@@ -1257,8 +1257,20 @@
   display: none;
 }
 
+/* The reader asked for no motion: everything inside an island's scope, an
+   author component's own elements included, changes at once. This file sits
+   in the components layer, where neither specificity nor order can beat the
+   SDK's unlayered rules or the utilities layer, so the zeroes are important.
+   A zero duration and delay start no transition at all, which 0.01ms would. */
 @media (prefers-reduced-motion: reduce) {
-  [data-rustify-scope] [data-name] {
-    transition-duration: 0ms;
+  [data-rustify-scope],
+  [data-rustify-scope] * {
+    transition-duration: 0s !important;
+    transition-delay: 0s !important;
+  }
+
+  /* The SDK spinner is still; its status text says what it would. */
+  [data-rustify-scope] [data-name="Spinner"] > svg {
+    animation: none !important;
   }
 }

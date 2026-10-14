@@ -16,7 +16,7 @@ const buildTimeout = 600_000;
 
 type Timing = { profile: string; target: string | null; elapsed_ms: number; completed_at_ms: number; fresh_artifacts: number; compiled_artifacts: number; flags: string[]; success: boolean };
 type Compile = { generation: string | null; completed_at_ms: number; host: Timing; wasm: Timing };
-type State = { session: string; revision: number; sequence: number; building: boolean; phase: string; compile: Compile | null; good: number | null; ok: boolean; errors: number; warnings: number; diagnostics: { severity: string; rule: string; file: string | null; line: number | null; column: number | null; message: string }[] };
+type State = { session: string; revision: number; sequence: number; building: boolean; phase: string; compile: Compile | null; good: number | null; ok: boolean; errors: number; warnings: number; diagnostics: { severity: string; rule: string; file: string | null; line: number | null; column: number | null; message: string; suggestion: string | null }[] };
 type CompilerEvent = { phase: "start" | "end"; args: string[]; at: number; status?: number | null };
 type Audit = { requests: string[]; failures: string[]; expectedStreamClosures: string[]; responses: { url: string; status: number; mime: string }[]; console: string[]; pageErrors: string[]; csp: string[] };
 type Tree = { root: Element; nodes: Node[]; ids: [Element, string][]; source: Element; sourceNodes: Node[]; values: string[] };
@@ -110,9 +110,9 @@ class Dev {
 
     private constructor(readonly child: ChildProcess, readonly url: string) {}
 
-    static async start(site: Site): Promise<Dev> {
+    static async start(site: Site, root = site.root): Promise<Dev> {
         const child = spawn(bin, ["dev", "--port", "0"], {
-            cwd: site.root, detached: true, env: { ...process.env, RUSTIFY_DOCS_CARGO: site.compiler },
+            cwd: root, detached: true, env: { ...process.env, RUSTIFY_DOCS_CARGO: site.compiler },
         });
         let log = "";
         child.stderr!.on("data", chunk => { log += chunk; });
@@ -811,4 +811,144 @@ payload_v2 = { package = "payload", path = "../payload-v2" }
     }
     expect(site.read("src/demos.rs")).toBe(siteSource);
     await healthy();
+});
+
+// The repairs the CLI tests assert, word for word, as the page shows them.
+const builtinReference = "https://github.com/rockie/rustify-ui/blob/main/docs/docs-ssg.md#static-builtins";
+type Repair = { rule: string; line: number; column: number; suggestion: string };
+
+function lineOf(text: string, needle: string, offset = 0) {
+    return text.split("\n").findIndex(line => line.includes(needle)) + 1 + offset;
+}
+
+async function expectRepairs(page: Page, state: State, file: string, repairs: Repair[]) {
+    const order = (a: Repair, b: Repair) => a.line - b.line || a.column - b.column || a.rule.localeCompare(b.rule);
+    const reported = state.diagnostics.filter(d => d.severity === "error" && d.file === file)
+        .map(d => ({ rule: d.rule, line: d.line!, column: d.column!, suggestion: d.suggestion! }));
+    expect(reported.sort(order)).toEqual([...repairs].sort(order));
+    const group = page.locator(".rd-dev-panel .rd-dev-list > section").filter({ has: page.getByRole("heading", { name: file, exact: true }) });
+    for (const repair of repairs) {
+        const item = group.locator(".rd-dev-item")
+            .filter({ has: page.locator(".rd-dev-location", { hasText: new RegExp(`^${repair.line}:${repair.column}$`) }) })
+            .filter({ has: page.locator(".rd-dev-rule", { hasText: repair.rule }) });
+        await expect(item).toHaveCount(1);
+        // The panel shows the same text, formatting only its backticked names.
+        await expect(item.locator(".rd-dev-suggestion")).toHaveText(repair.suggestion.replaceAll("`", ""));
+        await expect(item.locator(".rd-dev-suggestion code")).toHaveText([...repair.suggestion.matchAll(/`([^`]+)`/g)].map(match => match[1]));
+    }
+}
+
+// Long candidate lists and the reference URL wrap inside the panel.
+async function repairsFit(page: Page, label: string) {
+    const viewport = page.viewportSize()!;
+    for (const width of [375, 320]) {
+        for (const mode of ["light", "dark"]) {
+            await page.setViewportSize({ width, height: 812 });
+            await page.locator(`[data-rd-mode="${mode}"]`).click();
+            await expect(page.locator("html")).toHaveAttribute("data-theme", mode);
+            const overflow = await page.evaluate(() => ({
+                page: document.documentElement.scrollWidth - innerWidth,
+                repairs: [...document.querySelectorAll<HTMLElement>(".rd-dev-suggestion")].map(node => node.scrollWidth - node.clientWidth),
+            }));
+            expect(overflow.page, `${width}px page`).toBeLessThanOrEqual(0);
+            expect(overflow.repairs.every(extra => extra <= 0), `${width}px repairs ${overflow.repairs}`).toBe(true);
+            await test.info().attach(`${label}-${width}-${mode}.png`, { body: await page.screenshot(), contentType: "image/png" });
+        }
+    }
+    await page.setViewportSize(viewport);
+    await page.locator('[data-rd-mode="system"]').click();
+}
+
+test("gaps embedded diagnostics: registered names, props and demos show the CLI repair over the last good page and clear after the fix", async ({ page }) => {
+    test.setTimeout(900_000);
+    server = await Dev.start(site);
+    await page.goto(new URL("counter/", server.url).href);
+    site.release();
+    await ready(page);
+    const good = await settled();
+    const original = site.read("content/counter.md");
+    await captureTrees(page);
+
+    const cold = `${original}\n\`\`\`rustify-component\nname: MissingCounter\n\`\`\`\n\n\`\`\`rustify-component\nname: Counter\nprops:\n  unexpected: 1\n\`\`\`\n\n\`\`\`rustify-demo\nname: MissingDemo\n\`\`\`\n`;
+    site.write("content/counter.md", cold);
+    const failed = await settled(good.revision, false);
+    const panel = page.locator(".rd-dev-panel");
+    await expect(panel).toBeVisible();
+    await expectRepairs(page, failed, "content/counter.md", [
+        { rule: "unregistered-component", line: lineOf(cold, "name: MissingCounter", -1), column: 1, suggestion: "Use a component from `BrowserCounter`, `CardGrid`, `Counter`, `Steps`, `Tabs`; for an author component, enable `[rust]` and register its name in `site!`." },
+        { rule: "unknown-property", line: lineOf(cold, "unexpected: 1"), column: 3, suggestion: "Use one of `initial` (`i32`; default expression `2`), `label` (`String`; default expression `\"Counter\".to_string()`) for `Counter`; rename or remove `unexpected`." },
+        { rule: "unregistered-demo", line: lineOf(cold, "name: MissingDemo", -1), column: 1, suggestion: "Use a demo from `AsyncAfterAttachDemo`, `CatalogProxy`, `CounterDemo`, `FailureDemo`, `ThemeProbeDemo`; register demos in `site!`." },
+    ]);
+    expect(await page.evaluate(() => document.activeElement === document.body), "reading focus is not taken").toBe(true);
+    await retained(page);
+    await repairsFit(page, "gaps-registered");
+    await panel.getByRole("button", { name: "Hide problems" }).click();
+    const marker = page.locator(".rd-dev-marker");
+    await expect(marker).toBeFocused();
+    await page.keyboard.press("Enter");
+    await expect(panel.getByRole("button", { name: "Hide problems" })).toBeFocused();
+    await page.keyboard.press("Escape");
+    await expect(marker).toBeFocused();
+
+    // A refused type, after Chinese text on its own line, at the prop.
+    const typed = `${original}\n\`\`\`rustify-component\nname: Counter\nchildren: |\n  wrong-type\nprops:\n  label: 中文标签\n  initial: wrong-type\n\`\`\`\n`;
+    site.write("content/counter.md", typed);
+    const typedState = await settled(failed.revision, false);
+    await expect(marker).toBeVisible();
+    await marker.click();
+    await expect(panel).toBeVisible();
+    await expectRepairs(page, typedState, "content/counter.md", [
+        { rule: "invalid_props", line: lineOf(typed, "initial: wrong-type"), column: 3, suggestion: "Write `initial: 0` for declared type `i32` (default expression `2`). Reported props path: `initial`." },
+    ]);
+    await retained(page);
+    await page.keyboard.press("Escape");
+    await expect(marker).toBeFocused();
+
+    site.write("content/counter.md", original);
+    const fixed = await settled(typedState.revision);
+    await cleared(page, fixed);
+    // Gone with the errors, focus continues from the page; a remaining
+    // warning keeps the marker, and focus on it.
+    await expect(fixed.warnings ? marker : page.locator("main")).toBeFocused();
+    await healthy();
+});
+
+test("gaps embedded diagnostics: without Rust the panel names the builtins and the empty demo registration and wraps the reference", async ({ page }) => {
+    const plain = path.join(site.dir, "plain");
+    mkdirSync(path.join(plain, "content"), { recursive: true });
+    writeFileSync(path.join(plain, "rustify-docs.toml"), "schema_version = 1\n[site]\nname = 'Plain'\nurl = 'https://example.com/'\n");
+    writeFileSync(path.join(plain, "content/index.md"), "---\ndescription: Home\n---\n# Home\n");
+    const good = "---\ndescription: Counter\n---\n# Counter\n\nPlain text before the examples.\n";
+    writeFileSync(path.join(plain, "content/counter.md"), good);
+    server = await Dev.start(site, plain);
+    await page.goto(new URL("counter/", server.url).href);
+    const first = await settled();
+    await expect(page.locator("h1")).toHaveText("Counter");
+
+    const bad = `${good}\n\`\`\`rustify-component\nname: MissingWidget\n\`\`\`\n\n\`\`\`rustify-demo\nname: MissingDemo\n\`\`\`\n\n\`\`\`rustify-component\nname: Steps\n\`\`\`\n`;
+    writeFileSync(path.join(plain, "content/counter.md"), bad);
+    const failed = await settled(first.revision, false);
+    const panel = page.locator(".rd-dev-panel");
+    await expect(panel).toBeVisible();
+    await expectRepairs(page, failed, "content/counter.md", [
+        { rule: "unregistered-component", line: lineOf(bad, "name: MissingWidget", -1), column: 1, suggestion: "Use a component from `CardGrid`, `Steps`, `Tabs`; for an author component, enable `[rust]` and register its name in `site!`." },
+        { rule: "unregistered-demo", line: lineOf(bad, "name: MissingDemo", -1), column: 1, suggestion: "Enable `[rust]` and register a demo in `site!` before using a `rustify-demo` block." },
+        { rule: "embed-props", line: lineOf(bad, "name: Steps", -1), column: 1, suggestion: `Add or correct \`props\` using the declared fields \`items\` (\`Vec<StepSpec>\`; required); see ${builtinReference} for its object fields.` },
+    ]);
+    expect(await page.evaluate(() => document.activeElement === document.body), "reading focus is not taken").toBe(true);
+    await expect(page.locator("article")).toContainText("Plain text before the examples.");
+    await repairsFit(page, "gaps-builtins");
+    await panel.getByRole("button", { name: "Hide problems" }).click();
+    const marker = page.locator(".rd-dev-marker");
+    await expect(marker).toBeFocused();
+
+    writeFileSync(path.join(plain, "content/counter.md"), good);
+    const fixed = await settled(failed.revision);
+    await cleared(page, fixed);
+    await expect(fixed.warnings ? marker : page.locator("main")).toBeFocused();
+    expect(audit.csp).toEqual([]);
+    expect(audit.failures).toEqual([]);
+    expect(audit.console).toEqual([]);
+    expect(audit.pageErrors).toEqual([]);
+    expect(server.streamErrors).toEqual([]);
 });

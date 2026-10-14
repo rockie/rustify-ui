@@ -1,0 +1,456 @@
+{
+  "url": "http://127.0.0.1:4196/rustify-ui/proxy/",
+  "samples": [
+    {
+      "label": "ready",
+      "tokens": [
+        "0s",
+        "0s",
+        "0s",
+        "0s",
+        "0s"
+      ],
+      "present": {
+        "Switch thumb": 2,
+        "Checkbox box": 2,
+        "Radio dot": 6,
+        "Progress fill": 2,
+        "ColorField input": 2,
+        "Tab": 6,
+        "Button": 28,
+        "Spinner svg": 2
+      },
+      "computed": [
+        {
+          "target": "Switch thumb",
+          "duration": "0.15s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Switch thumb",
+          "duration": "0.15s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Checkbox box",
+          "duration": "0.15s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Checkbox box",
+          "duration": "0.15s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Radio dot",
+          "duration": "0.15s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Radio dot",
+          "duration": "0.15s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Progress fill",
+          "duration": "0.15s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Progress fill",
+          "duration": "0.15s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "ColorField input",
+          "duration": "0.15s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "ColorField input",
+          "duration": "0.15s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Tab",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Tab",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Button",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Button",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Button",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Button",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Button",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Spinner svg",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "rui-spin"
+        },
+        {
+          "target": "Spinner svg",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "rui-spin"
+        }
+      ],
+      "moving": [
+        {
+          "node": "span.pointer-events-none.absolute.inset-0 in Checkbox",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "span.pointer-events-none.absolute.inset-0 in RadioItem",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "span.pointer-events-none.absolute.inset-0 in RadioItem",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "span.pointer-events-none.absolute.inset-0 in RadioItem",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "span.pointer-events-none.block.size-5 in Switch",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "div.h-full.bg-primary.transition-[width] in Progress",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "input.flex.h-9.w-full in ColorField",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "span.pointer-events-none.absolute.inset-0 in Checkbox",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "span.pointer-events-none.absolute.inset-0 in RadioItem",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "span.pointer-events-none.absolute.inset-0 in RadioItem",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "span.pointer-events-none.absolute.inset-0 in RadioItem",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "span.pointer-events-none.block.size-5 in Switch",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "div.h-full.bg-primary.transition-[width] in Progress",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "input.flex.h-9.w-full in ColorField",
+          "duration": "0.15s",
+          "delay": "0s"
+        }
+      ],
+      "transitions": [],
+      "runs": [
+        {
+          "node": "input.flex.h-9.w-full in ColorField",
+          "property": "background-color",
+          "at": 30
+        }
+      ],
+      "spinners": [
+        {
+          "name": "rui-spin",
+          "running": 0
+        }
+      ]
+    },
+    {
+      "label": "toggle switch",
+      "tokens": [
+        "0s",
+        "0s",
+        "0s",
+        "0s",
+        "0s"
+      ],
+      "present": {
+        "Switch thumb": 2,
+        "Checkbox box": 2,
+        "Radio dot": 6,
+        "Progress fill": 2,
+        "ColorField input": 2,
+        "Tab": 6,
+        "Button": 28,
+        "Spinner svg": 2
+      },
+      "computed": [
+        {
+          "target": "Switch thumb",
+          "duration": "0.15s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Switch thumb",
+          "duration": "0.15s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Checkbox box",
+          "duration": "0.15s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Checkbox box",
+          "duration": "0.15s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Radio dot",
+          "duration": "0.15s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Radio dot",
+          "duration": "0.15s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Progress fill",
+          "duration": "0.15s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Progress fill",
+          "duration": "0.15s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "ColorField input",
+          "duration": "0.15s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "ColorField input",
+          "duration": "0.15s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Tab",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Tab",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Button",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Button",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Button",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Button",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Button",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Spinner svg",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "rui-spin"
+        },
+        {
+          "target": "Spinner svg",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "rui-spin"
+        }
+      ],
+      "moving": [
+        {
+          "node": "span.pointer-events-none.absolute.inset-0 in Checkbox",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "span.pointer-events-none.absolute.inset-0 in RadioItem",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "span.pointer-events-none.absolute.inset-0 in RadioItem",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "span.pointer-events-none.absolute.inset-0 in RadioItem",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "span.pointer-events-none.block.size-5 in Switch",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "div.h-full.bg-primary.transition-[width] in Progress",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "input.flex.h-9.w-full in ColorField",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "span.pointer-events-none.absolute.inset-0 in Checkbox",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "span.pointer-events-none.absolute.inset-0 in RadioItem",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "span.pointer-events-none.absolute.inset-0 in RadioItem",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "span.pointer-events-none.absolute.inset-0 in RadioItem",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "span.pointer-events-none.block.size-5 in Switch",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "div.h-full.bg-primary.transition-[width] in Progress",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "input.flex.h-9.w-full in ColorField",
+          "duration": "0.15s",
+          "delay": "0s"
+        }
+      ],
+      "transitions": [
+        {
+          "node": "span.pointer-events-none.block.size-5 in Switch",
+          "property": "translate",
+          "duration": 150,
+          "state": "running"
+        }
+      ],
+      "runs": [
+        {
+          "node": "input.flex.h-9.w-full in ColorField",
+          "property": "background-color",
+          "at": 30
+        }
+      ],
+      "spinners": [
+        {
+          "name": "rui-spin",
+          "running": 0
+        }
+      ]
+    }
+  ]
+}

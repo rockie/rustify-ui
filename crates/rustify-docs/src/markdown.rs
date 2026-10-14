@@ -197,16 +197,59 @@ pub struct Context<'a> {
 /// Renders `source`, whose first byte is at `offset` in its file (after any
 /// frontmatter), so every span in the result is a file offset.
 pub fn render(source: &str, offset: usize, context: &Context) -> Fragment {
-    let events: Vec<(Event, Range<usize>)> =
-        TextMergeWithOffset::new(Parser::new_ext(source, options()).into_offset_iter())
-            .map(|(event, span)| (event, span.start + offset..span.end + offset))
-            .collect();
+    let raw: Vec<_> = Parser::new_ext(source, options())
+        .into_offset_iter()
+        .collect();
+    let origins = code_origins(&raw, offset);
+    let events: Vec<(Event, Range<usize>)> = TextMergeWithOffset::new(raw.into_iter())
+        .map(|(event, span)| (event, span.start + offset..span.end + offset))
+        .collect();
     let mut writer = Writer::new(context);
+    writer.code_origins = origins;
     writer.reserve_explicit_ids(&events);
     for (event, span) in events {
         writer.event(event, span);
     }
     writer.finish()
+}
+
+/// Where each embed fence's text came from, before adjacent text is merged:
+/// the parser drops a CR before LF and a container's prefix between lines,
+/// so a payload offset is not the block's first text offset plus a shift.
+/// Keyed by the fence's file offset; each piece is (text offset, file
+/// offset, length in the file), and a synthesized piece has length 0.
+fn code_origins(
+    raw: &[(Event, Range<usize>)],
+    offset: usize,
+) -> BTreeMap<usize, Vec<(usize, usize, usize)>> {
+    let mut origins: BTreeMap<usize, Vec<(usize, usize, usize)>> = BTreeMap::new();
+    let mut open: Option<(usize, usize)> = None;
+    for (event, span) in raw {
+        match event {
+            Event::Start(Tag::CodeBlock(CodeBlockKind::Fenced(info)))
+                if matches!(info.trim(), "rustify-component" | "rustify-demo") =>
+            {
+                open = Some((span.start + offset, 0))
+            }
+            Event::End(TagEnd::CodeBlock) => open = None,
+            Event::Text(text) => {
+                if let Some((block, length)) = &mut open {
+                    let copied = if span.len() == text.len() {
+                        text.len()
+                    } else {
+                        0
+                    };
+                    origins
+                        .entry(*block)
+                        .or_default()
+                        .push((*length, span.start + offset, copied));
+                    *length += text.len();
+                }
+            }
+            _ => {}
+        }
+    }
+    origins
 }
 
 pub(crate) fn intro_range(source: &str) -> Result<Range<usize>, Issue> {
@@ -425,6 +468,9 @@ struct Writer<'a> {
     footnote_order: Vec<String>,
     footnote_references: Vec<usize>,
     footnotes: Vec<(String, Buffer)>,
+    /// Text origins of this source's code blocks; empty for embedded
+    /// children, whose events all carry their fence's span.
+    code_origins: BTreeMap<usize, Vec<(usize, usize, usize)>>,
     out: Fragment,
 }
 
@@ -446,6 +492,7 @@ impl<'a> Writer<'a> {
             footnote_order: Vec::new(),
             footnote_references: Vec::new(),
             footnotes: Vec::new(),
+            code_origins: BTreeMap::new(),
             out: Fragment::default(),
         }
     }
@@ -1149,12 +1196,15 @@ impl<'a> Writer<'a> {
 
     fn embedded_block(&mut self, kind: crate::embed::Kind, code: CodeCapture) {
         self.block_in_group();
-        let declaration = match crate::embed::parse(
-            kind,
-            &code.text,
-            code.payload_start.unwrap_or(code.span.start),
-            code.span.clone(),
-        ) {
+        let start = code.payload_start.unwrap_or(code.span.start);
+        let pieces = self.code_origins.get(&code.span.start);
+        let origin = |at: usize| match pieces
+            .and_then(|pieces| pieces.iter().rev().find(|(from, _, _)| *from <= at))
+        {
+            Some((from, file, length)) => file + (at - from).min(*length),
+            None => start + at,
+        };
+        let declaration = match crate::embed::parse(kind, &code.text, origin, code.span.clone()) {
             Ok(declaration) => declaration,
             Err(issue) => {
                 self.out.issues.push(issue);
@@ -1202,11 +1252,15 @@ impl<'a> Writer<'a> {
                     self.buf().append(children);
                     self.html(after, declaration.span, false);
                 }
-                Err(error) => self.out.issues.push(Issue::error(
-                    declaration.span,
-                    "embed-props",
-                    error.message,
-                )),
+                Err(error) => {
+                    let repair =
+                        crate::builtins::advice(&declaration.name, &declaration.props, &error);
+                    let issue = Issue::error(declaration.span, "embed-props", error.message);
+                    self.out.issues.push(match repair {
+                        Some(repair) => issue.suggest(repair),
+                        None => issue,
+                    });
+                }
             }
         } else {
             let embed = Embed {
@@ -1792,6 +1846,51 @@ mod tests {
         assert_eq!(page.references[0].destination, "guide.md#setup");
         assert_eq!(&page.html[page.slots[0].html.clone()], "guide.md#setup");
         assert!(page.code_blocks.is_empty());
+    }
+
+    #[test]
+    fn embed_payload_locations_are_file_offsets_after_crlf_and_container_prefixes() {
+        for source in [
+            "# T\r\n\r\n```rustify-component\r\nname: Counter\r\nprops:\r\n  initial: 2\r\n```\r\n",
+            "# T\n\n> ```rustify-component\n> name: Counter\n> props:\n>   initial: 2\n> ```\n",
+            "# T\n\n- item\n\n  ```rustify-component\n  name: Counter\n  props:\n    initial: 2\n  ```\n",
+        ] {
+            let fragment = md(source);
+            let span = fragment.embeds[0].declaration.properties["initial"].clone();
+            assert_eq!(&source[span], "initial", "{source:?}");
+        }
+        let source = "# T\r\n\r\n```rustify-component\r\nname: Steps\r\nunknown: 2\r\n```\r\n";
+        let issue = md(source)
+            .issues
+            .into_iter()
+            .find(|issue| issue.rule == "embed-payload")
+            .unwrap();
+        assert_eq!(&source[issue.span], "unknown");
+    }
+
+    #[test]
+    fn builtin_refusals_keep_the_fence_location_and_add_the_repair() {
+        let source = "# T\n\n```rustify-component\nname: Steps\nprops:\n  items: wrong\n```\n\n```rustify-component\nname: CardGrid\nprops:\n  cards: []\n  columns: \"2\"\n```\n";
+        let issues: Vec<_> = md(source)
+            .issues
+            .into_iter()
+            .filter(|issue| issue.rule == "embed-props")
+            .collect();
+        assert_eq!(issues.len(), 2);
+        assert_eq!(issues[0].span.start, source.find("```rustify").unwrap());
+        assert!(
+            issues[0].message.contains("expected a sequence"),
+            "{:?}",
+            issues[0]
+        );
+        assert_eq!(
+            issues[0].suggestion.as_deref(),
+            Some("Write `items` as `Vec<StepSpec>` (required); see https://github.com/rockie/rustify-ui/blob/main/docs/docs-ssg.md#static-builtins for its object fields. Reported props path: `items`.")
+        );
+        assert_eq!(
+            issues[1].suggestion.as_deref(),
+            Some("Write `columns: 0` for declared type `u8` (default expression `2`). Reported props path: `columns`.")
+        );
     }
 
     #[test]

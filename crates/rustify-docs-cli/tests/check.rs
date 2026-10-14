@@ -2,6 +2,8 @@
 //! the repository's fixtures and throwaway projects, read through stdout,
 //! stderr and the exit status alone.
 
+mod support;
+
 use std::collections::BTreeMap;
 use std::path::{Path, PathBuf};
 use std::process::{Command, Output};
@@ -607,4 +609,60 @@ fn help_and_version() {
         String::from_utf8(output.stdout).unwrap(),
         format!("rustify-docs {}\n", env!("CARGO_PKG_VERSION"))
     );
+}
+
+#[test]
+fn embedded_refusals_name_the_repair_at_the_same_place_in_check_text_and_build() {
+    let files = support::embedded::files();
+    let good: Vec<(&str, &str)> = files[..2]
+        .iter()
+        .map(|(path, text)| (path.as_str(), text.as_str()))
+        .collect();
+    let project = Project::new(&good);
+    let config = project.config();
+    let config = config.to_str().unwrap();
+    let build = || {
+        Command::new(BIN)
+            .args(["build", "--config", config, "--format", "json"])
+            .output()
+            .unwrap()
+    };
+    assert!(build().status.success());
+    let before = tree(&project.0.join("dist"));
+    for (path, text) in &files[2..] {
+        std::fs::write(project.0.join(path), text).unwrap();
+    }
+    let expected = support::embedded::expected();
+    let (code, report, _) = check_json(&project.config(), &[]);
+    assert_eq!(code, Some(1));
+    let checked = support::embedded::reported(&report["diagnostics"]);
+    assert_eq!(checked, expected);
+
+    // Text mode prints the same repair under the same location.
+    let output = run(&["check", "--config", config]);
+    assert_eq!(output.status.code(), Some(1));
+    let text = String::from_utf8(output.stderr).unwrap();
+    for refusal in &expected {
+        let located = format!(
+            "  --> {}:{}:{}\n  = help: {}\n",
+            refusal.file, refusal.line, refusal.column, refusal.suggestion
+        );
+        assert!(text.contains(&located), "{located}\n{text}");
+    }
+
+    let output = build();
+    assert_eq!(output.status.code(), Some(1));
+    let built: Value = serde_json::from_slice(&output.stdout).unwrap();
+    assert_eq!(
+        built["diagnostics"], report["diagnostics"],
+        "build reports exactly what check reports"
+    );
+    assert_eq!(tree(&project.0.join("dist")), before);
+
+    for (path, _) in &files[2..] {
+        std::fs::remove_file(project.0.join(path)).unwrap();
+    }
+    let (code, report, _) = check_json(&project.config(), &[]);
+    assert_eq!(code, Some(0), "{report}");
+    assert!(support::embedded::reported(&report["diagnostics"]).is_empty());
 }

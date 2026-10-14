@@ -1,0 +1,1863 @@
+{
+  "url": "http://127.0.0.1:4199/rustify-ui/components/loading/",
+  "samples": [
+    {
+      "label": "button ready",
+      "tokens": [
+        ".15s",
+        ".15s"
+      ],
+      "present": {
+        "Switch thumb": 0,
+        "Checkbox box": 0,
+        "Radio dot": 0,
+        "Progress fill": 0,
+        "ColorField input": 0,
+        "Tab": 0,
+        "Button": 6,
+        "Spinner svg": 0
+      },
+      "computed": [
+        {
+          "target": "Button",
+          "duration": "0.15s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Button",
+          "duration": "0.15s",
+          "delay": "0s",
+          "animation": "none"
+        }
+      ],
+      "moving": [
+        {
+          "node": "button[data-name=Button] in Button",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "button[data-name=Button] in Button",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "button[data-name=Button] in Button",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "button[data-name=Button] in Button",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "button[data-name=Button] in Button",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "button[data-name=Button] in Button",
+          "duration": "0.15s",
+          "delay": "0s"
+        }
+      ],
+      "transitions": [],
+      "runs": [
+        {
+          "node": "button[data-name=Button] in Button",
+          "property": "opacity",
+          "at": 63
+        },
+        {
+          "node": "button[data-name=Button] in Button",
+          "property": "opacity",
+          "at": 63
+        }
+      ],
+      "spinners": []
+    },
+    {
+      "label": "button hover",
+      "tokens": [
+        ".15s",
+        ".15s"
+      ],
+      "present": {
+        "Switch thumb": 0,
+        "Checkbox box": 0,
+        "Radio dot": 0,
+        "Progress fill": 0,
+        "ColorField input": 0,
+        "Tab": 0,
+        "Button": 6,
+        "Spinner svg": 0
+      },
+      "computed": [
+        {
+          "target": "Button",
+          "duration": "0.15s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Button",
+          "duration": "0.15s",
+          "delay": "0s",
+          "animation": "none"
+        }
+      ],
+      "moving": [
+        {
+          "node": "button[data-name=Button] in Button",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "button[data-name=Button] in Button",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "button[data-name=Button] in Button",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "button[data-name=Button] in Button",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "button[data-name=Button] in Button",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "button[data-name=Button] in Button",
+          "duration": "0.15s",
+          "delay": "0s"
+        }
+      ],
+      "transitions": [
+        {
+          "node": "button[data-name=Button] in Button",
+          "property": "background-color",
+          "duration": 150,
+          "state": "running"
+        }
+      ],
+      "runs": [
+        {
+          "node": "button[data-name=Button] in Button",
+          "property": "opacity",
+          "at": 63
+        },
+        {
+          "node": "button[data-name=Button] in Button",
+          "property": "opacity",
+          "at": 63
+        },
+        {
+          "node": "button[data-name=Button] in Button",
+          "property": "background-color",
+          "at": 330
+        }
+      ],
+      "spinners": []
+    },
+    {
+      "label": "button changed",
+      "tokens": [
+        ".15s",
+        ".15s"
+      ],
+      "present": {
+        "Switch thumb": 0,
+        "Checkbox box": 0,
+        "Radio dot": 0,
+        "Progress fill": 0,
+        "ColorField input": 0,
+        "Tab": 0,
+        "Button": 6,
+        "Spinner svg": 0
+      },
+      "computed": [
+        {
+          "target": "Button",
+          "duration": "0.15s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Button",
+          "duration": "0.15s",
+          "delay": "0s",
+          "animation": "none"
+        }
+      ],
+      "moving": [
+        {
+          "node": "button[data-name=Button] in Button",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "button[data-name=Button] in Button",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "button[data-name=Button] in Button",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "button[data-name=Button] in Button",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "button[data-name=Button] in Button",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "button[data-name=Button] in Button",
+          "duration": "0.15s",
+          "delay": "0s"
+        }
+      ],
+      "transitions": [
+        {
+          "node": "button[data-name=Button] in Button",
+          "property": "background-color",
+          "duration": 150,
+          "state": "running"
+        },
+        {
+          "node": "button[data-name=Button] in Button",
+          "property": "box-shadow",
+          "duration": 150,
+          "state": "running"
+        },
+        {
+          "node": "button[data-name=Button] in Button",
+          "property": "outline-color",
+          "duration": 150,
+          "state": "running"
+        },
+        {
+          "node": "button[data-name=Button] in Button",
+          "property": "outline-offset",
+          "duration": 150,
+          "state": "running"
+        }
+      ],
+      "runs": [
+        {
+          "node": "button[data-name=Button] in Button",
+          "property": "opacity",
+          "at": 63
+        },
+        {
+          "node": "button[data-name=Button] in Button",
+          "property": "opacity",
+          "at": 63
+        },
+        {
+          "node": "button[data-name=Button] in Button",
+          "property": "background-color",
+          "at": 330
+        },
+        {
+          "node": "button[data-name=Button] in Button",
+          "property": "box-shadow",
+          "at": 368
+        },
+        {
+          "node": "button[data-name=Button] in Button",
+          "property": "outline-color",
+          "at": 368
+        },
+        {
+          "node": "button[data-name=Button] in Button",
+          "property": "outline-offset",
+          "at": 368
+        }
+      ],
+      "spinners": []
+    },
+    {
+      "label": "tabs ready",
+      "tokens": [
+        ".15s",
+        ".15s"
+      ],
+      "present": {
+        "Switch thumb": 0,
+        "Checkbox box": 0,
+        "Radio dot": 0,
+        "Progress fill": 0,
+        "ColorField input": 0,
+        "Tab": 4,
+        "Button": 0,
+        "Spinner svg": 0
+      },
+      "computed": [
+        {
+          "target": "Tab",
+          "duration": "0.15s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Tab",
+          "duration": "0.15s",
+          "delay": "0s",
+          "animation": "none"
+        }
+      ],
+      "moving": [
+        {
+          "node": "div[data-name=Tabs] in Tabs",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "div[data-name=TabList] in TabList",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "button[data-name=Tab] in Tab",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "button[data-name=Tab] in Tab",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "div[data-name=TabPanel] in TabPanel",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "div[data-name=TabPanel] in TabPanel",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "div[data-name=Tabs] in Tabs",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "div[data-name=TabList] in TabList",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "button[data-name=Tab] in Tab",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "button[data-name=Tab] in Tab",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "div[data-name=TabPanel] in TabPanel",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "div[data-name=TabPanel] in TabPanel",
+          "duration": "0.15s",
+          "delay": "0s"
+        }
+      ],
+      "transitions": [],
+      "runs": [
+        {
+          "node": "button[data-name=Tab] in Tab",
+          "property": "opacity",
+          "at": 22
+        },
+        {
+          "node": "button[data-name=Tab] in Tab",
+          "property": "opacity",
+          "at": 22
+        }
+      ],
+      "spinners": []
+    },
+    {
+      "label": "tabs changed",
+      "tokens": [
+        ".15s",
+        ".15s"
+      ],
+      "present": {
+        "Switch thumb": 0,
+        "Checkbox box": 0,
+        "Radio dot": 0,
+        "Progress fill": 0,
+        "ColorField input": 0,
+        "Tab": 4,
+        "Button": 0,
+        "Spinner svg": 0
+      },
+      "computed": [
+        {
+          "target": "Tab",
+          "duration": "0.15s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Tab",
+          "duration": "0.15s",
+          "delay": "0s",
+          "animation": "none"
+        }
+      ],
+      "moving": [
+        {
+          "node": "div[data-name=Tabs] in Tabs",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "div[data-name=TabList] in TabList",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "button[data-name=Tab] in Tab",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "button[data-name=Tab] in Tab",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "div[data-name=TabPanel] in TabPanel",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "div[data-name=TabPanel] in TabPanel",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "div[data-name=Tabs] in Tabs",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "div[data-name=TabList] in TabList",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "button[data-name=Tab] in Tab",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "button[data-name=Tab] in Tab",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "div[data-name=TabPanel] in TabPanel",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "div[data-name=TabPanel] in TabPanel",
+          "duration": "0.15s",
+          "delay": "0s"
+        }
+      ],
+      "transitions": [
+        {
+          "node": "button[data-name=Tab] in Tab",
+          "property": "background-color",
+          "duration": 150,
+          "state": "running"
+        },
+        {
+          "node": "button[data-name=Tab] in Tab",
+          "property": "color",
+          "duration": 150,
+          "state": "running"
+        },
+        {
+          "node": "button[data-name=Tab] in Tab",
+          "property": "box-shadow",
+          "duration": 150,
+          "state": "running"
+        },
+        {
+          "node": "button[data-name=Tab] in Tab",
+          "property": "outline-color",
+          "duration": 150,
+          "state": "running"
+        },
+        {
+          "node": "button[data-name=Tab] in Tab",
+          "property": "outline-offset",
+          "duration": 150,
+          "state": "running"
+        },
+        {
+          "node": "button[data-name=Tab] in Tab",
+          "property": "background-color",
+          "duration": 150,
+          "state": "running"
+        },
+        {
+          "node": "button[data-name=Tab] in Tab",
+          "property": "color",
+          "duration": 150,
+          "state": "running"
+        }
+      ],
+      "runs": [
+        {
+          "node": "button[data-name=Tab] in Tab",
+          "property": "opacity",
+          "at": 22
+        },
+        {
+          "node": "button[data-name=Tab] in Tab",
+          "property": "opacity",
+          "at": 22
+        },
+        {
+          "node": "button[data-name=Tab] in Tab",
+          "property": "box-shadow",
+          "at": 237
+        },
+        {
+          "node": "button[data-name=Tab] in Tab",
+          "property": "outline-color",
+          "at": 237
+        },
+        {
+          "node": "button[data-name=Tab] in Tab",
+          "property": "outline-offset",
+          "at": 237
+        },
+        {
+          "node": "button[data-name=Tab] in Tab",
+          "property": "box-shadow",
+          "at": 256
+        },
+        {
+          "node": "button[data-name=Tab] in Tab",
+          "property": "outline-color",
+          "at": 256
+        },
+        {
+          "node": "button[data-name=Tab] in Tab",
+          "property": "outline-offset",
+          "at": 256
+        },
+        {
+          "node": "button[data-name=Tab] in Tab",
+          "property": "box-shadow",
+          "at": 256
+        },
+        {
+          "node": "button[data-name=Tab] in Tab",
+          "property": "outline-color",
+          "at": 256
+        },
+        {
+          "node": "button[data-name=Tab] in Tab",
+          "property": "outline-offset",
+          "at": 256
+        },
+        {
+          "node": "button[data-name=Tab] in Tab",
+          "property": "color",
+          "at": 256
+        },
+        {
+          "node": "button[data-name=Tab] in Tab",
+          "property": "background-color",
+          "at": 256
+        },
+        {
+          "node": "button[data-name=Tab] in Tab",
+          "property": "color",
+          "at": 256
+        },
+        {
+          "node": "button[data-name=Tab] in Tab",
+          "property": "background-color",
+          "at": 256
+        }
+      ],
+      "spinners": []
+    },
+    {
+      "label": "switch ready",
+      "tokens": [
+        ".15s",
+        ".15s"
+      ],
+      "present": {
+        "Switch thumb": 2,
+        "Checkbox box": 0,
+        "Radio dot": 0,
+        "Progress fill": 0,
+        "ColorField input": 0,
+        "Tab": 0,
+        "Button": 0,
+        "Spinner svg": 0
+      },
+      "computed": [
+        {
+          "target": "Switch thumb",
+          "duration": "0.15s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Switch thumb",
+          "duration": "0.15s",
+          "delay": "0s",
+          "animation": "none"
+        }
+      ],
+      "moving": [
+        {
+          "node": "button[data-name=Switch] in Switch",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "span.pointer-events-none.block.size-5 in Switch",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "label[data-name=Label] in Label",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "button[data-name=Switch] in Switch",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "span.pointer-events-none.block.size-5 in Switch",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "label[data-name=Label] in Label",
+          "duration": "0.15s",
+          "delay": "0s"
+        }
+      ],
+      "transitions": [],
+      "runs": [],
+      "spinners": []
+    },
+    {
+      "label": "switch changed",
+      "tokens": [
+        ".15s",
+        ".15s"
+      ],
+      "present": {
+        "Switch thumb": 2,
+        "Checkbox box": 0,
+        "Radio dot": 0,
+        "Progress fill": 0,
+        "ColorField input": 0,
+        "Tab": 0,
+        "Button": 0,
+        "Spinner svg": 0
+      },
+      "computed": [
+        {
+          "target": "Switch thumb",
+          "duration": "0.15s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Switch thumb",
+          "duration": "0.15s",
+          "delay": "0s",
+          "animation": "none"
+        }
+      ],
+      "moving": [
+        {
+          "node": "button[data-name=Switch] in Switch",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "span.pointer-events-none.block.size-5 in Switch",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "label[data-name=Label] in Label",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "button[data-name=Switch] in Switch",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "span.pointer-events-none.block.size-5 in Switch",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "label[data-name=Label] in Label",
+          "duration": "0.15s",
+          "delay": "0s"
+        }
+      ],
+      "transitions": [
+        {
+          "node": "button[data-name=Switch] in Switch",
+          "property": "outline-color",
+          "duration": 150,
+          "state": "running"
+        },
+        {
+          "node": "button[data-name=Switch] in Switch",
+          "property": "background-color",
+          "duration": 150,
+          "state": "running"
+        },
+        {
+          "node": "span.pointer-events-none.block.size-5 in Switch",
+          "property": "translate",
+          "duration": 150,
+          "state": "running"
+        }
+      ],
+      "runs": [
+        {
+          "node": "button[data-name=Switch] in Switch",
+          "property": "outline-color",
+          "at": 228
+        },
+        {
+          "node": "span.pointer-events-none.block.size-5 in Switch",
+          "property": "translate",
+          "at": 239
+        },
+        {
+          "node": "button[data-name=Switch] in Switch",
+          "property": "background-color",
+          "at": 239
+        }
+      ],
+      "spinners": []
+    },
+    {
+      "label": "checkbox ready",
+      "tokens": [
+        ".15s",
+        ".15s"
+      ],
+      "present": {
+        "Switch thumb": 0,
+        "Checkbox box": 2,
+        "Radio dot": 0,
+        "Progress fill": 0,
+        "ColorField input": 0,
+        "Tab": 0,
+        "Button": 0,
+        "Spinner svg": 0
+      },
+      "computed": [
+        {
+          "target": "Checkbox box",
+          "duration": "0.15s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Checkbox box",
+          "duration": "0.15s",
+          "delay": "0s",
+          "animation": "none"
+        }
+      ],
+      "moving": [
+        {
+          "node": "span[data-name=Checkbox] in Checkbox",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "span.pointer-events-none.absolute.inset-0 in Checkbox",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "svg[data-name=Icon] in Icon",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "label[data-name=Label] in Label",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "span[data-name=Checkbox] in Checkbox",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "span.pointer-events-none.absolute.inset-0 in Checkbox",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "svg[data-name=Icon] in Icon",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "label[data-name=Label] in Label",
+          "duration": "0.15s",
+          "delay": "0s"
+        }
+      ],
+      "transitions": [],
+      "runs": [],
+      "spinners": []
+    },
+    {
+      "label": "checkbox changed",
+      "tokens": [
+        ".15s",
+        ".15s"
+      ],
+      "present": {
+        "Switch thumb": 0,
+        "Checkbox box": 2,
+        "Radio dot": 0,
+        "Progress fill": 0,
+        "ColorField input": 0,
+        "Tab": 0,
+        "Button": 0,
+        "Spinner svg": 0
+      },
+      "computed": [
+        {
+          "target": "Checkbox box",
+          "duration": "0.15s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Checkbox box",
+          "duration": "0.15s",
+          "delay": "0s",
+          "animation": "none"
+        }
+      ],
+      "moving": [
+        {
+          "node": "span[data-name=Checkbox] in Checkbox",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "span.pointer-events-none.absolute.inset-0 in Checkbox",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "label[data-name=Label] in Label",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "span[data-name=Checkbox] in Checkbox",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "span.pointer-events-none.absolute.inset-0 in Checkbox",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "label[data-name=Label] in Label",
+          "duration": "0.15s",
+          "delay": "0s"
+        }
+      ],
+      "transitions": [
+        {
+          "node": "span.pointer-events-none.absolute.inset-0 in Checkbox",
+          "property": "background-color",
+          "duration": 150,
+          "state": "running"
+        },
+        {
+          "node": "span.pointer-events-none.absolute.inset-0 in Checkbox",
+          "property": "border-bottom-color",
+          "duration": 150,
+          "state": "running"
+        },
+        {
+          "node": "span.pointer-events-none.absolute.inset-0 in Checkbox",
+          "property": "border-left-color",
+          "duration": 150,
+          "state": "running"
+        },
+        {
+          "node": "span.pointer-events-none.absolute.inset-0 in Checkbox",
+          "property": "border-right-color",
+          "duration": 150,
+          "state": "running"
+        },
+        {
+          "node": "span.pointer-events-none.absolute.inset-0 in Checkbox",
+          "property": "border-top-color",
+          "duration": 150,
+          "state": "running"
+        }
+      ],
+      "runs": [
+        {
+          "node": "span.pointer-events-none.absolute.inset-0 in Checkbox",
+          "property": "border-bottom-color",
+          "at": 239
+        },
+        {
+          "node": "span.pointer-events-none.absolute.inset-0 in Checkbox",
+          "property": "border-left-color",
+          "at": 239
+        },
+        {
+          "node": "span.pointer-events-none.absolute.inset-0 in Checkbox",
+          "property": "border-right-color",
+          "at": 239
+        },
+        {
+          "node": "span.pointer-events-none.absolute.inset-0 in Checkbox",
+          "property": "border-top-color",
+          "at": 239
+        },
+        {
+          "node": "span.pointer-events-none.absolute.inset-0 in Checkbox",
+          "property": "background-color",
+          "at": 239
+        }
+      ],
+      "spinners": []
+    },
+    {
+      "label": "radio ready",
+      "tokens": [
+        ".15s",
+        ".15s"
+      ],
+      "present": {
+        "Switch thumb": 0,
+        "Checkbox box": 0,
+        "Radio dot": 6,
+        "Progress fill": 0,
+        "ColorField input": 0,
+        "Tab": 0,
+        "Button": 0,
+        "Spinner svg": 0
+      },
+      "computed": [
+        {
+          "target": "Radio dot",
+          "duration": "0.15s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Radio dot",
+          "duration": "0.15s",
+          "delay": "0s",
+          "animation": "none"
+        }
+      ],
+      "moving": [
+        {
+          "node": "div[data-name=RadioGroup] in RadioGroup",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "span[data-name=RadioItem] in RadioItem",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "span.pointer-events-none.absolute.inset-0 in RadioItem",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "svg[data-name=Icon] in Icon",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "span[data-name=RadioItem] in RadioItem",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "span.pointer-events-none.absolute.inset-0 in RadioItem",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "span[data-name=RadioItem] in RadioItem",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "span.pointer-events-none.absolute.inset-0 in RadioItem",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "div[data-name=RadioGroup] in RadioGroup",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "span[data-name=RadioItem] in RadioItem",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "span.pointer-events-none.absolute.inset-0 in RadioItem",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "svg[data-name=Icon] in Icon",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "span[data-name=RadioItem] in RadioItem",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "span.pointer-events-none.absolute.inset-0 in RadioItem",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "span[data-name=RadioItem] in RadioItem",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "span.pointer-events-none.absolute.inset-0 in RadioItem",
+          "duration": "0.15s",
+          "delay": "0s"
+        }
+      ],
+      "transitions": [],
+      "runs": [],
+      "spinners": []
+    },
+    {
+      "label": "radio changed",
+      "tokens": [
+        ".15s",
+        ".15s"
+      ],
+      "present": {
+        "Switch thumb": 0,
+        "Checkbox box": 0,
+        "Radio dot": 6,
+        "Progress fill": 0,
+        "ColorField input": 0,
+        "Tab": 0,
+        "Button": 0,
+        "Spinner svg": 0
+      },
+      "computed": [
+        {
+          "target": "Radio dot",
+          "duration": "0.15s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Radio dot",
+          "duration": "0.15s",
+          "delay": "0s",
+          "animation": "none"
+        }
+      ],
+      "moving": [
+        {
+          "node": "div[data-name=RadioGroup] in RadioGroup",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "span[data-name=RadioItem] in RadioItem",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "span.pointer-events-none.absolute.inset-0 in RadioItem",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "span[data-name=RadioItem] in RadioItem",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "span.pointer-events-none.absolute.inset-0 in RadioItem",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "svg[data-name=Icon] in Icon",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "span[data-name=RadioItem] in RadioItem",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "span.pointer-events-none.absolute.inset-0 in RadioItem",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "div[data-name=RadioGroup] in RadioGroup",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "span[data-name=RadioItem] in RadioItem",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "span.pointer-events-none.absolute.inset-0 in RadioItem",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "span[data-name=RadioItem] in RadioItem",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "span.pointer-events-none.absolute.inset-0 in RadioItem",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "svg[data-name=Icon] in Icon",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "span[data-name=RadioItem] in RadioItem",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "span.pointer-events-none.absolute.inset-0 in RadioItem",
+          "duration": "0.15s",
+          "delay": "0s"
+        }
+      ],
+      "transitions": [
+        {
+          "node": "span.pointer-events-none.absolute.inset-0 in RadioItem",
+          "property": "border-bottom-color",
+          "duration": 150,
+          "state": "running"
+        },
+        {
+          "node": "span.pointer-events-none.absolute.inset-0 in RadioItem",
+          "property": "border-left-color",
+          "duration": 150,
+          "state": "running"
+        },
+        {
+          "node": "span.pointer-events-none.absolute.inset-0 in RadioItem",
+          "property": "border-right-color",
+          "duration": 150,
+          "state": "running"
+        },
+        {
+          "node": "span.pointer-events-none.absolute.inset-0 in RadioItem",
+          "property": "border-top-color",
+          "duration": 150,
+          "state": "running"
+        },
+        {
+          "node": "span.pointer-events-none.absolute.inset-0 in RadioItem",
+          "property": "border-bottom-color",
+          "duration": 150,
+          "state": "running"
+        },
+        {
+          "node": "span.pointer-events-none.absolute.inset-0 in RadioItem",
+          "property": "border-left-color",
+          "duration": 150,
+          "state": "running"
+        },
+        {
+          "node": "span.pointer-events-none.absolute.inset-0 in RadioItem",
+          "property": "border-right-color",
+          "duration": 150,
+          "state": "running"
+        },
+        {
+          "node": "span.pointer-events-none.absolute.inset-0 in RadioItem",
+          "property": "border-top-color",
+          "duration": 150,
+          "state": "running"
+        }
+      ],
+      "runs": [
+        {
+          "node": "span.pointer-events-none.absolute.inset-0 in RadioItem",
+          "property": "border-bottom-color",
+          "at": 224
+        },
+        {
+          "node": "span.pointer-events-none.absolute.inset-0 in RadioItem",
+          "property": "border-left-color",
+          "at": 224
+        },
+        {
+          "node": "span.pointer-events-none.absolute.inset-0 in RadioItem",
+          "property": "border-right-color",
+          "at": 224
+        },
+        {
+          "node": "span.pointer-events-none.absolute.inset-0 in RadioItem",
+          "property": "border-top-color",
+          "at": 224
+        },
+        {
+          "node": "span.pointer-events-none.absolute.inset-0 in RadioItem",
+          "property": "border-bottom-color",
+          "at": 224
+        },
+        {
+          "node": "span.pointer-events-none.absolute.inset-0 in RadioItem",
+          "property": "border-left-color",
+          "at": 224
+        },
+        {
+          "node": "span.pointer-events-none.absolute.inset-0 in RadioItem",
+          "property": "border-right-color",
+          "at": 224
+        },
+        {
+          "node": "span.pointer-events-none.absolute.inset-0 in RadioItem",
+          "property": "border-top-color",
+          "at": 224
+        }
+      ],
+      "spinners": []
+    },
+    {
+      "label": "progress ready",
+      "tokens": [
+        ".15s",
+        ".15s"
+      ],
+      "present": {
+        "Switch thumb": 0,
+        "Checkbox box": 0,
+        "Radio dot": 0,
+        "Progress fill": 2,
+        "ColorField input": 0,
+        "Tab": 0,
+        "Button": 4,
+        "Spinner svg": 0
+      },
+      "computed": [
+        {
+          "target": "Progress fill",
+          "duration": "0.15s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Progress fill",
+          "duration": "0.15s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Button",
+          "duration": "0.15s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Button",
+          "duration": "0.15s",
+          "delay": "0s",
+          "animation": "none"
+        }
+      ],
+      "moving": [
+        {
+          "node": "div[data-name=Progress] in Progress",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "div.h-full.bg-primary.transition-[width] in Progress",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "button[data-name=Button] in Button",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "button[data-name=Button] in Button",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "div[data-name=Progress] in Progress",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "div.h-full.bg-primary.transition-[width] in Progress",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "button[data-name=Button] in Button",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "button[data-name=Button] in Button",
+          "duration": "0.15s",
+          "delay": "0s"
+        }
+      ],
+      "transitions": [],
+      "runs": [
+        {
+          "node": "button[data-name=Button] in Button",
+          "property": "opacity",
+          "at": 27
+        },
+        {
+          "node": "button[data-name=Button] in Button",
+          "property": "opacity",
+          "at": 27
+        }
+      ],
+      "spinners": []
+    },
+    {
+      "label": "progress changed",
+      "tokens": [
+        ".15s",
+        ".15s"
+      ],
+      "present": {
+        "Switch thumb": 0,
+        "Checkbox box": 0,
+        "Radio dot": 0,
+        "Progress fill": 2,
+        "ColorField input": 0,
+        "Tab": 0,
+        "Button": 4,
+        "Spinner svg": 0
+      },
+      "computed": [
+        {
+          "target": "Progress fill",
+          "duration": "0.15s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Progress fill",
+          "duration": "0.15s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Button",
+          "duration": "0.15s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Button",
+          "duration": "0.15s",
+          "delay": "0s",
+          "animation": "none"
+        }
+      ],
+      "moving": [
+        {
+          "node": "div[data-name=Progress] in Progress",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "div.h-full.bg-primary.transition-[width] in Progress",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "button[data-name=Button] in Button",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "button[data-name=Button] in Button",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "div[data-name=Progress] in Progress",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "div.h-full.bg-primary.transition-[width] in Progress",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "button[data-name=Button] in Button",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "button[data-name=Button] in Button",
+          "duration": "0.15s",
+          "delay": "0s"
+        }
+      ],
+      "transitions": [
+        {
+          "node": "div.h-full.bg-primary.transition-[width] in Progress",
+          "property": "width",
+          "duration": 150,
+          "state": "running"
+        },
+        {
+          "node": "button[data-name=Button] in Button",
+          "property": "box-shadow",
+          "duration": 150,
+          "state": "running"
+        },
+        {
+          "node": "button[data-name=Button] in Button",
+          "property": "outline-color",
+          "duration": 150,
+          "state": "running"
+        },
+        {
+          "node": "button[data-name=Button] in Button",
+          "property": "outline-offset",
+          "duration": 150,
+          "state": "running"
+        }
+      ],
+      "runs": [
+        {
+          "node": "button[data-name=Button] in Button",
+          "property": "opacity",
+          "at": 27
+        },
+        {
+          "node": "button[data-name=Button] in Button",
+          "property": "opacity",
+          "at": 27
+        },
+        {
+          "node": "button[data-name=Button] in Button",
+          "property": "box-shadow",
+          "at": 241
+        },
+        {
+          "node": "button[data-name=Button] in Button",
+          "property": "outline-color",
+          "at": 241
+        },
+        {
+          "node": "button[data-name=Button] in Button",
+          "property": "outline-offset",
+          "at": 241
+        },
+        {
+          "node": "div.h-full.bg-primary.transition-[width] in Progress",
+          "property": "width",
+          "at": 241
+        }
+      ],
+      "spinners": []
+    },
+    {
+      "label": "color field ready",
+      "tokens": [
+        ".15s",
+        ".15s"
+      ],
+      "present": {
+        "Switch thumb": 0,
+        "Checkbox box": 0,
+        "Radio dot": 0,
+        "Progress fill": 0,
+        "ColorField input": 2,
+        "Tab": 0,
+        "Button": 0,
+        "Spinner svg": 0
+      },
+      "computed": [
+        {
+          "target": "ColorField input",
+          "duration": "0.15s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "ColorField input",
+          "duration": "0.15s",
+          "delay": "0s",
+          "animation": "none"
+        }
+      ],
+      "moving": [
+        {
+          "node": "label[data-name=Label] in Label",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "div[data-name=ColorField] in ColorField",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "span[data-name=ColorSwatch] in ColorSwatch",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "input.flex.h-9.w-full in ColorField",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "label[data-name=Label] in Label",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "div[data-name=ColorField] in ColorField",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "span[data-name=ColorSwatch] in ColorSwatch",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "input.flex.h-9.w-full in ColorField",
+          "duration": "0.15s",
+          "delay": "0s"
+        }
+      ],
+      "transitions": [],
+      "runs": [
+        {
+          "node": "input.flex.h-9.w-full in ColorField",
+          "property": "background-color",
+          "at": 25
+        }
+      ],
+      "spinners": []
+    },
+    {
+      "label": "color field changed",
+      "tokens": [
+        ".15s",
+        ".15s"
+      ],
+      "present": {
+        "Switch thumb": 0,
+        "Checkbox box": 0,
+        "Radio dot": 0,
+        "Progress fill": 0,
+        "ColorField input": 2,
+        "Tab": 0,
+        "Button": 0,
+        "Spinner svg": 0
+      },
+      "computed": [
+        {
+          "target": "ColorField input",
+          "duration": "0.15s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "ColorField input",
+          "duration": "0.15s",
+          "delay": "0s",
+          "animation": "none"
+        }
+      ],
+      "moving": [
+        {
+          "node": "label[data-name=Label] in Label",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "div[data-name=ColorField] in ColorField",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "span[data-name=ColorSwatch] in ColorSwatch",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "input.flex.h-9.w-full in ColorField",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "label[data-name=Label] in Label",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "div[data-name=ColorField] in ColorField",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "span[data-name=ColorSwatch] in ColorSwatch",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "input.flex.h-9.w-full in ColorField",
+          "duration": "0.15s",
+          "delay": "0s"
+        }
+      ],
+      "transitions": [],
+      "runs": [
+        {
+          "node": "input.flex.h-9.w-full in ColorField",
+          "property": "background-color",
+          "at": 25
+        },
+        {
+          "node": "input.flex.h-9.w-full in ColorField",
+          "property": "outline-color",
+          "at": 220
+        },
+        {
+          "node": "span[data-name=ColorSwatch] in ColorSwatch",
+          "property": "background-color",
+          "at": 241
+        }
+      ],
+      "spinners": []
+    },
+    {
+      "label": "loading ready",
+      "tokens": [
+        ".15s",
+        ".15s"
+      ],
+      "present": {
+        "Switch thumb": 0,
+        "Checkbox box": 0,
+        "Radio dot": 0,
+        "Progress fill": 0,
+        "ColorField input": 0,
+        "Tab": 0,
+        "Button": 2,
+        "Spinner svg": 2
+      },
+      "computed": [
+        {
+          "target": "Button",
+          "duration": "0.15s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Button",
+          "duration": "0.15s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Spinner svg",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "rui-spin"
+        },
+        {
+          "target": "Spinner svg",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "rui-spin"
+        }
+      ],
+      "moving": [
+        {
+          "node": "span[data-name=Spinner] in Spinner",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "button[data-name=Button] in Button",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "span[data-name=Spinner] in Spinner",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "button[data-name=Button] in Button",
+          "duration": "0.15s",
+          "delay": "0s"
+        }
+      ],
+      "transitions": [],
+      "runs": [
+        {
+          "node": "button[data-name=Button] in Button",
+          "property": "opacity",
+          "at": 26
+        }
+      ],
+      "spinners": [
+        {
+          "name": "rui-spin",
+          "running": 1
+        }
+      ]
+    },
+    {
+      "label": "loading changed",
+      "tokens": [
+        ".15s",
+        ".15s"
+      ],
+      "present": {
+        "Switch thumb": 0,
+        "Checkbox box": 0,
+        "Radio dot": 0,
+        "Progress fill": 0,
+        "ColorField input": 0,
+        "Tab": 0,
+        "Button": 2,
+        "Spinner svg": 0
+      },
+      "computed": [
+        {
+          "target": "Button",
+          "duration": "0.15s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Button",
+          "duration": "0.15s",
+          "delay": "0s",
+          "animation": "none"
+        }
+      ],
+      "moving": [
+        {
+          "node": "button[data-name=Button] in Button",
+          "duration": "0.15s",
+          "delay": "0s"
+        },
+        {
+          "node": "button[data-name=Button] in Button",
+          "duration": "0.15s",
+          "delay": "0s"
+        }
+      ],
+      "transitions": [
+        {
+          "node": "button[data-name=Button] in Button",
+          "property": "background-color",
+          "duration": 150,
+          "state": "running"
+        }
+      ],
+      "runs": [
+        {
+          "node": "button[data-name=Button] in Button",
+          "property": "opacity",
+          "at": 26
+        },
+        {
+          "node": "button[data-name=Button] in Button",
+          "property": "background-color",
+          "at": 291
+        }
+      ],
+      "spinners": []
+    }
+  ]
+}

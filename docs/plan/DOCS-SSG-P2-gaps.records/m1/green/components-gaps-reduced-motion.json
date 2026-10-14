@@ -1,0 +1,1310 @@
+{
+  "url": "http://127.0.0.1:4196/rustify-ui/proxy/",
+  "samples": [
+    {
+      "label": "loading",
+      "tokens": [
+        "0s",
+        "0s",
+        "0s",
+        "0s",
+        "0s"
+      ],
+      "present": {
+        "Switch thumb": 2,
+        "Checkbox box": 2,
+        "Radio dot": 6,
+        "Progress fill": 2,
+        "ColorField input": 2,
+        "Tab": 6,
+        "Button": 28,
+        "Spinner svg": 2
+      },
+      "computed": [
+        {
+          "target": "Switch thumb",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Switch thumb",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Checkbox box",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Checkbox box",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Radio dot",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Radio dot",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Progress fill",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Progress fill",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "ColorField input",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "ColorField input",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Tab",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Tab",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Button",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Button",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Button",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Button",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Button",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Spinner svg",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Spinner svg",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        }
+      ],
+      "moving": [],
+      "transitions": [],
+      "runs": [],
+      "spinners": [
+        {
+          "name": "none",
+          "running": 0
+        }
+      ]
+    },
+    {
+      "label": "ready",
+      "tokens": [
+        "0s",
+        "0s",
+        "0s",
+        "0s",
+        "0s"
+      ],
+      "present": {
+        "Switch thumb": 2,
+        "Checkbox box": 2,
+        "Radio dot": 6,
+        "Progress fill": 2,
+        "ColorField input": 2,
+        "Tab": 6,
+        "Button": 28,
+        "Spinner svg": 2
+      },
+      "computed": [
+        {
+          "target": "Switch thumb",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Switch thumb",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Checkbox box",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Checkbox box",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Radio dot",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Radio dot",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Progress fill",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Progress fill",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "ColorField input",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "ColorField input",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Tab",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Tab",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Button",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Button",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Button",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Button",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Button",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Spinner svg",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Spinner svg",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        }
+      ],
+      "moving": [],
+      "transitions": [],
+      "runs": [],
+      "spinners": [
+        {
+          "name": "none",
+          "running": 0
+        }
+      ]
+    },
+    {
+      "label": "hover button",
+      "tokens": [
+        "0s",
+        "0s",
+        "0s",
+        "0s",
+        "0s"
+      ],
+      "present": {
+        "Switch thumb": 2,
+        "Checkbox box": 2,
+        "Radio dot": 6,
+        "Progress fill": 2,
+        "ColorField input": 2,
+        "Tab": 6,
+        "Button": 28,
+        "Spinner svg": 2
+      },
+      "computed": [
+        {
+          "target": "Switch thumb",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Switch thumb",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Checkbox box",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Checkbox box",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Radio dot",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Radio dot",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Progress fill",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Progress fill",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "ColorField input",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "ColorField input",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Tab",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Tab",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Button",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Button",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Button",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Button",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Button",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Spinner svg",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Spinner svg",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        }
+      ],
+      "moving": [],
+      "transitions": [],
+      "runs": [],
+      "spinners": [
+        {
+          "name": "none",
+          "running": 0
+        }
+      ]
+    },
+    {
+      "label": "select tab",
+      "tokens": [
+        "0s",
+        "0s",
+        "0s",
+        "0s",
+        "0s"
+      ],
+      "present": {
+        "Switch thumb": 2,
+        "Checkbox box": 2,
+        "Radio dot": 6,
+        "Progress fill": 2,
+        "ColorField input": 2,
+        "Tab": 6,
+        "Button": 28,
+        "Spinner svg": 2
+      },
+      "computed": [
+        {
+          "target": "Switch thumb",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Switch thumb",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Checkbox box",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Checkbox box",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Radio dot",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Radio dot",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Progress fill",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Progress fill",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "ColorField input",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "ColorField input",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Tab",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Tab",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Button",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Button",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Button",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Button",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Button",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Spinner svg",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Spinner svg",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        }
+      ],
+      "moving": [],
+      "transitions": [],
+      "runs": [],
+      "spinners": [
+        {
+          "name": "none",
+          "running": 0
+        }
+      ]
+    },
+    {
+      "label": "toggle switch",
+      "tokens": [
+        "0s",
+        "0s",
+        "0s",
+        "0s",
+        "0s"
+      ],
+      "present": {
+        "Switch thumb": 2,
+        "Checkbox box": 2,
+        "Radio dot": 6,
+        "Progress fill": 2,
+        "ColorField input": 2,
+        "Tab": 6,
+        "Button": 28,
+        "Spinner svg": 2
+      },
+      "computed": [
+        {
+          "target": "Switch thumb",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Switch thumb",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Checkbox box",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Checkbox box",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Radio dot",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Radio dot",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Progress fill",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Progress fill",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "ColorField input",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "ColorField input",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Tab",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Tab",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Button",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Button",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Button",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Button",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Button",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Spinner svg",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Spinner svg",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        }
+      ],
+      "moving": [],
+      "transitions": [],
+      "runs": [],
+      "spinners": [
+        {
+          "name": "none",
+          "running": 0
+        }
+      ]
+    },
+    {
+      "label": "check checkbox",
+      "tokens": [
+        "0s",
+        "0s",
+        "0s",
+        "0s",
+        "0s"
+      ],
+      "present": {
+        "Switch thumb": 2,
+        "Checkbox box": 2,
+        "Radio dot": 6,
+        "Progress fill": 2,
+        "ColorField input": 2,
+        "Tab": 6,
+        "Button": 28,
+        "Spinner svg": 2
+      },
+      "computed": [
+        {
+          "target": "Switch thumb",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Switch thumb",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Checkbox box",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Checkbox box",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Radio dot",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Radio dot",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Progress fill",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Progress fill",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "ColorField input",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "ColorField input",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Tab",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Tab",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Button",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Button",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Button",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Button",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Button",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Spinner svg",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Spinner svg",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        }
+      ],
+      "moving": [],
+      "transitions": [],
+      "runs": [],
+      "spinners": [
+        {
+          "name": "none",
+          "running": 0
+        }
+      ]
+    },
+    {
+      "label": "choose radio",
+      "tokens": [
+        "0s",
+        "0s",
+        "0s",
+        "0s",
+        "0s"
+      ],
+      "present": {
+        "Switch thumb": 2,
+        "Checkbox box": 2,
+        "Radio dot": 6,
+        "Progress fill": 2,
+        "ColorField input": 2,
+        "Tab": 6,
+        "Button": 28,
+        "Spinner svg": 2
+      },
+      "computed": [
+        {
+          "target": "Switch thumb",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Switch thumb",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Checkbox box",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Checkbox box",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Radio dot",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Radio dot",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Progress fill",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Progress fill",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "ColorField input",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "ColorField input",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Tab",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Tab",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Button",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Button",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Button",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Button",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Button",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Spinner svg",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Spinner svg",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        }
+      ],
+      "moving": [],
+      "transitions": [],
+      "runs": [],
+      "spinners": [
+        {
+          "name": "none",
+          "running": 0
+        }
+      ]
+    },
+    {
+      "label": "advance progress",
+      "tokens": [
+        "0s",
+        "0s",
+        "0s",
+        "0s",
+        "0s"
+      ],
+      "present": {
+        "Switch thumb": 2,
+        "Checkbox box": 2,
+        "Radio dot": 6,
+        "Progress fill": 2,
+        "ColorField input": 2,
+        "Tab": 6,
+        "Button": 28,
+        "Spinner svg": 2
+      },
+      "computed": [
+        {
+          "target": "Switch thumb",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Switch thumb",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Checkbox box",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Checkbox box",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Radio dot",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Radio dot",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Progress fill",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Progress fill",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "ColorField input",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "ColorField input",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Tab",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Tab",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Button",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Button",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Button",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Button",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Button",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Spinner svg",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Spinner svg",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        }
+      ],
+      "moving": [],
+      "transitions": [],
+      "runs": [],
+      "spinners": [
+        {
+          "name": "none",
+          "running": 0
+        }
+      ]
+    },
+    {
+      "label": "edit colour",
+      "tokens": [
+        "0s",
+        "0s",
+        "0s",
+        "0s",
+        "0s"
+      ],
+      "present": {
+        "Switch thumb": 2,
+        "Checkbox box": 2,
+        "Radio dot": 6,
+        "Progress fill": 2,
+        "ColorField input": 2,
+        "Tab": 6,
+        "Button": 28,
+        "Spinner svg": 2
+      },
+      "computed": [
+        {
+          "target": "Switch thumb",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Switch thumb",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Checkbox box",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Checkbox box",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Radio dot",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Radio dot",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Progress fill",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Progress fill",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "ColorField input",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "ColorField input",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Tab",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Tab",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Button",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Button",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Button",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Button",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Button",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Spinner svg",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Spinner svg",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        }
+      ],
+      "moving": [],
+      "transitions": [],
+      "runs": [],
+      "spinners": [
+        {
+          "name": "none",
+          "running": 0
+        }
+      ]
+    }
+  ]
+}

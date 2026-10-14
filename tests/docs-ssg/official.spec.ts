@@ -1,6 +1,8 @@
 import { expect, Locator, Page, test as playwright } from "@playwright/test";
 import { readFileSync } from "node:fs";
 import path from "node:path";
+import { attachMotion, expectNormal, expectStill, installMotionProbe, MotionSample, motionTargets, sampleMotion, seconds } from "./motion";
+import { atRest, attachScans, buildId, scan, Scan, serious } from "./a11y";
 
 // The official source, without a copied list of categories or pages. These
 // assertions use the same files that root/subpath/meta builds must consume.
@@ -282,7 +284,8 @@ for (const layout of [{ name: "375px", width: 375, scaleText: false }, { name: "
     const entry = categories.find(entry => entry.name === "data table")!;
     for (const route of ["./", guides[0].route, entry.route]) {
         await open(page, route);
-        if (layout.scaleText) await page.evaluate(async () => { document.documentElement.style.fontSize = "200%"; await Promise.all(document.getAnimations().filter(animation => animation instanceof CSSTransition).map(animation => animation.finished)); });
+        // Under reduce, scaling the text starts no transition to wait out.
+        if (layout.scaleText) expect(await page.evaluate(() => { document.documentElement.style.fontSize = "200%"; return document.getAnimations().filter(animation => animation instanceof CSSTransition).map(animation => (animation as CSSTransition).transitionProperty); })).toEqual([]);
         if (route === entry.route) {
             await attached(page, entry.demo); const source = await sourceText(page, entry); await source.getByRole("tab", { name: "Full file", exact: true }).click();
             const pre = source.locator('.rd-code:not([hidden]) .rd-code-pre'); await pre.focus(); await expect(pre).toBeFocused();
@@ -318,3 +321,64 @@ test("one bounded official home, category and guide capture batch records deskto
     }
     await healthy(page, audit);
 });
+
+// The categories whose demos hold the controls the reduced-motion contract names.
+const motionCategories = ["button", "tabs", "switch", "checkbox", "radio", "progress", "color field", "loading"];
+
+test("gaps reduced motion: under reduce the default theme's controls attach and change with no transition and a still spinner", async ({ page, audit }) => {
+    await installMotionProbe(page); await page.emulateMedia({ reducedMotion: "reduce" });
+    const samples: MotionSample[] = [];
+    for (const name of motionCategories) {
+        const entry = categories.find(entry => entry.name === name)!; await open(page, entry.route); const field = await attached(page, entry.demo);
+        samples.push(await sampleMotion(page, `${name} ready`));
+        if (name === "button") { await field.locator('[data-name="Button"]').first().hover(); samples.push(await sampleMotion(page, "button hover")); }
+        await exercise(page, field, name); samples.push(await sampleMotion(page, `${name} changed`));
+    }
+    await attachMotion(page, test.info(), "gaps-reduced-motion.json", samples);
+    for (const target of Object.keys(motionTargets)) expect(samples.some(sample => sample.present[target] > 0), target).toBe(true);
+    for (const sample of samples) expectStill(sample);
+    await healthy(page, audit);
+});
+
+test("gaps reduced motion: without a preference the default theme keeps 150ms transitions and a turning spinner", async ({ page, audit }) => {
+    await installMotionProbe(page); await page.emulateMedia({ reducedMotion: "no-preference" });
+    const samples: MotionSample[] = [];
+    for (const name of ["switch", "loading"]) {
+        const entry = categories.find(entry => entry.name === name)!; await open(page, entry.route); const field = await attached(page, entry.demo);
+        samples.push(await sampleMotion(page, `${name} ready`));
+        if (name === "switch") { await field.getByRole("switch").press("Space"); samples.push(await sampleMotion(page, "switch toggled")); }
+    }
+    await attachMotion(page, test.info(), "gaps-normal-motion.json", samples);
+    for (const sample of samples) expectNormal(sample);
+    expect(samples[0].tokens.length).toBeGreaterThan(0); expect(samples[0].tokens.map(seconds).every(value => value === 0.15)).toBe(true);
+    expect(samples[1].transitions.filter(entry => entry.node.startsWith("span.") && entry.node.endsWith("in Switch") && entry.property === "translate").map(entry => entry.duration)).toEqual([150]);
+    expect(samples[2].spinners).toEqual([{ name: "rui-spin", running: 1 }]);
+    await healthy(page, audit);
+});
+
+// Every registered route (home and the 24 categories), the Markdown quick
+// start and a deep missing address, as the projected registry lists them.
+const gapsRoutes = [...declaredPages.map(page => page.route.slice(1)), "quickstart/", "__gaps_missing__/deeper/"];
+
+for (const colorScheme of ["light", "dark"] as const) for (const width of [1280, 375]) {
+    test(`gaps a11y: every official route at rest has no serious or critical axe violation, ${colorScheme} ${width}px`, async ({ page, audit }) => {
+        test.setTimeout(600_000);
+        expect(gapsRoutes).toHaveLength(27);
+        await page.setViewportSize({ width, height: 900 }); await page.emulateMedia({ colorScheme, reducedMotion: "no-preference" });
+        const scans: Scan[] = [];
+        for (const route of gapsRoutes) {
+            const missing = route.startsWith("__gaps_missing__");
+            if (missing) audit.expected404.add(url(route));
+            const response = await page.goto(url(route)); expect(response!.status(), route).toBe(missing ? 404 : 200);
+            const count = await island(page).count();
+            const ready = page.locator('[data-rustify-island][data-rd-island-state="ready"]');
+            if (count) await expect(ready).toHaveCount(count);
+            await atRest(page);
+            if (count) await expect(ready).toHaveCount(count);
+            scans.push(await scan(page, route, count ? "ready" : "static"));
+        }
+        await attachScans(test.info(), `gaps-a11y-official-${colorScheme}-${width}.json`, scans, await buildId(page, url("./")));
+        expect(serious(scans)).toEqual([]);
+        await healthy(page, audit);
+    });
+}

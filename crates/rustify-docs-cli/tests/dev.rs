@@ -571,3 +571,52 @@ fn a_symlink_target_outside_the_snapshot_refreshes_and_recovers() {
     assert_eq!(changed.until(|state| state["ok"] == true)["reload"], true);
     assert_eq!(get_text(&page).0, 200);
 }
+
+#[test]
+fn embedded_refusals_carry_the_check_repairs_and_locations_and_clear_after_repair() {
+    let files = support::embedded::files();
+    let temp = Temp::new("dev-embedded");
+    for (path, text) in &files[..2] {
+        temp.write(&format!("site/{path}"), text);
+    }
+    let dev = Dev::start(&temp.path("site"), &[], &[]).unwrap();
+    let (_, html) = get_text(&dev.url);
+    let mut home = dev.events("/", good_of(&html));
+    let hello = home.next();
+    for (path, text) in &files[2..] {
+        temp.write(&format!("site/{path}"), text);
+    }
+    let expected = support::embedded::expected();
+    let failed = home.until(|state| {
+        state["ok"] == false
+            && support::embedded::reported(&state["diagnostics"]).len() == expected.len()
+    });
+    assert_eq!(
+        support::embedded::reported(&failed["diagnostics"]),
+        expected
+    );
+    assert_eq!(failed["reload"], false);
+    assert_eq!(failed["good"], hello["good"]);
+    // The last good page is still the one served, and the terminal prints
+    // each repair under its location as `check` does.
+    let (status, served) = get_text(&dev.url);
+    assert_eq!(status, 200);
+    assert_eq!(good_of(&served), hello["good"].as_u64().unwrap());
+    wait_for_log(&dev, "still serving revision");
+    for refusal in &expected {
+        wait_for_log(
+            &dev,
+            &format!(
+                "  --> {}:{}:{}\n  = help: {}\n",
+                refusal.file, refusal.line, refusal.column, refusal.suggestion
+            ),
+        );
+    }
+
+    for (path, _) in &files[2..] {
+        std::fs::remove_file(temp.path(&format!("site/{path}"))).unwrap();
+    }
+    let fixed = home.until(|state| state["ok"] == true);
+    assert_eq!(fixed["errors"], 0);
+    assert!(support::embedded::reported(&fixed["diagnostics"]).is_empty());
+}

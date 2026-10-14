@@ -1,0 +1,641 @@
+{
+  "url": "http://127.0.0.1:4199/rustify-ui/components/loading/",
+  "samples": [
+    {
+      "label": "button ready",
+      "tokens": [
+        ".15s",
+        ".15s"
+      ],
+      "present": {
+        "Switch thumb": 0,
+        "Checkbox box": 0,
+        "Radio dot": 0,
+        "Progress fill": 0,
+        "ColorField input": 0,
+        "Tab": 0,
+        "Button": 6,
+        "Spinner svg": 0
+      },
+      "computed": [
+        {
+          "target": "Button",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Button",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        }
+      ],
+      "moving": [],
+      "transitions": [],
+      "runs": [],
+      "spinners": []
+    },
+    {
+      "label": "button hover",
+      "tokens": [
+        ".15s",
+        ".15s"
+      ],
+      "present": {
+        "Switch thumb": 0,
+        "Checkbox box": 0,
+        "Radio dot": 0,
+        "Progress fill": 0,
+        "ColorField input": 0,
+        "Tab": 0,
+        "Button": 6,
+        "Spinner svg": 0
+      },
+      "computed": [
+        {
+          "target": "Button",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Button",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        }
+      ],
+      "moving": [],
+      "transitions": [],
+      "runs": [],
+      "spinners": []
+    },
+    {
+      "label": "button changed",
+      "tokens": [
+        ".15s",
+        ".15s"
+      ],
+      "present": {
+        "Switch thumb": 0,
+        "Checkbox box": 0,
+        "Radio dot": 0,
+        "Progress fill": 0,
+        "ColorField input": 0,
+        "Tab": 0,
+        "Button": 6,
+        "Spinner svg": 0
+      },
+      "computed": [
+        {
+          "target": "Button",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Button",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        }
+      ],
+      "moving": [],
+      "transitions": [],
+      "runs": [],
+      "spinners": []
+    },
+    {
+      "label": "tabs ready",
+      "tokens": [
+        ".15s",
+        ".15s"
+      ],
+      "present": {
+        "Switch thumb": 0,
+        "Checkbox box": 0,
+        "Radio dot": 0,
+        "Progress fill": 0,
+        "ColorField input": 0,
+        "Tab": 4,
+        "Button": 0,
+        "Spinner svg": 0
+      },
+      "computed": [
+        {
+          "target": "Tab",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Tab",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        }
+      ],
+      "moving": [],
+      "transitions": [],
+      "runs": [],
+      "spinners": []
+    },
+    {
+      "label": "tabs changed",
+      "tokens": [
+        ".15s",
+        ".15s"
+      ],
+      "present": {
+        "Switch thumb": 0,
+        "Checkbox box": 0,
+        "Radio dot": 0,
+        "Progress fill": 0,
+        "ColorField input": 0,
+        "Tab": 4,
+        "Button": 0,
+        "Spinner svg": 0
+      },
+      "computed": [
+        {
+          "target": "Tab",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Tab",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        }
+      ],
+      "moving": [],
+      "transitions": [],
+      "runs": [],
+      "spinners": []
+    },
+    {
+      "label": "switch ready",
+      "tokens": [
+        ".15s",
+        ".15s"
+      ],
+      "present": {
+        "Switch thumb": 2,
+        "Checkbox box": 0,
+        "Radio dot": 0,
+        "Progress fill": 0,
+        "ColorField input": 0,
+        "Tab": 0,
+        "Button": 0,
+        "Spinner svg": 0
+      },
+      "computed": [
+        {
+          "target": "Switch thumb",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Switch thumb",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        }
+      ],
+      "moving": [],
+      "transitions": [],
+      "runs": [],
+      "spinners": []
+    },
+    {
+      "label": "switch changed",
+      "tokens": [
+        ".15s",
+        ".15s"
+      ],
+      "present": {
+        "Switch thumb": 2,
+        "Checkbox box": 0,
+        "Radio dot": 0,
+        "Progress fill": 0,
+        "ColorField input": 0,
+        "Tab": 0,
+        "Button": 0,
+        "Spinner svg": 0
+      },
+      "computed": [
+        {
+          "target": "Switch thumb",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Switch thumb",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        }
+      ],
+      "moving": [],
+      "transitions": [],
+      "runs": [],
+      "spinners": []
+    },
+    {
+      "label": "checkbox ready",
+      "tokens": [
+        ".15s",
+        ".15s"
+      ],
+      "present": {
+        "Switch thumb": 0,
+        "Checkbox box": 2,
+        "Radio dot": 0,
+        "Progress fill": 0,
+        "ColorField input": 0,
+        "Tab": 0,
+        "Button": 0,
+        "Spinner svg": 0
+      },
+      "computed": [
+        {
+          "target": "Checkbox box",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Checkbox box",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        }
+      ],
+      "moving": [],
+      "transitions": [],
+      "runs": [],
+      "spinners": []
+    },
+    {
+      "label": "checkbox changed",
+      "tokens": [
+        ".15s",
+        ".15s"
+      ],
+      "present": {
+        "Switch thumb": 0,
+        "Checkbox box": 2,
+        "Radio dot": 0,
+        "Progress fill": 0,
+        "ColorField input": 0,
+        "Tab": 0,
+        "Button": 0,
+        "Spinner svg": 0
+      },
+      "computed": [
+        {
+          "target": "Checkbox box",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Checkbox box",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        }
+      ],
+      "moving": [],
+      "transitions": [],
+      "runs": [],
+      "spinners": []
+    },
+    {
+      "label": "radio ready",
+      "tokens": [
+        ".15s",
+        ".15s"
+      ],
+      "present": {
+        "Switch thumb": 0,
+        "Checkbox box": 0,
+        "Radio dot": 6,
+        "Progress fill": 0,
+        "ColorField input": 0,
+        "Tab": 0,
+        "Button": 0,
+        "Spinner svg": 0
+      },
+      "computed": [
+        {
+          "target": "Radio dot",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Radio dot",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        }
+      ],
+      "moving": [],
+      "transitions": [],
+      "runs": [],
+      "spinners": []
+    },
+    {
+      "label": "radio changed",
+      "tokens": [
+        ".15s",
+        ".15s"
+      ],
+      "present": {
+        "Switch thumb": 0,
+        "Checkbox box": 0,
+        "Radio dot": 6,
+        "Progress fill": 0,
+        "ColorField input": 0,
+        "Tab": 0,
+        "Button": 0,
+        "Spinner svg": 0
+      },
+      "computed": [
+        {
+          "target": "Radio dot",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Radio dot",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        }
+      ],
+      "moving": [],
+      "transitions": [],
+      "runs": [],
+      "spinners": []
+    },
+    {
+      "label": "progress ready",
+      "tokens": [
+        ".15s",
+        ".15s"
+      ],
+      "present": {
+        "Switch thumb": 0,
+        "Checkbox box": 0,
+        "Radio dot": 0,
+        "Progress fill": 2,
+        "ColorField input": 0,
+        "Tab": 0,
+        "Button": 4,
+        "Spinner svg": 0
+      },
+      "computed": [
+        {
+          "target": "Progress fill",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Progress fill",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Button",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Button",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        }
+      ],
+      "moving": [],
+      "transitions": [],
+      "runs": [],
+      "spinners": []
+    },
+    {
+      "label": "progress changed",
+      "tokens": [
+        ".15s",
+        ".15s"
+      ],
+      "present": {
+        "Switch thumb": 0,
+        "Checkbox box": 0,
+        "Radio dot": 0,
+        "Progress fill": 2,
+        "ColorField input": 0,
+        "Tab": 0,
+        "Button": 4,
+        "Spinner svg": 0
+      },
+      "computed": [
+        {
+          "target": "Progress fill",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Progress fill",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Button",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Button",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        }
+      ],
+      "moving": [],
+      "transitions": [],
+      "runs": [],
+      "spinners": []
+    },
+    {
+      "label": "color field ready",
+      "tokens": [
+        ".15s",
+        ".15s"
+      ],
+      "present": {
+        "Switch thumb": 0,
+        "Checkbox box": 0,
+        "Radio dot": 0,
+        "Progress fill": 0,
+        "ColorField input": 2,
+        "Tab": 0,
+        "Button": 0,
+        "Spinner svg": 0
+      },
+      "computed": [
+        {
+          "target": "ColorField input",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "ColorField input",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        }
+      ],
+      "moving": [],
+      "transitions": [],
+      "runs": [],
+      "spinners": []
+    },
+    {
+      "label": "color field changed",
+      "tokens": [
+        ".15s",
+        ".15s"
+      ],
+      "present": {
+        "Switch thumb": 0,
+        "Checkbox box": 0,
+        "Radio dot": 0,
+        "Progress fill": 0,
+        "ColorField input": 2,
+        "Tab": 0,
+        "Button": 0,
+        "Spinner svg": 0
+      },
+      "computed": [
+        {
+          "target": "ColorField input",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "ColorField input",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        }
+      ],
+      "moving": [],
+      "transitions": [],
+      "runs": [],
+      "spinners": []
+    },
+    {
+      "label": "loading ready",
+      "tokens": [
+        ".15s",
+        ".15s"
+      ],
+      "present": {
+        "Switch thumb": 0,
+        "Checkbox box": 0,
+        "Radio dot": 0,
+        "Progress fill": 0,
+        "ColorField input": 0,
+        "Tab": 0,
+        "Button": 2,
+        "Spinner svg": 2
+      },
+      "computed": [
+        {
+          "target": "Button",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Button",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Spinner svg",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Spinner svg",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        }
+      ],
+      "moving": [],
+      "transitions": [],
+      "runs": [],
+      "spinners": [
+        {
+          "name": "none",
+          "running": 0
+        }
+      ]
+    },
+    {
+      "label": "loading changed",
+      "tokens": [
+        ".15s",
+        ".15s"
+      ],
+      "present": {
+        "Switch thumb": 0,
+        "Checkbox box": 0,
+        "Radio dot": 0,
+        "Progress fill": 0,
+        "ColorField input": 0,
+        "Tab": 0,
+        "Button": 2,
+        "Spinner svg": 0
+      },
+      "computed": [
+        {
+          "target": "Button",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        },
+        {
+          "target": "Button",
+          "duration": "0s",
+          "delay": "0s",
+          "animation": "none"
+        }
+      ],
+      "moving": [],
+      "transitions": [],
+      "runs": [],
+      "spinners": []
+    }
+  ]
+}

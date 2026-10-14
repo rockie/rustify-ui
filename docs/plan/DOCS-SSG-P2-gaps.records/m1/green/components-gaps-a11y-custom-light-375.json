@@ -1,0 +1,2629 @@
+{
+  "binary": {
+    "path": "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-cli/rustify-docs",
+    "sha256": "c8d10d5b63ab637e5552c9e2515b88409e0b03fc474b0df31611766cdd2df1a2",
+    "buildInfo": "rustify-docs 0.1.15\npanic: unwind\ngrammars: syntect-5.3.0+two-face-0.5.2+bat-0.26.1+fancy\nsource: d2f20b03cf58c1d1ced3785397c501d412cd4167\n"
+  },
+  "buildId": "e19a8c4522e4b8f4",
+  "tags": [
+    "wcag2a",
+    "wcag2aa",
+    "wcag21a",
+    "wcag21aa",
+    "wcag22aa"
+  ],
+  "scans": [
+    {
+      "route": "custom/",
+      "state": "ready",
+      "width": 375,
+      "colorScheme": "light",
+      "motion": "no-preference",
+      "buildId": "e19a8c4522e4b8f4",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "tags": [
+            "cat.color",
+            "wcag2aa",
+            "wcag143",
+            "TTv5",
+            "TT13.c",
+            "EN-301-549",
+            "EN-9.1.4.3",
+            "ACT",
+            "RGAAv4",
+            "RGAA-3.2.1"
+          ],
+          "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=playwright",
+          "nodes": [
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "contrastRatio": 0,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "messageKey": "bgGradient",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<pre class=\"rd-code-pre\" tabindex=\"0\">",
+                      "target": [
+                        "#rd-panel-1 > pre"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element's background color could not be determined due to a background gradient"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<span class=\"hl-comment hl-line hl-documentation hl-rust\"><span class=\"hl-punctuation hl-definition hl-comment hl-rust\">///</span> The function and its containing file are displayed verbatim by the docs.</span>",
+              "target": [
+                "#rd-panel-1 > pre > code > .rd-line:nth-child(1) > .hl-source.hl-rust > .hl-documentation.hl-line.hl-comment"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "contrastRatio": 0,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "messageKey": "bgGradient",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<pre class=\"rd-code-pre\" tabindex=\"0\">",
+                      "target": [
+                        "#rd-panel-1 > pre"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element's background color could not be determined due to a background gradient"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<span class=\"hl-storage hl-modifier hl-rust\">pub</span>",
+              "target": [
+                "#rd-panel-1 > pre > code > .rd-line:nth-child(2) > .hl-source.hl-rust > .hl-function.hl-meta.hl-rust:nth-child(1) > .hl-function.hl-meta.hl-rust > .hl-modifier.hl-storage.hl-rust"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "contrastRatio": 0,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "messageKey": "bgGradient",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<pre class=\"rd-code-pre\" tabindex=\"0\">",
+                      "target": [
+                        "#rd-panel-1 > pre"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element's background color could not be determined due to a background gradient"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<span class=\"hl-storage hl-type hl-function hl-rust\">fn</span>",
+              "target": [
+                "#rd-panel-1 > pre > code > .rd-line:nth-child(2) > .hl-source.hl-rust > .hl-function.hl-meta.hl-rust:nth-child(1) > .hl-function.hl-meta.hl-rust > .hl-type.hl-storage.hl-function"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "contrastRatio": 0,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "messageKey": "bgGradient",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<pre class=\"rd-code-pre\" tabindex=\"0\">",
+                      "target": [
+                        "#rd-panel-1 > pre"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element's background color could not be determined due to a background gradient"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<span class=\"hl-entity hl-name hl-function hl-rust\">counter_demo</span>",
+              "target": [
+                "#rd-panel-1 > pre > code > .rd-line:nth-child(2) > .hl-source.hl-rust > .hl-function.hl-meta.hl-rust:nth-child(1) > .hl-entity.hl-name.hl-function"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "contrastRatio": 0,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "messageKey": "bgGradient",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<pre class=\"rd-code-pre\" tabindex=\"0\">",
+                      "target": [
+                        "#rd-panel-1 > pre"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element's background color could not be determined due to a background gradient"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<span class=\"hl-meta hl-function hl-return-type hl-rust\"><span class=\"hl-punctuation hl-separator hl-rust\">-&gt;</span> impl IntoView</span>",
+              "target": [
+                "#rd-panel-1 > pre > code > .rd-line:nth-child(2) > .hl-source.hl-rust > .hl-function.hl-meta.hl-rust:nth-child(3) > .hl-return-type.hl-function.hl-meta"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "contrastRatio": 0,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "messageKey": "bgGradient",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<pre class=\"rd-code-pre\" tabindex=\"0\">",
+                      "target": [
+                        "#rd-panel-1 > pre"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element's background color could not be determined due to a background gradient"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<span class=\"hl-support hl-function hl-rust\">counter</span>",
+              "target": [
+                "#rd-panel-1 > pre > code > .rd-line:nth-child(3) > .hl-source.hl-rust > .hl-function.hl-meta.hl-rust > .hl-block.hl-meta.hl-rust > .hl-support.hl-function.hl-rust"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "contrastRatio": 0,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "messageKey": "shortTextContent",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<pre class=\"rd-code-pre\" tabindex=\"0\">",
+                      "target": [
+                        "#rd-panel-1 > pre"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element content is too short to determine if it is actual text content"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<span class=\"hl-constant hl-numeric hl-integer hl-decimal hl-rust\">7</span>",
+              "target": [
+                "#rd-panel-1 > pre > code > .rd-line:nth-child(4) > .hl-source.hl-rust > .hl-function.hl-meta.hl-rust > .hl-block.hl-meta.hl-rust > .hl-group.hl-meta.hl-rust > .hl-numeric.hl-integer.hl-decimal"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element content is too short to determine if it is actual text content"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "contrastRatio": 0,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "messageKey": "bgGradient",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<pre class=\"rd-code-pre\" tabindex=\"0\">",
+                      "target": [
+                        "#rd-panel-1 > pre"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element's background color could not be determined due to a background gradient"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<span class=\"hl-string hl-quoted hl-double hl-rust\"><span class=\"hl-punctuation hl-definition hl-string hl-begin hl-rust\">\"</span>Résumé — a real registered counter<span class=\"hl-punctuation hl-definition hl-string hl-end hl-rust\">\"</span></span>",
+              "target": [
+                "#rd-panel-1 > pre > code > .rd-line:nth-child(5) > .hl-source.hl-rust > .hl-function.hl-meta.hl-rust > .hl-block.hl-meta.hl-rust > .hl-group.hl-meta.hl-rust > .hl-quoted.hl-double.hl-string"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "contrastRatio": 0,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "messageKey": "bgGradient",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<pre class=\"rd-code-pre\" tabindex=\"0\">",
+                      "target": [
+                        "#rd-panel-1 > pre"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element's background color could not be determined due to a background gradient"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<span class=\"hl-support hl-macro hl-rust\">view!</span>",
+              "target": [
+                "#rd-panel-1 > pre > code > .rd-line:nth-child(6) > .hl-source.hl-rust > .hl-function.hl-meta.hl-rust > .hl-block.hl-meta.hl-rust > .hl-group.hl-meta.hl-rust > .hl-macro.hl-support.hl-rust"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "contrastRatio": 0,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "messageKey": "bgGradient",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<pre class=\"rd-code-pre\" tabindex=\"0\">",
+                      "target": [
+                        "#rd-panel-1 > pre"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element's background color could not be determined due to a background gradient"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<span class=\"hl-string hl-quoted hl-double hl-rust\"><span class=\"hl-punctuation hl-definition hl-string hl-begin hl-rust\">\"</span>This child is part of the same view on both targets.<span class=\"hl-punctuation hl-definition hl-string hl-end hl-rust\">\"</span></span>",
+              "target": [
+                "#rd-panel-1 > pre > code > .rd-line:nth-child(6) > .hl-source.hl-rust > .hl-function.hl-meta.hl-rust > .hl-block.hl-meta.hl-rust > .hl-group.hl-meta.hl-rust > .hl-block.hl-meta.hl-rust:nth-child(2) > .hl-quoted.hl-double.hl-string"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "contrastRatio": 0,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "messageKey": "bgGradient",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<pre class=\"rd-code-pre\" tabindex=\"0\">",
+                      "target": [
+                        "#rd-panel-3 > pre"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element's background color could not be determined due to a background gradient"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<span class=\"hl-comment hl-line hl-documentation hl-rust\"><span class=\"hl-punctuation hl-definition hl-comment hl-rust\">///</span> The function and its containing file are displayed verbatim by the docs.</span>",
+              "target": [
+                "#rd-panel-3 > pre > code > .rd-line:nth-child(1) > .hl-source.hl-rust > .hl-documentation.hl-line.hl-comment"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "contrastRatio": 0,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "messageKey": "bgGradient",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<pre class=\"rd-code-pre\" tabindex=\"0\">",
+                      "target": [
+                        "#rd-panel-3 > pre"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element's background color could not be determined due to a background gradient"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<span class=\"hl-storage hl-modifier hl-rust\">pub</span>",
+              "target": [
+                "#rd-panel-3 > pre > code > .rd-line:nth-child(2) > .hl-source.hl-rust > .hl-function.hl-meta.hl-rust:nth-child(1) > .hl-function.hl-meta.hl-rust > .hl-modifier.hl-storage.hl-rust"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "contrastRatio": 0,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "messageKey": "bgGradient",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<pre class=\"rd-code-pre\" tabindex=\"0\">",
+                      "target": [
+                        "#rd-panel-3 > pre"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element's background color could not be determined due to a background gradient"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<span class=\"hl-storage hl-type hl-function hl-rust\">fn</span>",
+              "target": [
+                "#rd-panel-3 > pre > code > .rd-line:nth-child(2) > .hl-source.hl-rust > .hl-function.hl-meta.hl-rust:nth-child(1) > .hl-function.hl-meta.hl-rust > .hl-type.hl-storage.hl-function"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "contrastRatio": 0,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "messageKey": "bgGradient",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<pre class=\"rd-code-pre\" tabindex=\"0\">",
+                      "target": [
+                        "#rd-panel-3 > pre"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element's background color could not be determined due to a background gradient"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<span class=\"hl-entity hl-name hl-function hl-rust\">counter_demo</span>",
+              "target": [
+                "#rd-panel-3 > pre > code > .rd-line:nth-child(2) > .hl-source.hl-rust > .hl-function.hl-meta.hl-rust:nth-child(1) > .hl-entity.hl-name.hl-function"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "contrastRatio": 0,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "messageKey": "bgGradient",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<pre class=\"rd-code-pre\" tabindex=\"0\">",
+                      "target": [
+                        "#rd-panel-3 > pre"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element's background color could not be determined due to a background gradient"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<span class=\"hl-meta hl-function hl-return-type hl-rust\"><span class=\"hl-punctuation hl-separator hl-rust\">-&gt;</span> impl IntoView</span>",
+              "target": [
+                "#rd-panel-3 > pre > code > .rd-line:nth-child(2) > .hl-source.hl-rust > .hl-function.hl-meta.hl-rust:nth-child(3) > .hl-return-type.hl-function.hl-meta"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "contrastRatio": 0,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "messageKey": "bgGradient",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<pre class=\"rd-code-pre\" tabindex=\"0\">",
+                      "target": [
+                        "#rd-panel-3 > pre"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element's background color could not be determined due to a background gradient"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<span class=\"hl-support hl-function hl-rust\">counter</span>",
+              "target": [
+                "#rd-panel-3 > pre > code > .rd-line:nth-child(3) > .hl-source.hl-rust > .hl-function.hl-meta.hl-rust > .hl-block.hl-meta.hl-rust > .hl-support.hl-function.hl-rust"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "contrastRatio": 0,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "messageKey": "shortTextContent",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<pre class=\"rd-code-pre\" tabindex=\"0\">",
+                      "target": [
+                        "#rd-panel-3 > pre"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element content is too short to determine if it is actual text content"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<span class=\"hl-constant hl-numeric hl-integer hl-decimal hl-rust\">7</span>",
+              "target": [
+                "#rd-panel-3 > pre > code > .rd-line:nth-child(4) > .hl-source.hl-rust > .hl-function.hl-meta.hl-rust > .hl-block.hl-meta.hl-rust > .hl-group.hl-meta.hl-rust > .hl-numeric.hl-integer.hl-decimal"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element content is too short to determine if it is actual text content"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "contrastRatio": 0,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "messageKey": "bgGradient",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<pre class=\"rd-code-pre\" tabindex=\"0\">",
+                      "target": [
+                        "#rd-panel-3 > pre"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element's background color could not be determined due to a background gradient"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<span class=\"hl-string hl-quoted hl-double hl-rust\"><span class=\"hl-punctuation hl-definition hl-string hl-begin hl-rust\">\"</span>Résumé — a real registered counter<span class=\"hl-punctuation hl-definition hl-string hl-end hl-rust\">\"</span></span>",
+              "target": [
+                "#rd-panel-3 > pre > code > .rd-line:nth-child(5) > .hl-source.hl-rust > .hl-function.hl-meta.hl-rust > .hl-block.hl-meta.hl-rust > .hl-group.hl-meta.hl-rust > .hl-quoted.hl-double.hl-string"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "contrastRatio": 0,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "messageKey": "bgGradient",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<pre class=\"rd-code-pre\" tabindex=\"0\">",
+                      "target": [
+                        "#rd-panel-3 > pre"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element's background color could not be determined due to a background gradient"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<span class=\"hl-support hl-macro hl-rust\">view!</span>",
+              "target": [
+                "#rd-panel-3 > pre > code > .rd-line:nth-child(6) > .hl-source.hl-rust > .hl-function.hl-meta.hl-rust > .hl-block.hl-meta.hl-rust > .hl-group.hl-meta.hl-rust > .hl-macro.hl-support.hl-rust"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "contrastRatio": 0,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "messageKey": "bgGradient",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<pre class=\"rd-code-pre\" tabindex=\"0\">",
+                      "target": [
+                        "#rd-panel-3 > pre"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element's background color could not be determined due to a background gradient"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<span class=\"hl-string hl-quoted hl-double hl-rust\"><span class=\"hl-punctuation hl-definition hl-string hl-begin hl-rust\">\"</span>This child is part of the same view on both targets.<span class=\"hl-punctuation hl-definition hl-string hl-end hl-rust\">\"</span></span>",
+              "target": [
+                "#rd-panel-3 > pre > code > .rd-line:nth-child(6) > .hl-source.hl-rust > .hl-function.hl-meta.hl-rust > .hl-block.hl-meta.hl-rust > .hl-group.hl-meta.hl-rust > .hl-block.hl-meta.hl-rust:nth-child(2) > .hl-quoted.hl-double.hl-string"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "contrastRatio": 0,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "messageKey": "bgGradient",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<pre class=\"rd-code-pre\" tabindex=\"0\">",
+                      "target": [
+                        "#rd-panel-5 > pre"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element's background color could not be determined due to a background gradient"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<span class=\"hl-comment hl-line hl-documentation hl-rust\"><span class=\"hl-punctuation hl-definition hl-comment hl-rust\">///</span> The function and its containing file are displayed verbatim by the docs.</span>",
+              "target": [
+                "#rd-panel-5 > pre > code > .rd-line:nth-child(1) > .hl-source.hl-rust > .hl-documentation.hl-line.hl-comment"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "contrastRatio": 0,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "messageKey": "bgGradient",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<pre class=\"rd-code-pre\" tabindex=\"0\">",
+                      "target": [
+                        "#rd-panel-5 > pre"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element's background color could not be determined due to a background gradient"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<span class=\"hl-storage hl-modifier hl-rust\">pub</span>",
+              "target": [
+                "#rd-panel-5 > pre > code > .rd-line:nth-child(2) > .hl-source.hl-rust > .hl-function.hl-meta.hl-rust:nth-child(1) > .hl-function.hl-meta.hl-rust > .hl-modifier.hl-storage.hl-rust"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "contrastRatio": 0,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "messageKey": "bgGradient",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<pre class=\"rd-code-pre\" tabindex=\"0\">",
+                      "target": [
+                        "#rd-panel-5 > pre"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element's background color could not be determined due to a background gradient"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<span class=\"hl-storage hl-type hl-function hl-rust\">fn</span>",
+              "target": [
+                "#rd-panel-5 > pre > code > .rd-line:nth-child(2) > .hl-source.hl-rust > .hl-function.hl-meta.hl-rust:nth-child(1) > .hl-function.hl-meta.hl-rust > .hl-type.hl-storage.hl-function"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "contrastRatio": 0,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "messageKey": "bgGradient",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<pre class=\"rd-code-pre\" tabindex=\"0\">",
+                      "target": [
+                        "#rd-panel-5 > pre"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element's background color could not be determined due to a background gradient"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<span class=\"hl-entity hl-name hl-function hl-rust\">counter_demo</span>",
+              "target": [
+                "#rd-panel-5 > pre > code > .rd-line:nth-child(2) > .hl-source.hl-rust > .hl-function.hl-meta.hl-rust:nth-child(1) > .hl-entity.hl-name.hl-function"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "contrastRatio": 0,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "messageKey": "bgGradient",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<pre class=\"rd-code-pre\" tabindex=\"0\">",
+                      "target": [
+                        "#rd-panel-5 > pre"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element's background color could not be determined due to a background gradient"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<span class=\"hl-meta hl-function hl-return-type hl-rust\"><span class=\"hl-punctuation hl-separator hl-rust\">-&gt;</span> impl IntoView</span>",
+              "target": [
+                "#rd-panel-5 > pre > code > .rd-line:nth-child(2) > .hl-source.hl-rust > .hl-function.hl-meta.hl-rust:nth-child(3) > .hl-return-type.hl-function.hl-meta"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "contrastRatio": 0,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "messageKey": "bgGradient",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<pre class=\"rd-code-pre\" tabindex=\"0\">",
+                      "target": [
+                        "#rd-panel-5 > pre"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element's background color could not be determined due to a background gradient"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<span class=\"hl-support hl-function hl-rust\">counter</span>",
+              "target": [
+                "#rd-panel-5 > pre > code > .rd-line:nth-child(3) > .hl-source.hl-rust > .hl-function.hl-meta.hl-rust > .hl-block.hl-meta.hl-rust > .hl-support.hl-function.hl-rust"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "contrastRatio": 0,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "messageKey": "shortTextContent",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<pre class=\"rd-code-pre\" tabindex=\"0\">",
+                      "target": [
+                        "#rd-panel-5 > pre"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element content is too short to determine if it is actual text content"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<span class=\"hl-constant hl-numeric hl-integer hl-decimal hl-rust\">7</span>",
+              "target": [
+                "#rd-panel-5 > pre > code > .rd-line:nth-child(4) > .hl-source.hl-rust > .hl-function.hl-meta.hl-rust > .hl-block.hl-meta.hl-rust > .hl-group.hl-meta.hl-rust > .hl-numeric.hl-integer.hl-decimal"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element content is too short to determine if it is actual text content"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "contrastRatio": 0,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "messageKey": "bgGradient",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<pre class=\"rd-code-pre\" tabindex=\"0\">",
+                      "target": [
+                        "#rd-panel-5 > pre"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element's background color could not be determined due to a background gradient"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<span class=\"hl-string hl-quoted hl-double hl-rust\"><span class=\"hl-punctuation hl-definition hl-string hl-begin hl-rust\">\"</span>Résumé — a real registered counter<span class=\"hl-punctuation hl-definition hl-string hl-end hl-rust\">\"</span></span>",
+              "target": [
+                "#rd-panel-5 > pre > code > .rd-line:nth-child(5) > .hl-source.hl-rust > .hl-function.hl-meta.hl-rust > .hl-block.hl-meta.hl-rust > .hl-group.hl-meta.hl-rust > .hl-quoted.hl-double.hl-string"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "contrastRatio": 0,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "messageKey": "bgGradient",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<pre class=\"rd-code-pre\" tabindex=\"0\">",
+                      "target": [
+                        "#rd-panel-5 > pre"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element's background color could not be determined due to a background gradient"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<span class=\"hl-support hl-macro hl-rust\">view!</span>",
+              "target": [
+                "#rd-panel-5 > pre > code > .rd-line:nth-child(6) > .hl-source.hl-rust > .hl-function.hl-meta.hl-rust > .hl-block.hl-meta.hl-rust > .hl-group.hl-meta.hl-rust > .hl-macro.hl-support.hl-rust"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "contrastRatio": 0,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "messageKey": "bgGradient",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<pre class=\"rd-code-pre\" tabindex=\"0\">",
+                      "target": [
+                        "#rd-panel-5 > pre"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element's background color could not be determined due to a background gradient"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<span class=\"hl-string hl-quoted hl-double hl-rust\"><span class=\"hl-punctuation hl-definition hl-string hl-begin hl-rust\">\"</span>This child is part of the same view on both targets.<span class=\"hl-punctuation hl-definition hl-string hl-end hl-rust\">\"</span></span>",
+              "target": [
+                "#rd-panel-5 > pre > code > .rd-line:nth-child(6) > .hl-source.hl-rust > .hl-function.hl-meta.hl-rust > .hl-block.hl-meta.hl-rust > .hl-group.hl-meta.hl-rust > .hl-block.hl-meta.hl-rust:nth-child(2) > .hl-quoted.hl-double.hl-string"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "contrastRatio": 0,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "messageKey": "bgGradient",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<pre class=\"rd-code-pre\" tabindex=\"0\">",
+                      "target": [
+                        "#rd-panel-7 > pre"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element's background color could not be determined due to a background gradient"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<span class=\"hl-storage hl-modifier hl-rust\">pub</span>",
+              "target": [
+                ".rd-line:nth-child(1) > .hl-source.hl-rust > .hl-function.hl-meta.hl-rust:nth-child(1) > .hl-function.hl-meta.hl-rust > .hl-modifier.hl-storage.hl-rust"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "contrastRatio": 0,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "messageKey": "bgGradient",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<pre class=\"rd-code-pre\" tabindex=\"0\">",
+                      "target": [
+                        "#rd-panel-7 > pre"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element's background color could not be determined due to a background gradient"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<span class=\"hl-storage hl-type hl-function hl-rust\">fn</span>",
+              "target": [
+                ".rd-line:nth-child(1) > .hl-source.hl-rust > .hl-function.hl-meta.hl-rust:nth-child(1) > .hl-function.hl-meta.hl-rust > .hl-type.hl-storage.hl-function"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "contrastRatio": 0,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "messageKey": "bgGradient",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<pre class=\"rd-code-pre\" tabindex=\"0\">",
+                      "target": [
+                        "#rd-panel-7 > pre"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element's background color could not be determined due to a background gradient"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<span class=\"hl-entity hl-name hl-function hl-rust\">theme_probe_demo</span>",
+              "target": [
+                ".rd-line:nth-child(1) > .hl-source.hl-rust > .hl-function.hl-meta.hl-rust:nth-child(1) > .hl-entity.hl-name.hl-function"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "contrastRatio": 0,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "messageKey": "bgGradient",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<pre class=\"rd-code-pre\" tabindex=\"0\">",
+                      "target": [
+                        "#rd-panel-7 > pre"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element's background color could not be determined due to a background gradient"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<span class=\"hl-meta hl-function hl-return-type hl-rust\"><span class=\"hl-punctuation hl-separator hl-rust\">-&gt;</span> impl IntoView</span>",
+              "target": [
+                ".rd-line:nth-child(1) > .hl-source.hl-rust > .hl-function.hl-meta.hl-rust:nth-child(3) > .hl-return-type.hl-function.hl-meta"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "contrastRatio": 0,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "messageKey": "bgGradient",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<pre class=\"rd-code-pre\" tabindex=\"0\">",
+                      "target": [
+                        "#rd-panel-7 > pre"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element's background color could not be determined due to a background gradient"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<span class=\"hl-meta hl-block hl-rust\">",
+              "target": [
+                "#rd-panel-7 > pre > code > .rd-line:nth-child(2) > .hl-source.hl-rust > .hl-function.hl-meta.hl-rust > .hl-block.hl-meta.hl-rust"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "contrastRatio": 0,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "messageKey": "bgGradient",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<pre class=\"rd-code-pre\" tabindex=\"0\">",
+                      "target": [
+                        "#rd-panel-7 > pre"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element's background color could not be determined due to a background gradient"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<span class=\"hl-storage hl-type hl-rust\">let</span>",
+              "target": [
+                ".rd-line:nth-child(2) > .hl-source.hl-rust > .hl-function.hl-meta.hl-rust > .hl-block.hl-meta.hl-rust > .hl-type.hl-storage.hl-rust"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "contrastRatio": 0,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "messageKey": "bgGradient",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<pre class=\"rd-code-pre\" tabindex=\"0\">",
+                      "target": [
+                        "#rd-panel-7 > pre"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element's background color could not be determined due to a background gradient"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<span class=\"hl-meta hl-path hl-rust\">RwSignal<span class=\"hl-punctuation hl-accessor hl-rust\">::</span></span>",
+              "target": [
+                ".rd-line:nth-child(2) > .hl-source.hl-rust > .hl-function.hl-meta.hl-rust > .hl-block.hl-meta.hl-rust > .hl-path.hl-meta.hl-rust"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "contrastRatio": 0,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "messageKey": "bgGradient",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<pre class=\"rd-code-pre\" tabindex=\"0\">",
+                      "target": [
+                        "#rd-panel-7 > pre"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element's background color could not be determined due to a background gradient"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<span class=\"hl-constant hl-language hl-rust\">false</span>",
+              "target": [
+                ".rd-line:nth-child(2) > .hl-source.hl-rust > .hl-function.hl-meta.hl-rust > .hl-block.hl-meta.hl-rust > .hl-group.hl-meta.hl-rust:nth-child(4) > .hl-language.hl-constant.hl-rust"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "contrastRatio": 0,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "messageKey": "bgGradient",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<pre class=\"rd-code-pre\" tabindex=\"0\">",
+                      "target": [
+                        "#rd-panel-7 > pre"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element's background color could not be determined due to a background gradient"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<span class=\"hl-meta hl-block hl-rust\">",
+              "target": [
+                "#rd-panel-7 > pre > code > .rd-line:nth-child(3) > .hl-source.hl-rust > .hl-function.hl-meta.hl-rust > .hl-block.hl-meta.hl-rust"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "contrastRatio": 0,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "messageKey": "bgGradient",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<pre class=\"rd-code-pre\" tabindex=\"0\">",
+                      "target": [
+                        "#rd-panel-7 > pre"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element's background color could not be determined due to a background gradient"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<span class=\"hl-storage hl-type hl-rust\">let</span>",
+              "target": [
+                ".rd-line:nth-child(3) > .hl-source.hl-rust > .hl-function.hl-meta.hl-rust > .hl-block.hl-meta.hl-rust > .hl-type.hl-storage.hl-rust"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "contrastRatio": 0,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "messageKey": "bgGradient",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<pre class=\"rd-code-pre\" tabindex=\"0\">",
+                      "target": [
+                        "#rd-panel-7 > pre"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element's background color could not be determined due to a background gradient"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<span class=\"hl-meta hl-path hl-rust\">RwSignal<span class=\"hl-punctuation hl-accessor hl-rust\">::</span></span>",
+              "target": [
+                ".rd-line:nth-child(3) > .hl-source.hl-rust > .hl-function.hl-meta.hl-rust > .hl-block.hl-meta.hl-rust > .hl-path.hl-meta.hl-rust"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "contrastRatio": 0,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "messageKey": "bgGradient",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<pre class=\"rd-code-pre\" tabindex=\"0\">",
+                      "target": [
+                        "#rd-panel-7 > pre"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element's background color could not be determined due to a background gradient"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<span class=\"hl-constant hl-language hl-rust\">false</span>",
+              "target": [
+                ".rd-line:nth-child(3) > .hl-source.hl-rust > .hl-function.hl-meta.hl-rust > .hl-block.hl-meta.hl-rust > .hl-group.hl-meta.hl-rust:nth-child(4) > .hl-language.hl-constant.hl-rust"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "contrastRatio": 0,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "messageKey": "bgGradient",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<pre class=\"rd-code-pre\" tabindex=\"0\">",
+                      "target": [
+                        "#rd-panel-7 > pre"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element's background color could not be determined due to a background gradient"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<span class=\"hl-meta hl-block hl-rust\">",
+              "target": [
+                "#rd-panel-7 > pre > code > .rd-line:nth-child(4) > .hl-source.hl-rust > .hl-function.hl-meta.hl-rust > .hl-block.hl-meta.hl-rust"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "contrastRatio": 0,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "messageKey": "bgGradient",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<pre class=\"rd-code-pre\" tabindex=\"0\">",
+                      "target": [
+                        "#rd-panel-7 > pre"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element's background color could not be determined due to a background gradient"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<span class=\"hl-storage hl-type hl-rust\">let</span>",
+              "target": [
+                ".rd-line:nth-child(4) > .hl-source.hl-rust > .hl-function.hl-meta.hl-rust > .hl-block.hl-meta.hl-rust > .hl-type.hl-storage.hl-rust"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "contrastRatio": 0,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "messageKey": "bgGradient",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<pre class=\"rd-code-pre\" tabindex=\"0\">",
+                      "target": [
+                        "#rd-panel-7 > pre"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element's background color could not be determined due to a background gradient"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<span class=\"hl-meta hl-path hl-rust\">RwSignal<span class=\"hl-punctuation hl-accessor hl-rust\">::</span></span>",
+              "target": [
+                ".rd-line:nth-child(4) > .hl-source.hl-rust > .hl-function.hl-meta.hl-rust > .hl-block.hl-meta.hl-rust > .hl-path.hl-meta.hl-rust"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "contrastRatio": 0,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "messageKey": "bgGradient",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<pre class=\"rd-code-pre\" tabindex=\"0\">",
+                      "target": [
+                        "#rd-panel-7 > pre"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element's background color could not be determined due to a background gradient"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<span class=\"hl-constant hl-language hl-rust\">false</span>",
+              "target": [
+                ".rd-line:nth-child(4) > .hl-source.hl-rust > .hl-function.hl-meta.hl-rust > .hl-block.hl-meta.hl-rust > .hl-group.hl-meta.hl-rust:nth-child(4) > .hl-language.hl-constant.hl-rust"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "contrastRatio": 0,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "messageKey": "bgGradient",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<pre class=\"rd-code-pre\" tabindex=\"0\">",
+                      "target": [
+                        "#rd-panel-7 > pre"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element's background color could not be determined due to a background gradient"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<span class=\"hl-meta hl-block hl-rust\">",
+              "target": [
+                "#rd-panel-7 > pre > code > .rd-line:nth-child(5) > .hl-source.hl-rust > .hl-function.hl-meta.hl-rust > .hl-block.hl-meta.hl-rust"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "contrastRatio": 0,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "messageKey": "bgGradient",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<pre class=\"rd-code-pre\" tabindex=\"0\">",
+                      "target": [
+                        "#rd-panel-7 > pre"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element's background color could not be determined due to a background gradient"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<span class=\"hl-storage hl-type hl-rust\">let</span>",
+              "target": [
+                "#rd-panel-7 > pre > code > .rd-line:nth-child(5) > .hl-source.hl-rust > .hl-function.hl-meta.hl-rust > .hl-block.hl-meta.hl-rust > .hl-type.hl-storage.hl-rust"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "contrastRatio": 0,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "messageKey": "bgGradient",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<pre class=\"rd-code-pre\" tabindex=\"0\">",
+                      "target": [
+                        "#rd-panel-7 > pre"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element's background color could not be determined due to a background gradient"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<span class=\"hl-meta hl-path hl-rust\">RwSignal<span class=\"hl-punctuation hl-accessor hl-rust\">::</span></span>",
+              "target": [
+                "#rd-panel-7 > pre > code > .rd-line:nth-child(5) > .hl-source.hl-rust > .hl-function.hl-meta.hl-rust > .hl-block.hl-meta.hl-rust > .hl-path.hl-meta.hl-rust"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "contrastRatio": 0,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "messageKey": "bgGradient",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<pre class=\"rd-code-pre\" tabindex=\"0\">",
+                      "target": [
+                        "#rd-panel-7 > pre"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element's background color could not be determined due to a background gradient"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<span class=\"hl-support hl-type hl-rust\">String</span>",
+              "target": [
+                ".rd-line:nth-child(5) > .hl-source.hl-rust > .hl-function.hl-meta.hl-rust > .hl-block.hl-meta.hl-rust > .hl-group.hl-meta.hl-rust:nth-child(4) > .hl-type.hl-support.hl-rust"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "contrastRatio": 0,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "messageKey": "bgGradient",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<pre class=\"rd-code-pre\" tabindex=\"0\">",
+                      "target": [
+                        "#rd-panel-7 > pre"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element's background color could not be determined due to a background gradient"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<span class=\"hl-storage hl-type hl-rust\">let</span>",
+              "target": [
+                ".rd-line:nth-child(6) > .hl-source.hl-rust > .hl-function.hl-meta.hl-rust > .hl-block.hl-meta.hl-rust > .hl-type.hl-storage.hl-rust"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "contrastRatio": 0,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "messageKey": "bgGradient",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<pre class=\"rd-code-pre\" tabindex=\"0\">",
+                      "target": [
+                        "#rd-panel-7 > pre"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element's background color could not be determined due to a background gradient"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<span class=\"hl-meta hl-path hl-rust\">NodeRef<span class=\"hl-punctuation hl-accessor hl-rust\">::</span></span>",
+              "target": [
+                ".rd-line:nth-child(6) > .hl-source.hl-rust > .hl-function.hl-meta.hl-rust > .hl-block.hl-meta.hl-rust > .hl-path.hl-meta.hl-rust:nth-child(3)"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "contrastRatio": 0,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "messageKey": "bgGradient",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<pre class=\"rd-code-pre\" tabindex=\"0\">",
+                      "target": [
+                        "#rd-panel-7 > pre"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element's background color could not be determined due to a background gradient"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<span class=\"hl-meta hl-path hl-rust\">leptos<span class=\"hl-punctuation hl-accessor hl-rust\">::</span></span>",
+              "target": [
+                ".rd-line:nth-child(6) > .hl-source.hl-rust > .hl-function.hl-meta.hl-rust > .hl-block.hl-meta.hl-rust > .hl-generic.hl-meta.hl-rust > .hl-path.hl-meta.hl-rust:nth-child(2)"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "contrastRatio": 0,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "messageKey": "bgGradient",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<pre class=\"rd-code-pre\" tabindex=\"0\">",
+                      "target": [
+                        "#rd-panel-7 > pre"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element's background color could not be determined due to a background gradient"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<span class=\"hl-variable hl-annotation hl-rust\">cfg</span>",
+              "target": [
+                ".rd-line:nth-child(7) > .hl-source.hl-rust > .hl-function.hl-meta.hl-rust > .hl-block.hl-meta.hl-rust > .hl-annotation.hl-meta.hl-rust > .hl-annotation.hl-variable.hl-rust"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "contrastRatio": 0,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "messageKey": "bgGradient",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<pre class=\"rd-code-pre\" tabindex=\"0\">",
+                      "target": [
+                        "#rd-panel-7 > pre"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element's background color could not be determined due to a background gradient"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<span class=\"hl-meta hl-group hl-rust\">",
+              "target": [
+                ".rd-line:nth-child(7) > .hl-source.hl-rust > .hl-function.hl-meta.hl-rust > .hl-block.hl-meta.hl-rust > .hl-annotation.hl-meta.hl-rust > .hl-annotation.hl-parameters.hl-meta:nth-child(5) > .hl-group.hl-meta.hl-rust"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "contrastRatio": 0,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "messageKey": "bgGradient",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<pre class=\"rd-code-pre\" tabindex=\"0\">",
+                      "target": [
+                        "#rd-panel-7 > pre"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element's background color could not be determined due to a background gradient"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<span class=\"hl-string hl-quoted hl-double hl-rust\"><span class=\"hl-punctuation hl-definition hl-string hl-begin hl-rust\">\"</span>wasm32<span class=\"hl-punctuation hl-definition hl-string hl-end hl-rust\">\"</span></span>",
+              "target": [
+                ".rd-line:nth-child(7) > .hl-source.hl-rust > .hl-function.hl-meta.hl-rust > .hl-block.hl-meta.hl-rust > .hl-annotation.hl-meta.hl-rust > .hl-annotation.hl-parameters.hl-meta:nth-child(5) > .hl-group.hl-meta.hl-rust > .hl-quoted.hl-double.hl-string"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "contrastRatio": 0,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "messageKey": "bgGradient",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<pre class=\"rd-code-pre\" tabindex=\"0\">",
+                      "target": [
+                        "#rd-panel-7 > pre"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element's background color could not be determined due to a background gradient"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<span class=\"hl-meta hl-block hl-rust\">",
+              "target": [
+                "#rd-panel-7 > pre > code > .rd-line:nth-child(8) > .hl-source.hl-rust > .hl-function.hl-meta.hl-rust > .hl-block.hl-meta.hl-rust"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "contrastRatio": 0,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "messageKey": "bgGradient",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<pre class=\"rd-code-pre\" tabindex=\"0\">",
+                      "target": [
+                        "#rd-panel-7 > pre"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element's background color could not be determined due to a background gradient"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<span class=\"hl-storage hl-type hl-rust\">let</span>",
+              "target": [
+                "#rd-panel-7 > pre > code > .rd-line:nth-child(8) > .hl-source.hl-rust > .hl-function.hl-meta.hl-rust > .hl-block.hl-meta.hl-rust > .hl-type.hl-storage.hl-rust"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "contrastRatio": 0,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "messageKey": "bgGradient",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<pre class=\"rd-code-pre\" tabindex=\"0\">",
+                      "target": [
+                        "#rd-panel-7 > pre"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element's background color could not be determined due to a background gradient"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<span class=\"hl-meta hl-path hl-rust\">Signal<span class=\"hl-punctuation hl-accessor hl-rust\">::</span></span>",
+              "target": [
+                ".rd-line:nth-child(8) > .hl-source.hl-rust > .hl-function.hl-meta.hl-rust > .hl-block.hl-meta.hl-rust > .hl-path.hl-meta.hl-rust"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "contrastRatio": 0,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "messageKey": "bgGradient",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<pre class=\"rd-code-pre\" tabindex=\"0\">",
+                      "target": [
+                        "#rd-panel-7 > pre"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element's background color could not be determined due to a background gradient"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<span class=\"hl-storage hl-modifier hl-rust\">move</span>",
+              "target": [
+                ".rd-line:nth-child(8) > .hl-source.hl-rust > .hl-function.hl-meta.hl-rust > .hl-block.hl-meta.hl-rust > .hl-group.hl-meta.hl-rust > .hl-modifier.hl-storage.hl-rust"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "contrastRatio": 0,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "messageKey": "bgGradient",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<pre class=\"rd-code-pre\" tabindex=\"0\">",
+                      "target": [
+                        "#rd-panel-7 > pre"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element's background color could not be determined due to a background gradient"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<span class=\"hl-meta hl-block hl-rust\">        menu_anchor</span>",
+              "target": [
+                ".rd-line:nth-child(9) > .hl-source.hl-rust > .hl-function.hl-meta.hl-rust > .hl-block.hl-meta.hl-rust > .hl-group.hl-meta.hl-rust > .hl-block.hl-meta.hl-rust"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "contrastRatio": 0,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "messageKey": "bgGradient",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<pre class=\"rd-code-pre\" tabindex=\"0\">",
+                      "target": [
+                        "#rd-panel-7 > pre"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element's background color could not be determined due to a background gradient"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<span class=\"hl-support hl-function hl-rust\">get</span>",
+              "target": [
+                ".rd-line:nth-child(10) > .hl-source.hl-rust > .hl-function.hl-meta.hl-rust > .hl-block.hl-meta.hl-rust > .hl-group.hl-meta.hl-rust > .hl-block.hl-meta.hl-rust > .hl-support.hl-function.hl-rust"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "contrastRatio": 0,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "messageKey": "bgGradient",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<pre class=\"rd-code-pre\" tabindex=\"0\">",
+                      "target": [
+                        "#rd-panel-7 > pre"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element's background color could not be determined due to a background gradient"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<span class=\"hl-support hl-function hl-rust\">map</span>",
+              "target": [
+                ".rd-line:nth-child(11) > .hl-source.hl-rust > .hl-function.hl-meta.hl-rust > .hl-block.hl-meta.hl-rust > .hl-group.hl-meta.hl-rust > .hl-block.hl-meta.hl-rust > .hl-support.hl-function.hl-rust"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "contrastRatio": 0,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "messageKey": "bgGradient",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<pre class=\"rd-code-pre\" tabindex=\"0\">",
+                      "target": [
+                        "#rd-panel-7 > pre"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element's background color could not be determined due to a background gradient"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<span class=\"hl-variable hl-parameter hl-rust\">node</span>",
+              "target": [
+                ".rd-line:nth-child(11) > .hl-source.hl-rust > .hl-function.hl-meta.hl-rust > .hl-block.hl-meta.hl-rust > .hl-group.hl-meta.hl-rust > .hl-block.hl-meta.hl-rust > .hl-group.hl-meta.hl-rust:nth-child(3) > .hl-closure.hl-function.hl-meta:nth-child(3) > .hl-parameters.hl-function.hl-meta > .hl-parameter.hl-variable.hl-rust"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "contrastRatio": 0,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "messageKey": "bgGradient",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<pre class=\"rd-code-pre\" tabindex=\"0\">",
+                      "target": [
+                        "#rd-panel-7 > pre"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element's background color could not be determined due to a background gradient"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<span class=\"hl-meta hl-function hl-closure hl-rust\">",
+              "target": [
+                ".rd-line:nth-child(11) > .hl-source.hl-rust > .hl-function.hl-meta.hl-rust > .hl-block.hl-meta.hl-rust > .hl-group.hl-meta.hl-rust > .hl-block.hl-meta.hl-rust > .hl-group.hl-meta.hl-rust:nth-child(3) > .hl-closure.hl-function.hl-meta:nth-child(4)"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "contrastRatio": 0,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "messageKey": "bgGradient",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<pre class=\"rd-code-pre\" tabindex=\"0\">",
+                      "target": [
+                        "#rd-panel-7 > pre"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element's background color could not be determined due to a background gradient"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<span class=\"hl-meta hl-path hl-rust\">Anchor<span class=\"hl-punctuation hl-accessor hl-rust\">::</span></span>",
+              "target": [
+                ".rd-line:nth-child(11) > .hl-source.hl-rust > .hl-function.hl-meta.hl-rust > .hl-block.hl-meta.hl-rust > .hl-group.hl-meta.hl-rust > .hl-block.hl-meta.hl-rust > .hl-group.hl-meta.hl-rust:nth-child(3) > .hl-closure.hl-function.hl-meta:nth-child(4) > .hl-path.hl-meta.hl-rust"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "contrastRatio": 0,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "messageKey": "bgGradient",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<pre class=\"rd-code-pre\" tabindex=\"0\">",
+                      "target": [
+                        "#rd-panel-7 > pre"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element's background color could not be determined due to a background gradient"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<span class=\"hl-support hl-function hl-rust\">unwrap_or</span>",
+              "target": [
+                ".rd-line:nth-child(12) > .hl-source.hl-rust > .hl-function.hl-meta.hl-rust > .hl-block.hl-meta.hl-rust > .hl-group.hl-meta.hl-rust > .hl-block.hl-meta.hl-rust > .hl-support.hl-function.hl-rust"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "contrastRatio": 0,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "messageKey": "bgGradient",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<pre class=\"rd-code-pre\" tabindex=\"0\">",
+                      "target": [
+                        "#rd-panel-7 > pre"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element's background color could not be determined due to a background gradient"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<span class=\"hl-meta hl-group hl-rust\"><span class=\"hl-punctuation hl-section hl-group hl-begin hl-rust\">(</span><span class=\"hl-meta hl-path hl-rust\">Anchor<span class=\"hl-punctuation hl-accessor hl-rust\">::</span></span>Centred</span>",
+              "target": [
+                ".rd-line:nth-child(12) > .hl-source.hl-rust > .hl-function.hl-meta.hl-rust > .hl-block.hl-meta.hl-rust > .hl-group.hl-meta.hl-rust > .hl-block.hl-meta.hl-rust > .hl-group.hl-meta.hl-rust:nth-child(3)"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "contrastRatio": 0,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "messageKey": "bgGradient",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<pre class=\"rd-code-pre\" tabindex=\"0\">",
+                      "target": [
+                        "#rd-panel-7 > pre"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element's background color could not be determined due to a background gradient"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<span class=\"hl-meta hl-path hl-rust\">Anchor<span class=\"hl-punctuation hl-accessor hl-rust\">::</span></span>",
+              "target": [
+                ".rd-line:nth-child(12) > .hl-source.hl-rust > .hl-function.hl-meta.hl-rust > .hl-block.hl-meta.hl-rust > .hl-group.hl-meta.hl-rust > .hl-block.hl-meta.hl-rust > .hl-group.hl-meta.hl-rust:nth-child(3) > .hl-path.hl-meta.hl-rust"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "contrastRatio": 0,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "messageKey": "bgGradient",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<pre class=\"rd-code-pre\" tabindex=\"0\">",
+                      "target": [
+                        "#rd-panel-7 > pre"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element's background color could not be determined due to a background gradient"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<span class=\"hl-variable hl-annotation hl-rust\">cfg</span>",
+              "target": [
+                ".rd-line:nth-child(14) > .hl-source.hl-rust > .hl-function.hl-meta.hl-rust > .hl-block.hl-meta.hl-rust > .hl-annotation.hl-meta.hl-rust > .hl-annotation.hl-variable.hl-rust"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "contrastRatio": 0,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "messageKey": "bgGradient",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<pre class=\"rd-code-pre\" tabindex=\"0\">",
+                      "target": [
+                        "#rd-panel-7 > pre"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element's background color could not be determined due to a background gradient"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<span class=\"hl-variable hl-function hl-rust\">not</span>",
+              "target": [
+                ".rd-line:nth-child(14) > .hl-source.hl-rust > .hl-function.hl-meta.hl-rust > .hl-block.hl-meta.hl-rust > .hl-annotation.hl-meta.hl-rust > .hl-annotation.hl-parameters.hl-meta:nth-child(5) > .hl-group.hl-meta.hl-rust > .hl-function-call.hl-meta.hl-rust:nth-child(1) > .hl-variable.hl-function.hl-rust"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "contrastRatio": 0,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "messageKey": "bgGradient",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<pre class=\"rd-code-pre\" tabindex=\"0\">",
+                      "target": [
+                        "#rd-panel-7 > pre"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element's background color could not be determined due to a background gradient"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<span class=\"hl-meta hl-function-call hl-rust\">",
+              "target": [
+                ".rd-line:nth-child(14) > .hl-source.hl-rust > .hl-function.hl-meta.hl-rust > .hl-block.hl-meta.hl-rust > .hl-annotation.hl-meta.hl-rust > .hl-annotation.hl-parameters.hl-meta:nth-child(5) > .hl-group.hl-meta.hl-rust > .hl-function-call.hl-meta.hl-rust:nth-child(2)"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "contrastRatio": 0,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "messageKey": "bgGradient",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<pre class=\"rd-code-pre\" tabindex=\"0\">",
+                      "target": [
+                        "#rd-panel-7 > pre"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element's background color could not be determined due to a background gradient"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<span class=\"hl-string hl-quoted hl-double hl-rust\"><span class=\"hl-punctuation hl-definition hl-string hl-begin hl-rust\">\"</span>wasm32<span class=\"hl-punctuation hl-definition hl-string hl-end hl-rust\">\"</span></span>",
+              "target": [
+                ".rd-line:nth-child(14) > .hl-source.hl-rust > .hl-function.hl-meta.hl-rust > .hl-block.hl-meta.hl-rust > .hl-annotation.hl-meta.hl-rust > .hl-annotation.hl-parameters.hl-meta:nth-child(5) > .hl-group.hl-meta.hl-rust > .hl-function-call.hl-meta.hl-rust:nth-child(2) > .hl-quoted.hl-double.hl-string"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "contrastRatio": 0,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "messageKey": "bgGradient",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<pre class=\"rd-code-pre\" tabindex=\"0\">",
+                      "target": [
+                        "#rd-panel-7 > pre"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element's background color could not be determined due to a background gradient"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<span class=\"hl-meta hl-block hl-rust\">",
+              "target": [
+                "#rd-panel-7 > pre > code > .rd-line:nth-child(15) > .hl-source.hl-rust > .hl-function.hl-meta.hl-rust > .hl-block.hl-meta.hl-rust"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "contrastRatio": 0,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "messageKey": "bgGradient",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<pre class=\"rd-code-pre\" tabindex=\"0\">",
+                      "target": [
+                        "#rd-panel-7 > pre"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element's background color could not be determined due to a background gradient"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<span class=\"hl-storage hl-type hl-rust\">let</span>",
+              "target": [
+                ".rd-line:nth-child(15) > .hl-source.hl-rust > .hl-function.hl-meta.hl-rust > .hl-block.hl-meta.hl-rust > .hl-type.hl-storage.hl-rust"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "contrastRatio": 0,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "messageKey": "bgGradient",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<pre class=\"rd-code-pre\" tabindex=\"0\">",
+                      "target": [
+                        "#rd-panel-7 > pre"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element's background color could not be determined due to a background gradient"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<span class=\"hl-meta hl-path hl-rust\">Signal<span class=\"hl-punctuation hl-accessor hl-rust\">::</span></span>",
+              "target": [
+                ".rd-line:nth-child(15) > .hl-source.hl-rust > .hl-function.hl-meta.hl-rust > .hl-block.hl-meta.hl-rust > .hl-path.hl-meta.hl-rust"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "contrastRatio": 0,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "messageKey": "bgGradient",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<pre class=\"rd-code-pre\" tabindex=\"0\">",
+                      "target": [
+                        "#rd-panel-7 > pre"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element's background color could not be determined due to a background gradient"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<span class=\"hl-meta hl-path hl-rust\">Anchor<span class=\"hl-punctuation hl-accessor hl-rust\">::</span></span>",
+              "target": [
+                ".rd-line:nth-child(15) > .hl-source.hl-rust > .hl-function.hl-meta.hl-rust > .hl-block.hl-meta.hl-rust > .hl-group.hl-meta.hl-rust:nth-child(4) > .hl-closure.hl-function.hl-meta:nth-child(4) > .hl-path.hl-meta.hl-rust"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "contrastRatio": 0,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "messageKey": "bgGradient",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<pre class=\"rd-code-pre\" tabindex=\"0\">",
+                      "target": [
+                        "#rd-panel-7 > pre"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element's background color could not be determined due to a background gradient"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<span class=\"hl-meta hl-block hl-rust\">",
+              "target": [
+                "#rd-panel-7 > pre > code > .rd-line:nth-child(16) > .hl-source.hl-rust > .hl-function.hl-meta.hl-rust > .hl-block.hl-meta.hl-rust"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "contrastRatio": 0,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "messageKey": "bgGradient",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<pre class=\"rd-code-pre\" tabindex=\"0\">",
+                      "target": [
+                        "#rd-panel-7 > pre"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element's background color could not be determined due to a background gradient"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<span class=\"hl-storage hl-type hl-rust\">let</span>",
+              "target": [
+                ".rd-line:nth-child(16) > .hl-source.hl-rust > .hl-function.hl-meta.hl-rust > .hl-block.hl-meta.hl-rust > .hl-type.hl-storage.hl-rust"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "contrastRatio": 0,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "messageKey": "bgGradient",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<pre class=\"rd-code-pre\" tabindex=\"0\">",
+                      "target": [
+                        "#rd-panel-7 > pre"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element's background color could not be determined due to a background gradient"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<span class=\"hl-support hl-function hl-rust\">use_resolved_theme</span>",
+              "target": [
+                ".rd-line:nth-child(16) > .hl-source.hl-rust > .hl-function.hl-meta.hl-rust > .hl-block.hl-meta.hl-rust > .hl-support.hl-function.hl-rust"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "route": "plain/",
+      "state": "static",
+      "width": 375,
+      "colorScheme": "light",
+      "motion": "no-preference",
+      "buildId": "e19a8c4522e4b8f4",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "route": "missing/a/b/",
+      "state": "static 404",
+      "width": 375,
+      "colorScheme": "light",
+      "motion": "no-preference",
+      "buildId": "e19a8c4522e4b8f4",
+      "violations": [],
+      "incomplete": []
+    }
+  ]
+}

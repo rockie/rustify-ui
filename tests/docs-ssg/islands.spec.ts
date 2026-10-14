@@ -1,5 +1,7 @@
 import { expect, Locator, Page, Route, test as playwright } from "@playwright/test";
 import { readFileSync } from "node:fs";
+import { attachMotion, expectNormal, expectStill, installMotionProbe, motionTargets, sampleMotion } from "./motion";
+import { atRest, attachScans, buildId, scan, Scan, serious } from "./a11y";
 
 type RuntimeStats = { tasks: number; timers: number; observers: number; errors: number; aborted: boolean };
 type Coordinator = { state(): string; failure(): string | null; stats(): RuntimeStats | null };
@@ -766,6 +768,57 @@ test("the release proxy attaches every real category, then opens floating contro
     await healthy(page, audit);
 });
 
+const proxyCategory = (page: Page, name: string) => page.locator(`[data-category="${name}"]`);
+
+// Each step changes one control's state; the sample follows at once.
+const proxySteps: [string, (page: Page) => Promise<void>][] = [
+    ["hover button", page => proxyCategory(page, "button").locator('[data-name="Button"]').first().hover()],
+    ["select tab", page => proxyCategory(page, "tabs").getByRole("tab", { name: "Detail", exact: true }).click()],
+    ["toggle switch", page => proxyCategory(page, "switch").getByRole("switch").click()],
+    ["check checkbox", page => proxyCategory(page, "checkbox").getByRole("checkbox").click()],
+    ["choose radio", page => proxyCategory(page, "radio").getByRole("radio", { name: "South", exact: true }).click()],
+    ["advance progress", page => proxyCategory(page, "progress").getByRole("button", { name: "Advance progress", exact: true }).click()],
+    ["edit colour", async page => {
+        const input = proxyCategory(page, "color field").getByRole("textbox");
+        await input.fill("33669980");
+        await input.press("Enter");
+    }],
+];
+
+test("gaps reduced motion: under reduce the proxy's controls attach and change with no transition and a still spinner", async ({ page, audit }) => {
+    await installMotionProbe(page);
+    await page.emulateMedia({ reducedMotion: "reduce" });
+    const held = await openPaused(page, "proxy/");
+    const samples = [await sampleMotion(page, "loading")];
+    held.release();
+    await ready(page, 4);
+    samples.push(await sampleMotion(page, "ready"));
+    for (const [label, step] of proxySteps) {
+        await step(page);
+        samples.push(await sampleMotion(page, label));
+    }
+    await attachMotion(page, test.info(), "gaps-reduced-motion.json", samples);
+    for (const target of Object.keys(motionTargets)) expect(samples[1].present[target], target).toBeGreaterThan(0);
+    for (const sample of samples) expectStill(sample);
+    await healthy(page, audit);
+});
+
+test("gaps reduced motion: without a preference the proxy keeps the SDK's durations and the spinner's animation", async ({ page, audit }) => {
+    await installMotionProbe(page);
+    await page.emulateMedia({ reducedMotion: "no-preference" });
+    await page.goto(url("proxy/"));
+    await ready(page, 4);
+    const rest = await sampleMotion(page, "ready");
+    await proxyCategory(page, "switch").getByRole("switch").click();
+    const toggled = await sampleMotion(page, "toggle switch");
+    await attachMotion(page, test.info(), "gaps-normal-motion.json", [rest, toggled]);
+    for (const target of Object.keys(motionTargets)) expect(rest.present[target], target).toBeGreaterThan(0);
+    expectNormal(rest);
+    // Tailwind v4 moves the thumb with `translate`, which `transition-transform` covers.
+    expect(toggled.transitions.filter(entry => entry.node.startsWith("span.") && entry.node.endsWith("in Switch") && entry.property === "translate").map(entry => entry.duration)).toEqual([150]);
+    await healthy(page, audit);
+});
+
 for (const colorScheme of ["light", "dark"] as const) {
     for (const layout of [{ name: "375px", width: 375, scaleText: false }, { name: "200% reflow and text scaling", width: 640, scaleText: true }]) {
         test(`${layout.name} keeps loading, ready, failure and bounded source usable in ${colorScheme}`, async ({ page, audit }) => {
@@ -775,16 +828,18 @@ for (const colorScheme of ["light", "dark"] as const) {
             if (layout.scaleText) {
                 // The repository's zoom checks use half the CSS viewport and
                 // twice the root text size, exercising both reflow and text.
+                // Under reduce, scaling the text starts no transition at all;
+                // the check comes before anything could wait one out.
                 const transitions = await page.evaluate(async () => {
                     document.documentElement.style.fontSize = "200%";
-                    const scaling = document.getAnimations().filter((animation): animation is CSSTransition =>
-                        animation instanceof CSSTransition && Number.isFinite(animation.effect?.getTiming().iterations));
-                    const observed = scaling.map(animation => ({ property: animation.transitionProperty, duration: animation.effect?.getTiming().duration }));
-                    await Promise.all(scaling.map(animation => animation.finished));
+                    const observed = document.getAnimations().filter((animation): animation is CSSTransition =>
+                        animation instanceof CSSTransition && Number.isFinite(animation.effect?.getTiming().iterations))
+                        .map(animation => ({ property: animation.transitionProperty, duration: animation.effect?.getTiming().duration }));
                     await new Promise<void>(resolve => requestAnimationFrame(() => requestAnimationFrame(() => resolve())));
                     return observed;
                 });
                 await test.info().attach("font-scaling-transitions.json", { body: JSON.stringify(transitions, null, 2), contentType: "application/json" });
+                expect(transitions).toEqual([]);
                 await captureOriginals(page);
             }
             await page.evaluate(() => window.scrollTo(0, 0));
@@ -828,4 +883,54 @@ for (const colorScheme of ["light", "dark"] as const) {
             expect(await page.evaluate(() => window.__docs_island_csp)).toEqual([]);
         });
     }
+}
+
+for (const colorScheme of ["light", "dark"] as const) for (const width of [1280, 375]) {
+    test(`gaps a11y: loading, ready, client-only and failed islands at rest have no serious or critical axe violation, ${colorScheme} ${width}px`, async ({ page, audit }) => {
+        await page.setViewportSize({ width, height: 900 }); await page.emulateMedia({ colorScheme, reducedMotion: "no-preference" });
+        const scans: Scan[] = [];
+        const loading = page.locator('[data-rustify-island][data-rd-island-state="loading"]');
+        let held = await openPaused(page, "counter/");
+        await atRest(page);
+        await expect(loading).toHaveCount(4);
+        scans.push(await scan(page, "counter/", "loading"));
+        held.release();
+        await ready(page, 4);
+        await atRest(page);
+        await expect(page.locator('[data-rustify-island][data-rd-island-state="ready"]')).toHaveCount(4);
+        scans.push(await scan(page, "counter/", "ready"));
+        await held.remove();
+
+        held = await openPaused(page, "client-only/");
+        await atRest(page);
+        await expect(loading).toHaveCount(1);
+        await expect(page.locator("[data-rustify-client-message]")).toBeVisible();
+        scans.push(await scan(page, "client-only/", "client-only placeholder"));
+        held.release();
+        await ready(page, 1);
+        await atRest(page);
+        await expect(page.locator('[data-rustify-island][data-rd-island-state="ready"]')).toHaveCount(1);
+        scans.push(await scan(page, "client-only/", "ready"));
+        await held.remove();
+
+        // A real callback trap: every island returns to its initial view, failed.
+        held = await openPaused(page, "failure/");
+        held.release();
+        await ready(page, 2);
+        await page.getByTestId("failure-crash").click();
+        await restored(page, 2);
+        await atRest(page);
+        await expect(page.locator('[data-rustify-island][data-rd-island-state="failed"]')).toHaveCount(2);
+        scans.push(await scan(page, "failure/", "failed"));
+        await held.remove();
+
+        await attachScans(test.info(), `gaps-a11y-islands-${colorScheme}-${width}.json`, scans, await buildId(page, url("./")));
+        expect(serious(scans)).toEqual([]);
+        expect(await page.evaluate(() => window.__docs_island_csp)).toEqual([]);
+        expect(audit.failures).toEqual([]);
+        expect(audit.responses).toEqual([]);
+        expect(audit.pageErrors.filter(error => !/^RuntimeError: unreachable$/.test(error))).toEqual([]);
+        expect(audit.console.filter(message => !/^Interactive examples failed/.test(message.text) && !/docs fixture callback failure/.test(message.text))).toEqual([]);
+        expect(audit.requests.filter(request => new URL(request).origin !== new URL(url("./")).origin)).toEqual([]);
+    });
 }

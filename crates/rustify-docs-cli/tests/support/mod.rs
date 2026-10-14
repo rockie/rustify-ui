@@ -4,6 +4,8 @@
 
 #![allow(dead_code)]
 
+pub mod embedded;
+
 use std::collections::BTreeMap;
 use std::path::{Path, PathBuf};
 use std::process::{Child, Command, Output, Stdio};

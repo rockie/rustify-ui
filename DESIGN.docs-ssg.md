@@ -349,7 +349,7 @@ Depth cues come from state, not elevation:
 - On a horizontally scrollable code line, a soft 0.875rem foreground-14% fade marks the side with more to read. It is covered by panel-coloured `local` gradients at the scroll ends.
 - Highlighted lines carry the `line-hl` band across the full scroll width.
 
-**Motion.** Smooth scrolling is the only motion on a built page, and it applies only under `prefers-reduced-motion: no-preference`. Under `dev`, the floating problem panel also enters over 120ms (`ease-out`, opacity 0 and 0.375rem lower to rest), under the same media query. Under `reduce`, SDK component transitions drop to 0ms. Mode changes, panel toggles, tab switches and copy feedback are instant.
+**Motion.** Smooth scrolling is the only motion on a built page, and it applies only under `prefers-reduced-motion: no-preference`. Under `dev`, the floating problem panel also enters over 120ms (`ease-out`, opacity 0 and 0.375rem lower to rest), under the same media query. Under `reduce`, every transition inside an island's SDK scope, author components' elements included, is instant: zero durations and delays marked important, because the docs layer cannot otherwise outrank the utilities or the SDK's unlayered rules; the SDK spinner is still beside its status text. Mode changes, panel toggles, tab switches and copy feedback are instant.
 
 **The Hairline Rule.** Separate with a 1px `secondary` rule or a tonal panel, never with a shadow, a heavy top bar or a thick coloured side stripe.
 

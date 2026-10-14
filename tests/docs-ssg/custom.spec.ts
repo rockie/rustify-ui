@@ -1,6 +1,7 @@
 import { CDPSession, expect, Locator, Page, test as playwright } from "@playwright/test";
 import { createHash } from "node:crypto";
 import { readFileSync, readdirSync, statSync } from "node:fs";
+import { atRest, attachScans, buildId, scan, Scan, serious } from "./a11y";
 
 type ThemeMode = "light" | "dark";
 type FontResponse = { url: string; mime: string; bytes: Buffer; sha256: string };
@@ -457,3 +458,24 @@ test("no script preserves custom views, sources, navigation and theme at 375px a
         }
     }
 });
+
+for (const colorScheme of ["light", "dark"] as const) for (const width of [1280, 375]) {
+    test(`gaps a11y: the custom page, the plain page and a deep 404 at rest have no serious or critical axe violation, ${colorScheme} ${width}px`, async ({ page, audit }) => {
+        await page.setViewportSize({ width, height: 900 }); await page.emulateMedia({ colorScheme, reducedMotion: "no-preference" });
+        const scans: Scan[] = [];
+        for (const [path, count, state] of [["custom/", 4, "ready"], ["plain/", 0, "static"], ["missing/a/b/", 0, "static 404"]] as const) {
+            const missing = path.startsWith("missing/");
+            if (missing) audit.document404.add(route(path));
+            const response = await page.goto(route(path));
+            expect(response!.status()).toBe(missing ? 404 : 200);
+            await expect(islands(page)).toHaveCount(count);
+            if (count) await ready(page, count);
+            await atRest(page);
+            if (count) await ready(page, count);
+            scans.push(await scan(page, path, state));
+        }
+        await attachScans(test.info(), `gaps-a11y-custom-${colorScheme}-${width}.json`, scans, await buildId(page, route("./")));
+        expect(serious(scans)).toEqual([]);
+        await healthy(page, audit);
+    });
+}

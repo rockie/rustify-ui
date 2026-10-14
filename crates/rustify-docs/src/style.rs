@@ -471,6 +471,54 @@ mod tests {
     }
 
     #[test]
+    fn reduced_motion_survives_minifying_as_important_zeroes_for_every_scope_element() {
+        let css = site_css(&set(&["flex", "transition-colors"]), &Brand::default()).unwrap();
+        let blocks: Vec<&str> = css
+            .match_indices("prefers-reduced-motion:reduce")
+            .map(|(at, _)| {
+                let open = at + css[at..].find('{').unwrap();
+                let mut depth = 0;
+                let close = css[open..]
+                    .char_indices()
+                    .find_map(|(index, ch)| {
+                        depth += match ch {
+                            '{' => 1,
+                            '}' => -1,
+                            _ => 0,
+                        };
+                        (depth == 0).then_some(open + index)
+                    })
+                    .unwrap();
+                &css[open..=close]
+            })
+            .filter(|block| block.contains("data-rustify-scope"))
+            .collect();
+        assert_eq!(blocks.len(), 1, "{css}");
+        let block = blocks[0];
+        assert!(
+            block.contains("[data-rustify-scope],[data-rustify-scope] *{"),
+            "{block}"
+        );
+        assert!(
+            block.contains("transition-duration:0s!important"),
+            "{block}"
+        );
+        assert!(block.contains("transition-delay:0s!important"), "{block}");
+        assert!(
+            block
+                .contains("[data-rustify-scope] [data-name=Spinner]>svg{animation:none!important}"),
+            "{block}"
+        );
+        // The rule stays in the components layer: its weight is `!important`,
+        // never a later position among unlayered rules.
+        let layer = css
+            .find("@layer components{")
+            .expect("the components layer");
+        let reduce = css.find(block).unwrap();
+        assert!(layer < reduce, "{css}");
+    }
+
+    #[test]
     fn the_urls_a_stylesheet_loads() {
         let css = ".bg-\\[url\\(\\/a\\.svg\\)\\]{background-image:url(/a.svg)}.x{mask:url( \"/b c.svg\" ) no-repeat}:root{--c:url('data:image/svg+xml,%3Csvg/%3E')}";
         assert_eq!(

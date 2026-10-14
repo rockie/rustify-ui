@@ -5,7 +5,7 @@ use rustify_docs::content::{
     self, Analysis, Diagnostic, FragmentCache, Page, Project, RegisteredPage, Snapshot, Surfaces,
 };
 use rustify_docs::diagnostic::{LineIndex, Severity};
-use rustify_docs::embed::Kind;
+use rustify_docs::embed::{self, Kind, Owner};
 use rustify_docs::generation::{self, Extensions};
 use rustify_docs::highlight::Highlighter;
 use rustify_docs::markdown::Embed;
@@ -13,7 +13,7 @@ use rustify_docs::site::{
     IslandMetadata, RenderRequest, RenderTarget, SiteEnvironment, Slot, ThemeInput,
     PROTOCOL_VERSION,
 };
-use rustify_docs_syntax::Manifest;
+use rustify_docs_syntax::{ComponentManifest, Manifest};
 use serde_json::{json, Value};
 use std::collections::{BTreeMap, BTreeSet};
 
@@ -178,6 +178,12 @@ pub(super) fn build_cached(
     for page in analysis.published() {
         let article = &extensions.articles[&page.route];
         for embed in &page.fragment.embeds {
+            // The preflight already refused this embed, with its repair. A
+            // reused generation must not render it as well and report the
+            // same refusal a second time under the helper's code.
+            if !declared(&manifest, embed) {
+                continue;
+            }
             let key = format!(
                 "island-{}-{}",
                 generation::fingerprint(page.route.as_bytes()),
@@ -243,14 +249,19 @@ pub(super) fn build_cached(
             continue;
         };
         for error in result.diagnostics {
-            diagnostics.push(located(
+            let repair = props_repair(project, &manifest, embed, &error);
+            let diagnostic = located(
                 snapshot,
                 page,
                 embed,
                 error.property.as_deref(),
                 &error.code,
                 error.message,
-            ));
+            );
+            diagnostics.push(match repair {
+                Some(repair) => diagnostic.with_suggestion(repair),
+                None => diagnostic,
+            });
         }
         let Some(html) = result.html else {
             continue;
@@ -571,23 +582,22 @@ fn preflight(
     manifest: Option<&Manifest>,
 ) -> Vec<Diagnostic> {
     let mut diagnostics = Vec::new();
+    let registry = registry_file(project);
     if let Some(manifest) = manifest {
         for component in &manifest.components {
             if rustify_docs::builtins::is_builtin(&component.name) {
-                diagnostics.push(Diagnostic::in_file(
-                    &project
-                        .config
-                        .rust
-                        .as_ref()
-                        .expect("the Rust project")
-                        .registry,
-                    Severity::Error,
-                    "reserved-component",
-                    format!(
-                        "`{}` is a builtin component name; choose another registration name",
-                        component.name
-                    ),
-                ));
+                diagnostics.push(
+                    Diagnostic::in_file(
+                        registry,
+                        Severity::Error,
+                        "reserved-component",
+                        format!(
+                            "`{}` is a builtin component name; choose another registration name",
+                            component.name
+                        ),
+                    )
+                    .with_suggestion(embed::reserved_component(&component.name)),
+                );
             }
         }
     }
@@ -604,23 +614,140 @@ fn preflight(
     for page in analysis.published() {
         for embed in &page.fragment.embeds {
             let declaration = &embed.declaration;
+            let name = declaration.name.as_str();
             match declaration.kind {
-                Kind::Demo if !demos.contains(declaration.name.as_str()) => diagnostics.push(located(snapshot,page,embed,None,"unregistered-demo",format!("demo `{}` is not registered in site!",declaration.name))),
-                Kind::Component => match components.get(declaration.name.as_str()) {
-                    None => diagnostics.push(located(snapshot,page,embed,None,"unregistered-component",format!("component `{}` is not registered; add it to site! and configure [rust]",declaration.name))),
+                Kind::Demo if !demos.contains(name) => {
+                    let names: Vec<&str> = demos.iter().copied().collect();
+                    diagnostics.push(
+                        located(
+                            snapshot,
+                            page,
+                            embed,
+                            None,
+                            "unregistered-demo",
+                            format!("demo `{name}` is not registered in site!"),
+                        )
+                        .with_suggestion(embed::unregistered_demo(&names)),
+                    );
+                }
+                Kind::Component => match components.get(name) {
+                    None => {
+                        // Every name a `rustify-component` fence accepts: this
+                        // generation's registrations and the builtins.
+                        let builtins = rustify_docs::builtins::declarations();
+                        let names: Vec<&str> = components
+                            .keys()
+                            .copied()
+                            .chain(builtins.iter().map(|(name, _)| name.as_str()))
+                            .collect();
+                        diagnostics.push(
+                            located(
+                                snapshot,
+                                page,
+                                embed,
+                                None,
+                                "unregistered-component",
+                                format!("component `{name}` is not registered; add it to site! and configure [rust]"),
+                            )
+                            .with_suggestion(embed::unregistered_component(&names)),
+                        );
+                    }
                     Some(component) => {
                         for property in declaration.properties.keys() {
-                            if !component.fields.iter().any(|field| field.name==*property) {
-                                diagnostics.push(located(snapshot,page,embed,Some(property),"unknown-property",format!("component `{}` has no property `{property}`",declaration.name)));
+                            if component.fields.iter().any(|field| field.name == *property) {
+                                continue;
                             }
+                            let repair = embed::unknown_property(
+                                name,
+                                &fields(component),
+                                Owner::Registered { registry },
+                                property,
+                            );
+                            diagnostics.push(
+                                located(
+                                    snapshot,
+                                    page,
+                                    embed,
+                                    Some(property),
+                                    "unknown-property",
+                                    format!("component `{name}` has no property `{property}`"),
+                                )
+                                .with_suggestion(repair),
+                            );
                         }
                     }
                 },
-                Kind::Demo => {},
+                Kind::Demo => {}
             }
         }
     }
     diagnostics
+}
+
+/// Whether `embed` names a registration of this generation and only its
+/// declared props: exactly the embeds the preflight accepts.
+fn declared(manifest: &Manifest, embed: &Embed) -> bool {
+    let declaration = &embed.declaration;
+    match declaration.kind {
+        Kind::Demo => manifest
+            .demos
+            .iter()
+            .any(|demo| demo.name == declaration.name),
+        Kind::Component => manifest
+            .components
+            .iter()
+            .find(|component| component.name == declaration.name)
+            .is_some_and(|component| {
+                declaration
+                    .properties
+                    .keys()
+                    .all(|property| component.fields.iter().any(|field| field.name == *property))
+            }),
+    }
+}
+
+fn registry_file(project: &Project) -> &str {
+    project
+        .config
+        .rust
+        .as_ref()
+        .map(|rust| rust.registry.as_str())
+        .unwrap_or_default()
+}
+
+fn fields(component: &ComponentManifest) -> Vec<embed::Field> {
+    component
+        .fields
+        .iter()
+        .map(|field| embed::Field {
+            name: field.name.clone(),
+            ty: field.ty.clone(),
+            default: field.default.clone(),
+        })
+        .collect()
+}
+
+/// The repair for props a registered component's declared types refused.
+fn props_repair(
+    project: &Project,
+    manifest: &Manifest,
+    embed: &Embed,
+    error: &rustify_docs::site::SiteError,
+) -> Option<String> {
+    if error.code != "invalid_props" || embed.declaration.kind != Kind::Component {
+        return None;
+    }
+    let component = manifest
+        .components
+        .iter()
+        .find(|component| component.name == embed.declaration.name)?;
+    Some(embed::invalid_props(
+        &fields(component),
+        Owner::Registered {
+            registry: registry_file(project),
+        },
+        error.property.as_deref(),
+    ))
 }
 
 fn bounds(article: &str, embed: &Embed) -> Result<(usize, usize, usize, usize), String> {

@@ -696,6 +696,22 @@ Missing required fields, wrong types, unknown fields and duplicate YAML keys
 are errors. Children use the existing Markdown, link and HTML checks and
 cannot contain another interactive island. Keep those blocks adjacent.
 
+Each of these errors keeps the compiler's or parser's message and adds a
+one-line repair built from the declarations themselves. An unknown name lists
+every registered and builtin component, or every registered demo. An unknown
+or refused prop lists the declared fields with their types and whether each
+may be left out: its default expression, `optional` for a field declared as
+`Option`, `required`, or, for an author type or alias whose omission rules
+only the registration knows, the registration file to check. A field of a
+plain scalar, `String`, `Option` or `Vec` form gets an example YAML value of
+that form (its shape only; a value range is the message's to state), a
+builtin's object list points to [Static builtins](#static-builtins), and a
+nested serde path is repeated as `Reported props path`. A refused prop of a
+registered component points to that prop; a builtin's error, a missing prop
+and an unknown name point to the fence. Duplicate keys and malformed fences
+say how to write the fence. `check`, `build` and `dev` (the terminal and the
+page's problem panel) report the same location and repair.
+
 A demo directly references a site-local function with a
 `crate::module::function` path. Its Function and Full file tabs show and copy
 the original source, including Unicode and line endings, from the same files
@@ -742,6 +758,14 @@ fieldset disables input. Loading keeps the canvas locked. Successful
 attachment enables it; a startup or later wasm failure restores every island
 in that instance to its initial view and retains the source and shell.
 Reload the page to retry.
+
+When the reader's system asks for reduced motion
+(`prefers-reduced-motion: reduce`), every transition inside an island's SDK
+scope completes at once, the author component's own elements included, and
+the SDK spinner stands still beside its status text. The site stylesheet
+does this with important zero durations, so a utility class cannot undo it.
+Keyframe animations an author component declares itself keep running; put
+them behind `prefers-reduced-motion: no-preference`.
 
 ### Compilation profiles and version pairing
 

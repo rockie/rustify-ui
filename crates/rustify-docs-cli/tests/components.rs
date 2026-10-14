@@ -25,14 +25,41 @@ const DEMO: &str = concat!(
 const COLD_ERRORS: &str = concat!(
     "---\ndescription: Independent cold errors\n---\n# Independent errors\n\n",
     "```rustify-component\nname: Counter\nprops:\n  unexpected: 1\n```\n\n",
-    "```rustify-component\nname: UnregisteredCounter\n```\n",
+    "```rustify-component\nname: UnregisteredCounter\n```\n\n",
+    "```rustify-demo\nname: MissingDemo\n```\n",
 );
 
 const DATA_ERRORS: &str = concat!(
     "---\ndescription: Located property and YAML errors\n---\n# Property errors\n\n",
     "```rustify-component\nname: Counter\nprops:\n  'initial': not-an-integer\n```\n\n",
-    "```rustify-component\nname: Counter\nprops: {initial: 1, initial: 2}\n```\n",
+    "```rustify-component\nname: Counter\nprops: {initial: 1, initial: 2}\n```\n\n",
+    "```rustify-component\nname: Counter\nchildren: |\n  wrong\nprops: {label: wrong, initial: wrong}\n```\n\n",
+    "```rustify-component\nname: Swatch\nprops:\n  palette: {accent: 3}\n```\n\n",
+    "```rustify-component\nname: Swatch\nprops:\n  labels: wrong\n  palette: {accent: red}\n```\n\n",
+    "```rustify-component\nname: Swatch\n```\n",
 );
+
+/// Chinese text before the error on its line, with CRLF line ends.
+const ZH_CRLF_ERRORS: &str = concat!(
+    "---\r\ndescription: 中文与 CRLF\r\n---\r\n# 属性错误\r\n\r\n",
+    "中文前缀：下面的计数器初始值写错了。\r\n\r\n",
+    "```rustify-component\r\nname: Counter\r\nprops: {label: 中文标签, initial: 错误}\r\n```\r\n",
+);
+
+/// An author composite and an alias, whose omission rules only the
+/// registration knows, beside the fixture's own components.
+const AUTHOR_TYPES: &str = concat!(
+    "\n/// Author prop types for located props diagnostics.\n",
+    "#[derive(Clone, Debug, PartialEq, rustify_docs::__private::serde::Serialize, rustify_docs::__private::serde::Deserialize)]\n",
+    "#[serde(crate = \"rustify_docs::__private::serde\")]\n",
+    "pub struct Palette {\n    pub accent: String,\n}\n\n",
+    "pub type Labels = Vec<String>;\n",
+);
+
+const REGISTRY_END: &str = "        }\n        demos {";
+
+const INITIAL_REPAIR: &str =
+    "Write `initial: 0` for declared type `i32` (default expression `2`). Reported props path: `initial`.";
 
 fn project() -> Temp {
     let temp = Temp::new("components");
@@ -228,6 +255,50 @@ fn diagnostic<'a>(report: &'a Value, rule: &str, file: &str) -> &'a Value {
 
 fn written_line(text: &str, needle: &str) -> u64 {
     (text.lines().position(|line| line.contains(needle)).unwrap() + 1) as u64
+}
+
+/// The 1-based line and character column of `token` on the `nth` line
+/// containing `needle`.
+fn written_at(text: &str, needle: &str, nth: usize, token: &str) -> (u64, u64) {
+    let (index, line) = text
+        .lines()
+        .enumerate()
+        .filter(|(_, line)| line.contains(needle))
+        .nth(nth)
+        .unwrap();
+    let at = line.find(token).unwrap();
+    (index as u64 + 1, line[..at].chars().count() as u64 + 1)
+}
+
+/// Each error in `file` as (rule, line, column, suggestion), sorted.
+fn located_repairs(report: &Value, file: &str) -> Vec<(String, u64, u64, String)> {
+    let mut found: Vec<_> = report["diagnostics"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .filter(|error| error["severity"] == "error" && error["file"] == file)
+        .map(|error| {
+            (
+                error["rule"].as_str().unwrap().to_owned(),
+                error["line"].as_u64().unwrap(),
+                error["column"].as_u64().unwrap(),
+                error["suggestion"].as_str().unwrap_or("").to_owned(),
+            )
+        })
+        .collect();
+    found.sort();
+    found
+}
+
+fn check(temp: &Temp, args: &[&str]) -> std::process::Output {
+    Command::new(BIN)
+        .current_dir(temp.path("site"))
+        .arg("check")
+        .args(args)
+        .env("RUSTIFY_DOCS_CARGO", "mbx")
+        .env("RUSTUP_AUTO_INSTALL", "0")
+        .output()
+        .expect("the real CLI runs")
 }
 
 fn check_flags(report: &Value) {
@@ -509,8 +580,41 @@ fn real_component_builds_report_independent_errors_preserve_good_bytes_and_recov
     let first = build(&temp, "A-good", &lock, true);
     check_flags(&first);
     let good = tree(&site.join("dist"));
+    // `check` compiles the development profiles; warm them while the site is
+    // good. Under mbx a project's first development generation can find
+    // build-script outputs among its inputs and discard itself, and only then.
+    let warm = check(&temp, &["--format", "json"]);
+    if warm.status.code() != Some(0) {
+        let report: Value = serde_json::from_slice(&warm.stdout).unwrap();
+        let errors: Vec<_> = report["diagnostics"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .filter(|error| error["severity"] == "error")
+            .map(|error| error["rule"].as_str().unwrap())
+            .collect();
+        assert_eq!(
+            errors,
+            ["rust-generation-changed"],
+            "{}",
+            diagnostics(&report)
+        );
+        let again = check(&temp, &["--format", "json"]);
+        let report: Value = serde_json::from_slice(&again.stdout).unwrap();
+        assert_eq!(again.status.code(), Some(0), "{}", diagnostics(&report));
+    }
     let wasm_a = published_source(&good, &file_a, &function_a, 7, marker_a, &site);
 
+    let registry = temp.read("site/src/lib.rs");
+    assert_eq!(registry.matches(REGISTRY_END).count(), 1);
+    temp.write(
+        "site/src/lib.rs",
+        &registry.replacen(
+            REGISTRY_END,
+            &format!("            Tabs {{ tabs: Vec<String> }} => |props, children| demos::counter(props.tabs.len() as i32, \"Reserved\".to_string(), children),\n{REGISTRY_END}"),
+            1,
+        ),
+    );
     temp.write("site/content/errors.md", COLD_ERRORS);
     temp.write(
         "site/src/demos.rs",
@@ -524,12 +628,41 @@ fn real_component_builds_report_independent_errors_preserve_good_bytes_and_recov
         (field["line"].as_u64(), field["column"].as_u64()),
         (Some(written_line(COLD_ERRORS, "unexpected:")), Some(3))
     );
+    assert_eq!(
+        field["suggestion"],
+        "Use one of `initial` (`i32`; default expression `2`), `label` (`String`; default expression `\"Counter\".to_string()`) for `Counter`; rename or remove `unexpected`."
+    );
     let unknown = diagnostic(&failed, "unregistered-component", "content/errors.md");
     assert_eq!(
         unknown["line"],
         written_line(COLD_ERRORS, "name: UnregisteredCounter") - 1
     );
     assert_eq!(unknown["column"], 1);
+    assert_eq!(
+        unknown["suggestion"],
+        "Use a component from `BrowserCounter`, `CardGrid`, `Counter`, `Steps`, `Tabs`; for an author component, enable `[rust]` and register its name in `site!`."
+    );
+    let demo = diagnostic(&failed, "unregistered-demo", "content/errors.md");
+    assert_eq!(
+        (demo["line"].as_u64(), demo["column"].as_u64()),
+        (
+            Some(written_line(COLD_ERRORS, "name: MissingDemo") - 1),
+            Some(1)
+        )
+    );
+    assert_eq!(
+        demo["suggestion"],
+        "Use a demo from `AsyncAfterAttachDemo`, `CatalogProxy`, `CounterDemo`, `FailureDemo`, `ThemeProbeDemo`; register demos in `site!`."
+    );
+    let reserved = diagnostic(&failed, "reserved-component", "src/lib.rs");
+    assert_eq!(
+        (reserved["line"].as_u64(), reserved["column"].as_u64()),
+        (None, None)
+    );
+    assert_eq!(
+        reserved["suggestion"],
+        "Rename `Tabs` in `site!` and its Markdown references; builtin component names are reserved."
+    );
     let rust = diagnostic(&failed, "rust-compile", "src/demos.rs");
     assert!(rust["line"].as_u64().unwrap() > written_line(&file_a, "pub fn counter_demo"));
     assert!(rust["column"].as_u64().unwrap() > 0);
@@ -541,7 +674,16 @@ fn real_component_builds_report_independent_errors_preserve_good_bytes_and_recov
     );
 
     temp.write("site/src/demos.rs", &file_a);
+    temp.write(
+        "site/src/lib.rs",
+        &format!("{registry}{AUTHOR_TYPES}").replacen(
+            REGISTRY_END,
+            &format!("            Swatch {{ palette: crate::Palette, labels: crate::Labels = Vec::new(), limit: Option<u32> }} =>\n                |props, children| demos::counter(props.limit.unwrap_or(0) as i32 + props.labels.len() as i32, props.palette.accent, children),\n{REGISTRY_END}"),
+            1,
+        ),
+    );
     temp.write("site/content/errors.md", DATA_ERRORS);
+    temp.write("site/content/errors-zh.md", ZH_CRLF_ERRORS);
     let failed = build(&temp, "C-props-and-yaml", &lock, false);
     let typed = diagnostic(&failed, "invalid_props", "content/errors.md");
     assert_eq!(
@@ -550,16 +692,59 @@ fn real_component_builds_report_independent_errors_preserve_good_bytes_and_recov
     );
     let duplicate = diagnostic(&failed, "embed-payload", "content/errors.md");
     assert!(duplicate["message"].as_str().unwrap().contains("duplicate"));
+    let at = |needle: &str, nth: usize, token: &str| written_at(DATA_ERRORS, needle, nth, token);
+    let fence = |nth: usize| (at("name: Swatch", nth, "name").0 - 1, 1);
+    let palette = "Check `palette` of declared type `crate::Palette` (no declared default; confirm omission semantics in the registration) in `src/lib.rs`; follow the reported serde requirement.";
+    let mut expected = vec![
+        ("invalid_props", at("'initial':", 0, "'initial'"), INITIAL_REPAIR.to_owned()),
+        ("embed-payload", at("props: {initial: 1", 0, "{"), "Keep each YAML mapping key once; remove or rename the duplicate key.".to_owned()),
+        ("invalid_props", at("props: {label: wrong", 0, "initial"), INITIAL_REPAIR.to_owned()),
+        ("invalid_props", at("palette: {accent: 3}", 0, "palette"), format!("{palette} Reported props path: `palette.accent`.")),
+        ("invalid_props", at("labels: wrong", 0, "labels"), "Check `labels` of declared type `crate::Labels` (default expression `Vec::new()`) in `src/lib.rs`; follow the reported serde requirement. Reported props path: `labels`.".to_owned()),
+        ("invalid_props", fence(2), "Add or correct `props` using the declared fields `labels` (`crate::Labels`; default expression `Vec::new()`), `limit` (`Option<u32>`; optional; omission is null), `palette` (`crate::Palette`; no declared default; confirm omission semantics in the registration); check the registration in `src/lib.rs`.".to_owned()),
+    ]
+    .into_iter()
+    .map(|(rule, (line, column), repair)| (rule.to_owned(), line, column, repair))
+    .collect::<Vec<_>>();
+    expected.sort();
+    assert_eq!(located_repairs(&failed, "content/errors.md"), expected);
+    let (line, column) = written_at(ZH_CRLF_ERRORS, "props: {label: 中文标签", 0, "initial");
     assert_eq!(
-        duplicate["line"],
-        written_line(DATA_ERRORS, "props: {initial:")
+        located_repairs(&failed, "content/errors-zh.md"),
+        [(
+            "invalid_props".to_owned(),
+            line,
+            column,
+            INITIAL_REPAIR.to_owned()
+        )]
     );
-    assert!(duplicate["column"].as_u64().unwrap() > 0);
     assert_eq!(
         tree(&site.join("dist")),
         good,
         "data errors cannot publish a partial generation"
     );
+    // `check` reports the same refusals with the same repairs, as JSON and
+    // as text, from its own development generation.
+    let checked = check(&temp, &["--format", "json"]);
+    assert_eq!(checked.status.code(), Some(1));
+    let checked: Value = serde_json::from_slice(&checked.stdout).unwrap();
+    for file in ["content/errors.md", "content/errors-zh.md"] {
+        assert_eq!(
+            located_repairs(&checked, file),
+            located_repairs(&failed, file),
+            "{file}: {}",
+            diagnostics(&checked)
+        );
+    }
+    let text = String::from_utf8(check(&temp, &[]).stderr).unwrap();
+    for file in ["content/errors.md", "content/errors-zh.md"] {
+        for (_, line, column, repair) in located_repairs(&failed, file) {
+            let located = format!("  --> {file}:{line}:{column}\n  = help: {repair}\n");
+            assert!(text.contains(&located), "{located}\n{text}");
+        }
+    }
+    fs::remove_file(site.join("content/errors-zh.md")).unwrap();
+    temp.write("site/src/lib.rs", &registry);
 
     fs::remove_file(site.join("content/errors.md")).unwrap();
     let marker_b = "M2 source B — réparé λ <&>";

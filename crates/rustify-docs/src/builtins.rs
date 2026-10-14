@@ -1,5 +1,6 @@
 //! Typed static content blocks, rendered through the same site registry.
 
+use crate::embed::{Field, Owner};
 use crate::site::{SiteError, SiteRegistry};
 use leptos::prelude::*;
 use serde::{Deserialize, Serialize};
@@ -43,17 +44,69 @@ pub fn is_builtin(name: &str) -> bool {
     matches!(name, "Tabs" | "CardGrid" | "Steps")
 }
 
+/// The builtins' names and declared props, as the registry manifest lists them.
+pub fn declarations() -> Vec<(String, Vec<Field>)> {
+    let registry = registry();
+    let text = |value: &Value| value.as_str().map(str::to_owned);
+    registry.manifest()["components"]
+        .as_array()
+        .into_iter()
+        .flatten()
+        .filter_map(|component| {
+            let fields = component["fields"]
+                .as_array()?
+                .iter()
+                .map(|field| {
+                    Some(Field {
+                        name: text(&field["name"])?,
+                        ty: text(&field["ty"])?,
+                        default: text(&field["default"]),
+                    })
+                })
+                .collect::<Option<_>>()?;
+            Some((text(&component["name"])?, fields))
+        })
+        .collect()
+}
+
+/// The repair for a builtin's refused props: the range of `CardGrid.columns`
+/// is this module's own rule, and every other refusal is a declared type's.
+pub fn advice(name: &str, props: &Value, error: &SiteError) -> Option<String> {
+    let (_, fields) = declarations()
+        .into_iter()
+        .find(|(declared, _)| declared == name)?;
+    if name == "CardGrid" && columns_out_of_range(props) {
+        let default = fields
+            .iter()
+            .find(|field| field.name == "columns")?
+            .default
+            .as_deref()?;
+        return Some(format!(
+            "Set `columns` to 1, 2 or 3, or omit it for the default expression `{}`.",
+            crate::embed::display(default)
+        ));
+    }
+    Some(crate::embed::invalid_props(
+        &fields,
+        Owner::Builtin,
+        error.property.as_deref(),
+    ))
+}
+
+fn columns_out_of_range(props: &Value) -> bool {
+    props
+        .get("columns")
+        .and_then(Value::as_u64)
+        .is_some_and(|columns| !(1..=3).contains(&columns))
+}
+
 /// Produces static HTML without an interactive scope or author Rust build.
 pub fn render(name: &str, props: Value, children_html: String) -> Result<String, SiteError> {
-    if name == "CardGrid" {
-        if let Some(columns) = props.get("columns").and_then(Value::as_u64) {
-            if !(1..=3).contains(&columns) {
-                return Err(
-                    SiteError::new("invalid_props", "CardGrid.columns must be 1, 2 or 3")
-                        .with_property("columns"),
-                );
-            }
-        }
+    if name == "CardGrid" && columns_out_of_range(&props) {
+        return Err(
+            SiteError::new("invalid_props", "CardGrid.columns must be 1, 2 or 3")
+                .with_property("columns"),
+        );
     }
     registry().render_component_static(name, props, children_html)
 }
@@ -230,6 +283,59 @@ mod tests {
                 .code,
             "unknown_component"
         );
+    }
+
+    #[test]
+    fn builtin_repairs_come_from_the_registry_declarations() {
+        let declared: Vec<_> = declarations()
+            .into_iter()
+            .map(|(name, fields)| {
+                (
+                    name,
+                    fields
+                        .into_iter()
+                        .map(|field| (field.name, field.ty, field.default))
+                        .collect::<Vec<_>>(),
+                )
+            })
+            .collect();
+        assert_eq!(
+            declared,
+            [
+                (
+                    "Tabs".to_owned(),
+                    vec![("tabs".to_owned(), "Vec < TabSpec >".to_owned(), None)]
+                ),
+                (
+                    "CardGrid".to_owned(),
+                    vec![
+                        ("cards".to_owned(), "Vec < CardSpec >".to_owned(), None),
+                        ("columns".to_owned(), "u8".to_owned(), Some("2".to_owned())),
+                    ]
+                ),
+                (
+                    "Steps".to_owned(),
+                    vec![("items".to_owned(), "Vec < StepSpec >".to_owned(), None)]
+                ),
+            ]
+        );
+        let refused = |name: &str, props: Value| {
+            let error = render(name, props.clone(), String::new()).unwrap_err();
+            advice(name, &props, &error).unwrap()
+        };
+        assert_eq!(
+            refused("CardGrid", json!({"cards":[],"columns":0})),
+            "Set `columns` to 1, 2 or 3, or omit it for the default expression `2`."
+        );
+        assert_eq!(
+            refused("Steps", json!({"items":[],"unexpected":true})),
+            format!("Add or correct `props` using the declared fields `items` (`Vec<StepSpec>`; required); see {} for its object fields. Reported props path: `unexpected`.", crate::embed::BUILTIN_REFERENCE)
+        );
+        assert_eq!(
+            refused("Tabs", json!({"tabs":[{"label":"One"}]})),
+            format!("Write `tabs` as `Vec<TabSpec>` (required); see {} for its object fields. Reported props path: `tabs[0]`.", crate::embed::BUILTIN_REFERENCE)
+        );
+        assert!(advice("Unknown", &json!({}), &SiteError::new("invalid_props", "x")).is_none());
     }
 
     #[test]

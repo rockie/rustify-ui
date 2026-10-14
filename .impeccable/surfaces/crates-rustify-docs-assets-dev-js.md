@@ -39,3 +39,7 @@ Purpose and states follow DOCS-SSG-P2 §5.4 and §6. Keep the existing corner di
 - Success and reconnect: clear the building status, reload only affected pages using the existing scroll restoration, and resynchronise state on reconnect. Live announcements are per stage/result and never move reading focus. Completion timestamps are measurement evidence, not product copy.
 
 Validation will cover first build, building over last good, multiline Rust failure and recovery, long paths, dark/light, keyboard and narrow viewport. Capture the complete local implementation once, apply any material review findings in one batch, and confirm once. This brief is preparation; it does not record browser acceptance.
+
+## P2-gaps addition, confirmed with the user 2026-10-15
+
+Embedded component and demo errors now carry a one-line English repair (available names, declared fields with types and omission boundary, or the Static builtins reference URL). It uses the existing item composition unchanged: location and rule, message, then the repair in muted text; backticked names render in the system mono and long candidate lists wrap at their separators, the plain-text URL breaks through the existing `overflow-wrap`. No link, copy action, palette, size or spacing change; focus, empty and recovered states stay as built. Under `prefers-reduced-motion: reduce` island controls change state without transition and the SDK spinner is still beside its status text; normal preference keeps the 150ms feedback.
