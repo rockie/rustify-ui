@@ -1,0 +1,725 @@
+{
+  "config": {
+    "argv": [
+      "/Users/rockie/.nvm/versions/node/v26.1.0/bin/node",
+      "/Users/rockie/Documents/gh-rockie/rustify-ui/node_modules/.bin/playwright",
+      "test",
+      "--config=playwright.docs.config.ts",
+      "--project=docs-dev",
+      "tests/docs-ssg/dev-components.spec.ts",
+      "--workers=1",
+      "--reporter=line,json",
+      "--output=docs/validation/docs-ssg-p2/apply-r1/dev-components-green"
+    ],
+    "configFile": "/Users/rockie/Documents/gh-rockie/rustify-ui/playwright.docs.config.ts",
+    "rootDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": {},
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/apply-r1/dev-components-green",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "dom-only",
+        "name": "dom-only",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [
+          "dom-only/hydration.spec.ts"
+        ],
+        "testMatch": [
+          "dom-only/**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/apply-r1/dev-components-green",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "dom-hydrate",
+        "name": "dom-hydrate",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "dom-only/hydration.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/apply-r1/dev-components-green",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "docs-root",
+        "name": "docs-root",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [
+          "docs-ssg/dev*.spec.ts",
+          "docs-ssg/islands.spec.ts",
+          "docs-ssg/custom.spec.ts",
+          "docs-ssg/official.spec.ts"
+        ],
+        "testMatch": [
+          "docs-ssg/**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/apply-r1/dev-components-green",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "docs-subpath",
+        "name": "docs-subpath",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [
+          "docs-ssg/dev*.spec.ts",
+          "docs-ssg/islands.spec.ts",
+          "docs-ssg/custom.spec.ts",
+          "docs-ssg/official.spec.ts"
+        ],
+        "testMatch": [
+          "docs-ssg/**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/apply-r1/dev-components-green",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "docs-meta",
+        "name": "docs-meta",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [
+          "docs-ssg/dev*.spec.ts",
+          "docs-ssg/islands.spec.ts",
+          "docs-ssg/custom.spec.ts",
+          "docs-ssg/official.spec.ts"
+        ],
+        "testMatch": [
+          "docs-ssg/**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/apply-r1/dev-components-green",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "components-root",
+        "name": "components-root",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/islands.spec.ts",
+          "docs-ssg/custom.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/apply-r1/dev-components-green",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "components-subpath",
+        "name": "components-subpath",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/islands.spec.ts",
+          "docs-ssg/custom.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/apply-r1/dev-components-green",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "components-meta",
+        "name": "components-meta",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/islands.spec.ts",
+          "docs-ssg/custom.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/apply-r1/dev-components-green",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "official-root",
+        "name": "official-root",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/official.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/apply-r1/dev-components-green",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "official-subpath",
+        "name": "official-subpath",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/official.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/apply-r1/dev-components-green",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "official-meta",
+        "name": "official-meta",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/official.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/apply-r1/dev-components-green",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "components-webkit",
+        "name": "components-webkit",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/islands.spec.ts",
+          "docs-ssg/custom.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/apply-r1/dev-components-green",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "docs-firefox",
+        "name": "docs-firefox",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [
+          "docs-ssg/dev*.spec.ts",
+          "docs-ssg/islands.spec.ts",
+          "docs-ssg/custom.spec.ts",
+          "docs-ssg/official.spec.ts"
+        ],
+        "testMatch": [
+          "docs-ssg/**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/apply-r1/dev-components-green",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "docs-webkit",
+        "name": "docs-webkit",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [
+          "docs-ssg/dev*.spec.ts",
+          "docs-ssg/islands.spec.ts",
+          "docs-ssg/custom.spec.ts",
+          "docs-ssg/official.spec.ts"
+        ],
+        "testMatch": [
+          "docs-ssg/**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/apply-r1/dev-components-green",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "docs-dev",
+        "name": "docs-dev",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/dev*.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "line"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "docs-ssg/dev-components.spec.ts",
+      "file": "docs-ssg/dev-components.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "the address and first building shell precede the actual compilation, then content saves reuse its pair",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 900000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "docs-dev",
+              "projectName": "docs-dev",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 36834,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T13:03:39.153Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "first-building-desktop-light.png",
+                      "contentType": "image/png",
+                      "path": "docs/validation/docs-ssg-p2/apply-r1/dev-components-green/test-1/first-building-desktop-light.png"
+                    },
+                    {
+                      "name": "first-building-desktop-dark.png",
+                      "contentType": "image/png",
+                      "path": "docs/validation/docs-ssg-p2/apply-r1/dev-components-green/test-1/first-building-desktop-dark.png"
+                    },
+                    {
+                      "name": "first-building-narrow-light.png",
+                      "contentType": "image/png",
+                      "path": "docs/validation/docs-ssg-p2/apply-r1/dev-components-green/test-1/first-building-narrow-light.png"
+                    },
+                    {
+                      "name": "dev-component-browser-audit.json",
+                      "contentType": "application/json",
+                      "path": "docs/validation/docs-ssg-p2/apply-r1/dev-components-green/test-1/dev-component-browser-audit.json"
+                    },
+                    {
+                      "name": "dev-component-states.json",
+                      "contentType": "application/json",
+                      "path": "docs/validation/docs-ssg-p2/apply-r1/dev-components-green/test-1/dev-component-states.json"
+                    },
+                    {
+                      "name": "dev-component-compiler-commands.json",
+                      "contentType": "application/json",
+                      "path": "docs/validation/docs-ssg-p2/apply-r1/dev-components-green/test-1/dev-component-compiler-commands.json"
+                    },
+                    {
+                      "name": "dev-component-compiler-lifecycle.json",
+                      "contentType": "application/json",
+                      "path": "docs/validation/docs-ssg-p2/apply-r1/dev-components-green/test-1/dev-component-compiler-lifecycle.json"
+                    },
+                    {
+                      "name": "dev-component-cli.log",
+                      "contentType": "text/plain",
+                      "path": "docs/validation/docs-ssg-p2/apply-r1/dev-components-green/test-1/dev-component-cli.log"
+                    },
+                    {
+                      "name": "dev-component-compile-history.json",
+                      "contentType": "application/json",
+                      "path": "docs/validation/docs-ssg-p2/apply-r1/dev-components-green/test-1/dev-component-compile-history.json"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "69a9f46649e7beb019ff-2a8c99ec7c5cadf5f32f",
+          "file": "docs-ssg/dev-components.spec.ts",
+          "line": 385,
+          "column": 5
+        },
+        {
+          "title": "Rust saves keep the original interactive document until a complete new pair, and diagnostics recover at its scroll position",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 900000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "docs-dev",
+              "projectName": "docs-dev",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 97783,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T13:04:16.063Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "rust-building-desktop-light.png",
+                      "contentType": "image/png",
+                      "path": "docs/validation/docs-ssg-p2/apply-r1/dev-components-green/test-2/rust-building-desktop-light.png"
+                    },
+                    {
+                      "name": "rust-building-desktop-dark.png",
+                      "contentType": "image/png",
+                      "path": "docs/validation/docs-ssg-p2/apply-r1/dev-components-green/test-2/rust-building-desktop-dark.png"
+                    },
+                    {
+                      "name": "rust-building-narrow-light.png",
+                      "contentType": "image/png",
+                      "path": "docs/validation/docs-ssg-p2/apply-r1/dev-components-green/test-2/rust-building-narrow-light.png"
+                    },
+                    {
+                      "name": "rust-error-desktop-light.png",
+                      "contentType": "image/png",
+                      "path": "docs/validation/docs-ssg-p2/apply-r1/dev-components-green/test-2/rust-error-desktop-light.png"
+                    },
+                    {
+                      "name": "rust-error-desktop-dark.png",
+                      "contentType": "image/png",
+                      "path": "docs/validation/docs-ssg-p2/apply-r1/dev-components-green/test-2/rust-error-desktop-dark.png"
+                    },
+                    {
+                      "name": "rust-error-narrow-light.png",
+                      "contentType": "image/png",
+                      "path": "docs/validation/docs-ssg-p2/apply-r1/dev-components-green/test-2/rust-error-narrow-light.png"
+                    },
+                    {
+                      "name": "dev-component-browser-audit.json",
+                      "contentType": "application/json",
+                      "path": "docs/validation/docs-ssg-p2/apply-r1/dev-components-green/test-2/dev-component-browser-audit.json"
+                    },
+                    {
+                      "name": "dev-component-states.json",
+                      "contentType": "application/json",
+                      "path": "docs/validation/docs-ssg-p2/apply-r1/dev-components-green/test-2/dev-component-states.json"
+                    },
+                    {
+                      "name": "dev-component-compiler-commands.json",
+                      "contentType": "application/json",
+                      "path": "docs/validation/docs-ssg-p2/apply-r1/dev-components-green/test-2/dev-component-compiler-commands.json"
+                    },
+                    {
+                      "name": "dev-component-compiler-lifecycle.json",
+                      "contentType": "application/json",
+                      "path": "docs/validation/docs-ssg-p2/apply-r1/dev-components-green/test-2/dev-component-compiler-lifecycle.json"
+                    },
+                    {
+                      "name": "dev-component-cli.log",
+                      "contentType": "text/plain",
+                      "path": "docs/validation/docs-ssg-p2/apply-r1/dev-components-green/test-2/dev-component-cli.log"
+                    },
+                    {
+                      "name": "dev-component-compile-history.json",
+                      "contentType": "application/json",
+                      "path": "docs/validation/docs-ssg-p2/apply-r1/dev-components-green/test-2/dev-component-compile-history.json"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "69a9f46649e7beb019ff-00271b70757c082f7ca1",
+          "file": "docs-ssg/dev-components.spec.ts",
+          "line": 466,
+          "column": 5
+        },
+        {
+          "title": "hydrate-only dependency manifests invalidate wasm and behavior without compiling Markdown",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 900000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "docs-dev",
+              "projectName": "docs-dev",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 48563,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [
+                    {
+                      "text": "     Locking 1 package to highest compatible version\n      Adding browser-palette v0.1.0 (/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-mb2Piq/browser-palette)\n"
+                    }
+                  ],
+                  "retry": 0,
+                  "startTime": "2026-10-14T13:05:53.851Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "dev-hydrate-only-initial.png",
+                      "contentType": "image/png",
+                      "path": "docs/validation/docs-ssg-p2/apply-r1/dev-components-green/test-3/dev-hydrate-only-initial.png"
+                    },
+                    {
+                      "name": "dev-hydrate-only-alternate.png",
+                      "contentType": "image/png",
+                      "path": "docs/validation/docs-ssg-p2/apply-r1/dev-components-green/test-3/dev-hydrate-only-alternate.png"
+                    },
+                    {
+                      "name": "dev-component-browser-audit.json",
+                      "contentType": "application/json",
+                      "path": "docs/validation/docs-ssg-p2/apply-r1/dev-components-green/test-3/dev-component-browser-audit.json"
+                    },
+                    {
+                      "name": "dev-component-states.json",
+                      "contentType": "application/json",
+                      "path": "docs/validation/docs-ssg-p2/apply-r1/dev-components-green/test-3/dev-component-states.json"
+                    },
+                    {
+                      "name": "dev-component-compiler-commands.json",
+                      "contentType": "application/json",
+                      "path": "docs/validation/docs-ssg-p2/apply-r1/dev-components-green/test-3/dev-component-compiler-commands.json"
+                    },
+                    {
+                      "name": "dev-component-compiler-lifecycle.json",
+                      "contentType": "application/json",
+                      "path": "docs/validation/docs-ssg-p2/apply-r1/dev-components-green/test-3/dev-component-compiler-lifecycle.json"
+                    },
+                    {
+                      "name": "dev-component-cli.log",
+                      "contentType": "text/plain",
+                      "path": "docs/validation/docs-ssg-p2/apply-r1/dev-components-green/test-3/dev-component-cli.log"
+                    },
+                    {
+                      "name": "dev-component-dependencies.json",
+                      "contentType": "application/json",
+                      "path": "docs/validation/docs-ssg-p2/apply-r1/dev-components-green/test-3/dev-component-dependencies.json"
+                    },
+                    {
+                      "name": "dev-component-site-Cargo.toml",
+                      "contentType": "text/plain",
+                      "path": "docs/validation/docs-ssg-p2/apply-r1/dev-components-green/test-3/dev-component-site-Cargo.toml"
+                    },
+                    {
+                      "name": "dev-component-lock-before-dev",
+                      "contentType": "text/plain",
+                      "path": "docs/validation/docs-ssg-p2/apply-r1/dev-components-green/test-3/dev-component-lock-before-dev.txt"
+                    },
+                    {
+                      "name": "dev-component-lock-after-dev",
+                      "contentType": "text/plain",
+                      "path": "docs/validation/docs-ssg-p2/apply-r1/dev-components-green/test-3/dev-component-lock-after-dev.txt"
+                    },
+                    {
+                      "name": "dev-component-compile-history.json",
+                      "contentType": "application/json",
+                      "path": "docs/validation/docs-ssg-p2/apply-r1/dev-components-green/test-3/dev-component-compile-history.json"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "69a9f46649e7beb019ff-e8b0da2c146a35790f5a",
+          "file": "docs-ssg/dev-components.spec.ts",
+          "line": 654,
+          "column": 5
+        },
+        {
+          "title": "renamed same-name build inputs track each dependency save, deletion and recovery",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 900000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "docs-dev",
+              "projectName": "docs-dev",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 158897,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [
+                    {
+                      "text": "     Locking 2 packages to highest compatible versions\n      Adding payload v1.0.0 (/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/payload-v1)\n      Adding payload v2.0.0 (/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/payload-v2)\n"
+                    }
+                  ],
+                  "retry": 0,
+                  "startTime": "2026-10-14T13:06:42.419Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "dev-renamed-payload-v1-deleted.png",
+                      "contentType": "image/png",
+                      "path": "docs/validation/docs-ssg-p2/apply-r1/dev-components-green/test-4/dev-renamed-payload-v1-deleted.png"
+                    },
+                    {
+                      "name": "dev-renamed-payload-v1-restored.png",
+                      "contentType": "image/png",
+                      "path": "docs/validation/docs-ssg-p2/apply-r1/dev-components-green/test-4/dev-renamed-payload-v1-restored.png"
+                    },
+                    {
+                      "name": "dev-renamed-payload-v2-deleted.png",
+                      "contentType": "image/png",
+                      "path": "docs/validation/docs-ssg-p2/apply-r1/dev-components-green/test-4/dev-renamed-payload-v2-deleted.png"
+                    },
+                    {
+                      "name": "dev-renamed-payload-v2-restored.png",
+                      "contentType": "image/png",
+                      "path": "docs/validation/docs-ssg-p2/apply-r1/dev-components-green/test-4/dev-renamed-payload-v2-restored.png"
+                    },
+                    {
+                      "name": "dev-component-browser-audit.json",
+                      "contentType": "application/json",
+                      "path": "docs/validation/docs-ssg-p2/apply-r1/dev-components-green/test-4/dev-component-browser-audit.json"
+                    },
+                    {
+                      "name": "dev-component-states.json",
+                      "contentType": "application/json",
+                      "path": "docs/validation/docs-ssg-p2/apply-r1/dev-components-green/test-4/dev-component-states.json"
+                    },
+                    {
+                      "name": "dev-component-compiler-commands.json",
+                      "contentType": "application/json",
+                      "path": "docs/validation/docs-ssg-p2/apply-r1/dev-components-green/test-4/dev-component-compiler-commands.json"
+                    },
+                    {
+                      "name": "dev-component-compiler-lifecycle.json",
+                      "contentType": "application/json",
+                      "path": "docs/validation/docs-ssg-p2/apply-r1/dev-components-green/test-4/dev-component-compiler-lifecycle.json"
+                    },
+                    {
+                      "name": "dev-component-cli.log",
+                      "contentType": "text/plain",
+                      "path": "docs/validation/docs-ssg-p2/apply-r1/dev-components-green/test-4/dev-component-cli.log"
+                    },
+                    {
+                      "name": "dev-component-dependencies.json",
+                      "contentType": "application/json",
+                      "path": "docs/validation/docs-ssg-p2/apply-r1/dev-components-green/test-4/dev-component-dependencies.json"
+                    },
+                    {
+                      "name": "dev-component-site-Cargo.toml",
+                      "contentType": "text/plain",
+                      "path": "docs/validation/docs-ssg-p2/apply-r1/dev-components-green/test-4/dev-component-site-Cargo.toml"
+                    },
+                    {
+                      "name": "dev-component-lock-before-dev",
+                      "contentType": "text/plain",
+                      "path": "docs/validation/docs-ssg-p2/apply-r1/dev-components-green/test-4/dev-component-lock-before-dev.txt"
+                    },
+                    {
+                      "name": "dev-component-lock-after-dev",
+                      "contentType": "text/plain",
+                      "path": "docs/validation/docs-ssg-p2/apply-r1/dev-components-green/test-4/dev-component-lock-after-dev.txt"
+                    },
+                    {
+                      "name": "dev-component-compile-history.json",
+                      "contentType": "application/json",
+                      "path": "docs/validation/docs-ssg-p2/apply-r1/dev-components-green/test-4/dev-component-compile-history.json"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "69a9f46649e7beb019ff-272caa58a36950829a56",
+          "file": "docs-ssg/dev-components.spec.ts",
+          "line": 724,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-14T13:03:38.822Z",
+    "duration": 342550.118,
+    "expected": 4,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

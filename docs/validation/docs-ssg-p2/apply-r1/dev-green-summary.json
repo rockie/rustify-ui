@@ -1,0 +1,38 @@
+[
+  {
+    "run": "dev-hydrate-only-green",
+    "title": "hydrate-only dependency manifests invalidate wasm and behavior without compiling Markdown",
+    "status": "passed",
+    "duration_ms": 56693
+  },
+  {
+    "run": "dev-renamed-inputs-green",
+    "title": "renamed same-name build inputs track each dependency save, deletion and recovery",
+    "status": "passed",
+    "duration_ms": 152750
+  },
+  {
+    "run": "dev-components-green",
+    "title": "the address and first building shell precede the actual compilation, then content saves reuse its pair",
+    "status": "passed",
+    "duration_ms": 36834
+  },
+  {
+    "run": "dev-components-green",
+    "title": "Rust saves keep the original interactive document until a complete new pair, and diagnostics recover at its scroll position",
+    "status": "passed",
+    "duration_ms": 97783
+  },
+  {
+    "run": "dev-components-green",
+    "title": "hydrate-only dependency manifests invalidate wasm and behavior without compiling Markdown",
+    "status": "passed",
+    "duration_ms": 48563
+  },
+  {
+    "run": "dev-components-green",
+    "title": "renamed same-name build inputs track each dependency save, deletion and recovery",
+    "status": "passed",
+    "duration_ms": 158897
+  }
+]

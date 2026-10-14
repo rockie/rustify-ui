@@ -1,0 +1,67 @@
+{
+  "R": "7930fd9a978563e76468fef69d14f444159c47b5",
+  "previous_R": "3fcc626a4039a43c5e045ccd546bab976db89a73",
+  "work": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-apply-r1-pair-hwd0bpg1",
+  "project": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-apply-r1-pair-hwd0bpg1/docs-site",
+  "framework_packages": [
+    "rustify-components",
+    "rustify-docs",
+    "rustify-docs-macros",
+    "rustify-docs-syntax",
+    "rustify-style",
+    "rustify-ui"
+  ],
+  "third_party_packages_unchanged": true,
+  "lock_sha256": "637f9c9fe2446e16667cc6f6174f3ce9d810f9cc6cb9eb1cdd6d939730d24779",
+  "lock_bytes": 48590,
+  "commands": [
+    {
+      "name": "fetch",
+      "command": [
+        "cargo",
+        "fetch",
+        "--locked",
+        "--manifest-path",
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-apply-r1-pair-hwd0bpg1/docs-site/Cargo.toml"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "host-metadata",
+      "command": [
+        "mbx",
+        "metadata",
+        "--locked",
+        "--offline",
+        "--format-version",
+        "1",
+        "--manifest-path",
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-apply-r1-pair-hwd0bpg1/docs-site/Cargo.toml",
+        "--no-default-features",
+        "--features",
+        "ssr"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "wasm-metadata",
+      "command": [
+        "mbx",
+        "metadata",
+        "--locked",
+        "--offline",
+        "--format-version",
+        "1",
+        "--manifest-path",
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-apply-r1-pair-hwd0bpg1/docs-site/Cargo.toml",
+        "--no-default-features",
+        "--features",
+        "hydrate",
+        "--filter-platform",
+        "wasm32-unknown-unknown"
+      ],
+      "exit": 0
+    }
+  ],
+  "transport": "process-local public Git URL remap to existing local repository; no push/public install"
+}

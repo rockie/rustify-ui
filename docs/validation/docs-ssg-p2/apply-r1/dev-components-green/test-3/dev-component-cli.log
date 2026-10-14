@@ -1,0 +1,24 @@
+rustc 1.99.0 (b940084d7 2026-09-28)
+dev: pages show no last-updated date: not a git repository (or any of the parent directories): .git
+watching /private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-mb2Piq/site; drafts are shown, source and published output are unchanged, stop with Ctrl-C
+dev: host
+dev: wasm
+dev: inputs changed; discarding the candidate and rebuilding
+dev: render
+dev: host
+dev: wasm
+dev: render
+warning[not-in-nav]: this page is in no navigation group, so readers can only reach it by a link
+  --> content/index.md
+warning[theme-token]: radius: Light and dark have different author values; editing this common field applies to both
+  --> theme.json
+dev: revision 1: 10 page(s) changed, 2 warning(s), 1772 ms
+dev: render
+dev: host
+dev: wasm
+dev: render
+dev: revision 2: 6 page(s) changed, 2 warning(s), 9457 ms
+dev: render
+dev: render
+dev: reusing the compiled Rust generation
+dev: revision 3: 1 page(s) changed, 2 warning(s), 246 ms

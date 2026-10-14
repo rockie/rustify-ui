@@ -1,6 +1,7 @@
 import { expect, Page, test } from "@playwright/test";
 import { ChildProcess, execFileSync, spawn } from "node:child_process";
-import { copyFileSync, cpSync, existsSync, mkdtempSync, readFileSync, readdirSync, realpathSync, rmSync, writeFileSync } from "node:fs";
+import { copyFileSync, cpSync, existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, realpathSync, rmSync, writeFileSync } from "node:fs";
+import { createHash } from "node:crypto";
 import { get, ClientRequest } from "node:http";
 import { tmpdir } from "node:os";
 import path from "node:path";
@@ -45,7 +46,7 @@ class Site {
     readonly lifecycle = path.join(this.dir, "compiler-lifecycle.jsonl");
     readonly gate = path.join(this.dir, "hold-build");
     readonly entered = path.join(this.dir, "build-entered");
-    readonly lock: Buffer;
+    lock: Buffer;
 
     constructor() {
         for (const directory of ["src", "content", "static"]) cpSync(path.join(fixture, directory), path.join(this.root, directory), { recursive: true });
@@ -167,10 +168,15 @@ class Dev {
 let site: Site;
 let server: Dev | undefined;
 let audit: Audit;
+type DependencyPackage = { id: string; name: string; version: string; manifest_path: string; source: string | null };
+type DependencyNode = { id: string; features: string[]; deps: { name: string; pkg: string }[] };
+type DependencyGraph = { mode: string; author: string; packages: DependencyPackage[]; resolve: { nodes: DependencyNode[] } };
+let dependencyEvidence: { metadata: DependencyGraph[]; observations: unknown[] };
 
 test.beforeEach(async ({ page }) => {
     site = new Site();
     server = undefined;
+    dependencyEvidence = { metadata: [], observations: [] };
     audit = { requests: [], failures: [], expectedStreamClosures: [], responses: [], console: [], pageErrors: [], csp: [] };
     await page.exposeBinding("__dev_component_csp", (_, value: string) => audit.csp.push(value));
     await page.addInitScript(() => {
@@ -194,6 +200,14 @@ test.afterEach(async ({}, info) => {
         await info.attach("dev-component-compiler-commands.json", { body: JSON.stringify(site.commands(), null, 2), contentType: "application/json" });
         await info.attach("dev-component-compiler-lifecycle.json", { body: JSON.stringify(site.compilerEvents(), null, 2), contentType: "application/json" });
         await info.attach("dev-component-cli.log", { body: server?.log || "", contentType: "text/plain" });
+        if (dependencyEvidence.metadata.length) {
+            await info.attach("dev-component-dependencies.json", { body: JSON.stringify(dependencyEvidence, null, 2), contentType: "application/json" });
+            await info.attach("dev-component-site-Cargo.toml", { body: site.read("Cargo.toml"), contentType: "text/plain" });
+            if (existsSync(path.join(site.dir, "Cargo.lock.before-dev"))) {
+                await info.attach("dev-component-lock-before-dev", { body: readFileSync(path.join(site.dir, "Cargo.lock.before-dev")), contentType: "text/plain" });
+            }
+            await info.attach("dev-component-lock-after-dev", { body: site.read("Cargo.lock"), contentType: "text/plain" });
+        }
         const history = path.join(site.root, ".rustify-docs/logs/history");
         if (existsSync(history)) {
             const timings = readdirSync(history).map(directory => JSON.parse(readFileSync(path.join(history, directory, "timing.json"), "utf8")));
@@ -208,9 +222,9 @@ const islands = (page: Page) => page.locator("[data-rustify-island]");
 const source = (page: Page) => page.locator(".rd-demo-source");
 const values = (page: Page) => page.getByTestId("counter-value");
 
-async function ready(page: Page, demoValue = "7") {
+async function ready(page: Page, demoValue: string | string[] = "7") {
     await expect(page.locator('[data-rustify-island][data-rd-island-state="ready"]')).toHaveCount(4, { timeout: buildTimeout });
-    await expect(values(page)).toHaveText(["2", "2", "2", demoValue]);
+    await expect(values(page)).toHaveText(["2", "2", "2", ...(Array.isArray(demoValue) ? demoValue : [demoValue])]);
     for (const island of await islands(page).all()) {
         const metadata = JSON.parse((await island.getAttribute("data-rustify-island-metadata"))!);
         const field = island.locator("fieldset[data-rd-island-controls]");
@@ -548,5 +562,253 @@ test("Rust saves keep the original interactive document until a complete new pai
     expect(fixed.completed_at_ms).toBeGreaterThan(second.completed_at_ms);
     await page.getByTestId("counter-increment").first().click();
     await expect(values(page)).toHaveText(["7", "2", "2", "13"]);
+    await healthy();
+});
+
+function localPackage(directory: string, files: Record<string, string>) {
+    for (const [file, text] of Object.entries(files)) {
+        mkdirSync(path.dirname(path.join(site.dir, directory, file)), { recursive: true });
+        site.write(path.join("..", directory, file), text);
+    }
+}
+
+function lockLocalDependencies() {
+    // Resolve each real feature separately, without building either target.
+    // This happens before dev starts; --locked builds must not repair the lock.
+    for (const feature of ["ssr", "hydrate"]) {
+        const metadata = JSON.parse(execFileSync(process.env.RUSTIFY_DOCS_CARGO || "mbx", [
+            "metadata", "--offline", "--format-version", "1", "--no-default-features", "--features", feature,
+        ], { cwd: site.root, encoding: "utf8", maxBuffer: 64 * 1024 * 1024 })) as { packages: DependencyPackage[]; resolve: { root: string; nodes: DependencyNode[] } };
+        const author = metadata.resolve.root;
+        const packages = metadata.packages.filter(pkg => pkg.id === author
+            || (pkg.source === null && ["browser-palette", "payload"].includes(pkg.name))
+            || ["rustify-ui", "rustify-components", "rustify-docs"].includes(pkg.name))
+            .map(({ id, name, version, manifest_path, source }) => ({ id, name, version, manifest_path, source }));
+        const ids = new Set(packages.map(pkg => pkg.id));
+        const nodes = metadata.resolve.nodes.filter(node => ids.has(node.id)).map(({ id, features, deps }) => ({
+            id, features, deps: deps.filter(dep => ids.has(dep.pkg)).map(({ name, pkg }) => ({ name, pkg })),
+        }));
+        dependencyEvidence.metadata.push({ mode: feature, author, packages, resolve: { nodes } });
+    }
+    copyFileSync(path.join(site.root, "Cargo.lock"), path.join(site.dir, "Cargo.lock.before-dev"));
+    site.lock = readFileSync(path.join(site.dir, "Cargo.lock.before-dev"));
+}
+
+async function dependencySettled(previous: State, ok = true) {
+    // A missing watch event must fail promptly, not consume the build budget.
+    await expect.poll(() => {
+        const state = server!.state()!;
+        return state.revision > previous.revision || (state.sequence > previous.sequence && state.building);
+    }, { timeout: 10_000 }).toBe(true);
+    return settled(previous.revision, ok);
+}
+
+async function dependencySsr(page: Page, demoValues: string[]) {
+    const response = await page.request.get(new URL("counter/", server!.url).href);
+    expect(response.status()).toBe(200);
+    const html = await response.text();
+    const ssrValues = await page.evaluate(html => {
+        const document = new DOMParser().parseFromString(html, "text/html");
+        return [...document.querySelectorAll('[data-testid="counter-value"]')].map(node => node.textContent);
+    }, html);
+    expect(ssrValues).toEqual(["2", "2", "2", ...demoValues]);
+    return ssrValues;
+}
+
+async function dependencyReady(page: Page, demoValues: string[]) {
+    try {
+        await expect(page.locator('[data-rustify-island][data-rd-island-state="ready"]')).toHaveCount(4, { timeout: 30_000 });
+        await ready(page, demoValues);
+    } catch (error) {
+        await test.info().attach("dev-dependency-readiness-failure.png", { body: await page.screenshot(), contentType: "image/png" });
+        throw error;
+    }
+}
+
+async function dependencySnapshot(page: Page, demoValues: string[]) {
+    const ssrValues = await dependencySsr(page, demoValues);
+    await page.goto(new URL("counter/", server!.url).href);
+    await dependencyReady(page, demoValues);
+    await sourceText(page, site.read("src/demos.rs"));
+    const wasmUrl = audit.requests.filter(url => url.endsWith("/app_bg.wasm")).at(-1)!;
+    expect(wasmUrl).toBeTruthy();
+    const wasm = await page.request.get(wasmUrl);
+    expect(wasm.status()).toBe(200);
+    expect(wasm.headers()["content-type"].split(";")[0]).toBe("application/wasm");
+    const snapshot = { ssrValues, wasmUrl, wasmSha256: createHash("sha256").update(await wasm.body()).digest("hex"), state: server!.state()! };
+    dependencyEvidence.observations.push(snapshot);
+    return snapshot;
+}
+
+function updatedDependency(previous: Awaited<ReturnType<typeof dependencySnapshot>>, next: Awaited<ReturnType<typeof dependencySnapshot>>) {
+    const before = compilation(previous.state);
+    const after = compilation(next.state);
+    expect(before.generation).toBeTruthy();
+    expect(after.generation).toBeTruthy();
+    expect(after.generation).not.toBe(before.generation);
+    expect(after.completed_at_ms).toBeGreaterThan(before.completed_at_ms);
+    expect(next.wasmSha256).not.toBe(previous.wasmSha256);
+    expect(next.wasmUrl).not.toBe(previous.wasmUrl);
+}
+
+test("hydrate-only dependency manifests invalidate wasm and behavior without compiling Markdown", async ({ page }) => {
+    test.setTimeout(900_000);
+    localPackage("browser-palette", {
+        "Cargo.toml": `[package]\nname = "browser-palette"\nversion = "0.1.0"\nedition = "2021"\n\n[workspace]\n\n[features]\ndefault = []\nalternate = []\n`,
+        "src/lib.rs": `pub fn value() -> i32 { if cfg!(feature = "alternate") { 27 } else { 17 } }\n`,
+    });
+    site.edit("Cargo.toml", 'hydrate = ["rustify-docs/hydrate"', 'hydrate = ["dep:browser-palette", "rustify-docs/hydrate"');
+    site.edit("Cargo.toml", "[dependencies]\n", '[dependencies]\nbrowser-palette = { path = "../browser-palette", optional = true }\n');
+    site.edit("src/demos.rs", '*value += 1', `{
+                        #[cfg(feature = "hydrate")]
+                        { *value = browser_palette::value(); }
+                        #[cfg(not(feature = "hydrate"))]
+                        { *value += 1; }
+                    }`);
+    // Both colors are in the unchanged site source, so only the dependency's
+    // default feature determines the post-click value and its external class.
+    site.edit("src/demos.rs", '<output data-testid="counter-value">', `<output data-testid="counter-value" class={move || match value.get() {
+                    17 => "bg-[#123abc]",
+                    27 => "bg-[#fedcba]",
+                    _ => "",
+                }}>`);
+    const manifest = site.read("../browser-palette/Cargo.toml");
+    const siteSource = site.read("src/demos.rs");
+    dependencyEvidence.observations.push({ initialManifest: manifest, siteSource });
+    lockLocalDependencies();
+    for (const entry of dependencyEvidence.metadata) {
+        const palette = entry.packages.find(pkg => pkg.name === "browser-palette");
+        expect(!!palette && entry.resolve.nodes.some(node => node.id === palette.id)).toBe(entry.mode === "hydrate");
+    }
+    server = await Dev.start(site);
+    site.release();
+    await settled();
+    await page.goto(new URL("counter/", server.url).href);
+    await dependencyReady(page, ["7"]);
+    const first = await dependencySnapshot(page, ["7"]);
+    await page.getByTestId("counter-increment").last().click();
+    await expect(values(page)).toHaveText(["2", "2", "2", "17"]);
+    await expect(values(page).last()).toHaveCSS("background-color", "rgb(18, 58, 188)");
+    await test.info().attach("dev-hydrate-only-initial.png", { body: await page.screenshot(), contentType: "image/png" });
+
+    site.edit("../browser-palette/Cargo.toml", "default = []", 'default = ["alternate"]');
+    const changedState = await dependencySettled(first.state);
+    // Record the completion before asserting its generation: a stale cache
+    // can observe this save but incorrectly reuse its already compiled pair.
+    dependencyEvidence.observations.push({ changedManifest: site.read("../browser-palette/Cargo.toml"), changedState });
+    const second = await dependencySnapshot(page, ["7"]);
+    await page.getByTestId("counter-increment").last().click();
+    await expect(values(page)).toHaveText(["2", "2", "2", "27"]);
+    await expect(values(page).last()).toHaveCSS("background-color", "rgb(254, 220, 186)");
+    updatedDependency(first, second);
+    expect(site.read("src/demos.rs")).toBe(siteSource);
+    expect(site.read("../browser-palette/Cargo.toml")).toBe(manifest.replace("default = []", 'default = ["alternate"]'));
+    await cleared(page, changedState);
+    await test.info().attach("dev-hydrate-only-alternate.png", { body: await page.screenshot(), contentType: "image/png" });
+
+    const commands = site.commands();
+    site.edit("content/counter.md", "Each counter starts with the same props and child content.", "Markdown still reuses the hydrate-only dependency pair.");
+    const markdownState = await dependencySettled(changedState);
+    await expect(page.getByText("Markdown still reuses the hydrate-only dependency pair.", { exact: false })).toBeVisible();
+    await ready(page);
+    expect(markdownState.compile).toEqual(changedState.compile);
+    expect(site.commands()).toEqual(commands); // No metadata, helper Cargo or build calls.
+    const markdown = await dependencySnapshot(page, ["7"]);
+    expect(markdown.wasmSha256).toBe(second.wasmSha256);
+    await page.getByTestId("counter-increment").last().click();
+    await expect(values(page)).toHaveText(["2", "2", "2", "27"]);
+    await expect(values(page).last()).toHaveCSS("background-color", "rgb(254, 220, 186)");
+    await healthy();
+});
+
+test("renamed same-name build inputs track each dependency save, deletion and recovery", async ({ page }) => {
+    test.setTimeout(900_000);
+    for (const [directory, version, initial] of [["payload-v1", "1.0.0", "7"], ["payload-v2", "2.0.0", "19"]]) {
+        localPackage(directory, {
+            "Cargo.toml": `[package]\nname = "payload"\nversion = "${version}"\nedition = "2021"\nbuild = "build.rs"\n\n[workspace]\n`,
+            "payload.txt": `${initial}\n`,
+            "build.rs": `fn main() {
+    println!("cargo:rerun-if-changed=payload.txt");
+    let value: i32 = std::fs::read_to_string("payload.txt").expect("payload.txt must exist").trim().parse().unwrap();
+    let output = std::path::PathBuf::from(std::env::var_os("OUT_DIR").unwrap()).join("payload.rs");
+    std::fs::write(output, format!("pub fn value() -> i32 {{ {value} }}\\n")).unwrap();
+}
+`,
+            "src/lib.rs": 'include!(concat!(env!("OUT_DIR"), "/payload.rs"));\n',
+        });
+    }
+    site.edit("Cargo.toml", "[dependencies]\n", `[dependencies]
+payload_v1 = { package = "payload", path = "../payload-v1" }
+payload_v2 = { package = "payload", path = "../payload-v2" }
+`);
+    site.edit("src/demos.rs", `    counter(
+        7,
+        "Résumé — a real registered counter".to_string(),
+        view! { <p>"This child is part of the same view on both targets."</p> }.into_any(),
+    )`, `    view! {
+        <div>
+            {counter(payload_v1::value(), "Payload v1".to_string(), view! { <p>"First build input"</p> }.into_any())}
+            {counter(payload_v2::value(), "Payload v2".to_string(), view! { <p>"Second build input"</p> }.into_any())}
+        </div>
+    }`);
+    const siteSource = site.read("src/demos.rs");
+    lockLocalDependencies();
+    server = await Dev.start(site);
+    site.release();
+    await settled();
+    await page.goto(new URL("counter/", server.url).href);
+    await dependencyReady(page, ["7", "19"]);
+    let current = await dependencySnapshot(page, ["7", "19"]);
+    const expected = ["7", "19"];
+    const clickBoth = async () => {
+        for (const index of [3, 4]) await page.getByTestId("counter-increment").nth(index).click();
+        await expect(values(page)).toHaveText(["2", "2", "2", ...expected.map(value => String(Number(value) + 1))]);
+    };
+    await clickBoth();
+    for (const [index, directory, saved, restored] of [[0, "payload-v1", "14", "23"], [1, "payload-v2", "29", "37"]] as const) {
+        const file = `../${directory}/payload.txt`;
+        dependencyEvidence.observations.push({ save: file, value: saved, previous: current.state });
+        site.write(file, `${saved}\n`);
+        await dependencySettled(current.state);
+        expected[index] = saved;
+        const savedSnapshot = await dependencySnapshot(page, expected);
+        updatedDependency(current, savedSnapshot);
+        current = savedSnapshot;
+        await clickBoth();
+        await cleared(page, current.state);
+        await captureTrees(page);
+
+        const commands = site.commands().length;
+        dependencyEvidence.observations.push({ delete: file, previous: current.state });
+        rmSync(path.join(site.root, file));
+        const failed = await dependencySettled(current.state, false);
+        dependencyEvidence.observations.push({ deleted: file, failed });
+        expect(failed.good).toBe(current.state.good);
+        expect(failed.errors).toBeGreaterThan(0);
+        expect(site.commands().length).toBeGreaterThan(commands);
+        await expect(page.locator(".rd-dev-panel")).toContainText("payload.txt");
+        await expect(page.locator(".rd-dev-panel")).toContainText("showing the last good version");
+        await retained(page);
+        await dependencySsr(page, expected);
+        await expect(values(page)).toHaveText(["2", "2", "2", ...expected.map(value => String(Number(value) + 1))]);
+        await page.getByTestId("counter-increment").nth(3 + index).click();
+        await expect(values(page)).toHaveText(["2", "2", "2", ...expected.map((value, position) => String(Number(value) + (position === index ? 2 : 1)))]);
+        const lastGood = await page.request.get(current.wasmUrl);
+        expect(lastGood.status()).toBe(200);
+        expect(createHash("sha256").update(await lastGood.body()).digest("hex")).toBe(current.wasmSha256);
+        await test.info().attach(`dev-renamed-${directory}-deleted.png`, { body: await page.screenshot(), contentType: "image/png" });
+
+        dependencyEvidence.observations.push({ restore: file, value: restored, previous: failed });
+        site.write(file, `${restored}\n`);
+        const recovered = await dependencySettled(failed);
+        expected[index] = restored;
+        const restoredSnapshot = await dependencySnapshot(page, expected);
+        updatedDependency(current, restoredSnapshot);
+        current = restoredSnapshot;
+        await clickBoth();
+        await cleared(page, recovered);
+        await test.info().attach(`dev-renamed-${directory}-restored.png`, { body: await page.screenshot(), contentType: "image/png" });
+    }
+    expect(site.read("src/demos.rs")).toBe(siteSource);
     await healthy();
 });

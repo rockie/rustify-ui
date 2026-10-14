@@ -1,0 +1,1594 @@
+{
+  "metadata": [
+    {
+      "mode": "ssr",
+      "author": "path+file:///private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/site#docs-components-fixture@0.1.0",
+      "packages": [
+        {
+          "id": "path+file:///private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/site#docs-components-fixture@0.1.0",
+          "name": "docs-components-fixture",
+          "version": "0.1.0",
+          "manifest_path": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/site/Cargo.toml",
+          "source": null
+        },
+        {
+          "id": "path+file:///private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/payload-v1#payload@1.0.0",
+          "name": "payload",
+          "version": "1.0.0",
+          "manifest_path": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/payload-v1/Cargo.toml",
+          "source": null
+        },
+        {
+          "id": "path+file:///private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/payload-v2#payload@2.0.0",
+          "name": "payload",
+          "version": "2.0.0",
+          "manifest_path": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/payload-v2/Cargo.toml",
+          "source": null
+        },
+        {
+          "id": "git+https://github.com/rockie/rustify-ui?rev=7930fd9a978563e76468fef69d14f444159c47b5#rustify-components@0.1.0",
+          "name": "rustify-components",
+          "version": "0.1.0",
+          "manifest_path": "/Users/rockie/.cargo/git/checkouts/rustify-ui-8cabc2f0e62e69f4/7930fd9/crates/rustify-components/Cargo.toml",
+          "source": "git+https://github.com/rockie/rustify-ui?rev=7930fd9a978563e76468fef69d14f444159c47b5#7930fd9a978563e76468fef69d14f444159c47b5"
+        },
+        {
+          "id": "git+https://github.com/rockie/rustify-ui?rev=7930fd9a978563e76468fef69d14f444159c47b5#rustify-docs@0.1.0",
+          "name": "rustify-docs",
+          "version": "0.1.0",
+          "manifest_path": "/Users/rockie/.cargo/git/checkouts/rustify-ui-8cabc2f0e62e69f4/7930fd9/crates/rustify-docs/Cargo.toml",
+          "source": "git+https://github.com/rockie/rustify-ui?rev=7930fd9a978563e76468fef69d14f444159c47b5#7930fd9a978563e76468fef69d14f444159c47b5"
+        },
+        {
+          "id": "git+https://github.com/rockie/rustify-ui?rev=7930fd9a978563e76468fef69d14f444159c47b5#0.1.0",
+          "name": "rustify-ui",
+          "version": "0.1.0",
+          "manifest_path": "/Users/rockie/.cargo/git/checkouts/rustify-ui-8cabc2f0e62e69f4/7930fd9/crates/rustify-ui/Cargo.toml",
+          "source": "git+https://github.com/rockie/rustify-ui?rev=7930fd9a978563e76468fef69d14f444159c47b5#7930fd9a978563e76468fef69d14f444159c47b5"
+        }
+      ],
+      "resolve": {
+        "nodes": [
+          {
+            "id": "path+file:///private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/site#docs-components-fixture@0.1.0",
+            "features": [
+              "ssr"
+            ],
+            "deps": [
+              {
+                "name": "payload_v1",
+                "pkg": "path+file:///private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/payload-v1#payload@1.0.0"
+              },
+              {
+                "name": "payload_v2",
+                "pkg": "path+file:///private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/payload-v2#payload@2.0.0"
+              },
+              {
+                "name": "rustify_components",
+                "pkg": "git+https://github.com/rockie/rustify-ui?rev=7930fd9a978563e76468fef69d14f444159c47b5#rustify-components@0.1.0"
+              },
+              {
+                "name": "rustify_docs",
+                "pkg": "git+https://github.com/rockie/rustify-ui?rev=7930fd9a978563e76468fef69d14f444159c47b5#rustify-docs@0.1.0"
+              },
+              {
+                "name": "rustify_ui",
+                "pkg": "git+https://github.com/rockie/rustify-ui?rev=7930fd9a978563e76468fef69d14f444159c47b5#0.1.0"
+              }
+            ]
+          },
+          {
+            "id": "path+file:///private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/payload-v1#payload@1.0.0",
+            "features": [],
+            "deps": []
+          },
+          {
+            "id": "path+file:///private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/payload-v2#payload@2.0.0",
+            "features": [],
+            "deps": []
+          },
+          {
+            "id": "git+https://github.com/rockie/rustify-ui?rev=7930fd9a978563e76468fef69d14f444159c47b5#rustify-components@0.1.0",
+            "features": [
+              "ssr"
+            ],
+            "deps": [
+              {
+                "name": "rustify_ui",
+                "pkg": "git+https://github.com/rockie/rustify-ui?rev=7930fd9a978563e76468fef69d14f444159c47b5#0.1.0"
+              }
+            ]
+          },
+          {
+            "id": "git+https://github.com/rockie/rustify-ui?rev=7930fd9a978563e76468fef69d14f444159c47b5#rustify-docs@0.1.0",
+            "features": [
+              "site-ssr"
+            ],
+            "deps": [
+              {
+                "name": "rustify_components",
+                "pkg": "git+https://github.com/rockie/rustify-ui?rev=7930fd9a978563e76468fef69d14f444159c47b5#rustify-components@0.1.0"
+              },
+              {
+                "name": "rustify_ui",
+                "pkg": "git+https://github.com/rockie/rustify-ui?rev=7930fd9a978563e76468fef69d14f444159c47b5#0.1.0"
+              }
+            ]
+          },
+          {
+            "id": "git+https://github.com/rockie/rustify-ui?rev=7930fd9a978563e76468fef69d14f444159c47b5#0.1.0",
+            "features": [
+              "ssr"
+            ],
+            "deps": []
+          }
+        ]
+      }
+    },
+    {
+      "mode": "hydrate",
+      "author": "path+file:///private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/site#docs-components-fixture@0.1.0",
+      "packages": [
+        {
+          "id": "path+file:///private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/site#docs-components-fixture@0.1.0",
+          "name": "docs-components-fixture",
+          "version": "0.1.0",
+          "manifest_path": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/site/Cargo.toml",
+          "source": null
+        },
+        {
+          "id": "path+file:///private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/payload-v1#payload@1.0.0",
+          "name": "payload",
+          "version": "1.0.0",
+          "manifest_path": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/payload-v1/Cargo.toml",
+          "source": null
+        },
+        {
+          "id": "path+file:///private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/payload-v2#payload@2.0.0",
+          "name": "payload",
+          "version": "2.0.0",
+          "manifest_path": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/payload-v2/Cargo.toml",
+          "source": null
+        },
+        {
+          "id": "git+https://github.com/rockie/rustify-ui?rev=7930fd9a978563e76468fef69d14f444159c47b5#rustify-components@0.1.0",
+          "name": "rustify-components",
+          "version": "0.1.0",
+          "manifest_path": "/Users/rockie/.cargo/git/checkouts/rustify-ui-8cabc2f0e62e69f4/7930fd9/crates/rustify-components/Cargo.toml",
+          "source": "git+https://github.com/rockie/rustify-ui?rev=7930fd9a978563e76468fef69d14f444159c47b5#7930fd9a978563e76468fef69d14f444159c47b5"
+        },
+        {
+          "id": "git+https://github.com/rockie/rustify-ui?rev=7930fd9a978563e76468fef69d14f444159c47b5#rustify-docs@0.1.0",
+          "name": "rustify-docs",
+          "version": "0.1.0",
+          "manifest_path": "/Users/rockie/.cargo/git/checkouts/rustify-ui-8cabc2f0e62e69f4/7930fd9/crates/rustify-docs/Cargo.toml",
+          "source": "git+https://github.com/rockie/rustify-ui?rev=7930fd9a978563e76468fef69d14f444159c47b5#7930fd9a978563e76468fef69d14f444159c47b5"
+        },
+        {
+          "id": "git+https://github.com/rockie/rustify-ui?rev=7930fd9a978563e76468fef69d14f444159c47b5#0.1.0",
+          "name": "rustify-ui",
+          "version": "0.1.0",
+          "manifest_path": "/Users/rockie/.cargo/git/checkouts/rustify-ui-8cabc2f0e62e69f4/7930fd9/crates/rustify-ui/Cargo.toml",
+          "source": "git+https://github.com/rockie/rustify-ui?rev=7930fd9a978563e76468fef69d14f444159c47b5#7930fd9a978563e76468fef69d14f444159c47b5"
+        }
+      ],
+      "resolve": {
+        "nodes": [
+          {
+            "id": "path+file:///private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/site#docs-components-fixture@0.1.0",
+            "features": [
+              "hydrate"
+            ],
+            "deps": [
+              {
+                "name": "payload_v1",
+                "pkg": "path+file:///private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/payload-v1#payload@1.0.0"
+              },
+              {
+                "name": "payload_v2",
+                "pkg": "path+file:///private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/payload-v2#payload@2.0.0"
+              },
+              {
+                "name": "rustify_components",
+                "pkg": "git+https://github.com/rockie/rustify-ui?rev=7930fd9a978563e76468fef69d14f444159c47b5#rustify-components@0.1.0"
+              },
+              {
+                "name": "rustify_docs",
+                "pkg": "git+https://github.com/rockie/rustify-ui?rev=7930fd9a978563e76468fef69d14f444159c47b5#rustify-docs@0.1.0"
+              },
+              {
+                "name": "rustify_ui",
+                "pkg": "git+https://github.com/rockie/rustify-ui?rev=7930fd9a978563e76468fef69d14f444159c47b5#0.1.0"
+              }
+            ]
+          },
+          {
+            "id": "path+file:///private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/payload-v1#payload@1.0.0",
+            "features": [],
+            "deps": []
+          },
+          {
+            "id": "path+file:///private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/payload-v2#payload@2.0.0",
+            "features": [],
+            "deps": []
+          },
+          {
+            "id": "git+https://github.com/rockie/rustify-ui?rev=7930fd9a978563e76468fef69d14f444159c47b5#rustify-components@0.1.0",
+            "features": [
+              "hydrate"
+            ],
+            "deps": [
+              {
+                "name": "rustify_ui",
+                "pkg": "git+https://github.com/rockie/rustify-ui?rev=7930fd9a978563e76468fef69d14f444159c47b5#0.1.0"
+              }
+            ]
+          },
+          {
+            "id": "git+https://github.com/rockie/rustify-ui?rev=7930fd9a978563e76468fef69d14f444159c47b5#rustify-docs@0.1.0",
+            "features": [
+              "hydrate"
+            ],
+            "deps": [
+              {
+                "name": "rustify_components",
+                "pkg": "git+https://github.com/rockie/rustify-ui?rev=7930fd9a978563e76468fef69d14f444159c47b5#rustify-components@0.1.0"
+              },
+              {
+                "name": "rustify_ui",
+                "pkg": "git+https://github.com/rockie/rustify-ui?rev=7930fd9a978563e76468fef69d14f444159c47b5#0.1.0"
+              }
+            ]
+          },
+          {
+            "id": "git+https://github.com/rockie/rustify-ui?rev=7930fd9a978563e76468fef69d14f444159c47b5#0.1.0",
+            "features": [
+              "hydrate"
+            ],
+            "deps": []
+          }
+        ]
+      }
+    }
+  ],
+  "observations": [
+    {
+      "ssrValues": [
+        "2",
+        "2",
+        "2",
+        "7",
+        "19"
+      ],
+      "wasmUrl": "http://127.0.0.1:59921/docs/assets/islands/8345b7f8c182e54112110bd0ac3ab5f8e13c58a707999f01f4976edf45fdf7f9/app_bg.wasm",
+      "wasmSha256": "596d23063904e7fdd55d5b4d0bfe93740cea276428dfdaef8a9c91701256c37e",
+      "state": {
+        "session": "e44c-18de673a9a661308",
+        "revision": 1,
+        "sequence": 9,
+        "building": false,
+        "phase": "render",
+        "compile": {
+          "generation": "4c50e095cba9020af7042692f25bff4ecb80377207747c4cebe17789a2b1246c",
+          "completed_at_ms": 1791983237094,
+          "host": {
+            "elapsed_ms": 323,
+            "completed_at_ms": 1791983236856,
+            "fresh_artifacts": 267,
+            "compiled_artifacts": 0,
+            "profile": "docs-host",
+            "target": null,
+            "compiler": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/compiler.cjs",
+            "flags": [
+              "build",
+              "--locked",
+              "--message-format",
+              "json",
+              "--no-default-features",
+              "--profile",
+              "docs-host",
+              "--features",
+              "ssr",
+              "--manifest-path",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/site/Cargo.toml",
+              "--target-dir",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/site/.rustify-docs/target",
+              "--bin",
+              "docs-render"
+            ],
+            "success": true
+          },
+          "wasm": {
+            "elapsed_ms": 236,
+            "completed_at_ms": 1791983237094,
+            "fresh_artifacts": 255,
+            "compiled_artifacts": 0,
+            "profile": "docs-wasm",
+            "target": "wasm32-unknown-unknown",
+            "compiler": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/compiler.cjs",
+            "flags": [
+              "build",
+              "--locked",
+              "--message-format",
+              "json",
+              "--no-default-features",
+              "--profile",
+              "docs-wasm",
+              "--features",
+              "hydrate",
+              "--manifest-path",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/site/Cargo.toml",
+              "--target-dir",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/site/.rustify-docs/target",
+              "--lib",
+              "--target",
+              "wasm32-unknown-unknown"
+            ],
+            "success": true
+          }
+        },
+        "good": 1,
+        "ok": true,
+        "reload": true,
+        "errors": 0,
+        "warnings": 2,
+        "diagnostics": [
+          {
+            "severity": "warning",
+            "rule": "not-in-nav",
+            "file": "content/index.md",
+            "line": null,
+            "column": null,
+            "message": "this page is in no navigation group, so readers can only reach it by a link",
+            "suggestion": null
+          },
+          {
+            "severity": "warning",
+            "rule": "theme-token",
+            "file": "theme.json",
+            "line": null,
+            "column": null,
+            "message": "radius: Light and dark have different author values; editing this common field applies to both",
+            "suggestion": null
+          }
+        ]
+      }
+    },
+    {
+      "save": "../payload-v1/payload.txt",
+      "value": "14",
+      "previous": {
+        "session": "e44c-18de673a9a661308",
+        "revision": 1,
+        "sequence": 9,
+        "building": false,
+        "phase": "render",
+        "compile": {
+          "generation": "4c50e095cba9020af7042692f25bff4ecb80377207747c4cebe17789a2b1246c",
+          "completed_at_ms": 1791983237094,
+          "host": {
+            "elapsed_ms": 323,
+            "completed_at_ms": 1791983236856,
+            "fresh_artifacts": 267,
+            "compiled_artifacts": 0,
+            "profile": "docs-host",
+            "target": null,
+            "compiler": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/compiler.cjs",
+            "flags": [
+              "build",
+              "--locked",
+              "--message-format",
+              "json",
+              "--no-default-features",
+              "--profile",
+              "docs-host",
+              "--features",
+              "ssr",
+              "--manifest-path",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/site/Cargo.toml",
+              "--target-dir",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/site/.rustify-docs/target",
+              "--bin",
+              "docs-render"
+            ],
+            "success": true
+          },
+          "wasm": {
+            "elapsed_ms": 236,
+            "completed_at_ms": 1791983237094,
+            "fresh_artifacts": 255,
+            "compiled_artifacts": 0,
+            "profile": "docs-wasm",
+            "target": "wasm32-unknown-unknown",
+            "compiler": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/compiler.cjs",
+            "flags": [
+              "build",
+              "--locked",
+              "--message-format",
+              "json",
+              "--no-default-features",
+              "--profile",
+              "docs-wasm",
+              "--features",
+              "hydrate",
+              "--manifest-path",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/site/Cargo.toml",
+              "--target-dir",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/site/.rustify-docs/target",
+              "--lib",
+              "--target",
+              "wasm32-unknown-unknown"
+            ],
+            "success": true
+          }
+        },
+        "good": 1,
+        "ok": true,
+        "reload": true,
+        "errors": 0,
+        "warnings": 2,
+        "diagnostics": [
+          {
+            "severity": "warning",
+            "rule": "not-in-nav",
+            "file": "content/index.md",
+            "line": null,
+            "column": null,
+            "message": "this page is in no navigation group, so readers can only reach it by a link",
+            "suggestion": null
+          },
+          {
+            "severity": "warning",
+            "rule": "theme-token",
+            "file": "theme.json",
+            "line": null,
+            "column": null,
+            "message": "radius: Light and dark have different author values; editing this common field applies to both",
+            "suggestion": null
+          }
+        ]
+      }
+    },
+    {
+      "ssrValues": [
+        "2",
+        "2",
+        "2",
+        "14",
+        "19"
+      ],
+      "wasmUrl": "http://127.0.0.1:59921/docs/assets/islands/26106ca337ae639faf423fde70e1a75228ee9d6d920a4213dceb38622051a132/app_bg.wasm",
+      "wasmSha256": "4375a37d23240d356d03a12e3740892703f5f094037e2b78ca955e3aff2fc2b4",
+      "state": {
+        "session": "e44c-18de673a9a661308",
+        "revision": 2,
+        "sequence": 19,
+        "building": false,
+        "phase": "render",
+        "compile": {
+          "generation": "ddda4813defb3bacd9b89e7af2703ac54a6f75d7e8668d8532ec9822495ad586",
+          "completed_at_ms": 1791983267128,
+          "host": {
+            "elapsed_ms": 326,
+            "completed_at_ms": 1791983266890,
+            "fresh_artifacts": 267,
+            "compiled_artifacts": 0,
+            "profile": "docs-host",
+            "target": null,
+            "compiler": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/compiler.cjs",
+            "flags": [
+              "build",
+              "--locked",
+              "--message-format",
+              "json",
+              "--no-default-features",
+              "--profile",
+              "docs-host",
+              "--features",
+              "ssr",
+              "--manifest-path",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/site/Cargo.toml",
+              "--target-dir",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/site/.rustify-docs/target",
+              "--bin",
+              "docs-render"
+            ],
+            "success": true
+          },
+          "wasm": {
+            "elapsed_ms": 236,
+            "completed_at_ms": 1791983267128,
+            "fresh_artifacts": 255,
+            "compiled_artifacts": 0,
+            "profile": "docs-wasm",
+            "target": "wasm32-unknown-unknown",
+            "compiler": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/compiler.cjs",
+            "flags": [
+              "build",
+              "--locked",
+              "--message-format",
+              "json",
+              "--no-default-features",
+              "--profile",
+              "docs-wasm",
+              "--features",
+              "hydrate",
+              "--manifest-path",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/site/Cargo.toml",
+              "--target-dir",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/site/.rustify-docs/target",
+              "--lib",
+              "--target",
+              "wasm32-unknown-unknown"
+            ],
+            "success": true
+          }
+        },
+        "good": 2,
+        "ok": true,
+        "reload": true,
+        "errors": 0,
+        "warnings": 2,
+        "diagnostics": [
+          {
+            "severity": "warning",
+            "rule": "not-in-nav",
+            "file": "content/index.md",
+            "line": null,
+            "column": null,
+            "message": "this page is in no navigation group, so readers can only reach it by a link",
+            "suggestion": null
+          },
+          {
+            "severity": "warning",
+            "rule": "theme-token",
+            "file": "theme.json",
+            "line": null,
+            "column": null,
+            "message": "radius: Light and dark have different author values; editing this common field applies to both",
+            "suggestion": null
+          }
+        ]
+      }
+    },
+    {
+      "delete": "../payload-v1/payload.txt",
+      "previous": {
+        "session": "e44c-18de673a9a661308",
+        "revision": 2,
+        "sequence": 19,
+        "building": false,
+        "phase": "render",
+        "compile": {
+          "generation": "ddda4813defb3bacd9b89e7af2703ac54a6f75d7e8668d8532ec9822495ad586",
+          "completed_at_ms": 1791983267128,
+          "host": {
+            "elapsed_ms": 326,
+            "completed_at_ms": 1791983266890,
+            "fresh_artifacts": 267,
+            "compiled_artifacts": 0,
+            "profile": "docs-host",
+            "target": null,
+            "compiler": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/compiler.cjs",
+            "flags": [
+              "build",
+              "--locked",
+              "--message-format",
+              "json",
+              "--no-default-features",
+              "--profile",
+              "docs-host",
+              "--features",
+              "ssr",
+              "--manifest-path",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/site/Cargo.toml",
+              "--target-dir",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/site/.rustify-docs/target",
+              "--bin",
+              "docs-render"
+            ],
+            "success": true
+          },
+          "wasm": {
+            "elapsed_ms": 236,
+            "completed_at_ms": 1791983267128,
+            "fresh_artifacts": 255,
+            "compiled_artifacts": 0,
+            "profile": "docs-wasm",
+            "target": "wasm32-unknown-unknown",
+            "compiler": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/compiler.cjs",
+            "flags": [
+              "build",
+              "--locked",
+              "--message-format",
+              "json",
+              "--no-default-features",
+              "--profile",
+              "docs-wasm",
+              "--features",
+              "hydrate",
+              "--manifest-path",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/site/Cargo.toml",
+              "--target-dir",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/site/.rustify-docs/target",
+              "--lib",
+              "--target",
+              "wasm32-unknown-unknown"
+            ],
+            "success": true
+          }
+        },
+        "good": 2,
+        "ok": true,
+        "reload": true,
+        "errors": 0,
+        "warnings": 2,
+        "diagnostics": [
+          {
+            "severity": "warning",
+            "rule": "not-in-nav",
+            "file": "content/index.md",
+            "line": null,
+            "column": null,
+            "message": "this page is in no navigation group, so readers can only reach it by a link",
+            "suggestion": null
+          },
+          {
+            "severity": "warning",
+            "rule": "theme-token",
+            "file": "theme.json",
+            "line": null,
+            "column": null,
+            "message": "radius: Light and dark have different author values; editing this common field applies to both",
+            "suggestion": null
+          }
+        ]
+      }
+    },
+    {
+      "deleted": "../payload-v1/payload.txt",
+      "failed": {
+        "session": "e44c-18de673a9a661308",
+        "revision": 3,
+        "sequence": 24,
+        "building": false,
+        "phase": "wasm",
+        "compile": {
+          "generation": "5f9b21019f95ce83a788c51600cf0dd5ab02009ff1a2c284db8b7507a5b359bb",
+          "completed_at_ms": 1791983269984,
+          "host": {
+            "elapsed_ms": 298,
+            "completed_at_ms": 1791983269712,
+            "fresh_artifacts": 264,
+            "compiled_artifacts": 0,
+            "profile": "docs-host",
+            "target": null,
+            "compiler": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/compiler.cjs",
+            "flags": [
+              "build",
+              "--locked",
+              "--message-format",
+              "json",
+              "--no-default-features",
+              "--profile",
+              "docs-host",
+              "--features",
+              "ssr",
+              "--manifest-path",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/site/Cargo.toml",
+              "--target-dir",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/site/.rustify-docs/target",
+              "--bin",
+              "docs-render"
+            ],
+            "success": false
+          },
+          "wasm": {
+            "elapsed_ms": 270,
+            "completed_at_ms": 1791983269984,
+            "fresh_artifacts": 253,
+            "compiled_artifacts": 0,
+            "profile": "docs-wasm",
+            "target": "wasm32-unknown-unknown",
+            "compiler": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/compiler.cjs",
+            "flags": [
+              "build",
+              "--locked",
+              "--message-format",
+              "json",
+              "--no-default-features",
+              "--profile",
+              "docs-wasm",
+              "--features",
+              "hydrate",
+              "--manifest-path",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/site/Cargo.toml",
+              "--target-dir",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/site/.rustify-docs/target",
+              "--lib",
+              "--target",
+              "wasm32-unknown-unknown"
+            ],
+            "success": false
+          }
+        },
+        "good": 2,
+        "ok": false,
+        "reload": false,
+        "errors": 2,
+        "warnings": 2,
+        "diagnostics": [
+          {
+            "severity": "error",
+            "rule": "rust-cargo",
+            "file": null,
+            "line": null,
+            "column": null,
+            "message": "host Cargo build failed: Compiling payload v1.0.0 (/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/payload-v1)\nerror: failed to run custom build command for `payload v1.0.0 (/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/payload-v1)`\n\nCaused by:\n  process didn't exit successfully: `/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/site/.rustify-docs/target/docs-host/build/payload-c8aed53c5ffa8711/build-script-build` (exit status: 101)\n  --- stdout\n  cargo:rerun-if-changed=payload.txt\n\n  --- stderr\n\n  thread 'main' (45412908) panicked at /private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/payload-v1/build.rs:3:61:\n  payload.txt must exist: Os { code: 2, kind: NotFound, message: \"No such file or directory\" }\n  note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace\nmbx[savings]: 112741 compilations served. ask rustc how many it remembers doing.",
+            "suggestion": null
+          },
+          {
+            "severity": "error",
+            "rule": "rust-cargo",
+            "file": null,
+            "line": null,
+            "column": null,
+            "message": "wasm Cargo build failed: Compiling payload v1.0.0 (/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/payload-v1)\nerror: failed to run custom build command for `payload v1.0.0 (/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/payload-v1)`\n\nCaused by:\n  process didn't exit successfully: `/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/site/.rustify-docs/target/docs-wasm/build/payload-c8aed53c5ffa8711/build-script-build` (exit status: 101)\n  --- stdout\n  cargo:rerun-if-changed=payload.txt\n\n  --- stderr\n\n  thread 'main' (45412974) panicked at /private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/payload-v1/build.rs:3:61:\n  payload.txt must exist: Os { code: 2, kind: NotFound, message: \"No such file or directory\" }\n  note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace\nmbx[savings]: lent the same 232.0 GiB to every checkout at once. none of them has checked.",
+            "suggestion": null
+          },
+          {
+            "severity": "warning",
+            "rule": "not-in-nav",
+            "file": "content/index.md",
+            "line": null,
+            "column": null,
+            "message": "this page is in no navigation group, so readers can only reach it by a link",
+            "suggestion": null
+          },
+          {
+            "severity": "warning",
+            "rule": "theme-token",
+            "file": "theme.json",
+            "line": null,
+            "column": null,
+            "message": "radius: Light and dark have different author values; editing this common field applies to both",
+            "suggestion": null
+          }
+        ]
+      }
+    },
+    {
+      "restore": "../payload-v1/payload.txt",
+      "value": "23",
+      "previous": {
+        "session": "e44c-18de673a9a661308",
+        "revision": 3,
+        "sequence": 24,
+        "building": false,
+        "phase": "wasm",
+        "compile": {
+          "generation": "5f9b21019f95ce83a788c51600cf0dd5ab02009ff1a2c284db8b7507a5b359bb",
+          "completed_at_ms": 1791983269984,
+          "host": {
+            "elapsed_ms": 298,
+            "completed_at_ms": 1791983269712,
+            "fresh_artifacts": 264,
+            "compiled_artifacts": 0,
+            "profile": "docs-host",
+            "target": null,
+            "compiler": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/compiler.cjs",
+            "flags": [
+              "build",
+              "--locked",
+              "--message-format",
+              "json",
+              "--no-default-features",
+              "--profile",
+              "docs-host",
+              "--features",
+              "ssr",
+              "--manifest-path",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/site/Cargo.toml",
+              "--target-dir",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/site/.rustify-docs/target",
+              "--bin",
+              "docs-render"
+            ],
+            "success": false
+          },
+          "wasm": {
+            "elapsed_ms": 270,
+            "completed_at_ms": 1791983269984,
+            "fresh_artifacts": 253,
+            "compiled_artifacts": 0,
+            "profile": "docs-wasm",
+            "target": "wasm32-unknown-unknown",
+            "compiler": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/compiler.cjs",
+            "flags": [
+              "build",
+              "--locked",
+              "--message-format",
+              "json",
+              "--no-default-features",
+              "--profile",
+              "docs-wasm",
+              "--features",
+              "hydrate",
+              "--manifest-path",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/site/Cargo.toml",
+              "--target-dir",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/site/.rustify-docs/target",
+              "--lib",
+              "--target",
+              "wasm32-unknown-unknown"
+            ],
+            "success": false
+          }
+        },
+        "good": 2,
+        "ok": false,
+        "reload": false,
+        "errors": 2,
+        "warnings": 2,
+        "diagnostics": [
+          {
+            "severity": "error",
+            "rule": "rust-cargo",
+            "file": null,
+            "line": null,
+            "column": null,
+            "message": "host Cargo build failed: Compiling payload v1.0.0 (/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/payload-v1)\nerror: failed to run custom build command for `payload v1.0.0 (/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/payload-v1)`\n\nCaused by:\n  process didn't exit successfully: `/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/site/.rustify-docs/target/docs-host/build/payload-c8aed53c5ffa8711/build-script-build` (exit status: 101)\n  --- stdout\n  cargo:rerun-if-changed=payload.txt\n\n  --- stderr\n\n  thread 'main' (45412908) panicked at /private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/payload-v1/build.rs:3:61:\n  payload.txt must exist: Os { code: 2, kind: NotFound, message: \"No such file or directory\" }\n  note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace\nmbx[savings]: 112741 compilations served. ask rustc how many it remembers doing.",
+            "suggestion": null
+          },
+          {
+            "severity": "error",
+            "rule": "rust-cargo",
+            "file": null,
+            "line": null,
+            "column": null,
+            "message": "wasm Cargo build failed: Compiling payload v1.0.0 (/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/payload-v1)\nerror: failed to run custom build command for `payload v1.0.0 (/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/payload-v1)`\n\nCaused by:\n  process didn't exit successfully: `/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/site/.rustify-docs/target/docs-wasm/build/payload-c8aed53c5ffa8711/build-script-build` (exit status: 101)\n  --- stdout\n  cargo:rerun-if-changed=payload.txt\n\n  --- stderr\n\n  thread 'main' (45412974) panicked at /private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/payload-v1/build.rs:3:61:\n  payload.txt must exist: Os { code: 2, kind: NotFound, message: \"No such file or directory\" }\n  note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace\nmbx[savings]: lent the same 232.0 GiB to every checkout at once. none of them has checked.",
+            "suggestion": null
+          },
+          {
+            "severity": "warning",
+            "rule": "not-in-nav",
+            "file": "content/index.md",
+            "line": null,
+            "column": null,
+            "message": "this page is in no navigation group, so readers can only reach it by a link",
+            "suggestion": null
+          },
+          {
+            "severity": "warning",
+            "rule": "theme-token",
+            "file": "theme.json",
+            "line": null,
+            "column": null,
+            "message": "radius: Light and dark have different author values; editing this common field applies to both",
+            "suggestion": null
+          }
+        ]
+      }
+    },
+    {
+      "ssrValues": [
+        "2",
+        "2",
+        "2",
+        "23",
+        "19"
+      ],
+      "wasmUrl": "http://127.0.0.1:59921/docs/assets/islands/c28c93110bedc222084ddf32ee323d138d3323235f2971c0b46a69fbfe82a4ac/app_bg.wasm",
+      "wasmSha256": "6a27982cb06f989ee5882b744921a17049186627a569dfa20b623c2e9c958136",
+      "state": {
+        "session": "e44c-18de673a9a661308",
+        "revision": 4,
+        "sequence": 34,
+        "building": false,
+        "phase": "render",
+        "compile": {
+          "generation": "a9950fc0e47e96c9287e835e770aa0a8c801830e94d6149d64cc92adf4226cad",
+          "completed_at_ms": 1791983299667,
+          "host": {
+            "elapsed_ms": 318,
+            "completed_at_ms": 1791983299424,
+            "fresh_artifacts": 267,
+            "compiled_artifacts": 0,
+            "profile": "docs-host",
+            "target": null,
+            "compiler": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/compiler.cjs",
+            "flags": [
+              "build",
+              "--locked",
+              "--message-format",
+              "json",
+              "--no-default-features",
+              "--profile",
+              "docs-host",
+              "--features",
+              "ssr",
+              "--manifest-path",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/site/Cargo.toml",
+              "--target-dir",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/site/.rustify-docs/target",
+              "--bin",
+              "docs-render"
+            ],
+            "success": true
+          },
+          "wasm": {
+            "elapsed_ms": 241,
+            "completed_at_ms": 1791983299667,
+            "fresh_artifacts": 255,
+            "compiled_artifacts": 0,
+            "profile": "docs-wasm",
+            "target": "wasm32-unknown-unknown",
+            "compiler": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/compiler.cjs",
+            "flags": [
+              "build",
+              "--locked",
+              "--message-format",
+              "json",
+              "--no-default-features",
+              "--profile",
+              "docs-wasm",
+              "--features",
+              "hydrate",
+              "--manifest-path",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/site/Cargo.toml",
+              "--target-dir",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/site/.rustify-docs/target",
+              "--lib",
+              "--target",
+              "wasm32-unknown-unknown"
+            ],
+            "success": true
+          }
+        },
+        "good": 4,
+        "ok": true,
+        "reload": true,
+        "errors": 0,
+        "warnings": 2,
+        "diagnostics": [
+          {
+            "severity": "warning",
+            "rule": "not-in-nav",
+            "file": "content/index.md",
+            "line": null,
+            "column": null,
+            "message": "this page is in no navigation group, so readers can only reach it by a link",
+            "suggestion": null
+          },
+          {
+            "severity": "warning",
+            "rule": "theme-token",
+            "file": "theme.json",
+            "line": null,
+            "column": null,
+            "message": "radius: Light and dark have different author values; editing this common field applies to both",
+            "suggestion": null
+          }
+        ]
+      }
+    },
+    {
+      "save": "../payload-v2/payload.txt",
+      "value": "29",
+      "previous": {
+        "session": "e44c-18de673a9a661308",
+        "revision": 4,
+        "sequence": 34,
+        "building": false,
+        "phase": "render",
+        "compile": {
+          "generation": "a9950fc0e47e96c9287e835e770aa0a8c801830e94d6149d64cc92adf4226cad",
+          "completed_at_ms": 1791983299667,
+          "host": {
+            "elapsed_ms": 318,
+            "completed_at_ms": 1791983299424,
+            "fresh_artifacts": 267,
+            "compiled_artifacts": 0,
+            "profile": "docs-host",
+            "target": null,
+            "compiler": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/compiler.cjs",
+            "flags": [
+              "build",
+              "--locked",
+              "--message-format",
+              "json",
+              "--no-default-features",
+              "--profile",
+              "docs-host",
+              "--features",
+              "ssr",
+              "--manifest-path",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/site/Cargo.toml",
+              "--target-dir",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/site/.rustify-docs/target",
+              "--bin",
+              "docs-render"
+            ],
+            "success": true
+          },
+          "wasm": {
+            "elapsed_ms": 241,
+            "completed_at_ms": 1791983299667,
+            "fresh_artifacts": 255,
+            "compiled_artifacts": 0,
+            "profile": "docs-wasm",
+            "target": "wasm32-unknown-unknown",
+            "compiler": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/compiler.cjs",
+            "flags": [
+              "build",
+              "--locked",
+              "--message-format",
+              "json",
+              "--no-default-features",
+              "--profile",
+              "docs-wasm",
+              "--features",
+              "hydrate",
+              "--manifest-path",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/site/Cargo.toml",
+              "--target-dir",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/site/.rustify-docs/target",
+              "--lib",
+              "--target",
+              "wasm32-unknown-unknown"
+            ],
+            "success": true
+          }
+        },
+        "good": 4,
+        "ok": true,
+        "reload": true,
+        "errors": 0,
+        "warnings": 2,
+        "diagnostics": [
+          {
+            "severity": "warning",
+            "rule": "not-in-nav",
+            "file": "content/index.md",
+            "line": null,
+            "column": null,
+            "message": "this page is in no navigation group, so readers can only reach it by a link",
+            "suggestion": null
+          },
+          {
+            "severity": "warning",
+            "rule": "theme-token",
+            "file": "theme.json",
+            "line": null,
+            "column": null,
+            "message": "radius: Light and dark have different author values; editing this common field applies to both",
+            "suggestion": null
+          }
+        ]
+      }
+    },
+    {
+      "ssrValues": [
+        "2",
+        "2",
+        "2",
+        "23",
+        "29"
+      ],
+      "wasmUrl": "http://127.0.0.1:59921/docs/assets/islands/d91e756c07537a71bb7a271ccf20777e02849f36f31a2d236ed8729cbddc2765/app_bg.wasm",
+      "wasmSha256": "02a3cef130c127c8c62c77b993776249269cfffccc812d5b93917c224bf5d200",
+      "state": {
+        "session": "e44c-18de673a9a661308",
+        "revision": 5,
+        "sequence": 44,
+        "building": false,
+        "phase": "render",
+        "compile": {
+          "generation": "e1e44f7498226d06f21cc83fb6a743f5f986a21f1f8134c7c05c2feb523e6a3a",
+          "completed_at_ms": 1791983328415,
+          "host": {
+            "elapsed_ms": 307,
+            "completed_at_ms": 1791983328194,
+            "fresh_artifacts": 267,
+            "compiled_artifacts": 0,
+            "profile": "docs-host",
+            "target": null,
+            "compiler": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/compiler.cjs",
+            "flags": [
+              "build",
+              "--locked",
+              "--message-format",
+              "json",
+              "--no-default-features",
+              "--profile",
+              "docs-host",
+              "--features",
+              "ssr",
+              "--manifest-path",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/site/Cargo.toml",
+              "--target-dir",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/site/.rustify-docs/target",
+              "--bin",
+              "docs-render"
+            ],
+            "success": true
+          },
+          "wasm": {
+            "elapsed_ms": 219,
+            "completed_at_ms": 1791983328415,
+            "fresh_artifacts": 255,
+            "compiled_artifacts": 0,
+            "profile": "docs-wasm",
+            "target": "wasm32-unknown-unknown",
+            "compiler": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/compiler.cjs",
+            "flags": [
+              "build",
+              "--locked",
+              "--message-format",
+              "json",
+              "--no-default-features",
+              "--profile",
+              "docs-wasm",
+              "--features",
+              "hydrate",
+              "--manifest-path",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/site/Cargo.toml",
+              "--target-dir",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/site/.rustify-docs/target",
+              "--lib",
+              "--target",
+              "wasm32-unknown-unknown"
+            ],
+            "success": true
+          }
+        },
+        "good": 5,
+        "ok": true,
+        "reload": true,
+        "errors": 0,
+        "warnings": 2,
+        "diagnostics": [
+          {
+            "severity": "warning",
+            "rule": "not-in-nav",
+            "file": "content/index.md",
+            "line": null,
+            "column": null,
+            "message": "this page is in no navigation group, so readers can only reach it by a link",
+            "suggestion": null
+          },
+          {
+            "severity": "warning",
+            "rule": "theme-token",
+            "file": "theme.json",
+            "line": null,
+            "column": null,
+            "message": "radius: Light and dark have different author values; editing this common field applies to both",
+            "suggestion": null
+          }
+        ]
+      }
+    },
+    {
+      "delete": "../payload-v2/payload.txt",
+      "previous": {
+        "session": "e44c-18de673a9a661308",
+        "revision": 5,
+        "sequence": 44,
+        "building": false,
+        "phase": "render",
+        "compile": {
+          "generation": "e1e44f7498226d06f21cc83fb6a743f5f986a21f1f8134c7c05c2feb523e6a3a",
+          "completed_at_ms": 1791983328415,
+          "host": {
+            "elapsed_ms": 307,
+            "completed_at_ms": 1791983328194,
+            "fresh_artifacts": 267,
+            "compiled_artifacts": 0,
+            "profile": "docs-host",
+            "target": null,
+            "compiler": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/compiler.cjs",
+            "flags": [
+              "build",
+              "--locked",
+              "--message-format",
+              "json",
+              "--no-default-features",
+              "--profile",
+              "docs-host",
+              "--features",
+              "ssr",
+              "--manifest-path",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/site/Cargo.toml",
+              "--target-dir",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/site/.rustify-docs/target",
+              "--bin",
+              "docs-render"
+            ],
+            "success": true
+          },
+          "wasm": {
+            "elapsed_ms": 219,
+            "completed_at_ms": 1791983328415,
+            "fresh_artifacts": 255,
+            "compiled_artifacts": 0,
+            "profile": "docs-wasm",
+            "target": "wasm32-unknown-unknown",
+            "compiler": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/compiler.cjs",
+            "flags": [
+              "build",
+              "--locked",
+              "--message-format",
+              "json",
+              "--no-default-features",
+              "--profile",
+              "docs-wasm",
+              "--features",
+              "hydrate",
+              "--manifest-path",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/site/Cargo.toml",
+              "--target-dir",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/site/.rustify-docs/target",
+              "--lib",
+              "--target",
+              "wasm32-unknown-unknown"
+            ],
+            "success": true
+          }
+        },
+        "good": 5,
+        "ok": true,
+        "reload": true,
+        "errors": 0,
+        "warnings": 2,
+        "diagnostics": [
+          {
+            "severity": "warning",
+            "rule": "not-in-nav",
+            "file": "content/index.md",
+            "line": null,
+            "column": null,
+            "message": "this page is in no navigation group, so readers can only reach it by a link",
+            "suggestion": null
+          },
+          {
+            "severity": "warning",
+            "rule": "theme-token",
+            "file": "theme.json",
+            "line": null,
+            "column": null,
+            "message": "radius: Light and dark have different author values; editing this common field applies to both",
+            "suggestion": null
+          }
+        ]
+      }
+    },
+    {
+      "deleted": "../payload-v2/payload.txt",
+      "failed": {
+        "session": "e44c-18de673a9a661308",
+        "revision": 6,
+        "sequence": 49,
+        "building": false,
+        "phase": "wasm",
+        "compile": {
+          "generation": "f997ddbe8a1c520fa18652e9df2c9b6278b962114c747befcbcd5183b2216be6",
+          "completed_at_ms": 1791983330741,
+          "host": {
+            "elapsed_ms": 349,
+            "completed_at_ms": 1791983330468,
+            "fresh_artifacts": 264,
+            "compiled_artifacts": 0,
+            "profile": "docs-host",
+            "target": null,
+            "compiler": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/compiler.cjs",
+            "flags": [
+              "build",
+              "--locked",
+              "--message-format",
+              "json",
+              "--no-default-features",
+              "--profile",
+              "docs-host",
+              "--features",
+              "ssr",
+              "--manifest-path",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/site/Cargo.toml",
+              "--target-dir",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/site/.rustify-docs/target",
+              "--bin",
+              "docs-render"
+            ],
+            "success": false
+          },
+          "wasm": {
+            "elapsed_ms": 271,
+            "completed_at_ms": 1791983330741,
+            "fresh_artifacts": 253,
+            "compiled_artifacts": 0,
+            "profile": "docs-wasm",
+            "target": "wasm32-unknown-unknown",
+            "compiler": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/compiler.cjs",
+            "flags": [
+              "build",
+              "--locked",
+              "--message-format",
+              "json",
+              "--no-default-features",
+              "--profile",
+              "docs-wasm",
+              "--features",
+              "hydrate",
+              "--manifest-path",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/site/Cargo.toml",
+              "--target-dir",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/site/.rustify-docs/target",
+              "--lib",
+              "--target",
+              "wasm32-unknown-unknown"
+            ],
+            "success": false
+          }
+        },
+        "good": 5,
+        "ok": false,
+        "reload": false,
+        "errors": 2,
+        "warnings": 2,
+        "diagnostics": [
+          {
+            "severity": "error",
+            "rule": "rust-cargo",
+            "file": null,
+            "line": null,
+            "column": null,
+            "message": "host Cargo build failed: Compiling payload v2.0.0 (/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/payload-v2)\nerror: failed to run custom build command for `payload v2.0.0 (/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/payload-v2)`\n\nCaused by:\n  process didn't exit successfully: `/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/site/.rustify-docs/target/docs-host/build/payload-2be69f7080db82b2/build-script-build` (exit status: 101)\n  --- stdout\n  cargo:rerun-if-changed=payload.txt\n\n  --- stderr\n\n  thread 'main' (45419320) panicked at /private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/payload-v2/build.rs:3:61:\n  payload.txt must exist: Os { code: 2, kind: NotFound, message: \"No such file or directory\" }\n  note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace\nmbx[savings]: 13h 55m not spent compiling, over 8150 builds. what you did instead is between you and the terminal.",
+            "suggestion": null
+          },
+          {
+            "severity": "error",
+            "rule": "rust-cargo",
+            "file": null,
+            "line": null,
+            "column": null,
+            "message": "wasm Cargo build failed: Compiling payload v2.0.0 (/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/payload-v2)\nerror: failed to run custom build command for `payload v2.0.0 (/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/payload-v2)`\n\nCaused by:\n  process didn't exit successfully: `/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/site/.rustify-docs/target/docs-wasm/build/payload-2be69f7080db82b2/build-script-build` (exit status: 101)\n  --- stdout\n  cargo:rerun-if-changed=payload.txt\n\n  --- stderr\n\n  thread 'main' (45419389) panicked at /private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/payload-v2/build.rs:3:61:\n  payload.txt must exist: Os { code: 2, kind: NotFound, message: \"No such file or directory\" }\n  note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace\nmbx[savings]: 232.0 GiB in every checkout, 232.0 GiB on disk. arithmetic declined to comment.",
+            "suggestion": null
+          },
+          {
+            "severity": "warning",
+            "rule": "not-in-nav",
+            "file": "content/index.md",
+            "line": null,
+            "column": null,
+            "message": "this page is in no navigation group, so readers can only reach it by a link",
+            "suggestion": null
+          },
+          {
+            "severity": "warning",
+            "rule": "theme-token",
+            "file": "theme.json",
+            "line": null,
+            "column": null,
+            "message": "radius: Light and dark have different author values; editing this common field applies to both",
+            "suggestion": null
+          }
+        ]
+      }
+    },
+    {
+      "restore": "../payload-v2/payload.txt",
+      "value": "37",
+      "previous": {
+        "session": "e44c-18de673a9a661308",
+        "revision": 6,
+        "sequence": 49,
+        "building": false,
+        "phase": "wasm",
+        "compile": {
+          "generation": "f997ddbe8a1c520fa18652e9df2c9b6278b962114c747befcbcd5183b2216be6",
+          "completed_at_ms": 1791983330741,
+          "host": {
+            "elapsed_ms": 349,
+            "completed_at_ms": 1791983330468,
+            "fresh_artifacts": 264,
+            "compiled_artifacts": 0,
+            "profile": "docs-host",
+            "target": null,
+            "compiler": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/compiler.cjs",
+            "flags": [
+              "build",
+              "--locked",
+              "--message-format",
+              "json",
+              "--no-default-features",
+              "--profile",
+              "docs-host",
+              "--features",
+              "ssr",
+              "--manifest-path",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/site/Cargo.toml",
+              "--target-dir",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/site/.rustify-docs/target",
+              "--bin",
+              "docs-render"
+            ],
+            "success": false
+          },
+          "wasm": {
+            "elapsed_ms": 271,
+            "completed_at_ms": 1791983330741,
+            "fresh_artifacts": 253,
+            "compiled_artifacts": 0,
+            "profile": "docs-wasm",
+            "target": "wasm32-unknown-unknown",
+            "compiler": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/compiler.cjs",
+            "flags": [
+              "build",
+              "--locked",
+              "--message-format",
+              "json",
+              "--no-default-features",
+              "--profile",
+              "docs-wasm",
+              "--features",
+              "hydrate",
+              "--manifest-path",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/site/Cargo.toml",
+              "--target-dir",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/site/.rustify-docs/target",
+              "--lib",
+              "--target",
+              "wasm32-unknown-unknown"
+            ],
+            "success": false
+          }
+        },
+        "good": 5,
+        "ok": false,
+        "reload": false,
+        "errors": 2,
+        "warnings": 2,
+        "diagnostics": [
+          {
+            "severity": "error",
+            "rule": "rust-cargo",
+            "file": null,
+            "line": null,
+            "column": null,
+            "message": "host Cargo build failed: Compiling payload v2.0.0 (/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/payload-v2)\nerror: failed to run custom build command for `payload v2.0.0 (/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/payload-v2)`\n\nCaused by:\n  process didn't exit successfully: `/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/site/.rustify-docs/target/docs-host/build/payload-2be69f7080db82b2/build-script-build` (exit status: 101)\n  --- stdout\n  cargo:rerun-if-changed=payload.txt\n\n  --- stderr\n\n  thread 'main' (45419320) panicked at /private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/payload-v2/build.rs:3:61:\n  payload.txt must exist: Os { code: 2, kind: NotFound, message: \"No such file or directory\" }\n  note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace\nmbx[savings]: 13h 55m not spent compiling, over 8150 builds. what you did instead is between you and the terminal.",
+            "suggestion": null
+          },
+          {
+            "severity": "error",
+            "rule": "rust-cargo",
+            "file": null,
+            "line": null,
+            "column": null,
+            "message": "wasm Cargo build failed: Compiling payload v2.0.0 (/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/payload-v2)\nerror: failed to run custom build command for `payload v2.0.0 (/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/payload-v2)`\n\nCaused by:\n  process didn't exit successfully: `/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/site/.rustify-docs/target/docs-wasm/build/payload-2be69f7080db82b2/build-script-build` (exit status: 101)\n  --- stdout\n  cargo:rerun-if-changed=payload.txt\n\n  --- stderr\n\n  thread 'main' (45419389) panicked at /private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/payload-v2/build.rs:3:61:\n  payload.txt must exist: Os { code: 2, kind: NotFound, message: \"No such file or directory\" }\n  note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace\nmbx[savings]: 232.0 GiB in every checkout, 232.0 GiB on disk. arithmetic declined to comment.",
+            "suggestion": null
+          },
+          {
+            "severity": "warning",
+            "rule": "not-in-nav",
+            "file": "content/index.md",
+            "line": null,
+            "column": null,
+            "message": "this page is in no navigation group, so readers can only reach it by a link",
+            "suggestion": null
+          },
+          {
+            "severity": "warning",
+            "rule": "theme-token",
+            "file": "theme.json",
+            "line": null,
+            "column": null,
+            "message": "radius: Light and dark have different author values; editing this common field applies to both",
+            "suggestion": null
+          }
+        ]
+      }
+    },
+    {
+      "ssrValues": [
+        "2",
+        "2",
+        "2",
+        "23",
+        "37"
+      ],
+      "wasmUrl": "http://127.0.0.1:59921/docs/assets/islands/2087e5f8a756b48e0bffb154202636f795a1bd4ca0bfe21a53f0574467e17e49/app_bg.wasm",
+      "wasmSha256": "47294c87616ff5f636ecc79213c1230ebc3ae7f0aeabb71086bba105b3b833cc",
+      "state": {
+        "session": "e44c-18de673a9a661308",
+        "revision": 7,
+        "sequence": 59,
+        "building": false,
+        "phase": "render",
+        "compile": {
+          "generation": "ee2181f53be903691ace73ad3b72d4a4fef0f3d615b18a8dbd2375d8a1554707",
+          "completed_at_ms": 1791983359662,
+          "host": {
+            "elapsed_ms": 326,
+            "completed_at_ms": 1791983359434,
+            "fresh_artifacts": 267,
+            "compiled_artifacts": 0,
+            "profile": "docs-host",
+            "target": null,
+            "compiler": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/compiler.cjs",
+            "flags": [
+              "build",
+              "--locked",
+              "--message-format",
+              "json",
+              "--no-default-features",
+              "--profile",
+              "docs-host",
+              "--features",
+              "ssr",
+              "--manifest-path",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/site/Cargo.toml",
+              "--target-dir",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/site/.rustify-docs/target",
+              "--bin",
+              "docs-render"
+            ],
+            "success": true
+          },
+          "wasm": {
+            "elapsed_ms": 226,
+            "completed_at_ms": 1791983359662,
+            "fresh_artifacts": 255,
+            "compiled_artifacts": 0,
+            "profile": "docs-wasm",
+            "target": "wasm32-unknown-unknown",
+            "compiler": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/compiler.cjs",
+            "flags": [
+              "build",
+              "--locked",
+              "--message-format",
+              "json",
+              "--no-default-features",
+              "--profile",
+              "docs-wasm",
+              "--features",
+              "hydrate",
+              "--manifest-path",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/site/Cargo.toml",
+              "--target-dir",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-CnndPW/site/.rustify-docs/target",
+              "--lib",
+              "--target",
+              "wasm32-unknown-unknown"
+            ],
+            "success": true
+          }
+        },
+        "good": 7,
+        "ok": true,
+        "reload": true,
+        "errors": 0,
+        "warnings": 2,
+        "diagnostics": [
+          {
+            "severity": "warning",
+            "rule": "not-in-nav",
+            "file": "content/index.md",
+            "line": null,
+            "column": null,
+            "message": "this page is in no navigation group, so readers can only reach it by a link",
+            "suggestion": null
+          },
+          {
+            "severity": "warning",
+            "rule": "theme-token",
+            "file": "theme.json",
+            "line": null,
+            "column": null,
+            "message": "radius: Light and dark have different author values; editing this common field applies to both",
+            "suggestion": null
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,453 @@
+{
+  "config": {
+    "argv": [
+      "/Users/rockie/.nvm/versions/node/v26.1.0/bin/node",
+      "/Users/rockie/Documents/gh-rockie/rustify-ui/node_modules/.bin/playwright",
+      "test",
+      "--config=playwright.docs.config.ts",
+      "--project=docs-dev",
+      "tests/docs-ssg/dev-components.spec.ts",
+      "--grep",
+      "renamed same-name build inputs",
+      "--workers=1",
+      "--reporter=line,json",
+      "--output=docs/validation/docs-ssg-p2/apply-r1/dev-renamed-inputs-green"
+    ],
+    "configFile": "/Users/rockie/Documents/gh-rockie/rustify-ui/playwright.docs.config.ts",
+    "rootDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": {},
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/apply-r1/dev-renamed-inputs-green",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "dom-only",
+        "name": "dom-only",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [
+          "dom-only/hydration.spec.ts"
+        ],
+        "testMatch": [
+          "dom-only/**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/apply-r1/dev-renamed-inputs-green",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "dom-hydrate",
+        "name": "dom-hydrate",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "dom-only/hydration.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/apply-r1/dev-renamed-inputs-green",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "docs-root",
+        "name": "docs-root",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [
+          "docs-ssg/dev*.spec.ts",
+          "docs-ssg/islands.spec.ts",
+          "docs-ssg/custom.spec.ts",
+          "docs-ssg/official.spec.ts"
+        ],
+        "testMatch": [
+          "docs-ssg/**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/apply-r1/dev-renamed-inputs-green",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "docs-subpath",
+        "name": "docs-subpath",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [
+          "docs-ssg/dev*.spec.ts",
+          "docs-ssg/islands.spec.ts",
+          "docs-ssg/custom.spec.ts",
+          "docs-ssg/official.spec.ts"
+        ],
+        "testMatch": [
+          "docs-ssg/**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/apply-r1/dev-renamed-inputs-green",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "docs-meta",
+        "name": "docs-meta",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [
+          "docs-ssg/dev*.spec.ts",
+          "docs-ssg/islands.spec.ts",
+          "docs-ssg/custom.spec.ts",
+          "docs-ssg/official.spec.ts"
+        ],
+        "testMatch": [
+          "docs-ssg/**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/apply-r1/dev-renamed-inputs-green",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "components-root",
+        "name": "components-root",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/islands.spec.ts",
+          "docs-ssg/custom.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/apply-r1/dev-renamed-inputs-green",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "components-subpath",
+        "name": "components-subpath",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/islands.spec.ts",
+          "docs-ssg/custom.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/apply-r1/dev-renamed-inputs-green",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "components-meta",
+        "name": "components-meta",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/islands.spec.ts",
+          "docs-ssg/custom.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/apply-r1/dev-renamed-inputs-green",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "official-root",
+        "name": "official-root",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/official.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/apply-r1/dev-renamed-inputs-green",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "official-subpath",
+        "name": "official-subpath",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/official.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/apply-r1/dev-renamed-inputs-green",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "official-meta",
+        "name": "official-meta",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/official.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/apply-r1/dev-renamed-inputs-green",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "components-webkit",
+        "name": "components-webkit",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/islands.spec.ts",
+          "docs-ssg/custom.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/apply-r1/dev-renamed-inputs-green",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "docs-firefox",
+        "name": "docs-firefox",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [
+          "docs-ssg/dev*.spec.ts",
+          "docs-ssg/islands.spec.ts",
+          "docs-ssg/custom.spec.ts",
+          "docs-ssg/official.spec.ts"
+        ],
+        "testMatch": [
+          "docs-ssg/**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/apply-r1/dev-renamed-inputs-green",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "docs-webkit",
+        "name": "docs-webkit",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [
+          "docs-ssg/dev*.spec.ts",
+          "docs-ssg/islands.spec.ts",
+          "docs-ssg/custom.spec.ts",
+          "docs-ssg/official.spec.ts"
+        ],
+        "testMatch": [
+          "docs-ssg/**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/apply-r1/dev-renamed-inputs-green",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "docs-dev",
+        "name": "docs-dev",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/dev*.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "line"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "docs-ssg/dev-components.spec.ts",
+      "file": "docs-ssg/dev-components.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "renamed same-name build inputs track each dependency save, deletion and recovery",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 900000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "docs-dev",
+              "projectName": "docs-dev",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 152750,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [
+                    {
+                      "text": "     Locking 2 packages to highest compatible versions\n      Adding payload v1.0.0 (/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-9nC1Sl/payload-v1)\n      Adding payload v2.0.0 (/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-9nC1Sl/payload-v2)\n"
+                    }
+                  ],
+                  "retry": 0,
+                  "startTime": "2026-10-14T13:00:31.889Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "dev-renamed-payload-v1-deleted.png",
+                      "contentType": "image/png",
+                      "path": "docs/validation/docs-ssg-p2/apply-r1/dev-renamed-inputs-green/test-1/dev-renamed-payload-v1-deleted.png"
+                    },
+                    {
+                      "name": "dev-renamed-payload-v1-restored.png",
+                      "contentType": "image/png",
+                      "path": "docs/validation/docs-ssg-p2/apply-r1/dev-renamed-inputs-green/test-1/dev-renamed-payload-v1-restored.png"
+                    },
+                    {
+                      "name": "dev-renamed-payload-v2-deleted.png",
+                      "contentType": "image/png",
+                      "path": "docs/validation/docs-ssg-p2/apply-r1/dev-renamed-inputs-green/test-1/dev-renamed-payload-v2-deleted.png"
+                    },
+                    {
+                      "name": "dev-renamed-payload-v2-restored.png",
+                      "contentType": "image/png",
+                      "path": "docs/validation/docs-ssg-p2/apply-r1/dev-renamed-inputs-green/test-1/dev-renamed-payload-v2-restored.png"
+                    },
+                    {
+                      "name": "dev-component-browser-audit.json",
+                      "contentType": "application/json",
+                      "path": "docs/validation/docs-ssg-p2/apply-r1/dev-renamed-inputs-green/test-1/dev-component-browser-audit.json"
+                    },
+                    {
+                      "name": "dev-component-states.json",
+                      "contentType": "application/json",
+                      "path": "docs/validation/docs-ssg-p2/apply-r1/dev-renamed-inputs-green/test-1/dev-component-states.json"
+                    },
+                    {
+                      "name": "dev-component-compiler-commands.json",
+                      "contentType": "application/json",
+                      "path": "docs/validation/docs-ssg-p2/apply-r1/dev-renamed-inputs-green/test-1/dev-component-compiler-commands.json"
+                    },
+                    {
+                      "name": "dev-component-compiler-lifecycle.json",
+                      "contentType": "application/json",
+                      "path": "docs/validation/docs-ssg-p2/apply-r1/dev-renamed-inputs-green/test-1/dev-component-compiler-lifecycle.json"
+                    },
+                    {
+                      "name": "dev-component-cli.log",
+                      "contentType": "text/plain",
+                      "path": "docs/validation/docs-ssg-p2/apply-r1/dev-renamed-inputs-green/test-1/dev-component-cli.log"
+                    },
+                    {
+                      "name": "dev-component-dependencies.json",
+                      "contentType": "application/json",
+                      "path": "docs/validation/docs-ssg-p2/apply-r1/dev-renamed-inputs-green/test-1/dev-component-dependencies.json"
+                    },
+                    {
+                      "name": "dev-component-site-Cargo.toml",
+                      "contentType": "text/plain",
+                      "path": "docs/validation/docs-ssg-p2/apply-r1/dev-renamed-inputs-green/test-1/dev-component-site-Cargo.toml"
+                    },
+                    {
+                      "name": "dev-component-lock-before-dev",
+                      "contentType": "text/plain",
+                      "path": "docs/validation/docs-ssg-p2/apply-r1/dev-renamed-inputs-green/test-1/dev-component-lock-before-dev.txt"
+                    },
+                    {
+                      "name": "dev-component-lock-after-dev",
+                      "contentType": "text/plain",
+                      "path": "docs/validation/docs-ssg-p2/apply-r1/dev-renamed-inputs-green/test-1/dev-component-lock-after-dev.txt"
+                    },
+                    {
+                      "name": "dev-component-compile-history.json",
+                      "contentType": "application/json",
+                      "path": "docs/validation/docs-ssg-p2/apply-r1/dev-renamed-inputs-green/test-1/dev-component-compile-history.json"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "69a9f46649e7beb019ff-272caa58a36950829a56",
+          "file": "docs-ssg/dev-components.spec.ts",
+          "line": 724,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-14T13:00:31.575Z",
+    "duration": 153179.92799999999,
+    "expected": 1,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

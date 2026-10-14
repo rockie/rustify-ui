@@ -1,0 +1,53 @@
+{
+  "R": "7930fd9a978563e76468fef69d14f444159c47b5",
+  "C": "45878ce31763fe21b9276e563e2920d180787dee",
+  "passed": true,
+  "median_ms": 1163.400146484375,
+  "previous_C4_median_ms": 1117,
+  "meter_source_sha256": "e63bb883126e1433b1612a01182be3e9b51c13f6fcd514e4ea6c0e1511d34ad9",
+  "metric": "two-target compilation complete to actual input paint, unchanged 24-category meter",
+  "samples": [
+    {
+      "index": 1,
+      "compile_to_actual_input_paint_ms": 1207.7001953125,
+      "source_to_actual_input_paint_ms": 26161.7001953125,
+      "displacement": 0,
+      "hydration_shifts": [],
+      "source_matches": true
+    },
+    {
+      "index": 2,
+      "compile_to_actual_input_paint_ms": 1184.300048828125,
+      "source_to_actual_input_paint_ms": 26294.300048828125,
+      "displacement": 0,
+      "hydration_shifts": [],
+      "source_matches": true
+    },
+    {
+      "index": 3,
+      "compile_to_actual_input_paint_ms": 1162.39990234375,
+      "source_to_actual_input_paint_ms": 26260.39990234375,
+      "displacement": 0,
+      "hydration_shifts": [],
+      "source_matches": true
+    },
+    {
+      "index": 4,
+      "compile_to_actual_input_paint_ms": 1149.400146484375,
+      "source_to_actual_input_paint_ms": 26323.400146484375,
+      "displacement": 0,
+      "hydration_shifts": [],
+      "source_matches": true
+    },
+    {
+      "index": 5,
+      "compile_to_actual_input_paint_ms": 1163.400146484375,
+      "source_to_actual_input_paint_ms": 26554.400146484375,
+      "displacement": 0,
+      "hydration_shifts": [],
+      "source_matches": true
+    }
+  ],
+  "errors": [],
+  "all_own_processes_stopped": true
+}

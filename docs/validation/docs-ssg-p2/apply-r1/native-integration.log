@@ -1,0 +1,44 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-docs-cli v0.1.15 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-docs-cli)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 4.18s
+     Running tests/components.rs (target/debug/deps/components-bcea4a75aa805f08)
+
+running 2 tests
+test pair_helper_preserves_manifest_bytes_and_refuses_mismatched_generated_pairs ... ok
+test real_component_builds_report_independent_errors_preserve_good_bytes_and_recover_one_generation ... mbx[progress]: 15s elapsed; 0 hits, 0 misses, 0 bypassed, 3 not looked up; ~0s compiler work saved
+mbx[progress]: 30s elapsed; 0 hits, 0 misses, 0 bypassed, 3 not looked up; ~0s compiler work saved
+mbx[progress]: 45s elapsed; 0 hits, 0 misses, 0 bypassed, 3 not looked up; ~0s compiler work saved
+mbx[progress]: 1m elapsed; 0 hits, 0 misses, 0 bypassed, 3 not looked up; ~0s compiler work saved
+mbx[progress]: 1m 15s elapsed; 0 hits, 0 misses, 0 bypassed, 3 not looked up; ~0s compiler work saved
+mbx[progress]: 1m 30s elapsed; 0 hits, 0 misses, 0 bypassed, 3 not looked up; ~0s compiler work saved
+mbx[progress]: 1m 45s elapsed; 0 hits, 0 misses, 0 bypassed, 3 not looked up; ~0s compiler work saved
+mbx[progress]: 2m elapsed; 0 hits, 0 misses, 0 bypassed, 3 not looked up; ~0s compiler work saved
+mbx[progress]: 3m elapsed; 0 hits, 0 misses, 0 bypassed, 3 not looked up; ~0s compiler work saved
+mbx[progress]: 4m elapsed; 0 hits, 0 misses, 0 bypassed, 3 not looked up; ~0s compiler work saved
+mbx[progress]: 5m elapsed; 0 hits, 0 misses, 0 bypassed, 3 not looked up; ~0s compiler work saved
+mbx[progress]: 6m elapsed; 0 hits, 0 misses, 0 bypassed, 3 not looked up; ~0s compiler work saved
+ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 383.65s
+
+     Running tests/rust_dev.rs (target/debug/deps/rust_dev-4362a2059ccf95e6)
+
+running 3 tests
+test an_external_path_dependency_is_read_watched_and_restored_after_deletion ... mbx[progress]: 7m elapsed; 0 hits, 0 misses, 0 bypassed, 3 not looked up; ~0s compiler work saved
+mbx[progress]: 8m elapsed; 0 hits, 0 misses, 0 bypassed, 3 not looked up; ~0s compiler work saved
+ok
+test build_generated_includes_and_saves_during_compile_publish_only_the_latest_complete_view ... mbx[progress]: 9m elapsed; 0 hits, 0 misses, 0 bypassed, 3 not looked up; ~0s compiler work saved
+mbx[progress]: 10m elapsed; 0 hits, 0 misses, 0 bypassed, 3 not looked up; ~0s compiler work saved
+ok
+test real_rust_dev_serves_before_compile_reuses_content_and_preserves_failed_generations ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 298.63s
+
+mbx[cache]: 0 hits, 0 misses, 3 not looked up; 0 B downloaded, 0 B uploaded, 145.6 MiB stored locally
+mbx[savings]: 114079 compilations on file. the box remembers.
