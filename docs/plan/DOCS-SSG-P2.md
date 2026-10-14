@@ -56,7 +56,7 @@
 
 | Milestone | 状态 | 更新时间 | 简要记录 | 实现与验收记录 | 提交 |
 | --- | --- | --- | --- | --- | --- |
-| M6 | 阻塞 | 2026-10-14T10:08:39+08:00 | C4本地技术门收口，当前Safari实测hidden：CLI148/Docs265、UAT7/Chrome351/旧回归265及正式性能通过；真实用户/手机/最新桌面/公开分发未验收，M7 Pages待前置与授权 | [M6 记录](../validation/docs-ssg-p2/M6.md) | 3fcc626a（库R4），d301344e（CLI C4）；历史R3/C3 c5620082/6721dc73，验证043840a1；records6a337396；Safari验证f7bb8dcc |
+| M6 | 阻塞 | 2026-10-14T10:08:39+08:00 | C4本地技术门收口，当前Safari实测hidden：CLI148/Docs265、UAT7/Chrome351/旧回归265及正式性能通过；真实用户/手机/最新桌面/公开分发未验收，M7 Pages待前置与授权 | [M6 记录](../validation/docs-ssg-p2/M6.md) | 3fcc626a（库R4），d301344e（CLI C4）；历史R3/C3 c5620082/6721dc73，验证043840a1；records6a337396；Safari验证f7bb8dcc；续做3566f627 |
 | M1 | 已完成 | 2026-10-13T12:53:00+08:00 | V-2 水合 10/10；默认 DOM 12/12；旧示例 58/73/20/72/20 通过，geometry reset 缺陷先红后绿 | [M1 记录](../validation/docs-ssg-p2/M1.md) | 5632d13 |
 | M2 | 已完成 | 2026-10-13T19:01:02+08:00 | release代理371.9ms/位移0、开发档增量中位1944.6ms；配对/错配、subpath20+4/meta24、features/检查与设计收口通过 | [M2 记录](../validation/docs-ssg-p2/M2.md) | 5632d13 |
 | M3 | 已完成 | 2026-10-13T23:31:15+08:00 | Docs229/CLI131、subpath12/meta36、离线Git字体/检查/设计通过；release255.9ms/位移0；开发档失败2369.4ms保留，修正最终1731ms，真实同步/失败保护与受影响检查通过 | [M3 记录](../validation/docs-ssg-p2/M3.md) | 676a5577 |
