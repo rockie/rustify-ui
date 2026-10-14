@@ -1,0 +1,25 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.12s
+     Running unittests src/main.rs (target/debug/deps/rustify_docs-3a8d2ccaca4a0632)
+
+running 1 test
+
+thread 'rust_site::tests::discover_build_inputs_binds_duplicate_names_by_package_id_and_out_dir' (45103507) panicked at crates/rustify-docs-cli/src/rust_site.rs:2808:13:
+missing v1 build input
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test rust_site::tests::discover_build_inputs_binds_duplicate_names_by_package_id_and_out_dir ... FAILED
+
+failures:
+
+failures:
+    rust_site::tests::discover_build_inputs_binds_duplicate_names_by_package_id_and_out_dir
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 74 filtered out; finished in 0.01s
+
+error: test failed, to rerun pass `-p rustify-docs-cli --bin rustify-docs`

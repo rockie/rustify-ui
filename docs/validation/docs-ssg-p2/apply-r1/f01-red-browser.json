@@ -1,0 +1,494 @@
+{
+  "config": {
+    "argv": [
+      "/Users/rockie/.nvm/versions/node/v26.1.0/bin/node",
+      "/Users/rockie/Documents/gh-rockie/rustify-ui/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "playwright.docs.config.ts",
+      "--project=dom-hydrate",
+      "hydration.spec.ts",
+      "--grep",
+      "CSR fallback geometry"
+    ],
+    "configFile": "/Users/rockie/Documents/gh-rockie/rustify-ui/playwright.docs.config.ts",
+    "rootDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": {},
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/docs",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "dom-only",
+        "name": "dom-only",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [
+          "dom-only/hydration.spec.ts"
+        ],
+        "testMatch": [
+          "dom-only/**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/docs",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "dom-hydrate",
+        "name": "dom-hydrate",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "dom-only/hydration.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/docs",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "docs-root",
+        "name": "docs-root",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [
+          "docs-ssg/dev*.spec.ts",
+          "docs-ssg/islands.spec.ts",
+          "docs-ssg/custom.spec.ts",
+          "docs-ssg/official.spec.ts"
+        ],
+        "testMatch": [
+          "docs-ssg/**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/docs",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "docs-subpath",
+        "name": "docs-subpath",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [
+          "docs-ssg/dev*.spec.ts",
+          "docs-ssg/islands.spec.ts",
+          "docs-ssg/custom.spec.ts",
+          "docs-ssg/official.spec.ts"
+        ],
+        "testMatch": [
+          "docs-ssg/**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/docs",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "docs-meta",
+        "name": "docs-meta",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [
+          "docs-ssg/dev*.spec.ts",
+          "docs-ssg/islands.spec.ts",
+          "docs-ssg/custom.spec.ts",
+          "docs-ssg/official.spec.ts"
+        ],
+        "testMatch": [
+          "docs-ssg/**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/docs",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "components-root",
+        "name": "components-root",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/islands.spec.ts",
+          "docs-ssg/custom.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/docs",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "components-subpath",
+        "name": "components-subpath",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/islands.spec.ts",
+          "docs-ssg/custom.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/docs",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "components-meta",
+        "name": "components-meta",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/islands.spec.ts",
+          "docs-ssg/custom.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/docs",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "official-root",
+        "name": "official-root",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/official.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/docs",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "official-subpath",
+        "name": "official-subpath",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/official.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/docs",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "official-meta",
+        "name": "official-meta",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/official.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/docs",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "components-webkit",
+        "name": "components-webkit",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/islands.spec.ts",
+          "docs-ssg/custom.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/docs",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "docs-firefox",
+        "name": "docs-firefox",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [
+          "docs-ssg/dev*.spec.ts",
+          "docs-ssg/islands.spec.ts",
+          "docs-ssg/custom.spec.ts",
+          "docs-ssg/official.spec.ts"
+        ],
+        "testMatch": [
+          "docs-ssg/**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/docs",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "docs-webkit",
+        "name": "docs-webkit",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [
+          "docs-ssg/dev*.spec.ts",
+          "docs-ssg/islands.spec.ts",
+          "docs-ssg/custom.spec.ts",
+          "docs-ssg/official.spec.ts"
+        ],
+        "testMatch": [
+          "docs-ssg/**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/docs",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "docs-dev",
+        "name": "docs-dev",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/dev*.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results/docs/results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "dom-only/hydration.spec.ts",
+      "file": "dom-only/hydration.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "CSR fallback geometry survives independent Show branches: first cleaned first",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "dom-hydrate",
+              "projectName": "dom-hydrate",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 10367,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeCloseTo\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m, \u001b[22mprecision\u001b[2m)\u001b[22m\n\nExpected: \u001b[32m128\u001b[39m\nReceived: \u001b[31m256\u001b[39m\n\nExpected precision:    1\nExpected difference: < \u001b[32m0.05\u001b[39m\nReceived difference:   \u001b[31m128\u001b[39m\n\nCall Log:\n- Timeout 10000ms exceeded while waiting on the predicate",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeCloseTo\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m, \u001b[22mprecision\u001b[2m)\u001b[22m\n\nExpected: \u001b[32m128\u001b[39m\nReceived: \u001b[31m256\u001b[39m\n\nExpected precision:    1\nExpected difference: < \u001b[32m0.05\u001b[39m\nReceived difference:   \u001b[31m128\u001b[39m\n\nCall Log:\n- Timeout 10000ms exceeded while waiting on the predicate\n    at width (/Users/rockie/Documents/gh-rockie/rustify-ui/tests/dom-only/hydration.spec.ts:624:132)\n    at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/dom-only/hydration.spec.ts:640:13",
+                    "location": {
+                      "file": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/dom-only/hydration.spec.ts",
+                      "column": 132,
+                      "line": 624
+                    },
+                    "snippet": "  622 |             await expect(progress(scope, branch)).toHaveAttribute(\"aria-valuenow\", String(percent));\n  623 |             await expect(progress(scope, branch)).toHaveCSS(\"width\", \"256px\");\n> 624 |             await expect.poll(() => progress(scope, branch).locator(\"div\").evaluate((fill) => fill.getBoundingClientRect().width)).toBeCloseTo(256 * percent / 100, 1);\n      |                                                                                                                                    ^\n  625 |             await expect.poll(() => widthRules(progress(scope, branch).locator(\"div\"))).toEqual([`${percent}%`]);\n  626 |         };\n  627 |         try {"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/dom-only/hydration.spec.ts",
+                        "column": 132,
+                        "line": 624
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeCloseTo\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m, \u001b[22mprecision\u001b[2m)\u001b[22m\n\nExpected: \u001b[32m128\u001b[39m\nReceived: \u001b[31m256\u001b[39m\n\nExpected precision:    1\nExpected difference: < \u001b[32m0.05\u001b[39m\nReceived difference:   \u001b[31m128\u001b[39m\n\nCall Log:\n- Timeout 10000ms exceeded while waiting on the predicate\n\n  622 |             await expect(progress(scope, branch)).toHaveAttribute(\"aria-valuenow\", String(percent));\n  623 |             await expect(progress(scope, branch)).toHaveCSS(\"width\", \"256px\");\n> 624 |             await expect.poll(() => progress(scope, branch).locator(\"div\").evaluate((fill) => fill.getBoundingClientRect().width)).toBeCloseTo(256 * percent / 100, 1);\n      |                                                                                                                                    ^\n  625 |             await expect.poll(() => widthRules(progress(scope, branch).locator(\"div\"))).toEqual([`${percent}%`]);\n  626 |         };\n  627 |         try {\n    at width (/Users/rockie/Documents/gh-rockie/rustify-ui/tests/dom-only/hydration.spec.ts:624:132)\n    at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/dom-only/hydration.spec.ts:640:13"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T12:41:43.085Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "branch-geometry.json",
+                      "contentType": "application/json",
+                      "body": "ewogICJvYnNlcnZhdGlvbnMiOiBbCiAgICB7CiAgICAgICJwaGFzZSI6ICJvbmUgYnJhbmNoIHBlciByb290IiwKICAgICAgInJvb3RzIjogWwogICAgICAgIHsKICAgICAgICAgICJzbG90IjogImZpcnN0IiwKICAgICAgICAgICJtYXJrZXIiOiAicnVzdGlmeS1nZW9tZXRyeS0xIiwKICAgICAgICAgICJiYXJzIjogWwogICAgICAgICAgICB7CiAgICAgICAgICAgICAgIm5hbWUiOiAiZmlyc3QtcHJvZ3Jlc3MiLAogICAgICAgICAgICAgICJ2YWx1ZSI6ICI1MCIsCiAgICAgICAgICAgICAgInRyYWNrIjogMjU2LAogICAgICAgICAgICAgICJmaWxsIjogMTI4CiAgICAgICAgICAgIH0KICAgICAgICAgIF0KICAgICAgICB9LAogICAgICAgIHsKICAgICAgICAgICJzbG90IjogInNlY29uZCIsCiAgICAgICAgICAibWFya2VyIjogInJ1c3RpZnktZ2VvbWV0cnktMiIsCiAgICAgICAgICAiYmFycyI6IFsKICAgICAgICAgICAgewogICAgICAgICAgICAgICJuYW1lIjogImZpcnN0LXByb2dyZXNzIiwKICAgICAgICAgICAgICAidmFsdWUiOiAiNTAiLAogICAgICAgICAgICAgICJ0cmFjayI6IDI1NiwKICAgICAgICAgICAgICAiZmlsbCI6IDEyOAogICAgICAgICAgICB9CiAgICAgICAgICBdCiAgICAgICAgfQogICAgICBdLAogICAgICAicnVsZXMiOiBbCiAgICAgICAgIltkYXRhLXJ1c3RpZnktZ2VvbWV0cnktc2NvcGU9XCJydXN0aWZ5LWdlb21ldHJ5LTFcIl0gLnJ1aS1icmFuY2gtc2VlZC1nZW9tZXRyeS0xIHsgd2lkdGg6IDUwJTsgfSIsCiAgICAgICAgIltkYXRhLXJ1c3RpZnktZ2VvbWV0cnktc2NvcGU9XCJydXN0aWZ5LWdlb21ldHJ5LTJcIl0gLnJ1aS1icmFuY2gtc2VlZC1nZW9tZXRyeS0xIHsgd2lkdGg6IDUwJTsgfSIKICAgICAgXQogICAgfSwKICAgIHsKICAgICAgInBoYXNlIjogImZpbmFsIiwKICAgICAgInJvb3RzIjogWwogICAgICAgIHsKICAgICAgICAgICJzbG90IjogImZpcnN0IiwKICAgICAgICAgICJtYXJrZXIiOiAicnVzdGlmeS1nZW9tZXRyeS0zIiwKICAgICAgICAgICJiYXJzIjogWwogICAgICAgICAgICB7CiAgICAgICAgICAgICAgIm5hbWUiOiAiZmlyc3QtcHJvZ3Jlc3MiLAogICAgICAgICAgICAgICJ2YWx1ZSI6ICI1MCIsCiAgICAgICAgICAgICAgInRyYWNrIjogMjU2LAogICAgICAgICAgICAgICJmaWxsIjogMjU2CiAgICAgICAgICAgIH0sCiAgICAgICAgICAgIHsKICAgICAgICAgICAgICAibmFtZSI6ICJzZWNvbmQtcHJvZ3Jlc3MiLAogICAgICAgICAgICAgICJ2YWx1ZSI6ICIyNSIsCiAgICAgICAgICAgICAgInRyYWNrIjogMjU2LAogICAgICAgICAgICAgICJmaWxsIjogNjQKICAgICAgICAgICAgfQogICAgICAgICAgXQogICAgICAgIH0sCiAgICAgICAgewogICAgICAgICAgInNsb3QiOiAic2Vjb25kIiwKICAgICAgICAgICJtYXJrZXIiOiAicnVzdGlmeS1nZW9tZXRyeS0yIiwKICAgICAgICAgICJiYXJzIjogWwogICAgICAgICAgICB7CiAgICAgICAgICAgICAgIm5hbWUiOiAiZmlyc3QtcHJvZ3Jlc3MiLAogICAgICAgICAgICAgICJ2YWx1ZSI6ICI1MCIsCiAgICAgICAgICAgICAgInRyYWNrIjogMjU2LAogICAgICAgICAgICAgICJmaWxsIjogMTI4CiAgICAgICAgICAgIH0KICAgICAgICAgIF0KICAgICAgICB9CiAgICAgIF0sCiAgICAgICJydWxlcyI6IFsKICAgICAgICAiW2RhdGEtcnVzdGlmeS1nZW9tZXRyeS1zY29wZT1cInJ1c3RpZnktZ2VvbWV0cnktMVwiXSAucnVpLWJyYW5jaC1zZWVkLWdlb21ldHJ5LTEgeyB3aWR0aDogNTAlOyB9IiwKICAgICAgICAiW2RhdGEtcnVzdGlmeS1nZW9tZXRyeS1zY29wZT1cInJ1c3RpZnktZ2VvbWV0cnktMlwiXSAucnVpLWJyYW5jaC1zZWVkLWdlb21ldHJ5LTEgeyB3aWR0aDogNTAlOyB9IiwKICAgICAgICAiW2RhdGEtcnVzdGlmeS1nZW9tZXRyeS1zY29wZT1cInJ1c3RpZnktZ2VvbWV0cnktM1wiXSAucnVpLWJyYW5jaC1zZWVkLWdlb21ldHJ5LTIgeyB3aWR0aDogMjUlOyB9IgogICAgICBdCiAgICB9CiAgXSwKICAiZXJyb3JzIjogW10sCiAgImNzcCI6IFtdCn0="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/docs/dom-only-hydration-CSR-fal-6bcf7-ranches-first-cleaned-first-dom-hydrate/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/docs/dom-only-hydration-CSR-fal-6bcf7-ranches-first-cleaned-first-dom-hydrate/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/dom-only/hydration.spec.ts",
+                    "column": 132,
+                    "line": 624
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "0ec3c3b677b0d031d788-2d680eb78b5f312660a8",
+          "file": "dom-only/hydration.spec.ts",
+          "line": 593,
+          "column": 9
+        },
+        {
+          "title": "CSR fallback geometry survives independent Show branches: second cleaned first",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "dom-hydrate",
+              "projectName": "dom-hydrate",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 10195,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeCloseTo\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m, \u001b[22mprecision\u001b[2m)\u001b[22m\n\nExpected: \u001b[32m128\u001b[39m\nReceived: \u001b[31m256\u001b[39m\n\nExpected precision:    1\nExpected difference: < \u001b[32m0.05\u001b[39m\nReceived difference:   \u001b[31m128\u001b[39m\n\nCall Log:\n- Timeout 10000ms exceeded while waiting on the predicate",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeCloseTo\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m, \u001b[22mprecision\u001b[2m)\u001b[22m\n\nExpected: \u001b[32m128\u001b[39m\nReceived: \u001b[31m256\u001b[39m\n\nExpected precision:    1\nExpected difference: < \u001b[32m0.05\u001b[39m\nReceived difference:   \u001b[31m128\u001b[39m\n\nCall Log:\n- Timeout 10000ms exceeded while waiting on the predicate\n    at width (/Users/rockie/Documents/gh-rockie/rustify-ui/tests/dom-only/hydration.spec.ts:624:132)\n    at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/dom-only/hydration.spec.ts:640:13",
+                    "location": {
+                      "file": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/dom-only/hydration.spec.ts",
+                      "column": 132,
+                      "line": 624
+                    },
+                    "snippet": "  622 |             await expect(progress(scope, branch)).toHaveAttribute(\"aria-valuenow\", String(percent));\n  623 |             await expect(progress(scope, branch)).toHaveCSS(\"width\", \"256px\");\n> 624 |             await expect.poll(() => progress(scope, branch).locator(\"div\").evaluate((fill) => fill.getBoundingClientRect().width)).toBeCloseTo(256 * percent / 100, 1);\n      |                                                                                                                                    ^\n  625 |             await expect.poll(() => widthRules(progress(scope, branch).locator(\"div\"))).toEqual([`${percent}%`]);\n  626 |         };\n  627 |         try {"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/dom-only/hydration.spec.ts",
+                        "column": 132,
+                        "line": 624
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeCloseTo\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m, \u001b[22mprecision\u001b[2m)\u001b[22m\n\nExpected: \u001b[32m128\u001b[39m\nReceived: \u001b[31m256\u001b[39m\n\nExpected precision:    1\nExpected difference: < \u001b[32m0.05\u001b[39m\nReceived difference:   \u001b[31m128\u001b[39m\n\nCall Log:\n- Timeout 10000ms exceeded while waiting on the predicate\n\n  622 |             await expect(progress(scope, branch)).toHaveAttribute(\"aria-valuenow\", String(percent));\n  623 |             await expect(progress(scope, branch)).toHaveCSS(\"width\", \"256px\");\n> 624 |             await expect.poll(() => progress(scope, branch).locator(\"div\").evaluate((fill) => fill.getBoundingClientRect().width)).toBeCloseTo(256 * percent / 100, 1);\n      |                                                                                                                                    ^\n  625 |             await expect.poll(() => widthRules(progress(scope, branch).locator(\"div\"))).toEqual([`${percent}%`]);\n  626 |         };\n  627 |         try {\n    at width (/Users/rockie/Documents/gh-rockie/rustify-ui/tests/dom-only/hydration.spec.ts:624:132)\n    at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/dom-only/hydration.spec.ts:640:13"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T12:41:53.851Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "branch-geometry.json",
+                      "contentType": "application/json",
+                      "body": "ewogICJvYnNlcnZhdGlvbnMiOiBbCiAgICB7CiAgICAgICJwaGFzZSI6ICJvbmUgYnJhbmNoIHBlciByb290IiwKICAgICAgInJvb3RzIjogWwogICAgICAgIHsKICAgICAgICAgICJzbG90IjogImZpcnN0IiwKICAgICAgICAgICJtYXJrZXIiOiAicnVzdGlmeS1nZW9tZXRyeS0xIiwKICAgICAgICAgICJiYXJzIjogWwogICAgICAgICAgICB7CiAgICAgICAgICAgICAgIm5hbWUiOiAiZmlyc3QtcHJvZ3Jlc3MiLAogICAgICAgICAgICAgICJ2YWx1ZSI6ICI1MCIsCiAgICAgICAgICAgICAgInRyYWNrIjogMjU2LAogICAgICAgICAgICAgICJmaWxsIjogMTI4CiAgICAgICAgICAgIH0KICAgICAgICAgIF0KICAgICAgICB9LAogICAgICAgIHsKICAgICAgICAgICJzbG90IjogInNlY29uZCIsCiAgICAgICAgICAibWFya2VyIjogInJ1c3RpZnktZ2VvbWV0cnktMiIsCiAgICAgICAgICAiYmFycyI6IFsKICAgICAgICAgICAgewogICAgICAgICAgICAgICJuYW1lIjogImZpcnN0LXByb2dyZXNzIiwKICAgICAgICAgICAgICAidmFsdWUiOiAiNTAiLAogICAgICAgICAgICAgICJ0cmFjayI6IDI1NiwKICAgICAgICAgICAgICAiZmlsbCI6IDEyOAogICAgICAgICAgICB9CiAgICAgICAgICBdCiAgICAgICAgfQogICAgICBdLAogICAgICAicnVsZXMiOiBbCiAgICAgICAgIltkYXRhLXJ1c3RpZnktZ2VvbWV0cnktc2NvcGU9XCJydXN0aWZ5LWdlb21ldHJ5LTFcIl0gLnJ1aS1icmFuY2gtc2VlZC1nZW9tZXRyeS0xIHsgd2lkdGg6IDUwJTsgfSIsCiAgICAgICAgIltkYXRhLXJ1c3RpZnktZ2VvbWV0cnktc2NvcGU9XCJydXN0aWZ5LWdlb21ldHJ5LTJcIl0gLnJ1aS1icmFuY2gtc2VlZC1nZW9tZXRyeS0xIHsgd2lkdGg6IDUwJTsgfSIKICAgICAgXQogICAgfSwKICAgIHsKICAgICAgInBoYXNlIjogImZpbmFsIiwKICAgICAgInJvb3RzIjogWwogICAgICAgIHsKICAgICAgICAgICJzbG90IjogImZpcnN0IiwKICAgICAgICAgICJtYXJrZXIiOiAicnVzdGlmeS1nZW9tZXRyeS0zIiwKICAgICAgICAgICJiYXJzIjogWwogICAgICAgICAgICB7CiAgICAgICAgICAgICAgIm5hbWUiOiAiZmlyc3QtcHJvZ3Jlc3MiLAogICAgICAgICAgICAgICJ2YWx1ZSI6ICI1MCIsCiAgICAgICAgICAgICAgInRyYWNrIjogMjU2LAogICAgICAgICAgICAgICJmaWxsIjogMjU2CiAgICAgICAgICAgIH0sCiAgICAgICAgICAgIHsKICAgICAgICAgICAgICAibmFtZSI6ICJzZWNvbmQtcHJvZ3Jlc3MiLAogICAgICAgICAgICAgICJ2YWx1ZSI6ICIyNSIsCiAgICAgICAgICAgICAgInRyYWNrIjogMjU2LAogICAgICAgICAgICAgICJmaWxsIjogNjQKICAgICAgICAgICAgfQogICAgICAgICAgXQogICAgICAgIH0sCiAgICAgICAgewogICAgICAgICAgInNsb3QiOiAic2Vjb25kIiwKICAgICAgICAgICJtYXJrZXIiOiAicnVzdGlmeS1nZW9tZXRyeS0yIiwKICAgICAgICAgICJiYXJzIjogWwogICAgICAgICAgICB7CiAgICAgICAgICAgICAgIm5hbWUiOiAiZmlyc3QtcHJvZ3Jlc3MiLAogICAgICAgICAgICAgICJ2YWx1ZSI6ICI1MCIsCiAgICAgICAgICAgICAgInRyYWNrIjogMjU2LAogICAgICAgICAgICAgICJmaWxsIjogMTI4CiAgICAgICAgICAgIH0KICAgICAgICAgIF0KICAgICAgICB9CiAgICAgIF0sCiAgICAgICJydWxlcyI6IFsKICAgICAgICAiW2RhdGEtcnVzdGlmeS1nZW9tZXRyeS1zY29wZT1cInJ1c3RpZnktZ2VvbWV0cnktMVwiXSAucnVpLWJyYW5jaC1zZWVkLWdlb21ldHJ5LTEgeyB3aWR0aDogNTAlOyB9IiwKICAgICAgICAiW2RhdGEtcnVzdGlmeS1nZW9tZXRyeS1zY29wZT1cInJ1c3RpZnktZ2VvbWV0cnktMlwiXSAucnVpLWJyYW5jaC1zZWVkLWdlb21ldHJ5LTEgeyB3aWR0aDogNTAlOyB9IiwKICAgICAgICAiW2RhdGEtcnVzdGlmeS1nZW9tZXRyeS1zY29wZT1cInJ1c3RpZnktZ2VvbWV0cnktM1wiXSAucnVpLWJyYW5jaC1zZWVkLWdlb21ldHJ5LTIgeyB3aWR0aDogMjUlOyB9IgogICAgICBdCiAgICB9CiAgXSwKICAiZXJyb3JzIjogW10sCiAgImNzcCI6IFtdCn0="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/docs/dom-only-hydration-CSR-fal-9eb26-anches-second-cleaned-first-dom-hydrate/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/docs/dom-only-hydration-CSR-fal-9eb26-anches-second-cleaned-first-dom-hydrate/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/dom-only/hydration.spec.ts",
+                    "column": 132,
+                    "line": 624
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "0ec3c3b677b0d031d788-08e5d28a1a8958c98483",
+          "file": "dom-only/hydration.spec.ts",
+          "line": 593,
+          "column": 9
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-14T12:41:40.867Z",
+    "duration": 23332.431,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 2,
+    "flaky": 0
+  }
+}

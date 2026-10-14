@@ -289,30 +289,37 @@ pub(super) fn prepare_checked_with(
     let compiler = std::env::var_os("RUSTIFY_DOCS_CARGO")
         .filter(|value| !value.is_empty())
         .unwrap_or_else(|| OsString::from("cargo"));
-    let metadata = match cargo_metadata(&compiler, &manifest_path, &target, &project_root) {
-        Ok(value) => match Metadata::read(value, &manifest_path) {
-            Ok(metadata) => Some(metadata),
-            Err(error) => {
-                diagnostics.push(failure("rust-metadata", error));
-                None
+    // Keep the SSR and hydrate graphs isolated, including target-only edges.
+    let graphs: Vec<_> = [false, true]
+        .into_iter()
+        .map(|wasm| {
+            match cargo_metadata(&compiler, &manifest_path, &target, &project_root, wasm)
+                .and_then(|value| Metadata::read(value, &manifest_path))
+            {
+                Ok(metadata) => {
+                    if let Err(error) =
+                        validate_framework(&metadata, crate::EXPECTED_FRAMEWORK_REV.trim())
+                    {
+                        diagnostics.push(failure("rust-framework-pair", error));
+                    }
+                    Some(metadata)
+                }
+                Err(error) => {
+                    diagnostics.push(failure("rust-metadata", error));
+                    None
+                }
             }
-        },
-        Err(error) => {
-            diagnostics.push(failure("rust-metadata", error));
-            None
-        }
-    };
-    if let Some(metadata) = &metadata {
-        if let Err(error) = validate_framework(metadata, crate::EXPECTED_FRAMEWORK_REV.trim()) {
-            diagnostics.push(failure("rust-framework-pair", error));
-        }
-    }
+        })
+        .collect();
+    let metadata = graphs[0].as_ref();
+    let hydrate_metadata = graphs[1].as_ref();
+    let input_graphs: Vec<_> = graphs.iter().filter_map(Option::as_ref).collect();
     let mut inputs = match InputLayout::new(
         project,
         &project_root,
         &manifest_path,
         &target,
-        metadata.as_ref(),
+        &input_graphs,
         mode,
         &compiler,
     ) {
@@ -363,7 +370,7 @@ pub(super) fn prepare_checked_with(
     if let Some(declaration) = &declaration {
         diagnostics.extend(preflight(&declaration.manifest()));
     }
-    let (sources, source_files) = match (&declaration, &metadata, &snapshot) {
+    let (sources, source_files) = match (&declaration, metadata, &snapshot) {
         (Some(declaration), Some(metadata), Some(snapshot)) => demo_sources(
             declaration,
             metadata,
@@ -413,7 +420,7 @@ pub(super) fn prepare_checked_with(
         &project_root,
         host_profile,
         false,
-        metadata.as_ref(),
+        metadata,
     );
     // The immutable host artifact can describe itself while Cargo builds the
     // wasm target. Both compilers remain serial; nothing from this worker is
@@ -460,7 +467,7 @@ pub(super) fn prepare_checked_with(
             &project_root,
             wasm_profile,
             true,
-            metadata.as_ref(),
+            hydrate_metadata,
         );
         let description = description.map(|worker| {
             worker
@@ -558,7 +565,7 @@ pub(super) fn prepare_checked_with(
                 host: host.timing,
                 wasm: wasm.timing,
             },
-            framework_release: metadata.framework_release,
+            framework_release: metadata.framework_release.clone(),
             helper,
             project_root,
             inputs,
@@ -592,7 +599,7 @@ struct Metadata {
 }
 
 impl Metadata {
-    fn read(value: Value, manifest: &Path) -> Result<Self, String> {
+    fn read(mut value: Value, manifest: &Path) -> Result<Self, String> {
         let packages = value
             .get("packages")
             .and_then(Value::as_array)
@@ -637,6 +644,52 @@ impl Metadata {
             })
             .ok_or("the author package must depend on rustify-docs")?;
         let framework_release = format!("rustify-docs@{}", required_string(docs, "version")?);
+        // Cargo's packages list can include target-inactive packages. Only
+        // traverse edges from the selected author in this filtered resolve graph.
+        let nodes = value
+            .pointer("/resolve/nodes")
+            .and_then(Value::as_array)
+            .ok_or("Cargo metadata has no resolved author dependency graph")?;
+        let nodes: BTreeMap<_, _> = nodes
+            .iter()
+            .filter_map(|node| node.get("id").and_then(Value::as_str).map(|id| (id, node)))
+            .collect();
+        let mut active = BTreeSet::new();
+        let mut pending = vec![package_id.as_str()];
+        while let Some(id) = pending.pop() {
+            if !active.insert(id.to_string()) {
+                continue;
+            }
+            if let Some(dependencies) = nodes
+                .get(id)
+                .and_then(|node| node.get("dependencies"))
+                .and_then(Value::as_array)
+            {
+                pending.extend(dependencies.iter().filter_map(Value::as_str));
+            }
+        }
+        if let Some(packages) = value.get_mut("packages").and_then(Value::as_array_mut) {
+            packages.retain(|package| {
+                package
+                    .get("id")
+                    .and_then(Value::as_str)
+                    .is_some_and(|id| active.contains(id))
+            });
+        }
+        if let Some(nodes) = value
+            .pointer_mut("/resolve/nodes")
+            .and_then(Value::as_array_mut)
+        {
+            nodes.retain(|node| {
+                node.get("id")
+                    .and_then(Value::as_str)
+                    .is_some_and(|id| active.contains(id))
+            });
+        }
+        let packages = value
+            .get("packages")
+            .and_then(Value::as_array)
+            .ok_or("Cargo metadata has no packages")?;
         let mut local_roots = BTreeSet::new();
         for package in packages
             .iter()
@@ -832,7 +885,24 @@ fn cargo_metadata(
     manifest: &Path,
     target: &Path,
     root: &Path,
+    wasm: bool,
 ) -> Result<Value, String> {
+    let platform = if wasm {
+        "wasm32-unknown-unknown".to_string()
+    } else {
+        let output =
+            Command::new(std::env::var_os("RUSTC").unwrap_or_else(|| OsString::from("rustc")))
+                .current_dir(root)
+                .arg("-vV")
+                .output()
+                .map_err(|error| format!("cannot identify the host Rust target: {error}"))?;
+        String::from_utf8_lossy(&output.stdout)
+            .lines()
+            .find_map(|line| line.strip_prefix("host: "))
+            .map(str::to_owned)
+            .ok_or("rustc did not report the host target")?
+    };
+    let feature = if wasm { "hydrate" } else { "ssr" };
     let mut command = Command::new(compiler);
     command
         .current_dir(root)
@@ -846,7 +916,9 @@ fn cargo_metadata(
             "1",
             "--no-default-features",
             "--features",
-            "ssr",
+            feature,
+            "--filter-platform",
+            &platform,
             "--manifest-path",
         ])
         .arg(manifest);
@@ -875,7 +947,9 @@ fn cargo_metadata(
                 "1",
                 "--no-default-features",
                 "--features",
-                "ssr",
+                feature,
+                "--filter-platform",
+                &platform,
                 "--manifest-path",
             ])
             .arg(manifest);
@@ -983,12 +1057,16 @@ fn cargo_build(
                 diagnostics.push(failure("rust-cargo", format!("{} Cargo build failed: {}", if wasm { "wasm" } else { "host" }, String::from_utf8_lossy(&output.stderr).trim())));
             }
             let logs = target.parent().unwrap_or(target).join("logs");
-            if fs::create_dir_all(&logs).is_ok() {
-                let name = if wasm { "wasm" } else { "host" };
-                let _ = fs::write(logs.join(format!("{profile}-{name}.stdout")), &output.stdout);
-                let _ = fs::write(logs.join(format!("{profile}-{name}.stderr")), &output.stderr);
-                let _ = record_compile_history(&logs, &timing, &output.stdout, &output.stderr);
+            let name = if wasm { "wasm" } else { "host" };
+            // The next input capture needs these package_id/OUT_DIR receipts.
+            // A missing receipt must not silently drop build-script inputs.
+            if let Err(error) = fs::create_dir_all(&logs).and_then(|()| {
+                fs::write(logs.join(format!("{profile}-{name}.stdout")), &output.stdout)
+            }) {
+                diagnostics.push(failure("rust-inputs", format!("cannot save Cargo build-input identities: {error}")));
             }
+            let _ = fs::write(logs.join(format!("{profile}-{name}.stderr")), &output.stderr);
+            let _ = record_compile_history(&logs, &timing, &output.stdout, &output.stderr);
         }
     }
     Compilation {
@@ -1580,7 +1658,7 @@ impl InputLayout {
         root: &Path,
         manifest: &Path,
         target: &Path,
-        metadata: Option<&Metadata>,
+        metadata: &[&Metadata],
         mode: BuildMode,
         compiler: &OsString,
     ) -> Result<Self, String> {
@@ -1588,7 +1666,7 @@ impl InputLayout {
             .parent()
             .ok_or("Cargo.toml has no parent directory")?
             .to_path_buf()]);
-        if let Some(metadata) = metadata {
+        for metadata in metadata {
             roots.extend(metadata.local_roots.iter().cloned());
         }
         let mut explicit = BTreeSet::from([manifest.to_path_buf()]);
@@ -1635,10 +1713,10 @@ impl InputLayout {
         .collect();
         let context = serde_json::to_string(&json!({"cli": env!("CARGO_PKG_VERSION"), "expected": crate::EXPECTED_FRAMEWORK_REV.trim(),
             "protocol": PROTOCOL_VERSION, "bindgen": BINDGEN_VERSION, "profiles": mode.profiles(), "compiler": compiler.to_string_lossy(), "flags": flags,
-            "metadata": metadata.map(|metadata| &metadata.value)})).map_err(|error| error.to_string())?;
+            "metadata": metadata.iter().map(|metadata| &metadata.value).collect::<Vec<_>>()})).map_err(|error| error.to_string())?;
         let mut package_roots = BTreeMap::new();
         let mut immutable_roots = Vec::new();
-        if let Some(metadata) = metadata {
+        for metadata in metadata {
             for package in metadata
                 .value
                 .get("packages")
@@ -1646,14 +1724,14 @@ impl InputLayout {
                 .into_iter()
                 .flatten()
             {
-                let name = required_string(package, "name")?;
+                let id = required_string(package, "id")?;
                 let package_manifest = Path::new(required_string(package, "manifest_path")?);
                 let package_root = package_manifest
                     .parent()
                     .ok_or("dependency manifest has no parent directory")?
                     .to_path_buf();
                 if package.get("source").is_none_or(Value::is_null) {
-                    package_roots.insert(name.to_string(), package_root);
+                    package_roots.insert(id.to_string(), package_root);
                 } else {
                     immutable_roots.push(package_root);
                 }
@@ -1809,13 +1887,20 @@ impl InputLayout {
 
     fn discover_build_inputs(&mut self) -> Result<(), String> {
         self.default_compile_dirs.clear();
+        let logs = self.target.parent().unwrap_or(&self.target).join("logs");
         let profiles = [
-            self.target.join(&self.profiles.0),
-            self.target
-                .join("wasm32-unknown-unknown")
-                .join(&self.profiles.1),
+            (
+                self.target.join(&self.profiles.0),
+                format!("{}-host.stdout", self.profiles.0),
+            ),
+            (
+                self.target
+                    .join("wasm32-unknown-unknown")
+                    .join(&self.profiles.1),
+                format!("{}-wasm.stdout", self.profiles.1),
+            ),
         ];
-        for profile in profiles {
+        for (profile, log) in profiles {
             let deps = profile.join("deps");
             if deps.is_dir() {
                 for entry in fs::read_dir(&deps).map_err(|error| error.to_string())? {
@@ -1840,28 +1925,34 @@ impl InputLayout {
                     }
                 }
             }
-            let scripts = profile.join("build");
-            if !scripts.is_dir() {
-                continue;
-            }
-            for entry in fs::read_dir(scripts).map_err(|error| error.to_string())? {
-                let entry = entry.map_err(|error| error.to_string())?;
-                let directory = entry.path();
-                let name = entry.file_name();
-                let package = name
-                    .to_str()
-                    .and_then(|name| name.rsplit_once('-'))
-                    .map(|(name, _)| name);
-                let root = package
-                    .and_then(|name| self.package_roots.get(name))
-                    .cloned();
-                let Some(root) = root else {
+            let messages = match fs::read_to_string(logs.join(log)) {
+                Ok(messages) => messages,
+                Err(error) if error.kind() == std::io::ErrorKind::NotFound => continue,
+                Err(error) => {
+                    return Err(format!("cannot read Cargo build-input identities: {error}"))
+                }
+            };
+            for line in messages.lines() {
+                let Ok(message) = serde_json::from_str::<Value>(line) else {
                     continue;
                 };
-                let output = directory.join("output");
+                if message.get("reason").and_then(Value::as_str) != Some("build-script-executed") {
+                    continue;
+                }
+                let id = required_string(&message, "package_id")?;
+                let Some(root) = self.package_roots.get(id).cloned() else {
+                    continue;
+                };
+                let out_dir = Path::new(required_string(&message, "out_dir")?);
+                let output = out_dir
+                    .parent()
+                    .ok_or("build script out_dir has no parent")?
+                    .join("output");
                 if !output.is_file() {
                     continue;
                 }
+                // OUT_DIR hashes are opaque; Cargo's complete package identity
+                // binds each relative rerun path to its own manifest root.
                 let text = fs::read_to_string(output).map_err(|error| error.to_string())?;
                 if !text.lines().any(|line| {
                     line.starts_with("cargo:rerun-if-") || line.starts_with("cargo::rerun-if-")
@@ -2686,6 +2777,238 @@ mod tests {
         }
         assert_eq!(elapsed[&120_000], b"cold Cargo JSON");
         assert_eq!(elapsed[&210], b"warm Cargo JSON");
+    }
+
+    fn cache_project(root: &Path) -> Project {
+        fs::create_dir_all(root.join("src")).unwrap();
+        fs::write(root.join("src/lib.rs"), "pub fn value() {}\n").unwrap();
+        fs::write(root.join("src/main.rs"), "fn main() {}\n").unwrap();
+        fs::write(
+            root.join("rustify-docs.toml"),
+            "schema_version = 1\n[site]\nname = 'Cache regression'\n[rust]\nmanifest = 'Cargo.toml'\nregistry = 'src/lib.rs'\n",
+        )
+        .unwrap();
+        Project::load(root).unwrap().0
+    }
+
+    #[test]
+    fn input_layout_tracks_hydrate_only_manifest_and_target_graphs() {
+        let fixture = Fixture::new();
+        let site = fixture.0.join("site");
+        let project = cache_project(&site);
+        let site = fs::canonicalize(&site).unwrap();
+        for name in ["rustify-docs", "palette", "native", "web"] {
+            let root = fixture.0.join(name);
+            fs::create_dir_all(root.join("src")).unwrap();
+            fs::write(root.join("src/lib.rs"), "pub fn value() {}\n").unwrap();
+            fs::write(root.join("Cargo.toml"), format!(
+                "[package]\nname = '{name}'\nversion = '0.1.0'\nedition = '2021'\n[features]\nalternate = []\n"
+            )).unwrap();
+        }
+        let manifest = site.join("Cargo.toml");
+        fs::write(
+            &manifest,
+            r#"[package]
+name = "cache-site"
+version = "0.1.0"
+edition = "2021"
+[workspace]
+[lib]
+crate-type = ["cdylib", "rlib"]
+[[bin]]
+name = "docs-render"
+path = "src/main.rs"
+[features]
+ssr = []
+hydrate = ["dep:palette"]
+[dependencies]
+rustify-docs = { path = "../rustify-docs" }
+palette = { path = "../palette", optional = true }
+[target.'cfg(not(target_arch = "wasm32"))'.dependencies]
+native = { path = "../native" }
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+web = { path = "../web" }
+"#,
+        )
+        .unwrap();
+        let compiler = OsString::from("mbx");
+        let lock = Command::new(&compiler)
+            .args(["generate-lockfile", "--offline", "--manifest-path"])
+            .arg(&manifest)
+            .output()
+            .unwrap();
+        assert!(
+            lock.status.success(),
+            "{}",
+            String::from_utf8_lossy(&lock.stderr)
+        );
+        let target = site.join(".rustify-docs/target");
+        let host = Metadata::read(
+            cargo_metadata(&compiler, &manifest, &target, &site, false).unwrap(),
+            &manifest,
+        )
+        .unwrap();
+        let wasm = Metadata::read(
+            cargo_metadata(&compiler, &manifest, &target, &site, true).unwrap(),
+            &manifest,
+        )
+        .unwrap();
+        assert!(!host
+            .local_roots
+            .contains(&fs::canonicalize(fixture.0.join("palette")).unwrap()));
+        assert!(
+            wasm.local_roots
+                .contains(&fs::canonicalize(fixture.0.join("palette")).unwrap()),
+            "hydrate-only package is missing"
+        );
+        assert!(host
+            .local_roots
+            .contains(&fs::canonicalize(fixture.0.join("native")).unwrap()));
+        assert!(!host
+            .local_roots
+            .contains(&fs::canonicalize(fixture.0.join("web")).unwrap()));
+        assert!(wasm
+            .local_roots
+            .contains(&fs::canonicalize(fixture.0.join("web")).unwrap()));
+        assert!(!wasm
+            .local_roots
+            .contains(&fs::canonicalize(fixture.0.join("native")).unwrap()));
+        for (metadata, feature) in [(&host, "ssr"), (&wasm, "hydrate")] {
+            let author = metadata
+                .value
+                .pointer("/resolve/nodes")
+                .unwrap()
+                .as_array()
+                .unwrap()
+                .iter()
+                .find(|node| node["id"] == metadata.package_id)
+                .unwrap();
+            assert_eq!(
+                author["features"],
+                json!([feature]),
+                "the two rendering features must never be unified"
+            );
+        }
+        let layout = InputLayout::new(
+            &project,
+            &site,
+            &manifest,
+            &target,
+            &[&host, &wasm],
+            BuildMode::Development,
+            &compiler,
+        )
+        .unwrap();
+        let palette_manifest = fs::canonicalize(fixture.0.join("palette/Cargo.toml")).unwrap();
+        assert!(layout.watch_plan().files.contains(&palette_manifest));
+        let before = layout.compiled(&layout.capture().unwrap()).digest;
+        let text = fs::read_to_string(&palette_manifest).unwrap();
+        fs::write(
+            &palette_manifest,
+            format!("{text}default = ['alternate']\n"),
+        )
+        .unwrap();
+        assert_ne!(layout.compiled(&layout.capture().unwrap()).digest, before);
+        let compiled = layout.compiled(&layout.capture().unwrap()).digest;
+        fs::write(site.join("page.md"), "Markdown does not recompile Rust").unwrap();
+        assert_eq!(layout.compiled(&layout.capture().unwrap()).digest, compiled);
+    }
+
+    #[test]
+    fn discover_build_inputs_binds_duplicate_names_by_package_id_and_out_dir() {
+        let fixture = Fixture::new();
+        let site = fixture.0.join("site");
+        let project = cache_project(&site);
+        let site = fs::canonicalize(&site).unwrap();
+        let manifest = site.join("Cargo.toml");
+        fs::write(&manifest, "[package]\nname = 'site'\nversion = '0.1.0'\n").unwrap();
+        let target = site.join(".rustify-docs/target");
+        let logs = site.join(".rustify-docs/logs");
+        fs::create_dir_all(&logs).unwrap();
+        let mut packages = Vec::new();
+        let mut roots = BTreeSet::new();
+        for version in [1, 2] {
+            let root = fixture.0.join(format!("payload-v{version}"));
+            fs::create_dir_all(&root).unwrap();
+            fs::write(
+                root.join("Cargo.toml"),
+                format!("[package]\nname = 'payload'\nversion = '{version}.0.0'\n"),
+            )
+            .unwrap();
+            fs::write(root.join("payload.txt"), format!("{version}")).unwrap();
+            fs::write(root.join("unrelated.txt"), "stale output must not track me").unwrap();
+            let id = format!("path+file://{}#payload@{version}.0.0", root.display());
+            packages.push(json!({"name":"payload", "id":id, "source":null, "manifest_path":root.join("Cargo.toml")}));
+            roots.insert(root);
+        }
+        for (profile, name) in [
+            ("docs-host", "host"),
+            ("wasm32-unknown-unknown/docs-wasm", "wasm"),
+        ] {
+            let mut stdout = String::new();
+            for (index, package) in packages.iter().enumerate() {
+                if (name == "host") != (index == 0) {
+                    continue;
+                }
+                let directory = target
+                    .join(profile)
+                    .join(format!("build/payload-hash{index}"));
+                fs::create_dir_all(directory.join("out")).unwrap();
+                fs::write(directory.join("output"), "cargo:rerun-if-changed=payload.txt\ncargo::rerun-if-env-changed=CACHE_REGRESSION_ENV\n").unwrap();
+                stdout.push_str(&format!("{}\n", json!({"reason":"build-script-executed", "package_id":package["id"], "out_dir":directory.join("out")})));
+            }
+            let profile_name = profile.rsplit('/').next().unwrap();
+            fs::write(logs.join(format!("{profile_name}-{name}.stdout")), stdout).unwrap();
+            // A stale output not reported by Cargo must never be guessed by name.
+            let stale = target.join(profile).join("build/payload-stale");
+            fs::create_dir_all(&stale).unwrap();
+            fs::write(
+                stale.join("output"),
+                "cargo:rerun-if-changed=unrelated.txt\n",
+            )
+            .unwrap();
+        }
+        let metadata = Metadata {
+            value: json!({"packages":packages}),
+            package_id: "site".into(),
+            library_name: "site".into(),
+            library_source: site.join("src/lib.rs"),
+            framework_release: "unused".into(),
+            local_roots: roots,
+        };
+        let layout = InputLayout::new(
+            &project,
+            &site,
+            &manifest,
+            &target,
+            &[&metadata],
+            BuildMode::Development,
+            &OsString::from("mbx"),
+        )
+        .unwrap();
+        for version in [1, 2] {
+            let path = fixture.0.join(format!("payload-v{version}/payload.txt"));
+            assert!(
+                layout.watch_plan().files.contains(&path),
+                "missing v{version} build input"
+            );
+            let before = layout.compiled(&layout.capture().unwrap()).digest;
+            fs::write(&path, format!("changed {version}")).unwrap();
+            assert_ne!(layout.compiled(&layout.capture().unwrap()).digest, before);
+            fs::remove_file(&path).unwrap();
+            assert!(layout.capture().is_err());
+            assert!(
+                layout.watch_plan().files.contains(&path),
+                "recovery watch was lost"
+            );
+            fs::write(&path, format!("restored {version}")).unwrap();
+            assert!(layout.capture().is_ok());
+        }
+        assert!(layout.build_env.contains("CACHE_REGRESSION_ENV"));
+        assert!(!layout
+            .compile_files
+            .iter()
+            .any(|path| path.ends_with("unrelated.txt")));
     }
 
     #[test]

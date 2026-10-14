@@ -1,0 +1,430 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+warning: method `fallback_element` is never used
+   --> /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui/src/overlay.rs:349:23
+    |
+284 |     impl OverlayStack {
+    |     ----------------- method in this implementation
+...
+349 |         pub(crate) fn fallback_element(&self) -> Element {
+    |                       ^^^^^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: field `guest_click` is never read
+   --> /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui/src/router.rs:556:9
+    |
+549 |     struct Router {
+    |            ------ field in this struct
+...
+556 |         guest_click: Option<SendWrapper<Rc<GuestClick>>>,
+    |         ^^^^^^^^^^^
+    |
+    = note: `Router` has a derived impl for the trait `Clone`, but this is intentionally ignored during dead code analysis
+
+warning: `rustify-ui` (lib) generated 2 warnings
+   Compiling rustify-components v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-components)
+   Compiling dom-consumer v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/tests/dom-only/consumer)
+    Finished `release` profile [optimized] target(s) in 5.07s
+mbx[cache]: 0 hits, 2 misses; 0 B downloaded, 0 B uploaded, 15.3 MiB stored locally
+mbx[savings]: 108342 compilations served. the monocle stays on.
+/Users/rockie/Documents/gh-rockie/rustify-ui/target/dom/dom-consumer/rustify-dom-loader.js
+/Users/rockie/Documents/gh-rockie/rustify-ui/target/dom/dom-consumer/rustify-runtime.css
+/Users/rockie/Documents/gh-rockie/rustify-ui/target/dom/dom-consumer/rustify.css
+mbx[savings]: your deleted worktrees left 1.9 TiB logical behind. left. past tense.
+dom-consumer (in the repository, path dependencies): 187 packages (normal and build dependencies, every target)
+  no makepad*, rustify-makepad or cargo-makepad package
+product /Users/rockie/Documents/gh-rockie/rustify-ui/target/dom/dom-consumer: 8 files
+  app.js
+  index.html
+  pkg/app.js
+  pkg/app_bg.wasm
+  pkg/snippets/rustify-ui-4db2f10f10788f4c/web/dom-runtime.js
+  rustify-dom-loader.js
+  rustify-runtime.css
+  rustify.css
+  wasm imports from: {"./app_bg.js"}
+GPU API without the gpu feature: refused by the compiler (GpuRegion, RegionId, RegionState)
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.08s
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+warning: unused import: `std::net::TcpStream`
+  --> /Users/rockie/Documents/gh-rockie/rustify-ui/makepad/platform/network/src/blocking_http.rs:20:5
+   |
+20 | use std::net::TcpStream;
+   |     ^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused import: `Read`
+  --> /Users/rockie/Documents/gh-rockie/rustify-ui/makepad/platform/network/src/blocking_http.rs:12:15
+   |
+12 | use std::io::{Read, Write};
+   |               ^^^^
+
+warning: unused import: `Write`
+  --> /Users/rockie/Documents/gh-rockie/rustify-ui/makepad/platform/network/src/blocking_http.rs:12:21
+   |
+12 | use std::io::{Read, Write};
+   |                     ^^^^^
+
+warning: constant `USER_AGENT` is never used
+  --> /Users/rockie/Documents/gh-rockie/rustify-ui/makepad/platform/network/src/blocking_http.rs:24:7
+   |
+24 | const USER_AGENT: &str = "makepad-network/1.0";
+   |       ^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: constant `IO_SLICE` is never used
+  --> /Users/rockie/Documents/gh-rockie/rustify-ui/makepad/platform/network/src/blocking_http.rs:26:7
+   |
+26 | const IO_SLICE: Duration = Duration::from_millis(200);
+   |       ^^^^^^^^
+
+warning: field `url` is never read
+   --> /Users/rockie/Documents/gh-rockie/rustify-ui/makepad/platform/network/src/blocking_http.rs:141:5
+    |
+139 | pub struct Request {
+    |            ------- field in this struct
+140 |     method: Method,
+141 |     url: String,
+    |     ^^^
+
+warning: method `as_str` is never used
+   --> /Users/rockie/Documents/gh-rockie/rustify-ui/makepad/platform/network/src/blocking_http.rs:155:8
+    |
+154 | impl Method {
+    | ----------- method in this implementation
+155 |     fn as_str(self) -> &'static str {
+    |        ^^^^^^
+
+warning: struct `ParsedUrl` is never constructed
+   --> /Users/rockie/Documents/gh-rockie/rustify-ui/makepad/platform/network/src/blocking_http.rs:265:8
+    |
+265 | struct ParsedUrl {
+    |        ^^^^^^^^^
+
+warning: function `parse_url` is never used
+   --> /Users/rockie/Documents/gh-rockie/rustify-ui/makepad/platform/network/src/blocking_http.rs:272:4
+    |
+272 | fn parse_url(url: &str) -> Result<ParsedUrl, Error> {
+    |    ^^^^^^^^^
+
+warning: function `is_forbidden_url_byte` is never used
+   --> /Users/rockie/Documents/gh-rockie/rustify-ui/makepad/platform/network/src/blocking_http.rs:310:4
+    |
+310 | fn is_forbidden_url_byte(b: u8) -> bool {
+    |    ^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `split_authority` is never used
+   --> /Users/rockie/Documents/gh-rockie/rustify-ui/makepad/platform/network/src/blocking_http.rs:314:4
+    |
+314 | fn split_authority(authority: &str, default_port: u16) -> Result<(String, u16), Error> {
+    |    ^^^^^^^^^^^^^^^
+
+warning: function `is_literal_loopback_host` is never used
+   --> /Users/rockie/Documents/gh-rockie/rustify-ui/makepad/platform/network/src/blocking_http.rs:354:4
+    |
+354 | fn is_literal_loopback_host(host: &str) -> bool {
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `cleartext_host_permitted` is never used
+   --> /Users/rockie/Documents/gh-rockie/rustify-ui/makepad/platform/network/src/blocking_http.rs:368:4
+    |
+368 | fn cleartext_host_permitted(host: &str) -> bool {
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `validate_trailer_line` is never used
+   --> /Users/rockie/Documents/gh-rockie/rustify-ui/makepad/platform/network/src/blocking_http.rs:462:4
+    |
+462 | fn validate_trailer_line(line: &str) -> Result<(), Error> {
+    |    ^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `split_header_line` is never used
+   --> /Users/rockie/Documents/gh-rockie/rustify-ui/makepad/platform/network/src/blocking_http.rs:473:4
+    |
+473 | fn split_header_line(line: &str) -> Option<(&str, &str)> {
+    |    ^^^^^^^^^^^^^^^^^
+
+warning: function `parse_content_length` is never used
+   --> /Users/rockie/Documents/gh-rockie/rustify-ui/makepad/platform/network/src/blocking_http.rs:485:4
+    |
+485 | fn parse_content_length(value: &str) -> Result<u64, Error> {
+    |    ^^^^^^^^^^^^^^^^^^^^
+
+warning: struct `ValidatedHeaders` is never constructed
+   --> /Users/rockie/Documents/gh-rockie/rustify-ui/makepad/platform/network/src/blocking_http.rs:493:8
+    |
+493 | struct ValidatedHeaders {
+    |        ^^^^^^^^^^^^^^^^
+
+warning: function `validate_response_headers` is never used
+   --> /Users/rockie/Documents/gh-rockie/rustify-ui/makepad/platform/network/src/blocking_http.rs:499:4
+    |
+499 | fn validate_response_headers(
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `parse_header_block` is never used
+    --> /Users/rockie/Documents/gh-rockie/rustify-ui/makepad/platform/network/src/blocking_http.rs:1497:4
+     |
+1497 | fn parse_header_block(head: &str, limits: &Limits) -> Result<Vec<(String, String)>, Error> {
+     |    ^^^^^^^^^^^^^^^^^^
+
+warning: function `check_watch` is never used
+    --> /Users/rockie/Documents/gh-rockie/rustify-ui/makepad/platform/network/src/blocking_http.rs:1707:4
+     |
+1707 | fn check_watch(cancel: &CancelToken, deadline: Instant) -> Result<(), Error> {
+     |    ^^^^^^^^^^^
+
+warning: function `remaining` is never used
+    --> /Users/rockie/Documents/gh-rockie/rustify-ui/makepad/platform/network/src/blocking_http.rs:1717:4
+     |
+1717 | fn remaining(deadline: Instant) -> Result<Duration, Error> {
+     |    ^^^^^^^^^
+
+warning: `makepad-network` (lib) generated 21 warnings (run `cargo fix --lib -p makepad-network` to apply 1 suggestion)
+warning: unused import: `Read`
+ --> /Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/shared_bytes/src/lib.rs:3:16
+  |
+3 |     io::{self, Read},
+  |                ^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: associated function `map_file` is never used
+   --> /Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/shared_bytes/src/lib.rs:351:16
+    |
+350 |     impl MappedBytesInner {
+    |     --------------------- associated function in this implementation
+351 |         pub fn map_file(_file: &File, _len: usize) -> io::Result<Self> {
+    |                ^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `makepad-shared-bytes` (lib) generated 2 warnings (run `cargo fix --lib -p makepad-shared-bytes` to apply 1 suggestion)
+warning: unused imports: `TextureAlloc`, `TextureCategory`, and `TexturePixel`
+  --> /Users/rockie/Documents/gh-rockie/rustify-ui/makepad/platform/src/gpu_texture.rs:38:24
+   |
+38 |     texture::{Texture, TextureAlloc, TextureCategory, TextureFormat, TexturePixel},
+   |                        ^^^^^^^^^^^^  ^^^^^^^^^^^^^^^                 ^^^^^^^^^^^^
+   |
+   = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: `makepad-platform` (lib) generated 1 warning (run `cargo fix --lib -p makepad-platform` to apply 1 suggestion)
+warning: method `fallback_element` is never used
+   --> /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui/src/overlay.rs:349:23
+    |
+284 |     impl OverlayStack {
+    |     ----------------- method in this implementation
+...
+349 |         pub(crate) fn fallback_element(&self) -> Element {
+    |                       ^^^^^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: field `guest_click` is never read
+   --> /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui/src/router.rs:556:9
+    |
+549 |     struct Router {
+    |            ------ field in this struct
+...
+556 |         guest_click: Option<SendWrapper<Rc<GuestClick>>>,
+    |         ^^^^^^^^^^^
+    |
+    = note: `Router` has a derived impl for the trait `Clone`, but this is intentionally ignored during dead code analysis
+
+warning: `rustify-ui` (lib) generated 2 warnings
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.18s
+GPU API with the gpu feature: compiles on the host and for wasm32
+makepad/libs/bitflags/: 43 files, drift against sources.lock.json: none
+makepad/libs/smallvec/: 8 files, drift against sources.lock.json: modified libs/smallvec/src/lib.rs
+makepad/libs/bitflags and makepad/libs/smallvec: unchanged against HEAD
+rustify-docs (alone): 271 packages (normal and build dependencies, every target)
+  fork copy of a general library: bitflags v2.10.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/bitflags)
+  fork copy of a general library: smallvec v1.15.1 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/smallvec)
+  no makepad*, rustify-makepad or cargo-makepad package
+  js-sys: wasm-bindgen's JavaScript bindings: Rust declarations, nothing linked on the host
+  web-sys: wasm-bindgen's DOM bindings: Rust declarations, nothing linked on the host
+  windows-sys: Windows API declarations, used only when the target is Windows
+  no csr, hydrate, effects or gpu feature; 3 -sys package(s), no build tool
+rustify-docs-cli (alone): 337 packages (normal and build dependencies, every target)
+  fork copy of a general library: bitflags v2.10.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/bitflags)
+  fork copy of a general library: smallvec v1.15.1 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/smallvec)
+  no makepad*, rustify-makepad or cargo-makepad package
+  fsevent-sys: macOS FSEvents for `dev`'s watcher: links the CoreServices and CoreFoundation frameworks, part of macOS; no build script
+  inotify-sys: Linux inotify declarations over libc, used only when the target is Linux or Android
+  js-sys: wasm-bindgen's JavaScript bindings: Rust declarations, nothing linked on the host
+  kqueue-sys: BSD kqueue declarations over libc, used only when the target is a BSD or iOS; no build script
+  web-sys: wasm-bindgen's DOM bindings: Rust declarations, nothing linked on the host
+  windows-sys: Windows API declarations, used only when the target is Windows
+  no csr, hydrate, effects or gpu feature; 6 -sys package(s), no build tool
+hydration-harness/ssr: 62095 packages (normal and build dependencies, every target)
+  no makepad*, rustify-makepad or cargo-makepad package
+hydration-harness/hydrate: 62079 packages (normal and build dependencies, every target)
+  no makepad*, rustify-makepad or cargo-makepad package
+hydration-harness/csr: 58647 packages (normal and build dependencies, every target)
+  no makepad*, rustify-makepad or cargo-makepad package
+/Users/rockie/Documents/gh-rockie/rustify-ui/target/dom/hydration/index.html
+/Users/rockie/Documents/gh-rockie/rustify-ui/target/dom/hydration/csr.html
+/Users/rockie/Documents/gh-rockie/rustify-ui/target/dom/hydration/preboot.html
+/Users/rockie/Documents/gh-rockie/rustify-ui/target/dom/hydration/geometry.css
+/Users/rockie/Documents/gh-rockie/rustify-ui/target/dom/hydration/catalog.json
+/Users/rockie/Documents/gh-rockie/rustify-ui/target/dom/hydration/app.js
+/Users/rockie/Documents/gh-rockie/rustify-ui/target/dom/hydration/harness.css
+/Users/rockie/Documents/gh-rockie/rustify-ui/target/dom/hydration/rustify-dom-loader.js
+/Users/rockie/Documents/gh-rockie/rustify-ui/target/dom/hydration/rustify-runtime.css
+/Users/rockie/Documents/gh-rockie/rustify-ui/target/dom/hydration/rustify.css
+mbx[savings]: 2.4 TiB logical of old build output has been shown the door.
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+warning: method `fallback_element` is never used
+   --> /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui/src/overlay.rs:349:23
+    |
+284 |     impl OverlayStack {
+    |     ----------------- method in this implementation
+...
+349 |         pub(crate) fn fallback_element(&self) -> Element {
+    |                       ^^^^^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: field `guest_click` is never read
+   --> /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui/src/router.rs:556:9
+    |
+549 |     struct Router {
+    |            ------ field in this struct
+...
+556 |         guest_click: Option<SendWrapper<Rc<GuestClick>>>,
+    |         ^^^^^^^^^^^
+    |
+    = note: `Router` has a derived impl for the trait `Clone`, but this is intentionally ignored during dead code analysis
+
+warning: `rustify-ui` (lib) generated 2 warnings
+   Compiling rustify-components v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-components)
+   Compiling hydration-harness v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/tests/dom-only/hydration)
+mbx[progress]: 15s elapsed; 0 hits, 1 misses, 1 bypassed, 0 not looked up; ~0s compiler work saved
+    Finished `release` profile [optimized] target(s) in 16.94s
+mbx[cache]: 0 hits, 1 misses, 1 bypassed; 0 B downloaded, 0 B uploaded, 13.5 MiB stored locally
+mbx[savings]: 108342 compilations, each compiled once and served warm ever since
+product /Users/rockie/Documents/gh-rockie/rustify-ui/target/dom/hydration/hydrate: 5 files
+  app.js
+  harness.css
+  pkg/app.js
+  pkg/app_bg.wasm
+  pkg/snippets/rustify-ui-4db2f10f10788f4c/web/dom-runtime.js
+  wasm imports from: {"./app_bg.js"}
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+warning: method `fallback_element` is never used
+   --> /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui/src/overlay.rs:349:23
+    |
+284 |     impl OverlayStack {
+    |     ----------------- method in this implementation
+...
+349 |         pub(crate) fn fallback_element(&self) -> Element {
+    |                       ^^^^^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: field `guest_click` is never read
+   --> /Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui/src/router.rs:556:9
+    |
+549 |     struct Router {
+    |            ------ field in this struct
+...
+556 |         guest_click: Option<SendWrapper<Rc<GuestClick>>>,
+    |         ^^^^^^^^^^^
+    |
+    = note: `Router` has a derived impl for the trait `Clone`, but this is intentionally ignored during dead code analysis
+
+warning: `rustify-ui` (lib) generated 2 warnings
+   Compiling rustify-components v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-components)
+   Compiling hydration-harness v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/tests/dom-only/hydration)
+mbx[progress]: 15s elapsed; 0 hits, 1 misses, 1 bypassed, 0 not looked up; ~0s compiler work saved
+    Finished `release` profile [optimized] target(s) in 16.25s
+mbx[cache]: 0 hits, 1 misses, 1 bypassed; 0 B downloaded, 0 B uploaded, 13.3 MiB stored locally
+mbx[savings]: 108342 compilations retrieved with a straight face.
+product /Users/rockie/Documents/gh-rockie/rustify-ui/target/dom/hydration/csr: 5 files
+  app.js
+  harness.css
+  pkg/app.js
+  pkg/app_bg.wasm
+  pkg/snippets/rustify-ui-4db2f10f10788f4c/web/dom-runtime.js
+  wasm imports from: {"./app_bg.js"}
+hydration: host, hydrate and independent CSR at /Users/rockie/Documents/gh-rockie/rustify-ui/target/dom/hydration
+components fixture/ssr: 192 packages (normal and build dependencies, every target)
+  no makepad*, rustify-makepad or cargo-makepad package
+  isolated ssr; no private Markdown/highlighting/CSS compiler/scanner pipeline
+components fixture/hydrate: 190 packages (normal and build dependencies, every target)
+  no makepad*, rustify-makepad or cargo-makepad package
+  isolated hydrate; no private Markdown/highlighting/CSS compiler/scanner pipeline
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-components v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-components)
+   Compiling rustify-docs v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-docs)
+mbx[progress]: 15s elapsed; 0 hits, 1 misses, 0 bypassed, 0 not looked up; ~0s compiler work saved
+   Compiling rustify-docs-cli v0.1.14 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-docs-cli)
+mbx[progress]: 30s elapsed; 0 hits, 1 misses, 0 bypassed, 0 not looked up; ~0s compiler work saved
+mbx[progress]: 45s elapsed; 0 hits, 1 misses, 0 bypassed, 0 not looked up; ~0s compiler work saved
+    Finished `docs-cli` profile [optimized] target(s) in 53.95s
+mbx[cache]: 0 hits, 1 misses, 3 incremental; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: 2.4 TiB logical of build debris binned so far. cargo clean remains unemployed.
+building /Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/features/components-author into /Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-ssg/features/components
+warning[no-git-history]: pages show no last-updated date: not a git repository (or any of the parent directories): .git
+  = help: build inside a git repository with the content committed
+warning[not-in-nav]: this page is in no navigation group, so readers can only reach it by a link
+  --> content/index.md
+warning[theme-token]: radius: Light and dark have different author values; editing this common field applies to both
+  --> theme.json
+build: 9 pages and 404.html in /Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-ssg/features/components: 42960.7 KB in 38 files, 3 warning(s), 109228 ms
+largest pages:
+    424.6 KB  custom/index.html
+    133.8 KB  proxy/index.html
+     99.6 KB  counter/index.html
+     91.1 KB  failure/index.html
+     84.0 KB  async/index.html
+product /Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/features/components/assets/islands/18c6e568f46f5d6df14fad7681e4011456a17f05d5709e7c5445acbfbd7ffda0: 6 files
+  app.js
+  app_bg.wasm
+  dom-loader.js
+  dom-runtime.css
+  islands.js
+  snippets/rustify-ui-4db2f10f10788f4c/web/dom-runtime.js
+  wasm imports from: {"./app_bg.js"}
+component site: 1 complete island resource group(s) at /Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/features/components
+features: the default build is DOM only; the product is /Users/rockie/Documents/gh-rockie/rustify-ui/target/dom/dom-consumer
+mbx[cache]: 0 hits, 1 misses, 2 incremental; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: found 1.9 TiB logical of target/ whose checkouts left long ago. the estate has been settled.

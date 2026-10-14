@@ -1,0 +1,19 @@
+npm notice run rustify-ui-browser-tests@0.1.0 npx
+npm notice run 'playwright' test -c playwright.docs.config.ts --project=dom-hydrate hydration.spec.ts
+
+Running 12 tests using 1 worker
+
+  ✓   1 [dom-hydrate] › tests/dom-only/hydration.spec.ts:297:5 › static catalog remains useful without JavaScript (432ms)
+  ✓   2 [dom-hydrate] › tests/dom-only/hydration.spec.ts:324:5 › all catalog nodes, IDs, ARIA and geometry survive and match independent CSR (1.0s)
+  ✓   3 [dom-hydrate] › tests/dom-only/hydration.spec.ts:367:5 › the same component inputs produce the same public state in hydrate and CSR (2.8s)
+  ✓   4 [dom-hydrate] › tests/dom-only/hydration.spec.ts:393:5 › duplicate, malformed, detached and mismatched roots are refused without mutation (249ms)
+  ✓   5 [dom-hydrate] › tests/dom-only/hydration.spec.ts:420:5 › hydrate before runtime startup preserves all static nodes (137ms)
+  ✓   6 [dom-hydrate] › tests/dom-only/hydration.spec.ts:431:5 › structural comparison detects a deliberate wrong HTML element (338ms)
+  ✓   7 [dom-hydrate] › tests/dom-only/hydration.spec.ts:458:5 › asynchronous browser work starts after deterministic attachment (405ms)
+  ✓   8 [dom-hydrate] › tests/dom-only/hydration.spec.ts:479:5 › disposing one hydrated scope releases its Owner and keeps peers interactive (298ms)
+  ✓   9 [dom-hydrate] › tests/dom-only/hydration.spec.ts:499:5 › independent CSR runtimes isolate identical geometry classes and their cleanup (1.4s)
+  ✓  10 [dom-hydrate] › tests/dom-only/hydration.spec.ts:563:5 › a trap aborts shared listeners, tasks and overlays and restores static scopes (370ms)
+  ✓  11 [dom-hydrate] › tests/dom-only/hydration.spec.ts:593:9 › CSR fallback geometry survives independent Show branches: first cleaned first (1.6s)
+  ✓  12 [dom-hydrate] › tests/dom-only/hydration.spec.ts:593:9 › CSR fallback geometry survives independent Show branches: second cleaned first (1.6s)
+
+  12 passed (12.1s)

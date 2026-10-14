@@ -144,9 +144,41 @@ mod browser {
         previous: Option<String>,
     }
 
+    type ScopeHandle = StoredValue<(Scope, rustify_ui::AbortRelease), LocalStorage>;
+
     impl Scope {
-        fn new() -> Option<Self> {
+        fn shared_token() -> Option<String> {
             let root = use_context::<rustify_ui::ScopeRoots>()?.container();
+            let mut owner = Owner::current()?;
+            // Fallback collectors can belong to independent Show Owners. The
+            // marker belongs to the highest Owner of this mount root instead.
+            while let Some(parent) = owner.parent() {
+                let same_root = parent.with(|| {
+                    use_context::<rustify_ui::ScopeRoots>()
+                        .is_some_and(|roots| roots.container() == root)
+                });
+                if !same_root {
+                    break;
+                }
+                owner = parent;
+            }
+            Some(owner.with(|| {
+                if let Some(handle) = use_context::<ScopeHandle>().filter(|handle| {
+                    handle
+                        .try_with_value(|(scope, _)| scope.root == root)
+                        .unwrap_or(false)
+                }) {
+                    return handle.with_value(|(scope, _)| scope.token.clone());
+                }
+                let scope = Self::new(root);
+                let token = scope.token.clone();
+                let abort = rustify_ui::release_on_abort(scope.release());
+                provide_context(ScopeHandle::new_local((scope, abort)));
+                token
+            }))
+        }
+
+        fn new(root: HtmlElement) -> Self {
             // The page owns this sequence, so different wasm instances also
             // get different selectors while their canonical class IDs stay
             // unchanged. It is a runtime marker, never part of SSR identity.
@@ -163,15 +195,11 @@ mod browser {
             let previous = root.get_attribute(SCOPE_ATTRIBUTE);
             root.set_attribute(SCOPE_ATTRIBUTE, &token)
                 .unwrap_or_else(|error| leptos::wasm_bindgen::throw_val(error));
-            Some(Self {
+            Self {
                 root,
                 token,
                 previous,
-            })
-        }
-
-        fn selector(&self, class: &str) -> String {
-            format!("[{SCOPE_ATTRIBUTE}=\"{}\"] .{class}", self.token)
+            }
         }
 
         fn release(&self) -> js_sys::Function {
@@ -199,8 +227,7 @@ mod browser {
 
     impl Drop for Scope {
         fn drop(&mut self) {
-            // A newer collector may have replaced the marker while this
-            // Owner was being disposed; do not erase its ownership.
+            // Restore the pre-mount marker only when this root Owner ends.
             if self.root.get_attribute(SCOPE_ATTRIBUTE).as_deref() == Some(&self.token) {
                 match self.previous.as_deref() {
                     Some(previous) => {
@@ -217,8 +244,8 @@ mod browser {
     pub(super) struct Rules {
         sheet: CssStyleSheet,
         rules: BTreeMap<String, CssStyleRule>,
-        scope: Option<Scope>,
-        _abort: Vec<rustify_ui::AbortRelease>,
+        scope_token: Option<String>,
+        _abort: rustify_ui::AbortRelease,
     }
 
     impl Rules {
@@ -235,16 +262,11 @@ mod browser {
                 .unchecked_into::<js_sys::Function>()
                 .bind1(sheet.as_ref(), &JsValue::from_str(""))
                 .unchecked_into::<js_sys::Function>();
-            let scope = Scope::new();
-            let mut abort = vec![rustify_ui::release_on_abort(clear)];
-            if let Some(scope) = &scope {
-                abort.push(rustify_ui::release_on_abort(scope.release()));
-            }
             Self {
                 sheet,
                 rules: BTreeMap::new(),
-                scope,
-                _abort: abort,
+                scope_token: Scope::shared_token(),
+                _abort: rustify_ui::release_on_abort(clear),
             }
         }
 
@@ -262,9 +284,10 @@ mod browser {
                 .insert_rule_with_index(
                     &format!(
                         "{}{{{declarations}}}",
-                        self.scope
-                            .as_ref()
-                            .map_or_else(|| format!(".{class}"), |scope| scope.selector(class))
+                        self.scope_token.as_ref().map_or_else(
+                            || format!(".{class}"),
+                            |token| format!("[{SCOPE_ATTRIBUTE}=\"{token}\"] .{class}")
+                        )
                     ),
                     rules.length(),
                 )

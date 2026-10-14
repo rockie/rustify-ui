@@ -1,0 +1,494 @@
+{
+  "stats": {
+    "startTime": "2026-10-14T12:47:07.580Z",
+    "duration": 12070.155,
+    "expected": 12,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "tests": [
+    {
+      "title": "static catalog remains useful without JavaScript",
+      "status": [
+        "passed"
+      ]
+    },
+    {
+      "title": "all catalog nodes, IDs, ARIA and geometry survive and match independent CSR",
+      "status": [
+        "passed"
+      ]
+    },
+    {
+      "title": "the same component inputs produce the same public state in hydrate and CSR",
+      "status": [
+        "passed"
+      ]
+    },
+    {
+      "title": "duplicate, malformed, detached and mismatched roots are refused without mutation",
+      "status": [
+        "passed"
+      ]
+    },
+    {
+      "title": "hydrate before runtime startup preserves all static nodes",
+      "status": [
+        "passed"
+      ]
+    },
+    {
+      "title": "structural comparison detects a deliberate wrong HTML element",
+      "status": [
+        "passed"
+      ]
+    },
+    {
+      "title": "asynchronous browser work starts after deterministic attachment",
+      "status": [
+        "passed"
+      ]
+    },
+    {
+      "title": "disposing one hydrated scope releases its Owner and keeps peers interactive",
+      "status": [
+        "passed"
+      ]
+    },
+    {
+      "title": "independent CSR runtimes isolate identical geometry classes and their cleanup",
+      "status": [
+        "passed"
+      ]
+    },
+    {
+      "title": "a trap aborts shared listeners, tasks and overlays and restores static scopes",
+      "status": [
+        "passed"
+      ]
+    },
+    {
+      "title": "CSR fallback geometry survives independent Show branches: first cleaned first",
+      "status": [
+        "passed"
+      ]
+    },
+    {
+      "title": "CSR fallback geometry survives independent Show branches: second cleaned first",
+      "status": [
+        "passed"
+      ]
+    }
+  ],
+  "branches": [
+    {
+      "test": "CSR fallback geometry survives independent Show branches: first cleaned first",
+      "observations": [
+        {
+          "phase": "one branch per root",
+          "roots": [
+            {
+              "slot": "first",
+              "marker": "rustify-geometry-1",
+              "bars": [
+                {
+                  "name": "first-progress",
+                  "value": "50",
+                  "track": 256,
+                  "fill": 128
+                }
+              ]
+            },
+            {
+              "slot": "second",
+              "marker": "rustify-geometry-2",
+              "bars": [
+                {
+                  "name": "first-progress",
+                  "value": "50",
+                  "track": 256,
+                  "fill": 128
+                }
+              ]
+            }
+          ],
+          "rules": [
+            "[data-rustify-geometry-scope=\"rustify-geometry-1\"] .rui-branch-seed-geometry-1 { width: 50%; }",
+            "[data-rustify-geometry-scope=\"rustify-geometry-2\"] .rui-branch-seed-geometry-1 { width: 50%; }"
+          ]
+        },
+        {
+          "phase": "both branches",
+          "roots": [
+            {
+              "slot": "first",
+              "marker": "rustify-geometry-1",
+              "bars": [
+                {
+                  "name": "first-progress",
+                  "value": "50",
+                  "track": 256,
+                  "fill": 128
+                },
+                {
+                  "name": "second-progress",
+                  "value": "25",
+                  "track": 256,
+                  "fill": 64
+                }
+              ]
+            },
+            {
+              "slot": "second",
+              "marker": "rustify-geometry-2",
+              "bars": [
+                {
+                  "name": "first-progress",
+                  "value": "50",
+                  "track": 256,
+                  "fill": 128
+                }
+              ]
+            }
+          ],
+          "rules": [
+            "[data-rustify-geometry-scope=\"rustify-geometry-1\"] .rui-branch-seed-geometry-1 { width: 50%; }",
+            "[data-rustify-geometry-scope=\"rustify-geometry-2\"] .rui-branch-seed-geometry-1 { width: 50%; }",
+            "[data-rustify-geometry-scope=\"rustify-geometry-1\"] .rui-branch-seed-geometry-2 { width: 25%; }"
+          ]
+        },
+        {
+          "phase": "independent updates",
+          "roots": [
+            {
+              "slot": "first",
+              "marker": "rustify-geometry-1",
+              "bars": [
+                {
+                  "name": "first-progress",
+                  "value": "60",
+                  "track": 256,
+                  "fill": 153.59375
+                },
+                {
+                  "name": "second-progress",
+                  "value": "35",
+                  "track": 256,
+                  "fill": 89.59375
+                }
+              ]
+            },
+            {
+              "slot": "second",
+              "marker": "rustify-geometry-2",
+              "bars": [
+                {
+                  "name": "first-progress",
+                  "value": "50",
+                  "track": 256,
+                  "fill": 128
+                }
+              ]
+            }
+          ],
+          "rules": [
+            "[data-rustify-geometry-scope=\"rustify-geometry-1\"] .rui-branch-seed-geometry-1 { width: 60%; }",
+            "[data-rustify-geometry-scope=\"rustify-geometry-2\"] .rui-branch-seed-geometry-1 { width: 50%; }",
+            "[data-rustify-geometry-scope=\"rustify-geometry-1\"] .rui-branch-seed-geometry-2 { width: 35%; }"
+          ]
+        },
+        {
+          "phase": "one collector cleaned",
+          "roots": [
+            {
+              "slot": "first",
+              "marker": "rustify-geometry-1",
+              "bars": [
+                {
+                  "name": "second-progress",
+                  "value": "45",
+                  "track": 256,
+                  "fill": 115.1875
+                }
+              ]
+            },
+            {
+              "slot": "second",
+              "marker": "rustify-geometry-2",
+              "bars": [
+                {
+                  "name": "first-progress",
+                  "value": "50",
+                  "track": 256,
+                  "fill": 128
+                }
+              ]
+            }
+          ],
+          "rules": [
+            "[data-rustify-geometry-scope=\"rustify-geometry-2\"] .rui-branch-seed-geometry-1 { width: 50%; }",
+            "[data-rustify-geometry-scope=\"rustify-geometry-1\"] .rui-branch-seed-geometry-2 { width: 45%; }"
+          ]
+        },
+        {
+          "phase": "both collectors cleaned",
+          "roots": [
+            {
+              "slot": "first",
+              "marker": "rustify-geometry-1",
+              "bars": []
+            },
+            {
+              "slot": "second",
+              "marker": "rustify-geometry-2",
+              "bars": [
+                {
+                  "name": "first-progress",
+                  "value": "50",
+                  "track": 256,
+                  "fill": 128
+                }
+              ]
+            }
+          ],
+          "rules": [
+            "[data-rustify-geometry-scope=\"rustify-geometry-2\"] .rui-branch-seed-geometry-1 { width: 50%; }"
+          ]
+        },
+        {
+          "phase": "final",
+          "roots": [
+            {
+              "slot": "first",
+              "marker": null,
+              "bars": []
+            },
+            {
+              "slot": "second",
+              "marker": null,
+              "bars": []
+            }
+          ],
+          "rules": []
+        }
+      ],
+      "errors": [],
+      "csp": []
+    },
+    {
+      "test": "CSR fallback geometry survives independent Show branches: second cleaned first",
+      "observations": [
+        {
+          "phase": "one branch per root",
+          "roots": [
+            {
+              "slot": "first",
+              "marker": "rustify-geometry-1",
+              "bars": [
+                {
+                  "name": "first-progress",
+                  "value": "50",
+                  "track": 256,
+                  "fill": 128
+                }
+              ]
+            },
+            {
+              "slot": "second",
+              "marker": "rustify-geometry-2",
+              "bars": [
+                {
+                  "name": "first-progress",
+                  "value": "50",
+                  "track": 256,
+                  "fill": 128
+                }
+              ]
+            }
+          ],
+          "rules": [
+            "[data-rustify-geometry-scope=\"rustify-geometry-1\"] .rui-branch-seed-geometry-1 { width: 50%; }",
+            "[data-rustify-geometry-scope=\"rustify-geometry-2\"] .rui-branch-seed-geometry-1 { width: 50%; }"
+          ]
+        },
+        {
+          "phase": "both branches",
+          "roots": [
+            {
+              "slot": "first",
+              "marker": "rustify-geometry-1",
+              "bars": [
+                {
+                  "name": "first-progress",
+                  "value": "50",
+                  "track": 256,
+                  "fill": 128
+                },
+                {
+                  "name": "second-progress",
+                  "value": "25",
+                  "track": 256,
+                  "fill": 64
+                }
+              ]
+            },
+            {
+              "slot": "second",
+              "marker": "rustify-geometry-2",
+              "bars": [
+                {
+                  "name": "first-progress",
+                  "value": "50",
+                  "track": 256,
+                  "fill": 128
+                }
+              ]
+            }
+          ],
+          "rules": [
+            "[data-rustify-geometry-scope=\"rustify-geometry-1\"] .rui-branch-seed-geometry-1 { width: 50%; }",
+            "[data-rustify-geometry-scope=\"rustify-geometry-2\"] .rui-branch-seed-geometry-1 { width: 50%; }",
+            "[data-rustify-geometry-scope=\"rustify-geometry-1\"] .rui-branch-seed-geometry-2 { width: 25%; }"
+          ]
+        },
+        {
+          "phase": "independent updates",
+          "roots": [
+            {
+              "slot": "first",
+              "marker": "rustify-geometry-1",
+              "bars": [
+                {
+                  "name": "first-progress",
+                  "value": "60",
+                  "track": 256,
+                  "fill": 153.59375
+                },
+                {
+                  "name": "second-progress",
+                  "value": "35",
+                  "track": 256,
+                  "fill": 89.59375
+                }
+              ]
+            },
+            {
+              "slot": "second",
+              "marker": "rustify-geometry-2",
+              "bars": [
+                {
+                  "name": "first-progress",
+                  "value": "50",
+                  "track": 256,
+                  "fill": 128
+                }
+              ]
+            }
+          ],
+          "rules": [
+            "[data-rustify-geometry-scope=\"rustify-geometry-1\"] .rui-branch-seed-geometry-1 { width: 60%; }",
+            "[data-rustify-geometry-scope=\"rustify-geometry-2\"] .rui-branch-seed-geometry-1 { width: 50%; }",
+            "[data-rustify-geometry-scope=\"rustify-geometry-1\"] .rui-branch-seed-geometry-2 { width: 35%; }"
+          ]
+        },
+        {
+          "phase": "one collector cleaned",
+          "roots": [
+            {
+              "slot": "first",
+              "marker": "rustify-geometry-1",
+              "bars": [
+                {
+                  "name": "first-progress",
+                  "value": "70",
+                  "track": 256,
+                  "fill": 179.1875
+                }
+              ]
+            },
+            {
+              "slot": "second",
+              "marker": "rustify-geometry-2",
+              "bars": [
+                {
+                  "name": "first-progress",
+                  "value": "50",
+                  "track": 256,
+                  "fill": 128
+                }
+              ]
+            }
+          ],
+          "rules": [
+            "[data-rustify-geometry-scope=\"rustify-geometry-1\"] .rui-branch-seed-geometry-1 { width: 70%; }",
+            "[data-rustify-geometry-scope=\"rustify-geometry-2\"] .rui-branch-seed-geometry-1 { width: 50%; }"
+          ]
+        },
+        {
+          "phase": "both collectors cleaned",
+          "roots": [
+            {
+              "slot": "first",
+              "marker": "rustify-geometry-1",
+              "bars": []
+            },
+            {
+              "slot": "second",
+              "marker": "rustify-geometry-2",
+              "bars": [
+                {
+                  "name": "first-progress",
+                  "value": "50",
+                  "track": 256,
+                  "fill": 128
+                }
+              ]
+            }
+          ],
+          "rules": [
+            "[data-rustify-geometry-scope=\"rustify-geometry-2\"] .rui-branch-seed-geometry-1 { width: 50%; }"
+          ]
+        },
+        {
+          "phase": "final",
+          "roots": [
+            {
+              "slot": "first",
+              "marker": null,
+              "bars": []
+            },
+            {
+              "slot": "second",
+              "marker": null,
+              "bars": []
+            }
+          ],
+          "rules": []
+        }
+      ],
+      "errors": [],
+      "csp": []
+    }
+  ],
+  "hydrationIdentity": [
+    {
+      "root": true,
+      "nodes": 290,
+      "retained": 290,
+      "ids": true
+    },
+    {
+      "root": true,
+      "nodes": 290,
+      "retained": 290,
+      "ids": true
+    },
+    {
+      "root": true,
+      "nodes": 290,
+      "retained": 290,
+      "ids": true
+    }
+  ]
+}

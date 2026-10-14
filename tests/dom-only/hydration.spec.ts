@@ -33,6 +33,8 @@ declare global {
             reject(kind: string): Refusal;
             fatal(): string | null;
             trap(): void;
+            geometryMount(root: HTMLElement, seed: string): number;
+            geometryDispose(handle: number): boolean;
             peers: Record<string, Peer>;
             bootPeer(slot: string, seed: string): Promise<number>;
         };
@@ -586,3 +588,99 @@ test("a trap aborts shared listeners, tasks and overlays and restores static sco
     expect(await page.evaluate(() => [...document.adoptedStyleSheets].every((sheet) => sheet.cssRules.length === 0))).toBe(true);
     await testInfo.attach("fatal-runtime.json", { body: JSON.stringify({ active, stats, fatal: await page.evaluate(() => window.__hydration.fatal()) }, null, 2), contentType: "application/json" });
 });
+
+for (const cleanupOrder of ["first", "second"] as const) {
+    test(`CSR fallback geometry survives independent Show branches: ${cleanupOrder} cleaned first`, async ({ page }, testInfo) => {
+        const errors = await open(page, "csr");
+        const baselineSheets = await page.evaluate(() => document.adoptedStyleSheets.length);
+        const handles = await page.evaluate(() => ["first", "second"].map((slot) => {
+            const root = document.createElement("div");
+            root.dataset.geometryRoot = slot;
+            document.querySelector("main")!.append(root);
+            // Equal seeds intentionally force matching classes in separate mount roots.
+            return window.__hydration.geometryMount(root, "branch-seed");
+        }));
+        const first = page.locator('[data-geometry-root="first"]');
+        const second = page.locator('[data-geometry-root="second"]');
+        const progress = (scope: Locator, branch: string) => scope.getByTestId(`${branch}-progress`);
+        const observations: unknown[] = [];
+        const measure = async (phase: string) => observations.push(await page.evaluate((phase) => ({
+            phase,
+            roots: [...document.querySelectorAll("[data-geometry-root]")].map((root) => ({
+                slot: root.getAttribute("data-geometry-root"),
+                marker: root.getAttribute("data-rustify-geometry-scope"),
+                bars: [...root.querySelectorAll('[role="progressbar"]')].map((bar) => ({
+                    name: bar.getAttribute("data-testid"),
+                    value: bar.getAttribute("aria-valuenow"),
+                    track: bar.getBoundingClientRect().width,
+                    fill: bar.firstElementChild!.getBoundingClientRect().width,
+                })),
+            })),
+            rules: [...document.adoptedStyleSheets].flatMap((sheet) => [...sheet.cssRules].map((rule) => rule.cssText)),
+        }), phase));
+        const width = async (scope: Locator, branch: string, percent: number) => {
+            await expect(progress(scope, branch)).toHaveAttribute("aria-valuenow", String(percent));
+            await expect(progress(scope, branch)).toHaveCSS("width", "256px");
+            await expect.poll(() => progress(scope, branch).locator("div").evaluate((fill) => fill.getBoundingClientRect().width)).toBeCloseTo(256 * percent / 100, 1);
+            await expect.poll(() => widthRules(progress(scope, branch).locator("div"))).toEqual([`${percent}%`]);
+        };
+        try {
+            await first.getByTestId("first-toggle").click();
+            await second.getByTestId("first-toggle").click();
+            await width(first, "first", 50);
+            await width(second, "first", 50);
+            const markers = [await first.getAttribute("data-rustify-geometry-scope"), await second.getAttribute("data-rustify-geometry-scope")];
+            expect(markers[0]).toBeTruthy();
+            expect(markers[1]).toBeTruthy();
+            expect(markers[0]).not.toBe(markers[1]);
+            expect(await progress(first, "first").locator("div").getAttribute("class")).toBe(await progress(second, "first").locator("div").getAttribute("class"));
+            await measure("one branch per root");
+
+            await first.getByTestId("second-toggle").click();
+            await width(first, "first", 50);
+            await width(first, "second", 25);
+            expect(await first.getAttribute("data-rustify-geometry-scope")).toBe(markers[0]);
+            await measure("both branches");
+            await first.getByTestId("first-update").click();
+            await first.getByTestId("second-update").click();
+            await width(first, "first", 60);
+            await width(first, "second", 35);
+            await width(second, "first", 50);
+            await measure("independent updates");
+
+            const survivor = cleanupOrder === "first" ? "second" : "first";
+            await first.getByTestId(`${cleanupOrder}-toggle`).click();
+            await expect(progress(first, cleanupOrder)).toHaveCount(0);
+            await width(first, survivor, survivor === "first" ? 60 : 35);
+            expect(await first.getAttribute("data-rustify-geometry-scope")).toBe(markers[0]);
+            await first.getByTestId(`${survivor}-update`).click();
+            await width(first, survivor, survivor === "first" ? 70 : 45);
+            await width(second, "first", 50);
+            await measure("one collector cleaned");
+            await first.getByTestId(`${survivor}-toggle`).click();
+            await expect(first.getByRole("progressbar")).toHaveCount(0);
+            expect(await first.getAttribute("data-rustify-geometry-scope")).toBe(markers[0]);
+            await measure("both collectors cleaned");
+
+            await first.getByTestId("first-toggle").click();
+            await first.getByTestId("second-toggle").click();
+            await width(first, "first", cleanupOrder === "first" ? 60 : 70);
+            await width(first, "second", cleanupOrder === "first" ? 45 : 35);
+            expect(await first.getAttribute("data-rustify-geometry-scope")).toBe(markers[0]);
+            await expect(first.locator("[style]")).toHaveCount(0);
+            expect(await page.evaluate((handle) => window.__hydration.geometryDispose(handle), handles[0])).toBe(true);
+            await expect(first).not.toHaveAttribute("data-rustify-geometry-scope");
+            await width(second, "first", 50);
+            await second.getByTestId("first-update").click();
+            await width(second, "first", 60);
+            expect(await page.evaluate((handle) => window.__hydration.geometryDispose(handle), handles[1])).toBe(true);
+            await expect(second).not.toHaveAttribute("data-rustify-geometry-scope");
+            expect(await page.evaluate(() => document.adoptedStyleSheets.length)).toBe(baselineSheets);
+            expect(errors).toEqual([]);
+            expect(await page.evaluate(() => window.__hydrate_csp)).toEqual([]);
+        } finally {
+            await measure("final");
+            await testInfo.attach("branch-geometry.json", { body: JSON.stringify({ observations, errors, csp: await page.evaluate(() => window.__hydrate_csp) }, null, 2), contentType: "application/json" });
+        }
+    });
+}

@@ -56,6 +56,24 @@ fn attach(container: leptos::web_sys::HtmlElement, scope: &str) -> Result<u32, J
     Ok(id)
 }
 
+#[cfg(feature = "csr")]
+#[wasm_bindgen]
+pub fn harness_geometry_mount(
+    container: leptos::web_sys::HtmlElement,
+    seed: &str,
+) -> Result<u32, JsValue> {
+    let seed = seed.to_string();
+    let handle = rustify_ui::mount(container, crate::config(seed.clone()), move || {
+        rustify_ui::id::provide(&seed);
+        // Deliberately no provide_geometry_styles: each Show creates its own fallback.
+        view! { <crate::geometry_branches::GeometryBranches/> }
+    })
+    .map_err(|error| JsValue::from_str(&format!("{error:?}: {error}")))?;
+    let id = NEXT_HANDLE.with(|next| next.replace(next.get() + 1));
+    HANDLES.with(|handles| handles.borrow_mut().insert(id, handle));
+    Ok(id)
+}
+
 #[wasm_bindgen]
 pub fn harness_dispose(handle: u32) -> bool {
     HANDLES

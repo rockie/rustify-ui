@@ -180,6 +180,8 @@ try {
         reject,
         fatal: () => fatal,
         trap: () => app.harness_trap_deferred(),
+        geometryMount: (root, seed) => app.harness_geometry_mount(root, seed),
+        geometryDispose: (handle) => app.harness_dispose(handle),
         peers: {},
         async bootPeer(slot, seed) {
             const shell = document.createElement("section");

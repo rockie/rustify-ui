@@ -17,6 +17,9 @@ mod view;
 #[cfg(target_arch = "wasm32")]
 mod browser;
 
+#[cfg(all(target_arch = "wasm32", feature = "csr"))]
+mod geometry_branches;
+
 /// The same seeds in all three separately compiled rendering modes.
 pub const SCOPES: [&str; 3] = ["catalog-a", "catalog-b", "catalog-c"];
 

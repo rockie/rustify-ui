@@ -1,0 +1,162 @@
+[
+  {
+    "test": "CSR fallback geometry survives independent Show branches: first cleaned first",
+    "observations": [
+      {
+        "phase": "one branch per root",
+        "roots": [
+          {
+            "slot": "first",
+            "marker": "rustify-geometry-1",
+            "bars": [
+              {
+                "name": "first-progress",
+                "value": "50",
+                "track": 256,
+                "fill": 128
+              }
+            ]
+          },
+          {
+            "slot": "second",
+            "marker": "rustify-geometry-2",
+            "bars": [
+              {
+                "name": "first-progress",
+                "value": "50",
+                "track": 256,
+                "fill": 128
+              }
+            ]
+          }
+        ],
+        "rules": [
+          "[data-rustify-geometry-scope=\"rustify-geometry-1\"] .rui-branch-seed-geometry-1 { width: 50%; }",
+          "[data-rustify-geometry-scope=\"rustify-geometry-2\"] .rui-branch-seed-geometry-1 { width: 50%; }"
+        ]
+      },
+      {
+        "phase": "final",
+        "roots": [
+          {
+            "slot": "first",
+            "marker": "rustify-geometry-3",
+            "bars": [
+              {
+                "name": "first-progress",
+                "value": "50",
+                "track": 256,
+                "fill": 256
+              },
+              {
+                "name": "second-progress",
+                "value": "25",
+                "track": 256,
+                "fill": 64
+              }
+            ]
+          },
+          {
+            "slot": "second",
+            "marker": "rustify-geometry-2",
+            "bars": [
+              {
+                "name": "first-progress",
+                "value": "50",
+                "track": 256,
+                "fill": 128
+              }
+            ]
+          }
+        ],
+        "rules": [
+          "[data-rustify-geometry-scope=\"rustify-geometry-1\"] .rui-branch-seed-geometry-1 { width: 50%; }",
+          "[data-rustify-geometry-scope=\"rustify-geometry-2\"] .rui-branch-seed-geometry-1 { width: 50%; }",
+          "[data-rustify-geometry-scope=\"rustify-geometry-3\"] .rui-branch-seed-geometry-2 { width: 25%; }"
+        ]
+      }
+    ],
+    "errors": [],
+    "csp": []
+  },
+  {
+    "test": "CSR fallback geometry survives independent Show branches: second cleaned first",
+    "observations": [
+      {
+        "phase": "one branch per root",
+        "roots": [
+          {
+            "slot": "first",
+            "marker": "rustify-geometry-1",
+            "bars": [
+              {
+                "name": "first-progress",
+                "value": "50",
+                "track": 256,
+                "fill": 128
+              }
+            ]
+          },
+          {
+            "slot": "second",
+            "marker": "rustify-geometry-2",
+            "bars": [
+              {
+                "name": "first-progress",
+                "value": "50",
+                "track": 256,
+                "fill": 128
+              }
+            ]
+          }
+        ],
+        "rules": [
+          "[data-rustify-geometry-scope=\"rustify-geometry-1\"] .rui-branch-seed-geometry-1 { width: 50%; }",
+          "[data-rustify-geometry-scope=\"rustify-geometry-2\"] .rui-branch-seed-geometry-1 { width: 50%; }"
+        ]
+      },
+      {
+        "phase": "final",
+        "roots": [
+          {
+            "slot": "first",
+            "marker": "rustify-geometry-3",
+            "bars": [
+              {
+                "name": "first-progress",
+                "value": "50",
+                "track": 256,
+                "fill": 256
+              },
+              {
+                "name": "second-progress",
+                "value": "25",
+                "track": 256,
+                "fill": 64
+              }
+            ]
+          },
+          {
+            "slot": "second",
+            "marker": "rustify-geometry-2",
+            "bars": [
+              {
+                "name": "first-progress",
+                "value": "50",
+                "track": 256,
+                "fill": 128
+              }
+            ]
+          }
+        ],
+        "rules": [
+          "[data-rustify-geometry-scope=\"rustify-geometry-1\"] .rui-branch-seed-geometry-1 { width: 50%; }",
+          "[data-rustify-geometry-scope=\"rustify-geometry-2\"] .rui-branch-seed-geometry-1 { width: 50%; }",
+          "[data-rustify-geometry-scope=\"rustify-geometry-3\"] .rui-branch-seed-geometry-2 { width: 25%; }"
+        ]
+      }
+    ],
+    "errors": [],
+    "csp": []
+  }
+]
