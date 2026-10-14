@@ -541,12 +541,13 @@ SDK/components各自执行default/gpu/ssr单包test/clippy与hydrate wasm32 chec
 | M3 | 可定制的静态页、插槽与主题 | M2注册/describe协议、check/build和V-3/V-4/V-12代理门 | 统一页图/七slot/RenderContext::demo/nav.routes；主题/静态context、CLI同版字体/许可/来源摘要及主题下候选/样式复核；docs/themes.md；generation/shell/content单写，theme/style分工避共同文件 | V-6/V-7、主题/slot影响的V-5复跑及V-14通过；字体同源/中性路径/隐态样式可观察，themes文档示例/链接检查；回写「实施进度」 |
 | M4 | 可复制的组件工程与 Rust 随改随看 | M2真实编译/资源指纹+V-4、岛启动可用与V-12代理门；不等V-5故障全门或M3全出口 | 模板/doctor/包名/locked配对、README与docs/docs-ssg.md作者合同；先做§6dev设计，再building/last-good/原路径指纹/epoch事件；new/dev可分工，rust_site/main/report/lock单写 | V-8/V-9、V-12的content≤60s与完整dev首测、受影响V-4/V-14通过；未改模板浏览器/README试走/冷启动与增量观测有证据，finish review/规范同步；回写「实施进度」 |
 | M5 | 英文官方站与24类真实演示 | M2 check/build及V-4、M3页图/主题与V-6/V-7；演示函数只需M1对应类V-2及site!合同；不依赖M4 V-8/V-9 | root白名单/README首页/CATALOG定制页/nav36项；先做§6页面设计；vellum唯一源译英/utility坏链接修正、B语料演示页与docs_corpus、verify.yml官方目标；函数按文件分工，配置/nav/注册单写；可同期准备workflow/分发/Pages授权 | V-10/局部V-11/受影响V-14通过；12+24可达/同源/lang/零错误/排除读取与监视，finish review/规范同步；回写「实施进度」 |
-| M6 | 进行中 | 2026-10-14T09:05:09+08:00 | R4/C4真实冻结，固定安装及原B500保存门复验进行中；开发版保存过1s/C3原红保留；最终UAT/矩阵/旧示例、受影响性能和外部门未闭 | [M6 记录](../validation/docs-ssg-p2/M6.md) | 3fcc626a（库R4），d301344e（CLI C4）；历史R3/C3 c5620082/6721dc73，验证043840a1 |
+| M6 | P2完整行为、性能与首次用户出口 | M1–M5交付与V-2–V-10局部门；分发/推送授权、浏览器/设备与5位用户就绪 | 第一阶段冻结真实库R/CLI C、lock/模板/README/安装命令、提交与分发（非仅工作树）；之后同候选components/official root/subpath/meta、UAT-3连续作者路径、性能/设备/真人/回归；主实施者收口、资源串行 | V-5/V-9连续UAT/V-10/V-11/V-12/V-13/V-14通过；P2 AC及跨期回归有证据，Firefox按C-6延期单列未验证；冻结候选与后续发布无产品差异；回写「实施进度」 |
 | M7 | git安装交付与英文站实际上线（最终收口） | 实际deploy须M6全部出口及V-11–V-14；冻结R/C可公开安装，Pages配置/发布与回滚授权明确；草案/申请可提前 | 同C安装/模板、Mac构建/同run artifact+手动deploy/真实全页/回滚演练；复核README/模板/docs-docs-ssg部署meta范围与固定命令，不静默改候选；文档/台账单写 | V-15及安装后二进制V-8/V-9通过；受变化影响V-10/V-11/V-14复核；若产品/模板/引导变化，新候选重跑含V-13的受影响出口；部署身份/build_id一致、回滚有证据；回写「实施进度」 |
 
 提交点：M2技术风险收口；M6第一阶段在V-2–V-10局部门通过后为候选冻结提交R/C（仅记M6进行中，不能预填用户/完整矩阵通过），随后M6完整本地/用户收口；M7全部完成最终提交。各次先回写实际证据再提交/回填SHA；R/C分工及允许差异按§2.1，原完成记录归属不重绑。M3–M5未到冻结点可保留待提交行。
 
 按正文和检查已能调度，不另造内部任务状态表。已有稳定契约且文件/资源独立时才并行，默认从单人推进；测试运行、Cargo/锁文件、CSS生成、同一浏览器与Pages部署不并发。后续修改接口或候选基线时，先集成并重跑受影响检查，再解除依赖。
+
 
 ## 11. 风险、开放问题与就绪状态
 
