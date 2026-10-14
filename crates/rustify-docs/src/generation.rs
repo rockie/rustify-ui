@@ -630,6 +630,7 @@ fn final_documents(
     files: &BTreeMap<String, Arc<[u8]>>,
     sources: &BTreeMap<String, String>,
     site: &Site,
+    workers: usize,
 ) -> Vec<Diagnostic> {
     let mut problems = Vec::new();
     for path in files.keys() {
@@ -658,11 +659,16 @@ fn final_documents(
             urls.insert(route, path.as_str());
         }
     }
-    let mut ids = BTreeMap::new();
-    for (path, source) in sources {
+    let pages: Vec<_> = sources.iter().collect();
+    let documents = parallel_map(&pages, workers, |&(path, source)| {
         let html = String::from_utf8_lossy(&files[path]);
+        let (ids, slots) = crate::html_check::document_references(&html);
+        (path, source, ids, slots)
+    });
+    let mut ids = BTreeMap::new();
+    for (path, source, anchors, _) in &documents {
         let mut found = BTreeSet::new();
-        for id in crate::html_check::ids(&html) {
+        for id in anchors {
             if !found.insert(id.clone()) {
                 problems.push(Diagnostic::in_file(
                     source,
@@ -674,9 +680,7 @@ fn final_documents(
         }
         ids.insert(path.as_str(), found);
     }
-    for (path, source) in sources {
-        let html = String::from_utf8_lossy(&files[path]);
-        let (_, slots) = crate::html_check::check_rendered(&html);
+    for (path, source, _, slots) in documents {
         for slot in slots {
             let references = if slot.role == crate::html_check::UrlRole::Srcset {
                 crate::html_check::parse_srcset(&slot.value)
@@ -1153,7 +1157,7 @@ pub fn generate_extended(
     )?;
     // GitHub Pages runs Jekyll on a branch unless told not to.
     insert_output(&mut files, ".nojekyll".to_owned(), Arc::from(&b""[..]))?;
-    problems.extend(final_documents(&files, &sources, &site));
+    problems.extend(final_documents(&files, &sources, &site, workers));
     if !problems.is_empty() {
         return Err(problems);
     }

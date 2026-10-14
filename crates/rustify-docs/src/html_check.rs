@@ -530,6 +530,17 @@ pub fn check(chunk: &str) -> (Vec<Issue>, Vec<UrlSlot>) {
 /// template markup still obeys the policy, but supplies no document URLs.
 pub fn check_rendered(html: &str) -> (Vec<Issue>, Vec<UrlSlot>) {
     let semantics = semantics(html, &[]);
+    check_rendered_with_semantics(html, &semantics)
+}
+
+/// Collect final IDs and references from the same document tree.
+pub(crate) fn document_references(html: &str) -> (Vec<String>, Vec<UrlSlot>) {
+    let semantics = semantics(html, &[]);
+    let (_, slots) = check_rendered_with_semantics(html, &semantics);
+    (semantics.anchors, slots)
+}
+
+fn check_rendered_with_semantics(html: &str, semantics: &Semantics) -> (Vec<Issue>, Vec<UrlSlot>) {
     let (issues, mut slots) = scan_document(html, &semantics.stored_tags);
     slots.retain(|slot| in_document(&slot.span, &semantics.tags));
     (issues, slots)
