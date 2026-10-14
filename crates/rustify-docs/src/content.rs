@@ -187,6 +187,8 @@ pub struct Snapshot {
     pub linked: BTreeSet<String>,
     /// Exact original reads; separate from the files eligible for publication.
     pub inputs: InputReceipts,
+    /// Original scan findings, so a stable invalid input is not mistaken for a change.
+    pub diagnostics: Vec<Diagnostic>,
 }
 
 /// Original reads and existence checks used by one rendering round.
@@ -621,6 +623,7 @@ pub fn snapshot(project: &Project) -> (Snapshot, Vec<Diagnostic>) {
             }
         }
     }
+    snapshot.diagnostics = problems.clone();
     (snapshot, problems)
 }
 
@@ -632,7 +635,7 @@ pub fn validate_inputs(
 ) -> Vec<Diagnostic> {
     let (after, problems) = snapshot(project);
     let mut changed = BTreeSet::new();
-    if !problems.is_empty()
+    if problems != before.diagnostics
         || after.markdown != before.markdown
         || after.files != before.files
         || after.linked != before.linked
@@ -2946,6 +2949,37 @@ pub(crate) mod tests {
 
     pub(crate) const CONFIG: &str =
         "schema_version = 1\n[site]\nname = \"Docs\"\nurl = \"https://example.com/\"\n";
+
+    #[cfg(unix)]
+    #[test]
+    fn render_guard_distinguishes_existing_scan_errors_from_changed_inputs() {
+        let fixture = Fixture::new(&[
+            ("rustify-docs.toml", CONFIG),
+            ("content/index.md", "# Home\n\nA readable home page.\n"),
+            ("static/safe.txt", "safe\n"),
+        ]);
+        let outside = Fixture::new(&[("outside.txt", "secret\n")]);
+        let link = fixture.root.join("static/outside.txt");
+        std::os::unix::fs::symlink(outside.root.join("outside.txt"), &link).unwrap();
+        let (project, before, analysis) = fixture.analyze(Mode::Dev);
+        assert!(analysis
+            .diagnostics
+            .iter()
+            .any(|problem| problem.rule == "symlink-outside"));
+        assert!(analysis.errors() > 0, "the original input remains invalid");
+        assert!(validate_inputs(&project, &before, &analysis).is_empty());
+
+        std::fs::remove_file(&link).unwrap();
+        assert!(validate_inputs(&project, &before, &analysis)
+            .iter()
+            .any(|problem| problem.rule == "render-generation-changed"));
+        let (project, before, analysis) = fixture.analyze(Mode::Dev);
+        assert_eq!(analysis.errors(), 0, "{:?}", analysis.diagnostics);
+        std::os::unix::fs::symlink(outside.root.join("outside.txt"), &link).unwrap();
+        assert!(validate_inputs(&project, &before, &analysis)
+            .iter()
+            .any(|problem| problem.rule == "render-generation-changed"));
+    }
 
     #[test]
     fn render_guard_checks_the_original_outside_resource_read() {
