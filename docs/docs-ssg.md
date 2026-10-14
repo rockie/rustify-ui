@@ -18,8 +18,8 @@ Supported on macOS. Linux and Windows are not verified.
 ## Install and maintain the CLI
 
 This section records the verified P1 content-site release. The Rust examples
-below use the current repository checkout's CLI candidate, version **0.1.12**,
-paired with library revision `0494f304f0f9f8b620affb7309df23db3cb2377c`.
+below use the current repository checkout's CLI candidate, version **0.1.13**,
+paired with library revision `c562008291ef1b1826891944e0d81a5d61d775b8`.
 The library revision is committed locally; public availability is pending.
 The installed candidate reports its exact CLI source commit with
 `rustify-docs --build-info`. The pinned P1 install below is for content sites.
@@ -590,8 +590,8 @@ The components template requires an installed CLI with a traceable source
 revision, an explicit paired framework revision and its embedded dependency
 lock. A development checkout without that frozen pair refuses generation;
 it does not write an unlocked project or choose a framework revision for
-the author. This checkout's 0.1.12 candidate pins library revision
-`0494f304f0f9f8b620affb7309df23db3cb2377c` and embeds its generated dependency
+the author. This checkout's 0.1.13 candidate pins library revision
+`c562008291ef1b1826891944e0d81a5d61d775b8` and embeds its generated dependency
 lock. Public Git availability is still being prepared; the installed CLI's
 `--build-info` identifies its paired C commit. The verified P1 installation
 above does not provide this template.
