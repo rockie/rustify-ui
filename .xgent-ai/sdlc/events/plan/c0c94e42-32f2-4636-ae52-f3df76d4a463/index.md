@@ -65,3 +65,5 @@
 | 4aedf6ab-fa49-422f-ad86-4b2c10f2e9cb | implementation / plan | [4aedf6ab-fa49-422f-ad86-4b2c10f2e9cb.md](4aedf6ab-fa49-422f-ad86-4b2c10f2e9cb.md) |
 
 | b3f0be08-3bee-4655-8492-e878ba7cfb64 | implementation / plan（D15本人验收） | [事件](b3f0be08-3bee-4655-8492-e878ba7cfb64.md) |
+
+| d1b9cc3a-bcc7-44a6-ba1a-475a75ca9611 | implementation / plan（V-13本人验收通过） | [事件](d1b9cc3a-bcc7-44a6-ba1a-475a75ca9611.md) |
