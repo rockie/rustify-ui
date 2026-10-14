@@ -1,0 +1,22 @@
+{
+  "candidate_C": "d301344eeb27e22907c59a10805ae0cebf8dee99",
+  "framework_R": "3fcc626a4039a43c5e045ccd546bab976db89a73",
+  "preview_command": [
+    "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair4-installed-9pziu1hu/installed/bin/rustify-docs",
+    "preview",
+    "--dir",
+    "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair4-installed-9pziu1hu/official-c4/site/dist",
+    "--port",
+    "0"
+  ],
+  "command": [
+    "node",
+    "docs/validation/docs-ssg-p2/m6/verify-official-safari.mjs",
+    "--origin",
+    "http://127.0.0.1:58033/rustify-ui/",
+    "--out",
+    "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2/m6/native-safari-header-c4-r1.json"
+  ],
+  "exit_code": 1,
+  "scope": "bounded current-candidate native Safari recheck; hidden stops at first page; no browser setting or product changes"
+}

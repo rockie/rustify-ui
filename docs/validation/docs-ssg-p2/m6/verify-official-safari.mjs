@@ -97,7 +97,7 @@ export class SafariMcp {
 }
 
 async function inputs() {
-  const formal = JSON.parse(await readFile(new URL("formal-a-radio-r3.json", import.meta.url), "utf8"));
+  const formal = JSON.parse(await readFile(new URL("formal-a-official-islands-c4-r1.json", import.meta.url), "utf8"));
   if (formal.categories.length !== 24 || new Set(formal.categories.map((entry) => entry.route)).size !== 24) throw new Error("formal A must supply 24 unique categories");
   const sourceHashes = {};
   for (const [path, expected] of Object.entries(formal.source_sha256)) {
@@ -134,7 +134,12 @@ async function inputs() {
   const icons = [...shell.matchAll(/<link rel="icon" href="([^"]+)" \/>/g)].map((match) => match[1]);
   if (icons.length !== 1 || !icons[0].startsWith("data:image/svg+xml,")) throw new Error("official shell must declare its one inline SVG head icon");
   sourceHashes[shellPath] = sha256(shell);
-  const pair = JSON.parse(await readFile(new URL("frozen-pair2-identity.json", import.meta.url), "utf8"));
+  const statePath = "target/docs-ssg/m6-installed-c.json", stateBytes = await readFile(new URL(statePath, root));
+  const installed = JSON.parse(stateBytes), version = installed.source_identity.match(/^rustify-docs (\d+\.\d+\.\d+)$/m)?.[1];
+  if (!version || !installed.source_identity.includes(`source: ${installed.candidate_sha}`)) throw new Error("installed CLI source identity is incomplete");
+  if (sha256(await readFile(installed.binary)) !== installed.binary_sha256) throw new Error("installed CLI binary differs from the canonical state");
+  sourceHashes[statePath] = sha256(stateBytes);
+  const pair = { candidate_sha: installed.candidate_sha, framework_revision: installed.framework_revision, cli_version: version, binary_sha256: installed.binary_sha256 };
   return { categories, guides, paragraphs, probes, sourceHashes, pair, icon: icons[0] };
 }
 

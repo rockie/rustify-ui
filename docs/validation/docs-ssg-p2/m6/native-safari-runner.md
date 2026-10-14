@@ -4,13 +4,13 @@
 
 ## 输入与执行
 
-类别和源码地址来自 [formal-a-radio-r3.json](formal-a-radio-r3.json) 的二十四项 categories / source_sha256，沿用 Radio probe 修正后的基线；脚本从 [measure-official-islands.mjs](measure-official-islands.mjs) 提取 until / runProbes 及其局部 helper，不复制另一份类别清单，不复用该报告的 Chromium 性能结论。
+类别和源码地址来自当前 C4 的 [formal-a-official-islands-c4-r1.json](formal-a-official-islands-c4-r1.json) 二十四项 categories / source_sha256；脚本从 [measure-official-islands.mjs](measure-official-islands.mjs) 提取 until / runProbes 及其局部 helper，不复制另一份类别清单，不复用该报告的 Chromium 性能结论。
 
-执行时读取 [frozen-pair2-identity.json](frozen-pair2-identity.json)，并核对 host manifest 的 cli_version；代码没有固定 C/R/version 值。Root 应先完成当前候选重冻/安装/official build，再从实际 host 输出设置 SAFARI_HEADER_ORIGIN 和 SAFARI_META_ORIGIN，分别包含真实端口与 base。以下命令各执行一次并串行运行：
+执行时读取仓根 `target/docs-ssg/m6-installed-c.json`，核对实际 installed binary SHA 与 source identity，再与 host manifest 的 cli_version 配对；不再读取旧 C2 身份文件。Root 应先完成当前候选重冻/安装/official build，再从实际 host 输出设置 SAFARI_HEADER_ORIGIN 和 SAFARI_META_ORIGIN，分别包含真实端口与 base。以下命令各执行一次并串行运行，已有输出不得覆盖：
 
 ```sh
-node docs/validation/docs-ssg-p2/m6/verify-official-safari.mjs --origin "$SAFARI_HEADER_ORIGIN" --out docs/validation/docs-ssg-p2/m6/native-safari-header-r1.json
-node docs/validation/docs-ssg-p2/m6/verify-official-safari.mjs --origin "$SAFARI_META_ORIGIN" --out docs/validation/docs-ssg-p2/m6/native-safari-meta-r1.json
+node docs/validation/docs-ssg-p2/m6/verify-official-safari.mjs --origin "$SAFARI_HEADER_ORIGIN" --out docs/validation/docs-ssg-p2/m6/native-safari-header-c4-r1.json
+node docs/validation/docs-ssg-p2/m6/verify-official-safari.mjs --origin "$SAFARI_META_ORIGIN" --out docs/validation/docs-ssg-p2/m6/native-safari-meta-c4-r1.json
 ```
 
 脚本通过 `/usr/bin/safaridriver --mcp` 的 stdio NDJSON JSON-RPC 初始化，创建一个自有 about:blank tab。每次页面动作前显式切回该 handle，console/network 调用另传自有 handle；不调用 list_tabs 或读取原有 tab。finally 尝试恢复自有上下文的 viewport / 文档主题存储，关闭该自有 tab，并终止 MCP 子进程；失败清理会使报告不通过。
@@ -31,7 +31,7 @@ Safari Inspector 会把 head 的 data SVG icon 列为资源。只有 URL 与实�
 
 ## 尚未验证
 
-本次验证器修订没有运行 Safari、MCP、Cargo 或端口服务。已完成 Node 语法、探针函数解析、已保存 create/close 标准 MCP JSON / 纯 text 解码与所用工具名称的本地 capability 核对。
+先前 C2 修订仅完成静态核对。当前 C4 已实际复查：[header C4 r1](native-safari-header-c4-r1.json) 在第一个首页观察到 hidden / focus=false，首败停止；其余37页未执行。自身标签页已关闭、MCP及预览进程已退出。Node语法通过，旧C2报告与验证器快照保留。
 
 Root 的 [safari-owned-schema-probe-c2-r1.json](safari-owned-schema-probe-c2-r1.json) 已记录一个实际 C2 自有 tab 的 evaluate、network、wasm 详情和空 console 原响应，并记录自有 tab 已关闭。本轮据该记录完成 MIME 字段适配与静态解码核对，保留原就绪等待。协议层仍保存原响应；未知列表或字段形状明确失败，不按空数组通过。
 
@@ -39,6 +39,9 @@ Root 实际 [header C2 r1](native-safari-header-c2-r1.json) 尝试三十八页�
 
 [单页 C2 诊断](safari-startup-diagnostic-c2-r1.json) 的十二个 snapshot 均为 hidden / focus=false，raf 计数停在 1，已有 mounted seed。实际 [islands.js](../../../../crates/rustify-docs/assets/islands.js) 路径是 parsed → boot → bind → docs_hydrate → 两个 rAF → attached 检查 → complete；[mode.js](../../../../crates/rustify-docs/assets/mode.js) 在 parser 进入 interactive 后启动三十秒期限，失败后恢复静态 canvas 并释放 runtime。由这些证据推断，MCP 自有 tab 的不可见状态阻断了完成所需绘制回调；wasm HTTP 成功本身不能证明 coordinator 已 complete。[DOM loader](../../../../crates/rustify-ui/web/dom-loader.js) 的 boot 还包含 compileStreaming、glue import / init、protocol 检查和 runtime boot；coordinator stats 在 bind 前为 null，可帮助区分尚未 bind 与绑定后的失败。
 
-当前不启动第二轮完整遍历。Root 先确认真实可见的自有 Safari 入口；完整两 host 与二十四类 native key 主路径仍未通过。后续运行应指定新的 --out，保留上述 r1 原报告。验证器不改产品期限、document visibility 或 rAF 实现。修订后的验证器仅完成静态核对，未实际运行。
+Root 可在当前候选上有界复查可见性；hidden 时首个页面即停止，不盲目遍历。完整两 host 与二十四类 native key 主路径仍未通过。后续运行应指定新的 --out，保留上述 C2 原报告与 [C2 版本验证器](verify-official-safari-c2-history.mjs)。验证器不改产品期限、document visibility 或 rAF 实现；当前候选的实际结果以新的 C4 报告为准。
 
 此 runner 属于水合后的兼容输入门，不证明原始 SSR DOM 身份保留、水合布局位移为零或性能预算。它也不替代实体手机、浏览器原生 200% zoom、VoiceOver、完整 V-11 或线上验收。
+
+
+当前C4的实际命令/来源见[command](native-safari-header-c4-command-r1.json)。这次没有修改Safari设置、产品期限、visibility或rAF。尚未运行C4 meta host；须先具备真实可见入口，再按上述新文件名接续，不重写本轮hidden报告。

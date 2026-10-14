@@ -1,0 +1,859 @@
+{
+  "scope": "native Safari post-hydration compatibility and public input results only; no original SSR identity/layout/performance claim",
+  "origin": "http://127.0.0.1:58033/rustify-ui/",
+  "pair": {
+    "candidate_sha": "d301344eeb27e22907c59a10805ae0cebf8dee99",
+    "framework_revision": "3fcc626a4039a43c5e045ccd546bab976db89a73",
+    "cli_version": "0.1.14",
+    "binary_sha256": "5eae4e6bf727505a030fd67680c7c3a2c82bb6e195815a0d834b18cf4d737b71"
+  },
+  "source_sha256": {
+    "crates/rustify-components/src/catalog.rs": "614bb91f26c40be9a0a9f7ab9d40acec564cf836a00f3e86fea7cf9a238b1ebb",
+    "site/src/lib.rs": "63ec70624fd4301acd67455eed03f774c556dff47ca0cdcb1c08e8c83e0da897",
+    "tests/docs-ssg/official.spec.ts": "673b9acad501bdf12e0bd796981111d8670897669c9e9c9a2c072c87a4f40709",
+    "site/src/demos/basics.rs": "dd1d28c17eadc662bc29b7fb3c074639262fbf8348d59323711797333daae887",
+    "site/src/demos/fields.rs": "e2e168730187389fb745cb94663e43e48f99fb7ee2130d3a1e1b40b11097efaf",
+    "site/src/demos/choices.rs": "f407ec974556b93c405bf933c9b8994e2b132497f162dc0bb3d3f4518ffbf2e6",
+    "site/src/demos/feedback.rs": "b12c385ed3eaa2a9bfc8df36579a978731f6f33eb442a7d4121bc6e6ff9401c7",
+    "site/src/demos/collections.rs": "ee0dbc6ea072d32e0fe3cf9cd5e22f9cc3c864afdb80bbb2fb5e7ea0fc9688cc",
+    "tests/docs-ssg/harness/measure-islands.mjs": "04942861fe35568078d46c798559ea71cff5abfa67a59933e36262643b9448a3",
+    "crates/rustify-docs/assets/islands.js": "ecc0183124465813a93fae273b21263b166b75814d4334c388f1b6f1e0cb9801",
+    "docs/validation/docs-ssg-p2/m6/measure-official-islands.mjs": "5c99569d0d788c58e691492541df9593f50f5fc4ca9d3af4d30625b146cca581",
+    "docs/quickstart.md": "2a1c59977dff046cbb4558aba22f7bf67659c8e3245c2f636f609bd327736f03",
+    "docs/architecture.md": "aac4a1b1615cd446d5ee80b924182baa4b59cb0034f32cb4a8756da4213443eb",
+    "docs/navigation.md": "c47f6dd683d60c93a6d1dd0ab7e48cacf31afbcef455bd67121ee94354374113",
+    "docs/workspace.md": "7c1f0cc92411347716449584a369ed40cb9a69dd667a7205326d2cb2e63960c4",
+    "docs/forms.md": "9bdc075def9adcc22ed970b01f0a3d72a70f6fe63b4452de0c4e45a7fd69cac3",
+    "docs/i18n.md": "1cd3d5d15d7d9921cda6c72c25d5ca06c0181315f4f80a70c9a480454c5f3ea6",
+    "docs/data.md": "d3a29f3ba22e1618a84d3d8a30b656d954039c5a82c141979b86d7a19e6b3b8a",
+    "docs/themes.md": "741155c94d50da23ef3aaf190e8d3c9746c86ff557c0c087df569761c9946730",
+    "docs/utility.md": "b8007bbff20639b7b66efeb40e05de283a85b566f190b5cf996e523e372033f8",
+    "docs/compatibility.md": "92a2318d6765d73255c1a640eb1eafa8b1e6ff06d056c8785609605f2d0fab2e",
+    "docs/components.md": "4222d8dee6a4ae4695fdc5772214a3ff6dfc3954e72afefb7eea1bf083b6545f",
+    "docs/vellum.md": "bc20cd8e6dad25fc16ca98a683e171c0a232a98a5b559c5c38235f450db652d0",
+    "README.md": "9e0fd678e41eb225967fc808c5adf269fcf32b19eedc46720480e42791deb27e",
+    "crates/rustify-docs/src/shell.rs": "328a5195402bdb3b992399cad2a97c3239b32b8235169fa27c61eaa9c17a971a",
+    "target/docs-ssg/m6-installed-c.json": "40e89217e5398a9a0f0a62442ab4f279930b5342456891ab207821ec238fea64"
+  },
+  "pages": [
+    {
+      "route": "./",
+      "url": "http://127.0.0.1:58033/rustify-ui/",
+      "title": "Rustify UI",
+      "category": null,
+      "passed": false,
+      "page": {
+        "url": "http://127.0.0.1:58033/rustify-ui/",
+        "lang": "en",
+        "title": [
+          "Rustify UI"
+        ],
+        "policy": "default-src 'none'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; media-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'",
+        "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/27.0.1 Safari/605.1.15",
+        "ready": true,
+        "islands": 0,
+        "icons": [
+          "data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22/%3E"
+        ],
+        "lifecycle": {
+          "visibility_state": "hidden",
+          "hidden": true,
+          "has_focus": false,
+          "ready_state": "complete",
+          "coordinator": {
+            "state": "empty",
+            "failure": null,
+            "stats": null
+          },
+          "blocks": []
+        }
+      },
+      "environment_gap": "owned Safari document is hidden; a real visible tab is required for rAF and native input",
+      "failure": "Error: native Safari environment: owned Safari document is hidden; a real visible tab is required for rAF and native input",
+      "failure_inspector": {
+        "network": {
+          "count": 5,
+          "requests": [
+            {
+              "duration_ms": 0,
+              "initiator": {
+                "type": "other"
+              },
+              "method": "GET",
+              "mime_type": "text/html",
+              "request_id": "0.34",
+              "response_size_bytes": 6548,
+              "started_at_iso8601": "2026-10-14T02:17:23.133Z",
+              "status": 200,
+              "url": "http://127.0.0.1:58033/rustify-ui/"
+            },
+            {
+              "duration_ms": 0,
+              "initiator": {
+                "type": "parser",
+                "url": "http://127.0.0.1:58033/rustify-ui/"
+              },
+              "method": "GET",
+              "mime_type": "text/css",
+              "request_id": "0.41",
+              "response_size_bytes": 65182,
+              "started_at_iso8601": "2026-10-14T02:17:23.151Z",
+              "status": 200,
+              "url": "http://127.0.0.1:58033/rustify-ui/assets/site.a412d899bf.css"
+            },
+            {
+              "duration_ms": 0,
+              "initiator": {
+                "type": "parser",
+                "url": "http://127.0.0.1:58033/rustify-ui/"
+              },
+              "method": "GET",
+              "mime_type": "text/javascript",
+              "request_id": "0.42",
+              "response_size_bytes": 6697,
+              "started_at_iso8601": "2026-10-14T02:17:23.151Z",
+              "status": 200,
+              "url": "http://127.0.0.1:58033/rustify-ui/assets/mode.5e2c2584b0.js"
+            },
+            {
+              "duration_ms": 0,
+              "initiator": {
+                "type": "parser",
+                "url": "http://127.0.0.1:58033/rustify-ui/"
+              },
+              "method": "GET",
+              "mime_type": "text/javascript",
+              "request_id": "0.43",
+              "response_size_bytes": 13629,
+              "started_at_iso8601": "2026-10-14T02:17:23.151Z",
+              "status": 200,
+              "url": "http://127.0.0.1:58033/rustify-ui/assets/site.2529a0d647.js"
+            },
+            {
+              "duration_ms": 0,
+              "initiator": {
+                "type": "other"
+              },
+              "method": "GET",
+              "mime_type": "image/svg+xml",
+              "request_id": "0.182",
+              "response_size_bytes": 41,
+              "started_at_iso8601": "2026-10-14T02:17:23.268Z",
+              "status": 200,
+              "url": "data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22/%3E"
+            }
+          ]
+        },
+        "console": []
+      }
+    }
+  ],
+  "small_checks": [],
+  "passed": false,
+  "limitations": [
+    "No physical-phone, native-zoom, VoiceOver or full accessibility acceptance",
+    "Early CSP/page errors rely on Inspector buffers; page event listeners start after navigation",
+    "Saved owned-tab schema probe validates response wrappers only, not this run's compatibility"
+  ],
+  "cleanup": {
+    "owned_tab_closed": true
+  },
+  "initialize": {
+    "capabilities": {
+      "tools": {}
+    },
+    "protocolVersion": "2024-11-05",
+    "serverInfo": {
+      "name": "Safari",
+      "version": "1.0.0"
+    }
+  },
+  "owned_tab": "page-5393A1B9-69AE-46C1-95E0-FAD848F9E648",
+  "manifest": {
+    "schema_version": 1,
+    "mode": "production",
+    "base": "/rustify-ui/",
+    "cli_version": "0.1.14",
+    "build_id": "65ccb4835d9086d7",
+    "files": [
+      {
+        "path": ".nojekyll",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      },
+      {
+        "path": "404.html",
+        "sha256": "a3b7658b225e2550c42e6734e754c9fd5e42e7355f3ab5c4569e47bd4a8b1847",
+        "bytes": 9281
+      },
+      {
+        "path": "architecture/index.html",
+        "sha256": "582b25a42aba5710b86ce412d617706e9a5e8a6bd4013d1f3a76587e1e140a42",
+        "bytes": 49692
+      },
+      {
+        "path": "assets/files/theme-document.schema.d97f50ae4a.json",
+        "sha256": "d97f50ae4a55502a3d2c1f8fa11999c469c84b7f138152f20868106ca22207ac",
+        "bytes": 5525
+      },
+      {
+        "path": "assets/islands/dd2cc26e3a373436d5e1406cc427d0093d83ecf37288802183c1842409a75c61/app.js",
+        "sha256": "3c9a35642f65ab615a26860f6d121ebf6eb79a739cf1af0829373fd468cfb15a",
+        "bytes": 61177
+      },
+      {
+        "path": "assets/islands/dd2cc26e3a373436d5e1406cc427d0093d83ecf37288802183c1842409a75c61/app_bg.wasm",
+        "sha256": "4c1c4b05b6c628e0ce363322ec4c87441752828021cd24143bab48e031055d92",
+        "bytes": 9753420
+      },
+      {
+        "path": "assets/islands/dd2cc26e3a373436d5e1406cc427d0093d83ecf37288802183c1842409a75c61/dom-loader.js",
+        "sha256": "72c911771f7102b184c18b3f311186c94496a4efd47b9d25e46284d8ad2f5dd1",
+        "bytes": 11686
+      },
+      {
+        "path": "assets/islands/dd2cc26e3a373436d5e1406cc427d0093d83ecf37288802183c1842409a75c61/dom-runtime.css",
+        "sha256": "7597abd6960f0ed1ce5b365356e5b2c422bf79117a39e0a8575aa447cd350f41",
+        "bytes": 796
+      },
+      {
+        "path": "assets/islands/dd2cc26e3a373436d5e1406cc427d0093d83ecf37288802183c1842409a75c61/islands.js",
+        "sha256": "ecc0183124465813a93fae273b21263b166b75814d4334c388f1b6f1e0cb9801",
+        "bytes": 2275
+      },
+      {
+        "path": "assets/islands/dd2cc26e3a373436d5e1406cc427d0093d83ecf37288802183c1842409a75c61/snippets/rustify-ui-4db2f10f10788f4c/web/dom-runtime.js",
+        "sha256": "d3f6018d391b65cfaf609fe1a17d9e47e221c51087a956b9fcd0bc6d11076343",
+        "bytes": 7096
+      },
+      {
+        "path": "assets/mode.5e2c2584b0.js",
+        "sha256": "5e2c2584b0eccb6b7631ffa0f0e110e7316d5f60d532a806bef18f1e017c57cf",
+        "bytes": 6697
+      },
+      {
+        "path": "assets/share.9f8be38eaf.png",
+        "sha256": "9f8be38eafa7450a22835777de9ff300878deff236dd54fa9a91e00e206be673",
+        "bytes": 3964
+      },
+      {
+        "path": "assets/site.2529a0d647.js",
+        "sha256": "2529a0d647cd2b645277e1dc98c9396c87421748f2bc42488d3031c6db6e203a",
+        "bytes": 13629
+      },
+      {
+        "path": "assets/site.a412d899bf.css",
+        "sha256": "a412d899bfdad26361db1b05e1e8effb1bb219c81fa18bd5c67cb0e2f9335e56",
+        "bytes": 65182
+      },
+      {
+        "path": "compatibility/index.html",
+        "sha256": "5c1845b79f95cd50af91affae3146b94790e18de187fa895bbafd2fac767cecd",
+        "bytes": 39715
+      },
+      {
+        "path": "components/button/index.html",
+        "sha256": "b8effc49a932e05f8afa6fba462cd13a6ccae4209e6f3021da1468d81ea47bec",
+        "bytes": 113492
+      },
+      {
+        "path": "components/checkbox/index.html",
+        "sha256": "ce93c330f30f15188a47fd96460ea80c6969d50158df418c3b39260644b502e6",
+        "bytes": 125616
+      },
+      {
+        "path": "components/color-field/index.html",
+        "sha256": "feac629b27e7091e8f01824487c3f31e6d4f91318509d78a7c8229900ecc0b07",
+        "bytes": 99297
+      },
+      {
+        "path": "components/data-table/index.html",
+        "sha256": "f05991c59dcd3d8baebd662c763b014201c24234cc683b92a865a98a65af256f",
+        "bytes": 172506
+      },
+      {
+        "path": "components/dialog/index.html",
+        "sha256": "3d7cfee5eabb8c899e920e94fea74b82b02c266bb967415979d2dc9202df17ee",
+        "bytes": 132668
+      },
+      {
+        "path": "components/icon/index.html",
+        "sha256": "1219c368329c1344db2296508004e3e8b1a006de00706ba2ec8674098fa24b67",
+        "bytes": 113102
+      },
+      {
+        "path": "components/index.html",
+        "sha256": "48f0f00e9cbd3a4ba97dd291c5b7676b46a95990b0b0f7245f4ffbcdda029488",
+        "bytes": 34437
+      },
+      {
+        "path": "components/label/index.html",
+        "sha256": "fe7f9061d34bd28a8d41ab36dd2fd85cc10168172044566e3da1f4e550f7fb5e",
+        "bytes": 108854
+      },
+      {
+        "path": "components/link/index.html",
+        "sha256": "0e56f006fcccd5eda4e58a73a51a9276178a7492709cfd8e1cc160df8d4c7d93",
+        "bytes": 114229
+      },
+      {
+        "path": "components/loading/index.html",
+        "sha256": "2cc952db73d18fe213771ca6ddf9fe804ccc073a2d66c7443826b04289d35789",
+        "bytes": 111232
+      },
+      {
+        "path": "components/menu/index.html",
+        "sha256": "ba43da736fdb40bb8e74413732f9b705ea57315f18fd89aa2eb5ae05b999c9e4",
+        "bytes": 145053
+      },
+      {
+        "path": "components/number-field/index.html",
+        "sha256": "7058195b5243cd05743af19fca10178a93f22b4a750998f903d5cf2e04a0d9e8",
+        "bytes": 100130
+      },
+      {
+        "path": "components/progress/index.html",
+        "sha256": "ede1e8bd5e0452b184c2001eaa449f117cdb05603e03a698af4bf5cdebb8a584",
+        "bytes": 131955
+      },
+      {
+        "path": "components/radio/index.html",
+        "sha256": "ea7f320c45e2d452b1482f18db201daf3d6494a5a4f1df6be8f01af7eddb8020",
+        "bytes": 128354
+      },
+      {
+        "path": "components/scroll-area/index.html",
+        "sha256": "4cc0a607bc77e92b71ecb4897700f4b6a904c32f17958ac197337e49768542f7",
+        "bytes": 143914
+      },
+      {
+        "path": "components/select/index.html",
+        "sha256": "48da16c70cde0e807dff10c3137278d911479325577f4cface5951858b4b36df",
+        "bytes": 132135
+      },
+      {
+        "path": "components/slider/index.html",
+        "sha256": "92ae0ab858f1cd3a9d5e6549354f3c1a025a19098106ee59e2501019e17d078a",
+        "bytes": 124923
+      },
+      {
+        "path": "components/switch/index.html",
+        "sha256": "ab2acee061195b4d5ef275e987cc9dcf8781de69d7ecf56660941dff5bce9304",
+        "bytes": 125039
+      },
+      {
+        "path": "components/tabs/index.html",
+        "sha256": "fe51d02b68745bdef8741b83b884aec4b0c46995934a80964f75b0f229f59347",
+        "bytes": 143522
+      },
+      {
+        "path": "components/text-area/index.html",
+        "sha256": "d79c18b2f4a4fbb7b8cafe81a1c1628d74b539be7c4b5ac171599775174a3500",
+        "bytes": 96472
+      },
+      {
+        "path": "components/text-field/index.html",
+        "sha256": "e2d7c97cf8d65e8885fc41ab7e7115596959673ba37fe866e58d5052c6f81e5f",
+        "bytes": 98639
+      },
+      {
+        "path": "components/toast/index.html",
+        "sha256": "2d9c3890dc176898ad0b1998d6b45bbcf61f3305b1b30624562ae753d81c0093",
+        "bytes": 130075
+      },
+      {
+        "path": "components/toggle-group/index.html",
+        "sha256": "1c6a7ef9e11562ab59af17f1f12ea8c6938d5635ef52b18c955a34277ee845b7",
+        "bytes": 132422
+      },
+      {
+        "path": "components/tooltip/index.html",
+        "sha256": "b28cb2509d21bc485e7767c614d7f6cc285800ed6d1afcfc20b0a99b222dd9e7",
+        "bytes": 126308
+      },
+      {
+        "path": "components/tree/index.html",
+        "sha256": "c20b8717a8f14f5fcee3f0544de85ad9e3506676d18bb91e755c67fd4b5e2757",
+        "bytes": 160052
+      },
+      {
+        "path": "data/index.html",
+        "sha256": "a14ffe90dfedde3f7ecb81ac34028b04e3f5fd70aa6f78464ffa0b9aab863a1f",
+        "bytes": 40887
+      },
+      {
+        "path": "forms/index.html",
+        "sha256": "137c268c12c792f18be3696d628bf25d6f557f50c74824afcf7058762c461214",
+        "bytes": 23478
+      },
+      {
+        "path": "i18n/index.html",
+        "sha256": "d9b79e6e3ce9f7e797a2ddfc75b20a2bb4055cb01f37f6a3cf8d57855c09f13d",
+        "bytes": 26143
+      },
+      {
+        "path": "index.html",
+        "sha256": "3d5b245793266a9171922a6051abec61d091257d21d21aa394930f5d7a307310",
+        "bytes": 6548
+      },
+      {
+        "path": "navigation/index.html",
+        "sha256": "b2e420583b994f15cd5d2d0a40b1b41f718165023df4ec264569d2061d8306fd",
+        "bytes": 23615
+      },
+      {
+        "path": "quickstart/index.html",
+        "sha256": "a2dda0b284fa5bc2281e81b730e1038e857e9ee4102b7ca00aa85e06bb63a174",
+        "bytes": 120409
+      },
+      {
+        "path": "robots.txt",
+        "sha256": "7d180e0cdfc5af37d4faa5068de03ec8f95288ad45018f031b6754f8d9c934c8",
+        "bytes": 81
+      },
+      {
+        "path": "sitemap.xml",
+        "sha256": "aa88e063ddd2f69362475901dfe50cfa4d99911f93725ebaa50027ca608c9fa0",
+        "bytes": 3207
+      },
+      {
+        "path": "themes/index.html",
+        "sha256": "153a65e5b0fe94a9d4050050e3c4033b9efc35bf9fbf978aa7052ae8840c3a80",
+        "bytes": 85956
+      },
+      {
+        "path": "utility/index.html",
+        "sha256": "732092901ebe58f2b8df8bebaf6e8f7409f6d4a09d45bf9a6caec686a22b76e5",
+        "bytes": 31141
+      },
+      {
+        "path": "vellum/index.html",
+        "sha256": "bb59c77abd855b633bf9ae7249fdb1a5a6dddd6b337f797b6f551e483049059e",
+        "bytes": 61537
+      },
+      {
+        "path": "workspace/index.html",
+        "sha256": "a933288d5a9ac9773eef0316c0377ab4bca6d8270d601b3a734c4acddab50171",
+        "bytes": 24687
+      }
+    ]
+  },
+  "raw_mcp_responses": [
+    {
+      "method": "initialize",
+      "params": {
+        "protocolVersion": "2024-11-05",
+        "capabilities": {},
+        "clientInfo": {
+          "name": "rustify-native-safari-validation",
+          "version": "1"
+        }
+      },
+      "response": {
+        "id": 1,
+        "jsonrpc": "2.0",
+        "result": {
+          "capabilities": {
+            "tools": {}
+          },
+          "protocolVersion": "2024-11-05",
+          "serverInfo": {
+            "name": "Safari",
+            "version": "1.0.0"
+          }
+        }
+      }
+    },
+    {
+      "method": "tools/call",
+      "params": {
+        "name": "create_tab",
+        "arguments": {
+          "url": "about:blank"
+        }
+      },
+      "response": {
+        "id": 2,
+        "jsonrpc": "2.0",
+        "result": {
+          "content": [
+            {
+              "text": "{\"handle\": \"page-5393A1B9-69AE-46C1-95E0-FAD848F9E648\"}",
+              "type": "text"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "method": "tools/call",
+      "params": {
+        "name": "switch_tab",
+        "arguments": {
+          "handle": "page-5393A1B9-69AE-46C1-95E0-FAD848F9E648"
+        }
+      },
+      "response": {
+        "id": 3,
+        "jsonrpc": "2.0",
+        "result": {
+          "content": [
+            {
+              "text": "Switched to tab page-5393A1B9-69AE-46C1-95E0-FAD848F9E648",
+              "type": "text"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "method": "tools/call",
+      "params": {
+        "name": "evaluate_javascript",
+        "arguments": {
+          "expression": "return \"__RUSTIFY_SAFARI_VALUE__\" + JSON.stringify((function(){return {width:innerWidth,height:innerHeight};\n})());"
+        }
+      },
+      "response": {
+        "id": 4,
+        "jsonrpc": "2.0",
+        "result": {
+          "content": [
+            {
+              "text": "\"__RUSTIFY_SAFARI_VALUE__{\\\"width\\\":1024,\\\"height\\\":664}\"",
+              "type": "text"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "method": "tools/call",
+      "params": {
+        "name": "switch_tab",
+        "arguments": {
+          "handle": "page-5393A1B9-69AE-46C1-95E0-FAD848F9E648"
+        }
+      },
+      "response": {
+        "id": 5,
+        "jsonrpc": "2.0",
+        "result": {
+          "content": [
+            {
+              "text": "Switched to tab page-5393A1B9-69AE-46C1-95E0-FAD848F9E648",
+              "type": "text"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "method": "tools/call",
+      "params": {
+        "name": "list_network_requests",
+        "arguments": {
+          "tab_handle": "page-5393A1B9-69AE-46C1-95E0-FAD848F9E648",
+          "clear": true
+        }
+      },
+      "response": {
+        "id": 6,
+        "jsonrpc": "2.0",
+        "result": {
+          "content": [
+            {
+              "text": "{\"count\":0,\"requests\":[]}",
+              "type": "text"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "method": "tools/call",
+      "params": {
+        "name": "switch_tab",
+        "arguments": {
+          "handle": "page-5393A1B9-69AE-46C1-95E0-FAD848F9E648"
+        }
+      },
+      "response": {
+        "id": 7,
+        "jsonrpc": "2.0",
+        "result": {
+          "content": [
+            {
+              "text": "Switched to tab page-5393A1B9-69AE-46C1-95E0-FAD848F9E648",
+              "type": "text"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "method": "tools/call",
+      "params": {
+        "name": "browser_console_messages",
+        "arguments": {
+          "tab_handle": "page-5393A1B9-69AE-46C1-95E0-FAD848F9E648",
+          "clear": true,
+          "level_filter": [
+            "error"
+          ],
+          "limit": 500
+        }
+      },
+      "response": {
+        "id": 8,
+        "jsonrpc": "2.0",
+        "result": {
+          "content": [
+            {
+              "text": "[]",
+              "type": "text"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "method": "tools/call",
+      "params": {
+        "name": "switch_tab",
+        "arguments": {
+          "handle": "page-5393A1B9-69AE-46C1-95E0-FAD848F9E648"
+        }
+      },
+      "response": {
+        "id": 9,
+        "jsonrpc": "2.0",
+        "result": {
+          "content": [
+            {
+              "text": "Switched to tab page-5393A1B9-69AE-46C1-95E0-FAD848F9E648",
+              "type": "text"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "method": "tools/call",
+      "params": {
+        "name": "navigate_to_url",
+        "arguments": {
+          "tab_uuid": "page-5393A1B9-69AE-46C1-95E0-FAD848F9E648",
+          "url": "http://127.0.0.1:58033/rustify-ui/"
+        }
+      },
+      "response": {
+        "id": 10,
+        "jsonrpc": "2.0",
+        "result": {
+          "content": [
+            {
+              "text": "{\"title\":\"Rustify UI\",\"url\":\"http:\\/\\/127.0.0.1:58033\\/rustify-ui\\/\",\"format\":\"textTree\",\"content\":\"root scrollPosition=(0,0) contentSize=[1024×1172]\\n\\t'Skip to content'\\n\\toverlay\\n\\t\\tlink uid=95 'Rustify UI'\\n\\t\\tnavigation label='Site links'\\n\\t\\t\\tlist\\n\\t\\t\\t\\tlink uid=96 url=github.com\\/rockie\\/rustify-ui\\n\\t\\tlabel=Theme\\n\\t\\t\\tbutton uid=97 'System'\\n\\t\\t\\tbutton uid=98 'Light'\\n\\t\\t\\tbutton uid=99 'Dark'\\n\\t'Rustify UI'\\n\\t'An experimental Rust SDK for browser applications, with DOM components and optional GPU regions.'\\n\\tnavigation label='Start reading'\\n\\t\\tlink uid=100 url=:58033\\/rustify-ui\\/quickstart 'Quick start'\\n\\t\\tlink uid=101 url=:58033\\/rustify-ui\\/components\\/button\\n\\tlist\\n\\t\\tlist-item\\n\\t\\t\\t'DOM interfaces'\\n\\t\\t\\t'Leptos owns the DOM, layout and reactive application state.'\\n\\t\\tlist-item\\n\\t\\t\\t'GPU when needed'\\n\\t\\t\\t'Opt in to GPU regions for content that needs custom drawing.'\\n\\t\\tlist-item\\n\\t\\t\\t'Static deployment'\\n\\t\\t\\t'Build browser assets and serve them over HTTP without a backend.'\\n\\tarticle 'Rustify UI is an experimental Rust SDK for Leptos CSR applications in the browser, with…'\"}",
+              "type": "text"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "method": "tools/call",
+      "params": {
+        "name": "switch_tab",
+        "arguments": {
+          "handle": "page-5393A1B9-69AE-46C1-95E0-FAD848F9E648"
+        }
+      },
+      "response": {
+        "id": 11,
+        "jsonrpc": "2.0",
+        "result": {
+          "content": [
+            {
+              "text": "Switched to tab page-5393A1B9-69AE-46C1-95E0-FAD848F9E648",
+              "type": "text"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "method": "tools/call",
+      "params": {
+        "name": "evaluate_javascript",
+        "arguments": {
+          "expression": "return \"__RUSTIFY_SAFARI_VALUE__\" + JSON.stringify((function(){const blocks=[...document.querySelectorAll('[data-rustify-island]')],coordinator=window.__rustify_docs_islands;\nreturn {url:location.href,lang:document.documentElement.lang,title:[...document.querySelectorAll('h1')].map(n=>n.textContent.trim()),policy:document.querySelector('meta[http-equiv=\"Content-Security-Policy\"]')?.content,ua:navigator.userAgent,ready:document.readyState==='complete'&&blocks.every(n=>n.getAttribute('data-rd-island-state')==='ready'),islands:blocks.length,icons:[...document.head.querySelectorAll('link[rel~=\"icon\"]')].map(n=>n.getAttribute('href')),\nlifecycle:{visibility_state:document.visibilityState,hidden:document.hidden,has_focus:document.hasFocus(),ready_state:document.readyState,coordinator:coordinator?{state:coordinator.state(),failure:coordinator.failure(),stats:coordinator.stats()}:null,\nblocks:blocks.map(n=>{const field=n.querySelector('fieldset[data-rd-island-controls]');return {key:n.getAttribute('data-rustify-island'),state:n.getAttribute('data-rd-island-state'),mounted:field?.firstElementChild?.getAttribute('data-rustify-mounted'),inert:field?.inert,disabled:field?.disabled,aria_busy:field?.getAttribute('aria-busy')};})}};\n})());"
+        }
+      },
+      "response": {
+        "id": 12,
+        "jsonrpc": "2.0",
+        "result": {
+          "content": [
+            {
+              "text": "\"__RUSTIFY_SAFARI_VALUE__{\\\"url\\\":\\\"http://127.0.0.1:58033/rustify-ui/\\\",\\\"lang\\\":\\\"en\\\",\\\"title\\\":[\\\"Rustify UI\\\"],\\\"policy\\\":\\\"default-src 'none'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; media-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'\\\",\\\"ua\\\":\\\"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/27.0.1 Safari/605.1.15\\\",\\\"ready\\\":true,\\\"islands\\\":0,\\\"icons\\\":[\\\"data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22/%3E\\\"],\\\"lifecycle\\\":{\\\"visibility_state\\\":\\\"hidden\\\",\\\"hidden\\\":true,\\\"has_focus\\\":false,\\\"ready_state\\\":\\\"complete\\\",\\\"coordinator\\\":{\\\"state\\\":\\\"empty\\\",\\\"failure\\\":null,\\\"stats\\\":null},\\\"blocks\\\":[]}}\"",
+              "type": "text"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "method": "tools/call",
+      "params": {
+        "name": "switch_tab",
+        "arguments": {
+          "handle": "page-5393A1B9-69AE-46C1-95E0-FAD848F9E648"
+        }
+      },
+      "response": {
+        "id": 13,
+        "jsonrpc": "2.0",
+        "result": {
+          "content": [
+            {
+              "text": "Switched to tab page-5393A1B9-69AE-46C1-95E0-FAD848F9E648",
+              "type": "text"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "method": "tools/call",
+      "params": {
+        "name": "list_network_requests",
+        "arguments": {
+          "tab_handle": "page-5393A1B9-69AE-46C1-95E0-FAD848F9E648",
+          "clear": true
+        }
+      },
+      "response": {
+        "id": 14,
+        "jsonrpc": "2.0",
+        "result": {
+          "content": [
+            {
+              "text": "{\"count\":5,\"requests\":[{\"duration_ms\":0,\"initiator\":{\"type\":\"other\"},\"method\":\"GET\",\"mime_type\":\"text/html\",\"request_id\":\"0.34\",\"response_size_bytes\":6548,\"started_at_iso8601\":\"2026-10-14T02:17:23.133Z\",\"status\":200,\"url\":\"http://127.0.0.1:58033/rustify-ui/\"},{\"duration_ms\":0,\"initiator\":{\"type\":\"parser\",\"url\":\"http://127.0.0.1:58033/rustify-ui/\"},\"method\":\"GET\",\"mime_type\":\"text/css\",\"request_id\":\"0.41\",\"response_size_bytes\":65182,\"started_at_iso8601\":\"2026-10-14T02:17:23.151Z\",\"status\":200,\"url\":\"http://127.0.0.1:58033/rustify-ui/assets/site.a412d899bf.css\"},{\"duration_ms\":0,\"initiator\":{\"type\":\"parser\",\"url\":\"http://127.0.0.1:58033/rustify-ui/\"},\"method\":\"GET\",\"mime_type\":\"text/javascript\",\"request_id\":\"0.42\",\"response_size_bytes\":6697,\"started_at_iso8601\":\"2026-10-14T02:17:23.151Z\",\"status\":200,\"url\":\"http://127.0.0.1:58033/rustify-ui/assets/mode.5e2c2584b0.js\"},{\"duration_ms\":0,\"initiator\":{\"type\":\"parser\",\"url\":\"http://127.0.0.1:58033/rustify-ui/\"},\"method\":\"GET\",\"mime_type\":\"text/javascript\",\"request_id\":\"0.43\",\"response_size_bytes\":13629,\"started_at_iso8601\":\"2026-10-14T02:17:23.151Z\",\"status\":200,\"url\":\"http://127.0.0.1:58033/rustify-ui/assets/site.2529a0d647.js\"},{\"duration_ms\":0,\"initiator\":{\"type\":\"other\"},\"method\":\"GET\",\"mime_type\":\"image/svg+xml\",\"request_id\":\"0.182\",\"response_size_bytes\":41,\"started_at_iso8601\":\"2026-10-14T02:17:23.268Z\",\"status\":200,\"url\":\"data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22/%3E\"}]}",
+              "type": "text"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "method": "tools/call",
+      "params": {
+        "name": "switch_tab",
+        "arguments": {
+          "handle": "page-5393A1B9-69AE-46C1-95E0-FAD848F9E648"
+        }
+      },
+      "response": {
+        "id": 15,
+        "jsonrpc": "2.0",
+        "result": {
+          "content": [
+            {
+              "text": "Switched to tab page-5393A1B9-69AE-46C1-95E0-FAD848F9E648",
+              "type": "text"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "method": "tools/call",
+      "params": {
+        "name": "browser_console_messages",
+        "arguments": {
+          "tab_handle": "page-5393A1B9-69AE-46C1-95E0-FAD848F9E648",
+          "clear": true,
+          "level_filter": [
+            "error"
+          ],
+          "limit": 500
+        }
+      },
+      "response": {
+        "id": 16,
+        "jsonrpc": "2.0",
+        "result": {
+          "content": [
+            {
+              "text": "[]",
+              "type": "text"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "method": "tools/call",
+      "params": {
+        "name": "close_tab",
+        "arguments": {
+          "handle": "page-5393A1B9-69AE-46C1-95E0-FAD848F9E648"
+        }
+      },
+      "response": {
+        "id": 17,
+        "jsonrpc": "2.0",
+        "result": {
+          "content": [
+            {
+              "text": "Closed tab page-5393A1B9-69AE-46C1-95E0-FAD848F9E648",
+              "type": "text"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "mcp_stderr": "",
+  "stopped_after_failure": "./",
+  "unrun_routes": [
+    "quickstart/",
+    "architecture/",
+    "navigation/",
+    "workspace/",
+    "forms/",
+    "i18n/",
+    "data/",
+    "themes/",
+    "utility/",
+    "compatibility/",
+    "components/",
+    "vellum/",
+    "components/button/",
+    "components/label/",
+    "components/link/",
+    "components/icon/",
+    "components/text-field/",
+    "components/text-area/",
+    "components/checkbox/",
+    "components/radio/",
+    "components/switch/",
+    "components/select/",
+    "components/slider/",
+    "components/progress/",
+    "components/loading/",
+    "components/tooltip/",
+    "components/menu/",
+    "components/dialog/",
+    "components/tabs/",
+    "components/scroll-area/",
+    "components/data-table/",
+    "components/tree/",
+    "components/toast/",
+    "components/number-field/",
+    "components/color-field/",
+    "components/toggle-group/",
+    "missing/native/safari/deep/"
+  ],
+  "failure": "Error: stopped after first verifier failure at ./: Error: native Safari environment: owned Safari document is hidden; a real visible tab is required for rAF and native input"
+}

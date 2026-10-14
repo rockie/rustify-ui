@@ -1,0 +1,23 @@
+{
+  "scope": "read-only unauthenticated public GitHub API; no push/config/credential changes",
+  "observed_at": "2026-10-14T02:19:12.967394+00:00",
+  "requests": [
+    {
+      "kind": "candidate_commit",
+      "url": "https://api.github.com/repos/rockie/rustify-ui/commits/d301344eeb27e22907c59a10805ae0cebf8dee99",
+      "method": "GET",
+      "authenticated": false,
+      "status": 422,
+      "message": "Unprocessable Entity"
+    },
+    {
+      "kind": "proposed_branch",
+      "url": "https://api.github.com/repos/rockie/rustify-ui/git/ref/heads/docs-ssg-p2-c4-d301344e",
+      "method": "GET",
+      "authenticated": false,
+      "status": 404,
+      "message": "Not Found"
+    }
+  ],
+  "push_approval": "pending explicit user answer"
+}
