@@ -1,0 +1,45 @@
+{
+  "scope": "resumed read-only public GitHub API; no push/Pages changes",
+  "observed_at": "2026-10-14T08:50:50.206833+00:00",
+  "requests": [
+    {
+      "name": "repository",
+      "method": "GET",
+      "url": "https://api.github.com/repos/rockie/rustify-ui",
+      "authenticated": false,
+      "status": 200,
+      "response_private": false,
+      "response_default_branch": "main",
+      "response_has_pages": false,
+      "response_html_url": "https://github.com/rockie/rustify-ui"
+    },
+    {
+      "name": "candidate_commit",
+      "method": "GET",
+      "url": "https://api.github.com/repos/rockie/rustify-ui/commits/d301344eeb27e22907c59a10805ae0cebf8dee99",
+      "authenticated": false,
+      "status": 422,
+      "response_message": "No commit found for SHA: d301344eeb27e22907c59a10805ae0cebf8dee99",
+      "response_status": "422"
+    },
+    {
+      "name": "candidate_branch",
+      "method": "GET",
+      "url": "https://api.github.com/repos/rockie/rustify-ui/git/ref/heads/docs-ssg-p2-c4-d301344e",
+      "authenticated": false,
+      "status": 404,
+      "response_message": "Not Found",
+      "response_status": "404"
+    },
+    {
+      "name": "Pages",
+      "method": "GET",
+      "url": "https://api.github.com/repos/rockie/rustify-ui/pages",
+      "authenticated": false,
+      "status": 404,
+      "response_message": "Not Found",
+      "response_status": "404"
+    }
+  ],
+  "push_authorization": "awaiting explicit clarification of user\u7ee7\u7eed"
+}

@@ -1,0 +1,33 @@
+{
+  "scope": "resumed desktop readiness; official guidance and current installed versions, no browser settings/install changes",
+  "observed_at": "2026-10-14T08:51:55.495669+00:00",
+  "versions": {
+    "Chrome": {
+      "version": "155.0.8059.41",
+      "build": "8059.41"
+    },
+    "Safari": {
+      "version": "27.0.1",
+      "build": "22625.1.29.11.28"
+    }
+  },
+  "official_Chrome_stable": {
+    "release_date": "2026-10-13",
+    "Windows_and_Mac": "155.0.8059.79/.80",
+    "source": "https://chromereleases.googleblog.com/2026/10/"
+  },
+  "Safari_automation_guidance": [
+    {
+      "source": "https://developer.apple.com/documentation/safari-developer-tools/macos-enabling-webdriver",
+      "claim": "Enable via Safari Developer settings Allow remote automation, or safaridriver --enable"
+    },
+    {
+      "source": "https://webkit.org/blog/18136/introducing-the-safari-mcp-server-for-web-developers/",
+      "claim": "Safari27 MCP setup uses Allow remote automation and external agents; listed tools offer no separate foreground visibility option"
+    }
+  ],
+  "native_W3C_probe": "safari-webdriver-resume-r1.json",
+  "W3C_probe_result": "ready=true, POST/session timed out after30seconds, no confirmed owned session; own driver exited",
+  "remote_automation_setting_state": "unknown; not inferred disabled from timeout",
+  "frozen_C4_product_unchanged": true
+}

@@ -1,0 +1,27 @@
+{
+  "scope": "resumed read-only capability probe with existing native Safari WebDriver; only own new isolated session, no --enable or preference changes",
+  "observed_at": "2026-10-14T08:48:34.955288+00:00",
+  "command": [
+    "/usr/bin/safaridriver",
+    "--port",
+    "64970"
+  ],
+  "session_create_timeout_seconds": 30,
+  "records": [
+    {
+      "method": "GET",
+      "path": "/status",
+      "status": 200,
+      "seconds": 0.003,
+      "value": {
+        "value": {
+          "message": "",
+          "ready": true
+        }
+      }
+    }
+  ],
+  "driver_ready": true,
+  "failure": "timed out",
+  "own_driver_exited": true
+}
