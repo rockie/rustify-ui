@@ -48,14 +48,14 @@
 - 最近完成：M2 · C 审计/提交/真实安装，new 工程 CLI 验收与按 C 投影的 V-2/V-3 复验通过
 - 下一步：代码评审：用 review-code 以 `docs/plan/DOCS-SSG-P2-gaps.md` 为参数评审本计划提交（R、C 与证据提交）；原 M6/M7 缺证与整 P2 终验仍由原计划承接
 - 当前阻塞：无
-- 代码基线：C `7a42230b` 之后的证据提交（见完成记录）；用户既有台账、评审/差异报告与夹具缓存改动保持未提交原位
+- 代码基线：证据提交 `958c9bd9`（R `cc5fded3`、C `7a42230b`）；用户既有台账、评审/差异报告与夹具缓存改动保持未提交原位
 
 ### 完成记录
 
 | Milestone | 状态 | 更新时间 | 简要记录 | 实现与验收记录 | 提交 |
 | --- | --- | --- | --- | --- | --- |
 | M1 | 已完成 | 2026-10-15 02:24 +08:00 | 诊断建议、CRLF/容器位置与 dev 去重；reduce 规则；PRD/作者参考/DESIGN 同步；V-1–V-4 与 §9.2 门通过 | [M1 记录](DOCS-SSG-P2-gaps.records/M1.md) | cc5fded3 |
-| M2 | 已完成 | 2026-10-15 02:52 +08:00 | C=0.1.16 五文件配对 R；本地 Git 真实安装、new 工程 CLI 验收、按 C 投影的 docs-dev/components/official 复验通过 | [M2 记录](DOCS-SSG-P2-gaps.records/M2.md) | C 7a42230b、待提交 |
+| M2 | 已完成 | 2026-10-15 02:52 +08:00 | C=0.1.16 五文件配对 R；本地 Git 真实安装、new 工程 CLI 验收、按 C 投影的 docs-dev/components/official 复验通过 | [M2 记录](DOCS-SSG-P2-gaps.records/M2.md) | C 7a42230b、958c9bd9 |
 
 ## 0. 需求、范围与决策
 
