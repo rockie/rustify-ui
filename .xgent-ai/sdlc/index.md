@@ -22,7 +22,7 @@
 - [DOCS-SSG PRD](status/prd/8917bbeb-7add-4826-95ee-5cdf6bdff735.md)：文档规范状态prd-ready，已批准矩阵/测量合同待同步；P1原计划已8/9，四项交付遗漏、真机及M9缺证见[覆盖报告](status/review/5b279eaf-0dc1-4c8f-a54a-672cc942633f.md)。P2–P4终验保留，未写SPMS。
 - [DOCS-SSG-P1](status/plan/526c88c7-a4b3-4ea9-9193-371420b66d1d.md)：9/9完成；固定安装1b81de2（CLI0.1.4）、最终交付945398c、回填be2cf15。本地115+远端34浏览器、219 Docs Rust、1091 CSR/GPU工作区及模式矩阵/真实安装升级回滚通过；GitHub同SHA安装/SDK/源预览完成。独立gaps2/2，D-04最新版Chrome及两手机延期、P4完整矩阵保留。下一步由用户以review-code评审原计划。
 
-- [DOCS-SSG-P2](status/plan/c0c94e42-32f2-4636-ae52-f3df76d4a463.md)：5/7，固定0.1.14/R4/C4本地技术验证完成；D15撤销五人招募及限时门，V-13本人验收通过，无新分支或公共推送前置。浏览器/实体设备缺口与M7公共安装/Pages未验证项保留。
+- [DOCS-SSG-P2](status/plan/c0c94e42-32f2-4636-ae52-f3df76d4a463.md)：本地技术验证与本人验收通过，当前开发基线0.1.14/R4/C4；原台账5/7。D16公共安装/Pages及回滚留P4，不作为后续本地开发前置；M6环境缺口保留。下一步P3多语言/回退，随后P4搜索/AI索引，均尚未实施。
 ## 初始化范围与验证边界
 
 - 初始化观察：2026-10-07T10:37:52+11:00，协议 v3 / 状态模型 v2。
@@ -36,3 +36,5 @@
 - 台账及AGENTS.md入口尚未提交，未随Git共享；WASM-TAILWIND原有实施成果仍未提交。
 
 - [DOCS-SSG开发验收决定D15](events/prd/8917bbeb-7add-4826-95ee-5cdf6bdff735/5d6fb51a-64cf-4085-93a0-8f9b2781af97.md)：开发阶段由本项目用户确认三个可见成果；本人已回复“验收通过”，原五人统计提案仅为历史研究记录。
+
+- [DOCS-SSG发布顺序D16](events/prd/8917bbeb-7add-4826-95ee-5cdf6bdff735/44303026-e66c-4cd8-b47d-7dde4ce62426.md)：先完成P3/P4本地能力，公开发布留P4收口。
