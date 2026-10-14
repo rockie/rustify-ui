@@ -11,5 +11,6 @@
 | b7e93e3a-7b55-4078-bac8-b5022a453090.md | document / document | [b7e93e3a-7b55-4078-bac8-b5022a453090.md](b7e93e3a-7b55-4078-bac8-b5022a453090.md) |
 | f3bece9f-6ab9-4cd4-b936-eb3a6c41fc8b.md | document / document（评审处置后 prd-ready） | [f3bece9f-6ab9-4cd4-b936-eb3a6c41fc8b.md](f3bece9f-6ab9-4cd4-b936-eb3a6c41fc8b.md) |
 | fb795e8b-7c84-46b6-874a-53ca765e6a09.md | document / document（P1 已有计划承接） | [fb795e8b-7c84-46b6-874a-53ca765e6a09.md](fb795e8b-7c84-46b6-874a-53ca765e6a09.md) |
+| 5d6fb51a-64cf-4085-93a0-8f9b2781af97 | document / document（D15本人验收） | [事件](5d6fb51a-64cf-4085-93a0-8f9b2781af97.md) |
 
 维护约定：改变本层内容者同步索引；按稳定 ID/路径保留历史，无变化不重写，索引不作为事件。详见[目录索引维护](../../../protocol.md#目录索引维护)。

@@ -44,19 +44,19 @@
 
 ### 恢复快照
 
-- 最近更新：2026-10-14T16:53:15+08:00
+- 最近更新：2026-10-14T17:19:34+08:00
 - 当前进度：5/7 个里程碑完成
-- 当前状态：用户续做已恢复执行；M1–M5完成、C4本地技术验证完成；当前公开C4/分支/Pages缺失，原生SafariW3C新会话30s超时、Chrome仍旧patch，M6外部验收阻塞、M7未完成
+- 当前状态：M1–M5完成、C4本地技术验证完成；按用户D15修订开发验收，M6本人验收进行中，五人招募门槛已撤销；其他浏览器/实体设备缺口仍未验证，M7公开安装与Pages未完成
 - 最近完成：M5 · 同源英文官方站、真实dev/三浏览器入口、设计确认及B语料增量
-- 下一步：等待对固定候选分支推送的明确授权选择，获得后仅发布已验C4并验证公共安装；可见Safari/最新Chrome及真人/设备资源具备后补验，M7仍须M6全部出口与发布授权
-- 当前阻塞：用户已确认5位首次用户与两类实体手机目前无法安排；可见Safari/最新桌面协助待答；固定候选公开分发/推送授权及Pages条件未齐备，本地测试不能关闭这些出口
+- 下一步：使用已安装的固定0.1.14 C4准备本地本人验收，记录新建站点、改页及同源可交互演示的实际结果；无需新分支或先公开推送。其他浏览器/设备补验与M7公开安装/Pages按原范围记录
+- 当前阻塞：本地本人验收无招募或公开分发前置；可见Safari/最新Chrome与两类实体手机仍有环境缺口，M7公共Git来源及Pages条件未齐备；这些缺口不记为通过
 - 代码基线：3fcc626a（M6性能修复库R4），d301344e（CLI C4/0.1.14）；旧R3/C3为c5620082/6721dc73，验证043840a1；M1/M2仍5632d13、M3–M5仍676a5577；用户既有工作树改动保留
 
 ### 完成记录
 
 | Milestone | 状态 | 更新时间 | 简要记录 | 实现与验收记录 | 提交 |
 | --- | --- | --- | --- | --- | --- |
-| M6 | 阻塞 | 2026-10-14T10:08:39+08:00 | C4本地技术门收口，当前Safari实测hidden：CLI148/Docs265、UAT7/Chrome351/旧回归265及正式性能通过；真实用户/手机/最新桌面/公开分发未验收，M7 Pages待前置与授权 | [M6 记录](../validation/docs-ssg-p2/M6.md) | 3fcc626a（库R4），d301344e（CLI C4）；历史R3/C3 c5620082/6721dc73，验证043840a1；records6a337396；Safari验证f7bb8dcc；续做3566f627 |
+| M6 | 进行中 | 2026-10-14T17:19:34+08:00 | C4本地技术门收口：CLI148/Docs265、UAT7/Chrome351/旧回归265及正式性能通过；D15撤销五人限时门，改为本人验收待确认，可直接使用本地固定版本；手机/可见Safari/最新Chrome缺口保留，公开分发归M7 | [M6 记录](../validation/docs-ssg-p2/M6.md) | 3fcc626a（库R4），d301344e（CLI C4）；历史R3/C3 c5620082/6721dc73，验证043840a1；records6a337396；Safari验证f7bb8dcc；续做3566f627 |
 | M1 | 已完成 | 2026-10-13T12:53:00+08:00 | V-2 水合 10/10；默认 DOM 12/12；旧示例 58/73/20/72/20 通过，geometry reset 缺陷先红后绿 | [M1 记录](../validation/docs-ssg-p2/M1.md) | 5632d13 |
 | M2 | 已完成 | 2026-10-13T19:01:02+08:00 | release代理371.9ms/位移0、开发档增量中位1944.6ms；配对/错配、subpath20+4/meta24、features/检查与设计收口通过 | [M2 记录](../validation/docs-ssg-p2/M2.md) | 5632d13 |
 | M3 | 已完成 | 2026-10-13T23:31:15+08:00 | Docs229/CLI131、subpath12/meta36、离线Git字体/检查/设计通过；release255.9ms/位移0；开发档失败2369.4ms保留，修正最终1731ms，真实同步/失败保护与受影响检查通过 | [M3 记录](../validation/docs-ssg-p2/M3.md) | 676a5577 |
@@ -71,7 +71,7 @@
 
 | ID | 类型 | 来源 | 内容 | 设计/验收落点 | 状态 |
 | --- | --- | --- | --- | --- | --- |
-| WORK-F1 | 功能 | PRD §3、§7.2，P2 AC-2、AC-5 | 组件库模板可运行；首次用户独立新增演示 | §2、§5.4；V-8、V-9、V-13、V-15，P1 条件由 V-1/V-14 复核 | 已确认；本期终验 |
+| WORK-F1 | 功能 | PRD §3、§7.2，P2 AC-2、AC-5、D15 | 组件库模板可运行；本人验收新建、改页及同源可交互新演示 | §2、§5.4；V-8、V-9、V-13、V-15，P1 条件由 V-1/V-14 复核 | 已确认；本期终验 |
 | WORK-F4 | 功能 | PRD §3，P2 AC-1–4 | 带属性/子内容的内置或注册组件；SSR、局部交互、定位诊断、GitHub 占位 | §2、§5.1、§5.2；V-3、V-5、V-15 | 已确认；本期终验 |
 | WORK-F5 | 功能 | PRD §3，P2 AC-1–6 | 编译与源码同源的演示；无脚本、加载中、故障与恢复 | §2、§5.2、§6、§8；V-4、V-5、V-9、V-11 | 已确认；本期终验 |
 | WORK-F6 | 功能 | PRD §3、§7.2，P2 AC-2、AC-3 | 定制页与全部布局插槽；404 共用覆盖结果 | §3、§5.3；V-6、V-14；搜索由 P4 承接 | 已确认；本期终验 |
@@ -91,7 +91,7 @@
 | C-3 | 生命周期 | PRD D8、§4 DEP-3；SDK runtime、DOM loader、mount | runtime 先于水合；一页一个 wasm 实例，共享失败域；实例中止清理监听/任务/浮层 | §2、§5.2、§8；V-2、V-5 | 已确认 |
 | C-4 | 交付与验证 | AGENTS.md「前端 UI 开发与验收」「完成标准」；CLAUDE.md「Conventions」「Browser tests」 | 中文计划；当前分支；真实浏览器与本仓检查；Playwright 单 project 串行；无缺失服务自动安装 | §6、§9、§10；V-11、V-14、V-15 | 已确认 |
 | C-5 | 内容与部署 | PRD §5.2 Q2/Q4、D11/D12、WORK-F16；当前 GitHub 仓库与 Pages API | git 安装；默认 GitHub Pages /rustify-ui/；HTML页面及站点资源、不发布Markdown，meta不含frame-ancestors；Pages未启用由M7配置 | §3、§5.6、§8；V-10、V-15 | 已核实；上线条件单列 |
-| C-6 | 本期验收口径 | PRD §3、§5.2 Q3/Q5；用户 2026-10-12 确认三个数值，2026-10-13 明确Firefox延期到P4；[P1后移范围](DOCS-SSG-P1.prd-dev-gaps.md#g-05--firefox-从-p1-验收矩阵后移--b) | P2 沿用 ≤1 s、≤2 s 与4/5人15分钟门槛；D-04不延伸P2；Firefox稳定版/引擎P2保留未验证，不阻塞P2出口，P4恢复完整矩阵 | §7、§9.2、§11；V-11、V-12、V-13 | 已确认；Firefox延期有新决定 |
+| C-6 | 本期验收口径 | PRD §3、§5.1 D15、§5.2 Q3/Q5；用户2026-10-14撤销开发阶段五人限时门，2026-10-13明确Firefox延期到P4；[P1后移范围](DOCS-SSG-P1.prd-dev-gaps.md#g-05--firefox-从-p1-验收矩阵后移--b) | P2沿用≤1 s、≤2 s性能门槛；V-13由本项目用户验收三个可见成果，不要求招募、首次用户资格或限时达成率；D-04不延伸P2；Firefox稳定版/引擎P2保留未验证，不阻塞P2出口，P4恢复完整矩阵 | §7、§9.2、§11；V-11、V-12、V-13 | 已确认；本人验收与Firefox延期各有用户决定 |
 
 ### 0.2 决策表
 
@@ -103,7 +103,7 @@
 | D4 | 演示源码 | 注册直接引用函数符号；CLI 从同一函数所在的原始文件按语法范围切片 | 无 pretty-print、手抄副本或正则找大括号；全文件只作为 HTML 内源码文本，不发布原始 .rs | WORK-F5/AC-1、WORK-N7；已有 include 仅提取 region、从不编译 |
 | D5 | 故障与恢复 | 外部基础脚本控制状态；同页共享实例失效时全部相关交互块终止，恢复 SSR 初始画面，提供整页重新加载 | 静态 shell/源码不依赖 wasm；不增加逐岛实例隔离或透明重启承诺 | PRD D8、WORK-F5/AC-4/6；DOM loader on_fatal |
 | D6 | 主题 | 一个 ThemeDocument 同时解析 light/dark；构建期输出外部 CSS，水合只提供同一主题上下文 | 保留 system/light/dark 首帧逻辑；不在首帧重新写 inline style，不用默认 ThemeScope 覆盖静态投影 | WORK-F8、C-1；codec/resolve/font_context、既有 mode.js |
-| D7 | 本期规模与上线 | 7 个里程碑；局部风险即时验，昂贵矩阵/性能/首次用户集中 M6，安装/实际上线 M7 | 遵循 PRD 6–8 个建议；验收和发布均有独立退出门 | PRD §7.1、WORK-F1/AC-5、WORK-F16/AC-3 |
+| D7 | 本期规模与上线 | 7 个里程碑；局部风险即时验，昂贵矩阵/性能/本人验收集中 M6，公共安装/实际上线 M7 | 遵循 PRD 6–8 个建议；验收和发布均有独立退出门 | PRD §7.1、WORK-F1/AC-5、WORK-F16/AC-3 |
 
 ### 0.3 ADR-lite
 
@@ -347,7 +347,7 @@ Slot 为有限集合：header、footer、sidebar_top、sidebar_bottom、before_c
 
 - `new --template components` 先检查 Rust/wasm32 目标，再检查目录，使用现有临时同级目录/rename 的完整写入流程。模板含至少一个能调属性的组件、一个源函数演示、两页指南、README、锁文件和 host/wasm 入口；生成后不修改即可 dev/build/check。content 模板仅有原内容，不变为隐含 Rust 工程。
 - 站点显示名保留目录名；Cargo 包名将 ASCII 大写转小写、连续空白/非 ASCII 字符/分隔符归并为 `-`、去掉首尾 `-`；空结果用 docs-site，非字母开头加 docs-。如 My Docs → my-docs；显示名仍为 My Docs。该值一次生成并用于锁文件根包条目/入口，V-8 覆盖空结果与非法开头，不到首次 dev 才报 manifest 错误。
-- 组件 README 必含：new 的首条命令、五命令/工具链提示、冷启动/计时说明、写函数→site!注册→rustify-demo围栏→dev查看的完整示例、props/children/SSR与client-only边界、定制页/RenderContext::demo/七类slot、主题/字体/include/导航、Rust诊断与last-good、成对版本升级/回滚、静态托管与meta策略。M4 从空目录按该 README 试走并检查链接/示例与真实模板一致；此预检不代替 V-13 真人。
+- 组件 README 必含：new 的首条命令、五命令/工具链提示、冷启动/计时说明、写函数→site!注册→rustify-demo围栏→dev查看的完整示例、props/children/SSR与client-only边界、定制页/RenderContext::demo/七类slot、主题/字体/include/导航、Rust诊断与last-good、成对版本升级/回滚、静态托管与meta策略。M4 从空目录按该 README 试走并检查链接/示例与真实模板一致；此预检作为实施证据，V-13由本项目用户按D15确认三个可见成果。
 - `check` 分析两种站点；Rust 站点做冷态静态注册预检、host helper 构建及 wasm32 编译检查，汇总错误，不生成或替换发布目录。可写 Cargo/私有编译缓存，但不修改作者源码/config/已有产物；更新帮助中原有“不写文件”表述的准确范围。纯内容 check 维持原有零站点编译行为。
 - `build` 先准备 host/wasm/bindgen 完整候选，再渲染并全量校验，最后进入现有发布事务。无错误才生成 manifest 和可预览目录；失败代码、协议或输出校验都保全之前成功目录。
 - `dev` 继续复用现有 notify/Filter/Builder/Outcome/事件流，增加 building 阶段和 Rust 文件/manifest/lock/本地 path dependency/build 输入依赖。源码、声明、主题和解析缓存有各自内容摘要；Rust 不变的 Markdown/配置/资源保存只运行预编译 helper，不再次调用 Rust 编译器。先绑定监听并打印地址，再在后台做首次编译；无 last-good 时显示“首次编译中”的静态诊断 shell，终端单行显示 host/wasm/render 当前阶段；增量期间显示上一代与 building 状态。两目标编译完成事件包含 epoch 毫秒、generation 和各目标结果，供 V-12 对照。
@@ -432,7 +432,7 @@ README 是显式构建依赖，片段内链接以仓库根为源基准：docs/qu
 | 构建/发布被杀、磁盘满、无权限/锁冲突 | 单输出目录 | 用 P1 事务恢复；非自有目录不覆盖 | 明确拒绝/失败，原输出可恢复 | publish 的 journal/manifest/lock | 现有 recover；恢复同一完整版本 | V-14 |
 | Pages 未配置、权限不足或部署后资源/404不正确 | 官方站公开 URL | 构建/上传失败保留旧部署；线上验收失败回退完整 last-good，无旧站则取消发布 | 上线未完成，不能宣称英文站已上线 | CI 结论 + 实际全部 URL/manifest/MIME | §8手动从last-good SHA重建并部署；首发失败按官方取消发布入口撤下 | V-15 |
 
-发布顺序：SDK/注册风险门 → 自定义/模板/站点集成 → M6第一阶段固定版本、依赖/lock、作者README与模板、候选SHA和分发来源 → 同候选性能/设备/首次用户出口 → 同SHA安装 → 配置Pages Actions来源 → 构建/上传完整artifact → deploy → 真实全页验收。M6 前由维护者确认候选推送及向受试者提供的方式/授权；需要发布 git 来源才能参加 V-13，不能等 M7 才可安装。缺分发授权不阻塞本地开发，但阻塞相应 M6 用户出口。
+发布顺序：SDK/注册风险门 → 自定义/模板/站点集成 → M6第一阶段固定版本、依赖/lock、作者README与模板、候选SHA及本地实际安装 → 同候选性能/设备/本人验收 → M7公开固定Git来源并验证同SHA安装 → 配置Pages Actions来源 → 构建/上传完整artifact → deploy → 真实全页验收。V-13可以使用已提交、已安装的本地固定版本，不要求先公开推送。现有0.1.14及R4/C4固定提交继续使用，不要求新候选分支；发布时可用固定版本tag标识，公共来源仍须按完整SHA验证。实际远端写与Pages发布在当时有效授权内执行，缺公共来源不阻塞本地本人验收。
 
 workflow 草案及授权准备可在 M5 期间完成，实际 deploy 仍等 M6/V-15前置。只以 workflow_dispatch 手动触发，输入明确 candidate_sha（回滚时为last-good SHA），不配置 push main 自动部署；checkout/lock/安装身份全部指向该 SHA。build 用受支持 macOS；deploy needs build，只消费同一run的完整artifact，environment为github-pages、权限按官方文档配置；单部署串行，不在deploy runner编译CLI。发布动作须在当时有效授权内执行，不将计划授权等同于推送或启用Pages的授权。
 
@@ -476,7 +476,7 @@ serve.sh 的工作目录按 source/variant 分开；header项目用preview，met
 | V-10 | WORK-F16/AC-1/2、WORK-N4/N7、WORK-N5/AC-3：12指南/README同源及修改反映；24类集合、侧栏36项可达/有序；排除文档链接转repo URL、validation写入不触发dev、无原始文件/Makepad；lang与正文一致；整站check零错误 | `rustify-docs check --config rustify-docs.toml --format json`/build；official.spec.ts与manifest/CATALOG比较；临时同源副本修改指南/README/排除文件；检查repo映射/请求/目标图、字体中性路径 | M5完整站；M6同冻结候选必复跑；M7实际URL复核 |
 | V-11 | WORK-N3/AC-2/4、WORK-N5回归、WORK-F16/AC-3本地：两CSP host的全部页面/深链接/404/本期交互，禁JS/主题/320与375px/200%/键盘/读屏，console/CSP/失败请求；首页1280首屏主操作及§6finish基准、正文lang | `npx playwright test -c playwright.docs.config.ts --project=official-root`，official-subpath/official-meta分别串行；真实稳定Chrome/Safari及iPhone Safari/Android Chrome，Firefox依用户2026-10-13决定留P4，P2未验证；axe+人工键盘/VoiceOver，同候选preview/meta | M5局部页面设计验收；M6当期矩阵，缺设备阻塞出口、不套D-04；V-15补真实Pages |
 | V-12 | WORK-N1/AC-4、WORK-N2/AC-2/4及P1性能：五次冷缓存FCP→全部岛响应≤1s/零位移，编译完成→新画面≤2s；content new→首页≤60s、0wasm和原预算；不以boot完成替代输入响应 | performance组/measure-load/measure-save与新增measure-islands，参考A/B按§9.2，记录profile/资源gzip体积/CPU下载解析/余量与epoch映射；CLI调用从本轮固定候选 | M2必做链接全部24类的release wasm代理门及编译后时延探测，超预算先解决资源策略才进M3/M4；M4复测完整dev/new；M6正式最大页/参考站测量，代理不代替正式出口 |
-| V-13 | WORK-F1/AC-5、UAT-15：5位真实首次用户，至少4位15分钟独立完成新建/改页/演示，同源可交互 | 冻结CLI的help给第一条new命令，随后只按生成README；已安装候选可获取，负责人按§9.3招募计时（增量编译计入）；自动化不代替真人 | M6第一阶段冻结/分发后；M7模板/README/配对或产品改变则新候选重跑，非产品记录差异须写复用依据 |
+| V-13 | WORK-F1/AC-5、UAT-15、D15：本项目用户确认新建站点、改写页面和新增演示三个可见成果，演示同源且可交互；不设招募、首次用户资格或限时门槛 | 使用实际安装的固定CLI与生成README，可接受开发协助；按§9.3记录本人可见结果及反馈。既有自动化只作实施证据，不代填用户结论；公共Git来源不是本地验收前置 | M6第一阶段固定并本地安装后；M7模板/README/配对或产品改变则重验受影响成果，非产品记录差异须写复用依据 |
 | V-14 | C-2/C-4、WORK-N4/N6/N7与P1回归：fmt/分目标test/clippy/build、sources/css/catalog、事务/安全、旧DOM/GPU受影响行为；helper/wasm无私有管线 | §9.4命令/features/artifacts/reliability；CI verify.yml新增site-ssr/hydrate及宏/parser分目标门。SDK mount/overlay/runtime改动至少fusion-basic/component-catalog；theme/i18n另加theme-studio/property-workbench，DataTable/Tree改动另加data-workbench；按具体改动补相关spec，每项目先build-web release再单project串行 | M1共享改动收口必跑对应旧示例；M2–M5就近；M6集中复跑受影响项目；M7只复核受文档/版本影响门 |
 | V-15 | WORK-F1/AC-2、WORK-F4/AC-4、WORK-F16/AC-1–3、WORK-N3/4：同冻结SHA真实git安装/配对、未改模板交互与锁不变/禁网；GitHub围栏预览；Pages全页/资源/404/CSP/字体/交互与deployment identity；部署说明写明meta范围、不提供frame-ancestors；回滚演练 | 固定SHA `cargo install --git/--rev --locked --profile docs-cli`，复跑V-8/V-9与来源/manifest；管理员/CI按§8上线，从返回URL全页走查和MIME；本地/线上build_id一致、last-good重建或首版重部署证据，文档链接/安装命令一致 | M7在M6出口/分发/Pages授权齐备后；未部署、未线上走查或无回滚演练证据不能完成 |
 
@@ -489,7 +489,7 @@ serve.sh 的工作目录按 source/variant 分开；header项目用preview，met
 | UAT-9 演示失败 | V-5/V-11的下载/init/水合/trap与重载；搜索失败留P4 |
 | UAT-10 同次校验 | V-3/V-4/V-8，冷态同时报注册与Rust错误、位置/JSON/禁网；翻译警告留P3 |
 | UAT-11 官方读者 | V-10/V-11/V-15，12指南、24分类/DOM源码、GPU外链/无Makepad、零错误/实际子路径上线；搜索/中英切换/llms留P4 |
-| UAT-15 首次用户 | V-13；预检README和agent连续路径不代替五位真人 |
+| UAT-15 本人验收 | V-13；按D15由本项目用户确认三个可见成果，README预检和agent连续路径作为实施证据 |
 
 ### 9.2 性能合同
 
@@ -501,9 +501,9 @@ serve.sh 的工作目录按 source/variant 分开；header项目用preview，met
 - 内容模板new到首页≤60s（WORK-N2/AC-2）、内容页0wasm/≤100KB gzip 和原 LCP≤2.5s/CLS≤0.1、B 内容保存≤1s/完整构建≤20s仍是回归；M4改new/doctor即测≤60s，M6复核。按P1已批准引擎/CDP条件运行既有harness，CSP/兼容最新稳定版和实体设备另登记。新增wasm/主题/font候选影响预算时，报告改动前后字节/耗时，不用“量不大”解释退步。
 - 若所有岛 eager hydration 不能达成 ≤1s，先测 CPU/下载/解析与依赖体积分项；按数据减依赖或按实际页面拆分资源。不能为了延后计算而把岛移出“全部可交互”集合，也不把 FCP 起点改成资源已就绪。
 
-### 9.3 首次用户与真实环境
+### 9.3 用户验收与真实环境
 
-测试负责人提供5位符合G1的Rust熟悉者，未用本框架；起始只有稳定Rust/CLI，wasm32目标按工具链提示准备。候选CLI help给new首条命令，之后仅按生成README新建、改页、注册函数演示并预览；安装/框架R/README摘要都属于M6冻结候选。首次依赖下载/冷编译单记并剔除，操作/阅读/修正与之后的增量编译等待均计入15分钟。记录匿名编号、环境/CLI C/库R、三个可见成果、有效时长、人工帮助与结果；受帮助者不能冒作独立完成，须替补或失败。自动化/README试走不代替招募。
+开发阶段由本项目用户验收，不另行招募。使用已实际安装的固定CLI及其生成README，新建站点、改写一页、注册新函数演示并预览；记录CLI C、库R、README摘要、环境、三个可见成果、实际协助与反馈。新演示须可交互，源码与函数及原文件一致；用户结论由本人确认。允许结合README和开发协助，不设首次用户资格、人数、十五分钟或独立完成率门槛。本地已提交并安装的固定版本可以直接验收，公共Git安装另由M7验证。原五人统计提案只保留为历史研究记录，后续研究是否开展另行决定；自动化结果不代填本人结论。
 
 V-11覆盖当期桌面稳定Chrome/Safari及两类实体手机，记录具体版本/设备。P1的D-04只限原期；用户2026-10-13明确“延期到P4；P2保留未验证记录”，Firefox稳定版与引擎均按此范围后移，P4完整矩阵保留。WebKit仅为引擎辅助证据。设备/最新浏览器缺失按§11准备，不以模拟填真人/真机结论。
 
@@ -541,7 +541,7 @@ SDK/components各自执行default/gpu/ssr单包test/clippy与hydrate wasm32 chec
 | M3 | 可定制的静态页、插槽与主题 | M2注册/describe协议、check/build和V-3/V-4/V-12代理门 | 统一页图/七slot/RenderContext::demo/nav.routes；主题/静态context、CLI同版字体/许可/来源摘要及主题下候选/样式复核；docs/themes.md；generation/shell/content单写，theme/style分工避共同文件 | V-6/V-7、主题/slot影响的V-5复跑及V-14通过；字体同源/中性路径/隐态样式可观察，themes文档示例/链接检查；回写「实施进度」 |
 | M4 | 可复制的组件工程与 Rust 随改随看 | M2真实编译/资源指纹+V-4、岛启动可用与V-12代理门；不等V-5故障全门或M3全出口 | 模板/doctor/包名/locked配对、README与docs/docs-ssg.md作者合同；先做§6dev设计，再building/last-good/原路径指纹/epoch事件；new/dev可分工，rust_site/main/report/lock单写 | V-8/V-9、V-12的content≤60s与完整dev首测、受影响V-4/V-14通过；未改模板浏览器/README试走/冷启动与增量观测有证据，finish review/规范同步；回写「实施进度」 |
 | M5 | 英文官方站与24类真实演示 | M2 check/build及V-4、M3页图/主题与V-6/V-7；演示函数只需M1对应类V-2及site!合同；不依赖M4 V-8/V-9 | root白名单/README首页/CATALOG定制页/nav36项；先做§6页面设计；vellum唯一源译英/utility坏链接修正、B语料演示页与docs_corpus、verify.yml官方目标；函数按文件分工，配置/nav/注册单写；可同期准备workflow/分发/Pages授权 | V-10/局部V-11/受影响V-14通过；12+24可达/同源/lang/零错误/排除读取与监视，finish review/规范同步；回写「实施进度」 |
-| M6 | P2完整行为、性能与首次用户出口 | M1–M5交付与V-2–V-10局部门；分发/推送授权、浏览器/设备与5位用户就绪 | 第一阶段冻结真实库R/CLI C、lock/模板/README/安装命令、提交与分发（非仅工作树）；之后同候选components/official root/subpath/meta、UAT-3连续作者路径、性能/设备/真人/回归；主实施者收口、资源串行 | V-5/V-9连续UAT/V-10/V-11/V-12/V-13/V-14通过；P2 AC及跨期回归有证据，Firefox按C-6延期单列未验证；冻结候选与后续发布无产品差异；回写「实施进度」 |
+| M6 | P2完整行为、性能与本人验收出口 | M1–M5交付与V-2–V-10局部门；固定R/C本地实际安装、浏览器/设备环境按V-11准备；本人验收无需招募或公共推送 | 第一阶段固定真实库R/CLI C、lock/模板/README/安装命令及提交、本地安装；之后同候选components/official root/subpath/meta、UAT-3连续作者路径、性能/设备/本人验收/回归；主实施者收口、资源串行 | V-5/V-9连续UAT/V-10/V-11/V-12/V-13/V-14通过；P2 AC及跨期回归有证据，Firefox按C-6延期单列未验证；V-13按D15确认三个成果，不设五人限时门；固定候选与后续发布无产品差异；回写「实施进度」 |
 | M7 | git安装交付与英文站实际上线（最终收口） | 实际deploy须M6全部出口及V-11–V-14；冻结R/C可公开安装，Pages配置/发布与回滚授权明确；草案/申请可提前 | 同C安装/模板、Mac构建/同run artifact+手动deploy/真实全页/回滚演练；复核README/模板/docs-docs-ssg部署meta范围与固定命令，不静默改候选；文档/台账单写 | V-15及安装后二进制V-8/V-9通过；受变化影响V-10/V-11/V-14复核；若产品/模板/引导变化，新候选重跑含V-13的受影响出口；部署身份/build_id一致、回滚有证据；回写「实施进度」 |
 
 提交点：M2技术风险收口；M6第一阶段在V-2–V-10局部门通过后为候选冻结提交R/C（仅记M6进行中，不能预填用户/完整矩阵通过），随后M6完整本地/用户收口；M7全部完成最终提交。各次先回写实际证据再提交/回填SHA；R/C分工及允许差异按§2.1，原完成记录归属不重绑。M3–M5未到冻结点可保留待提交行。
@@ -553,8 +553,8 @@ SDK/components各自执行default/gpu/ssr单包test/clippy与hydrate wasm32 chec
 
 | 项目 | 影响 | 责任人/解除办法 | 最晚确认点 | 是否阻塞 |
 | --- | --- | --- | --- | --- |
-| 首次用户当前无法安排 | WORK-F1/AC-5不能由自动化替代 | 用户2026-10-13本轮答复“目前无法安排，届时保留为验收缺口”；保留§9.3的5位真人门，不以自动化代替或预填通过 | M6/V-13前 | 不阻塞技术实施；M6保留未验证缺口 |
-| 候选分发/推送授权与可获取R/C尚未准备 | 受试者不能只用未提交工作树；V-13必须验冻结引导 | 维护者先交付具体R/C及文案/lock，确认可获取的分发方式及有效推送授权；M5可提前准备，M6第一阶段完成 | M6冻结/V-13前 | 不阻塞本地开发；未就绪阻塞M6用户出口 |
+| 开发阶段本人验收待确认 | WORK-F1/AC-5须有本人可见成果和反馈 | 用户2026-10-14明确由自己验收，不要求五名熟悉Rust的首次用户；按D15与§9.3准备固定版本及三个成果，结果待本人确认 | M6/V-13收口前 | 无招募阻塞；自动化不代填用户结论 |
+| 公共固定R/C来源尚未准备 | M7真实Git安装须核对公开来源及完整SHA | 本地固定0.1.14/R4/C4直接供本人验收，不要求新分支；公共分发按固定版本及实际授权准备，M7验证公共来源；此前候选分支推送提议撤回 | M7/V-15前 | 不阻塞M6本地本人验收；公共安装未验证 |
 | Pages 尚未启用，发布/取消发布/回滚授权待准备 | 无真实URL不能关闭WORK-F16/AC-3 | 2026-10-13只读API确认仓库public、has_pages=false、Pages GET404；维护者按§8完成可审workflow/产物再在有效授权内配置/手动发布，V-15含全页/回滚 | M7/V-15前 | 不阻塞M1–M6；未就绪阻塞M7 |
 | P2稳定Chrome/Safari待核验，两类实体手机当前无法安排 | P1 D-04不能当P2豁免 | 用户本轮确认设备渠道无法安排，实体手机保留缺口；本机继续核验可用桌面渠道并记录版本。Firefox按下方新决定延期，其他缺环境明确未验证 | M6/V-11前 | 不阻塞技术实施；真机及其他缺证保留未验证 |
 | M1全部24类静态初态与node/ID接管已实测，site!管线待验 | 站点接线仍可能错绑/布局跳动/受控值不一致 | M1 V-2独立harness及对应回归已通过，证据见M1记录；M2 V-5继续证明site!管线/slot/异步反例 | M2退出 | M1前置已解除；M2管线门仍必做 |
@@ -575,9 +575,11 @@ SDK/components各自执行default/gpu/ssr单包test/clippy与hydrate wasm32 chec
 | vellum内容 | M5翻译唯一源为英文（§5.6），保留原事实/数值/链接、12页集合；V-10/V-11 |
 | Firefox | 明确延期到P4，P2稳定版/引擎保留未验证；不记为通过，不豁免其他设备。PRD WORK-N3/AC-4与Q3需按本决定同步，原PRD未在本计划修改范围；V-11/M6按此新例外执行 |
 
+用户2026-10-14更新开发验收与版本方式：由本项目用户验收，取消五人招募、首次用户资格和十五分钟达成率前置，PRD D15及V-13同步；现有0.1.14/R4/C4继续固定，不要求新候选分支。此决定不预填本人结果，也不把手机、其他桌面浏览器或公开部署缺口记为通过。
+
 - 最终状态：**Ready**。
-- 定级理由：作者配对、SSG确定初态/浏览器异步、site!过程宏与共享parser、原地指纹/档位、字体、vellum与Firefox合同均有唯一答案。M1 harness解除M1/M2循环，所有风险探测及本地/用户/发布门有真实载体和前置。Ready表示可从V-1/M1开工；未测的技术余量、尚未招募/核设备/分发/部署均是对应出口的必做任务，不能记满足或完成。实际实施进度见顶部恢复快照。
-- 用户 2026-10-12 已确认沿用 P2 的三个数值门槛，PRD Q5 的本期数值不再是待拍板项。Q4 沿用 GitHub Pages 的当前默认；若更换托管，仅修订其实际配置/策略与 V-15，不默默改变内容或 CSP 目标。
+- 定级理由：作者配对、SSG确定初态/浏览器异步、site!过程宏与共享parser、原地指纹/档位、字体、vellum与Firefox合同均有唯一答案。M1 harness解除M1/M2循环，所有风险探测及本地/用户/发布门有真实载体和前置。Ready表示可从V-1/M1开工；尚未完成的本人验收、设备补验、公共安装与部署按各自范围保留证据缺口，不能记满足或完成。实际实施进度见顶部恢复快照。
+- P2保留≤1 s、≤2 s性能门槛；原五人限时门按用户2026-10-14的D15决定撤销，性能五次样本合同不变。Q4沿用GitHub Pages的当前默认；若更换托管，仅修订其实际配置/策略与V-15，不默默改变内容或CSP目标。
 
 ## 12. 已知坑与历史教训
 
