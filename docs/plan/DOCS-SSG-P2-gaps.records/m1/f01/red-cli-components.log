@@ -1,0 +1,38 @@
+# red: components test with the raw-literal branch disabled (pre-fix lexing); HEAD f5d303d61acf294dff3c3ee75a589085622700b5 + test edits
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-docs v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-docs)
+   Compiling rustify-docs-cli v0.1.16 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-docs-cli)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 3.16s
+     Running tests/components.rs (target/debug/deps/components-8785479507f66277)
+
+running 2 tests
+test pair_helper_preserves_manifest_bytes_and_refuses_mismatched_generated_pairs ... ok
+test real_component_builds_report_independent_errors_preserve_good_bytes_and_recover_one_generation has been running for over 60 seconds
+test real_component_builds_report_independent_errors_preserve_good_bytes_and_recover_one_generation ... FAILED
+
+failures:
+
+---- real_component_builds_report_independent_errors_preserve_good_bytes_and_recover_one_generation stdout ----
+components/A-good: success=true, errors=0, compiler={"generation":"1aa73378c0e0438afeed42776dcb70154f75c35af5ba03fd1948c5129d3da7e6","framework_release":"rustify-docs@0.1.0","host":{"elapsed_ms":222,"completed_at_ms":1792029531898,"fresh_artifacts":263,"compiled_artifacts":0,"profile":"docs-host-release","target":null,"compiler":"mbx","flags":["build","--locked","--message-format","json","--no-default-features","--profile","docs-host-release","--features","ssr","--manifest-path","/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-cli-components-17932-0/site/Cargo.toml","--target-dir","/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-cli-components-17932-0/site/.rustify-docs/target","--bin","docs-render"],"success":true},"wasm":{"elapsed_ms":227,"completed_at_ms":1792029532132,"fresh_artifacts":251,"compiled_artifacts":0,"profile":"release","target":"wasm32-unknown-unknown","compiler":"mbx","flags":["build","--locked","--message-format","json","--no-default-features","--profile","release","--features","hydrate","--manifest-path","/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-cli-components-17932-0/site/Cargo.toml","--target-dir","/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-cli-components-17932-0/site/.rustify-docs/target","--lib","--target","wasm32-unknown-unknown"],"success":true},"reused":false}
+components/B-cold-and-rust-errors: success=false, errors=6, compiler=null
+components/C-props-and-yaml: success=false, errors=7, compiler=null
+
+thread 'real_component_builds_report_independent_errors_preserve_good_bytes_and_recover_one_generation' (49878138) panicked at crates/rustify-docs-cli/tests/components.rs:710:5:
+assertion `left == right` failed
+  left: [("embed-payload", 14, 8, "Keep each YAML mapping key once; remove or rename the duplicate key."), ("invalid_props", 9, 3, "Write `initial: 0` for declared type `i32` (default expression `2`). Reported props path: `initial`."), ("invalid_props", 21, 23, "Write `initial: 0` for declared type `i32` (default expression `2`). Reported props path: `initial`."), ("invalid_props", 27, 3, "Check `palette` of declared type `crate::Palette` (no declared default; confirm omission semantics in the registration) in `src/lib.rs`; follow the reported serde requirement. Reported props path: `palette.accent`."), ("invalid_props", 33, 3, "Check `labels` of declared type `crate::Labels` (default expression `Vec::new()`) in `src/lib.rs`; follow the reported serde requirement. Reported props path: `labels`."), ("invalid_props", 37, 1, "Add or correct `props` using the declared fields `caption` (`String`; default expression `r#\"a\" b \"c\"#.to_string()`), `labels` (`crate::Labels`; default expression `Vec::new()`), `limit` (`Option<u32>`; optional; omission is null), `palette` (`crate::Palette`; no declared default; confirm omission semantics in the registration); check the registration in `src/lib.rs`.")]
+ right: [("embed-payload", 14, 8, "Keep each YAML mapping key once; remove or rename the duplicate key."), ("invalid_props", 9, 3, "Write `initial: 0` for declared type `i32` (default expression `2`). Reported props path: `initial`."), ("invalid_props", 21, 23, "Write `initial: 0` for declared type `i32` (default expression `2`). Reported props path: `initial`."), ("invalid_props", 27, 3, "Check `palette` of declared type `crate::Palette` (no declared default; confirm omission semantics in the registration) in `src/lib.rs`; follow the reported serde requirement. Reported props path: `palette.accent`."), ("invalid_props", 33, 3, "Check `labels` of declared type `crate::Labels` (default expression `Vec::new()`) in `src/lib.rs`; follow the reported serde requirement. Reported props path: `labels`."), ("invalid_props", 37, 1, "Add or correct `props` using the declared fields `caption` (`String`; default expression `r#\"a\"   b   \"c\"#.to_string()`), `labels` (`crate::Labels`; default expression `Vec::new()`), `limit` (`Option<u32>`; optional; omission is null), `palette` (`crate::Palette`; no declared default; confirm omission semantics in the registration); check the registration in `src/lib.rs`.")]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    real_component_builds_report_independent_errors_preserve_good_bytes_and_recover_one_generation
+
+test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 263.91s
+
+error: test failed, to rerun pass `-p rustify-docs-cli --test components`

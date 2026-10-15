@@ -678,7 +678,7 @@ fn real_component_builds_report_independent_errors_preserve_good_bytes_and_recov
         "site/src/lib.rs",
         &format!("{registry}{AUTHOR_TYPES}").replacen(
             REGISTRY_END,
-            &format!("            Swatch {{ palette: crate::Palette, labels: crate::Labels = Vec::new(), limit: Option<u32> }} =>\n                |props, children| demos::counter(props.limit.unwrap_or(0) as i32 + props.labels.len() as i32, props.palette.accent, children),\n{REGISTRY_END}"),
+            &format!("            Swatch {{ palette: crate::Palette, labels: crate::Labels = Vec::new(), limit: Option<u32>, caption: String = r#\"a\"   b   \"c\"#.to_string() }} =>\n                |props, children| demos::counter(props.limit.unwrap_or(0) as i32 + props.labels.len() as i32 + props.caption.len() as i32, props.palette.accent, children),\n{REGISTRY_END}"),
             1,
         ),
     );
@@ -701,7 +701,7 @@ fn real_component_builds_report_independent_errors_preserve_good_bytes_and_recov
         ("invalid_props", at("props: {label: wrong", 0, "initial"), INITIAL_REPAIR.to_owned()),
         ("invalid_props", at("palette: {accent: 3}", 0, "palette"), format!("{palette} Reported props path: `palette.accent`.")),
         ("invalid_props", at("labels: wrong", 0, "labels"), "Check `labels` of declared type `crate::Labels` (default expression `Vec::new()`) in `src/lib.rs`; follow the reported serde requirement. Reported props path: `labels`.".to_owned()),
-        ("invalid_props", fence(2), "Add or correct `props` using the declared fields `labels` (`crate::Labels`; default expression `Vec::new()`), `limit` (`Option<u32>`; optional; omission is null), `palette` (`crate::Palette`; no declared default; confirm omission semantics in the registration); check the registration in `src/lib.rs`.".to_owned()),
+        ("invalid_props", fence(2), "Add or correct `props` using the declared fields `caption` (`String`; default expression `r#\"a\"   b   \"c\"#.to_string()`), `labels` (`crate::Labels`; default expression `Vec::new()`), `limit` (`Option<u32>`; optional; omission is null), `palette` (`crate::Palette`; no declared default; confirm omission semantics in the registration); check the registration in `src/lib.rs`.".to_owned()),
     ]
     .into_iter()
     .map(|(rule, (line, column), repair)| (rule.to_owned(), line, column, repair))

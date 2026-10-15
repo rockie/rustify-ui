@@ -318,7 +318,8 @@ fn fields_list(fields: &[Field], owner: Owner) -> String {
 
 /// A manifest's normalized tokens as an author writes them: `Vec<StepSpec>`
 /// and `"Counter".to_string()` rather than `Vec < StepSpec >` and
-/// `"Counter" . to_string ()`. String and character literals are kept whole.
+/// `"Counter" . to_string ()`. String literals, raw ones included, and
+/// character literals are kept whole.
 pub fn display(tokens: &str) -> String {
     const SPACED: [&str; 10] = ["->", "=>", "=", "==", "!=", "<=", ">=", "+", "&&", "||"];
     let word = |ch: char| ch.is_alphanumeric() || matches!(ch, '_' | '"' | '\'');
@@ -354,6 +355,11 @@ fn pieces(tokens: &str) -> Vec<String> {
             index += 1;
             continue;
         }
+        if let Some(end) = raw_literal_end(&chars, index) {
+            current.extend(&chars[index..end]);
+            index = end;
+            continue;
+        }
         let closing = match ch {
             '"' => Some('"'),
             // A character literal, not a lifetime such as `'static`.
@@ -384,6 +390,45 @@ fn pieces(tokens: &str) -> Vec<String> {
         pieces.push(current);
     }
     pieces
+}
+
+/// The end of a raw string literal (`r"…"`, `br#"…"#`, `cr##"…"##`) that
+/// starts at `start`. Its content has no escapes and may hold quotes and
+/// spaces; only a quote followed by as many hashes as opened it closes it.
+fn raw_literal_end(chars: &[char], start: usize) -> Option<usize> {
+    // `r` at the end of an identifier such as `bar` opens nothing.
+    if start > 0 && (chars[start - 1].is_alphanumeric() || chars[start - 1] == '_') {
+        return None;
+    }
+    let mut index = start;
+    if matches!(chars.get(index), Some('b' | 'c')) {
+        index += 1;
+    }
+    if chars.get(index) != Some(&'r') {
+        return None;
+    }
+    index += 1;
+    let hashes = chars[index..].iter().take_while(|&&ch| ch == '#').count();
+    index += hashes;
+    // A raw identifier such as `r#type` has no quote here.
+    if chars.get(index) != Some(&'"') {
+        return None;
+    }
+    index += 1;
+    while index < chars.len() {
+        let closed = chars[index] == '"'
+            && chars[index + 1..]
+                .iter()
+                .take(hashes)
+                .filter(|&&ch| ch == '#')
+                .count()
+                == hashes;
+        index += 1;
+        if closed {
+            return Some(index + hashes);
+        }
+    }
+    Some(chars.len())
 }
 
 /// Whether some YAML mapping in the payload repeats a key, which is why the
@@ -767,8 +812,69 @@ mod tests {
             ("\"a < b , c\" . into ()", "\"a < b , c\".into()"),
             ("' ' . to_string ()", "' '.to_string()"),
             ("impl Fn () -> bool + Send", "impl Fn() -> bool + Send"),
+            ("r\"a  b\" . into ()", "r\"a  b\".into()"),
+            (
+                "r#\"a\"   b   \"c\"# . to_string ()",
+                "r#\"a\"   b   \"c\"#.to_string()",
+            ),
+            ("r##\"x \"# , y\"## . into ()", "r##\"x \"# , y\"##.into()"),
+            ("r\"C:\\  dir\\\" . into ()", "r\"C:\\  dir\\\".into()"),
+            ("br#\"a  \"b\"# . to_vec ()", "br#\"a  \"b\"#.to_vec()"),
+            ("cr\"a  b\" . into ()", "cr\"a  b\".into()"),
+            ("Some (r#\"a  b\"#)", "Some(r#\"a  b\"#)"),
+            ("r#type :: new ()", "r#type::new()"),
         ] {
             assert_eq!(display(tokens), shown, "{tokens}");
+        }
+    }
+
+    #[test]
+    fn declared_defaults_keep_their_literals_in_every_repair() {
+        let source = r####"fn site() { rustify_docs::site! { components {
+            Labels {
+                plain: String = r"a   b".to_string(),
+                quoted: String = r#"a"   b   "c"#.to_string(),
+                hashed: String = r##"x "#   y"##.to_string(),
+                path: String = r"C:\   dir\".to_string(),
+                bytes: Vec<u8> = br#"a   "b"#.to_vec(),
+                escaped: String = "a \"  b".to_string(),
+                letter: char = ' ',
+            } => |props, children| props.plain,
+        } } }"####;
+        let manifest = rustify_docs_syntax::parse_registry(source)
+            .unwrap()
+            .manifest();
+        let fields: Vec<Field> = manifest.components[0]
+            .fields
+            .iter()
+            .map(|field| Field {
+                name: field.name.clone(),
+                ty: field.ty.clone(),
+                default: field.default.clone(),
+            })
+            .collect();
+        let registered = Owner::Registered {
+            registry: "src/lib.rs",
+        };
+        let listed = unknown_property("Labels", &fields, registered, "unexpected");
+        let missing = invalid_props(&fields, registered, None);
+        for (field, ty, literal) in [
+            ("plain", "String", r#"r"a   b".to_string()"#),
+            ("quoted", "String", r##"r#"a"   b   "c"#.to_string()"##),
+            ("hashed", "String", r###"r##"x "#   y"##.to_string()"###),
+            ("path", "String", r#"r"C:\   dir\".to_string()"#),
+            ("bytes", "Vec<u8>", r##"br#"a   "b"#.to_vec()"##),
+            ("escaped", "String", r#""a \"  b".to_string()"#),
+            ("letter", "char", "' '"),
+        ] {
+            let boundary = format!("`{field}` (`{ty}`; default expression `{literal}`)");
+            assert!(listed.contains(&boundary), "{field} in {listed}");
+            assert!(missing.contains(&boundary), "{field} in {missing}");
+            let refused = invalid_props(&fields, registered, Some(field));
+            assert!(
+                refused.contains(&format!("(default expression `{literal}`)")),
+                "{field} in {refused}"
+            );
         }
     }
 
