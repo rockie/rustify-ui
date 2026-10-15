@@ -440,11 +440,15 @@ fn the_not_found_page_works_from_any_depth() {
     let (project, snapshot) = load();
     let (_, generation) = build(&project, &snapshot, Mode::Production, 2);
     let html = text(&generation.files, "404.html");
-    assert_eq!(html.matches("<h1").count(), 1);
-    contains(&html, "Page not found</h1>");
+    let dom = dom_query::Document::from(html.as_str());
+    assert_eq!(dom.select("h1").length(), 1);
+    assert_eq!(dom.select("main h1").text().as_ref(), "Page not found");
     contains(&html, r#"<meta name="robots" content="noindex">"#);
     assert!(!html.contains("rel=\"canonical\""));
-    contains(&html, r#"<a href="/docs/">Back to the home page</a>"#);
+    let home = dom.select("main article a[href='/docs/']");
+    assert_eq!(home.length(), 1);
+    assert_eq!(home.text().as_ref(), "Back to the home page");
+    assert_eq!(home.attr("lang").as_deref(), Some("en"));
     // Every link and file is rooted under the base, except the declared data icon.
     for (value, declared_icon) in page_urls(&html) {
         assert!(rooted_url(&value, declared_icon), "{value}");
@@ -514,15 +518,19 @@ fn links_anchors_images_and_repository_files_resolve_under_the_base() {
         r#"<a href="/docs/reference/api/">API reference</a>"#,
     );
     // The site name is the current page on the home page alone.
-    contains(
-        &home,
-        r#"<a href="/docs/" aria-current="page" class="rd-brand">"#,
-    );
-    assert!(!setup.contains(r#"<a href="/docs/" aria-current="page""#));
-    contains(
-        &setup,
-        r#"<a href="/docs/guide/setup/" aria-current="page">Setup</a>"#,
-    );
+    let home_dom = dom_query::Document::from(home.as_str());
+    let brand = home_dom.select("a.rd-brand[href='/docs/']");
+    assert_eq!(brand.length(), 1);
+    assert_eq!(brand.attr("aria-current").as_deref(), Some("page"));
+    assert_eq!(brand.text().as_ref(), "Fixture Docs");
+    let setup_dom = dom_query::Document::from(setup.as_str());
+    assert_eq!(setup_dom.select("a.rd-brand").attr("aria-current"), None);
+    let current = setup_dom.select(".rd-sidebar a[href='/docs/guide/setup/']");
+    assert_eq!(current.length(), 2);
+    for link in current.iter() {
+        assert_eq!(link.attr("aria-current").as_deref(), Some("page"));
+        assert_eq!(link.text().as_ref(), "Setup");
+    }
 }
 
 #[test]
@@ -658,20 +666,57 @@ fn header_links_are_on_every_page_and_mark_the_guide() {
     let (project, snapshot) = load();
     let (_, generation) = build(&project, &snapshot, Mode::Production, 2);
     let files = &generation.files;
-    let links = |current: &str| {
-        format!(
-            r#"<ul class="rd-header-links"><li><a href="/docs/guide/"{current}>Guide</a></li><li><a href="https://github.com/example/fixture" rel="noopener">GitHub</a></li></ul><ul class="rd-header-social"><li><a href="https://mastodon.example/@fixture" rel="noopener">Mastodon</a></li></ul>"#
-        )
-    };
     for (page, current) in [
-        ("index.html", ""),
-        ("404.html", ""),
-        ("reference/api/index.html", ""),
-        ("guide/index.html", r#" aria-current="page""#),
-        ("guide/setup/index.html", r#" aria-current="true""#),
+        ("index.html", None),
+        ("404.html", None),
+        ("reference/api/index.html", None),
+        ("guide/index.html", Some("page")),
+        ("guide/setup/index.html", Some("true")),
     ] {
         let html = text(files, page);
-        assert_eq!(html.matches(&links(current)).count(), 2, "{page}:\n{html}");
+        let dom = dom_query::Document::from(html.as_str());
+        let navigations = dom.select(".rd-header-nav");
+        assert_eq!(navigations.length(), 2, "{page}");
+        for navigation in navigations.iter() {
+            assert_eq!(navigation.select(".rd-header-links > li > a").length(), 2);
+            assert_eq!(navigation.select(".rd-header-social > li > a").length(), 1);
+            let links: Vec<_> = navigation
+                .select(".rd-header-links > li > a, .rd-header-social > li > a")
+                .iter()
+                .map(|link| {
+                    (
+                        link.attr("href").map(|value| value.to_string()),
+                        link.text().to_string(),
+                        link.attr("rel").map(|value| value.to_string()),
+                        link.attr("aria-current").map(|value| value.to_string()),
+                    )
+                })
+                .collect();
+            assert_eq!(
+                links,
+                [
+                    (
+                        Some("/docs/guide/".into()),
+                        "Guide".into(),
+                        None,
+                        current.map(str::to_owned)
+                    ),
+                    (
+                        Some("https://github.com/example/fixture".into()),
+                        "GitHub".into(),
+                        Some("noopener".into()),
+                        None
+                    ),
+                    (
+                        Some("https://mastodon.example/@fixture".into()),
+                        "Mastodon".into(),
+                        Some("noopener".into()),
+                        None
+                    ),
+                ],
+                "{page}"
+            );
+        }
     }
 }
 
@@ -794,16 +839,37 @@ fn drafts_render_marked_in_dev_and_nowhere_in_production() {
     let (dev, generation) = build(&project, &snapshot, Mode::Dev, 2);
     assert!(dev.diagnostics.is_empty(), "{:#?}", dev.diagnostics);
     let later = text(&generation.files, "guide/later/index.html");
-    contains(&later, ">Draft</p>");
+    let later_dom = dom_query::Document::from(later.as_str());
+    let marker = later_dom.select("main p.rd-draft");
+    assert_eq!(marker.length(), 1);
+    assert_eq!(marker.text().as_ref(), "Draft");
+    assert_eq!(marker.attr("lang").as_deref(), Some("en"));
     let setup = text(&generation.files, "guide/setup/index.html");
-    contains(&setup, "Later · Draft");
+    let setup_dom = dom_query::Document::from(setup.as_str());
+    let draft_links = setup_dom.select(".rd-sidebar a[href='/docs/guide/later/']");
+    assert_eq!(draft_links.length(), 2);
+    for link in draft_links.iter() {
+        assert_eq!(link.text().as_ref(), "Later · Draft");
+        assert_eq!(link.select("span").length(), 1);
+        assert_eq!(link.select("span").text().as_ref(), " · Draft");
+        assert_eq!(link.select("span").attr("lang").as_deref(), Some("en"));
+    }
 
     let (_, production) = build(&project, &snapshot, Mode::Production, 2);
+    assert!(!production.files.contains_key("guide/later/index.html"));
     for (path, bytes) in &production.files {
         let text = String::from_utf8_lossy(bytes);
         assert!(
             !text.contains("/guide/later/") && !text.contains("Later · Draft"),
             "{path} mentions the draft"
         );
+        if path.ends_with(".html") {
+            let dom = dom_query::Document::from(text.as_ref());
+            assert_eq!(dom.select(".rd-draft").length(), 0, "{path}");
+            assert!(
+                !dom.select("body").text().contains("Later · Draft"),
+                "{path}"
+            );
+        }
     }
 }

@@ -659,7 +659,12 @@ fn build(args: &[String]) -> ExitCode {
             );
         }
     }
-    publish::add_manifest(&mut generation.files, &project.config.site.base, VERSION);
+    publish::add_manifest(
+        &mut generation.files,
+        &project.config.site.base,
+        VERSION,
+        &generation.locale_not_found,
+    );
     let stop_at = std::env::var(FAULT_VARIABLE)
         .ok()
         .and_then(|value| value.strip_prefix("stop:").map(str::to_owned));
@@ -778,7 +783,33 @@ fn preview(args: &[String]) -> ExitCode {
             };
         }
     }
-    let manifest = match Manifest::read(&dir) {
+    let area = match Area::of(&dir) {
+        Ok(area) => area,
+        Err(message) => return fail("preview", message),
+    };
+    let _lock = match publish::lock(&area, false) {
+        Ok(lock) => lock,
+        Err(LockError::Busy) => {
+            return fail(
+                "preview",
+                format!(
+                    "{} is being built; preview it when the build ends",
+                    literal(&area.out.display().to_string())
+                ),
+            )
+        }
+        Err(LockError::Io(message)) => return fail("preview", message),
+    };
+    if area.unfinished() {
+        return fail(
+            "preview",
+            format!(
+                "a build of {} stopped half-way; run `rustify-docs build` to recover it",
+                literal(&area.out.display().to_string())
+            ),
+        );
+    }
+    let manifest = match Manifest::read(&area.out) {
         Ok(manifest) => manifest,
         Err(message) => {
             return fail(
@@ -812,34 +843,13 @@ fn preview(args: &[String]) -> ExitCode {
             );
         }
     }
-    let area = match Area::of(&dir) {
-        Ok(area) => area,
+    let locale_not_found = match manifest.locale_not_found_files(&area.out) {
+        Ok(files) => files,
         Err(message) => return fail("preview", message),
     };
-    let _lock = match publish::lock(&area, false) {
-        Ok(lock) => lock,
-        Err(LockError::Busy) => {
-            return fail(
-                "preview",
-                format!(
-                    "{} is being built; preview it when the build ends",
-                    literal(&area.out.display().to_string())
-                ),
-            )
-        }
-        Err(LockError::Io(message)) => return fail("preview", message),
-    };
-    if area.unfinished() {
-        return fail(
-            "preview",
-            format!(
-                "a build of {} stopped half-way; run `rustify-docs build` to recover it",
-                literal(&area.out.display().to_string())
-            ),
-        );
-    }
-    let not_found =
-        std::fs::read(area.out.join("404.html")).unwrap_or_else(|_| b"404 not found\n".to_vec());
+    let not_found = locale_not_found.get("").cloned().unwrap_or_else(|| {
+        std::fs::read(area.out.join("404.html")).unwrap_or_else(|_| b"404 not found\n".to_vec())
+    });
     let listener = match preview::bind(&host, port, preview::DEFAULT_PORT) {
         Ok(listener) => listener,
         Err(message) => return fail("preview", message),
@@ -861,6 +871,7 @@ fn preview(args: &[String]) -> ExitCode {
             dir: area.out.canonicalize().unwrap_or(area.out.clone()),
             base: manifest.base,
             not_found,
+            locale_not_found,
         },
     );
     ExitCode::SUCCESS

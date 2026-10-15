@@ -37,11 +37,19 @@ fi
 rm -rf "$work"
 mkdir -p "$work"
 case $source in
-  content)
-    cp -R "$root/tests/docs-ssg/fixtures/content" "$work/site"
+  content | i18n)
+    fixture=$root/tests/docs-ssg/fixtures/content
+    if [ "$source" = i18n ]; then
+      fixture=$root/tests/docs-ssg/fixtures/i18n/content
+    fi
+    cp -R "$fixture" "$work/site"
     perl -0pi -e "s#url = \"https://example.com/docs/\"\nbase = \"/docs/\"#url = \"https://docs.example.net$base\"\nbase = \"$base\"#" "$work/site/rustify-docs.toml"
     rg -q "base = \"$base\"" "$work/site/rustify-docs.toml"
     "$bin" build --config "$work/site/rustify-docs.toml" --out "$work/dist" >&2
+    ;;
+  i18n-components)
+    python3 "$root/tests/docs-ssg/i18n-fixture.py" --out "$work/site" --cli "$bin" --base "$base" >&2
+    RUSTIFY_DOCS_CARGO=mbx "$bin" build --config "$work/site/rustify-docs.toml" --out "$work/dist" >&2
     ;;
   components)
     fixture=$root/tests/docs-ssg/fixtures/components

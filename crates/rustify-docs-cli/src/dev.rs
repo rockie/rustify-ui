@@ -63,6 +63,8 @@ struct Good {
     revision: u64,
     files: Files,
     base: String,
+    locale_not_found: BTreeMap<String, String>,
+    locale_changed_at: u64,
 }
 
 /// What every connection reads.
@@ -82,7 +84,7 @@ struct State {
     /// For each output path, the revision that last changed or removed it.
     changed_at: HashMap<String, u64>,
     /// What is served while nothing has built, and its base.
-    shell: Option<(Files, String)>,
+    shell: Option<(Files, String, BTreeMap<String, String>)>,
 }
 
 struct Shared {
@@ -188,6 +190,19 @@ impl Filter {
         }
         let mut existence = BTreeMap::new();
         let mut ancestors = BTreeMap::new();
+        for path in content::message_dependencies(project) {
+            let path = root.join(path);
+            for parent in path
+                .ancestors()
+                .skip(1)
+                .filter(|parent| parent.starts_with(root))
+            {
+                ancestors
+                    .entry(parent.to_path_buf())
+                    .or_insert_with(|| directory_identity(parent));
+            }
+            files.insert(path);
+        }
         if let Some(selected) = &config.content_include {
             let assets = root.join(&config.assets_dir);
             let mut bytes = BTreeSet::new();
@@ -304,13 +319,14 @@ enum Outcome {
     Built {
         files: FileMap,
         base: String,
+        locale_not_found: BTreeMap<String, String>,
         diagnostics: Vec<Diagnostic>,
     },
     Failed {
         diagnostics: Vec<Diagnostic>,
         /// The page to show while nothing has built, for the configuration
         /// this round read, when it read one.
-        shell: Option<(FileMap, String)>,
+        shell: Option<(FileMap, String, BTreeMap<String, String>)>,
     },
 }
 
@@ -425,12 +441,18 @@ impl Builder {
                 )
             }
         };
-        let shell = || {
-            generation::dev_shell(&project)
-                .ok()
-                .map(|shell| (shell.files, project.config.site.base.clone()))
-        };
         let (snapshot, problems) = content::snapshot(&project);
+        let shell = || {
+            generation::dev_shell_from_snapshot(&project, &snapshot, false)
+                .ok()
+                .map(|shell| {
+                    (
+                        shell.files,
+                        project.config.site.base.clone(),
+                        shell.locale_not_found,
+                    )
+                })
+        };
         diagnostics.extend(problems);
         if let Some(marker) = &self.fault {
             let texts: Vec<&str> = snapshot.markdown.values().map(|text| &**text).collect();
@@ -516,6 +538,7 @@ impl Builder {
             Ok(generation) => Outcome::Built {
                 files: generation.files,
                 base: project.config.site.base.clone(),
+                locale_not_found: generation.locale_not_found,
                 diagnostics: sorted(diagnostics),
             },
             Err(problems) => {
@@ -580,11 +603,20 @@ fn commit(shared: &Shared, outcome: Outcome) -> Committed {
         Outcome::Built {
             files,
             base,
+            locale_not_found,
             diagnostics,
         } => {
             let changed = changed_paths(state.good.as_ref().map(|good| &*good.files), &files);
             let same_base = state.good.as_ref().is_some_and(|good| good.base == base);
-            if changed.is_empty() && same_base && !state.failed && *state.diagnostics == diagnostics
+            let same_locales = state
+                .good
+                .as_ref()
+                .is_some_and(|good| good.locale_not_found == locale_not_found);
+            if changed.is_empty()
+                && same_base
+                && same_locales
+                && !state.failed
+                && *state.diagnostics == diagnostics
             {
                 state.building = false;
                 state.sequence += 1;
@@ -593,6 +625,14 @@ fn commit(shared: &Shared, outcome: Outcome) -> Committed {
             }
             state.revision += 1;
             let revision = state.revision;
+            let locale_changed_at = if same_base && same_locales {
+                state
+                    .good
+                    .as_ref()
+                    .map_or(revision, |good| good.locale_changed_at)
+            } else {
+                revision
+            };
             let pages = changed
                 .iter()
                 .filter(|path| path.ends_with(".html"))
@@ -604,6 +644,8 @@ fn commit(shared: &Shared, outcome: Outcome) -> Committed {
                 revision,
                 files: Arc::new(files),
                 base,
+                locale_not_found,
+                locale_changed_at,
             });
             state.failed = false;
             state.diagnostics = Arc::new(diagnostics);
@@ -613,8 +655,8 @@ fn commit(shared: &Shared, outcome: Outcome) -> Committed {
             state.revision += 1;
             state.failed = true;
             state.diagnostics = Arc::new(diagnostics);
-            if let Some((files, base)) = shell {
-                state.shell = Some((Arc::new(files), base));
+            if let Some((files, base, mapping)) = shell {
+                state.shell = Some((Arc::new(files), base, mapping));
             }
             Committed::Failed {
                 revision: state.revision,
@@ -689,6 +731,12 @@ fn page_key(base: &str, path: &str) -> String {
 }
 
 /// Whether the page at `path`, a copy of build `seen`, is out of date.
+fn locale_error_path<'a>(base: &str, path: &str, mapping: &'a BTreeMap<String, String>) -> &'a str {
+    crate::preview::locale_prefix(base, path)
+        .and_then(|prefix| mapping.get(&prefix))
+        .map_or("404.html", String::as_str)
+}
+
 fn needs_reload(state: &State, path: &str, seen: u64) -> bool {
     let Some(good) = &state.good else {
         return false;
@@ -696,7 +744,10 @@ fn needs_reload(state: &State, path: &str, seen: u64) -> bool {
     let key = page_key(&good.base, path);
     let mut at = state.changed_at.get(&key).copied().unwrap_or(0);
     if !good.files.contains_key(&key) {
-        at = at.max(state.changed_at.get("404.html").copied().unwrap_or(0));
+        let error = locale_error_path(&good.base, path, &good.locale_not_found);
+        at = at
+            .max(state.changed_at.get(error).copied().unwrap_or(0))
+            .max(good.locale_changed_at);
     }
     at > seen
 }
@@ -906,7 +957,7 @@ fn handle(mut stream: TcpStream, shared: &Shared) -> std::io::Result<()> {
             ),
         };
     }
-    let (files, base, build, built, building) = {
+    let (files, base, error_path, build, built, building) = {
         let state = shared
             .state
             .lock()
@@ -915,11 +966,19 @@ fn handle(mut stream: TcpStream, shared: &Shared) -> std::io::Result<()> {
             (Some(good), _) => (
                 good.files.clone(),
                 good.base.clone(),
+                locale_error_path(&good.base, target, &good.locale_not_found).to_owned(),
                 good.revision,
                 true,
                 state.building,
             ),
-            (None, Some((files, base))) => (files.clone(), base.clone(), 0, false, state.building),
+            (None, Some((files, base, mapping))) => (
+                files.clone(),
+                base.clone(),
+                locale_error_path(base, target, mapping).to_owned(),
+                0,
+                false,
+                state.building,
+            ),
             (None, None) => {
                 drop(state);
                 return respond(
@@ -953,7 +1012,7 @@ fn handle(mut stream: TcpStream, shared: &Shared) -> std::io::Result<()> {
         ),
     };
     match resolve(&files, &base, target) {
-        Answer::File(key) if built || key != generation::DEV_SHELL_PAGE => {
+        Answer::File(key) if built || !key.ends_with(".html") => {
             let bytes = &files[&key];
             let content_type = crate::preview::mime(Path::new(&key));
             if key.ends_with(".html") {
@@ -992,10 +1051,14 @@ fn handle(mut stream: TcpStream, shared: &Shared) -> std::io::Result<()> {
             } else {
                 "500 Internal Server Error"
             },
-            generation::DEV_SHELL_PAGE,
+            if files.contains_key(&error_path) {
+                &error_path
+            } else {
+                generation::DEV_SHELL_PAGE
+            },
             &mut stream,
         ),
-        _ => page("404 Not Found", "404.html", &mut stream),
+        _ => page("404 Not Found", &error_path, &mut stream),
     }
 }
 
@@ -1131,7 +1194,13 @@ pub fn run(options: Options) -> ExitCode {
             changed_at: HashMap::new(),
             shell: generation::dev_shell_with_status(&project, true)
                 .ok()
-                .map(|shell| (Arc::new(shell.files), project.config.site.base.clone())),
+                .map(|shell| {
+                    (
+                        Arc::new(shell.files),
+                        project.config.site.base.clone(),
+                        shell.locale_not_found,
+                    )
+                }),
         }),
         changed: Condvar::new(),
     });
@@ -1239,7 +1308,7 @@ pub fn run(options: Options) -> ExitCode {
             .unwrap_or_else(|poisoned| poisoned.into_inner());
         match (&state.good, &state.shell) {
             (Some(good), _) => good.base.clone(),
-            (_, Some((_, base))) => base.clone(),
+            (_, Some((_, base, _))) => base.clone(),
             _ => project.config.site.base.clone(),
         }
     };
@@ -1306,6 +1375,88 @@ pub fn run(options: Options) -> ExitCode {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn locale_error_mapping_commits_with_files_and_survives_failed_candidates() {
+        let shared = Shared {
+            session: "locale-test".into(),
+            changed: Condvar::new(),
+            state: Mutex::new(State {
+                sequence: 0,
+                building: false,
+                phase: "render",
+                compile: serde_json::Value::Null,
+                revision: 0,
+                good: None,
+                failed: false,
+                diagnostics: Arc::new(Vec::new()),
+                changed_at: HashMap::new(),
+                shell: None,
+            }),
+        };
+        let files = files(&[
+            ("index.html", "home"),
+            ("404.html", "default"),
+            ("zh/404.html", "Chinese"),
+            ("fr/404.html", "French"),
+        ]);
+        let mapping = BTreeMap::from([
+            ("".into(), "404.html".into()),
+            ("zh".into(), "zh/404.html".into()),
+        ]);
+        commit(
+            &shared,
+            Outcome::Built {
+                files: files.clone(),
+                base: "/docs/".into(),
+                locale_not_found: mapping.clone(),
+                diagnostics: Vec::new(),
+            },
+        );
+        commit(
+            &shared,
+            Outcome::Failed {
+                diagnostics: Vec::new(),
+                shell: None,
+            },
+        );
+        {
+            let state = shared.state.lock().unwrap();
+            let good = state.good.as_ref().unwrap();
+            assert_eq!(good.locale_not_found, mapping);
+            assert_eq!(
+                locale_error_path(&good.base, "/docs/zh/missing/a/b/", &good.locale_not_found),
+                "zh/404.html"
+            );
+            assert!(!needs_reload(&state, "/docs/zh/missing/a/b/", 1));
+        }
+        let mapping = BTreeMap::from([
+            ("".into(), "404.html".into()),
+            ("fr".into(), "fr/404.html".into()),
+        ]);
+        commit(
+            &shared,
+            Outcome::Built {
+                files,
+                base: "/docs/".into(),
+                locale_not_found: mapping,
+                diagnostics: Vec::new(),
+            },
+        );
+        let state = shared.state.lock().unwrap();
+        let good = state.good.as_ref().unwrap();
+        assert_eq!(
+            locale_error_path(&good.base, "/docs/zh/missing/", &good.locale_not_found),
+            "404.html"
+        );
+        assert_eq!(
+            locale_error_path(&good.base, "/docs/fr/missing/", &good.locale_not_found),
+            "fr/404.html"
+        );
+        assert!(needs_reload(&state, "/docs/zh/missing/", 1));
+        assert!(needs_reload(&state, "/docs/fr/missing/", 1));
+        assert!(!needs_reload(&state, "/docs/", 1));
+    }
 
     struct FilterFixture(PathBuf);
 
@@ -1463,6 +1614,91 @@ mod tests {
         assert!(initial.relevant(&fixture.0.join("second/index.md")));
     }
 
+    #[test]
+    fn inputs_messages_filter_recovers_initial_and_failed_reads_without_expanding_selection() {
+        let fixture = FilterFixture::new("index.md");
+        fixture.write("rustify-docs.toml", "schema_version=1\n[site]\nname='Docs'\n[content]\ninclude=['index.md']\n[[i18n.locales]]\nlang='en'\nlabel='English'\nprefix=''\nmessages='locales/nested/en.toml'\n");
+        fixture.write("content/index.md", "# Home\n");
+        let project = fixture.project();
+        let initial = Filter::of(&fixture.0, &project, Read::default());
+        assert!(initial.relevant(&fixture.0.join("locales/nested/en.toml")));
+        std::fs::create_dir(fixture.0.join("locales")).unwrap();
+        assert!(initial.relevant(&fixture.0.join("locales")));
+        let (snapshot, _) = content::snapshot(&project);
+        let failed = Filter::of(
+            &fixture.0,
+            &project,
+            Read {
+                linked: Some(&snapshot.linked),
+                inputs: vec![&snapshot.inputs],
+                ..Read::default()
+            },
+        );
+        fixture.write("locales/nested/en.toml", "copy='Copy code'\n");
+        assert!(failed.relevant(&fixture.0.join("locales/nested")));
+        assert!(failed.relevant(&fixture.0.join("locales/nested/en.toml")));
+        assert!(!failed.relevant(&fixture.0.join("locales/unused.toml")));
+        assert!(!failed.relevant(&fixture.0.join("content/unselected.md")));
+        assert!(!failed.relevant(&fixture.0.join("dist/locales/nested/en.toml")));
+        let built = Filter::of(&fixture.0, &project, Read::default());
+        std::fs::remove_dir_all(fixture.0.join("locales/nested")).unwrap();
+        assert!(built.relevant(&fixture.0.join("locales/nested")));
+        fixture.write("locales/nested/en.toml", "copy='Copy code'\n");
+        assert!(built.relevant(&fixture.0.join("locales/nested/en.toml")));
+    }
+
+    #[cfg(unix)]
+    #[test]
+    fn inputs_messages_filter_tracks_real_paths_and_same_byte_symlink_retargets() {
+        let fixture = FilterFixture::new("index.md");
+        fixture.write("rustify-docs.toml", "schema_version=1\n[site]\nname='Docs'\n[[i18n.locales]]\nlang='en'\nlabel='English'\nprefix=''\nmessages='locales/en.toml'\n");
+        for directory in ["first", "second"] {
+            fixture.write(&format!("{directory}/en.toml"), "copy='Copy code'\n");
+        }
+        let alias = fixture.0.join("locales");
+        std::os::unix::fs::symlink("first", &alias).unwrap();
+        let project = fixture.project();
+        let initial = Filter::of(&fixture.0, &project, Read::default());
+        assert!(initial.relevant(&fixture.0.join("first/en.toml")));
+        assert!(!initial.relevant(&fixture.0.join("first/unused.toml")));
+        std::fs::remove_file(&alias).unwrap();
+        std::os::unix::fs::symlink("second", &alias).unwrap();
+        assert!(initial.relevant(&alias));
+        let failed = Filter::of(&fixture.0, &project, Read::default());
+        assert!(failed.relevant(&fixture.0.join("second/en.toml")));
+        std::fs::remove_file(fixture.0.join("second/en.toml")).unwrap();
+        assert!(failed.relevant(&fixture.0.join("second/en.toml")));
+        fixture.write("second/en.toml", "copy='Copy code'\n");
+        assert!(failed.relevant(&fixture.0.join("second/en.toml")));
+    }
+
+    #[cfg(unix)]
+    #[test]
+    fn inputs_messages_filter_tracks_prospective_paths_through_symlink_directories() {
+        let fixture = FilterFixture::new("index.md");
+        fixture.write("rustify-docs.toml", "schema_version=1\n[site]\nname='Docs'\n[content]\ninclude=['index.md']\n[[i18n.locales]]\nlang='en'\nlabel='English'\nprefix=''\nmessages='locales/nested/en.toml'\n");
+        std::fs::create_dir(fixture.0.join("shared")).unwrap();
+        std::os::unix::fs::symlink("shared", fixture.0.join("locales")).unwrap();
+        let filter = Filter::of(&fixture.0, &fixture.project(), Read::default());
+        assert!(filter.relevant(&fixture.0.join("shared/nested/en.toml")));
+        fixture.write("shared/nested/en.toml", "copy='Copy code'\n");
+        assert!(filter.relevant(&fixture.0.join("shared/nested")));
+        assert!(!filter.relevant(&fixture.0.join("shared/unselected.md")));
+    }
+
+    #[cfg(unix)]
+    #[test]
+    fn inputs_messages_filter_recovers_a_dangling_message_symlink_target() {
+        let fixture = FilterFixture::new("index.md");
+        fixture.write("rustify-docs.toml", "schema_version=1\n[site]\nname='Docs'\n[content]\ninclude=['index.md']\n[[i18n.locales]]\nlang='en'\nlabel='English'\nprefix=''\nmessages='locales/en.toml'\n");
+        std::fs::create_dir(fixture.0.join("locales")).unwrap();
+        std::os::unix::fs::symlink("../shared/en.toml", fixture.0.join("locales/en.toml")).unwrap();
+        let filter = Filter::of(&fixture.0, &fixture.project(), Read::default());
+        assert!(filter.relevant(&fixture.0.join("shared/en.toml")));
+        fixture.write("shared/en.toml", "copy='Copy code'\n");
+        assert!(filter.relevant(&fixture.0.join("shared")));
+    }
+
     fn files(entries: &[(&str, &str)]) -> BTreeMap<String, Arc<[u8]>> {
         entries
             .iter()
@@ -1532,6 +1768,8 @@ mod tests {
             revision: 1,
             files: Arc::new(one.clone()),
             base: "/".into(),
+            locale_not_found: BTreeMap::new(),
+            locale_changed_at: 0,
         });
         // The shell (build 0) gives way to the first build, a missing page
         // to the not-found page.

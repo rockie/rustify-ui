@@ -1,0 +1,29 @@
+[[i18n.locales]]
+lang = "en"
+label = "English"
+prefix = ""
+
+[[i18n.locales]]
+lang = "zh"
+label = "中文"
+prefix = "zh"
+
+[i18n.locales.nav]
+groups = [
+  { label = "注册页面", routes = ["/locale/", "/custom/", "/plain/"] },
+  { label = "示例", items = ["counter.md", "builtins.md", "async.md", "client-only.md", "failure.md", "proxy.md"] },
+]
+top = [{ label = "计数器", link = "counter.md" }]
+
+[[i18n.locales]]
+lang = "fr"
+label = "Français"
+prefix = "fr"
+messages = "locales/fr.toml"
+
+[i18n.locales.nav]
+groups = [
+  { label = "Pages", routes = ["/locale/", "/custom/", "/plain/"] },
+  { label = "Exemples", items = ["counter.md", "builtins.md", "async.md", "client-only.md", "failure.md", "proxy.md"] },
+]
+top = [{ label = "Compteurs", link = "counter.md" }]

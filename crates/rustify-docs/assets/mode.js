@@ -27,6 +27,44 @@
   var deadlineAt = null;
   var resolveParsed;
   var parsed = new Promise(function (resolve) { resolveParsed = resolve; });
+  var notFoundPrepared = false;
+
+  function prepareNotFound() {
+    if (notFoundPrepared) return;
+    notFoundPrepared = true;
+    var root = document.documentElement;
+    if (!root.hasAttribute("data-rd-not-found")) return;
+    var templates = document.querySelectorAll("template[data-rd-not-found-prefix]");
+    var path;
+    try { path = decodeURIComponent(location.pathname); } catch (malformed) { path = ""; }
+    if (path.indexOf("\0") !== -1 || path.indexOf("\\") !== -1) path = "";
+    var base = root.getAttribute("data-rd-base") || "/";
+    var rest = path.indexOf(base) === 0 ? path.slice(base.length) : "";
+    if (rest.split("/").some(function (segment) { return segment === "." || segment === ".."; })) rest = "";
+    var prefix = rest.split("/")[0];
+    var selected = null;
+    templates.forEach(function (template) {
+      if (template.getAttribute("data-rd-not-found-prefix") === prefix) selected = template;
+    });
+    if (selected) {
+      var content = selected.content.cloneNode(true);
+      // Keep the original parser-inserted module; template scripts never run.
+      Array.prototype.slice.call(document.body.children).forEach(function (node) {
+        if (node.tagName === "SCRIPT") content.appendChild(node);
+      });
+      root.lang = selected.getAttribute("data-rd-not-found-lang");
+      document.title = selected.getAttribute("data-rd-not-found-title");
+      var dev = document.querySelector("script[data-labels]");
+      if (dev) {
+        dev.setAttribute("data-lang", root.lang);
+        dev.setAttribute("data-labels", selected.getAttribute("data-rd-dev-labels") || "{}");
+        dev.setAttribute("data-label-langs", selected.getAttribute("data-rd-dev-label-langs") || "{}");
+      }
+      document.body.replaceChildren(content);
+    } else {
+      templates.forEach(function (template) { template.remove(); });
+    }
+  }
 
   function blockFor(event) {
     var target = event.target;
@@ -92,6 +130,7 @@
 
   function prepare() {
     if (records.length || phase === "empty" || phase === "loading" || phase === "ready") return;
+    prepareNotFound();
     var malformed = false;
     document.querySelectorAll("[data-rustify-island]").forEach(function (block) {
       var canvas = block.querySelector("fieldset[data-rd-island-controls]");

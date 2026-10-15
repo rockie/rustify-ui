@@ -38,6 +38,24 @@ struct RawConfig {
     #[serde(default)]
     dev: RawDev,
     rust: Option<RawRust>,
+    i18n: Option<Spanned<RawI18n>>,
+}
+
+#[derive(Deserialize)]
+#[serde(deny_unknown_fields)]
+struct RawI18n {
+    #[serde(default)]
+    locales: Vec<RawLocale>,
+}
+
+#[derive(Deserialize)]
+#[serde(deny_unknown_fields)]
+struct RawLocale {
+    lang: Spanned<String>,
+    label: String,
+    prefix: Spanned<String>,
+    messages: Option<Spanned<String>>,
+    nav: Option<RawNav>,
 }
 
 #[derive(Deserialize)]
@@ -114,7 +132,7 @@ enum RawLogo {
 #[serde(deny_unknown_fields)]
 struct RawNav {
     #[serde(default)]
-    groups: Vec<RawGroup>,
+    groups: Vec<Spanned<RawGroup>>,
     #[serde(default)]
     top: Vec<RawLink>,
     #[serde(default)]
@@ -161,6 +179,8 @@ pub struct Config {
     pub theme_document: Option<(String, Range<usize>)>,
     pub logo: Option<Logo>,
     pub nav: Nav,
+    /// Declared languages; empty preserves the single-language configuration.
+    pub locales: Vec<LocaleConfig>,
     pub dev_port: u16,
     pub rust: Option<RustConfig>,
 }
@@ -183,6 +203,18 @@ pub struct SiteConfig {
     pub base: String,
     /// The image link previews show, project-relative, with its span.
     pub image: Option<(String, Range<usize>)>,
+}
+
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct LocaleConfig {
+    pub lang: String,
+    /// Where the language was declared, for missing-translation diagnostics.
+    pub lang_span: Range<usize>,
+    pub label: String,
+    pub prefix: String,
+    /// A project-relative message catalog and its configuration span.
+    pub messages: Option<(String, Range<usize>)>,
+    pub nav: Option<Nav>,
 }
 
 #[derive(Clone, Debug, PartialEq, Eq)]
@@ -305,11 +337,251 @@ pub fn valid_lang(tag: &str) -> bool {
         })
 }
 
+/// A non-default locale's URL segment, excluding generated and private output.
+pub fn valid_locale_prefix(prefix: &str) -> bool {
+    !prefix.is_empty()
+        && !matches!(prefix, "." | ".." | "assets" | "404" | "index.html")
+        && prefix
+            .chars()
+            .all(|c| c.is_ascii_alphanumeric() || matches!(c, '-' | '_' | '.' | '~'))
+        && !crate::content::is_private(prefix)
+        && !crate::generation::SITE_FILES.contains(&prefix)
+}
+
 fn absolute_url(url: &str) -> bool {
     let lower = url.to_ascii_lowercase();
     (lower.starts_with("https://") || lower.starts_with("http://"))
         && url.len() > url.find("://").unwrap_or(0) + 3
         && !url.contains(char::is_whitespace)
+}
+
+fn parse_nav(raw: RawNav, rule: &'static str, errors: &mut Vec<Issue>) -> Nav {
+    let mut groups = Vec::new();
+    for group in raw.groups {
+        let span = group.span();
+        let group = group.into_inner();
+        let scope = match &group.scope {
+            None => "/".to_owned(),
+            Some(scope) => match normalize_base(scope.get_ref()) {
+                Ok(scope) => scope,
+                Err(_) => {
+                    errors.push(error(
+                        scope.span(),
+                        rule,
+                        format!(
+                            "nav scope {} is not a route prefix like `/guide/`",
+                            code_span(scope.get_ref())
+                        ),
+                    ));
+                    continue;
+                }
+            },
+        };
+        let source = match (group.dir, group.items, group.routes) {
+            (Some(dir), None, None) => match relative_path(dir.get_ref()) {
+                Ok(path) => GroupSource::Dir {
+                    dir: path,
+                    span: dir.span(),
+                },
+                Err(message) => {
+                    errors.push(error(
+                        dir.span(),
+                        rule,
+                        format!("nav group {}: {message}", code_span(&group.label)),
+                    ));
+                    continue;
+                }
+            },
+            (None, Some(items), None) => {
+                let mut list = Vec::new();
+                for item in items {
+                    match relative_path(item.get_ref()) {
+                        Ok(path) => list.push((path, item.span())),
+                        Err(message) => errors.push(error(item.span(), rule, message)),
+                    }
+                }
+                GroupSource::Items(list)
+            }
+            (None, None, Some(routes)) => {
+                let mut list = Vec::new();
+                for route in routes {
+                    let value = route.get_ref();
+                    match normalize_base(value) {
+                        Ok(normalized) if normalized == *value => {
+                            list.push((normalized, route.span()));
+                        }
+                        _ => errors.push(error(route.span(), rule, "nav.routes needs canonical routes like `/custom/`, without the deployment base, query or fragment")),
+                    }
+                }
+                GroupSource::Routes(list)
+            }
+            _ => {
+                errors.push(error(
+                    span,
+                    rule,
+                    format!(
+                        "nav group {} needs exactly one of `dir`, `items` and `routes`",
+                        code_span(&group.label)
+                    ),
+                ));
+                continue;
+            }
+        };
+        groups.push(NavGroupConfig {
+            label: group.label,
+            source,
+            scope,
+        });
+    }
+    let links = |links: Vec<RawLink>| -> Vec<NavLink> {
+        links
+            .into_iter()
+            .map(|link| NavLink {
+                label: link.label,
+                span: link.link.span(),
+                link: link.link.into_inner(),
+            })
+            .collect()
+    };
+    Nav {
+        groups,
+        top: links(raw.top),
+        social: links(raw.social),
+    }
+}
+
+fn parse_locales(
+    i18n: Option<Spanned<RawI18n>>,
+    site_lang: &str,
+    site_lang_span: Range<usize>,
+    out_dir: &str,
+    errors: &mut Vec<Issue>,
+) -> Vec<LocaleConfig> {
+    let Some(i18n) = i18n else {
+        return Vec::new();
+    };
+    let span = i18n.span();
+    let raw = i18n.into_inner();
+    if raw.locales.is_empty() {
+        errors.push(error(
+            span,
+            "i18n-config",
+            "i18n.locales must declare at least the default language",
+        ));
+        return Vec::new();
+    }
+    let mut languages = BTreeSet::new();
+    let mut prefixes = BTreeSet::new();
+    let mut default_count = 0;
+    let mut locales = Vec::new();
+    for locale in raw.locales {
+        let lang_span = locale.lang.span();
+        let lang = locale.lang.into_inner();
+        if !valid_lang(&lang) {
+            errors.push(
+                error(
+                    lang_span.clone(),
+                    "i18n-config",
+                    format!("{} is not a language tag", code_span(&lang)),
+                )
+                .suggest("use a tag like `en` or `zh-CN`"),
+            );
+        }
+        if !languages.insert(lang.to_ascii_lowercase()) {
+            errors.push(error(
+                lang_span.clone(),
+                "i18n-config",
+                format!("i18n.locales declares {} more than once", code_span(&lang)),
+            ));
+        }
+        let default = lang.eq_ignore_ascii_case(site_lang);
+        default_count += usize::from(default);
+        let prefix_span = locale.prefix.span();
+        let prefix = locale.prefix.into_inner();
+        if default && !prefix.is_empty() {
+            errors.push(error(
+                prefix_span.clone(),
+                "i18n-config",
+                "the locale matching site.lang must have an empty prefix",
+            ));
+        } else if !default && !valid_locale_prefix(&prefix) {
+            errors.push(error(
+                prefix_span.clone(),
+                "i18n-config",
+                format!(
+                    "locale prefix {} must be one URL-safe segment, outside reserved directories and site files",
+                    code_span(&prefix)
+                ),
+            ));
+        }
+        if !prefixes.insert(prefix.clone()) {
+            errors.push(error(
+                prefix_span,
+                "i18n-config",
+                format!(
+                    "i18n.locales uses prefix {} more than once",
+                    code_span(&prefix)
+                ),
+            ));
+        }
+        let messages = locale.messages.and_then(|messages| {
+            let span = messages.span();
+            let path = match relative_path(messages.get_ref()) {
+                Ok(path) => path,
+                Err(message) => {
+                    errors.push(error(
+                        span,
+                        "i18n-config",
+                        format!("locale messages: {message}"),
+                    ));
+                    return None;
+                }
+            };
+            if path.is_empty() || crate::content::is_private(&path) {
+                errors.push(error(
+                    span,
+                    "i18n-config",
+                    "locale messages must name a non-private project file",
+                ));
+                return None;
+            }
+            if out_dir.is_empty() || path == out_dir || path.starts_with(&format!("{out_dir}/")) {
+                errors.push(error(
+                    span,
+                    "i18n-config",
+                    format!(
+                        "build.out would replace locale messages {}",
+                        code_span(&path)
+                    ),
+                ));
+                return None;
+            }
+            Some((path, span))
+        });
+        locales.push(LocaleConfig {
+            lang,
+            lang_span,
+            label: locale.label,
+            prefix,
+            messages,
+            nav: locale.nav.map(|nav| parse_nav(nav, "i18n-config", errors)),
+        });
+    }
+    if default_count != 1 {
+        errors.push(error(
+            if site_lang_span.is_empty() {
+                span
+            } else {
+                site_lang_span
+            },
+            "i18n-config",
+            format!(
+                "site.lang {} must match exactly one i18n locale",
+                code_span(site_lang)
+            ),
+        ));
+    }
+    locales
 }
 
 impl Config {
@@ -334,9 +606,18 @@ impl Config {
 /// Reads `rustify-docs.toml`. On success, also returns the warnings; on
 /// failure, every error found (an unreadable file stops at its first).
 pub fn parse(text: &str) -> Result<(Config, Vec<Issue>), Vec<Issue>> {
-    let raw: RawConfig = toml::from_str(text).map_err(|e| {
+    let deserializer = toml::Deserializer::parse(text).map_err(|e| {
         let span = e.span().unwrap_or(0..0);
         vec![error(span, "config", e.message().to_owned())]
+    })?;
+    let raw: RawConfig = serde_path_to_error::deserialize(deserializer).map_err(|e| {
+        let rule = if matches!(e.path().iter().next(), Some(serde_path_to_error::Segment::Map { key }) if key == "i18n") {
+            "i18n-config"
+        } else {
+            "config"
+        };
+        let e = e.into_inner();
+        vec![error(e.span().unwrap_or(0..0), rule, e.message().to_owned())]
     })?;
     let mut errors = Vec::new();
     let warnings = Vec::new();
@@ -489,6 +770,7 @@ pub fn parse(text: &str) -> Result<(Config, Vec<Issue>), Vec<Issue>> {
         ));
     }
 
+    let lang_span = raw.site.lang.as_ref().map(Spanned::span).unwrap_or(0..0);
     let lang = match raw.site.lang {
         None => "en".to_owned(),
         Some(lang) => {
@@ -505,6 +787,7 @@ pub fn parse(text: &str) -> Result<(Config, Vec<Issue>), Vec<Issue>> {
             lang.into_inner()
         }
     };
+    let locales = parse_locales(raw.i18n, &lang, lang_span, &out_dir, &mut errors);
     let base = match raw.site.base {
         None => "/".to_owned(),
         Some(base) => normalize_base(base.get_ref()).unwrap_or_else(|message| {
@@ -655,96 +938,7 @@ pub fn parse(text: &str) -> Result<(Config, Vec<Issue>), Vec<Issue>> {
         }
     });
 
-    let mut groups = Vec::new();
-    for group in raw.nav.groups {
-        let scope = match &group.scope {
-            None => "/".to_owned(),
-            Some(scope) => match normalize_base(scope.get_ref()) {
-                Ok(scope) => scope,
-                Err(_) => {
-                    errors.push(error(
-                        scope.span(),
-                        "config-nav",
-                        format!(
-                            "nav scope {} is not a route prefix like `/guide/`",
-                            code_span(scope.get_ref())
-                        ),
-                    ));
-                    continue;
-                }
-            },
-        };
-        let source = match (group.dir, group.items, group.routes) {
-            (Some(dir), None, None) => match relative_path(dir.get_ref()) {
-                Ok(path) => GroupSource::Dir {
-                    dir: path,
-                    span: dir.span(),
-                },
-                Err(message) => {
-                    errors.push(error(
-                        dir.span(),
-                        "config-nav",
-                        format!("nav group {}: {message}", code_span(&group.label)),
-                    ));
-                    continue;
-                }
-            },
-            (None, Some(items), None) => {
-                let mut list = Vec::new();
-                for item in items {
-                    match relative_path(item.get_ref()) {
-                        Ok(path) => list.push((path, item.span())),
-                        Err(message) => errors.push(error(item.span(), "config-nav", message)),
-                    }
-                }
-                GroupSource::Items(list)
-            }
-            (None, None, Some(routes)) => {
-                let mut list = Vec::new();
-                for route in routes {
-                    let value = route.get_ref();
-                    match normalize_base(value) {
-                        Ok(normalized) if normalized == *value => {
-                            list.push((normalized, route.span()));
-                        }
-                        _ => errors.push(error(route.span(), "config-nav", "nav.routes needs canonical routes like `/custom/`, without the deployment base, query or fragment")),
-                    }
-                }
-                GroupSource::Routes(list)
-            }
-            _ => {
-                errors.push(error(
-                    0..0,
-                    "config-nav",
-                    format!(
-                        "nav group {} needs exactly one of `dir`, `items` and `routes`",
-                        code_span(&group.label)
-                    ),
-                ));
-                continue;
-            }
-        };
-        groups.push(NavGroupConfig {
-            label: group.label,
-            source,
-            scope,
-        });
-    }
-    let links = |links: Vec<RawLink>| -> Vec<NavLink> {
-        links
-            .into_iter()
-            .map(|link| NavLink {
-                label: link.label,
-                span: link.link.span(),
-                link: link.link.into_inner(),
-            })
-            .collect()
-    };
-    let nav = Nav {
-        groups,
-        top: links(raw.nav.top),
-        social: links(raw.nav.social),
-    };
+    let nav = parse_nav(raw.nav, "config-nav", &mut errors);
 
     if !errors.is_empty() {
         return Err(errors);
@@ -768,6 +962,7 @@ pub fn parse(text: &str) -> Result<(Config, Vec<Issue>), Vec<Issue>> {
             theme_document,
             logo,
             nav,
+            locales,
             dev_port: raw.dev.port.unwrap_or(DEFAULT_DEV_PORT),
             rust,
         },
@@ -795,6 +990,7 @@ mod tests {
         );
         assert_eq!(config.site.base, "/");
         assert_eq!(config.site.lang, "en");
+        assert!(config.locales.is_empty());
         assert_eq!(config.dev_port, 4188);
         assert_eq!(config.primary, None);
     }
@@ -1004,6 +1200,206 @@ mod tests {
         }
         for bad in ["", "e", "english", "zh_CN", "en-", "en-toolongtag"] {
             assert!(!valid_lang(bad), "{bad}");
+        }
+    }
+
+    #[test]
+    fn locales_accept_declared_languages_messages_and_navigation() {
+        let text = format!(
+            "{MINIMAL}lang = \"EN\"\n\
+             [[i18n.locales]]\nlang = \"en\"\nlabel = \"English\"\nprefix = \"\"\n\
+             [[i18n.locales]]\nlang = \"zh-Hant\"\nlabel = \"中文\"\nprefix = \"zh\"\nmessages = \"locales/./zh.toml\"\n\
+             [i18n.locales.nav]\ngroups = [{{ label = \"指南\", items = [\"guide/start.md\"], scope = \"/guide\" }}]\n\
+             top = [{{ label = \"首页\", link = \"/\" }}]\nsocial = [{{ label = \"Code\", link = \"https://example.com\" }}]\n"
+        );
+        let (config, warnings) = parse(&text).unwrap();
+        assert!(warnings.is_empty());
+        assert_eq!(config.site.lang, "EN");
+        let locale = &config.locales[1];
+        assert_eq!(
+            (
+                locale.lang.as_str(),
+                locale.label.as_str(),
+                locale.prefix.as_str()
+            ),
+            ("zh-Hant", "中文", "zh")
+        );
+        assert_eq!(&text[locale.lang_span.clone()], "\"zh-Hant\"");
+        let (messages, span) = locale.messages.as_ref().unwrap();
+        assert_eq!(messages, "locales/zh.toml");
+        assert_eq!(&text[span.clone()], "\"locales/./zh.toml\"");
+        let nav = locale.nav.as_ref().unwrap();
+        assert_eq!(nav.groups[0].scope, "/guide/");
+        std::assert_matches!(
+            &nav.groups[0].source,
+            GroupSource::Items(items) if items[0].0 == "guide/start.md"
+        );
+        assert_eq!(nav.top[0].link, "/");
+        assert_eq!(nav.social[0].link, "https://example.com");
+    }
+
+    #[test]
+    fn enabled_i18n_requires_nonempty_locales() {
+        for declaration in ["[i18n]\n", "[i18n]\nlocales = []\n"] {
+            let text = format!("{MINIMAL}{declaration}");
+            let errors = parse(&text).unwrap_err();
+            assert_eq!(errors[0].rule, "i18n-config", "{errors:?}");
+            assert!(errors[0].span.start > 0, "{errors:?}");
+        }
+    }
+
+    #[test]
+    fn locales_require_the_site_language_and_only_its_empty_prefix() {
+        for declaration in [
+            "lang = \"fr\"\nlabel = \"Français\"\nprefix = \"fr\"",
+            "lang = \"en\"\nlabel = \"English\"\nprefix = \"en\"",
+            "lang = \"en\"\nlabel = \"English\"\nprefix = \"\"\n[[i18n.locales]]\nlang = \"fr\"\nlabel = \"Français\"\nprefix = \"\"",
+        ] {
+            let text = format!("{MINIMAL}[[i18n.locales]]\n{declaration}\n");
+            let errors = parse(&text).unwrap_err();
+            assert!(
+                errors.iter().all(|issue| issue.rule == "i18n-config"),
+                "{errors:?}"
+            );
+            assert!(errors.iter().all(|issue| issue.span.start > 0), "{errors:?}");
+        }
+    }
+
+    #[test]
+    fn locales_reject_invalid_or_case_insensitively_duplicate_tags() {
+        for lang in ["bad_tag", "EN"] {
+            let text = format!(
+                "{MINIMAL}[[i18n.locales]]\nlang = \"en\"\nlabel = \"English\"\nprefix = \"\"\n\
+                 [[i18n.locales]]\nlang = \"{lang}\"\nlabel = \"Other\"\nprefix = \"other\"\n"
+            );
+            let errors = parse(&text).unwrap_err();
+            let issue = errors
+                .iter()
+                .find(|issue| issue.rule == "i18n-config")
+                .unwrap_or_else(|| panic!("{errors:?}"));
+            assert_eq!(&text[issue.span.clone()], format!("\"{lang}\""));
+        }
+    }
+
+    #[test]
+    fn locale_prefixes_reject_unsafe_or_reserved_segments() {
+        for prefix in [
+            " ",
+            " zh",
+            ".",
+            "..",
+            "/zh",
+            "zh/",
+            "a/b",
+            "a%2fb",
+            "a?b",
+            "a#b",
+            "a:b",
+            "zh\\\\fr",
+            "assets",
+            "404",
+            "index.html",
+            "404.html",
+            "robots.txt",
+            "sitemap.xml",
+            "rustify-docs-manifest.json",
+            ".nojekyll",
+            ".git",
+            ".rustify-docs",
+            ".env",
+        ] {
+            let text = format!(
+                "{MINIMAL}[[i18n.locales]]\nlang = \"en\"\nlabel = \"English\"\nprefix = \"\"\n\
+                 [[i18n.locales]]\nlang = \"fr\"\nlabel = \"Français\"\nprefix = \"{prefix}\"\n"
+            );
+            let errors = parse(&text).unwrap_err();
+            assert!(
+                errors.iter().any(|issue| issue.rule == "i18n-config"
+                    && text[issue.span.clone()] == format!("\"{prefix}\"")),
+                "{prefix}: {errors:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn locale_prefixes_are_unique() {
+        let text = format!(
+            "{MINIMAL}[[i18n.locales]]\nlang = \"en\"\nlabel = \"English\"\nprefix = \"\"\n\
+             [[i18n.locales]]\nlang = \"zh\"\nlabel = \"中文\"\nprefix = \"other\"\n\
+             [[i18n.locales]]\nlang = \"fr\"\nlabel = \"Français\"\nprefix = \"other\"\n"
+        );
+        let errors = parse(&text).unwrap_err();
+        assert!(errors
+            .iter()
+            .any(|issue| issue.rule == "i18n-config" && &text[issue.span.clone()] == "\"other\""));
+    }
+
+    #[test]
+    fn locale_messages_stay_inside_safe_project_inputs() {
+        for messages in [
+            "../fr.toml",
+            "/fr.toml",
+            ".git/fr.toml",
+            "locales/.env",
+            "dist/fr.toml",
+            ".",
+        ] {
+            let text = format!(
+                "{MINIMAL}[[i18n.locales]]\nlang = \"en\"\nlabel = \"English\"\nprefix = \"\"\nmessages = \"{messages}\"\n"
+            );
+            let errors = parse(&text).unwrap_err();
+            assert!(
+                errors.iter().any(|issue| issue.rule == "i18n-config"
+                    && text[issue.span.clone()] == format!("\"{messages}\"")),
+                "{messages}: {errors:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn locale_navigation_uses_the_existing_rules_and_reports_its_source() {
+        for nav in [
+            "groups = [{ label = \"G\" }]",
+            "groups = [{ label = \"G\", dir = \"../escape\" }]",
+            "groups = [{ label = \"G\", items = [], routes = [] }]",
+            "groups = [{ label = \"G\", routes = [\"/invalid\"] }]",
+            "groups = [{ label = \"G\", items = [], scope = \"/invalid?query\" }]",
+            "unknown = true",
+            "top = [{ label = \"L\", link = 3 }]",
+        ] {
+            let text = format!(
+                "{MINIMAL}[[i18n.locales]]\nlang = \"en\"\nlabel = \"English\"\nprefix = \"\"\n[i18n.locales.nav]\n{nav}\n"
+            );
+            let errors = parse(&text).unwrap_err();
+            assert!(
+                errors.iter().all(|issue| issue.rule == "i18n-config"),
+                "{nav}: {errors:?}"
+            );
+            assert!(
+                errors.iter().all(|issue| issue.span.start > 0),
+                "{errors:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn locale_schema_errors_keep_the_original_token_location() {
+        for (declaration, token) in [
+            ("[i18n]\nunknown = true\n", "unknown"),
+            ("[i18n]\nlocales = 3\n", "3"),
+            (
+                "[[i18n.locales]]\nlang = 3\nlabel = 'English'\nprefix = ''\n",
+                "3",
+            ),
+            (
+                "[[i18n.locales]]\nlang = 'en'\nlabel = 'English'\nprefix = ''\nmessages = 3\n",
+                "3",
+            ),
+        ] {
+            let text = format!("{MINIMAL}{declaration}");
+            let errors = parse(&text).unwrap_err();
+            assert_eq!(errors[0].rule, "i18n-config", "{errors:?}");
+            assert_eq!(&text[errors[0].span.clone()], token, "{errors:?}");
         }
     }
 }

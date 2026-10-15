@@ -316,12 +316,8 @@ pub(crate) fn document_mode(attribute: Option<&str>, prefers_dark: bool) -> rust
 pub(crate) fn prepare_environment(
     environment: &SiteEnvironment,
 ) -> Result<PreparedEnvironment, SiteError> {
-    let locale = rustify_ui::Locale::from_tag(&environment.lang).ok_or_else(|| {
-        SiteError::new(
-            "invalid_environment",
-            format!("unsupported locale {}", code_span(&environment.lang)),
-        )
-    })?;
+    let locale =
+        rustify_ui::Locale::from_tag(&environment.lang).unwrap_or(rustify_ui::Locale::English);
     let theme = if let Some(theme) = &environment.theme {
         let context = rustify_ui::theme::font_context(16., false);
         let resolve = |mode| {
@@ -351,6 +347,23 @@ mod tests {
     use super::*;
     use crate::site::ThemeInput;
     use rustify_ui::{Theme, ThemeDocument, ThemeMode};
+
+    #[test]
+    fn valid_third_language_keeps_its_environment_and_uses_english_sdk_labels() {
+        for (lang, locale) in [
+            ("en", rustify_ui::Locale::English),
+            ("zh", rustify_ui::Locale::Chinese),
+            ("fr", rustify_ui::Locale::English),
+        ] {
+            let environment = SiteEnvironment {
+                lang: lang.into(),
+                ..SiteEnvironment::default()
+            };
+            let prepared = prepare_environment(&environment).unwrap();
+            assert_eq!(prepared.locale, locale);
+            assert_eq!(environment.lang, lang);
+        }
+    }
 
     fn themed(mode: ThemeMode) -> SiteEnvironment {
         let mut document = ThemeDocument::from_legacy(Theme::light(), Theme::dark());

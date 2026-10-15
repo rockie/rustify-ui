@@ -54,3 +54,27 @@ to restore it without mixing assets.
   page carries its content security policy in a `<meta>` element; a host
   that can set response headers should also send it as the
   `Content-Security-Policy` header, which `rustify-docs preview` shows.
+
+To publish several languages, keep the default pages at their existing
+paths and add translations below a language prefix, such as
+`content/fr/guide/getting-started.md`. Add this to `rustify-docs.toml`:
+
+```toml
+[[i18n.locales]]
+lang = "en"
+label = "English"
+prefix = ""
+
+[[i18n.locales]]
+lang = "fr"
+label = "Français"
+prefix = "fr"
+messages = "locales/fr.toml"
+```
+
+The empty prefix belongs to `[site].lang`. Create `locales/fr.toml` with
+project text, for example `copy = "Copier"`; omitted French UI keys use
+English and are reported by `check`. Missing pages show the default
+language body with a notice. The language menu links to the same logical
+page, including its fallback. The [author reference](https://github.com/rockie/rustify-ui/blob/main/docs/docs-ssg.md#publish-several-languages)
+also covers translated navigation, drafts and language-specific 404 pages.

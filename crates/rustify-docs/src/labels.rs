@@ -1,13 +1,25 @@
-//! The interface's own words, in the two languages it ships.
+//! The interface's built-in words and project message overrides.
 //!
-//! A page's `lang` picks them by its primary subtag: `zh…` gets Chinese,
-//! everything else English. A page in a third language keeps its own `lang`
-//! on its content, and the interface strings inside it say `lang="en"`, so a
-//! screen reader does not read English with a French voice.
+//! Built-ins use the primary language subtag: `zh…` gets Chinese and all
+//! others English. A resolved catalog records each string's actual language,
+//! including English fallback for missing third-language messages.
 
+use std::collections::BTreeMap;
+use std::fmt;
+
+use serde::de::{MapAccess, Visitor};
+use serde::{Deserialize, Deserializer, Serialize};
+use sha2::{Digest, Sha256};
+use toml::Spanned;
+
+use crate::diagnostic::Issue;
+use crate::diagnostic_text::{code_span, literal};
+
+#[derive(Serialize)]
 pub struct Labels {
     /// The `lang` the strings are in, written on them when it differs from
     /// the page's.
+    #[serde(skip)]
     pub lang: &'static str,
     pub note: &'static str,
     pub tip: &'static str,
@@ -42,6 +54,9 @@ pub struct Labels {
     pub back_home: &'static str,
     pub last_updated: &'static str,
     pub edit_page: &'static str,
+    pub language: &'static str,
+    pub untranslated: &'static str,
+    pub available_languages: &'static str,
     /// A task list's box: its accessible name, the item's text following.
     pub task: &'static str,
     /// What `dev` adds while an author writes; `{n}` is a number.
@@ -50,6 +65,7 @@ pub struct Labels {
     pub demo: DemoLabels,
 }
 
+#[derive(Serialize)]
 pub struct DemoLabels {
     pub example: &'static str,
     pub loading: &'static str,
@@ -62,7 +78,7 @@ pub struct DemoLabels {
 
 /// The words of `dev`'s problem panel and of the page shown when nothing
 /// has built yet.
-#[derive(Debug, serde::Serialize)]
+#[derive(Debug, Serialize)]
 pub struct DevLabels {
     /// The panel's name.
     pub problems: &'static str,
@@ -123,6 +139,9 @@ pub const EN: Labels = Labels {
     back_home: "Back to the home page",
     last_updated: "Last updated",
     edit_page: "Edit this page",
+    language: "Language",
+    untranslated: "This page has not been translated yet.",
+    available_languages: "Available languages",
     task: "Task",
     dev: DevLabels {
         problems: "Problems",
@@ -189,6 +208,9 @@ pub const ZH: Labels = Labels {
     back_home: "返回首页",
     last_updated: "最后更新",
     edit_page: "编辑此页",
+    language: "语言",
+    untranslated: "此页面尚未翻译。",
+    available_languages: "可用语言",
     task: "任务",
     dev: DevLabels {
         problems: "问题",
@@ -236,9 +258,267 @@ pub fn for_lang(lang: &str) -> (&'static Labels, bool) {
     }
 }
 
+/// A plain interface string and the language its words are actually in.
+#[derive(Clone, Debug, PartialEq, Eq, Serialize)]
+pub struct LabelText {
+    pub text: String,
+    pub lang: String,
+}
+
+/// One build's resolved interface words, shared by all pages in a language.
+#[derive(Clone, Debug, PartialEq, Eq, Serialize)]
+#[serde(transparent)]
+pub struct Catalog {
+    entries: BTreeMap<String, LabelText>,
+    #[serde(skip)]
+    missing: Vec<String>,
+    #[serde(skip)]
+    digest: String,
+}
+
+impl Catalog {
+    /// Reads a key from the fixed built-in directory.
+    ///
+    /// # Panics
+    /// Panics when a caller uses a key absent from the built-in labels.
+    pub fn get(&self, key: &str) -> &LabelText {
+        &self.entries[key]
+    }
+
+    pub fn iter(&self) -> impl ExactSizeIterator<Item = (&str, &LabelText)> {
+        self.entries
+            .iter()
+            .map(|(key, value)| (key.as_str(), value))
+    }
+
+    pub fn keys(&self) -> impl ExactSizeIterator<Item = &str> {
+        self.entries.keys().map(String::as_str)
+    }
+
+    /// Third-language keys using English fallback; built-in languages have none.
+    pub fn missing_keys(&self) -> &[String] {
+        &self.missing
+    }
+
+    /// A deterministic digest of all keys, words and their actual languages.
+    pub fn digest(&self) -> &str {
+        &self.digest
+    }
+}
+
+/// Resolves overrides already validated by [`parse_messages`].
+pub fn resolve(lang: &str, overrides: &BTreeMap<String, String>) -> Catalog {
+    let (labels, foreign) = for_lang(lang);
+    let mut missing = Vec::new();
+    let entries: BTreeMap<_, _> = builtin_entries(labels)
+        .into_iter()
+        .map(|(key, builtin)| {
+            let value = if let Some(text) = overrides.get(&key) {
+                LabelText {
+                    text: text.clone(),
+                    lang: lang.to_owned(),
+                }
+            } else {
+                if foreign {
+                    missing.push(key.clone());
+                }
+                LabelText {
+                    text: builtin,
+                    lang: labels.lang.to_owned(),
+                }
+            };
+            (key, value)
+        })
+        .collect();
+    let mut hash = Sha256::new();
+    for (key, value) in &entries {
+        for part in [key.as_str(), value.text.as_str(), value.lang.as_str()] {
+            hash.update((part.len() as u64).to_le_bytes());
+            hash.update(part.as_bytes());
+        }
+    }
+    Catalog {
+        entries,
+        missing,
+        digest: format!("{:x}", hash.finalize()),
+    }
+}
+
+fn builtin_entries(labels: &Labels) -> BTreeMap<String, String> {
+    fn flatten(prefix: &str, value: serde_json::Value, entries: &mut BTreeMap<String, String>) {
+        match value {
+            serde_json::Value::String(text) => {
+                entries.insert(prefix.to_owned(), text);
+            }
+            serde_json::Value::Object(fields) => {
+                for (key, value) in fields {
+                    let key = if prefix.is_empty() {
+                        key
+                    } else {
+                        format!("{prefix}.{key}")
+                    };
+                    flatten(&key, value, entries);
+                }
+            }
+            _ => unreachable!("Labels only contain strings and nested label structs"),
+        }
+    }
+    let value = match serde_json::to_value(labels) {
+        Ok(value) => value,
+        Err(error) => unreachable!("Labels have no fallible serialization: {error}"),
+    };
+    let mut entries = BTreeMap::new();
+    flatten("", value, &mut entries);
+    entries
+}
+
+type RawMessages = BTreeMap<Spanned<String>, Spanned<MessageValue>>;
+
+enum MessageValue {
+    String(String),
+    Table(RawMessages),
+}
+
+impl<'de> Deserialize<'de> for MessageValue {
+    fn deserialize<D: Deserializer<'de>>(deserializer: D) -> Result<Self, D::Error> {
+        struct MessageVisitor;
+
+        impl<'de> Visitor<'de> for MessageVisitor {
+            type Value = MessageValue;
+
+            fn expecting(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
+                formatter.write_str("a message string or a table of message strings")
+            }
+
+            fn visit_str<E: serde::de::Error>(self, value: &str) -> Result<Self::Value, E> {
+                Ok(MessageValue::String(value.to_owned()))
+            }
+
+            fn visit_string<E: serde::de::Error>(self, value: String) -> Result<Self::Value, E> {
+                Ok(MessageValue::String(value))
+            }
+
+            fn visit_map<M: MapAccess<'de>>(self, mut map: M) -> Result<Self::Value, M::Error> {
+                let mut values = BTreeMap::new();
+                while let Some((key, value)) = map.next_entry()? {
+                    values.insert(key, value);
+                }
+                Ok(MessageValue::Table(values))
+            }
+        }
+
+        deserializer.deserialize_any(MessageVisitor)
+    }
+}
+
+/// Reads project messages, keeping each invalid key or value's original span.
+pub fn parse_messages(text: &str) -> Result<BTreeMap<String, String>, Vec<Issue>> {
+    let raw: RawMessages = toml::from_str(text).map_err(|error| {
+        vec![Issue::error(
+            error.span().unwrap_or(0..0),
+            "i18n-messages",
+            literal(error.message()),
+        )]
+    })?;
+    let mut entries = BTreeMap::new();
+    let mut issues = Vec::new();
+    flatten_messages("", raw, &builtin_entries(&EN), &mut entries, &mut issues);
+    if issues.is_empty() {
+        Ok(entries)
+    } else {
+        Err(issues)
+    }
+}
+
+fn flatten_messages(
+    prefix: &str,
+    raw: RawMessages,
+    builtins: &BTreeMap<String, String>,
+    entries: &mut BTreeMap<String, String>,
+    issues: &mut Vec<Issue>,
+) {
+    for (key, value) in raw {
+        let full = if prefix.is_empty() {
+            key.get_ref().clone()
+        } else {
+            format!("{prefix}.{}", key.get_ref())
+        };
+        let span = value.span();
+        let namespace = format!("{full}.");
+        let value = match value.into_inner() {
+            MessageValue::Table(table)
+                if builtins.keys().any(|key| key.starts_with(&namespace)) =>
+            {
+                flatten_messages(&full, table, builtins, entries, issues);
+                continue;
+            }
+            value => value,
+        };
+        let Some(builtin) = builtins.get(&full) else {
+            issues.push(Issue::error(
+                key.span(),
+                "i18n-messages",
+                format!("unknown message key {}", code_span(&full)),
+            ));
+            continue;
+        };
+        let MessageValue::String(text) = value else {
+            issues.push(Issue::error(
+                span,
+                "i18n-messages",
+                format!("message {} must be a string", code_span(&full)),
+            ));
+            continue;
+        };
+        if text
+            .chars()
+            .any(|ch| ch.is_control() && !matches!(ch, '\n' | '\r' | '\t'))
+        {
+            issues.push(Issue::error(
+                span,
+                "i18n-messages",
+                format!("message {} contains a control character", code_span(&full)),
+            ));
+        } else if placeholders(&text) != placeholders(builtin) {
+            issues.push(
+                Issue::error(
+                    span,
+                    "i18n-messages",
+                    format!(
+                        "message {} must keep the built-in format placeholders",
+                        code_span(&full)
+                    ),
+                )
+                .suggest(format!(
+                    "preserve the placeholders in {}",
+                    code_span(builtin)
+                )),
+            );
+        } else if entries.insert(full.clone(), text).is_some() {
+            issues.push(Issue::error(
+                key.span(),
+                "i18n-messages",
+                format!("message {} is declared more than once", code_span(&full)),
+            ));
+        }
+    }
+}
+
+fn placeholders(mut text: &str) -> BTreeMap<&str, usize> {
+    let mut names = BTreeMap::new();
+    while let Some(start) = text.find('{') {
+        text = &text[start + 1..];
+        let Some(end) = text.find('}') else { break };
+        *names.entry(&text[..end]).or_default() += 1;
+        text = &text[end + 1..];
+    }
+    names
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
+    use std::collections::BTreeMap;
 
     #[test]
     fn primary_subtag_picks_the_language() {
@@ -251,5 +531,161 @@ mod tests {
         assert_eq!(pick("en-GB"), ("en", false));
         assert_eq!(pick("EN"), ("en", false));
         assert_eq!(pick("fr"), ("en", true));
+    }
+
+    #[test]
+    fn builtin_catalogs_allow_partial_overrides() {
+        let overrides = BTreeMap::from([("copy".into(), "拷貝".into())]);
+        let catalog = resolve("ZH-Hant", &overrides);
+        assert_eq!(
+            catalog.get("copy"),
+            &LabelText {
+                text: "拷貝".into(),
+                lang: "ZH-Hant".into()
+            }
+        );
+        assert_eq!(catalog.get("tip").text, ZH.tip);
+        assert_eq!(catalog.get("tip").lang, "zh");
+        assert!(catalog.missing_keys().is_empty());
+    }
+
+    #[test]
+    fn third_languages_keep_each_strings_actual_language() {
+        let overrides = BTreeMap::from([("copy".into(), "Copier".into())]);
+        let catalog = resolve("fr-CA", &overrides);
+        assert_eq!(
+            catalog.get("copy"),
+            &LabelText {
+                text: "Copier".into(),
+                lang: "fr-CA".into()
+            }
+        );
+        assert_eq!(
+            catalog.get("tip"),
+            &LabelText {
+                text: EN.tip.into(),
+                lang: "en".into()
+            }
+        );
+        assert!(!catalog.missing_keys().iter().any(|key| key == "copy"));
+        assert_eq!(catalog.missing_keys().len(), catalog.keys().count() - 1);
+    }
+
+    #[test]
+    fn catalog_keys_come_from_the_label_fields() {
+        let catalog = resolve("en", &BTreeMap::new());
+        let keys: Vec<_> = catalog.keys().collect();
+        assert!(keys.contains(&"language"));
+        assert!(keys.contains(&"untranslated"));
+        assert!(keys.contains(&"available_languages"));
+        assert!(keys.contains(&"demo.loading"));
+        assert!(keys.contains(&"dev.error_one"));
+        assert!(!keys.contains(&"lang"));
+        assert_eq!(catalog.get("demo.loading").text, EN.demo.loading);
+    }
+
+    #[test]
+    fn catalog_digest_depends_on_words_and_their_languages() {
+        let base = resolve("en", &BTreeMap::new());
+        let same = resolve("fr", &BTreeMap::new());
+        let translated = resolve("fr", &BTreeMap::from([("copy".into(), EN.copy.into())]));
+        let changed = resolve("en", &BTreeMap::from([("copy".into(), "Copy code".into())]));
+        assert_eq!(base.digest(), same.digest());
+        assert_ne!(base.digest(), translated.digest());
+        assert_ne!(base.digest(), changed.digest());
+    }
+
+    #[test]
+    fn messages_accept_root_dotted_and_nested_strings() {
+        let messages = parse_messages("note = 'Remarque'\n\"demo.loading\" = 'Chargement…'\n[dev]\nerror_one = '{n} erreur'\n").unwrap();
+        assert_eq!(
+            messages,
+            BTreeMap::from([
+                ("note".into(), "Remarque".into()),
+                ("demo.loading".into(), "Chargement…".into()),
+                ("dev.error_one".into(), "{n} erreur".into()),
+            ])
+        );
+    }
+
+    #[test]
+    fn messages_preserve_normal_newlines_and_plain_text() {
+        let messages =
+            parse_messages("note = \"\"\"First line\n<strong>second</strong>\"\"\"\n").unwrap();
+        assert_eq!(messages["note"], "First line\n<strong>second</strong>");
+    }
+
+    #[test]
+    fn unknown_message_keys_keep_the_source_key_span() {
+        let text = "[demo]\nunknown = 'no'\n";
+        let issues = parse_messages(text).unwrap_err();
+        assert_eq!(issues.len(), 1);
+        assert_eq!(issues[0].rule, "i18n-messages");
+        assert_eq!(&text[issues[0].span.clone()], "unknown");
+    }
+
+    #[test]
+    fn non_string_messages_keep_the_source_value_span() {
+        let text = "[demo]\nloading = 42\n";
+        let issues = parse_messages(text).unwrap_err();
+        assert_eq!(issues.len(), 1);
+        assert_eq!(issues[0].rule, "i18n-messages");
+        assert_eq!(&text[issues[0].span.clone()], "42");
+    }
+
+    #[test]
+    fn all_non_string_toml_values_are_message_errors() {
+        for value in ["true", "1.5", "[1, 2]", "{ nested = 'text' }", "2026-10-15"] {
+            let text = format!("note = {value}\n");
+            let issues = parse_messages(&text).unwrap_err();
+            assert_eq!(issues.len(), 1, "{value}: {issues:?}");
+            assert_eq!(issues[0].rule, "i18n-messages", "{value}");
+            assert_eq!(&text[issues[0].span.clone()], value, "{value}");
+        }
+    }
+
+    #[test]
+    fn unknown_empty_message_tables_are_errors() {
+        let text = "[unknown]\n";
+        let issues = parse_messages(text).unwrap_err();
+        assert_eq!(issues[0].rule, "i18n-messages");
+        assert_eq!(&text[issues[0].span.clone()], "unknown");
+    }
+
+    #[test]
+    fn message_control_characters_keep_the_source_value_span() {
+        let text = "note = \"bad\\u0007text\"\n";
+        let issues = parse_messages(text).unwrap_err();
+        assert_eq!(issues.len(), 1);
+        assert_eq!(issues[0].rule, "i18n-messages");
+        assert_eq!(&text[issues[0].span.clone()], "\"bad\\u0007text\"");
+    }
+
+    #[test]
+    fn missing_message_placeholders_are_errors() {
+        let text = "[dev]\nerror_one = 'erreur'\n";
+        let issues = parse_messages(text).unwrap_err();
+        assert_eq!(issues[0].rule, "i18n-messages");
+        assert_eq!(&text[issues[0].span.clone()], "'erreur'");
+    }
+
+    #[test]
+    fn added_message_placeholders_are_errors() {
+        let issues = parse_messages("copy = 'Copier {n}'\n").unwrap_err();
+        assert_eq!(issues[0].rule, "i18n-messages");
+    }
+
+    #[test]
+    fn duplicate_message_keys_are_errors() {
+        let issues = parse_messages("copy = 'Copier'\ncopy = 'Encore'\n").unwrap_err();
+        assert_eq!(issues[0].rule, "i18n-messages");
+        assert!(issues[0].span.start > 0);
+    }
+
+    #[test]
+    fn flat_and_nested_aliases_cannot_repeat_a_message() {
+        let issues = parse_messages("\"demo.loading\" = 'Premier'\n[demo]\nloading = 'Deuxième'\n")
+            .unwrap_err();
+        assert_eq!(issues[0].rule, "i18n-messages");
     }
 }

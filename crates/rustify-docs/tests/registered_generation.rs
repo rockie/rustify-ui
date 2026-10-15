@@ -80,6 +80,7 @@ impl Drop for Fixture {
 
 fn page(name: &str, route: &str, title: &str, html: &str) -> RegisteredPage {
     RegisteredPage {
+        lang: None,
         name: name.into(),
         route: route.into(),
         title: title.into(),

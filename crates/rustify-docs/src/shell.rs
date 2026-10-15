@@ -9,9 +9,10 @@
 use leptos::prelude::*;
 use leptos::tachys::html::attribute::custom::CustomAttribute;
 use std::collections::{BTreeMap, BTreeSet};
+use std::sync::Arc;
 
 use crate::escape::escape_html_into;
-use crate::labels::{self, Labels};
+use crate::labels::{Catalog, LabelText};
 use crate::markdown::Heading;
 use crate::site::Slot;
 
@@ -55,6 +56,7 @@ pub struct NavItem {
     /// The page's route, relative to the site's base: `/guide/setup/`.
     pub route: String,
     pub draft: bool,
+    pub lang: String,
 }
 
 /// A titled group of sidebar entries, shown on the pages under `prefix`.
@@ -63,6 +65,7 @@ pub struct NavGroup {
     pub label: String,
     pub prefix: String,
     pub items: Vec<NavItem>,
+    pub lang: String,
 }
 
 /// Where `dev` serves what it adds to every page: the problem panel's
@@ -84,6 +87,7 @@ pub struct HeaderLink {
     pub route: Option<String>,
     /// Another site's address, which gets `rel="noopener"`.
     pub external: bool,
+    pub lang: String,
 }
 
 /// Where a build put the shared files, already joined with the base.
@@ -102,6 +106,8 @@ pub struct AssetUrls {
 pub struct Site {
     pub name: String,
     pub lang: String,
+    pub home_route: String,
+    pub catalog: Arc<Catalog>,
     /// `/` or `/segments/`.
     pub base: String,
     pub nav: Vec<NavGroup>,
@@ -168,16 +174,35 @@ pub struct Meta<'a> {
     pub updated: Option<&'a str>,
     /// Where the page's source can be edited.
     pub edit_url: Option<&'a str>,
+    pub alternates: &'a [AlternateLink],
+}
+
+#[derive(Clone, Debug)]
+pub struct AlternateLink {
+    pub lang: String,
+    pub href: String,
+}
+
+#[derive(Clone, Debug)]
+pub struct LanguageLink {
+    pub lang: String,
+    pub label: String,
+    pub href: String,
+    pub is_fallback: bool,
+    pub fallback_label: LabelText,
+    pub anchors: Vec<String>,
 }
 
 /// One page to render.
 pub struct Page<'a> {
     pub route: &'a str,
-    /// The document's `<title>`, unique across the site.
+    /// The document's `<title>`, unique within its configured language.
     pub document_title: &'a str,
     pub title: &'a str,
     pub description: Option<&'a str>,
     pub lang: &'a str,
+    pub source_lang: &'a str,
+    pub language_links: &'a [LanguageLink],
     pub draft: bool,
     /// The article's HTML, with every URL already resolved.
     pub article: &'a str,
@@ -215,28 +240,72 @@ pub fn render_not_found(site: &Site) -> String {
 
 /// Renders a not-found page with the same overrides as ordinary pages.
 pub fn render_not_found_with_slots(site: &Site, slots: &LayoutSlots) -> String {
-    let (labels, _) = labels::for_lang(&site.lang);
-    let mut article = String::from("<p>");
-    crate::escape::escape_html_into(&mut article, labels.not_found_body);
+    render_not_found_with_languages(site, slots, &[])
+}
+
+/// An error document with ordinary links to each configured language's home.
+pub fn render_not_found_with_languages(
+    site: &Site,
+    slots: &LayoutSlots,
+    homes: &[LanguageLink],
+) -> String {
+    let labels = &site.catalog;
+    let mut article = format!(
+        "<p lang=\"{}\">",
+        crate::escape::escape_html(&labels.get("not_found_body").lang)
+    );
+    crate::escape::escape_html_into(&mut article, &labels.get("not_found_body").text);
     article.push_str("</p>\n<p><a href=\"");
-    crate::escape::escape_html_into(&mut article, &site.url("/"));
+    crate::escape::escape_html_into(&mut article, &site.url(&site.home_route));
+    article.push_str("\" lang=\"");
+    crate::escape::escape_html_into(&mut article, &labels.get("back_home").lang);
     article.push_str("\">");
-    crate::escape::escape_html_into(&mut article, labels.back_home);
+    crate::escape::escape_html_into(&mut article, &labels.get("back_home").text);
     article.push_str("</a></p>\n");
-    let document_title = format!("{} | {}", labels.not_found_title, site.name);
+    let document_title = format!(
+        "{} | {}",
+        labels.get("not_found_title").text.clone(),
+        site.name
+    );
     let article = slots
         .get(&Slot::NotFound)
         .map_or(article.as_str(), String::as_str);
+    let mut article = article.to_owned();
+    if !homes.is_empty() {
+        let label = labels.get("available_languages");
+        article.push_str("<nav class=\"rd-available-languages\" aria-label=\"");
+        escape_html_into(&mut article, &label.text);
+        article.push_str("\" lang=\"");
+        escape_html_into(&mut article, &label.lang);
+        article.push_str("\"><p>");
+        escape_html_into(&mut article, &label.text);
+        article.push_str("</p><ul>");
+        for home in homes {
+            article.push_str("<li><a href=\"");
+            escape_html_into(&mut article, &home.href);
+            article.push_str("\" hreflang=\"");
+            escape_html_into(&mut article, &home.lang);
+            article.push_str("\" lang=\"");
+            escape_html_into(&mut article, &home.lang);
+            article.push_str("\">");
+            escape_html_into(&mut article, &home.label);
+            article.push_str("</a></li>");
+        }
+        article.push_str("</ul></nav>");
+    }
+    let route = format!("{}404/", site.home_route);
     render_page_with_slots(
         site,
         &Page {
-            route: "/404/",
+            route: &route,
             document_title: &document_title,
-            title: labels.not_found_title,
-            description: Some(labels.not_found_body),
+            title: &labels.get("not_found_title").text,
+            description: Some(&labels.get("not_found_body").text),
             lang: &site.lang,
+            source_lang: &labels.get("not_found_title").lang,
+            language_links: &[],
             draft: false,
-            article,
+            article: &article,
             headings: &[],
             article_has_h1: false,
             toc_levels: (2, 3),
@@ -259,13 +328,26 @@ pub fn render_dev_shell(site: &Site) -> String {
 
 /// The same static shell while the first build is still running.
 pub fn render_dev_shell_with_status(site: &Site, building: bool) -> String {
-    let (labels, _) = labels::for_lang(&site.lang);
+    let labels = &site.catalog;
     let (title, body) = if building {
-        (labels.dev.building_title, labels.dev.building_body)
+        (
+            labels.get("dev.building_title").text.as_str(),
+            labels.get("dev.building_body").text.as_str(),
+        )
     } else {
-        (labels.dev.shell_title, labels.dev.shell_body)
+        (
+            labels.get("dev.shell_title").text.as_str(),
+            labels.get("dev.shell_body").text.as_str(),
+        )
     };
-    let mut article = String::from("<p>");
+    let body_lang = &labels
+        .get(if building {
+            "dev.building_body"
+        } else {
+            "dev.shell_body"
+        })
+        .lang;
+    let mut article = format!("<p lang=\"{}\">", crate::escape::escape_html(body_lang));
     crate::escape::escape_html_into(&mut article, body);
     article.push_str("</p>\n");
     let document_title = format!("{} | {}", title, site.name);
@@ -277,6 +359,14 @@ pub fn render_dev_shell_with_status(site: &Site, building: bool) -> String {
             title,
             description: Some(body),
             lang: &site.lang,
+            source_lang: &labels
+                .get(if building {
+                    "dev.building_title"
+                } else {
+                    "dev.shell_title"
+                })
+                .lang,
+            language_links: &[],
             draft: false,
             article: &article,
             headings: &[],
@@ -310,7 +400,14 @@ pub fn render_page_with_slots(site: &Site, page: &Page, slots: &LayoutSlots) -> 
     // static page, and author text cannot produce one here: the renderer
     // escapes every `<` it writes as text.
     let shell = shell.replace("<!>", "");
-    let mut replacements = vec![(ARTICLE, page.article)];
+    let mut article = std::borrow::Cow::Borrowed(page.article);
+    if is_fallback(page) && page.article_has_h1 {
+        if let Some(cut) = crate::html_check::leading_h1_end(page.article) {
+            let note = fallback_notice(&site.catalog).to_html().replace("<!>", "");
+            article.to_mut().insert_str(cut, &note);
+        }
+    }
+    let mut replacements = vec![(ARTICLE, article.as_ref())];
     replacements.extend(
         slots
             .iter()
@@ -363,8 +460,7 @@ fn main_id(page: &Page, slots: &LayoutSlots) -> String {
 }
 
 fn page_view(site: &Site, page: &Page, slots: &LayoutSlots) -> impl IntoView {
-    let (labels, foreign) = labels::for_lang(page.lang);
-    let ui_lang = foreign.then_some(labels.lang);
+    let labels = &site.catalog;
     let document_title = page.document_title.to_owned();
     let description = page.description.unwrap_or_default().to_owned();
     let meta = page.meta;
@@ -384,8 +480,8 @@ fn page_view(site: &Site, page: &Page, slots: &LayoutSlots) -> impl IntoView {
         .collect();
     let main_id = main_id(page, slots);
     let body = match &page.home {
-        Some(home) => home_layout(page, home, labels, ui_lang, slots, &main_id).into_any(),
-        None => doc_layout(site, page, &toc, labels, ui_lang, slots, &main_id).into_any(),
+        Some(home) => home_layout(page, home, labels, slots, &main_id).into_any(),
+        None => doc_layout(site, page, &toc, labels, slots, &main_id).into_any(),
     };
     view! {
         <html lang=page.lang.to_owned() data-rustify-scope="" data-theme="system" data-rd-base=site.base.clone()>
@@ -398,6 +494,9 @@ fn page_view(site: &Site, page: &Page, slots: &LayoutSlots) -> impl IntoView {
                 <meta name="description" content=description.clone() />
                 {meta.noindex.then(|| view! { <meta name="robots" content="noindex" /> })}
                 {meta.canonical.map(|url| view! { <link rel="canonical" href=url.to_owned() /> })}
+                {meta.alternates.iter().map(|link| view! {
+                    <link rel="alternate" hreflang=link.lang.clone() href=link.href.clone() />
+                }).collect_view()}
                 {open_graph("og:type", if meta.home { "website" } else { "article" }.to_owned())}
                 {open_graph("og:site_name", site.name.clone())}
                 {open_graph("og:title", page.title.to_owned())}
@@ -413,9 +512,12 @@ fn page_view(site: &Site, page: &Page, slots: &LayoutSlots) -> impl IntoView {
                 <script src=site.assets.mode_script.clone()></script>
                 <script src=site.assets.site_script.clone() defer=""></script>
                 {site.assets.dev.then(|| {
-                    let words = serde_json::to_string(&labels.dev).unwrap_or_default();
+                    let words: BTreeMap<_, _> = labels.iter().filter_map(|(key, value)| key.strip_prefix("dev.").map(|key| (key, &value.text))).collect();
+                    let languages: BTreeMap<_, _> = labels.iter().filter_map(|(key, value)| key.strip_prefix("dev.").map(|key| (key, &value.lang))).collect();
+                    let words = serde_json::to_string(&words).unwrap_or_default();
+                    let languages = serde_json::to_string(&languages).unwrap_or_default();
                     view! {
-                        <script src=DEV_SCRIPT_URL defer="" data-labels=words data-lang=ui_lang.unwrap_or(page.lang).to_owned()></script>
+                        <script src=DEV_SCRIPT_URL defer="" data-labels=words data-lang=page.lang.to_owned() data-label-langs=languages></script>
                     }
                 })}
             </head>
@@ -423,18 +525,18 @@ fn page_view(site: &Site, page: &Page, slots: &LayoutSlots) -> impl IntoView {
                 <a
                     href=format!("#{main_id}")
                     class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50 focus:rounded-md focus:bg-background focus:px-3 focus:py-2"
-                    lang=ui_lang
+                    lang=labels.get("skip_to_content").lang.clone()
                 >
-                    {labels.skip_to_content}
+                    {labels.get("skip_to_content").text.clone()}
                 </a>
-                {header(site, page.route, labels, ui_lang, slots)}
+                {header(site, page, labels, slots)}
                 {body}
                 <footer class="rd-site-footer mx-auto max-w-[76rem] px-4 md:px-6">
                     {if slots.contains_key(&Slot::Footer) {
                         view! { <div inner_html=slot_marker(Slot::Footer)></div> }.into_any()
                     } else {
-                        view! { <nav aria-label=labels.footer_links lang=ui_lang>
-                            <a href=site.url("/")>{labels.back_home}</a>
+                        view! { <nav aria-label=labels.get("footer_links").text.clone() lang=labels.get("footer_links").lang.clone()>
+                            <a href=site.url(&site.home_route) lang=labels.get("back_home").lang.clone()>{labels.get("back_home").text.clone()}</a>
                         </nav> }.into_any()
                     }}
                 </footer>
@@ -442,14 +544,63 @@ fn page_view(site: &Site, page: &Page, slots: &LayoutSlots) -> impl IntoView {
                     id="rd-status"
                     class="sr-only"
                     aria-live="polite"
-                    data-copied=labels.copied
-                    data-copy-failed=labels.copy_failed
-                    data-copy-failed-short=labels.copy_failed_short
-                    lang=ui_lang
+                    data-copied=labels.get("copied").text.clone()
+                    data-copy-failed=labels.get("copy_failed").text.clone()
+                    data-copy-failed-short=labels.get("copy_failed_short").text.clone()
+                    data-copied-lang=labels.get("copied").lang.clone()
+                    data-copy-failed-lang=labels.get("copy_failed").lang.clone()
+                    data-copy-failed-short-lang=labels.get("copy_failed_short").lang.clone()
+                    lang=page.lang.to_owned()
                 ></p>
             </body>
         </html>
     }
+}
+
+fn fallback_note(page: &Page, labels: &Catalog) -> Option<impl IntoView> {
+    (is_fallback(page)
+        && !(page.article_has_h1 && crate::html_check::leading_h1_end(page.article).is_some()))
+    .then(|| fallback_notice(labels))
+}
+
+fn is_fallback(page: &Page) -> bool {
+    page.language_links
+        .iter()
+        .any(|link| link.lang == page.lang && link.is_fallback)
+}
+
+fn fallback_notice(labels: &Catalog) -> impl IntoView {
+    view! {
+        <p class="rd-untranslated" role="note" lang=labels.get("untranslated").lang.clone()>
+            {labels.get("untranslated").text.clone()}
+        </p>
+    }
+}
+
+fn language_switcher(page: &Page, labels: &Catalog) -> Option<impl IntoView> {
+    let current = page
+        .language_links
+        .iter()
+        .find(|link| link.lang == page.lang)?;
+    (page.language_links.len() > 1).then(|| view! {
+        <details class="rd-language-switch" data-rd-language-switch="">
+            <summary lang=current.lang.clone()>{current.label.clone()}</summary>
+            <nav aria-label=labels.get("language").text.clone() lang=labels.get("language").lang.clone()><ul>
+                {page.language_links.iter().map(|link| view! {
+                    <li><a href=link.href.clone() hreflang=link.lang.clone() lang=link.lang.clone()
+                        aria-current=(link.lang == page.lang).then_some("page")
+                        data-rd-language-anchors=serde_json::to_string(&link.anchors).unwrap_or_default()>
+                        {link.label.clone()}
+                        {link.is_fallback.then(|| view! {
+                            <span class="rd-language-fallback" lang=link.fallback_label.lang.clone()>
+                                " · "{link.fallback_label.text.clone()}
+                            </span>
+                        })}
+                    </a></li>
+                }).collect_view()}
+            </ul></nav>
+        </details>
+    })
 }
 
 /// A content page: the sidebar, the table of contents and the article with
@@ -458,8 +609,7 @@ fn doc_layout(
     site: &Site,
     page: &Page,
     toc: &[&Heading],
-    labels: &'static Labels,
-    ui_lang: Option<&'static str>,
+    labels: &Catalog,
     slots: &LayoutSlots,
     main_id: &str,
 ) -> impl IntoView {
@@ -468,19 +618,20 @@ fn doc_layout(
     let heading = (!page.article_has_h1).then(|| page.title.to_owned());
     view! {
         <div class="rd-layout mx-auto grid max-w-[76rem] gap-x-10 px-4 md:px-6">
-            {sidebar(site, page.route, labels, ui_lang, slots)}
-            {table_of_contents(toc, labels, ui_lang)}
+            {sidebar(site, page.route, labels, slots)}
+            {table_of_contents(toc, page.source_lang, labels)}
             <main id=main_id.to_owned() class="rd-main min-w-0 py-8 md:py-12">
                 <div class="rd-column">
                     {page.draft.then(|| view! {
-                        <p class="rd-draft" lang=ui_lang>{labels.draft}</p>
+                        <p class="rd-draft" lang=labels.get("draft").lang.clone()>{labels.get("draft").text.clone()}</p>
                     })}
-                    {heading.map(|title| view! { <h1 class="rd-title">{title}</h1> })}
+                    {heading.map(|title| view! { <h1 class="rd-title" lang=page.source_lang.to_owned()>{title}</h1> })}
+                    {fallback_note(page, labels)}
                     {slot_view(Slot::BeforeContent, slots)}
-                    <article class="rd-prose" inner_html=ARTICLE></article>
+                    <article class="rd-prose" lang=page.source_lang.to_owned() inner_html=ARTICLE></article>
                     {slot_view(Slot::AfterContent, slots)}
-                    {page_footer(page.meta, labels, ui_lang)}
-                    {pager(site, previous, next, labels, ui_lang)}
+                    {page_footer(page.meta, labels)}
+                    {pager(site, previous, next, labels)}
                 </div>
             </main>
         </div>
@@ -492,8 +643,7 @@ fn doc_layout(
 fn home_layout(
     page: &Page,
     home: &Home,
-    labels: &'static Labels,
-    ui_lang: Option<&'static str>,
+    labels: &Catalog,
     slots: &LayoutSlots,
     main_id: &str,
 ) -> impl IntoView {
@@ -501,8 +651,9 @@ fn home_layout(
         return view! {
             <main id=main_id.to_owned() class="rd-home mx-auto max-w-[76rem] px-4 md:px-6">
                 {slot_view(Slot::BeforeContent, slots)}
-                {(!page.article_has_h1).then(|| view! { <h1 class="rd-home-title">{page.title.to_owned()}</h1> })}
-                <div inner_html=ARTICLE></div>
+                {(!page.article_has_h1).then(|| view! { <h1 class="rd-home-title" lang=page.source_lang.to_owned()>{page.title.to_owned()}</h1> })}
+                {fallback_note(page, labels)}
+                <div lang=page.source_lang.to_owned() inner_html=ARTICLE></div>
                 {slot_view(Slot::AfterContent, slots)}
             </main>
         }.into_any();
@@ -517,7 +668,7 @@ fn home_layout(
             } else {
                 "rd-action rd-action-secondary"
             };
-            view! { <a href=url.clone() class=class lang=ui_lang.map(|_| page.lang.to_owned())>{text.to_string()}</a> }
+            view! { <a href=url.clone() class=class lang=page.source_lang.to_owned()>{text.to_string()}</a> }
         })
         .collect_view();
     let features = (!home.features.is_empty()).then(|| {
@@ -540,18 +691,19 @@ fn home_layout(
             2 | 4 => "2",
             _ => "3",
         };
-        view! { <ul class="rd-features" data-columns=columns>{items}</ul> }
+        view! { <ul class="rd-features" data-columns=columns lang=page.source_lang.to_owned()>{items}</ul> }
     });
     view! {
         <main id=main_id.to_owned() class="rd-home mx-auto max-w-[76rem] px-4 md:px-6">
-            <div class="rd-hero">
-                <h1 class="rd-home-title" id=home.heading_id.map(str::to_owned)>{page.title.to_owned()}</h1>
+            <div class="rd-hero" lang=page.source_lang.to_owned()>
+                <h1 class="rd-home-title" lang=page.source_lang.to_owned() id=home.heading_id.map(str::to_owned)>{page.title.to_owned()}</h1>
                 {home.tagline.map(|tagline| view! { <p class="rd-tagline">{tagline.to_owned()}</p> })}
-                {(!home.actions.is_empty()).then(|| view! { <nav class="rd-actions" aria-label=labels.start_reading lang=ui_lang>{actions}</nav> })}
+                {(!home.actions.is_empty()).then(|| view! { <nav class="rd-actions" aria-label=labels.get("start_reading").text.clone() lang=labels.get("start_reading").lang.clone()>{actions}</nav> })}
             </div>
+            {fallback_note(page, labels)}
             {features}
             {slot_view(Slot::BeforeContent, slots)}
-            <article class="rd-prose rd-home-prose" inner_html=ARTICLE></article>
+            <article class="rd-prose rd-home-prose" lang=page.source_lang.to_owned() inner_html=ARTICLE></article>
             {slot_view(Slot::AfterContent, slots)}
         </main>
     }.into_any()
@@ -580,10 +732,12 @@ fn header_entries(site: &Site, route: &str) -> String {
         for link in links {
             html.push_str("<li><a href=\"");
             escape_html_into(&mut html, &link.url);
+            html.push_str("\" lang=\"");
+            escape_html_into(&mut html, &link.lang);
             html.push('"');
             match link.route.as_deref() {
                 Some(target) if target == route => html.push_str(" aria-current=\"page\""),
-                Some(target) if target != "/" && route.starts_with(target) => {
+                Some(target) if target != site.home_route && route.starts_with(target) => {
                     html.push_str(" aria-current=\"true\"")
                 }
                 _ => {}
@@ -603,21 +757,16 @@ fn header_entries(site: &Site, route: &str) -> String {
 /// The header bar, and the configuration's links: in the bar from 768 px,
 /// and below that in a row of their own under it (one of the two is always
 /// `display: none`), so a narrow screen never scrolls sideways for them.
-fn header(
-    site: &Site,
-    route: &str,
-    labels: &'static Labels,
-    ui_lang: Option<&'static str>,
-    slots: &LayoutSlots,
-) -> impl IntoView {
-    let at_home = route == "/";
+fn header(site: &Site, page: &Page, labels: &Catalog, slots: &LayoutSlots) -> impl IntoView {
+    let route = page.route;
+    let at_home = route == site.home_route;
     let name = site.name.clone();
     let entries = header_entries(site, route);
     let links = (!entries.is_empty()).then(|| {
-        view! { <nav class="rd-header-nav rd-header-nav-wide" aria-label=labels.site_links lang=ui_lang inner_html=entries.clone()></nav> }
+        view! { <nav class="rd-header-nav rd-header-nav-wide" aria-label=labels.get("site_links").text.clone() lang=labels.get("site_links").lang.clone() inner_html=entries.clone()></nav> }
     });
     let narrow = (!entries.is_empty()).then(|| {
-        view! { <nav class="rd-header-nav rd-header-nav-narrow" aria-label=labels.site_links lang=ui_lang inner_html=entries></nav> }
+        view! { <nav class="rd-header-nav rd-header-nav-narrow" aria-label=labels.get("site_links").text.clone() lang=labels.get("site_links").lang.clone() inner_html=entries></nav> }
     });
     // The name says what the logo shows, so the logo is decoration. A pair
     // switches with the mode through CSS, with or without script.
@@ -635,17 +784,18 @@ fn header(
     });
     view! {
         <header class="sticky top-0 z-40 border-b border-secondary bg-background">
-            <div class="mx-auto flex h-14 max-w-[76rem] items-center gap-4 px-4 md:px-6">
+            <div class="rd-header-bar mx-auto flex max-w-[76rem] items-center gap-4 px-4 md:px-6">
                 {if slots.contains_key(&Slot::Header) {
                     view! { <div class="rd-brand" inner_html=slot_marker(Slot::Header)></div> }.into_any()
                 } else {
-                    view! { <a href=site.url("/") class="rd-brand" aria-current=at_home.then_some("page")>{logo}<span>{name}</span></a> }.into_any()
+                    view! { <a href=site.url(&site.home_route) class="rd-brand" aria-current=at_home.then_some("page")>{logo}<span>{name}</span></a> }.into_any()
                 }}
                 {links}
-                <div class="rd-mode-switch" data-rd-mode-switch="" hidden="" role="group" aria-label=labels.theme lang=ui_lang>
-                    {mode_button("system", labels.theme_system)}
-                    {mode_button("light", labels.theme_light)}
-                    {mode_button("dark", labels.theme_dark)}
+                {language_switcher(page, labels)}
+                <div class="rd-mode-switch" data-rd-mode-switch="" hidden="" role="group" aria-label=labels.get("theme").text.clone() lang=labels.get("theme").lang.clone()>
+                    {mode_button("system", labels.get("theme_system"))}
+                    {mode_button("light", labels.get("theme_light"))}
+                    {mode_button("dark", labels.get("theme_dark"))}
                 </div>
             </div>
         </header>
@@ -653,11 +803,11 @@ fn header(
     }
 }
 
-fn mode_button(mode: &'static str, label: &'static str) -> impl IntoView {
+fn mode_button(mode: &'static str, label: &LabelText) -> impl IntoView {
     view! {
-        <button type="button" class="rd-mode-option" data-rd-mode=mode aria-pressed="false">
+        <button type="button" class="rd-mode-option" data-rd-mode=mode aria-pressed="false" lang=label.lang.clone()>
             <span class="rd-mode-icon" inner_html=crate::icons::mode(mode)></span>
-            <span class="rd-mode-label">{label}</span>
+            <span class="rd-mode-label">{label.text.clone()}</span>
         </button>
     }
 }
@@ -665,15 +815,19 @@ fn mode_button(mode: &'static str, label: &'static str) -> impl IntoView {
 /// The sidebar's entries as HTML: hundreds on every page of a large site,
 /// each a bare link styled by one `.rd-nav` rule instead of a class list
 /// repeated per entry, written once and placed in both navigations.
-fn sidebar_entries(site: &Site, route: &str, labels: &'static Labels) -> String {
+fn sidebar_entries(site: &Site, route: &str, labels: &Catalog) -> String {
     let mut html = String::new();
     for group in site.groups_for(route) {
-        html.push_str("<section><h2>");
+        html.push_str("<section><h2 lang=\"");
+        escape_html_into(&mut html, &group.lang);
+        html.push_str("\">");
         escape_html_into(&mut html, &group.label);
         html.push_str("</h2><ul>");
         for item in &group.items {
             html.push_str("<li><a href=\"");
             escape_html_into(&mut html, &site.url(&item.route));
+            html.push_str("\" lang=\"");
+            escape_html_into(&mut html, &item.lang);
             html.push('"');
             if item.route == route {
                 html.push_str(" aria-current=\"page\"");
@@ -681,8 +835,11 @@ fn sidebar_entries(site: &Site, route: &str, labels: &'static Labels) -> String 
             html.push('>');
             escape_html_into(&mut html, &item.title);
             if item.draft {
-                html.push_str(" · ");
-                html.push_str(labels.draft);
+                html.push_str("<span lang=\"");
+                escape_html_into(&mut html, &labels.get("draft").lang);
+                html.push_str("\"> · ");
+                escape_html_into(&mut html, &labels.get("draft").text);
+                html.push_str("</span>");
             }
             html.push_str("</a></li>");
         }
@@ -697,21 +854,15 @@ fn sidebar_entries(site: &Site, route: &str, labels: &'static Labels) -> String 
 /// `display: none`, so focus and assistive technology meet one navigation.
 /// (A closed <details> shown by CSS alone is not in WebKit's accessibility
 /// tree, so the wide column cannot be one.)
-fn sidebar(
-    site: &Site,
-    route: &str,
-    labels: &'static Labels,
-    ui_lang: Option<&'static str>,
-    slots: &LayoutSlots,
-) -> impl IntoView {
+fn sidebar(site: &Site, route: &str, labels: &Catalog, slots: &LayoutSlots) -> impl IntoView {
     let entries = sidebar_entries(site, route, labels);
     view! {
         <div class="rd-sidebar">
             {slot_view(Slot::SidebarTop, slots)}
-            <nav class="rd-nav rd-sidebar-wide" aria-label=labels.menu lang=ui_lang inner_html=entries.clone()></nav>
+            <nav class="rd-nav rd-sidebar-wide" aria-label=labels.get("menu").text.clone() lang=labels.get("menu").lang.clone() inner_html=entries.clone()></nav>
             <details class="rd-sidebar-narrow">
-                <summary lang=ui_lang>{labels.menu}</summary>
-                <nav class="rd-nav" aria-label=labels.menu lang=ui_lang inner_html=entries></nav>
+                <summary lang=labels.get("menu").lang.clone()>{labels.get("menu").text.clone()}</summary>
+                <nav class="rd-nav" aria-label=labels.get("menu").text.clone() lang=labels.get("menu").lang.clone() inner_html=entries></nav>
             </details>
             {slot_view(Slot::SidebarBottom, slots)}
         </div>
@@ -737,23 +888,19 @@ fn toc_entries(toc: &[&Heading]) -> String {
 
 /// The table of contents, twice for the same reason as the sidebar: a
 /// column from 1280 px, a <details> panel above the article below that.
-fn table_of_contents(
-    toc: &[&Heading],
-    labels: &'static Labels,
-    ui_lang: Option<&'static str>,
-) -> impl IntoView {
+fn table_of_contents(toc: &[&Heading], source_lang: &str, labels: &Catalog) -> impl IntoView {
     (!toc.is_empty()).then(|| {
         let entries = toc_entries(toc);
         view! {
             <div class="rd-toc">
-                <nav class="rd-toc-wide" aria-label=labels.on_this_page lang=ui_lang>
-                    <p>{labels.on_this_page}</p>
-                    <ul inner_html=entries.clone()></ul>
+                <nav class="rd-toc-wide" aria-label=labels.get("on_this_page").text.clone() lang=labels.get("on_this_page").lang.clone()>
+                    <p>{labels.get("on_this_page").text.clone()}</p>
+                    <ul lang=source_lang.to_owned() inner_html=entries.clone()></ul>
                 </nav>
                 <details class="rd-toc-narrow">
-                    <summary lang=ui_lang>{labels.on_this_page}</summary>
-                    <nav aria-label=labels.on_this_page lang=ui_lang>
-                        <ul inner_html=entries></ul>
+                    <summary lang=labels.get("on_this_page").lang.clone()>{labels.get("on_this_page").text.clone()}</summary>
+                    <nav aria-label=labels.get("on_this_page").text.clone() lang=labels.get("on_this_page").lang.clone()>
+                        <ul lang=source_lang.to_owned() inner_html=entries></ul>
                     </nav>
                 </details>
             </div>
@@ -761,18 +908,14 @@ fn table_of_contents(
     })
 }
 
-fn page_footer(
-    meta: Meta,
-    labels: &'static Labels,
-    ui_lang: Option<&'static str>,
-) -> impl IntoView {
+fn page_footer(meta: Meta, labels: &Catalog) -> impl IntoView {
     let edit = meta.edit_url.map(|url| {
-        view! { <a href=url.to_owned() rel="noopener" lang=ui_lang>{labels.edit_page}</a> }
+        view! { <a href=url.to_owned() rel="noopener" lang=labels.get("edit_page").lang.clone()>{labels.get("edit_page").text.clone()}</a> }
     });
     let updated = meta.updated.map(|date| {
         view! {
             <p>
-                <span lang=ui_lang>{labels.last_updated}</span>
+                <span lang=labels.get("last_updated").lang.clone()>{labels.get("last_updated").text.clone()}</span>
                 " "
                 <time datetime=date.to_owned()>{date.to_owned()}</time>
             </p>
@@ -792,22 +935,21 @@ fn pager(
     site: &Site,
     previous: Option<&NavItem>,
     next: Option<&NavItem>,
-    labels: &'static Labels,
-    ui_lang: Option<&'static str>,
+    labels: &Catalog,
 ) -> impl IntoView {
-    let link = |item: &NavItem, label: &'static str, is_next: bool| {
+    let link = |item: &NavItem, label: &LabelText, is_next: bool| {
         view! {
             <a href=site.url(&item.route) rel=if is_next { "next" } else { "prev" } data-rd-next=is_next.then_some("")>
-                <span class="rd-pager-label" lang=ui_lang>{label}</span>
-                <span class="rd-pager-title">{item.title.clone()}</span>
+                <span class="rd-pager-label" lang=label.lang.clone()>{label.text.clone()}</span>
+                <span class="rd-pager-title" lang=item.lang.clone()>{item.title.clone()}</span>
             </a>
         }
     };
     (previous.is_some() || next.is_some()).then(|| {
         view! {
-            <nav class="rd-pager" aria-label=format!("{} / {}", labels.previous, labels.next)>
-                {previous.map(|item| link(item, labels.previous, false))}
-                {next.map(|item| link(item, labels.next, true))}
+            <nav class="rd-pager" aria-label=format!("{} / {}", labels.get("previous").text.clone(), labels.get("next").text.clone())>
+                {previous.map(|item| link(item, labels.get("previous"), false))}
+                {next.map(|item| link(item, labels.get("next"), true))}
             </nav>
         }
     })
@@ -817,28 +959,35 @@ fn pager(
 mod tests {
     use super::*;
     use crate::highlight::Highlighter;
+    use crate::labels;
     use crate::markdown;
 
     fn site() -> Site {
         Site {
             name: "Docs".into(),
             lang: "en".into(),
+            home_route: "/".into(),
+            catalog: Arc::new(labels::resolve("en", &BTreeMap::new())),
             base: "/rustify-ui/".into(),
             nav: vec![NavGroup {
+                lang: "en".into(),
                 label: "Guide".into(),
                 prefix: "/".into(),
                 items: vec![
                     NavItem {
+                        lang: "en".into(),
                         title: "Intro".into(),
                         route: "/".into(),
                         draft: false,
                     },
                     NavItem {
+                        lang: "en".into(),
                         title: "Setup".into(),
                         route: "/setup/".into(),
                         draft: false,
                     },
                     NavItem {
+                        lang: "en".into(),
                         title: "Next steps".into(),
                         route: "/next/".into(),
                         draft: true,
@@ -857,24 +1006,139 @@ mod tests {
         }
     }
 
+    #[test]
+    fn localized_home_is_not_a_current_section() {
+        let mut site = site();
+        site.home_route = "/fr/".into();
+        for (label, route) in [("Accueil", "/fr/"), ("Guide", "/fr/guide/")] {
+            site.top.push(HeaderLink {
+                lang: "fr".into(),
+                label: label.into(),
+                url: site.url(route),
+                route: Some(route.into()),
+                external: false,
+            });
+        }
+        let html = header_entries(&site, "/fr/guide/setup/");
+        let document = dom_query::Document::from(html.as_str());
+        assert!(document
+            .select("a[href='/rustify-ui/fr/']")
+            .attr("aria-current")
+            .is_none());
+        assert_eq!(
+            document
+                .select("a[href='/rustify-ui/fr/guide/']")
+                .attr("aria-current")
+                .as_deref(),
+            Some("true")
+        );
+    }
+
+    #[test]
+    fn language_switcher_and_fallback_body_keep_each_words_language() {
+        let mut site = site();
+        site.lang = "fr".into();
+        site.home_route = "/fr/".into();
+        site.catalog = std::sync::Arc::new(labels::resolve(
+            "fr",
+            &BTreeMap::from([
+                ("menu".into(), "Parcourir".into()),
+                ("language".into(), "Langue".into()),
+                ("untranslated".into(), "Traduction indisponible".into()),
+            ]),
+        ));
+        let links = [
+            LanguageLink {
+                lang: "en".into(),
+                label: "English".into(),
+                href: site.url("/setup/"),
+                is_fallback: false,
+                anchors: vec!["setup".into()],
+                fallback_label: labels::resolve("en", &BTreeMap::new())
+                    .get("untranslated")
+                    .clone(),
+            },
+            LanguageLink {
+                lang: "fr".into(),
+                label: "Français".into(),
+                href: site.url("/fr/setup/"),
+                is_fallback: true,
+                anchors: vec!["setup".into()],
+                fallback_label: site.catalog.get("untranslated").clone(),
+            },
+        ];
+        let mut page = Page {
+            route: "/fr/setup/",
+            document_title: "Setup | Docs",
+            title: "Setup",
+            description: None,
+            lang: "fr",
+            source_lang: "en",
+            language_links: &links,
+            draft: false,
+            article: "<p>English source</p>",
+            headings: &[],
+            article_has_h1: false,
+            toc_levels: (2, 3),
+            meta: Meta::default(),
+            home: None,
+        };
+        let html = render_page(&site, &page);
+        let doc = dom_query::Document::from(html.as_str());
+        assert_eq!(doc.select("html").attr("lang").as_deref(), Some("fr"));
+        assert_eq!(doc.select("article").attr("lang").as_deref(), Some("en"));
+        assert_eq!(doc.select("h1").attr("lang").as_deref(), Some("en"));
+        assert_eq!(
+            doc.select(".rd-language-switch summary").text().as_ref(),
+            "Français"
+        );
+        assert_eq!(
+            doc.select("a[hreflang=fr]").attr("aria-current").as_deref(),
+            Some("page")
+        );
+        assert_eq!(
+            doc.select(".rd-untranslated").attr("lang").as_deref(),
+            Some("fr")
+        );
+        assert_eq!(
+            doc.select(".rd-sidebar-wide").attr("lang").as_deref(),
+            Some("fr")
+        );
+        assert_eq!(
+            doc.select(".rd-mode-switch").attr("lang").as_deref(),
+            Some("en")
+        );
+        assert!(html.contains("href=\"/rustify-ui/fr/\""));
+        page.article = "<h1>English title</h1><p>English body</p>";
+        page.article_has_h1 = true;
+        let html = render_page(&site, &page);
+        assert!(html.find("</h1>").unwrap() < html.find("rd-untranslated").unwrap());
+        assert!(html.find("rd-untranslated").unwrap() < html.find("<p>English body").unwrap());
+    }
+
     fn render(markdown_source: &str, route: &str, lang: &str) -> String {
-        let (labels, foreign) = labels::for_lang(lang);
+        let catalog = labels::resolve(lang, &std::collections::BTreeMap::new());
         let includes = markdown::IncludeFiles::default();
         let context = markdown::Context {
             highlighter: &Highlighter::new(),
-            labels,
-            foreign,
+            catalog: &catalog,
+            source_lang: lang,
             includes: &includes,
         };
         let fragment = markdown::render(markdown_source, 0, &context);
+        let mut site = site();
+        site.lang = lang.into();
+        site.catalog = Arc::new(catalog);
         render_page(
-            &site(),
+            &site,
             &Page {
                 route,
                 document_title: "Setup | Docs",
                 title: "Setup",
                 description: fragment.summary.as_deref(),
                 lang,
+                source_lang: lang,
+                language_links: &[],
                 draft: false,
                 article: &fragment.html,
                 headings: &fragment.headings,
@@ -889,6 +1153,7 @@ mod tests {
     fn render_slots(article: &str, slots: &LayoutSlots) -> String {
         let mut site = site();
         site.top.push(HeaderLink {
+            lang: "en".into(),
             label: "Examples".into(),
             url: site.url("/next/"),
             route: Some("/next/".into()),
@@ -902,6 +1167,8 @@ mod tests {
                 title: "Setup",
                 description: None,
                 lang: "en",
+                source_lang: "en",
+                language_links: &[],
                 draft: false,
                 article,
                 headings: &[],
@@ -1006,7 +1273,7 @@ mod tests {
             assert_eq!(html.matches(&format!("id=\"{id}\"")).count(), 1);
         }
         assert!(html.contains("Custom error<!>body"));
-        assert!(html.contains("<h1 class=\"rd-title\">Page not found</h1>"));
+        assert!(html.contains("<h1 lang=\"en\" class=\"rd-title\">Page not found</h1>"));
         assert!(html.contains("name=\"robots\" content=\"noindex\""));
     }
 
@@ -1028,7 +1295,7 @@ mod tests {
         // The current page is marked; the others link under the base.
         assert!(
             html.contains(
-                "<li><a href=\"/rustify-ui/setup/\" aria-current=\"page\">Setup</a></li>"
+                "<li><a href=\"/rustify-ui/setup/\" lang=\"en\" aria-current=\"page\">Setup</a></li>"
             ),
             "{html}"
         );
@@ -1042,7 +1309,7 @@ mod tests {
         );
         assert!(html.contains("<a href=\"/rustify-ui/next/\" rel=\"next\" data-rd-next=\"\">"));
         assert!(
-            html.contains("Next steps · Draft</a>"),
+            html.contains("Next steps<span lang=\"en\"> · Draft</span></a>"),
             "draft marker in the sidebar"
         );
         assert!(!html.contains("<!>"));
@@ -1056,12 +1323,14 @@ mod tests {
         let mut site = site();
         site.top = vec![
             HeaderLink {
+                lang: "en".into(),
                 label: "Setup".into(),
                 url: "/rustify-ui/setup/".into(),
                 route: Some("/setup/".into()),
                 external: false,
             },
             HeaderLink {
+                lang: "en".into(),
                 label: "Home".into(),
                 url: "/rustify-ui/".into(),
                 route: Some("/".into()),
@@ -1069,6 +1338,7 @@ mod tests {
             },
         ];
         site.social = vec![HeaderLink {
+            lang: "en".into(),
             label: "GitHub".into(),
             url: "https://github.com/example".into(),
             route: None,
@@ -1083,6 +1353,8 @@ mod tests {
                     title: "Setup",
                     description: None,
                     lang: "en",
+                    source_lang: "en",
+                    language_links: &[],
                     draft: false,
                     article: "<p>x</p>",
                     headings: &[],
@@ -1094,23 +1366,27 @@ mod tests {
             )
         };
         let html = page("/setup/install/");
-        let links = "<ul class=\"rd-header-links\"><li><a href=\"/rustify-ui/setup/\" aria-current=\"true\">Setup</a></li><li><a href=\"/rustify-ui/\">Home</a></li></ul><ul class=\"rd-header-social\"><li><a href=\"https://github.com/example\" rel=\"noopener\">GitHub</a></li></ul>";
+        let links = "<ul class=\"rd-header-links\"><li><a href=\"/rustify-ui/setup/\" lang=\"en\" aria-current=\"true\">Setup</a></li><li><a href=\"/rustify-ui/\" lang=\"en\">Home</a></li></ul><ul class=\"rd-header-social\"><li><a href=\"https://github.com/example\" lang=\"en\" rel=\"noopener\">GitHub</a></li></ul>";
         // Once in the header bar, once in a row of its own under it.
         assert_eq!(html.matches(links).count(), 2, "{html}");
         assert!(
             html.contains(
-                "<nav aria-label=\"Site links\" class=\"rd-header-nav rd-header-nav-wide\">"
+                "<nav aria-label=\"Site links\" lang=\"en\" class=\"rd-header-nav rd-header-nav-wide\">"
             ),
             "{html}"
         );
         assert!(html.contains(
-            "</header><nav aria-label=\"Site links\" class=\"rd-header-nav rd-header-nav-narrow\">"
+            "</header><nav aria-label=\"Site links\" lang=\"en\" class=\"rd-header-nav rd-header-nav-narrow\">"
         ));
         let html = page("/setup/");
-        assert!(html.contains("<a href=\"/rustify-ui/setup/\" aria-current=\"page\">Setup</a>"));
+        assert!(html.contains(
+            "<a href=\"/rustify-ui/setup/\" lang=\"en\" aria-current=\"page\">Setup</a>"
+        ));
         let html = page("/");
-        assert!(html.contains("<a href=\"/rustify-ui/\" aria-current=\"page\">Home</a>"));
-        assert!(html.contains("<a href=\"/rustify-ui/setup/\">Setup</a>"));
+        assert!(
+            html.contains("<a href=\"/rustify-ui/\" lang=\"en\" aria-current=\"page\">Home</a>")
+        );
+        assert!(html.contains("<a href=\"/rustify-ui/setup/\" lang=\"en\">Setup</a>"));
         // A site without them has neither navigation.
         assert!(!render("x\n", "/setup/", "en").contains("rd-header-nav"));
     }
@@ -1137,7 +1413,12 @@ mod tests {
         assert_eq!(html.matches("<h1").count(), 1);
         assert!(html.contains("<html lang=\"zh-CN\""));
         assert!(html.contains("跳到正文"));
-        assert!(!html.contains("lang=\"en\""));
+        let doc = dom_query::Document::from(html.as_str());
+        assert_eq!(
+            doc.select(".rd-mode-switch").attr("lang").as_deref(),
+            Some("zh")
+        );
+        assert_eq!(doc.select("article").attr("lang").as_deref(), Some("zh-CN"));
     }
 
     #[test]

@@ -10,6 +10,7 @@
 //! instead of swapping files under it.
 
 use rustify_docs::diagnostic_text::{code_span, literal};
+use std::collections::BTreeMap;
 use std::io::{BufRead, BufReader, Write};
 use std::net::{SocketAddr, TcpListener, TcpStream};
 use std::path::{Path, PathBuf};
@@ -27,6 +28,23 @@ pub struct Site {
     pub base: String,
     /// The bytes of the output's `404.html`.
     pub not_found: Vec<u8>,
+    pub locale_not_found: BTreeMap<String, Vec<u8>>,
+}
+
+impl Site {
+    fn not_found(&self, target: &str) -> &[u8] {
+        locale_prefix(&self.base, target)
+            .and_then(|prefix| self.locale_not_found.get(&prefix))
+            .map_or(&self.not_found, Vec::as_slice)
+    }
+}
+
+/// The complete first segment after a normalized deployment base.
+pub fn locale_prefix(base: &str, target: &str) -> Option<String> {
+    let path = decode(target.split(['?', '#']).next().unwrap_or_default())?;
+    let rest = path.strip_prefix(base)?;
+    (!rest.split('/').any(|part| matches!(part, "." | "..")))
+        .then(|| rest.split('/').next().unwrap_or_default().to_owned())
 }
 
 pub fn mime(path: &Path) -> &'static str {
@@ -191,7 +209,7 @@ fn handle(mut stream: TcpStream, site: &Site) -> std::io::Result<()> {
                 &mut stream,
                 "404 Not Found",
                 &[("Content-Type", "text/html; charset=utf-8".into())],
-                &site.not_found,
+                site.not_found(target),
                 head_only,
             ),
         },
@@ -209,7 +227,7 @@ fn handle(mut stream: TcpStream, site: &Site) -> std::io::Result<()> {
             &mut stream,
             "404 Not Found",
             &[("Content-Type", "text/html; charset=utf-8".into())],
-            &site.not_found,
+            site.not_found(target),
             head_only,
         ),
         Answer::BadRequest => respond(
@@ -261,6 +279,38 @@ pub fn serve(listener: TcpListener, site: Site) {
 mod tests {
     use super::*;
 
+    #[test]
+    fn language_errors_use_only_the_frozen_mapping_and_complete_safe_prefixes() {
+        let mut site = Site {
+            dir: PathBuf::new(),
+            base: "/docs/".into(),
+            not_found: b"default".to_vec(),
+            locale_not_found: std::collections::BTreeMap::from([
+                ("".into(), b"default".to_vec()),
+                ("zh".into(), b"Chinese".to_vec()),
+            ]),
+        };
+        for path in [
+            "/docs/zh/missing/a/b/",
+            "/docs/%7ah/missing/",
+            "/docs/zh/404.html?x",
+        ] {
+            assert_eq!(site.not_found(path), b"Chinese", "{path}");
+        }
+        for path in [
+            "/docs/zh-other/missing/",
+            "/docs/foo/404.html",
+            "/outside/zh/missing/",
+            "/docs/zh/../other/",
+            "/docs/zh/%ff",
+            "/docs/%2fzh/missing/",
+        ] {
+            assert_eq!(site.not_found(path), b"default", "{path}");
+        }
+        site.locale_not_found.clear();
+        assert_eq!(site.not_found("/docs/zh/missing/"), b"default");
+    }
+
     fn site() -> (Site, PathBuf) {
         let dir = std::env::temp_dir().join(format!("rustify-docs-preview-{}", std::process::id()));
         let _ = std::fs::remove_dir_all(&dir);
@@ -274,6 +324,7 @@ mod tests {
                 dir: real.clone(),
                 base: "/docs/".into(),
                 not_found: b"404".to_vec(),
+                locale_not_found: BTreeMap::new(),
             },
             real,
         )

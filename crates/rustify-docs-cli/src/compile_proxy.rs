@@ -232,6 +232,7 @@ fn publication(
         &mut generation.files,
         &project.config.site.base,
         super::VERSION,
+        &generation.locale_not_found,
     );
     publish::publish(&lock, &generation.files)
 }

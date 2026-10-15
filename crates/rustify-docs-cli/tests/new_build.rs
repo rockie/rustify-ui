@@ -97,11 +97,86 @@ fn a_new_site_builds_and_nothing_is_compiled() {
     ] {
         assert!(site.join("dist").join(page).is_file(), "{page}");
     }
+    assert!(!temp.read("my-docs/rustify-docs.toml").contains("[i18n"));
+    assert!(!temp
+        .read("my-docs/dist/index.html")
+        .contains("rd-language-switch"));
+    let manifest: serde_json::Value =
+        serde_json::from_str(&temp.read("my-docs/dist/rustify-docs-manifest.json")).unwrap();
+    assert!(manifest.get("locale_not_found").is_none());
     // Only the toolchain check ran: no cargo, no compiler, no linker.
     assert_eq!(tools.calls(), ["rustc --version"]);
 
     let checked = tools.run_in(&site, &["check", "--format", "json"]);
     succeeded(&checked);
+    assert_eq!(tools.calls(), ["rustc --version"]);
+}
+
+#[test]
+fn a_new_content_site_can_follow_its_readme_to_add_a_third_language_without_compiling() {
+    let temp = Temp::new("new-i18n");
+    let tools = Toolchain::new(&temp, true);
+    succeeded(&tools.run_in(&temp.0, &["new", "my-docs"]));
+    let site = temp.path("my-docs");
+    let config = temp.read("my-docs/rustify-docs.toml");
+    assert!(!config.contains("[i18n"));
+    let readme = temp.read("my-docs/README.md");
+    let declaration = readme
+        .split("```toml\n")
+        .skip(1)
+        .map(|rest| rest.split("```").next().unwrap())
+        .find(|block| block.contains("[[i18n.locales]]"))
+        .expect("the generated README shows how to declare several languages");
+    temp.write(
+        "my-docs/rustify-docs.toml",
+        &format!("{config}\n{declaration}"),
+    );
+    temp.write("my-docs/locales/fr.toml", "copy = \"Copier\"\n");
+    let checked = tools.run_in(&site, &["check", "--format", "json"]);
+    succeeded(&checked);
+    let report: serde_json::Value = serde_json::from_slice(&checked.stdout).unwrap();
+    assert_eq!(report["summary"]["errors"], 0, "{report:#}");
+    for rule in ["i18n-missing-page", "i18n-missing-label"] {
+        assert!(
+            report["diagnostics"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .any(|issue| issue["rule"] == rule && issue["severity"] == "warning"),
+            "{report:#}"
+        );
+    }
+    succeeded(&tools.run_in(&site, &["build"]));
+    let html = temp.read("my-docs/dist/fr/guide/getting-started/index.html");
+    let document = dom_query::Document::from(html.as_str());
+    assert_eq!(document.select("html").attr("lang").as_deref(), Some("fr"));
+    assert_eq!(
+        document.select("article").attr("lang").as_deref(),
+        Some("en")
+    );
+    assert_eq!(document.select("h1").text().as_ref(), "Getting started");
+    assert!(document.select(".rd-untranslated").exists());
+    assert_eq!(
+        document.select(".rd-untranslated").attr("lang").as_deref(),
+        Some("en")
+    );
+    let copy = document.select("[data-rd-copy]");
+    assert_eq!(copy.attr("lang").as_deref(), Some("fr"));
+    assert_eq!(copy.attr("data-copy").as_deref(), Some("Copier"));
+    assert_eq!(copy.attr("data-copied").as_deref(), Some("Copied"));
+    assert_eq!(copy.attr("data-copied-lang").as_deref(), Some("en"));
+    assert!(document
+        .select("article")
+        .text()
+        .contains("rustify-docs dev"));
+    let manifest: serde_json::Value =
+        serde_json::from_str(&temp.read("my-docs/dist/rustify-docs-manifest.json")).unwrap();
+    assert_eq!(
+        manifest["locale_not_found"],
+        serde_json::json!({"": "404.html", "fr": "fr/404.html"})
+    );
+    assert!(!site.join("Cargo.toml").exists());
+    assert!(!site.join("dist/locales/fr.toml").exists());
     assert_eq!(tools.calls(), ["rustc --version"]);
 }
 

@@ -6,21 +6,32 @@
 // panel in the corner lists the problems; hidden, it leaves a marker that
 // opens it again. The next good build clears both. Nothing here takes focus
 // the author did not hand it.
-(function () {
-  "use strict";
+(function (enhance) {
   var script = document.currentScript;
+  var coordinator = window.__rustify_docs_islands;
+  var start = function () { enhance(script); };
+  if (document.documentElement.hasAttribute("data-rd-not-found") && coordinator) {
+    coordinator.parsed.then(start);
+  } else {
+    start();
+  }
+})(function (script) {
+  "use strict";
   if (!script || !window.EventSource) return;
   var query = new URL(script.src).searchParams;
   // Which run of `dev` served this page, and the build it is a copy of.
   var session = query.get("session") || "";
   var good = query.get("good") || "0";
   var words = {};
+  var wordLangs = {};
   try {
     words = JSON.parse(script.getAttribute("data-labels") || "{}");
+    wordLangs = JSON.parse(script.getAttribute("data-label-langs") || "{}");
   } catch (malformed) {
     words = {};
   }
   var lang = script.getAttribute("data-lang") || document.documentElement.lang;
+  function wordLang(key) { return wordLangs[key] || lang; }
   var scrollKey = "rustify-docs:dev:scroll:" + location.pathname;
   var hiddenKey = "rustify-docs:dev:hidden";
 
@@ -64,10 +75,11 @@
     location.reload();
   }
 
-  function element(tag, className, text) {
+  function element(tag, className, text, key) {
     var node = document.createElement(tag);
     if (className) node.className = className;
     if (text !== undefined) node.textContent = text;
+    if (key) node.lang = wordLang(key);
     return node;
   }
 
@@ -101,10 +113,20 @@
   live.setAttribute("lang", lang);
   document.body.appendChild(live);
 
-  function announce(text) {
+  function announce(text, key, includeRevision) {
     live.textContent = "";
     setTimeout(function () {
-      live.textContent = text;
+      if (key) {
+        live.lang = wordLang(key);
+        live.textContent = text;
+      } else {
+        live.lang = lang;
+        summary.childNodes.forEach(function (node) { live.appendChild(node.cloneNode(true)); });
+        if (includeRevision) {
+          live.appendChild(document.createTextNode(" · "));
+          live.appendChild(revision.cloneNode(true));
+        }
+      }
     }, 50);
   }
 
@@ -132,6 +154,7 @@
   hide.type = "button";
   hide.setAttribute("aria-label", words.hide || "Hide");
   hide.title = words.hide || "Hide";
+  hide.lang = wordLang("hide");
   hide.appendChild(icon(["M18 6 6 18", "m6 6 12 12"]));
   head.appendChild(summary);
   head.appendChild(revision);
@@ -141,6 +164,7 @@
   list.tabIndex = 0;
   list.setAttribute("role", "region");
   list.setAttribute("aria-label", words.problems || "Problems");
+  list.lang = wordLang("problems");
   panel.appendChild(head);
   panel.appendChild(list);
   var marker = element("button", "rd-dev-marker");
@@ -168,25 +192,28 @@
     into.textContent = "";
     var parts = [];
     if (state.building) {
-      parts.push(["building", words.building || "Building"]);
-      if (state.phase && words[state.phase]) parts.push(["building", words[state.phase]]);
+      parts.push(["building", words.building || "Building", "building"]);
+      if (state.phase && words[state.phase]) parts.push(["building", words[state.phase], state.phase]);
     }
-    if (state.errors) parts.push(["error", count(state.errors, words.error_one, words.error_other)]);
-    if (state.warnings) parts.push(["warning", count(state.warnings, words.warning_one, words.warning_other)]);
+    if (state.errors) parts.push(["error", count(state.errors, words.error_one, words.error_other), state.errors === 1 ? "error_one" : "error_other"]);
+    if (state.warnings) parts.push(["warning", count(state.warnings, words.warning_one, words.warning_other), state.warnings === 1 ? "warning_one" : "warning_other"]);
     var page = null;
+    var pageKey = "";
     if (Number(good) > 0 && (state.building || !state.ok)) page = words.last_good;
     else if (!state.ok && !state.building) page = words.no_last_good;
+    if (page) pageKey = Number(good) > 0 ? "last_good" : "no_last_good";
     parts.forEach(function (part, i) {
       if (i > 0) into.appendChild(document.createTextNode(" · "));
-      into.appendChild(element("span", "rd-dev-count-" + part[0], part[1]));
+      into.appendChild(element("span", "rd-dev-count-" + part[0], part[1], part[2]));
     });
     if (page && stacked) {
       var line = element("span", "rd-dev-state");
       line.appendChild(element("span", "rd-dev-sr", " · "));
-      line.appendChild(document.createTextNode(page));
+      line.appendChild(element("span", "", page, pageKey));
       into.appendChild(line);
     } else if (page) {
-      into.appendChild(document.createTextNode(" · " + page));
+      into.appendChild(document.createTextNode(" · "));
+      into.appendChild(element("span", "", page, pageKey));
     }
     var text = parts.map(function (part) {
       return part[1];
@@ -271,7 +298,7 @@
           where.appendChild(element("span", "rd-dev-location", d.line + (d.column ? ":" + d.column : "")));
         }
         var rule = element("span", "rd-dev-rule");
-        rule.appendChild(element("span", "rd-dev-sr", (d.severity === "error" ? words.error : words.warning) + ": "));
+        rule.appendChild(element("span", "rd-dev-sr", (d.severity === "error" ? words.error : words.warning) + ": ", d.severity));
         rule.appendChild(document.createTextNode(d.rule));
         where.appendChild(rule);
         item.appendChild(where);
@@ -303,6 +330,7 @@
     var text = describe(state, summary, true);
     describe(state, markerText, false);
     revision.textContent = count(state.revision, words.revision, words.revision);
+    revision.lang = wordLang("revision");
     panel.hidden = !open;
     marker.hidden = open;
     marker.setAttribute("aria-expanded", String(open));
@@ -320,9 +348,9 @@
     if (state.building && (last === null || !last.building || last.phase !== state.phase)) {
       announce(text);
     } else if (state.errors > 0 && (last === null || last.revision !== state.revision)) {
-      announce(text + " · " + revision.textContent);
+      announce(text, null, true);
     } else if (hadErrors && state.errors === 0) {
-      announce(words.fixed || "");
+      announce(words.fixed || "", "fixed");
     }
     last = state;
   }
@@ -385,4 +413,4 @@
   }
 
   connect();
-})();
+});

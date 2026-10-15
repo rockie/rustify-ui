@@ -126,6 +126,7 @@ pub const GENERATED_PREFIXES: &[&str] = &[
 /// directory, plus what it took to make them.
 pub struct Generation {
     pub files: BTreeMap<String, Arc<[u8]>>,
+    pub locale_not_found: BTreeMap<String, String>,
     pub stylesheet_path: String,
     /// Pages written, the not-found page included.
     pub pages: usize,
@@ -188,6 +189,11 @@ fn link_site(project: &Project) -> Site {
     Site {
         name: project.config.site.name.clone(),
         lang: project.config.site.lang.clone(),
+        home_route: "/".into(),
+        catalog: Arc::new(crate::labels::resolve(
+            &project.config.site.lang,
+            &BTreeMap::new(),
+        )),
         base: project.config.site.base.clone(),
         nav: Vec::new(),
         top: Vec::new(),
@@ -495,6 +501,7 @@ fn header_links(
             let written = link.link.trim();
             HeaderLink {
                 label: link.label.clone(),
+                lang: site.lang.clone(),
                 url: target_url(analysis, target, written, site, outputs),
                 route: match target {
                     Target::Page { page, .. } => Some(analysis.pages[*page].route.clone()),
@@ -507,7 +514,7 @@ fn header_links(
         .collect()
 }
 
-/// A `<title>` for every page, unique across the site: `Title | Site`, and
+/// A `<title>` for every page, unique within its configured language: `Title | Site`, and
 /// where two pages share a title, each is told apart by its parent page's
 /// title, or failing that by its address.
 fn document_titles(
@@ -523,9 +530,14 @@ fn document_titles(
             format!("{title} | {site_name}")
         }
     };
-    let mut by_title: BTreeMap<String, Vec<usize>> = BTreeMap::new();
+    let mut by_title: BTreeMap<(String, String), Vec<usize>> = BTreeMap::new();
     for &i in published {
-        by_title.entry(plain(i)).or_default().push(i);
+        let lang = if analysis.locales.is_empty() {
+            String::new()
+        } else {
+            analysis.pages[i].lang.clone()
+        };
+        by_title.entry((lang, plain(i))).or_default().push(i);
     }
     let parent_title = |i: usize| {
         let route = analysis.pages[i].route.trim_end_matches('/');
@@ -544,7 +556,7 @@ fn document_titles(
         }
     };
     let mut titles = BTreeMap::new();
-    for (title, pages) in by_title {
+    for ((_, title), pages) in by_title {
         if pages.len() == 1
             || pages.iter().any(|&i| {
                 matches!(
@@ -592,13 +604,18 @@ fn title_diagnostics(
     titles: &BTreeMap<usize, String>,
     site: &Site,
 ) -> Vec<Diagnostic> {
-    let mut groups = BTreeMap::<&str, Vec<usize>>::new();
+    let mut groups = BTreeMap::<(&str, &str), Vec<usize>>::new();
     for (&i, title) in titles {
-        groups.entry(title).or_default().push(i);
+        let lang = if analysis.locales.is_empty() {
+            ""
+        } else {
+            analysis.pages[i].lang.as_str()
+        };
+        groups.entry((lang, title)).or_default().push(i);
     }
-    let (labels, _) = crate::labels::for_lang(&site.lang);
-    let not_found = format!("{} | {}", labels.not_found_title, site.name);
-    groups.into_iter().filter_map(|(title, pages)| {
+    groups.into_iter().filter_map(|((_, title), pages)| {
+        let catalog = &analysis.catalogs[&analysis.pages[pages[0]].lang];
+        let not_found = format!("{} | {}", catalog.get("not_found_title").text, site.name);
         let registered = pages.iter().find(|&&i| matches!(analysis.pages[i].origin, crate::content::PageOrigin::Registered(_)))?;
         if pages.len() == 1 && title != not_found { return None; }
         let routes = pages.iter().map(|&i| literal(&analysis.pages[i].route)).collect::<Vec<_>>().join(", ");
@@ -631,6 +648,7 @@ fn final_documents(
     files: &BTreeMap<String, Arc<[u8]>>,
     sources: &BTreeMap<String, String>,
     site: &Site,
+    origin: Option<&str>,
     workers: usize,
 ) -> Vec<Diagnostic> {
     let mut problems = Vec::new();
@@ -701,6 +719,14 @@ fn final_documents(
             };
             for url in references {
                 let url = url.trim();
+                let url = if slot.element == "link" {
+                    origin
+                        .and_then(|origin| url.strip_prefix(origin))
+                        .filter(|path| path.starts_with('/'))
+                        .unwrap_or(url)
+                } else {
+                    url
+                };
                 if url.starts_with("//") || crate::content::has_scheme(url) {
                     continue;
                 }
@@ -769,7 +795,11 @@ fn sitemap(
 ) -> String {
     let mut entries: Vec<(&str, usize)> = published
         .iter()
-        .filter(|&&i| !analysis.pages[i].draft && analysis.pages[i].front.index != Some(false))
+        .filter(|&&i| {
+            !analysis.pages[i].draft
+                && !analysis.pages[i].locale.is_fallback
+                && analysis.pages[i].front.index != Some(false)
+        })
         .map(|&i| (analysis.pages[i].route.as_str(), i))
         .collect();
     entries.sort();
@@ -811,6 +841,22 @@ pub fn generate(
     )
 }
 
+fn not_found_body(html: &str) -> String {
+    let body = html
+        .find("<body")
+        .and_then(|start| html[start..].find('>').map(|offset| start + offset + 1))
+        .unwrap_or(0);
+    let end = html.rfind("</body>").unwrap_or(html.len());
+    let mut body = html[body..end].to_owned();
+    while let Some(start) = body.find("<script") {
+        let Some(close) = body[start..].find("</script>") else {
+            break;
+        };
+        body.replace_range(start..start + close + "</script>".len(), "");
+    }
+    body
+}
+
 /// Merges registered views into the ordinary shell and final policy checks.
 pub fn generate_extended(
     project: &Project,
@@ -826,6 +872,15 @@ pub fn generate_extended(
     let mut site = Site {
         name: config.site.name.clone(),
         lang: config.site.lang.clone(),
+        home_route: "/".into(),
+        catalog: analysis
+            .catalogs
+            .iter()
+            .find(|(lang, _)| lang.eq_ignore_ascii_case(&config.site.lang))
+            .map(|(_, catalog)| catalog.clone())
+            .unwrap_or_else(|| {
+                Arc::new(crate::labels::resolve(&config.site.lang, &BTreeMap::new()))
+            }),
         base: config.site.base.clone(),
         nav: analysis.nav.clone(),
         top: Vec::new(),
@@ -938,15 +993,84 @@ pub fn generate_extended(
         };
         Some(format!("{}/{path}", edit.trim_end_matches('/')))
     });
+    let localized_sites: BTreeMap<_, _> = analysis
+        .catalogs
+        .iter()
+        .map(|(lang, catalog)| {
+            let mut localized = site.clone();
+            localized.lang = lang.clone();
+            localized.catalog = catalog.clone();
+            if let Some(view) = analysis.locales.get(lang) {
+                localized.home_route = view.root_route.clone();
+                localized.nav = view.nav.clone();
+                let nav = config
+                    .locales
+                    .iter()
+                    .find(|locale| locale.lang == *lang)
+                    .and_then(|locale| locale.nav.as_ref())
+                    .unwrap_or(&config.nav);
+                localized.top = header_links(analysis, &nav.top, &view.top, &localized, &outputs);
+                localized.social =
+                    header_links(analysis, &nav.social, &view.social, &localized, &outputs);
+                let label_lang = if config
+                    .locales
+                    .iter()
+                    .any(|locale| locale.lang == *lang && locale.nav.is_some())
+                {
+                    lang
+                } else {
+                    &config.site.lang
+                };
+                for link in localized.top.iter_mut().chain(&mut localized.social) {
+                    link.lang = label_lang.clone();
+                }
+            }
+            (lang.clone(), localized)
+        })
+        .collect();
     let rendered: Vec<(String, String, BTreeSet<String>)> =
         parallel_map(&published, workers, |&i| {
             let page = &analysis.pages[i];
+            let site = &localized_sites[&page.lang];
+            let language_links: Vec<_> = config
+                .locales
+                .iter()
+                .filter_map(|locale| {
+                    let &target = analysis.locales[&locale.lang]
+                        .pages
+                        .get(&page.locale.logical_route)?;
+                    let target = &analysis.pages[target];
+                    Some(shell::LanguageLink {
+                        lang: locale.lang.clone(),
+                        label: locale.label.clone(),
+                        href: site.url(&target.route),
+                        is_fallback: target.locale.is_fallback,
+                        fallback_label: analysis.catalogs[&locale.lang].get("untranslated").clone(),
+                        anchors: target
+                            .fragment
+                            .anchors
+                            .iter()
+                            .cloned()
+                            .chain(
+                                analysis
+                                    .slots
+                                    .get(&target.route)
+                                    .into_iter()
+                                    .flat_map(|slots| slots.values())
+                                    .flat_map(|slot| slot.fragment.anchors.iter().cloned()),
+                            )
+                            .collect::<BTreeSet<_>>()
+                            .into_iter()
+                            .collect(),
+                    })
+                })
+                .collect();
             let mut article = extensions
                 .articles
                 .get(&page.route)
                 .cloned()
-                .unwrap_or_else(|| article(analysis, i, &site, &outputs, &sizes));
-            let custom_home = page.route == "/"
+                .unwrap_or_else(|| article(analysis, i, site, &outputs, &sizes));
+            let custom_home = page.locale.logical_route == "/"
                 && matches!(page.origin, crate::content::PageOrigin::Registered(_));
             let home = (page.front.layout == Layout::Home || custom_home).then(|| {
                 if custom_home {
@@ -978,7 +1102,7 @@ pub fn generate_extended(
                         .zip(&page.action_targets)
                         .map(|(action, target)| {
                             let url =
-                                target_url(analysis, target, action.link.trim(), &site, &outputs);
+                                target_url(analysis, target, action.link.trim(), site, &outputs);
                             (action.text.as_str(), url)
                         })
                         .collect(),
@@ -995,19 +1119,40 @@ pub fn generate_extended(
                 .toc
                 .levels
                 .map_or((2, 3), |[low, high]| (low, high));
-            let canonical = absolute(&site.url(&page.route));
+            let canonical = absolute(&site.url(&page.locale.source_route));
+            let alternates: Vec<_> = if origin.is_some() && !analysis.locales.is_empty() {
+                analysis
+                    .locales
+                    .values()
+                    .filter_map(|view| view.pages.get(&page.locale.logical_route))
+                    .map(|&i| &analysis.pages[i])
+                    .filter(|target| {
+                        !target.locale.is_fallback
+                            && !target.draft
+                            && target.front.index != Some(false)
+                    })
+                    .map(|target| shell::AlternateLink {
+                        lang: target.lang.clone(),
+                        href: absolute(&site.url(&target.route)).unwrap_or_default(),
+                    })
+                    .collect()
+            } else {
+                Vec::new()
+            };
             let edit_url = edit_prefix
                 .as_ref()
                 .map(|prefix| format!("{prefix}{}", page.file));
-            let slots = layout_slots(analysis, &page.route, &site, &outputs, &sizes);
+            let slots = layout_slots(analysis, &page.route, site, &outputs, &sizes);
             let mut html = shell::render_page_with_slots(
-                &site,
+                site,
                 &Page {
                     route: &page.route,
                     document_title: &titles[&i],
                     title: &page.title,
                     description: page.description.as_deref(),
                     lang: &page.lang,
+                    source_lang: &page.locale.source_lang,
+                    language_links: &language_links,
                     draft: page.draft,
                     article: &article,
                     headings: &page.fragment.headings,
@@ -1017,28 +1162,124 @@ pub fn generate_extended(
                     meta: Meta {
                         canonical: canonical.as_deref(),
                         image: share_image.as_deref(),
-                        noindex: page.front.index == Some(false),
-                        home: page.route == "/",
+                        noindex: page.front.index == Some(false) || page.locale.is_fallback,
+                        home: page.locale.logical_route == "/",
                         updated: dates.get(&page.file).map(String::as_str),
                         edit_url: edit_url.as_deref(),
+                        alternates: &alternates,
                     },
                     home,
                 },
                 &slots,
             );
-            island_module(&mut html, &page.route, &site, extensions);
+            island_module(&mut html, &page.route, site, extensions);
             let mut classes = BTreeSet::new();
             crate::classes::collect(&html, &mut classes);
             (page_path(&page.route), html, classes)
         });
-    let slots = layout_slots(analysis, "/404/", &site, &outputs, &sizes);
-    let mut not_found = shell::render_not_found_with_slots(&site, &slots);
-    island_module(&mut not_found, "/404/", &site, extensions);
+    let homes: Vec<_> = config
+        .locales
+        .iter()
+        .map(|locale| shell::LanguageLink {
+            lang: locale.lang.clone(),
+            label: locale.label.clone(),
+            href: site.url(&analysis.locales[&locale.lang].root_route),
+            is_fallback: false,
+            fallback_label: analysis.catalogs[&locale.lang].get("untranslated").clone(),
+            anchors: Vec::new(),
+        })
+        .collect();
+    let mut locale_not_found = BTreeMap::new();
+    let mut not_found_pages = BTreeMap::new();
+    if config.locales.is_empty() {
+        let slots = layout_slots(analysis, "/404/", &site, &outputs, &sizes);
+        let mut html = shell::render_not_found_with_slots(&site, &slots);
+        island_module(&mut html, "/404/", &site, extensions);
+        not_found_pages.insert("404.html".to_owned(), html);
+    } else {
+        for locale in &config.locales {
+            let site = &localized_sites[&locale.lang];
+            let route = crate::content::locale_route(config, &locale.lang, "/404/");
+            let slots = layout_slots(analysis, &route, site, &outputs, &sizes);
+            let mut html = shell::render_not_found_with_languages(site, &slots, &homes);
+            html = html.replacen("data-rd-base=", "data-rd-not-found=\"\" data-rd-base=", 1);
+            island_module(&mut html, &route, site, extensions);
+            let path = if locale.prefix.is_empty() {
+                "404.html".into()
+            } else {
+                format!("{}/404.html", locale.prefix)
+            };
+            locale_not_found.insert(locale.prefix.clone(), path.clone());
+            not_found_pages.insert(path, html);
+        }
+        let mut templates = String::new();
+        for (prefix, path) in &locale_not_found {
+            if prefix.is_empty() {
+                continue;
+            }
+            let locale = config
+                .locales
+                .iter()
+                .find(|locale| locale.prefix == *prefix)
+                .expect("validated language prefix");
+            let catalog = &analysis.catalogs[&locale.lang];
+            let words: BTreeMap<_, _> = catalog
+                .iter()
+                .filter_map(|(key, value)| key.strip_prefix("dev.").map(|key| (key, &value.text)))
+                .collect();
+            let languages: BTreeMap<_, _> = catalog
+                .iter()
+                .filter_map(|(key, value)| key.strip_prefix("dev.").map(|key| (key, &value.lang)))
+                .collect();
+            templates.push_str("<template");
+            for (name, value) in [
+                ("data-rd-not-found-prefix", prefix.clone()),
+                ("data-rd-not-found-lang", locale.lang.clone()),
+                (
+                    "data-rd-not-found-title",
+                    format!("{} | {}", catalog.get("not_found_title").text, site.name),
+                ),
+                (
+                    "data-rd-dev-labels",
+                    serde_json::to_string(&words).unwrap_or_default(),
+                ),
+                (
+                    "data-rd-dev-label-langs",
+                    serde_json::to_string(&languages).unwrap_or_default(),
+                ),
+            ] {
+                templates.push_str(&format!(" {name}=\""));
+                crate::escape::escape_html_into(&mut templates, &value);
+                templates.push('"');
+            }
+            templates.push('>');
+            templates.push_str(&not_found_body(&not_found_pages[path]));
+            templates.push_str("</template>");
+        }
+        if let Some(mut root) = not_found_pages.remove("404.html") {
+            if !root.contains("data-rd-islands-module") {
+                if let Some(route) = config
+                    .locales
+                    .iter()
+                    .map(|locale| crate::content::locale_route(config, &locale.lang, "/404/"))
+                    .find(|route| extensions.island_routes.contains(route))
+                {
+                    island_module(&mut root, &route, &site, extensions);
+                }
+            }
+            if let Some(at) = root.rfind("</body>") {
+                root.insert_str(at, &templates);
+            }
+            not_found_pages.insert("404.html".into(), root);
+        }
+    }
     let mut candidates: BTreeSet<String> = crate::classes::SCRIPT_STATE_CLASSES
         .iter()
         .map(|class| class.to_string())
         .collect();
-    crate::classes::collect(&not_found, &mut candidates);
+    for html in not_found_pages.values() {
+        crate::classes::collect(html, &mut candidates);
+    }
     for (_, _, classes) in &rendered {
         candidates.extend(classes.iter().cloned());
     }
@@ -1121,7 +1362,7 @@ pub fn generate_extended(
         .into_iter()
         .map(|(path, html, _)| (path, html))
         .collect();
-    pages.push(("404.html".to_owned(), not_found));
+    pages.extend(not_found_pages);
     let pages: Vec<(String, Arc<[u8]>, Vec<String>)> =
         parallel_map(&pages, workers, |(path, html)| {
             let html = html.replacen(STYLESHEET_PLACEHOLDER, &stylesheet_url, 1);
@@ -1135,14 +1376,16 @@ pub fn generate_extended(
             (page_path(&page.route), page.file.clone())
         })
         .collect();
-    sources.insert(
-        "404.html".into(),
-        config
-            .rust
-            .as_ref()
-            .map_or("404.html", |rust| rust.registry.as_str())
-            .to_owned(),
-    );
+    for path in std::iter::once("404.html").chain(locale_not_found.values().map(String::as_str)) {
+        sources.insert(
+            path.into(),
+            config
+                .rust
+                .as_ref()
+                .map_or(path, |rust| rust.registry.as_str())
+                .to_owned(),
+        );
+    }
     let page_count = pages.len();
     for (path, bytes, found) in pages {
         for problem in found {
@@ -1185,12 +1428,19 @@ pub fn generate_extended(
     )?;
     // GitHub Pages runs Jekyll on a branch unless told not to.
     insert_output(&mut files, ".nojekyll".to_owned(), Arc::from(&b""[..]))?;
-    problems.extend(final_documents(&files, &sources, &site, workers));
+    problems.extend(final_documents(
+        &files,
+        &sources,
+        &site,
+        origin.as_deref(),
+        workers,
+    ));
     if !problems.is_empty() {
         return Err(problems);
     }
     Ok(Generation {
         files,
+        locale_not_found,
         stylesheet_path,
         pages: page_count,
         candidates: candidates.len(),
@@ -1212,12 +1462,32 @@ pub fn dev_shell_with_status(
     project: &Project,
     building: bool,
 ) -> Result<Generation, Vec<Diagnostic>> {
+    let (snapshot, _) = crate::content::snapshot(project);
+    dev_shell_from_snapshot(project, &snapshot, building)
+}
+
+/// Uses the failed generation's original message reads for its diagnostic shell.
+#[doc(hidden)]
+pub fn dev_shell_from_snapshot(
+    project: &Project,
+    snapshot: &Snapshot,
+    building: bool,
+) -> Result<Generation, Vec<Diagnostic>> {
     let config = &project.config;
     let mode_path = format!("assets/mode.{}.js", fingerprint(MODE_SCRIPT.as_bytes()));
     let site_path = format!("assets/site.{}.js", fingerprint(SITE_SCRIPT.as_bytes()));
+    let catalogs = crate::content::resolve_catalogs(project, snapshot, &mut Vec::new());
     let mut site = Site {
         name: config.site.name.clone(),
         lang: config.site.lang.clone(),
+        home_route: "/".into(),
+        catalog: catalogs
+            .iter()
+            .find(|(lang, _)| lang.eq_ignore_ascii_case(&config.site.lang))
+            .map(|(_, catalog)| catalog.clone())
+            .unwrap_or_else(|| {
+                Arc::new(crate::labels::resolve(&config.site.lang, &BTreeMap::new()))
+            }),
         base: config.site.base.clone(),
         nav: Vec::new(),
         top: Vec::new(),
@@ -1231,12 +1501,39 @@ pub fn dev_shell_with_status(
         site_script: site.url(&format!("/{site_path}")),
         dev: true,
     };
-    let html = shell::render_dev_shell_with_status(&site, building);
+    let mut pages = BTreeMap::new();
+    let mut locale_not_found = BTreeMap::new();
+    if config.locales.is_empty() {
+        pages.insert(
+            DEV_SHELL_PAGE.to_owned(),
+            shell::render_dev_shell_with_status(&site, building),
+        );
+    } else {
+        for locale in &config.locales {
+            let mut localized = site.clone();
+            localized.lang = locale.lang.clone();
+            localized.home_route = crate::content::locale_route(config, &locale.lang, "/");
+            localized.catalog = catalogs[&locale.lang].clone();
+            let html = shell::render_dev_shell_with_status(&localized, building);
+            let path = if locale.prefix.is_empty() {
+                "404.html".into()
+            } else {
+                format!("{}/404.html", locale.prefix)
+            };
+            if locale.prefix.is_empty() {
+                pages.insert(DEV_SHELL_PAGE.to_owned(), html.clone());
+            }
+            locale_not_found.insert(locale.prefix.clone(), path.clone());
+            pages.insert(path, html);
+        }
+    }
     let mut candidates: BTreeSet<String> = crate::classes::SCRIPT_STATE_CLASSES
         .iter()
         .map(|class| class.to_string())
         .collect();
-    crate::classes::collect(&html, &mut candidates);
+    for html in pages.values() {
+        crate::classes::collect(html, &mut candidates);
+    }
     let brand = match &config.primary {
         Some(primary) => Brand {
             primary_light: primary.light.clone(),
@@ -1252,20 +1549,24 @@ pub fn dev_shell_with_status(
         )]
     })?;
     let stylesheet_path = format!("assets/site.{}.css", fingerprint(css.as_bytes()));
-    let html = html.replacen(
-        STYLESHEET_PLACEHOLDER,
-        &site.url(&format!("/{stylesheet_path}")),
-        1,
-    );
     let mut files: BTreeMap<String, Arc<[u8]>> = BTreeMap::new();
-    files.insert(DEV_SHELL_PAGE.to_owned(), Arc::from(html.into_bytes()));
+    let page_count = pages.len();
+    for (path, html) in pages {
+        let html = html.replacen(
+            STYLESHEET_PLACEHOLDER,
+            &site.url(&format!("/{stylesheet_path}")),
+            1,
+        );
+        files.insert(path, Arc::from(html.into_bytes()));
+    }
     files.insert(stylesheet_path.clone(), Arc::from(css.into_bytes()));
     files.insert(mode_path, Arc::from(MODE_SCRIPT.as_bytes()));
     files.insert(site_path, Arc::from(SITE_SCRIPT.as_bytes()));
     Ok(Generation {
         files,
+        locale_not_found,
         stylesheet_path,
-        pages: 1,
+        pages: page_count,
         candidates: candidates.len(),
     })
 }

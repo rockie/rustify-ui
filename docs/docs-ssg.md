@@ -282,6 +282,114 @@ as `/examples/` without the deployment base, query or fragment. A duplicate
 route, an unknown route or a Markdown page listed there is an error; use
 `dir` or `items` for Markdown pages.
 
+### Publish several languages
+
+The multilingual configuration below belongs to the current source work.
+It requires the new matched CLI/framework pair recorded at P3 closure;
+the older installation revision above cannot read these keys.
+
+Declare every language, including the default `site.lang`. The default has
+an empty prefix and keeps the existing addresses. Other languages each
+have one unique URL segment:
+
+```toml
+[[i18n.locales]]
+lang = "en"
+label = "English"
+prefix = ""
+
+[[i18n.locales]]
+lang = "zh"
+label = "中文"
+prefix = "zh"
+
+[[i18n.locales]]
+lang = "fr"
+label = "Français"
+prefix = "fr"
+messages = "locales/fr.toml"
+
+[i18n.locales.nav]
+groups = [{ label = "Guides", items = ["guide/setup.md"] }]
+top = [{ label = "Installation", link = "guide/setup.md" }]
+```
+
+`content/guide/setup.md`, `content/zh/guide/setup.md` and
+`content/fr/guide/setup.md` share the logical route `/guide/setup/`.
+With base `/docs/`, their addresses are `/docs/guide/setup/`,
+`/docs/zh/guide/setup/` and `/docs/fr/guide/setup/`. Translate the content
+without changing its logical path. A translation without a default-language
+source is an `i18n-orphan` error. When `content.include` selects exact files,
+add the translated paths to that list too; declaring a language does not
+expand the selection.
+
+The language menu links to the same logical page. A missing translation
+uses the default source at the target address, with an untranslated notice,
+target-language controls and the source language on its body and title.
+A relative page link follows the current UI language; an explicitly
+prefixed site link keeps the language it names. Images, includes and
+repository files retain their real source paths. Anchors must exist in the
+actual target version. The script preserves a hash on language switching
+only when the target contains that ID.
+
+The default-language pages define the page set. A default draft hides that
+logical page in every language in production. A translated draft uses the
+default body at its language address; `dev` can show drafts. Omitting i18n
+keeps the previous independent `frontmatter.lang` behavior.
+
+Each locale can replace the complete `nav` definition: `groups`, `top` and
+`social`, with the existing field shapes. `items` and `dir` still select
+default-language content paths, and `routes` still select logical registered
+routes. The resulting navigation stays inside the current language, using
+translated page titles where available. Do not put a language prefix in
+these selectors. A supplied `frontmatter.lang` must match its directory's
+declared language; tag comparisons ignore case and HTML retains the
+configuration's spelling.
+
+`messages` is a project-relative TOML file of plain strings:
+
+```toml
+menu = "Parcourir"
+language = "Langue"
+untranslated = "Cette page n’est pas encore traduite."
+
+[demo]
+loading = "Chargement de l’exemple…"
+
+[dev]
+revision = "révision {n}"
+```
+
+The fixed keys come from the [built-in label directory](../crates/rustify-docs/src/labels.rs).
+English and Chinese can override individual keys. Other languages use the
+provided strings and fall back to English one key at a time; each control
+marks the language of its actual text. Missing project keys each produce
+one `i18n-missing-label` warning. Unknown keys, non-string values, control
+characters and changed format placeholders are errors; preserve `{n}` in
+count and revision messages. Strings are escaped as text. Keep message
+files outside the scanned content and assets directories: they are build
+inputs and cannot be downloaded, included as source or published as assets,
+including through a symbolic alias. Editing them triggers a dev rebuild.
+
+Registered pages can declare `lang: "zh"` with the same logical `route` as
+the default function. Names remain globally unique. Markdown and registered
+pages can be translations of each other. For a missing registered version,
+the default function is rendered again in the target environment;
+`RenderContext.route` stays logical, `lang` is the target UI language and
+`base` is the deployment base. Islands retain that same environment through
+SSR and hydration. SDK controls support English and Chinese; another valid
+language uses English SDK words without producing project-message warnings.
+
+Real, indexable versions link to each other with `hreflang` and have their
+own canonical address. A fallback has `noindex`, points its canonical to
+the source version and is absent from the sitemap and alternate targets.
+Without `site.url`, canonical, alternate and sitemap output are omitted.
+
+Layouts remain left-to-right; RTL is unsupported. Removing a locale or
+changing its prefix changes public addresses. No redirects or URL migration
+are generated. Upgrade or roll back the CLI, framework, configuration and
+content as one matched set.
+
 ### Select Markdown sources
 
 Without `content.include`, the content directory keeps its recursive
@@ -349,7 +457,7 @@ and every key is known:
 | --- | --- |
 | `title` | The page's title. Without it, the first `# heading` is the title; a page with neither is an error. |
 | `description` | One sentence for search results and link previews. Without it the first paragraph is used (warning); a page with neither is an error. |
-| `lang` | The page's language tag; defaults to `site.lang`. The interface is in that language when the theme has its words (English and Chinese). |
+| `lang` | Without i18n, the page's language tag, defaulting to `site.lang`. With i18n, it must match the language declared for its content directory. Interface strings use that language's catalog with per-key English fallback. |
 | `sidebar.label`, `sidebar.order` | The sidebar's text for the page, and its position in its group (lower first; pages without an order follow, by path). |
 | `sidebar.group` | The nav group the page is listed in, by label, instead of its directory's. It must name a configured group; without `[[nav.groups]]` it starts a group of that name. A group's explicit `items` list is never changed by it. |
 | `draft` | `true` keeps the page out of a production build. |
@@ -887,7 +995,9 @@ As in the template's
 [src/demos.rs](../crates/rustify-docs-cli/templates/components/src/demos.rs), these functions need
 `use leptos::prelude::*;`. `RenderContext` provides `route`, `lang` and
 `base`; each `demo(name)` call uses the same island and source wrapper as a
-fence, with independent IDs and state. `route` omits the deployment base.
+fence, with independent IDs and state. `route` omits the deployment base
+and language prefix; `lang` is the target UI language, including when the
+function supplies a fallback version.
 Use `base` when constructing links to other registered routes. The page is
 written as `/examples/index.html` and uses the normal shell, navigation and
 theme; it is not rendered by an application server for each request.
@@ -978,6 +1088,7 @@ inside the configured Rust project.
 dist/
   index.html, guide/index.html, …     one directory and index.html per page
   404.html                            the not-found page
+  zh/404.html, fr/404.html, …          one error page per configured non-default language
   assets/site.<hash>.css              the stylesheet: the classes the pages use, minified
   assets/mode.<hash>.js, site.<hash>.js   the theme's two small scripts
   assets/files/<name>.<hash>.<ext>    every file a page shows or links to
@@ -995,8 +1106,8 @@ dist/
   content writes the same bytes; changing an image renames it and changes
   only the pages that show it; changing the logo changes every page (each
   shows it) and nothing else.
-- Each page has a unique `<title>` (`Page | Site`; two pages with one title
-  are told apart by their parent page), its description, Open Graph and
+- Each page has a unique `<title>` within its configured language (`Page |
+  Site`; two pages with one title are told apart by their parent page), its description, Open Graph and
   Twitter card tags, and when `site.url` is set, its canonical address and a
   preview image (`site.image`, or a built-in card). `index: false` adds
   `<meta name="robots" content="noindex">` and keeps the page out of the
@@ -1012,6 +1123,8 @@ dist/
 
 The manifest records `schema_version`, `mode` (always `production`), `base`,
 `cli_version`, a `build_id` and every other file with its SHA-256 and size.
+Multilingual builds also record `locale_not_found`, an explicit mapping
+from each prefix (including the empty default) to its generated error file.
 It holds no time, machine path or environment value. Pages with islands also
 reference a fingerprinted `assets/islands/<hash>/` group containing their
 wasm, glue, snippets and locked SDK runtime assets. Rust source is displayed
@@ -1139,6 +1252,21 @@ pick) and prints the address. `--host` takes an address to listen on, such
 as the machine's LAN address for a phone; it serves the same read-only
 files.
 
+For multilingual builds, preview freezes the error-file mapping and bytes
+from the output manifest while holding its shared lock. It can preview a
+copied `dist` with `--dir` without the source project. Changing the project's
+language configuration does not change an existing output's behavior.
+A damaged mapping or a missing declared error file refuses startup and asks
+for a rebuild. Outputs without the field retain the default-error behavior;
+an ordinary directory containing `foo/404.html` does not declare a language.
+
+Preview answers a missing address under a configured prefix with that
+language's error page and HTTP 404, including without scripts. A host with
+one fixed error file serves the root `404.html`; its external head script
+selects the matching static language body before attaching any islands.
+Without scripts, the default error and links to every language's home remain
+readable. Both paths retain the real HTTP 404 status.
+
 Any static host serves the output as it is, provided it:
 
 - serves the output under the base it was built for, with directory
@@ -1241,6 +1369,9 @@ Errors stop a build; warnings do not, unless `--deny-warnings` is given.
 | `config-missing` | error | No `rustify-docs.toml` where `--config` points |
 | `frontmatter`, `frontmatter-unclosed` | error | Frontmatter that is not valid, has an unknown key, or never closes |
 | `lang` | error | A page `lang` that is not a language tag |
+| `i18n-config`, `i18n-messages` | error | Invalid locale configuration or project messages; message inputs selected as public resources |
+| `i18n-content-lang`, `i18n-orphan` | error | A page language disagreeing with its directory; a translation without a default-language source |
+| `i18n-missing-page`, `i18n-missing-label` | warning | One missing production translation or one missing third-language project message key; `check --deny-warnings` fails for these too |
 | `route-conflict`, `reserved-route` | error | Two pages with one address; a page at `/404/` |
 | `missing-title` | error | A page with no title and no `#` heading |
 | `missing-description` | error / warning | No description and no paragraph to take one from (error); no `description:` (warning) |

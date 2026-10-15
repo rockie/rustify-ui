@@ -2,7 +2,16 @@
 // without them: the mode follows the system, every code block is readable
 // and selectable, every heading and page is a link. A failure here hides
 // nothing.
-(function () {
+(function (enhance) {
+  var script = document.currentScript;
+  var coordinator = window.__rustify_docs_islands;
+  var start = function () { enhance(script); };
+  if (document.documentElement.hasAttribute("data-rd-not-found") && coordinator) {
+    coordinator.parsed.then(start);
+  } else {
+    start();
+  }
+})(function (script) {
   "use strict";
   var root = document.documentElement;
   var base = root.getAttribute("data-rd-base") || "/";
@@ -24,19 +33,44 @@
     }
   }
 
-  function announce(text) {
+  function announce(text, lang) {
     if (!status || !text) return;
     status.textContent = "";
     // A changed text node is what a live region reads; clearing first makes
     // the same message announce twice in a row.
     setTimeout(function () {
+      if (lang) status.lang = lang;
       status.textContent = text;
     }, 50);
   }
 
-  function label(name) {
-    return status ? status.getAttribute("data-" + name) || "" : "";
+  function label(name, button) {
+    return (button && button.getAttribute("data-" + name)) || (status && status.getAttribute("data-" + name)) || "";
   }
+
+  function labelLang(name, button) {
+    return (button && button.getAttribute("data-" + name + "-lang")) ||
+      (status && status.getAttribute("data-" + name + "-lang")) || root.lang;
+  }
+
+  document.querySelectorAll("[data-rd-language-switch]").forEach(function (menu) {
+    menu.addEventListener("keydown", function (event) {
+      if (event.key !== "Escape" || !menu.open) return;
+      event.preventDefault();
+      menu.open = false;
+      menu.querySelector("summary").focus();
+    });
+    menu.querySelectorAll("a[hreflang]").forEach(function (link) {
+      link.addEventListener("click", function () {
+        var anchor = location.hash.slice(1);
+        try { anchor = decodeURIComponent(anchor); } catch (malformed) { /* Literal percent in an id. */ }
+        var target = new URL(link.href);
+        var anchors = JSON.parse(link.getAttribute("data-rd-language-anchors") || "[]");
+        target.hash = anchor && anchors.indexOf(anchor) !== -1 ? location.hash : "";
+        link.href = target.href;
+      });
+    });
+  });
 
   // The colour mode switch.
   var modeKey = "rustify-docs:mode:" + base;
@@ -87,10 +121,13 @@
     }
     clearTimeout(button.rdCopyTimer);
     button.setAttribute("data-state", state);
-    if (text) text.textContent = label(state === "copied" ? "copied" : "copy-failed-short");
+    var key = state === "copied" ? "copied" : "copy-failed-short";
+    if (text) text.textContent = label(key, button);
+    button.lang = labelLang(key, button);
     button.rdCopyTimer = setTimeout(function () {
       button.removeAttribute("data-state");
       if (text) text.textContent = button.getAttribute("data-rd-copy-text");
+      button.lang = labelLang("copy", button);
     }, state === "copied" ? 2000 : 4000);
   }
 
@@ -99,7 +136,7 @@
     if (!raw) return;
     var failed = function () {
       showCopy(button, "failed");
-      announce(label("copy-failed"));
+      announce(label("copy-failed", button), labelLang("copy-failed", button));
       selectCode(figure);
     };
     if (!navigator.clipboard || !window.isSecureContext) {
@@ -108,7 +145,7 @@
     }
     navigator.clipboard.writeText(raw.content.textContent).then(function () {
       showCopy(button, "copied");
-      announce(label("copied"));
+      announce(label("copied", button), labelLang("copied", button));
     }, failed);
   }
 
@@ -355,4 +392,4 @@
     var offset = currentItem.getBoundingClientRect().top - sidebar.getBoundingClientRect().top;
     if (offset > sidebar.clientHeight - 48) sidebar.scrollTop = offset - sidebar.clientHeight / 3;
   }
-})();
+});

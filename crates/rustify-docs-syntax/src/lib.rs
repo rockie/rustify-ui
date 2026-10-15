@@ -94,6 +94,7 @@ pub struct PageDeclaration {
     pub route: LitStr,
     pub title: LitStr,
     pub description: Option<LitStr>,
+    pub lang: Option<LitStr>,
     pub function: ExprPath,
 }
 
@@ -149,6 +150,7 @@ impl SiteDeclaration {
                     route: page.route.value(),
                     title: page.title.value(),
                     description: page.description.as_ref().map(LitStr::value),
+                    lang: page.lang.as_ref().map(LitStr::value),
                     function: normalized(&page.function),
                 })
                 .collect(),
@@ -272,7 +274,11 @@ impl Parse for SiteDeclaration {
                         let page = parse_page(&content)?;
                         register(&page.name, &mut names)?;
                         let route = page.route.value();
-                        if !routes.insert(route.clone()) {
+                        let lang = page
+                            .lang
+                            .as_ref()
+                            .map(|lang| lang.value().to_ascii_lowercase());
+                        if !routes.insert((lang, route.clone())) {
                             return Err(Error::new(
                                 page.route.span(),
                                 format!("duplicate page route {}", code_span(&route)),
@@ -431,6 +437,7 @@ fn parse_page(input: ParseStream) -> Result<PageDeclaration> {
     let mut route = None;
     let mut title = None;
     let mut description = None;
+    let mut lang = None;
     while !content.is_empty() {
         let key: Ident = content.parse()?;
         let key_name = self::name(&key);
@@ -438,6 +445,7 @@ fn parse_page(input: ParseStream) -> Result<PageDeclaration> {
             "route" => &mut route,
             "title" => &mut title,
             "description" => &mut description,
+            "lang" => &mut lang,
             _ => {
                 return Err(Error::new(
                     key.span(),
@@ -464,6 +472,7 @@ fn parse_page(input: ParseStream) -> Result<PageDeclaration> {
         route,
         title,
         description,
+        lang,
         function,
     })
 }

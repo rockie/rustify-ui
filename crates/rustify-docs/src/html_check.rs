@@ -537,7 +537,43 @@ pub fn check_rendered(html: &str) -> (Vec<Issue>, Vec<UrlSlot>) {
 /// Collect final IDs and references from the same document tree.
 pub(crate) fn document_references(html: &str) -> (Vec<String>, Vec<UrlSlot>) {
     let semantics = semantics(html, &[]);
-    let (_, slots) = check_rendered_with_semantics(html, &semantics);
+    let (_, mut slots) = check_rendered_with_semantics(html, &semantics);
+    let mut emitter = html5gum::DefaultEmitter::new_with_span();
+    emitter.naively_switch_states(true);
+    for token in Tokenizer::new_with_emitter(html, emitter) {
+        let Ok(Token::StartTag(tag)) = token else {
+            continue;
+        };
+        if !tag.name.eq_ignore_ascii_case(b"link")
+            || !in_document(&(tag.span.start..tag.span.end), &semantics.tags)
+        {
+            continue;
+        }
+        let attribute = |key: &[u8]| {
+            tag.attributes
+                .iter()
+                .find(|(name, _)| name.eq_ignore_ascii_case(key))
+                .map(|(_, value)| value)
+        };
+        let metadata = attribute(b"rel").is_some_and(|rel| {
+            String::from_utf8_lossy(&rel.value)
+                .split_ascii_whitespace()
+                .any(|rel| {
+                    rel.eq_ignore_ascii_case("canonical") || rel.eq_ignore_ascii_case("alternate")
+                })
+        });
+        if metadata {
+            if let Some(href) = attribute(b"href") {
+                slots.push(UrlSlot {
+                    span: href.span.start..href.span.end,
+                    role: UrlRole::Link,
+                    value: String::from_utf8_lossy(&href.value).into_owned(),
+                    element: "link".into(),
+                    attribute: "href".into(),
+                });
+            }
+        }
+    }
     (semantics.anchors, slots)
 }
 

@@ -32,7 +32,7 @@ use crate::escape::{escape_html_into, escape_url_into};
 use crate::highlight::Highlighter;
 use crate::html_check::{self, UrlRole};
 use crate::include::{self, Directive};
-use crate::labels::Labels;
+use crate::labels::{Catalog, LabelText};
 use crate::slug::{slugify, Slugger};
 
 /// The parser options every page is read with: GFM tables, task lists,
@@ -48,7 +48,7 @@ pub fn options() -> Options {
 
 /// A version for everything above that decides a fragment's bytes; part of
 /// the fragment cache key.
-pub const WRITER_VERSION: u32 = 11;
+pub const WRITER_VERSION: u32 = 12;
 
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct Heading {
@@ -188,10 +188,9 @@ pub fn include_paths(source: &str) -> Vec<String> {
 /// What a page is rendered with.
 pub struct Context<'a> {
     pub highlighter: &'a Highlighter,
-    pub labels: &'a Labels,
-    /// The page is in neither interface language, so interface strings say
-    /// `lang="en"`.
-    pub foreign: bool,
+    pub catalog: &'a Catalog,
+    /// The actual language inherited from the source body around the controls.
+    pub source_lang: &'a str,
     pub includes: &'a IncludeFiles,
 }
 
@@ -336,7 +335,7 @@ pub fn render_html(html: &str) -> Fragment {
 
 /// Uses the existing code panels, raw copy templates and accessible tabs for
 /// a compiled demo's function and full-file source.
-pub fn code_group_html(blocks: &[(&str, &str)], name: &str, context: &Context) -> String {
+pub fn code_group_html(blocks: &[(&LabelText, &str)], name: &str, context: &Context) -> String {
     let mut writer = Writer::new(context);
     writer.group = Some(GroupCapture {
         name: name.to_owned(),
@@ -349,7 +348,8 @@ pub fn code_group_html(blocks: &[(&str, &str)], name: &str, context: &Context) -
         writer.code_block(BlockSpec {
             text: (*source).to_owned(),
             tag: Some("rust".into()),
-            title: Some((*label).to_owned()),
+            title: Some(label.text.clone()),
+            title_lang: Some(label.lang.clone()),
             linenos: false,
             highlight: Vec::new(),
             span: 0..0,
@@ -434,10 +434,15 @@ struct GroupCapture {
     name: String,
     /// Where in the document buffer the group's wrapper goes.
     start: usize,
-    labels: Vec<String>,
+    labels: Vec<CodeLabel>,
     span: Range<usize>,
     /// Something other than a code block was found inside.
     stray: bool,
+}
+
+struct CodeLabel {
+    text: String,
+    lang: String,
 }
 
 /// A code block to write: its text, tag, title and options.
@@ -445,6 +450,7 @@ struct BlockSpec {
     text: String,
     tag: Option<String>,
     title: Option<String>,
+    title_lang: Option<String>,
     linenos: bool,
     highlight: Vec<std::ops::RangeInclusive<usize>>,
     span: Range<usize>,
@@ -588,13 +594,14 @@ impl<'a> Writer<'a> {
         self.push(&html);
     }
 
-    /// `lang="en"` on an interface string inside foreign-language content.
-    fn ui_lang(&self) -> &'static str {
-        if self.context.foreign {
-            " lang=\"en\""
-        } else {
-            ""
+    fn ui_lang(&self, lang: &str) -> String {
+        let mut attribute = String::new();
+        if !lang.eq_ignore_ascii_case(self.context.source_lang) {
+            attribute.push_str(" lang=\"");
+            escape_html_into(&mut attribute, lang);
+            attribute.push('"');
         }
+        attribute
     }
 
     /// Notes block content inside a code group, which may hold only code.
@@ -653,11 +660,16 @@ impl<'a> Writer<'a> {
             Event::TaskListMarker(checked) => {
                 // Named, so the box is not an unlabelled control; its state
                 // and the item's text follow.
-                let task = self.context.labels.task;
-                self.push(&format!(
-                    "<input type=\"checkbox\" disabled{} aria-label=\"{task}\"> ",
+                let task = self.context.catalog.get("task");
+                let mut html = format!(
+                    "<input type=\"checkbox\" disabled{} aria-label=\"",
                     if checked { " checked" } else { "" }
-                ));
+                );
+                escape_html_into(&mut html, &task.text);
+                html.push('"');
+                html.push_str(&self.ui_lang(&task.lang));
+                html.push_str("> ");
+                self.push(&html);
             }
             Event::InlineMath(_) | Event::DisplayMath(_) => {}
         }
@@ -794,7 +806,10 @@ impl<'a> Writer<'a> {
             ));
         }
         for (i, label) in group.labels.iter().enumerate() {
-            if group.labels[..i].contains(label) {
+            if group.labels[..i]
+                .iter()
+                .any(|earlier| earlier.text == label.text)
+            {
                 self.out.issues.push(
                     Issue::error(
                         span.clone(),
@@ -802,7 +817,7 @@ impl<'a> Writer<'a> {
                         format!(
                             "code group {} has two tabs labelled {}",
                             code_span(&group.name),
-                            code_span(label)
+                            code_span(&label.text)
                         ),
                     )
                     .suggest("give each block its own title=\"…\""),
@@ -816,10 +831,11 @@ impl<'a> Writer<'a> {
         );
         for (i, label) in group.labels.iter().enumerate() {
             open.push_str(&format!(
-                "<button type=\"button\" role=\"tab\" aria-selected=\"{}\" data-rd-tab=\"{i}\">",
-                i == 0
+                "<button type=\"button\" role=\"tab\" aria-selected=\"{}\" data-rd-tab=\"{i}\"{}>",
+                i == 0,
+                self.ui_lang(&label.lang)
             ));
-            escape_html_into(&mut open, label);
+            escape_html_into(&mut open, &label.text);
             open.push_str("</button>");
         }
         open.push_str("</div></div>\n");
@@ -828,7 +844,7 @@ impl<'a> Writer<'a> {
         self.push("</div>\n");
         self.out.code_groups.push(CodeGroup {
             name: group.name,
-            labels: group.labels,
+            labels: group.labels.into_iter().map(|label| label.text).collect(),
             span,
         });
     }
@@ -878,11 +894,14 @@ impl<'a> Writer<'a> {
                     None => self.push("<blockquote>\n"),
                     Some(kind) => {
                         let (name, title) = self.alert(kind);
-                        let lang = self.ui_lang();
-                        self.push(&format!(
-                            "<div class=\"markdown-alert markdown-alert-{name}\" role=\"note\">\n<p class=\"markdown-alert-title\"{lang}>{}{title}</p>\n",
+                        let mut html = format!(
+                            "<div class=\"markdown-alert markdown-alert-{name}\" role=\"note\">\n<p class=\"markdown-alert-title\"{}>{}",
+                            self.ui_lang(&title.lang),
                             crate::icons::alert(name)
-                        ));
+                        );
+                        escape_html_into(&mut html, &title.text);
+                        html.push_str("</p>\n");
+                        self.push(&html);
                     }
                 }
             }
@@ -1102,15 +1121,15 @@ impl<'a> Writer<'a> {
         self.push(&format!("</h{level}>\n"));
     }
 
-    fn alert(&self, kind: BlockQuoteKind) -> (&'static str, &'static str) {
-        let labels = self.context.labels;
-        match kind {
-            BlockQuoteKind::Note => ("note", labels.note),
-            BlockQuoteKind::Tip => ("tip", labels.tip),
-            BlockQuoteKind::Important => ("important", labels.important),
-            BlockQuoteKind::Warning => ("warning", labels.warning),
-            BlockQuoteKind::Caution => ("caution", labels.caution),
-        }
+    fn alert(&self, kind: BlockQuoteKind) -> (&'static str, &LabelText) {
+        let key = match kind {
+            BlockQuoteKind::Note => "note",
+            BlockQuoteKind::Tip => "tip",
+            BlockQuoteKind::Important => "important",
+            BlockQuoteKind::Warning => "warning",
+            BlockQuoteKind::Caution => "caution",
+        };
+        (key, self.context.catalog.get(key))
     }
 
     fn image(&mut self, image: ImageCapture) {
@@ -1193,6 +1212,7 @@ impl<'a> Writer<'a> {
             text: code.text,
             tag: fence.tag,
             title: fence.title,
+            title_lang: None,
             linenos: fence.linenos,
             highlight: fence.highlight,
             span: code.span,
@@ -1345,6 +1365,7 @@ impl<'a> Writer<'a> {
             text,
             tag,
             title: Some(directive.title.unwrap_or(path)),
+            title_lang: None,
             linenos: false,
             highlight: Vec::new(),
             span,
@@ -1375,16 +1396,24 @@ impl<'a> Writer<'a> {
             .map(|language| language.id.to_owned())
             .or_else(|| block.tag.clone())
             .unwrap_or_default();
-        let label = match (&block.title, highlighted.language) {
-            (Some(title), _) => title.clone(),
-            (None, Some(language)) => language.label.to_owned(),
-            (None, None) => block
-                .tag
-                .clone()
-                .unwrap_or_else(|| self.context.labels.plain_text.to_owned()),
+        let plain_text = self.context.catalog.get("plain_text");
+        let (label, label_lang) = match (&block.title, highlighted.language, &block.tag) {
+            (Some(title), _, _) => (
+                title.clone(),
+                block
+                    .title_lang
+                    .as_deref()
+                    .unwrap_or(self.context.source_lang),
+            ),
+            (None, Some(language), _) => (language.label.to_owned(), self.context.source_lang),
+            (None, None, Some(tag)) => (tag.clone(), self.context.source_lang),
+            (None, None, None) => (plain_text.text.clone(), plain_text.lang.as_str()),
         };
         let tab = self.group.as_mut().map(|group| {
-            group.labels.push(label.clone());
+            group.labels.push(CodeLabel {
+                text: label.clone(),
+                lang: label_lang.to_owned(),
+            });
             group.labels.len() - 1
         });
         let mut html = String::with_capacity(block.text.len() * 3 + 256);
@@ -1400,14 +1429,27 @@ impl<'a> Writer<'a> {
         if let Some(tab) = tab {
             html.push_str(&format!(" data-rd-tab-panel=\"{tab}\""));
         }
-        html.push_str(">\n<figcaption class=\"rd-code-bar\"><span class=\"rd-code-title\">");
+        html.push_str(">\n<figcaption class=\"rd-code-bar\"><span class=\"rd-code-title\"");
+        html.push_str(&self.ui_lang(label_lang));
+        html.push('>');
         escape_html_into(&mut html, &label);
-        html.push_str("</span><button type=\"button\" class=\"rd-copy\" data-rd-copy hidden");
-        html.push_str(self.ui_lang());
+        html.push_str("</span><button type=\"button\" class=\"rd-copy\"");
+        for key in ["copy", "copied", "copy_failed", "copy_failed_short"] {
+            let label = self.context.catalog.get(key);
+            let attribute = key.replace('_', "-");
+            html.push_str(&format!(" data-{attribute}=\""));
+            escape_html_into(&mut html, &label.text);
+            html.push_str(&format!("\" data-{attribute}-lang=\""));
+            escape_html_into(&mut html, &label.lang);
+            html.push('"');
+        }
+        let copy = self.context.catalog.get("copy");
+        html.push_str(" data-rd-copy hidden");
+        html.push_str(&self.ui_lang(&copy.lang));
         html.push('>');
         html.push_str(&crate::icons::copy());
         html.push_str("<span class=\"rd-copy-label\">");
-        html.push_str(self.context.labels.copy);
+        escape_html_into(&mut html, &copy.text);
         html.push_str(
             "</span></button></figcaption>\n<pre class=\"rd-code-pre\" tabindex=\"0\"><code>",
         );
@@ -1456,12 +1498,14 @@ impl<'a> Writer<'a> {
             self.buf().append(inner);
         }
         if !self.footnote_order.is_empty() {
-            let lang = self.ui_lang();
-            let labels = self.context.labels;
-            self.push(&format!(
-                "<section class=\"rd-footnotes\"><h2 class=\"sr-only\"{lang}>{}</h2>\n<ol>\n",
-                labels.footnotes
-            ));
+            let footnotes = self.context.catalog.get("footnotes");
+            let mut html = format!(
+                "<section class=\"rd-footnotes\"><h2 class=\"sr-only\"{}>",
+                self.ui_lang(&footnotes.lang)
+            );
+            escape_html_into(&mut html, &footnotes.text);
+            html.push_str("</h2>\n<ol>\n");
+            self.push(&html);
             let order = std::mem::take(&mut self.footnote_order);
             let mut footnotes = std::mem::take(&mut self.footnotes);
             for label in &order {
@@ -1473,11 +1517,16 @@ impl<'a> Writer<'a> {
                     body.html.truncate(trimmed);
                     self.buf().append(body);
                 }
-                self.push(&format!(
-                    " <a href=\"#fnref-{slug}\" class=\"rd-footnote-back\" aria-label=\"{}\"{lang}>{}</a></li>\n",
-                    labels.back_to_reference,
+                let back = self.context.catalog.get("back_to_reference");
+                let mut html =
+                    format!(" <a href=\"#fnref-{slug}\" class=\"rd-footnote-back\" aria-label=\"");
+                escape_html_into(&mut html, &back.text);
+                html.push_str(&format!(
+                    "\"{}>{}</a></li>\n",
+                    self.ui_lang(&back.lang),
                     crate::icons::back()
                 ));
+                self.push(&html);
             }
             self.push("</ol>\n</section>\n");
         }
@@ -1646,22 +1695,27 @@ mod tests {
 
     fn render_with(
         source: &str,
-        labels: &Labels,
-        foreign: bool,
+        catalog: &Catalog,
+        source_lang: &str,
         includes: &IncludeFiles,
     ) -> Fragment {
         let highlighter = Highlighter::new();
         let context = Context {
             highlighter: &highlighter,
-            labels,
-            foreign,
+            catalog,
+            source_lang,
             includes,
         };
         render(source, 0, &context)
     }
 
     fn md(source: &str) -> Fragment {
-        render_with(source, &labels::EN, false, &IncludeFiles::default())
+        render_with(
+            source,
+            &labels::resolve("en", &BTreeMap::new()),
+            "en",
+            &IncludeFiles::default(),
+        )
     }
 
     fn rules(fragment: &Fragment) -> Vec<&'static str> {
@@ -1817,8 +1871,8 @@ mod tests {
     fn interface_strings_carry_english_inside_foreign_content() {
         let page = render_with(
             "> [!TIP]\n> Astuce.\n\n```rust\nfn main() {}\n```\n",
-            &labels::EN,
-            true,
+            &labels::resolve("en", &BTreeMap::new()),
+            "fr",
             &IncludeFiles::default(),
         );
         assert!(page.html.contains(&format!(
@@ -1831,14 +1885,114 @@ mod tests {
             .contains("<span class=\"rd-copy-label\">Copy</span></button>"));
         let zh = render_with(
             "> [!TIP]\n> 提示内容\n",
-            &labels::ZH,
-            false,
+            &labels::resolve("zh", &BTreeMap::new()),
+            "zh",
             &IncludeFiles::default(),
         );
         assert!(zh.html.contains(&format!(
             "<p class=\"markdown-alert-title\">{}提示</p>",
             crate::icons::alert("tip")
         )));
+    }
+
+    #[test]
+    fn project_interface_messages_are_escaped_as_plain_text() {
+        let catalog = labels::resolve(
+            "en",
+            &BTreeMap::from([
+                ("tip".into(), "Tip <hint>".into()),
+                ("copy".into(), "Copy <code>".into()),
+                ("task".into(), "Task \"name\"".into()),
+                ("plain_text".into(), "Plain <text>".into()),
+                ("footnotes".into(), "Notes <all>".into()),
+                ("back_to_reference".into(), "Back \"reference\"".into()),
+            ]),
+        );
+        let page = render_with(
+            "> [!TIP]\n> Body.\n\n```\nexample\n```\n\n- [ ] todo\n\nText[^n].\n\n[^n]: Note.\n",
+            &catalog,
+            "en",
+            &IncludeFiles::default(),
+        );
+        assert!(page.html.contains("Tip &lt;hint&gt;</p>"), "{}", page.html);
+        assert!(page.html.contains("Copy &lt;code&gt;</span>"));
+        assert!(page.html.contains("aria-label=\"Task &quot;name&quot;\""));
+        assert!(page.html.contains("Plain &lt;text&gt;</span>"));
+        assert!(page.html.contains("Notes &lt;all&gt;</h2>"));
+        assert!(page
+            .html
+            .contains("aria-label=\"Back &quot;reference&quot;\""));
+    }
+
+    #[test]
+    fn interface_messages_keep_each_language_inside_a_fallback_body() {
+        let catalog = labels::resolve(
+            "fr-CA",
+            &BTreeMap::from([
+                ("tip".into(), "Conseil".into()),
+                ("copy".into(), "Copier".into()),
+                ("copy_failed".into(), "Échec \"copie\"".into()),
+                ("task".into(), "Tâche".into()),
+                ("plain_text".into(), "Texte".into()),
+                ("footnotes".into(), "Notes".into()),
+            ]),
+        );
+        let page = render_with(
+            "> [!TIP]\n> Body.\n\n```\nexample\n```\n\n- [ ] todo\n\nText[^n].\n\n[^n]: Note.\n",
+            &catalog,
+            "en",
+            &IncludeFiles::default(),
+        );
+        assert!(page.html.contains(&format!(
+            "<p class=\"markdown-alert-title\" lang=\"fr-CA\">{}Conseil</p>",
+            crate::icons::alert("tip")
+        )));
+        assert!(page
+            .html
+            .contains("class=\"rd-code-title\" lang=\"fr-CA\">Texte</span>"));
+        assert!(page
+            .html
+            .contains("data-copy=\"Copier\" data-copy-lang=\"fr-CA\""));
+        assert!(page
+            .html
+            .contains("data-copied=\"Copied\" data-copied-lang=\"en\""));
+        assert!(page.html.contains(
+            "data-copy-failed=\"Échec &quot;copie&quot;\" data-copy-failed-lang=\"fr-CA\""
+        ));
+        assert!(page
+            .html
+            .contains("data-copy-failed-short=\"Copy failed\" data-copy-failed-short-lang=\"en\""));
+        assert!(page
+            .html
+            .contains("data-rd-copy hidden lang=\"fr-CA\"><svg"));
+        assert!(page.html.contains("aria-label=\"Tâche\" lang=\"fr-CA\""));
+        assert!(page
+            .html
+            .contains("<h2 class=\"sr-only\" lang=\"fr-CA\">Notes</h2>"));
+        assert!(page.html.contains("aria-label=\"Back to reference\"><svg"));
+    }
+
+    #[test]
+    fn plain_code_group_titles_keep_the_catalog_language() {
+        let catalog = labels::resolve(
+            "fr",
+            &BTreeMap::from([("plain_text".into(), "Texte <brut>".into())]),
+        );
+        let page = render_with(
+            "<!-- rustify:code-group name=\"example\" -->\n\n```\nplain\n```\n\n```rust title=\"Example\"\nfn main() {}\n```\n\n<!-- rustify:end-code-group -->\n",
+            &catalog,
+            "en",
+            &IncludeFiles::default(),
+        );
+        assert!(page.issues.is_empty(), "{:?}", page.issues);
+        assert!(page
+            .html
+            .contains("data-rd-tab=\"0\" lang=\"fr\">Texte &lt;brut&gt;</button>"));
+        assert!(page
+            .html
+            .contains("class=\"rd-code-title\" lang=\"fr\">Texte &lt;brut&gt;</span>"));
+        assert!(page.html.contains("data-rd-tab=\"1\">Example</button>"));
+        assert_eq!(page.code_groups[0].labels, ["Texte <brut>", "Example"]);
     }
 
     #[test]
@@ -1901,11 +2055,15 @@ mod tests {
         );
         assert_eq!(
             issues[0].suggestion.as_deref(),
-            Some("Write `items` as `Vec<StepSpec>` (required); see https://github.com/rockie/rustify-ui/blob/main/docs/docs-ssg.md#static-builtins for its object fields. Reported props path: `items`.")
+            Some(
+                "Write `items` as `Vec<StepSpec>` (required); see https://github.com/rockie/rustify-ui/blob/main/docs/docs-ssg.md#static-builtins for its object fields. Reported props path: `items`."
+            )
         );
         assert_eq!(
             issues[1].suggestion.as_deref(),
-            Some("Write `columns: 0` for declared type `u8` (default expression `2`). Reported props path: `columns`.")
+            Some(
+                "Write `columns: 0` for declared type `u8` (default expression `2`). Reported props path: `columns`."
+            )
         );
     }
 
@@ -1922,7 +2080,9 @@ mod tests {
 
     #[test]
     fn builtin_cards_and_child_links_share_the_content_graph_without_islands() {
-        let page = md("```rustify-component\nname: CardGrid\nprops:\n  cards:\n    - title: Guide\n      link: guide.md\n      description: Install the library.\nchildren: '[Details](guide.md#setup)'\n```\n");
+        let page = md(
+            "```rustify-component\nname: CardGrid\nprops:\n  cards:\n    - title: Guide\n      link: guide.md\n      description: Install the library.\nchildren: '[Details](guide.md#setup)'\n```\n",
+        );
         assert!(page.issues.is_empty(), "{:?}", page.issues);
         assert!(page.embeds.is_empty());
         assert_eq!(
@@ -1944,7 +2104,9 @@ mod tests {
 
     #[test]
     fn code_blocks_keep_raw_text_and_mark_lines() {
-        let page = md("```rust title=\"main.rs\" linenos highlight=\"2\"\nfn main() {\n    let s = \"<&>\";\n}\n```\n");
+        let page = md(
+            "```rust title=\"main.rs\" linenos highlight=\"2\"\nfn main() {\n    let s = \"<&>\";\n}\n```\n",
+        );
         assert_eq!(
             page.code_blocks[0].text,
             "fn main() {\n    let s = \"<&>\";\n}\n"
@@ -1985,7 +2147,9 @@ mod tests {
 
     #[test]
     fn links_and_images_become_slots() {
-        let page = md("# T\n\nSee [the guide](guide.md#setup \"Guide\"), [site](https://example.com) and <me@example.com>.\n\n![A *cat*](cat.png)\n");
+        let page = md(
+            "# T\n\nSee [the guide](guide.md#setup \"Guide\"), [site](https://example.com) and <me@example.com>.\n\n![A *cat*](cat.png)\n",
+        );
         assert_eq!(
             page.summary.as_deref(),
             Some("See the guide, site and me@example.com.")
@@ -2017,7 +2181,9 @@ mod tests {
 
     #[test]
     fn bare_urls_link_like_on_github_but_not_inside_links_or_code() {
-        let page = md("Go to www.example.com/a_b, https://x.example/p?q=1. or `https://not.linked` and [https://kept.example](other.md).\n");
+        let page = md(
+            "Go to www.example.com/a_b, https://x.example/p?q=1. or `https://not.linked` and [https://kept.example](other.md).\n",
+        );
         assert!(
             page.html.contains(
                 "<a href=\"http://www.example.com/a_b\" rel=\"noopener\">www.example.com/a_b</a>"
@@ -2091,7 +2257,9 @@ mod tests {
 
     #[test]
     fn code_group_mistakes_are_located() {
-        let page = md("<!-- rustify:code-group name=\"g\" -->\n\nNot code.\n\n```sh\na\n```\n\n```sh\nb\n```\n\n<!-- rustify:end-code-group -->\n");
+        let page = md(
+            "<!-- rustify:code-group name=\"g\" -->\n\nNot code.\n\n```sh\na\n```\n\n```sh\nb\n```\n\n<!-- rustify:end-code-group -->\n",
+        );
         assert_eq!(
             rules(&page),
             ["code-group", "code-group"],
@@ -2128,7 +2296,12 @@ mod tests {
             .0
             .insert("src/gone.rs".into(), Err("the file does not exist".into()));
         let source = "<!-- rustify:include path=\"src/demo.rs\" region=\"main\" -->\n\n<!-- rustify:include path=\"src/demo.rs\" region=\"nope\" -->\n\n<!-- rustify:include path=\"src/gone.rs\" -->\n";
-        let page = render_with(source, &labels::EN, false, &files);
+        let page = render_with(
+            source,
+            &labels::resolve("en", &BTreeMap::new()),
+            "en",
+            &files,
+        );
         assert_eq!(rules(&page), ["include-region", "include-missing"]);
         assert!(page.issues[0].message.contains("there is no region `nope`"));
         assert_eq!(page.code_blocks[0].text, "fn main() {}\n");
@@ -2174,10 +2347,11 @@ mod tests {
     fn offsets_are_file_offsets() {
         let highlighter = Highlighter::new();
         let includes = IncludeFiles::default();
+        let catalog = labels::resolve("en", &BTreeMap::new());
         let context = Context {
             highlighter: &highlighter,
-            labels: &labels::EN,
-            foreign: false,
+            catalog: &catalog,
+            source_lang: "en",
             includes: &includes,
         };
         let page = render("## A\n", 10, &context);

@@ -1354,6 +1354,11 @@ fn toolchain(git: Option<&str>, rev: Option<&str>) -> Result<(), String> {
         (None, None) => candidate(&root, &work)?,
         _ => return Err("--git and --rev go together".into()),
     };
+    if rev.len() != 40 || !rev.bytes().all(|byte| byte.is_ascii_hexdigit()) {
+        return Err(
+            "--rev must be the complete 40-character Git commit installed by this check".into(),
+        );
+    }
     let sysroot = sysroot()?;
     environment(&sysroot)?;
     println!("CLI source: {url} at {rev}");
@@ -1400,10 +1405,13 @@ fn toolchain(git: Option<&str>, rev: Option<&str>) -> Result<(), String> {
             String::from_utf8_lossy(&output.stdout).into_owned(),
         ))
     };
-    let (_, version) = output(&["--version"])?;
-    let (_, info) = output(&["--build-info"])?;
+    let (version_ok, version) = output(&["--version"])?;
+    let (info_ok, info) = output(&["--build-info"])?;
     let (recovered, probe) = output(&["__panic-probe"])?;
     print!("{version}{info}");
+    if !version_ok || !info_ok {
+        return Err("the installed CLI did not report its version and build identity".into());
+    }
     if !info.contains("panic: unwind") {
         return Err(format!("the installed binary does not unwind:\n{info}"));
     }
@@ -1416,22 +1424,136 @@ fn toolchain(git: Option<&str>, rev: Option<&str>) -> Result<(), String> {
         .arg(&install_root)
         .output()
         .map_err(|error| error.to_string())?;
+    if !listed.status.success() {
+        return Err(format!(
+            "cargo install --list failed: {}",
+            String::from_utf8_lossy(&listed.stderr)
+        ));
+    }
     let listed = String::from_utf8_lossy(&listed.stdout).into_owned();
     print!("{listed}");
-    if !listed.contains(&rev) {
-        return Err(format!("cargo install --list does not name {rev}"));
-    }
+    verify_cli_source(&info, &listed, &rev)?;
+    println!("installed identity: --build-info source and Cargo Git source match {rev}");
 
     walkthrough(&sysroot, &binary, &work.join("author"))?;
+    components_template(&sysroot, &binary, &work.join("components-author"))?;
     println!(
         "toolchain: {} installed from {rev} with the docs-cli profile ({} bytes, unwinds); \
          new, check, build, preview and dev ran with only Rust and the CLI on PATH, \
-         check and build with no network; nothing was compiled",
+         single-language and French check/build with no network; nothing was compiled",
         version.trim(),
         std::fs::metadata(&binary)
             .map(|meta| meta.len())
             .unwrap_or(0)
     );
+    Ok(())
+}
+
+fn verify_cli_source(info: &str, listed: &str, rev: &str) -> Result<(), String> {
+    let sources: Vec<_> = info
+        .lines()
+        .filter_map(|line| line.strip_prefix("source: "))
+        .collect();
+    if sources != [rev] {
+        return Err(format!(
+            "the installed --build-info source is {sources:?}, expected the complete commit {rev}"
+        ));
+    }
+    let packages: Vec<_> = listed
+        .lines()
+        .filter(|line| line.starts_with("rustify-docs-cli v"))
+        .collect();
+    let [package] = packages.as_slice() else {
+        return Err("cargo install --list must name exactly one rustify-docs-cli package".into());
+    };
+    let source = package
+        .split_once(" (")
+        .and_then(|(_, source)| source.strip_suffix("):"));
+    let revision_query = format!("rev={rev}");
+    let matched = source
+        .and_then(|source| source.rsplit_once('#'))
+        .is_some_and(|(source, short)| {
+            short.len() >= 7
+                && rev.starts_with(short)
+                && source
+                    .split_once('?')
+                    .is_some_and(|(_, query)| query.split('&').any(|entry| entry == revision_query))
+        });
+    if !matched {
+        return Err(format!(
+            "cargo install --list Git revision does not match {rev}: {package}"
+        ));
+    }
+    Ok(())
+}
+
+fn quoted_assignment<'a>(text: &'a str, field: &str) -> Option<&'a str> {
+    text.split_once(&format!("{field} = \""))?
+        .1
+        .split_once('"')
+        .map(|(value, _)| value)
+}
+
+fn components_template(sysroot: &Path, binary: &Path, dir: &Path) -> Result<(), String> {
+    let author = Author::new(sysroot, binary, dir)?;
+    author.check_path()?;
+    author.run(OFFLINE, dir, &["new", "site", "--template", "components"])?;
+    let site = dir.join("site");
+    let manifest =
+        std::fs::read_to_string(site.join("Cargo.toml")).map_err(|error| error.to_string())?;
+    let lock = std::fs::read(site.join("Cargo.lock")).map_err(|error| error.to_string())?;
+    let lock_text = std::str::from_utf8(&lock).map_err(|error| error.to_string())?;
+    let mut framework = None;
+    for package in ["rustify-docs", "rustify-ui", "rustify-components"] {
+        let declarations: Vec<_> = manifest
+            .lines()
+            .filter(|line| line.starts_with(&format!("{package} = {{")))
+            .collect();
+        let [declaration] = declarations.as_slice() else {
+            return Err(format!(
+                "the installed components template must declare {package} once"
+            ));
+        };
+        let revision = quoted_assignment(declaration, "rev")
+            .ok_or_else(|| format!("the generated {package} has no Git revision"))?;
+        let git = quoted_assignment(declaration, "git")
+            .ok_or_else(|| format!("the generated {package} has no Git URL"))?;
+        if revision.len() != 40
+            || !revision.bytes().all(|byte| byte.is_ascii_hexdigit())
+            || framework.is_some_and(|previous| previous != revision)
+        {
+            return Err("the generated components dependencies do not share one complete framework revision".into());
+        }
+        framework = Some(revision);
+        let entries: Vec<_> = lock_text
+            .split("[[package]]")
+            .filter(|entry| quoted_assignment(entry, "name") == Some(package))
+            .collect();
+        let [entry] = entries.as_slice() else {
+            return Err(format!("the generated lock must contain {package} once"));
+        };
+        let expected = format!("git+{git}?rev={revision}#{revision}");
+        if quoted_assignment(entry, "source") != Some(expected.as_str()) {
+            return Err(format!("the generated {package} lock source does not match its generated Git revision {revision}"));
+        }
+    }
+    let calls = author.calls()?;
+    if calls
+        != [
+            "rustc --version",
+            "rustc --print target-libdir --target wasm32-unknown-unknown",
+        ]
+    {
+        return Err(format!(
+            "components template creation unexpectedly invoked tools: {calls:?}"
+        ));
+    }
+    if std::fs::read(site.join("Cargo.lock")).map_err(|error| error.to_string())? != lock {
+        return Err(
+            "the generated components lock changed during the template identity check".into(),
+        );
+    }
+    println!("components template (no network, no build): generated by the installed CLI; all three Git dependencies and unchanged lock resolve to framework {}; lock retained at {} ({} bytes)", framework.unwrap_or_default(), site.join("Cargo.lock").display(), lock.len());
     Ok(())
 }
 
@@ -1666,12 +1788,26 @@ fn walkthrough(sysroot: &Path, binary: &Path, dir: &Path) -> Result<(), String> 
 
     println!(
         "preview (loopback only): {}",
-        serve_and_fetch(&author, &site, &["preview", "--port", "0"], "preview")?
+        serve_and_fetch(
+            &author,
+            &site,
+            &["preview", "--port", "0"],
+            "preview",
+            &[("", 200, &[]), ("guide/getting-started/", 200, &[])]
+        )?
     );
     println!(
         "dev (loopback only): {}",
-        serve_and_fetch(&author, &site, &["dev", "--port", "0"], "dev")?
+        serve_and_fetch(
+            &author,
+            &site,
+            &["dev", "--port", "0"],
+            "dev",
+            &[("", 200, &[]), ("guide/getting-started/", 200, &[])]
+        )?
     );
+
+    third_language_walkthrough(&author, &site)?;
 
     let calls = author.calls()?;
     if calls.is_empty() {
@@ -1691,6 +1827,149 @@ fn walkthrough(sysroot: &Path, binary: &Path, dir: &Path) -> Result<(), String> 
         calls.len()
     );
     std::fs::remove_dir_all(dir).map_err(|error| format!("{}: {error}", dir.display()))?;
+    Ok(())
+}
+
+fn third_language_walkthrough(author: &Author, site: &Path) -> Result<(), String> {
+    let config_file = site.join("rustify-docs.toml");
+    let mut config = std::fs::read_to_string(&config_file).map_err(|error| error.to_string())?;
+    config.push_str("\n[[i18n.locales]]\nlang='en'\nlabel='English'\nprefix=''\n\n[[i18n.locales]]\nlang='fr'\nlabel='Français'\nprefix='fr'\nmessages='locales/fr.toml'\n");
+    std::fs::write(&config_file, config).map_err(|error| error.to_string())?;
+    for directory in ["content/fr", "locales"] {
+        std::fs::create_dir_all(site.join(directory)).map_err(|error| error.to_string())?;
+    }
+    std::fs::write(site.join("content/fr/index.md"), "---\ntitle: Accueil français\ndescription: Une vraie traduction.\nlang: fr\n---\n# Accueil français\n\nUne page réellement traduite.\n\n[Commencer](../guide/getting-started.md)\n").map_err(|error| error.to_string())?;
+    let messages_file = site.join("locales/fr.toml");
+    let messages = "language='Langue'\nuntranslated='Traduction indisponible.'\nnot_found_title='Page introuvable'\nnot_found_body='Aucune page à cette adresse.'\nback_home='Retour à l’accueil'\ncopy='Copier'\n";
+    std::fs::write(&messages_file, messages).map_err(|error| error.to_string())?;
+    let checked = author.run(OFFLINE, site, &["check", "--format", "json"])?;
+    let report: serde_json::Value = serde_json::from_slice(&checked.stdout)
+        .map_err(|error| format!("French check JSON: {error}"))?;
+    let diagnostics = report["diagnostics"]
+        .as_array()
+        .ok_or("French check has no diagnostics array")?;
+    if report["success"] != true || report["summary"]["errors"] != 0 {
+        return Err(format!("French check failed offline: {report}"));
+    }
+    for rule in ["i18n-missing-page", "i18n-missing-label"] {
+        if !diagnostics.iter().any(|issue| {
+            issue["rule"] == rule
+                && issue["severity"] == "warning"
+                && issue["message"]
+                    .as_str()
+                    .is_some_and(|text| text.contains("`fr`"))
+        }) {
+            return Err(format!("French check did not report {rule}: {report}"));
+        }
+    }
+    let built = author.run(OFFLINE, site, &["build"])?;
+    println!("French check/build (no network): 0 errors with missing-page and missing-label warnings; {}", conclusion(&built, "build: "));
+    let dist = site.join("dist");
+    let pages: [(&str, &str, u16, &[&str]); 3] = [
+        (
+            "fr/",
+            "fr/index.html",
+            200,
+            &[
+                "<html lang=\"fr\"",
+                "<article lang=\"fr\"",
+                "Une page réellement traduite.",
+            ],
+        ),
+        (
+            "fr/guide/getting-started/",
+            "fr/guide/getting-started/index.html",
+            200,
+            &[
+                "<html lang=\"fr\"",
+                "<article lang=\"en\"",
+                "Traduction indisponible.",
+                "data-rd-copy hidden lang=\"fr\"",
+                ">Copier</span>",
+            ],
+        ),
+        (
+            "fr/missing/deep/",
+            "fr/404.html",
+            404,
+            &[
+                "<html lang=\"fr\"",
+                "Page introuvable",
+                "Aucune page à cette adresse.",
+                "href=\"/fr/\"",
+            ],
+        ),
+    ];
+    for (_, file, _, markers) in &pages {
+        let html =
+            std::fs::read_to_string(dist.join(file)).map_err(|error| format!("{file}: {error}"))?;
+        if let Some(missing) = markers.iter().find(|marker| !html.contains(**marker)) {
+            return Err(format!("French output {file} is missing {missing:?}"));
+        }
+    }
+    let manifest: serde_json::Value = serde_json::from_slice(
+        &std::fs::read(dist.join(MANIFEST)).map_err(|error| error.to_string())?,
+    )
+    .map_err(|error| error.to_string())?;
+    if manifest["locale_not_found"] != serde_json::json!({"": "404.html", "fr": "fr/404.html"}) {
+        return Err(format!(
+            "French locale_not_found is not the generated language map: {}",
+            manifest["locale_not_found"]
+        ));
+    }
+    let before = crate::sources::fingerprint_tree(&dist)?;
+    if before
+        .keys()
+        .any(|file| file.ends_with(".toml") || file.ends_with(".wasm"))
+    {
+        return Err("the French content site published a configuration input or wasm".into());
+    }
+    std::fs::write(&messages_file, "copy = [\n").map_err(|error| error.to_string())?;
+    let failed = author
+        .command(OFFLINE, site, &["build", "--format", "json"])
+        .output()
+        .map_err(|error| error.to_string())?;
+    let failure: serde_json::Value = serde_json::from_slice(&failed.stdout)
+        .map_err(|error| format!("invalid French messages build JSON: {error}"))?;
+    if failed.status.code() != Some(1)
+        || failure["success"] != false
+        || !failure["diagnostics"].as_array().is_some_and(|items| {
+            items
+                .iter()
+                .any(|issue| issue["rule"] == "i18n-messages" && issue["file"] == "locales/fr.toml")
+        })
+    {
+        return Err(format!(
+            "invalid French messages did not reject the candidate: {failure}"
+        ));
+    }
+    if crate::sources::fingerprint_tree(&dist)? != before {
+        return Err("a failed French build changed the last good dist".into());
+    }
+    let requests: Vec<_> = pages
+        .iter()
+        .map(|(route, _, status, markers)| (*route, *status, *markers))
+        .collect();
+    println!(
+        "French preview (loopback only, invalid source keeps dist): {}",
+        serve_and_fetch(
+            author,
+            site,
+            &["preview", "--port", "0"],
+            "preview",
+            &requests
+        )?
+    );
+    std::fs::write(&messages_file, messages).map_err(|error| error.to_string())?;
+    author.run(OFFLINE, site, &["build"])?;
+    if crate::sources::fingerprint_tree(&dist)? != before {
+        return Err("restoring French messages did not reproduce the last good dist".into());
+    }
+    println!(
+        "French dev (loopback only, restored messages): {}",
+        serve_and_fetch(author, site, &["dev", "--port", "0"], "dev", &requests)?
+    );
+    println!("French output: real translation, English fallback, per-word language, locale_not_found, input-only messages and unchanged dist on failure; restored build is identical");
     Ok(())
 }
 
@@ -1806,13 +2085,14 @@ impl Drop for Server {
 }
 
 /// Starts `rustify-docs <args>` (a server) in `site` with loopback only,
-/// reads the address it prints first, fetches the home page and a guide page
-/// from it, and stops it. Returns what was fetched, for the record.
+/// reads the address it prints first, fetches the expected pages from it,
+/// and stops it. Returns what was fetched, for the record.
 fn serve_and_fetch(
     author: &Author,
     site: &Path,
     args: &[&str],
     label: &str,
+    pages: &[(&str, u16, &[&str])],
 ) -> Result<String, String> {
     use std::io::BufRead;
     let what = format!("`rustify-docs {}`", args.join(" "));
@@ -1858,24 +2138,29 @@ fn serve_and_fetch(
     let (authority, base) = rest.split_at(rest.find('/').unwrap_or(rest.len()));
     let base = if base.is_empty() { "/" } else { base };
     let mut fetched = Vec::new();
-    for page in ["", "guide/getting-started/"] {
+    for (page, expected_status, markers) in pages {
         let path = format!("{base}{page}");
-        let (status, bytes) = http_get(authority, &path)?;
-        if status != 200 {
-            return Err(format!(
-                "{what}: GET {path} answered {status}:\n{}",
-                stderr()
-            ));
+        let deadline = std::time::Instant::now() + SERVER_START;
+        loop {
+            let (status, bytes) = http_get(authority, &path)?;
+            let html = String::from_utf8_lossy(&bytes);
+            if status == *expected_status && markers.iter().all(|marker| html.contains(*marker)) {
+                fetched.push(format!("GET {path} {status} ({} bytes)", bytes.len()));
+                break;
+            }
+            if std::time::Instant::now() >= deadline {
+                return Err(format!("{what}: GET {path} did not become {expected_status} with {markers:?}; answered {status}:\n{}", stderr()));
+            }
+            std::thread::sleep(std::time::Duration::from_millis(50));
         }
-        fetched.push(format!("GET {path} 200 ({bytes} bytes)"));
     }
     drop(server);
     Ok(format!("{line}; {}; stopped", fetched.join(", ")))
 }
 
 /// One GET over HTTP/1.1 that closes the connection. Returns the status and
-/// the body's length.
-fn http_get(authority: &str, path: &str) -> Result<(u16, usize), String> {
+/// the body.
+fn http_get(authority: &str, path: &str) -> Result<(u16, Vec<u8>), String> {
     use std::io::{Read, Write};
     let what = format!("GET http://{authority}{path}");
     let address: std::net::SocketAddr = authority
@@ -1906,13 +2191,42 @@ fn http_get(authority: &str, path: &str) -> Result<(u16, usize), String> {
     let body = response
         .windows(4)
         .position(|window| window == b"\r\n\r\n")
-        .map_or(0, |at| response.len() - at - 4);
+        .map(|at| response[at + 4..].to_vec())
+        .ok_or_else(|| format!("{what}: no HTTP header terminator"))?;
     Ok((status, body))
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn toolchain_identity_matches_the_complete_build_source_and_cargo_revision() {
+        let revision = "b31e28b7f7dd949f7dc89ebc7b5f64380adbb63d";
+        let info = format!("rustify-docs 0.1.19\npanic: unwind\nsource: {revision}\n");
+        let listed = format!("rustify-docs-cli v0.1.19 (file:///tmp/source?rev={revision}#b31e28b7):\n    rustify-docs\n");
+        assert!(verify_cli_source(&info, &listed, revision).is_ok());
+        for source in [
+            "unknown",
+            "b31e28b7",
+            "b31e28b7f7dd949f7dc89ebc7b5f64380adbb63e",
+        ] {
+            assert!(verify_cli_source(&format!("source: {source}\n"), &listed, revision).is_err());
+        }
+    }
+
+    #[test]
+    fn toolchain_identity_rejects_unrelated_packages_and_inconsistent_cargo_hashes() {
+        let revision = "b31e28b7f7dd949f7dc89ebc7b5f64380adbb63d";
+        let info = format!("source: {revision}\n");
+        for listed in [
+            format!("other-package v1.0.0 (file:///tmp/source?rev={revision}#b31e28b7):"),
+            format!("rustify-docs-cli v0.1.19 (file:///tmp/source?rev={revision}#12345678):"),
+            format!("rustify-docs-cli v0.1.19 (file:///tmp/source?rev=b31e28b7#b31e28b7):\n    {revision}"),
+        ] {
+            assert!(verify_cli_source(&info, &listed, revision).is_err(), "{listed}");
+        }
+    }
 
     #[test]
     fn makepad_packages_are_named_by_the_rule_and_library_copies_are_not() {

@@ -181,6 +181,8 @@ pub fn is_private(path: &str) -> bool {
 #[derive(Clone, Debug, Default)]
 pub struct Snapshot {
     pub markdown: BTreeMap<String, Arc<str>>,
+    /// Project messages are inputs only, never public resources.
+    pub messages: BTreeMap<String, Arc<str>>,
     /// Project-relative bytes; the theme document is input only, not a resource.
     pub files: BTreeMap<String, Arc<[u8]>>,
     /// Where the symbolic links in those directories really lead, relative
@@ -278,6 +280,7 @@ enum Refusal {
     Private,
     /// A configuration input, not a publishable resource.
     ThemeDocument,
+    Messages,
 }
 
 /// The project's root as the file system resolves it, symbolic links and
@@ -332,6 +335,27 @@ fn theme_paths(project: &Project, root: &Path) -> BTreeSet<String> {
         paths.extend(watched_source(root, &project.root.join(path)));
     }
     paths
+}
+
+fn message_paths(project: &Project, root: &Path) -> BTreeSet<String> {
+    let mut paths = BTreeSet::new();
+    for (path, _) in project
+        .config
+        .locales
+        .iter()
+        .filter_map(|locale| locale.messages.as_ref())
+    {
+        paths.insert(path.clone());
+        paths.extend(watched_source(root, &project.root.join(path)));
+    }
+    paths
+}
+
+/// Message aliases and their existing or prospective targets within the project.
+/// These paths only select watch events; they never authorize file reads.
+#[doc(hidden)]
+pub fn message_dependencies(project: &Project) -> BTreeSet<String> {
+    message_paths(project, &real_root(project))
 }
 
 fn matches_theme(project: &Project, root: &Path, theme: &BTreeSet<String>, path: &str) -> bool {
@@ -400,6 +424,10 @@ impl Refusal {
                     "{what} is the theme configuration input and cannot be published as a resource"
                 ),
             ),
+            Self::Messages => locate(
+                "i18n-messages",
+                format!("{what} is a messages input and cannot be published as a resource"),
+            ),
         }
     }
 
@@ -407,7 +435,7 @@ impl Refusal {
     /// somewhere refused.
     fn walk_problem(self, file: &str, what: &str) -> Option<Diagnostic> {
         match self {
-            Self::Missing | Self::ThemeDocument => None,
+            Self::Missing | Self::ThemeDocument | Self::Messages => None,
             Self::Outside => Some(Diagnostic::in_file(
                 file,
                 Severity::Error,
@@ -487,6 +515,51 @@ pub fn snapshot(project: &Project) -> (Snapshot, Vec<Diagnostic>) {
     let config = &project.config;
     let root = real_root(project);
     let theme = theme_paths(project, &root);
+    let messages = message_paths(project, &root);
+    let mut read_messages = BTreeSet::new();
+    for (path, span) in config
+        .locales
+        .iter()
+        .filter_map(|locale| locale.messages.as_ref())
+    {
+        if !read_messages.insert(path) {
+            continue;
+        }
+        if let Some(real) =
+            watched_source(&root, &project.root.join(path)).filter(|real| real != path)
+        {
+            snapshot.linked.insert(real);
+        }
+        match read_source(project, &root, path, &mut snapshot.inputs) {
+            Ok(bytes) => match std::str::from_utf8(&bytes) {
+                Ok(text) => {
+                    snapshot.messages.insert(path.clone(), Arc::from(text));
+                }
+                Err(_) => problems.push(Diagnostic::located(
+                    &project.config_file,
+                    &project.config_text,
+                    Issue::error(
+                        span.clone(),
+                        "i18n-messages",
+                        format!("messages {} must be UTF-8", code_span(path)),
+                    ),
+                )),
+            },
+            Err(refusal) => {
+                let mut issue = refusal.issue(
+                    &|rule, message| Issue::error(span.clone(), rule, message),
+                    &format!("messages {}", code_span(path)),
+                    "i18n-messages",
+                );
+                issue.rule = "i18n-messages";
+                problems.push(Diagnostic::located(
+                    &project.config_file,
+                    &project.config_text,
+                    issue,
+                ));
+            }
+        }
+    }
     for (dir, is_content) in [(&config.content_dir, true), (&config.assets_dir, false)] {
         // The directory itself, or one on its path, may be a link too.
         let full = project.root.join(dir);
@@ -501,6 +574,15 @@ pub fn snapshot(project: &Project) -> (Snapshot, Vec<Diagnostic>) {
                 }
                 for (file, span) in selected {
                     let relative = format!("{dir}/{file}");
+                    if matches_theme(project, &root, &messages, &relative) {
+                        problems.push(Diagnostic::in_file(
+                            &relative,
+                            Severity::Error,
+                            "i18n-messages",
+                            "a messages input cannot be selected as public content",
+                        ));
+                        continue;
+                    }
                     if let Some(real) = watched_source(&root, &project.root.join(&relative))
                         .filter(|real| real != &relative)
                     {
@@ -561,6 +643,15 @@ pub fn snapshot(project: &Project) -> (Snapshot, Vec<Diagnostic>) {
             &mut problems,
         );
         for (relative, _) in files {
+            if matches_theme(project, &root, &messages, &relative) {
+                problems.push(Diagnostic::in_file(
+                    &relative,
+                    Severity::Error,
+                    "i18n-messages",
+                    "a messages input cannot be published from the content or assets directory",
+                ));
+                continue;
+            }
             let Ok(bytes) = read_source(project, &root, &relative, &mut snapshot.inputs) else {
                 problems.push(Diagnostic::in_file(
                     &relative,
@@ -744,20 +835,63 @@ pub fn route_for(content_path: &str) -> String {
     }
 }
 
+/// Adds a configured language root to an already canonical logical route.
+pub fn locale_route(config: &Config, lang: &str, logical_route: &str) -> String {
+    match config
+        .locales
+        .iter()
+        .find(|locale| locale.lang.eq_ignore_ascii_case(lang))
+    {
+        Some(locale) if !locale.prefix.is_empty() => format!("/{}{logical_route}", locale.prefix),
+        _ => logical_route.to_owned(),
+    }
+}
+
+fn markdown_locale<'a>(config: &'a Config, path: &'a str) -> (&'a str, &'a str) {
+    for locale in &config.locales {
+        if !locale.prefix.is_empty() {
+            if let Some(path) = path.strip_prefix(&format!("{}/", locale.prefix)) {
+                return (&locale.lang, path);
+            }
+        }
+    }
+    let default_lang = config
+        .locales
+        .iter()
+        .find(|locale| locale.lang.eq_ignore_ascii_case(&config.site.lang))
+        .map_or(config.site.lang.as_str(), |locale| locale.lang.as_str());
+    (default_lang, path)
+}
+
+fn reserved_logical_route(config: &Config, route: &str) -> bool {
+    route == "/404/"
+        || config.locales.iter().any(|locale| {
+            !locale.prefix.is_empty() && route.starts_with(&format!("/{}/", locale.prefix))
+        })
+}
+
 /// A fragment's cache key: everything that decides its bytes.
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
 pub struct FragmentKey([u8; 32]);
 
 impl FragmentKey {
-    pub fn of(body: &str, offset: usize, lang: &str, includes: &IncludeFiles) -> Self {
-        let (labels, foreign) = labels::for_lang(lang);
+    pub fn of(
+        body: &str,
+        offset: usize,
+        source_lang: &str,
+        ui_lang: &str,
+        labels_digest: &str,
+        includes: &IncludeFiles,
+    ) -> Self {
         let mut hash = Sha256::new();
         hash.update(WRITER_VERSION.to_le_bytes());
         hash.update(GRAMMAR_VERSION.as_bytes());
         hash.update([0]);
         hash.update(markdown::options().bits().to_le_bytes());
-        hash.update(labels.lang.as_bytes());
-        hash.update([u8::from(foreign)]);
+        for part in [source_lang, ui_lang, labels_digest] {
+            hash.update((part.len() as u64).to_le_bytes());
+            hash.update(part.as_bytes());
+        }
         hash.update((offset as u64).to_le_bytes());
         hash.update(body.as_bytes());
         for (path, contents) in &includes.0 {
@@ -856,6 +990,7 @@ pub enum PageOrigin {
 pub struct RegisteredPage {
     pub name: String,
     pub route: String,
+    pub lang: Option<String>,
     pub title: String,
     pub description: Option<String>,
     pub html: String,
@@ -868,6 +1003,8 @@ pub struct RegisteredPage {
 #[derive(Clone, Debug, Default)]
 pub struct Surfaces {
     pub pages: Vec<RegisteredPage>,
+    /// Final routes rendered in their target environment; declarations stay real.
+    pub rendered_pages: BTreeMap<String, String>,
     pub slots: BTreeMap<String, BTreeMap<Slot, String>>,
     /// Complete source candidates, including classes not present in initial HTML.
     pub candidates: BTreeSet<String>,
@@ -892,6 +1029,7 @@ pub struct Page {
     pub title: String,
     pub description: Option<String>,
     pub lang: String,
+    pub locale: PageLocale,
     pub draft: bool,
     pub fragment: Arc<Fragment>,
     /// For each of the fragment's references, where it points.
@@ -900,12 +1038,34 @@ pub struct Page {
     pub action_targets: Vec<Target>,
 }
 
+/// The logical address and actual content behind a language-specific page.
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct PageLocale {
+    pub logical_route: String,
+    pub ui_lang: String,
+    pub source_lang: String,
+    pub source_route: String,
+    pub is_fallback: bool,
+}
+
+/// Navigation and final page identities within one configured language.
+#[derive(Clone, Debug)]
+pub struct LocaleView {
+    pub root_route: String,
+    pub pages: BTreeMap<String, usize>,
+    pub nav: Vec<NavGroup>,
+    pub top: Vec<Target>,
+    pub social: Vec<Target>,
+}
+
 /// The analysed site.
 pub struct Analysis {
     pub mode: Mode,
     /// Markdown pages in path order, then registered pages in declaration order.
     pub pages: Vec<Page>,
     pub routes: BTreeMap<String, usize>,
+    pub locales: BTreeMap<String, LocaleView>,
+    pub catalogs: BTreeMap<String, Arc<labels::Catalog>>,
     pub slots: BTreeMap<String, BTreeMap<Slot, AnalysedFragment>>,
     pub nav: Vec<NavGroup>,
     /// Where each of the configuration's `nav.top` and `nav.social` links
@@ -960,6 +1120,7 @@ fn read_include(sources: &mut Sources, path: &str) -> Result<String, String> {
             Refusal::Outside => "the file is outside the project",
             Refusal::Private => "this file is private and is never included",
             Refusal::ThemeDocument => "the file is the site's theme configuration input",
+            Refusal::Messages => "the file is a messages configuration input",
         }
         .to_owned()
     })?;
@@ -976,6 +1137,7 @@ struct Sources<'a> {
     snapshot: &'a Snapshot,
     root: PathBuf,
     theme: BTreeSet<String>,
+    messages: BTreeSet<String>,
     outside: BTreeMap<String, Arc<[u8]>>,
     inputs: InputReceipts,
     /// Every project file a resource reference named, found or not.
@@ -1001,6 +1163,9 @@ impl Sources<'_> {
         if self.theme_file(path) {
             return Err(Refusal::ThemeDocument);
         }
+        if self.message_file(path) {
+            return Err(Refusal::Messages);
+        }
         if self.snapshot.files.contains_key(path) || self.outside.contains_key(path) {
             return Ok(());
         }
@@ -1012,6 +1177,9 @@ impl Sources<'_> {
     fn read(&mut self, path: &str) -> Result<Arc<[u8]>, Refusal> {
         if is_private(path) {
             return Err(Refusal::Private);
+        }
+        if self.message_file(path) {
+            return Err(Refusal::Messages);
         }
         // A fragment cache hit still belongs to this round's original read.
         // Reuse bytes from the snapshot or the first read of a shared include.
@@ -1032,6 +1200,9 @@ impl Sources<'_> {
         if is_private(path) {
             return Err(Refusal::Private);
         }
+        if self.message_file(path) {
+            return Err(Refusal::Messages);
+        }
         let real = self
             .root
             .join(real_source(&self.root, &self.project.root.join(path))?);
@@ -1044,6 +1215,10 @@ impl Sources<'_> {
         matches_theme(self.project, &self.root, &self.theme, path)
     }
 
+    fn message_file(&self, path: &str) -> bool {
+        matches_theme(self.project, &self.root, &self.messages, path)
+    }
+
     fn refuse_theme(
         &self,
         target: Target,
@@ -1053,6 +1228,10 @@ impl Sources<'_> {
         if let Target::Resource(path) = &target {
             if self.theme_file(path) {
                 found.push(Refusal::ThemeDocument.issue(issue, &code_span(path), "broken-link"));
+                return Target::Keep;
+            }
+            if self.message_file(path) {
+                found.push(Refusal::Messages.issue(issue, &code_span(path), "i18n-messages"));
                 return Target::Keep;
             }
         }
@@ -1140,6 +1319,218 @@ pub fn analyze(
     )
 }
 
+// Derive missing versions from real declarations before resolving references.
+fn project_locales(
+    project: &Project,
+    mode: Mode,
+    pages: &mut Vec<Page>,
+    diagnostics: &mut Vec<Diagnostic>,
+) -> BTreeMap<String, LocaleView> {
+    let config = &project.config;
+    if config.locales.is_empty() {
+        return BTreeMap::new();
+    }
+    let defaults: BTreeMap<String, usize> = pages
+        .iter()
+        .enumerate()
+        .filter(|(_, page)| page.lang.eq_ignore_ascii_case(&config.site.lang))
+        .map(|(i, page)| (page.locale.logical_route.clone(), i))
+        .collect();
+    let real: BTreeMap<(String, String), usize> = pages
+        .iter()
+        .enumerate()
+        .map(|(i, page)| {
+            (
+                (
+                    page.lang.to_ascii_lowercase(),
+                    page.locale.logical_route.clone(),
+                ),
+                i,
+            )
+        })
+        .collect();
+    for page in pages.iter() {
+        if !defaults.contains_key(&page.locale.logical_route) {
+            diagnostics.push(
+                Diagnostic::in_file(
+                    &page.file,
+                    Severity::Error,
+                    "i18n-orphan",
+                    format!(
+                        "translation {} has no default-language page at {}",
+                        code_span(&page.lang),
+                        code_span(&page.locale.logical_route)
+                    ),
+                )
+                .with_suggestion("create the default-language page first"),
+            );
+        }
+    }
+    let mut locales = BTreeMap::new();
+    for locale in &config.locales {
+        let mut view = LocaleView {
+            root_route: locale_route(config, &locale.lang, "/"),
+            pages: BTreeMap::new(),
+            nav: Vec::new(),
+            top: Vec::new(),
+            social: Vec::new(),
+        };
+        for (logical, &default) in &defaults {
+            let found = real
+                .get(&(locale.lang.to_ascii_lowercase(), logical.clone()))
+                .copied();
+            if mode == Mode::Production && pages[default].draft {
+                if let Some(found) = found {
+                    pages[found].draft = true;
+                }
+                continue;
+            }
+            let index = match found {
+                Some(i) if mode == Mode::Dev || !pages[i].draft => i,
+                other => {
+                    let mut fallback = pages[default].clone();
+                    fallback.route = locale_route(config, &locale.lang, logical);
+                    fallback.lang = locale.lang.clone();
+                    fallback.locale.ui_lang = locale.lang.clone();
+                    fallback.locale.is_fallback = true;
+                    match other {
+                        Some(i) => {
+                            pages[i] = fallback;
+                            i
+                        }
+                        None => {
+                            pages.push(fallback);
+                            pages.len() - 1
+                        }
+                    }
+                }
+            };
+            if !locale.lang.eq_ignore_ascii_case(&config.site.lang)
+                && !pages[default].draft
+                && (pages[index].locale.is_fallback || pages[index].front.draft)
+            {
+                let source = &pages[default];
+                let expected = match source.origin {
+                    PageOrigin::Markdown => code_span(&format!(
+                        "{}/{}/{}",
+                        config.content_dir, locale.prefix, source.path
+                    )),
+                    PageOrigin::Registered(_) => format!(
+                        "a registered page with route {} and lang {}",
+                        code_span(logical),
+                        code_span(&locale.lang)
+                    ),
+                };
+                diagnostics.push(Diagnostic::located(
+                    &project.config_file,
+                    &project.config_text,
+                    Issue::warning(
+                        locale.lang_span.clone(),
+                        "i18n-missing-page",
+                        format!(
+                            "language {} has no published translation of {}; expected {}",
+                            code_span(&locale.lang),
+                            code_span(logical),
+                            expected
+                        ),
+                    )
+                    .suggest(format!(
+                        "create the {} version of {}",
+                        code_span(&locale.lang),
+                        code_span(logical)
+                    )),
+                ));
+            }
+            view.pages.insert(logical.clone(), index);
+        }
+        locales.insert(locale.lang.clone(), view);
+    }
+    locales
+}
+
+pub(crate) fn resolve_catalogs(
+    project: &Project,
+    snapshot: &Snapshot,
+    diagnostics: &mut Vec<Diagnostic>,
+) -> BTreeMap<String, Arc<labels::Catalog>> {
+    let config = &project.config;
+    if config.locales.is_empty() {
+        return BTreeMap::from([(
+            config.site.lang.clone(),
+            Arc::new(labels::resolve(&config.site.lang, &BTreeMap::new())),
+        )]);
+    }
+    let mut catalogs = BTreeMap::new();
+    for locale in &config.locales {
+        let (overrides, valid) = match &locale.messages {
+            None => (BTreeMap::new(), true),
+            Some((path, _)) => match snapshot.messages.get(path) {
+                None => (BTreeMap::new(), false),
+                Some(text) => match labels::parse_messages(text) {
+                    Ok(messages) => (messages, true),
+                    Err(issues) => {
+                        diagnostics.extend(
+                            issues
+                                .into_iter()
+                                .map(|issue| Diagnostic::located(path, text, issue)),
+                        );
+                        (BTreeMap::new(), false)
+                    }
+                },
+            },
+        };
+        let catalog = labels::resolve(&locale.lang, &overrides);
+        if valid {
+            let span = locale
+                .messages
+                .as_ref()
+                .map_or(&locale.lang_span, |(_, span)| span);
+            for key in catalog.missing_keys() {
+                diagnostics.push(Diagnostic::located(
+                    &project.config_file,
+                    &project.config_text,
+                    Issue::warning(
+                        span.clone(),
+                        "i18n-missing-label",
+                        format!(
+                            "language {} has no message {}; English is used",
+                            code_span(&locale.lang),
+                            code_span(key)
+                        ),
+                    )
+                    .suggest(format!(
+                        "add {} to this language's messages file",
+                        code_span(key)
+                    )),
+                ));
+            }
+        }
+        catalogs.insert(locale.lang.clone(), Arc::new(catalog));
+    }
+    catalogs
+}
+
+fn catalog_digest(
+    project: &Project,
+    snapshot: &Snapshot,
+    lang: &str,
+    catalog: &labels::Catalog,
+) -> String {
+    let mut hash = Sha256::new();
+    hash.update(catalog.digest().as_bytes());
+    if let Some(text) = project
+        .config
+        .locales
+        .iter()
+        .find(|locale| locale.lang == lang)
+        .and_then(|locale| locale.messages.as_ref())
+        .and_then(|(path, _)| snapshot.messages.get(path))
+    {
+        hash.update(text.as_bytes());
+    }
+    format!("{:x}", hash.finalize())
+}
+
 /// Analyses Markdown and registered HTML in the same content graph.
 pub fn analyze_with_surfaces(
     project: &Project,
@@ -1153,12 +1544,23 @@ pub fn analyze_with_surfaces(
     let config = &project.config;
     let content_dir = &config.content_dir;
     let mut diagnostics = Vec::new();
+    let mut catalogs = resolve_catalogs(project, snapshot, &mut diagnostics);
+    let mut catalog_digests: BTreeMap<String, String> = catalogs
+        .iter()
+        .map(|(lang, catalog)| {
+            (
+                lang.clone(),
+                catalog_digest(project, snapshot, lang, catalog),
+            )
+        })
+        .collect();
     let file_of = |path: &str| format!("{content_dir}/{path}");
     let root = real_root(project);
     let mut sources = Sources {
         project,
         snapshot,
         theme: theme_paths(project, &root),
+        messages: message_paths(project, &root),
         root,
         outside: BTreeMap::new(),
         inputs: InputReceipts::default(),
@@ -1167,10 +1569,19 @@ pub fn analyze_with_surfaces(
     if let Some((path, _)) = &config.theme_document {
         sources.track(path);
     }
+    for (path, _) in config
+        .locales
+        .iter()
+        .filter_map(|locale| locale.messages.as_ref())
+    {
+        sources.track(path);
+    }
 
     // Pages: frontmatter, route, includes.
     struct Draft {
         path: String,
+        route: String,
+        locale: PageLocale,
         front: Front,
         body_offset: usize,
         includes: IncludeFiles,
@@ -1193,14 +1604,19 @@ pub fn analyze_with_surfaces(
                 (Front::default(), body)
             }
         };
-        let route = route_for(path);
-        if route == "/404/" {
+        let (declared_lang, logical_path) = markdown_locale(config, path);
+        let logical_route = route_for(logical_path);
+        let route = locale_route(config, declared_lang, &logical_route);
+        if reserved_logical_route(config, &logical_route) {
             diagnostics.push(
                 Diagnostic::in_file(
                     &file,
                     Severity::Error,
                     "reserved-route",
-                    "`/404/` is reserved for the generated not-found page",
+                    format!(
+                        "{} is reserved for generated or language-specific output",
+                        code_span(&logical_route)
+                    ),
                 )
                 .with_suggestion("rename the file"),
             );
@@ -1223,7 +1639,7 @@ pub fn analyze_with_surfaces(
             );
             continue;
         }
-        let lang = match &front.lang {
+        let mut lang = match &front.lang {
             Some(lang) if config::valid_lang(lang) => lang.clone(),
             Some(lang) => {
                 diagnostics.push(frontmatter::language_issue(text).map_or_else(
@@ -1240,7 +1656,44 @@ pub fn analyze_with_surfaces(
                 ));
                 config.site.lang.clone()
             }
-            None => config.site.lang.clone(),
+            None => declared_lang.to_owned(),
+        };
+        if !config.locales.is_empty() {
+            if front
+                .lang
+                .as_ref()
+                .is_some_and(|lang| !lang.eq_ignore_ascii_case(declared_lang))
+            {
+                let span = frontmatter::split(text)
+                    .ok()
+                    .flatten()
+                    .map_or(0..0, |split| split.yaml);
+                let at = front
+                    .lang
+                    .as_ref()
+                    .and_then(|lang| text[span.clone()].find(lang))
+                    .map_or(span.start, |at| span.start + at);
+                diagnostics.push(Diagnostic::located(
+                    &file,
+                    text,
+                    Issue::error(
+                        at..at,
+                        "i18n-content-lang",
+                        format!(
+                            "frontmatter.lang must match this directory's language {}",
+                            code_span(declared_lang)
+                        ),
+                    ),
+                ));
+            }
+            lang = declared_lang.to_owned();
+        }
+        let locale = PageLocale {
+            logical_route,
+            ui_lang: lang.clone(),
+            source_lang: lang.clone(),
+            source_route: route.clone(),
+            is_fallback: false,
         };
         let body = &text[body_offset..];
         let mut includes = IncludeFiles::default();
@@ -1250,10 +1703,18 @@ pub fn analyze_with_surfaces(
             included.insert(include.clone());
             includes.0.insert(include, read);
         }
-        let key = FragmentKey::of(body, body_offset, &lang, &includes);
-        routes.insert(route, drafts.len());
+        let catalog = catalogs
+            .entry(lang.clone())
+            .or_insert_with(|| Arc::new(labels::resolve(&lang, &BTreeMap::new())));
+        let digest = catalog_digests
+            .entry(lang.clone())
+            .or_insert_with(|| catalog.digest().to_owned());
+        let key = FragmentKey::of(body, body_offset, &lang, &lang, digest, &includes);
+        routes.insert(route.clone(), drafts.len());
         drafts.push(Draft {
             path: path.clone(),
+            route,
+            locale,
             front,
             body_offset,
             includes,
@@ -1272,11 +1733,10 @@ pub fn analyze_with_surfaces(
     let rendered = crate::generation::parallel_map(&missing, workers, |&i| {
         let draft = &drafts[i];
         let text = &snapshot.markdown[&draft.path];
-        let (labels, foreign) = labels::for_lang(&draft.lang);
         let context = markdown::Context {
             highlighter,
-            labels,
-            foreign,
+            catalog: &catalogs[&draft.lang],
+            source_lang: &draft.lang,
             includes: &draft.includes,
         };
         Arc::new(markdown::render(
@@ -1416,12 +1876,13 @@ pub fn analyze_with_surfaces(
         }
         pages.push(Page {
             origin: PageOrigin::Markdown,
-            route: route_for(&draft.path),
+            route: draft.route,
             file,
             path: draft.path,
             title,
             description,
             lang: draft.lang,
+            locale: draft.locale,
             draft: draft.front.draft,
             front: draft.front,
             fragment,
@@ -1436,24 +1897,47 @@ pub fn analyze_with_surfaces(
         .map(|(i, page)| (page.route.clone(), i))
         .collect();
     for registered in &surfaces.pages {
-        let route = &registered.route;
-        if config::normalize_base(route).as_ref() != Ok(route) {
+        let logical_route = &registered.route;
+        if config::normalize_base(logical_route).as_ref() != Ok(logical_route) {
             diagnostics.push(Diagnostic::in_file(
                 &registered.file,
                 Severity::Error,
                 "invalid-route",
-                format!("registered route {} needs a canonical path like `/custom/`, without query or fragment", code_span(route)),
+                format!("registered route {} needs a canonical path like `/custom/`, without query or fragment", code_span(logical_route)),
             ));
             continue;
         }
-        let output = crate::generation::page_path(route);
-        let first = route
+        let lang = registered.lang.as_deref().unwrap_or(&config.site.lang);
+        let lang = if let Some(locale) = config
+            .locales
+            .iter()
+            .find(|locale| locale.lang.eq_ignore_ascii_case(lang))
+        {
+            &locale.lang
+        } else if lang.eq_ignore_ascii_case(&config.site.lang) {
+            &config.site.lang
+        } else {
+            diagnostics.push(Diagnostic::in_file(
+                &registered.file,
+                Severity::Error,
+                "i18n-config",
+                format!(
+                    "registered page {} declares unconfigured language {}",
+                    code_span(&registered.name),
+                    code_span(lang)
+                ),
+            ));
+            continue;
+        };
+        let route = locale_route(config, lang, logical_route);
+        let output = crate::generation::page_path(logical_route);
+        let first = logical_route
             .trim_matches('/')
             .split('/')
             .next()
             .unwrap_or_default();
-        if route == "/404/"
-            || is_private(route)
+        if reserved_logical_route(config, logical_route)
+            || is_private(logical_route)
             || crate::generation::SITE_FILES.contains(&first)
             || crate::generation::GENERATED_PREFIXES
                 .iter()
@@ -1465,12 +1949,12 @@ pub fn analyze_with_surfaces(
                 "reserved-route",
                 format!(
                     "registered route {} is reserved for generated or private output",
-                    code_span(route)
+                    code_span(logical_route)
                 ),
             ));
             continue;
         }
-        if let Some(&other) = routes.get(route) {
+        if let Some(&other) = routes.get(&route) {
             diagnostics.push(Diagnostic::in_file(
                 &registered.file,
                 Severity::Error,
@@ -1479,32 +1963,119 @@ pub fn analyze_with_surfaces(
                     "registered page {} and {} both become {}",
                     code_span(&registered.name),
                     code_span(&pages[other].file),
-                    literal(route)
+                    literal(&route)
                 ),
             ));
             continue;
         }
         let fragment = cache.html(&registered.html, &mut live);
+        routes.insert(route.clone(), pages.len());
+        pages.push(Page {
+            origin: PageOrigin::Registered(registered.name.clone()),
+            path: logical_route.clone(),
+            file: registered.file.clone(),
+            route: route.clone(),
+            front: Front {
+                title: Some(registered.title.clone()),
+                description: registered.description.clone(),
+                lang: Some(lang.clone()),
+                ..Front::default()
+            },
+            title: registered.title.clone(),
+            description: registered.description.clone(),
+            lang: lang.clone(),
+            locale: PageLocale {
+                logical_route: logical_route.clone(),
+                ui_lang: lang.clone(),
+                source_lang: lang.clone(),
+                source_route: route.clone(),
+                is_fallback: false,
+            },
+            draft: false,
+            fragment,
+            targets: Vec::new(),
+            action_targets: Vec::new(),
+        });
+    }
+    let mut locales = project_locales(project, mode, &mut pages, &mut diagnostics);
+    let routes: BTreeMap<String, usize> = pages
+        .iter()
+        .enumerate()
+        .map(|(i, page)| (page.route.clone(), i))
+        .collect();
+    for page in &mut pages {
+        if page.locale.is_fallback && page.origin == PageOrigin::Markdown {
+            let text = &snapshot.markdown[&page.path];
+            let offset = frontmatter::split(text)
+                .ok()
+                .flatten()
+                .map_or(0, |split| split.body);
+            let body = &text[offset..];
+            let mut includes = IncludeFiles::default();
+            for path in markdown::include_paths(body) {
+                includes
+                    .0
+                    .insert(path.clone(), read_include(&mut sources, &path));
+            }
+            let key = FragmentKey::of(
+                body,
+                offset,
+                &page.locale.source_lang,
+                &page.lang,
+                &catalog_digests[&page.lang],
+                &includes,
+            );
+            live.insert(key);
+            let fragment = if let Some(fragment) = cache.entries.get(&key) {
+                cache.hits += 1;
+                fragment.clone()
+            } else {
+                cache.misses += 1;
+                let fragment = Arc::new(markdown::render(
+                    body,
+                    offset,
+                    &markdown::Context {
+                        highlighter,
+                        catalog: &catalogs[&page.lang],
+                        source_lang: &page.locale.source_lang,
+                        includes: &includes,
+                    },
+                ));
+                cache.entries.insert(key, fragment.clone());
+                fragment
+            };
+            let anchors = page.fragment.anchors.clone();
+            page.fragment = fragment;
+            if page.fragment.anchors != anchors {
+                Arc::make_mut(&mut page.fragment).anchors = anchors;
+            }
+        }
+        if !matches!(page.origin, PageOrigin::Registered(_)) {
+            continue;
+        }
+        if let Some(html) = surfaces.rendered_pages.get(&page.route) {
+            page.fragment = cache.html(html, &mut live);
+        }
         diagnostics.extend(
-            fragment
+            page.fragment
                 .issues
                 .iter()
                 .cloned()
-                .map(|issue| Diagnostic::rendered(&registered.file, issue)),
+                .map(|issue| Diagnostic::rendered(&page.file, issue)),
         );
-        if fragment.h1_count > 1 {
+        if page.fragment.h1_count > 1 {
             diagnostics.push(Diagnostic::in_file(
-                &registered.file,
+                &page.file,
                 Severity::Error,
                 "multiple-h1",
                 "a page has one top-level heading; the registered HTML contains more than one",
             ));
         }
         let mut previous = 1;
-        for heading in &fragment.headings {
+        for heading in &page.fragment.headings {
             if heading.level > previous + 1 {
                 diagnostics.push(Diagnostic::in_file(
-                    &registered.file,
+                    &page.file,
                     Severity::Warning,
                     "heading-skip",
                     format!(
@@ -1515,26 +2086,6 @@ pub fn analyze_with_surfaces(
             }
             previous = heading.level;
         }
-        routes.insert(route.clone(), pages.len());
-        pages.push(Page {
-            origin: PageOrigin::Registered(registered.name.clone()),
-            path: route.clone(),
-            file: registered.file.clone(),
-            route: route.clone(),
-            front: Front {
-                title: Some(registered.title.clone()),
-                description: registered.description.clone(),
-                lang: Some(config.site.lang.clone()),
-                ..Front::default()
-            },
-            title: registered.title.clone(),
-            description: registered.description.clone(),
-            lang: config.site.lang.clone(),
-            draft: false,
-            fragment,
-            targets: Vec::new(),
-            action_targets: Vec::new(),
-        });
     }
     if !pages.iter().any(|page| mode == Mode::Dev || !page.draft) {
         let (message, suggestion) = if !project.content_root().is_dir() {
@@ -1576,7 +2127,7 @@ pub fn analyze_with_surfaces(
     let by_path: HashMap<String, usize> = pages
         .iter()
         .enumerate()
-        .filter(|(_, page)| page.origin == PageOrigin::Markdown)
+        .filter(|(_, page)| page.origin == PageOrigin::Markdown && !page.locale.is_fallback)
         .map(|(i, page)| (page.path.clone(), i))
         .collect();
 
@@ -1586,7 +2137,12 @@ pub fn analyze_with_surfaces(
         .map_or(project.config_file.as_str(), |rust| rust.registry.as_str());
     let mut slots = BTreeMap::new();
     for (route, rendered) in &surfaces.slots {
-        if route != "/404/" && !routes.contains_key(route) {
+        let not_found = route == "/404/"
+            || config
+                .locales
+                .iter()
+                .any(|locale| locale_route(config, &locale.lang, "/404/") == *route);
+        if !not_found && !routes.contains_key(route) {
             diagnostics.push(Diagnostic::in_file(
                 slot_file,
                 Severity::Error,
@@ -1632,14 +2188,19 @@ pub fn analyze_with_surfaces(
         }
     }
 
-    // Code groups: one name, one set of tabs, across the site.
-    let mut groups: BTreeMap<&str, (BTreeSet<&str>, &str)> = BTreeMap::new();
+    // A group's tabs agree within a UI language; translated controls can differ.
+    let mut groups: BTreeMap<(&str, &str), (BTreeSet<&str>, &str)> = BTreeMap::new();
     for page in &pages {
         for group in &page.fragment.code_groups {
             let labels: BTreeSet<&str> = group.labels.iter().map(String::as_str).collect();
-            match groups.get(group.name.as_str()) {
+            let key = if config.locales.is_empty() {
+                ("", group.name.as_str())
+            } else {
+                (page.lang.as_str(), group.name.as_str())
+            };
+            match groups.get(&key) {
                 None => {
-                    groups.insert(&group.name, (labels, &page.file));
+                    groups.insert(key, (labels, &page.file));
                 }
                 Some((known, first)) if *known != labels => {
                     let text = &snapshot.markdown[&page.path];
@@ -1764,7 +2325,7 @@ pub fn analyze_with_surfaces(
     }
 
     // The configuration's header links resolve from the content root.
-    let mut config_links = |links: &[config::NavLink]| -> Vec<Target> {
+    let mut config_links = |links: &[config::NavLink], from: Option<&str>| -> Vec<Target> {
         let mut found = Vec::new();
         let targets = links
             .iter()
@@ -1775,7 +2336,7 @@ pub fn analyze_with_surfaces(
                 let target = resolve_link(
                     &graph,
                     &mut sources,
-                    None,
+                    from,
                     "",
                     link.link.trim(),
                     &mut found,
@@ -1793,8 +2354,24 @@ pub fn analyze_with_surfaces(
         }
         targets
     };
-    let top = config_links(&config.nav.top);
-    let social = config_links(&config.nav.social);
+    let (mut top, mut social) = if config.locales.is_empty() {
+        (
+            config_links(&config.nav.top, None),
+            config_links(&config.nav.social, None),
+        )
+    } else {
+        (Vec::new(), Vec::new())
+    };
+    for locale in &config.locales {
+        let Some(view) = locales.get_mut(&locale.lang) else {
+            continue;
+        };
+        let nav = locale.nav.as_ref().unwrap_or(&config.nav);
+        view.top = config_links(&nav.top, Some(&view.root_route));
+        view.social = config_links(&nav.social, Some(&view.root_route));
+        collect_resources(&view.top, &mut resources);
+        collect_resources(&view.social, &mut resources);
+    }
     for target in top.iter().chain(&social) {
         if let Target::Resource(path) = target {
             resources.insert(path.clone());
@@ -1842,15 +2419,85 @@ pub fn analyze_with_surfaces(
     }
 
     // Navigation.
-    let nav = navigation(
-        project,
-        snapshot,
-        &pages,
-        mode,
-        &by_path,
-        &routes,
-        &mut diagnostics,
-    );
+    validate_sidebar_groups(project, snapshot, &pages, &mut diagnostics);
+    let mut nav = if config.locales.is_empty() {
+        navigation(project, &pages, mode, &by_path, &routes, &mut diagnostics)
+    } else {
+        Vec::new()
+    };
+    if !config.locales.is_empty() {
+        // Select and rank logical pages once per navigation definition, using
+        // each target version's title while retaining the default path identity.
+        let defaults: Vec<_> = pages
+            .iter()
+            .filter(|page| page.lang.eq_ignore_ascii_case(&config.site.lang))
+            .collect();
+        for locale in &config.locales {
+            let Some(view) = locales.get_mut(&locale.lang) else {
+                continue;
+            };
+            let mut localized = project.clone();
+            localized.config.nav = locale.nav.clone().unwrap_or_else(|| config.nav.clone());
+            let projected: Vec<_> = defaults
+                .iter()
+                .map(|source| {
+                    let target = view
+                        .pages
+                        .get(&source.locale.logical_route)
+                        .map(|&i| &pages[i]);
+                    let mut page = target.unwrap_or(source).clone();
+                    if locale.nav.is_none() {
+                        page.front.sidebar.group = source.front.sidebar.group.clone();
+                    } else if page.locale.is_fallback {
+                        page.front.sidebar.group = None;
+                    }
+                    page.path = source.path.clone();
+                    page.origin = source.origin.clone();
+                    page.route = source.locale.logical_route.clone();
+                    page
+                })
+                .collect();
+            let paths = projected
+                .iter()
+                .enumerate()
+                .filter(|(_, page)| page.origin == PageOrigin::Markdown)
+                .map(|(i, page)| (page.path.clone(), i))
+                .collect();
+            let logical_routes = projected
+                .iter()
+                .enumerate()
+                .map(|(i, page)| (page.route.clone(), i))
+                .collect();
+            view.nav = navigation(
+                &localized,
+                &projected,
+                mode,
+                &paths,
+                &logical_routes,
+                &mut diagnostics,
+            );
+            for group in &mut view.nav {
+                group.lang = if locale.nav.is_some() {
+                    locale.lang.clone()
+                } else {
+                    config.site.lang.clone()
+                };
+                group.prefix = locale_route(config, &locale.lang, &group.prefix);
+                for item in &mut group.items {
+                    item.route = locale_route(config, &locale.lang, &item.route);
+                }
+            }
+        }
+        let default = config
+            .locales
+            .iter()
+            .find(|locale| locale.lang.eq_ignore_ascii_case(&config.site.lang));
+        if let Some(locale) = default {
+            nav = locales[&locale.lang].nav.clone();
+            top = locales[&locale.lang].top.clone();
+            social = locales[&locale.lang].social.clone();
+        }
+    }
 
     // The logo, the link-preview image and the brand colours.
     let logos = config.logo.iter().flat_map(|logo| {
@@ -1902,11 +2549,14 @@ pub fn analyze_with_surfaces(
         let Some(output) = path.strip_prefix(&assets_prefix) else {
             continue;
         };
-        if is_private(path) || sources.theme_file(path) {
+        if is_private(path) || sources.theme_file(path) || sources.message_file(path) {
             continue;
         }
         let taken = page_files.contains(output)
             || crate::generation::SITE_FILES.contains(&output)
+            || config.locales.iter().any(|locale| {
+                !locale.prefix.is_empty() && output == format!("{}/404.html", locale.prefix)
+            })
             || crate::generation::GENERATED_PREFIXES
                 .iter()
                 .any(|prefix| output.starts_with(prefix));
@@ -1965,6 +2615,8 @@ pub fn analyze_with_surfaces(
         mode,
         pages,
         routes,
+        locales,
+        catalogs,
         slots,
         nav,
         top,
@@ -1997,6 +2649,27 @@ pub fn markdown_intro(
     path: &str,
     highlighter: &Highlighter,
 ) -> Result<MarkdownIntroContent, Vec<Diagnostic>> {
+    markdown_intro_with_context(
+        project,
+        snapshot,
+        analysis,
+        path,
+        highlighter,
+        (&project.config.site.lang, &project.config.site.lang, "/"),
+    )
+}
+
+/// The same source introduction inside a specific target-language surface.
+#[doc(hidden)]
+pub fn markdown_intro_with_context(
+    project: &Project,
+    snapshot: &Snapshot,
+    analysis: &Analysis,
+    path: &str,
+    highlighter: &Highlighter,
+    context: (&str, &str, &str),
+) -> Result<MarkdownIntroContent, Vec<Diagnostic>> {
+    let (ui_lang, source_lang, route) = context;
     let path = config::relative_path(path).map_err(|message| {
         vec![Diagnostic::general(
             Severity::Error,
@@ -2009,6 +2682,7 @@ pub fn markdown_intro(
         project,
         snapshot,
         theme: theme_paths(project, &root),
+        messages: message_paths(project, &root),
         root,
         outside: BTreeMap::new(),
         inputs: InputReceipts::default(),
@@ -2041,14 +2715,19 @@ pub fn markdown_intro(
             .0
             .insert(include.clone(), read_include(&mut sources, &include));
     }
-    let (labels, foreign) = labels::for_lang(&project.config.site.lang);
+    let catalog = analysis
+        .catalogs
+        .iter()
+        .find(|(lang, _)| lang.eq_ignore_ascii_case(ui_lang))
+        .map(|(_, catalog)| catalog.clone())
+        .unwrap_or_else(|| Arc::new(labels::resolve(ui_lang, &BTreeMap::new())));
     let fragment = markdown::render(
         body,
         range.start,
         &markdown::Context {
             highlighter,
-            labels,
-            foreign,
+            catalog: &catalog,
+            source_lang,
             includes: &includes,
         },
     );
@@ -2056,7 +2735,7 @@ pub fn markdown_intro(
         .pages
         .iter()
         .enumerate()
-        .filter(|(_, page)| page.origin == PageOrigin::Markdown)
+        .filter(|(_, page)| page.origin == PageOrigin::Markdown && !page.locale.is_fallback)
         .map(|(index, page)| (page.path.clone(), index))
         .collect();
     let anchors = analysis
@@ -2102,6 +2781,28 @@ pub fn markdown_intro(
                     &issue,
                 )
             }
+        };
+        let target = if let Target::Page { page, anchor } = target {
+            let page = graph.projected_page(page, Some(route), url);
+            if let Some(anchor) = &anchor {
+                if !graph
+                    .anchors
+                    .get(&graph.pages[page].route)
+                    .is_some_and(|known| known.contains(anchor))
+                {
+                    found.push(issue(
+                        "broken-anchor",
+                        format!(
+                            "{} has no heading {}",
+                            literal(&graph.pages[page].file),
+                            code_span(anchor)
+                        ),
+                    ));
+                }
+            }
+            Target::Page { page, anchor }
+        } else {
+            target
         };
         targets.push(sources.refuse_theme(target, &mut found, &issue));
     }
@@ -2175,6 +2876,55 @@ struct LinkGraph<'a> {
     routes: &'a BTreeMap<String, usize>,
     anchors: &'a BTreeMap<String, BTreeSet<String>>,
     mode: Mode,
+}
+
+impl LinkGraph<'_> {
+    fn projected_page(&self, target: usize, from: Option<&str>, path: &str) -> usize {
+        let config = &self.project.config;
+        if config.locales.is_empty() {
+            return target;
+        }
+        let source = from
+            .and_then(|route| self.routes.get(route))
+            .map(|&i| &self.pages[i]);
+        let explicit = if path.starts_with('/') {
+            let path = without_base(path, &config.site.base);
+            config.locales.iter().any(|locale| {
+                !locale.prefix.is_empty() && path.starts_with(&format!("/{}/", locale.prefix))
+            })
+        } else {
+            !self.pages[target]
+                .locale
+                .source_lang
+                .eq_ignore_ascii_case(&config.site.lang)
+                && source.is_none_or(|page| {
+                    !page
+                        .locale
+                        .source_lang
+                        .eq_ignore_ascii_case(&self.pages[target].locale.source_lang)
+                })
+        };
+        if explicit {
+            return target;
+        }
+        let lang = source
+            .map(|page| page.lang.as_str())
+            .or_else(|| {
+                from.and_then(|route| {
+                    config
+                        .locales
+                        .iter()
+                        .find(|locale| {
+                            !locale.prefix.is_empty()
+                                && route.starts_with(&format!("/{}/", locale.prefix))
+                        })
+                        .map(|locale| locale.lang.as_str())
+                })
+            })
+            .unwrap_or(&config.site.lang);
+        let route = locale_route(config, lang, &self.pages[target].locale.logical_route);
+        self.routes.get(&route).copied().unwrap_or(target)
+    }
 }
 
 fn collect_resources(targets: &[Target], resources: &mut BTreeSet<String>) {
@@ -2343,6 +3093,7 @@ fn resolve_link(
     }
     let (path, fragment) = split_fragment(url);
     let fragment = fragment.map(percent_decode);
+    let decoded = percent_decode(path.split('?').next().unwrap_or_default());
     let check_anchor = |route: &str, found: &mut Vec<Issue>| {
         if let Some(anchor) = fragment.as_deref().filter(|anchor| !anchor.is_empty()) {
             let known = anchors
@@ -2358,6 +3109,7 @@ fn resolve_link(
         }
     };
     let to_page = |target: usize, found: &mut Vec<Issue>| -> Target {
+        let target = graph.projected_page(target, from, &decoded);
         if pages[target].draft
             && !from
                 .and_then(|route| routes.get(route))
@@ -2395,7 +3147,6 @@ fn resolve_link(
         return Target::Keep;
     }
     // URL separators are syntax before decoding: `%3F` belongs to a name.
-    let decoded = percent_decode(path.split('?').next().unwrap_or_default());
     if let Some(absolute) = without_base(&decoded, &project.config.site.base).strip_prefix('/') {
         // A site route, or a file in the asset directory.
         let route = if absolute.is_empty() || absolute.ends_with('/') {
@@ -2430,7 +3181,12 @@ fn resolve_link(
                 None
             };
             if let Some(markdown) = as_markdown {
-                return match by_path.get(markdown.as_str()) {
+                let target = by_path.get(markdown.as_str()).or_else(|| {
+                    (!project.config.locales.is_empty())
+                        .then(|| routes.get(&route_for(&markdown)))
+                        .flatten()
+                });
+                return match target {
                     Some(&target) => to_page(target, found),
                     None => {
                         let file = format!("{}/{markdown}", project.config.content_dir);
@@ -2505,6 +3261,10 @@ fn resolve_link(
                 ));
                 return Target::Keep;
             };
+            if sources.message_file(&file) {
+                found.push(Refusal::Messages.issue(issue, &code_span(&file), "i18n-messages"));
+                return Target::Keep;
+            }
             if sources.exists(&file).is_err() {
                 found.push(issue(
                     "broken-link",
@@ -2696,9 +3456,67 @@ fn resolve_resource(
     }
 }
 
-fn navigation(
+fn validate_sidebar_groups(
     project: &Project,
     snapshot: &Snapshot,
+    pages: &[Page],
+    diagnostics: &mut Vec<Diagnostic>,
+) {
+    let config = &project.config;
+    for page in pages.iter().filter(|page| !page.locale.is_fallback) {
+        if page.origin != PageOrigin::Markdown {
+            continue;
+        }
+        let nav = config
+            .locales
+            .iter()
+            .find(|locale| locale.lang == page.lang)
+            .and_then(|locale| locale.nav.as_ref())
+            .unwrap_or(&config.nav);
+        if nav.groups.is_empty() {
+            continue;
+        }
+        let Some(label) = page
+            .front
+            .sidebar
+            .group
+            .as_deref()
+            .filter(|label| !nav.groups.iter().any(|group| group.label == *label))
+        else {
+            continue;
+        };
+        let text = &snapshot.markdown[&page.path];
+        let yaml = frontmatter::split(text)
+            .ok()
+            .flatten()
+            .map_or(0..0, |split| split.yaml);
+        let at = text[yaml.clone()]
+            .find(label)
+            .map_or(yaml.start, |at| yaml.start + at);
+        let names: Vec<String> = nav
+            .groups
+            .iter()
+            .map(|group| literal(&group.label))
+            .collect();
+        diagnostics.push(Diagnostic::located(
+            &page.file,
+            text,
+            Issue::error(
+                at..at + label.len(),
+                "nav-unknown-group",
+                format!(
+                    "sidebar.group {} is not a nav group in {}",
+                    code_span(label),
+                    literal(&project.config_file)
+                ),
+            )
+            .suggest(format!("use one of: {}", names.join(", "))),
+        ));
+    }
+}
+
+fn navigation(
+    project: &Project,
     pages: &[Page],
     mode: Mode,
     by_path: &HashMap<String, usize>,
@@ -2728,6 +3546,7 @@ fn navigation(
     let item = |i: usize| {
         let page = &pages[i];
         NavItem {
+            lang: page.locale.source_lang.clone(),
             title: page
                 .front
                 .sidebar
@@ -2754,6 +3573,7 @@ fn navigation(
         for (label, found) in labels {
             if !found.is_empty() {
                 groups.push(NavGroup {
+                    lang: config.site.lang.clone(),
                     label: label.to_owned(),
                     prefix: "/".into(),
                     items: ranked(found).into_iter().map(item).collect(),
@@ -2763,44 +3583,7 @@ fn navigation(
         return groups;
     }
 
-    // With groups configured, `sidebar.group` names one of them.
     let known = |label: &str| config.nav.groups.iter().any(|group| group.label == label);
-    for page in pages {
-        if page.origin != PageOrigin::Markdown {
-            continue;
-        }
-        let Some(label) = chosen(page).filter(|label| !known(label)) else {
-            continue;
-        };
-        let text = &snapshot.markdown[&page.path];
-        let yaml = frontmatter::split(text)
-            .ok()
-            .flatten()
-            .map_or(0..0, |split| split.yaml);
-        let at = text[yaml.clone()]
-            .find(label)
-            .map_or(yaml.start, |at| yaml.start + at);
-        let names: Vec<String> = config
-            .nav
-            .groups
-            .iter()
-            .map(|group| literal(&group.label))
-            .collect();
-        diagnostics.push(Diagnostic::located(
-            &page.file,
-            text,
-            Issue::error(
-                at..at + label.len(),
-                "nav-unknown-group",
-                format!(
-                    "sidebar.group {} is not a nav group in {}",
-                    code_span(label),
-                    literal(&project.config_file)
-                ),
-            )
-            .suggest(format!("use one of: {}", names.join(", "))),
-        ));
-    }
     // Explicit file and route lists keep their pages in the declared group.
     let explicit: BTreeSet<usize> = config
         .nav
@@ -2917,6 +3700,7 @@ fn navigation(
         };
         listed.extend(found.iter().copied());
         groups.push(NavGroup {
+            lang: config.site.lang.clone(),
             label: group.label.clone(),
             prefix: group.scope.clone(),
             items: found.into_iter().map(item).collect(),
@@ -3301,6 +4085,7 @@ pub(crate) mod tests {
 
     fn registered(name: &str, route: &str, html: &str) -> RegisteredPage {
         RegisteredPage {
+            lang: None,
             name: name.into(),
             route: route.into(),
             title: name.into(),

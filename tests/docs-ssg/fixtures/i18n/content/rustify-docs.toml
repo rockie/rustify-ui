@@ -1,0 +1,40 @@
+schema_version = 1
+
+[site]
+name = "Language fixture"
+description = "A static reading site in several languages."
+lang = "en"
+url = "https://example.com/docs/"
+base = "/docs/"
+
+[[nav.groups]]
+label = "Guide"
+items = ["guide/setup.md", "guide/second.md", "faq.md"]
+
+[[nav.top]]
+label = "Start reading"
+link = "guide/setup.md"
+
+[[i18n.locales]]
+lang = "en"
+label = "English"
+prefix = ""
+
+[[i18n.locales]]
+lang = "zh"
+label = "中文"
+prefix = "zh"
+
+[i18n.locales.nav]
+groups = [{ label = "指南", items = ["guide/setup.md", "guide/second.md", "faq.md"] }]
+top = [{ label = "开始阅读", link = "guide/setup.md" }]
+
+[[i18n.locales]]
+lang = "fr"
+label = "Français"
+prefix = "fr"
+messages = "locales/fr.toml"
+
+[i18n.locales.nav]
+groups = [{ label = "Guides", items = ["guide/setup.md", "guide/second.md", "faq.md"] }]
+top = [{ label = "Lire le guide", link = "guide/setup.md" }]

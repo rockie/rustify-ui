@@ -47,6 +47,8 @@ pub struct PageManifest {
     pub route: String,
     pub title: String,
     pub description: Option<String>,
+    #[serde(default)]
+    pub lang: Option<String>,
     pub function: String,
 }
 

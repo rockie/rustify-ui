@@ -6,7 +6,7 @@
 
 mod support;
 
-use std::collections::BTreeMap;
+use std::collections::{BTreeMap, BTreeSet};
 
 use support::*;
 
@@ -238,6 +238,114 @@ fn site_files_list_what_may_be_indexed_and_nothing_private_ships() {
     for bytes in files.values() {
         let text = String::from_utf8_lossy(bytes);
         assert!(!text.contains("SECRET") && !text.contains("rustify-region"));
+    }
+}
+
+#[test]
+fn a_multilingual_content_build_publishes_resolvable_versions_and_true_error_files() {
+    for base in ["/", "/rustify-ui/"] {
+        let temp = Temp::new("i18n-artifacts");
+        copy_tree(&fixture("i18n/content"), &temp.path("site"));
+        temp.edit(
+            "site/rustify-docs.toml",
+            "url = \"https://example.com/docs/\"\nbase = \"/docs/\"",
+            &format!("url = \"https://docs.example.net{base}\"\nbase = \"{base}\""),
+        );
+        let built = run_in(&temp.path("site"), &["build", "--format", "json"]);
+        succeeded(&built);
+        let report: serde_json::Value = serde_json::from_slice(&built.stdout).unwrap();
+        assert_eq!(report["summary"]["errors"], 0, "{report:#}");
+        let files = tree(&temp.path("site/dist"));
+        for prefix in ["", "zh/", "fr/"] {
+            for route in ["", "guide/setup/", "guide/second/", "faq/"] {
+                let path = format!("{prefix}{route}index.html");
+                assert!(files.contains_key(&path), "{base}: {path}");
+            }
+        }
+        addresses_resolve(&files, base, "https://docs.example.net");
+        let manifest: serde_json::Value =
+            serde_json::from_slice(&files["rustify-docs-manifest.json"]).unwrap();
+        assert_eq!(
+            manifest["locale_not_found"],
+            serde_json::json!({"": "404.html", "zh": "zh/404.html", "fr": "fr/404.html"})
+        );
+        for (prefix, lang) in [("", "en"), ("zh", "zh"), ("fr", "fr")] {
+            let path = manifest["locale_not_found"][prefix].as_str().unwrap();
+            let bytes = &files[path];
+            let listed = manifest["files"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .find(|file| file["path"] == path)
+                .unwrap();
+            assert_eq!(listed["bytes"], bytes.len() as u64, "{path}");
+            assert_eq!(listed["sha256"], sha256(bytes), "{path}");
+            let html = text_of(&files, path);
+            let document = dom_query::Document::from(html.as_str());
+            assert_eq!(document.select("html").attr("lang").as_deref(), Some(lang));
+            assert_eq!(
+                document
+                    .select("meta[name=robots]")
+                    .attr("content")
+                    .as_deref(),
+                Some("noindex")
+            );
+            assert!(!document
+                .select("head link[rel=canonical], head link[hreflang]")
+                .exists());
+        }
+        let sitemap = text_of(&files, "sitemap.xml");
+        let locations: BTreeSet<_> = sitemap
+            .split("<loc>")
+            .skip(1)
+            .map(|rest| rest.split("</loc>").next().unwrap().to_owned())
+            .collect();
+        let real: BTreeSet<_> = [
+            "",
+            "guide/setup/",
+            "guide/second/",
+            "faq/",
+            "zh/",
+            "zh/guide/setup/",
+            "fr/",
+        ]
+        .into_iter()
+        .map(|route| format!("https://docs.example.net{base}{route}"))
+        .collect();
+        assert_eq!(locations, real, "only real versions belong in the sitemap");
+        for (prefix, logical) in [
+            ("fr", "guide/setup/"),
+            ("zh", "guide/second/"),
+            ("fr", "guide/second/"),
+        ] {
+            let html = text_of(&files, &format!("{prefix}/{logical}index.html"));
+            let document = dom_query::Document::from(html.as_str());
+            assert_eq!(
+                document.select("html").attr("lang").as_deref(),
+                Some(prefix)
+            );
+            assert_eq!(
+                document.select("article").attr("lang").as_deref(),
+                Some("en")
+            );
+            assert_eq!(
+                document
+                    .select("meta[name=robots]")
+                    .attr("content")
+                    .as_deref(),
+                Some("noindex")
+            );
+            assert_eq!(
+                document
+                    .select("link[rel=canonical]")
+                    .attr("href")
+                    .as_deref(),
+                Some(format!("https://docs.example.net{base}{logical}").as_str())
+            );
+        }
+        assert!(files
+            .keys()
+            .all(|path| !path.starts_with("locales/") && !path.ends_with(".toml")));
     }
 }
 

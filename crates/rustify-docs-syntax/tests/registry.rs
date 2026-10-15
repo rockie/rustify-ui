@@ -71,6 +71,32 @@ fn source_and_macro_token_parsing_produce_the_same_manifest() {
 }
 
 #[test]
+fn page_languages_are_shared_by_cold_and_macro_token_parsing() {
+    let body = r#"pages {
+        Home { route: "/", title: "Home" } => crate::pages::home,
+        HomeZh { route: "/", title: "首页", lang: "zh" } => crate::pages::home_zh,
+    }"#;
+    let from_tokens = syn::parse_str::<SiteDeclaration>(body).expect("macro tokens");
+    let site = parse(body);
+    assert_eq!(site.manifest(), from_tokens.manifest());
+    assert!(site.pages[0].lang.is_none());
+    assert_eq!(site.pages[1].lang.as_ref().unwrap().value(), "zh");
+    assert_eq!(site.manifest().pages[0].lang, None);
+    assert_eq!(site.manifest().pages[1].lang.as_deref(), Some("zh"));
+}
+
+#[test]
+fn one_logical_route_can_register_different_declared_languages() {
+    let site = parse(
+        r#"pages {
+        HomeEn { route: "/", title: "Home", lang: "en" } => home,
+        HomeZh { route: "/", title: "首页", lang: "zh" } => home_zh,
+    }"#,
+    );
+    assert_eq!(site.pages.len(), 2);
+}
+
+#[test]
 fn whitespace_comments_and_crlf_do_not_change_the_manifest() {
     let compact = parse("demos { CounterDemo => crate::demos::counter_demo, }").manifest();
     let expanded = parse(
@@ -213,6 +239,48 @@ fn repeated_property_names_are_rejected() {
 #[test]
 fn repeated_page_routes_are_rejected() {
     assert!(error("pages { Home { route: \"/\", title: \"Home\" } => home, Index { route: \"/\", title: \"Index\" } => index }").to_string().contains("duplicate page route `/`"));
+}
+
+#[test]
+fn repeated_page_routes_in_the_same_declared_language_are_rejected() {
+    assert!(error(
+        r#"pages {
+        Home { route: "/", title: "Home", lang: "zh-CN" } => home,
+        Index { route: "/", title: "Index", lang: "ZH-cn" } => index,
+    }"#
+    )
+    .to_string()
+    .contains("duplicate page route `/`"));
+}
+
+#[test]
+fn page_names_remain_unique_across_declared_languages() {
+    assert!(error(
+        r#"pages {
+        Home { route: "/", title: "Home", lang: "en" } => home,
+        Home { route: "/", title: "首页", lang: "zh" } => home_zh,
+    }"#
+    )
+    .to_string()
+    .contains("duplicate registration name `Home`"));
+}
+
+#[test]
+fn page_language_metadata_is_literal_and_has_no_repeated_key() {
+    assert!(error(
+        r#"pages {
+        Home { route: "/", title: "Home", lang: LOCALE } => home,
+    }"#
+    )
+    .to_string()
+    .contains("string literal"));
+    assert!(error(
+        r#"pages {
+        Home { route: "/", title: "Home", lang: "en", lang: "zh" } => home,
+    }"#
+    )
+    .to_string()
+    .contains("duplicate page metadata `lang`"));
 }
 
 #[test]

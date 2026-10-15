@@ -735,50 +735,41 @@ mod tests {
             .dark
             .0
             .insert("primary".into(), "invalid color".into());
-        let invalid_locale = SiteEnvironment {
-            lang: "unsupported".into(),
-            ..SiteEnvironment::default()
-        };
-        for (environment, expected) in [
-            (invalid_theme, "invalid_theme"),
-            (invalid_locale, "invalid_environment"),
-        ] {
-            let results = render_batch(
-                &registry,
-                environment,
-                vec![
-                    item(
-                        "bad-props",
-                        RenderTarget::Component {
-                            name: "Client".into(),
-                            props: json!({"label":3}),
-                            children_html: String::new(),
-                        },
-                    ),
-                    item(
-                        "valid-props",
-                        RenderTarget::Component {
-                            name: "Client".into(),
-                            props: json!({"label":"kept"}),
-                            children_html: String::new(),
-                        },
-                    ),
-                    item(
-                        "demo",
-                        RenderTarget::Demo {
-                            name: "Probe".into(),
-                        },
-                    ),
-                ],
-            );
-            assert_eq!(results[0].diagnostics[0].code, "invalid_props");
-            assert_eq!(results[1].diagnostics[0].code, expected);
-            assert_eq!(results[2].diagnostics[0].code, expected);
-            assert_eq!(results[1].props, Some(json!({"label":"kept"})));
-            assert!(results[1].client_only);
-            assert!(results
-                .iter()
-                .all(|result| result.html.is_none() && result.demos.is_empty()));
-        }
+        let results = render_batch(
+            &registry,
+            invalid_theme,
+            vec![
+                item(
+                    "bad-props",
+                    RenderTarget::Component {
+                        name: "Client".into(),
+                        props: json!({"label":3}),
+                        children_html: String::new(),
+                    },
+                ),
+                item(
+                    "valid-props",
+                    RenderTarget::Component {
+                        name: "Client".into(),
+                        props: json!({"label":"kept"}),
+                        children_html: String::new(),
+                    },
+                ),
+                item(
+                    "demo",
+                    RenderTarget::Demo {
+                        name: "Probe".into(),
+                    },
+                ),
+            ],
+        );
+        assert_eq!(results[0].diagnostics[0].code, "invalid_props");
+        assert_eq!(results[1].diagnostics[0].code, "invalid_theme");
+        assert_eq!(results[2].diagnostics[0].code, "invalid_theme");
+        assert_eq!(results[1].props, Some(json!({"label":"kept"})));
+        assert!(results[1].client_only);
+        assert!(results
+            .iter()
+            .all(|result| result.html.is_none() && result.demos.is_empty()));
     }
 }

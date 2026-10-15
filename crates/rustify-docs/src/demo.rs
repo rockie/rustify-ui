@@ -2,7 +2,7 @@
 
 use crate::escape::{escape_html, escape_html_into};
 use crate::highlight::Highlighter;
-use crate::labels::Labels;
+use crate::labels::Catalog;
 use crate::markdown::{code_group_html, Context, IncludeFiles};
 use crate::site::IslandMetadata;
 
@@ -20,17 +20,12 @@ pub fn render(
     metadata: &IslandMetadata,
     source: Option<Source<'_>>,
     highlighter: &Highlighter,
-    labels: &Labels,
-    foreign: bool,
+    catalog: &Catalog,
+    source_lang: &str,
     client_only: bool,
 ) -> String {
     let json = serde_json::to_string(metadata).expect("island metadata has JSON-compatible fields");
     let key = escape_html(&metadata.key);
-    let ui_lang = if foreign {
-        format!(" lang=\"{}\"", labels.lang)
-    } else {
-        String::new()
-    };
     let mut out = format!(
         "<section class=\"rd-demo\" data-rustify-island=\"{key}\" data-rustify-island-metadata=\"{}\" data-rd-island-state=\"no-script\"{}>\n\
          <fieldset class=\"rd-demo-canvas\" data-rd-island-controls disabled aria-labelledby=\"rd-demo-label-{key}\">",
@@ -39,15 +34,31 @@ pub fn render(
     );
     out.push_str(html);
     out.push_str("</fieldset>\n");
+    out.push_str("<div class=\"rd-demo-status\" data-rd-island-status role=\"status\" aria-live=\"polite\">\n");
+    for (key, attributes) in [
+        (
+            "demo.example",
+            format!("class=\"sr-only\" id=\"rd-demo-label-{key}\""),
+        ),
+        ("demo.loading", "data-rd-island-loading hidden".into()),
+        (
+            "demo.failed",
+            "data-rd-island-error aria-hidden=\"true\"".into(),
+        ),
+    ] {
+        let label = catalog.get(key);
+        out.push_str(&format!(
+            "<span {attributes} lang=\"{}\">{}</span>",
+            escape_html(&label.lang),
+            escape_html(&label.text)
+        ));
+    }
+    let reload = catalog.get("demo.reload");
+    let no_script = catalog.get("demo.no_script");
     out.push_str(&format!(
-        "<div class=\"rd-demo-status\" data-rd-island-status role=\"status\" aria-live=\"polite\"{ui_lang}>\
-         <span class=\"sr-only\" id=\"rd-demo-label-{key}\">{}</span>\
-         <span data-rd-island-loading hidden>{}</span>\
-         <span data-rd-island-error aria-hidden=\"true\">{}</span>\
-         <button type=\"button\" class=\"rd-demo-reload\" data-rd-island-reload aria-hidden=\"true\">{}</button>\
-         <noscript><span>{}</span></noscript></div>\n",
-        escape_html(labels.demo.example), escape_html(labels.demo.loading), escape_html(labels.demo.failed),
-        escape_html(labels.demo.reload), escape_html(labels.demo.no_script),
+        "<button type=\"button\" class=\"rd-demo-reload\" data-rd-island-reload aria-hidden=\"true\" lang=\"{}\">{}</button>\
+         <noscript><span lang=\"{}\">{}</span></noscript></div>\n",
+        escape_html(&reload.lang), escape_html(&reload.text), escape_html(&no_script.lang), escape_html(&no_script.text),
     ));
     if let Some(source) = source {
         out.push_str(
@@ -60,14 +71,14 @@ pub fn render(
         let includes = IncludeFiles::default();
         out.push_str(&code_group_html(
             &[
-                (labels.demo.function, source.function),
-                (labels.demo.full_file, source.file),
+                (catalog.get("demo.function"), source.function),
+                (catalog.get("demo.full_file"), source.file),
             ],
             &format!("rd-demo-source-{}", metadata.key),
             &Context {
                 highlighter,
-                labels,
-                foreign,
+                catalog,
+                source_lang,
                 includes: &includes,
             },
         ));
@@ -108,8 +119,8 @@ mod tests {
                 file: &file,
             }),
             &Highlighter::new(),
-            &crate::labels::EN,
-            false,
+            &crate::labels::resolve("en", &Default::default()),
+            "en",
             false,
         );
         let canvas_end = rendered.find("</fieldset>").unwrap();
@@ -136,18 +147,18 @@ mod tests {
             &metadata("key\"<&"),
             None,
             &Highlighter::new(),
-            &crate::labels::ZH,
-            true,
+            &crate::labels::resolve("zh", &Default::default()),
+            "en",
             true,
         );
         assert!(rendered.contains("data-rustify-island=\"key&quot;&lt;&amp;\""));
         assert!(rendered.contains("data-rustify-island-metadata=\"{&quot;protocol_version&quot;:1"));
         assert!(rendered.contains(original));
         assert!(rendered.contains("data-rd-island-client-only=\"true\""));
-        assert!(rendered.contains("aria-live=\"polite\" lang=\"zh\""));
-        assert!(
-            rendered.contains("<noscript><span>启用 JavaScript 后可操作此示例</span></noscript>")
-        );
+        assert!(rendered.contains("data-rd-island-loading hidden lang=\"zh\""));
+        assert!(rendered.contains(
+            "<noscript><span lang=\"zh\">启用 JavaScript 后可操作此示例</span></noscript>"
+        ));
         assert!(!rendered.contains("rd-demo-source\""));
         assert!(!rendered.contains("<script"));
     }

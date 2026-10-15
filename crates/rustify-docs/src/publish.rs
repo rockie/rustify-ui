@@ -15,7 +15,7 @@
 //! that is not a previous build's output is never replaced.
 
 use crate::diagnostic_text::{code_span, literal};
-use std::collections::BTreeMap;
+use std::collections::{BTreeMap, BTreeSet};
 use std::fs::{self, File, TryLockError};
 use std::io;
 use std::path::{Path, PathBuf};
@@ -41,6 +41,8 @@ pub struct Manifest {
     /// The digest of the file list below.
     pub build_id: String,
     pub files: Vec<ManifestFile>,
+    #[serde(default, skip_serializing_if = "BTreeMap::is_empty")]
+    pub locale_not_found: BTreeMap<String, String>,
 }
 
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
@@ -81,6 +83,7 @@ impl Manifest {
             cli_version: cli_version.into(),
             build_id,
             files: list,
+            locale_not_found: BTreeMap::new(),
         }
     }
 
@@ -110,11 +113,68 @@ impl Manifest {
             )
         })
     }
+
+    /// Validates and freezes this output's explicitly declared language errors.
+    pub fn locale_not_found_files(&self, dir: &Path) -> Result<BTreeMap<String, Vec<u8>>, String> {
+        let damaged = |message: String| {
+            format!("invalid locale_not_found: {message}; run `rustify-docs build` again")
+        };
+        if self.locale_not_found.is_empty() {
+            return Ok(BTreeMap::new());
+        }
+        if self.locale_not_found.get("").map(String::as_str) != Some("404.html") {
+            return Err(damaged(
+                "the default entry must be an empty prefix mapped to 404.html".into(),
+            ));
+        }
+        let root = fs::canonicalize(dir)
+            .map_err(|error| damaged(format!("cannot read output: {error}")))?;
+        let listed: BTreeSet<_> = self.files.iter().map(|file| file.path.as_str()).collect();
+        let mut frozen = BTreeMap::new();
+        for (prefix, path) in &self.locale_not_found {
+            let expected = if prefix.is_empty() {
+                "404.html".to_owned()
+            } else {
+                if !crate::config::valid_locale_prefix(prefix) {
+                    return Err(damaged(format!(
+                        "{} is not a safe language prefix",
+                        code_span(prefix)
+                    )));
+                }
+                format!("{prefix}/404.html")
+            };
+            if path != &expected || !listed.contains(path.as_str()) {
+                return Err(damaged(format!(
+                    "{} must name the listed file {}",
+                    code_span(prefix),
+                    code_span(&expected)
+                )));
+            }
+            let real = fs::canonicalize(root.join(path))
+                .map_err(|error| damaged(format!("cannot read {}: {error}", code_span(path))))?;
+            if !real.starts_with(&root) || !real.is_file() {
+                return Err(damaged(format!(
+                    "{} is not a regular file inside the output",
+                    code_span(path)
+                )));
+            }
+            let bytes = fs::read(real)
+                .map_err(|error| damaged(format!("cannot read {}: {error}", code_span(path))))?;
+            frozen.insert(prefix.clone(), bytes);
+        }
+        Ok(frozen)
+    }
 }
 
 /// Adds the manifest of `files` to them.
-pub fn add_manifest(files: &mut BTreeMap<String, Arc<[u8]>>, base: &str, cli_version: &str) {
-    let manifest = Manifest::of(files, base, cli_version);
+pub fn add_manifest(
+    files: &mut BTreeMap<String, Arc<[u8]>>,
+    base: &str,
+    cli_version: &str,
+    locale_not_found: &BTreeMap<String, String>,
+) {
+    let mut manifest = Manifest::of(files, base, cli_version);
+    manifest.locale_not_found = locale_not_found.clone();
     files.insert(MANIFEST_FILE.to_owned(), Arc::from(manifest.to_bytes()));
 }
 
@@ -346,6 +406,22 @@ pub fn check_out(project: &crate::content::Project, out: &Path) -> Result<(), St
             ));
         }
     }
+    let messages: BTreeSet<_> = project
+        .config
+        .locales
+        .iter()
+        .filter_map(|locale| locale.messages.as_ref().map(|(path, _)| path))
+        .collect();
+    for path in messages {
+        let input = normal(&project.root.join(path));
+        if overlaps(&out, &input) {
+            return Err(format!(
+                "the output {} overlaps the messages input {}; a build replaces its output whole",
+                literal(&out.display().to_string()),
+                literal(&input.display().to_string())
+            ));
+        }
+    }
     Ok(())
 }
 
@@ -501,7 +577,7 @@ mod tests {
         let mut files = BTreeMap::new();
         files.insert("index.html".to_owned(), Arc::from(text.as_bytes()));
         files.insert("a/b.txt".to_owned(), Arc::from(&b"b"[..]));
-        add_manifest(&mut files, "/", "0.1.0");
+        add_manifest(&mut files, "/", "0.1.0", &BTreeMap::new());
         files
     }
 
@@ -520,6 +596,85 @@ mod tests {
         );
         assert_eq!(site("one")[MANIFEST_FILE], files[MANIFEST_FILE]);
         assert_ne!(site("two")[MANIFEST_FILE], files[MANIFEST_FILE]);
+    }
+
+    #[test]
+    fn locale_manifest_freezes_only_declared_error_files_and_preserves_legacy_bytes() {
+        let dir = Dir::new();
+        let mut files = BTreeMap::from([
+            ("404.html".into(), Arc::<[u8]>::from(&b"English"[..])),
+            ("zh/404.html".into(), Arc::<[u8]>::from(&b"Chinese"[..])),
+            (
+                "foo/404.html".into(),
+                Arc::<[u8]>::from(&b"Ordinary file"[..]),
+            ),
+        ]);
+        let mapping = BTreeMap::from([
+            ("".into(), "404.html".into()),
+            ("zh".into(), "zh/404.html".into()),
+        ]);
+        add_manifest(&mut files, "/docs/", "0.1.0", &mapping);
+        for (path, bytes) in &files {
+            let path = dir.0.join(path);
+            fs::create_dir_all(path.parent().unwrap()).unwrap();
+            fs::write(path, bytes).unwrap();
+        }
+        let manifest = Manifest::read(&dir.0).unwrap();
+        assert_eq!(manifest.locale_not_found, mapping);
+        let frozen = manifest.locale_not_found_files(&dir.0).unwrap();
+        assert_eq!(frozen.len(), 2);
+        assert_eq!(frozen["zh"], b"Chinese");
+        assert!(!frozen.contains_key("foo"));
+        let legacy = site("legacy");
+        assert!(!String::from_utf8_lossy(&legacy[MANIFEST_FILE]).contains("locale_not_found"));
+        let manifest: Manifest = serde_json::from_slice(&legacy[MANIFEST_FILE]).unwrap();
+        assert!(manifest.locale_not_found.is_empty());
+    }
+
+    #[test]
+    fn locale_manifest_rejects_invalid_or_missing_declared_error_files() {
+        let dir = Dir::new();
+        let files = BTreeMap::from([("404.html".into(), Arc::<[u8]>::from(&b"English"[..]))]);
+        fs::write(dir.0.join("404.html"), b"English").unwrap();
+        for (prefix, path) in [
+            ("zh", "zh/404.html"),
+            ("..", "../404.html"),
+            ("%7a%68", "%7a%68/404.html"),
+            ("assets", "assets/404.html"),
+            ("zh", "404.html"),
+            ("zh", "/zh/404.html"),
+        ] {
+            let mut manifest = Manifest::of(&files, "/", "0.1.0");
+            manifest.locale_not_found =
+                BTreeMap::from([("".into(), "404.html".into()), (prefix.into(), path.into())]);
+            assert!(
+                manifest.locale_not_found_files(&dir.0).is_err(),
+                "{prefix} {path}"
+            );
+        }
+        let mut manifest = Manifest::of(&files, "/", "0.1.0");
+        manifest
+            .locale_not_found
+            .insert("zh".into(), "zh/404.html".into());
+        assert!(manifest.locale_not_found_files(&dir.0).is_err());
+        manifest.locale_not_found = BTreeMap::from([("".into(), "404.html".into())]);
+        fs::remove_file(dir.0.join("404.html")).unwrap();
+        assert!(manifest.locale_not_found_files(&dir.0).is_err());
+    }
+
+    #[cfg(unix)]
+    #[test]
+    fn locale_manifest_rejects_error_file_symlinks_outside_the_output() {
+        let dir = Dir::new();
+        let outside = Dir::new();
+        fs::write(outside.0.join("error.html"), b"outside").unwrap();
+        std::os::unix::fs::symlink(outside.0.join("error.html"), dir.0.join("404.html")).unwrap();
+        let files = BTreeMap::from([("404.html".into(), Arc::<[u8]>::from(&b"outside"[..]))]);
+        let mut manifest = Manifest::of(&files, "/", "0.1.0");
+        manifest
+            .locale_not_found
+            .insert("".into(), "404.html".into());
+        assert!(manifest.locale_not_found_files(&dir.0).is_err());
     }
 
     #[test]

@@ -161,7 +161,7 @@ slots {
 `RenderContext` supplies `route`, `lang`, `base` and `demo(name)`. Each call
 to `demo` has independent state and IDs, with the same source controls as
 a Markdown demo. Use `base` when making links to other registered routes.
-Page titles and routes must be unique across registered and Markdown pages.
+Page titles and routes must be unique within each configured language.
 
 The seven slots are `header`, `footer`, `sidebar_top`, `sidebar_bottom`,
 `before_content`, `after_content` and `not_found`. Each accepts a function
@@ -181,6 +181,36 @@ routes = ["/examples/"]
 
 The existing Guide group uses `dir = "guide"`; a group chooses one of
 `dir`, Markdown `items`, or registered `routes`.
+
+## Publish several languages
+
+The generated project uses one language until you configure
+`[[i18n.locales]]`. Keep the locale matching `[site].lang` at `prefix = ""`
+and give each other language a distinct prefix, such as `zh` or `fr`.
+Markdown translations mirror default paths below that prefix:
+`content/zh/guide/getting-started.md` translates
+`content/guide/getting-started.md`.
+
+A registered translation keeps the logical route and declares its language:
+
+```rust
+pages {
+    ExamplesPage { route: "/examples/", title: "Examples" } => crate::demos::examples_page,
+    ExamplesZh { route: "/examples/", title: "示例", lang: "zh" } => crate::demos::examples_page,
+}
+```
+
+Use this in the existing `pages` block. Registration names remain globally
+unique. `RenderContext.route` is the logical route and `lang` is the
+requested UI language, including when an untranslated page reuses the
+default function. The same context reaches slots and demos. SDK controls
+use English for languages beyond its built-in English and Chinese.
+
+Each locale may set `messages = "locales/fr.toml"` for project UI text and
+its own navigation. Missing pages keep their source language and show a
+fallback notice; missing third-language UI keys use English. See the
+[author reference](https://github.com/rockie/rustify-ui/blob/main/docs/docs-ssg.md#publish-several-languages)
+for the complete configuration, validation and static-host behavior.
 
 ## Theme, fonts and included code
 

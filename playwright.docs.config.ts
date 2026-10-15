@@ -38,7 +38,18 @@ const officialVariant = (name: Official) => name === "official-root" ? "root" : 
 const officialBase = (name: Official) => name === "official-root" ? "/" : "/rustify-ui/";
 const officialUrl = (name: Official) => `http://127.0.0.1:${officialPorts[name]}${officialBase(name)}`;
 
-type Server = "dom-only" | "dom-hydrate" | Docs | Components | Official;
+const i18nProjects = [
+    ["docs-i18n-root", "i18n", "root", 4201, "i18n.spec.ts"],
+    ["docs-i18n-subpath", "i18n", "subpath", 4202, "i18n.spec.ts"],
+    ["docs-i18n-meta", "i18n", "meta", 4203, "i18n.spec.ts"],
+    ["components-i18n-root", "i18n-components", "root", 4207, "i18n-islands.spec.ts"],
+    ["components-i18n-subpath", "i18n-components", "subpath", 4208, "i18n-islands.spec.ts"],
+    ["components-i18n-meta", "i18n-components", "meta", 4209, "i18n-islands.spec.ts"],
+] as const;
+const i18nUrl = (variant: string, port: number) => `http://127.0.0.1:${port}${variant === "root" ? "/" : "/rustify-ui/"}`;
+
+type Server = "dom-only" | "dom-hydrate" | Docs | Components | Official | typeof i18nProjects[number][0];
+const docsIgnore = ["docs-ssg/dev*.spec.ts", "docs-ssg/islands.spec.ts", "docs-ssg/custom.spec.ts", "docs-ssg/official.spec.ts", "docs-ssg/i18n*.spec.ts"];
 
 const serversOf: Record<string, Server[]> = {
     "dom-only": ["dom-only"],
@@ -59,6 +70,7 @@ const serversOf: Record<string, Server[]> = {
     "docs-webkit": ["docs-subpath"],
     // `rustify-docs dev`: each test starts its own on a copy of the fixture.
     "docs-dev": [],
+    ...Object.fromEntries(i18nProjects.map(([name]) => [name, [name]])),
 };
 
 function requestedProjects(argv: string[]): string[] {
@@ -113,7 +125,7 @@ export default defineConfig({
         ...docsProjects.map((name) => ({
             name,
             testMatch: ["docs-ssg/**/*.spec.ts"],
-            testIgnore: ["docs-ssg/dev*.spec.ts", "docs-ssg/islands.spec.ts", "docs-ssg/custom.spec.ts", "docs-ssg/official.spec.ts"],
+            testIgnore: docsIgnore,
             use: { baseURL: docsUrl(name) },
         })),
         ...componentsProjects.map((name) => ({
@@ -126,6 +138,11 @@ export default defineConfig({
             testMatch: ["docs-ssg/official.spec.ts"],
             use: { baseURL: officialUrl(name) },
         })),
+        ...i18nProjects.map(([name, , variant, port, spec]) => ({
+            name,
+            testMatch: [`docs-ssg/${spec}`],
+            use: { baseURL: i18nUrl(variant, port) },
+        })),
         {
             name: "components-webkit",
             testMatch: ["docs-ssg/islands.spec.ts", "docs-ssg/custom.spec.ts"],
@@ -134,13 +151,13 @@ export default defineConfig({
         {
             name: "docs-firefox",
             testMatch: ["docs-ssg/**/*.spec.ts"],
-            testIgnore: ["docs-ssg/dev*.spec.ts", "docs-ssg/islands.spec.ts", "docs-ssg/custom.spec.ts", "docs-ssg/official.spec.ts"],
+            testIgnore: docsIgnore,
             use: { ...devices["Desktop Firefox"], baseURL: docsUrl("docs-subpath"), launchOptions: {} },
         },
         {
             name: "docs-webkit",
             testMatch: ["docs-ssg/**/*.spec.ts"],
-            testIgnore: ["docs-ssg/dev*.spec.ts", "docs-ssg/islands.spec.ts", "docs-ssg/custom.spec.ts", "docs-ssg/official.spec.ts"],
+            testIgnore: docsIgnore,
             use: { ...devices["Desktop Safari"], baseURL: docsUrl("docs-subpath"), launchOptions: {} },
         },
         {
@@ -157,6 +174,7 @@ export default defineConfig({
             ),
             ...componentsProjects.map((name) => [name, `sh tests/docs-ssg/serve.sh components ${name === "components-root" ? "root" : name === "components-meta" ? "meta" : "subpath"} ${componentsPorts[name]}`, componentsUrl(name)] as const),
             ...officialProjects.map((name) => [name, `sh tests/docs-ssg/serve.sh official ${officialVariant(name)} ${officialPorts[name]}`, officialUrl(name)] as const),
+            ...i18nProjects.map(([name, source, variant, port]) => [name, `sh tests/docs-ssg/serve.sh ${source} ${variant} ${port}`, i18nUrl(variant, port)] as const),
         ] as const
     )
         .filter(([server]) => wanted(server))

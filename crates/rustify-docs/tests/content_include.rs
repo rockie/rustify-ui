@@ -147,6 +147,7 @@ fn an_explicit_empty_include_can_publish_only_a_registered_page() {
         pages: vec![RegisteredPage {
             name: "Landing".into(),
             route: "/".into(),
+            lang: None,
             title: "Landing".into(),
             description: Some("Registered landing page".into()),
             html: "<p>Registered landing page.</p>".into(),

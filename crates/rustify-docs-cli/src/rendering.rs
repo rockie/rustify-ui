@@ -144,29 +144,44 @@ pub(super) fn build_cached(
             mode: rustify_ui::ThemeMode::Light,
         }),
     };
-    let surface_render = render_surfaces(
+    analysis = content::analyze_with_surfaces(
         project,
-        &analysis,
-        &prepared,
-        &environment,
-        &mut surfaces,
-        &mut extensions,
-        (snapshot, highlighter),
+        snapshot,
+        analysis.mode,
+        cache,
+        highlighter,
+        generation::default_workers(),
+        &surfaces,
     );
-    diagnostics.extend(surface_render.diagnostics);
-    if !manifest.pages.is_empty() || !manifest.slots.is_empty() || !surfaces.candidates.is_empty() {
-        analysis = content::analyze_with_surfaces(
+    let mut surface_inputs = content::InputReceipts::default();
+    let mut surface_referenced = BTreeSet::new();
+    for lang in analysis.catalogs.keys() {
+        let mut environment = environment.clone();
+        environment.lang = lang.clone();
+        let rendered = render_surfaces(
             project,
-            snapshot,
-            analysis.mode,
-            cache,
-            highlighter,
-            generation::default_workers(),
-            &surfaces,
+            &analysis,
+            &prepared,
+            &environment,
+            &mut surfaces,
+            &mut extensions,
+            (snapshot, highlighter),
         );
+        diagnostics.extend(rendered.diagnostics);
+        surface_inputs.extend(rendered.inputs);
+        surface_referenced.extend(rendered.referenced);
     }
-    analysis.inputs.extend(surface_render.inputs);
-    analysis.referenced.extend(surface_render.referenced);
+    analysis = content::analyze_with_surfaces(
+        project,
+        snapshot,
+        analysis.mode,
+        cache,
+        highlighter,
+        generation::default_workers(),
+        &surfaces,
+    );
+    analysis.inputs.extend(surface_inputs);
+    analysis.referenced.extend(surface_referenced);
     extensions.articles = generation::resolved_articles(project, snapshot, &analysis);
     if let Some(css) = prepared
         .resources
@@ -222,24 +237,20 @@ pub(super) fn build_cached(
             });
         }
     }
-    let rendered = match if requests.is_empty() {
-        Ok(Vec::new())
-    } else {
-        prepared.render(environment.clone(), requests.clone())
-    } {
-        Ok(results) => results,
-        Err(problems) => {
-            diagnostics.extend(problems);
-            return Build {
-                analysis,
-                extensions,
-                diagnostics,
-                info,
-                guard: Some(prepared),
-                theme,
-            };
+    let mut batches: BTreeMap<&str, Vec<RenderRequest>> = BTreeMap::new();
+    for request in &requests {
+        let (page, _) = locations[&request.key];
+        batches.entry(&page.lang).or_default().push(request.clone());
+    }
+    let mut rendered = Vec::new();
+    for (lang, batch) in batches {
+        let mut environment = environment.clone();
+        environment.lang = lang.to_owned();
+        match prepared.render(environment, batch) {
+            Ok(results) => rendered.extend(results),
+            Err(problems) => diagnostics.extend(problems),
         }
-    };
+    }
     let mut by_key: BTreeMap<_, _> = rendered
         .into_iter()
         .map(|item| (item.key.clone(), item))
@@ -277,7 +288,10 @@ pub(super) fn build_cached(
             key: request.key,
             seed: request.seed,
             target: request.target,
-            environment: environment.clone(),
+            environment: SiteEnvironment {
+                lang: page.lang.clone(),
+                ..environment.clone()
+            },
         };
         let source = match embed.declaration.kind {
             Kind::Demo => prepared.sources.get(&embed.declaration.name).map(|source| {
@@ -289,14 +303,13 @@ pub(super) fn build_cached(
             }),
             Kind::Component => None,
         };
-        let (labels, foreign) = rustify_docs::labels::for_lang(&page.lang);
         let block = rustify_docs::demo::render(
             &html,
             &metadata,
             source,
             highlighter,
-            labels,
-            foreign,
+            &analysis.catalogs[&page.lang],
+            &page.locale.source_lang,
             result.client_only,
         );
         let article = extensions
@@ -342,6 +355,7 @@ fn declared_pages(project: &Project, manifest: &Manifest) -> Surfaces {
             .map(|page| RegisteredPage {
                 name: page.name.clone(),
                 route: page.route.clone(),
+                lang: page.lang.clone(),
                 title: page.title.clone(),
                 description: page.description.clone(),
                 html: String::new(),
@@ -370,30 +384,46 @@ fn render_surfaces(
 ) -> SurfaceRender {
     let (snapshot, highlighter) = content_read;
     let mut requests = Vec::new();
-    for page in &surfaces.pages {
+    let mut request_routes = BTreeMap::new();
+    for page in analysis
+        .published()
+        .filter(|page| page.lang == environment.lang)
+    {
+        let content::PageOrigin::Registered(name) = &page.origin else {
+            continue;
+        };
         let key = format!(
-            "surface-{}-page-{}",
-            generation::fingerprint(page.route.as_bytes()),
-            page.name
+            "surface-{}-page-{name}",
+            generation::fingerprint(page.route.as_bytes())
         );
+        request_routes.insert(key.clone(), page.route.clone());
         requests.push(RenderRequest {
             seed: key.clone(),
             key,
             target: RenderTarget::Page {
-                name: page.name.clone(),
-                route: page.route.clone(),
+                name: name.clone(),
+                route: page.locale.logical_route.clone(),
             },
         });
     }
-    let routes: BTreeSet<_> = analysis
+    let mut routes: BTreeMap<_, _> = analysis
         .published()
-        .map(|page| page.route.as_str())
-        .chain(surfaces.pages.iter().map(|page| page.route.as_str()))
-        .chain(["/404/"])
+        .filter(|page| page.lang == environment.lang)
+        .map(|page| (page.route.clone(), page.locale.logical_route.clone()))
         .collect();
-    for route in routes {
+    if !project.config.locales.is_empty()
+        || environment
+            .lang
+            .eq_ignore_ascii_case(&project.config.site.lang)
+    {
+        routes.insert(
+            content::locale_route(&project.config, &environment.lang, "/404/"),
+            "/404/".into(),
+        );
+    }
+    for (route, logical) in routes {
         for slot in &prepared.manifest.slots {
-            if slot.slot == rustify_docs_syntax::Slot::NotFound && route != "/404/" {
+            if slot.slot == rustify_docs_syntax::Slot::NotFound && logical != "/404/" {
                 continue;
             }
             let key = format!(
@@ -401,12 +431,13 @@ fn render_surfaces(
                 generation::fingerprint(route.as_bytes()),
                 slot.slot.key()
             );
+            request_routes.insert(key.clone(), route.clone());
             requests.push(RenderRequest {
                 seed: key.clone(),
                 key,
                 target: RenderTarget::Slot {
                     slot: site_slot(slot.slot),
-                    route: route.to_owned(),
+                    route: logical.clone(),
                 },
             });
         }
@@ -440,10 +471,7 @@ fn render_surfaces(
         let result = results
             .remove(&request.key)
             .expect("a validated render key");
-        let route = match &request.target {
-            RenderTarget::Page { route, .. } | RenderTarget::Slot { route, .. } => route,
-            _ => unreachable!(),
-        };
+        let route = &request_routes[&request.key];
         for error in result.diagnostics {
             diagnostics.push(Diagnostic::in_file(
                 file,
@@ -474,7 +502,19 @@ fn render_surfaces(
                 ));
                 continue;
             }
-            match content::markdown_intro(project, snapshot, analysis, &intro.path, highlighter) {
+            let source_lang = analysis
+                .routes
+                .get(route)
+                .map(|&i| analysis.pages[i].locale.source_lang.as_str())
+                .unwrap_or(&environment.lang);
+            match content::markdown_intro_with_context(
+                project,
+                snapshot,
+                analysis,
+                &intro.path,
+                highlighter,
+                (&environment.lang, source_lang, route),
+            ) {
                 Ok(intro) => {
                     source_inputs.extend(intro.inputs);
                     source_referenced.extend(intro.referenced);
@@ -506,14 +546,17 @@ fn render_surfaces(
                         function: &source.function,
                         file: &source.file,
                     });
-            let (labels, foreign) = rustify_docs::labels::for_lang(&environment.lang);
             let block = rustify_docs::demo::render(
                 &demo_html,
                 &metadata,
                 source,
                 highlighter,
-                labels,
-                foreign,
+                &analysis.catalogs[&environment.lang],
+                analysis
+                    .routes
+                    .get(route)
+                    .map(|&i| analysis.pages[i].locale.source_lang.as_str())
+                    .unwrap_or(&environment.lang),
                 false,
             );
             let marker = format!(
@@ -538,16 +581,15 @@ fn render_surfaces(
             extensions.css.push_str(&demo.geometry_css);
         }
         match request.target {
-            RenderTarget::Page { name, .. } => {
-                surfaces
-                    .pages
-                    .iter_mut()
-                    .find(|page| page.name == name)
-                    .expect("a declared page")
-                    .html = html;
+            RenderTarget::Page { .. } => {
+                surfaces.rendered_pages.insert(route.clone(), html);
             }
-            RenderTarget::Slot { slot, route } => {
-                surfaces.slots.entry(route).or_default().insert(slot, html);
+            RenderTarget::Slot { slot, .. } => {
+                surfaces
+                    .slots
+                    .entry(route.clone())
+                    .or_default()
+                    .insert(slot, html);
             }
             _ => unreachable!(),
         }
