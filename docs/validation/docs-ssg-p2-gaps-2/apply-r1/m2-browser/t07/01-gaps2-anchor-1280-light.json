@@ -1,0 +1,28 @@
+{
+  "width": 1280,
+  "theme": "light",
+  "actual": [
+    {
+      "message": "content/a`b`c.md has no heading #a`b",
+      "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as -",
+      "codes": [
+        {
+          "text": "content/a`b`c.md",
+          "font": "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace"
+        },
+        {
+          "text": "#a`b",
+          "font": "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace"
+        },
+        {
+          "text": "-",
+          "font": "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace"
+        }
+      ],
+      "overflow": [
+        0,
+        0
+      ]
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+checking /private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-gaps2-apply-author-bmzqiwx6/author-site/.
+warning[no-git-history]: pages show no last-updated date: not a git repository (or any of the parent directories): .git
+  = help: build inside a git repository with the content committed
+warning[not-in-nav]: this page is in no navigation group, so readers can only reach it by a link
+  --> content/a`b`c.md
+warning[not-in-nav]: this page is in no navigation group, so readers can only reach it by a link
+  --> content/gaps.md
+error[unknown-property]: component `Counter` has no property `` un`known ``
+  --> content/gaps.md:10:3
+  = help: Use one of `initial` (`i32`; default expression `2`), `label` (`String`; default expression `` "a`b".to_string() ``) for `Counter`; rename or remove `` un`known ``.
+warning[not-in-nav]: this page is in no navigation group, so readers can only reach it by a link
+  --> content/index.md
+warning[missing-site-url]: site.url is not set, so pages have no canonical address or preview image and there is no sitemap
+  --> rustify-docs.toml
+  = help: add `url = "https://…"` under [site], the address the site is published at
+check: 5 pages, 1 error(s), 5 warning(s); first: component `Counter` has no property `` un`known `` (content/gaps.md:10:3)

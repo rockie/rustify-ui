@@ -1,0 +1,142 @@
+[
+  {
+    "session": "32a5-18dea3b7082b2cd0",
+    "revision": 0,
+    "sequence": 0,
+    "building": true,
+    "phase": "render",
+    "compile": null,
+    "good": null,
+    "ok": true,
+    "reload": false,
+    "errors": 0,
+    "warnings": 0,
+    "diagnostics": []
+  },
+  {
+    "session": "32a5-18dea3b7082b2cd0",
+    "revision": 1,
+    "sequence": 1,
+    "building": false,
+    "phase": "render",
+    "compile": null,
+    "good": 1,
+    "ok": true,
+    "reload": true,
+    "errors": 0,
+    "warnings": 0,
+    "diagnostics": []
+  },
+  {
+    "session": "32a5-18dea3b7082b2cd0",
+    "revision": 1,
+    "sequence": 2,
+    "building": true,
+    "phase": "render",
+    "compile": null,
+    "good": 1,
+    "ok": true,
+    "reload": false,
+    "errors": 0,
+    "warnings": 0,
+    "diagnostics": []
+  },
+  {
+    "session": "32a5-18dea3b7082b2cd0",
+    "revision": 2,
+    "sequence": 3,
+    "building": false,
+    "phase": "render",
+    "compile": null,
+    "good": 1,
+    "ok": false,
+    "reload": false,
+    "errors": 3,
+    "warnings": 0,
+    "diagnostics": [
+      {
+        "severity": "error",
+        "rule": "unregistered-component",
+        "file": "content/counter.md",
+        "line": 8,
+        "column": 1,
+        "message": "component `MissingWidget` is not registered; add it to site! and configure [rust]",
+        "suggestion": "Use a component from `CardGrid`, `Steps`, `Tabs`; for an author component, enable `[rust]` and register its name in `site!`."
+      },
+      {
+        "severity": "error",
+        "rule": "unregistered-demo",
+        "file": "content/counter.md",
+        "line": 12,
+        "column": 1,
+        "message": "demo `MissingDemo` is not registered in site!",
+        "suggestion": "Enable `[rust]` and register a demo in `site!` before using a `rustify-demo` block."
+      },
+      {
+        "severity": "error",
+        "rule": "embed-props",
+        "file": "content/counter.md",
+        "line": 16,
+        "column": 1,
+        "message": "missing field `items`",
+        "suggestion": "Add or correct `props` using the declared fields `items` (`Vec<StepSpec>`; required); see https://github.com/rockie/rustify-ui/blob/main/docs/docs-ssg.md#static-builtins for its object fields."
+      }
+    ]
+  },
+  {
+    "session": "32a5-18dea3b7082b2cd0",
+    "revision": 2,
+    "sequence": 4,
+    "building": true,
+    "phase": "render",
+    "compile": null,
+    "good": 1,
+    "ok": false,
+    "reload": false,
+    "errors": 3,
+    "warnings": 0,
+    "diagnostics": [
+      {
+        "severity": "error",
+        "rule": "unregistered-component",
+        "file": "content/counter.md",
+        "line": 8,
+        "column": 1,
+        "message": "component `MissingWidget` is not registered; add it to site! and configure [rust]",
+        "suggestion": "Use a component from `CardGrid`, `Steps`, `Tabs`; for an author component, enable `[rust]` and register its name in `site!`."
+      },
+      {
+        "severity": "error",
+        "rule": "unregistered-demo",
+        "file": "content/counter.md",
+        "line": 12,
+        "column": 1,
+        "message": "demo `MissingDemo` is not registered in site!",
+        "suggestion": "Enable `[rust]` and register a demo in `site!` before using a `rustify-demo` block."
+      },
+      {
+        "severity": "error",
+        "rule": "embed-props",
+        "file": "content/counter.md",
+        "line": 16,
+        "column": 1,
+        "message": "missing field `items`",
+        "suggestion": "Add or correct `props` using the declared fields `items` (`Vec<StepSpec>`; required); see https://github.com/rockie/rustify-ui/blob/main/docs/docs-ssg.md#static-builtins for its object fields."
+      }
+    ]
+  },
+  {
+    "session": "32a5-18dea3b7082b2cd0",
+    "revision": 3,
+    "sequence": 5,
+    "building": false,
+    "phase": "render",
+    "compile": null,
+    "good": 3,
+    "ok": true,
+    "reload": false,
+    "errors": 0,
+    "warnings": 0,
+    "diagnostics": []
+  }
+]

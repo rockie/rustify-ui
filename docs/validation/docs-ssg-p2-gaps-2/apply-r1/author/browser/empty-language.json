@@ -1,0 +1,144 @@
+{
+  "command": {
+    "action": "show",
+    "label": "empty-language",
+    "revision": 5,
+    "rule": "config-lang",
+    "expected": {
+      "message": " is not a language tag",
+      "messageCodes": [
+        ""
+      ],
+      "suggestion": "use a tag like en or zh-CN",
+      "suggestionCodes": [
+        "en",
+        "zh-CN"
+      ]
+    }
+  },
+  "actual": {
+    "message": " is not a language tag",
+    "messageCodes": [
+      ""
+    ],
+    "suggestion": "use a tag like en or zh-CN",
+    "suggestionCodes": [
+      "en",
+      "zh-CN"
+    ]
+  },
+  "views": [
+    {
+      "width": 1280,
+      "theme": "light",
+      "actual": {
+        "message": " is not a language tag",
+        "messageCodes": [
+          ""
+        ],
+        "suggestion": "use a tag like en or zh-CN",
+        "suggestionCodes": [
+          "en",
+          "zh-CN"
+        ]
+      },
+      "layout": {
+        "page": 0,
+        "prose": [
+          0,
+          0
+        ],
+        "fonts": [
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace"
+        ]
+      },
+      "screenshot": "empty-language-1280-light.png"
+    },
+    {
+      "width": 1280,
+      "theme": "dark",
+      "actual": {
+        "message": " is not a language tag",
+        "messageCodes": [
+          ""
+        ],
+        "suggestion": "use a tag like en or zh-CN",
+        "suggestionCodes": [
+          "en",
+          "zh-CN"
+        ]
+      },
+      "layout": {
+        "page": 0,
+        "prose": [
+          0,
+          0
+        ],
+        "fonts": [
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace"
+        ]
+      },
+      "screenshot": "empty-language-1280-dark.png"
+    },
+    {
+      "width": 375,
+      "theme": "light",
+      "actual": {
+        "message": " is not a language tag",
+        "messageCodes": [
+          ""
+        ],
+        "suggestion": "use a tag like en or zh-CN",
+        "suggestionCodes": [
+          "en",
+          "zh-CN"
+        ]
+      },
+      "layout": {
+        "page": 0,
+        "prose": [
+          0,
+          0
+        ],
+        "fonts": [
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace"
+        ]
+      },
+      "screenshot": "empty-language-375-light.png"
+    },
+    {
+      "width": 375,
+      "theme": "dark",
+      "actual": {
+        "message": " is not a language tag",
+        "messageCodes": [
+          ""
+        ],
+        "suggestion": "use a tag like en or zh-CN",
+        "suggestionCodes": [
+          "en",
+          "zh-CN"
+        ]
+      },
+      "layout": {
+        "page": 0,
+        "prose": [
+          0,
+          0
+        ],
+        "fonts": [
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace"
+        ]
+      },
+      "screenshot": "empty-language-375-dark.png"
+    }
+  ]
+}

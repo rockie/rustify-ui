@@ -1,0 +1,178 @@
+{
+  "R": "6942ec0d23812ecda61492d9db5c0046f481edfc",
+  "previous_R": "e20daf7f07179d2bd24700c345f577fb9c8dbc15",
+  "checks": {
+    "template_lock": {
+      "packages": 193,
+      "framework_sources_moved": [
+        "rustify-components",
+        "rustify-docs",
+        "rustify-docs-macros",
+        "rustify-docs-syntax",
+        "rustify-style",
+        "rustify-ui"
+      ],
+      "third_party_unchanged": 187,
+      "bytes": 48590,
+      "sha256": "3fbc75522786f4ea7ea55b86f4a22269e24b4c5f84941da662b57544fdbd0b5c"
+    },
+    "root_lock": {
+      "cli": [
+        "0.1.18",
+        "0.1.19"
+      ],
+      "other_packages_unchanged": 428
+    },
+    "template_project": {
+      "graphs": {
+        "host": {
+          "packages": 189,
+          "makepad": [],
+          "framework_sources": {
+            "rustify-components": "git+https://github.com/rockie/rustify-ui?rev=6942ec0d23812ecda61492d9db5c0046f481edfc#6942ec0d23812ecda61492d9db5c0046f481edfc",
+            "rustify-docs": "git+https://github.com/rockie/rustify-ui?rev=6942ec0d23812ecda61492d9db5c0046f481edfc#6942ec0d23812ecda61492d9db5c0046f481edfc",
+            "rustify-docs-macros": "git+https://github.com/rockie/rustify-ui?rev=6942ec0d23812ecda61492d9db5c0046f481edfc#6942ec0d23812ecda61492d9db5c0046f481edfc",
+            "rustify-docs-syntax": "git+https://github.com/rockie/rustify-ui?rev=6942ec0d23812ecda61492d9db5c0046f481edfc#6942ec0d23812ecda61492d9db5c0046f481edfc",
+            "rustify-style": "git+https://github.com/rockie/rustify-ui?rev=6942ec0d23812ecda61492d9db5c0046f481edfc#6942ec0d23812ecda61492d9db5c0046f481edfc",
+            "rustify-ui": "git+https://github.com/rockie/rustify-ui?rev=6942ec0d23812ecda61492d9db5c0046f481edfc#6942ec0d23812ecda61492d9db5c0046f481edfc"
+          }
+        },
+        "wasm": {
+          "packages": 180,
+          "makepad": [],
+          "framework_sources": {
+            "rustify-components": "git+https://github.com/rockie/rustify-ui?rev=6942ec0d23812ecda61492d9db5c0046f481edfc#6942ec0d23812ecda61492d9db5c0046f481edfc",
+            "rustify-docs": "git+https://github.com/rockie/rustify-ui?rev=6942ec0d23812ecda61492d9db5c0046f481edfc#6942ec0d23812ecda61492d9db5c0046f481edfc",
+            "rustify-docs-macros": "git+https://github.com/rockie/rustify-ui?rev=6942ec0d23812ecda61492d9db5c0046f481edfc#6942ec0d23812ecda61492d9db5c0046f481edfc",
+            "rustify-docs-syntax": "git+https://github.com/rockie/rustify-ui?rev=6942ec0d23812ecda61492d9db5c0046f481edfc#6942ec0d23812ecda61492d9db5c0046f481edfc",
+            "rustify-style": "git+https://github.com/rockie/rustify-ui?rev=6942ec0d23812ecda61492d9db5c0046f481edfc#6942ec0d23812ecda61492d9db5c0046f481edfc",
+            "rustify-ui": "git+https://github.com/rockie/rustify-ui?rev=6942ec0d23812ecda61492d9db5c0046f481edfc#6942ec0d23812ecda61492d9db5c0046f481edfc"
+          }
+        }
+      },
+      "lock_unchanged": true,
+      "root_package": "docs-site",
+      "lock_sha256": "3fbc75522786f4ea7ea55b86f4a22269e24b4c5f84941da662b57544fdbd0b5c"
+    }
+  },
+  "commands": [
+    {
+      "name": "build-info",
+      "command": [
+        "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-cli/rustify-docs",
+        "--build-info"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "new",
+      "command": [
+        "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-cli/rustify-docs",
+        "new",
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-gaps2-apply-pair-rfi6g846/docs-site",
+        "--template",
+        "components"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "fetch",
+      "command": [
+        "cargo",
+        "fetch",
+        "--locked",
+        "--manifest-path",
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-gaps2-apply-pair-rfi6g846/docs-site/Cargo.toml"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "host-metadata",
+      "command": [
+        "mbx",
+        "metadata",
+        "--locked",
+        "--offline",
+        "--format-version",
+        "1",
+        "--manifest-path",
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-gaps2-apply-pair-rfi6g846/docs-site/Cargo.toml",
+        "--no-default-features",
+        "--features",
+        "ssr"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "wasm-metadata",
+      "command": [
+        "mbx",
+        "metadata",
+        "--locked",
+        "--offline",
+        "--format-version",
+        "1",
+        "--manifest-path",
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-gaps2-apply-pair-rfi6g846/docs-site/Cargo.toml",
+        "--no-default-features",
+        "--features",
+        "hydrate",
+        "--filter-platform",
+        "wasm32-unknown-unknown"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "host-check",
+      "command": [
+        "mbx",
+        "check",
+        "--locked",
+        "--offline",
+        "--manifest-path",
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-gaps2-apply-pair-rfi6g846/docs-site/Cargo.toml",
+        "--no-default-features",
+        "--features",
+        "ssr",
+        "--profile",
+        "docs-host",
+        "--bin",
+        "docs-render"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "wasm-check",
+      "command": [
+        "mbx",
+        "check",
+        "--locked",
+        "--offline",
+        "--manifest-path",
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-gaps2-apply-pair-rfi6g846/docs-site/Cargo.toml",
+        "--no-default-features",
+        "--features",
+        "hydrate",
+        "--profile",
+        "docs-wasm",
+        "--lib",
+        "--target",
+        "wasm32-unknown-unknown"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "update-workspace",
+      "command": [
+        "cargo",
+        "update",
+        "--workspace",
+        "--offline",
+        "--manifest-path",
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-gaps2-apply-pair-rfi6g846/docs-site/Cargo.toml"
+      ],
+      "exit": 0
+    }
+  ],
+  "passed": true
+}

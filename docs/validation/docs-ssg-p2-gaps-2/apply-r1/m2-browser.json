@@ -1,0 +1,18 @@
+{
+  "name": "m2-browser",
+  "command": [
+    "npx",
+    "--no-install",
+    "playwright",
+    "test",
+    "-c",
+    "playwright.docs.config.ts",
+    "--project=docs-dev",
+    "--workers=1",
+    "--reporter=json",
+    "--output=docs/validation/docs-ssg-p2-gaps-2/apply-r1/m2-browser-artifacts"
+  ],
+  "exit": 0,
+  "seconds": 411.83,
+  "head": "b31e28b7f7dd949f7dc89ebc7b5f64380adbb63d"
+}

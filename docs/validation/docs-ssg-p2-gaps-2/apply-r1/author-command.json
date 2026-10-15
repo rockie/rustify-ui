@@ -1,0 +1,22 @@
+{
+  "name": "author-command",
+  "command": [
+    "python3.12",
+    "docs/plan/DOCS-SSG-P2-gaps-2.records/m2/author-acceptance.py",
+    "--cli",
+    "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-gaps2-apply-installed-byzjg2a6/bin/rustify-docs",
+    "--c",
+    "b31e28b7f7dd949f7dc89ebc7b5f64380adbb63d",
+    "--r",
+    "6942ec0d23812ecda61492d9db5c0046f481edfc",
+    "--work",
+    "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-gaps2-apply-author-bmzqiwx6",
+    "--out",
+    "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2-gaps-2/apply-r1/author",
+    "--browser",
+    "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOCS-SSG-P2-gaps-2.records/m2/author-browser.cjs"
+  ],
+  "exit": 0,
+  "seconds": 83.18,
+  "head": "b31e28b7f7dd949f7dc89ebc7b5f64380adbb63d"
+}

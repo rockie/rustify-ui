@@ -1,0 +1,62 @@
+[
+  {
+    "test": "gaps embedded diagnostics: registered names, props and demos show the CLI repair over the last good page and clear after the fix",
+    "faults": {
+      "console": [],
+      "pageErrors": [],
+      "csp": [],
+      "failures": [],
+      "responses": []
+    }
+  },
+  {
+    "test": "gaps embedded diagnostics: without Rust the panel names the builtins and the empty demo registration and wraps the reference",
+    "faults": {
+      "console": [],
+      "pageErrors": [],
+      "csp": [],
+      "failures": [],
+      "responses": []
+    }
+  },
+  {
+    "test": "gaps-2 code spans: plain author paths, prefixed anchors, YAML keys and empty language remain exact",
+    "faults": {
+      "console": [],
+      "pageErrors": [],
+      "csp": [],
+      "failures": [],
+      "responses": []
+    }
+  },
+  {
+    "test": "gaps-2 code spans: frontmatter language preserves author text resembling a YAML location",
+    "faults": {
+      "console": [],
+      "pageErrors": [],
+      "csp": [],
+      "failures": [],
+      "responses": []
+    }
+  },
+  {
+    "test": "gaps-2 code spans: defaults with literal backticks survive unknown props, type errors and external unmatched ticks",
+    "faults": {
+      "console": [],
+      "pageErrors": [],
+      "csp": [],
+      "failures": [],
+      "responses": []
+    }
+  },
+  {
+    "test": "gaps-2 code spans: the real DOM reader preserves the handwritten whitespace and delimiter table",
+    "faults": {
+      "console": [],
+      "pageErrors": [],
+      "csp": [],
+      "failures": [],
+      "responses": []
+    }
+  }
+]

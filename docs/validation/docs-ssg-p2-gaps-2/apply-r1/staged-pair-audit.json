@@ -1,0 +1,23 @@
+{
+  "staged_files": [
+    "Cargo.lock",
+    "crates/rustify-docs-cli/Cargo.toml",
+    "crates/rustify-docs-cli/assets/components-Cargo.lock",
+    "crates/rustify-docs-cli/assets/framework-revision.txt",
+    "docs/docs-ssg.md"
+  ],
+  "index_tree": "398e987db6812d1380f497dee8a8755f6206e98f",
+  "product_files_relative_to_R": [
+    "Cargo.lock",
+    "crates/rustify-docs-cli/Cargo.toml",
+    "crates/rustify-docs-cli/assets/components-Cargo.lock",
+    "crates/rustify-docs-cli/assets/framework-revision.txt",
+    "docs/docs-ssg.md"
+  ],
+  "progress_only_commits": [
+    "90daea30fce621f5694f1d72b34cc3c532508725"
+  ],
+  "before_c_dirty_files": 464,
+  "before_c_dirty_preserved": true,
+  "R": "6942ec0d23812ecda61492d9db5c0046f481edfc"
+}

@@ -35,7 +35,7 @@ def warm(name):
         run(name+'-retry', [a.cli,'check','--format','json'])
 
 info = run('build-info', [a.cli,'--build-info'], cwd=work).stdout
-assert info.startswith('rustify-docs 0.1.18\n') and f'source: {a.c}\n' in info and 'panic: unwind\n' in info, info
+assert info.startswith('rustify-docs 0.1.19\n') and f'source: {a.c}\n' in info and 'panic: unwind\n' in info, info
 report['binary_sha256'] = hashlib.sha256(Path(a.cli).read_bytes()).hexdigest()
 run('new', [a.cli,'new',str(site),'--template','components'], cwd=work)
 pins = [line.strip() for line in (site/'Cargo.toml').read_text().splitlines() if 'github.com/rockie/rustify-ui' in line]
@@ -105,6 +105,8 @@ try:
       ('tick-typed',good_md+'```rustify-component\nname: Counter\nprops:\n  label: [1]\n```\n',config,'invalid_props','invalid type: sequence, expected a string','Write `label: "text"` for declared type `String` (default expression `` "a`b".to_string() ``). Reported props path: `label`.',{'message':'invalid type: sequence, expected a string','messageCodes':[],'suggestion':'Write label: "text" for declared type String (default expression "a`b".to_string()). Reported props path: label.','suggestionCodes':['label: "text"','String','"a`b".to_string()','label']}),
       ('tick-anchor',good_md+'[Target](a%60b%60c.md#a%60b)\n',config,'broken-anchor','`` content/a`b`c.md `` has no heading `` #a`b ``',"link to an existing heading's id; ids are the heading text in lower case with spaces as `-`",{'message':'content/a`b`c.md has no heading #a`b','messageCodes':['content/a`b`c.md','#a`b'],'suggestion':"link to an existing heading's id; ids are the heading text in lower case with spaces as -",'suggestionCodes':['-']}),
       ('empty-language',good_md,config.replace('lang = "en"','lang = ""'),'config-lang','``  `` is not a language tag','use a tag like `en` or `zh-CN`',{'message':' is not a language tag','messageCodes':[''],'suggestion':'use a tag like en or zh-CN','suggestionCodes':['en','zh-CN']}),
+      ('frontmatter-ticks','---\ndescription: Home\nlang: "a` at line `b"\n---\n# Gaps\n',config,'lang','lang: `` a` at line `b `` is not a language tag','use a language tag such as `en`, `zh-CN` or `fr`',{'message':'lang: a` at line `b is not a language tag','messageCodes':['a` at line `b'],'suggestion':'use a language tag such as en, zh-CN or fr','suggestionCodes':['en','zh-CN','fr']}),
+      ('frontmatter-plain','---\ndescription: Home\nlang: "a at line b"\n---\n# Gaps\n',config,'lang','lang: `a at line b` is not a language tag','use a language tag such as `en`, `zh-CN` or `fr`',{'message':'lang: a at line b is not a language tag','messageCodes':['a at line b'],'suggestion':'use a language tag such as en, zh-CN or fr','suggestionCodes':['en','zh-CN','fr']}),
     ]
     previous=first
     for name,markdown,current_config,rule,message,suggestion,display in phases:
@@ -115,6 +117,7 @@ try:
         diagnostics=errors(checked);assert len(diagnostics)==1,diagnostics
         d=diagnostics[0];assert (d['rule'],d['message'],d['suggestion'])==(rule,message,suggestion),d
         assert d['line']>0 and d['column']>0 and d['file']==('rustify-docs.toml' if rule=='config-lang' else 'content/gaps.md'),d
+        if rule=='lang':assert (d['line'],d['column'])==(3,7),d
         terminal=run(name+'-text',[a.cli,'check'],1).stderr
         location=f"  --> {d['file']}:{d['line']}:{d['column']}\n  = help: {suggestion}\n"
         assert message in terminal and location in terminal,terminal

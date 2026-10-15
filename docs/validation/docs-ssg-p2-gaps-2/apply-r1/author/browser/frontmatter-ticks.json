@@ -1,0 +1,178 @@
+{
+  "command": {
+    "action": "show",
+    "label": "frontmatter-ticks",
+    "revision": 6,
+    "rule": "lang",
+    "expected": {
+      "message": "lang: a` at line `b is not a language tag",
+      "messageCodes": [
+        "a` at line `b"
+      ],
+      "suggestion": "use a language tag such as en, zh-CN or fr",
+      "suggestionCodes": [
+        "en",
+        "zh-CN",
+        "fr"
+      ]
+    }
+  },
+  "actual": {
+    "message": "lang: a` at line `b is not a language tag",
+    "messageCodes": [
+      "a` at line `b"
+    ],
+    "suggestion": "use a language tag such as en, zh-CN or fr",
+    "suggestionCodes": [
+      "en",
+      "zh-CN",
+      "fr"
+    ]
+  },
+  "views": [
+    {
+      "width": 1280,
+      "theme": "light",
+      "actual": {
+        "message": "lang: a` at line `b is not a language tag",
+        "messageCodes": [
+          "a` at line `b"
+        ],
+        "suggestion": "use a language tag such as en, zh-CN or fr",
+        "suggestionCodes": [
+          "en",
+          "zh-CN",
+          "fr"
+        ]
+      },
+      "layout": {
+        "page": 0,
+        "prose": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "fonts": [
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace"
+        ]
+      },
+      "screenshot": "frontmatter-ticks-1280-light.png"
+    },
+    {
+      "width": 1280,
+      "theme": "dark",
+      "actual": {
+        "message": "lang: a` at line `b is not a language tag",
+        "messageCodes": [
+          "a` at line `b"
+        ],
+        "suggestion": "use a language tag such as en, zh-CN or fr",
+        "suggestionCodes": [
+          "en",
+          "zh-CN",
+          "fr"
+        ]
+      },
+      "layout": {
+        "page": 0,
+        "prose": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "fonts": [
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace"
+        ]
+      },
+      "screenshot": "frontmatter-ticks-1280-dark.png"
+    },
+    {
+      "width": 375,
+      "theme": "light",
+      "actual": {
+        "message": "lang: a` at line `b is not a language tag",
+        "messageCodes": [
+          "a` at line `b"
+        ],
+        "suggestion": "use a language tag such as en, zh-CN or fr",
+        "suggestionCodes": [
+          "en",
+          "zh-CN",
+          "fr"
+        ]
+      },
+      "layout": {
+        "page": 0,
+        "prose": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "fonts": [
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace"
+        ]
+      },
+      "screenshot": "frontmatter-ticks-375-light.png"
+    },
+    {
+      "width": 375,
+      "theme": "dark",
+      "actual": {
+        "message": "lang: a` at line `b is not a language tag",
+        "messageCodes": [
+          "a` at line `b"
+        ],
+        "suggestion": "use a language tag such as en, zh-CN or fr",
+        "suggestionCodes": [
+          "en",
+          "zh-CN",
+          "fr"
+        ]
+      },
+      "layout": {
+        "page": 0,
+        "prose": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "fonts": [
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace"
+        ]
+      },
+      "screenshot": "frontmatter-ticks-375-dark.png"
+    }
+  ]
+}

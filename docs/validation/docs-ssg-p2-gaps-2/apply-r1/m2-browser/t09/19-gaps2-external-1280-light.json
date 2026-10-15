@@ -1,0 +1,46 @@
+{
+  "width": 1280,
+  "theme": "light",
+  "actual": [
+    {
+      "message": "invalid type: string \"a`b\", expected i32",
+      "suggestion": "Write initial: 0 for declared type i32 (default expression 2). Reported props path: initial.",
+      "codes": [
+        {
+          "text": "initial: 0",
+          "font": "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace"
+        },
+        {
+          "text": "i32",
+          "font": "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace"
+        },
+        {
+          "text": "2",
+          "font": "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace"
+        },
+        {
+          "text": "initial",
+          "font": "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace"
+        }
+      ],
+      "overflow": [
+        0,
+        0
+      ]
+    },
+    {
+      "message": "this page is in no navigation group, so readers can only reach it by a link",
+      "codes": [],
+      "overflow": [
+        0
+      ]
+    },
+    {
+      "message": "radius: Light and dark have different author values; editing this common field applies to both",
+      "codes": [],
+      "overflow": [
+        0
+      ]
+    }
+  ]
+}

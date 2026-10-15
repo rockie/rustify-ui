@@ -1,0 +1,168 @@
+{
+  "command": {
+    "action": "show",
+    "label": "tick-anchor",
+    "revision": 4,
+    "rule": "broken-anchor",
+    "expected": {
+      "message": "content/a`b`c.md has no heading #a`b",
+      "messageCodes": [
+        "content/a`b`c.md",
+        "#a`b"
+      ],
+      "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as -",
+      "suggestionCodes": [
+        "-"
+      ]
+    }
+  },
+  "actual": {
+    "message": "content/a`b`c.md has no heading #a`b",
+    "messageCodes": [
+      "content/a`b`c.md",
+      "#a`b"
+    ],
+    "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as -",
+    "suggestionCodes": [
+      "-"
+    ]
+  },
+  "views": [
+    {
+      "width": 1280,
+      "theme": "light",
+      "actual": {
+        "message": "content/a`b`c.md has no heading #a`b",
+        "messageCodes": [
+          "content/a`b`c.md",
+          "#a`b"
+        ],
+        "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as -",
+        "suggestionCodes": [
+          "-"
+        ]
+      },
+      "layout": {
+        "page": 0,
+        "prose": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "fonts": [
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace"
+        ]
+      },
+      "screenshot": "tick-anchor-1280-light.png"
+    },
+    {
+      "width": 1280,
+      "theme": "dark",
+      "actual": {
+        "message": "content/a`b`c.md has no heading #a`b",
+        "messageCodes": [
+          "content/a`b`c.md",
+          "#a`b"
+        ],
+        "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as -",
+        "suggestionCodes": [
+          "-"
+        ]
+      },
+      "layout": {
+        "page": 0,
+        "prose": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "fonts": [
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace"
+        ]
+      },
+      "screenshot": "tick-anchor-1280-dark.png"
+    },
+    {
+      "width": 375,
+      "theme": "light",
+      "actual": {
+        "message": "content/a`b`c.md has no heading #a`b",
+        "messageCodes": [
+          "content/a`b`c.md",
+          "#a`b"
+        ],
+        "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as -",
+        "suggestionCodes": [
+          "-"
+        ]
+      },
+      "layout": {
+        "page": 0,
+        "prose": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "fonts": [
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace"
+        ]
+      },
+      "screenshot": "tick-anchor-375-light.png"
+    },
+    {
+      "width": 375,
+      "theme": "dark",
+      "actual": {
+        "message": "content/a`b`c.md has no heading #a`b",
+        "messageCodes": [
+          "content/a`b`c.md",
+          "#a`b"
+        ],
+        "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as -",
+        "suggestionCodes": [
+          "-"
+        ]
+      },
+      "layout": {
+        "page": 0,
+        "prose": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "fonts": [
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace"
+        ]
+      },
+      "screenshot": "tick-anchor-375-dark.png"
+    }
+  ]
+}

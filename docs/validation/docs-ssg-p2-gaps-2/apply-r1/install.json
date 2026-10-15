@@ -1,0 +1,20 @@
+{
+  "name": "install",
+  "command": [
+    "mbx",
+    "install",
+    "--git",
+    "https://github.com/rockie/rustify-ui",
+    "--rev",
+    "b31e28b7f7dd949f7dc89ebc7b5f64380adbb63d",
+    "--locked",
+    "--profile",
+    "docs-cli",
+    "--root",
+    "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-gaps2-apply-installed-byzjg2a6",
+    "rustify-docs-cli"
+  ],
+  "exit": 0,
+  "seconds": 88.37,
+  "head": "b31e28b7f7dd949f7dc89ebc7b5f64380adbb63d"
+}

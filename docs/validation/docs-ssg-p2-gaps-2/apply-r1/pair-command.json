@@ -1,0 +1,20 @@
+{
+  "name": "pair-command",
+  "command": [
+    "python3.12",
+    "docs/plan/DOCS-SSG-P2-gaps.records/m2/pair-audit.py",
+    "--cli",
+    "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-cli/rustify-docs",
+    "--r",
+    "6942ec0d23812ecda61492d9db5c0046f481edfc",
+    "--previous-r",
+    "e20daf7f07179d2bd24700c345f577fb9c8dbc15",
+    "--work",
+    "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-gaps2-apply-pair-rfi6g846",
+    "--out",
+    "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2-gaps-2/apply-r1/pair-audit.json"
+  ],
+  "exit": 0,
+  "seconds": 25.53,
+  "head": "90daea30fce621f5694f1d72b34cc3c532508725"
+}

@@ -1,0 +1,15 @@
+{
+  "name": "c-prepared-build",
+  "command": [
+    "mbx",
+    "build",
+    "--locked",
+    "-p",
+    "rustify-docs-cli",
+    "--profile",
+    "docs-cli"
+  ],
+  "exit": 0,
+  "seconds": 30.72,
+  "head": "90daea30fce621f5694f1d72b34cc3c532508725"
+}

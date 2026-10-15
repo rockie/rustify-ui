@@ -1,0 +1,19 @@
+{
+  "name": "m2-cli-affected",
+  "command": [
+    "mbx",
+    "test",
+    "--locked",
+    "-p",
+    "rustify-docs-cli",
+    "--test",
+    "diagnostic_text",
+    "--test",
+    "check",
+    "--test",
+    "dev"
+  ],
+  "exit": 0,
+  "seconds": 12.41,
+  "head": "b31e28b7f7dd949f7dc89ebc7b5f64380adbb63d"
+}
