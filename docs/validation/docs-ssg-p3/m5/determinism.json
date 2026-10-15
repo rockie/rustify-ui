@@ -1,0 +1,74 @@
+{
+  "cli_source": "bae5b882d9304a47254d81662b5163981bb0adaf",
+  "fixture": "tests/docs-ssg/fixtures/i18n/content",
+  "successful_builds": 2,
+  "summaries": [
+    {
+      "errors": 0,
+      "warnings": 59,
+      "pages": 12,
+      "files": 24,
+      "bytes": 191451,
+      "largest": [
+        {
+          "path": "404.html",
+          "bytes": 18029
+        },
+        {
+          "path": "fr/guide/setup/index.html",
+          "bytes": 10940
+        },
+        {
+          "path": "guide/setup/index.html",
+          "bytes": 10693
+        },
+        {
+          "path": "zh/guide/setup/index.html",
+          "bytes": 10525
+        },
+        {
+          "path": "fr/guide/second/index.html",
+          "bytes": 7189
+        }
+      ],
+      "out": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-p3-determinism-xzw0kwei/site/dist",
+      "milliseconds": 42
+    },
+    {
+      "errors": 0,
+      "warnings": 59,
+      "pages": 12,
+      "files": 24,
+      "bytes": 191451,
+      "largest": [
+        {
+          "path": "404.html",
+          "bytes": 18029
+        },
+        {
+          "path": "fr/guide/setup/index.html",
+          "bytes": 10940
+        },
+        {
+          "path": "guide/setup/index.html",
+          "bytes": 10693
+        },
+        {
+          "path": "zh/guide/setup/index.html",
+          "bytes": 10525
+        },
+        {
+          "path": "fr/guide/second/index.html",
+          "bytes": 7189
+        }
+      ],
+      "out": "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-p3-determinism-xzw0kwei/site/dist",
+      "milliseconds": 43
+    }
+  ],
+  "files_compared": 24,
+  "complete_tree_identical": true,
+  "invalid_messages_exit": 1,
+  "invalid_candidate_preserved_complete_dist": true,
+  "manifest_build_id": "d1f72c45b513b8ea"
+}

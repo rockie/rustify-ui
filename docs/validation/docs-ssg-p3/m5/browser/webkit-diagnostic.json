@@ -1,0 +1,29 @@
+{
+  "version": "26.6",
+  "console": [],
+  "errors": [],
+  "failed": [],
+  "responses": [],
+  "results": [
+    {
+      "url": "http://127.0.0.1:4207/docs/counter/",
+      "state": "ready",
+      "failure": null,
+      "states": [
+        "ready",
+        "ready",
+        "ready",
+        "ready"
+      ]
+    },
+    {
+      "url": "http://127.0.0.1:4208/rustify-ui/zh/locale/",
+      "state": "ready",
+      "failure": null,
+      "states": [
+        "ready",
+        "ready"
+      ]
+    }
+  ]
+}

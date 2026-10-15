@@ -20,9 +20,11 @@ Supported on macOS. Linux and Windows are not verified.
 This section records the verified P1 content-site release. The Rust examples
 below use the current repository checkout's CLI candidate, version **0.1.21**,
 paired with library revision `820cea0f0ea886606427bfd031e17c93d401aca8`.
-The library revision is committed locally; public availability is pending.
-The installed candidate reports its exact CLI source commit with
-`rustify-docs --build-info`. The pinned P1 install below is for content sites.
+The candidate was installed from local Git commit
+`bae5b882d9304a47254d81662b5163981bb0adaf`; public availability is pending.
+`rustify-docs --build-info` and `cargo install --list` identify that CLI
+commit. The pinned P1 install below remains the verified public content-site
+release and does not support the multilingual configuration.
 
 The CLI is distributed from git, with its dependencies locked and the
 workspace's `docs-cli` profile, which unwinds so that `dev` can recover from a
@@ -284,9 +286,8 @@ route, an unknown route or a Markdown page listed there is an error; use
 
 ### Publish several languages
 
-The multilingual configuration below belongs to the current source work.
-It requires the new matched CLI/framework pair recorded at P3 closure;
-the older installation revision above cannot read these keys.
+The multilingual configuration requires the paired CLI 0.1.21 and framework
+revision described above. The older P1 installation cannot read these keys.
 
 Declare every language, including the default `site.lang`. The default has
 an empty prefix and keeps the existing addresses. Other languages each

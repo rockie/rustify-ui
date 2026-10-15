@@ -172,11 +172,13 @@ async function openAttached(page: Page, url: string, status: number, beforeAttac
     let release!: () => void;
     const released = new Promise<void>(resolve => { release = resolve; });
     let requested = false;
+    const pending: Promise<void>[] = [];
     const pattern = "**/assets/islands/**/app_bg.wasm";
-    const handler = async (route: Route) => {
+    const handler = (route: Route) => {
         requested = true;
-        await released;
-        await route.continue();
+        const handled = released.then(() => route.continue());
+        pending.push(handled);
+        return handled;
     };
     await page.route(pattern, handler);
     try {
@@ -186,8 +188,18 @@ async function openAttached(page: Page, url: string, status: number, beforeAttac
         await expect.poll(() => requested).toBe(true);
         await expect(page.locator('[data-rustify-island][data-rd-island-state="loading"]')).toHaveCount(2);
         for (const controls of await page.locator("fieldset[data-rd-island-controls]").all()) {
-            await expect(controls).toHaveJSProperty("disabled", true);
+            await expect(controls).toHaveJSProperty("disabled", false);
             await expect(controls).toHaveJSProperty("inert", true);
+            await expect(controls).toHaveAttribute("aria-busy", "true");
+            const gated = await controls.locator("button").first().evaluate(button => {
+                let delivered = false;
+                const receive = () => { delivered = true; };
+                button.addEventListener("click", receive);
+                const accepted = button.dispatchEvent(new MouseEvent("click", { bubbles: true, cancelable: true }));
+                button.removeEventListener("click", receive);
+                return { accepted, delivered };
+            });
+            expect(gated).toEqual({ accepted: false, delivered: false });
         }
         await beforeAttach();
         await captureOriginals(page);
@@ -196,7 +208,7 @@ async function openAttached(page: Page, url: string, status: number, beforeAttac
         await retained(page);
     } finally {
         release();
-        await page.unroute(pattern, handler);
+        try { await Promise.all(pending); } finally { await page.unroute(pattern, handler); }
     }
 }
 
@@ -251,7 +263,7 @@ test("French dev pages update messages and translations, retain the last good lo
             await expect(page.locator("[data-locale-page]")).toHaveAttribute("data-context-lang", "fr");
             await expect(page.locator("[data-locale-page]")).toContainText("English locale page");
             await expect(page.getByRole("tab", { name: "Fonction", exact: true }).first()).toHaveAttribute("lang", "fr");
-            await expect(page.getByRole("tab", { name: "Full file", exact: true }).first()).toHaveAttribute("lang", "en");
+            expect(await page.getByRole("tab", { name: "Full file", exact: true }).first().evaluate(button => button.closest("[lang]")?.getAttribute("lang"))).toBe("en");
             await expect(copies(page).first()).toHaveText("Copier");
             await expect(copies(page).first()).toHaveAttribute("lang", "fr");
         });
@@ -302,13 +314,14 @@ test("French dev pages update messages and translations, retain the last good lo
         expect(failed.good).toBe(state.good);
         expect(failed.compile).toEqual(compiled);
         expect(failed.diagnostics.some(issue => issue.rule === "i18n-messages" && issue.file === "locales/fr.toml")).toBe(true);
-        await expect(page.locator(".rd-dev-panel")).toBeVisible();
-        await expect(page.locator(".rd-dev-count-error").first()).toHaveAttribute("lang", "fr");
-        await expect(page.locator(".rd-dev-count-error").first()).toContainText("erreur");
+        const panel = page.locator(".rd-dev-panel");
+        await expect(panel).toBeVisible();
+        await expect(panel.locator(".rd-dev-count-error")).toHaveAttribute("lang", "fr");
+        await expect(panel.locator(".rd-dev-count-error")).toContainText("erreur");
         await expect(page.getByRole("button", { name: "Masquer les problèmes", exact: true })).toHaveAttribute("lang", "fr");
         await expect(page.locator(".rd-dev-list")).toHaveAttribute("lang", "fr");
-        await expect(page.locator(".rd-dev-state > span[lang=en]")).toHaveText("showing the last good version");
-        await expect(page.locator(".rd-dev-revision")).toHaveAttribute("lang", "en");
+        await expect(panel.locator(".rd-dev-state > span[lang=en]")).toHaveText("showing the last good version");
+        await expect(panel.locator(".rd-dev-revision")).toHaveAttribute("lang", "en");
         await retained(page);
         const retainedResponse = await page.request.get(localeUrl);
         expect(retainedResponse.status()).toBe(200);

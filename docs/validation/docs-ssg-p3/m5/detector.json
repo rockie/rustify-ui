@@ -1,0 +1,50 @@
+[
+  {
+    "antipattern": "design-system-font-size",
+    "name": "Font size outside DESIGN.md",
+    "description": "A literal font-size is off the type ramp documented in DESIGN.md typography. Use a documented size step or update the design system if the new step is intentional.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-docs/assets/docs.css",
+    "line": 466,
+    "snippet": "font-size: 2rem is off the DESIGN.md type ramp",
+    "advisory": true,
+    "ignoreValue": "2rem"
+  },
+  {
+    "antipattern": "design-system-font-size",
+    "name": "Font size outside DESIGN.md",
+    "description": "A literal font-size is off the type ramp documented in DESIGN.md typography. Use a documented size step or update the design system if the new step is intentional.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-docs/assets/docs.css",
+    "line": 518,
+    "snippet": "font-size: 1.375rem is off the DESIGN.md type ramp",
+    "advisory": true,
+    "ignoreValue": "1.375rem"
+  },
+  {
+    "antipattern": "design-system-font-size",
+    "name": "Font size outside DESIGN.md",
+    "description": "A literal font-size is off the type ramp documented in DESIGN.md typography. Use a documented size step or update the design system if the new step is intentional.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-docs/assets/docs.css",
+    "line": 1234,
+    "snippet": "font-size: clamp(2.25rem, 1.6rem + 2.6vw, 3.25rem) has fluid endpoints 2.25rem and 3.25rem off the DESIGN.md type ramp",
+    "advisory": true,
+    "ignoreValue": "2.25rem"
+  },
+  {
+    "antipattern": "design-system-font-size",
+    "name": "Font size outside DESIGN.md",
+    "description": "A literal font-size is off the type ramp documented in DESIGN.md typography. Use a documented size step or update the design system if the new step is intentional.",
+    "severity": "advisory",
+    "category": "quality",
+    "file": "/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-docs/assets/docs.css",
+    "line": 1245,
+    "snippet": "font-size: 1.1875rem is off the DESIGN.md type ramp",
+    "advisory": true,
+    "ignoreValue": "1.1875rem"
+  }
+]

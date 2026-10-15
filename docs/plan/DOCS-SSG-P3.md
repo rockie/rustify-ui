@@ -47,23 +47,23 @@
 
 ### 恢复快照
 
-- 最近更新：2026-10-15T22:18:19+08:00
+- 最近更新：2026-10-15T23:34:52+08:00
 - 当前进度：4/5 个里程碑完成
-- 当前状态：进行中；M1–M4 已完成；M5 浏览器发现窄屏语言菜单溢出，正修复并重做配对
+- 当前状态：M1–M4 已完成；M5 本地交付及 V-4、V-7–V-9 通过，V-10 出口资源未齐
 - 最近完成：M4 · SEO、404 与缺失检查闭环
-- 下一步：提交窄屏菜单修复为新 R，形成仅五文件 C 并实装，再完成 V-7–V-9；V-10 保留资源缺证
-- 当前阻塞：无；P2 历史终验缺证不阻塞本地开发，见 §4/§11
-- 代码基线：`08eb0d322e4a595ed1fa280d0f7532c908e6b0dc`（库 R；配对 C 待形成）
+- 下一步：提交本地证据并补 V-10 指定稳定浏览器、真机与 VoiceOver；本地成果可由用户发起代码评审
+- 当前阻塞：C-5 / V-10 完整矩阵缺证；没有稳定 Firefox App、两种真机与 VoiceOver资源，Safari 完整原生200%视觉补证也未齐
+- 代码基线：库 R₂ `820cea0f0ea886606427bfd031e17c93d401aca8`；CLI C₂ `bae5b882d9304a47254d81662b5163981bb0adaf`（0.1.21）；证据待提交
 
 ### 完成记录
 
 | Milestone | 状态 | 更新时间 | 简要记录 | 实现与验收记录 | 提交 |
 | --- | --- | --- | --- | --- | --- |
-| M5 | 进行中 | 2026-10-15T22:29:35+08:00 | 0.1.20 C 实装通过；内容浏览器 6/8，窄屏菜单溢出正修复，需新 R/C 后收口。 | [M5 记录](DOCS-SSG-P3.records/M5.md) | R `08eb0d32`、C `53c0be03`、UI修复 `820cea0f` |
-| M1 | 配置和真实语言页面身份 | C-1 本地能力；当前工作树核对 | §2.1/§2.2 的 config/labels/注册元数据与 content 初始图；沿 RawConfig、PageDeclaration/Manifest 和原 route_for；★i18n 测试先红后绿 | V-1、V-2；回写「实施进度」 |
-| M2 | 完整回退图与语言内链接 | PageLocale/LocaleView 与 V-2 | content::analyze_with_surfaces/navigation、FragmentCache、Snapshot/InputReceipts、dev watch；按 §5.1 扩展现有图解析，不重写引用器；主实施者写共享图 | V-3；回写「实施进度」 |
-| M3 | 已完成 | 2026-10-15T22:29:35+08:00 | 新 R/C 下真实三语言 helper、slot、demo、metadata 通过，V-4 闭环；浏览器窄屏菜单问题在 M5 修正。 | [M3 记录](DOCS-SSG-P3.records/M3.md) | R `08eb0d32`、C `53c0be03`、UI修复 `820cea0f` |
-| M4 | 已完成 | 2026-10-15T22:29:35+08:00 | V-5/V-6 局部与 V-4 前置均通过；SEO/404、独立 dist、首次语言壳与 dev HTTP/SSE 恢复闭环。 | [M4 记录](DOCS-SSG-P3.records/M4.md) | R `08eb0d32`、C `53c0be03`、UI修复 `820cea0f` |
+| M5 | 阻塞 | 2026-10-15T23:34:52+08:00 | C₂实装与固定配对、本地343/179测试、49/49浏览器及features/artifacts/toolchain通过；V-10资源未齐，不记整期完成。 | [M5 记录](DOCS-SSG-P3.records/M5.md) | R `08eb0d32`、C `53c0be03`、UI修复 `820cea0f`、C `bae5b882` |
+| M1 | 已完成 | 2026-10-15T23:34:52+08:00 | 配置/目录/注册语言元数据与真实/回退图已实现；V-1/V-2和内容图回归通过。 | [M1 记录](DOCS-SSG-P3.records/M1.md) | R `08eb0d32` |
+| M2 | 已完成 | 2026-10-15T23:34:52+08:00 | 语言内链接/导航、目录输入/收据、缓存与Markdown文案已接入；V-3和直接回归通过。 | [M2 记录](DOCS-SSG-P3.records/M2.md) | R `08eb0d32` |
+| M3 | 已完成 | 2026-10-15T23:34:52+08:00 | 新R/C的真实三语言helper/slot/demo及metadata通过；SDK与阅读壳契约、本地浏览器均补验。 | [M3 记录](DOCS-SSG-P3.records/M3.md) | R `08eb0d32`、C `53c0be03`、UI修复 `820cea0f`、C `bae5b882` |
+| M4 | 已完成 | 2026-10-15T23:34:52+08:00 | V-5/V-6通过；SEO/404、独立dist、首次语言壳与dev HTTP/SSE恢复闭环。 | [M4 记录](DOCS-SSG-P3.records/M4.md) | R `08eb0d32`、C `53c0be03`、UI修复 `820cea0f`、C `bae5b882` |
 
 ## 0. 需求、范围与决策
 
@@ -288,7 +288,7 @@ dev.js 现有 data-labels 来自页面本身，继续独立于 SSE 的诊断数�
 
 模板锁由真实 R 的 Git 依赖生成，不手改 source；用 `new --template components`、独立 SSR/hydrate 与 `scripts/docs-pages-prepare.py --project` 检查三份框架依赖都落到 R。开发与库 R 的模板契约测试通过后才生成 C。失败回退为恢复原配对二进制及原静态产物；旧 CLI 不读新 i18n 配置，故回滚时配置/内容/注册代码也取同一旧提交。
 
-当前 HEAD 已含非空的上一期 R，配对脚本会按 CLI 的 Git source 投影旧 R，并非保留 dirty 工作树 path。新增语言 Rust 消费者不能用旧 R 验证；不清空 dirty 资产、不绕过配对。M3 库内局部通过后可先推进不依赖该检查结果的 M4 工作，M5 形成新 R/C 后重跑 V-4 的真实消费者，再核定 M3/M4 退出；该项未通过前不记 M3 完成。内容站与其余局部检查仍按原安排执行。
+从调查基线实施时，HEAD 已含非空的上一期 R，配对脚本会按 CLI 的 Git source 投影旧 R，并非保留 dirty 工作树 path。新增语言 Rust 消费者不能用旧 R 验证；不清空 dirty 资产、不绕过配对。M3 库内局部通过后可先推进不依赖该检查结果的 M4 工作，M5 形成新 R/C 后重跑 V-4 的真实消费者，再核定 M3/M4 退出；该项未通过前不记 M3 完成。内容站与其余局部检查仍按原安排执行。
 
 M5 记录 `DOCS_LOCAL_GIT`（本仓的绝对 file:// Git URL）、`DOCS_C`（已存在的 C 完整 SHA）与 `DOCS_INSTALL`（独立绝对安装目录），再执行本地安装并把浏览器入口绑定到安装二进制：
 

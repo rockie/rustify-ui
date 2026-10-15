@@ -1,0 +1,10 @@
+{
+  "source": "53c0be03951e32bec03bee9161be0a3e755e2a37",
+  "framework": "08eb0d322e4a595ed1fa280d0f7532c908e6b0dc",
+  "local_git": "file:///Users/rockie/Documents/gh-rockie/rustify-ui",
+  "install": "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/p3/install-53c0be03",
+  "binary": "/Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-ssg/p3/install-53c0be03/bin/rustify-docs",
+  "binary_sha256": "6dae9d772f1b1a31f25771852b6cf6e5d22191ef9a168fac3d7a36bcb88c2a3e",
+  "build_info": "rustify-docs 0.1.20\npanic: unwind\ngrammars: syntect-5.3.0+two-face-0.5.2+bat-0.26.1+fancy\nsource: 53c0be03951e32bec03bee9161be0a3e755e2a37\n",
+  "cargo_install_list": "rustify-docs-cli v0.1.20 (file:///Users/rockie/Documents/gh-rockie/rustify-ui?rev=53c0be03951e32bec03bee9161be0a3e755e2a37#53c0be03):\n    rustify-docs\n"
+}

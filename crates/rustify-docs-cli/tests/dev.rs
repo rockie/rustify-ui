@@ -396,15 +396,21 @@ fn drafts_are_shown_and_marked_and_a_link_to_one_is_a_warning() {
     let dev = Dev::start(&temp.path("site"), &[], &[]).unwrap();
     let (status, draft) = get_text(&format!("{}guide/later/", dev.url));
     assert_eq!(status, 200);
-    assert!(
-        draft.contains("class=\"rd-draft\""),
-        "the page says it is a draft"
-    );
+    let draft_dom = dom_query::Document::from(draft.as_str());
+    let marker = draft_dom.select("main p.rd-draft");
+    assert_eq!(marker.length(), 1, "the page says it is a draft");
+    assert_eq!(marker.text().as_ref(), "Draft");
+    assert_eq!(marker.attr("lang").as_deref(), Some("en"));
     let (_, guide) = get_text(&format!("{}guide/", dev.url));
-    assert!(
-        guide.contains("Later · Draft"),
-        "the sidebar says it is a draft"
-    );
+    let guide_dom = dom_query::Document::from(guide.as_str());
+    let links = guide_dom.select(".rd-sidebar a[href='/docs/guide/later/']");
+    assert_eq!(links.length(), 2, "both sidebars link to the draft");
+    for link in links.iter() {
+        assert_eq!(link.text().as_ref(), "Later · Draft");
+        assert_eq!(link.select("span").length(), 1);
+        assert_eq!(link.select("span").text().as_ref(), " · Draft");
+        assert_eq!(link.select("span").attr("lang").as_deref(), Some("en"));
+    }
     let mut events = dev.events("/docs/guide/", good_of(&guide));
     events.next();
     temp.edit(

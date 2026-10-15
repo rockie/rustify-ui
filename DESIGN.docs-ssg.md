@@ -256,7 +256,7 @@ Each alert has an edge hue (`--rd-<kind>`) and a title hue (`--rd-<kind>-text`).
 - **Code Panel** (`code-bg`, the SDK `muted` values #f2f4f7 / #161b26): code blocks, code groups, inline code and table header cells.
 - **Marked Line** (`line-hl`, #e3ebf8 / #1f2a3d): highlighted code lines.
 - `warning` draws only the draft label's border.
-- **Popover** (`popover`, the SDK's #ffffff / #1d2939): the surface of the dev problem panel and its marker, and nothing else on a docs page. In dark it equals `secondary`, which is why the panel's inner rules use their own mix (below).
+- **Popover** (`popover`, the SDK's #ffffff / #1d2939): the language menu, dev problem panel and its marker. In dark it equals `secondary`, which is why the dev panel's inner rules use their own mix (below).
 
 Tints are mixed in `oklab` from these tokens:
 
@@ -321,7 +321,7 @@ Highlighting is emitted as `hl-` classes, and each colour is held at 4.5:1 or be
 ## Layout
 
 - **Frame:** a centred frame of at most 76rem. Gutters are 1rem below 48rem and 1.5rem from 48rem, with a 2.5rem column gap.
-- **Header:** sticky, 3.5rem tall (`--rd-header`), with a bottom hairline. The brand sits left and the mode switch is pushed right.
+- **Header:** sticky, at least 3.5rem tall (`--rd-header`), with a bottom hairline. The brand sits left; the language menu, when configured, and mode switch sit right. Let the bar grow when its language summary wraps at narrow widths.
 - **Under 48rem (768px):** one column, ordered sidebar → TOC → article. The sidebar and TOC are native `<details>` panels separated by hairlines, with a drawn chevron that rotates when open.
 - **48rem–79.99rem:** a 15rem sticky sidebar column plus the article. The TOC stays a `<details>` panel above the article, constrained to the measure.
 - **From 80rem (1280px):** three columns: 15rem sidebar, flexible article, 14rem TOC. The sidebar and TOC columns are sticky under the header, scroll on their own and have 3rem block padding.
@@ -336,7 +336,7 @@ Highlighting is emitted as `hl-` classes, and each colour is held at 4.5:1 or be
   - Features begin 4rem below. They are one column, two from 40rem, and three from 64rem only when the count is 3, 5 or more (2 and 4 stay in pairs).
   - The page's own Markdown follows at the measure, 3rem down.
 - **Anchors:** headings and any `[id]` scroll to `header + 1.5rem` below the top.
-- **Site footer:** every home, content and 404 page ends with a body-level footer outside main, behind a 1px `secondary` hairline. It has 1.5rem block padding and one underlined primary link at 0.875rem in the named Footer links navigation, returning to the site's base. It does not depend on home actions, header links, dates or an edit URL. Local page metadata stays inside the article column.
+- **Site footer:** every home, content and 404 page ends with a body-level footer outside main, behind a 1px `secondary` hairline. It has 1.5rem block padding and one underlined primary link at 0.875rem in the named Footer links navigation, returning to the current language's home (the site's base without configured languages). It does not depend on home actions, header links, dates or an edit URL. Local page metadata stays inside the article column.
 
 The surface's incremental component sidecar is [.impeccable/docs-ssg.design.json](.impeccable/docs-ssg.design.json). Its source is this document; the root `.impeccable/design.json` continues to describe the SDK and Theme Studio.
 
@@ -379,6 +379,26 @@ Depth cues come from state, not elevation:
   - The switch ships `hidden` and appears only once `site.js` runs.
   - `mode.js` applies a stored choice synchronously in `<head>`. The storage key is per base path. When storage is refused, the page stays on system mode.
 - **Header links (`nav.top`, then `nav.social`):** muted 0.875rem links at weight 500, 1.25rem apart, the social group after a 1px `secondary` hairline. Hover turns a link foreground. The link to the page in view (`aria-current="page"`) or to the section it is under (`aria-current="true"`) is primary. From 48rem they sit in the bar before the mode switch and scroll sideways inside it if they must. Below that they are a row of their own under the header with a bottom hairline, scrolling sideways by themselves, so the page never does. The row is not sticky. One of the two navigations is always `display: none`.
+
+### Languages and untranslated pages (P3)
+
+Language selection extends the static reading shell; it adds no palette, type scale, loading state or new presentation path. It appears only when more than one language is configured.
+
+- **Native menu:** a `<details>` beside the mode switch, with the current language's configured autonym as its summary. Each option is an ordinary `<a hreflang>` to the same logical page, labelled with that language's autonym and its own `lang`. The current option has `aria-current="page"`, primary text and weight 600. A fallback option appends the target catalog's untranslated message at normal weight, marked with that message's actual language.
+- **Material and size:** 0.8125rem type with 1.5 leading; the summary has 0.375rem 0.5rem padding. The menu uses the existing `popover` surface, 1px `border` edge and panel radius, with 0.375rem inset and 0.5rem option padding. Hover uses `secondary`; focus uses the existing ring. Its width fits its content, capped at 24rem or the viewport minus two 1rem gutters; its height is capped at 60vh and scrolls internally.
+- **Narrow layout:** below 48rem the menu is positioned from the header bar, 1rem from the viewport's right edge. Long option text wraps inside the gutters. At 320px the summary may wrap and the brand may truncate; language and mode controls remain reachable.
+- **Navigation and keyboard:** opening, Tab and Enter use native details and link behavior. With script, Escape closes the menu and returns focus to its summary. A language link retains the current hash only when that exact decoded ID exists in the destination; otherwise it goes to the destination's top. Do not guess a translated heading ID. Without script the same-page language links remain usable.
+- **Source and interface:** the document's `lang` is the selected interface language. The article, source title and source-derived navigation text retain their actual source language. Header, sidebar, pager and home/footer destinations stay within the selected language; a fallback title can remain in its source language. Built-in interface words remain English/Chinese; an optional configured catalog supplies other languages, with missing keys falling back individually to English and marked `lang="en"`.
+- **Copy states:** the action, copied/failed state and polite status each carry that message's actual language. For example, French “Copier” can become English “Copied” when only the latter key is missing; neither changes the document or article language.
+- **Untranslated notice:** a quiet `role="note"` paragraph follows H1 and precedes the body, including when the source supplies the leading H1. It uses `code-bg`, a `secondary` hairline, the panel radius, 0.75rem 1rem padding, 0.875rem type and 1.6 leading. Its words carry the resolved message language. This is a stable reading state, with no loading indicator or error treatment.
+
+### Localized not-found pages (P3)
+
+Each configured language has a physical `404.html` using its own navigation, error catalog and home destination, plus ordinary autonym links to every language home. Keep the same article frame, H1, footer and quiet recovery links. The error page is `noindex` and has no canonical or alternate-language metadata.
+
+For a static host with one error document, the root error shell contains the default language as its active body and other language bodies in inert templates. The existing external `mode.js` chooses by the complete first path segment after the deployment base, updates document language/title and activates one body before resolving the existing islands `parsed` boundary. Shell enhancements then bind to that selected tree; shared slots and existing DOM islands occur once in it. An unknown or partial prefix uses the default language. Without script, that host retains the default error body and all language-home links; a server selecting a physical language error file can show that language without script. Existing no-script island canvases keep their native controls disabled.
+
+These rules were checked against source R `820cea0f` and installed CLI C `bae5b882` (0.1.21), identified in the [installation evidence](docs/validation/docs-ssg-p3/m5/installed-identity-final.json), and all twelve [final captures](docs/validation/docs-ssg-p3/m5/browser/final/). The [root](docs/validation/docs-ssg-p3/m5/browser/docs-i18n-root.json), [subpath](docs/validation/docs-ssg-p3/m5/browser/docs-i18n-subpath.json) and [meta-CSP host](docs/validation/docs-ssg-p3/m5/browser/docs-i18n-meta.json) content checks each passed 8/8: native keyboard navigation and Escape focus return, actual-language attributes and copy states, destination anchors, true 404/CSP, no-script reading and light/dark 1280/375/320px reflow with reduced motion. This evidence does not establish spoken screen-reader output, native zoom, physical devices, full RTL support, dev behavior or full P3 acceptance.
 
 ### Sidebar rail
 
@@ -567,7 +587,7 @@ An errata sheet in the corner of the page the author is reading: compact, precis
 - **Same failure saved again:** the revision number updates and the open or hidden choice stays.
 - **Recovered:** once building ends, a result with no problems hides panel and marker and forgets the hidden choice. Warnings retain their marker; the building label clears. A build that changes the page reloads it and restores the scroll position.
 - **Reconnected:** the event stream resynchronizes using the page path, last good revision and dev session. A dropped stream retries; a closed stream is opened again after 1s. A changed page or session reloads through the existing scroll-restoration path. No separate connection banner or recovery action is added.
-- **Language:** every string comes from `DevLabels` (en, zh). The layer carries the page's interface `lang`.
+- **Language:** English/Chinese `DevLabels` are the built-ins; configured catalogs resolve the layer's `dev.*` messages individually, retaining each message's actual language.
 
 **Motion.** The floating panel enters over 120ms `ease-out` from opacity 0 and 0.375rem lower. Under `prefers-reduced-motion: reduce` there is none, and the inline panel never animates.
 
@@ -589,7 +609,7 @@ The [M4 design synchronization record](docs/validation/docs-ssg-p2/m4/design-doc
 - **Draft (dev only):** a "Draft" label above the title, foreground 0.8125rem/500 with a 1px `warning` border. The sidebar entry carries " · Draft".
 - **No script:** every page is complete. The mode follows the system through CSS, code is readable and selectable, panels open natively, and code groups read as consecutive blocks. Script-only controls (mode switch, copy) ship `hidden`.
 - **Blocked storage:** choices hold for the current page only.
-- **Interface language:** strings come from `labels.rs` (en, zh). Any other page language falls back to English, and those strings are marked `lang="en"`.
+- **Interface language:** `labels.rs` supplies English/Chinese built-ins. Without configured overrides, other page languages use English UI marked `lang="en"`; optional configured catalogs resolve each key separately. The document's selected UI language and the body's source language remain distinct, including on untranslated projections.
 
 ## Do's and Don'ts
 

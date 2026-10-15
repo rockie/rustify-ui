@@ -1,0 +1,152 @@
+[
+  {
+    "theme": "light",
+    "width": 1280,
+    "header": {
+      "x": 32,
+      "y": 0,
+      "width": 1216,
+      "height": 56,
+      "top": 0,
+      "right": 1248,
+      "bottom": 56,
+      "left": 32
+    },
+    "menu": {
+      "x": 602.5,
+      "y": 43.75,
+      "width": 384,
+      "height": 140,
+      "top": 43.75,
+      "right": 986.5,
+      "bottom": 183.75,
+      "left": 602.5
+    },
+    "body": 1280
+  },
+  {
+    "theme": "light",
+    "width": 375,
+    "header": {
+      "x": 0,
+      "y": 0,
+      "width": 375,
+      "height": 56,
+      "top": 0,
+      "right": 375,
+      "bottom": 56,
+      "left": 0
+    },
+    "menu": {
+      "x": -93,
+      "y": 43.75,
+      "width": 343,
+      "height": 140,
+      "top": 43.75,
+      "right": 250,
+      "bottom": 183.75,
+      "left": -93
+    },
+    "body": 375
+  },
+  {
+    "theme": "light",
+    "width": 320,
+    "header": {
+      "x": 0,
+      "y": 0,
+      "width": 320,
+      "height": 90.5,
+      "top": 0,
+      "right": 320,
+      "bottom": 90.5,
+      "left": 0
+    },
+    "menu": {
+      "x": 16,
+      "y": 39.5,
+      "width": 288,
+      "height": 159.5,
+      "top": 39.5,
+      "right": 304,
+      "bottom": 199,
+      "left": 16
+    },
+    "body": 320
+  },
+  {
+    "theme": "dark",
+    "width": 1280,
+    "header": {
+      "x": 32,
+      "y": 0,
+      "width": 1216,
+      "height": 56,
+      "top": 0,
+      "right": 1248,
+      "bottom": 56,
+      "left": 32
+    },
+    "menu": {
+      "x": 602.625,
+      "y": 43.75,
+      "width": 384,
+      "height": 140,
+      "top": 43.75,
+      "right": 986.625,
+      "bottom": 183.75,
+      "left": 602.625
+    },
+    "body": 1280
+  },
+  {
+    "theme": "dark",
+    "width": 375,
+    "header": {
+      "x": 0,
+      "y": 0,
+      "width": 375,
+      "height": 56,
+      "top": 0,
+      "right": 375,
+      "bottom": 56,
+      "left": 0
+    },
+    "menu": {
+      "x": -93,
+      "y": 43.75,
+      "width": 343,
+      "height": 140,
+      "top": 43.75,
+      "right": 250,
+      "bottom": 183.75,
+      "left": -93
+    },
+    "body": 375
+  },
+  {
+    "theme": "dark",
+    "width": 320,
+    "header": {
+      "x": 0,
+      "y": 0,
+      "width": 320,
+      "height": 90.5,
+      "top": 0,
+      "right": 320,
+      "bottom": 90.5,
+      "left": 0
+    },
+    "menu": {
+      "x": 16,
+      "y": 39.5,
+      "width": 288,
+      "height": 159.5,
+      "top": 39.5,
+      "right": 304,
+      "bottom": 199,
+      "left": 16
+    },
+    "body": 320
+  }
+]
