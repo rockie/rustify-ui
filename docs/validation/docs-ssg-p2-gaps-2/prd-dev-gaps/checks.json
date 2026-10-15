@@ -1,0 +1,36 @@
+[
+  {
+    "name": "cli-diagnostic-text",
+    "command": [
+      "mbx",
+      "test",
+      "--locked",
+      "-p",
+      "rustify-docs-cli",
+      "--test",
+      "diagnostic_text"
+    ],
+    "exit": 0,
+    "seconds": 3.11
+  },
+  {
+    "name": "browser",
+    "command": [
+      "npx",
+      "--no-install",
+      "playwright",
+      "test",
+      "-c",
+      "playwright.docs.config.ts",
+      "--project=docs-dev",
+      "dev-components.spec.ts",
+      "--grep",
+      "gaps embedded diagnostics|gaps-2 code spans",
+      "--workers=1",
+      "--reporter=json",
+      "--output=/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2-gaps-2/prd-dev-gaps/browser-artifacts"
+    ],
+    "exit": 0,
+    "seconds": 81.34
+  }
+]

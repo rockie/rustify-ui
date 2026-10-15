@@ -1,0 +1,27 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling display-review-probe v0.0.0 (/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-p2-gaps-review-4xrlmqj7/display-probe)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.50s
+     Running `mbx-launch /var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-p2-gaps-review-4xrlmqj7/display-target/debug/display-review-probe`
+mbx[cache]: 0 hits, 0 misses, 1 not looked up; 0 B downloaded, 0 B uploaded, 521.6 KiB stored locally
+input="r#\"a\"   b   \"c\"# . to_string ()"
+output="r#\"a\" b \"c\"#.to_string()"
+input="r#\"a\\\"  b  \\\"c\"# . to_string ()"
+output="r#\"a\\\"  b  \\\"c\"#.to_string()"
+input="\"ordinary   quoted string\" . to_string ()"
+output="\"ordinary   quoted string\".to_string()"
+input="Vec < u32 >"
+output="Vec<u32>"
+mbx[savings]: the sweep found 2.6 TiB logical nobody would miss. nobody has.

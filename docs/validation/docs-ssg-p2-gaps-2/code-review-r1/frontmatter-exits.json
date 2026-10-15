@@ -1,0 +1,54 @@
+{
+  "root": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/frontmatter-prose-probe-halsyeal",
+  "binary": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps2-installed.jc9IaV/bin/rustify-docs",
+  "value": "a` at line `b",
+  "expected_message": "lang: `` a` at line `b `` is not a language tag",
+  "expected_display": "lang: a` at line `b is not a language tag",
+  "expected_codes": [
+    "a` at line `b"
+  ],
+  "commands": [
+    {
+      "command": [
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps2-installed.jc9IaV/bin/rustify-docs",
+        "check",
+        "--format",
+        "json"
+      ],
+      "exit": 1,
+      "stdout": "{\"schema_version\":1,\"success\":false,\"diagnostics\":[{\"severity\":\"warning\",\"rule\":\"no-git-history\",\"file\":null,\"line\":null,\"column\":null,\"message\":\"pages show no last-updated date: not a git repository (or any of the parent directories): .git\",\"suggestion\":\"build inside a git repository with the content committed\"},{\"severity\":\"error\",\"rule\":\"lang\",\"file\":\"content/index.md\",\"line\":3,\"column\":7,\"message\":\"lang: `` a`\",\"suggestion\":\"use a language tag such as `en`, `zh-CN` or `fr`\"}],\"summary\":{\"errors\":1,\"warnings\":1,\"pages\":1}}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps2-installed.jc9IaV/bin/rustify-docs",
+        "build",
+        "--format",
+        "json"
+      ],
+      "exit": 1,
+      "stdout": "{\"schema_version\":1,\"success\":false,\"diagnostics\":[{\"severity\":\"warning\",\"rule\":\"no-git-history\",\"file\":null,\"line\":null,\"column\":null,\"message\":\"pages show no last-updated date: not a git repository (or any of the parent directories): .git\",\"suggestion\":\"build inside a git repository with the content committed\"},{\"severity\":\"error\",\"rule\":\"lang\",\"file\":\"content/index.md\",\"line\":3,\"column\":7,\"message\":\"lang: `` a`\",\"suggestion\":\"use a language tag such as `en`, `zh-CN` or `fr`\"}],\"summary\":{\"errors\":1,\"warnings\":1,\"pages\":0}}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps2-installed.jc9IaV/bin/rustify-docs",
+        "check"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "checking /private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/frontmatter-prose-probe-halsyeal/.\nwarning[no-git-history]: pages show no last-updated date: not a git repository (or any of the parent directories): .git\n  = help: build inside a git repository with the content committed\nerror[lang]: lang: `` a`\n  --> content/index.md:3:7\n  = help: use a language tag such as `en`, `zh-CN` or `fr`\ncheck: 1 pages, 1 error(s), 1 warning(s); first: lang: `` a` (content/index.md:3:7)\n"
+    }
+  ],
+  "actual_diagnostic": {
+    "severity": "error",
+    "rule": "lang",
+    "file": "content/index.md",
+    "line": 3,
+    "column": 7,
+    "message": "lang: `` a`",
+    "suggestion": "use a language tag such as `en`, `zh-CN` or `fr`"
+  },
+  "dist_files_unchanged": 10,
+  "checked_and_built_diagnostics_identical": true
+}

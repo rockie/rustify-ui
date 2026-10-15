@@ -1,0 +1,95 @@
+{
+  "root": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/frontmatter-prose-probe-halsyeal",
+  "binary": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps2-installed.jc9IaV/bin/rustify-docs",
+  "cases": [
+    {
+      "value": "a`b",
+      "exit": 1,
+      "diagnostic": {
+        "severity": "error",
+        "rule": "lang",
+        "file": "content/index.md",
+        "line": 3,
+        "column": 7,
+        "message": "lang: `` a`b `` is not a language tag",
+        "suggestion": "use a language tag such as `en`, `zh-CN` or `fr`"
+      },
+      "prior_diagnostic": {
+        "severity": "error",
+        "rule": "lang",
+        "file": "content/index.md",
+        "line": 3,
+        "column": 7,
+        "message": "lang: `a`b` is not a language tag",
+        "suggestion": "use a language tag such as `en`, `zh-CN` or `fr`"
+      }
+    },
+    {
+      "value": "a at line b",
+      "exit": 1,
+      "diagnostic": {
+        "severity": "error",
+        "rule": "lang",
+        "file": "content/index.md",
+        "line": 3,
+        "column": 7,
+        "message": "lang: `a",
+        "suggestion": "use a language tag such as `en`, `zh-CN` or `fr`"
+      },
+      "prior_diagnostic": {
+        "severity": "error",
+        "rule": "lang",
+        "file": "content/index.md",
+        "line": 3,
+        "column": 7,
+        "message": "lang: `a",
+        "suggestion": "use a language tag such as `en`, `zh-CN` or `fr`"
+      }
+    },
+    {
+      "value": "a` at line `b",
+      "exit": 1,
+      "diagnostic": {
+        "severity": "error",
+        "rule": "lang",
+        "file": "content/index.md",
+        "line": 3,
+        "column": 7,
+        "message": "lang: `` a`",
+        "suggestion": "use a language tag such as `en`, `zh-CN` or `fr`"
+      },
+      "prior_diagnostic": {
+        "severity": "error",
+        "rule": "lang",
+        "file": "content/index.md",
+        "line": 3,
+        "column": 7,
+        "message": "lang: `a`",
+        "suggestion": "use a language tag such as `en`, `zh-CN` or `fr`"
+      }
+    },
+    {
+      "value": "a` at line b`",
+      "exit": 1,
+      "diagnostic": {
+        "severity": "error",
+        "rule": "lang",
+        "file": "content/index.md",
+        "line": 3,
+        "column": 7,
+        "message": "lang: `` a`",
+        "suggestion": "use a language tag such as `en`, `zh-CN` or `fr`"
+      },
+      "prior_diagnostic": {
+        "severity": "error",
+        "rule": "lang",
+        "file": "content/index.md",
+        "line": 3,
+        "column": 7,
+        "message": "lang: `a`",
+        "suggestion": "use a language tag such as `en`, `zh-CN` or `fr`"
+      }
+    }
+  ],
+  "prior_binary": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps-installed.eV4AfO/bin/rustify-docs"
+}

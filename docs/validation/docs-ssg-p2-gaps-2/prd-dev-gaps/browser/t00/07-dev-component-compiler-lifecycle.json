@@ -1,0 +1,178 @@
+[
+  {
+    "args": [
+      "build",
+      "--locked",
+      "--message-format",
+      "json",
+      "--no-default-features",
+      "--profile",
+      "docs-host",
+      "--features",
+      "ssr",
+      "--manifest-path",
+      "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-Hny2Q5/site/Cargo.toml",
+      "--target-dir",
+      "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-Hny2Q5/site/.rustify-docs/target",
+      "--bin",
+      "docs-render"
+    ],
+    "at": 1792052805721,
+    "phase": "start"
+  },
+  {
+    "args": [
+      "build",
+      "--locked",
+      "--message-format",
+      "json",
+      "--no-default-features",
+      "--profile",
+      "docs-host",
+      "--features",
+      "ssr",
+      "--manifest-path",
+      "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-Hny2Q5/site/Cargo.toml",
+      "--target-dir",
+      "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-Hny2Q5/site/.rustify-docs/target",
+      "--bin",
+      "docs-render"
+    ],
+    "at": 1792052829787,
+    "phase": "end",
+    "status": 0
+  },
+  {
+    "args": [
+      "build",
+      "--locked",
+      "--message-format",
+      "json",
+      "--no-default-features",
+      "--profile",
+      "docs-wasm",
+      "--features",
+      "hydrate",
+      "--manifest-path",
+      "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-Hny2Q5/site/Cargo.toml",
+      "--target-dir",
+      "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-Hny2Q5/site/.rustify-docs/target",
+      "--lib",
+      "--target",
+      "wasm32-unknown-unknown"
+    ],
+    "at": 1792052829818,
+    "phase": "start"
+  },
+  {
+    "args": [
+      "build",
+      "--locked",
+      "--message-format",
+      "json",
+      "--no-default-features",
+      "--profile",
+      "docs-wasm",
+      "--features",
+      "hydrate",
+      "--manifest-path",
+      "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-Hny2Q5/site/Cargo.toml",
+      "--target-dir",
+      "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-Hny2Q5/site/.rustify-docs/target",
+      "--lib",
+      "--target",
+      "wasm32-unknown-unknown"
+    ],
+    "at": 1792052839442,
+    "phase": "end",
+    "status": 0
+  },
+  {
+    "args": [
+      "build",
+      "--locked",
+      "--message-format",
+      "json",
+      "--no-default-features",
+      "--profile",
+      "docs-host",
+      "--features",
+      "ssr",
+      "--manifest-path",
+      "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-Hny2Q5/site/Cargo.toml",
+      "--target-dir",
+      "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-Hny2Q5/site/.rustify-docs/target",
+      "--bin",
+      "docs-render"
+    ],
+    "at": 1792052840171,
+    "phase": "start"
+  },
+  {
+    "args": [
+      "build",
+      "--locked",
+      "--message-format",
+      "json",
+      "--no-default-features",
+      "--profile",
+      "docs-host",
+      "--features",
+      "ssr",
+      "--manifest-path",
+      "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-Hny2Q5/site/Cargo.toml",
+      "--target-dir",
+      "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-Hny2Q5/site/.rustify-docs/target",
+      "--bin",
+      "docs-render"
+    ],
+    "at": 1792052840451,
+    "phase": "end",
+    "status": 0
+  },
+  {
+    "args": [
+      "build",
+      "--locked",
+      "--message-format",
+      "json",
+      "--no-default-features",
+      "--profile",
+      "docs-wasm",
+      "--features",
+      "hydrate",
+      "--manifest-path",
+      "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-Hny2Q5/site/Cargo.toml",
+      "--target-dir",
+      "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-Hny2Q5/site/.rustify-docs/target",
+      "--lib",
+      "--target",
+      "wasm32-unknown-unknown"
+    ],
+    "at": 1792052840477,
+    "phase": "start"
+  },
+  {
+    "args": [
+      "build",
+      "--locked",
+      "--message-format",
+      "json",
+      "--no-default-features",
+      "--profile",
+      "docs-wasm",
+      "--features",
+      "hydrate",
+      "--manifest-path",
+      "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-Hny2Q5/site/Cargo.toml",
+      "--target-dir",
+      "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-Hny2Q5/site/.rustify-docs/target",
+      "--lib",
+      "--target",
+      "wasm32-unknown-unknown"
+    ],
+    "at": 1792052840703,
+    "phase": "end",
+    "status": 0
+  }
+]

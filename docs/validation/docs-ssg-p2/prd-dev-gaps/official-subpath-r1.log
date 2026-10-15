@@ -1,0 +1,9 @@
+npm notice run rustify-ui-browser-tests@0.1.0 npx
+npm notice run 'playwright' test -c playwright.docs.config.ts --project=official-subpath tests/docs-ssg/official.spec.ts --workers=1 --grep-invert one bounded official --reporter=line,json --output=docs/validation/docs-ssg-p2/prd-dev-gaps/official-subpath
+[WebServer] docs-pages-prepare: git failed: Preparing worktree (detached HEAD 45878ce3)
+[WebServer] fatal: '/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/http/official/subpath/site' is a missing but already registered worktree;
+[WebServer] use 'add -f' to override, or 'prune' or 'remove' to clear
+[WebServer] 
+
+Error: Process from config.webServer was not able to start. Exit code: 1
+

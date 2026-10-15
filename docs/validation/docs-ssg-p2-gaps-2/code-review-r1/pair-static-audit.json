@@ -1,0 +1,55 @@
+{
+  "R": "e20daf7f07179d2bd24700c345f577fb9c8dbc15",
+  "C": "758def9cb3b88a1d06282ddfdb3e8708c8529cdc",
+  "C_files": [
+    "Cargo.lock",
+    "crates/rustify-docs-cli/Cargo.toml",
+    "crates/rustify-docs-cli/assets/components-Cargo.lock",
+    "crates/rustify-docs-cli/assets/framework-revision.txt",
+    "docs/docs-ssg.md"
+  ],
+  "template_packages": [
+    193,
+    193
+  ],
+  "changed": [
+    {
+      "name": "rustify-components",
+      "old": "git+https://github.com/rockie/rustify-ui?rev=745ba6b720aa6ed042dcf5d4f763641fc2d05165#745ba6b720aa6ed042dcf5d4f763641fc2d05165",
+      "new": "git+https://github.com/rockie/rustify-ui?rev=e20daf7f07179d2bd24700c345f577fb9c8dbc15#e20daf7f07179d2bd24700c345f577fb9c8dbc15",
+      "same_other_fields": true
+    },
+    {
+      "name": "rustify-docs",
+      "old": "git+https://github.com/rockie/rustify-ui?rev=745ba6b720aa6ed042dcf5d4f763641fc2d05165#745ba6b720aa6ed042dcf5d4f763641fc2d05165",
+      "new": "git+https://github.com/rockie/rustify-ui?rev=e20daf7f07179d2bd24700c345f577fb9c8dbc15#e20daf7f07179d2bd24700c345f577fb9c8dbc15",
+      "same_other_fields": true
+    },
+    {
+      "name": "rustify-docs-macros",
+      "old": "git+https://github.com/rockie/rustify-ui?rev=745ba6b720aa6ed042dcf5d4f763641fc2d05165#745ba6b720aa6ed042dcf5d4f763641fc2d05165",
+      "new": "git+https://github.com/rockie/rustify-ui?rev=e20daf7f07179d2bd24700c345f577fb9c8dbc15#e20daf7f07179d2bd24700c345f577fb9c8dbc15",
+      "same_other_fields": true
+    },
+    {
+      "name": "rustify-docs-syntax",
+      "old": "git+https://github.com/rockie/rustify-ui?rev=745ba6b720aa6ed042dcf5d4f763641fc2d05165#745ba6b720aa6ed042dcf5d4f763641fc2d05165",
+      "new": "git+https://github.com/rockie/rustify-ui?rev=e20daf7f07179d2bd24700c345f577fb9c8dbc15#e20daf7f07179d2bd24700c345f577fb9c8dbc15",
+      "same_other_fields": true
+    },
+    {
+      "name": "rustify-style",
+      "old": "git+https://github.com/rockie/rustify-ui?rev=745ba6b720aa6ed042dcf5d4f763641fc2d05165#745ba6b720aa6ed042dcf5d4f763641fc2d05165",
+      "new": "git+https://github.com/rockie/rustify-ui?rev=e20daf7f07179d2bd24700c345f577fb9c8dbc15#e20daf7f07179d2bd24700c345f577fb9c8dbc15",
+      "same_other_fields": true
+    },
+    {
+      "name": "rustify-ui",
+      "old": "git+https://github.com/rockie/rustify-ui?rev=745ba6b720aa6ed042dcf5d4f763641fc2d05165#745ba6b720aa6ed042dcf5d4f763641fc2d05165",
+      "new": "git+https://github.com/rockie/rustify-ui?rev=e20daf7f07179d2bd24700c345f577fb9c8dbc15#e20daf7f07179d2bd24700c345f577fb9c8dbc15",
+      "same_other_fields": true
+    }
+  ],
+  "framework_revision": "e20daf7f07179d2bd24700c345f577fb9c8dbc15",
+  "root_lock_diff": "diff --git a/Cargo.lock b/Cargo.lock\nindex 52f4f9fd..6dd42eb4 100644\n--- a/Cargo.lock\n+++ b/Cargo.lock\n@@ -2454,7 +2454,7 @@ dependencies = [\n \n [[package]]\n name = \"rustify-docs-cli\"\n-version = \"0.1.17\"\n+version = \"0.1.18\"\n dependencies = [\n  \"dom_query\",\n  \"kqueue\",\n"
+}

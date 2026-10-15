@@ -1,0 +1,31 @@
+{
+  "unchanged_input_files": 439,
+  "status_unchanged": true,
+  "HEAD": "97c9946c6a325bed676a92dbd7bcea038db4ea69",
+  "installed_after": {
+    "entry": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps2-installed.jc9IaV/bin/rustify-docs",
+    "sha256": "6c0b025dfc4e73ec2dfbf519bd353ae795700e29f91f8613aa6ff3cc9ddac1d1",
+    "build_info": "rustify-docs 0.1.18\npanic: unwind\ngrammars: syntect-5.3.0+two-face-0.5.2+bat-0.26.1+fancy\nsource: 758def9cb3b88a1d06282ddfdb3e8708c8529cdc\n"
+  },
+  "tests": {
+    "rustify-docs-test.log": {
+      "groups": 8,
+      "passed": 277,
+      "failed": 0,
+      "ignored": 0
+    },
+    "rustify-docs-syntax-test.log": {
+      "groups": 3,
+      "passed": 31,
+      "failed": 0,
+      "ignored": 0
+    },
+    "rustify-docs-cli-test-python312.log": {
+      "groups": 12,
+      "passed": 157,
+      "failed": 0,
+      "ignored": 1
+    }
+  },
+  "input_set_sha256": "a9bd912778eeea0148b317879280bdc997a4ec14a2f2c11ac53804125682ce86"
+}

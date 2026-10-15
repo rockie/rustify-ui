@@ -1,0 +1,69 @@
+{
+  "base": "958c9bd902fd847b59093c31d83468fd7bae2b83",
+  "target": "8a8268e6c5abb2d14a5bc7cdd67a7a1f2051debd",
+  "groups": {
+    "product_tests_or_pair": [
+      "Cargo.lock",
+      "crates/rustify-docs-cli/Cargo.toml",
+      "crates/rustify-docs-cli/assets/components-Cargo.lock",
+      "crates/rustify-docs-cli/assets/framework-revision.txt",
+      "crates/rustify-docs-cli/tests/components.rs",
+      "crates/rustify-docs/src/embed.rs",
+      "docs/docs-ssg.md"
+    ],
+    "plan_and_records": [
+      "docs/plan/DOCS-SSG-P2-gaps.md",
+      "docs/plan/DOCS-SSG-P2-gaps.records/M1.md",
+      "docs/plan/DOCS-SSG-P2-gaps.records/M2.md"
+    ],
+    "evidence": [
+      "docs/plan/DOCS-SSG-P2-gaps.records/m1/f01/cli-test.log",
+      "docs/plan/DOCS-SSG-P2-gaps.records/m1/f01/docs-test.log",
+      "docs/plan/DOCS-SSG-P2-gaps.records/m1/f01/red-cli-components.log",
+      "docs/plan/DOCS-SSG-P2-gaps.records/m1/f01/red-embed-tests.log",
+      "docs/plan/DOCS-SSG-P2-gaps.records/m2/f01/author-acceptance.json",
+      "docs/plan/DOCS-SSG-P2-gaps.records/m2/f01/author-acceptance.py",
+      "docs/plan/DOCS-SSG-P2-gaps.records/m2/f01/author-build-cold.stdout",
+      "docs/plan/DOCS-SSG-P2-gaps.records/m2/f01/author-build-raw-cold.stdout",
+      "docs/plan/DOCS-SSG-P2-gaps.records/m2/f01/author-build-raw-typed.stdout",
+      "docs/plan/DOCS-SSG-P2-gaps.records/m2/f01/author-build-typed.stdout",
+      "docs/plan/DOCS-SSG-P2-gaps.records/m2/f01/author-check-cold-text.stderr",
+      "docs/plan/DOCS-SSG-P2-gaps.records/m2/f01/author-check-raw-cold-text.stderr",
+      "docs/plan/DOCS-SSG-P2-gaps.records/m2/f01/author-check-raw-typed-text.stderr",
+      "docs/plan/DOCS-SSG-P2-gaps.records/m2/f01/author-check-typed-text.stderr",
+      "docs/plan/DOCS-SSG-P2-gaps.records/m2/f01/cli-test.log",
+      "docs/plan/DOCS-SSG-P2-gaps.records/m2/f01/components-subpath-identity.jsonl",
+      "docs/plan/DOCS-SSG-P2-gaps.records/m2/f01/docs-dev-identity.jsonl",
+      "docs/plan/DOCS-SSG-P2-gaps.records/m2/f01/green/components-gaps-normal-motion.json",
+      "docs/plan/DOCS-SSG-P2-gaps.records/m2/f01/green/components-gaps-reduced-motion.json",
+      "docs/plan/DOCS-SSG-P2-gaps.records/m2/f01/green/components-summary.json",
+      "docs/plan/DOCS-SSG-P2-gaps.records/m2/f01/green/dev-builtins-states.json",
+      "docs/plan/DOCS-SSG-P2-gaps.records/m2/f01/green/dev-registered-browser-audit.json",
+      "docs/plan/DOCS-SSG-P2-gaps.records/m2/f01/green/dev-registered-cli.log",
+      "docs/plan/DOCS-SSG-P2-gaps.records/m2/f01/green/dev-registered-states.json",
+      "docs/plan/DOCS-SSG-P2-gaps.records/m2/f01/green/docs-dev-summary.json",
+      "docs/plan/DOCS-SSG-P2-gaps.records/m2/f01/green/gaps-builtins-320-dark.png",
+      "docs/plan/DOCS-SSG-P2-gaps.records/m2/f01/green/gaps-registered-375-light.png",
+      "docs/plan/DOCS-SSG-P2-gaps.records/m2/f01/green/official-gaps-normal-motion.json",
+      "docs/plan/DOCS-SSG-P2-gaps.records/m2/f01/green/official-gaps-reduced-motion.json",
+      "docs/plan/DOCS-SSG-P2-gaps.records/m2/f01/green/official-summary.json",
+      "docs/plan/DOCS-SSG-P2-gaps.records/m2/f01/identity.py",
+      "docs/plan/DOCS-SSG-P2-gaps.records/m2/f01/install.log",
+      "docs/plan/DOCS-SSG-P2-gaps.records/m2/f01/official-subpath-identity.jsonl",
+      "docs/plan/DOCS-SSG-P2-gaps.records/m2/f01/pair-audit.json",
+      "docs/plan/DOCS-SSG-P2-gaps.records/m2/f01/pair-build-info.log",
+      "docs/plan/DOCS-SSG-P2-gaps.records/m2/f01/pair-diff-audit.txt",
+      "docs/plan/DOCS-SSG-P2-gaps.records/m2/f01/pair-fetch.log",
+      "docs/plan/DOCS-SSG-P2-gaps.records/m2/f01/pair-host-check.log",
+      "docs/plan/DOCS-SSG-P2-gaps.records/m2/f01/pair-new.log",
+      "docs/plan/DOCS-SSG-P2-gaps.records/m2/f01/pair-update-workspace.log",
+      "docs/plan/DOCS-SSG-P2-gaps.records/m2/f01/pair-wasm-check.log",
+      "docs/plan/DOCS-SSG-P2-gaps.records/m2/f01/scans.py"
+    ]
+  },
+  "diff_algorithm": "git diff --no-ext-diff --no-textconv BASE TARGET",
+  "excluded_progress_only": [
+    "f5d303d61acf294dff3c3ee75a589085622700b5",
+    "8a8268e6c5abb2d14a5bc7cdd67a7a1f2051debd"
+  ]
+}

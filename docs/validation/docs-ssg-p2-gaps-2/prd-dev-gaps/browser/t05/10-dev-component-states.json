@@ -1,0 +1,30 @@
+[
+  {
+    "session": "170e2-18dea69a6a9f3830",
+    "revision": 0,
+    "sequence": 0,
+    "building": true,
+    "phase": "render",
+    "compile": null,
+    "good": null,
+    "ok": true,
+    "reload": false,
+    "errors": 0,
+    "warnings": 0,
+    "diagnostics": []
+  },
+  {
+    "session": "170e2-18dea69a6a9f3830",
+    "revision": 1,
+    "sequence": 1,
+    "building": false,
+    "phase": "render",
+    "compile": null,
+    "good": 1,
+    "ok": true,
+    "reload": true,
+    "errors": 0,
+    "warnings": 0,
+    "diagnostics": []
+  }
+]

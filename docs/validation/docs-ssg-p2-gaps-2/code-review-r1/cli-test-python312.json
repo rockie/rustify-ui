@@ -1,0 +1,13 @@
+{
+  "command": [
+    "mbx",
+    "test",
+    "--locked",
+    "-p",
+    "rustify-docs-cli"
+  ],
+  "exit_code": 0,
+  "seconds": 641.58,
+  "log": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-review-gaps2-9ai42i6c/rustify-docs-cli-test-python312.log",
+  "python": "Python 3.12.13"
+}

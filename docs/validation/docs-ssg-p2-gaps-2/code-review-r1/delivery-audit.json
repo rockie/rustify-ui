@@ -1,0 +1,37 @@
+{
+  "report": "docs/plan/DOCS-SSG-P2-gaps-2.code-review.md",
+  "report_sha256": "57349a6152eaee15c32b75679a60549086fc6929d6668f0fbd5fe5cf7b4d970a",
+  "review_id": "8248f8f2-341a-4bfc-98d0-b893b5be44ac",
+  "source_plan_unchanged": true,
+  "product_files_unchanged": 32,
+  "original_inputs_unchanged_except_owned_ledger": 435,
+  "owned_existing_ledger_changes": [
+    ".xgent-ai/sdlc/events/review/index.md",
+    ".xgent-ai/sdlc/index.md",
+    ".xgent-ai/sdlc/status/plan/e9817d55-60e7-4c8f-9abb-4793cc82d5f3.md",
+    ".xgent-ai/sdlc/status/review/index.md"
+  ],
+  "unexplained_input_changes": [],
+  "unexplained_new_paths": [],
+  "links_checked": 210,
+  "missing_links": [],
+  "index_coverage": [
+    {
+      "directory": ".xgent-ai/sdlc/status/review",
+      "direct_members": 38,
+      "unlisted": []
+    },
+    {
+      "directory": ".xgent-ai/sdlc/events/review",
+      "direct_members": 38,
+      "unlisted": []
+    },
+    {
+      "directory": ".xgent-ai/sdlc/events/review/8248f8f2-341a-4bfc-98d0-b893b5be44ac",
+      "direct_members": 2,
+      "unlisted": []
+    }
+  ],
+  "head": "97c9946c6a325bed676a92dbd7bcea038db4ea69",
+  "observed_at": "2026-10-15T14:41:46+08:00"
+}

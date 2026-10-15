@@ -1,0 +1,220 @@
+{
+  "stats": {
+    "startTime": "2026-10-15T08:26:43.877Z",
+    "duration": 80545.215,
+    "expected": 6,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "errors": [],
+  "cases": [
+    {
+      "title": "gaps embedded diagnostics: registered names, props and demos show the CLI repair over the last good page and clear after the fix",
+      "status": "passed",
+      "attachments": [
+        "browser/t00/00-gaps-registered-375-light.png",
+        "browser/t00/01-gaps-registered-375-dark.png",
+        "browser/t00/02-gaps-registered-320-light.png",
+        "browser/t00/03-gaps-registered-320-dark.png",
+        "browser/t00/04-dev-component-browser-audit.json",
+        "browser/t00/05-dev-component-states.json",
+        "browser/t00/06-dev-component-compiler-commands.json",
+        "browser/t00/07-dev-component-compiler-lifecycle.json",
+        "browser/t00/08-dev-component-cli.log",
+        "browser/t00/09-dev-component-compile-history.json"
+      ]
+    },
+    {
+      "title": "gaps embedded diagnostics: without Rust the panel names the builtins and the empty demo registration and wraps the reference",
+      "status": "passed",
+      "attachments": [
+        "browser/t01/00-gaps-builtins-375-light.png",
+        "browser/t01/01-gaps-builtins-375-dark.png",
+        "browser/t01/02-gaps-builtins-320-light.png",
+        "browser/t01/03-gaps-builtins-320-dark.png",
+        "browser/t01/04-dev-component-browser-audit.json",
+        "browser/t01/05-dev-component-states.json",
+        "browser/t01/06-dev-component-compiler-commands.json",
+        "browser/t01/07-dev-component-compiler-lifecycle.json",
+        "browser/t01/08-dev-component-cli.log"
+      ]
+    },
+    {
+      "title": "gaps-2 code spans: plain author paths, prefixed anchors, YAML keys and empty language remain exact",
+      "status": "passed",
+      "attachments": [
+        "browser/t02/00-broken-anchor-prose.json",
+        "browser/t02/01-gaps2-anchor-1280-light.json",
+        "browser/t02/02-gaps2-anchor-1280-light.png",
+        "browser/t02/03-gaps2-anchor-1280-dark.json",
+        "browser/t02/04-gaps2-anchor-1280-dark.png",
+        "browser/t02/05-gaps2-anchor-375-light.json",
+        "browser/t02/06-gaps2-anchor-375-light.png",
+        "browser/t02/07-gaps2-anchor-375-dark.json",
+        "browser/t02/08-gaps2-anchor-375-dark.png",
+        "browser/t02/09-embed-payload-prose.json",
+        "browser/t02/10-gaps2-yaml-1280-light.json",
+        "browser/t02/11-gaps2-yaml-1280-light.png",
+        "browser/t02/12-gaps2-yaml-1280-dark.json",
+        "browser/t02/13-gaps2-yaml-1280-dark.png",
+        "browser/t02/14-gaps2-yaml-375-light.json",
+        "browser/t02/15-gaps2-yaml-375-light.png",
+        "browser/t02/16-gaps2-yaml-375-dark.json",
+        "browser/t02/17-gaps2-yaml-375-dark.png",
+        "browser/t02/18-config-lang-prose.json",
+        "browser/t02/19-gaps2-empty-1280-light.json",
+        "browser/t02/20-gaps2-empty-1280-light.png",
+        "browser/t02/21-gaps2-empty-1280-dark.json",
+        "browser/t02/22-gaps2-empty-1280-dark.png",
+        "browser/t02/23-gaps2-empty-375-light.json",
+        "browser/t02/24-gaps2-empty-375-light.png",
+        "browser/t02/25-gaps2-empty-375-dark.json",
+        "browser/t02/26-gaps2-empty-375-dark.png",
+        "browser/t02/27-dev-component-browser-audit.json",
+        "browser/t02/28-dev-component-states.json",
+        "browser/t02/29-dev-component-compiler-commands.json",
+        "browser/t02/30-dev-component-compiler-lifecycle.json",
+        "browser/t02/31-dev-component-cli.log"
+      ]
+    },
+    {
+      "title": "gaps-2 code spans: frontmatter language preserves author text resembling a YAML location",
+      "status": "passed",
+      "attachments": [
+        "browser/t03/00-lang-prose.json",
+        "browser/t03/01-gaps2-frontmatter-ticks-1280-light.json",
+        "browser/t03/02-gaps2-frontmatter-ticks-1280-light.png",
+        "browser/t03/03-gaps2-frontmatter-ticks-1280-dark.json",
+        "browser/t03/04-gaps2-frontmatter-ticks-1280-dark.png",
+        "browser/t03/05-gaps2-frontmatter-ticks-375-light.json",
+        "browser/t03/06-gaps2-frontmatter-ticks-375-light.png",
+        "browser/t03/07-gaps2-frontmatter-ticks-375-dark.json",
+        "browser/t03/08-gaps2-frontmatter-ticks-375-dark.png",
+        "browser/t03/09-lang-prose.json",
+        "browser/t03/10-gaps2-frontmatter-plain-1280-light.json",
+        "browser/t03/11-gaps2-frontmatter-plain-1280-light.png",
+        "browser/t03/12-gaps2-frontmatter-plain-1280-dark.json",
+        "browser/t03/13-gaps2-frontmatter-plain-1280-dark.png",
+        "browser/t03/14-gaps2-frontmatter-plain-375-light.json",
+        "browser/t03/15-gaps2-frontmatter-plain-375-light.png",
+        "browser/t03/16-gaps2-frontmatter-plain-375-dark.json",
+        "browser/t03/17-gaps2-frontmatter-plain-375-dark.png",
+        "browser/t03/18-dev-component-browser-audit.json",
+        "browser/t03/19-dev-component-states.json",
+        "browser/t03/20-dev-component-compiler-commands.json",
+        "browser/t03/21-dev-component-compiler-lifecycle.json",
+        "browser/t03/22-dev-component-cli.log"
+      ]
+    },
+    {
+      "title": "gaps-2 code spans: defaults with literal backticks survive unknown props, type errors and external unmatched ticks",
+      "status": "passed",
+      "attachments": [
+        "browser/t04/00-unknown-property-prose.json",
+        "browser/t04/01-gaps2-default-unknown-1280-light.json",
+        "browser/t04/02-gaps2-default-unknown-1280-light.png",
+        "browser/t04/03-gaps2-default-unknown-1280-dark.json",
+        "browser/t04/04-gaps2-default-unknown-1280-dark.png",
+        "browser/t04/05-gaps2-default-unknown-375-light.json",
+        "browser/t04/06-gaps2-default-unknown-375-light.png",
+        "browser/t04/07-gaps2-default-unknown-375-dark.json",
+        "browser/t04/08-gaps2-default-unknown-375-dark.png",
+        "browser/t04/09-invalid_props-prose.json",
+        "browser/t04/10-gaps2-default-type-1280-light.json",
+        "browser/t04/11-gaps2-default-type-1280-light.png",
+        "browser/t04/12-gaps2-default-type-1280-dark.json",
+        "browser/t04/13-gaps2-default-type-1280-dark.png",
+        "browser/t04/14-gaps2-default-type-375-light.json",
+        "browser/t04/15-gaps2-default-type-375-light.png",
+        "browser/t04/16-gaps2-default-type-375-dark.json",
+        "browser/t04/17-gaps2-default-type-375-dark.png",
+        "browser/t04/18-invalid_props-prose.json",
+        "browser/t04/19-gaps2-external-1280-light.json",
+        "browser/t04/20-gaps2-external-1280-light.png",
+        "browser/t04/21-gaps2-external-1280-dark.json",
+        "browser/t04/22-gaps2-external-1280-dark.png",
+        "browser/t04/23-gaps2-external-375-light.json",
+        "browser/t04/24-gaps2-external-375-light.png",
+        "browser/t04/25-gaps2-external-375-dark.json",
+        "browser/t04/26-gaps2-external-375-dark.png",
+        "browser/t04/27-dev-component-browser-audit.json",
+        "browser/t04/28-dev-component-states.json",
+        "browser/t04/29-dev-component-compiler-commands.json",
+        "browser/t04/30-dev-component-compiler-lifecycle.json",
+        "browser/t04/31-dev-component-cli.log",
+        "browser/t04/32-dev-component-compile-history.json"
+      ]
+    },
+    {
+      "title": "gaps-2 code spans: the real DOM reader preserves the handwritten whitespace and delimiter table",
+      "status": "passed",
+      "attachments": [
+        "browser/t05/00-verbatim-table.json",
+        "browser/t05/01-gaps2-table-1280-light.json",
+        "browser/t05/02-gaps2-table-1280-light.png",
+        "browser/t05/03-gaps2-table-1280-dark.json",
+        "browser/t05/04-gaps2-table-1280-dark.png",
+        "browser/t05/05-gaps2-table-375-light.json",
+        "browser/t05/06-gaps2-table-375-light.png",
+        "browser/t05/07-gaps2-table-375-dark.json",
+        "browser/t05/08-gaps2-table-375-dark.png",
+        "browser/t05/09-dev-component-browser-audit.json",
+        "browser/t05/10-dev-component-states.json",
+        "browser/t05/11-dev-component-compiler-commands.json",
+        "browser/t05/12-dev-component-compiler-lifecycle.json",
+        "browser/t05/13-dev-component-cli.log"
+      ]
+    }
+  ],
+  "audits": [
+    {
+      "path": "browser/t03/18-dev-component-browser-audit.json",
+      "console": [],
+      "pageErrors": [],
+      "csp": [],
+      "failures": [],
+      "responses_400_plus": []
+    },
+    {
+      "path": "browser/t04/27-dev-component-browser-audit.json",
+      "console": [],
+      "pageErrors": [],
+      "csp": [],
+      "failures": [],
+      "responses_400_plus": []
+    },
+    {
+      "path": "browser/t05/09-dev-component-browser-audit.json",
+      "console": [],
+      "pageErrors": [],
+      "csp": [],
+      "failures": [],
+      "responses_400_plus": []
+    },
+    {
+      "path": "browser/t02/27-dev-component-browser-audit.json",
+      "console": [],
+      "pageErrors": [],
+      "csp": [],
+      "failures": [],
+      "responses_400_plus": []
+    },
+    {
+      "path": "browser/t00/04-dev-component-browser-audit.json",
+      "console": [],
+      "pageErrors": [],
+      "csp": [],
+      "failures": [],
+      "responses_400_plus": []
+    },
+    {
+      "path": "browser/t01/04-dev-component-browser-audit.json",
+      "console": [],
+      "pageErrors": [],
+      "csp": [],
+      "failures": [],
+      "responses_400_plus": []
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "observed_at": "2026-10-15T09:13:34.496398+08:00",
+  "base": "d2f20b03cf58c1d1ced3785397c501d412cd4167",
+  "target": "958c9bd902fd847b59093c31d83468fd7bae2b83",
+  "checkout": "f5d303d61acf294dff3c3ee75a589085622700b5",
+  "plan_sha256": "b193ee9dce5e2ba8ff68b9e3ecc280396232ef67423ab11a94bd784e06dc62e9",
+  "initial_status_sha256": "16865ab11c9f05103bbf54d5f44bd43b167bd75ed5cf0084db7f2f474a84ac13",
+  "initial_tracked_diff_sha256": "a842a17c0ae6465265eb5d5692b336fb4891146e4ae06b2938e2a0402e771156",
+  "initial_index_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "input_manifest_sha256": "fd481704ff43dd4e953f367afd08aba0230d192a23d5673a717421c1d6b1e5a6",
+  "source_file_sha256": "ea3e75536821db931183181495c8d8989bdabe710b0bc9fc1f955388a8ff0cca",
+  "probe": "The exact source section from pub const BUILTIN_REFERENCE up to (excluding) /// Whether some YAML mapping, plus an isolated main using the actual rustify-docs-syntax::parse_registry. Executed with mbx run --locked --offline and the current syntax crate (unchanged by this diff).",
+  "probe_result": "manifest keeps r#\"a\"   b   \"c\"#; unknown_property advice prints r#\"a\" b \"c\"#; literal_preserved=false.",
+  "probe_command": [
+    "mbx",
+    "run",
+    "--locked",
+    "--offline",
+    "--manifest-path",
+    "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-p2-gaps-review-4xrlmqj7/manifest-probe/Cargo.toml",
+    "--target-dir",
+    "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-p2-gaps-review-4xrlmqj7/manifest-target"
+  ],
+  "probe_manifest": "[package]\nname=\"manifest-review-probe\"\nversion=\"0.0.0\"\nedition=\"2021\"\n[workspace]\n[dependencies]\nrustify-docs-syntax={path=\"/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-docs-syntax\"}\n",
+  "binary": {
+    "path": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps-installed.VV1r7t/bin/rustify-docs",
+    "sha256": "c0dd693c69e5e1fd77472024bf557e88a239b2861b7d46884912a740e8389cc4",
+    "build_info": "rustify-docs 0.1.16\npanic: unwind\ngrammars: syntect-5.3.0+two-face-0.5.2+bat-0.26.1+fancy\nsource: 7a42230b29ba3fc5c71c0c85d69913c54ac0bff6\n"
+  },
+  "dev_stats": {
+    "startTime": "2026-10-15T01:10:34.037Z",
+    "duration": 38957.362,
+    "expected": 2,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

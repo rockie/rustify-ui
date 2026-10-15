@@ -1,0 +1,55 @@
+{
+  "browser": "153.0.8010.12",
+  "url": "http://127.0.0.1:61138/standalone",
+  "optional": null,
+  "onlyA": {
+    "marker": "rustify-geometry-1",
+    "bars": {
+      "a": {
+        "track": 256,
+        "fill": 128,
+        "class": "h-full bg-primary transition-[width] rui-geometry-1",
+        "width": "128px"
+      }
+    },
+    "rules": [
+      "[data-rustify-geometry-scope=\"rustify-geometry-1\"] .rui-geometry-1 { width: 50%; }"
+    ]
+  },
+  "both": {
+    "marker": "rustify-geometry-2",
+    "bars": {
+      "a": {
+        "track": 256,
+        "fill": 256,
+        "class": "h-full bg-primary transition-[width] rui-geometry-1",
+        "width": "256px"
+      },
+      "b": {
+        "track": 256,
+        "fill": 64,
+        "class": "h-full bg-primary transition-[width] rui-geometry-2",
+        "width": "64px"
+      }
+    },
+    "rules": [
+      "[data-rustify-geometry-scope=\"rustify-geometry-1\"] .rui-geometry-1 { width: 50%; }",
+      "[data-rustify-geometry-scope=\"rustify-geometry-2\"] .rui-geometry-2 { width: 25%; }"
+    ]
+  },
+  "closeB": {
+    "marker": "rustify-geometry-1",
+    "bars": {
+      "a": {
+        "track": 256,
+        "fill": 128,
+        "class": "h-full bg-primary transition-[width] rui-geometry-1",
+        "width": "128px"
+      }
+    },
+    "rules": [
+      "[data-rustify-geometry-scope=\"rustify-geometry-1\"] .rui-geometry-1 { width: 50%; }"
+    ]
+  },
+  "failures": []
+}

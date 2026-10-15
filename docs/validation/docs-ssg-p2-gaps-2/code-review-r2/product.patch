@@ -1,0 +1,313 @@
+diff --git a/Cargo.lock b/Cargo.lock
+index 6dd42eb4..7630e434 100644
+--- a/Cargo.lock
++++ b/Cargo.lock
+@@ -2454,7 +2454,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "rustify-docs-cli"
+-version = "0.1.18"
++version = "0.1.19"
+ dependencies = [
+  "dom_query",
+  "kqueue",
+diff --git a/crates/rustify-docs-cli/Cargo.toml b/crates/rustify-docs-cli/Cargo.toml
+index 64c4166c..4f3d3143 100644
+--- a/crates/rustify-docs-cli/Cargo.toml
++++ b/crates/rustify-docs-cli/Cargo.toml
+@@ -3,7 +3,7 @@ name = "rustify-docs-cli"
+ # Its own version, not the workspace's: it changes whenever the binary's
+ # sources, embedded assets or resolved dependencies change, and both
+ # `--version` and a production manifest's `cli_version` report it.
+-version = "0.1.18"
++version = "0.1.19"
+ edition.workspace = true
+ license.workspace = true
+ publish.workspace = true
+diff --git a/crates/rustify-docs-cli/assets/components-Cargo.lock b/crates/rustify-docs-cli/assets/components-Cargo.lock
+index 1e3eccaa..efebcb0e 100644
+--- a/crates/rustify-docs-cli/assets/components-Cargo.lock
++++ b/crates/rustify-docs-cli/assets/components-Cargo.lock
+@@ -1188,7 +1188,7 @@ dependencies = [
+ [[package]]
+ name = "rustify-components"
+ version = "0.1.0"
+-source = "git+https://github.com/rockie/rustify-ui?rev=e20daf7f07179d2bd24700c345f577fb9c8dbc15#e20daf7f07179d2bd24700c345f577fb9c8dbc15"
++source = "git+https://github.com/rockie/rustify-ui?rev=6942ec0d23812ecda61492d9db5c0046f481edfc#6942ec0d23812ecda61492d9db5c0046f481edfc"
+ dependencies = [
+  "js-sys",
+  "leptos",
+@@ -1201,7 +1201,7 @@ dependencies = [
+ [[package]]
+ name = "rustify-docs"
+ version = "0.1.0"
+-source = "git+https://github.com/rockie/rustify-ui?rev=e20daf7f07179d2bd24700c345f577fb9c8dbc15#e20daf7f07179d2bd24700c345f577fb9c8dbc15"
++source = "git+https://github.com/rockie/rustify-ui?rev=6942ec0d23812ecda61492d9db5c0046f481edfc#6942ec0d23812ecda61492d9db5c0046f481edfc"
+ dependencies = [
+  "any_spawner",
+  "hydration_context",
+@@ -1219,7 +1219,7 @@ dependencies = [
+ [[package]]
+ name = "rustify-docs-macros"
+ version = "0.1.0"
+-source = "git+https://github.com/rockie/rustify-ui?rev=e20daf7f07179d2bd24700c345f577fb9c8dbc15#e20daf7f07179d2bd24700c345f577fb9c8dbc15"
++source = "git+https://github.com/rockie/rustify-ui?rev=6942ec0d23812ecda61492d9db5c0046f481edfc#6942ec0d23812ecda61492d9db5c0046f481edfc"
+ dependencies = [
+  "proc-macro2",
+  "quote",
+@@ -1231,7 +1231,7 @@ dependencies = [
+ [[package]]
+ name = "rustify-docs-syntax"
+ version = "0.1.0"
+-source = "git+https://github.com/rockie/rustify-ui?rev=e20daf7f07179d2bd24700c345f577fb9c8dbc15#e20daf7f07179d2bd24700c345f577fb9c8dbc15"
++source = "git+https://github.com/rockie/rustify-ui?rev=6942ec0d23812ecda61492d9db5c0046f481edfc#6942ec0d23812ecda61492d9db5c0046f481edfc"
+ dependencies = [
+  "proc-macro2",
+  "quote",
+@@ -1242,7 +1242,7 @@ dependencies = [
+ [[package]]
+ name = "rustify-style"
+ version = "0.1.0"
+-source = "git+https://github.com/rockie/rustify-ui?rev=e20daf7f07179d2bd24700c345f577fb9c8dbc15#e20daf7f07179d2bd24700c345f577fb9c8dbc15"
++source = "git+https://github.com/rockie/rustify-ui?rev=6942ec0d23812ecda61492d9db5c0046f481edfc#6942ec0d23812ecda61492d9db5c0046f481edfc"
+ dependencies = [
+  "flate2",
+  "regex",
+@@ -1254,7 +1254,7 @@ dependencies = [
+ [[package]]
+ name = "rustify-ui"
+ version = "0.1.0"
+-source = "git+https://github.com/rockie/rustify-ui?rev=e20daf7f07179d2bd24700c345f577fb9c8dbc15#e20daf7f07179d2bd24700c345f577fb9c8dbc15"
++source = "git+https://github.com/rockie/rustify-ui?rev=6942ec0d23812ecda61492d9db5c0046f481edfc#6942ec0d23812ecda61492d9db5c0046f481edfc"
+ dependencies = [
+  "js-sys",
+  "leptos",
+diff --git a/crates/rustify-docs-cli/assets/framework-revision.txt b/crates/rustify-docs-cli/assets/framework-revision.txt
+index 0c3d2b10..086395ea 100644
+--- a/crates/rustify-docs-cli/assets/framework-revision.txt
++++ b/crates/rustify-docs-cli/assets/framework-revision.txt
+@@ -1 +1 @@
+-e20daf7f07179d2bd24700c345f577fb9c8dbc15
++6942ec0d23812ecda61492d9db5c0046f481edfc
+diff --git a/crates/rustify-docs-cli/tests/diagnostic_text.rs b/crates/rustify-docs-cli/tests/diagnostic_text.rs
+index 78f33d9e..a2d19ac1 100644
+--- a/crates/rustify-docs-cli/tests/diagnostic_text.rs
++++ b/crates/rustify-docs-cli/tests/diagnostic_text.rs
+@@ -4,7 +4,7 @@ mod support;
+ 
+ use rustify_docs::embed::{self, Field, Owner};
+ use serde_json::Value;
+-use support::{run_in, stdout, Temp};
++use support::{run_in, stderr, stdout, succeeded, tree, Temp};
+ 
+ #[test]
+ fn both_writers_match_the_handwritten_verbatim_table() {
+@@ -125,6 +125,64 @@ fn check_and_build_encode_plain_paths_prefixed_anchors_yaml_keys_and_empty_langu
+     assert_eq!(language["suggestion"], "use a tag like `en` or `zh-CN`");
+ }
+ 
++#[test]
++fn frontmatter_language_keeps_author_text_that_looks_like_a_yaml_location() {
++    let temp = Temp::new("diagnostic-frontmatter-language");
++    temp.write(
++        "rustify-docs.toml",
++        "schema_version=1\n[site]\nname='D'\nurl='https://example.com/'\n",
++    );
++    let good = "---\ndescription: Home\n---\n# Home\n";
++    temp.write("content/index.md", good);
++    succeeded(&run_in(&temp.0, &["build"]));
++    let dist = tree(&temp.path("dist"));
++    assert!(!dist.is_empty());
++    for (value, message) in [
++        (
++            "a` at line `b",
++            "lang: `` a` at line `b `` is not a language tag",
++        ),
++        ("a at line b", "lang: `a at line b` is not a language tag"),
++        (
++            "a at line 2 column 7",
++            "lang: `a at line 2 column 7` is not a language tag",
++        ),
++        ("a`b", "lang: `` a`b `` is not a language tag"),
++    ] {
++        temp.write(
++            "content/index.md",
++            &format!("---\ndescription: Home\nlang: \"{value}\"\n---\n# Home\n"),
++        );
++        let checked = run_in(&temp.0, &["check", "--format", "json"]);
++        assert_eq!(checked.status.code(), Some(1));
++        let checked: Value = serde_json::from_slice(&checked.stdout).unwrap();
++        let language = checked["diagnostics"]
++            .as_array()
++            .unwrap()
++            .iter()
++            .find(|d| d["rule"] == "lang")
++            .unwrap();
++        assert_eq!(language["message"], message);
++        assert_eq!(language["file"], "content/index.md");
++        assert_eq!(
++            (&language["line"], &language["column"]),
++            (&Value::from(3), &Value::from(7))
++        );
++        let built = run_in(&temp.0, &["build", "--format", "json"]);
++        assert_eq!(built.status.code(), Some(1));
++        let built: Value = serde_json::from_slice(&built.stdout).unwrap();
++        assert_eq!(built["diagnostics"], checked["diagnostics"]);
++        let text = run_in(&temp.0, &["check"]);
++        assert_eq!(text.status.code(), Some(1));
++        assert!(stderr(&text).contains(message));
++        assert!(stderr(&text).contains("content/index.md:3:7"));
++        assert_eq!(tree(&temp.path("dist")), dist);
++    }
++    temp.write("content/index.md", good);
++    succeeded(&run_in(&temp.0, &["check"]));
++    assert_eq!(tree(&temp.path("dist")), dist);
++}
++
+ #[test]
+ fn region_repairs_encode_the_fixed_marker_prefixes_and_configuration_values() {
+     let temp = Temp::new("diagnostic-region");
+diff --git a/crates/rustify-docs/src/frontmatter.rs b/crates/rustify-docs/src/frontmatter.rs
+index 434ad323..047f9036 100644
+--- a/crates/rustify-docs/src/frontmatter.rs
++++ b/crates/rustify-docs/src/frontmatter.rs
+@@ -189,17 +189,14 @@ pub(crate) fn language_issue(text: &str) -> Option<Issue> {
+         .nth(location.column() - 1)
+         .map_or(0, |(at, _)| at);
+     let at = split.yaml.start + line_start + column;
++    let message = error.to_string();
++    // Only remove YAML's actual location suffix; the author value may
++    // itself contain " at line ".
++    let suffix = format!(" at line {} column {}", location.line(), location.column());
++    let message = message.strip_suffix(&suffix).unwrap_or(&message);
+     Some(
+-        Issue::error(
+-            at..at,
+-            "lang",
+-            error
+-                .to_string()
+-                .split(" at line ")
+-                .next()
+-                .unwrap_or_default(),
+-        )
+-        .suggest("use a language tag such as `en`, `zh-CN` or `fr`"),
++        Issue::error(at..at, "lang", message)
++            .suggest("use a language tag such as `en`, `zh-CN` or `fr`"),
+     )
+ }
+ 
+diff --git a/docs/docs-ssg.md b/docs/docs-ssg.md
+index 84eb1eee..244dca8f 100644
+--- a/docs/docs-ssg.md
++++ b/docs/docs-ssg.md
+@@ -18,8 +18,8 @@ Supported on macOS. Linux and Windows are not verified.
+ ## Install and maintain the CLI
+ 
+ This section records the verified P1 content-site release. The Rust examples
+-below use the current repository checkout's CLI candidate, version **0.1.18**,
+-paired with library revision `e20daf7f07179d2bd24700c345f577fb9c8dbc15`.
++below use the current repository checkout's CLI candidate, version **0.1.19**,
++paired with library revision `6942ec0d23812ecda61492d9db5c0046f481edfc`.
+ The library revision is committed locally; public availability is pending.
+ The installed candidate reports its exact CLI source commit with
+ `rustify-docs --build-info`. The pinned P1 install below is for content sites.
+@@ -590,8 +590,8 @@ The components template requires an installed CLI with a traceable source
+ revision, an explicit paired framework revision and its embedded dependency
+ lock. A development checkout without that frozen pair refuses generation;
+ it does not write an unlocked project or choose a framework revision for
+-the author. This checkout's 0.1.18 candidate pins library revision
+-`e20daf7f07179d2bd24700c345f577fb9c8dbc15` and embeds its generated dependency
++the author. This checkout's 0.1.19 candidate pins library revision
++`6942ec0d23812ecda61492d9db5c0046f481edfc` and embeds its generated dependency
+ lock. Public Git availability is still being prepared; the installed CLI's
+ `--build-info` identifies its paired C commit. The verified P1 installation
+ above does not provide this template.
+diff --git a/docs/plan/DOCS-SSG-P2-gaps-2.records/m2/author-acceptance.py b/docs/plan/DOCS-SSG-P2-gaps-2.records/m2/author-acceptance.py
+index 81a29ddd..66fe2987 100644
+--- a/docs/plan/DOCS-SSG-P2-gaps-2.records/m2/author-acceptance.py
++++ b/docs/plan/DOCS-SSG-P2-gaps-2.records/m2/author-acceptance.py
+@@ -35,7 +35,7 @@ def warm(name):
+         run(name+'-retry', [a.cli,'check','--format','json'])
+ 
+ info = run('build-info', [a.cli,'--build-info'], cwd=work).stdout
+-assert info.startswith('rustify-docs 0.1.18\n') and f'source: {a.c}\n' in info and 'panic: unwind\n' in info, info
++assert info.startswith('rustify-docs 0.1.19\n') and f'source: {a.c}\n' in info and 'panic: unwind\n' in info, info
+ report['binary_sha256'] = hashlib.sha256(Path(a.cli).read_bytes()).hexdigest()
+ run('new', [a.cli,'new',str(site),'--template','components'], cwd=work)
+ pins = [line.strip() for line in (site/'Cargo.toml').read_text().splitlines() if 'github.com/rockie/rustify-ui' in line]
+@@ -105,6 +105,8 @@ try:
+       ('tick-typed',good_md+'```rustify-component\nname: Counter\nprops:\n  label: [1]\n```\n',config,'invalid_props','invalid type: sequence, expected a string','Write `label: "text"` for declared type `String` (default expression `` "a`b".to_string() ``). Reported props path: `label`.',{'message':'invalid type: sequence, expected a string','messageCodes':[],'suggestion':'Write label: "text" for declared type String (default expression "a`b".to_string()). Reported props path: label.','suggestionCodes':['label: "text"','String','"a`b".to_string()','label']}),
+       ('tick-anchor',good_md+'[Target](a%60b%60c.md#a%60b)\n',config,'broken-anchor','`` content/a`b`c.md `` has no heading `` #a`b ``',"link to an existing heading's id; ids are the heading text in lower case with spaces as `-`",{'message':'content/a`b`c.md has no heading #a`b','messageCodes':['content/a`b`c.md','#a`b'],'suggestion':"link to an existing heading's id; ids are the heading text in lower case with spaces as -",'suggestionCodes':['-']}),
+       ('empty-language',good_md,config.replace('lang = "en"','lang = ""'),'config-lang','``  `` is not a language tag','use a tag like `en` or `zh-CN`',{'message':' is not a language tag','messageCodes':[''],'suggestion':'use a tag like en or zh-CN','suggestionCodes':['en','zh-CN']}),
++      ('frontmatter-ticks','---\ndescription: Home\nlang: "a` at line `b"\n---\n# Gaps\n',config,'lang','lang: `` a` at line `b `` is not a language tag','use a language tag such as `en`, `zh-CN` or `fr`',{'message':'lang: a` at line `b is not a language tag','messageCodes':['a` at line `b'],'suggestion':'use a language tag such as en, zh-CN or fr','suggestionCodes':['en','zh-CN','fr']}),
++      ('frontmatter-plain','---\ndescription: Home\nlang: "a at line b"\n---\n# Gaps\n',config,'lang','lang: `a at line b` is not a language tag','use a language tag such as `en`, `zh-CN` or `fr`',{'message':'lang: a at line b is not a language tag','messageCodes':['a at line b'],'suggestion':'use a language tag such as en, zh-CN or fr','suggestionCodes':['en','zh-CN','fr']}),
+     ]
+     previous=first
+     for name,markdown,current_config,rule,message,suggestion,display in phases:
+@@ -115,6 +117,7 @@ try:
+         diagnostics=errors(checked);assert len(diagnostics)==1,diagnostics
+         d=diagnostics[0];assert (d['rule'],d['message'],d['suggestion'])==(rule,message,suggestion),d
+         assert d['line']>0 and d['column']>0 and d['file']==('rustify-docs.toml' if rule=='config-lang' else 'content/gaps.md'),d
++        if rule=='lang':assert (d['line'],d['column'])==(3,7),d
+         terminal=run(name+'-text',[a.cli,'check'],1).stderr
+         location=f"  --> {d['file']}:{d['line']}:{d['column']}\n  = help: {suggestion}\n"
+         assert message in terminal and location in terminal,terminal
+diff --git a/tests/docs-ssg/dev-components.spec.ts b/tests/docs-ssg/dev-components.spec.ts
+index 0ac85b11..802e28fe 100644
+--- a/tests/docs-ssg/dev-components.spec.ts
++++ b/tests/docs-ssg/dev-components.spec.ts
+@@ -1047,6 +1047,54 @@ test('gaps-2 code spans: plain author paths, prefixed anchors, YAML keys and emp
+     expect(server.streamErrors).toEqual([]);
+ });
+ 
++test('gaps-2 code spans: frontmatter language preserves author text resembling a YAML location', async ({ page }) => {
++    const plain = path.join(site.dir, 'plain');
++    mkdirSync(path.join(plain, 'content'), { recursive: true });
++    const good = '---\ndescription: Home\n---\n# Home\n';
++    writeFileSync(path.join(plain, 'rustify-docs.toml'), "schema_version=1\n[site]\nname='Plain'\nurl='https://example.com/'\n");
++    writeFileSync(path.join(plain, 'content/index.md'), good);
++    server = await Dev.start(site, plain);
++    await page.goto(server.url);
++    let state = await settled();
++    const first = state;
++    const lastGood = await (await page.request.get(server.url)).body();
++    await page.evaluate(() => window.__dev_component_document = 'last good language page');
++    for (const [label, value, encoded] of [
++        ['ticks', 'a` at line `b', '`` a` at line `b ``'],
++        ['plain', 'a at line b', '`a at line b`'],
++    ]) {
++        writeFileSync(path.join(plain, 'content/index.md'), `---\ndescription: Home\nlang: "${value}"\n---\n# Home\n`);
++        state = await settled(state.revision, false);
++        const diagnostic = state.diagnostics.find(d => d.rule === 'lang')!;
++        expect(diagnostic).toMatchObject({ file: 'content/index.md', line: 3, column: 7, message: `lang: ${encoded} is not a language tag` });
++        await exactProse(page, state, 'lang', { message: `lang: ${value} is not a language tag`, messageCodes: [value], suggestion: 'use a language tag such as en, zh-CN or fr', suggestionCodes: ['en', 'zh-CN', 'fr'] });
++        expect(state.good).toBe(first.good);
++        expect(await (await page.request.get(server.url)).body()).toEqual(lastGood);
++        expect(await page.evaluate(() => window.__dev_component_document)).toBe('last good language page');
++        await expect.poll(() => server!.log).toContain(diagnostic.message);
++        await expect.poll(() => server!.log).toContain('content/index.md:3:7');
++        await proseLayouts(page, `gaps2-frontmatter-${label}`);
++        const hide = page.getByRole('button', { name: 'Hide problems' });
++        const marker = page.locator('.rd-dev-marker');
++        await hide.click();
++        await expect(marker).toBeFocused();
++        await page.keyboard.press('Enter');
++        await expect(hide).toBeFocused();
++        await page.keyboard.press('Escape');
++        await expect(marker).toBeFocused();
++        await marker.click();
++    }
++    writeFileSync(path.join(plain, 'content/index.md'), good);
++    state = await settled(state.revision);
++    await cleared(page, state);
++    expect(audit.csp).toEqual([]);
++    expect(audit.failures).toEqual([]);
++    expect(audit.responses.filter(response => response.status >= 400)).toEqual([]);
++    expect(audit.console).toEqual([]);
++    expect(audit.pageErrors).toEqual([]);
++    expect(server.streamErrors).toEqual([]);
++});
++
+ test('gaps-2 code spans: defaults with literal backticks survive unknown props, type errors and external unmatched ticks', async ({ page }) => {
+     test.setTimeout(900_000);
+     site.edit('src/lib.rs', 'label: String = "Counter".to_string()', 'label: String = "a`b".to_string()');

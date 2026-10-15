@@ -1,0 +1,31 @@
+{
+  "observed_at": "2026-10-15T11:59:29+08:00",
+  "head": "8a8268e6c5abb2d14a5bc7cdd67a7a1f2051debd",
+  "branch": "main",
+  "worktree": "dirty (product sources unchanged; existing ledger/reports/fixtures/cache retained)",
+  "hash_algorithm": "SHA-256 of current worktree bytes for each listed tracked/untracked path",
+  "inputs_sha256": {
+    "docs/plan/DOCS-SSG-P2-gaps-2.md": "b0391d7885e08d3ea7f0f0dc350bfc93ca9e1b4570ce2108763c9d77389cdef3",
+    "docs/PRD-DOCS-SSG.md": "22f4fac99b06a23cda3c34f7ee0c66c11369ccd60a34d71fecee2617aa4c16c1",
+    "docs/plan/DOCS-SSG-P2.prd-dev-gaps.r2.md": "c1212c1b4088670f27b343ee5712d76202c12c980480c581c22ad18ac80d2085",
+    "crates/rustify-docs/src/lib.rs": "373a7961ffcbcc39b78f0d27b6c72d0fd31d05d7cd0491a04cf3925d1252a3f1",
+    "crates/rustify-docs/Cargo.toml": "fa5df5b0e0e4e981c65bab98dd85a104b4587dfefc9fd46c9855397fe03c7806",
+    "crates/rustify-docs/src/diagnostic.rs": "9e9fda0133d224318961568f38cebecb585331c42b922478aa3134d2d1e4a097",
+    "crates/rustify-docs/src/site/registry.rs": "d665ace10c20dd9be8ca76c5d417d8d0cf0f530d0dfeccd93be66bde8421e4f6",
+    "crates/rustify-docs/src/config.rs": "2781aec46c3921124347930e7b1427a00c750bc2482965d3a67341cc91e48e81",
+    "crates/rustify-docs/src/content.rs": "0b22a9d2f557712d78fd1cdb262847eea17c78cb8a0ccf19eb4b564a9cdbe480",
+    "crates/rustify-docs/src/generation.rs": "da1ed3870ac27499579a43bd9df57e4d48c42f08d24218e17c6f7e535b3ece81",
+    "crates/rustify-docs/src/markdown.rs": "ca61dce8c8ef9152d1841f8dfb4ee1444203813423f42844d99ecbbaaa7e3133",
+    "crates/rustify-docs/src/embed.rs": "3222e635a46b1cedd6a7db70b3189d62a5871632d29b5fa41434a23f33f0a329",
+    "crates/rustify-docs/assets/dev.js": "da43de3de6ecad49dcb3c09922b2d44cffb91c4046d1773956d14cb915505a46",
+    "crates/rustify-docs-cli/src/report.rs": "a64a0dfc6f138463b160c0f1fada7bf25538dc08d9411114b614e89de3d3ea87",
+    "crates/rustify-docs-cli/src/rendering.rs": "f6d3b1a7806809bd637daca36f218fb9d0627c279cf36ca0397e890917139216",
+    "crates/rustify-docs-cli/templates/components/Cargo.toml.in": "8425e2fdafeb64289e54da02426a5c219d85b74c89a9becd49b2177587a5b933",
+    "tests/docs-ssg/dev-components.spec.ts": "13238f10c7dacfa3ebb6bc1cfa798565dc3899f5394b5a34cc78cd0c33268697",
+    "scripts/docs-pages-prepare.py": "587d765000fedb779bdaef9b408bed6a3cb60a5079b2529aa4be35023f41cb92",
+    ".github/workflows/verify.yml": "9fe64e4a49030f39860b03946316690f180b03d263cd2908a41aa20a1bb8a03f"
+  },
+  "standard": "https://spec.commonmark.org/0.31.2/#code-spans",
+  "standard_checked_on": "2026-10-15",
+  "new_behavior": "not implemented or browser accepted in this review"
+}

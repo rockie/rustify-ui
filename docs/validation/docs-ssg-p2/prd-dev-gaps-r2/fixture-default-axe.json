@@ -1,0 +1,381 @@
+{
+  "origin": "http://127.0.0.1:4298/",
+  "browser": "153.0.8010.12",
+  "tags": [
+    "wcag2a",
+    "wcag2aa",
+    "wcag21a",
+    "wcag21aa",
+    "wcag22aa"
+  ],
+  "scans": [
+    {
+      "colorScheme": "light",
+      "width": 1280,
+      "route": "counter/",
+      "label": "loading",
+      "states": [
+        "loading",
+        "loading",
+        "loading",
+        "loading"
+      ],
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "nodes": 11
+        }
+      ]
+    },
+    {
+      "colorScheme": "light",
+      "width": 1280,
+      "route": "counter/",
+      "label": "ready",
+      "states": [
+        "ready",
+        "ready",
+        "ready",
+        "ready"
+      ],
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "nodes": 11
+        }
+      ]
+    },
+    {
+      "colorScheme": "light",
+      "width": 1280,
+      "route": "client-only/",
+      "label": "client-only placeholder",
+      "states": [
+        "loading"
+      ],
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "colorScheme": "light",
+      "width": 1280,
+      "route": "client-only/",
+      "label": "ready",
+      "states": [
+        "ready"
+      ],
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "colorScheme": "light",
+      "width": 1280,
+      "route": "failure/",
+      "label": "failed",
+      "states": [
+        "failed",
+        "failed"
+      ],
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "nodes": 28
+        }
+      ]
+    },
+    {
+      "colorScheme": "light",
+      "width": 375,
+      "route": "counter/",
+      "label": "loading",
+      "states": [
+        "loading",
+        "loading",
+        "loading",
+        "loading"
+      ],
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "nodes": 10
+        }
+      ]
+    },
+    {
+      "colorScheme": "light",
+      "width": 375,
+      "route": "counter/",
+      "label": "ready",
+      "states": [
+        "ready",
+        "ready",
+        "ready",
+        "ready"
+      ],
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "nodes": 10
+        }
+      ]
+    },
+    {
+      "colorScheme": "light",
+      "width": 375,
+      "route": "client-only/",
+      "label": "client-only placeholder",
+      "states": [
+        "loading"
+      ],
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "colorScheme": "light",
+      "width": 375,
+      "route": "client-only/",
+      "label": "ready",
+      "states": [
+        "ready"
+      ],
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "colorScheme": "light",
+      "width": 375,
+      "route": "failure/",
+      "label": "failed",
+      "states": [
+        "failed",
+        "failed"
+      ],
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "nodes": 19
+        }
+      ]
+    },
+    {
+      "colorScheme": "dark",
+      "width": 1280,
+      "route": "counter/",
+      "label": "loading",
+      "states": [
+        "loading",
+        "loading",
+        "loading",
+        "loading"
+      ],
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "nodes": 11
+        }
+      ]
+    },
+    {
+      "colorScheme": "dark",
+      "width": 1280,
+      "route": "counter/",
+      "label": "ready",
+      "states": [
+        "ready",
+        "ready",
+        "ready",
+        "ready"
+      ],
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "nodes": 11
+        }
+      ]
+    },
+    {
+      "colorScheme": "dark",
+      "width": 1280,
+      "route": "client-only/",
+      "label": "client-only placeholder",
+      "states": [
+        "loading"
+      ],
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "colorScheme": "dark",
+      "width": 1280,
+      "route": "client-only/",
+      "label": "ready",
+      "states": [
+        "ready"
+      ],
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "colorScheme": "dark",
+      "width": 1280,
+      "route": "failure/",
+      "label": "failed",
+      "states": [
+        "failed",
+        "failed"
+      ],
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "nodes": 28
+        }
+      ]
+    },
+    {
+      "colorScheme": "dark",
+      "width": 375,
+      "route": "counter/",
+      "label": "loading",
+      "states": [
+        "loading",
+        "loading",
+        "loading",
+        "loading"
+      ],
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "nodes": 10
+        }
+      ]
+    },
+    {
+      "colorScheme": "dark",
+      "width": 375,
+      "route": "counter/",
+      "label": "ready",
+      "states": [
+        "ready",
+        "ready",
+        "ready",
+        "ready"
+      ],
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "nodes": 10
+        }
+      ]
+    },
+    {
+      "colorScheme": "dark",
+      "width": 375,
+      "route": "client-only/",
+      "label": "client-only placeholder",
+      "states": [
+        "loading"
+      ],
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "colorScheme": "dark",
+      "width": 375,
+      "route": "client-only/",
+      "label": "ready",
+      "states": [
+        "ready"
+      ],
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "colorScheme": "dark",
+      "width": 375,
+      "route": "failure/",
+      "label": "failed",
+      "states": [
+        "failed",
+        "failed"
+      ],
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "nodes": 19
+        }
+      ]
+    }
+  ],
+  "console": [
+    {
+      "colorScheme": "light",
+      "width": 1280,
+      "text": "Interactive examples failed {keys: Array(2), error: RuntimeError: unreachable}"
+    },
+    {
+      "colorScheme": "light",
+      "width": 375,
+      "text": "Interactive examples failed {keys: Array(2), error: RuntimeError: unreachable}"
+    },
+    {
+      "colorScheme": "dark",
+      "width": 1280,
+      "text": "Interactive examples failed {keys: Array(2), error: RuntimeError: unreachable}"
+    },
+    {
+      "colorScheme": "dark",
+      "width": 375,
+      "text": "Interactive examples failed {keys: Array(2), error: RuntimeError: unreachable}"
+    }
+  ],
+  "pageErrors": [
+    {
+      "colorScheme": "light",
+      "width": 1280,
+      "error": "RuntimeError: unreachable"
+    },
+    {
+      "colorScheme": "light",
+      "width": 375,
+      "error": "RuntimeError: unreachable"
+    },
+    {
+      "colorScheme": "dark",
+      "width": 1280,
+      "error": "RuntimeError: unreachable"
+    },
+    {
+      "colorScheme": "dark",
+      "width": 375,
+      "error": "RuntimeError: unreachable"
+    }
+  ],
+  "summary": {
+    "scans": 20,
+    "labels": [
+      "counter/ loading: loading",
+      "counter/ ready: ready",
+      "client-only/ client-only placeholder: loading",
+      "client-only/ ready: ready",
+      "failure/ failed: failed"
+    ],
+    "serious_or_critical": [],
+    "violations": 0,
+    "incomplete": [
+      "color-contrast"
+    ],
+    "unexpected_page_errors": 0
+  }
+}

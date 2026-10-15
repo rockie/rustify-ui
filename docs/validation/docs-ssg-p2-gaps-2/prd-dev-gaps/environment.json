@@ -1,0 +1,18 @@
+{
+  "python": "3.12.13 (main, Mar  3 2026, 12:39:30) [Clang 21.0.0 (clang-2100.0.123.102)]",
+  "node": "v26.1.0",
+  "rust": "rustc 1.99.0 (b940084d7 2026-09-28)",
+  "mbx": "mbx 1.15.0",
+  "process_environment": {
+    "GIT_CONFIG_COUNT": "1",
+    "GIT_CONFIG_KEY_0": "url.file:///Users/rockie/Documents/gh-rockie/rustify-ui/.insteadOf",
+    "GIT_CONFIG_VALUE_0": "https://github.com/rockie/rustify-ui",
+    "CARGO_NET_GIT_FETCH_WITH_CLI": "true",
+    "RUSTIFY_DOCS_CARGO": "mbx"
+  },
+  "platform": "macOS-27.0.1-arm64-arm-64bit",
+  "system": "Darwin",
+  "machine": "arm64",
+  "playwright": "1.63.0",
+  "chromium": "153.0.8010.12"
+}

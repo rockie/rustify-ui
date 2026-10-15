@@ -1,0 +1,127 @@
+{
+  "cli": "45878ce31763fe21b9276e563e2920d180787dee",
+  "framework": "7930fd9a978563e76468fef69d14f444159c47b5",
+  "cases": [
+    {
+      "case": "content",
+      "exit_code": 1,
+      "diagnostics": [
+        {
+          "severity": "warning",
+          "rule": "no-git-history",
+          "file": null,
+          "line": null,
+          "column": null,
+          "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+          "suggestion": "build inside a git repository with the content committed"
+        },
+        {
+          "severity": "warning",
+          "rule": "not-in-nav",
+          "file": "content/gaps.md",
+          "line": null,
+          "column": null,
+          "message": "this page is in no navigation group, so readers can only reach it by a link",
+          "suggestion": null
+        },
+        {
+          "severity": "error",
+          "rule": "unregistered-component",
+          "file": "content/gaps.md",
+          "line": 6,
+          "column": 1,
+          "message": "component `MissingCounter` is not registered; add it to site! and configure [rust]",
+          "suggestion": null
+        },
+        {
+          "severity": "error",
+          "rule": "embed-props",
+          "file": "content/gaps.md",
+          "line": 10,
+          "column": 1,
+          "message": "invalid type: string \"wrong-type\", expected a sequence",
+          "suggestion": null
+        },
+        {
+          "severity": "warning",
+          "rule": "missing-site-url",
+          "file": "rustify-docs.toml",
+          "line": null,
+          "column": null,
+          "message": "site.url is not set, so pages have no canonical address or preview image and there is no sitemap",
+          "suggestion": "add `url = \"https://…\"` under [site], the address the site is published at"
+        }
+      ]
+    },
+    {
+      "case": "components",
+      "exit_code": 1,
+      "lock_unchanged": true,
+      "diagnostics": [
+        {
+          "severity": "error",
+          "rule": "rust-generation-changed",
+          "file": null,
+          "line": null,
+          "column": null,
+          "message": "Rust build inputs changed during this generation; discard it and rebuild from the current inputs. 4 file inputs and 10 environment dependencies differ; first 10: added file `/Users/rockie/Library/Caches/mbx/out-dirs/v1/42ea4592e8c2493ac43c65c0e96d890f6bb5c37dde9f843ab6b5fa8d0ba1f06e/private.rs`, added file `/Users/rockie/Library/Caches/mbx/out-dirs/v1/8434857d119812731f0a721ce4d138f16e5cbe93db828d7def8a76ebd28439a0/private.rs`, added file `/Users/rockie/Library/Caches/mbx/out-dirs/v1/9723f9cd972f5fd0cebdd2f1c49cb4289952596c408923f4381d8e065304d894/private.rs`, added file `/Users/rockie/Library/Caches/mbx/out-dirs/v1/bb28ac49c6706234f47eb07ff90bd8fbd00f2f09b5bceee8d588d2709a064c46/version.expr`, added build environment dependency `CARGO_PKG_VERSION`, added build environment dependency `CARGO_PKG_VERSION_PATCH`, added build environment dependency `DISABLE_SERVER_FN_HASH`, added build environment dependency `LEPTOS_OUTPUT_NAME`, added build environment dependency `LEPTOS_WATCH`, added build environment dependency `OUT_DIR`",
+          "suggestion": null
+        },
+        {
+          "severity": "warning",
+          "rule": "no-git-history",
+          "file": null,
+          "line": null,
+          "column": null,
+          "message": "pages show no last-updated date: not a git repository (or any of the parent directories): .git",
+          "suggestion": "build inside a git repository with the content committed"
+        },
+        {
+          "severity": "warning",
+          "rule": "not-in-nav",
+          "file": "content/gaps.md",
+          "line": null,
+          "column": null,
+          "message": "this page is in no navigation group, so readers can only reach it by a link",
+          "suggestion": null
+        },
+        {
+          "severity": "error",
+          "rule": "unregistered-component",
+          "file": "content/gaps.md",
+          "line": 6,
+          "column": 1,
+          "message": "component `MissingCounter` is not registered; add it to site! and configure [rust]",
+          "suggestion": null
+        },
+        {
+          "severity": "error",
+          "rule": "unknown-property",
+          "file": "content/gaps.md",
+          "line": 19,
+          "column": 3,
+          "message": "component `Counter` has no property `unexpected`",
+          "suggestion": null
+        },
+        {
+          "severity": "warning",
+          "rule": "not-in-nav",
+          "file": "content/index.md",
+          "line": null,
+          "column": null,
+          "message": "this page is in no navigation group, so readers can only reach it by a link",
+          "suggestion": null
+        },
+        {
+          "severity": "warning",
+          "rule": "theme-token",
+          "file": "theme.json",
+          "line": null,
+          "column": null,
+          "message": "radius: Light and dark have different author values; editing this common field applies to both",
+          "suggestion": null
+        }
+      ]
+    }
+  ]
+}

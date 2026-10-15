@@ -69,3 +69,5 @@
 | d1b9cc3a-bcc7-44a6-ba1a-475a75ca9611 | implementation / plan（V-13本人验收通过） | [事件](d1b9cc3a-bcc7-44a6-ba1a-475a75ca9611.md) |
 
 | be25503e-5366-4e0a-b44f-14e654388753 | implementation / plan（发布留P4） | [事件](be25503e-5366-4e0a-b44f-14e654388753.md) |
+| 7d76172f-07d1-4156-8455-11d66a3ee973 | implementation / plan（R1修复/C5终验） | [事件](7d76172f-07d1-4156-8455-11d66a3ee973.md) |
+| 6504dd54-592e-4d1c-8444-ec4bdd37e2d8 | implementation/plan（P2覆盖与gaps） | [事件](6504dd54-592e-4d1c-8444-ec4bdd37e2d8.md) |

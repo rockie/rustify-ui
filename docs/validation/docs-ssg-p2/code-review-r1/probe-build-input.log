@@ -1,0 +1,36 @@
+rustc 1.99.0 (b940084d7 2026-09-28)
+dev: pages show no last-updated date: not a git repository (or any of the parent directories): .git
+watching /private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-p2-code-review-wf25bzoq/probe-site; drafts are shown, source and published output are unchanged, stop with Ctrl-C
+dev: host
+dev: wasm
+dev: inputs changed; discarding the candidate and rebuilding
+dev: render
+dev: host
+dev: wasm
+dev: render
+warning[not-in-nav]: this page is in no navigation group, so readers can only reach it by a link
+  --> content/index.md
+warning[missing-site-url]: site.url is not set, so pages have no canonical address or preview image and there is no sitemap
+  --> rustify-docs.toml
+  = help: add `url = "https://…"` under [site], the address the site is published at
+warning[rust-compile]: warning: function `active_class` is never used
+  --> src/demos.rs:34:4
+   |
+34 | fn active_class() -> &'static str {
+   |    ^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+
+  --> src/demos.rs:34:4
+  = help: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+dev: revision 1: 4 page(s) changed, 3 warning(s), 893 ms
+dev: render
+dev: host
+dev: wasm
+dev: inputs changed; discarding the candidate and rebuilding
+dev: render
+dev: host
+dev: wasm
+dev: render
+dev: revision 2: 1 page(s) changed, 3 warning(s), 857 ms

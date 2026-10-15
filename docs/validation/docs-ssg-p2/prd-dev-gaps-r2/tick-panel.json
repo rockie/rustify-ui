@@ -1,0 +1,22 @@
+{
+  "url": "http://127.0.0.1:58654/docs/",
+  "browser": "153.0.8010.12",
+  "cli_repair": "Use one of `initial` (`i32`; default expression `2`), `label` (`String`; default expression `\"a`b\".to_string()`) for `Counter`; rename or remove `unexpected`.",
+  "console": [],
+  "pageErrors": [],
+  "panel_text": "Use one of initial (i32; default expression 2), label (String; default expression \"ab\".to_string()) for Counter; rename or remove unexpected.",
+  "panel_code": [
+    "initial",
+    "i32",
+    "2",
+    "label",
+    "String",
+    "\"a",
+    ") for ",
+    "; rename or remove ",
+    "."
+  ],
+  "faithful_text": "Use one of initial (i32; default expression 2), label (String; default expression \"a`b\".to_string()) for Counter; rename or remove unexpected.",
+  "panel_keeps_literal": false,
+  "panel_equals_faithful": false
+}

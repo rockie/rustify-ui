@@ -1,0 +1,48 @@
+{
+  "binary": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps-installed.eV4AfO/bin/rustify-docs",
+  "sha256": "47486f96ff0985f63d36590d13f5bbd7ddbcbba3d501f40f6f561f00be8c9d7c",
+  "build_info": [
+    "rustify-docs 0.1.17",
+    "panic: unwind",
+    "grammars: syntect-5.3.0+two-face-0.5.2+bat-0.26.1+fancy",
+    "source: 79a77825eadd07207154348ee9ffba48195d7766"
+  ],
+  "docs_passed_by_group": [
+    203,
+    14,
+    17,
+    6,
+    16,
+    1,
+    19,
+    0
+  ],
+  "docs_passed": 276,
+  "environment": {
+    "rustc --version": {
+      "exit": 0,
+      "stdout": "rustc 1.99.0 (b940084d7 2026-09-28)",
+      "stderr": ""
+    },
+    "mbx --version": {
+      "exit": 0,
+      "stdout": "mbx 1.15.0",
+      "stderr": ""
+    },
+    "node --version": {
+      "exit": 0,
+      "stdout": "v26.1.0",
+      "stderr": ""
+    },
+    "python3 --version": {
+      "exit": 0,
+      "stdout": "Python 3.12.13",
+      "stderr": ""
+    },
+    "node -p require(\"@playwright/test/package.json\").version": {
+      "exit": 0,
+      "stdout": "1.63.0",
+      "stderr": ""
+    }
+  }
+}

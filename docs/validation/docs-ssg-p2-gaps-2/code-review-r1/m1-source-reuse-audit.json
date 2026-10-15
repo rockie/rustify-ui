@@ -1,0 +1,35 @@
+{
+  "compared": 28,
+  "matched": [
+    "crates/rustify-docs-cli/src/dev.rs",
+    "crates/rustify-docs-cli/src/links.rs",
+    "crates/rustify-docs-cli/src/main.rs",
+    "crates/rustify-docs-cli/src/new.rs",
+    "crates/rustify-docs-cli/src/preview.rs",
+    "crates/rustify-docs-cli/src/rendering.rs",
+    "crates/rustify-docs-cli/src/rust_site.rs",
+    "crates/rustify-docs-cli/src/rust_source.rs",
+    "crates/rustify-docs-cli/src/theme.rs",
+    "crates/rustify-docs-cli/tests/diagnostic_text.rs",
+    "crates/rustify-docs-syntax/src/lib.rs",
+    "crates/rustify-docs-syntax/tests/registry.rs",
+    "crates/rustify-docs/assets/dev.js",
+    "crates/rustify-docs/src/builtins.rs",
+    "crates/rustify-docs/src/config.rs",
+    "crates/rustify-docs/src/content.rs",
+    "crates/rustify-docs/src/diagnostic_text.rs",
+    "crates/rustify-docs/src/embed.rs",
+    "crates/rustify-docs/src/frontmatter.rs",
+    "crates/rustify-docs/src/generation.rs",
+    "crates/rustify-docs/src/html_check.rs",
+    "crates/rustify-docs/src/include.rs",
+    "crates/rustify-docs/src/lib.rs",
+    "crates/rustify-docs/src/markdown.rs",
+    "crates/rustify-docs/src/publish.rs",
+    "crates/rustify-docs/src/site/registry.rs",
+    "tests/docs-ssg/dev-components.spec.ts"
+  ],
+  "different": [
+    "docs/docs-ssg.md"
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "object_id": "e9ce88ff-9dee-4eee-afc5-eeb044bb2b7e",
+  "observed_at": "2026-10-15T16:39:20+08:00",
+  "events": {
+    "review": "3b1a6b89-1f97-4b5b-b018-40294a3d9e52",
+    "disposition": "2ffb55b2-6ea2-4075-8b5a-821e29c41bfc",
+    "prior_disposition": "932aa5d2-e4c0-4370-b546-b484f6dc03ee"
+  },
+  "report_sha256": "5e089adf7e703266c4a1c3afddb48cd76416dba955a6fa145cee531a5b96621f",
+  "modified_existing_paths": [
+    ".xgent-ai/sdlc/index.md",
+    ".xgent-ai/sdlc/status/review/index.md",
+    ".xgent-ai/sdlc/events/review/index.md",
+    ".xgent-ai/sdlc/status/review/c8480584-6578-4587-972a-8294319685fc.md",
+    ".xgent-ai/sdlc/events/review/c8480584-6578-4587-972a-8294319685fc/index.md",
+    ".xgent-ai/sdlc/status/plan/e9817d55-60e7-4c8f-9abb-4793cc82d5f3.md",
+    ".xgent-ai/sdlc/status/plan/c0c94e42-32f2-4636-ae52-f3df76d4a463.md",
+    ".xgent-ai/sdlc/status/prd/8917bbeb-7add-4826-95ee-5cdf6bdff735.md"
+  ],
+  "before_hashes": {
+    ".xgent-ai/sdlc/index.md": "7183ea3c5da01628b0f52dd0640857cad31c9717494cb02c1de60528ab3c6123",
+    ".xgent-ai/sdlc/status/review/index.md": "f57626efa89c68e373f22eb634365e6adb268279251d5862eacbf546bdf2ca81",
+    ".xgent-ai/sdlc/events/review/index.md": "bb5488bd2449e49642beb89f86beedbbec48ae7fe6438407a5f2670bd3ec8c15",
+    ".xgent-ai/sdlc/status/review/c8480584-6578-4587-972a-8294319685fc.md": "6edf27186dc4848e307f4826ba51c249dad062e3acd15e59b0e69043c1da8021",
+    ".xgent-ai/sdlc/events/review/c8480584-6578-4587-972a-8294319685fc/index.md": "b4c5d43424f97333ed55f7e35098782e0b4d84607bb25e20985b7c3daba00b44",
+    ".xgent-ai/sdlc/status/plan/e9817d55-60e7-4c8f-9abb-4793cc82d5f3.md": "f768a16d521c1a7cbc2e0cef91eefaa89d256810b8db099c67e07b9bb8d34092",
+    ".xgent-ai/sdlc/status/plan/c0c94e42-32f2-4636-ae52-f3df76d4a463.md": "b9564200bf7009b426d4b1eaa963ac2d212565c199c714d2f31c6eaf9a8baf48",
+    ".xgent-ai/sdlc/status/prd/8917bbeb-7add-4826-95ee-5cdf6bdff735.md": "e9ed254690ed1c01d881b90aa1af6d1f5a55c8dd67238993d4cb8b927e98dc8e"
+  },
+  "new_event_paths": [
+    ".xgent-ai/sdlc/events/review/e9ce88ff-9dee-4eee-afc5-eeb044bb2b7e/3b1a6b89-1f97-4b5b-b018-40294a3d9e52.md",
+    ".xgent-ai/sdlc/events/review/e9ce88ff-9dee-4eee-afc5-eeb044bb2b7e/2ffb55b2-6ea2-4075-8b5a-821e29c41bfc.md",
+    ".xgent-ai/sdlc/events/review/c8480584-6578-4587-972a-8294319685fc/932aa5d2-e4c0-4370-b546-b484f6dc03ee.md"
+  ],
+  "new_status_path": ".xgent-ai/sdlc/status/review/e9ce88ff-9dee-4eee-afc5-eeb044bb2b7e.md"
+}

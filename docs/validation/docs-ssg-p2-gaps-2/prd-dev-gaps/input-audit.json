@@ -1,0 +1,353 @@
+{
+  "C": "b31e28b7f7dd949f7dc89ebc7b5f64380adbb63d",
+  "R": "6942ec0d23812ecda61492d9db5c0046f481edfc",
+  "five_files": [
+    "Cargo.lock",
+    "crates/rustify-docs-cli/Cargo.toml",
+    "crates/rustify-docs-cli/assets/components-Cargo.lock",
+    "crates/rustify-docs-cli/assets/framework-revision.txt",
+    "docs/docs-ssg.md"
+  ],
+  "template_records": 193,
+  "updated_sources": [
+    "rustify-components",
+    "rustify-docs",
+    "rustify-docs-macros",
+    "rustify-docs-syntax",
+    "rustify-style",
+    "rustify-ui"
+  ],
+  "unchanged_template_records": 187,
+  "root_lock_changes": [
+    [
+      {
+        "name": "rustify-docs-cli",
+        "version": "0.1.17",
+        "dependencies": [
+          "dom_query",
+          "kqueue",
+          "kqueue-sys",
+          "notify",
+          "proc-macro2",
+          "rustify-docs",
+          "rustify-docs-syntax",
+          "rustify-style",
+          "rustify-ui",
+          "serde_json",
+          "sha2",
+          "syn 2.0.119",
+          "toml",
+          "ureq",
+          "wasm-bindgen-cli-support"
+        ]
+      },
+      {
+        "name": "rustify-docs-cli",
+        "version": "0.1.19",
+        "dependencies": [
+          "dom_query",
+          "kqueue",
+          "kqueue-sys",
+          "notify",
+          "proc-macro2",
+          "rustify-docs",
+          "rustify-docs-syntax",
+          "rustify-style",
+          "rustify-ui",
+          "serde_json",
+          "sha2",
+          "syn 2.0.119",
+          "toml",
+          "ureq",
+          "wasm-bindgen-cli-support"
+        ]
+      }
+    ]
+  ],
+  "current_source_files_equal_C": 55,
+  "source_drift": [],
+  "source_paths": [
+    "crates/rustify-docs-cli/src/compile_proxy.rs",
+    "crates/rustify-docs-cli/src/dev.rs",
+    "crates/rustify-docs-cli/src/links.rs",
+    "crates/rustify-docs-cli/src/main.rs",
+    "crates/rustify-docs-cli/src/new.rs",
+    "crates/rustify-docs-cli/src/preview.rs",
+    "crates/rustify-docs-cli/src/rendering.rs",
+    "crates/rustify-docs-cli/src/report.rs",
+    "crates/rustify-docs-cli/src/rust_site.rs",
+    "crates/rustify-docs-cli/src/rust_source.rs",
+    "crates/rustify-docs-cli/src/theme.rs",
+    "crates/rustify-docs-cli/tests/diagnostic_text.rs",
+    "crates/rustify-docs-syntax/src/lib.rs",
+    "crates/rustify-docs-syntax/src/manifest.rs",
+    "crates/rustify-docs/assets/dev.css",
+    "crates/rustify-docs/assets/dev.js",
+    "crates/rustify-docs/assets/docs.css",
+    "crates/rustify-docs/assets/islands.js",
+    "crates/rustify-docs/assets/mode.js",
+    "crates/rustify-docs/assets/share.png",
+    "crates/rustify-docs/assets/site.js",
+    "crates/rustify-docs/assets/tailwindcss/LICENSE",
+    "crates/rustify-docs/assets/tailwindcss/preflight.css",
+    "crates/rustify-docs/assets/tailwindcss/theme.css",
+    "crates/rustify-docs/src/autolink.rs",
+    "crates/rustify-docs/src/builtins.rs",
+    "crates/rustify-docs/src/classes.rs",
+    "crates/rustify-docs/src/color.rs",
+    "crates/rustify-docs/src/config.rs",
+    "crates/rustify-docs/src/content.rs",
+    "crates/rustify-docs/src/demo.rs",
+    "crates/rustify-docs/src/diagnostic.rs",
+    "crates/rustify-docs/src/diagnostic_text.rs",
+    "crates/rustify-docs/src/embed.rs",
+    "crates/rustify-docs/src/escape.rs",
+    "crates/rustify-docs/src/frontmatter.rs",
+    "crates/rustify-docs/src/generation.rs",
+    "crates/rustify-docs/src/highlight.rs",
+    "crates/rustify-docs/src/history.rs",
+    "crates/rustify-docs/src/html_check.rs",
+    "crates/rustify-docs/src/icons.rs",
+    "crates/rustify-docs/src/imagesize.rs",
+    "crates/rustify-docs/src/include.rs",
+    "crates/rustify-docs/src/labels.rs",
+    "crates/rustify-docs/src/lib.rs",
+    "crates/rustify-docs/src/markdown.rs",
+    "crates/rustify-docs/src/publish.rs",
+    "crates/rustify-docs/src/shell.rs",
+    "crates/rustify-docs/src/site.rs",
+    "crates/rustify-docs/src/site/hydrate.rs",
+    "crates/rustify-docs/src/site/registry.rs",
+    "crates/rustify-docs/src/site/ssr.rs",
+    "crates/rustify-docs/src/slug.rs",
+    "crates/rustify-docs/src/style.rs",
+    "tests/docs-ssg/dev-components.spec.ts"
+  ],
+  "versions": {
+    "docs/PRD-DOCS-SSG.md": "22f4fac99b06a23cda3c34f7ee0c66c11369ccd60a34d71fecee2617aa4c16c1",
+    "docs/plan/DOCS-SSG-P2.md": "0e2b26d03aa30b2a8cc8bf6baa80eb21b0d043a281e8953e4a513ba3c29b921f",
+    "docs/plan/DOCS-SSG-P2-gaps.md": "397a1ebe5129ce66d2a607649c6d44065f87a6252313ad61f6d662723e3000ff",
+    "docs/plan/DOCS-SSG-P2-gaps-2.md": "a8976ea5e9a063f6e8f804287cc39a35fe6962801deacc9889aa7be1778a68e8",
+    "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md": "341778d2179cf441ea175fdfa0dd1d149ecdd71946bc1391d65a494b76041436",
+    "docs/plan/DOCS-SSG-P2.prd-dev-gaps.r2.md": "c1212c1b4088670f27b343ee5712d76202c12c980480c581c22ad18ac80d2085",
+    "docs/plan/DOCS-SSG-P2-gaps-2.records/M1.md": "4fc230e040d599676ccdd8253099f489af8c40fc286fa425c46aa91aca6033d9",
+    "docs/plan/DOCS-SSG-P2-gaps-2.records/M2.md": "4fb6448fb83656e17f46aace828efd8eb85cd1cd36cd5d284dfee9bfeefdc5aa",
+    "docs/plan/DOCS-SSG-P2-gaps-2.code-review.md": "57349a6152eaee15c32b75679a60549086fc6929d6668f0fbd5fe5cf7b4d970a",
+    "docs/plan/DOCS-SSG-P2-gaps-2.code-review.r2.md": "480f03007a44c0f22e20a8c5f8061772cdbd1b34054ec70d25b1ad869ccfd58f"
+  },
+  "historical_checks": [
+    {
+      "name": "fmt",
+      "exit": 0,
+      "raw_results": []
+    },
+    {
+      "name": "docs-tests",
+      "exit": 0,
+      "raw_results": [
+        [
+          "204",
+          "0",
+          "0"
+        ],
+        [
+          "14",
+          "0",
+          "0"
+        ],
+        [
+          "17",
+          "0",
+          "0"
+        ],
+        [
+          "6",
+          "0",
+          "0"
+        ],
+        [
+          "16",
+          "0",
+          "0"
+        ],
+        [
+          "1",
+          "0",
+          "0"
+        ],
+        [
+          "19",
+          "0",
+          "0"
+        ],
+        [
+          "0",
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "name": "cli-tests",
+      "exit": 0,
+      "raw_results": [
+        [
+          "74",
+          "0",
+          "1"
+        ],
+        [
+          "13",
+          "0",
+          "0"
+        ],
+        [
+          "16",
+          "0",
+          "0"
+        ],
+        [
+          "2",
+          "0",
+          "0"
+        ],
+        [
+          "15",
+          "0",
+          "0"
+        ],
+        [
+          "6",
+          "0",
+          "0"
+        ],
+        [
+          "2",
+          "0",
+          "0"
+        ],
+        [
+          "9",
+          "0",
+          "0"
+        ],
+        [
+          "6",
+          "0",
+          "0"
+        ],
+        [
+          "5",
+          "0",
+          "0"
+        ],
+        [
+          "7",
+          "0",
+          "0"
+        ],
+        [
+          "3",
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "name": "syntax-tests",
+      "exit": 0,
+      "raw_results": [
+        [
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "30",
+          "0",
+          "0"
+        ],
+        [
+          "1",
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "name": "ssr-tests",
+      "exit": 0,
+      "raw_results": [
+        [
+          "10",
+          "0",
+          "0"
+        ],
+        [
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "1",
+          "0",
+          "0"
+        ],
+        [
+          "19",
+          "0",
+          "0"
+        ],
+        [
+          "0",
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "name": "ssr-clippy",
+      "exit": 0,
+      "raw_results": []
+    },
+    {
+      "name": "hydrate-check",
+      "exit": 0,
+      "raw_results": []
+    },
+    {
+      "name": "ssr-features",
+      "exit": 0,
+      "raw_results": []
+    },
+    {
+      "name": "hydrate-features",
+      "exit": 0,
+      "raw_results": []
+    },
+    {
+      "name": "docs-clippy",
+      "exit": 0,
+      "raw_results": []
+    },
+    {
+      "name": "cli-clippy",
+      "exit": 0,
+      "raw_results": []
+    },
+    {
+      "name": "cli-build",
+      "exit": 0,
+      "raw_results": []
+    },
+    {
+      "name": "m1-browser",
+      "exit": 0,
+      "raw_results": []
+    }
+  ],
+  "r_double_prime_to_current_producer_changes": [
+    "crates/rustify-docs/src/frontmatter.rs"
+  ],
+  "head_to_C_product_diff": []
+}

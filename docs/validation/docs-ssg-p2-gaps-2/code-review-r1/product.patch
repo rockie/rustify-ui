@@ -1,0 +1,3081 @@
+diff --git a/Cargo.lock b/Cargo.lock
+index 52f4f9fd..6dd42eb4 100644
+--- a/Cargo.lock
++++ b/Cargo.lock
+@@ -2454,7 +2454,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "rustify-docs-cli"
+-version = "0.1.17"
++version = "0.1.18"
+ dependencies = [
+  "dom_query",
+  "kqueue",
+diff --git a/crates/rustify-docs-cli/Cargo.toml b/crates/rustify-docs-cli/Cargo.toml
+index 61c4ca7a..64c4166c 100644
+--- a/crates/rustify-docs-cli/Cargo.toml
++++ b/crates/rustify-docs-cli/Cargo.toml
+@@ -3,7 +3,7 @@ name = "rustify-docs-cli"
+ # Its own version, not the workspace's: it changes whenever the binary's
+ # sources, embedded assets or resolved dependencies change, and both
+ # `--version` and a production manifest's `cli_version` report it.
+-version = "0.1.17"
++version = "0.1.18"
+ edition.workspace = true
+ license.workspace = true
+ publish.workspace = true
+diff --git a/crates/rustify-docs-cli/assets/components-Cargo.lock b/crates/rustify-docs-cli/assets/components-Cargo.lock
+index 38ba24ba..1e3eccaa 100644
+--- a/crates/rustify-docs-cli/assets/components-Cargo.lock
++++ b/crates/rustify-docs-cli/assets/components-Cargo.lock
+@@ -1188,7 +1188,7 @@ dependencies = [
+ [[package]]
+ name = "rustify-components"
+ version = "0.1.0"
+-source = "git+https://github.com/rockie/rustify-ui?rev=745ba6b720aa6ed042dcf5d4f763641fc2d05165#745ba6b720aa6ed042dcf5d4f763641fc2d05165"
++source = "git+https://github.com/rockie/rustify-ui?rev=e20daf7f07179d2bd24700c345f577fb9c8dbc15#e20daf7f07179d2bd24700c345f577fb9c8dbc15"
+ dependencies = [
+  "js-sys",
+  "leptos",
+@@ -1201,7 +1201,7 @@ dependencies = [
+ [[package]]
+ name = "rustify-docs"
+ version = "0.1.0"
+-source = "git+https://github.com/rockie/rustify-ui?rev=745ba6b720aa6ed042dcf5d4f763641fc2d05165#745ba6b720aa6ed042dcf5d4f763641fc2d05165"
++source = "git+https://github.com/rockie/rustify-ui?rev=e20daf7f07179d2bd24700c345f577fb9c8dbc15#e20daf7f07179d2bd24700c345f577fb9c8dbc15"
+ dependencies = [
+  "any_spawner",
+  "hydration_context",
+@@ -1219,7 +1219,7 @@ dependencies = [
+ [[package]]
+ name = "rustify-docs-macros"
+ version = "0.1.0"
+-source = "git+https://github.com/rockie/rustify-ui?rev=745ba6b720aa6ed042dcf5d4f763641fc2d05165#745ba6b720aa6ed042dcf5d4f763641fc2d05165"
++source = "git+https://github.com/rockie/rustify-ui?rev=e20daf7f07179d2bd24700c345f577fb9c8dbc15#e20daf7f07179d2bd24700c345f577fb9c8dbc15"
+ dependencies = [
+  "proc-macro2",
+  "quote",
+@@ -1231,7 +1231,7 @@ dependencies = [
+ [[package]]
+ name = "rustify-docs-syntax"
+ version = "0.1.0"
+-source = "git+https://github.com/rockie/rustify-ui?rev=745ba6b720aa6ed042dcf5d4f763641fc2d05165#745ba6b720aa6ed042dcf5d4f763641fc2d05165"
++source = "git+https://github.com/rockie/rustify-ui?rev=e20daf7f07179d2bd24700c345f577fb9c8dbc15#e20daf7f07179d2bd24700c345f577fb9c8dbc15"
+ dependencies = [
+  "proc-macro2",
+  "quote",
+@@ -1242,7 +1242,7 @@ dependencies = [
+ [[package]]
+ name = "rustify-style"
+ version = "0.1.0"
+-source = "git+https://github.com/rockie/rustify-ui?rev=745ba6b720aa6ed042dcf5d4f763641fc2d05165#745ba6b720aa6ed042dcf5d4f763641fc2d05165"
++source = "git+https://github.com/rockie/rustify-ui?rev=e20daf7f07179d2bd24700c345f577fb9c8dbc15#e20daf7f07179d2bd24700c345f577fb9c8dbc15"
+ dependencies = [
+  "flate2",
+  "regex",
+@@ -1254,7 +1254,7 @@ dependencies = [
+ [[package]]
+ name = "rustify-ui"
+ version = "0.1.0"
+-source = "git+https://github.com/rockie/rustify-ui?rev=745ba6b720aa6ed042dcf5d4f763641fc2d05165#745ba6b720aa6ed042dcf5d4f763641fc2d05165"
++source = "git+https://github.com/rockie/rustify-ui?rev=e20daf7f07179d2bd24700c345f577fb9c8dbc15#e20daf7f07179d2bd24700c345f577fb9c8dbc15"
+ dependencies = [
+  "js-sys",
+  "leptos",
+diff --git a/crates/rustify-docs-cli/assets/framework-revision.txt b/crates/rustify-docs-cli/assets/framework-revision.txt
+index e949a691..0c3d2b10 100644
+--- a/crates/rustify-docs-cli/assets/framework-revision.txt
++++ b/crates/rustify-docs-cli/assets/framework-revision.txt
+@@ -1 +1 @@
+-745ba6b720aa6ed042dcf5d4f763641fc2d05165
++e20daf7f07179d2bd24700c345f577fb9c8dbc15
+diff --git a/crates/rustify-docs-cli/src/dev.rs b/crates/rustify-docs-cli/src/dev.rs
+index 782258d0..cd9201ba 100644
+--- a/crates/rustify-docs-cli/src/dev.rs
++++ b/crates/rustify-docs-cli/src/dev.rs
+@@ -19,6 +19,7 @@
+ //! whose lock is never taken, so `build` can run alongside. The server
+ //! listens on the loopback interface only.
+ 
++use rustify_docs::diagnostic_text::literal;
+ use std::collections::{BTreeMap, BTreeSet, HashMap};
+ use std::io::{BufRead, BufReader, Write};
+ use std::net::{TcpListener, TcpStream};
+@@ -1045,7 +1046,7 @@ pub fn run(options: Options) -> ExitCode {
+     let root = crate::project_root(&options.config);
+     let root = match std::fs::canonicalize(&root) {
+         Ok(root) => root,
+-        Err(error) => return fail(format!("{}: {error}", root.display())),
++        Err(error) => return fail(format!("{}: {error}", literal(&root.display().to_string()))),
+     };
+     let config = match options.config.file_name() {
+         Some(name) => root.join(name),
+@@ -1059,7 +1060,7 @@ pub fn run(options: Options) -> ExitCode {
+             }
+             return fail(format!(
+                 "{} has errors; fix them and run dev again",
+-                config.display()
++                literal(&config.display().to_string())
+             ));
+         }
+     };
+@@ -1098,12 +1099,20 @@ pub fn run(options: Options) -> ExitCode {
+             }
+         }) {
+             Ok(watcher) => watcher,
+-            Err(error) => return fail(format!("cannot watch {}: {error}", root.display())),
++            Err(error) => {
++                return fail(format!(
++                    "cannot watch {}: {error}",
++                    literal(&root.display().to_string())
++                ))
++            }
+         };
+     if let Err(error) =
+         notify::Watcher::watch(&mut watcher, &root, notify::RecursiveMode::Recursive)
+     {
+-        return fail(format!("cannot watch {}: {error}", root.display()));
++        return fail(format!(
++            "cannot watch {}: {error}",
++            literal(&root.display().to_string())
++        ));
+     }
+     let watcher = Arc::new(Mutex::new(watcher));
+     let watched = Arc::new(Mutex::new(BTreeSet::from([root.clone()])));
+@@ -1212,7 +1221,7 @@ pub fn run(options: Options) -> ExitCode {
+     let host = "127.0.0.1";
+     let listener = match options.port {
+         Some(port) => TcpListener::bind((host, port))
+-            .map_err(|error| format!("cannot listen on {host}:{port}: {error}")),
++            .map_err(|error| format!("cannot listen on {}:{port}: {error}", literal(host))),
+         None => crate::preview::bind(host, None, project.config.dev_port),
+     };
+     let listener = match listener {
+diff --git a/crates/rustify-docs-cli/src/links.rs b/crates/rustify-docs-cli/src/links.rs
+index 22443874..6ce925bb 100644
+--- a/crates/rustify-docs-cli/src/links.rs
++++ b/crates/rustify-docs-cli/src/links.rs
+@@ -9,6 +9,7 @@
+ //! address is written: a link that could not be checked is not reported as
+ //! working.
+ 
++use rustify_docs::diagnostic_text::code_span;
+ use std::collections::BTreeMap;
+ use std::ops::Range;
+ use std::time::Duration;
+@@ -143,15 +144,19 @@ pub fn check(
+     for (url, answer) in addresses.iter().zip(answers) {
+         let issue = |span: Range<usize>| match &answer {
+             Answer::Status(code) if *code >= 400 => Some(
+-                Issue::error(span, "external-link", format!("`{url}` answered {code}"))
+-                    .suggest("fix the address or remove the link"),
++                Issue::error(
++                    span,
++                    "external-link",
++                    format!("{} answered {code}", code_span(url)),
++                )
++                .suggest("fix the address or remove the link"),
+             ),
+             Answer::Status(_) => None,
+             Answer::Unreachable(reason) => Some(
+                 Issue::error(
+                     span,
+                     "external-link-unreachable",
+-                    format!("`{url}` could not be checked: {reason}"),
++                    format!("{} could not be checked: {reason}", code_span(url)),
+                 )
+                 .suggest(
+                     "check the address and the network, or run check without --external-links",
+diff --git a/crates/rustify-docs-cli/src/main.rs b/crates/rustify-docs-cli/src/main.rs
+index 99bb5952..09e66c14 100644
+--- a/crates/rustify-docs-cli/src/main.rs
++++ b/crates/rustify-docs-cli/src/main.rs
+@@ -1,5 +1,6 @@
+ //! The `rustify-docs` command.
+ 
++use rustify_docs::diagnostic_text::{code_span, literal};
+ use std::collections::BTreeMap;
+ use std::path::{Path, PathBuf};
+ use std::process::ExitCode;
+@@ -201,11 +202,14 @@ impl Args {
+             } else if let Some(&known) = flags.iter().find(|known| **known == arg) {
+                 parsed.flags.push(known);
+             } else if arg.starts_with('-') && arg != "-" {
+-                return Err(format!("`{arg}` is not an option of this command"));
++                return Err(format!(
++                    "{} is not an option of this command",
++                    code_span(arg)
++                ));
+             } else if parsed.positional.len() < positional {
+                 parsed.positional.push(arg.to_owned());
+             } else {
+-                return Err(format!("unexpected argument `{arg}`"));
++                return Err(format!("unexpected argument {}", code_span(arg)));
+             }
+             i += 1;
+         }
+@@ -224,7 +228,7 @@ impl Args {
+         match self.get("--format").unwrap_or("text") {
+             "text" => Ok(Format::Text),
+             "json" => Ok(Format::Json),
+-            other => Err(format!("--format {other}: use text or json")),
++            other => Err(format!("--format {}: use text or json", literal(other))),
+         }
+     }
+ 
+@@ -581,7 +585,10 @@ fn build(args: &[String]) -> ExitCode {
+     }
+     if let Some(parent) = out.parent() {
+         if let Err(error) = std::fs::create_dir_all(parent) {
+-            return refuse("output", format!("{}: {error}", parent.display()));
++            return refuse(
++                "output",
++                format!("{}: {error}", literal(&parent.display().to_string())),
++            );
+         }
+     }
+     let area = match Area::of(&out) {
+@@ -595,7 +602,7 @@ fn build(args: &[String]) -> ExitCode {
+                 "output-busy",
+                 format!(
+                     "{} is in use by another build or a preview; stop it and build again",
+-                    area.out.display()
++                    literal(&area.out.display().to_string())
+                 ),
+             )
+         }
+@@ -758,14 +765,14 @@ fn preview(args: &[String]) -> ExitCode {
+                     "preview",
+                     format!(
+                         "{} is being built; preview it when the build ends",
+-                        area.out.display()
++                        literal(&area.out.display().to_string())
+                     ),
+                 ),
+                 _ => fail(
+                     "preview",
+                     format!(
+                         "a build of {} stopped half-way; run `rustify-docs build` to recover it",
+-                        area.out.display()
++                        literal(&area.out.display().to_string())
+                     ),
+                 ),
+             };
+@@ -784,9 +791,9 @@ fn preview(args: &[String]) -> ExitCode {
+         return fail(
+             "preview",
+             format!(
+-                "{} is a `{}` output; preview serves production builds only",
+-                dir.display(),
+-                manifest.mode
++                "{} is a {} output; preview serves production builds only",
++                literal(&dir.display().to_string()),
++                code_span(&manifest.mode)
+             ),
+         );
+     }
+@@ -800,7 +807,7 @@ fn preview(args: &[String]) -> ExitCode {
+                 "preview",
+                 format!(
+                     "the output was built for base {}, not {wanted}; build again with --base {wanted}, or preview with --base {}",
+-                    manifest.base, manifest.base
++                    literal(&manifest.base), literal(&manifest.base), wanted = literal(&wanted)
+                 ),
+             );
+         }
+@@ -816,7 +823,7 @@ fn preview(args: &[String]) -> ExitCode {
+                 "preview",
+                 format!(
+                     "{} is being built; preview it when the build ends",
+-                    area.out.display()
++                    literal(&area.out.display().to_string())
+                 ),
+             )
+         }
+@@ -827,7 +834,7 @@ fn preview(args: &[String]) -> ExitCode {
+             "preview",
+             format!(
+                 "a build of {} stopped half-way; run `rustify-docs build` to recover it",
+-                area.out.display()
++                literal(&area.out.display().to_string())
+             ),
+         );
+     }
+@@ -919,6 +926,6 @@ fn main() -> ExitCode {
+         Some("preview") => preview(&args[1..]),
+         Some("new") => new_site(&args[1..]),
+         Some("dev") => dev(&args[1..]),
+-        Some(other) => usage(format!("unknown command `{other}`")),
++        Some(other) => usage(format!("unknown command {}", code_span(other))),
+     }
+ }
+diff --git a/crates/rustify-docs-cli/src/new.rs b/crates/rustify-docs-cli/src/new.rs
+index 4b9dd17f..1888bf13 100644
+--- a/crates/rustify-docs-cli/src/new.rs
++++ b/crates/rustify-docs-cli/src/new.rs
+@@ -6,6 +6,7 @@
+ //! failure leaves nothing behind and an existing directory is never written
+ //! into.
+ 
++use rustify_docs::diagnostic_text::{code_span, literal};
+ use std::path::{Path, PathBuf};
+ use std::process::Command;
+ 
+@@ -252,7 +253,8 @@ pub fn run(dir: &Path, template: &str) -> Result<String, String> {
+         "components" => (COMPONENTS, doctor_components()?),
+         _ => {
+             return Err(format!(
+-                "template `{template}` is not in this release; choose `content` or `components`"
++                "template {} is not in this release; choose `content` or `components`",
++                code_span(template)
+             ));
+         }
+     };
+@@ -264,26 +266,41 @@ pub fn run(dir: &Path, template: &str) -> Result<String, String> {
+         .file_name()
+         .and_then(|name| name.to_str())
+         .filter(|name| !name.is_empty())
+-        .ok_or_else(|| format!("{} does not end in a directory name", dir.display()))?
++        .ok_or_else(|| {
++            format!(
++                "{} does not end in a directory name",
++                literal(&dir.display().to_string())
++            )
++        })?
+         .to_owned();
+     let parent = match dir.parent() {
+         Some(parent) if !parent.as_os_str().is_empty() => parent.to_path_buf(),
+         _ => PathBuf::from("."),
+     };
+     if !parent.is_dir() {
+-        return Err(format!("{} does not exist", parent.display()));
++        return Err(format!(
++            "{} does not exist",
++            literal(&parent.display().to_string())
++        ));
+     }
+     let existed = match std::fs::symlink_metadata(dir) {
+         Ok(meta) if meta.is_dir() => {
+-            if !is_empty_dir(dir).map_err(|e| format!("{}: {e}", dir.display()))? {
++            if !is_empty_dir(dir)
++                .map_err(|e| format!("{}: {e}", literal(&dir.display().to_string())))?
++            {
+                 return Err(format!(
+                     "{} is not empty; `new` only writes into a new or empty directory",
+-                    dir.display()
++                    literal(&dir.display().to_string())
+                 ));
+             }
+             true
+         }
+-        Ok(_) => return Err(format!("{} exists and is not a directory", dir.display())),
++        Ok(_) => {
++            return Err(format!(
++                "{} exists and is not a directory",
++                literal(&dir.display().to_string())
++            ))
++        }
+         Err(_) => false,
+     };
+ 
+@@ -321,7 +338,10 @@ pub fn run(dir: &Path, template: &str) -> Result<String, String> {
+         if existed && !dir.exists() {
+             let _ = std::fs::create_dir(dir);
+         }
+-        return Err(format!("writing {}: {error}", dir.display()));
++        return Err(format!(
++            "writing {}: {error}",
++            literal(&dir.display().to_string())
++        ));
+     }
+     Ok(version)
+ }
+diff --git a/crates/rustify-docs-cli/src/preview.rs b/crates/rustify-docs-cli/src/preview.rs
+index 6c50714e..5e87fb27 100644
+--- a/crates/rustify-docs-cli/src/preview.rs
++++ b/crates/rustify-docs-cli/src/preview.rs
+@@ -9,6 +9,7 @@
+ //! holds the output's lock shared, so a build of the same output is refused
+ //! instead of swapping files under it.
+ 
++use rustify_docs::diagnostic_text::{code_span, literal};
+ use std::io::{BufRead, BufReader, Write};
+ use std::net::{SocketAddr, TcpListener, TcpStream};
+ use std::path::{Path, PathBuf};
+@@ -231,16 +232,16 @@ pub fn bind(host: &str, port: Option<u16>, default: u16) -> Result<TcpListener,
+             format!("{host}:{port}")
+         };
+         text.parse()
+-            .map_err(|_| format!("`{host}` is not an IP address to listen on"))
++            .map_err(|_| format!("{} is not an IP address to listen on", code_span(host)))
+     };
+     match port {
+         Some(port) => TcpListener::bind(address(port)?)
+-            .map_err(|error| format!("cannot listen on {host}:{port}: {error}")),
++            .map_err(|error| format!("cannot listen on {}:{port}: {error}", literal(host))),
+         None => {
+             let (default, any) = (address(default)?, address(0)?);
+             TcpListener::bind(default)
+                 .or_else(|_| TcpListener::bind(any))
+-                .map_err(|error| format!("cannot listen on {host}: {error}"))
++                .map_err(|error| format!("cannot listen on {}: {error}", literal(host)))
+         }
+     }
+ }
+diff --git a/crates/rustify-docs-cli/src/rendering.rs b/crates/rustify-docs-cli/src/rendering.rs
+index 578e90ac..04b04ebf 100644
+--- a/crates/rustify-docs-cli/src/rendering.rs
++++ b/crates/rustify-docs-cli/src/rendering.rs
+@@ -5,6 +5,7 @@ use rustify_docs::content::{
+     self, Analysis, Diagnostic, FragmentCache, Page, Project, RegisteredPage, Snapshot, Surfaces,
+ };
+ use rustify_docs::diagnostic::{LineIndex, Severity};
++use rustify_docs::diagnostic_text::{code_span, literal};
+ use rustify_docs::embed::{self, Kind, Owner};
+ use rustify_docs::generation::{self, Extensions};
+ use rustify_docs::highlight::Highlighter;
+@@ -448,7 +449,7 @@ fn render_surfaces(
+                 file,
+                 Severity::Error,
+                 &error.code,
+-                format!("{route}: {}", error.message),
++                format!("{}: {}", literal(route), error.message),
+             ));
+         }
+         let Some(mut html) = result.html else {
+@@ -467,7 +468,8 @@ fn render_surfaces(
+                     Severity::Error,
+                     "markdown-intro-marker",
+                     format!(
+-                        "{route}: the Markdown introduction placeholder is missing or duplicated"
++                        "{}: the Markdown introduction placeholder is missing or duplicated",
++                        literal(route)
+                     ),
+                 ));
+                 continue;
+@@ -524,8 +526,9 @@ fn render_surfaces(
+                     Severity::Error,
+                     "embed-marker",
+                     format!(
+-                        "{route}: the nested demo placeholder `{}` is missing or duplicated",
+-                        demo.key
++                        "{}: the nested demo placeholder {} is missing or duplicated",
++                        literal(route),
++                        code_span(&demo.key)
+                     ),
+                 ));
+                 continue;
+@@ -592,8 +595,8 @@ fn preflight(
+                         Severity::Error,
+                         "reserved-component",
+                         format!(
+-                            "`{}` is a builtin component name; choose another registration name",
+-                            component.name
++                            "{} is a builtin component name; choose another registration name",
++                            code_span(&component.name)
+                         ),
+                     )
+                     .with_suggestion(embed::reserved_component(&component.name)),
+@@ -625,7 +628,7 @@ fn preflight(
+                             embed,
+                             None,
+                             "unregistered-demo",
+-                            format!("demo `{name}` is not registered in site!"),
++                            format!("demo {} is not registered in site!", code_span(name)),
+                         )
+                         .with_suggestion(embed::unregistered_demo(&names)),
+                     );
+@@ -647,7 +650,7 @@ fn preflight(
+                                 embed,
+                                 None,
+                                 "unregistered-component",
+-                                format!("component `{name}` is not registered; add it to site! and configure [rust]"),
++                                format!("component {} is not registered; add it to site! and configure [rust]", code_span(name)),
+                             )
+                             .with_suggestion(embed::unregistered_component(&names)),
+                         );
+@@ -670,7 +673,11 @@ fn preflight(
+                                     embed,
+                                     Some(property),
+                                     "unknown-property",
+-                                    format!("component `{name}` has no property `{property}`"),
++                                    format!(
++                                        "component {} has no property {}",
++                                        code_span(name),
++                                        code_span(property)
++                                    ),
+                                 )
+                                 .with_suggestion(repair),
+                             );
+diff --git a/crates/rustify-docs-cli/src/rust_site.rs b/crates/rustify-docs-cli/src/rust_site.rs
+index 77582596..15acfae0 100644
+--- a/crates/rustify-docs-cli/src/rust_site.rs
++++ b/crates/rustify-docs-cli/src/rust_site.rs
+@@ -3,6 +3,7 @@
+ use crate::rust_source::{DemoSource, Resolver};
+ use rustify_docs::content::{Diagnostic, Project};
+ use rustify_docs::diagnostic::{Issue, Severity};
++use rustify_docs::diagnostic_text::{code_span, literal};
+ use rustify_docs::site::{
+     Description, HelperOperation, HelperRequest, HelperResponse, HelperResult, RenderRequest,
+     RenderResult, SiteEnvironment, PROTOCOL_VERSION,
+@@ -529,7 +530,7 @@ pub(super) fn prepare_checked_with(
+                 candidates.extend(product_class_candidates(text).map_err(|error| {
+                     format!(
+                         "cannot scan compiled Rust class source {}: {error}",
+-                        path.display()
++                        literal(&path.display().to_string())
+                     )
+                 })?);
+             }
+@@ -543,7 +544,8 @@ pub(super) fn prepare_checked_with(
+             }
+             if files.insert(path.clone(), bytes).is_some() {
+                 return Err(format!(
+-                    "framework runtime resource conflicts with generated binding `{path}`"
++                    "framework runtime resource conflicts with generated binding {}",
++                    code_span(&path)
+                 ));
+             }
+         }
+@@ -743,7 +745,8 @@ fn validate_framework(metadata: &Metadata, expected: &str) -> Result<(), String>
+             .collect();
+         let [package] = matches.as_slice() else {
+             return Err(format!(
+-                "Cargo.toml/Cargo.lock must resolve one direct `{name}` dependency. {PAIR_ADVICE}"
++                "Cargo.toml/Cargo.lock must resolve one direct {} dependency. {PAIR_ADVICE}",
++                code_span(name)
+             ));
+         };
+         framework.push(*package);
+@@ -761,7 +764,7 @@ fn validate_framework(metadata: &Metadata, expected: &str) -> Result<(), String>
+             let requested = source.split_once('?').and_then(|(_, query)| query.split('#').next())
+                 .and_then(|query| query.split('&').find_map(|part| part.strip_prefix("rev="))).unwrap_or("");
+             if expected.is_empty() || resolved != expected || requested != expected {
+-                return Err(format!("Cargo.toml/Cargo.lock framework revision does not match this CLI's explicit expected revision `{expected}`. {PAIR_ADVICE}"));
++                return Err(format!("Cargo.toml/Cargo.lock framework revision does not match this CLI's explicit expected revision {}. {PAIR_ADVICE}", code_span(expected)));
+             }
+         }
+         None if expected.is_empty() => {
+@@ -1149,7 +1152,7 @@ fn compiled_sources(message: &Value, package_root: &Path) -> Result<BTreeSet<Pat
+         let text = fs::read_to_string(&path).map_err(|error| {
+             format!(
+                 "cannot read compiled Rust dep-info {}: {error}",
+-                path.display()
++                literal(&path.display().to_string())
+             )
+         })?;
+         for source in dep_info_paths(&text) {
+@@ -1162,7 +1165,7 @@ fn compiled_sources(message: &Value, package_root: &Path) -> Result<BTreeSet<Pat
+         }
+     }
+     if !found {
+-        return Err(format!("Cargo did not leave dep-info for compiled local target `{}`; class scanning needs its actual source set", message.pointer("/target/name").and_then(Value::as_str).unwrap_or("unknown")));
++        return Err(format!("Cargo did not leave dep-info for compiled local target {}; class scanning needs its actual source set", code_span(message.pointer("/target/name").and_then(Value::as_str).unwrap_or("unknown"))));
+     }
+     Ok(sources)
+ }
+@@ -1548,8 +1551,8 @@ fn validate_description(
+         }
+         if digest(resource.content.as_bytes()) != resource.sha256 {
+             return Err(format!(
+-                "framework resource `{}` does not match its SHA-256",
+-                resource.path
++                "framework resource {} does not match its SHA-256",
++                code_span(&resource.path)
+             ));
+         }
+         if resources
+@@ -1576,7 +1579,7 @@ fn validate_demo_names(results: &[RenderResult], manifest: &Manifest) -> Result<
+                 .iter()
+                 .any(|declared| declared.name == demo.name)
+         {
+-            return Err(format!("docs-render returned HTML for undeclared nested demo `{}`; discard the entire generation", demo.name));
++            return Err(format!("docs-render returned HTML for undeclared nested demo {}; discard the entire generation", code_span(&demo.name)));
+         }
+     }
+     Ok(())
+@@ -1591,7 +1594,7 @@ fn manifest_mismatch(cold: &Value, compiled: &Value, path: &str) -> Option<Strin
+             for (key, expected) in cold {
+                 let path = format!("{path}.{key}");
+                 let Some(received) = compiled.get(key) else {
+-                    return Some(format!("{path}: missing compiled field"));
++                    return Some(format!("{}: missing compiled field", literal(&path)));
+                 };
+                 if let Some(difference) = manifest_mismatch(expected, received, &path) {
+                     return Some(difference);
+@@ -1600,7 +1603,12 @@ fn manifest_mismatch(cold: &Value, compiled: &Value, path: &str) -> Option<Strin
+             compiled
+                 .keys()
+                 .find(|key| !cold.contains_key(*key))
+-                .map(|key| format!("{path}.{key}: unexpected compiled field"))
++                .map(|key| {
++                    format!(
++                        "{}: unexpected compiled field",
++                        literal(&format!("{path}.{key}"))
++                    )
++                })
+         }
+         (Value::Array(cold), Value::Array(compiled)) if cold.len() == compiled.len() => cold
+             .iter()
+@@ -1619,9 +1627,10 @@ fn manifest_mismatch(cold: &Value, compiled: &Value, path: &str) -> Option<Strin
+                 bounded
+             };
+             Some(format!(
+-                "{path}: cold {}, compiled {}",
+-                bounded(cold),
+-                bounded(compiled)
++                "{}: cold {}, compiled {}",
++                literal(path),
++                literal(&bounded(cold)),
++                literal(&bounded(compiled))
+             ))
+         }
+     }
+@@ -2275,7 +2284,7 @@ fn required_string<'a>(value: &'a Value, field: &str) -> Result<&'a str, String>
+     value
+         .get(field)
+         .and_then(Value::as_str)
+-        .ok_or_else(|| format!("Cargo metadata is missing `{field}`"))
++        .ok_or_else(|| format!("Cargo metadata is missing {}", code_span(field)))
+ }
+ fn project_path(root: &Path, relative: &str) -> Result<PathBuf, String> {
+     let path = fs::canonicalize(root.join(relative))
+@@ -2310,7 +2319,7 @@ fn input_changes(before: &InputSnapshot, after: &InputSnapshot, root: &Path) ->
+                 _ => "changed",
+             };
+             let display = path.strip_prefix(root).unwrap_or(path).to_string_lossy();
+-            examples.push(format!("{kind} file `{display}`"));
++            examples.push(format!("{kind} file {}", code_span(&display)));
+         }
+     }
+     let keys: BTreeSet<_> = before
+@@ -2332,7 +2341,10 @@ fn input_changes(before: &InputSnapshot, after: &InputSnapshot, root: &Path) ->
+                 (Some(_), None) => "removed",
+                 _ => "changed",
+             };
+-            examples.push(format!("{kind} build environment dependency `{key}`"));
++            examples.push(format!(
++                "{kind} build environment dependency {}",
++                code_span(key)
++            ));
+         }
+     }
+     let details = if examples.is_empty() {
+diff --git a/crates/rustify-docs-cli/src/rust_source.rs b/crates/rustify-docs-cli/src/rust_source.rs
+index 0b813504..a88418d0 100644
+--- a/crates/rustify-docs-cli/src/rust_source.rs
++++ b/crates/rustify-docs-cli/src/rust_source.rs
+@@ -1,5 +1,6 @@
+ //! Finds a registered demo's direct source definition without rewriting it.
+ 
++use rustify_docs::diagnostic_text::{code_span, literal};
+ use sha2::{Digest, Sha256};
+ use std::collections::BTreeMap;
+ use std::fs;
+@@ -139,16 +140,20 @@ impl Resolver {
+         let text = match &self.snapshot {
+             Some(files) => match files.get(&canonical) {
+                 Some(bytes) => std::str::from_utf8(bytes)
+-                    .map_err(|error| format!("{path}: cannot read UTF-8 Rust source: {error}"))?
++                    .map_err(|error| {
++                        format!("{}: cannot read UTF-8 Rust source: {error}", literal(&path))
++                    })?
+                     .to_string(),
+-                None => fs::read_to_string(&canonical)
+-                    .map_err(|error| format!("{path}: cannot read UTF-8 Rust source: {error}"))?,
++                None => fs::read_to_string(&canonical).map_err(|error| {
++                    format!("{}: cannot read UTF-8 Rust source: {error}", literal(&path))
++                })?,
+             },
+-            None => fs::read_to_string(&canonical)
+-                .map_err(|error| format!("{path}: cannot read UTF-8 Rust source: {error}"))?,
++            None => fs::read_to_string(&canonical).map_err(|error| {
++                format!("{}: cannot read UTF-8 Rust source: {error}", literal(&path))
++            })?,
+         };
+         let syntax = syn::parse_file(&text)
+-            .map_err(|error| format!("{path}: cannot parse Rust source: {error}"))?;
++            .map_err(|error| format!("{}: cannot parse Rust source: {error}", literal(&path)))?;
+         // syn removes the BOM and shebang before parsing. Restore their byte
+         // offset so spans still address the original, unmodified file.
+         let parse_offset = usize::from(text.starts_with('\u{feff}')) * '\u{feff}'.len_utf8()
+@@ -183,8 +188,8 @@ impl Resolver {
+                 .collect();
+             return match functions.as_slice() {
+                 [function] => source.function(function),
+-                [] => Err(format!("{}: cannot locate a direct free function named `{name}`; re-exported, generated and external functions need a direct source function path", source.path)),
+-                _ => Err(format!("{}: ambiguous function `{name}` has multiple definitions, including possible cfg alternatives; register a uniquely named direct source function", source.path)),
++                [] => Err(format!("{}: cannot locate a direct free function named {}; re-exported, generated and external functions need a direct source function path", literal(&source.path), code_span(name))),
++                _ => Err(format!("{}: ambiguous function {} has multiple definitions, including possible cfg alternatives; register a uniquely named direct source function", literal(&source.path), code_span(name))),
+             };
+         }
+ 
+@@ -197,11 +202,11 @@ impl Resolver {
+             .collect();
+         let module = match modules.as_slice() {
+             [module] => *module,
+-            [] => return Err(format!("{}: cannot locate source module `{name}`; aliases, external crates and methods need a direct source function path", source.path)),
+-            _ => return Err(format!("{}: ambiguous module `{name}` has multiple definitions; register a uniquely named direct source function", source.path)),
++            [] => return Err(format!("{}: cannot locate source module {}; aliases, external crates and methods need a direct source function path", literal(&source.path), code_span(name))),
++            _ => return Err(format!("{}: ambiguous module {} has multiple definitions; register a uniquely named direct source function", literal(&source.path), code_span(name))),
+         };
+-        let explicit =
+-            module_path(&module.attrs).map_err(|error| format!("{}: {error}", source.path))?;
++        let explicit = module_path(&module.attrs)
++            .map_err(|error| format!("{}: {error}", literal(&source.path)))?;
+         if let Some((_, items)) = &module.content {
+             let directory =
+                 explicit.map_or_else(|| dirs.normal.join(name), |path| dirs.explicit.join(path));
+@@ -263,9 +268,9 @@ impl Resolver {
+                 let plain = self.canonical_source(&plain)?;
+                 let directory = self.canonical_source(&directory)?;
+                 let display = |path: &Path| path.strip_prefix(&self.project_root).ok().and_then(Path::to_str).unwrap_or("a project module").to_string();
+-                Err(format!("ambiguous module `{name}` has both `{}` and `{}`; keep one source file and register a direct source function", display(&plain), display(&directory)))
++                Err(format!("ambiguous module {} has both {} and {}; keep one source file and register a direct source function", code_span(&name), code_span(&display(&plain)), code_span(&display(&directory))))
+             }
+-            (false, false) => Err(format!("cannot find the Rust source for module `{name}`; check its .rs or mod.rs declaration and register a direct source function")),
++            (false, false) => Err(format!("cannot find the Rust source for module {}; check its .rs or mod.rs declaration and register a direct source function", code_span(&name))),
+         }
+     }
+ }
+@@ -278,7 +283,7 @@ impl SourceFile {
+         if self.text.get(start..end).is_none() {
+             return Err(format!(
+                 "{}: source spans cannot locate the original function bytes",
+-                self.path
++                literal(&self.path)
+             ));
+         }
+         let mut line_start = self.text[..start].rfind('\n').map_or(0, |at| at + 1);
+diff --git a/crates/rustify-docs-cli/src/theme.rs b/crates/rustify-docs-cli/src/theme.rs
+index 33e80d51..a7134582 100644
+--- a/crates/rustify-docs-cli/src/theme.rs
++++ b/crates/rustify-docs-cli/src/theme.rs
+@@ -2,6 +2,7 @@
+ 
+ use rustify_docs::content::{is_private, Diagnostic, Project, Snapshot};
+ use rustify_docs::diagnostic::{Issue, Severity};
++use rustify_docs::diagnostic_text::{code_span, literal};
+ use rustify_ui::theme::{
+     font_context, import_json, resolve, FontResourceDigest, ResolvedTheme, ThemeDocument,
+     ThemeMode, FONT_GLYPH_FALLBACKS, FONT_RESOURCE_DIGESTS, THEME_INPUT_LIMIT,
+@@ -130,7 +131,7 @@ pub(super) fn prepare(project: &Project) -> (Option<PreparedTheme>, Vec<Diagnost
+                 path,
+                 Severity::Warning,
+                 "theme-token",
+-                format!("{}: {}", warning.field, warning.message),
++                format!("{}: {}", literal(&warning.field), warning.message),
+             )
+         })
+         .collect();
+@@ -212,8 +213,12 @@ fn document_path(project: &Project, relative: &str) -> Result<PathBuf, String> {
+     }
+     let root = fs::canonicalize(&project.root)
+         .map_err(|error| format!("cannot resolve the theme's project root: {error}"))?;
+-    let path = fs::canonicalize(root.join(relative))
+-        .map_err(|error| format!("cannot read theme.document `{relative}`: {error}"))?;
++    let path = fs::canonicalize(root.join(relative)).map_err(|error| {
++        format!(
++            "cannot read theme.document {}: {error}",
++            code_span(relative)
++        )
++    })?;
+     let canonical_relative = path
+         .strip_prefix(&root)
+         .map_err(|_| "theme.document symlink leads outside the project".to_string())?
+@@ -227,19 +232,31 @@ fn document_path(project: &Project, relative: &str) -> Result<PathBuf, String> {
+         return Err("theme.document must not read private files or generated output".into());
+     }
+     if !path.is_file() {
+-        return Err(format!("theme.document `{relative}` is not a file"));
++        return Err(format!(
++            "theme.document {} is not a file",
++            code_span(relative)
++        ));
+     }
+     Ok(path)
+ }
+ 
+ fn read_document(project: &Project, relative: &str) -> Result<String, String> {
+     let path = document_path(project, relative)?;
+-    let file = fs::File::open(path)
+-        .map_err(|error| format!("cannot read theme.document `{relative}`: {error}"))?;
++    let file = fs::File::open(path).map_err(|error| {
++        format!(
++            "cannot read theme.document {}: {error}",
++            code_span(relative)
++        )
++    })?;
+     let mut bytes = Vec::new();
+     file.take((THEME_INPUT_LIMIT + 1) as u64)
+         .read_to_end(&mut bytes)
+-        .map_err(|error| format!("cannot read theme.document `{relative}`: {error}"))?;
++        .map_err(|error| {
++            format!(
++                "cannot read theme.document {}: {error}",
++                code_span(relative)
++            )
++        })?;
+     if bytes.len() > THEME_INPUT_LIMIT {
+         return Err("theme input exceeds 256 KiB".into());
+     }
+@@ -270,7 +287,10 @@ fn project_css(
+             .find(|font| font.identity.resource_path == resource)
+             .filter(|font| !font.bytes.is_empty() && !font.license.is_empty())
+             .ok_or_else(|| {
+-                format!("the paired CLI has no packaged bytes or license for font `{resource}`")
++                format!(
++                    "the paired CLI has no packaged bytes or license for font {}",
++                    code_span(&resource)
++                )
+             })?;
+         let digest = font.identity.sha256;
+         let path = format!("assets/fonts/{digest}.ttf");
+diff --git a/crates/rustify-docs-cli/tests/diagnostic_text.rs b/crates/rustify-docs-cli/tests/diagnostic_text.rs
+new file mode 100644
+index 00000000..78f33d9e
+--- /dev/null
++++ b/crates/rustify-docs-cli/tests/diagnostic_text.rs
+@@ -0,0 +1,160 @@
++//! Diagnostic prose keeps author values intact across the real command exits.
++
++mod support;
++
++use rustify_docs::embed::{self, Field, Owner};
++use serde_json::Value;
++use support::{run_in, stdout, Temp};
++
++#[test]
++fn both_writers_match_the_handwritten_verbatim_table() {
++    for (value, encoded) in [
++        ("", "``  ``"),
++        (" ", "` `"),
++        ("  ", "`  `"),
++        (" a ", "` a `"),
++        ("a\nb", "`a\nb`"),
++        ("a\r\nb", "`a\r\nb`"),
++        ("a\\b", "`a\\b`"),
++        ("Counter", "`Counter`"),
++        ("a`b", "`` a`b ``"),
++        ("a``b", "``` a``b ```"),
++        ("`a`", "`` `a` ``"),
++        ("`", "`` ` ``"),
++        ("``", "``` `` ```"),
++        (" `\r\n ", "``  `\r\n  ``"),
++    ] {
++        assert_eq!(rustify_docs::diagnostic_text::code_span(value), encoded);
++        assert_eq!(rustify_docs_syntax::code_span(value), encoded);
++        let prose = if value.contains('`') { encoded } else { value };
++        assert_eq!(rustify_docs::diagnostic_text::literal(value), prose);
++        assert_eq!(rustify_docs_syntax::literal(value), prose);
++    }
++}
++
++#[test]
++fn duplicate_site_routes_quote_the_whole_route() {
++    let error = rustify_docs_syntax::parse_registry(
++        "fn site() { site! { pages { One { route: \"/a`b/\", title: \"One\" } => one, Two { route: \"/a`b/\", title: \"Two\" } => two } } }",
++    ).err().unwrap();
++    assert_eq!(error.to_string(), "duplicate page route `` /a`b/ ``");
++}
++
++#[test]
++fn repairs_encode_the_entire_default_and_author_key() {
++    let fields = [Field {
++        name: "label".into(),
++        ty: "String".into(),
++        default: Some("\"a`b\".to_string()".into()),
++    }];
++    let owner = Owner::Registered {
++        registry: "src/lib.rs",
++    };
++    assert_eq!(
++        embed::unknown_property("Counter", &fields, owner, "un`known"),
++        "Use one of `label` (`String`; default expression `` \"a`b\".to_string() ``) for `Counter`; rename or remove `` un`known ``."
++    );
++    assert_eq!(
++        embed::invalid_props(&fields, owner, Some("label")),
++        "Write `label: \"text\"` for declared type `String` (default expression `` \"a`b\".to_string() ``). Reported props path: `label`."
++    );
++    assert_eq!(
++        embed::invalid_props(&fields, owner, None),
++        "Add or correct `props` using the declared fields `label` (`String`; default expression `` \"a`b\".to_string() ``); check the registration in `src/lib.rs`."
++    );
++}
++
++#[test]
++fn check_and_build_encode_plain_paths_prefixed_anchors_yaml_keys_and_empty_language() {
++    let temp = Temp::new("diagnostic-text");
++    let config = "schema_version=1\n[site]\nname='D'\nurl='https://example.com/'\n";
++    temp.write("rustify-docs.toml", config);
++    temp.write(
++        "content/index.md",
++        "---\ndescription: Home\n---\n# Home\n\n[Target](a%60b%60c.md#a%60b)\n",
++    );
++    temp.write(
++        "content/a`b`c.md",
++        "---\ndescription: Target\n---\n# Target\n",
++    );
++    let check = run_in(&temp.0, &["check", "--format", "json"]);
++    assert_eq!(check.status.code(), Some(1));
++    let checked: Value = serde_json::from_slice(&check.stdout).unwrap();
++    let anchor = checked["diagnostics"]
++        .as_array()
++        .unwrap()
++        .iter()
++        .find(|d| d["rule"] == "broken-anchor")
++        .unwrap();
++    assert_eq!(
++        anchor["message"],
++        "`` content/a`b`c.md `` has no heading `` #a`b ``"
++    );
++    let built = run_in(&temp.0, &["build", "--format", "json"]);
++    assert_eq!(built.status.code(), Some(1));
++    let built: Value = serde_json::from_str(&stdout(&built)).unwrap();
++    assert_eq!(built["diagnostics"], checked["diagnostics"]);
++
++    temp.write("content/index.md", "---\ndescription: Home\n---\n# Home\n\n```rustify-component\nname: Steps\nun`known: 1\n```\n\n```rustify-component\nname: Miss`ing\n```\n\n```rustify-component\nname: MissingCounter\n```\n");
++    let output = run_in(&temp.0, &["check", "--format", "json"]);
++    assert_eq!(output.status.code(), Some(1));
++    let report: Value = serde_json::from_slice(&output.stdout).unwrap();
++    let diagnostics = report["diagnostics"].as_array().unwrap();
++    assert!(diagnostics.iter().any(|d| d["rule"] == "embed-payload" && d["message"] == "unknown field `` un`known ``; a demo takes only `name`, a component takes `name`, `props` and `children`"));
++    assert!(diagnostics.iter().any(|d| d["rule"] == "embed-payload"
++        && d["message"] == "name must be a registered Rust identifier"));
++    assert_eq!(
++        diagnostics
++            .iter()
++            .filter(|d| d["rule"] == "unregistered-component")
++            .count(),
++        1
++    );
++
++    temp.write("rustify-docs.toml", &format!("{config}lang=''\n"));
++    let output = run_in(&temp.0, &["check", "--format", "json"]);
++    assert_eq!(output.status.code(), Some(1));
++    let report: Value = serde_json::from_slice(&output.stdout).unwrap();
++    let language = report["diagnostics"]
++        .as_array()
++        .unwrap()
++        .iter()
++        .find(|d| d["rule"] == "config-lang")
++        .unwrap();
++    assert_eq!(language["message"], "``  `` is not a language tag");
++    assert_eq!(language["suggestion"], "use a tag like `en` or `zh-CN`");
++}
++
++#[test]
++fn region_repairs_encode_the_fixed_marker_prefixes_and_configuration_values() {
++    let temp = Temp::new("diagnostic-region");
++    let config = "schema_version=1\n[site]\nname='D'\nurl='https://example.com/'\n";
++    temp.write("rustify-docs.toml", config);
++    temp.write("content/index.md", "---\ndescription: Home\n---\n# Home\n\n<!-- rustify:include path=\"snippets/a.rs\" region=\"a`b\" -->\n");
++    temp.write("snippets/a.rs", "fn example() {}\n");
++    let output = run_in(&temp.0, &["check", "--format", "json"]);
++    assert_eq!(output.status.code(), Some(1));
++    let report: Value = serde_json::from_slice(&output.stdout).unwrap();
++    let region = report["diagnostics"]
++        .as_array()
++        .unwrap()
++        .iter()
++        .find(|d| d["rule"] == "include-region")
++        .unwrap();
++    assert_eq!(
++        region["message"],
++        "`snippets/a.rs`: there is no region `` a`b ``"
++    );
++    assert_eq!(
++        region["suggestion"],
++        "mark the lines with `` rustify-region:a`b `` and `` rustify-endregion:a`b `` comments"
++    );
++    temp.write("rustify-docs.toml", &format!("{config}lang='a`b'\n"));
++    let output = run_in(&temp.0, &["check", "--format", "json"]);
++    let report: Value = serde_json::from_slice(&output.stdout).unwrap();
++    assert!(report["diagnostics"]
++        .as_array()
++        .unwrap()
++        .iter()
++        .any(|d| d["rule"] == "config-lang" && d["message"] == "`` a`b `` is not a language tag"));
++}
+diff --git a/crates/rustify-docs-syntax/src/lib.rs b/crates/rustify-docs-syntax/src/lib.rs
+index 673694ef..41a6cff5 100644
+--- a/crates/rustify-docs-syntax/src/lib.rs
++++ b/crates/rustify-docs-syntax/src/lib.rs
+@@ -25,6 +25,28 @@ use syn::spanned::Spanned;
+ use syn::visit::Visit;
+ use syn::{braced, Attribute, Error, Expr, ExprPath, Ident, LitStr, Macro, Result, Token, Type};
+ 
++/// Quotes a complete code value with a fence longer than any run it contains.
++pub fn code_span(value: &str) -> String {
++    if value.is_empty() {
++        return "``  ``".into();
++    }
++    let longest = value.split(|ch| ch != '`').map(str::len).max().unwrap_or(0);
++    if longest == 0 {
++        return format!("`{value}`");
++    }
++    let fence = "`".repeat(longest + 1);
++    format!("{fence} {value} {fence}")
++}
++
++/// Keeps ordinary author text as written, quoting the whole value if it has ticks.
++pub fn literal(value: &str) -> String {
++    if value.contains('`') {
++        code_span(value)
++    } else {
++        value.to_owned()
++    }
++}
++
+ /// One declaration, with source spans and Rust AST for the procedural macro.
+ #[derive(Clone, Default)]
+ pub struct SiteDeclaration {
+@@ -221,7 +243,7 @@ impl Parse for SiteDeclaration {
+             if !sections.insert(section_name.clone()) {
+                 return Err(Error::new(
+                     section.span(),
+-                    format!("duplicate site section `{section_name}`"),
++                    format!("duplicate site section {}", code_span(&section_name)),
+                 ));
+             }
+             let content;
+@@ -253,7 +275,7 @@ impl Parse for SiteDeclaration {
+                         if !routes.insert(route.clone()) {
+                             return Err(Error::new(
+                                 page.route.span(),
+-                                format!("duplicate page route `{route}`"),
++                                format!("duplicate page route {}", code_span(&route)),
+                             ));
+                         }
+                         declaration.pages.push(page);
+@@ -267,7 +289,7 @@ impl Parse for SiteDeclaration {
+                         if !slots.insert(slot) {
+                             return Err(Error::new(
+                                 name.span(),
+-                                format!("duplicate slot `{}`", slot.key()),
++                                format!("duplicate slot {}", code_span(slot.key())),
+                             ));
+                         }
+                         content.parse::<Token![=>]>()?;
+@@ -283,7 +305,10 @@ impl Parse for SiteDeclaration {
+                 _ => {
+                     return Err(Error::new(
+                         section.span(),
+-                        format!("unknown site section `{section_name}`; expected components, demos, pages or slots"),
++                        format!(
++                            "unknown site section {}; expected components, demos, pages or slots",
++                            code_span(&section_name)
++                        ),
+                     ));
+                 }
+             }
+@@ -334,7 +359,7 @@ fn parse_component(input: ParseStream) -> Result<ComponentDeclaration> {
+         if !seen.insert(field_key.clone()) {
+             return Err(Error::new(
+                 field_name.span(),
+-                format!("duplicate property `{field_key}`"),
++                format!("duplicate property {}", code_span(&field_key)),
+             ));
+         }
+         content.parse::<Token![:]>()?;
+@@ -372,16 +397,19 @@ fn parse_client_only(attribute: &Attribute) -> Result<ClientOnlyDeclaration> {
+         } else if meta.path.is_ident("message") {
+             &mut message
+         } else {
+-            return Err(meta.error(format!("unknown client_only metadata `{key}`")));
++            return Err(meta.error(format!("unknown client_only metadata {}", code_span(&key))));
+         };
+         if destination.is_some() {
+-            return Err(meta.error(format!("duplicate client_only metadata `{key}`")));
++            return Err(meta.error(format!(
++                "duplicate client_only metadata {}",
++                code_span(&key)
++            )));
+         }
+         let literal: LitStr = meta.value()?.parse()?;
+         if literal.value().trim().is_empty() {
+             return Err(Error::new(
+                 literal.span(),
+-                format!("client_only `{key}` must not be empty"),
++                format!("client_only {} must not be empty", code_span(&key)),
+             ));
+         }
+         *destination = Some(literal);
+@@ -413,14 +441,14 @@ fn parse_page(input: ParseStream) -> Result<PageDeclaration> {
+             _ => {
+                 return Err(Error::new(
+                     key.span(),
+-                    format!("unknown page metadata `{key_name}`"),
++                    format!("unknown page metadata {}", code_span(&key_name)),
+                 ));
+             }
+         };
+         if destination.is_some() {
+             return Err(Error::new(
+                 key.span(),
+-                format!("duplicate page metadata `{key_name}`"),
++                format!("duplicate page metadata {}", code_span(&key_name)),
+             ));
+         }
+         content.parse::<Token![:]>()?;
+@@ -451,7 +479,7 @@ fn slot_name(ident: &Ident) -> Result<Slot> {
+         "not_found" => Ok(Slot::NotFound),
+         other => Err(Error::new(
+             ident.span(),
+-            format!("unknown slot `{other}`; expected header, footer, sidebar_top, sidebar_bottom, before_content, after_content or not_found"),
++            format!("unknown slot {}; expected header, footer, sidebar_top, sidebar_bottom, before_content, after_content or not_found", code_span(other)),
+         )),
+     }
+ }
+@@ -474,7 +502,7 @@ fn register(ident: &Ident, names: &mut HashSet<String>) -> Result<()> {
+     } else {
+         Err(Error::new(
+             ident.span(),
+-            format!("duplicate registration name `{key}`"),
++            format!("duplicate registration name {}", code_span(&key)),
+         ))
+     }
+ }
+diff --git a/crates/rustify-docs-syntax/tests/registry.rs b/crates/rustify-docs-syntax/tests/registry.rs
+index f9a5bcb5..c5ee594c 100644
+--- a/crates/rustify-docs-syntax/tests/registry.rs
++++ b/crates/rustify-docs-syntax/tests/registry.rs
+@@ -368,3 +368,20 @@ fn a_bom_and_shebang_preserve_following_line_diagnostics() {
+     let second = line.rfind("演示").expect("second name");
+     assert_eq!((at.line, at.column), (2, line[..second].chars().count()));
+ }
++
++#[test]
++fn diagnostic_spans_keep_empty_values_and_literal_tick_runs() {
++    for (value, encoded) in [
++        ("", "``  ``"),
++        (" a \r\nb ", "` a \r\nb `"),
++        ("`", "`` ` ``"),
++        ("a``b", "``` a``b ```"),
++        (" `\r\n ", "``  `\r\n  ``"),
++    ] {
++        assert_eq!(rustify_docs_syntax::code_span(value), encoded);
++        assert_eq!(
++            rustify_docs_syntax::literal(value),
++            if value.contains('`') { encoded } else { value }
++        );
++    }
++}
+diff --git a/crates/rustify-docs/assets/dev.js b/crates/rustify-docs/assets/dev.js
+index 6227c31d..90972c93 100644
+--- a/crates/rustify-docs/assets/dev.js
++++ b/crates/rustify-docs/assets/dev.js
+@@ -207,13 +207,31 @@
+ 
+   function prose(className, text) {
+     var node = element("p", className);
+-    String(text)
+-      .split("`")
+-      .forEach(function (piece, i) {
+-        if (!piece) return;
+-        if (i % 2 === 1) node.appendChild(breakable(element("code", "rd-dev-code"), piece));
+-        else node.appendChild(document.createTextNode(piece));
+-      });
++    text = String(text);
++    var runs = /`+/g;
++    var start = 0;
++    var opening;
++    while ((opening = runs.exec(text))) {
++      var contentStart = runs.lastIndex;
++      var closing;
++      while ((closing = runs.exec(text))) {
++        if (closing[0].length === opening[0].length) break;
++      }
++      if (!closing) {
++        // An unmatched run belongs to the original prose, including compiler
++        // and parser messages we do not rewrite. Later runs may still pair.
++        runs.lastIndex = contentStart;
++        continue;
++      }
++      node.appendChild(document.createTextNode(text.slice(start, opening.index)));
++      var piece = text.slice(contentStart, closing.index);
++      if (opening[0].length >= 2 && piece.length >= 2 && piece[0] === " " && piece[piece.length - 1] === " ") {
++        piece = piece.slice(1, -1);
++      }
++      node.appendChild(breakable(element("code", "rd-dev-code"), piece));
++      start = runs.lastIndex;
++    }
++    node.appendChild(document.createTextNode(text.slice(start)));
+     return node;
+   }
+ 
+diff --git a/crates/rustify-docs/src/builtins.rs b/crates/rustify-docs/src/builtins.rs
+index 44ece032..5ef9680c 100644
+--- a/crates/rustify-docs/src/builtins.rs
++++ b/crates/rustify-docs/src/builtins.rs
+@@ -1,5 +1,6 @@
+ //! Typed static content blocks, rendered through the same site registry.
+ 
++use crate::diagnostic_text::code_span;
+ use crate::embed::{Field, Owner};
+ use crate::site::{SiteError, SiteRegistry};
+ use leptos::prelude::*;
+@@ -82,8 +83,8 @@ pub fn advice(name: &str, props: &Value, error: &SiteError) -> Option<String> {
+             .default
+             .as_deref()?;
+         return Some(format!(
+-            "Set `columns` to 1, 2 or 3, or omit it for the default expression `{}`.",
+-            crate::embed::display(default)
++            "Set `columns` to 1, 2 or 3, or omit it for the default expression {}.",
++            code_span(&crate::embed::display(default))
+         ));
+     }
+     Some(crate::embed::invalid_props(
+diff --git a/crates/rustify-docs/src/config.rs b/crates/rustify-docs/src/config.rs
+index 819886e4..70cc2331 100644
+--- a/crates/rustify-docs/src/config.rs
++++ b/crates/rustify-docs/src/config.rs
+@@ -6,6 +6,7 @@
+ //! root (the directory holding the file); the URL base is normalized once
+ //! here and every URL the build writes goes through it.
+ 
++use crate::diagnostic_text::{code_span, literal};
+ use std::collections::BTreeSet;
+ use std::ops::Range;
+ 
+@@ -253,7 +254,8 @@ pub fn relative_path(path: &str) -> Result<String, String> {
+     let path = path.replace('\\', "/");
+     if path.starts_with('/') || path.chars().nth(1) == Some(':') {
+         return Err(format!(
+-            "`{path}` is absolute; paths are relative to the project root"
++            "{} is absolute; paths are relative to the project root",
++            code_span(&path)
+         ));
+     }
+     let mut parts: Vec<&str> = Vec::new();
+@@ -262,7 +264,7 @@ pub fn relative_path(path: &str) -> Result<String, String> {
+             "" | "." => {}
+             ".." => {
+                 if parts.pop().is_none() {
+-                    return Err(format!("`{path}` leaves the project"));
++                    return Err(format!("{} leaves the project", code_span(&path)));
+                 }
+             }
+             part => parts.push(part),
+@@ -285,9 +287,7 @@ pub fn normalize_base(base: &str) -> Result<String, String> {
+                 .chars()
+                 .all(|c| c.is_ascii_alphanumeric() || matches!(c, '-' | '_' | '.' | '~'));
+         if !valid {
+-            return Err(format!(
+-                "`{base}` is not a base path; use `/` or segments of letters, digits, `-`, `_`, `.` and `~`, like `/docs/`"
+-            ));
++            return Err(format!("{} is not a base path; use `/` or segments of letters, digits, `-`, `_`, `.` and `~`, like `/docs/`", code_span(base)));
+         }
+     }
+     Ok(format!("/{trimmed}/"))
+@@ -320,7 +320,9 @@ impl Config {
+         if let Some(url) = &self.site.url {
+             if !url.ends_with(&base) {
+                 return Err(format!(
+-                    "--base {base} does not match site.url {url}; change both together"
++                    "--base {} does not match site.url {}; change both together",
++                    literal(&base),
++                    literal(url)
+                 ));
+             }
+         }
+@@ -413,7 +415,7 @@ pub fn parse(text: &str) -> Result<(Config, Vec<Issue>), Vec<Issue>> {
+                 return None;
+             }
+             if !selected.insert(file.clone()) {
+-                errors.push(error(span, "content-include", format!("content.include lists `{file}` more than once")));
++                errors.push(error(span, "content-include", format!("content.include lists {} more than once", code_span(&file))));
+                 return None;
+             }
+             Some((file, span))
+@@ -425,8 +427,16 @@ pub fn parse(text: &str) -> Result<(Config, Vec<Issue>), Vec<Issue>> {
+     for (input, name) in [(&content_dir, "content.dir"), (&assets_dir, "assets.dir")] {
+         if inside(input, &out_dir) || inside(&out_dir, input) {
+             errors.push(
+-                error(out_span.clone(), "config-out", format!("build.out `{out_dir}` overlaps {name} `{input}`; a build replaces its output whole"))
+-                    .suggest("put the output in a directory of its own, like `dist`"),
++                error(
++                    out_span.clone(),
++                    "config-out",
++                    format!(
++                        "build.out {} overlaps {name} {}; a build replaces its output whole",
++                        code_span(&out_dir),
++                        code_span(input)
++                    ),
++                )
++                .suggest("put the output in a directory of its own, like `dist`"),
+             );
+         }
+     }
+@@ -439,7 +449,11 @@ pub fn parse(text: &str) -> Result<(Config, Vec<Issue>), Vec<Issue>> {
+                 errors.push(error(
+                     out_span.clone(),
+                     "config-out",
+-                    format!("build.out `{out_dir}` would replace {name} `{input}`"),
++                    format!(
++                        "build.out {} would replace {name} {}",
++                        code_span(&out_dir),
++                        code_span(input)
++                    ),
+                 ));
+             }
+         }
+@@ -483,7 +497,7 @@ pub fn parse(text: &str) -> Result<(Config, Vec<Issue>), Vec<Issue>> {
+                     error(
+                         lang.span(),
+                         "config-lang",
+-                        format!("`{}` is not a language tag", lang.get_ref()),
++                        format!("{} is not a language tag", code_span(lang.get_ref())),
+                     )
+                     .suggest("use a tag like `en` or `zh-CN`"),
+                 );
+@@ -504,7 +518,10 @@ pub fn parse(text: &str) -> Result<(Config, Vec<Issue>), Vec<Issue>> {
+             errors.push(error(
+                 url.span(),
+                 "config-url",
+-                format!("`{value}` is not an absolute http(s) URL without a query or fragment"),
++                format!(
++                    "{} is not an absolute http(s) URL without a query or fragment",
++                    code_span(value)
++                ),
+             ));
+             return None;
+         }
+@@ -524,8 +541,9 @@ pub fn parse(text: &str) -> Result<(Config, Vec<Issue>), Vec<Issue>> {
+                     url.span(),
+                     "config-url",
+                     format!(
+-                        "site.url's path `{}` is not site.base `{base}`",
+-                        &value[path_start..]
++                        "site.url's path {} is not site.base {}",
++                        code_span(&value[path_start..]),
++                        code_span(&base)
+                     ),
+                 )
+                 .suggest("site.url is the public address of the site's root, base path included"),
+@@ -576,7 +594,7 @@ pub fn parse(text: &str) -> Result<(Config, Vec<Issue>), Vec<Issue>> {
+                 errors.push(error(
+                     color.span(),
+                     "config-color",
+-                    format!("`{}` is not a #RRGGBB colour", color.get_ref()),
++                    format!("{} is not a #RRGGBB colour", code_span(color.get_ref())),
+                 ));
+                 good = false;
+             }
+@@ -648,8 +666,8 @@ pub fn parse(text: &str) -> Result<(Config, Vec<Issue>), Vec<Issue>> {
+                         scope.span(),
+                         "config-nav",
+                         format!(
+-                            "nav scope `{}` is not a route prefix like `/guide/`",
+-                            scope.get_ref()
++                            "nav scope {} is not a route prefix like `/guide/`",
++                            code_span(scope.get_ref())
+                         ),
+                     ));
+                     continue;
+@@ -666,7 +684,7 @@ pub fn parse(text: &str) -> Result<(Config, Vec<Issue>), Vec<Issue>> {
+                     errors.push(error(
+                         dir.span(),
+                         "config-nav",
+-                        format!("nav group `{}`: {message}", group.label),
++                        format!("nav group {}: {message}", code_span(&group.label)),
+                     ));
+                     continue;
+                 }
+@@ -699,8 +717,8 @@ pub fn parse(text: &str) -> Result<(Config, Vec<Issue>), Vec<Issue>> {
+                     0..0,
+                     "config-nav",
+                     format!(
+-                        "nav group `{}` needs exactly one of `dir`, `items` and `routes`",
+-                        group.label
++                        "nav group {} needs exactly one of `dir`, `items` and `routes`",
++                        code_span(&group.label)
+                     ),
+                 ));
+                 continue;
+diff --git a/crates/rustify-docs/src/content.rs b/crates/rustify-docs/src/content.rs
+index fb16231a..23323ac6 100644
+--- a/crates/rustify-docs/src/content.rs
++++ b/crates/rustify-docs/src/content.rs
+@@ -7,6 +7,7 @@
+ //! all of them in one run. It reads files and nothing else: it writes no
+ //! output and makes no network request.
+ 
++use crate::diagnostic_text::{code_span, literal};
+ use std::collections::{BTreeMap, BTreeSet, HashMap};
+ use std::path::{Path, PathBuf};
+ use std::sync::Arc;
+@@ -126,7 +127,7 @@ impl Project {
+                 name,
+                 Severity::Error,
+                 "config-missing",
+-                format!("cannot read {name}: {error}"),
++                format!("cannot read {}: {error}", literal(name)),
+             )]
+         })?;
+         let mut inputs = InputReceipts::default();
+@@ -525,7 +526,7 @@ pub fn snapshot(project: &Project) -> (Snapshot, Vec<Diagnostic>) {
+                             &project.config_text,
+                             refusal.issue(
+                                 &|rule, message| Issue::error(span.clone(), rule, message),
+-                                &format!("content.include `{file}`"),
++                                &format!("content.include {}", code_span(file)),
+                                 "content-include-missing",
+                             ),
+                         )),
+@@ -616,7 +617,7 @@ pub fn snapshot(project: &Project) -> (Snapshot, Vec<Diagnostic>) {
+                     &project.config_text,
+                     refusal.issue(
+                         &|rule, message| Issue::error(span.clone(), rule, message),
+-                        &format!("theme.document `{path}`"),
++                        &format!("theme.document {}", code_span(path)),
+                         "theme-document-missing",
+                     ),
+                 )),
+@@ -1051,11 +1052,7 @@ impl Sources<'_> {
+     ) -> Target {
+         if let Target::Resource(path) = &target {
+             if self.theme_file(path) {
+-                found.push(Refusal::ThemeDocument.issue(
+-                    issue,
+-                    &format!("`{path}`"),
+-                    "broken-link",
+-                ));
++                found.push(Refusal::ThemeDocument.issue(issue, &code_span(path), "broken-link"));
+                 return Target::Keep;
+             }
+         }
+@@ -1217,8 +1214,9 @@ pub fn analyze_with_surfaces(
+                     Severity::Error,
+                     "route-conflict",
+                     format!(
+-                        "this page and `{}` both become {route}",
+-                        file_of(&other.path)
++                        "this page and {} both become {}",
++                        code_span(&file_of(&other.path)),
++                        literal(&route)
+                     ),
+                 )
+                 .with_suggestion("rename or move one of them"),
+@@ -1234,7 +1232,7 @@ pub fn analyze_with_surfaces(
+                             &file,
+                             Severity::Error,
+                             "lang",
+-                            format!("`{lang}` is not a language tag"),
++                            format!("{} is not a language tag", code_span(lang)),
+                         )
+                         .with_suggestion("use a language tag such as `en`, `zh-CN` or `fr`")
+                     },
+@@ -1444,7 +1442,7 @@ pub fn analyze_with_surfaces(
+                 &registered.file,
+                 Severity::Error,
+                 "invalid-route",
+-                format!("registered route `{route}` needs a canonical path like `/custom/`, without query or fragment"),
++                format!("registered route {} needs a canonical path like `/custom/`, without query or fragment", code_span(route)),
+             ));
+             continue;
+         }
+@@ -1465,7 +1463,10 @@ pub fn analyze_with_surfaces(
+                 &registered.file,
+                 Severity::Error,
+                 "reserved-route",
+-                format!("registered route `{route}` is reserved for generated or private output"),
++                format!(
++                    "registered route {} is reserved for generated or private output",
++                    code_span(route)
++                ),
+             ));
+             continue;
+         }
+@@ -1475,8 +1476,10 @@ pub fn analyze_with_surfaces(
+                 Severity::Error,
+                 "route-conflict",
+                 format!(
+-                    "registered page `{}` and `{}` both become {route}",
+-                    registered.name, pages[other].file
++                    "registered page {} and {} both become {}",
++                    code_span(&registered.name),
++                    code_span(&pages[other].file),
++                    literal(route)
+                 ),
+             ));
+             continue;
+@@ -1537,23 +1540,31 @@ pub fn analyze_with_surfaces(
+         let (message, suggestion) = if !project.content_root().is_dir() {
+             (
+                 format!(
+-                    "the content directory `{content_dir}` does not exist, so the site has no page"
++                    "the content directory {} does not exist, so the site has no page",
++                    code_span(content_dir)
+                 ),
+                 format!(
+                     "create it with an `index.md`, or set content.dir in {}",
+-                    project.config_file
++                    literal(&project.config_file)
+                 ),
+             )
+         } else if pages.is_empty() {
+             (
+                 format!(
+-                    "`{content_dir}` holds no page, so the site would have only its not-found page"
++                    "{} holds no page, so the site would have only its not-found page",
++                    code_span(content_dir)
++                ),
++                format!(
++                    "add a Markdown page, such as {}",
++                    code_span(&format!("{content_dir}/index.md"))
+                 ),
+-                format!("add a Markdown page, such as `{content_dir}/index.md`"),
+             )
+         } else {
+             (
+-                format!("every page in `{content_dir}` is a draft, so a production build would publish none"),
++                format!(
++                    "every page in {} is a draft, so a production build would publish none",
++                    code_span(content_dir)
++                ),
+                 "set `draft: false` on the pages that are ready".to_owned(),
+             )
+         };
+@@ -1580,7 +1591,7 @@ pub fn analyze_with_surfaces(
+                 slot_file,
+                 Severity::Error,
+                 "slot-route",
+-                format!("slots name `{route}`, which is not a page route"),
++                format!("slots name {}, which is not a page route", code_span(route)),
+             ));
+             continue;
+         }
+@@ -1638,7 +1649,7 @@ pub fn analyze_with_surfaces(
+                         Issue::error(
+                             group.span.clone(),
+                             "code-group-conflict",
+-                            format!("code group `{}` has other tabs in {first}; groups of one name switch together", group.name),
++                            format!("code group {} has other tabs in {}; groups of one name switch together", code_span(&group.name), literal(first)),
+                         )
+                         .suggest("give the groups the same tabs, or different names"),
+                     ));
+@@ -1803,7 +1814,7 @@ pub fn analyze_with_surfaces(
+                 Issue::error(
+                     span.clone(),
+                     rule,
+-                    format!("source candidate `{candidate}`: {message}"),
++                    format!("source candidate {}: {message}", code_span(candidate)),
+                 )
+             };
+             let target = if url.starts_with('#') {
+@@ -1862,7 +1873,7 @@ pub fn analyze_with_surfaces(
+                 &project.config_text,
+                 refusal.issue(
+                     &|rule, message| Issue::error(span.clone(), rule, message),
+-                    &format!("{key} `{path}`"),
++                    &format!("{key} {}", code_span(path)),
+                     missing,
+                 ),
+             )),
+@@ -1906,7 +1917,8 @@ pub fn analyze_with_surfaces(
+                     Severity::Error,
+                     "output-conflict",
+                     format!(
+-                        "this file would be published at `{output}`, which the build writes itself"
++                        "this file would be published at {}, which the build writes itself",
++                        code_span(output)
+                     ),
+                 )
+                 .with_suggestion("rename or move it"),
+@@ -1926,7 +1938,7 @@ pub fn analyze_with_surfaces(
+                 diagnostics.push(Diagnostic::located(
+                     &project.config_file,
+                     &project.config_text,
+-                    Issue::warning(span.clone(), "brand-contrast", format!("{color} as link text on the {mode_name} background is {link:.2}:1; text needs 4.5:1"))
++                    Issue::warning(span.clone(), "brand-contrast", format!("{} as link text on the {mode_name} background is {link:.2}:1; text needs 4.5:1", literal(color)))
+                         .suggest(format!("pick a {} {mode_name} primary", if mode_name == "light" { "darker" } else { "lighter" })),
+                 ));
+             }
+@@ -1937,7 +1949,10 @@ pub fn analyze_with_surfaces(
+                     Issue::warning(
+                         span.clone(),
+                         "brand-contrast",
+-                        format!("no button label reaches 4.5:1 on {color} ({button:.2}:1 at best)"),
++                        format!(
++                            "no button label reaches 4.5:1 on {} ({button:.2}:1 at best)",
++                            literal(color)
++                        ),
+                     ),
+                 ));
+             }
+@@ -2124,7 +2139,10 @@ fn resolve_source_link(
+         )
+     };
+     let Some(file) = file else {
+-        found.push(issue("broken-link", format!("`{path}` leaves the project")));
++        found.push(issue(
++            "broken-link",
++            format!("{} leaves the project", code_span(path)),
++        ));
+         return Target::Keep;
+     };
+     if let Some(page) = file
+@@ -2198,7 +2216,10 @@ fn resolve_references(
+                     .get(route)
+                     .is_some_and(|known| known.contains(&anchor))
+                 {
+-                    found.push(issue("broken-anchor", format!("{route} has no id `{url}`")));
++                    found.push(issue(
++                        "broken-anchor",
++                        format!("{} has no id {}", literal(route), code_span(url)),
++                    ));
+                 }
+                 Target::Keep
+             }
+@@ -2249,7 +2270,10 @@ fn resolve_html_link(
+     let (path, fragment) = split_fragment(url);
+     let decoded = percent_decode(path.split('?').next().unwrap_or_default());
+     let Some(file) = join("", &decoded) else {
+-        found.push(issue("broken-link", format!("`{path}` leaves the project")));
++        found.push(issue(
++            "broken-link",
++            format!("{} leaves the project", code_span(path)),
++        ));
+         return Target::Keep;
+     };
+     if excluded_markdown(graph.project, &file) {
+@@ -2279,7 +2303,7 @@ fn resolve_html_link(
+     match sources.get(&file) {
+         Ok(()) => Target::Resource(file),
+         Err(refusal) => {
+-            found.push(refusal.issue(issue, &format!("`{path}`"), "broken-link"));
++            found.push(refusal.issue(issue, &code_span(path), "broken-link"));
+             Target::Keep
+         }
+     }
+@@ -2312,7 +2336,7 @@ fn resolve_link(
+         if matches!(scheme.as_str(), "javascript" | "vbscript" | "data") {
+             found.push(issue(
+                 "script-url",
+-                format!("a `{scheme}:` link is not allowed"),
++                format!("a {} link is not allowed", code_span(&format!("{scheme}:"))),
+             ));
+         }
+         return Target::Keep;
+@@ -2327,7 +2351,7 @@ fn resolve_link(
+             if !known {
+                 let file = routes.get(route).map_or(route, |&i| pages[i].file.as_str());
+                 found.push(
+-                    issue("broken-anchor", format!("{file} has no heading `#{anchor}`"))
++                    issue("broken-anchor", format!("{} has no heading {}", literal(file), code_span(&format!("#{anchor}"))))
+                         .suggest("link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"),
+                 );
+             }
+@@ -2339,7 +2363,10 @@ fn resolve_link(
+                 .and_then(|route| routes.get(route))
+                 .is_some_and(|&i| pages[i].draft)
+         {
+-            let message = format!("{} is a draft and is not published", pages[target].file);
++            let message = format!(
++                "{} is a draft and is not published",
++                literal(&pages[target].file)
++            );
+             match mode {
+                 Mode::Production => found.push(issue("draft-link", message)),
+                 Mode::Dev => found.push(Issue {
+@@ -2362,7 +2389,7 @@ fn resolve_link(
+             Some(from) => check_anchor(from, found),
+             None => found.push(issue(
+                 "broken-link",
+-                format!("`{url}` names no page; link to a page or a URL"),
++                format!("{} names no page; link to a page or a URL", code_span(url)),
+             )),
+         }
+         return Target::Keep;
+@@ -2383,7 +2410,10 @@ fn resolve_link(
+         if snapshot.files.contains_key(&asset) {
+             return Target::Resource(asset);
+         }
+-        found.push(issue("broken-link", format!("no page or file at `{path}`")));
++        found.push(issue(
++            "broken-link",
++            format!("no page or file at {}", code_span(path)),
++        ));
+         return Target::Keep;
+     }
+     match join(dir, &decoded) {
+@@ -2438,8 +2468,8 @@ fn resolve_link(
+                         found.push(issue(
+                             "broken-link",
+                             format!(
+-                                "there is no page `{}/{markdown}`",
+-                                project.config.content_dir
++                                "there is no page {}",
++                                code_span(&format!("{0}/{markdown}", project.config.content_dir))
+                             ),
+                         ));
+                         Target::Keep
+@@ -2454,23 +2484,32 @@ fn resolve_link(
+                 return match sources.get(&file) {
+                     Ok(()) => Target::Resource(file),
+                     Err(refusal) => {
+-                        found.push(refusal.issue(issue, &format!("`{file}`"), "broken-link"));
++                        found.push(refusal.issue(issue, &code_span(&file), "broken-link"));
+                         Target::Keep
+                     }
+                 };
+             }
+-            found.push(issue("broken-link", format!("there is no file `{file}`")));
++            found.push(issue(
++                "broken-link",
++                format!("there is no file {}", code_span(&file)),
++            ));
+             Target::Keep
+         }
+         None => {
+             // Outside the content: a file in the repository.
+             let project_dir = format!("{}/{dir}", project.config.content_dir);
+             let Some(file) = join(&project_dir, &decoded) else {
+-                found.push(issue("broken-link", format!("`{path}` leaves the project")));
++                found.push(issue(
++                    "broken-link",
++                    format!("{} leaves the project", code_span(path)),
++                ));
+                 return Target::Keep;
+             };
+             if sources.exists(&file).is_err() {
+-                found.push(issue("broken-link", format!("there is no file `{file}`")));
++                found.push(issue(
++                    "broken-link",
++                    format!("there is no file {}", code_span(&file)),
++                ));
+                 return Target::Keep;
+             }
+             match &project.config.repo {
+@@ -2494,7 +2533,7 @@ fn resolve_link(
+                 }
+                 None => {
+                     found.push(
+-                        issue("repo-link", format!("`{file}` is outside the content and the site has no [repo] to link it to"))
++                        issue("repo-link", format!("{} is outside the content and the site has no [repo] to link it to", code_span(&file)))
+                             .suggest("add [repo] url and ref to rustify-docs.toml, or link to a page"),
+                     );
+                     Target::Keep
+@@ -2524,7 +2563,7 @@ fn repository_link(
+     issue: &dyn Fn(&'static str, String) -> Issue,
+ ) -> Target {
+     if let Err(refusal) = sources.exists(file) {
+-        found.push(refusal.issue(issue, &format!("`{file}`"), "broken-link"));
++        found.push(refusal.issue(issue, &code_span(file), "broken-link"));
+         return Target::Keep;
+     }
+     let Some(repo) = &project.config.repo else {
+@@ -2532,7 +2571,8 @@ fn repository_link(
+             issue(
+                 "repo-link",
+                 format!(
+-                    "`{file}` is not a published page and the site has no [repo] to link it to"
++                    "{} is not a published page and the site has no [repo] to link it to",
++                    code_span(file)
+                 ),
+             )
+             .suggest("add [repo] url and ref to rustify-docs.toml, or link to a published page"),
+@@ -2589,8 +2629,14 @@ fn resolve_resource(
+         };
+         if crate::html_check::is_cross_origin(&candidate, image) {
+             found.push(
+-                issue("cross-origin-resource", format!("`{candidate}` is loaded from another origin, which the site's policy blocks"))
+-                    .suggest("download it into the asset directory and reference it from there"),
++                issue(
++                    "cross-origin-resource",
++                    format!(
++                        "{} is loaded from another origin, which the site's policy blocks",
++                        code_span(&candidate)
++                    ),
++                )
++                .suggest("download it into the asset directory and reference it from there"),
+             );
+             keep(&mut resolved);
+             continue;
+@@ -2628,7 +2674,7 @@ fn resolve_resource(
+                 };
+                 let mut problem = refusal.unwrap_or(Refusal::Missing).issue(
+                     issue,
+-                    &format!("`{candidate}`"),
++                    &code_span(&candidate),
+                     missing,
+                 );
+                 if problem.rule == missing {
+@@ -2734,11 +2780,11 @@ fn navigation(
+         let at = text[yaml.clone()]
+             .find(label)
+             .map_or(yaml.start, |at| yaml.start + at);
+-        let names: Vec<&str> = config
++        let names: Vec<String> = config
+             .nav
+             .groups
+             .iter()
+-            .map(|group| group.label.as_str())
++            .map(|group| literal(&group.label))
+             .collect();
+         diagnostics.push(Diagnostic::located(
+             &page.file,
+@@ -2747,8 +2793,9 @@ fn navigation(
+                 at..at + label.len(),
+                 "nav-unknown-group",
+                 format!(
+-                    "sidebar.group `{label}` is not a nav group in {}",
+-                    project.config_file
++                    "sidebar.group {} is not a nav group in {}",
++                    code_span(label),
++                    literal(&project.config_file)
+                 ),
+             )
+             .suggest(format!("use one of: {}", names.join(", "))),
+@@ -2805,7 +2852,11 @@ fn navigation(
+                         Issue::warning(
+                             span.clone(),
+                             "nav-empty",
+-                            format!("nav group `{}` lists no pages under `{dir}`", group.label),
++                            format!(
++                                "nav group {} lists no pages under {}",
++                                code_span(&group.label),
++                                code_span(dir)
++                            ),
+                         ),
+                     ));
+                 }
+@@ -2824,8 +2875,9 @@ fn navigation(
+                                 span.clone(),
+                                 "nav-missing-page",
+                                 format!(
+-                                    "nav lists `{path}`, which is not a page in {}",
+-                                    config.content_dir
++                                    "nav lists {}, which is not a page in {}",
++                                    code_span(path),
++                                    literal(&config.content_dir)
+                                 ),
+                             ),
+                         )),
+@@ -2840,16 +2892,16 @@ fn navigation(
+                     let problem = if !selected_routes.insert(route) {
+                         Some((
+                             "nav-duplicate-route",
+-                            format!("nav.routes lists `{route}` more than once"),
++                            format!("nav.routes lists {} more than once", code_span(route)),
+                         ))
+                     } else {
+                         match routes.get(route) {
+-                            Some(&i) if pages[i].origin == PageOrigin::Markdown => Some(("nav-route-origin", format!("nav.routes lists `{route}`, which is a Markdown page; use dir or items"))),
++                            Some(&i) if pages[i].origin == PageOrigin::Markdown => Some(("nav-route-origin", format!("nav.routes lists {}, which is a Markdown page; use dir or items", code_span(route)))),
+                             Some(&i) => {
+                                 if listable(&pages[i]) { found.push(i); }
+                                 None
+                             }
+-                            None => Some(("nav-missing-page", format!("nav.routes lists `{route}`, which is not a registered page"))),
++                            None => Some(("nav-missing-page", format!("nav.routes lists {}, which is not a registered page", code_span(route)))),
+                         }
+                     };
+                     if let Some((rule, message)) = problem {
+diff --git a/crates/rustify-docs/src/diagnostic_text.rs b/crates/rustify-docs/src/diagnostic_text.rs
+new file mode 100644
+index 00000000..14acf5fb
+--- /dev/null
++++ b/crates/rustify-docs/src/diagnostic_text.rs
+@@ -0,0 +1,58 @@
++//! Verbatim code fragments in diagnostic messages and repairs.
++//!
++//! This is Rustify's diagnostic notation, not CommonMark: spaces and line
++//! endings are preserved. Separate fragments with non-backtick prose so
++//! their fences cannot merge.
++
++/// Quotes a complete code value with a fence longer than any run it contains.
++pub fn code_span(value: &str) -> String {
++    if value.is_empty() {
++        return "``  ``".into();
++    }
++    let longest = value.split(|ch| ch != '`').map(str::len).max().unwrap_or(0);
++    if longest == 0 {
++        return format!("`{value}`");
++    }
++    let fence = "`".repeat(longest + 1);
++    format!("{fence} {value} {fence}")
++}
++
++/// Keeps ordinary author text as written, quoting the whole value if it has ticks.
++pub fn literal(value: &str) -> String {
++    if value.contains('`') {
++        code_span(value)
++    } else {
++        value.to_owned()
++    }
++}
++
++#[cfg(test)]
++mod tests {
++    use super::*;
++
++    #[test]
++    fn preserves_empty_whitespace_line_endings_and_tick_runs() {
++        for (value, encoded) in [
++            ("", "``  ``"),
++            (" ", "` `"),
++            ("  ", "`  `"),
++            (" a ", "` a `"),
++            ("a\nb", "`a\nb`"),
++            ("a\r\nb", "`a\r\nb`"),
++            ("a\\b", "`a\\b`"),
++            ("Counter", "`Counter`"),
++            ("a`b", "`` a`b ``"),
++            ("a``b", "``` a``b ```"),
++            ("`a`", "`` `a` ``"),
++            ("`", "`` ` ``"),
++            ("``", "``` `` ```"),
++            (" `\r\n ", "``  `\r\n  ``"),
++        ] {
++            assert_eq!(code_span(value), encoded, "{value:?}");
++            assert_eq!(
++                literal(value),
++                if value.contains('`') { encoded } else { value }
++            );
++        }
++    }
++}
+diff --git a/crates/rustify-docs/src/embed.rs b/crates/rustify-docs/src/embed.rs
+index f13b957d..f5e9fba7 100644
+--- a/crates/rustify-docs/src/embed.rs
++++ b/crates/rustify-docs/src/embed.rs
+@@ -1,5 +1,6 @@
+ //! Located, data-only declarations in Markdown component and demo fences.
+ 
++use crate::diagnostic_text::code_span;
+ use serde::de::{self, DeserializeSeed, IgnoredAny, MapAccess, SeqAccess, Visitor};
+ use std::cell::Cell;
+ use std::collections::BTreeMap;
+@@ -66,7 +67,7 @@ pub fn parse(
+     };
+     for key in fields.keys() {
+         if key != "name" && (kind == Kind::Demo || !matches!(key.as_str(), "props" | "children")) {
+-            return Err(error(key, format!("unknown field `{key}`; a demo takes only `name`, a component takes `name`, `props` and `children`")));
++            return Err(error(key, format!("unknown field {}; a demo takes only `name`, a component takes `name`, `props` and `children`", code_span(key))));
+         }
+     }
+     let name = fields
+@@ -172,17 +173,24 @@ pub fn unregistered_demo(names: &[&str]) -> String {
+ 
+ pub fn unknown_property(component: &str, fields: &[Field], owner: Owner, field: &str) -> String {
+     if fields.is_empty() {
+-        return format!("Remove `{field}`; `{component}` declares no props.");
++        return format!(
++            "Remove {}; {} declares no props.",
++            code_span(field),
++            code_span(component)
++        );
+     }
+     format!(
+-        "Use one of {} for `{component}`; rename or remove `{field}`.",
+-        fields_list(fields, owner)
++        "Use one of {} for {}; rename or remove {}.",
++        fields_list(fields, owner),
++        code_span(component),
++        code_span(field)
+     )
+ }
+ 
+ pub fn reserved_component(name: &str) -> String {
+     format!(
+-        "Rename `{name}` in `site!` and its Markdown references; builtin component names are reserved."
++        "Rename {} in `site!` and its Markdown references; builtin component names are reserved.",
++        code_span(name)
+     )
+ }
+ 
+@@ -200,7 +208,7 @@ pub fn invalid_props(fields: &[Field], owner: Owner, path: Option<&str>) -> Stri
+         ),
+     };
+     if let Some(path) = path {
+-        repair.push_str(&format!(" Reported props path: `{path}`."));
++        repair.push_str(&format!(" Reported props path: {}.", code_span(path)));
+     }
+     repair
+ }
+@@ -210,20 +218,18 @@ fn field_repair(field: &Field, owner: Owner) -> String {
+     let boundary = boundary(field, owner);
+     let name = &field.name;
+     match (shape(&ty), owner) {
+-        (Some(shape), _) => format!("Write `{name}: {shape}` for declared type `{ty}` ({boundary})."),
+-        (None, Owner::Builtin) => format!(
+-            "Write `{name}` as `{ty}` ({boundary}); see {BUILTIN_REFERENCE} for its object fields."
+-        ),
+-        (None, Owner::Registered { registry }) => format!(
+-            "Check `{name}` of declared type `{ty}` ({boundary}) in `{registry}`; follow the reported serde requirement."
+-        ),
++        (Some(shape), _) => format!("Write {} for declared type {} ({boundary}).", code_span(&format!("{name}: {shape}")), code_span(&ty)),
++        (None, Owner::Builtin) => format!("Write {} as {} ({boundary}); see {BUILTIN_REFERENCE} for its object fields.", code_span(name), code_span(&ty)),
++        (None, Owner::Registered { registry }) => format!("Check {} of declared type {} ({boundary}) in {}; follow the reported serde requirement.", code_span(name), code_span(&ty), code_span(registry)),
+     }
+ }
+ 
+ fn reference_step(owner: Owner) -> String {
+     match owner {
+         Owner::Builtin => format!("see {BUILTIN_REFERENCE} for its object fields"),
+-        Owner::Registered { registry } => format!("check the registration in `{registry}`"),
++        Owner::Registered { registry } => {
++            format!("check the registration in {}", code_span(registry))
++        }
+     }
+ }
+ 
+@@ -233,7 +239,7 @@ fn reference_step(owner: Owner) -> String {
+ fn boundary(field: &Field, owner: Owner) -> String {
+     let ty = display(&field.ty);
+     if let Some(default) = &field.default {
+-        format!("default expression `{}`", display(default))
++        format!("default expression {}", code_span(&display(default)))
+     } else if generic(
+         &ty,
+         &["Option", "std::option::Option", "core::option::Option"],
+@@ -290,7 +296,7 @@ fn names_list(names: &[&str]) -> String {
+     }
+     names
+         .iter()
+-        .map(|name| format!("`{name}`"))
++        .map(|name| code_span(name))
+         .collect::<Vec<_>>()
+         .join(", ")
+ }
+@@ -306,9 +312,9 @@ fn fields_list(fields: &[Field], owner: Owner) -> String {
+         .iter()
+         .map(|field| {
+             format!(
+-                "`{}` (`{}`; {})",
+-                field.name,
+-                display(&field.ty),
++                "{} ({}; {})",
++                code_span(&field.name),
++                code_span(&display(&field.ty)),
+                 boundary(field, owner)
+             )
+         })
+diff --git a/crates/rustify-docs/src/frontmatter.rs b/crates/rustify-docs/src/frontmatter.rs
+index 6f353c3d..434ad323 100644
+--- a/crates/rustify-docs/src/frontmatter.rs
++++ b/crates/rustify-docs/src/frontmatter.rs
+@@ -1,6 +1,7 @@
+ //! A page's YAML frontmatter: split off with its offsets, then read with
+ //! every key known.
+ 
++use crate::diagnostic_text::code_span;
+ use std::ops::Range;
+ 
+ use serde::Deserialize;
+@@ -160,7 +161,10 @@ pub(crate) fn language_issue(text: &str) -> Option<Issue> {
+                 if crate::config::valid_lang(value) {
+                     Ok(value.to_owned())
+                 } else {
+-                    Err(E::custom(format!("`{value}` is not a language tag")))
++                    Err(E::custom(format!(
++                        "{} is not a language tag",
++                        code_span(value)
++                    )))
+                 }
+             }
+         }
+diff --git a/crates/rustify-docs/src/generation.rs b/crates/rustify-docs/src/generation.rs
+index cfd69187..b27d08ad 100644
+--- a/crates/rustify-docs/src/generation.rs
++++ b/crates/rustify-docs/src/generation.rs
+@@ -8,6 +8,7 @@
+ //! renders under its own reactive owner, and nothing mutable is shared
+ //! between threads but the queue index.
+ 
++use crate::diagnostic_text::{code_span, literal};
+ use std::collections::{BTreeMap, BTreeSet};
+ use std::sync::atomic::{AtomicUsize, Ordering};
+ use std::sync::Arc;
+@@ -600,9 +601,9 @@ fn title_diagnostics(
+     groups.into_iter().filter_map(|(title, pages)| {
+         let registered = pages.iter().find(|&&i| matches!(analysis.pages[i].origin, crate::content::PageOrigin::Registered(_)))?;
+         if pages.len() == 1 && title != not_found { return None; }
+-        let routes = pages.iter().map(|&i| analysis.pages[i].route.as_str()).collect::<Vec<_>>().join(", ");
++        let routes = pages.iter().map(|&i| literal(&analysis.pages[i].route)).collect::<Vec<_>>().join(", ");
+         Some(Diagnostic::in_file(&analysis.pages[*registered].file, Severity::Error,
+-            "document-title", format!("registered page document title `{title}` is duplicated by {routes}{}; give the page a unique title", if title == not_found { " and the generated not-found page" } else { "" })))
++            "document-title", format!("registered page document title {} is duplicated by {routes}{}; give the page a unique title", code_span(title), if title == not_found { " and the generated not-found page" } else { "" })))
+     }).collect()
+ }
+ 
+@@ -641,7 +642,11 @@ fn final_documents(
+                     sources.get(path).map_or(path.as_str(), String::as_str),
+                     Severity::Error,
+                     "output-conflict",
+-                    format!("published file `{prefix}` is also a directory required by `{path}`"),
++                    format!(
++                        "published file {} is also a directory required by {}",
++                        code_span(prefix),
++                        code_span(path)
++                    ),
+                 ));
+             }
+             parent = prefix;
+@@ -674,7 +679,11 @@ fn final_documents(
+                     source,
+                     Severity::Error,
+                     "output-check",
+-                    format!("generated `{path}` has duplicate document id `#{id}`"),
++                    format!(
++                        "generated {} has duplicate document id {}",
++                        code_span(path),
++                        code_span(&format!("#{id}"))
++                    ),
+                 ));
+             }
+         }
+@@ -715,18 +724,34 @@ fn final_documents(
+                         .and_then(|absolute| urls.get(absolute).copied())
+                 };
+                 let missing = match target {
+-                    None => Some(format!("references `{url}`, which is not a file or route the site publishes")),
+-                    Some(target) => fragment.filter(|anchor| !anchor.is_empty()).and_then(|anchor| {
+-                        let anchor = crate::content::percent_decode(anchor);
+-                        ids.get(target).filter(|ids| !ids.contains(&anchor)).map(|_| format!("references `{url}`, but the final `{target}` document has no id `#{anchor}`"))
+-                    }),
++                    None => Some(format!(
++                        "references {}, which is not a file or route the site publishes",
++                        code_span(url)
++                    )),
++                    Some(target) => {
++                        fragment
++                            .filter(|anchor| !anchor.is_empty())
++                            .and_then(|anchor| {
++                                let anchor = crate::content::percent_decode(anchor);
++                                ids.get(target)
++                                    .filter(|ids| !ids.contains(&anchor))
++                                    .map(|_| {
++                                        format!(
++                                            "references {}, but the final {} document has no id {}",
++                                            code_span(url),
++                                            code_span(target),
++                                            code_span(&format!("#{anchor}"))
++                                        )
++                                    })
++                            })
++                    }
+                 };
+                 if let Some(missing) = missing {
+                     problems.push(Diagnostic::in_file(
+                         source,
+                         Severity::Error,
+                         "output-check",
+-                        format!("generated `{path}` {missing}"),
++                        format!("generated {} {missing}", code_span(path)),
+                     ));
+                 }
+             }
+@@ -1080,7 +1105,10 @@ pub fn generate_extended(
+             Diagnostic::general(
+                 Severity::Error,
+                 "output-check",
+-                format!("the generated stylesheet loads `{url}`, which is not a file the site publishes"),
++                format!(
++                    "the generated stylesheet loads {}, which is not a file the site publishes",
++                    code_span(&url)
++                ),
+             )
+         })
+         .collect();
+diff --git a/crates/rustify-docs/src/html_check.rs b/crates/rustify-docs/src/html_check.rs
+index 8ebac5f9..9a20b565 100644
+--- a/crates/rustify-docs/src/html_check.rs
++++ b/crates/rustify-docs/src/html_check.rs
+@@ -11,6 +11,7 @@
+ //! The same pass records each URL attribute's raw value range, so links and
+ //! resources in author HTML are resolved and rewritten like Markdown ones.
+ 
++use crate::diagnostic_text::{code_span, literal};
+ use std::ops::Range;
+ 
+ use dom_query::Document;
+@@ -622,7 +623,10 @@ fn scan_tokens(
+                 issues.push(Issue::error(
+                     span.clone(),
+                     "event-handler",
+-                    format!("`{attribute}` runs inline script, which the policy blocks"),
++                    format!(
++                        "{} runs inline script, which the policy blocks",
++                        code_span(&attribute)
++                    ),
+                 ));
+                 continue;
+             }
+@@ -641,7 +645,7 @@ fn scan_tokens(
+                 issues.push(Issue::error(
+                     span.clone(),
+                     "script-url",
+-                    format!("`{attribute}` holds a script URL"),
++                    format!("{} holds a script URL", code_span(&attribute)),
+                 ));
+                 continue;
+             }
+@@ -662,8 +666,15 @@ fn scan_tokens(
+                     };
+                     if is_cross_origin(&url, true) {
+                         issues.push(
+-                            Issue::error(span.clone(), "cross-origin-resource", format!("a class loads `{url}` from another origin, which the policy blocks"))
+-                                .suggest("download it into static/ and reference it from there"),
++                            Issue::error(
++                                span.clone(),
++                                "cross-origin-resource",
++                                format!(
++                                    "a class loads {} from another origin, which the policy blocks",
++                                    code_span(&url)
++                                ),
++                            )
++                            .suggest("download it into static/ and reference it from there"),
+                         );
+                     } else if !url.trim_start().to_ascii_lowercase().starts_with("data:") {
+                         slots.push(UrlSlot {
+@@ -691,8 +702,15 @@ fn scan_tokens(
+             if !matches!(role, UrlRole::Link) && urls.iter().any(|url| is_cross_origin(url, image))
+             {
+                 issues.push(
+-                    Issue::error(span.clone(), "cross-origin-resource", format!("<{name} {attribute}> loads from another origin, which the policy blocks"))
+-                        .suggest("download it into static/ and reference it from there"),
++                    Issue::error(
++                        span.clone(),
++                        "cross-origin-resource",
++                        format!(
++                            "{} loads from another origin, which the policy blocks",
++                            literal(&format!("<{name} {attribute}>"))
++                        ),
++                    )
++                    .suggest("download it into static/ and reference it from there"),
+                 );
+                 continue;
+             }
+@@ -736,17 +754,17 @@ pub fn check_document(html: &str) -> Vec<String> {
+                         in_script = !tag.self_closing;
+                         match attribute("src") {
+                             None => problems.push("an inline <script>".to_owned()),
+-                            Some(src) if is_cross_origin(&src, false) => {
+-                                problems.push(format!("a script from another origin: {src}"))
+-                            }
++                            Some(src) if is_cross_origin(&src, false) => problems
++                                .push(format!("a script from another origin: {}", literal(&src))),
+                             Some(_) => {}
+                         }
+                     }
+                     "style" | "iframe" | "frame" | "object" | "embed" | "base" => {
+-                        problems.push(format!("a <{name}> element"))
++                        problems.push(format!("a {} element", literal(&format!("<{name}>"))))
+                     }
+                     "a" | "area" if opens_unguarded_window(attribute) => problems.push(format!(
+-                        "a new-window <{name}> to another site without rel=\"noopener\""
++                        "a new-window {} to another site without rel=\"noopener\"",
++                        literal(&format!("<{name}>"))
+                     )),
+                     "link" => {
+                         let rel = attribute("rel").unwrap_or_default().to_ascii_lowercase();
+@@ -764,8 +782,11 @@ pub fn check_document(html: &str) -> Vec<String> {
+                         if let Some(href) = attribute("href")
+                             .filter(|href| loads && is_cross_origin(href, rel == "icon"))
+                         {
+-                            problems
+-                                .push(format!("a <link rel=\"{rel}\"> to another origin: {href}"));
++                            problems.push(format!(
++                                "a {} to another origin: {}",
++                                literal(&format!("<link rel=\"{rel}\">")),
++                                literal(&href)
++                            ));
+                         }
+                     }
+                     _ => {}
+@@ -774,9 +795,16 @@ pub fn check_document(html: &str) -> Vec<String> {
+                     let key = String::from_utf8_lossy(key).to_ascii_lowercase();
+                     let value = String::from_utf8_lossy(&value.value);
+                     if key.starts_with("on") || key == "style" {
+-                        problems.push(format!("a `{key}` attribute on <{name}>"));
++                        problems.push(format!(
++                            "a {} attribute on {}",
++                            code_span(&key),
++                            literal(&format!("<{name}>"))
++                        ));
+                     } else if is_script_url(&value) {
+-                        problems.push(format!("a script URL in <{name} {key}>"));
++                        problems.push(format!(
++                            "a script URL in {}",
++                            literal(&format!("<{name} {key}>"))
++                        ));
+                     } else if let Some(role) = url_role(&name, &key) {
+                         let image =
+                             matches!(role, UrlRole::Srcset | UrlRole::Resource { image: true });
+@@ -790,8 +818,11 @@ pub fn check_document(html: &str) -> Vec<String> {
+                         };
+                         if let Some(url) = urls.into_iter().find(|url| is_cross_origin(url, image))
+                         {
+-                            problems
+-                                .push(format!("<{name} {key}> loads from another origin: {url}"));
++                            problems.push(format!(
++                                "{} loads from another origin: {}",
++                                literal(&format!("<{name} {key}>")),
++                                literal(&url)
++                            ));
+                         }
+                     }
+                 }
+diff --git a/crates/rustify-docs/src/include.rs b/crates/rustify-docs/src/include.rs
+index 9d26039e..0c123799 100644
+--- a/crates/rustify-docs/src/include.rs
++++ b/crates/rustify-docs/src/include.rs
+@@ -7,6 +7,7 @@
+ //! syntax. The marker lines are left out; the lines between keep their bytes
+ //! and line endings. Nothing is compiled: the file is read as it is now.
+ 
++use crate::diagnostic_text::code_span;
+ use std::ops::Range;
+ 
+ /// An include directive's attributes.
+@@ -45,7 +46,7 @@ pub fn directive(html: &str) -> Option<Result<Directive, String>> {
+                 "region" => directive.region = Some(value),
+                 "lang" => directive.lang = Some(value),
+                 "title" => directive.title = Some(value),
+-                other => return Err(format!("`{other}` is not an include attribute")),
++                other => return Err(format!("{} is not an include attribute", code_span(other))),
+             }
+         }
+         if directive.path.is_empty() {
+@@ -62,15 +63,15 @@ pub fn parse_attributes(text: &str) -> Result<Vec<(String, String)>, String> {
+     while !rest.is_empty() {
+         let equals = rest
+             .find('=')
+-            .ok_or_else(|| format!("`{rest}` is not name=\"value\""))?;
++            .ok_or_else(|| format!("{} is not name=\"value\"", code_span(rest)))?;
+         let name = rest[..equals].trim().to_owned();
+         let after = rest[equals + 1..].trim_start();
+         let after = after
+             .strip_prefix('"')
+-            .ok_or_else(|| format!("the value of `{name}` must be in double quotes"))?;
++            .ok_or_else(|| format!("the value of {} must be in double quotes", code_span(&name)))?;
+         let end = after
+             .find('"')
+-            .ok_or_else(|| format!("the value of `{name}` has no closing quote"))?;
++            .ok_or_else(|| format!("the value of {} has no closing quote", code_span(&name)))?;
+         out.push((name, after[..end].to_owned()));
+         rest = after[end + 1..].trim_start();
+     }
+@@ -96,28 +97,42 @@ pub fn extract(source: &str, region: &str) -> Result<String, String> {
+     for line in source.split_inclusive('\n') {
+         if is_marker(line, &open) {
+             if start.is_some() || found.is_some() {
+-                return Err(format!("region `{region}` is opened more than once"));
++                return Err(format!(
++                    "region {} is opened more than once",
++                    code_span(region)
++                ));
+             }
+             start = Some(offset + line.len());
+         } else if is_marker(line, &close) {
+             match start.take() {
+                 Some(begin) => {
+                     if found.is_some() {
+-                        return Err(format!("region `{region}` is closed more than once"));
++                        return Err(format!(
++                            "region {} is closed more than once",
++                            code_span(region)
++                        ));
+                     }
+                     found = Some(begin..offset);
+                 }
+-                None => return Err(format!("region `{region}` is closed before it is opened")),
++                None => {
++                    return Err(format!(
++                        "region {} is closed before it is opened",
++                        code_span(region)
++                    ))
++                }
+             }
+         }
+         offset += line.len();
+     }
+     if start.is_some() {
+-        return Err(format!("region `{region}` is opened but never closed"));
++        return Err(format!(
++            "region {} is opened but never closed",
++            code_span(region)
++        ));
+     }
+     found
+         .map(|range| source[range].to_owned())
+-        .ok_or_else(|| format!("there is no region `{region}`"))
++        .ok_or_else(|| format!("there is no region {}", code_span(region)))
+ }
+ 
+ #[cfg(test)]
+diff --git a/crates/rustify-docs/src/lib.rs b/crates/rustify-docs/src/lib.rs
+index d2c880d5..17446da4 100644
+--- a/crates/rustify-docs/src/lib.rs
++++ b/crates/rustify-docs/src/lib.rs
+@@ -18,6 +18,8 @@ compile_error!("build rustify-docs site-ssr and hydrate as separate targets; dis
+ 
+ pub use rustify_docs_macros::site;
+ 
++pub mod diagnostic_text;
++
+ #[cfg(any(feature = "site-ssr", feature = "hydrate"))]
+ pub mod site;
+ #[cfg(all(feature = "hydrate", target_arch = "wasm32"))]
+diff --git a/crates/rustify-docs/src/markdown.rs b/crates/rustify-docs/src/markdown.rs
+index 5054022c..7ae66f49 100644
+--- a/crates/rustify-docs/src/markdown.rs
++++ b/crates/rustify-docs/src/markdown.rs
+@@ -17,6 +17,7 @@
+ //! each generation. Raw HTML is checked against the site's policy here, and
+ //! its URLs become slots the same way.
+ 
++use crate::diagnostic_text::code_span;
+ use std::collections::BTreeMap;
+ use std::ops::Range;
+ 
+@@ -508,7 +509,10 @@ impl<'a> Writer<'a> {
+                         Issue::error(
+                             span.clone(),
+                             "duplicate-heading-id",
+-                            format!("the heading id `{id}` is used twice on this page"),
++                            format!(
++                                "the heading id {} is used twice on this page",
++                                code_span(id)
++                            ),
+                         )
+                         .suggest("give one of the headings another {#id}"),
+                     );
+@@ -733,8 +737,8 @@ impl<'a> Writer<'a> {
+                         span,
+                         "code-group",
+                         format!(
+-                            "code group `{}` is still open; groups do not nest",
+-                            open.name
++                            "code group {} is still open; groups do not nest",
++                            code_span(&open.name)
+                         ),
+                     ));
+                     return;
+@@ -775,8 +779,8 @@ impl<'a> Writer<'a> {
+                     span.clone(),
+                     "code-group",
+                     format!(
+-                        "code group `{}` holds something other than code blocks",
+-                        group.name
++                        "code group {} holds something other than code blocks",
++                        code_span(&group.name)
+                     ),
+                 )
+                 .suggest("keep only fenced code blocks between the two group comments"),
+@@ -786,7 +790,7 @@ impl<'a> Writer<'a> {
+             self.out.issues.push(Issue::error(
+                 span.clone(),
+                 "code-group",
+-                format!("code group `{}` has no code blocks", group.name),
++                format!("code group {} has no code blocks", code_span(&group.name)),
+             ));
+         }
+         for (i, label) in group.labels.iter().enumerate() {
+@@ -796,8 +800,9 @@ impl<'a> Writer<'a> {
+                         span.clone(),
+                         "code-group",
+                         format!(
+-                            "code group `{}` has two tabs labelled `{label}`",
+-                            group.name
++                            "code group {} has two tabs labelled {}",
++                            code_span(&group.name),
++                            code_span(label)
+                         ),
+                     )
+                     .suggest("give each block its own title=\"…\""),
+@@ -1291,8 +1296,12 @@ impl<'a> Writer<'a> {
+             Some(Ok(source)) => source.clone(),
+             Some(Err(message)) => {
+                 self.out.issues.push(
+-                    Issue::error(span, "include-missing", format!("`{path}`: {message}"))
+-                        .suggest("the path is relative to the project root"),
++                    Issue::error(
++                        span,
++                        "include-missing",
++                        format!("{}: {message}", code_span(&path)),
++                    )
++                    .suggest("the path is relative to the project root"),
+                 );
+                 return;
+             }
+@@ -1300,7 +1309,7 @@ impl<'a> Writer<'a> {
+                 self.out.issues.push(Issue::error(
+                     span,
+                     "include-missing",
+-                    format!("`{path}` was not read for this page"),
++                    format!("{} was not read for this page", code_span(&path)),
+                 ));
+                 return;
+             }
+@@ -1310,8 +1319,15 @@ impl<'a> Writer<'a> {
+                 Ok(text) => text,
+                 Err(message) => {
+                     self.out.issues.push(
+-                        Issue::error(span, "include-region", format!("`{path}`: {message}")).suggest(format!(
+-                            "mark the lines with `rustify-region:{region}` and `rustify-endregion:{region}` comments"
++                        Issue::error(
++                            span,
++                            "include-region",
++                            format!("{}: {message}", code_span(&path)),
++                        )
++                        .suggest(format!(
++                            "mark the lines with {} and {} comments",
++                            code_span(&format!("rustify-region:{region}")),
++                            code_span(&format!("rustify-endregion:{region}"))
+                         )),
+                     );
+                     return;
+@@ -1426,7 +1442,7 @@ impl<'a> Writer<'a> {
+                 Issue::error(
+                     group.span.clone(),
+                     "code-group",
+-                    format!("code group `{}` is never closed", group.name),
++                    format!("code group {} is never closed", code_span(&group.name)),
+                 )
+                 .suggest("end it with <!-- rustify:end-code-group -->"),
+             );
+@@ -1579,12 +1595,12 @@ pub fn parse_info(info: &str) -> Result<FenceInfo, String> {
+         let name = &rest[..name_end];
+         rest = &rest[name_end..];
+         let value = if let Some(after) = rest.strip_prefix('=') {
+-            let after = after
+-                .strip_prefix('"')
+-                .ok_or_else(|| format!("the value of `{name}` must be in double quotes"))?;
++            let after = after.strip_prefix('"').ok_or_else(|| {
++                format!("the value of {} must be in double quotes", code_span(name))
++            })?;
+             let end = after
+                 .find('"')
+-                .ok_or_else(|| format!("the value of `{name}` has no closing quote"))?;
++                .ok_or_else(|| format!("the value of {} has no closing quote", code_span(name)))?;
+             rest = &after[end + 1..];
+             Some(&after[..end])
+         } else {
+@@ -1596,7 +1612,7 @@ pub fn parse_info(info: &str) -> Result<FenceInfo, String> {
+             ("linenos", None) => fence.linenos = true,
+             ("title", Some(title)) => fence.title = Some(title.to_owned()),
+             ("highlight", Some(lines)) => fence.highlight = parse_ranges(lines)?,
+-            (name, _) => return Err(format!("`{name}` is not a code fence attribute")),
++            (name, _) => return Err(format!("{} is not a code fence attribute", code_span(name))),
+         }
+         first = false;
+     }
+diff --git a/crates/rustify-docs/src/publish.rs b/crates/rustify-docs/src/publish.rs
+index 23e8ea85..5d3b7026 100644
+--- a/crates/rustify-docs/src/publish.rs
++++ b/crates/rustify-docs/src/publish.rs
+@@ -14,6 +14,7 @@
+ //! a preview holds it shared, and neither waits for the other. A directory
+ //! that is not a previous build's output is never replaced.
+ 
++use crate::diagnostic_text::{code_span, literal};
+ use std::collections::BTreeMap;
+ use std::fs::{self, File, TryLockError};
+ use std::io;
+@@ -95,12 +96,19 @@ impl Manifest {
+         let text = fs::read_to_string(&path).map_err(|error| match error.kind() {
+             io::ErrorKind::NotFound => format!(
+                 "{} has no {MANIFEST_FILE}; it is not a production build",
+-                dir.display()
++                literal(&dir.display().to_string())
++            ),
++            _ => format!(
++                "cannot read {}: {error}",
++                literal(&path.display().to_string())
+             ),
+-            _ => format!("cannot read {}: {error}", path.display()),
+         })?;
+-        serde_json::from_str(&text)
+-            .map_err(|error| format!("{} is damaged: {error}", path.display()))
++        serde_json::from_str(&text).map_err(|error| {
++            format!(
++                "{} is damaged: {error}",
++                literal(&path.display().to_string())
++            )
++        })
+     }
+ }
+ 
+@@ -122,14 +130,20 @@ pub struct Area {
+ impl Area {
+     /// The area of `out` (absolute; it need not exist, its parent must).
+     pub fn of(out: &Path) -> Result<Self, String> {
+-        let name = out
+-            .file_name()
+-            .ok_or_else(|| format!("{} is not a directory name", out.display()))?;
+-        let parent = out
+-            .parent()
+-            .ok_or_else(|| format!("{} has no parent directory", out.display()))?;
+-        let parent =
+-            fs::canonicalize(parent).map_err(|error| format!("{}: {error}", parent.display()))?;
++        let name = out.file_name().ok_or_else(|| {
++            format!(
++                "{} is not a directory name",
++                literal(&out.display().to_string())
++            )
++        })?;
++        let parent = out.parent().ok_or_else(|| {
++            format!(
++                "{} has no parent directory",
++                literal(&out.display().to_string())
++            )
++        })?;
++        let parent = fs::canonicalize(parent)
++            .map_err(|error| format!("{}: {error}", literal(&parent.display().to_string())))?;
+         let out = parent.join(name);
+         let label: String = name
+             .to_string_lossy()
+@@ -185,13 +199,18 @@ pub struct Lock {
+ /// Locks `area`: exclusively for a build, shared for a preview. Never waits.
+ pub fn lock(area: &Area, exclusive: bool) -> Result<Lock, LockError> {
+     fs::create_dir_all(&area.dir)
+-        .map_err(|e| LockError::Io(format!("{}: {e}", area.dir.display())))?;
++        .map_err(|e| LockError::Io(format!("{}: {e}", literal(&area.dir.display().to_string()))))?;
+     let file = File::options()
+         .create(true)
+         .truncate(false)
+         .write(true)
+         .open(area.lock_path())
+-        .map_err(|e| LockError::Io(format!("{}: {e}", area.lock_path().display())))?;
++        .map_err(|e| {
++            LockError::Io(format!(
++                "{}: {e}",
++                literal(&area.lock_path().display().to_string())
++            ))
++        })?;
+     let taken = if exclusive {
+         file.try_lock()
+     } else {
+@@ -216,7 +235,7 @@ fn remove_tree(path: &Path) -> io::Result<()> {
+ }
+ 
+ fn io_error(what: &str, path: &Path, error: io::Error) -> String {
+-    format!("{what} {}: {error}", path.display())
++    format!("{what} {}: {error}", literal(&path.display().to_string()))
+ }
+ 
+ /// What recovering an interrupted build did.
+@@ -304,14 +323,14 @@ pub fn check_out(project: &crate::content::Project, out: &Path) -> Result<(), St
+     }) {
+         return Err(format!(
+             "the output {} is inside a repository's or this tool's own directory",
+-            out.display()
++            literal(&out.display().to_string())
+         ));
+     }
+     let overlaps = |a: &Path, b: &Path| a.starts_with(b) || b.starts_with(a);
+     if root.starts_with(&out) {
+         return Err(format!(
+             "the output {} would hold the project; a build replaces its output whole",
+-            out.display()
++            literal(&out.display().to_string())
+         ));
+     }
+     for (dir, what) in [
+@@ -322,8 +341,8 @@ pub fn check_out(project: &crate::content::Project, out: &Path) -> Result<(), St
+         if overlaps(&out, &dir) {
+             return Err(format!(
+                 "the output {} overlaps the {what} {}; a build replaces its output whole",
+-                out.display(),
+-                dir.display()
++                literal(&out.display().to_string()),
++                literal(&dir.display().to_string())
+             ));
+         }
+     }
+@@ -338,7 +357,7 @@ pub fn replaceable(out: &Path) -> Result<(), String> {
+     if fs::symlink_metadata(out).is_ok_and(|meta| meta.file_type().is_symlink()) {
+         return Err(format!(
+             "{} is a symbolic link; give the directory it points to as the output",
+-            out.display()
++            literal(&out.display().to_string())
+         ));
+     }
+     match fs::read_dir(out) {
+@@ -351,16 +370,12 @@ pub fn replaceable(out: &Path) -> Result<(), String> {
+             if !out.join(MANIFEST_FILE).is_file() {
+                 return Err(format!(
+                     "{} holds files that no build wrote (it has no {MANIFEST_FILE}); it is not replaced",
+-                    out.display()
++                    literal(&out.display().to_string())
+                 ));
+             }
+             match Manifest::read(out) {
+                 Ok(manifest) if manifest.mode == PRODUCTION => Ok(()),
+-                Ok(manifest) => Err(format!(
+-                    "{} holds a `{}` output, not a production build; it is not replaced",
+-                    out.display(),
+-                    manifest.mode
+-                )),
++                Ok(manifest) => Err(format!("{} holds a {} output, not a production build; it is not replaced", literal(&out.display().to_string()), code_span(&manifest.mode))),
+                 Err(message) => Err(format!(
+                     "{message}; whatever wrote it, the directory is not replaced: remove it and build again"
+                 )),
+diff --git a/crates/rustify-docs/src/site/registry.rs b/crates/rustify-docs/src/site/registry.rs
+index 39164bb7..7a3df5af 100644
+--- a/crates/rustify-docs/src/site/registry.rs
++++ b/crates/rustify-docs/src/site/registry.rs
+@@ -1,4 +1,5 @@
+ use super::{SiteEnvironment, SiteError, Slot};
++use crate::diagnostic_text::code_span;
+ use leptos::prelude::*;
+ use serde::{de::DeserializeOwned, Serialize};
+ use serde_json::Value;
+@@ -142,24 +143,25 @@ impl SiteRegistry {
+         props: Value,
+     ) -> Result<PreparedComponent, SiteError> {
+         self.components.get(name).ok_or_else(|| {
+-            SiteError::new("unknown_component", format!("unknown component `{name}`"))
++            SiteError::new(
++                "unknown_component",
++                format!("unknown component {}", code_span(name)),
++            )
+         })?(props)
+     }
+ 
+     #[cfg(feature = "site-ssr")]
+     pub(crate) fn demo_view(&self, name: &str) -> Result<AnyView, SiteError> {
+-        self.demos
+-            .get(name)
+-            .map(|render| render())
+-            .ok_or_else(|| SiteError::new("unknown_demo", format!("unknown demo `{name}`")))
++        self.demos.get(name).map(|render| render()).ok_or_else(|| {
++            SiteError::new("unknown_demo", format!("unknown demo {}", code_span(name)))
++        })
+     }
+ 
+     #[cfg(all(feature = "hydrate", target_arch = "wasm32"))]
+     pub(crate) fn prepare_demo(&self, name: &str) -> Result<ViewFactory, SiteError> {
+-        self.demos
+-            .get(name)
+-            .cloned()
+-            .ok_or_else(|| SiteError::new("unknown_demo", format!("unknown demo `{name}`")))
++        self.demos.get(name).cloned().ok_or_else(|| {
++            SiteError::new("unknown_demo", format!("unknown demo {}", code_span(&name)))
++        })
+     }
+ 
+     #[cfg(feature = "site-ssr")]
+@@ -171,7 +173,9 @@ impl SiteRegistry {
+         self.pages
+             .get(name)
+             .map(|render| render(context))
+-            .ok_or_else(|| SiteError::new("unknown_page", format!("unknown page `{name}`")))
++            .ok_or_else(|| {
++                SiteError::new("unknown_page", format!("unknown page {}", code_span(name)))
++            })
+     }
+ 
+     #[cfg(feature = "site-ssr")]
+@@ -184,7 +188,10 @@ impl SiteRegistry {
+             .get(&slot)
+             .map(|render| render(context))
+             .ok_or_else(|| {
+-                SiteError::new("unknown_slot", format!("slot `{slot:?}` has no override"))
++                SiteError::new(
++                    "unknown_slot",
++                    format!("slot {} has no override", code_span(&format!("{slot:?}"))),
++                )
+             })
+     }
+ }
+@@ -312,7 +319,7 @@ pub(crate) fn prepare_environment(
+     let locale = rustify_ui::Locale::from_tag(&environment.lang).ok_or_else(|| {
+         SiteError::new(
+             "invalid_environment",
+-            format!("unsupported locale `{}`", environment.lang),
++            format!("unsupported locale {}", code_span(&environment.lang)),
+         )
+     })?;
+     let theme = if let Some(theme) = &environment.theme {
+diff --git a/docs/docs-ssg.md b/docs/docs-ssg.md
+index 03355c1c..84eb1eee 100644
+--- a/docs/docs-ssg.md
++++ b/docs/docs-ssg.md
+@@ -18,8 +18,8 @@ Supported on macOS. Linux and Windows are not verified.
+ ## Install and maintain the CLI
+ 
+ This section records the verified P1 content-site release. The Rust examples
+-below use the current repository checkout's CLI candidate, version **0.1.17**,
+-paired with library revision `745ba6b720aa6ed042dcf5d4f763641fc2d05165`.
++below use the current repository checkout's CLI candidate, version **0.1.18**,
++paired with library revision `e20daf7f07179d2bd24700c345f577fb9c8dbc15`.
+ The library revision is committed locally; public availability is pending.
+ The installed candidate reports its exact CLI source commit with
+ `rustify-docs --build-info`. The pinned P1 install below is for content sites.
+@@ -590,8 +590,8 @@ The components template requires an installed CLI with a traceable source
+ revision, an explicit paired framework revision and its embedded dependency
+ lock. A development checkout without that frozen pair refuses generation;
+ it does not write an unlocked project or choose a framework revision for
+-the author. This checkout's 0.1.17 candidate pins library revision
+-`745ba6b720aa6ed042dcf5d4f763641fc2d05165` and embeds its generated dependency
++the author. This checkout's 0.1.18 candidate pins library revision
++`e20daf7f07179d2bd24700c345f577fb9c8dbc15` and embeds its generated dependency
+ lock. Public Git availability is still being prepared; the installed CLI's
+ `--build-info` identifies its paired C commit. The verified P1 installation
+ above does not provide this template.
+@@ -712,6 +712,51 @@ and an unknown name point to the fence. Duplicate keys and malformed fences
+ say how to write the fence. `check`, `build` and `dev` (the terminal and the
+ page's problem panel) report the same location and repair.
+ 
++Diagnostic messages and repairs use Rustify verbatim code fragments. This
++notation preserves spaces, backslashes and LF/CRLF line endings; it is not
++CommonMark. The JSON structure remains schema version 1 and can be read by
++a standard JSON parser. A consumer formatting `message` or `suggestion`
++must then read the fragment notation as follows:
++
++- A nonempty code value without backticks has one backtick on each side,
++  with no padding. An empty code value has two backticks, two ASCII spaces,
++  then two backticks.
++- A code value containing backticks has a fence one backtick longer than
++  its longest backtick run, with one ASCII space between each fence and
++  the value. Fixed prefixes belong inside the value: quote the complete
++  heading ID or region marker, including `#` or `rustify-region:`.
++- Ordinary author text, such as a file path outside a code fragment, stays
++  unchanged unless it contains a backtick. In that case the whole value
++  uses the same fragment notation and the panel's existing monospace style.
++
++Scan maximal backtick runs from left to right. Pair an opening run with the
++first later maximal run of exactly the same length; runs of other lengths
++are content. An unmatched run stays ordinary text and scanning continues.
++For a single-backtick pair, keep all enclosed characters. For a longer pair,
++remove exactly one leading and one trailing ASCII space only when both are
++present and the enclosed text has at least two characters, including when
++it consists entirely of spaces. Preserve everything else, including newlines.
++An empty fragment creates an empty code node. Keep non-backtick prose between
++fragments so their fences do not merge; adjacent code values must be quoted
++as one complete value.
++
++These examples show the encoded fragment between the arrows; the quoted
++values on either side use JSON string notation:
++
++````text
++""       -> ``  ``         -> ""
++" a "    -> ` a `          -> " a "
++"a`b"    -> `` a`b ``      -> "a`b"
++"a``b"   -> ``` a``b ```   -> "a``b"
++````
++
++The terminal and JSON carry these delimiters; the panel removes them and
++shows the original value. The verbatim guarantee covers Rustify's own
++templates and the author values they insert. External messages from serde,
++YAML parsers, rustc and I/O are passed through unchanged. The panel uses the
++same reader for those messages: unmatched backticks remain visible, while
++paired backticks are still formatted as code and can remain ambiguous.
++
+ A demo directly references a site-local function with a
+ `crate::module::function` path. Its Function and Full file tabs show and copy
+ the original source, including Unicode and line endings, from the same files
+diff --git a/tests/docs-ssg/dev-components.spec.ts b/tests/docs-ssg/dev-components.spec.ts
+index fd599f56..0ac85b11 100644
+--- a/tests/docs-ssg/dev-components.spec.ts
++++ b/tests/docs-ssg/dev-components.spec.ts
+@@ -821,6 +821,25 @@ function lineOf(text: string, needle: string, offset = 0) {
+     return text.split("\n").findIndex(line => line.includes(needle)) + 1 + offset;
+ }
+ 
++function diagnosticProse(input: string) {
++    const runs = [...input.matchAll(/`+/g)];
++    let text = "";
++    const codes: string[] = [];
++    let start = 0;
++    for (let i = 0; i < runs.length; i++) {
++        const opening = runs[i];
++        const j = runs.findIndex((closing, index) => index > i && closing[0].length === opening[0].length);
++        if (j < 0) continue;
++        let code = input.slice(opening.index! + opening[0].length, runs[j].index!);
++        if (opening[0].length >= 2 && code.length >= 2 && code.startsWith(" ") && code.endsWith(" ")) code = code.slice(1, -1);
++        text += input.slice(start, opening.index!) + code;
++        codes.push(code);
++        start = runs[j].index! + runs[j][0].length;
++        i = j;
++    }
++    return { text: text + input.slice(start), codes };
++}
++
+ async function expectRepairs(page: Page, state: State, file: string, repairs: Repair[]) {
+     const order = (a: Repair, b: Repair) => a.line - b.line || a.column - b.column || a.rule.localeCompare(b.rule);
+     const reported = state.diagnostics.filter(d => d.severity === "error" && d.file === file)
+@@ -833,8 +852,9 @@ async function expectRepairs(page: Page, state: State, file: string, repairs: Re
+             .filter({ has: page.locator(".rd-dev-rule", { hasText: repair.rule }) });
+         await expect(item).toHaveCount(1);
+         // The panel shows the same text, formatting only its backticked names.
+-        await expect(item.locator(".rd-dev-suggestion")).toHaveText(repair.suggestion.replaceAll("`", ""));
+-        await expect(item.locator(".rd-dev-suggestion code")).toHaveText([...repair.suggestion.matchAll(/`([^`]+)`/g)].map(match => match[1]));
++        const expected = diagnosticProse(repair.suggestion);
++        expect(await item.locator(".rd-dev-suggestion").textContent()).toBe(expected.text);
++        expect(await item.locator(".rd-dev-suggestion code").allTextContents()).toEqual(expected.codes);
+     }
+ }
+ 
+@@ -952,3 +972,165 @@ test("gaps embedded diagnostics: without Rust the panel names the builtins and t
+     expect(audit.pageErrors).toEqual([]);
+     expect(server.streamErrors).toEqual([]);
+ });
++
++// Independent display expectations: never derive these from the prose reader.
++async function exactProse(page: Page, state: State, rule: string, expected: { message: string; messageCodes: string[]; suggestion?: string; suggestionCodes?: string[] }) {
++    const item = page.locator('.rd-dev-item').filter({ has: page.locator('.rd-dev-rule', { hasText: rule }) });
++    await expect(item).toHaveCount(1);
++    await expect.poll(() => item.locator('.rd-dev-message').textContent()).toBe(expected.message);
++    expect(await item.locator('.rd-dev-message code').allTextContents()).toEqual(expected.messageCodes);
++    if (expected.suggestion !== undefined) {
++        expect(await item.locator('.rd-dev-suggestion').textContent()).toBe(expected.suggestion);
++        expect(await item.locator('.rd-dev-suggestion code').allTextContents()).toEqual(expected.suggestionCodes);
++    }
++    await test.info().attach(`${rule}-prose.json`, { body: JSON.stringify({ diagnostic: state.diagnostics.find(d => d.rule === rule), expected, actual: await item.evaluate(node => ({ message: node.querySelector('.rd-dev-message')?.textContent, messageCodes: [...node.querySelectorAll('.rd-dev-message code')].map(code => code.textContent), suggestion: node.querySelector('.rd-dev-suggestion')?.textContent, suggestionCodes: [...node.querySelectorAll('.rd-dev-suggestion code')].map(code => code.textContent) })) }, null, 2), contentType: 'application/json' });
++}
++
++async function proseLayouts(page: Page, label: string) {
++    for (const width of [1280, 375]) {
++        for (const theme of ['light', 'dark']) {
++            await page.setViewportSize({ width, height: 900 });
++            await page.locator(`[data-rd-mode="${theme}"]`).click();
++            await expect(page.locator('html')).toHaveAttribute('data-theme', theme);
++            expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(0);
++            const actual = await page.locator('.rd-dev-item').evaluateAll(items => items.map(item => ({ message: item.querySelector('.rd-dev-message')?.textContent, suggestion: item.querySelector('.rd-dev-suggestion')?.textContent, codes: [...item.querySelectorAll('code')].map(code => ({ text: code.textContent, font: getComputedStyle(code).fontFamily })), overflow: [...item.querySelectorAll<HTMLElement>('.rd-dev-message, .rd-dev-suggestion')].map(node => node.scrollWidth - node.clientWidth) })));
++            expect(actual.every(item => item.overflow.every(extra => extra <= 0))).toBe(true);
++            await test.info().attach(`${label}-${width}-${theme}.json`, { body: JSON.stringify({ width, theme, actual }, null, 2), contentType: 'application/json' });
++            await test.info().attach(`${label}-${width}-${theme}.png`, { body: await page.screenshot(), contentType: 'image/png' });
++        }
++    }
++}
++
++test('gaps-2 code spans: plain author paths, prefixed anchors, YAML keys and empty language remain exact', async ({ page }) => {
++    const plain = path.join(site.dir, 'plain');
++    mkdirSync(path.join(plain, 'content'), { recursive: true });
++    const config = "schema_version=1\n[site]\nname='Plain'\nurl='https://example.com/'\n";
++    const good = '---\ndescription: Home\n---\n# Home\n';
++    writeFileSync(path.join(plain, 'rustify-docs.toml'), config);
++    writeFileSync(path.join(plain, 'content/index.md'), good);
++    writeFileSync(path.join(plain, 'content/a`b`c.md'), '---\ndescription: Target\n---\n# Target\n');
++    server = await Dev.start(site, plain);
++    await page.goto(server.url);
++    let state = await settled();
++    writeFileSync(path.join(plain, 'content/index.md'), `${good}\n[Target](a%60b%60c.md#a%60b)\n`);
++    state = await settled(state.revision, false);
++    expect(state.diagnostics.find(d => d.rule === 'broken-anchor')?.message).toBe('`` content/a`b`c.md `` has no heading `` #a`b ``');
++    await exactProse(page, state, 'broken-anchor', { message: 'content/a`b`c.md has no heading #a`b', messageCodes: ['content/a`b`c.md', '#a`b'] });
++    await proseLayouts(page, 'gaps2-anchor');
++    const hide = page.getByRole('button', { name: 'Hide problems' });
++    const marker = page.locator('.rd-dev-marker');
++    await hide.click();
++    await expect(marker).toBeFocused();
++    await page.keyboard.press('Enter');
++    await expect(hide).toBeFocused();
++    await page.keyboard.press('Escape');
++    await expect(marker).toBeFocused();
++    await marker.click();
++
++    writeFileSync(path.join(plain, 'content/index.md'), `${good}\n\`\`\`rustify-component\nname: Steps\nun\`known: 1\n\`\`\`\n`);
++    state = await settled(state.revision, false);
++    await exactProse(page, state, 'embed-payload', { message: 'unknown field un`known; a demo takes only name, a component takes name, props and children', messageCodes: ['un`known', 'name', 'name', 'props', 'children'] });
++    await proseLayouts(page, 'gaps2-yaml');
++
++    writeFileSync(path.join(plain, 'rustify-docs.toml'), `${config}lang=''\n`);
++    state = await settled(state.revision, false);
++    await exactProse(page, state, 'config-lang', { message: ' is not a language tag', messageCodes: [''], suggestion: 'use a tag like en or zh-CN', suggestionCodes: ['en', 'zh-CN'] });
++    await proseLayouts(page, 'gaps2-empty');
++    writeFileSync(path.join(plain, 'content/index.md'), good);
++    writeFileSync(path.join(plain, 'rustify-docs.toml'), config);
++    state = await settled(state.revision);
++    await cleared(page, state);
++    expect(audit.csp).toEqual([]);
++    expect(audit.failures).toEqual([]);
++    expect(audit.console).toEqual([]);
++    expect(audit.pageErrors).toEqual([]);
++    expect(server.streamErrors).toEqual([]);
++});
++
++test('gaps-2 code spans: defaults with literal backticks survive unknown props, type errors and external unmatched ticks', async ({ page }) => {
++    test.setTimeout(900_000);
++    site.edit('src/lib.rs', 'label: String = "Counter".to_string()', 'label: String = "a`b".to_string()');
++    server = await Dev.start(site);
++    await page.goto(new URL('counter/', server.url).href);
++    site.release();
++    await ready(page);
++    let state = await settled();
++    const original = site.read('content/counter.md');
++    await captureTrees(page);
++    site.write('content/counter.md', `${original}\n\`\`\`rustify-component\nname: Counter\nprops:\n  un\`known: 1\n\`\`\`\n`);
++    state = await settled(state.revision, false);
++    await exactProse(page, state, 'unknown-property', { message: 'component Counter has no property un`known', messageCodes: ['Counter', 'un`known'], suggestion: 'Use one of initial (i32; default expression 2), label (String; default expression "a`b".to_string()) for Counter; rename or remove un`known.', suggestionCodes: ['initial', 'i32', '2', 'label', 'String', '"a`b".to_string()', 'Counter', 'un`known'] });
++    await retained(page);
++    await proseLayouts(page, 'gaps2-default-unknown');
++    site.write('content/counter.md', `${original}\n\`\`\`rustify-component\nname: Counter\nprops:\n  label: [wrong]\n\`\`\`\n`);
++    state = await settled(state.revision, false);
++    const typed = state.diagnostics.find(d => d.rule === 'invalid_props')!;
++    expect(typed.suggestion).toBe('Write `label: "text"` for declared type `String` (default expression `` "a`b".to_string() ``). Reported props path: `label`.');
++    await exactProse(page, state, 'invalid_props', { message: 'invalid type: sequence, expected a string', messageCodes: [], suggestion: 'Write label: "text" for declared type String (default expression "a`b".to_string()). Reported props path: label.', suggestionCodes: ['label: "text"', 'String', '"a`b".to_string()', 'label'] });
++    await retained(page);
++    await proseLayouts(page, 'gaps2-default-type');
++    site.write('content/counter.md', `${original}\n\`\`\`rustify-component\nname: Counter\nprops:\n  initial: a\`b\n\`\`\`\n`);
++    state = await settled(state.revision, false);
++    const external = state.diagnostics.find(d => d.rule === 'invalid_props')!;
++    expect(external.message).toContain('a`b');
++    await exactProse(page, state, 'invalid_props', { message: 'invalid type: string "a`b", expected i32', messageCodes: [] });
++    await proseLayouts(page, 'gaps2-external');
++    await page.getByRole('button', { name: 'Hide problems' }).click();
++    await expect(page.locator('.rd-dev-marker')).toBeFocused();
++    site.write('content/counter.md', original);
++    state = await settled(state.revision);
++    await cleared(page, state);
++    await healthy();
++});
++
++test('gaps-2 code spans: the real DOM reader preserves the handwritten whitespace and delimiter table', async ({ page }) => {
++    const plain = path.join(site.dir, 'plain');
++    mkdirSync(path.join(plain, 'content'), { recursive: true });
++    writeFileSync(path.join(plain, 'rustify-docs.toml'), "schema_version=1\n[site]\nname='Plain'\nurl='https://example.com/'\n");
++    writeFileSync(path.join(plain, 'content/index.md'), '---\ndescription: Home\n---\n# Home\n');
++    server = await Dev.start(site, plain);
++    const state = await settled();
++    const cases: { encoded: string; text: string; codes: string[] }[] = [
++        { encoded: '``  ``', text: '', codes: [''] },
++        { encoded: '` `', text: ' ', codes: [' '] },
++        { encoded: '`  `', text: '  ', codes: ['  '] },
++        { encoded: '` a `', text: ' a ', codes: [' a '] },
++        { encoded: '`a\nb`', text: 'a\nb', codes: ['a\nb'] },
++        { encoded: '`a\r\nb`', text: 'a\r\nb', codes: ['a\r\nb'] },
++        { encoded: '`a\\b`', text: 'a\\b', codes: ['a\\b'] },
++        { encoded: '`Counter`', text: 'Counter', codes: ['Counter'] },
++        { encoded: '`` a`b ``', text: 'a`b', codes: ['a`b'] },
++        { encoded: '``` a``b ```', text: 'a``b', codes: ['a``b'] },
++        { encoded: '`` `a` ``', text: '`a`', codes: ['`a`'] },
++        { encoded: '`` ` ``', text: '`', codes: ['`'] },
++        { encoded: '``` `` ```', text: '``', codes: ['``'] },
++        { encoded: '``  `\r\n  ``', text: ' `\r\n ', codes: [' `\r\n '] },
++        { encoded: '``    ``', text: '  ', codes: ['  '] },
++        { encoded: '``a b``', text: 'a b', codes: ['a b'] },
++        { encoded: '``\na\r\n``', text: '\na\r\n', codes: ['\na\r\n'] },
++        { encoded: '``  `` then `` file/a`b `` and `en` / `zh-CN`', text: ' then file/a`b and en / zh-CN', codes: ['', 'file/a`b', 'en', 'zh-CN'] },
++        { encoded: 'plain `unmatched and `` value ``', text: 'plain `unmatched and value', codes: ['value'] },
++        { encoded: 'unknown field `a`b`', text: 'unknown field ab`', codes: ['a'] },
++        { encoded: 'single a`b', text: 'single a`b', codes: [] },
++        { encoded: '`<img src=x onerror=alert(1)>`', text: '<img src=x onerror=alert(1)>', codes: ['<img src=x onerror=alert(1)>'] },
++    ];
++    cases.forEach(({ encoded, text, codes }) => expect(diagnosticProse(encoded)).toEqual({ text, codes }));
++    // This table isolates the DOM reader using a controlled SSE response.
++    // The other gaps-2 tests exercise actual author input through the service.
++    await page.route('**/__rustify-docs/events?**', route => route.fulfill({ contentType: 'text/event-stream', body: `event: state\ndata: ${JSON.stringify({ ...state, ok: false, errors: cases.length, warnings: 0, reload: false, diagnostics: cases.map((entry, i) => ({ severity: 'error', rule: `span-${i}`, file: 'table', line: i + 1, column: 1, message: entry.encoded, suggestion: entry.encoded })) })}\n\n` }));
++    await page.goto(server.url);
++    for (let i = 0; i < cases.length; i++) {
++        const { text, codes } = cases[i];
++        const item = page.locator('.rd-dev-item').nth(i);
++        await expect.poll(() => item.locator('.rd-dev-message').textContent()).toBe(text);
++        expect(await item.locator('.rd-dev-message code').allTextContents()).toEqual(codes);
++        expect(await item.locator('.rd-dev-suggestion').textContent()).toBe(text);
++        expect(await item.locator('.rd-dev-suggestion code').allTextContents()).toEqual(codes);
++        expect(await item.locator('img').count()).toBe(0);
++    }
++    await test.info().attach('verbatim-table.json', { body: JSON.stringify(cases, null, 2), contentType: 'application/json' });
++    await proseLayouts(page, 'gaps2-table');
++    expect(audit.csp).toEqual([]);
++    expect(audit.console).toEqual([]);
++    expect(audit.pageErrors).toEqual([]);
++});

@@ -1,0 +1,33 @@
+{
+  "Cargo.lock": {
+    "before_count": 429,
+    "after_count": 429,
+    "changed": [
+      "rustify-docs-cli@0.1.16",
+      "rustify-docs-cli@0.1.17"
+    ],
+    "unchanged": 428,
+    "sha256": "c5eaf10f5b1c1e700f3b590bcb49d3d90c50a2555178e9357c271dd0222d0b66"
+  },
+  "crates/rustify-docs-cli/assets/components-Cargo.lock": {
+    "before_count": 193,
+    "after_count": 193,
+    "changed": [
+      "rustify-components@0.1.0",
+      "rustify-docs-macros@0.1.0",
+      "rustify-docs-syntax@0.1.0",
+      "rustify-docs@0.1.0",
+      "rustify-style@0.1.0",
+      "rustify-ui@0.1.0"
+    ],
+    "unchanged": 187,
+    "sha256": "cd199780c895e3064b45e578b757ff8f32ea38746b52104ace8656269874f7eb"
+  },
+  "pair_files": [
+    "Cargo.lock",
+    "crates/rustify-docs-cli/Cargo.toml",
+    "crates/rustify-docs-cli/assets/components-Cargo.lock",
+    "crates/rustify-docs-cli/assets/framework-revision.txt",
+    "docs/docs-ssg.md"
+  ]
+}

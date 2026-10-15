@@ -1,0 +1,807 @@
+{
+  "browser": "153.0.8010.12",
+  "cases": [
+    {
+      "name": "button-1280-rest",
+      "width": 1280,
+      "hover": false,
+      "computed": {
+        "html": "<button type=\"button\" data-name=\"Button\" data-testid=\"\" class=\"inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:border-destructive bg-primary text-primary-foreground hover:bg-primary/90 h-9 px-4 py-2\">Increment</button>",
+        "hovered": false,
+        "disabled": false,
+        "color": "rgb(255, 255, 255)",
+        "background": "rgb(23, 92, 211)",
+        "primary": "#175cd3",
+        "mutedForeground": "#667085",
+        "colorMutedForeground": "",
+        "fontSize": "14px",
+        "parents": [
+          {
+            "tag": "BUTTON",
+            "name": "Button",
+            "class": "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:border-destructive bg-primary text-primary-foreground hover:bg-primary/90 h-9 px-4 py-2",
+            "opacity": "0.996476",
+            "color": "rgb(255, 255, 255)",
+            "background": "rgb(23, 92, 211)"
+          },
+          {
+            "tag": "DIV",
+            "name": null,
+            "class": "flex flex-wrap items-center gap-3",
+            "opacity": "1",
+            "color": "rgb(29, 41, 57)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "tag": "DIV",
+            "name": null,
+            "class": "space-y-4",
+            "opacity": "1",
+            "color": "rgb(29, 41, 57)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "tag": "DIV",
+            "name": null,
+            "class": "",
+            "opacity": "1",
+            "color": "rgb(29, 41, 57)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "tag": "DIV",
+            "name": null,
+            "class": "",
+            "opacity": "1",
+            "color": "rgb(29, 41, 57)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "tag": "FIELDSET",
+            "name": null,
+            "class": "rd-demo-canvas",
+            "opacity": "1",
+            "color": "rgb(29, 41, 57)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "tag": "SECTION",
+            "name": null,
+            "class": "rd-demo",
+            "opacity": "1",
+            "color": "rgb(29, 41, 57)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "tag": "DIV",
+            "name": null,
+            "class": "",
+            "opacity": "1",
+            "color": "rgb(29, 41, 57)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "tag": "ARTICLE",
+            "name": null,
+            "class": "rd-prose",
+            "opacity": "1",
+            "color": "rgb(29, 41, 57)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "tag": "DIV",
+            "name": null,
+            "class": "rd-column",
+            "opacity": "1",
+            "color": "rgb(29, 41, 57)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "tag": "MAIN",
+            "name": null,
+            "class": "rd-main min-w-0 py-8 md:py-12",
+            "opacity": "1",
+            "color": "rgb(29, 41, 57)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "tag": "DIV",
+            "name": null,
+            "class": "rd-layout mx-auto grid max-w-[76rem] gap-x-10 px-4 md:px-6",
+            "opacity": "1",
+            "color": "rgb(29, 41, 57)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "tag": "BODY",
+            "name": null,
+            "class": "min-h-screen bg-background text-foreground antialiased",
+            "opacity": "1",
+            "color": "rgb(29, 41, 57)",
+            "background": "rgb(249, 250, 251)"
+          },
+          {
+            "tag": "HTML",
+            "name": null,
+            "class": "",
+            "opacity": "1",
+            "color": "rgb(0, 0, 0)",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ]
+      },
+      "violations": []
+    },
+    {
+      "name": "button-1280-hover",
+      "width": 1280,
+      "hover": true,
+      "computed": {
+        "html": "<button type=\"button\" data-name=\"Button\" data-testid=\"\" class=\"inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:border-destructive bg-primary text-primary-foreground hover:bg-primary/90 h-9 px-4 py-2\">Increment</button>",
+        "hovered": true,
+        "disabled": false,
+        "color": "rgb(255, 255, 255)",
+        "background": "oklab(0.509297 -0.0309391 -0.192977 / 0.982547)",
+        "primary": "#175cd3",
+        "mutedForeground": "#667085",
+        "colorMutedForeground": "",
+        "fontSize": "14px",
+        "parents": [
+          {
+            "tag": "BUTTON",
+            "name": "Button",
+            "class": "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:border-destructive bg-primary text-primary-foreground hover:bg-primary/90 h-9 px-4 py-2",
+            "opacity": "1",
+            "color": "rgb(255, 255, 255)",
+            "background": "oklab(0.509297 -0.0309391 -0.192977 / 0.982547)"
+          },
+          {
+            "tag": "DIV",
+            "name": null,
+            "class": "flex flex-wrap items-center gap-3",
+            "opacity": "1",
+            "color": "rgb(29, 41, 57)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "tag": "DIV",
+            "name": null,
+            "class": "space-y-4",
+            "opacity": "1",
+            "color": "rgb(29, 41, 57)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "tag": "DIV",
+            "name": null,
+            "class": "",
+            "opacity": "1",
+            "color": "rgb(29, 41, 57)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "tag": "DIV",
+            "name": null,
+            "class": "",
+            "opacity": "1",
+            "color": "rgb(29, 41, 57)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "tag": "FIELDSET",
+            "name": null,
+            "class": "rd-demo-canvas",
+            "opacity": "1",
+            "color": "rgb(29, 41, 57)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "tag": "SECTION",
+            "name": null,
+            "class": "rd-demo",
+            "opacity": "1",
+            "color": "rgb(29, 41, 57)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "tag": "DIV",
+            "name": null,
+            "class": "",
+            "opacity": "1",
+            "color": "rgb(29, 41, 57)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "tag": "ARTICLE",
+            "name": null,
+            "class": "rd-prose",
+            "opacity": "1",
+            "color": "rgb(29, 41, 57)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "tag": "DIV",
+            "name": null,
+            "class": "rd-column",
+            "opacity": "1",
+            "color": "rgb(29, 41, 57)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "tag": "MAIN",
+            "name": null,
+            "class": "rd-main min-w-0 py-8 md:py-12",
+            "opacity": "1",
+            "color": "rgb(29, 41, 57)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "tag": "DIV",
+            "name": null,
+            "class": "rd-layout mx-auto grid max-w-[76rem] gap-x-10 px-4 md:px-6",
+            "opacity": "1",
+            "color": "rgb(29, 41, 57)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "tag": "BODY",
+            "name": null,
+            "class": "min-h-screen bg-background text-foreground antialiased",
+            "opacity": "1",
+            "color": "rgb(29, 41, 57)",
+            "background": "rgb(249, 250, 251)"
+          },
+          {
+            "tag": "HTML",
+            "name": null,
+            "class": "",
+            "opacity": "1",
+            "color": "rgb(0, 0, 0)",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ]
+      },
+      "violations": []
+    },
+    {
+      "name": "tabs-1280-rest",
+      "width": 1280,
+      "hover": false,
+      "computed": {
+        "html": "<button type=\"button\" role=\"tab\" id=\"rui-surface-2fe2c895c6-page-Tabs-demo-0-tabs-1-tab-details\" data-name=\"Tab\" data-testid=\"tab-details\" aria-selected=\"false\" aria-controls=\"rui-surface-2fe2c895c6-page-Tabs-demo-0-tabs-1-panel-details\" tabindex=\"-1\" class=\"inline-flex items-center justify-center gap-1.5 rounded-md border border-transparent px-2.5 py-1 text-sm font-medium whitespace-nowrap transition-all cursor-pointer select-none outline-none focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-selected:bg-background aria-selected:text-foreground disabled:pointer-events-none disabled:opacity-50\">Details</button>",
+        "hovered": false,
+        "disabled": false,
+        "color": "rgb(102, 112, 133)",
+        "background": "rgba(0, 0, 0, 0)",
+        "primary": "#175cd3",
+        "mutedForeground": "#667085",
+        "colorMutedForeground": "",
+        "fontSize": "14px",
+        "parents": [
+          {
+            "tag": "BUTTON",
+            "name": "Tab",
+            "class": "inline-flex items-center justify-center gap-1.5 rounded-md border border-transparent px-2.5 py-1 text-sm font-medium whitespace-nowrap transition-all cursor-pointer select-none outline-none focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-selected:bg-background aria-selected:text-foreground disabled:pointer-events-none disabled:opacity-50",
+            "opacity": "1",
+            "color": "rgb(102, 112, 133)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "tag": "DIV",
+            "name": "TabList",
+            "class": "inline-flex w-fit items-center justify-center rounded-lg bg-muted p-[3px] text-muted-foreground",
+            "opacity": "1",
+            "color": "rgb(102, 112, 133)",
+            "background": "rgb(242, 244, 247)"
+          },
+          {
+            "tag": "DIV",
+            "name": "Tabs",
+            "class": "flex gap-2 flex-col",
+            "opacity": "1",
+            "color": "rgb(29, 41, 57)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "tag": "DIV",
+            "name": null,
+            "class": "space-y-4",
+            "opacity": "1",
+            "color": "rgb(29, 41, 57)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "tag": "DIV",
+            "name": null,
+            "class": "",
+            "opacity": "1",
+            "color": "rgb(29, 41, 57)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "tag": "DIV",
+            "name": null,
+            "class": "",
+            "opacity": "1",
+            "color": "rgb(29, 41, 57)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "tag": "FIELDSET",
+            "name": null,
+            "class": "rd-demo-canvas",
+            "opacity": "1",
+            "color": "rgb(29, 41, 57)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "tag": "SECTION",
+            "name": null,
+            "class": "rd-demo",
+            "opacity": "1",
+            "color": "rgb(29, 41, 57)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "tag": "DIV",
+            "name": null,
+            "class": "",
+            "opacity": "1",
+            "color": "rgb(29, 41, 57)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "tag": "ARTICLE",
+            "name": null,
+            "class": "rd-prose",
+            "opacity": "1",
+            "color": "rgb(29, 41, 57)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "tag": "DIV",
+            "name": null,
+            "class": "rd-column",
+            "opacity": "1",
+            "color": "rgb(29, 41, 57)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "tag": "MAIN",
+            "name": null,
+            "class": "rd-main min-w-0 py-8 md:py-12",
+            "opacity": "1",
+            "color": "rgb(29, 41, 57)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "tag": "DIV",
+            "name": null,
+            "class": "rd-layout mx-auto grid max-w-[76rem] gap-x-10 px-4 md:px-6",
+            "opacity": "1",
+            "color": "rgb(29, 41, 57)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "tag": "BODY",
+            "name": null,
+            "class": "min-h-screen bg-background text-foreground antialiased",
+            "opacity": "1",
+            "color": "rgb(29, 41, 57)",
+            "background": "rgb(249, 250, 251)"
+          },
+          {
+            "tag": "HTML",
+            "name": null,
+            "class": "",
+            "opacity": "1",
+            "color": "rgb(0, 0, 0)",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ]
+      },
+      "violations": []
+    },
+    {
+      "name": "button-375-rest",
+      "width": 375,
+      "hover": false,
+      "computed": {
+        "html": "<button type=\"button\" data-name=\"Button\" data-testid=\"\" class=\"inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:border-destructive bg-primary text-primary-foreground hover:bg-primary/90 h-9 px-4 py-2\">Increment</button>",
+        "hovered": false,
+        "disabled": false,
+        "color": "rgb(255, 255, 255)",
+        "background": "rgb(23, 92, 211)",
+        "primary": "#175cd3",
+        "mutedForeground": "#667085",
+        "colorMutedForeground": "",
+        "fontSize": "14px",
+        "parents": [
+          {
+            "tag": "BUTTON",
+            "name": "Button",
+            "class": "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:border-destructive bg-primary text-primary-foreground hover:bg-primary/90 h-9 px-4 py-2",
+            "opacity": "0.960488",
+            "color": "rgb(255, 255, 255)",
+            "background": "rgb(23, 92, 211)"
+          },
+          {
+            "tag": "DIV",
+            "name": null,
+            "class": "flex flex-wrap items-center gap-3",
+            "opacity": "1",
+            "color": "rgb(29, 41, 57)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "tag": "DIV",
+            "name": null,
+            "class": "space-y-4",
+            "opacity": "1",
+            "color": "rgb(29, 41, 57)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "tag": "DIV",
+            "name": null,
+            "class": "",
+            "opacity": "1",
+            "color": "rgb(29, 41, 57)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "tag": "DIV",
+            "name": null,
+            "class": "",
+            "opacity": "1",
+            "color": "rgb(29, 41, 57)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "tag": "FIELDSET",
+            "name": null,
+            "class": "rd-demo-canvas",
+            "opacity": "1",
+            "color": "rgb(29, 41, 57)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "tag": "SECTION",
+            "name": null,
+            "class": "rd-demo",
+            "opacity": "1",
+            "color": "rgb(29, 41, 57)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "tag": "DIV",
+            "name": null,
+            "class": "",
+            "opacity": "1",
+            "color": "rgb(29, 41, 57)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "tag": "ARTICLE",
+            "name": null,
+            "class": "rd-prose",
+            "opacity": "1",
+            "color": "rgb(29, 41, 57)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "tag": "DIV",
+            "name": null,
+            "class": "rd-column",
+            "opacity": "1",
+            "color": "rgb(29, 41, 57)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "tag": "MAIN",
+            "name": null,
+            "class": "rd-main min-w-0 py-8 md:py-12",
+            "opacity": "1",
+            "color": "rgb(29, 41, 57)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "tag": "DIV",
+            "name": null,
+            "class": "rd-layout mx-auto grid max-w-[76rem] gap-x-10 px-4 md:px-6",
+            "opacity": "1",
+            "color": "rgb(29, 41, 57)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "tag": "BODY",
+            "name": null,
+            "class": "min-h-screen bg-background text-foreground antialiased",
+            "opacity": "1",
+            "color": "rgb(29, 41, 57)",
+            "background": "rgb(249, 250, 251)"
+          },
+          {
+            "tag": "HTML",
+            "name": null,
+            "class": "",
+            "opacity": "1",
+            "color": "rgb(0, 0, 0)",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ]
+      },
+      "violations": []
+    },
+    {
+      "name": "button-375-hover",
+      "width": 375,
+      "hover": true,
+      "computed": {
+        "html": "<button type=\"button\" data-name=\"Button\" data-testid=\"\" class=\"inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:border-destructive bg-primary text-primary-foreground hover:bg-primary/90 h-9 px-4 py-2\">Increment</button>",
+        "hovered": true,
+        "disabled": false,
+        "color": "rgb(255, 255, 255)",
+        "background": "oklab(0.509297 -0.0309391 -0.192977 / 0.982521)",
+        "primary": "#175cd3",
+        "mutedForeground": "#667085",
+        "colorMutedForeground": "",
+        "fontSize": "14px",
+        "parents": [
+          {
+            "tag": "BUTTON",
+            "name": "Button",
+            "class": "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium shrink-0 w-fit select-none transition-all outline-none cursor-pointer disabled:pointer-events-none disabled:opacity-50 aria-disabled:opacity-50 aria-disabled:cursor-not-allowed focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:border-destructive bg-primary text-primary-foreground hover:bg-primary/90 h-9 px-4 py-2",
+            "opacity": "1",
+            "color": "rgb(255, 255, 255)",
+            "background": "oklab(0.509297 -0.0309391 -0.192977 / 0.982521)"
+          },
+          {
+            "tag": "DIV",
+            "name": null,
+            "class": "flex flex-wrap items-center gap-3",
+            "opacity": "1",
+            "color": "rgb(29, 41, 57)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "tag": "DIV",
+            "name": null,
+            "class": "space-y-4",
+            "opacity": "1",
+            "color": "rgb(29, 41, 57)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "tag": "DIV",
+            "name": null,
+            "class": "",
+            "opacity": "1",
+            "color": "rgb(29, 41, 57)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "tag": "DIV",
+            "name": null,
+            "class": "",
+            "opacity": "1",
+            "color": "rgb(29, 41, 57)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "tag": "FIELDSET",
+            "name": null,
+            "class": "rd-demo-canvas",
+            "opacity": "1",
+            "color": "rgb(29, 41, 57)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "tag": "SECTION",
+            "name": null,
+            "class": "rd-demo",
+            "opacity": "1",
+            "color": "rgb(29, 41, 57)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "tag": "DIV",
+            "name": null,
+            "class": "",
+            "opacity": "1",
+            "color": "rgb(29, 41, 57)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "tag": "ARTICLE",
+            "name": null,
+            "class": "rd-prose",
+            "opacity": "1",
+            "color": "rgb(29, 41, 57)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "tag": "DIV",
+            "name": null,
+            "class": "rd-column",
+            "opacity": "1",
+            "color": "rgb(29, 41, 57)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "tag": "MAIN",
+            "name": null,
+            "class": "rd-main min-w-0 py-8 md:py-12",
+            "opacity": "1",
+            "color": "rgb(29, 41, 57)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "tag": "DIV",
+            "name": null,
+            "class": "rd-layout mx-auto grid max-w-[76rem] gap-x-10 px-4 md:px-6",
+            "opacity": "1",
+            "color": "rgb(29, 41, 57)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "tag": "BODY",
+            "name": null,
+            "class": "min-h-screen bg-background text-foreground antialiased",
+            "opacity": "1",
+            "color": "rgb(29, 41, 57)",
+            "background": "rgb(249, 250, 251)"
+          },
+          {
+            "tag": "HTML",
+            "name": null,
+            "class": "",
+            "opacity": "1",
+            "color": "rgb(0, 0, 0)",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ]
+      },
+      "violations": []
+    },
+    {
+      "name": "tabs-375-rest",
+      "width": 375,
+      "hover": false,
+      "computed": {
+        "html": "<button type=\"button\" role=\"tab\" id=\"rui-surface-2fe2c895c6-page-Tabs-demo-0-tabs-1-tab-details\" data-name=\"Tab\" data-testid=\"tab-details\" aria-selected=\"false\" aria-controls=\"rui-surface-2fe2c895c6-page-Tabs-demo-0-tabs-1-panel-details\" tabindex=\"-1\" class=\"inline-flex items-center justify-center gap-1.5 rounded-md border border-transparent px-2.5 py-1 text-sm font-medium whitespace-nowrap transition-all cursor-pointer select-none outline-none focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-selected:bg-background aria-selected:text-foreground disabled:pointer-events-none disabled:opacity-50\">Details</button>",
+        "hovered": false,
+        "disabled": false,
+        "color": "rgb(102, 112, 133)",
+        "background": "rgba(0, 0, 0, 0)",
+        "primary": "#175cd3",
+        "mutedForeground": "#667085",
+        "colorMutedForeground": "",
+        "fontSize": "14px",
+        "parents": [
+          {
+            "tag": "BUTTON",
+            "name": "Tab",
+            "class": "inline-flex items-center justify-center gap-1.5 rounded-md border border-transparent px-2.5 py-1 text-sm font-medium whitespace-nowrap transition-all cursor-pointer select-none outline-none focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-selected:bg-background aria-selected:text-foreground disabled:pointer-events-none disabled:opacity-50",
+            "opacity": "0.96038",
+            "color": "rgb(102, 112, 133)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "tag": "DIV",
+            "name": "TabList",
+            "class": "inline-flex w-fit items-center justify-center rounded-lg bg-muted p-[3px] text-muted-foreground",
+            "opacity": "1",
+            "color": "rgb(102, 112, 133)",
+            "background": "rgb(242, 244, 247)"
+          },
+          {
+            "tag": "DIV",
+            "name": "Tabs",
+            "class": "flex gap-2 flex-col",
+            "opacity": "1",
+            "color": "rgb(29, 41, 57)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "tag": "DIV",
+            "name": null,
+            "class": "space-y-4",
+            "opacity": "1",
+            "color": "rgb(29, 41, 57)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "tag": "DIV",
+            "name": null,
+            "class": "",
+            "opacity": "1",
+            "color": "rgb(29, 41, 57)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "tag": "DIV",
+            "name": null,
+            "class": "",
+            "opacity": "1",
+            "color": "rgb(29, 41, 57)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "tag": "FIELDSET",
+            "name": null,
+            "class": "rd-demo-canvas",
+            "opacity": "1",
+            "color": "rgb(29, 41, 57)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "tag": "SECTION",
+            "name": null,
+            "class": "rd-demo",
+            "opacity": "1",
+            "color": "rgb(29, 41, 57)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "tag": "DIV",
+            "name": null,
+            "class": "",
+            "opacity": "1",
+            "color": "rgb(29, 41, 57)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "tag": "ARTICLE",
+            "name": null,
+            "class": "rd-prose",
+            "opacity": "1",
+            "color": "rgb(29, 41, 57)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "tag": "DIV",
+            "name": null,
+            "class": "rd-column",
+            "opacity": "1",
+            "color": "rgb(29, 41, 57)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "tag": "MAIN",
+            "name": null,
+            "class": "rd-main min-w-0 py-8 md:py-12",
+            "opacity": "1",
+            "color": "rgb(29, 41, 57)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "tag": "DIV",
+            "name": null,
+            "class": "rd-layout mx-auto grid max-w-[76rem] gap-x-10 px-4 md:px-6",
+            "opacity": "1",
+            "color": "rgb(29, 41, 57)",
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "tag": "BODY",
+            "name": null,
+            "class": "min-h-screen bg-background text-foreground antialiased",
+            "opacity": "1",
+            "color": "rgb(29, 41, 57)",
+            "background": "rgb(249, 250, 251)"
+          },
+          {
+            "tag": "HTML",
+            "name": null,
+            "class": "",
+            "opacity": "1",
+            "color": "rgb(0, 0, 0)",
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ]
+      },
+      "violations": []
+    }
+  ]
+}

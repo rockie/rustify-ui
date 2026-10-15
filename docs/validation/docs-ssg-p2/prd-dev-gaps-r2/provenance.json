@@ -1,0 +1,65 @@
+{
+  "observed": "2026-10-15 +08:00",
+  "checkout": {
+    "head": "8a8268e6c5abb2d14a5bc7cdd67a7a1f2051debd",
+    "branch": "main",
+    "worktree": "dirty (see initial-status.txt; product sources clean)"
+  },
+  "pair": {
+    "R_prime": "745ba6b720aa6ed042dcf5d4f763641fc2d05165",
+    "C_prime": "79a77825eadd07207154348ee9ffba48195d7766",
+    "version": "0.1.17"
+  },
+  "installed_cli": {
+    "path": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps-installed.eV4AfO/bin/rustify-docs",
+    "sha256": "47486f96ff0985f63d36590d13f5bbd7ddbcbba3d501f40f6f561f00be8c9d7c",
+    "build_info": "rustify-docs 0.1.17\npanic: unwind\ngrammars: syntect-5.3.0+two-face-0.5.2+bat-0.26.1+fancy\nsource: 79a77825eadd07207154348ee9ffba48195d7766\n"
+  },
+  "official_build_id": "66edda8b1a7cba74 (rebuilt by tests/docs-ssg/serve.sh official subpath 4299; equal to the M2 F-01 official-subpath build_id)",
+  "environment": {
+    "os": "macOS Darwin 27.0.0 arm64",
+    "rust": "1.99.0",
+    "mbx": "1.15.0",
+    "node": "26.1.0",
+    "python": "3.12.13 (temporary python3 entry)",
+    "playwright": "1.63.0",
+    "chromium": "153.0.8010.12",
+    "transport": "process-local Git remap to the local repository (gaps plan 9.2); no install, push or deployment"
+  },
+  "inputs_sha256": {
+    "docs/PRD-DOCS-SSG.md": "22f4fac99b06a23cda3c34f7ee0c66c11369ccd60a34d71fecee2617aa4c16c1",
+    "docs/plan/DOCS-SSG-P2.md": "0e2b26d03aa30b2a8cc8bf6baa80eb21b0d043a281e8953e4a513ba3c29b921f",
+    "docs/plan/DOCS-SSG-P2-gaps.md": "397a1ebe5129ce66d2a607649c6d44065f87a6252313ad61f6d662723e3000ff",
+    "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md": "341778d2179cf441ea175fdfa0dd1d149ecdd71946bc1391d65a494b76041436",
+    "docs/plan/DOCS-SSG-P2-gaps.records/M1.md": "10ce69bd2943d8f83d70899d15dcdbcc307b4b8eb2bddd716af158577a2e54ba",
+    "docs/plan/DOCS-SSG-P2-gaps.records/M2.md": "6cb2610142aa268fc4de134ccc1fef5a694d41c0a9eff7507b0ea7f7c328bd97",
+    "docs/plan/DOCS-SSG-P2-gaps.code-review.md": "11e1e615da9dc9218d5fc4e553b25719c6e40b8fda416cd49a448a2c6e7dba51",
+    "docs/plan/DOCS-SSG-P2-gaps.code-review.r2.md": "e0614a523ad98e96c61d815266d1ca865be70797324caf3451719b9248982d93",
+    "docs/plan/DOCS-SSG-P2-gaps.review.md": "94c65f97c31a4661fcb2482398444ba1fbb6346694baca46304d719b1b52e16d",
+    "docs/docs-ssg.md": "efe69bae0700d304b427219f25f6870ea4dd2f2f9ea6c4e68d1ebabd7a657f29",
+    "DESIGN.docs-ssg.md": "ce9afe161f4d33d72107942cb0f66976cdf3683c9b3fe3b40c94cf39f26804b1",
+    "crates/rustify-docs/assets/dev.js": "da43de3de6ecad49dcb3c09922b2d44cffb91c4046d1773956d14cb915505a46",
+    "crates/rustify-docs/assets/docs.css": "33ef6d676670f13f18e9f0be44dd8d923ace1a50646ce69656b6abb7693cdae2",
+    "crates/rustify-docs/src/embed.rs": "3222e635a46b1cedd6a7db70b3189d62a5871632d29b5fa41434a23f33f0a329",
+    "crates/rustify-docs-cli/src/rendering.rs": "f6d3b1a7806809bd637daca36f218fb9d0627c279cf36ca0397e890917139216"
+  },
+  "commands": [
+    "python3 probe-diagnostics.py --cli <installed C'> --sha 47486f96... --work <empty temp dir>  (9.2 shell)",
+    "sh tests/docs-ssg/serve.sh official subpath 4299  (9.2 shell, RUSTIFY_DOCS_BIN=<installed C'>)",
+    "node reduced-motion.mjs http://127.0.0.1:4299/rustify-ui/ reduced-motion.json",
+    "node state-axe.mjs http://127.0.0.1:4299/rustify-ui/ state-axe.json",
+    "node state-incomplete.mjs http://127.0.0.1:4299/rustify-ui/ loading|failed",
+    "rustify-docs build --config <prepared fixture copy, [theme] removed, base /> --out dist-default; rustify-docs preview --dir dist-default --port 4298  (installed C', build 37e545ee7cf387b9)",
+    "node fixture-default-axe.mjs http://127.0.0.1:4298/ fixture-default-axe.json",
+    "node state-incomplete.mjs http://127.0.0.1:4298/ loading counter/,client-only/"
+  ],
+  "results": {
+    "probe-diagnostics": "exit 0",
+    "reduced-motion": "exit 0",
+    "state-axe": "exit 0",
+    "state-incomplete": "exit 0",
+    "fixture-default-axe": "exit 0",
+    "fixture-default-incomplete": "exit 0"
+  },
+  "fixture_default_build_id": "37e545ee7cf387b9 (temporary copy only; repository fixture unchanged)"
+}

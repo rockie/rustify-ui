@@ -1,0 +1,231 @@
+{
+  "stats": {
+    "startTime": "2026-10-15T08:11:50.784Z",
+    "duration": 4029.553,
+    "expected": 3,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "errors": [],
+  "tests": [
+    {
+      "title": "gaps-2 code spans: plain author paths, prefixed anchors, YAML keys and empty language remain exact",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "attachments": [
+        "docs/validation/docs-ssg-p2-gaps-2/code-review-r2/browser/t01/00-broken-anchor-prose.json",
+        "docs/validation/docs-ssg-p2-gaps-2/code-review-r2/browser/t01/01-gaps2-anchor-1280-light.json",
+        "docs/validation/docs-ssg-p2-gaps-2/code-review-r2/browser/t01/02-gaps2-anchor-1280-light.png",
+        "docs/validation/docs-ssg-p2-gaps-2/code-review-r2/browser/t01/03-gaps2-anchor-1280-dark.json",
+        "docs/validation/docs-ssg-p2-gaps-2/code-review-r2/browser/t01/04-gaps2-anchor-1280-dark.png",
+        "docs/validation/docs-ssg-p2-gaps-2/code-review-r2/browser/t01/05-gaps2-anchor-375-light.json",
+        "docs/validation/docs-ssg-p2-gaps-2/code-review-r2/browser/t01/06-gaps2-anchor-375-light.png",
+        "docs/validation/docs-ssg-p2-gaps-2/code-review-r2/browser/t01/07-gaps2-anchor-375-dark.json",
+        "docs/validation/docs-ssg-p2-gaps-2/code-review-r2/browser/t01/08-gaps2-anchor-375-dark.png",
+        "docs/validation/docs-ssg-p2-gaps-2/code-review-r2/browser/t01/09-embed-payload-prose.json",
+        "docs/validation/docs-ssg-p2-gaps-2/code-review-r2/browser/t01/10-gaps2-yaml-1280-light.json",
+        "docs/validation/docs-ssg-p2-gaps-2/code-review-r2/browser/t01/11-gaps2-yaml-1280-light.png",
+        "docs/validation/docs-ssg-p2-gaps-2/code-review-r2/browser/t01/12-gaps2-yaml-1280-dark.json",
+        "docs/validation/docs-ssg-p2-gaps-2/code-review-r2/browser/t01/13-gaps2-yaml-1280-dark.png",
+        "docs/validation/docs-ssg-p2-gaps-2/code-review-r2/browser/t01/14-gaps2-yaml-375-light.json",
+        "docs/validation/docs-ssg-p2-gaps-2/code-review-r2/browser/t01/15-gaps2-yaml-375-light.png",
+        "docs/validation/docs-ssg-p2-gaps-2/code-review-r2/browser/t01/16-gaps2-yaml-375-dark.json",
+        "docs/validation/docs-ssg-p2-gaps-2/code-review-r2/browser/t01/17-gaps2-yaml-375-dark.png",
+        "docs/validation/docs-ssg-p2-gaps-2/code-review-r2/browser/t01/18-config-lang-prose.json",
+        "docs/validation/docs-ssg-p2-gaps-2/code-review-r2/browser/t01/19-gaps2-empty-1280-light.json",
+        "docs/validation/docs-ssg-p2-gaps-2/code-review-r2/browser/t01/20-gaps2-empty-1280-light.png",
+        "docs/validation/docs-ssg-p2-gaps-2/code-review-r2/browser/t01/21-gaps2-empty-1280-dark.json",
+        "docs/validation/docs-ssg-p2-gaps-2/code-review-r2/browser/t01/22-gaps2-empty-1280-dark.png",
+        "docs/validation/docs-ssg-p2-gaps-2/code-review-r2/browser/t01/23-gaps2-empty-375-light.json",
+        "docs/validation/docs-ssg-p2-gaps-2/code-review-r2/browser/t01/24-gaps2-empty-375-light.png",
+        "docs/validation/docs-ssg-p2-gaps-2/code-review-r2/browser/t01/25-gaps2-empty-375-dark.json",
+        "docs/validation/docs-ssg-p2-gaps-2/code-review-r2/browser/t01/26-gaps2-empty-375-dark.png",
+        "docs/validation/docs-ssg-p2-gaps-2/code-review-r2/browser/t01/27-dev-component-browser-audit.json",
+        "docs/validation/docs-ssg-p2-gaps-2/code-review-r2/browser/t01/28-dev-component-states.json",
+        "docs/validation/docs-ssg-p2-gaps-2/code-review-r2/browser/t01/29-dev-component-compiler-commands.json",
+        "docs/validation/docs-ssg-p2-gaps-2/code-review-r2/browser/t01/30-dev-component-compiler-lifecycle.json",
+        "docs/validation/docs-ssg-p2-gaps-2/code-review-r2/browser/t01/31-dev-component-cli.log"
+      ],
+      "pngs": 12,
+      "prose": [
+        {
+          "diagnostic": {
+            "severity": "error",
+            "rule": "broken-anchor",
+            "file": "content/index.md",
+            "line": 6,
+            "column": 1,
+            "message": "`` content/a`b`c.md `` has no heading `` #a`b ``",
+            "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+          },
+          "actual": {
+            "message": "content/a`b`c.md has no heading #a`b",
+            "messageCodes": [
+              "content/a`b`c.md",
+              "#a`b"
+            ],
+            "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as -",
+            "suggestionCodes": [
+              "-"
+            ]
+          }
+        },
+        {
+          "diagnostic": {
+            "severity": "error",
+            "rule": "embed-payload",
+            "file": "content/index.md",
+            "line": 8,
+            "column": 1,
+            "message": "unknown field `` un`known ``; a demo takes only `name`, a component takes `name`, `props` and `children`",
+            "suggestion": "Write valid YAML for `rustify-component` (`name`, optional `props` mapping and `children` string) or `rustify-demo` (`name` only); correct the reported payload error."
+          },
+          "actual": {
+            "message": "unknown field un`known; a demo takes only name, a component takes name, props and children",
+            "messageCodes": [
+              "un`known",
+              "name",
+              "name",
+              "props",
+              "children"
+            ],
+            "suggestion": "Write valid YAML for rustify-component (name, optional props mapping and children string) or rustify-demo (name only); correct the reported payload error.",
+            "suggestionCodes": [
+              "rustify-component",
+              "name",
+              "props",
+              "children",
+              "rustify-demo",
+              "name"
+            ]
+          }
+        },
+        {
+          "diagnostic": {
+            "severity": "error",
+            "rule": "config-lang",
+            "file": "rustify-docs.toml",
+            "line": 5,
+            "column": 6,
+            "message": "``  `` is not a language tag",
+            "suggestion": "use a tag like `en` or `zh-CN`"
+          },
+          "actual": {
+            "message": " is not a language tag",
+            "messageCodes": [
+              ""
+            ],
+            "suggestion": "use a tag like en or zh-CN",
+            "suggestionCodes": [
+              "en",
+              "zh-CN"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "title": "gaps-2 code spans: frontmatter language preserves author text resembling a YAML location",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "attachments": [
+        "docs/validation/docs-ssg-p2-gaps-2/code-review-r2/browser/t02/00-lang-prose.json",
+        "docs/validation/docs-ssg-p2-gaps-2/code-review-r2/browser/t02/01-gaps2-frontmatter-ticks-1280-light.json",
+        "docs/validation/docs-ssg-p2-gaps-2/code-review-r2/browser/t02/02-gaps2-frontmatter-ticks-1280-light.png",
+        "docs/validation/docs-ssg-p2-gaps-2/code-review-r2/browser/t02/03-gaps2-frontmatter-ticks-1280-dark.json",
+        "docs/validation/docs-ssg-p2-gaps-2/code-review-r2/browser/t02/04-gaps2-frontmatter-ticks-1280-dark.png",
+        "docs/validation/docs-ssg-p2-gaps-2/code-review-r2/browser/t02/05-gaps2-frontmatter-ticks-375-light.json",
+        "docs/validation/docs-ssg-p2-gaps-2/code-review-r2/browser/t02/06-gaps2-frontmatter-ticks-375-light.png",
+        "docs/validation/docs-ssg-p2-gaps-2/code-review-r2/browser/t02/07-gaps2-frontmatter-ticks-375-dark.json",
+        "docs/validation/docs-ssg-p2-gaps-2/code-review-r2/browser/t02/08-gaps2-frontmatter-ticks-375-dark.png",
+        "docs/validation/docs-ssg-p2-gaps-2/code-review-r2/browser/t02/09-lang-prose.json",
+        "docs/validation/docs-ssg-p2-gaps-2/code-review-r2/browser/t02/10-gaps2-frontmatter-plain-1280-light.json",
+        "docs/validation/docs-ssg-p2-gaps-2/code-review-r2/browser/t02/11-gaps2-frontmatter-plain-1280-light.png",
+        "docs/validation/docs-ssg-p2-gaps-2/code-review-r2/browser/t02/12-gaps2-frontmatter-plain-1280-dark.json",
+        "docs/validation/docs-ssg-p2-gaps-2/code-review-r2/browser/t02/13-gaps2-frontmatter-plain-1280-dark.png",
+        "docs/validation/docs-ssg-p2-gaps-2/code-review-r2/browser/t02/14-gaps2-frontmatter-plain-375-light.json",
+        "docs/validation/docs-ssg-p2-gaps-2/code-review-r2/browser/t02/15-gaps2-frontmatter-plain-375-light.png",
+        "docs/validation/docs-ssg-p2-gaps-2/code-review-r2/browser/t02/16-gaps2-frontmatter-plain-375-dark.json",
+        "docs/validation/docs-ssg-p2-gaps-2/code-review-r2/browser/t02/17-gaps2-frontmatter-plain-375-dark.png",
+        "docs/validation/docs-ssg-p2-gaps-2/code-review-r2/browser/t02/18-dev-component-browser-audit.json",
+        "docs/validation/docs-ssg-p2-gaps-2/code-review-r2/browser/t02/19-dev-component-states.json",
+        "docs/validation/docs-ssg-p2-gaps-2/code-review-r2/browser/t02/20-dev-component-compiler-commands.json",
+        "docs/validation/docs-ssg-p2-gaps-2/code-review-r2/browser/t02/21-dev-component-compiler-lifecycle.json",
+        "docs/validation/docs-ssg-p2-gaps-2/code-review-r2/browser/t02/22-dev-component-cli.log"
+      ],
+      "pngs": 8,
+      "prose": [
+        {
+          "diagnostic": {
+            "severity": "error",
+            "rule": "lang",
+            "file": "content/index.md",
+            "line": 3,
+            "column": 7,
+            "message": "lang: `` a` at line `b `` is not a language tag",
+            "suggestion": "use a language tag such as `en`, `zh-CN` or `fr`"
+          },
+          "actual": {
+            "message": "lang: a` at line `b is not a language tag",
+            "messageCodes": [
+              "a` at line `b"
+            ],
+            "suggestion": "use a language tag such as en, zh-CN or fr",
+            "suggestionCodes": [
+              "en",
+              "zh-CN",
+              "fr"
+            ]
+          }
+        },
+        {
+          "diagnostic": {
+            "severity": "error",
+            "rule": "lang",
+            "file": "content/index.md",
+            "line": 3,
+            "column": 7,
+            "message": "lang: `a at line b` is not a language tag",
+            "suggestion": "use a language tag such as `en`, `zh-CN` or `fr`"
+          },
+          "actual": {
+            "message": "lang: a at line b is not a language tag",
+            "messageCodes": [
+              "a at line b"
+            ],
+            "suggestion": "use a language tag such as en, zh-CN or fr",
+            "suggestionCodes": [
+              "en",
+              "zh-CN",
+              "fr"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "title": "gaps-2 code spans: the real DOM reader preserves the handwritten whitespace and delimiter table",
+      "status": "passed",
+      "expectedStatus": "passed",
+      "attachments": [
+        "docs/validation/docs-ssg-p2-gaps-2/code-review-r2/browser/t03/00-verbatim-table.json",
+        "docs/validation/docs-ssg-p2-gaps-2/code-review-r2/browser/t03/01-gaps2-table-1280-light.json",
+        "docs/validation/docs-ssg-p2-gaps-2/code-review-r2/browser/t03/02-gaps2-table-1280-light.png",
+        "docs/validation/docs-ssg-p2-gaps-2/code-review-r2/browser/t03/03-gaps2-table-1280-dark.json",
+        "docs/validation/docs-ssg-p2-gaps-2/code-review-r2/browser/t03/04-gaps2-table-1280-dark.png",
+        "docs/validation/docs-ssg-p2-gaps-2/code-review-r2/browser/t03/05-gaps2-table-375-light.json",
+        "docs/validation/docs-ssg-p2-gaps-2/code-review-r2/browser/t03/06-gaps2-table-375-light.png",
+        "docs/validation/docs-ssg-p2-gaps-2/code-review-r2/browser/t03/07-gaps2-table-375-dark.json",
+        "docs/validation/docs-ssg-p2-gaps-2/code-review-r2/browser/t03/08-gaps2-table-375-dark.png",
+        "docs/validation/docs-ssg-p2-gaps-2/code-review-r2/browser/t03/09-dev-component-browser-audit.json",
+        "docs/validation/docs-ssg-p2-gaps-2/code-review-r2/browser/t03/10-dev-component-states.json",
+        "docs/validation/docs-ssg-p2-gaps-2/code-review-r2/browser/t03/11-dev-component-compiler-commands.json",
+        "docs/validation/docs-ssg-p2-gaps-2/code-review-r2/browser/t03/12-dev-component-compiler-lifecycle.json",
+        "docs/validation/docs-ssg-p2-gaps-2/code-review-r2/browser/t03/13-dev-component-cli.log"
+      ],
+      "pngs": 4,
+      "prose": []
+    }
+  ]
+}

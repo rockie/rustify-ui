@@ -1,0 +1,64 @@
+{
+  "build_id": "b9267374bcc32cc6",
+  "cli_version": "0.1.15",
+  "static_pages": [
+    {
+      "page": "index.html",
+      "gzip9_total_bytes": 21045
+    },
+    {
+      "page": "404.html",
+      "gzip9_total_bytes": 20840
+    },
+    {
+      "page": "compatibility/index.html",
+      "gzip9_total_bytes": 31302
+    },
+    {
+      "page": "forms/index.html",
+      "gzip9_total_bytes": 24185
+    },
+    {
+      "page": "workspace/index.html",
+      "gzip9_total_bytes": 25269
+    },
+    {
+      "page": "navigation/index.html",
+      "gzip9_total_bytes": 24703
+    },
+    {
+      "page": "quickstart/index.html",
+      "gzip9_total_bytes": 35181
+    },
+    {
+      "page": "components/index.html",
+      "gzip9_total_bytes": 27655
+    },
+    {
+      "page": "architecture/index.html",
+      "gzip9_total_bytes": 34146
+    },
+    {
+      "page": "i18n/index.html",
+      "gzip9_total_bytes": 24258
+    },
+    {
+      "page": "data/index.html",
+      "gzip9_total_bytes": 28139
+    },
+    {
+      "page": "themes/index.html",
+      "gzip9_total_bytes": 33110
+    },
+    {
+      "page": "vellum/index.html",
+      "gzip9_total_bytes": 35585
+    },
+    {
+      "page": "utility/index.html",
+      "gzip9_total_bytes": 26593
+    }
+  ],
+  "max_gzip9_bytes": 35585,
+  "compression": "Python gzip.compress level 9, mtime 0; file-byte sums, no transport headers"
+}

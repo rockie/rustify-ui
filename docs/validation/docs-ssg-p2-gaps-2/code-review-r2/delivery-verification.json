@@ -1,0 +1,15 @@
+{
+  "source_snapshot_unchanged_except_intended_ledger": true,
+  "original_ledger_paths_updated": [
+    ".xgent-ai/sdlc/events/review/index.md",
+    ".xgent-ai/sdlc/index.md",
+    ".xgent-ai/sdlc/status/plan/e9817d55-60e7-4c8f-9abb-4793cc82d5f3.md",
+    ".xgent-ai/sdlc/status/review/8248f8f2-341a-4bfc-98d0-b893b5be44ac.md",
+    ".xgent-ai/sdlc/status/review/index.md"
+  ],
+  "new_review_events": 2,
+  "links_checked": 224,
+  "report_sha256": "480f03007a44c0f22e20a8c5f8061772cdbd1b34054ec70d25b1ad869ccfd58f",
+  "HEAD": "789003cc5ad58bd734f5a8c483f8fec475c2afe9",
+  "index_unchanged": true
+}

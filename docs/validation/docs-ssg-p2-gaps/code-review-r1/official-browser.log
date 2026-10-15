@@ -1,0 +1,64 @@
+npm notice run rustify-ui-browser-tests@0.1.0 npx
+npm notice run 'playwright' test -c playwright.docs.config.ts --project=official-subpath official.spec.ts --grep gaps reduced motion|gaps a11y.*dark 375px --workers=1 --output=/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-p2-gaps-review-4xrlmqj7/official-browser --reporter=line,json
+[WebServer] {"candidate_sha": "7a42230b29ba3fc5c71c0c85d69913c54ac0bff6", "framework_revision": "cc5fded38a0cfb24ee8f132bb70f19a80adb6ecc", "protected_files": 12692, "receipt": "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/http/official/subpath/site/.rustify-docs/pages-prepare.json"}
+
+[WebServer] building /Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/http/official/subpath/site into /Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-ssg/http/official/subpath/dist
+
+[WebServer] warning[missing-description]: no `description:`; the first paragraph is used
+[WebServer]   --> docs/architecture.md
+[WebServer]   = help: add `description:` to the frontmatter
+[WebServer] warning[missing-description]: no `description:`; the first paragraph is used
+[WebServer]   --> docs/compatibility.md
+[WebServer]   = help: add `description:` to the frontmatter
+[WebServer] warning[missing-description]: no `description:`; the first paragraph is used
+[WebServer]   --> docs/components.md
+[WebServer]   = help: add `description:` to the frontmatter
+[WebServer] warning[missing-description]: no `description:`; the first paragraph is used
+[WebServer]   --> docs/data.md
+[WebServer]   = help: add `description:` to the frontmatter
+[WebServer] warning[missing-description]: no `description:`; the first paragraph is used
+[WebServer]   --> docs/forms.md
+[WebServer]   = help: add `description:` to the frontmatter
+[WebServer] warning[missing-description]: no `description:`; the first paragraph is used
+[WebServer]   --> docs/i18n.md
+[WebServer]   = help: add `description:` to the frontmatter
+[WebServer] warning[missing-description]: no `description:`; the first paragraph is used
+[WebServer]   --> docs/navigation.md
+[WebServer]   = help: add `description:` to the frontmatter
+[WebServer] warning[missing-description]: no `description:`; the first paragraph is used
+[WebServer]   --> docs/quickstart.md
+[WebServer]   = help: add `description:` to the frontmatter
+[WebServer] warning[missing-description]: no `description:`; the first paragraph is used
+[WebServer]   --> docs/themes.md
+[WebServer]   = help: add `description:` to the frontmatter
+[WebServer] warning[missing-description]: no `description:`; the first paragraph is used
+[WebServer]   --> docs/utility.md
+[WebServer]   = help: add `description:` to the frontmatter
+[WebServer] warning[missing-description]: no `description:`; the first paragraph is used
+[WebServer]   --> docs/vellum.md
+[WebServer]   = help: add `description:` to the frontmatter
+[WebServer] warning[missing-description]: no `description:`; the first paragraph is used
+[WebServer]   --> docs/workspace.md
+[WebServer]   = help: add `description:` to the frontmatter
+
+[WebServer] build: 37 pages and 404.html in /Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-ssg/http/official/subpath/dist: 13220.7 KB in 53 files, 12 warning(s), 77127 ms
+[WebServer] largest pages:
+[WebServer]     168.5 KB  components/data-table/index.html
+[WebServer]     156.3 KB  components/tree/index.html
+[WebServer]     141.7 KB  components/menu/index.html
+[WebServer]     140.5 KB  components/scroll-area/index.html
+[WebServer]     140.2 KB  components/tabs/index.html
+
+[WebServer] serving /Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-ssg/http/official/subpath/dist (built by rustify-docs 0.1.16, build 6c62de28ff6904b9) until stopped
+
+
+Running 3 tests using 1 worker
+
+(node:91774) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1/3] [official-subpath] › tests/docs-ssg/official.spec.ts:328:1 › gaps reduced motion: under reduce the default theme's controls attach and change with no transition and a still spinner
+[2/3] [official-subpath] › tests/docs-ssg/official.spec.ts:343:1 › gaps reduced motion: without a preference the default theme keeps 150ms transitions and a turning spinner
+[3/3] [official-subpath] › tests/docs-ssg/official.spec.ts:364:5 › gaps a11y: every official route at rest has no serious or critical axe violation, dark 375px
+  3 passed (1.7m)

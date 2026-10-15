@@ -1,0 +1,60 @@
+[package]
+name = "probe-site"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[workspace]
+resolver = "2"
+
+[lib]
+name = "site_docs"
+crate-type = ["rlib", "cdylib"]
+
+[[bin]]
+name = "docs-render"
+path = "src/bin/docs-render.rs"
+required-features = ["ssr"]
+
+[features]
+default = []
+ssr = ["leptos/ssr", "rustify-docs/site-ssr", "rustify-ui/ssr", "rustify-components/ssr"]
+hydrate = ["leptos/hydrate", "rustify-docs/hydrate", "rustify-ui/hydrate", "rustify-components/hydrate", "dep:browser-palette"]
+
+[dependencies]
+browser-palette = { path = "../browser-palette", optional = true }
+leptos = { version = "=0.8.22", default-features = false }
+rustify-docs = { git = "https://github.com/rockie/rustify-ui", rev = "3fcc626a4039a43c5e045ccd546bab976db89a73", default-features = false }
+rustify-ui = { git = "https://github.com/rockie/rustify-ui", rev = "3fcc626a4039a43c5e045ccd546bab976db89a73", default-features = false }
+rustify-components = { git = "https://github.com/rockie/rustify-ui", rev = "3fcc626a4039a43c5e045ccd546bab976db89a73", default-features = false }
+
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+wasm-bindgen = "=0.2.128"
+
+[profile.docs-host]
+inherits = "dev"
+panic = "unwind"
+incremental = true
+debug = 0
+opt-level = 1
+lto = false
+
+[profile.docs-wasm]
+inherits = "dev"
+panic = "abort"
+incremental = true
+debug = 0
+opt-level = 1
+lto = false
+
+[profile.docs-host-release]
+inherits = "release"
+panic = "unwind"
+debug = 0
+lto = "thin"
+
+[profile.release]
+panic = "abort"
+debug = 0
+lto = "thin"
+codegen-units = 1

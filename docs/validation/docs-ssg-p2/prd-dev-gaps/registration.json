@@ -1,0 +1,17 @@
+{
+  "observed_at": "2026-10-14T23:45:12.212864+08:00",
+  "review_id": "5fdbf99f-8f49-4629-b1c8-89b2335d0a6b",
+  "plan_id": "f2f47f04-3082-4faf-96c8-48f1a319b6d4",
+  "events": [
+    ".xgent-ai/sdlc/events/review/5fdbf99f-8f49-4629-b1c8-89b2335d0a6b/fc83402c-142e-4f14-a057-4fb5da966bd7.md",
+    ".xgent-ai/sdlc/events/review/5fdbf99f-8f49-4629-b1c8-89b2335d0a6b/78fec352-eb6a-4254-961f-c14d28fe5950.md",
+    ".xgent-ai/sdlc/events/plan/f2f47f04-3082-4faf-96c8-48f1a319b6d4/e720a1c6-e7a1-4571-9204-8d9317ed2624.md",
+    ".xgent-ai/sdlc/events/plan/f2f47f04-3082-4faf-96c8-48f1a319b6d4/c04881bc-2ff9-48b6-86d2-0cb2c25284c9.md",
+    ".xgent-ai/sdlc/events/plan/c0c94e42-32f2-4636-ae52-f3df76d4a463/6504dd54-592e-4d1c-8444-ec4bdd37e2d8.md",
+    ".xgent-ai/sdlc/events/prd/8917bbeb-7add-4826-95ee-5cdf6bdff735/3feceebd-251b-4e6a-9e77-98680e56975f.md",
+    ".xgent-ai/sdlc/events/review/5fdbf99f-8f49-4629-b1c8-89b2335d0a6b/70622e49-870e-43cf-98e1-e16ada832940.md"
+  ],
+  "existing_plan_event": "6504dd54-592e-4d1c-8444-ec4bdd37e2d8",
+  "existing_prd_event": "3feceebd-251b-4e6a-9e77-98680e56975f",
+  "line_location_correction_event": "70622e49-870e-43cf-98e1-e16ada832940"
+}

@@ -1,0 +1,23 @@
+{
+  "command": [
+    "npx",
+    "playwright",
+    "test",
+    "-c",
+    "playwright.docs.config.ts",
+    "--project=official-subpath",
+    "tests/docs-ssg/official.spec.ts",
+    "--workers=1",
+    "--grep-invert",
+    "one bounded official",
+    "--reporter=line,json",
+    "--output=docs/validation/docs-ssg-p2/prd-dev-gaps/official-subpath"
+  ],
+  "C": "45878ce31763fe21b9276e563e2920d180787dee",
+  "R": "7930fd9a978563e76468fef69d14f444159c47b5",
+  "binary_sha256": "5589466a132c616095dc67d99bc91b24b3ac3184a06f3b982a78880ebcdbf4fb",
+  "started_at": "2026-10-14T15:04:05.691972+00:00",
+  "transport": "existing process-local Git remap, offline; no public install or deployment",
+  "exit_code": 0,
+  "finished_at": "2026-10-14T15:06:11.272141+00:00"
+}

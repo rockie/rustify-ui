@@ -1,0 +1,222 @@
+{
+  "baseline": "8a8268e6c5abb2d14a5bc7cdd67a7a1f2051debd",
+  "cli": {
+    "path": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps-installed.eV4AfO/bin/rustify-docs",
+    "sha256": "47486f96ff0985f63d36590d13f5bbd7ddbcbba3d501f40f6f561f00be8c9d7c",
+    "build_info": "rustify-docs 0.1.17\npanic: unwind\ngrammars: syntect-5.3.0+two-face-0.5.2+bat-0.26.1+fancy\nsource: 79a77825eadd07207154348ee9ffba48195d7766\n"
+  },
+  "temp": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-plan-review-NQM7b1",
+  "steps": [
+    {
+      "step": "initial healthy",
+      "state": {
+        "session": "115b7-18de97daa68b39f8",
+        "revision": 1,
+        "sequence": 1,
+        "building": false,
+        "phase": "render",
+        "compile": null,
+        "good": 1,
+        "ok": true,
+        "reload": false,
+        "errors": 0,
+        "warnings": 0,
+        "diagnostics": []
+      }
+    },
+    {
+      "step": "tick path and prefixed anchor",
+      "mode": "light",
+      "screenshot": "baseline-ticks-1280-light.png",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "theme": "light",
+      "items": [
+        {
+          "rule": "Error: broken-anchor",
+          "message": "content/abc.md has no heading #ab",
+          "code": [
+            "b",
+            "#a"
+          ]
+        },
+        {
+          "rule": "Warning: not-in-nav",
+          "message": "this page is in no navigation group, so readers can only reach it by a link",
+          "code": []
+        }
+      ],
+      "overflow": false,
+      "panelOverflow": false,
+      "csp": []
+    },
+    {
+      "step": "tick path and prefixed anchor",
+      "mode": "dark",
+      "screenshot": "baseline-ticks-1280-dark.png",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "theme": "dark",
+      "items": [
+        {
+          "rule": "Error: broken-anchor",
+          "message": "content/abc.md has no heading #ab",
+          "code": [
+            "b",
+            "#a"
+          ]
+        },
+        {
+          "rule": "Warning: not-in-nav",
+          "message": "this page is in no navigation group, so readers can only reach it by a link",
+          "code": []
+        }
+      ],
+      "overflow": false,
+      "panelOverflow": false,
+      "csp": []
+    },
+    {
+      "step": "tick path and prefixed anchor",
+      "mode": "light",
+      "screenshot": "baseline-ticks-375-light.png",
+      "viewport": {
+        "width": 375,
+        "height": 900
+      },
+      "theme": "light",
+      "items": [
+        {
+          "rule": "Error: broken-anchor",
+          "message": "content/abc.md has no heading #ab",
+          "code": [
+            "b",
+            "#a"
+          ]
+        },
+        {
+          "rule": "Warning: not-in-nav",
+          "message": "this page is in no navigation group, so readers can only reach it by a link",
+          "code": []
+        }
+      ],
+      "overflow": false,
+      "panelOverflow": false,
+      "csp": []
+    },
+    {
+      "step": "tick path and prefixed anchor",
+      "mode": "dark",
+      "screenshot": "baseline-ticks-375-dark.png",
+      "viewport": {
+        "width": 375,
+        "height": 900
+      },
+      "theme": "dark",
+      "items": [
+        {
+          "rule": "Error: broken-anchor",
+          "message": "content/abc.md has no heading #ab",
+          "code": [
+            "b",
+            "#a"
+          ]
+        },
+        {
+          "rule": "Warning: not-in-nav",
+          "message": "this page is in no navigation group, so readers can only reach it by a link",
+          "code": []
+        }
+      ],
+      "overflow": false,
+      "panelOverflow": false,
+      "csp": []
+    },
+    {
+      "step": "hide enter escape",
+      "hideFocus": true,
+      "escapeFocus": true
+    },
+    {
+      "step": "repair",
+      "state": {
+        "session": "115b7-18de97daa68b39f8",
+        "revision": 3,
+        "sequence": 5,
+        "building": false,
+        "phase": "render",
+        "compile": null,
+        "good": 3,
+        "ok": true,
+        "reload": false,
+        "errors": 0,
+        "warnings": 0,
+        "diagnostics": []
+      },
+      "panelHidden": true
+    },
+    {
+      "step": "empty language",
+      "state": {
+        "session": "115b7-18de97daa68b39f8",
+        "revision": 4,
+        "sequence": 7,
+        "building": false,
+        "phase": "render",
+        "compile": null,
+        "good": 3,
+        "ok": false,
+        "reload": false,
+        "errors": 1,
+        "warnings": 0,
+        "diagnostics": [
+          {
+            "severity": "error",
+            "rule": "config-lang",
+            "file": "rustify-docs.toml",
+            "line": 6,
+            "column": 8,
+            "message": "`` is not a language tag",
+            "suggestion": "use a tag like `en` or `zh-CN`"
+          }
+        ]
+      },
+      "messages": [
+        " is not a language tag"
+      ]
+    }
+  ],
+  "console": [],
+  "pageErrors": [],
+  "csp": [],
+  "requestFailures": [],
+  "url": "http://127.0.0.1:52008/docs/",
+  "browser": "153.0.8010.12",
+  "diagnostics": [
+    {
+      "severity": "warning",
+      "rule": "not-in-nav",
+      "file": "content/a`b`c.md",
+      "line": null,
+      "column": null,
+      "message": "this page is in no navigation group, so readers can only reach it by a link",
+      "suggestion": null
+    },
+    {
+      "severity": "error",
+      "rule": "broken-anchor",
+      "file": "content/index.md",
+      "line": 22,
+      "column": 1,
+      "message": "content/a`b`c.md has no heading `#a`b`",
+      "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+    }
+  ],
+  "stderr": "rustc 1.99.0 (b940084d7 2026-09-28)\ndev: pages show no last-updated date: not a git repository (or any of the parent directories): .git\nwatching /private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-plan-review-NQM7b1/site; drafts are shown, source and published output are unchanged, stop with Ctrl-C\ndev: revision 1: 6 page(s) changed, 0 warning(s), 33 ms\ndev: render\nwarning[not-in-nav]: this page is in no navigation group, so readers can only reach it by a link\n  --> content/a`b`c.md\nerror[broken-anchor]: content/a`b`c.md has no heading `#a`b`\n  --> content/index.md:22:1\n  = help: link to an existing heading's id; ids are the heading text in lower case with spaces as `-`\ndev: revision 2 failed: 1 error(s), 1 warning(s), 10 ms; still serving revision 1\ndev: render\ndev: revision 3: 0 page(s) changed, 0 warning(s), 17 ms\ndev: render\nerror[config-lang]: `` is not a language tag\n  --> rustify-docs.toml:6:8\n  = help: use a tag like `en` or `zh-CN`\ndev: revision 4 failed: 1 error(s), 0 warning(s), 0 ms; still serving revision 3\n",
+  "completed": true,
+  "serviceStopped": true
+}

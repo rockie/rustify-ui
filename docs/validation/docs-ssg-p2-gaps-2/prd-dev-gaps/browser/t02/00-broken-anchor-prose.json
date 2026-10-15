@@ -1,0 +1,29 @@
+{
+  "diagnostic": {
+    "severity": "error",
+    "rule": "broken-anchor",
+    "file": "content/index.md",
+    "line": 6,
+    "column": 1,
+    "message": "`` content/a`b`c.md `` has no heading `` #a`b ``",
+    "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+  },
+  "expected": {
+    "message": "content/a`b`c.md has no heading #a`b",
+    "messageCodes": [
+      "content/a`b`c.md",
+      "#a`b"
+    ]
+  },
+  "actual": {
+    "message": "content/a`b`c.md has no heading #a`b",
+    "messageCodes": [
+      "content/a`b`c.md",
+      "#a`b"
+    ],
+    "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as -",
+    "suggestionCodes": [
+      "-"
+    ]
+  }
+}

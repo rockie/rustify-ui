@@ -1,0 +1,127 @@
+{
+  "url": "http://127.0.0.1:59946/",
+  "wanted": [
+    [
+      "invalid_props",
+      10,
+      3,
+      "Write `label: \"text\"` for declared type `String` (default expression `r#\"a\"   b   \"c\"#.to_string()`). Reported props path: `label`."
+    ]
+  ],
+  "browser": "153.0.8010.12",
+  "console": [],
+  "pageErrors": [],
+  "failures": [],
+  "csp": [],
+  "views": [
+    {
+      "theme": "light",
+      "width": 1280,
+      "pageOverflow": 0,
+      "repairs": [
+        {
+          "text": "Write label: \"text\" for declared type String (default expression r#\"a\"   b   \"c\"#.to_string()). Reported props path: label.",
+          "whiteSpace": "pre-wrap",
+          "overflow": 0,
+          "codeWhiteSpace": [
+            "pre-wrap",
+            "pre-wrap",
+            "pre-wrap",
+            "pre-wrap"
+          ]
+        },
+        {
+          "text": "add url = \"https://…\" under [site], the address the site is published at",
+          "whiteSpace": "pre-wrap",
+          "overflow": 0,
+          "codeWhiteSpace": [
+            "pre-wrap"
+          ]
+        }
+      ]
+    },
+    {
+      "theme": "dark",
+      "width": 1280,
+      "pageOverflow": 0,
+      "repairs": [
+        {
+          "text": "Write label: \"text\" for declared type String (default expression r#\"a\"   b   \"c\"#.to_string()). Reported props path: label.",
+          "whiteSpace": "pre-wrap",
+          "overflow": 0,
+          "codeWhiteSpace": [
+            "pre-wrap",
+            "pre-wrap",
+            "pre-wrap",
+            "pre-wrap"
+          ]
+        },
+        {
+          "text": "add url = \"https://…\" under [site], the address the site is published at",
+          "whiteSpace": "pre-wrap",
+          "overflow": 0,
+          "codeWhiteSpace": [
+            "pre-wrap"
+          ]
+        }
+      ]
+    },
+    {
+      "theme": "light",
+      "width": 375,
+      "pageOverflow": 0,
+      "repairs": [
+        {
+          "text": "Write label: \"text\" for declared type String (default expression r#\"a\"   b   \"c\"#.to_string()). Reported props path: label.",
+          "whiteSpace": "pre-wrap",
+          "overflow": 0,
+          "codeWhiteSpace": [
+            "pre-wrap",
+            "pre-wrap",
+            "pre-wrap",
+            "pre-wrap"
+          ]
+        },
+        {
+          "text": "add url = \"https://…\" under [site], the address the site is published at",
+          "whiteSpace": "pre-wrap",
+          "overflow": 0,
+          "codeWhiteSpace": [
+            "pre-wrap"
+          ]
+        }
+      ]
+    },
+    {
+      "theme": "dark",
+      "width": 375,
+      "pageOverflow": 0,
+      "repairs": [
+        {
+          "text": "Write label: \"text\" for declared type String (default expression r#\"a\"   b   \"c\"#.to_string()). Reported props path: label.",
+          "whiteSpace": "pre-wrap",
+          "overflow": 0,
+          "codeWhiteSpace": [
+            "pre-wrap",
+            "pre-wrap",
+            "pre-wrap",
+            "pre-wrap"
+          ]
+        },
+        {
+          "text": "add url = \"https://…\" under [site], the address the site is published at",
+          "whiteSpace": "pre-wrap",
+          "overflow": 0,
+          "codeWhiteSpace": [
+            "pre-wrap"
+          ]
+        }
+      ]
+    }
+  ],
+  "allSuggestions": [
+    "Write label: \"text\" for declared type String (default expression r#\"a\"   b   \"c\"#.to_string()). Reported props path: label.",
+    "add url = \"https://…\" under [site], the address the site is published at"
+  ],
+  "passed": true
+}

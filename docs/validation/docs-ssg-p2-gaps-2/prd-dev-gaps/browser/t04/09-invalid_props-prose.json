@@ -1,0 +1,33 @@
+{
+  "diagnostic": {
+    "severity": "error",
+    "rule": "invalid_props",
+    "file": "content/counter.md",
+    "line": 50,
+    "column": 3,
+    "message": "invalid type: sequence, expected a string",
+    "suggestion": "Write `label: \"text\"` for declared type `String` (default expression `` \"a`b\".to_string() ``). Reported props path: `label`."
+  },
+  "expected": {
+    "message": "invalid type: sequence, expected a string",
+    "messageCodes": [],
+    "suggestion": "Write label: \"text\" for declared type String (default expression \"a`b\".to_string()). Reported props path: label.",
+    "suggestionCodes": [
+      "label: \"text\"",
+      "String",
+      "\"a`b\".to_string()",
+      "label"
+    ]
+  },
+  "actual": {
+    "message": "invalid type: sequence, expected a string",
+    "messageCodes": [],
+    "suggestion": "Write label: \"text\" for declared type String (default expression \"a`b\".to_string()). Reported props path: label.",
+    "suggestionCodes": [
+      "label: \"text\"",
+      "String",
+      "\"a`b\".to_string()",
+      "label"
+    ]
+  }
+}

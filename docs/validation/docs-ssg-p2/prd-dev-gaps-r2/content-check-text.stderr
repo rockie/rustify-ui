@@ -1,0 +1,15 @@
+checking /var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-prd-gaps-r2.tg8pHY/content-site
+warning[no-git-history]: pages show no last-updated date: not a git repository (or any of the parent directories): .git
+  = help: build inside a git repository with the content committed
+warning[not-in-nav]: this page is in no navigation group, so readers can only reach it by a link
+  --> content/gaps.md
+error[unregistered-component]: component `MissingCounter` is not registered; add it to site! and configure [rust]
+  --> content/gaps.md:6:1
+  = help: Use a component from `CardGrid`, `Steps`, `Tabs`; for an author component, enable `[rust]` and register its name in `site!`.
+error[embed-props]: invalid type: string "wrong-type", expected a sequence
+  --> content/gaps.md:10:1
+  = help: Write `items` as `Vec<StepSpec>` (required); see https://github.com/rockie/rustify-ui/blob/main/docs/docs-ssg.md#static-builtins for its object fields. Reported props path: `items`.
+warning[missing-site-url]: site.url is not set, so pages have no canonical address or preview image and there is no sitemap
+  --> rustify-docs.toml
+  = help: add `url = "https://…"` under [site], the address the site is published at
+check: 4 pages, 2 error(s), 3 warning(s); first: component `MissingCounter` is not registered; add it to site! and configure [rust] (content/gaps.md:6:1)

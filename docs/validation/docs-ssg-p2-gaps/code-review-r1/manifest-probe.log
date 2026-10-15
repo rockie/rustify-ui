@@ -1,0 +1,35 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling unicode-ident v1.0.27
+   Compiling proc-macro2 v1.0.107
+   Compiling quote v1.0.47
+   Compiling serde_core v1.0.229
+   Compiling serde v1.0.229
+   Compiling syn v3.0.9
+   Compiling syn v2.0.119
+   Compiling serde_derive v1.0.229
+   Compiling rustify-docs-syntax v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-docs-syntax)
+   Compiling manifest-review-probe v0.0.0 (/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-p2-gaps-review-4xrlmqj7/manifest-probe)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 5.05s
+     Running `mbx-launch /var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-p2-gaps-review-4xrlmqj7/manifest-target/debug/manifest-review-probe`
+mbx[cache]: 4 hits, 8 misses, 13 not looked up; 0 B downloaded, 0 B uploaded, 53.6 MiB stored locally
+source=fn site() { rustify_docs::site! { components {
+      Counter { label: String = r#"a"   b   "c"#.to_string() } => |props, children| props.label,
+    } } }
+manifest_default=Some("r#\"a\"   b   \"c\"# . to_string ()")
+repair=Use one of `label` (`String`; default expression `r#"a" b "c"#.to_string()`) for `Counter`; rename or remove `unexpected`.
+literal_preserved=false
+runtime_literal="a\"   b   \"c"
+mbx[savings]: 2.0 TiB logical of target/ had outlived its checkouts. it has been dealt with.

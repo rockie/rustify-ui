@@ -1,0 +1,22 @@
+{
+  "name": "browser",
+  "command": [
+    "npx",
+    "--no-install",
+    "playwright",
+    "test",
+    "-c",
+    "playwright.docs.config.ts",
+    "--project=docs-dev",
+    "dev-components.spec.ts",
+    "--grep",
+    "frontmatter language preserves|plain author paths|real DOM reader",
+    "--workers=1",
+    "--reporter=json",
+    "--output=/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2-gaps-2/code-review-r2/browser-artifacts"
+  ],
+  "exit": 0,
+  "seconds": 4.95,
+  "entry": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-gaps2-apply-installed-byzjg2a6/bin/rustify-docs",
+  "sha256": "c51f563d608a31bd56c09ae2ef393cdb93558ba3fa17472c8c0833f1a10ac95d"
+}

@@ -1,0 +1,314 @@
+{
+  "origin": "http://127.0.0.1:4299/rustify-ui/",
+  "browser": "153.0.8010.12",
+  "tags": [
+    "wcag2a",
+    "wcag2aa",
+    "wcag21a",
+    "wcag21aa",
+    "wcag22aa"
+  ],
+  "scans": [
+    {
+      "state": "loading",
+      "colorScheme": "light",
+      "width": 1280,
+      "route": "components/button/",
+      "islands": 1,
+      "states": [
+        "loading"
+      ],
+      "notice": "Increment\nReset\nUnavailable\n\nCount: 0\n\nInteractive example\nLoading interactive example…\n\nsite/src/demos/basics.rs\n\nFunction\nFull file\nCopy\n/// Buttons request changes to state owned by the application.\npub fn button_demo() -> impl IntoView {\n    let count = RwSignal::new(0_u32);\n    view! {\n        <div class=\"space-y-4\">\n            <div class=\"flex flex-wrap items-center gap-3\">\n                ",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "nodes": 33
+        }
+      ]
+    },
+    {
+      "state": "loading",
+      "colorScheme": "light",
+      "width": 1280,
+      "route": "components/tabs/",
+      "islands": 1,
+      "states": [
+        "loading"
+      ],
+      "notice": "Overview\nDetails\n\nThe first panel is visible initially.\n\nActive panel: overview\n\nInteractive example\nLoading interactive example…\n\nsite/src/demos/collections.rs\n\nFunction\nFull file\nCopy\n/// Tabs retain their panels while the active value belongs to the application.\npub fn tabs_demo() -> impl IntoView {\n    let active = RwSignal::new(\"overview\".to_string());\n    view! {\n        <div class=\"space-y-",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "nodes": 41
+        }
+      ]
+    },
+    {
+      "state": "loading",
+      "colorScheme": "light",
+      "width": 375,
+      "route": "components/button/",
+      "islands": 1,
+      "states": [
+        "loading"
+      ],
+      "notice": "Increment\nReset\nUnavailable\n\nCount: 0\n\nInteractive example\nLoading interactive example…\n\nsite/src/demos/basics.rs\n\nFunction\nFull file\nCopy\n/// Buttons request changes to state owned by the application.\npub fn button_demo() -> impl IntoView {\n    let count = RwSignal::new(0_u32);\n    view! {\n        <div class=\"space-y-4\">\n            <div class=\"flex flex-wrap items-center gap-3\">\n                ",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "nodes": 25
+        }
+      ]
+    },
+    {
+      "state": "loading",
+      "colorScheme": "light",
+      "width": 375,
+      "route": "components/tabs/",
+      "islands": 1,
+      "states": [
+        "loading"
+      ],
+      "notice": "Overview\nDetails\n\nThe first panel is visible initially.\n\nActive panel: overview\n\nInteractive example\nLoading interactive example…\n\nsite/src/demos/collections.rs\n\nFunction\nFull file\nCopy\n/// Tabs retain their panels while the active value belongs to the application.\npub fn tabs_demo() -> impl IntoView {\n    let active = RwSignal::new(\"overview\".to_string());\n    view! {\n        <div class=\"space-y-",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "nodes": 22
+        }
+      ]
+    },
+    {
+      "state": "loading",
+      "colorScheme": "dark",
+      "width": 1280,
+      "route": "components/button/",
+      "islands": 1,
+      "states": [
+        "loading"
+      ],
+      "notice": "Increment\nReset\nUnavailable\n\nCount: 0\n\nInteractive example\nLoading interactive example…\n\nsite/src/demos/basics.rs\n\nFunction\nFull file\nCopy\n/// Buttons request changes to state owned by the application.\npub fn button_demo() -> impl IntoView {\n    let count = RwSignal::new(0_u32);\n    view! {\n        <div class=\"space-y-4\">\n            <div class=\"flex flex-wrap items-center gap-3\">\n                ",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "nodes": 33
+        }
+      ]
+    },
+    {
+      "state": "loading",
+      "colorScheme": "dark",
+      "width": 1280,
+      "route": "components/tabs/",
+      "islands": 1,
+      "states": [
+        "loading"
+      ],
+      "notice": "Overview\nDetails\n\nThe first panel is visible initially.\n\nActive panel: overview\n\nInteractive example\nLoading interactive example…\n\nsite/src/demos/collections.rs\n\nFunction\nFull file\nCopy\n/// Tabs retain their panels while the active value belongs to the application.\npub fn tabs_demo() -> impl IntoView {\n    let active = RwSignal::new(\"overview\".to_string());\n    view! {\n        <div class=\"space-y-",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "nodes": 41
+        }
+      ]
+    },
+    {
+      "state": "loading",
+      "colorScheme": "dark",
+      "width": 375,
+      "route": "components/button/",
+      "islands": 1,
+      "states": [
+        "loading"
+      ],
+      "notice": "Increment\nReset\nUnavailable\n\nCount: 0\n\nInteractive example\nLoading interactive example…\n\nsite/src/demos/basics.rs\n\nFunction\nFull file\nCopy\n/// Buttons request changes to state owned by the application.\npub fn button_demo() -> impl IntoView {\n    let count = RwSignal::new(0_u32);\n    view! {\n        <div class=\"space-y-4\">\n            <div class=\"flex flex-wrap items-center gap-3\">\n                ",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "nodes": 25
+        }
+      ]
+    },
+    {
+      "state": "loading",
+      "colorScheme": "dark",
+      "width": 375,
+      "route": "components/tabs/",
+      "islands": 1,
+      "states": [
+        "loading"
+      ],
+      "notice": "Overview\nDetails\n\nThe first panel is visible initially.\n\nActive panel: overview\n\nInteractive example\nLoading interactive example…\n\nsite/src/demos/collections.rs\n\nFunction\nFull file\nCopy\n/// Tabs retain their panels while the active value belongs to the application.\npub fn tabs_demo() -> impl IntoView {\n    let active = RwSignal::new(\"overview\".to_string());\n    view! {\n        <div class=\"space-y-",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "nodes": 22
+        }
+      ]
+    },
+    {
+      "state": "failed",
+      "colorScheme": "light",
+      "width": 1280,
+      "route": "components/button/",
+      "islands": 1,
+      "states": [
+        "failed"
+      ],
+      "notice": "Increment\nReset\nUnavailable\n\nCount: 0\n\nInteractive example\nThis example could not start. Reload the page to try again.\nReload page\n\nsite/src/demos/basics.rs\n\nFunction\nFull file\nCopy\n/// Buttons request changes to state owned by the application.\npub fn button_demo() -> impl IntoView {\n    let count = RwSignal::new(0_u32);\n    view! {\n        <div class=\"space-y-4\">\n            <div class=\"flex flex",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "nodes": 33
+        }
+      ]
+    },
+    {
+      "state": "failed",
+      "colorScheme": "light",
+      "width": 1280,
+      "route": "components/tabs/",
+      "islands": 1,
+      "states": [
+        "failed"
+      ],
+      "notice": "Overview\nDetails\n\nThe first panel is visible initially.\n\nActive panel: overview\n\nInteractive example\nThis example could not start. Reload the page to try again.\nReload page\n\nsite/src/demos/collections.rs\n\nFunction\nFull file\nCopy\n/// Tabs retain their panels while the active value belongs to the application.\npub fn tabs_demo() -> impl IntoView {\n    let active = RwSignal::new(\"overview\".to_string()",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "nodes": 41
+        }
+      ]
+    },
+    {
+      "state": "failed",
+      "colorScheme": "light",
+      "width": 375,
+      "route": "components/button/",
+      "islands": 1,
+      "states": [
+        "failed"
+      ],
+      "notice": "Increment\nReset\nUnavailable\n\nCount: 0\n\nInteractive example\nThis example could not start. Reload the page to try again.\nReload page\n\nsite/src/demos/basics.rs\n\nFunction\nFull file\nCopy\n/// Buttons request changes to state owned by the application.\npub fn button_demo() -> impl IntoView {\n    let count = RwSignal::new(0_u32);\n    view! {\n        <div class=\"space-y-4\">\n            <div class=\"flex flex",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "nodes": 25
+        }
+      ]
+    },
+    {
+      "state": "failed",
+      "colorScheme": "light",
+      "width": 375,
+      "route": "components/tabs/",
+      "islands": 1,
+      "states": [
+        "failed"
+      ],
+      "notice": "Overview\nDetails\n\nThe first panel is visible initially.\n\nActive panel: overview\n\nInteractive example\nThis example could not start. Reload the page to try again.\nReload page\n\nsite/src/demos/collections.rs\n\nFunction\nFull file\nCopy\n/// Tabs retain their panels while the active value belongs to the application.\npub fn tabs_demo() -> impl IntoView {\n    let active = RwSignal::new(\"overview\".to_string()",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "nodes": 22
+        }
+      ]
+    },
+    {
+      "state": "failed",
+      "colorScheme": "dark",
+      "width": 1280,
+      "route": "components/button/",
+      "islands": 1,
+      "states": [
+        "failed"
+      ],
+      "notice": "Increment\nReset\nUnavailable\n\nCount: 0\n\nInteractive example\nThis example could not start. Reload the page to try again.\nReload page\n\nsite/src/demos/basics.rs\n\nFunction\nFull file\nCopy\n/// Buttons request changes to state owned by the application.\npub fn button_demo() -> impl IntoView {\n    let count = RwSignal::new(0_u32);\n    view! {\n        <div class=\"space-y-4\">\n            <div class=\"flex flex",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "nodes": 33
+        }
+      ]
+    },
+    {
+      "state": "failed",
+      "colorScheme": "dark",
+      "width": 1280,
+      "route": "components/tabs/",
+      "islands": 1,
+      "states": [
+        "failed"
+      ],
+      "notice": "Overview\nDetails\n\nThe first panel is visible initially.\n\nActive panel: overview\n\nInteractive example\nThis example could not start. Reload the page to try again.\nReload page\n\nsite/src/demos/collections.rs\n\nFunction\nFull file\nCopy\n/// Tabs retain their panels while the active value belongs to the application.\npub fn tabs_demo() -> impl IntoView {\n    let active = RwSignal::new(\"overview\".to_string()",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "nodes": 41
+        }
+      ]
+    },
+    {
+      "state": "failed",
+      "colorScheme": "dark",
+      "width": 375,
+      "route": "components/button/",
+      "islands": 1,
+      "states": [
+        "failed"
+      ],
+      "notice": "Increment\nReset\nUnavailable\n\nCount: 0\n\nInteractive example\nThis example could not start. Reload the page to try again.\nReload page\n\nsite/src/demos/basics.rs\n\nFunction\nFull file\nCopy\n/// Buttons request changes to state owned by the application.\npub fn button_demo() -> impl IntoView {\n    let count = RwSignal::new(0_u32);\n    view! {\n        <div class=\"space-y-4\">\n            <div class=\"flex flex",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "nodes": 25
+        }
+      ]
+    },
+    {
+      "state": "failed",
+      "colorScheme": "dark",
+      "width": 375,
+      "route": "components/tabs/",
+      "islands": 1,
+      "states": [
+        "failed"
+      ],
+      "notice": "Overview\nDetails\n\nThe first panel is visible initially.\n\nActive panel: overview\n\nInteractive example\nThis example could not start. Reload the page to try again.\nReload page\n\nsite/src/demos/collections.rs\n\nFunction\nFull file\nCopy\n/// Tabs retain their panels while the active value belongs to the application.\npub fn tabs_demo() -> impl IntoView {\n    let active = RwSignal::new(\"overview\".to_string()",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "nodes": 22
+        }
+      ]
+    }
+  ],
+  "pageErrors": [],
+  "summary": {
+    "scans": 16,
+    "states": [
+      "loading:loading",
+      "failed:failed"
+    ],
+    "serious_or_critical": [],
+    "violations": 0,
+    "incomplete": [
+      "color-contrast"
+    ]
+  }
+}

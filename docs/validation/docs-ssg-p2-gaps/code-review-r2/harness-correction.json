@@ -1,0 +1,8 @@
+{
+  "first_run": "author-acceptance.first.log",
+  "failure": "a global suggestion count also included the missing-site-url warning",
+  "evidence": "author-work/build-raw-cold.stdout contains the raw error and independent site configuration warnings",
+  "reference": "tests/docs-ssg/dev-components.spec.ts:829-837 groups by diagnostic file before selecting items",
+  "correction": "scope the exact-text/count assertion to the content/gaps.md group; preserve and inspect all suggestions separately",
+  "product_files_changed": false
+}

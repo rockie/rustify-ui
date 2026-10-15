@@ -1,0 +1,43 @@
+{
+  "fmt": {
+    "command": "cargo fmt --all -- --check",
+    "exit": 0,
+    "log": "fmt-check.log"
+  },
+  "docs": {
+    "command": "mbx test --locked -p rustify-docs",
+    "exit": 0,
+    "passed": 276,
+    "log": "docs-test.log"
+  },
+  "ui_detector": {
+    "command": ".agents/skills/impeccable/scripts/impeccable detect --json crates/rustify-docs/assets/dev.js",
+    "exit": 0,
+    "findings": [],
+    "log": "ui-detector.json"
+  },
+  "git_diff_check": {
+    "command": "git diff --no-ext-diff --no-textconv --check 958c9bd9 HEAD",
+    "exit": 2,
+    "result": "new blank line at EOF in two generated historical test logs; no code finding"
+  },
+  "cli": {
+    "command": "mbx test --locked -p rustify-docs-cli --test check --test components --test dev",
+    "exit": 0,
+    "passed": 33,
+    "counts": [
+      16,
+      2,
+      15
+    ],
+    "log": "cli-test.log"
+  },
+  "installed_acceptance": {
+    "exit": 0,
+    "report": "author-acceptance.json",
+    "passed": true,
+    "browser_cases": 2,
+    "browser_views": 8,
+    "first_harness_failure": "harness-correction.json"
+  }
+}

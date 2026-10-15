@@ -1,0 +1,44 @@
+{
+  "reducedMotion": true,
+  "ready": "ready",
+  "transitionProperty": "all",
+  "transitionDuration": "0.15s",
+  "opacity": "0.918587",
+  "rules": [
+    {
+      "selector": "[data-rustify-scope] [data-name]",
+      "layers": [
+        "components"
+      ],
+      "media": [
+        "(prefers-reduced-motion: reduce)"
+      ],
+      "transitionProperty": "",
+      "transitionDuration": "0s"
+    },
+    {
+      "selector": ".transition-all",
+      "layers": [
+        "utilities"
+      ],
+      "media": [],
+      "transitionProperty": "all",
+      "transitionDuration": "var(--tw-duration,var(--default-transition-duration))"
+    },
+    {
+      "selector": "[data-rustify-scope] [data-name]",
+      "layers": [],
+      "media": [],
+      "transitionProperty": "",
+      "transitionDuration": "var(--motion-duration)"
+    }
+  ],
+  "animations": [
+    {
+      "type": "CSSTransition",
+      "property": "opacity",
+      "state": "running",
+      "duration": 150
+    }
+  ]
+}

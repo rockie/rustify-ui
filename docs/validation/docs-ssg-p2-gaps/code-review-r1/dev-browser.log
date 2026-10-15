@@ -1,0 +1,12 @@
+npm notice run rustify-ui-browser-tests@0.1.0 npx
+npm notice run 'playwright' test -c playwright.docs.config.ts --project=docs-dev dev-components.spec.ts --grep gaps embedded diagnostics --workers=1 --output=/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-p2-gaps-review-4xrlmqj7/dev-browser --reporter=line,json
+
+Running 2 tests using 1 worker
+
+(node:92823) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1/2] [docs-dev] › tests/docs-ssg/dev-components.spec.ts:862:5 › gaps embedded diagnostics: registered names, props and demos show the CLI repair over the last good page and clear after the fix
+[2/2] [docs-dev] › tests/docs-ssg/dev-components.spec.ts:916:5 › gaps embedded diagnostics: without Rust the panel names the builtins and the empty demo registration and wraps the reference
+  2 passed (39.0s)

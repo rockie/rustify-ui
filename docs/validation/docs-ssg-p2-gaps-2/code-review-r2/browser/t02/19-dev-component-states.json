@@ -1,0 +1,154 @@
+[
+  {
+    "session": "11540-18dea5b861fe6e90",
+    "revision": 0,
+    "sequence": 0,
+    "building": true,
+    "phase": "render",
+    "compile": null,
+    "good": null,
+    "ok": true,
+    "reload": false,
+    "errors": 0,
+    "warnings": 0,
+    "diagnostics": []
+  },
+  {
+    "session": "11540-18dea5b861fe6e90",
+    "revision": 1,
+    "sequence": 1,
+    "building": false,
+    "phase": "render",
+    "compile": null,
+    "good": 1,
+    "ok": true,
+    "reload": true,
+    "errors": 0,
+    "warnings": 0,
+    "diagnostics": []
+  },
+  {
+    "session": "11540-18dea5b861fe6e90",
+    "revision": 1,
+    "sequence": 2,
+    "building": true,
+    "phase": "render",
+    "compile": null,
+    "good": 1,
+    "ok": true,
+    "reload": false,
+    "errors": 0,
+    "warnings": 0,
+    "diagnostics": []
+  },
+  {
+    "session": "11540-18dea5b861fe6e90",
+    "revision": 2,
+    "sequence": 3,
+    "building": false,
+    "phase": "render",
+    "compile": null,
+    "good": 1,
+    "ok": false,
+    "reload": false,
+    "errors": 1,
+    "warnings": 0,
+    "diagnostics": [
+      {
+        "severity": "error",
+        "rule": "lang",
+        "file": "content/index.md",
+        "line": 3,
+        "column": 7,
+        "message": "lang: `` a` at line `b `` is not a language tag",
+        "suggestion": "use a language tag such as `en`, `zh-CN` or `fr`"
+      }
+    ]
+  },
+  {
+    "session": "11540-18dea5b861fe6e90",
+    "revision": 2,
+    "sequence": 4,
+    "building": true,
+    "phase": "render",
+    "compile": null,
+    "good": 1,
+    "ok": false,
+    "reload": false,
+    "errors": 1,
+    "warnings": 0,
+    "diagnostics": [
+      {
+        "severity": "error",
+        "rule": "lang",
+        "file": "content/index.md",
+        "line": 3,
+        "column": 7,
+        "message": "lang: `` a` at line `b `` is not a language tag",
+        "suggestion": "use a language tag such as `en`, `zh-CN` or `fr`"
+      }
+    ]
+  },
+  {
+    "session": "11540-18dea5b861fe6e90",
+    "revision": 3,
+    "sequence": 5,
+    "building": false,
+    "phase": "render",
+    "compile": null,
+    "good": 1,
+    "ok": false,
+    "reload": false,
+    "errors": 1,
+    "warnings": 0,
+    "diagnostics": [
+      {
+        "severity": "error",
+        "rule": "lang",
+        "file": "content/index.md",
+        "line": 3,
+        "column": 7,
+        "message": "lang: `a at line b` is not a language tag",
+        "suggestion": "use a language tag such as `en`, `zh-CN` or `fr`"
+      }
+    ]
+  },
+  {
+    "session": "11540-18dea5b861fe6e90",
+    "revision": 3,
+    "sequence": 6,
+    "building": true,
+    "phase": "render",
+    "compile": null,
+    "good": 1,
+    "ok": false,
+    "reload": false,
+    "errors": 1,
+    "warnings": 0,
+    "diagnostics": [
+      {
+        "severity": "error",
+        "rule": "lang",
+        "file": "content/index.md",
+        "line": 3,
+        "column": 7,
+        "message": "lang: `a at line b` is not a language tag",
+        "suggestion": "use a language tag such as `en`, `zh-CN` or `fr`"
+      }
+    ]
+  },
+  {
+    "session": "11540-18dea5b861fe6e90",
+    "revision": 4,
+    "sequence": 7,
+    "building": false,
+    "phase": "render",
+    "compile": null,
+    "good": 4,
+    "ok": true,
+    "reload": false,
+    "errors": 0,
+    "warnings": 0,
+    "diagnostics": []
+  }
+]

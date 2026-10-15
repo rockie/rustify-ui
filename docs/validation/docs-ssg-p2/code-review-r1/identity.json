@@ -1,0 +1,43 @@
+{
+  "base": "785f51ad9fdcb69e624a0c8f85d91e3541d58e90",
+  "target": "53d5c48563420c9252cac3f9d1e14647494320a3",
+  "native_test_version": "53d5c48563420c9252cac3f9d1e14647494320a3",
+  "cli_C": "d301344eeb27e22907c59a10805ae0cebf8dee99",
+  "framework_R": "3fcc626a4039a43c5e045ccd546bab976db89a73",
+  "cli_version": "0.1.14",
+  "binary": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-m6-pair4-installed-9pziu1hu/installed/bin/rustify-docs",
+  "binary_sha256": "5eae4e6bf727505a030fd67680c7c3a2c82bb6e195815a0d834b18cf4d737b71",
+  "csr_graph_features": {
+    "leptos": [
+      "csr"
+    ],
+    "rustify-components": [
+      "csr"
+    ],
+    "rustify-ui": [
+      "csr"
+    ]
+  },
+  "fingerprint_recheck": {
+    "source_files": [],
+    "tracked_worktree": [],
+    "untracked": []
+  },
+  "source_byte_equivalence": {
+    "crates/rustify-components/src/geometry.rs": {
+      "3fcc626a4039a43c5e045ccd546bab976db89a73": "5b1f1a78f95a9663ef487a578e7998be89d77dbf6cfcd18dd531061dd61c582d",
+      "d301344eeb27e22907c59a10805ae0cebf8dee99": "5b1f1a78f95a9663ef487a578e7998be89d77dbf6cfcd18dd531061dd61c582d",
+      "53d5c48563420c9252cac3f9d1e14647494320a3": "5b1f1a78f95a9663ef487a578e7998be89d77dbf6cfcd18dd531061dd61c582d"
+    },
+    "crates/rustify-docs-cli/src/rust_site.rs": {
+      "3fcc626a4039a43c5e045ccd546bab976db89a73": "03776481298efe5690afd9aac27887075fc0048704e14fbda3f3e6d1c8653cfa",
+      "d301344eeb27e22907c59a10805ae0cebf8dee99": "03776481298efe5690afd9aac27887075fc0048704e14fbda3f3e6d1c8653cfa",
+      "53d5c48563420c9252cac3f9d1e14647494320a3": "03776481298efe5690afd9aac27887075fc0048704e14fbda3f3e6d1c8653cfa"
+    },
+    "crates/rustify-docs-cli/src/dev.rs": {
+      "3fcc626a4039a43c5e045ccd546bab976db89a73": "10a61bdcb260163d19d60aed6ae52e473f71411daa4339a7671b74ba8e927215",
+      "d301344eeb27e22907c59a10805ae0cebf8dee99": "10a61bdcb260163d19d60aed6ae52e473f71411daa4339a7671b74ba8e927215",
+      "53d5c48563420c9252cac3f9d1e14647494320a3": "10a61bdcb260163d19d60aed6ae52e473f71411daa4339a7671b74ba8e927215"
+    }
+  }
+}

@@ -1,0 +1,1001 @@
+[
+  {
+    "id": "WORK-F1/AC-1",
+    "line": 187,
+    "text": "用户在空目录用内容模板新建站点后，不做任何修改即可启动开发预览并浏览首页与至少两个示例内容页，整个过程不编译站点 Rust 代码",
+    "phase": "P1",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "已满足",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-F1/AC-2",
+    "line": 188,
+    "text": "用户用组件库模板新建站点后，不做任何修改即可在开发预览中看到一个可交互的演示及其源码",
+    "phase": "P2",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "已满足",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-F1/AC-3",
+    "line": 189,
+    "text": "环境缺少所需工具链组件时，`new` 与 `dev` 输出缺失项和确切的补装命令，并以非零状态退出，目标目录中不留下半成品文件",
+    "phase": "P1",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "已满足",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-F1/AC-4",
+    "line": 190,
+    "text": "目标目录非空时，`new` 拒绝执行并说明原因，目录中原有文件的内容和数量保持不变",
+    "phase": "P1",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "已满足",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-F1/AC-5",
+    "line": 191,
+    "text": "本项目用户在固定版本上完成新建站点、改写一页、加入并注册一个可运行演示；开发预览显示改写后的内容，新演示可交互，显示源码与演示函数及原文件一致。可以结合 README 与开发协助验收，不设招募人数、首次用户资格或限时门槛；自动化结果作为实施证据，用户结论由本人确认",
+    "phase": "P2",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "已确认变更",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-F2/AC-1",
+    "line": 214,
+    "text": "作者使用 GFM 表格、任务列表、脚注和五种 GitHub alert 写成的页面，构建后每种元素都以对应的语义和样式呈现；同一文件在 GitHub 文件预览中同样可读",
+    "phase": "P1",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "范围外",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-F2/AC-2",
+    "line": 215,
+    "text": "作者写的 `[x](./navigation.md#links)` 这类相对链接在产物中指向对应页面的对应锚点，点击后到达该标题；同一链接在 GitHub 上也指向正确的文件",
+    "phase": "P1",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "范围外",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-F2/AC-3",
+    "line": 216,
+    "text": "页面中含中文标题和两个同名标题时，每个标题都有唯一且两次构建间保持不变的锚点；自定义锚点优先于自动生成的锚点",
+    "phase": "P1",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "范围外",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-F2/AC-4",
+    "line": 217,
+    "text": "标记为草稿的页面在开发预览中带“草稿”标识可见；在构建产物、站点地图、搜索索引与 AI 输出中都不出现（搜索索引与 AI 输出在交付期分别由 WORK-F9/AC-4、WORK-F12/AC-4 复核）",
+    "phase": "P1",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "范围外",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-F3/AC-1",
+    "line": 237,
+    "text": "上列 11 种语言的代码块在禁用脚本时也显示语法高亮，切换深浅主题后配色随之变化，且所有配色对比度满足 WORK-N5/AC-1",
+    "phase": "P1",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "范围外",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-F3/AC-2",
+    "line": 238,
+    "text": "读者点击复制按钮后，剪贴板内容与代码块原文逐字符一致（不含行号与高亮标记），并看到可被朗读的成功提示；剪贴板被拒绝时显示失败提示，代码保持可手动选中",
+    "phase": "P1",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "范围外",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-F3/AC-3",
+    "line": 239,
+    "text": "作者用标记区间引用源文件片段，源文件改动后重新构建，页面显示改动后的片段；区间标记不存在时构建失败，诊断指出 Markdown 位置与缺失的区间名",
+    "phase": "P1",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "范围外",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-F3/AC-4",
+    "line": 240,
+    "text": "读者在代码分组中切换页签，只显示所选页签内容；同页其他同名分组同步切换，选择在页面间保持",
+    "phase": "P1",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "范围外",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-F4/AC-1",
+    "line": 259,
+    "text": "作者在 Markdown 中放置一个站点注册的组件并传入属性后，构建产物的 HTML 已包含该组件以这些属性渲染出的内容；禁用脚本时内容可见",
+    "phase": "P2",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.r2.md",
+    "previous_coverage": "已满足",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-F4/AC-2",
+    "line": 260,
+    "text": "作者放置的交互组件在页面加载后可以交互，交互结果与在普通 Leptos 应用中一致；同页放置 3 个同类组件时各自状态互不影响",
+    "phase": "P2",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.r2.md",
+    "previous_coverage": "已满足",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-F4/AC-3",
+    "line": 261,
+    "text": "作者使用未注册的组件名，或属性类型、名称不匹配时，构建失败，诊断给出 Markdown 文件、行号、列号与可用的组件名或属性名",
+    "phase": "P2",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.r2.md",
+    "previous_coverage": "已满足（上轮部分满足）",
+    "reviewed_this_round": true
+  },
+  {
+    "id": "WORK-F4/AC-4",
+    "line": 262,
+    "text": "含嵌入组件的 Markdown 文件在 GitHub 文件预览中，每个组件位置都显示为可识别的占位文本或代码块，其余正文正常显示",
+    "phase": "P2",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "未核实",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-F5/AC-1",
+    "line": 283,
+    "text": "演示块显示的源码与演示函数在源文件中的文本逐字符一致，修改该函数后重新构建，页面上的运行结果与源码同时更新",
+    "phase": "P2",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "已满足",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-F5/AC-2",
+    "line": 284,
+    "text": "演示函数无法编译时，`build` 与 `check` 失败并给出 Rust 源位置；开发预览显示编译错误并保留上一个可用版本",
+    "phase": "P2",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "已满足",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-F5/AC-3",
+    "line": 285,
+    "text": "禁用脚本时，演示块显示与启用脚本时首帧一致的初始画面和完整源码，并说明交互需要启用脚本",
+    "phase": "P2",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "已满足",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-F5/AC-4",
+    "line": 286,
+    "text": "演示在交互中发生运行时错误后，页面正文、导航和链接仍可使用，所有失效的交互块显示失败状态与重新加载入口；不存在仍可点击却没有任何反应的控件",
+    "phase": "P2",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "已满足",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-F5/AC-5",
+    "line": 287,
+    "text": "脚本已启用而演示尚未可交互时，演示显示加载中状态，不提示启用脚本；此时的点击与输入不改变演示状态；就绪后加载中状态消失",
+    "phase": "P2",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "已满足",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-F5/AC-6",
+    "line": 288,
+    "text": "演示的交互资源下载、初始化或水合失败时，演示保留初始画面与源码，显示失败状态与重新加载入口，不停留在加载中；页面正文、导航和链接仍可使用",
+    "phase": "P2",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "已满足",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-F6/AC-1",
+    "line": 310,
+    "text": "维护者只修改首页的 frontmatter 就得到包含标题、标语、两个主操作和特性网格的首页，在 1280 px 宽的视口中不滚动就能看到主操作",
+    "phase": "P1",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "已满足",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-F6/AC-2",
+    "line": 311,
+    "text": "维护者注册的定制页出现在配置的地址上，具有与内容页一致的页头、侧栏、主题切换与页脚（站内搜索能找到定制页的验收见 WORK-F9/AC-5）",
+    "phase": "P2",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "已满足",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-F6/AC-3",
+    "line": 312,
+    "text": "维护者覆盖页脚插槽后，所有页面（含 404 页）显示新的页脚，其余插槽保持默认",
+    "phase": "P2",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "已满足",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-F7/AC-1",
+    "line": 334,
+    "text": "侧栏的分组与顺序与目录结构加 frontmatter 或配置的声明一致；当前页在侧栏中高亮，页面加载后位于侧栏可视区域内",
+    "phase": "P1",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "范围外",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-F7/AC-2",
+    "line": 335,
+    "text": "读者打开 `页面地址#某标题`，或点击页内目录中的条目后，该标题完整位于固定页头下方的可视区域，地址栏的锚点与之对应",
+    "phase": "P1",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "范围外",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-F7/AC-3",
+    "line": 336,
+    "text": "读者滚动正文时，页内目录高亮的条目始终是视口顶部所在章节的标题",
+    "phase": "P1",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "范围外",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-F7/AC-4",
+    "line": 337,
+    "text": "禁用脚本时，侧栏、顶栏、页内目录与上一页、下一页都是可用的普通链接，点击后到达对应页面或标题",
+    "phase": "P1",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "范围外",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-F7/AC-5",
+    "line": 338,
+    "text": "读者访问基路径下任意深度的不存在地址时，得到 404 状态和站点的 404 页，其样式、脚本与链接都正常，并能从中返回首页",
+    "phase": "P1",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "范围外",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-F8/AC-1",
+    "line": 361,
+    "text": "读者把色彩模式设为深色后刷新或进入其他页面，页面首帧即为深色，不出现浅色闪烁；设为“跟随系统”时随操作系统设置变化",
+    "phase": "P1",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "已满足",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-F8/AC-2",
+    "line": 362,
+    "text": "视口宽 1280 px 时显示侧栏、正文、目录三栏，768–1279 px 时显示两栏（目录收为折叠），小于 768 px 时显示单栏（侧栏收为菜单）",
+    "phase": "P1",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "已满足",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-F8/AC-3",
+    "line": 363,
+    "text": "维护者配置的主色与 logo 出现在页头、链接、焦点环和主按钮上，浅色和深色两种模式下都生效",
+    "phase": "P1",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "已满足",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-F8/AC-4",
+    "line": 364,
+    "text": "默认主题下正文每行英文 60–80 字符、中文 30–45 字；标题、正文、代码块与提示框之间有可辨认的层级",
+    "phase": "P1",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "已满足",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-F8/AC-5",
+    "line": 365,
+    "text": "维护者导入一份 Theme Studio 主题文档后，站点和演示在浅色与深色下使用该文档的颜色、圆角与字体，与 Theme Studio 中同一文档的预览一致",
+    "phase": "P2",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "已满足",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-F8/AC-6",
+    "line": 366,
+    "text": "站点组件或定制页中使用一个默认样式里没有的 Tailwind v4 类，重新构建后该类在页面上生效，过程中没有执行额外的工具或命令",
+    "phase": "P2",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "已满足",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-F9/AC-1",
+    "line": 389,
+    "text": "在 1,000 页中英混合语料中，读者搜索“主题切换”和“ThemeScope”，排在首位的结果都是标题含该词的页面，每条结果都显示页面标题、标题路径与含高亮词的摘要",
+    "phase": "P4",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "范围外",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-F9/AC-2",
+    "line": 390,
+    "text": "读者搜索一个站内不存在的词时，看到明确的无结果状态和换词建议，输入框保持焦点",
+    "phase": "P4",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "范围外",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-F9/AC-3",
+    "line": 391,
+    "text": "读者只用键盘就能打开搜索、在结果间移动、打开结果并到达对应标题，Esc 关闭后焦点回到触发位置",
+    "phase": "P4",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "范围外",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-F9/AC-4",
+    "line": 392,
+    "text": "在中文界面下搜索，结果只包含中文界面下的页面：有中文译文的页面以译文出现；缺译页以默认语言正文参与，结果标明“尚未翻译”，打开后停在中文界面；草稿页和声明不参与搜索的页面在任何查询下都不出现",
+    "phase": "P4",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "范围外",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-F9/AC-5",
+    "line": 393,
+    "text": "维护者注册的定制页上的文字，与内容页一样能被搜索到，选中结果后到达该定制页",
+    "phase": "P4",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "范围外",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-F9/AC-6",
+    "line": 394,
+    "text": "读者在 404 页可以用快捷键或页头按钮打开搜索，并到达所选结果",
+    "phase": "P4",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "范围外",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-F9/AC-7",
+    "line": 395,
+    "text": "搜索索引加载失败时，搜索显示暂不可用与重试入口，不显示无结果状态，重试成功后显示该查询的结果；索引加载中输入的查询在加载完成后得到结果，期间显示加载状态",
+    "phase": "P4",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "范围外",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-F10/AC-1",
+    "line": 417,
+    "text": "读者在有中英两个版本的页面切换语言后，到达同一页的另一语言版本，侧栏、顶栏、上一页与下一页和界面文字均为该语言，页面 `lang` 属性与之相符",
+    "phase": "P3",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "范围外",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-F10/AC-2",
+    "line": 418,
+    "text": "读者切换到当前页缺译的语言时，看到默认语言正文和“尚未翻译”提示，界面文字为目标语言，正文标注为源语言；该回退页面不进入站点地图，不被声明为翻译版本，规范地址指向默认语言版本",
+    "phase": "P3",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "范围外",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-F10/AC-3",
+    "line": 419,
+    "text": "维护者新增一种内置以外的语言并只提供部分界面文案时，缺少的条目以英文显示，`check` 列出缺少的条目",
+    "phase": "P3",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "范围外",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-F10/AC-4",
+    "line": 420,
+    "text": "读者在某语言前缀下访问不存在的地址时，看到该语言的 404 页；托管只使用一个错误页时，禁用脚本看到默认语言的 404 页和各语言首页链接，启用脚本看到该语言的 404 页",
+    "phase": "P3",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "范围外",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-F11/AC-1",
+    "line": 442,
+    "text": "每个已发布页面都有唯一的标题、描述、规范地址和分享卡片元数据；未写描述的页面使用正文首段摘要",
+    "phase": "P1",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "范围外",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-F11/AC-2",
+    "line": 443,
+    "text": "站点地图恰好列出全部已发布页面，不含草稿、声明不索引的页面和 404 页；robots 文件指向站点地图",
+    "phase": "P1",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "范围外",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-F11/AC-3",
+    "line": 444,
+    "text": "未配置站点地址时，构建成功，产物中没有规范地址和站点地图，警告说明需要补的配置项",
+    "phase": "P1",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "范围外",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-F11/AC-4",
+    "line": 445,
+    "text": "有中英两个版本的页面，两个版本都声明彼此的语言互指；缺译回退页面不出现在任何互指声明中",
+    "phase": "P3",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "范围外",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-F12/AC-1",
+    "line": 468,
+    "text": "索引列出每个已发布内容页，以及每个已提供描述的定制页的标题、HTML 地址和描述，分组与站点导航一致；其中的链接全部可访问",
+    "phase": "P4",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "范围外",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-F12/AC-2",
+    "line": 469,
+    "text": "站点分别部署在根路径和 `/rustify-ui/` 子路径时，索引都位于该基路径下，所列链接都以该基路径为前缀；有中英两种语言时各有一份索引，每份只列该语言界面下的页面，缺译页指向默认语言版本并标明语言",
+    "phase": "P4",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "范围外",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-F12/AC-3",
+    "line": 470,
+    "text": "未配置站点地址时，构建成功并警告缺少站点地址；索引中的链接是带基路径的根相对地址，按索引所在地址解析后都可访问，没有无法解析的地址",
+    "phase": "P4",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "范围外",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-F12/AC-4",
+    "line": 471,
+    "text": "草稿页、声明不参与 AI 输出的页面，以及未提供描述的定制页，都不出现在任何一份索引中；产物中没有 Markdown 源文件或 Markdown 副本",
+    "phase": "P4",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "范围外",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-F13/AC-1",
+    "line": 493,
+    "text": "作者在开发预览中保存 Markdown 后，浏览器自动显示新内容并保持原滚动位置，过程中不触发 Rust 编译，耗时满足 WORK-N2/AC-1",
+    "phase": "P1",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "已满足",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-F13/AC-2",
+    "line": 494,
+    "text": "作者保存一个含失效链接的 Markdown 后，浏览器浮层和终端都显示该链接的文件、行号与修复建议；改正后浮层自动消失，无需重启服务",
+    "phase": "P1",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.r2.md",
+    "previous_coverage": "已满足（原例）；残留差异见 G-06",
+    "reviewed_this_round": true
+  },
+  {
+    "id": "WORK-F13/AC-3",
+    "line": 495,
+    "text": "默认端口被占用时，`dev` 改用一个空闲端口并打印实际地址，不影响占用该端口的程序",
+    "phase": "P1",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "已满足",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-F13/AC-4",
+    "line": 496,
+    "text": "作者保存一个能编译的 Rust 修改后，页面显示构建中状态，编译完成后自动刷新为新结果；保存一个不能编译的修改后，浮层显示编译错误，页面仍是上一个可用版本",
+    "phase": "P2",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "已满足",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-F14/AC-1",
+    "line": 516,
+    "text": "维护者以 `/rustify-ui/` 为基路径构建后，产物中所有页面、资源与站内链接都以该基路径为前缀，每个页面对应一个“目录 + index.html”",
+    "phase": "P1",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "范围外",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-F14/AC-2",
+    "line": 517,
+    "text": "内容未变而重新构建时，资源文件名保持不变；任一资源内容改变时，只有它及引用它的文件名改变",
+    "phase": "P1",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "范围外",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-F14/AC-3",
+    "line": 518,
+    "text": "`preview` 的响应头带有 WORK-N3 的完整严格 CSP；基路径下任意深度的不存在地址得到 404 状态与产物中的 404 页；以与产物不符的基路径启动时，拒绝启动并输出产物的实际基路径",
+    "phase": "P1",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "范围外",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-F14/AC-4",
+    "line": 519,
+    "text": "构建成功时，终端最后输出页数、产物总大小、最大的 5 个页面与警告数；构建失败时最后输出错误数与第一个错误",
+    "phase": "P1",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "范围外",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-F15/AC-1",
+    "line": 542,
+    "text": "站点含一个失效锚点、一张缺失图片和一段带内联脚本的原始 HTML 时，`check` 报告 3 个错误，每个都有文件、行号、列号与修复建议，并以非零状态退出；`build` 同样失败",
+    "phase": "P1",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "范围外",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-F15/AC-2",
+    "line": 543,
+    "text": "`check` 以机器可读格式输出时，每条诊断包含严重级别、规则名、文件、行、列、说明与修复建议，可以被标准 JSON 解析器完整解析",
+    "phase": "P1",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.r2.md",
+    "previous_coverage": "已满足（上轮部分满足）",
+    "reviewed_this_round": true
+  },
+  {
+    "id": "WORK-F15/AC-3",
+    "line": 544,
+    "text": "站点含一个未注册的组件和一个不能编译的演示时，`check` 报告这两个错误及各自位置",
+    "phase": "P2",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.r2.md",
+    "previous_coverage": "已满足",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-F15/AC-4",
+    "line": 545,
+    "text": "一种语言缺少 3 个页面的译文和 2 条界面文案时，`check` 以警告列出这 5 项；启用把警告当作错误后以非零状态退出",
+    "phase": "P3",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "范围外",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-F15/AC-5",
+    "line": 546,
+    "text": "未开启外链检查时，`check` 在断网环境下照常完成，不发起任何网络请求",
+    "phase": "P1",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "范围外",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-F16/AC-1",
+    "line": 570,
+    "text": "文档站包含上列 12 份指南，每份的正文与仓库中对应的源文件来自同一份内容；修改源文件后重新构建，站点随之变化；站点中不出现计划、验证、报告和 PRD 页面",
+    "phase": "P2",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "已满足",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-F16/AC-2",
+    "line": 571,
+    "text": "24 个组件分类各有至少一个可运行的 DOM 演示和与之同源的源码；页面不加载 Makepad 运行时",
+    "phase": "P2",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "已满足",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-F16/AC-3",
+    "line": 572,
+    "text": "文档站以 `check` 零错误构建，部署到配置的子路径（§5.2 Q4）后浏览全部页面：该托管交付的严格 CSP 生效（只能使用 meta 策略时，是除 `frame-ancestors` 外的全部指令），CSP 违规为 0；部署说明写明该托管交付的策略范围",
+    "phase": "P4",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "范围外",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-F16/AC-4",
+    "line": 573,
+    "text": "文档站提供可用的站内搜索、中英界面切换，以及中英各一份 llms.txt 索引；首页与快速开始有中文版本",
+    "phase": "P4",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "范围外",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-F17/AC-1",
+    "line": 592,
+    "text": "应用只以默认配置依赖 rustify-ui 与 rustify-components 时，完整依赖清单（含构建依赖）中不出现 makepad 开头的包或 rustify-makepad，产物中不含 Makepad 运行时与桥接脚本",
+    "phase": "P1",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "范围外",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-F17/AC-2",
+    "line": 593,
+    "text": "未开启 GPU 能力的应用中，toast 到时自动消失，浮层在锚点尺寸变化后重新定位，实例中止后页面级监听全部失效，结果与开启 GPU 能力时相同",
+    "phase": "P1",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "范围外",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-F17/AC-3",
+    "line": 594,
+    "text": "未开启 GPU 能力的应用用普通 Rust 工具链完成构建和启动，过程中不调用 Makepad 打包工具；实例出错时与现有契约一致，只影响该实例并显示失败提示",
+    "phase": "P1",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "范围外",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-F17/AC-4",
+    "line": 595,
+    "text": "现有 7 个示例显式开启 GPU 能力后，原有的浏览器回归用例全部通过，行为与改动前一致",
+    "phase": "P1",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "范围外",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-F17/AC-5",
+    "line": 596,
+    "text": "开发者在未开启 GPU 能力的工程里使用 GPU region 时构建失败；快速入门和该 API 的文档都写明需要开启的开关名",
+    "phase": "P1",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "范围外",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-N1/AC-1",
+    "line": 622,
+    "text": "不含自定义交互组件的内容页，冷缓存首次访问时下载的 wasm 为 0 字节，基础交互（主题切换、复制代码、代码分组切换、移动端菜单、目录高亮）均可使用",
+    "phase": "P1",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "已满足",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-N1/AC-2",
+    "line": 623,
+    "text": "被测页面在移动端条件下，LCP ≤ 2.5 s、CLS ≤ 0.1",
+    "phase": "P1",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "部分满足",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-N1/AC-3",
+    "line": 624,
+    "text": "内容页首次加载的 HTML、CSS 与脚本按体积口径合计 ≤ 100 KB（不含图片、字体和按需加载的搜索与演示资源）",
+    "phase": "P1",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "已满足",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-N1/AC-4",
+    "line": 625,
+    "text": "含演示的页面在参考机条件下，从首次内容绘制（FCP）到页面上全部演示可交互（交互岛完成水合、控件响应输入）≤ 1 s；起点不以交互岛资源加载完成计。水合前后演示区域的布局偏移为 0",
+    "phase": "P2",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "未核实",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-N1/AC-5",
+    "line": 626,
+    "text": "1,000 页语料、参考机条件下：读者打开搜索后，输入框立即获得焦点，可以输入，索引加载不阻塞输入。从一次查询的输入事件到该查询的结果显示，索引尚未加载时的首次查询 ≤ 1 s（包括索引加载的剩余时间，以打开搜索后立即输入为最坏情形），索引加载后每次输入 ≤ 100 ms；打开搜索到输入之间读者的停顿不计入",
+    "phase": "P4",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "范围外",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-N2/AC-1",
+    "line": 646,
+    "text": "在参考站点 B 的开发预览中保存一个 Markdown、配置或静态资源文件，到浏览器显示新内容 ≤ 1 s",
+    "phase": "P1",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "已满足",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-N2/AC-2",
+    "line": 647,
+    "text": "用内容模板新建站点并启动开发预览，从执行 `new` 到浏览器可以打开首页 ≤ 60 s",
+    "phase": "P1",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "未核实",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-N2/AC-3",
+    "line": 648,
+    "text": "参考站点 B（无站点 Rust 代码）的完整构建，包括样式、站点地图与全部页面，耗时 ≤ 20 s",
+    "phase": "P1",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "已满足",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-N2/AC-4",
+    "line": 649,
+    "text": "站点 Rust 代码的增量编译完成后，开发预览在 2 s 内刷新为新结果",
+    "phase": "P2",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "已满足",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-N3/AC-1",
+    "line": 670,
+    "text": "产物部署到满足托管条件、但不支持重写规则的静态托管的根路径或任意子路径后（与构建时声明的基路径一致），所有页面、资源、站内链接与锚点均可用，失效引用为 0；基路径下任意深度的不存在地址以 404 状态显示站点的 404 页",
+    "phase": "P1",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "已满足",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-N3/AC-2",
+    "line": 671,
+    "text": "以响应头交付上述完整策略时，浏览全部页面并使用当期全部内置交互，CSP 违规为 0；每页内置的 meta 策略与完整策略除 `frame-ancestors` 外逐项一致，只有 meta 策略生效时同样零违规；产物不要求跨源隔离响应头",
+    "phase": "P1",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "已满足",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-N3/AC-3",
+    "line": 672,
+    "text": "默认配置的产物在浏览时只向站点自身的源发起请求",
+    "phase": "P1",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "已满足",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-N3/AC-4",
+    "line": 673,
+    "text": "各期出口时，桌面 Chrome、Firefox、Safari 最新稳定版通过该期已交付的读者端验收；iOS Safari 与 Android Chrome 最新版在 375 px 宽度下能完成该期已交付的阅读、导航与主题切换。P1 本轮按上述用户已批准的 D-04 例外执行；P2 的 Firefox 稳定版与引擎按上述 2026-10-13 决定延期到 P4 并保留未验证，其他浏览器与设备不因此豁免",
+    "phase": "P1",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.r2.md",
+    "previous_coverage": "部分满足",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-N3/AC-5",
+    "line": 674,
+    "text": "浏览器禁用脚本时，全部内容页的正文、侧栏、页内目录与上一页、下一页可用；搜索入口和演示交互说明需要启用脚本，演示仍显示初始画面与源码",
+    "phase": "P4",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "范围外",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-N3/AC-6",
+    "line": 675,
+    "text": "桌面 Chrome、Firefox、Safari 最新稳定版通过全部读者端验收；iOS Safari 与 Android Chrome 最新版在 375 px 宽度下能完成阅读、导航、搜索和主题切换",
+    "phase": "P4",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "范围外",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-N4/AC-1",
+    "line": 691,
+    "text": "CLI、框架库与任一生成站点的完整依赖清单（含构建依赖）中，不出现 makepad 开头的包、rustify-makepad 或 cargo-makepad",
+    "phase": "P1",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "已满足",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-N4/AC-2",
+    "line": 692,
+    "text": "生成站点的产物中不含 Makepad 运行时、WebGL 初始化代码或 GPU 资源文件",
+    "phase": "P1",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "已满足",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-N4/AC-3",
+    "line": 693,
+    "text": "只安装 Rust 稳定版工具链（含 wasm32 目标）和 CLI 的环境中，`new`、`dev`、`build`、`preview`、`check` 都能完成；环境中没有 Node、npm、Tailwind CLI、wasm-pack、浏览器或容器",
+    "phase": "P1",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "已满足",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-N4/AC-4",
+    "line": 694,
+    "text": "依赖获取完成后断开网络，`build` 与 `check`（未开启外链检查）均成功",
+    "phase": "P1",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "已满足",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-N5/AC-1",
+    "line": 710,
+    "text": "默认主题在浅色和深色下，正文与界面文字的对比度 ≥ 4.5:1，大号文字与界面图形元素 ≥ 3:1",
+    "phase": "P1",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.r2.md",
+    "previous_coverage": "已满足（上轮未核实）",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-N5/AC-2",
+    "line": 711,
+    "text": "仅用键盘可以完成以下操作：跳到正文、浏览侧栏、打开并使用搜索、切换主题与语言、操作演示、复制代码；焦点始终可见",
+    "phase": "P4",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "范围外",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-N5/AC-3",
+    "line": 712,
+    "text": "每页恰有一个一级标题，具有页头、导航、主体、页脚四类地标与正确的 `lang`；作者内容中的标题跳级由 `check` 报出",
+    "phase": "P1",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "已满足",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-N5/AC-4",
+    "line": 713,
+    "text": "屏幕阅读器（VoiceOver 与 Safari）会朗读搜索结果数量的变化和当前选中的结果，也会朗读复制成功或失败的状态",
+    "phase": "P4",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "范围外",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-N5/AC-5",
+    "line": 714,
+    "text": "视口宽 320 px 或页面缩放 200% 时没有横向页面滚动，代码块与宽表格在自身容器内滚动；系统开启减少动态效果时不使用平滑滚动和过渡动画",
+    "phase": "P1",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.r2.md",
+    "previous_coverage": "已满足（上轮部分满足；原生缩放仍 U-01）",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-N5/AC-6",
+    "line": 715,
+    "text": "按 WCAG 2.2 AA 的自动化规则检查，默认主题全部页面类型的严重与重大违规为 0",
+    "phase": "P1",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.r2.md",
+    "previous_coverage": "已满足（上轮未核实）",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-N6/AC-1",
+    "line": 729,
+    "text": "内容、配置、工具与依赖版本都相同时，连续两次构建的产物逐字节相同",
+    "phase": "P1",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "已满足",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-N6/AC-2",
+    "line": 730,
+    "text": "构建因错误失败时，上一次成功的产物目录保持不变，不出现部分写入的产物",
+    "phase": "P1",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.r2.md",
+    "previous_coverage": "已满足",
+    "reviewed_this_round": true
+  },
+  {
+    "id": "WORK-N6/AC-3",
+    "line": 731,
+    "text": "每条错误诊断都包含文件路径、适用的行号与列号、问题描述和修复建议；有错误时进程以非零状态退出",
+    "phase": "P1",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.r2.md",
+    "previous_coverage": "已满足（上轮部分满足）",
+    "reviewed_this_round": true
+  },
+  {
+    "id": "WORK-N6/AC-4",
+    "line": 732,
+    "text": "开发预览中连续进行 1,000 次内容保存，每次改动都能反映到页面上，期间不需要重启服务",
+    "phase": "P1",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "已满足",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-N7/AC-1",
+    "line": 746,
+    "text": "产物只包含静态资源目录中被发布的文件、内容中引用的图片，以及框架生成的文件；内容 Markdown 源文件、`.env`、`.git`、草稿页与未被引用的源文件都不出现",
+    "phase": "P1",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "已满足",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-N7/AC-2",
+    "line": 747,
+    "text": "产物与 AI 输出中不出现构建机器的绝对路径、用户名或环境变量值",
+    "phase": "P1",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "已满足",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-N7/AC-3",
+    "line": 748,
+    "text": "原始 HTML 含内联脚本、事件属性或内联样式时，`check` 与 `build` 报错并指出位置，产物不会以放宽 CSP 的方式发布",
+    "phase": "P1",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "已满足",
+    "reviewed_this_round": false
+  },
+  {
+    "id": "WORK-N7/AC-4",
+    "line": 749,
+    "text": "默认产物不包含第三方统计、跟踪脚本或外部字体请求；以新窗口打开的站外链接都带 `noopener`",
+    "phase": "P1",
+    "previous_source": "docs/plan/DOCS-SSG-P2.prd-dev-gaps.md",
+    "previous_coverage": "已满足",
+    "reviewed_this_round": false
+  }
+]

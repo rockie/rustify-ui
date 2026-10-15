@@ -1,0 +1,35 @@
+{
+  "diagnostic": {
+    "severity": "error",
+    "rule": "lang",
+    "file": "content/index.md",
+    "line": 3,
+    "column": 7,
+    "message": "lang: `a at line b` is not a language tag",
+    "suggestion": "use a language tag such as `en`, `zh-CN` or `fr`"
+  },
+  "expected": {
+    "message": "lang: a at line b is not a language tag",
+    "messageCodes": [
+      "a at line b"
+    ],
+    "suggestion": "use a language tag such as en, zh-CN or fr",
+    "suggestionCodes": [
+      "en",
+      "zh-CN",
+      "fr"
+    ]
+  },
+  "actual": {
+    "message": "lang: a at line b is not a language tag",
+    "messageCodes": [
+      "a at line b"
+    ],
+    "suggestion": "use a language tag such as en, zh-CN or fr",
+    "suggestionCodes": [
+      "en",
+      "zh-CN",
+      "fr"
+    ]
+  }
+}

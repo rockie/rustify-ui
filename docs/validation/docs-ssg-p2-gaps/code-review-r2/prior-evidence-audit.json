@@ -1,0 +1,606 @@
+{
+  "docs-dev-summary.json": {
+    "project": "docs-dev",
+    "stats": {
+      "startTime": "2026-10-15T02:22:03.149Z",
+      "duration": 35892.62,
+      "expected": 2,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    }
+  },
+  "components-summary.json": {
+    "stats": {
+      "startTime": "2026-10-15T02:23:10.754Z",
+      "duration": 134308.652,
+      "expected": 10,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "tests": [
+      {
+        "title": "gaps a11y: the custom page, the plain page and a deep 404 at rest have no serious or critical axe violation, light 1280px",
+        "project": "components-subpath",
+        "status": [
+          "passed"
+        ]
+      },
+      {
+        "title": "gaps a11y: the custom page, the plain page and a deep 404 at rest have no serious or critical axe violation, light 375px",
+        "project": "components-subpath",
+        "status": [
+          "passed"
+        ]
+      },
+      {
+        "title": "gaps a11y: the custom page, the plain page and a deep 404 at rest have no serious or critical axe violation, dark 1280px",
+        "project": "components-subpath",
+        "status": [
+          "passed"
+        ]
+      },
+      {
+        "title": "gaps a11y: the custom page, the plain page and a deep 404 at rest have no serious or critical axe violation, dark 375px",
+        "project": "components-subpath",
+        "status": [
+          "passed"
+        ]
+      },
+      {
+        "title": "gaps reduced motion: under reduce the proxy's controls attach and change with no transition and a still spinner",
+        "project": "components-subpath",
+        "status": [
+          "passed"
+        ]
+      },
+      {
+        "title": "gaps reduced motion: without a preference the proxy keeps the SDK's durations and the spinner's animation",
+        "project": "components-subpath",
+        "status": [
+          "passed"
+        ]
+      },
+      {
+        "title": "gaps a11y: loading, ready, client-only and failed islands at rest have no serious or critical axe violation, light 1280px",
+        "project": "components-subpath",
+        "status": [
+          "passed"
+        ]
+      },
+      {
+        "title": "gaps a11y: loading, ready, client-only and failed islands at rest have no serious or critical axe violation, light 375px",
+        "project": "components-subpath",
+        "status": [
+          "passed"
+        ]
+      },
+      {
+        "title": "gaps a11y: loading, ready, client-only and failed islands at rest have no serious or critical axe violation, dark 1280px",
+        "project": "components-subpath",
+        "status": [
+          "passed"
+        ]
+      },
+      {
+        "title": "gaps a11y: loading, ready, client-only and failed islands at rest have no serious or critical axe violation, dark 375px",
+        "project": "components-subpath",
+        "status": [
+          "passed"
+        ]
+      }
+    ],
+    "a11y": {
+      "files": 8,
+      "scans": 32,
+      "violations": 0,
+      "serious_or_critical": 0,
+      "binaries": [
+        {
+          "buildInfo": "rustify-docs 0.1.17\npanic: unwind\ngrammars: syntect-5.3.0+two-face-0.5.2+bat-0.26.1+fancy\nsource: 79a77825eadd07207154348ee9ffba48195d7766\n",
+          "path": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps-installed.eV4AfO/bin/rustify-docs",
+          "sha256": "47486f96ff0985f63d36590d13f5bbd7ddbcbba3d501f40f6f561f00be8c9d7c"
+        }
+      ],
+      "build_ids": [
+        "166cceb55da50148"
+      ],
+      "incomplete_rules": {
+        "color-contrast": 16
+      }
+    }
+  },
+  "official-summary.json": {
+    "stats": {
+      "startTime": "2026-10-15T02:26:03.586Z",
+      "duration": 167980.75199999998,
+      "expected": 6,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "tests": [
+      {
+        "title": "gaps reduced motion: under reduce the default theme's controls attach and change with no transition and a still spinner",
+        "project": "official-subpath",
+        "status": [
+          "passed"
+        ]
+      },
+      {
+        "title": "gaps reduced motion: without a preference the default theme keeps 150ms transitions and a turning spinner",
+        "project": "official-subpath",
+        "status": [
+          "passed"
+        ]
+      },
+      {
+        "title": "gaps a11y: every official route at rest has no serious or critical axe violation, light 1280px",
+        "project": "official-subpath",
+        "status": [
+          "passed"
+        ]
+      },
+      {
+        "title": "gaps a11y: every official route at rest has no serious or critical axe violation, light 375px",
+        "project": "official-subpath",
+        "status": [
+          "passed"
+        ]
+      },
+      {
+        "title": "gaps a11y: every official route at rest has no serious or critical axe violation, dark 1280px",
+        "project": "official-subpath",
+        "status": [
+          "passed"
+        ]
+      },
+      {
+        "title": "gaps a11y: every official route at rest has no serious or critical axe violation, dark 375px",
+        "project": "official-subpath",
+        "status": [
+          "passed"
+        ]
+      }
+    ],
+    "a11y": {
+      "files": 4,
+      "scans": 108,
+      "violations": 0,
+      "serious_or_critical": 0,
+      "binaries": [
+        {
+          "buildInfo": "rustify-docs 0.1.17\npanic: unwind\ngrammars: syntect-5.3.0+two-face-0.5.2+bat-0.26.1+fancy\nsource: 79a77825eadd07207154348ee9ffba48195d7766\n",
+          "path": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps-installed.eV4AfO/bin/rustify-docs",
+          "sha256": "47486f96ff0985f63d36590d13f5bbd7ddbcbba3d501f40f6f561f00be8c9d7c"
+        }
+      ],
+      "build_ids": [
+        "66edda8b1a7cba74"
+      ],
+      "incomplete_rules": {
+        "color-contrast": 102,
+        "aria-valid-attr-value": 4
+      }
+    }
+  },
+  "author_acceptance": {
+    "cli": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T//rustify-docs-gaps-installed.eV4AfO/bin/rustify-docs",
+    "R": "745ba6b720aa6ed042dcf5d4f763641fc2d05165",
+    "steps": [
+      {
+        "name": "build-info",
+        "command": [
+          "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T//rustify-docs-gaps-installed.eV4AfO/bin/rustify-docs",
+          "--build-info"
+        ],
+        "exit": 0
+      },
+      {
+        "name": "new",
+        "command": [
+          "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T//rustify-docs-gaps-installed.eV4AfO/bin/rustify-docs",
+          "new",
+          "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps-installed.eV4AfO/acceptance/author-site",
+          "--template",
+          "components"
+        ],
+        "exit": 0
+      },
+      {
+        "name": "fetch",
+        "command": [
+          "cargo",
+          "fetch",
+          "--locked"
+        ],
+        "exit": 0
+      },
+      {
+        "name": "host-metadata",
+        "command": [
+          "mbx",
+          "metadata",
+          "--locked",
+          "--offline",
+          "--format-version",
+          "1",
+          "--no-default-features",
+          "--features",
+          "ssr"
+        ],
+        "exit": 0
+      },
+      {
+        "name": "wasm-metadata",
+        "command": [
+          "mbx",
+          "metadata",
+          "--locked",
+          "--offline",
+          "--format-version",
+          "1",
+          "--no-default-features",
+          "--features",
+          "hydrate",
+          "--filter-platform",
+          "wasm32-unknown-unknown"
+        ],
+        "exit": 0
+      },
+      {
+        "name": "check-1",
+        "exit": 0
+      },
+      {
+        "name": "build-good",
+        "command": [
+          "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T//rustify-docs-gaps-installed.eV4AfO/bin/rustify-docs",
+          "build",
+          "--format",
+          "json"
+        ],
+        "exit": 0
+      },
+      {
+        "name": "build-cold",
+        "command": [
+          "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T//rustify-docs-gaps-installed.eV4AfO/bin/rustify-docs",
+          "build",
+          "--format",
+          "json"
+        ],
+        "exit": 1
+      },
+      {
+        "name": "check-cold",
+        "command": [
+          "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T//rustify-docs-gaps-installed.eV4AfO/bin/rustify-docs",
+          "check",
+          "--format",
+          "json"
+        ],
+        "exit": 1
+      },
+      {
+        "name": "check-cold-text",
+        "command": [
+          "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T//rustify-docs-gaps-installed.eV4AfO/bin/rustify-docs",
+          "check"
+        ],
+        "exit": 1
+      },
+      {
+        "name": "build-typed",
+        "command": [
+          "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T//rustify-docs-gaps-installed.eV4AfO/bin/rustify-docs",
+          "build",
+          "--format",
+          "json"
+        ],
+        "exit": 1
+      },
+      {
+        "name": "check-typed",
+        "command": [
+          "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T//rustify-docs-gaps-installed.eV4AfO/bin/rustify-docs",
+          "check",
+          "--format",
+          "json"
+        ],
+        "exit": 1
+      },
+      {
+        "name": "check-typed-text",
+        "command": [
+          "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T//rustify-docs-gaps-installed.eV4AfO/bin/rustify-docs",
+          "check"
+        ],
+        "exit": 1
+      },
+      {
+        "name": "build-raw-good",
+        "command": [
+          "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T//rustify-docs-gaps-installed.eV4AfO/bin/rustify-docs",
+          "build",
+          "--format",
+          "json"
+        ],
+        "exit": 0
+      },
+      {
+        "name": "check-raw-1",
+        "exit": 0
+      },
+      {
+        "name": "build-raw-cold",
+        "command": [
+          "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T//rustify-docs-gaps-installed.eV4AfO/bin/rustify-docs",
+          "build",
+          "--format",
+          "json"
+        ],
+        "exit": 1
+      },
+      {
+        "name": "check-raw-cold",
+        "command": [
+          "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T//rustify-docs-gaps-installed.eV4AfO/bin/rustify-docs",
+          "check",
+          "--format",
+          "json"
+        ],
+        "exit": 1
+      },
+      {
+        "name": "check-raw-cold-text",
+        "command": [
+          "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T//rustify-docs-gaps-installed.eV4AfO/bin/rustify-docs",
+          "check"
+        ],
+        "exit": 1
+      },
+      {
+        "name": "build-raw-typed",
+        "command": [
+          "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T//rustify-docs-gaps-installed.eV4AfO/bin/rustify-docs",
+          "build",
+          "--format",
+          "json"
+        ],
+        "exit": 1
+      },
+      {
+        "name": "check-raw-typed",
+        "command": [
+          "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T//rustify-docs-gaps-installed.eV4AfO/bin/rustify-docs",
+          "check",
+          "--format",
+          "json"
+        ],
+        "exit": 1
+      },
+      {
+        "name": "check-raw-typed-text",
+        "command": [
+          "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T//rustify-docs-gaps-installed.eV4AfO/bin/rustify-docs",
+          "check"
+        ],
+        "exit": 1
+      }
+    ],
+    "pins": [
+      "rustify-docs = { git = \"https://github.com/rockie/rustify-ui\", rev = \"745ba6b720aa6ed042dcf5d4f763641fc2d05165\", default-features = false }",
+      "rustify-ui = { git = \"https://github.com/rockie/rustify-ui\", rev = \"745ba6b720aa6ed042dcf5d4f763641fc2d05165\", default-features = false }",
+      "rustify-components = { git = \"https://github.com/rockie/rustify-ui\", rev = \"745ba6b720aa6ed042dcf5d4f763641fc2d05165\", default-features = false }"
+    ],
+    "lock_sha256": "a870cfb866959f38e309758c4b50ff113a4e831c862e596996e20a1e347716ef",
+    "graphs": {
+      "host": {
+        "packages": 189,
+        "makepad": 0,
+        "framework_source": [
+          "git+https://github.com/rockie/rustify-ui?rev=745ba6b720aa6ed042dcf5d4f763641fc2d05165#745ba6b720aa6ed042dcf5d4f763641fc2d05165"
+        ]
+      },
+      "wasm": {
+        "packages": 180,
+        "makepad": 0,
+        "framework_source": [
+          "git+https://github.com/rockie/rustify-ui?rev=745ba6b720aa6ed042dcf5d4f763641fc2d05165#745ba6b720aa6ed042dcf5d4f763641fc2d05165"
+        ]
+      }
+    },
+    "good": {
+      "pages": 3,
+      "files": 16
+    },
+    "cases": {
+      "cold": {
+        "refusals": 5,
+        "dist_unchanged": true,
+        "check_equals_build": true,
+        "repairs": [
+          "Keep each YAML mapping key once; remove or rename the duplicate key.",
+          "Add or correct `props` using the declared fields `items` (`Vec<StepSpec>`; required); see https://github.com/rockie/rustify-ui/blob/main/docs/docs-ssg.md#static-builtins for its object fields.",
+          "Use one of `initial` (`i32`; default expression `2`), `label` (`String`; default expression `\"Counter\".to_string()`) for `Counter`; rename or remove `unexpected`.",
+          "Use a component from `CardGrid`, `Counter`, `Steps`, `Tabs`; for an author component, enable `[rust]` and register its name in `site!`.",
+          "Use a demo from `CounterDemo`; register demos in `site!`."
+        ]
+      },
+      "typed": {
+        "refusals": 1,
+        "dist_unchanged": true,
+        "check_equals_build": true,
+        "repairs": [
+          "Write `initial: 0` for declared type `i32` (default expression `2`). Reported props path: `initial`."
+        ]
+      }
+    },
+    "dev": {
+      "url": "http://127.0.0.1:57381/",
+      "first_revision": 1,
+      "failed_revision": 2,
+      "fixed_revision": 3,
+      "repair": [
+        [
+          "invalid_props",
+          11,
+          22,
+          "Write `initial: 0` for declared type `i32` (default expression `2`). Reported props path: `initial`."
+        ]
+      ],
+      "last_good_served": true
+    },
+    "raw": {
+      "registration": "label: String = r#\"a\"   b   \"c\"#.to_string()",
+      "good": {
+        "pages": 3,
+        "files": 16
+      },
+      "cases": {
+        "raw-cold": {
+          "refusals": 1,
+          "dist_unchanged": true,
+          "check_equals_build": true,
+          "repairs": [
+            "Use one of `initial` (`i32`; default expression `2`), `label` (`String`; default expression `r#\"a\"   b   \"c\"#.to_string()`) for `Counter`; rename or remove `unexpected`."
+          ]
+        },
+        "raw-typed": {
+          "refusals": 1,
+          "dist_unchanged": true,
+          "check_equals_build": true,
+          "repairs": [
+            "Write `label: \"text\"` for declared type `String` (default expression `r#\"a\"   b   \"c\"#.to_string()`). Reported props path: `label`."
+          ]
+        }
+      },
+      "dev": {
+        "url": "http://127.0.0.1:57581/",
+        "first_revision": 1,
+        "failed_revision": 3,
+        "fixed_revision": 4,
+        "repair": [
+          [
+            [
+              "unknown-property",
+              10,
+              3,
+              "Use one of `initial` (`i32`; default expression `2`), `label` (`String`; default expression `r#\"a\"   b   \"c\"#.to_string()`) for `Counter`; rename or remove `unexpected`."
+            ]
+          ],
+          [
+            [
+              "invalid_props",
+              10,
+              3,
+              "Write `label: \"text\"` for declared type `String` (default expression `r#\"a\"   b   \"c\"#.to_string()`). Reported props path: `label`."
+            ]
+          ]
+        ],
+        "last_good_served": true
+      }
+    },
+    "inputs_unchanged": {
+      "Cargo.toml": true,
+      "Cargo.lock": true,
+      "src/lib.rs": true,
+      "src/demos.rs": true
+    },
+    "passed": true
+  },
+  "identities": [
+    {
+      "phase": "before",
+      "binary": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps-installed.eV4AfO/bin/rustify-docs",
+      "sha256": "47486f96ff0985f63d36590d13f5bbd7ddbcbba3d501f40f6f561f00be8c9d7c",
+      "build_info": [
+        "rustify-docs 0.1.17",
+        "panic: unwind",
+        "grammars: syntect-5.3.0+two-face-0.5.2+bat-0.26.1+fancy",
+        "source: 79a77825eadd07207154348ee9ffba48195d7766"
+      ],
+      "prepare_pair": {
+        "candidate": "79a77825eadd07207154348ee9ffba48195d7766",
+        "framework": "745ba6b720aa6ed042dcf5d4f763641fc2d05165"
+      }
+    },
+    {
+      "phase": "after",
+      "binary": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps-installed.eV4AfO/bin/rustify-docs",
+      "sha256": "47486f96ff0985f63d36590d13f5bbd7ddbcbba3d501f40f6f561f00be8c9d7c",
+      "build_info": [
+        "rustify-docs 0.1.17",
+        "panic: unwind",
+        "grammars: syntect-5.3.0+two-face-0.5.2+bat-0.26.1+fancy",
+        "source: 79a77825eadd07207154348ee9ffba48195d7766"
+      ],
+      "prepare_pair": {
+        "candidate": "79a77825eadd07207154348ee9ffba48195d7766",
+        "framework": "745ba6b720aa6ed042dcf5d4f763641fc2d05165"
+      }
+    },
+    {
+      "phase": "before",
+      "binary": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps-installed.eV4AfO/bin/rustify-docs",
+      "sha256": "47486f96ff0985f63d36590d13f5bbd7ddbcbba3d501f40f6f561f00be8c9d7c",
+      "build_info": [
+        "rustify-docs 0.1.17",
+        "panic: unwind",
+        "grammars: syntect-5.3.0+two-face-0.5.2+bat-0.26.1+fancy",
+        "source: 79a77825eadd07207154348ee9ffba48195d7766"
+      ],
+      "prepare_pair": {
+        "candidate": "79a77825eadd07207154348ee9ffba48195d7766",
+        "framework": "745ba6b720aa6ed042dcf5d4f763641fc2d05165"
+      }
+    },
+    {
+      "phase": "after",
+      "binary": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps-installed.eV4AfO/bin/rustify-docs",
+      "sha256": "47486f96ff0985f63d36590d13f5bbd7ddbcbba3d501f40f6f561f00be8c9d7c",
+      "build_info": [
+        "rustify-docs 0.1.17",
+        "panic: unwind",
+        "grammars: syntect-5.3.0+two-face-0.5.2+bat-0.26.1+fancy",
+        "source: 79a77825eadd07207154348ee9ffba48195d7766"
+      ],
+      "prepare_pair": {
+        "candidate": "79a77825eadd07207154348ee9ffba48195d7766",
+        "framework": "745ba6b720aa6ed042dcf5d4f763641fc2d05165"
+      }
+    },
+    {
+      "phase": "before",
+      "binary": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps-installed.eV4AfO/bin/rustify-docs",
+      "sha256": "47486f96ff0985f63d36590d13f5bbd7ddbcbba3d501f40f6f561f00be8c9d7c",
+      "build_info": [
+        "rustify-docs 0.1.17",
+        "panic: unwind",
+        "grammars: syntect-5.3.0+two-face-0.5.2+bat-0.26.1+fancy",
+        "source: 79a77825eadd07207154348ee9ffba48195d7766"
+      ],
+      "prepare_pair": {
+        "candidate": "79a77825eadd07207154348ee9ffba48195d7766",
+        "framework": "745ba6b720aa6ed042dcf5d4f763641fc2d05165"
+      }
+    },
+    {
+      "phase": "after",
+      "binary": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps-installed.eV4AfO/bin/rustify-docs",
+      "sha256": "47486f96ff0985f63d36590d13f5bbd7ddbcbba3d501f40f6f561f00be8c9d7c",
+      "build_info": [
+        "rustify-docs 0.1.17",
+        "panic: unwind",
+        "grammars: syntect-5.3.0+two-face-0.5.2+bat-0.26.1+fancy",
+        "source: 79a77825eadd07207154348ee9ffba48195d7766"
+      ],
+      "prepare_pair": {
+        "candidate": "79a77825eadd07207154348ee9ffba48195d7766",
+        "framework": "745ba6b720aa6ed042dcf5d4f763641fc2d05165"
+      }
+    }
+  ]
+}

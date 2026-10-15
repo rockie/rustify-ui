@@ -19,10 +19,10 @@
 - [THEME-STUDIO](status/plan/0222c547-cbeb-412a-8c3e-3399b943670e.md)：6/6 历史交付；F-01/F-02 已修复验证，后续共享改动与独立复审待核对。
 - [VELLUM](status/plan/fb86407f-8889-4844-99a0-a0e6a580a27f.md)：8/8 历史交付；后续相关提交及共享改动未由原终验覆盖。
 - [融合 Leptos CSR 与 Makepad 的框架 PRD](status/prd/cc008e52-5073-46aa-aa2f-864f262e41b0.md)：完整版本 Q1–Q3 定稿问题尚未关闭；P1–P3 分期封板不等于完整 PRD 达标。
-- [DOCS-SSG PRD](status/prd/8917bbeb-7add-4826-95ee-5cdf6bdff735.md)：文档规范状态prd-ready，已批准矩阵/测量合同待同步；P1原计划已8/9，四项交付遗漏、真机及M9缺证见[覆盖报告](status/review/5b279eaf-0dc1-4c8f-a54a-672cc942633f.md)。P2–P4终验保留，未写SPMS。
+- [DOCS-SSG PRD](status/prd/8917bbeb-7add-4826-95ee-5cdf6bdff735.md)：文档规范状态prd-ready/stale，P2计划已承接、当前进度见计划状态页；P1原计划9/9、gaps2/2以各原计划为准。P2–P4终验与Firefox后续追踪保留，未写SPMS。
 - [DOCS-SSG-P1](status/plan/526c88c7-a4b3-4ea9-9193-371420b66d1d.md)：9/9完成；固定安装1b81de2（CLI0.1.4）、最终交付945398c、回填be2cf15。本地115+远端34浏览器、219 Docs Rust、1091 CSR/GPU工作区及模式矩阵/真实安装升级回滚通过；GitHub同SHA安装/SDK/源预览完成。独立gaps2/2，D-04最新版Chrome及两手机延期、P4完整矩阵保留。下一步由用户以review-code评审原计划。
 
-- [DOCS-SSG-P2](status/plan/c0c94e42-32f2-4636-ae52-f3df76d4a463.md)：本地技术验证与本人验收通过，当前开发基线0.1.14/R4/C4；原台账5/7。D16公共安装/Pages及回滚留P4，不作为后续本地开发前置；M6环境缺口保留。下一步P3多语言/回退，随后P4搜索/AI索引，均尚未实施。
+- [DOCS-SSG-P2](status/plan/c0c94e42-32f2-4636-ae52-f3df76d4a463.md)：原5/7和R2旧问题关闭保留；[本次覆盖](status/review/5fdbf99f-8f49-4629-b1c8-89b2335d0a6b.md) A2/B3/C0及原待核实项保留。[独立gaps](status/plan/f2f47f04-3082-4faf-96c8-48f1a319b6d4.md)实施2/2，F-01修复后本地R′ 745ba6b7/C′ 79a77825（0.1.17）配对；[独立代码复审R2](status/review/1f739015-f48c-4e90-8370-093b2257e67f.md)确认F-01已解决、修复增量通过验收，新增0、无需apply；[R1](status/review/ee23493d-e277-489f-b5a5-5fd7b2ef763d.md)原“需要修改”及修复历史保留；可选核对本增量PRD覆盖；[计划评审](status/review/e50f2cbd-5734-4670-a4d2-31fdae182094.md)历史文档处置保持。本人C4、设备/正式性能缺证与D16公开发布留原计划/P4，不记整P2通过。[覆盖复审R2](status/review/c8480584-6578-4587-972a-8294319685fc.md)：G-01/G-02/G-05已解决，新增G-06（dev面板反引号）按用户D-05由[gaps-2](status/plan/e9817d55-60e7-4c8f-9abb-4793cc82d5f3.md)承接，原文 Ready，实施 2/2；[计划评审与同轮处置](status/review/d589882c-01b3-4031-b976-e2eedc754763.md)：原1×P1、6×P2及“需要修改/建议Blocked”保留；F-01–F-07文档缺口已修订并复核，用户选定含反引号普通作者值整段等宽，修后Ready/dev-plan-ready、review-applied，评审时实施0/2。gaps-2 当前 2/2；[独立代码复审 R2](status/review/1b86dee0-14ed-45c9-8800-e3c18a9c4439.md)确认 PG-01 已解决、修复增量通过验收，新增 0、无需 apply。R‴ 6942ec0d / C‴ b31e28b7 0.1.19 配对与安装身份已核对；本轮 CLI 6/6、fmt、真实 DOM 定向 3/3（24 视图）通过，历史全量证据限定复用。原 R1“需要修改”及 review-applied 历史保留。[覆盖R3](status/review/e9ce88ff-9dee-4eee-afc5-eeb044bb2b7e.md)确认G-06/D-05已解决，新增A0/B0/C0；本轮CLI6/6、真实DOM6/6通过，无需新计划，原U项3与5/7、M6/M7保留。
 ## 初始化范围与验证边界
 
 - 初始化观察：2026-10-07T10:37:52+11:00，协议 v3 / 状态模型 v2。

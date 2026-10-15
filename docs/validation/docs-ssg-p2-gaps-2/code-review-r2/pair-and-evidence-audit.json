@@ -1,0 +1,484 @@
+{
+  "pair": {
+    "C": "b31e28b7f7dd949f7dc89ebc7b5f64380adbb63d",
+    "R": "6942ec0d23812ecda61492d9db5c0046f481edfc",
+    "files": [
+      "Cargo.lock",
+      "crates/rustify-docs-cli/Cargo.toml",
+      "crates/rustify-docs-cli/assets/components-Cargo.lock",
+      "crates/rustify-docs-cli/assets/framework-revision.txt",
+      "docs/docs-ssg.md"
+    ],
+    "template_package_records": 193,
+    "six_updated_sources": [
+      "rustify-components",
+      "rustify-docs",
+      "rustify-docs-macros",
+      "rustify-docs-syntax",
+      "rustify-style",
+      "rustify-ui"
+    ],
+    "unchanged_records": 187,
+    "root_lock_changed_package": {
+      "name": "rustify-docs-cli",
+      "old": "0.1.18",
+      "new": "0.1.19"
+    },
+    "R_to_C_files": [
+      "Cargo.lock",
+      "crates/rustify-docs-cli/Cargo.toml",
+      "crates/rustify-docs-cli/assets/components-Cargo.lock",
+      "crates/rustify-docs-cli/assets/framework-revision.txt",
+      "docs/docs-ssg.md",
+      "docs/plan/DOCS-SSG-P2-gaps-2.md"
+    ],
+    "current_functional_files_equal_C": 67
+  },
+  "historical_input_comparisons": {
+    "crates/rustify-docs/src/frontmatter.rs": {
+      "recorded": "de94ded22473ff77a2a311f2b522c8f4b37b0f42a8fe0a8bc72e8fcde6682161",
+      "current": "de94ded22473ff77a2a311f2b522c8f4b37b0f42a8fe0a8bc72e8fcde6682161",
+      "same": true
+    },
+    "crates/rustify-docs-cli/tests/diagnostic_text.rs": {
+      "recorded": "16a6b13b34e3298adb4c926a1ec1c8d2508efcc32fef61321651804085363ed1",
+      "current": "16a6b13b34e3298adb4c926a1ec1c8d2508efcc32fef61321651804085363ed1",
+      "same": true
+    },
+    "tests/docs-ssg/dev-components.spec.ts": {
+      "recorded": "23e8cd13cf09eba92911fe818356c2a4e9f63a51c8b562ea6b3e1b96b1ec25af",
+      "current": "23e8cd13cf09eba92911fe818356c2a4e9f63a51c8b562ea6b3e1b96b1ec25af",
+      "same": true
+    },
+    "Cargo.toml": {
+      "recorded": "3110bc7775664fb5bbb3bd1a4f11c21f5e003731f59e8d279e74e48ebf058984",
+      "current": "3110bc7775664fb5bbb3bd1a4f11c21f5e003731f59e8d279e74e48ebf058984",
+      "same": true
+    },
+    "Cargo.lock": {
+      "recorded": "e998fb7546a1453e17aa82175cd664a83bf715229c98fb64cab718558e1d45ec",
+      "current": "f1f1bb66274dd714a1dd46ee708aa222cff522bb79521f3af91bc77bce90ea05",
+      "same": false
+    },
+    "mise.toml": {
+      "recorded": "79ab2010974872add3570450d3bacfccdec26500391154acbce08ce07a8dee96",
+      "current": "79ab2010974872add3570450d3bacfccdec26500391154acbce08ce07a8dee96",
+      "same": true
+    },
+    "package-lock.json": {
+      "recorded": "604e76e51058797735930bf001f7b42ed8ed2f709b5562d0c89f3f4607244cd7",
+      "current": "604e76e51058797735930bf001f7b42ed8ed2f709b5562d0c89f3f4607244cd7",
+      "same": true
+    },
+    "playwright.docs.config.ts": {
+      "recorded": "ff9d4713125f21c9bb207252358a493e3b7a3ea2695d0a589d5b77e205ff6255",
+      "current": "ff9d4713125f21c9bb207252358a493e3b7a3ea2695d0a589d5b77e205ff6255",
+      "same": true
+    }
+  },
+  "historical_checks": [
+    {
+      "name": "fmt",
+      "command": [
+        "cargo",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "exit": 0,
+      "test_results": []
+    },
+    {
+      "name": "docs-tests",
+      "command": [
+        "mbx",
+        "test",
+        "--locked",
+        "-p",
+        "rustify-docs"
+      ],
+      "exit": 0,
+      "test_results": [
+        [
+          "204",
+          "0",
+          "0"
+        ],
+        [
+          "14",
+          "0",
+          "0"
+        ],
+        [
+          "17",
+          "0",
+          "0"
+        ],
+        [
+          "6",
+          "0",
+          "0"
+        ],
+        [
+          "16",
+          "0",
+          "0"
+        ],
+        [
+          "1",
+          "0",
+          "0"
+        ],
+        [
+          "19",
+          "0",
+          "0"
+        ],
+        [
+          "0",
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "name": "cli-tests",
+      "command": [
+        "mbx",
+        "test",
+        "--locked",
+        "-p",
+        "rustify-docs-cli"
+      ],
+      "exit": 0,
+      "test_results": [
+        [
+          "74",
+          "0",
+          "1"
+        ],
+        [
+          "13",
+          "0",
+          "0"
+        ],
+        [
+          "16",
+          "0",
+          "0"
+        ],
+        [
+          "2",
+          "0",
+          "0"
+        ],
+        [
+          "15",
+          "0",
+          "0"
+        ],
+        [
+          "6",
+          "0",
+          "0"
+        ],
+        [
+          "2",
+          "0",
+          "0"
+        ],
+        [
+          "9",
+          "0",
+          "0"
+        ],
+        [
+          "6",
+          "0",
+          "0"
+        ],
+        [
+          "5",
+          "0",
+          "0"
+        ],
+        [
+          "7",
+          "0",
+          "0"
+        ],
+        [
+          "3",
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "name": "syntax-tests",
+      "command": [
+        "mbx",
+        "test",
+        "--locked",
+        "-p",
+        "rustify-docs-syntax"
+      ],
+      "exit": 0,
+      "test_results": [
+        [
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "30",
+          "0",
+          "0"
+        ],
+        [
+          "1",
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "name": "ssr-tests",
+      "command": [
+        "mbx",
+        "test",
+        "--locked",
+        "-p",
+        "rustify-docs",
+        "--no-default-features",
+        "--features",
+        "site-ssr"
+      ],
+      "exit": 0,
+      "test_results": [
+        [
+          "10",
+          "0",
+          "0"
+        ],
+        [
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "1",
+          "0",
+          "0"
+        ],
+        [
+          "19",
+          "0",
+          "0"
+        ],
+        [
+          "0",
+          "0",
+          "0"
+        ]
+      ]
+    },
+    {
+      "name": "ssr-clippy",
+      "command": [
+        "mbx",
+        "clippy",
+        "--locked",
+        "-p",
+        "rustify-docs",
+        "--no-default-features",
+        "--features",
+        "site-ssr",
+        "--all-targets",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit": 0,
+      "test_results": []
+    },
+    {
+      "name": "hydrate-check",
+      "command": [
+        "mbx",
+        "check",
+        "--locked",
+        "-p",
+        "rustify-docs",
+        "--no-default-features",
+        "--features",
+        "hydrate",
+        "--target",
+        "wasm32-unknown-unknown"
+      ],
+      "exit": 0,
+      "test_results": []
+    },
+    {
+      "name": "ssr-features",
+      "command": [
+        "mbx",
+        "tree",
+        "--locked",
+        "-p",
+        "rustify-docs",
+        "--no-default-features",
+        "--features",
+        "site-ssr",
+        "--prefix",
+        "none",
+        "--format",
+        "{p} [{f}]"
+      ],
+      "exit": 0,
+      "test_results": []
+    },
+    {
+      "name": "hydrate-features",
+      "command": [
+        "mbx",
+        "tree",
+        "--locked",
+        "-p",
+        "rustify-docs",
+        "--no-default-features",
+        "--features",
+        "hydrate",
+        "--target",
+        "wasm32-unknown-unknown",
+        "--prefix",
+        "none",
+        "--format",
+        "{p} [{f}]"
+      ],
+      "exit": 0,
+      "test_results": []
+    },
+    {
+      "name": "docs-clippy",
+      "command": [
+        "mbx",
+        "clippy",
+        "--locked",
+        "-p",
+        "rustify-docs",
+        "--all-targets",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit": 0,
+      "test_results": []
+    },
+    {
+      "name": "cli-clippy",
+      "command": [
+        "mbx",
+        "clippy",
+        "--locked",
+        "-p",
+        "rustify-docs-cli",
+        "--all-targets",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit": 0,
+      "test_results": []
+    },
+    {
+      "name": "cli-build",
+      "command": [
+        "mbx",
+        "build",
+        "--locked",
+        "-p",
+        "rustify-docs-cli",
+        "--profile",
+        "docs-cli"
+      ],
+      "exit": 0,
+      "test_results": []
+    },
+    {
+      "name": "m1-browser",
+      "command": [
+        "npx",
+        "--no-install",
+        "playwright",
+        "test",
+        "-c",
+        "playwright.docs.config.ts",
+        "--project=docs-dev",
+        "--workers=1",
+        "--reporter=json",
+        "--output=docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser-artifacts"
+      ],
+      "exit": 0,
+      "test_results": []
+    }
+  ],
+  "historical_browsers": {
+    "m1-browser": {
+      "startTime": "2026-10-15T07:11:23.259Z",
+      "duration": 406054.56799999997,
+      "expected": 32,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "m2-browser": {
+      "startTime": "2026-10-15T07:29:12.932Z",
+      "duration": 410965.51,
+      "expected": 32,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    }
+  },
+  "installed_author": {
+    "C": "b31e28b7f7dd949f7dc89ebc7b5f64380adbb63d",
+    "R": "6942ec0d23812ecda61492d9db5c0046f481edfc",
+    "sha256": "c51f563d608a31bd56c09ae2ef393cdb93558ba3fa17472c8c0833f1a10ac95d",
+    "cases": 6,
+    "views": 24,
+    "frontmatter": [
+      {
+        "name": "frontmatter-ticks",
+        "diagnostic": {
+          "severity": "error",
+          "rule": "lang",
+          "file": "content/gaps.md",
+          "line": 3,
+          "column": 7,
+          "message": "lang: `` a` at line `b `` is not a language tag",
+          "suggestion": "use a language tag such as `en`, `zh-CN` or `fr`"
+        },
+        "dist_unchanged": true,
+        "last_good_bytes_unchanged": true,
+        "terminal_same": true
+      },
+      {
+        "name": "frontmatter-plain",
+        "diagnostic": {
+          "severity": "error",
+          "rule": "lang",
+          "file": "content/gaps.md",
+          "line": 3,
+          "column": 7,
+          "message": "lang: `a at line b` is not a language tag",
+          "suggestion": "use a language tag such as `en`, `zh-CN` or `fr`"
+        },
+        "dist_unchanged": true,
+        "last_good_bytes_unchanged": true,
+        "terminal_same": true
+      }
+    ]
+  }
+}

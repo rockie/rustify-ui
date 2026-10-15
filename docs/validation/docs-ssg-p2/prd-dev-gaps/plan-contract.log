@@ -1,0 +1,27 @@
+WARN: docs/plan/DOCS-SSG-P2-gaps.md:67: 自定义 ID 须人工核对引用：WORK-F4
+WARN: docs/plan/DOCS-SSG-P2-gaps.md:68: 自定义 ID 须人工核对引用：WORK-F15
+WARN: docs/plan/DOCS-SSG-P2-gaps.md:69: 自定义 ID 须人工核对引用：WORK-N6
+WARN: docs/plan/DOCS-SSG-P2-gaps.md:70: 自定义 ID 须人工核对引用：WORK-N5
+WARN: docs/plan/DOCS-SSG-P2-gaps.md:71: 自定义 ID 须人工核对引用：WORK-N3
+ERROR: docs/plan/DOCS-SSG-P2-gaps.md:13: ID 引用未定义或未在账本登记来源：M6
+ERROR: docs/plan/DOCS-SSG-P2-gaps.md:13: ID 引用未定义或未在账本登记来源：M7
+ERROR: docs/plan/DOCS-SSG-P2-gaps.md:63: ID 引用未定义或未在账本登记来源：M6
+ERROR: docs/plan/DOCS-SSG-P2-gaps.md:77: ID 引用未定义或未在账本登记来源：M6
+ERROR: docs/plan/DOCS-SSG-P2-gaps.md:77: ID 引用未定义或未在账本登记来源：M7
+ERROR: docs/plan/DOCS-SSG-P2-gaps.md:86: ID 引用未定义或未在账本登记来源：M6
+ERROR: docs/plan/DOCS-SSG-P2-gaps.md:97: ID 引用未定义或未在账本登记来源：M6
+ERROR: docs/plan/DOCS-SSG-P2-gaps.md:97: ID 引用未定义或未在账本登记来源：V-11
+ERROR: docs/plan/DOCS-SSG-P2-gaps.md:97: ID 引用未定义或未在账本登记来源：V-12
+ERROR: docs/plan/DOCS-SSG-P2-gaps.md:98: ID 引用未定义或未在账本登记来源：M7
+ERROR: docs/plan/DOCS-SSG-P2-gaps.md:98: ID 引用未定义或未在账本登记来源：V-15
+ERROR: docs/plan/DOCS-SSG-P2-gaps.md:163: ID 引用未定义或未在账本登记来源：M6
+ERROR: docs/plan/DOCS-SSG-P2-gaps.md:173: ID 引用未定义或未在账本登记来源：M6
+ERROR: docs/plan/DOCS-SSG-P2-gaps.md:193: ID 引用未定义或未在账本登记来源：M6
+ERROR: docs/plan/DOCS-SSG-P2-gaps.md:193: ID 引用未定义或未在账本登记来源：M7
+ERROR: docs/plan/DOCS-SSG-P2-gaps.md:207: ID 引用未定义或未在账本登记来源：V-14
+ERROR: docs/plan/DOCS-SSG-P2-gaps.md:211: ID 引用未定义或未在账本登记来源：M6
+ERROR: docs/plan/DOCS-SSG-P2-gaps.md:211: ID 引用未定义或未在账本登记来源：M7
+ERROR: docs/plan/DOCS-SSG-P2-gaps.md:228: ID 引用未定义或未在账本登记来源：M6
+ERROR: docs/plan/DOCS-SSG-P2-gaps.md:228: ID 引用未定义或未在账本登记来源：M7
+ERROR: docs/plan/DOCS-SSG-P2-gaps.md:238: ID 引用未定义或未在账本登记来源：M6
+计划结构与引用：ERROR 21 · WARN 5（不证明设计或验收有效）

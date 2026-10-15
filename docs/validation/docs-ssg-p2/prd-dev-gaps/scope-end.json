@@ -1,0 +1,35 @@
+{
+  "observed_at": "2026-10-14T15:41:32.250640+00:00",
+  "head": "d2f20b03cf58c1d1ced3785397c501d412cd4167",
+  "original_input_hashes_unchanged": true,
+  "protected_product_count": 523,
+  "changed_protected_products": {},
+  "missing_protected_products": [],
+  "coverage_rows": 111,
+  "p2_source_ac_count": 22,
+  "implementation_protocol_verbatim": true,
+  "owned_preview_port_50009_listener": false,
+  "native_tests": {
+    "passed": 265,
+    "failed": 0
+  },
+  "official_subpath": {
+    "startTime": "2026-10-14T15:04:06.422Z",
+    "duration": 124837.734,
+    "expected": 46,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "gaps_plan": {
+    "source_state": "Ready",
+    "milestones": 2,
+    "completed": 0
+  },
+  "plan_check_warnings_reviewed": {
+    "custom_ids": "Five WORK IDs each found in PRD; retained original work IDs",
+    "paths": "future M1 record is explicitly new; docs/project-status is only verbatim legacy protocol fallback, actual .xgent-ai/sdlc/protocol.md exists",
+    "progress": "Unrelated existing dirty work and review artifacts do not count as implementation"
+  },
+  "no_commit_push_deploy": true
+}

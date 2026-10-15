@@ -1,0 +1,33 @@
+{
+  "head": "789003cc5ad58bd734f5a8c483f8fec475c2afe9",
+  "fixed_files_checked": 1005,
+  "changed": [],
+  "index_unchanged": true,
+  "browser_audits": [
+    {
+      "path": "docs/validation/docs-ssg-p2-gaps-2/code-review-r2/browser/t01/27-dev-component-browser-audit.json",
+      "console": [],
+      "pageErrors": [],
+      "csp": [],
+      "failures": [],
+      "bad_responses": []
+    },
+    {
+      "path": "docs/validation/docs-ssg-p2-gaps-2/code-review-r2/browser/t02/18-dev-component-browser-audit.json",
+      "console": [],
+      "pageErrors": [],
+      "csp": [],
+      "failures": [],
+      "bad_responses": []
+    },
+    {
+      "path": "docs/validation/docs-ssg-p2-gaps-2/code-review-r2/browser/t03/09-dev-component-browser-audit.json",
+      "console": [],
+      "pageErrors": [],
+      "csp": [],
+      "failures": [],
+      "bad_responses": []
+    }
+  ],
+  "installed_identity_unchanged": true
+}

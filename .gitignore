@@ -7,6 +7,6 @@ target/
 /test-results
 /playwright-report
 /artifacts/p1/raw
-/.rustify-docs
+.rustify-docs/
 /site/dist
 .DS_Store

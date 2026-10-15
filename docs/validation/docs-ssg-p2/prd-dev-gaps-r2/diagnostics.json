@@ -1,0 +1,116 @@
+{
+  "cli": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps-installed.eV4AfO/bin/rustify-docs",
+  "binary_sha256": "47486f96ff0985f63d36590d13f5bbd7ddbcbba3d501f40f6f561f00be8c9d7c",
+  "cases": {
+    "content": {
+      "errors": [
+        {
+          "rule": "unregistered-component",
+          "line": 6,
+          "column": 1,
+          "message": "component `MissingCounter` is not registered; add it to site! and configure [rust]",
+          "suggestion": "Use a component from `CardGrid`, `Steps`, `Tabs`; for an author component, enable `[rust]` and register its name in `site!`."
+        },
+        {
+          "rule": "embed-props",
+          "line": 10,
+          "column": 1,
+          "message": "invalid type: string \"wrong-type\", expected a sequence",
+          "suggestion": "Write `items` as `Vec<StepSpec>` (required); see https://github.com/rockie/rustify-ui/blob/main/docs/docs-ssg.md#static-builtins for its object fields. Reported props path: `items`."
+        }
+      ],
+      "build_equals_check": true,
+      "text_has_each_help": true,
+      "null_suggestions": 0,
+      "dist_unchanged": true
+    },
+    "component-names": {
+      "errors": [
+        {
+          "rule": "unregistered-component",
+          "line": 6,
+          "column": 1,
+          "message": "component `MissingCounter` is not registered; add it to site! and configure [rust]",
+          "suggestion": "Use a component from `BrowserCounter`, `CardGrid`, `Counter`, `Steps`, `Tabs`; for an author component, enable `[rust]` and register its name in `site!`."
+        },
+        {
+          "rule": "unknown-property",
+          "line": 13,
+          "column": 3,
+          "message": "component `Counter` has no property `unexpected`",
+          "suggestion": "Use one of `initial` (`i32`; default expression `2`), `label` (`String`; default expression `\"Counter\".to_string()`) for `Counter`; rename or remove `unexpected`."
+        }
+      ],
+      "build_equals_check": true,
+      "text_has_each_help": true,
+      "null_suggestions": 0,
+      "dist_unchanged": true
+    },
+    "component-type": {
+      "errors": [
+        {
+          "rule": "invalid_props",
+          "line": 9,
+          "column": 3,
+          "message": "invalid type: string \"wrong-type\", expected i32",
+          "suggestion": "Write `initial: 0` for declared type `i32` (default expression `2`). Reported props path: `initial`."
+        }
+      ],
+      "build_equals_check": true,
+      "text_has_each_help": true,
+      "null_suggestions": 0,
+      "dist_unchanged": true
+    },
+    "tick": {
+      "errors": [
+        {
+          "rule": "unknown-property",
+          "line": 9,
+          "column": 3,
+          "message": "component `Counter` has no property `unexpected`",
+          "suggestion": "Use one of `initial` (`i32`; default expression `2`), `label` (`String`; default expression `\"a`b\".to_string()`) for `Counter`; rename or remove `unexpected`."
+        }
+      ],
+      "build_equals_check": true,
+      "text_has_each_help": true,
+      "null_suggestions": 0,
+      "dist_unchanged": true
+    }
+  },
+  "prepare": {
+    "candidate_sha": "79a77825eadd07207154348ee9ffba48195d7766",
+    "framework_revision": "745ba6b720aa6ed042dcf5d4f763641fc2d05165",
+    "manifest": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-prd-gaps-r2.tg8pHY/components-site/Cargo.toml",
+    "project": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-prd-gaps-r2.tg8pHY/components-site"
+  },
+  "lock_unchanged_after_original_cases": true,
+  "tick_dev": {
+    "sse_suggestion_equals_cli": true,
+    "terminal_has_suggestion": true,
+    "panel": {
+      "url": "http://127.0.0.1:58654/docs/",
+      "browser": "153.0.8010.12",
+      "cli_repair": "Use one of `initial` (`i32`; default expression `2`), `label` (`String`; default expression `\"a`b\".to_string()`) for `Counter`; rename or remove `unexpected`.",
+      "console": [],
+      "pageErrors": [],
+      "panel_text": "Use one of initial (i32; default expression 2), label (String; default expression \"ab\".to_string()) for Counter; rename or remove unexpected.",
+      "panel_code": [
+        "initial",
+        "i32",
+        "2",
+        "label",
+        "String",
+        "\"a",
+        ") for ",
+        "; rename or remove ",
+        "."
+      ],
+      "faithful_text": "Use one of initial (i32; default expression 2), label (String; default expression \"a`b\".to_string()) for Counter; rename or remove unexpected.",
+      "panel_keeps_literal": false,
+      "panel_equals_faithful": false
+    },
+    "browser_exit": 0
+  },
+  "lock_unchanged": true,
+  "finished": true
+}

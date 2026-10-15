@@ -1,0 +1,186 @@
+{
+  "command": "npx playwright test --config=playwright.docs.config.ts --project=docs-dev tests/docs-ssg/dev-components.spec.ts --grep 'hydrate-only dependency manifests|renamed same-name build inputs' --workers=1",
+  "environment": {
+    "RUSTIFY_DOCS_BIN": "/tmp/rustify-apply-r1-installed.SgjSel/bin/rustify-docs",
+    "cli_sha256": "5589466a132c616095dc67d99bc91b24b3ac3184a06f3b982a78880ebcdbf4fb",
+    "build_info_source": "45878ce31763fe21b9276e563e2920d180787dee",
+    "cli_version": "0.1.15",
+    "CARGO_NET_OFFLINE": "true"
+  },
+  "stats": {
+    "startTime": "2026-10-14T14:12:29.509Z",
+    "duration": 190717.77500000002,
+    "expected": 2,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "tests": [
+    {
+      "title": "hydrate-only dependency manifests invalidate wasm and behavior without compiling Markdown",
+      "status": "passed",
+      "duration_ms": 48414,
+      "retry": 0,
+      "observations": [
+        {
+          "ssr_values": [
+            "2",
+            "2",
+            "2",
+            "7"
+          ],
+          "wasm_sha256": "86793f9dfc623b5a077b365891fdec46c868e86684e425af27841ef434fbd07b",
+          "compile_generation": "ae467079c9fb705ea5abfe62ce32228532c329f4e7dc078f9442c8bbef7cb461",
+          "good": 1,
+          "errors": 0
+        },
+        {
+          "changed_manifest_default": [
+            "default = [\"alternate\"]"
+          ]
+        },
+        {
+          "ssr_values": [
+            "2",
+            "2",
+            "2",
+            "7"
+          ],
+          "wasm_sha256": "8d109bfde02026acafacdfe96aadcac3a06a64c555c4d3fa72fd31ba4a819326",
+          "compile_generation": "5adebfe964af9443f6fa53224b0d612eaa430ece5247dec006a8a258035cb814",
+          "good": 2,
+          "errors": 0
+        },
+        {
+          "ssr_values": [
+            "2",
+            "2",
+            "2",
+            "7"
+          ],
+          "wasm_sha256": "8d109bfde02026acafacdfe96aadcac3a06a64c555c4d3fa72fd31ba4a819326",
+          "compile_generation": "5adebfe964af9443f6fa53224b0d612eaa430ece5247dec006a8a258035cb814",
+          "good": 3,
+          "errors": 0
+        }
+      ],
+      "audit": {
+        "requests": 84,
+        "failures": 0,
+        "expectedStreamClosures": 2,
+        "responses": 84,
+        "console": 0,
+        "pageErrors": 0,
+        "csp": 0
+      }
+    },
+    {
+      "title": "renamed same-name build inputs track each dependency save, deletion and recovery",
+      "status": "passed",
+      "duration_ms": 141869,
+      "retry": 0,
+      "observations": [
+        {
+          "ssr_values": [
+            "2",
+            "2",
+            "2",
+            "7",
+            "19"
+          ],
+          "wasm_sha256": "f9d2293bee26323588c0de1d87bbd2f4f6946d2c4827a04548eb05ac6db8f08a",
+          "compile_generation": "4392edc1b972abff107df37c40b625191fad1287189bdfff9f0d483bd7eae9a9",
+          "good": 1,
+          "errors": 0
+        },
+        {
+          "save": "../payload-v1/payload.txt",
+          "value": "14"
+        },
+        {
+          "ssr_values": [
+            "2",
+            "2",
+            "2",
+            "14",
+            "19"
+          ],
+          "wasm_sha256": "ea9c7a1df4575d8dddfca98b2f4b8beff297835e292cf52f7562494183a7fc77",
+          "compile_generation": "679d3e9b80e19a0cc8293c79b1c7a0adcc0950d63aa8cd02c41d2597e19a30c5",
+          "good": 2,
+          "errors": 0
+        },
+        {
+          "deleted": "../payload-v1/payload.txt",
+          "good": 2,
+          "errors": 2
+        },
+        {
+          "restore": "../payload-v1/payload.txt",
+          "value": "23"
+        },
+        {
+          "ssr_values": [
+            "2",
+            "2",
+            "2",
+            "23",
+            "19"
+          ],
+          "wasm_sha256": "5c2cd4e2dc20eb0d9ac8cd310d695eb4c5103b11ff040923522ac71b31778614",
+          "compile_generation": "1f31aaccb392cff2ee8e9a3b3c625747c84fb5a1d5cf0575f40c36c562b89d6f",
+          "good": 4,
+          "errors": 0
+        },
+        {
+          "save": "../payload-v2/payload.txt",
+          "value": "29"
+        },
+        {
+          "ssr_values": [
+            "2",
+            "2",
+            "2",
+            "23",
+            "29"
+          ],
+          "wasm_sha256": "b047d23d5f180963e93d864e9d5ab14e826d06747088064b531dd6334b37e8bf",
+          "compile_generation": "3f13c731a823e283fe11dd15ccacd8771812ebc6a594fff4a5538be8a4d98fb1",
+          "good": 5,
+          "errors": 0
+        },
+        {
+          "deleted": "../payload-v2/payload.txt",
+          "good": 5,
+          "errors": 2
+        },
+        {
+          "restore": "../payload-v2/payload.txt",
+          "value": "37"
+        },
+        {
+          "ssr_values": [
+            "2",
+            "2",
+            "2",
+            "23",
+            "37"
+          ],
+          "wasm_sha256": "832d7db8d413174bb15095e26e2ea501f20b3c05465a5b8c2df27fc62f3412ad",
+          "compile_generation": "09b45d02c40751cdeedb87a4dbc7e9e91880c7ed2649db1f41f92da120983510",
+          "good": 7,
+          "errors": 0
+        }
+      ],
+      "audit": {
+        "requests": 140,
+        "failures": 0,
+        "expectedStreamClosures": 3,
+        "responses": 140,
+        "console": 0,
+        "pageErrors": 0,
+        "csp": 0
+      }
+    }
+  ]
+}

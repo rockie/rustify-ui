@@ -1,0 +1,30 @@
+[
+  {
+    "name": "fmt",
+    "command": [
+      "cargo",
+      "fmt",
+      "--all",
+      "--",
+      "--check"
+    ],
+    "exit": 0,
+    "seconds": 1.72,
+    "target": "789003cc5ad58bd734f5a8c483f8fec475c2afe9"
+  },
+  {
+    "name": "cli-diagnostic-text",
+    "command": [
+      "mbx",
+      "test",
+      "--locked",
+      "-p",
+      "rustify-docs-cli",
+      "--test",
+      "diagnostic_text"
+    ],
+    "exit": 0,
+    "seconds": 11.53,
+    "target": "789003cc5ad58bd734f5a8c483f8fec475c2afe9"
+  }
+]

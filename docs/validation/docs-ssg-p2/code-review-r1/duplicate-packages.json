@@ -1,0 +1,112 @@
+[
+  {
+    "name": "payload",
+    "version": "1.0.0",
+    "id": "path+file:///var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-p2-code-review-wf25bzoq/payload-v1#payload@1.0.0",
+    "license": null,
+    "license_file": null,
+    "description": null,
+    "source": null,
+    "dependencies": [],
+    "targets": [
+      {
+        "kind": [
+          "lib"
+        ],
+        "crate_types": [
+          "lib"
+        ],
+        "name": "payload",
+        "src_path": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-p2-code-review-wf25bzoq/payload-v1/src/lib.rs",
+        "edition": "2021",
+        "doc": true,
+        "doctest": true,
+        "test": true
+      },
+      {
+        "kind": [
+          "custom-build"
+        ],
+        "crate_types": [
+          "bin"
+        ],
+        "name": "build-script-build",
+        "src_path": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-p2-code-review-wf25bzoq/payload-v1/build.rs",
+        "edition": "2021",
+        "doc": false,
+        "doctest": false,
+        "test": false
+      }
+    ],
+    "features": {},
+    "manifest_path": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-p2-code-review-wf25bzoq/payload-v1/Cargo.toml",
+    "metadata": null,
+    "publish": null,
+    "authors": [],
+    "categories": [],
+    "keywords": [],
+    "readme": null,
+    "repository": null,
+    "homepage": null,
+    "documentation": null,
+    "edition": "2021",
+    "links": null,
+    "default_run": null,
+    "rust_version": null
+  },
+  {
+    "name": "payload",
+    "version": "2.0.0",
+    "id": "path+file:///var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-p2-code-review-wf25bzoq/payload-v2#payload@2.0.0",
+    "license": null,
+    "license_file": null,
+    "description": null,
+    "source": null,
+    "dependencies": [],
+    "targets": [
+      {
+        "kind": [
+          "lib"
+        ],
+        "crate_types": [
+          "lib"
+        ],
+        "name": "payload",
+        "src_path": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-p2-code-review-wf25bzoq/payload-v2/src/lib.rs",
+        "edition": "2021",
+        "doc": true,
+        "doctest": true,
+        "test": true
+      },
+      {
+        "kind": [
+          "custom-build"
+        ],
+        "crate_types": [
+          "bin"
+        ],
+        "name": "build-script-build",
+        "src_path": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-p2-code-review-wf25bzoq/payload-v2/build.rs",
+        "edition": "2021",
+        "doc": false,
+        "doctest": false,
+        "test": false
+      }
+    ],
+    "features": {},
+    "manifest_path": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-p2-code-review-wf25bzoq/payload-v2/Cargo.toml",
+    "metadata": null,
+    "publish": null,
+    "authors": [],
+    "categories": [],
+    "keywords": [],
+    "readme": null,
+    "repository": null,
+    "homepage": null,
+    "documentation": null,
+    "edition": "2021",
+    "links": null,
+    "default_run": null,
+    "rust_version": null
+  }
+]

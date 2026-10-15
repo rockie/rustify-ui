@@ -1,0 +1,38 @@
+[
+  {
+    "command": [
+      "mbx",
+      "test",
+      "--locked",
+      "-p",
+      "rustify-docs"
+    ],
+    "exit_code": 0,
+    "seconds": 61.82,
+    "log": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-review-gaps2-9ai42i6c/rustify-docs-test.log"
+  },
+  {
+    "command": [
+      "mbx",
+      "test",
+      "--locked",
+      "-p",
+      "rustify-docs-syntax"
+    ],
+    "exit_code": 0,
+    "seconds": 1.46,
+    "log": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-review-gaps2-9ai42i6c/rustify-docs-syntax-test.log"
+  },
+  {
+    "command": [
+      "mbx",
+      "test",
+      "--locked",
+      "-p",
+      "rustify-docs-cli"
+    ],
+    "exit_code": 101,
+    "seconds": 16.07,
+    "log": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-review-gaps2-9ai42i6c/rustify-docs-cli-test.log"
+  }
+]

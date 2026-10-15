@@ -1,0 +1,12 @@
+{
+  "scans": 16,
+  "states": [
+    "loading:loading",
+    "failed:failed"
+  ],
+  "serious_or_critical": [],
+  "violations": 0,
+  "incomplete": [
+    "color-contrast"
+  ]
+}

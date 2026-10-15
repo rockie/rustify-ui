@@ -15,4 +15,7 @@
 | fb86407f-8889-4844-99a0-a0e6a580a27f | [VELLUM](../../../../docs/plan/VELLUM.md) | [fb86407f](fb86407f-8889-4844-99a0-a0e6a580a27f.md) | 活动 |
 | be9305f5-b240-453b-bb54-5ff7d0ed7970 | [WASM-TAILWIND](../../../../docs/plan/WASM-TAILWIND.md) | [be9305f5](be9305f5-b240-453b-bb54-5ff7d0ed7970.md) | 活动 |
 
+| f2f47f04-3082-4faf-96c8-48f1a319b6d4 | [DOCS-SSG-P2-gaps](../../../../docs/plan/DOCS-SSG-P2-gaps.md) | [对象](f2f47f04-3082-4faf-96c8-48f1a319b6d4.md) | 活动 |
+| e9817d55-60e7-4c8f-9abb-4793cc82d5f3 | [DOCS-SSG-P2-gaps-2](../../../../docs/plan/DOCS-SSG-P2-gaps-2.md) | [对象](e9817d55-60e7-4c8f-9abb-4793cc82d5f3.md) | 活动 |
+
 维护约定：改变本层内容者同步索引；按稳定 ID/路径保留历史，无变化不重写，索引不作为事件。详见[目录索引维护](../../protocol.md#目录索引维护)。

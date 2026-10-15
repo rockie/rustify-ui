@@ -1,0 +1,519 @@
+{
+  "binary": {
+    "entry": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps2-installed.jc9IaV/bin/rustify-docs",
+    "sha256": "6c0b025dfc4e73ec2dfbf519bd353ae795700e29f91f8613aa6ff3cc9ddac1d1",
+    "build_info": "rustify-docs 0.1.18\npanic: unwind\ngrammars: syntect-5.3.0+two-face-0.5.2+bat-0.26.1+fancy\nsource: 758def9cb3b88a1d06282ddfdb3e8708c8529cdc\n"
+  },
+  "site": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-gaps2-content-browser-VRMJLn",
+  "cases": [
+    {
+      "label": "anchor",
+      "rule": "broken-anchor",
+      "markdown": "---\ndescription: Home\n---\n# Home\n\n[Target](a%60b%60c.md#a%60b)\n",
+      "config": "schema_version=1\n[site]\nname='Review'\nurl='https://example.com/'\n",
+      "message": "content/a`b`c.md has no heading #a`b",
+      "codes": [
+        "content/a`b`c.md",
+        "#a`b"
+      ],
+      "actual": {
+        "message": "content/a`b`c.md has no heading #a`b",
+        "messageCodes": [
+          "content/a`b`c.md",
+          "#a`b"
+        ],
+        "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as -",
+        "suggestionCodes": [
+          "-"
+        ]
+      },
+      "views": [
+        {
+          "width": 1280,
+          "theme": "light",
+          "actual": {
+            "message": "content/a`b`c.md has no heading #a`b",
+            "messageCodes": [
+              "content/a`b`c.md",
+              "#a`b"
+            ],
+            "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as -",
+            "suggestionCodes": [
+              "-"
+            ]
+          },
+          "layout": {
+            "page": 0,
+            "prose": [
+              0,
+              0
+            ]
+          },
+          "screenshot": "anchor-1280-light.png"
+        },
+        {
+          "width": 1280,
+          "theme": "dark",
+          "actual": {
+            "message": "content/a`b`c.md has no heading #a`b",
+            "messageCodes": [
+              "content/a`b`c.md",
+              "#a`b"
+            ],
+            "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as -",
+            "suggestionCodes": [
+              "-"
+            ]
+          },
+          "layout": {
+            "page": 0,
+            "prose": [
+              0,
+              0
+            ]
+          },
+          "screenshot": "anchor-1280-dark.png"
+        },
+        {
+          "width": 375,
+          "theme": "light",
+          "actual": {
+            "message": "content/a`b`c.md has no heading #a`b",
+            "messageCodes": [
+              "content/a`b`c.md",
+              "#a`b"
+            ],
+            "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as -",
+            "suggestionCodes": [
+              "-"
+            ]
+          },
+          "layout": {
+            "page": 0,
+            "prose": [
+              0,
+              0
+            ]
+          },
+          "screenshot": "anchor-375-light.png"
+        },
+        {
+          "width": 375,
+          "theme": "dark",
+          "actual": {
+            "message": "content/a`b`c.md has no heading #a`b",
+            "messageCodes": [
+              "content/a`b`c.md",
+              "#a`b"
+            ],
+            "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as -",
+            "suggestionCodes": [
+              "-"
+            ]
+          },
+          "layout": {
+            "page": 0,
+            "prose": [
+              0,
+              0
+            ]
+          },
+          "screenshot": "anchor-375-dark.png"
+        }
+      ]
+    },
+    {
+      "label": "yaml",
+      "rule": "embed-payload",
+      "markdown": "---\ndescription: Home\n---\n# Home\n\n```rustify-component\nname: Steps\nun`known: 1\n```\n",
+      "config": "schema_version=1\n[site]\nname='Review'\nurl='https://example.com/'\n",
+      "message": "unknown field un`known; a demo takes only name, a component takes name, props and children",
+      "codes": [
+        "un`known",
+        "name",
+        "name",
+        "props",
+        "children"
+      ],
+      "actual": {
+        "message": "unknown field un`known; a demo takes only name, a component takes name, props and children",
+        "messageCodes": [
+          "un`known",
+          "name",
+          "name",
+          "props",
+          "children"
+        ],
+        "suggestion": "Write valid YAML for rustify-component (name, optional props mapping and children string) or rustify-demo (name only); correct the reported payload error.",
+        "suggestionCodes": [
+          "rustify-component",
+          "name",
+          "props",
+          "children",
+          "rustify-demo",
+          "name"
+        ]
+      },
+      "views": [
+        {
+          "width": 1280,
+          "theme": "light",
+          "actual": {
+            "message": "unknown field un`known; a demo takes only name, a component takes name, props and children",
+            "messageCodes": [
+              "un`known",
+              "name",
+              "name",
+              "props",
+              "children"
+            ],
+            "suggestion": "Write valid YAML for rustify-component (name, optional props mapping and children string) or rustify-demo (name only); correct the reported payload error.",
+            "suggestionCodes": [
+              "rustify-component",
+              "name",
+              "props",
+              "children",
+              "rustify-demo",
+              "name"
+            ]
+          },
+          "layout": {
+            "page": 0,
+            "prose": [
+              0,
+              0
+            ]
+          },
+          "screenshot": "yaml-1280-light.png"
+        },
+        {
+          "width": 1280,
+          "theme": "dark",
+          "actual": {
+            "message": "unknown field un`known; a demo takes only name, a component takes name, props and children",
+            "messageCodes": [
+              "un`known",
+              "name",
+              "name",
+              "props",
+              "children"
+            ],
+            "suggestion": "Write valid YAML for rustify-component (name, optional props mapping and children string) or rustify-demo (name only); correct the reported payload error.",
+            "suggestionCodes": [
+              "rustify-component",
+              "name",
+              "props",
+              "children",
+              "rustify-demo",
+              "name"
+            ]
+          },
+          "layout": {
+            "page": 0,
+            "prose": [
+              0,
+              0
+            ]
+          },
+          "screenshot": "yaml-1280-dark.png"
+        },
+        {
+          "width": 375,
+          "theme": "light",
+          "actual": {
+            "message": "unknown field un`known; a demo takes only name, a component takes name, props and children",
+            "messageCodes": [
+              "un`known",
+              "name",
+              "name",
+              "props",
+              "children"
+            ],
+            "suggestion": "Write valid YAML for rustify-component (name, optional props mapping and children string) or rustify-demo (name only); correct the reported payload error.",
+            "suggestionCodes": [
+              "rustify-component",
+              "name",
+              "props",
+              "children",
+              "rustify-demo",
+              "name"
+            ]
+          },
+          "layout": {
+            "page": 0,
+            "prose": [
+              0,
+              0
+            ]
+          },
+          "screenshot": "yaml-375-light.png"
+        },
+        {
+          "width": 375,
+          "theme": "dark",
+          "actual": {
+            "message": "unknown field un`known; a demo takes only name, a component takes name, props and children",
+            "messageCodes": [
+              "un`known",
+              "name",
+              "name",
+              "props",
+              "children"
+            ],
+            "suggestion": "Write valid YAML for rustify-component (name, optional props mapping and children string) or rustify-demo (name only); correct the reported payload error.",
+            "suggestionCodes": [
+              "rustify-component",
+              "name",
+              "props",
+              "children",
+              "rustify-demo",
+              "name"
+            ]
+          },
+          "layout": {
+            "page": 0,
+            "prose": [
+              0,
+              0
+            ]
+          },
+          "screenshot": "yaml-375-dark.png"
+        }
+      ]
+    },
+    {
+      "label": "empty-language",
+      "rule": "config-lang",
+      "markdown": "---\ndescription: Home\n---\n# Home\n",
+      "config": "schema_version=1\n[site]\nname='Review'\nurl='https://example.com/'\nlang=''\n",
+      "message": " is not a language tag",
+      "codes": [
+        ""
+      ],
+      "actual": {
+        "message": " is not a language tag",
+        "messageCodes": [
+          ""
+        ],
+        "suggestion": "use a tag like en or zh-CN",
+        "suggestionCodes": [
+          "en",
+          "zh-CN"
+        ]
+      },
+      "views": [
+        {
+          "width": 1280,
+          "theme": "light",
+          "actual": {
+            "message": " is not a language tag",
+            "messageCodes": [
+              ""
+            ],
+            "suggestion": "use a tag like en or zh-CN",
+            "suggestionCodes": [
+              "en",
+              "zh-CN"
+            ]
+          },
+          "layout": {
+            "page": 0,
+            "prose": [
+              0,
+              0
+            ]
+          },
+          "screenshot": "empty-language-1280-light.png"
+        },
+        {
+          "width": 1280,
+          "theme": "dark",
+          "actual": {
+            "message": " is not a language tag",
+            "messageCodes": [
+              ""
+            ],
+            "suggestion": "use a tag like en or zh-CN",
+            "suggestionCodes": [
+              "en",
+              "zh-CN"
+            ]
+          },
+          "layout": {
+            "page": 0,
+            "prose": [
+              0,
+              0
+            ]
+          },
+          "screenshot": "empty-language-1280-dark.png"
+        },
+        {
+          "width": 375,
+          "theme": "light",
+          "actual": {
+            "message": " is not a language tag",
+            "messageCodes": [
+              ""
+            ],
+            "suggestion": "use a tag like en or zh-CN",
+            "suggestionCodes": [
+              "en",
+              "zh-CN"
+            ]
+          },
+          "layout": {
+            "page": 0,
+            "prose": [
+              0,
+              0
+            ]
+          },
+          "screenshot": "empty-language-375-light.png"
+        },
+        {
+          "width": 375,
+          "theme": "dark",
+          "actual": {
+            "message": " is not a language tag",
+            "messageCodes": [
+              ""
+            ],
+            "suggestion": "use a tag like en or zh-CN",
+            "suggestionCodes": [
+              "en",
+              "zh-CN"
+            ]
+          },
+          "layout": {
+            "page": 0,
+            "prose": [
+              0,
+              0
+            ]
+          },
+          "screenshot": "empty-language-375-dark.png"
+        }
+      ]
+    },
+    {
+      "label": "frontmatter-at-line",
+      "rule": "lang",
+      "markdown": "---\ndescription: Home\nlang: \"a` at line `b\"\n---\n# Home\n",
+      "config": "schema_version=1\n[site]\nname='Review'\nurl='https://example.com/'\n",
+      "message": "lang: `` a`",
+      "codes": [],
+      "actual": {
+        "message": "lang: `` a`",
+        "messageCodes": [],
+        "suggestion": "use a language tag such as en, zh-CN or fr",
+        "suggestionCodes": [
+          "en",
+          "zh-CN",
+          "fr"
+        ]
+      },
+      "views": [
+        {
+          "width": 1280,
+          "theme": "light",
+          "actual": {
+            "message": "lang: `` a`",
+            "messageCodes": [],
+            "suggestion": "use a language tag such as en, zh-CN or fr",
+            "suggestionCodes": [
+              "en",
+              "zh-CN",
+              "fr"
+            ]
+          },
+          "layout": {
+            "page": 0,
+            "prose": [
+              0,
+              0
+            ]
+          },
+          "screenshot": "frontmatter-at-line-1280-light.png"
+        },
+        {
+          "width": 1280,
+          "theme": "dark",
+          "actual": {
+            "message": "lang: `` a`",
+            "messageCodes": [],
+            "suggestion": "use a language tag such as en, zh-CN or fr",
+            "suggestionCodes": [
+              "en",
+              "zh-CN",
+              "fr"
+            ]
+          },
+          "layout": {
+            "page": 0,
+            "prose": [
+              0,
+              0
+            ]
+          },
+          "screenshot": "frontmatter-at-line-1280-dark.png"
+        },
+        {
+          "width": 375,
+          "theme": "light",
+          "actual": {
+            "message": "lang: `` a`",
+            "messageCodes": [],
+            "suggestion": "use a language tag such as en, zh-CN or fr",
+            "suggestionCodes": [
+              "en",
+              "zh-CN",
+              "fr"
+            ]
+          },
+          "layout": {
+            "page": 0,
+            "prose": [
+              0,
+              0
+            ]
+          },
+          "screenshot": "frontmatter-at-line-375-light.png"
+        },
+        {
+          "width": 375,
+          "theme": "dark",
+          "actual": {
+            "message": "lang: `` a`",
+            "messageCodes": [],
+            "suggestion": "use a language tag such as en, zh-CN or fr",
+            "suggestionCodes": [
+              "en",
+              "zh-CN",
+              "fr"
+            ]
+          },
+          "layout": {
+            "page": 0,
+            "prose": [
+              0,
+              0
+            ]
+          },
+          "screenshot": "frontmatter-at-line-375-dark.png"
+        }
+      ]
+    }
+  ],
+  "audit": {
+    "console": [],
+    "pageErrors": [],
+    "failures": [],
+    "csp": [],
+    "responses": []
+  },
+  "browserVersion": "153.0.8010.12",
+  "url": "http://127.0.0.1:52019/",
+  "recovered": true,
+  "observationsConfirmed": true
+}
