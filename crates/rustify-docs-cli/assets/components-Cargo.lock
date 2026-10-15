@@ -1188,7 +1188,7 @@ dependencies = [
 [[package]]
 name = "rustify-components"
 version = "0.1.0"
-source = "git+https://github.com/rockie/rustify-ui?rev=6942ec0d23812ecda61492d9db5c0046f481edfc#6942ec0d23812ecda61492d9db5c0046f481edfc"
+source = "git+https://github.com/rockie/rustify-ui?rev=08eb0d322e4a595ed1fa280d0f7532c908e6b0dc#08eb0d322e4a595ed1fa280d0f7532c908e6b0dc"
 dependencies = [
  "js-sys",
  "leptos",
@@ -1201,7 +1201,7 @@ dependencies = [
 [[package]]
 name = "rustify-docs"
 version = "0.1.0"
-source = "git+https://github.com/rockie/rustify-ui?rev=6942ec0d23812ecda61492d9db5c0046f481edfc#6942ec0d23812ecda61492d9db5c0046f481edfc"
+source = "git+https://github.com/rockie/rustify-ui?rev=08eb0d322e4a595ed1fa280d0f7532c908e6b0dc#08eb0d322e4a595ed1fa280d0f7532c908e6b0dc"
 dependencies = [
  "any_spawner",
  "hydration_context",
@@ -1219,7 +1219,7 @@ dependencies = [
 [[package]]
 name = "rustify-docs-macros"
 version = "0.1.0"
-source = "git+https://github.com/rockie/rustify-ui?rev=6942ec0d23812ecda61492d9db5c0046f481edfc#6942ec0d23812ecda61492d9db5c0046f481edfc"
+source = "git+https://github.com/rockie/rustify-ui?rev=08eb0d322e4a595ed1fa280d0f7532c908e6b0dc#08eb0d322e4a595ed1fa280d0f7532c908e6b0dc"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -1231,7 +1231,7 @@ dependencies = [
 [[package]]
 name = "rustify-docs-syntax"
 version = "0.1.0"
-source = "git+https://github.com/rockie/rustify-ui?rev=6942ec0d23812ecda61492d9db5c0046f481edfc#6942ec0d23812ecda61492d9db5c0046f481edfc"
+source = "git+https://github.com/rockie/rustify-ui?rev=08eb0d322e4a595ed1fa280d0f7532c908e6b0dc#08eb0d322e4a595ed1fa280d0f7532c908e6b0dc"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -1242,7 +1242,7 @@ dependencies = [
 [[package]]
 name = "rustify-style"
 version = "0.1.0"
-source = "git+https://github.com/rockie/rustify-ui?rev=6942ec0d23812ecda61492d9db5c0046f481edfc#6942ec0d23812ecda61492d9db5c0046f481edfc"
+source = "git+https://github.com/rockie/rustify-ui?rev=08eb0d322e4a595ed1fa280d0f7532c908e6b0dc#08eb0d322e4a595ed1fa280d0f7532c908e6b0dc"
 dependencies = [
  "flate2",
  "regex",
@@ -1254,7 +1254,7 @@ dependencies = [
 [[package]]
 name = "rustify-ui"
 version = "0.1.0"
-source = "git+https://github.com/rockie/rustify-ui?rev=6942ec0d23812ecda61492d9db5c0046f481edfc#6942ec0d23812ecda61492d9db5c0046f481edfc"
+source = "git+https://github.com/rockie/rustify-ui?rev=08eb0d322e4a595ed1fa280d0f7532c908e6b0dc#08eb0d322e4a595ed1fa280d0f7532c908e6b0dc"
 dependencies = [
  "js-sys",
  "leptos",
