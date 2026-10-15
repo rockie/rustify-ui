@@ -1,0 +1,17 @@
+{
+  "report": "docs/plan/DOCS-SSG-P2-gaps-2.code-review.md",
+  "report_sha256": "57349a6152eaee15c32b75679a60549086fc6929d6668f0fbd5fe5cf7b4d970a",
+  "plan": "docs/plan/DOCS-SSG-P2-gaps-2.md",
+  "plan_sha256": "866198aa1ae4eeeebf6f57996d23e0aabae0d8a0ea08f816761f5e0c663404c2",
+  "review_base": "8a8268e6c5abb2d14a5bc7cdd67a7a1f2051debd",
+  "review_target": "6c011792056f05c5c9837d316ac6fb00cd8fdfac",
+  "repair_head": "97c9946c6a325bed676a92dbd7bcea038db4ea69",
+  "issue": "PG-01",
+  "milestones": [
+    "M1",
+    "M2"
+  ],
+  "decision": "confirmed; fix language_issue location suffix only; existing truncation violates current full-span contract",
+  "rendering": "DOM/SSG",
+  "staged_before": []
+}

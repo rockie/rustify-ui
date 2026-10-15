@@ -1,0 +1,75 @@
+{
+  "stats": {
+    "startTime": "2026-10-15T06:56:37.341Z",
+    "duration": 31874.167,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  },
+  "tests": [
+    {
+      "title": "gaps-2 code spans: frontmatter language preserves author text resembling a YAML location",
+      "status": "unexpected",
+      "results": [
+        {
+          "status": "failed",
+          "duration": 1286,
+          "errors": [
+            {
+              "location": {
+                "file": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/docs-ssg/dev-components.spec.ts",
+                "column": 28,
+                "line": 1069
+              },
+              "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoMatchObject\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 1\u001b[39m\n\n\u001b[2m  Object {\u001b[22m\n\u001b[2m    \"column\": 7,\u001b[22m\n\u001b[2m    \"file\": \"content/index.md\",\u001b[22m\n\u001b[2m    \"line\": 3,\u001b[22m\n\u001b[32m-   \"message\": \"lang: `` a` at line `b `` is not a language tag\",\u001b[39m\n\u001b[31m+   \"message\": \"lang: `` a`\",\u001b[39m\n\u001b[2m  }\u001b[22m\n\n  1067 |         state = await settled(state.revision, false);\n  1068 |         const diagnostic = state.diagnostics.find(d => d.rule === 'lang')!;\n> 1069 |         expect(diagnostic).toMatchObject({ file: 'content/index.md', line: 3, column: 7, message: `lang: ${encoded} is not a language tag` });\n       |                            ^\n  1070 |         await exactProse(page, state, 'lang', { message: `lang: ${value} is not a language tag`, messageCodes: [value], suggestion: 'use a language tag such as en, zh-CN or fr', suggestionCodes: ['en', 'zh-CN', 'fr'] });\n  1071 |         expect(state.good).toBe(first.good);\n  1072 |         expect(await (await page.request.get(server.url)).body()).toEqual(lastGood);\n    at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/docs-ssg/dev-components.spec.ts:1069:28"
+            }
+          ],
+          "attachments": [
+            {
+              "name": "dev-component-browser-audit.json",
+              "contentType": "application/json",
+              "sha256": "3b09bc3dfec4a11b780a5e23d69948669a9d073e677d9a9f83bad022abae6230",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/red-browser/t01/00-dev-component-browser-audit.json"
+            },
+            {
+              "name": "dev-component-states.json",
+              "contentType": "application/json",
+              "sha256": "5c3cb7d5435c463992592901421607e2646ae18f0f50201124b24ad828e2b756",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/red-browser/t01/01-dev-component-states.json"
+            },
+            {
+              "name": "dev-component-compiler-commands.json",
+              "contentType": "application/json",
+              "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/red-browser/t01/02-dev-component-compiler-commands.json"
+            },
+            {
+              "name": "dev-component-compiler-lifecycle.json",
+              "contentType": "application/json",
+              "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/red-browser/t01/03-dev-component-compiler-lifecycle.json"
+            },
+            {
+              "name": "dev-component-cli.log",
+              "contentType": "text/plain",
+              "sha256": "74ac635906c9f337e6b0f88738536e83e37945fb6e15e019f9710acf07a9c439",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/red-browser/t01/04-dev-component-cli.log"
+            },
+            {
+              "name": "error-context",
+              "contentType": "text/markdown",
+              "path": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2-gaps-2/apply-r1/red-browser-artifacts/docs-ssg-dev-components-ga-fcf01--resembling-a-YAML-location-docs-dev/error-context.md"
+            },
+            {
+              "name": "trace",
+              "contentType": "application/zip",
+              "path": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p2-gaps-2/apply-r1/red-browser-artifacts/docs-ssg-dev-components-ga-fcf01--resembling-a-YAML-location-docs-dev/trace.zip"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": []
+}

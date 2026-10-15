@@ -1,0 +1,13 @@
+{
+  "links": "passed (plan example FEATURE.records excluded)",
+  "progress": "1/2; M1 complete and M2 in progress",
+  "original_dirty_files": 461,
+  "intentional_ledger_updates": [
+    ".xgent-ai/sdlc/index.md",
+    ".xgent-ai/sdlc/events/plan/e9817d55-60e7-4c8f-9abb-4793cc82d5f3/index.md",
+    ".xgent-ai/sdlc/events/review/8248f8f2-341a-4bfc-98d0-b893b5be44ac/index.md",
+    ".xgent-ai/sdlc/status/plan/e9817d55-60e7-4c8f-9abb-4793cc82d5f3.md",
+    ".xgent-ai/sdlc/status/review/8248f8f2-341a-4bfc-98d0-b893b5be44ac.md"
+  ],
+  "other_original_dirty_bytes": "unchanged"
+}

@@ -1,0 +1,18 @@
+{
+  "name": "m1-browser",
+  "command": [
+    "npx",
+    "--no-install",
+    "playwright",
+    "test",
+    "-c",
+    "playwright.docs.config.ts",
+    "--project=docs-dev",
+    "--workers=1",
+    "--reporter=json",
+    "--output=docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser-artifacts"
+  ],
+  "exit": 0,
+  "seconds": 406.88,
+  "head": "97c9946c6a325bed676a92dbd7bcea038db4ea69"
+}

@@ -1,0 +1,20 @@
+{
+  "name": "ssr-clippy",
+  "command": [
+    "mbx",
+    "clippy",
+    "--locked",
+    "-p",
+    "rustify-docs",
+    "--no-default-features",
+    "--features",
+    "site-ssr",
+    "--all-targets",
+    "--",
+    "-D",
+    "warnings"
+  ],
+  "exit": 0,
+  "seconds": 0.35,
+  "head": "97c9946c6a325bed676a92dbd7bcea038db4ea69"
+}

@@ -1,0 +1,164 @@
+{
+  "stats": {
+    "startTime": "2026-10-15T06:57:33.134Z",
+    "duration": 51943.799,
+    "expected": 1,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "tests": [
+    {
+      "title": "gaps-2 code spans: frontmatter language preserves author text resembling a YAML location",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 2229,
+          "errors": [],
+          "attachments": [
+            {
+              "name": "lang-prose.json",
+              "contentType": "application/json",
+              "sha256": "f738e8644522c365d8474a76fa1a1aee8414c8c77e6bef33158d74f541f45652",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/green-browser/t01/00-lang-prose.json"
+            },
+            {
+              "name": "gaps2-frontmatter-ticks-1280-light.json",
+              "contentType": "application/json",
+              "sha256": "efa2b4304a2d3d6135c79d7fe017affdea50413642b527c7529dd1bb3269d872",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/green-browser/t01/01-gaps2-frontmatter-ticks-1280-light.json"
+            },
+            {
+              "name": "gaps2-frontmatter-ticks-1280-light.png",
+              "contentType": "image/png",
+              "sha256": "f5dd8a50827f95370cb4bfc4fb4dce19fa992ed845f1d8ab9cc9a326b31b21f6",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/green-browser/t01/02-gaps2-frontmatter-ticks-1280-light.png"
+            },
+            {
+              "name": "gaps2-frontmatter-ticks-1280-dark.json",
+              "contentType": "application/json",
+              "sha256": "065509cd6b7c1883021de3da22ca041a5c9c0a18332610156a5b612288fff446",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/green-browser/t01/03-gaps2-frontmatter-ticks-1280-dark.json"
+            },
+            {
+              "name": "gaps2-frontmatter-ticks-1280-dark.png",
+              "contentType": "image/png",
+              "sha256": "c0b26f33c0987e28d075b79d33785654765719552ae11a99f82192a76e2fb8ba",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/green-browser/t01/04-gaps2-frontmatter-ticks-1280-dark.png"
+            },
+            {
+              "name": "gaps2-frontmatter-ticks-375-light.json",
+              "contentType": "application/json",
+              "sha256": "67b0e67403e7e8da6e1726b422081ba51eb7d3106e68c645dd10f1e0895bbd63",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/green-browser/t01/05-gaps2-frontmatter-ticks-375-light.json"
+            },
+            {
+              "name": "gaps2-frontmatter-ticks-375-light.png",
+              "contentType": "image/png",
+              "sha256": "01179baa71ee9ccdfd0696c19d0d1589d0cfe5cab50bf950eb136ec3b733bcbe",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/green-browser/t01/06-gaps2-frontmatter-ticks-375-light.png"
+            },
+            {
+              "name": "gaps2-frontmatter-ticks-375-dark.json",
+              "contentType": "application/json",
+              "sha256": "26cf97ffbcf8bf3ca0b130cb06ca45fd313ceb66876545c650bd5299b36d53af",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/green-browser/t01/07-gaps2-frontmatter-ticks-375-dark.json"
+            },
+            {
+              "name": "gaps2-frontmatter-ticks-375-dark.png",
+              "contentType": "image/png",
+              "sha256": "b77e17857452dfc5e835ea7d1872e3f16626ffe9ae828e8ee3fcba32c81336e4",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/green-browser/t01/08-gaps2-frontmatter-ticks-375-dark.png"
+            },
+            {
+              "name": "lang-prose.json",
+              "contentType": "application/json",
+              "sha256": "914fa42675fec14d187e96c6251e0e9c687ab080cfdb273d9b99e7bd5236da80",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/green-browser/t01/09-lang-prose.json"
+            },
+            {
+              "name": "gaps2-frontmatter-plain-1280-light.json",
+              "contentType": "application/json",
+              "sha256": "40d1a91a25b85e563d7df5b32a3773044574a715e80a1c7f786ef5ae83ad4b82",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/green-browser/t01/10-gaps2-frontmatter-plain-1280-light.json"
+            },
+            {
+              "name": "gaps2-frontmatter-plain-1280-light.png",
+              "contentType": "image/png",
+              "sha256": "e9615364ce7a8f2203cd6df4eeae06e7212a6bec5bf218d134af6076af182772",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/green-browser/t01/11-gaps2-frontmatter-plain-1280-light.png"
+            },
+            {
+              "name": "gaps2-frontmatter-plain-1280-dark.json",
+              "contentType": "application/json",
+              "sha256": "2a2a69c12e09e2329395aeb9112ea10d46c2424c8d4fe00468fe04b73256d025",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/green-browser/t01/12-gaps2-frontmatter-plain-1280-dark.json"
+            },
+            {
+              "name": "gaps2-frontmatter-plain-1280-dark.png",
+              "contentType": "image/png",
+              "sha256": "ac46942d4dd69bcf44ea628b8921d90db2915c781510ec1fede40ddfe600c581",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/green-browser/t01/13-gaps2-frontmatter-plain-1280-dark.png"
+            },
+            {
+              "name": "gaps2-frontmatter-plain-375-light.json",
+              "contentType": "application/json",
+              "sha256": "277bd26af03950c6a90bdfc150751f43c283a51670f085649c99a5a78f37d4bf",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/green-browser/t01/14-gaps2-frontmatter-plain-375-light.json"
+            },
+            {
+              "name": "gaps2-frontmatter-plain-375-light.png",
+              "contentType": "image/png",
+              "sha256": "66f248f9ba46282219a84a89af4622d9fac5f0ccffc22d2fd526bffcc32031fb",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/green-browser/t01/15-gaps2-frontmatter-plain-375-light.png"
+            },
+            {
+              "name": "gaps2-frontmatter-plain-375-dark.json",
+              "contentType": "application/json",
+              "sha256": "ed5243af28a49892079781cf179916d012e8999d494ae56ac79db3577e89a5e7",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/green-browser/t01/16-gaps2-frontmatter-plain-375-dark.json"
+            },
+            {
+              "name": "gaps2-frontmatter-plain-375-dark.png",
+              "contentType": "image/png",
+              "sha256": "286580277dbef5a8967eca68cad5d312a1fdb409070eb49b13dbbdbcd4c74b4c",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/green-browser/t01/17-gaps2-frontmatter-plain-375-dark.png"
+            },
+            {
+              "name": "dev-component-browser-audit.json",
+              "contentType": "application/json",
+              "sha256": "5afc604d3c2633b980ddc5ec150642a23340a640eef21826764c5e041d88d295",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/green-browser/t01/18-dev-component-browser-audit.json"
+            },
+            {
+              "name": "dev-component-states.json",
+              "contentType": "application/json",
+              "sha256": "d4c0dce5c5d0f93e157318a4f059102f1ef725601049687da949aec65eb3bfe7",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/green-browser/t01/19-dev-component-states.json"
+            },
+            {
+              "name": "dev-component-compiler-commands.json",
+              "contentType": "application/json",
+              "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/green-browser/t01/20-dev-component-compiler-commands.json"
+            },
+            {
+              "name": "dev-component-compiler-lifecycle.json",
+              "contentType": "application/json",
+              "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/green-browser/t01/21-dev-component-compiler-lifecycle.json"
+            },
+            {
+              "name": "dev-component-cli.log",
+              "contentType": "text/plain",
+              "sha256": "39309a40a879c606d1a01aebde6ce55824cc1d778228ce0d20f33f133acc491d",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/green-browser/t01/22-dev-component-cli.log"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": []
+}

@@ -1,0 +1,13 @@
+{
+  "name": "syntax-tests",
+  "command": [
+    "mbx",
+    "test",
+    "--locked",
+    "-p",
+    "rustify-docs-syntax"
+  ],
+  "exit": 0,
+  "seconds": 1.18,
+  "head": "97c9946c6a325bed676a92dbd7bcea038db4ea69"
+}

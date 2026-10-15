@@ -1,0 +1,217 @@
+[
+  {
+    "name": "fmt",
+    "command": [
+      "cargo",
+      "fmt",
+      "--all",
+      "--",
+      "--check"
+    ],
+    "exit": 0,
+    "seconds": 1.57,
+    "head": "97c9946c6a325bed676a92dbd7bcea038db4ea69"
+  },
+  {
+    "name": "docs-tests",
+    "command": [
+      "mbx",
+      "test",
+      "--locked",
+      "-p",
+      "rustify-docs"
+    ],
+    "exit": 0,
+    "seconds": 51.63,
+    "head": "97c9946c6a325bed676a92dbd7bcea038db4ea69"
+  },
+  {
+    "name": "cli-tests",
+    "command": [
+      "mbx",
+      "test",
+      "--locked",
+      "-p",
+      "rustify-docs-cli"
+    ],
+    "exit": 0,
+    "seconds": 677.49,
+    "head": "97c9946c6a325bed676a92dbd7bcea038db4ea69"
+  },
+  {
+    "name": "syntax-tests",
+    "command": [
+      "mbx",
+      "test",
+      "--locked",
+      "-p",
+      "rustify-docs-syntax"
+    ],
+    "exit": 0,
+    "seconds": 1.18,
+    "head": "97c9946c6a325bed676a92dbd7bcea038db4ea69"
+  },
+  {
+    "name": "ssr-tests",
+    "command": [
+      "mbx",
+      "test",
+      "--locked",
+      "-p",
+      "rustify-docs",
+      "--no-default-features",
+      "--features",
+      "site-ssr"
+    ],
+    "exit": 0,
+    "seconds": 3.85,
+    "head": "97c9946c6a325bed676a92dbd7bcea038db4ea69"
+  },
+  {
+    "name": "ssr-clippy",
+    "command": [
+      "mbx",
+      "clippy",
+      "--locked",
+      "-p",
+      "rustify-docs",
+      "--no-default-features",
+      "--features",
+      "site-ssr",
+      "--all-targets",
+      "--",
+      "-D",
+      "warnings"
+    ],
+    "exit": 0,
+    "seconds": 0.35,
+    "head": "97c9946c6a325bed676a92dbd7bcea038db4ea69"
+  },
+  {
+    "name": "hydrate-check",
+    "command": [
+      "mbx",
+      "check",
+      "--locked",
+      "-p",
+      "rustify-docs",
+      "--no-default-features",
+      "--features",
+      "hydrate",
+      "--target",
+      "wasm32-unknown-unknown"
+    ],
+    "exit": 0,
+    "seconds": 0.34,
+    "head": "97c9946c6a325bed676a92dbd7bcea038db4ea69"
+  },
+  {
+    "name": "ssr-features",
+    "command": [
+      "mbx",
+      "tree",
+      "--locked",
+      "-p",
+      "rustify-docs",
+      "--no-default-features",
+      "--features",
+      "site-ssr",
+      "--prefix",
+      "none",
+      "--format",
+      "{p} [{f}]"
+    ],
+    "exit": 0,
+    "seconds": 0.16,
+    "head": "97c9946c6a325bed676a92dbd7bcea038db4ea69"
+  },
+  {
+    "name": "hydrate-features",
+    "command": [
+      "mbx",
+      "tree",
+      "--locked",
+      "-p",
+      "rustify-docs",
+      "--no-default-features",
+      "--features",
+      "hydrate",
+      "--target",
+      "wasm32-unknown-unknown",
+      "--prefix",
+      "none",
+      "--format",
+      "{p} [{f}]"
+    ],
+    "exit": 0,
+    "seconds": 0.16,
+    "head": "97c9946c6a325bed676a92dbd7bcea038db4ea69"
+  },
+  {
+    "name": "docs-clippy",
+    "command": [
+      "mbx",
+      "clippy",
+      "--locked",
+      "-p",
+      "rustify-docs",
+      "--all-targets",
+      "--",
+      "-D",
+      "warnings"
+    ],
+    "exit": 0,
+    "seconds": 3.81,
+    "head": "97c9946c6a325bed676a92dbd7bcea038db4ea69"
+  },
+  {
+    "name": "cli-clippy",
+    "command": [
+      "mbx",
+      "clippy",
+      "--locked",
+      "-p",
+      "rustify-docs-cli",
+      "--all-targets",
+      "--",
+      "-D",
+      "warnings"
+    ],
+    "exit": 0,
+    "seconds": 1.73,
+    "head": "97c9946c6a325bed676a92dbd7bcea038db4ea69"
+  },
+  {
+    "name": "cli-build",
+    "command": [
+      "mbx",
+      "build",
+      "--locked",
+      "-p",
+      "rustify-docs-cli",
+      "--profile",
+      "docs-cli"
+    ],
+    "exit": 0,
+    "seconds": 0.39,
+    "head": "97c9946c6a325bed676a92dbd7bcea038db4ea69"
+  },
+  {
+    "name": "m1-browser",
+    "command": [
+      "npx",
+      "--no-install",
+      "playwright",
+      "test",
+      "-c",
+      "playwright.docs.config.ts",
+      "--project=docs-dev",
+      "--workers=1",
+      "--reporter=json",
+      "--output=docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser-artifacts"
+    ],
+    "exit": 0,
+    "seconds": 406.88,
+    "head": "97c9946c6a325bed676a92dbd7bcea038db4ea69"
+  }
+]

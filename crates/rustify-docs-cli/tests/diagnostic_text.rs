@@ -4,7 +4,7 @@ mod support;
 
 use rustify_docs::embed::{self, Field, Owner};
 use serde_json::Value;
-use support::{run_in, stdout, Temp};
+use support::{run_in, stderr, stdout, succeeded, tree, Temp};
 
 #[test]
 fn both_writers_match_the_handwritten_verbatim_table() {
@@ -123,6 +123,64 @@ fn check_and_build_encode_plain_paths_prefixed_anchors_yaml_keys_and_empty_langu
         .unwrap();
     assert_eq!(language["message"], "``  `` is not a language tag");
     assert_eq!(language["suggestion"], "use a tag like `en` or `zh-CN`");
+}
+
+#[test]
+fn frontmatter_language_keeps_author_text_that_looks_like_a_yaml_location() {
+    let temp = Temp::new("diagnostic-frontmatter-language");
+    temp.write(
+        "rustify-docs.toml",
+        "schema_version=1\n[site]\nname='D'\nurl='https://example.com/'\n",
+    );
+    let good = "---\ndescription: Home\n---\n# Home\n";
+    temp.write("content/index.md", good);
+    succeeded(&run_in(&temp.0, &["build"]));
+    let dist = tree(&temp.path("dist"));
+    assert!(!dist.is_empty());
+    for (value, message) in [
+        (
+            "a` at line `b",
+            "lang: `` a` at line `b `` is not a language tag",
+        ),
+        ("a at line b", "lang: `a at line b` is not a language tag"),
+        (
+            "a at line 2 column 7",
+            "lang: `a at line 2 column 7` is not a language tag",
+        ),
+        ("a`b", "lang: `` a`b `` is not a language tag"),
+    ] {
+        temp.write(
+            "content/index.md",
+            &format!("---\ndescription: Home\nlang: \"{value}\"\n---\n# Home\n"),
+        );
+        let checked = run_in(&temp.0, &["check", "--format", "json"]);
+        assert_eq!(checked.status.code(), Some(1));
+        let checked: Value = serde_json::from_slice(&checked.stdout).unwrap();
+        let language = checked["diagnostics"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|d| d["rule"] == "lang")
+            .unwrap();
+        assert_eq!(language["message"], message);
+        assert_eq!(language["file"], "content/index.md");
+        assert_eq!(
+            (&language["line"], &language["column"]),
+            (&Value::from(3), &Value::from(7))
+        );
+        let built = run_in(&temp.0, &["build", "--format", "json"]);
+        assert_eq!(built.status.code(), Some(1));
+        let built: Value = serde_json::from_slice(&built.stdout).unwrap();
+        assert_eq!(built["diagnostics"], checked["diagnostics"]);
+        let text = run_in(&temp.0, &["check"]);
+        assert_eq!(text.status.code(), Some(1));
+        assert!(stderr(&text).contains(message));
+        assert!(stderr(&text).contains("content/index.md:3:7"));
+        assert_eq!(tree(&temp.path("dist")), dist);
+    }
+    temp.write("content/index.md", good);
+    succeeded(&run_in(&temp.0, &["check"]));
+    assert_eq!(tree(&temp.path("dist")), dist);
 }
 
 #[test]

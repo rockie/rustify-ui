@@ -189,17 +189,14 @@ pub(crate) fn language_issue(text: &str) -> Option<Issue> {
         .nth(location.column() - 1)
         .map_or(0, |(at, _)| at);
     let at = split.yaml.start + line_start + column;
+    let message = error.to_string();
+    // Only remove YAML's actual location suffix; the author value may
+    // itself contain " at line ".
+    let suffix = format!(" at line {} column {}", location.line(), location.column());
+    let message = message.strip_suffix(&suffix).unwrap_or(&message);
     Some(
-        Issue::error(
-            at..at,
-            "lang",
-            error
-                .to_string()
-                .split(" at line ")
-                .next()
-                .unwrap_or_default(),
-        )
-        .suggest("use a language tag such as `en`, `zh-CN` or `fr`"),
+        Issue::error(at..at, "lang", message)
+            .suggest("use a language tag such as `en`, `zh-CN` or `fr`"),
     )
 }
 

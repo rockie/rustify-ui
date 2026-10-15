@@ -1,0 +1,17 @@
+{
+  "name": "docs-clippy",
+  "command": [
+    "mbx",
+    "clippy",
+    "--locked",
+    "-p",
+    "rustify-docs",
+    "--all-targets",
+    "--",
+    "-D",
+    "warnings"
+  ],
+  "exit": 0,
+  "seconds": 3.81,
+  "head": "97c9946c6a325bed676a92dbd7bcea038db4ea69"
+}

@@ -1047,6 +1047,54 @@ test('gaps-2 code spans: plain author paths, prefixed anchors, YAML keys and emp
     expect(server.streamErrors).toEqual([]);
 });
 
+test('gaps-2 code spans: frontmatter language preserves author text resembling a YAML location', async ({ page }) => {
+    const plain = path.join(site.dir, 'plain');
+    mkdirSync(path.join(plain, 'content'), { recursive: true });
+    const good = '---\ndescription: Home\n---\n# Home\n';
+    writeFileSync(path.join(plain, 'rustify-docs.toml'), "schema_version=1\n[site]\nname='Plain'\nurl='https://example.com/'\n");
+    writeFileSync(path.join(plain, 'content/index.md'), good);
+    server = await Dev.start(site, plain);
+    await page.goto(server.url);
+    let state = await settled();
+    const first = state;
+    const lastGood = await (await page.request.get(server.url)).body();
+    await page.evaluate(() => window.__dev_component_document = 'last good language page');
+    for (const [label, value, encoded] of [
+        ['ticks', 'a` at line `b', '`` a` at line `b ``'],
+        ['plain', 'a at line b', '`a at line b`'],
+    ]) {
+        writeFileSync(path.join(plain, 'content/index.md'), `---\ndescription: Home\nlang: "${value}"\n---\n# Home\n`);
+        state = await settled(state.revision, false);
+        const diagnostic = state.diagnostics.find(d => d.rule === 'lang')!;
+        expect(diagnostic).toMatchObject({ file: 'content/index.md', line: 3, column: 7, message: `lang: ${encoded} is not a language tag` });
+        await exactProse(page, state, 'lang', { message: `lang: ${value} is not a language tag`, messageCodes: [value], suggestion: 'use a language tag such as en, zh-CN or fr', suggestionCodes: ['en', 'zh-CN', 'fr'] });
+        expect(state.good).toBe(first.good);
+        expect(await (await page.request.get(server.url)).body()).toEqual(lastGood);
+        expect(await page.evaluate(() => window.__dev_component_document)).toBe('last good language page');
+        await expect.poll(() => server!.log).toContain(diagnostic.message);
+        await expect.poll(() => server!.log).toContain('content/index.md:3:7');
+        await proseLayouts(page, `gaps2-frontmatter-${label}`);
+        const hide = page.getByRole('button', { name: 'Hide problems' });
+        const marker = page.locator('.rd-dev-marker');
+        await hide.click();
+        await expect(marker).toBeFocused();
+        await page.keyboard.press('Enter');
+        await expect(hide).toBeFocused();
+        await page.keyboard.press('Escape');
+        await expect(marker).toBeFocused();
+        await marker.click();
+    }
+    writeFileSync(path.join(plain, 'content/index.md'), good);
+    state = await settled(state.revision);
+    await cleared(page, state);
+    expect(audit.csp).toEqual([]);
+    expect(audit.failures).toEqual([]);
+    expect(audit.responses.filter(response => response.status >= 400)).toEqual([]);
+    expect(audit.console).toEqual([]);
+    expect(audit.pageErrors).toEqual([]);
+    expect(server.streamErrors).toEqual([]);
+});
+
 test('gaps-2 code spans: defaults with literal backticks survive unknown props, type errors and external unmatched ticks', async ({ page }) => {
     test.setTimeout(900_000);
     site.edit('src/lib.rs', 'label: String = "Counter".to_string()', 'label: String = "a`b".to_string()');

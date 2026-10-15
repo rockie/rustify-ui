@@ -1,0 +1,1638 @@
+{
+  "stats": {
+    "startTime": "2026-10-15T07:11:23.259Z",
+    "duration": 406054.56799999997,
+    "expected": 32,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "tests": [
+    {
+      "title": "the address and first building shell precede the actual compilation, then content saves reuse its pair",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 34469,
+          "errors": [],
+          "attachments": [
+            {
+              "name": "first-building-desktop-light.png",
+              "contentType": "image/png",
+              "sha256": "eb6a1a8abfc6c7aa04daaf3efb25d638880ac75cc3dd317047a3830fac513082"
+            },
+            {
+              "name": "first-building-desktop-dark.png",
+              "contentType": "image/png",
+              "sha256": "90e32d38cab7a010c80d491956aa24b8300c557383f176e7ce44147c26814553"
+            },
+            {
+              "name": "first-building-narrow-light.png",
+              "contentType": "image/png",
+              "sha256": "eadace0cc1642c94b0078517fd01c784fbfec16b37a16f21c0768f04487896df"
+            },
+            {
+              "name": "dev-component-browser-audit.json",
+              "contentType": "application/json",
+              "sha256": "ce160f2a8c709e8ce3adbe9a9a2786a26e57879959db07e026df5e43938d6b45",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t01/03-dev-component-browser-audit.json"
+            },
+            {
+              "name": "dev-component-states.json",
+              "contentType": "application/json",
+              "sha256": "29ed014f68ca14a9c87df8a1d084f71515f550eeeea675e83bc4488f502b56ab"
+            },
+            {
+              "name": "dev-component-compiler-commands.json",
+              "contentType": "application/json",
+              "sha256": "dcef39c471a00331fba678379d570338c57684bd41b353d492267a2afa067829"
+            },
+            {
+              "name": "dev-component-compiler-lifecycle.json",
+              "contentType": "application/json",
+              "sha256": "c5c70fda97d0911289c516dada0ed66420cd9b321b20c7c72f090919f7ff40ca"
+            },
+            {
+              "name": "dev-component-cli.log",
+              "contentType": "text/plain",
+              "sha256": "9e1416ff8513aa10a3c8dde9571db52b5e2cae9f9021aa088dbf1d3bd5a74380"
+            },
+            {
+              "name": "dev-component-compile-history.json",
+              "contentType": "application/json",
+              "sha256": "7e3bebaf6236d11165b434266eafc53b79ce71ebfa982cbcb863f9fd9c192adf"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Rust saves keep the original interactive document until a complete new pair, and diagnostics recover at its scroll position",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 89658,
+          "errors": [],
+          "attachments": [
+            {
+              "name": "rust-building-desktop-light.png",
+              "contentType": "image/png",
+              "sha256": "f980d1f431151317ed615dafa6f4b308c3d55a6ecd35e9dc8814d2cf9426925e"
+            },
+            {
+              "name": "rust-building-desktop-dark.png",
+              "contentType": "image/png",
+              "sha256": "20349aad0ebe7f7bf85e70fdc58a5d32b4cfcd93dd1560efba3b4a6372591931"
+            },
+            {
+              "name": "rust-building-narrow-light.png",
+              "contentType": "image/png",
+              "sha256": "62d082804ef88824501c194e87b9898a00d733f2f913980b4e193d0e3a9ad0ac"
+            },
+            {
+              "name": "rust-error-desktop-light.png",
+              "contentType": "image/png",
+              "sha256": "5fdfb0c1c781403bec29cf1f148316076eea56dd613aa723e033c54f5f6c0e78"
+            },
+            {
+              "name": "rust-error-desktop-dark.png",
+              "contentType": "image/png",
+              "sha256": "f01909ddd067dffd57e27c11aa286ff625ee67bd6fa29579755771fbce4e431a"
+            },
+            {
+              "name": "rust-error-narrow-light.png",
+              "contentType": "image/png",
+              "sha256": "99a770b6cbce51d9967346d9e4cf6a76b595183505491af7bc1a0dac7dcd4c63"
+            },
+            {
+              "name": "dev-component-browser-audit.json",
+              "contentType": "application/json",
+              "sha256": "a6d14e5d897ad5ea01b928dd1c2a5576ec23907ee0f0eabf3b4baf4ef0cde9ea",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t02/06-dev-component-browser-audit.json"
+            },
+            {
+              "name": "dev-component-states.json",
+              "contentType": "application/json",
+              "sha256": "cc446c89284f0b3d273f236c5259f1c478dfc7dbacb854a0f501db0fb2a2535f"
+            },
+            {
+              "name": "dev-component-compiler-commands.json",
+              "contentType": "application/json",
+              "sha256": "f3b530782e9393d712e61b879b3ac62fe798857eed0bd1187a1413df2e5498cb"
+            },
+            {
+              "name": "dev-component-compiler-lifecycle.json",
+              "contentType": "application/json",
+              "sha256": "a7039748396abe8c16ddf990d43815c16ebfd0499ef521e0e0c17c07f4ed948e"
+            },
+            {
+              "name": "dev-component-cli.log",
+              "contentType": "text/plain",
+              "sha256": "b91c4cc95e3c37cc587fc222af32a98740a3d48c5da241f503e2ccdd61578f61"
+            },
+            {
+              "name": "dev-component-compile-history.json",
+              "contentType": "application/json",
+              "sha256": "9d819c656f0b5143da9c460c44cb742080195e8dab4af41898d5f08e73949dee"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "hydrate-only dependency manifests invalidate wasm and behavior without compiling Markdown",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 43359,
+          "errors": [],
+          "attachments": [
+            {
+              "name": "dev-hydrate-only-initial.png",
+              "contentType": "image/png",
+              "sha256": "8d252209e806820409a7c26e5e8e4677d6b6fef20cc87bdca9f2dc083f80e799"
+            },
+            {
+              "name": "dev-hydrate-only-alternate.png",
+              "contentType": "image/png",
+              "sha256": "5a1d79614661ddcf851e9fae8399a3599f76af90f6bc8aa0ac6a38ab19dc310b"
+            },
+            {
+              "name": "dev-component-browser-audit.json",
+              "contentType": "application/json",
+              "sha256": "1176e9ba7cd43ab6e4d60d220cea9cf7707e4c4d53bb2311d09098a2f7694eec",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t03/02-dev-component-browser-audit.json"
+            },
+            {
+              "name": "dev-component-states.json",
+              "contentType": "application/json",
+              "sha256": "c551a12ddf91c23508a1f5fefc075d3f2c6c83ec467f89a9cc8592cb36f318e5"
+            },
+            {
+              "name": "dev-component-compiler-commands.json",
+              "contentType": "application/json",
+              "sha256": "1a56b03c98adfd259318cda7a4c15ea53cfacfae026357b870aac69b49aa9ae1"
+            },
+            {
+              "name": "dev-component-compiler-lifecycle.json",
+              "contentType": "application/json",
+              "sha256": "1cc1472ce8b0828811fd7438c713ba4189677ecd1660df137eb547a6d6199d7e"
+            },
+            {
+              "name": "dev-component-cli.log",
+              "contentType": "text/plain",
+              "sha256": "f49335a7aa4f01ee1c551a17746d862361c92f6bc840e5440b7511a0f6d38b8e"
+            },
+            {
+              "name": "dev-component-dependencies.json",
+              "contentType": "application/json",
+              "sha256": "1cdce678ebb3114296e1452b69fd74a742201d734c9ea20abc439155168fc77d"
+            },
+            {
+              "name": "dev-component-site-Cargo.toml",
+              "contentType": "text/plain",
+              "sha256": "5173c7d98c1c6b910f2e36abad04571981d5ca00fb03bfbcdeb5c6413382586f"
+            },
+            {
+              "name": "dev-component-lock-before-dev",
+              "contentType": "text/plain",
+              "sha256": "97857dcf5e15cee57415b72d1eea7938d5b875b83fa76b12d4842095f7725708"
+            },
+            {
+              "name": "dev-component-lock-after-dev",
+              "contentType": "text/plain",
+              "sha256": "97857dcf5e15cee57415b72d1eea7938d5b875b83fa76b12d4842095f7725708"
+            },
+            {
+              "name": "dev-component-compile-history.json",
+              "contentType": "application/json",
+              "sha256": "8a30a4aa787d2e8c8656bf974cec5f96ae8b3f81b4192e5a30eed61623690cc4"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "renamed same-name build inputs track each dependency save, deletion and recovery",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 149817,
+          "errors": [],
+          "attachments": [
+            {
+              "name": "dev-renamed-payload-v1-deleted.png",
+              "contentType": "image/png",
+              "sha256": "09e8d40a3496a4548538457cfc605b74de20513d223005d3c966f3e7d345edba"
+            },
+            {
+              "name": "dev-renamed-payload-v1-restored.png",
+              "contentType": "image/png",
+              "sha256": "d23416ff8c11470fbc5ceb8a7c97326932f783b2e35b5c884009c13bd6081614"
+            },
+            {
+              "name": "dev-renamed-payload-v2-deleted.png",
+              "contentType": "image/png",
+              "sha256": "d389b991fedb25cb4791b31a595f39522e0fc82843cebe72c1f60b156f71641a"
+            },
+            {
+              "name": "dev-renamed-payload-v2-restored.png",
+              "contentType": "image/png",
+              "sha256": "f1b701c1937a04a2e1a45474ff1ccde413789b4e3094b9f9ee16e92dd9a25ff3"
+            },
+            {
+              "name": "dev-component-browser-audit.json",
+              "contentType": "application/json",
+              "sha256": "fb05715e9c8289f8f7eec576c42afdba78bd5d86b4a42e5fa4672cb87006b99a",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t04/04-dev-component-browser-audit.json"
+            },
+            {
+              "name": "dev-component-states.json",
+              "contentType": "application/json",
+              "sha256": "cf8790dd01c104a0ff5bbbfb93bac9233e765f6a79c97f7b85c56df8ac515053"
+            },
+            {
+              "name": "dev-component-compiler-commands.json",
+              "contentType": "application/json",
+              "sha256": "d8d7af527053b9375b32197c12832227867b8b47b4c2694fd601f817d7829cab"
+            },
+            {
+              "name": "dev-component-compiler-lifecycle.json",
+              "contentType": "application/json",
+              "sha256": "0c31c473e7525404bad78c526e1c7ce4467266600db0e529fc1368cc6dcbf1f0"
+            },
+            {
+              "name": "dev-component-cli.log",
+              "contentType": "text/plain",
+              "sha256": "1b03d69706a2b0f1c0465f1b6d5120e6ddea1f75dda64be934d511f3510ea971"
+            },
+            {
+              "name": "dev-component-dependencies.json",
+              "contentType": "application/json",
+              "sha256": "dd100707b4ab9f718946651f35603d87dfa1e87f9449ad9d2d73c145b9cf604f"
+            },
+            {
+              "name": "dev-component-site-Cargo.toml",
+              "contentType": "text/plain",
+              "sha256": "495cf5dcbf293f1ce0e4a970276029d934836c9e163af1e2506027511c1600b5"
+            },
+            {
+              "name": "dev-component-lock-before-dev",
+              "contentType": "text/plain",
+              "sha256": "3193c3f401f75724e30e1f9d8f5e7afe2ab4862f6fcc0e7b3368c58005d098f2"
+            },
+            {
+              "name": "dev-component-lock-after-dev",
+              "contentType": "text/plain",
+              "sha256": "3193c3f401f75724e30e1f9d8f5e7afe2ab4862f6fcc0e7b3368c58005d098f2"
+            },
+            {
+              "name": "dev-component-compile-history.json",
+              "contentType": "application/json",
+              "sha256": "b6e4974bc9e0e4bed445be2f2bc1c0b88ac28059539ac73b9f5698170988fb6c"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "gaps embedded diagnostics: registered names, props and demos show the CLI repair over the last good page and clear after the fix",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 33665,
+          "errors": [],
+          "attachments": [
+            {
+              "name": "gaps-registered-375-light.png",
+              "contentType": "image/png",
+              "sha256": "5f0ef4f8661c3289d7ff162577696c61525023f9d9a412895d0b3b072f49b8ee",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t05/00-gaps-registered-375-light.png"
+            },
+            {
+              "name": "gaps-registered-375-dark.png",
+              "contentType": "image/png",
+              "sha256": "fdc9f5f5c99ad51cb0509e9451cff9a8d170ce8a29fa80953adc5dc519ad493a",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t05/01-gaps-registered-375-dark.png"
+            },
+            {
+              "name": "gaps-registered-320-light.png",
+              "contentType": "image/png",
+              "sha256": "268e871737394eccad141739c998600a84c6bb45d6cd51940237cbbc57b813ff",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t05/02-gaps-registered-320-light.png"
+            },
+            {
+              "name": "gaps-registered-320-dark.png",
+              "contentType": "image/png",
+              "sha256": "c0257722977ad7a64fa38b40b8791f8e87a5e1b61fa3189687fe56f49dca6ddd",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t05/03-gaps-registered-320-dark.png"
+            },
+            {
+              "name": "dev-component-browser-audit.json",
+              "contentType": "application/json",
+              "sha256": "ba089947dc78bb1a06c1c4cf5b716898c6a6ae03785f56523cb831b63cd398a3",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t05/04-dev-component-browser-audit.json"
+            },
+            {
+              "name": "dev-component-states.json",
+              "contentType": "application/json",
+              "sha256": "77561558589229e5cca4cdd01dacae520b1e683f143fee248329b456f61e998c",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t05/05-dev-component-states.json"
+            },
+            {
+              "name": "dev-component-compiler-commands.json",
+              "contentType": "application/json",
+              "sha256": "5f1e3e064140c46d3009ac7b72883f1f1694ce6648eaa01187f311c41d38bb03",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t05/06-dev-component-compiler-commands.json"
+            },
+            {
+              "name": "dev-component-compiler-lifecycle.json",
+              "contentType": "application/json",
+              "sha256": "ba5ba0720b3d1bf56ddb56b4c16bd96c27eec66b21c79c2f8eaaa412915208d0",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t05/07-dev-component-compiler-lifecycle.json"
+            },
+            {
+              "name": "dev-component-cli.log",
+              "contentType": "text/plain",
+              "sha256": "ad5f5c035baf917b4fea77c6e96a95b9b2487e6338d291bf9ce889d4c2a2db5c",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t05/08-dev-component-cli.log"
+            },
+            {
+              "name": "dev-component-compile-history.json",
+              "contentType": "application/json",
+              "sha256": "bd99513da5b88fef3db05dbe9f4cf6846b3a30dcf6f8b8dcdb0dfded6f095623",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t05/09-dev-component-compile-history.json"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "gaps embedded diagnostics: without Rust the panel names the builtins and the empty demo registration and wraps the reference",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 816,
+          "errors": [],
+          "attachments": [
+            {
+              "name": "gaps-builtins-375-light.png",
+              "contentType": "image/png",
+              "sha256": "9ac765e519f69d406304d2669e49b8f2ca1e9b3a582e7add3306d063ee719d6b",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t06/00-gaps-builtins-375-light.png"
+            },
+            {
+              "name": "gaps-builtins-375-dark.png",
+              "contentType": "image/png",
+              "sha256": "e2cb8bd33d8cd616122294a28fb0fc21c7546065334b2b23ea1fc78279cf1f1b",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t06/01-gaps-builtins-375-dark.png"
+            },
+            {
+              "name": "gaps-builtins-320-light.png",
+              "contentType": "image/png",
+              "sha256": "b7010c31ee35cbdf2e4dbfc039ae4b8e4752cdfff1b881706178fd75811e09b1",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t06/02-gaps-builtins-320-light.png"
+            },
+            {
+              "name": "gaps-builtins-320-dark.png",
+              "contentType": "image/png",
+              "sha256": "664af13c1a5f3760e8aaad2c841849dd6fd90ba0e26fe1218e142a0ab4043d01",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t06/03-gaps-builtins-320-dark.png"
+            },
+            {
+              "name": "dev-component-browser-audit.json",
+              "contentType": "application/json",
+              "sha256": "04024c8e7fd87069ed314063f8926bb54553b00970a5c962d806cbc718f05069",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t06/04-dev-component-browser-audit.json"
+            },
+            {
+              "name": "dev-component-states.json",
+              "contentType": "application/json",
+              "sha256": "7964726848614c8337a80feac14ffc40c743280bdfb9f84a19d0350e10bbece6",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t06/05-dev-component-states.json"
+            },
+            {
+              "name": "dev-component-compiler-commands.json",
+              "contentType": "application/json",
+              "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t06/06-dev-component-compiler-commands.json"
+            },
+            {
+              "name": "dev-component-compiler-lifecycle.json",
+              "contentType": "application/json",
+              "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t06/07-dev-component-compiler-lifecycle.json"
+            },
+            {
+              "name": "dev-component-cli.log",
+              "contentType": "text/plain",
+              "sha256": "28b569bd40c7118f16a5136f3589a24c459360a0eea7353000ef379c70179658",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t06/08-dev-component-cli.log"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "gaps-2 code spans: plain author paths, prefixed anchors, YAML keys and empty language remain exact",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1404,
+          "errors": [],
+          "attachments": [
+            {
+              "name": "broken-anchor-prose.json",
+              "contentType": "application/json",
+              "sha256": "efa805f3c94ad4ba32f4de4c14470442ab52650a9f478358e7ef0035ec692305",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t07/00-broken-anchor-prose.json"
+            },
+            {
+              "name": "gaps2-anchor-1280-light.json",
+              "contentType": "application/json",
+              "sha256": "dd6bd09dd1fc96a4b7dc7ecebb0d3baf0b91dcf44d00f9a85e32eafc5bebfae4",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t07/01-gaps2-anchor-1280-light.json"
+            },
+            {
+              "name": "gaps2-anchor-1280-light.png",
+              "contentType": "image/png",
+              "sha256": "3ec39abd5b8372aece398ff47c67b4c68c5721d08e21a3351c518439d8964377",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t07/02-gaps2-anchor-1280-light.png"
+            },
+            {
+              "name": "gaps2-anchor-1280-dark.json",
+              "contentType": "application/json",
+              "sha256": "3486cc66e2b2cb9ba2b0425e25e2a0faeda1d3bd83e5f505a3689b802d58b154",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t07/03-gaps2-anchor-1280-dark.json"
+            },
+            {
+              "name": "gaps2-anchor-1280-dark.png",
+              "contentType": "image/png",
+              "sha256": "fccd5c407ea3529029164b6362affd49f8bd847fc38a260ea74f66d10682eb98",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t07/04-gaps2-anchor-1280-dark.png"
+            },
+            {
+              "name": "gaps2-anchor-375-light.json",
+              "contentType": "application/json",
+              "sha256": "67d0a71af8f6e0c660218dc31b1b6e350441c2ac25cf8347ef6dc9b8e34d927f",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t07/05-gaps2-anchor-375-light.json"
+            },
+            {
+              "name": "gaps2-anchor-375-light.png",
+              "contentType": "image/png",
+              "sha256": "d79cbe5eeddae30a5a78d0440fae2809b42c24358734d8739e7f97f1ae1a39db",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t07/06-gaps2-anchor-375-light.png"
+            },
+            {
+              "name": "gaps2-anchor-375-dark.json",
+              "contentType": "application/json",
+              "sha256": "97a6e4e6e334bf8a1e190f213e9d2190323414ec106a460f43065706236aa1d1",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t07/07-gaps2-anchor-375-dark.json"
+            },
+            {
+              "name": "gaps2-anchor-375-dark.png",
+              "contentType": "image/png",
+              "sha256": "a53afa14b6b7946f8736805e220464214ea8760a1bc927d424222f7cd417227e",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t07/08-gaps2-anchor-375-dark.png"
+            },
+            {
+              "name": "embed-payload-prose.json",
+              "contentType": "application/json",
+              "sha256": "d0da36ebd790ed48a055c745a71500e9fb3557d9894187379f487647b9ec160e",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t07/09-embed-payload-prose.json"
+            },
+            {
+              "name": "gaps2-yaml-1280-light.json",
+              "contentType": "application/json",
+              "sha256": "37fbebe0323fa6c10cae4ee1623dcfcece0770fa50aaa689be8ecabd6c8c9727",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t07/10-gaps2-yaml-1280-light.json"
+            },
+            {
+              "name": "gaps2-yaml-1280-light.png",
+              "contentType": "image/png",
+              "sha256": "a85e5b4e51b55377aabc479efd691db83575fc33c0e64858d20cbcc3208224e8",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t07/11-gaps2-yaml-1280-light.png"
+            },
+            {
+              "name": "gaps2-yaml-1280-dark.json",
+              "contentType": "application/json",
+              "sha256": "da0ca4e79ba37fcbf93c631af867e4c1cc742149c194c5189d118266ccb15e01",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t07/12-gaps2-yaml-1280-dark.json"
+            },
+            {
+              "name": "gaps2-yaml-1280-dark.png",
+              "contentType": "image/png",
+              "sha256": "cf896a2fbbbf13bbcfe4d285a18adf638e1be628c2e13eb9864df4c5fbff18f8",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t07/13-gaps2-yaml-1280-dark.png"
+            },
+            {
+              "name": "gaps2-yaml-375-light.json",
+              "contentType": "application/json",
+              "sha256": "fcdc824282a6aa4f60c714dcb6caab824e61efba827eb3202ea841436c6663f3",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t07/14-gaps2-yaml-375-light.json"
+            },
+            {
+              "name": "gaps2-yaml-375-light.png",
+              "contentType": "image/png",
+              "sha256": "9167c5c6222546f9162c576b312f6257513a428d4d434c88e4ec0e41ef36eb75",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t07/15-gaps2-yaml-375-light.png"
+            },
+            {
+              "name": "gaps2-yaml-375-dark.json",
+              "contentType": "application/json",
+              "sha256": "26c2b17177219f055e0174de24fcb2c270b2b0b08eda9ebca1d2fb9e14de88fa",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t07/16-gaps2-yaml-375-dark.json"
+            },
+            {
+              "name": "gaps2-yaml-375-dark.png",
+              "contentType": "image/png",
+              "sha256": "17a94312d1a1b8897a58edbf2e748348f8057f08399d5815482bf4bd22efb1b3",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t07/17-gaps2-yaml-375-dark.png"
+            },
+            {
+              "name": "config-lang-prose.json",
+              "contentType": "application/json",
+              "sha256": "e340952751ae2e13d51e0ad4a7bb016d7bb3919d2ac6763456e56c6ed6c5b3b3",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t07/18-config-lang-prose.json"
+            },
+            {
+              "name": "gaps2-empty-1280-light.json",
+              "contentType": "application/json",
+              "sha256": "212939cc27678f806b134d657273728ea50d501c4aaf2c68c770ac1cceeb21b9",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t07/19-gaps2-empty-1280-light.json"
+            },
+            {
+              "name": "gaps2-empty-1280-light.png",
+              "contentType": "image/png",
+              "sha256": "16b275d0b0eb4987eb32a4236eb355702635380ac8117d63247b80cf2bdcb011",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t07/20-gaps2-empty-1280-light.png"
+            },
+            {
+              "name": "gaps2-empty-1280-dark.json",
+              "contentType": "application/json",
+              "sha256": "aa11263cf8eb3ae5b835045ee3581f26a343215a4f2fe9ecff77760b921621a9",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t07/21-gaps2-empty-1280-dark.json"
+            },
+            {
+              "name": "gaps2-empty-1280-dark.png",
+              "contentType": "image/png",
+              "sha256": "a46e4c312df09d98058b463dc05fe208653096dd48f230590cd86cbdabe212f0",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t07/22-gaps2-empty-1280-dark.png"
+            },
+            {
+              "name": "gaps2-empty-375-light.json",
+              "contentType": "application/json",
+              "sha256": "492288a6e5c8a1c0172cd43659ce7b82f70e5c30b36a74e536624b332d5c24c8",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t07/23-gaps2-empty-375-light.json"
+            },
+            {
+              "name": "gaps2-empty-375-light.png",
+              "contentType": "image/png",
+              "sha256": "d3276549dffea54ea4fae997269a096e94b324b3374f9851f8299c7352cda6ac",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t07/24-gaps2-empty-375-light.png"
+            },
+            {
+              "name": "gaps2-empty-375-dark.json",
+              "contentType": "application/json",
+              "sha256": "41cd5ef8d942952d79b5da9943e681741f0316d0f4a4d157d647cbab5960013e",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t07/25-gaps2-empty-375-dark.json"
+            },
+            {
+              "name": "gaps2-empty-375-dark.png",
+              "contentType": "image/png",
+              "sha256": "fbc3d507326cd8b86cca9d459c5a11fc3aeadf8b9da06b06372fc51e509a2c42",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t07/26-gaps2-empty-375-dark.png"
+            },
+            {
+              "name": "dev-component-browser-audit.json",
+              "contentType": "application/json",
+              "sha256": "a7740ad37648a6d36140334e6a2e84fb45d57a822d9a83f7314fdcabd1af1208",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t07/27-dev-component-browser-audit.json"
+            },
+            {
+              "name": "dev-component-states.json",
+              "contentType": "application/json",
+              "sha256": "5072a78ea4a223d3c4316450f7a4076558f0edcff630274f7e33b79f4bd57608",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t07/28-dev-component-states.json"
+            },
+            {
+              "name": "dev-component-compiler-commands.json",
+              "contentType": "application/json",
+              "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t07/29-dev-component-compiler-commands.json"
+            },
+            {
+              "name": "dev-component-compiler-lifecycle.json",
+              "contentType": "application/json",
+              "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t07/30-dev-component-compiler-lifecycle.json"
+            },
+            {
+              "name": "dev-component-cli.log",
+              "contentType": "text/plain",
+              "sha256": "05c10c9ccffdf39535080504642be6a86f58a10b7d3307582e7506d70d9de7e6",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t07/31-dev-component-cli.log"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "gaps-2 code spans: frontmatter language preserves author text resembling a YAML location",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1133,
+          "errors": [],
+          "attachments": [
+            {
+              "name": "lang-prose.json",
+              "contentType": "application/json",
+              "sha256": "f738e8644522c365d8474a76fa1a1aee8414c8c77e6bef33158d74f541f45652",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t08/00-lang-prose.json"
+            },
+            {
+              "name": "gaps2-frontmatter-ticks-1280-light.json",
+              "contentType": "application/json",
+              "sha256": "efa2b4304a2d3d6135c79d7fe017affdea50413642b527c7529dd1bb3269d872",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t08/01-gaps2-frontmatter-ticks-1280-light.json"
+            },
+            {
+              "name": "gaps2-frontmatter-ticks-1280-light.png",
+              "contentType": "image/png",
+              "sha256": "f5dd8a50827f95370cb4bfc4fb4dce19fa992ed845f1d8ab9cc9a326b31b21f6",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t08/02-gaps2-frontmatter-ticks-1280-light.png"
+            },
+            {
+              "name": "gaps2-frontmatter-ticks-1280-dark.json",
+              "contentType": "application/json",
+              "sha256": "065509cd6b7c1883021de3da22ca041a5c9c0a18332610156a5b612288fff446",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t08/03-gaps2-frontmatter-ticks-1280-dark.json"
+            },
+            {
+              "name": "gaps2-frontmatter-ticks-1280-dark.png",
+              "contentType": "image/png",
+              "sha256": "c0b26f33c0987e28d075b79d33785654765719552ae11a99f82192a76e2fb8ba",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t08/04-gaps2-frontmatter-ticks-1280-dark.png"
+            },
+            {
+              "name": "gaps2-frontmatter-ticks-375-light.json",
+              "contentType": "application/json",
+              "sha256": "67b0e67403e7e8da6e1726b422081ba51eb7d3106e68c645dd10f1e0895bbd63",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t08/05-gaps2-frontmatter-ticks-375-light.json"
+            },
+            {
+              "name": "gaps2-frontmatter-ticks-375-light.png",
+              "contentType": "image/png",
+              "sha256": "01179baa71ee9ccdfd0696c19d0d1589d0cfe5cab50bf950eb136ec3b733bcbe",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t08/06-gaps2-frontmatter-ticks-375-light.png"
+            },
+            {
+              "name": "gaps2-frontmatter-ticks-375-dark.json",
+              "contentType": "application/json",
+              "sha256": "26cf97ffbcf8bf3ca0b130cb06ca45fd313ceb66876545c650bd5299b36d53af",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t08/07-gaps2-frontmatter-ticks-375-dark.json"
+            },
+            {
+              "name": "gaps2-frontmatter-ticks-375-dark.png",
+              "contentType": "image/png",
+              "sha256": "b77e17857452dfc5e835ea7d1872e3f16626ffe9ae828e8ee3fcba32c81336e4",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t08/08-gaps2-frontmatter-ticks-375-dark.png"
+            },
+            {
+              "name": "lang-prose.json",
+              "contentType": "application/json",
+              "sha256": "914fa42675fec14d187e96c6251e0e9c687ab080cfdb273d9b99e7bd5236da80",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t08/09-lang-prose.json"
+            },
+            {
+              "name": "gaps2-frontmatter-plain-1280-light.json",
+              "contentType": "application/json",
+              "sha256": "40d1a91a25b85e563d7df5b32a3773044574a715e80a1c7f786ef5ae83ad4b82",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t08/10-gaps2-frontmatter-plain-1280-light.json"
+            },
+            {
+              "name": "gaps2-frontmatter-plain-1280-light.png",
+              "contentType": "image/png",
+              "sha256": "e9615364ce7a8f2203cd6df4eeae06e7212a6bec5bf218d134af6076af182772",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t08/11-gaps2-frontmatter-plain-1280-light.png"
+            },
+            {
+              "name": "gaps2-frontmatter-plain-1280-dark.json",
+              "contentType": "application/json",
+              "sha256": "2a2a69c12e09e2329395aeb9112ea10d46c2424c8d4fe00468fe04b73256d025",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t08/12-gaps2-frontmatter-plain-1280-dark.json"
+            },
+            {
+              "name": "gaps2-frontmatter-plain-1280-dark.png",
+              "contentType": "image/png",
+              "sha256": "ac46942d4dd69bcf44ea628b8921d90db2915c781510ec1fede40ddfe600c581",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t08/13-gaps2-frontmatter-plain-1280-dark.png"
+            },
+            {
+              "name": "gaps2-frontmatter-plain-375-light.json",
+              "contentType": "application/json",
+              "sha256": "277bd26af03950c6a90bdfc150751f43c283a51670f085649c99a5a78f37d4bf",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t08/14-gaps2-frontmatter-plain-375-light.json"
+            },
+            {
+              "name": "gaps2-frontmatter-plain-375-light.png",
+              "contentType": "image/png",
+              "sha256": "66f248f9ba46282219a84a89af4622d9fac5f0ccffc22d2fd526bffcc32031fb",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t08/15-gaps2-frontmatter-plain-375-light.png"
+            },
+            {
+              "name": "gaps2-frontmatter-plain-375-dark.json",
+              "contentType": "application/json",
+              "sha256": "ed5243af28a49892079781cf179916d012e8999d494ae56ac79db3577e89a5e7",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t08/16-gaps2-frontmatter-plain-375-dark.json"
+            },
+            {
+              "name": "gaps2-frontmatter-plain-375-dark.png",
+              "contentType": "image/png",
+              "sha256": "286580277dbef5a8967eca68cad5d312a1fdb409070eb49b13dbbdbcd4c74b4c",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t08/17-gaps2-frontmatter-plain-375-dark.png"
+            },
+            {
+              "name": "dev-component-browser-audit.json",
+              "contentType": "application/json",
+              "sha256": "deffeb25b8cfa60b6da148b9a323e56122aa131c202f26c517e8fdae0d91626c",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t08/18-dev-component-browser-audit.json"
+            },
+            {
+              "name": "dev-component-states.json",
+              "contentType": "application/json",
+              "sha256": "647e8a90c552fcf332657fe40c809439d9880607e7d72ff9d0c1c62a2fe0433a",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t08/19-dev-component-states.json"
+            },
+            {
+              "name": "dev-component-compiler-commands.json",
+              "contentType": "application/json",
+              "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t08/20-dev-component-compiler-commands.json"
+            },
+            {
+              "name": "dev-component-compiler-lifecycle.json",
+              "contentType": "application/json",
+              "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t08/21-dev-component-compiler-lifecycle.json"
+            },
+            {
+              "name": "dev-component-cli.log",
+              "contentType": "text/plain",
+              "sha256": "43449d81846c53a2bbb5f3d16757f585fe9d254d27e653ffddec7d71df4e4b39",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t08/22-dev-component-cli.log"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "gaps-2 code spans: defaults with literal backticks survive unknown props, type errors and external unmatched ticks",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 34423,
+          "errors": [],
+          "attachments": [
+            {
+              "name": "unknown-property-prose.json",
+              "contentType": "application/json",
+              "sha256": "5180f1092e284fa1287bda500bca32c2bc91e3427b375a8299c6e0e6d35dce1d",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t09/00-unknown-property-prose.json"
+            },
+            {
+              "name": "gaps2-default-unknown-1280-light.json",
+              "contentType": "application/json",
+              "sha256": "7df7a2ea9a5f39accf7e665b8f72fc501f57644849c8dfa415da62c93a4bca29",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t09/01-gaps2-default-unknown-1280-light.json"
+            },
+            {
+              "name": "gaps2-default-unknown-1280-light.png",
+              "contentType": "image/png",
+              "sha256": "3b2d0f84bcc51e0e41ea08ce2c86007261861f4fc1761219aa2ac23aeaa4979a",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t09/02-gaps2-default-unknown-1280-light.png"
+            },
+            {
+              "name": "gaps2-default-unknown-1280-dark.json",
+              "contentType": "application/json",
+              "sha256": "e73ddcf1df6292f2b13013ed3f6fd8e55e07b3c150cd673bb5aec45e83541ec4",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t09/03-gaps2-default-unknown-1280-dark.json"
+            },
+            {
+              "name": "gaps2-default-unknown-1280-dark.png",
+              "contentType": "image/png",
+              "sha256": "b13a424dee6d1b62f2ec0c4e3e1736b0b20542273db93ee8e6cc27b9478905e8",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t09/04-gaps2-default-unknown-1280-dark.png"
+            },
+            {
+              "name": "gaps2-default-unknown-375-light.json",
+              "contentType": "application/json",
+              "sha256": "6e12f3de5b0478cc01389a02a494e92537594826379c0d22dd92189d397037d5",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t09/05-gaps2-default-unknown-375-light.json"
+            },
+            {
+              "name": "gaps2-default-unknown-375-light.png",
+              "contentType": "image/png",
+              "sha256": "b3b4ae28dabb2fb1dacdf5237a8e0f3c1451e7d3e9fe62323f9e1627f891e361",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t09/06-gaps2-default-unknown-375-light.png"
+            },
+            {
+              "name": "gaps2-default-unknown-375-dark.json",
+              "contentType": "application/json",
+              "sha256": "729609daa772cf9a93c2d471ea460acd423296535d14c7871263fd128686d224",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t09/07-gaps2-default-unknown-375-dark.json"
+            },
+            {
+              "name": "gaps2-default-unknown-375-dark.png",
+              "contentType": "image/png",
+              "sha256": "60201df78572a6bb0d4687d0b0b3356062065b41cd3d6e3c0b6b763c215291c0",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t09/08-gaps2-default-unknown-375-dark.png"
+            },
+            {
+              "name": "invalid_props-prose.json",
+              "contentType": "application/json",
+              "sha256": "80ed1221bc1fcf42e11f35f23e39daf364465d3608c3eefcd38dd0aa3add933a",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t09/09-invalid_props-prose.json"
+            },
+            {
+              "name": "gaps2-default-type-1280-light.json",
+              "contentType": "application/json",
+              "sha256": "fec36b92c4e64b60704918e177c9f835753addc8f3f59f4bc4042f1ae238eec3",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t09/10-gaps2-default-type-1280-light.json"
+            },
+            {
+              "name": "gaps2-default-type-1280-light.png",
+              "contentType": "image/png",
+              "sha256": "99e6413dc34468b0ba57615c1d9f51aa7a2e1aa49648f871584c0712cee8a9f6",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t09/11-gaps2-default-type-1280-light.png"
+            },
+            {
+              "name": "gaps2-default-type-1280-dark.json",
+              "contentType": "application/json",
+              "sha256": "34f61855a56ac585c9e44b2b06b48bd74fc9a55b4691998875efc4bfa184d804",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t09/12-gaps2-default-type-1280-dark.json"
+            },
+            {
+              "name": "gaps2-default-type-1280-dark.png",
+              "contentType": "image/png",
+              "sha256": "fd3de5ef9a1c6d2718147be3557a29424d9f3c94936bc89f8b86ba247a27d894",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t09/13-gaps2-default-type-1280-dark.png"
+            },
+            {
+              "name": "gaps2-default-type-375-light.json",
+              "contentType": "application/json",
+              "sha256": "bf2056b5601fd6a9dd821abd8f4a173be35eef4c30aeebae1b8719cf30c61fc4",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t09/14-gaps2-default-type-375-light.json"
+            },
+            {
+              "name": "gaps2-default-type-375-light.png",
+              "contentType": "image/png",
+              "sha256": "b742b418bfd1d6230d7652a873897e288dd0024de8b305fe3e4afd00dab207b5",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t09/15-gaps2-default-type-375-light.png"
+            },
+            {
+              "name": "gaps2-default-type-375-dark.json",
+              "contentType": "application/json",
+              "sha256": "3a85e9008daae5b1282065a1ca48ec4c81d8bdb119212115c814eda89074477c",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t09/16-gaps2-default-type-375-dark.json"
+            },
+            {
+              "name": "gaps2-default-type-375-dark.png",
+              "contentType": "image/png",
+              "sha256": "2a8d777bed01161e27b90d6f3403cfab313c00c777642364ccc6659092b08a30",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t09/17-gaps2-default-type-375-dark.png"
+            },
+            {
+              "name": "invalid_props-prose.json",
+              "contentType": "application/json",
+              "sha256": "214268c08a0b3a51b387755f6cbca57f282ca3c34342d8b850a33ea1cbdbef32",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t09/18-invalid_props-prose.json"
+            },
+            {
+              "name": "gaps2-external-1280-light.json",
+              "contentType": "application/json",
+              "sha256": "968fdf6174e4a0f4d0c85a6e7b8503ad98c70c782e428a4fa3a34d4e0f153cdf",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t09/19-gaps2-external-1280-light.json"
+            },
+            {
+              "name": "gaps2-external-1280-light.png",
+              "contentType": "image/png",
+              "sha256": "2dd5c9c5bb66e5350db5ed575e0484b4baa6cf0203ec1fe531919c445485f9a1",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t09/20-gaps2-external-1280-light.png"
+            },
+            {
+              "name": "gaps2-external-1280-dark.json",
+              "contentType": "application/json",
+              "sha256": "02a179744401b735f509813804d03087c823ec80551f78d7c8aeae59ebe1b733",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t09/21-gaps2-external-1280-dark.json"
+            },
+            {
+              "name": "gaps2-external-1280-dark.png",
+              "contentType": "image/png",
+              "sha256": "15890a9cbf72f6da1dc087d5a0155ea07f7ac3ae113697e55c25dd0cf6c8f577",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t09/22-gaps2-external-1280-dark.png"
+            },
+            {
+              "name": "gaps2-external-375-light.json",
+              "contentType": "application/json",
+              "sha256": "1cb1de25897703bd88cf6c109a856227ca358397fa645bc6699aed92788a1f20",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t09/23-gaps2-external-375-light.json"
+            },
+            {
+              "name": "gaps2-external-375-light.png",
+              "contentType": "image/png",
+              "sha256": "2f3aa956c89eccb10928a0c907c92b41d249d232dc498e4c5bc0ddee424d2264",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t09/24-gaps2-external-375-light.png"
+            },
+            {
+              "name": "gaps2-external-375-dark.json",
+              "contentType": "application/json",
+              "sha256": "f1c0950fe6fe42839daede93409b805df8fdbe7cc2cc2b59bbee1323e8c541af",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t09/25-gaps2-external-375-dark.json"
+            },
+            {
+              "name": "gaps2-external-375-dark.png",
+              "contentType": "image/png",
+              "sha256": "75fc170d78cec5aaf060ba18c98674cffaaa6daad9d019a540fd6a0b597925f7",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t09/26-gaps2-external-375-dark.png"
+            },
+            {
+              "name": "dev-component-browser-audit.json",
+              "contentType": "application/json",
+              "sha256": "c188ee05ec90d074a32badecf0553974498822af77f67b41460c4212508aba4a",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t09/27-dev-component-browser-audit.json"
+            },
+            {
+              "name": "dev-component-states.json",
+              "contentType": "application/json",
+              "sha256": "f1dbaabd01eda2ad647d0b5006e7566a2d47fcb1877325eff32757c5ab1d73e9",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t09/28-dev-component-states.json"
+            },
+            {
+              "name": "dev-component-compiler-commands.json",
+              "contentType": "application/json",
+              "sha256": "cf625a7e84110693597917be5bfb4c1a3b18c7de243ec8c8654c6b62db575d88",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t09/29-dev-component-compiler-commands.json"
+            },
+            {
+              "name": "dev-component-compiler-lifecycle.json",
+              "contentType": "application/json",
+              "sha256": "a70bc1bf87950c46d43428442e04200e40cc188604396fddcddceb885d4b29f0",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t09/30-dev-component-compiler-lifecycle.json"
+            },
+            {
+              "name": "dev-component-cli.log",
+              "contentType": "text/plain",
+              "sha256": "1dfdb4816789e5bacd789e51d786fe8adae87786bc256342ad620ea8412d4aeb",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t09/31-dev-component-cli.log"
+            },
+            {
+              "name": "dev-component-compile-history.json",
+              "contentType": "application/json",
+              "sha256": "16b54d03192690f2fc896803088f5e0514d8feaf37d56447a06bf14677cef4e3",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t09/32-dev-component-compile-history.json"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "gaps-2 code spans: the real DOM reader preserves the handwritten whitespace and delimiter table",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 771,
+          "errors": [],
+          "attachments": [
+            {
+              "name": "verbatim-table.json",
+              "contentType": "application/json",
+              "sha256": "22fc5e22a15b77be98a0716479e222da690e7291c5d7d9dde9137ce10987f40d",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t10/00-verbatim-table.json"
+            },
+            {
+              "name": "gaps2-table-1280-light.json",
+              "contentType": "application/json",
+              "sha256": "3d4af59aa3683f39112a4477e63ce868191c9c62f75b78eb839d0909b918e054",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t10/01-gaps2-table-1280-light.json"
+            },
+            {
+              "name": "gaps2-table-1280-light.png",
+              "contentType": "image/png",
+              "sha256": "bc03c6a20ff3043a7a4fb16ecbf04ee4a3fdfe926161f40a81b4f70c29153f4a",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t10/02-gaps2-table-1280-light.png"
+            },
+            {
+              "name": "gaps2-table-1280-dark.json",
+              "contentType": "application/json",
+              "sha256": "7a4196a57de53ee5f7a0dc0abc4eb6b4f65dbc1ad90bd3a170aca3603f9b72c2",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t10/03-gaps2-table-1280-dark.json"
+            },
+            {
+              "name": "gaps2-table-1280-dark.png",
+              "contentType": "image/png",
+              "sha256": "18c4dd52954ca720e2c8efd5ec584c4653bdf069b2f7b89655633b7173e8ea26",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t10/04-gaps2-table-1280-dark.png"
+            },
+            {
+              "name": "gaps2-table-375-light.json",
+              "contentType": "application/json",
+              "sha256": "44346898ea4a7e8673ad636a72be7d409f7fbe866ba1e4ff91802b607bc45393",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t10/05-gaps2-table-375-light.json"
+            },
+            {
+              "name": "gaps2-table-375-light.png",
+              "contentType": "image/png",
+              "sha256": "af82d772f6cfd74c9f394cebcdb1eefdf9ea9c82027ed4398fff25d557741541",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t10/06-gaps2-table-375-light.png"
+            },
+            {
+              "name": "gaps2-table-375-dark.json",
+              "contentType": "application/json",
+              "sha256": "d5facda8c45b74888179490cf5e1dc8cb7c0912a27c379afa3538fc2733fd356",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t10/07-gaps2-table-375-dark.json"
+            },
+            {
+              "name": "gaps2-table-375-dark.png",
+              "contentType": "image/png",
+              "sha256": "0fd41cff723bc1168837c35b3e36a23c7c37c21cff8b62809ee5c1e025e5358d",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t10/08-gaps2-table-375-dark.png"
+            },
+            {
+              "name": "dev-component-browser-audit.json",
+              "contentType": "application/json",
+              "sha256": "35e159f7d70e1a21ad819ecef73b7e7f58d73982fdfeda7fa10321b16e35d3c9",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t10/09-dev-component-browser-audit.json"
+            },
+            {
+              "name": "dev-component-states.json",
+              "contentType": "application/json",
+              "sha256": "6a4661e53adaa6129bd4f7148297b51d8ee6260f26b3b8ea60156c65260191c9",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t10/10-dev-component-states.json"
+            },
+            {
+              "name": "dev-component-compiler-commands.json",
+              "contentType": "application/json",
+              "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t10/11-dev-component-compiler-commands.json"
+            },
+            {
+              "name": "dev-component-compiler-lifecycle.json",
+              "contentType": "application/json",
+              "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t10/12-dev-component-compiler-lifecycle.json"
+            },
+            {
+              "name": "dev-component-cli.log",
+              "contentType": "text/plain",
+              "sha256": "8fe1cee051c2ad9f199d4d6ff065d5f69c4ee4a5d86e1ef1618dbd7672e3d29e",
+              "path": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/m1-browser/t10/13-dev-component-cli.log"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "UAT-1 and UAT-2: new, dev, three pages within a minute; then saves, a mistake and its fix in one session",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 3838,
+          "errors": [],
+          "attachments": []
+        }
+      ]
+    },
+    {
+      "title": "semantic diagnostics locate the source, preserve the home, and clear on repair",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1232,
+          "errors": [],
+          "attachments": [
+            {
+              "name": "dev-initial-states.json",
+              "contentType": "application/json",
+              "sha256": "705f3e5eff49795275d95abf35b46939beff91050f8d34a1e0dc859167debef0"
+            },
+            {
+              "name": "dev-expected-stream-closures.json",
+              "contentType": "application/json",
+              "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "a new site is readable at once: the home page and its two pages",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 318,
+          "errors": [],
+          "attachments": [
+            {
+              "name": "dev-initial-states.json",
+              "contentType": "application/json",
+              "sha256": "9bd288a61e24c87ccdfa7d151a0243bfd7bac1e9986100737230926a78ce3d50"
+            },
+            {
+              "name": "dev-expected-stream-closures.json",
+              "contentType": "application/json",
+              "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "a save reloads the page it changed in place and leaves the others",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1787,
+          "errors": [],
+          "attachments": [
+            {
+              "name": "dev-initial-states.json",
+              "contentType": "application/json",
+              "sha256": "7362e9345d711eb7047cb7895842cbae57d206648a78009b7ec204bdd33407b7"
+            },
+            {
+              "name": "dev-expected-stream-closures.json",
+              "contentType": "application/json",
+              "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "a real symlink target save refreshes its image and survives deletion and recovery",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 479,
+          "errors": [],
+          "attachments": [
+            {
+              "name": "dev-initial-states.json",
+              "contentType": "application/json",
+              "sha256": "963a3143c4971b875b922bc4af94b655413e77de3cfbb621f86bff11bd5b01b3"
+            },
+            {
+              "name": "dev-expected-stream-closures.json",
+              "contentType": "application/json",
+              "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "a snapshot attachment in content/manual.pdf recovers when only its target is restored",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 391,
+          "errors": [],
+          "attachments": [
+            {
+              "name": "dev-initial-states.json",
+              "contentType": "application/json",
+              "sha256": "fe01f0178e004095d26bb8bc5193ad780ab8712f8aae93b719a550aebb1b745f"
+            },
+            {
+              "name": "dev-expected-stream-closures.json",
+              "contentType": "application/json",
+              "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "a snapshot attachment in static/manual.pdf recovers when only its target is restored",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 389,
+          "errors": [],
+          "attachments": [
+            {
+              "name": "dev-initial-states.json",
+              "contentType": "application/json",
+              "sha256": "c751dfd83f66a7d385fa6ffa15dbbf528dfe4582f46c64f70ee8f14a17fedf1e"
+            },
+            {
+              "name": "dev-expected-stream-closures.json",
+              "contentType": "application/json",
+              "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "arbitrary CSS resources keep numeric entity delimiters and compiler URL decoding",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 198,
+          "errors": [],
+          "attachments": [
+            {
+              "name": "resources.png",
+              "contentType": "image/png",
+              "sha256": "90d8241948acc46bf5ad55e261c7afdd636246a675daf3cf1f2dedf925d4d87b"
+            },
+            {
+              "name": "dev-initial-states.json",
+              "contentType": "application/json",
+              "sha256": "0e1e50926dd5534392c0a45aa0df28a854f7cfa124ea3bf97fd2ba4f00506266"
+            },
+            {
+              "name": "dev-expected-stream-closures.json",
+              "contentType": "application/json",
+              "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "template contents are rejected as anchors while their holder and ordinary IDs navigate",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 334,
+          "errors": [],
+          "attachments": [
+            {
+              "name": "dev-initial-states.json",
+              "contentType": "application/json",
+              "sha256": "0775f997a3b92db90209b98753e5091306083a6df920a1459763b8336100329e"
+            },
+            {
+              "name": "dev-expected-stream-closures.json",
+              "contentType": "application/json",
+              "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "body anchors at / navigate on the same and other pages and recover from ghost links",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 406,
+          "errors": [],
+          "attachments": [
+            {
+              "name": "body-anchors.png",
+              "contentType": "image/png",
+              "sha256": "16c547decca3dc234b913cef0a67348cf2391d50eac35432887dc798bd678250"
+            },
+            {
+              "name": "dev-initial-states.json",
+              "contentType": "application/json",
+              "sha256": "3316fec80186e0bdb5492e639e5ea0a8eaa33b2d9f28e3cd5032dcfeb8f87fe4"
+            },
+            {
+              "name": "dev-expected-stream-closures.json",
+              "contentType": "application/json",
+              "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "body anchors at /docs/ navigate on the same and other pages and recover from ghost links",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 409,
+          "errors": [],
+          "attachments": [
+            {
+              "name": "body-anchors.png",
+              "contentType": "image/png",
+              "sha256": "16c547decca3dc234b913cef0a67348cf2391d50eac35432887dc798bd678250"
+            },
+            {
+              "name": "dev-initial-states.json",
+              "contentType": "application/json",
+              "sha256": "e80b537529ec0fa3fd2488745d7d1b127042c5b99f203db16d58fea11facc72a"
+            },
+            {
+              "name": "dev-expected-stream-closures.json",
+              "contentType": "application/json",
+              "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "self-closing SVG template preserves document anchors and cross-page navigation",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 258,
+          "errors": [],
+          "attachments": [
+            {
+              "name": "foreign-anchors.png",
+              "contentType": "image/png",
+              "sha256": "ffa30cc791cfb05b9c7d50a6df10591c4cba0021c0ce3e09f12b32a8164277a2"
+            },
+            {
+              "name": "dev-initial-states.json",
+              "contentType": "application/json",
+              "sha256": "fee07e53c7299f75df0096fd3307a43493699e35ef1fd089a2bab3305e2451a8"
+            },
+            {
+              "name": "dev-expected-stream-closures.json",
+              "contentType": "application/json",
+              "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "paired SVG template preserves document anchors and cross-page navigation",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 256,
+          "errors": [],
+          "attachments": [
+            {
+              "name": "foreign-anchors.png",
+              "contentType": "image/png",
+              "sha256": "18a9089048034864e19eef79b4f0b82dd204899c62403949e4a823b2c02e7168"
+            },
+            {
+              "name": "dev-initial-states.json",
+              "contentType": "application/json",
+              "sha256": "d3199cf597ac59b192425859e57a6c83874c533400f34665a4932c7e2e701d39"
+            },
+            {
+              "name": "dev-expected-stream-closures.json",
+              "contentType": "application/json",
+              "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "SVG inside an HTML template preserves document anchors and cross-page navigation",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 271,
+          "errors": [],
+          "attachments": [
+            {
+              "name": "foreign-anchors.png",
+              "contentType": "image/png",
+              "sha256": "7a70f950aa1b51b46b62476b2874335cfcde99874a6642d3a34fed4177782e45"
+            },
+            {
+              "name": "dev-initial-states.json",
+              "contentType": "application/json",
+              "sha256": "ac3f033d91bd8c84c2f129be2f59252b0e7f9dad9f6c31baeb214e6731b31e3f"
+            },
+            {
+              "name": "dev-expected-stream-closures.json",
+              "contentType": "application/json",
+              "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "HTML templates at foreign integration points recover from ghost links",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 319,
+          "errors": [],
+          "attachments": [
+            {
+              "name": "dev-initial-states.json",
+              "contentType": "application/json",
+              "sha256": "32da78cb1177aeb73cf3d7cc8a99683876c2e46117d0ea9a94ae814cd6ee28d0"
+            },
+            {
+              "name": "dev-expected-stream-closures.json",
+              "contentType": "application/json",
+              "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "a failed build keeps the page readable under a panel that hides to a marker and clears on the fix",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 626,
+          "errors": [],
+          "attachments": [
+            {
+              "name": "dev-initial-states.json",
+              "contentType": "application/json",
+              "sha256": "b244273a40dc505a7654a9d380dd882142f9d2f7cea949be856b041d73bb1b05"
+            },
+            {
+              "name": "dev-expected-stream-closures.json",
+              "contentType": "application/json",
+              "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "while nothing has built, every page says so, and becomes the site once it builds",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 236,
+          "errors": [],
+          "attachments": [
+            {
+              "name": "dev-initial-states.json",
+              "contentType": "application/json",
+              "sha256": "2aefdecd169c6909fb183bdd969713cd787f5aa9edf156824f3cab16d031618e"
+            },
+            {
+              "name": "dev-expected-stream-closures.json",
+              "contentType": "application/json",
+              "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "a restarted dev brings an open page up to date",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1075,
+          "errors": [],
+          "attachments": [
+            {
+              "name": "dev-initial-states.json",
+              "contentType": "application/json",
+              "sha256": "7476334ae28c718d40835fa929ea92d5aff26d8ef1fc9f999ae25d0f834c14d7"
+            },
+            {
+              "name": "dev-expected-stream-closures.json",
+              "contentType": "application/json",
+              "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "a panic in a build is one more problem, and the next build is served",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 342,
+          "errors": [],
+          "attachments": [
+            {
+              "name": "dev-initial-states.json",
+              "contentType": "application/json",
+              "sha256": "fb4170df6d0e0cdddf16e30a5681d67c067191cb0abb56bfa089775c37bcb671"
+            },
+            {
+              "name": "dev-expected-stream-closures.json",
+              "contentType": "application/json",
+              "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "the panel speaks the page's language",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 227,
+          "errors": [],
+          "attachments": [
+            {
+              "name": "dev-initial-states.json",
+              "contentType": "application/json",
+              "sha256": "b4ad9366f48ad950acfdac61f30722c073ee87f99a8a75835ca8f66bde9f9795"
+            },
+            {
+              "name": "dev-expected-stream-closures.json",
+              "contentType": "application/json",
+              "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "on a phone the panel is a sheet along the bottom and nothing scrolls sideways",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 344,
+          "errors": [],
+          "attachments": [
+            {
+              "name": "dev-initial-states.json",
+              "contentType": "application/json",
+              "sha256": "f717da3c880822f2643f0ad7fa346aa3e6b60fcc106e7ec35758b14aafe5ff68"
+            },
+            {
+              "name": "dev-expected-stream-closures.json",
+              "contentType": "application/json",
+              "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "axe finds no serious or critical problem with the panel open or hidden, in both modes",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1390,
+          "errors": [],
+          "attachments": [
+            {
+              "name": "axe-violations.txt",
+              "contentType": "text/plain",
+              "sha256": "140bedbf9c3f6d56a9846d2ba7088798683f4da0c248231336e6a05679e4fdfe"
+            },
+            {
+              "name": "dev-initial-states.json",
+              "contentType": "application/json",
+              "sha256": "7968c1e123b0f49fc3618c3c10e72ff7601ba526b701590f15c37e8e85f64bae"
+            },
+            {
+              "name": "dev-expected-stream-closures.json",
+              "contentType": "application/json",
+              "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": []
+}

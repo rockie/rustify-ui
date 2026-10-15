@@ -1,0 +1,32 @@
+{
+  "width": 1280,
+  "theme": "dark",
+  "actual": [
+    {
+      "message": "lang: a` at line `b is not a language tag",
+      "suggestion": "use a language tag such as en, zh-CN or fr",
+      "codes": [
+        {
+          "text": "a` at line `b",
+          "font": "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace"
+        },
+        {
+          "text": "en",
+          "font": "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace"
+        },
+        {
+          "text": "zh-CN",
+          "font": "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace"
+        },
+        {
+          "text": "fr",
+          "font": "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace"
+        }
+      ],
+      "overflow": [
+        0,
+        0
+      ]
+    }
+  ]
+}

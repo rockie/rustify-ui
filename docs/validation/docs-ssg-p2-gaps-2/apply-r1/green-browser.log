@@ -1,0 +1,14 @@
+npm notice run rustify-ui-browser-tests@0.1.0 npx
+npm notice run 'playwright' test -c playwright.docs.config.ts --project=docs-dev dev-components.spec.ts --grep frontmatter language preserves --workers=1 --reporter=json --output=docs/validation/docs-ssg-p2-gaps-2/apply-r1/green-browser-artifacts
+{
+  "stats": {
+    "startTime": "2026-10-15T06:57:33.134Z",
+    "duration": 51943.799,
+    "expected": 1,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "errors": [],
+  "results": "docs/validation/docs-ssg-p2-gaps-2/apply-r1/green-browser/results.json"
+}

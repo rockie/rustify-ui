@@ -1,0 +1,47 @@
+{
+  "diagnostic": {
+    "severity": "error",
+    "rule": "unknown-property",
+    "file": "content/counter.md",
+    "line": 50,
+    "column": 3,
+    "message": "component `Counter` has no property `` un`known ``",
+    "suggestion": "Use one of `initial` (`i32`; default expression `2`), `label` (`String`; default expression `` \"a`b\".to_string() ``) for `Counter`; rename or remove `` un`known ``."
+  },
+  "expected": {
+    "message": "component Counter has no property un`known",
+    "messageCodes": [
+      "Counter",
+      "un`known"
+    ],
+    "suggestion": "Use one of initial (i32; default expression 2), label (String; default expression \"a`b\".to_string()) for Counter; rename or remove un`known.",
+    "suggestionCodes": [
+      "initial",
+      "i32",
+      "2",
+      "label",
+      "String",
+      "\"a`b\".to_string()",
+      "Counter",
+      "un`known"
+    ]
+  },
+  "actual": {
+    "message": "component Counter has no property un`known",
+    "messageCodes": [
+      "Counter",
+      "un`known"
+    ],
+    "suggestion": "Use one of initial (i32; default expression 2), label (String; default expression \"a`b\".to_string()) for Counter; rename or remove un`known.",
+    "suggestionCodes": [
+      "initial",
+      "i32",
+      "2",
+      "label",
+      "String",
+      "\"a`b\".to_string()",
+      "Counter",
+      "un`known"
+    ]
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "width": 375,
+  "theme": "light",
+  "actual": [
+    {
+      "message": "unknown field un`known; a demo takes only name, a component takes name, props and children",
+      "suggestion": "Write valid YAML for rustify-component (name, optional props mapping and children string) or rustify-demo (name only); correct the reported payload error.",
+      "codes": [
+        {
+          "text": "un`known",
+          "font": "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace"
+        },
+        {
+          "text": "name",
+          "font": "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace"
+        },
+        {
+          "text": "name",
+          "font": "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace"
+        },
+        {
+          "text": "props",
+          "font": "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace"
+        },
+        {
+          "text": "children",
+          "font": "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace"
+        },
+        {
+          "text": "rustify-component",
+          "font": "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace"
+        },
+        {
+          "text": "name",
+          "font": "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace"
+        },
+        {
+          "text": "props",
+          "font": "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace"
+        },
+        {
+          "text": "children",
+          "font": "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace"
+        },
+        {
+          "text": "rustify-demo",
+          "font": "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace"
+        },
+        {
+          "text": "name",
+          "font": "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace"
+        }
+      ],
+      "overflow": [
+        0,
+        0
+      ]
+    }
+  ]
+}

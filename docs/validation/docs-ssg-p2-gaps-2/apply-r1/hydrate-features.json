@@ -1,0 +1,22 @@
+{
+  "name": "hydrate-features",
+  "command": [
+    "mbx",
+    "tree",
+    "--locked",
+    "-p",
+    "rustify-docs",
+    "--no-default-features",
+    "--features",
+    "hydrate",
+    "--target",
+    "wasm32-unknown-unknown",
+    "--prefix",
+    "none",
+    "--format",
+    "{p} [{f}]"
+  ],
+  "exit": 0,
+  "seconds": 0.16,
+  "head": "97c9946c6a325bed676a92dbd7bcea038db4ea69"
+}

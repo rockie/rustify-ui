@@ -1,0 +1,517 @@
+{
+  "requests": [
+    "http://127.0.0.1:64270/docs/counter/",
+    "http://127.0.0.1:64270/docs/assets/site.9ef35152a4.css",
+    "http://127.0.0.1:64270/__rustify-docs/dev.css",
+    "http://127.0.0.1:64270/docs/assets/mode.5e2c2584b0.js",
+    "http://127.0.0.1:64270/docs/assets/site.2529a0d647.js",
+    "http://127.0.0.1:64270/__rustify-docs/dev.js?session=7235-18dea288784083b0&good=1",
+    "http://127.0.0.1:64270/docs/assets/islands/1b84c8006ad38115e1b116e7b9333e23015d99f7667167ba26290f742d5e5efe/islands.js",
+    "http://127.0.0.1:64270/docs/assets/fonts/371924e7480d3d01807fdc1bd30442d0a6651e6b5ea546482f5883d613cf0419.ttf",
+    "http://127.0.0.1:64270/docs/assets/fonts/662a196d58f1183bf2d77428b6d5283fe3f45161ab021bea4036bc98e5cac016.ttf",
+    "http://127.0.0.1:64270/__rustify-docs/events?path=%2Fdocs%2Fcounter%2F&good=1&session=7235-18dea288784083b0",
+    "http://127.0.0.1:64270/docs/assets/islands/1b84c8006ad38115e1b116e7b9333e23015d99f7667167ba26290f742d5e5efe/dom-loader.js",
+    "http://127.0.0.1:64270/docs/assets/islands/1b84c8006ad38115e1b116e7b9333e23015d99f7667167ba26290f742d5e5efe/app_bg.wasm",
+    "http://127.0.0.1:64270/docs/assets/islands/1b84c8006ad38115e1b116e7b9333e23015d99f7667167ba26290f742d5e5efe/app.js",
+    "http://127.0.0.1:64270/docs/assets/islands/1b84c8006ad38115e1b116e7b9333e23015d99f7667167ba26290f742d5e5efe/snippets/rustify-ui-4db2f10f10788f4c/web/dom-runtime.js",
+    "http://127.0.0.1:64270/docs/counter/",
+    "http://127.0.0.1:64270/docs/assets/site.9ef35152a4.css",
+    "http://127.0.0.1:64270/__rustify-docs/dev.css",
+    "http://127.0.0.1:64270/docs/assets/mode.5e2c2584b0.js",
+    "http://127.0.0.1:64270/docs/assets/site.2529a0d647.js",
+    "http://127.0.0.1:64270/__rustify-docs/dev.js?session=7235-18dea288784083b0&good=1",
+    "http://127.0.0.1:64270/docs/assets/islands/1b84c8006ad38115e1b116e7b9333e23015d99f7667167ba26290f742d5e5efe/islands.js",
+    "http://127.0.0.1:64270/docs/assets/fonts/371924e7480d3d01807fdc1bd30442d0a6651e6b5ea546482f5883d613cf0419.ttf",
+    "http://127.0.0.1:64270/docs/assets/fonts/662a196d58f1183bf2d77428b6d5283fe3f45161ab021bea4036bc98e5cac016.ttf",
+    "http://127.0.0.1:64270/docs/assets/islands/1b84c8006ad38115e1b116e7b9333e23015d99f7667167ba26290f742d5e5efe/dom-loader.js",
+    "http://127.0.0.1:64270/__rustify-docs/events?path=%2Fdocs%2Fcounter%2F&good=1&session=7235-18dea288784083b0",
+    "http://127.0.0.1:64270/docs/assets/islands/1b84c8006ad38115e1b116e7b9333e23015d99f7667167ba26290f742d5e5efe/app_bg.wasm",
+    "http://127.0.0.1:64270/docs/assets/islands/1b84c8006ad38115e1b116e7b9333e23015d99f7667167ba26290f742d5e5efe/app.js",
+    "http://127.0.0.1:64270/docs/assets/islands/1b84c8006ad38115e1b116e7b9333e23015d99f7667167ba26290f742d5e5efe/snippets/rustify-ui-4db2f10f10788f4c/web/dom-runtime.js",
+    "http://127.0.0.1:64270/docs/counter/",
+    "http://127.0.0.1:64270/docs/assets/site.9ef35152a4.css",
+    "http://127.0.0.1:64270/__rustify-docs/dev.css",
+    "http://127.0.0.1:64270/docs/assets/mode.5e2c2584b0.js",
+    "http://127.0.0.1:64270/docs/assets/site.2529a0d647.js",
+    "http://127.0.0.1:64270/__rustify-docs/dev.js?session=7235-18dea288784083b0&good=2",
+    "http://127.0.0.1:64270/docs/assets/islands/1a6a77907f14ac77f8973447016fefb5cfde15eea1755e915447062fc14552d5/islands.js",
+    "http://127.0.0.1:64270/docs/assets/fonts/371924e7480d3d01807fdc1bd30442d0a6651e6b5ea546482f5883d613cf0419.ttf",
+    "http://127.0.0.1:64270/docs/assets/fonts/662a196d58f1183bf2d77428b6d5283fe3f45161ab021bea4036bc98e5cac016.ttf",
+    "http://127.0.0.1:64270/__rustify-docs/events?path=%2Fdocs%2Fcounter%2F&good=2&session=7235-18dea288784083b0",
+    "http://127.0.0.1:64270/docs/assets/islands/1a6a77907f14ac77f8973447016fefb5cfde15eea1755e915447062fc14552d5/dom-loader.js",
+    "http://127.0.0.1:64270/docs/assets/islands/1a6a77907f14ac77f8973447016fefb5cfde15eea1755e915447062fc14552d5/app_bg.wasm",
+    "http://127.0.0.1:64270/docs/assets/islands/1a6a77907f14ac77f8973447016fefb5cfde15eea1755e915447062fc14552d5/app.js",
+    "http://127.0.0.1:64270/docs/assets/islands/1a6a77907f14ac77f8973447016fefb5cfde15eea1755e915447062fc14552d5/snippets/rustify-ui-4db2f10f10788f4c/web/dom-runtime.js",
+    "http://127.0.0.1:64270/docs/counter/",
+    "http://127.0.0.1:64270/docs/assets/site.9ef35152a4.css",
+    "http://127.0.0.1:64270/__rustify-docs/dev.css",
+    "http://127.0.0.1:64270/docs/assets/mode.5e2c2584b0.js",
+    "http://127.0.0.1:64270/docs/assets/site.2529a0d647.js",
+    "http://127.0.0.1:64270/__rustify-docs/dev.js?session=7235-18dea288784083b0&good=2",
+    "http://127.0.0.1:64270/docs/assets/islands/1a6a77907f14ac77f8973447016fefb5cfde15eea1755e915447062fc14552d5/islands.js",
+    "http://127.0.0.1:64270/docs/assets/fonts/371924e7480d3d01807fdc1bd30442d0a6651e6b5ea546482f5883d613cf0419.ttf",
+    "http://127.0.0.1:64270/docs/assets/fonts/662a196d58f1183bf2d77428b6d5283fe3f45161ab021bea4036bc98e5cac016.ttf",
+    "http://127.0.0.1:64270/docs/assets/islands/1a6a77907f14ac77f8973447016fefb5cfde15eea1755e915447062fc14552d5/dom-loader.js",
+    "http://127.0.0.1:64270/__rustify-docs/events?path=%2Fdocs%2Fcounter%2F&good=2&session=7235-18dea288784083b0",
+    "http://127.0.0.1:64270/docs/assets/islands/1a6a77907f14ac77f8973447016fefb5cfde15eea1755e915447062fc14552d5/app_bg.wasm",
+    "http://127.0.0.1:64270/docs/assets/islands/1a6a77907f14ac77f8973447016fefb5cfde15eea1755e915447062fc14552d5/app.js",
+    "http://127.0.0.1:64270/docs/assets/islands/1a6a77907f14ac77f8973447016fefb5cfde15eea1755e915447062fc14552d5/snippets/rustify-ui-4db2f10f10788f4c/web/dom-runtime.js",
+    "http://127.0.0.1:64270/docs/counter/",
+    "http://127.0.0.1:64270/docs/assets/site.9ef35152a4.css",
+    "http://127.0.0.1:64270/__rustify-docs/dev.css",
+    "http://127.0.0.1:64270/docs/assets/mode.5e2c2584b0.js",
+    "http://127.0.0.1:64270/docs/assets/site.2529a0d647.js",
+    "http://127.0.0.1:64270/__rustify-docs/dev.js?session=7235-18dea288784083b0&good=3",
+    "http://127.0.0.1:64270/docs/assets/islands/1a6a77907f14ac77f8973447016fefb5cfde15eea1755e915447062fc14552d5/islands.js",
+    "http://127.0.0.1:64270/docs/assets/fonts/371924e7480d3d01807fdc1bd30442d0a6651e6b5ea546482f5883d613cf0419.ttf",
+    "http://127.0.0.1:64270/docs/assets/fonts/662a196d58f1183bf2d77428b6d5283fe3f45161ab021bea4036bc98e5cac016.ttf",
+    "http://127.0.0.1:64270/__rustify-docs/events?path=%2Fdocs%2Fcounter%2F&good=3&session=7235-18dea288784083b0",
+    "http://127.0.0.1:64270/docs/assets/islands/1a6a77907f14ac77f8973447016fefb5cfde15eea1755e915447062fc14552d5/dom-loader.js",
+    "http://127.0.0.1:64270/docs/assets/islands/1a6a77907f14ac77f8973447016fefb5cfde15eea1755e915447062fc14552d5/app_bg.wasm",
+    "http://127.0.0.1:64270/docs/assets/islands/1a6a77907f14ac77f8973447016fefb5cfde15eea1755e915447062fc14552d5/app.js",
+    "http://127.0.0.1:64270/docs/assets/islands/1a6a77907f14ac77f8973447016fefb5cfde15eea1755e915447062fc14552d5/snippets/rustify-ui-4db2f10f10788f4c/web/dom-runtime.js",
+    "http://127.0.0.1:64270/docs/counter/",
+    "http://127.0.0.1:64270/docs/assets/site.9ef35152a4.css",
+    "http://127.0.0.1:64270/__rustify-docs/dev.css",
+    "http://127.0.0.1:64270/docs/assets/mode.5e2c2584b0.js",
+    "http://127.0.0.1:64270/docs/assets/site.2529a0d647.js",
+    "http://127.0.0.1:64270/__rustify-docs/dev.js?session=7235-18dea288784083b0&good=3",
+    "http://127.0.0.1:64270/docs/assets/islands/1a6a77907f14ac77f8973447016fefb5cfde15eea1755e915447062fc14552d5/islands.js",
+    "http://127.0.0.1:64270/docs/assets/fonts/371924e7480d3d01807fdc1bd30442d0a6651e6b5ea546482f5883d613cf0419.ttf",
+    "http://127.0.0.1:64270/docs/assets/fonts/662a196d58f1183bf2d77428b6d5283fe3f45161ab021bea4036bc98e5cac016.ttf",
+    "http://127.0.0.1:64270/__rustify-docs/events?path=%2Fdocs%2Fcounter%2F&good=3&session=7235-18dea288784083b0",
+    "http://127.0.0.1:64270/docs/assets/islands/1a6a77907f14ac77f8973447016fefb5cfde15eea1755e915447062fc14552d5/dom-loader.js",
+    "http://127.0.0.1:64270/docs/assets/islands/1a6a77907f14ac77f8973447016fefb5cfde15eea1755e915447062fc14552d5/app_bg.wasm",
+    "http://127.0.0.1:64270/docs/assets/islands/1a6a77907f14ac77f8973447016fefb5cfde15eea1755e915447062fc14552d5/app.js",
+    "http://127.0.0.1:64270/docs/assets/islands/1a6a77907f14ac77f8973447016fefb5cfde15eea1755e915447062fc14552d5/snippets/rustify-ui-4db2f10f10788f4c/web/dom-runtime.js"
+  ],
+  "failures": [],
+  "expectedStreamClosures": [
+    "http://127.0.0.1:64270/__rustify-docs/events?path=%2Fdocs%2Fcounter%2F&good=2&session=7235-18dea288784083b0 net::ERR_ABORTED"
+  ],
+  "responses": [
+    {
+      "url": "http://127.0.0.1:64270/docs/counter/",
+      "status": 200,
+      "mime": "text/html; charset=utf-8"
+    },
+    {
+      "url": "http://127.0.0.1:64270/__rustify-docs/dev.css",
+      "status": 200,
+      "mime": "text/css; charset=utf-8"
+    },
+    {
+      "url": "http://127.0.0.1:64270/docs/assets/site.9ef35152a4.css",
+      "status": 200,
+      "mime": "text/css; charset=utf-8"
+    },
+    {
+      "url": "http://127.0.0.1:64270/docs/assets/mode.5e2c2584b0.js",
+      "status": 200,
+      "mime": "text/javascript; charset=utf-8"
+    },
+    {
+      "url": "http://127.0.0.1:64270/docs/assets/site.2529a0d647.js",
+      "status": 200,
+      "mime": "text/javascript; charset=utf-8"
+    },
+    {
+      "url": "http://127.0.0.1:64270/__rustify-docs/dev.js?session=7235-18dea288784083b0&good=1",
+      "status": 200,
+      "mime": "text/javascript; charset=utf-8"
+    },
+    {
+      "url": "http://127.0.0.1:64270/docs/assets/fonts/371924e7480d3d01807fdc1bd30442d0a6651e6b5ea546482f5883d613cf0419.ttf",
+      "status": 200,
+      "mime": "font/ttf"
+    },
+    {
+      "url": "http://127.0.0.1:64270/docs/assets/fonts/662a196d58f1183bf2d77428b6d5283fe3f45161ab021bea4036bc98e5cac016.ttf",
+      "status": 200,
+      "mime": "font/ttf"
+    },
+    {
+      "url": "http://127.0.0.1:64270/docs/assets/islands/1b84c8006ad38115e1b116e7b9333e23015d99f7667167ba26290f742d5e5efe/islands.js",
+      "status": 200,
+      "mime": "text/javascript; charset=utf-8"
+    },
+    {
+      "url": "http://127.0.0.1:64270/__rustify-docs/events?path=%2Fdocs%2Fcounter%2F&good=1&session=7235-18dea288784083b0",
+      "status": 200,
+      "mime": "text/event-stream; charset=utf-8"
+    },
+    {
+      "url": "http://127.0.0.1:64270/docs/assets/islands/1b84c8006ad38115e1b116e7b9333e23015d99f7667167ba26290f742d5e5efe/dom-loader.js",
+      "status": 200,
+      "mime": "text/javascript; charset=utf-8"
+    },
+    {
+      "url": "http://127.0.0.1:64270/docs/assets/islands/1b84c8006ad38115e1b116e7b9333e23015d99f7667167ba26290f742d5e5efe/app_bg.wasm",
+      "status": 200,
+      "mime": "application/wasm"
+    },
+    {
+      "url": "http://127.0.0.1:64270/docs/assets/islands/1b84c8006ad38115e1b116e7b9333e23015d99f7667167ba26290f742d5e5efe/app.js",
+      "status": 200,
+      "mime": "text/javascript; charset=utf-8"
+    },
+    {
+      "url": "http://127.0.0.1:64270/docs/assets/islands/1b84c8006ad38115e1b116e7b9333e23015d99f7667167ba26290f742d5e5efe/snippets/rustify-ui-4db2f10f10788f4c/web/dom-runtime.js",
+      "status": 200,
+      "mime": "text/javascript; charset=utf-8"
+    },
+    {
+      "url": "http://127.0.0.1:64270/docs/counter/",
+      "status": 200,
+      "mime": "text/html; charset=utf-8"
+    },
+    {
+      "url": "http://127.0.0.1:64270/docs/assets/site.9ef35152a4.css",
+      "status": 200,
+      "mime": "text/css; charset=utf-8"
+    },
+    {
+      "url": "http://127.0.0.1:64270/__rustify-docs/dev.css",
+      "status": 200,
+      "mime": "text/css; charset=utf-8"
+    },
+    {
+      "url": "http://127.0.0.1:64270/docs/assets/mode.5e2c2584b0.js",
+      "status": 200,
+      "mime": "text/javascript; charset=utf-8"
+    },
+    {
+      "url": "http://127.0.0.1:64270/docs/assets/site.2529a0d647.js",
+      "status": 200,
+      "mime": "text/javascript; charset=utf-8"
+    },
+    {
+      "url": "http://127.0.0.1:64270/docs/assets/fonts/371924e7480d3d01807fdc1bd30442d0a6651e6b5ea546482f5883d613cf0419.ttf",
+      "status": 200,
+      "mime": "font/ttf"
+    },
+    {
+      "url": "http://127.0.0.1:64270/docs/assets/fonts/662a196d58f1183bf2d77428b6d5283fe3f45161ab021bea4036bc98e5cac016.ttf",
+      "status": 200,
+      "mime": "font/ttf"
+    },
+    {
+      "url": "http://127.0.0.1:64270/docs/assets/islands/1b84c8006ad38115e1b116e7b9333e23015d99f7667167ba26290f742d5e5efe/islands.js",
+      "status": 200,
+      "mime": "text/javascript; charset=utf-8"
+    },
+    {
+      "url": "http://127.0.0.1:64270/__rustify-docs/dev.js?session=7235-18dea288784083b0&good=1",
+      "status": 200,
+      "mime": "text/javascript; charset=utf-8"
+    },
+    {
+      "url": "http://127.0.0.1:64270/docs/assets/islands/1b84c8006ad38115e1b116e7b9333e23015d99f7667167ba26290f742d5e5efe/dom-loader.js",
+      "status": 200,
+      "mime": "text/javascript; charset=utf-8"
+    },
+    {
+      "url": "http://127.0.0.1:64270/__rustify-docs/events?path=%2Fdocs%2Fcounter%2F&good=1&session=7235-18dea288784083b0",
+      "status": 200,
+      "mime": "text/event-stream; charset=utf-8"
+    },
+    {
+      "url": "http://127.0.0.1:64270/docs/assets/islands/1b84c8006ad38115e1b116e7b9333e23015d99f7667167ba26290f742d5e5efe/app_bg.wasm",
+      "status": 200,
+      "mime": "application/wasm"
+    },
+    {
+      "url": "http://127.0.0.1:64270/docs/assets/islands/1b84c8006ad38115e1b116e7b9333e23015d99f7667167ba26290f742d5e5efe/app.js",
+      "status": 200,
+      "mime": "text/javascript; charset=utf-8"
+    },
+    {
+      "url": "http://127.0.0.1:64270/docs/assets/islands/1b84c8006ad38115e1b116e7b9333e23015d99f7667167ba26290f742d5e5efe/snippets/rustify-ui-4db2f10f10788f4c/web/dom-runtime.js",
+      "status": 200,
+      "mime": "text/javascript; charset=utf-8"
+    },
+    {
+      "url": "http://127.0.0.1:64270/docs/counter/",
+      "status": 200,
+      "mime": "text/html; charset=utf-8"
+    },
+    {
+      "url": "http://127.0.0.1:64270/docs/assets/site.9ef35152a4.css",
+      "status": 200,
+      "mime": "text/css; charset=utf-8"
+    },
+    {
+      "url": "http://127.0.0.1:64270/__rustify-docs/dev.css",
+      "status": 200,
+      "mime": "text/css; charset=utf-8"
+    },
+    {
+      "url": "http://127.0.0.1:64270/docs/assets/mode.5e2c2584b0.js",
+      "status": 200,
+      "mime": "text/javascript; charset=utf-8"
+    },
+    {
+      "url": "http://127.0.0.1:64270/docs/assets/site.2529a0d647.js",
+      "status": 200,
+      "mime": "text/javascript; charset=utf-8"
+    },
+    {
+      "url": "http://127.0.0.1:64270/__rustify-docs/dev.js?session=7235-18dea288784083b0&good=2",
+      "status": 200,
+      "mime": "text/javascript; charset=utf-8"
+    },
+    {
+      "url": "http://127.0.0.1:64270/docs/assets/fonts/371924e7480d3d01807fdc1bd30442d0a6651e6b5ea546482f5883d613cf0419.ttf",
+      "status": 200,
+      "mime": "font/ttf"
+    },
+    {
+      "url": "http://127.0.0.1:64270/docs/assets/fonts/662a196d58f1183bf2d77428b6d5283fe3f45161ab021bea4036bc98e5cac016.ttf",
+      "status": 200,
+      "mime": "font/ttf"
+    },
+    {
+      "url": "http://127.0.0.1:64270/docs/assets/islands/1a6a77907f14ac77f8973447016fefb5cfde15eea1755e915447062fc14552d5/islands.js",
+      "status": 200,
+      "mime": "text/javascript; charset=utf-8"
+    },
+    {
+      "url": "http://127.0.0.1:64270/__rustify-docs/events?path=%2Fdocs%2Fcounter%2F&good=2&session=7235-18dea288784083b0",
+      "status": 200,
+      "mime": "text/event-stream; charset=utf-8"
+    },
+    {
+      "url": "http://127.0.0.1:64270/docs/assets/islands/1a6a77907f14ac77f8973447016fefb5cfde15eea1755e915447062fc14552d5/dom-loader.js",
+      "status": 200,
+      "mime": "text/javascript; charset=utf-8"
+    },
+    {
+      "url": "http://127.0.0.1:64270/docs/assets/islands/1a6a77907f14ac77f8973447016fefb5cfde15eea1755e915447062fc14552d5/app_bg.wasm",
+      "status": 200,
+      "mime": "application/wasm"
+    },
+    {
+      "url": "http://127.0.0.1:64270/docs/assets/islands/1a6a77907f14ac77f8973447016fefb5cfde15eea1755e915447062fc14552d5/app.js",
+      "status": 200,
+      "mime": "text/javascript; charset=utf-8"
+    },
+    {
+      "url": "http://127.0.0.1:64270/docs/assets/islands/1a6a77907f14ac77f8973447016fefb5cfde15eea1755e915447062fc14552d5/snippets/rustify-ui-4db2f10f10788f4c/web/dom-runtime.js",
+      "status": 200,
+      "mime": "text/javascript; charset=utf-8"
+    },
+    {
+      "url": "http://127.0.0.1:64270/docs/counter/",
+      "status": 200,
+      "mime": "text/html; charset=utf-8"
+    },
+    {
+      "url": "http://127.0.0.1:64270/docs/assets/site.9ef35152a4.css",
+      "status": 200,
+      "mime": "text/css; charset=utf-8"
+    },
+    {
+      "url": "http://127.0.0.1:64270/__rustify-docs/dev.css",
+      "status": 200,
+      "mime": "text/css; charset=utf-8"
+    },
+    {
+      "url": "http://127.0.0.1:64270/docs/assets/mode.5e2c2584b0.js",
+      "status": 200,
+      "mime": "text/javascript; charset=utf-8"
+    },
+    {
+      "url": "http://127.0.0.1:64270/docs/assets/islands/1a6a77907f14ac77f8973447016fefb5cfde15eea1755e915447062fc14552d5/islands.js",
+      "status": 200,
+      "mime": "text/javascript; charset=utf-8"
+    },
+    {
+      "url": "http://127.0.0.1:64270/docs/assets/site.2529a0d647.js",
+      "status": 200,
+      "mime": "text/javascript; charset=utf-8"
+    },
+    {
+      "url": "http://127.0.0.1:64270/docs/assets/fonts/371924e7480d3d01807fdc1bd30442d0a6651e6b5ea546482f5883d613cf0419.ttf",
+      "status": 200,
+      "mime": "font/ttf"
+    },
+    {
+      "url": "http://127.0.0.1:64270/docs/assets/fonts/662a196d58f1183bf2d77428b6d5283fe3f45161ab021bea4036bc98e5cac016.ttf",
+      "status": 200,
+      "mime": "font/ttf"
+    },
+    {
+      "url": "http://127.0.0.1:64270/__rustify-docs/dev.js?session=7235-18dea288784083b0&good=2",
+      "status": 200,
+      "mime": "text/javascript; charset=utf-8"
+    },
+    {
+      "url": "http://127.0.0.1:64270/__rustify-docs/events?path=%2Fdocs%2Fcounter%2F&good=2&session=7235-18dea288784083b0",
+      "status": 200,
+      "mime": "text/event-stream; charset=utf-8"
+    },
+    {
+      "url": "http://127.0.0.1:64270/docs/assets/islands/1a6a77907f14ac77f8973447016fefb5cfde15eea1755e915447062fc14552d5/dom-loader.js",
+      "status": 200,
+      "mime": "text/javascript; charset=utf-8"
+    },
+    {
+      "url": "http://127.0.0.1:64270/docs/assets/islands/1a6a77907f14ac77f8973447016fefb5cfde15eea1755e915447062fc14552d5/app_bg.wasm",
+      "status": 200,
+      "mime": "application/wasm"
+    },
+    {
+      "url": "http://127.0.0.1:64270/docs/assets/islands/1a6a77907f14ac77f8973447016fefb5cfde15eea1755e915447062fc14552d5/app.js",
+      "status": 200,
+      "mime": "text/javascript; charset=utf-8"
+    },
+    {
+      "url": "http://127.0.0.1:64270/docs/assets/islands/1a6a77907f14ac77f8973447016fefb5cfde15eea1755e915447062fc14552d5/snippets/rustify-ui-4db2f10f10788f4c/web/dom-runtime.js",
+      "status": 200,
+      "mime": "text/javascript; charset=utf-8"
+    },
+    {
+      "url": "http://127.0.0.1:64270/docs/counter/",
+      "status": 200,
+      "mime": "text/html; charset=utf-8"
+    },
+    {
+      "url": "http://127.0.0.1:64270/__rustify-docs/dev.css",
+      "status": 200,
+      "mime": "text/css; charset=utf-8"
+    },
+    {
+      "url": "http://127.0.0.1:64270/docs/assets/site.9ef35152a4.css",
+      "status": 200,
+      "mime": "text/css; charset=utf-8"
+    },
+    {
+      "url": "http://127.0.0.1:64270/docs/assets/mode.5e2c2584b0.js",
+      "status": 200,
+      "mime": "text/javascript; charset=utf-8"
+    },
+    {
+      "url": "http://127.0.0.1:64270/docs/assets/site.2529a0d647.js",
+      "status": 200,
+      "mime": "text/javascript; charset=utf-8"
+    },
+    {
+      "url": "http://127.0.0.1:64270/docs/assets/fonts/371924e7480d3d01807fdc1bd30442d0a6651e6b5ea546482f5883d613cf0419.ttf",
+      "status": 200,
+      "mime": "font/ttf"
+    },
+    {
+      "url": "http://127.0.0.1:64270/docs/assets/fonts/662a196d58f1183bf2d77428b6d5283fe3f45161ab021bea4036bc98e5cac016.ttf",
+      "status": 200,
+      "mime": "font/ttf"
+    },
+    {
+      "url": "http://127.0.0.1:64270/__rustify-docs/dev.js?session=7235-18dea288784083b0&good=3",
+      "status": 200,
+      "mime": "text/javascript; charset=utf-8"
+    },
+    {
+      "url": "http://127.0.0.1:64270/docs/assets/islands/1a6a77907f14ac77f8973447016fefb5cfde15eea1755e915447062fc14552d5/islands.js",
+      "status": 200,
+      "mime": "text/javascript; charset=utf-8"
+    },
+    {
+      "url": "http://127.0.0.1:64270/__rustify-docs/events?path=%2Fdocs%2Fcounter%2F&good=3&session=7235-18dea288784083b0",
+      "status": 200,
+      "mime": "text/event-stream; charset=utf-8"
+    },
+    {
+      "url": "http://127.0.0.1:64270/docs/assets/islands/1a6a77907f14ac77f8973447016fefb5cfde15eea1755e915447062fc14552d5/dom-loader.js",
+      "status": 200,
+      "mime": "text/javascript; charset=utf-8"
+    },
+    {
+      "url": "http://127.0.0.1:64270/docs/assets/islands/1a6a77907f14ac77f8973447016fefb5cfde15eea1755e915447062fc14552d5/app_bg.wasm",
+      "status": 200,
+      "mime": "application/wasm"
+    },
+    {
+      "url": "http://127.0.0.1:64270/docs/assets/islands/1a6a77907f14ac77f8973447016fefb5cfde15eea1755e915447062fc14552d5/app.js",
+      "status": 200,
+      "mime": "text/javascript; charset=utf-8"
+    },
+    {
+      "url": "http://127.0.0.1:64270/docs/assets/islands/1a6a77907f14ac77f8973447016fefb5cfde15eea1755e915447062fc14552d5/snippets/rustify-ui-4db2f10f10788f4c/web/dom-runtime.js",
+      "status": 200,
+      "mime": "text/javascript; charset=utf-8"
+    },
+    {
+      "url": "http://127.0.0.1:64270/docs/counter/",
+      "status": 200,
+      "mime": "text/html; charset=utf-8"
+    },
+    {
+      "url": "http://127.0.0.1:64270/docs/assets/site.9ef35152a4.css",
+      "status": 200,
+      "mime": "text/css; charset=utf-8"
+    },
+    {
+      "url": "http://127.0.0.1:64270/__rustify-docs/dev.css",
+      "status": 200,
+      "mime": "text/css; charset=utf-8"
+    },
+    {
+      "url": "http://127.0.0.1:64270/docs/assets/mode.5e2c2584b0.js",
+      "status": 200,
+      "mime": "text/javascript; charset=utf-8"
+    },
+    {
+      "url": "http://127.0.0.1:64270/docs/assets/site.2529a0d647.js",
+      "status": 200,
+      "mime": "text/javascript; charset=utf-8"
+    },
+    {
+      "url": "http://127.0.0.1:64270/__rustify-docs/dev.js?session=7235-18dea288784083b0&good=3",
+      "status": 200,
+      "mime": "text/javascript; charset=utf-8"
+    },
+    {
+      "url": "http://127.0.0.1:64270/docs/assets/fonts/371924e7480d3d01807fdc1bd30442d0a6651e6b5ea546482f5883d613cf0419.ttf",
+      "status": 200,
+      "mime": "font/ttf"
+    },
+    {
+      "url": "http://127.0.0.1:64270/docs/assets/fonts/662a196d58f1183bf2d77428b6d5283fe3f45161ab021bea4036bc98e5cac016.ttf",
+      "status": 200,
+      "mime": "font/ttf"
+    },
+    {
+      "url": "http://127.0.0.1:64270/docs/assets/islands/1a6a77907f14ac77f8973447016fefb5cfde15eea1755e915447062fc14552d5/islands.js",
+      "status": 200,
+      "mime": "text/javascript; charset=utf-8"
+    },
+    {
+      "url": "http://127.0.0.1:64270/__rustify-docs/events?path=%2Fdocs%2Fcounter%2F&good=3&session=7235-18dea288784083b0",
+      "status": 200,
+      "mime": "text/event-stream; charset=utf-8"
+    },
+    {
+      "url": "http://127.0.0.1:64270/docs/assets/islands/1a6a77907f14ac77f8973447016fefb5cfde15eea1755e915447062fc14552d5/dom-loader.js",
+      "status": 200,
+      "mime": "text/javascript; charset=utf-8"
+    },
+    {
+      "url": "http://127.0.0.1:64270/docs/assets/islands/1a6a77907f14ac77f8973447016fefb5cfde15eea1755e915447062fc14552d5/app_bg.wasm",
+      "status": 200,
+      "mime": "application/wasm"
+    },
+    {
+      "url": "http://127.0.0.1:64270/docs/assets/islands/1a6a77907f14ac77f8973447016fefb5cfde15eea1755e915447062fc14552d5/app.js",
+      "status": 200,
+      "mime": "text/javascript; charset=utf-8"
+    },
+    {
+      "url": "http://127.0.0.1:64270/docs/assets/islands/1a6a77907f14ac77f8973447016fefb5cfde15eea1755e915447062fc14552d5/snippets/rustify-ui-4db2f10f10788f4c/web/dom-runtime.js",
+      "status": 200,
+      "mime": "text/javascript; charset=utf-8"
+    }
+  ],
+  "console": [],
+  "pageErrors": [],
+  "csp": []
+}

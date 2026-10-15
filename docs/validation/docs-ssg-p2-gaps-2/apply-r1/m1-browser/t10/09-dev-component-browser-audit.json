@@ -1,0 +1,53 @@
+{
+  "requests": [
+    "http://127.0.0.1:65272/",
+    "http://127.0.0.1:65272/assets/site.f9c6a2237d.css",
+    "http://127.0.0.1:65272/__rustify-docs/dev.css",
+    "http://127.0.0.1:65272/assets/mode.5e2c2584b0.js",
+    "http://127.0.0.1:65272/assets/site.2529a0d647.js",
+    "http://127.0.0.1:65272/__rustify-docs/dev.js?session=b355-18dea2c5ff91f280&good=1",
+    "http://127.0.0.1:65272/__rustify-docs/events?path=%2F&good=1&session=b355-18dea2c5ff91f280"
+  ],
+  "failures": [],
+  "expectedStreamClosures": [],
+  "responses": [
+    {
+      "url": "http://127.0.0.1:65272/",
+      "status": 200,
+      "mime": "text/html; charset=utf-8"
+    },
+    {
+      "url": "http://127.0.0.1:65272/assets/site.f9c6a2237d.css",
+      "status": 200,
+      "mime": "text/css; charset=utf-8"
+    },
+    {
+      "url": "http://127.0.0.1:65272/__rustify-docs/dev.css",
+      "status": 200,
+      "mime": "text/css; charset=utf-8"
+    },
+    {
+      "url": "http://127.0.0.1:65272/assets/mode.5e2c2584b0.js",
+      "status": 200,
+      "mime": "text/javascript; charset=utf-8"
+    },
+    {
+      "url": "http://127.0.0.1:65272/assets/site.2529a0d647.js",
+      "status": 200,
+      "mime": "text/javascript; charset=utf-8"
+    },
+    {
+      "url": "http://127.0.0.1:65272/__rustify-docs/dev.js?session=b355-18dea2c5ff91f280&good=1",
+      "status": 200,
+      "mime": "text/javascript; charset=utf-8"
+    },
+    {
+      "url": "http://127.0.0.1:65272/__rustify-docs/events?path=%2F&good=1&session=b355-18dea2c5ff91f280",
+      "status": 200,
+      "mime": "text/event-stream"
+    }
+  ],
+  "console": [],
+  "pageErrors": [],
+  "csp": []
+}

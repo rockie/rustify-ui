@@ -1,0 +1,157 @@
+[
+  {
+    "encoded": "``  ``",
+    "text": "",
+    "codes": [
+      ""
+    ]
+  },
+  {
+    "encoded": "` `",
+    "text": " ",
+    "codes": [
+      " "
+    ]
+  },
+  {
+    "encoded": "`  `",
+    "text": "  ",
+    "codes": [
+      "  "
+    ]
+  },
+  {
+    "encoded": "` a `",
+    "text": " a ",
+    "codes": [
+      " a "
+    ]
+  },
+  {
+    "encoded": "`a\nb`",
+    "text": "a\nb",
+    "codes": [
+      "a\nb"
+    ]
+  },
+  {
+    "encoded": "`a\r\nb`",
+    "text": "a\r\nb",
+    "codes": [
+      "a\r\nb"
+    ]
+  },
+  {
+    "encoded": "`a\\b`",
+    "text": "a\\b",
+    "codes": [
+      "a\\b"
+    ]
+  },
+  {
+    "encoded": "`Counter`",
+    "text": "Counter",
+    "codes": [
+      "Counter"
+    ]
+  },
+  {
+    "encoded": "`` a`b ``",
+    "text": "a`b",
+    "codes": [
+      "a`b"
+    ]
+  },
+  {
+    "encoded": "``` a``b ```",
+    "text": "a``b",
+    "codes": [
+      "a``b"
+    ]
+  },
+  {
+    "encoded": "`` `a` ``",
+    "text": "`a`",
+    "codes": [
+      "`a`"
+    ]
+  },
+  {
+    "encoded": "`` ` ``",
+    "text": "`",
+    "codes": [
+      "`"
+    ]
+  },
+  {
+    "encoded": "``` `` ```",
+    "text": "``",
+    "codes": [
+      "``"
+    ]
+  },
+  {
+    "encoded": "``  `\r\n  ``",
+    "text": " `\r\n ",
+    "codes": [
+      " `\r\n "
+    ]
+  },
+  {
+    "encoded": "``    ``",
+    "text": "  ",
+    "codes": [
+      "  "
+    ]
+  },
+  {
+    "encoded": "``a b``",
+    "text": "a b",
+    "codes": [
+      "a b"
+    ]
+  },
+  {
+    "encoded": "``\na\r\n``",
+    "text": "\na\r\n",
+    "codes": [
+      "\na\r\n"
+    ]
+  },
+  {
+    "encoded": "``  `` then `` file/a`b `` and `en` / `zh-CN`",
+    "text": " then file/a`b and en / zh-CN",
+    "codes": [
+      "",
+      "file/a`b",
+      "en",
+      "zh-CN"
+    ]
+  },
+  {
+    "encoded": "plain `unmatched and `` value ``",
+    "text": "plain `unmatched and value",
+    "codes": [
+      "value"
+    ]
+  },
+  {
+    "encoded": "unknown field `a`b`",
+    "text": "unknown field ab`",
+    "codes": [
+      "a"
+    ]
+  },
+  {
+    "encoded": "single a`b",
+    "text": "single a`b",
+    "codes": []
+  },
+  {
+    "encoded": "`<img src=x onerror=alert(1)>`",
+    "text": "<img src=x onerror=alert(1)>",
+    "codes": [
+      "<img src=x onerror=alert(1)>"
+    ]
+  }
+]

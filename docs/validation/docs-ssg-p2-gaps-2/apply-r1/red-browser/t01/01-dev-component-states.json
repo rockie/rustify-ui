@@ -1,0 +1,68 @@
+[
+  {
+    "session": "1422d-18dea1a4593ba268",
+    "revision": 0,
+    "sequence": 0,
+    "building": true,
+    "phase": "render",
+    "compile": null,
+    "good": null,
+    "ok": true,
+    "reload": false,
+    "errors": 0,
+    "warnings": 0,
+    "diagnostics": []
+  },
+  {
+    "session": "1422d-18dea1a4593ba268",
+    "revision": 1,
+    "sequence": 1,
+    "building": false,
+    "phase": "render",
+    "compile": null,
+    "good": 1,
+    "ok": true,
+    "reload": true,
+    "errors": 0,
+    "warnings": 0,
+    "diagnostics": []
+  },
+  {
+    "session": "1422d-18dea1a4593ba268",
+    "revision": 1,
+    "sequence": 2,
+    "building": true,
+    "phase": "render",
+    "compile": null,
+    "good": 1,
+    "ok": true,
+    "reload": false,
+    "errors": 0,
+    "warnings": 0,
+    "diagnostics": []
+  },
+  {
+    "session": "1422d-18dea1a4593ba268",
+    "revision": 2,
+    "sequence": 3,
+    "building": false,
+    "phase": "render",
+    "compile": null,
+    "good": 1,
+    "ok": false,
+    "reload": false,
+    "errors": 1,
+    "warnings": 0,
+    "diagnostics": [
+      {
+        "severity": "error",
+        "rule": "lang",
+        "file": "content/index.md",
+        "line": 3,
+        "column": 7,
+        "message": "lang: `` a`",
+        "suggestion": "use a language tag such as `en`, `zh-CN` or `fr`"
+      }
+    ]
+  }
+]

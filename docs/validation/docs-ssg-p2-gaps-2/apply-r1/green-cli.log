@@ -1,0 +1,27 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+   Compiling rustify-docs v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-docs)
+   Compiling rustify-docs-cli v0.1.18 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-docs-cli)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 3.68s
+     Running tests/diagnostic_text.rs (target/debug/deps/diagnostic_text-6b0064ee8d4cb38c)
+
+running 6 tests
+test repairs_encode_the_entire_default_and_author_key ... ok
+test both_writers_match_the_handwritten_verbatim_table ... ok
+test duplicate_site_routes_quote_the_whole_route ... ok
+test region_repairs_encode_the_fixed_marker_prefixes_and_configuration_values ... ok
+test check_and_build_encode_plain_paths_prefixed_anchors_yaml_keys_and_empty_language ... ok
+test frontmatter_language_keeps_author_text_that_looks_like_a_yaml_location ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.95s
+
+mbx[cache]: 0 hits, 1 misses, 3 incremental; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: 2.6 TiB logical of old files removed while you were busy compiling other things.

@@ -1,0 +1,21 @@
+{
+  "name": "green-browser",
+  "command": [
+    "npx",
+    "--no-install",
+    "playwright",
+    "test",
+    "-c",
+    "playwright.docs.config.ts",
+    "--project=docs-dev",
+    "dev-components.spec.ts",
+    "--grep",
+    "frontmatter language preserves",
+    "--workers=1",
+    "--reporter=json",
+    "--output=docs/validation/docs-ssg-p2-gaps-2/apply-r1/green-browser-artifacts"
+  ],
+  "exit": 0,
+  "seconds": 52.96,
+  "head": "97c9946c6a325bed676a92dbd7bcea038db4ea69"
+}

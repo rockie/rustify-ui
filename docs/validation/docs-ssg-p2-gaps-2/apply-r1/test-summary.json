@@ -1,0 +1,69 @@
+{
+  "docs-tests": {
+    "name": "docs-tests",
+    "command": [
+      "mbx",
+      "test",
+      "--locked",
+      "-p",
+      "rustify-docs"
+    ],
+    "exit": 0,
+    "seconds": 51.63,
+    "head": "97c9946c6a325bed676a92dbd7bcea038db4ea69",
+    "passed": 277,
+    "failed": 0,
+    "ignored": 0
+  },
+  "cli-tests": {
+    "name": "cli-tests",
+    "command": [
+      "mbx",
+      "test",
+      "--locked",
+      "-p",
+      "rustify-docs-cli"
+    ],
+    "exit": 0,
+    "seconds": 677.49,
+    "head": "97c9946c6a325bed676a92dbd7bcea038db4ea69",
+    "passed": 158,
+    "failed": 0,
+    "ignored": 1
+  },
+  "syntax-tests": {
+    "name": "syntax-tests",
+    "command": [
+      "mbx",
+      "test",
+      "--locked",
+      "-p",
+      "rustify-docs-syntax"
+    ],
+    "exit": 0,
+    "seconds": 1.18,
+    "head": "97c9946c6a325bed676a92dbd7bcea038db4ea69",
+    "passed": 31,
+    "failed": 0,
+    "ignored": 0
+  },
+  "ssr-tests": {
+    "name": "ssr-tests",
+    "command": [
+      "mbx",
+      "test",
+      "--locked",
+      "-p",
+      "rustify-docs",
+      "--no-default-features",
+      "--features",
+      "site-ssr"
+    ],
+    "exit": 0,
+    "seconds": 3.85,
+    "head": "97c9946c6a325bed676a92dbd7bcea038db4ea69",
+    "passed": 30,
+    "failed": 0,
+    "ignored": 0
+  }
+}

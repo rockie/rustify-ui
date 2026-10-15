@@ -1,0 +1,16 @@
+{
+  "name": "red-cli",
+  "command": [
+    "mbx",
+    "test",
+    "--locked",
+    "-p",
+    "rustify-docs-cli",
+    "--test",
+    "diagnostic_text",
+    "frontmatter_language_keeps_author_text_that_looks_like_a_yaml_location"
+  ],
+  "exit": 101,
+  "seconds": 5.02,
+  "head": "97c9946c6a325bed676a92dbd7bcea038db4ea69"
+}

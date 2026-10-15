@@ -1,0 +1,9 @@
+{
+  "reference_R": "e20daf7f07179d2bd24700c345f577fb9c8dbc15",
+  "producer_and_reader_files": 44,
+  "unchanged": 43,
+  "changed": [
+    "crates/rustify-docs/src/frontmatter.rs"
+  ],
+  "audit": "Original V-2 classifications remain applicable outside language_issue; its writer is unchanged, actual-location-only suffix removal now preserves the encoded value through the wrapper. New location format uses parser-owned numeric positions, not author prose."
+}

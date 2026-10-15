@@ -1,0 +1,17 @@
+rustc 1.99.0 (b940084d7 2026-09-28)
+dev: pages show no last-updated date: not a git repository (or any of the parent directories): .git
+watching /private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-na2Wrb/plain; drafts are shown, source and published output are unchanged, stop with Ctrl-C
+dev: revision 1: 3 page(s) changed, 0 warning(s), 15 ms
+dev: render
+error[unregistered-component]: component `MissingWidget` is not registered; add it to site! and configure [rust]
+  --> content/counter.md:8:1
+  = help: Use a component from `CardGrid`, `Steps`, `Tabs`; for an author component, enable `[rust]` and register its name in `site!`.
+error[unregistered-demo]: demo `MissingDemo` is not registered in site!
+  --> content/counter.md:12:1
+  = help: Enable `[rust]` and register a demo in `site!` before using a `rustify-demo` block.
+error[embed-props]: missing field `items`
+  --> content/counter.md:16:1
+  = help: Add or correct `props` using the declared fields `items` (`Vec<StepSpec>`; required); see https://github.com/rockie/rustify-ui/blob/main/docs/docs-ssg.md#static-builtins for its object fields.
+dev: revision 2 failed: 3 error(s), 0 warning(s), 9 ms; still serving revision 1
+dev: render
+dev: revision 3: 0 page(s) changed, 0 warning(s), 13 ms

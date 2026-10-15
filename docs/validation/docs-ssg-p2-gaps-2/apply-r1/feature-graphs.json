@@ -1,0 +1,14 @@
+{
+  "ssr": {
+    "root": "rustify-docs v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-docs) [site-ssr]",
+    "packages": 183,
+    "makepad": [],
+    "pipeline": false
+  },
+  "hydrate": {
+    "root": "rustify-docs v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-docs) [hydrate]",
+    "packages": 180,
+    "makepad": [],
+    "pipeline": false
+  }
+}

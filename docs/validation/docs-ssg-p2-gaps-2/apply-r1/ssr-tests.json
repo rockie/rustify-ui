@@ -1,0 +1,16 @@
+{
+  "name": "ssr-tests",
+  "command": [
+    "mbx",
+    "test",
+    "--locked",
+    "-p",
+    "rustify-docs",
+    "--no-default-features",
+    "--features",
+    "site-ssr"
+  ],
+  "exit": 0,
+  "seconds": 3.85,
+  "head": "97c9946c6a325bed676a92dbd7bcea038db4ea69"
+}

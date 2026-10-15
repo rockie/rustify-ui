@@ -1,0 +1,46 @@
+{
+  "width": 1280,
+  "theme": "dark",
+  "actual": [
+    {
+      "message": "invalid type: sequence, expected a string",
+      "suggestion": "Write label: \"text\" for declared type String (default expression \"a`b\".to_string()). Reported props path: label.",
+      "codes": [
+        {
+          "text": "label: \"text\"",
+          "font": "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace"
+        },
+        {
+          "text": "String",
+          "font": "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace"
+        },
+        {
+          "text": "\"a`b\".to_string()",
+          "font": "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace"
+        },
+        {
+          "text": "label",
+          "font": "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace"
+        }
+      ],
+      "overflow": [
+        0,
+        0
+      ]
+    },
+    {
+      "message": "this page is in no navigation group, so readers can only reach it by a link",
+      "codes": [],
+      "overflow": [
+        0
+      ]
+    },
+    {
+      "message": "radius: Light and dark have different author values; editing this common field applies to both",
+      "codes": [],
+      "overflow": [
+        0
+      ]
+    }
+  ]
+}

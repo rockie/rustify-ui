@@ -1,0 +1,15 @@
+{
+  "name": "cli-build",
+  "command": [
+    "mbx",
+    "build",
+    "--locked",
+    "-p",
+    "rustify-docs-cli",
+    "--profile",
+    "docs-cli"
+  ],
+  "exit": 0,
+  "seconds": 0.39,
+  "head": "97c9946c6a325bed676a92dbd7bcea038db4ea69"
+}
