@@ -1,5 +1,9 @@
 import { BrowserContext, Page } from "@playwright/test";
 
+export function firstFontFamily(node: Element) {
+    return getComputedStyle(node).fontFamily.split(",")[0].trim().replace(/^['"]|['"]$/g, "");
+}
+
 export async function grantClipboard(context: BrowserContext) {
     const permissions = context.browser()?.browserType().name() === "chromium"
         ? ["clipboard-read", "clipboard-write"] : ["clipboard-read"];

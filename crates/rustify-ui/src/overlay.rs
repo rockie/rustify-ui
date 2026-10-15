@@ -745,14 +745,7 @@ mod dom {
             let registered = RwSignal::new(None::<LayerId>);
             let size_watch = StoredValue::new(None::<SendWrapper<crate::ResizeObservation>>);
             let anchor_watch = StoredValue::new(None::<SendWrapper<crate::ResizeObservation>>);
-            // Capture before children mount: a menu may focus its first item
-            // before the node-registration effect runs.
-            let returns_to = StoredValue::new(
-                document()
-                    .active_element()
-                    .filter(|active| active.is_connected())
-                    .map(SendWrapper::new),
-            );
+            let returns_to: StoredValue<Option<SendWrapper<Element>>> = StoredValue::new(None);
             // Dropped with the layer, which takes the listener with it.
             let tab_loop = StoredValue::new(None::<Listener>);
 
@@ -821,6 +814,12 @@ mod dom {
                     // Reposition on the layer's own size, as well as its anchor.
                     size_watch.set_value(
                         crate::observe_resize(&element, move || moved.update(|n| *n += 1))
+                            .map(SendWrapper::new),
+                    );
+                    returns_to.set_value(
+                        document()
+                            .active_element()
+                            .filter(|active| active.is_connected())
                             .map(SendWrapper::new),
                     );
                     let on_close = on_close.clone();

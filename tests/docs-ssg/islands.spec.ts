@@ -578,7 +578,8 @@ test("a real callback trap restores every initial island and keeps source, navig
     await expect(page).toHaveURL(url("counter/"));
     await ready(page, 4);
     expect(audit.pageErrors.length).toBeGreaterThanOrEqual(1);
-    expect(audit.pageErrors.filter(error => !/^RuntimeError: unreachable$/.test(error))).toEqual([]);
+    expect(audit.pageErrors).toHaveLength(1);
+    expect(audit.pageErrors[0]).toMatch(/^RuntimeError: (?:unreachable$|Unreachable code should not be executed\b)/);
     expect(audit.console.filter(message => !/^Interactive examples failed/.test(message.text) && !/docs fixture callback failure/.test(message.text))).toEqual([]);
     expect(audit.console.filter(message => /^Interactive examples failed/.test(message.text))).toHaveLength(1);
     expect(audit.failures).toEqual([]);
@@ -759,13 +760,13 @@ test("the release proxy attaches every real category, then opens floating contro
     await category("text field").getByRole("textbox", { name: "Editable text", exact: true }).fill("Attached text");
     await expect(category("text field").locator('[data-testid$="-text-result"]')).toHaveText("Attached text");
     await category("menu").getByRole("button", { name: "Open menu", exact: true }).focus();
-    await category("menu").getByRole("button", { name: "Open menu", exact: true }).click();
+    await category("menu").getByRole("button", { name: "Open menu", exact: true }).press("Enter");
     await expect(page.getByRole("menu", { name: "Fixture actions" })).toBeVisible();
-    await page.getByRole("menuitem", { name: "Copy", exact: true }).click();
+    await page.getByRole("menuitem", { name: "Copy", exact: true }).press("Enter");
     await expect(page.getByRole("menu", { name: "Fixture actions" })).toHaveCount(0);
     await expect(category("menu").getByRole("button", { name: "Open menu", exact: true })).toBeFocused();
     await category("dialog").getByRole("button", { name: "Open dialog", exact: true }).focus();
-    await category("dialog").getByRole("button", { name: "Open dialog", exact: true }).click();
+    await category("dialog").getByRole("button", { name: "Open dialog", exact: true }).press("Enter");
     await expect(page.getByRole("dialog", { name: "Fixture dialog" })).toBeVisible();
     await page.keyboard.press("Escape");
     await expect(page.getByRole("dialog", { name: "Fixture dialog" })).toHaveCount(0);

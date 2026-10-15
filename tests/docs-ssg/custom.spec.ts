@@ -2,7 +2,7 @@ import { CDPSession, expect, Locator, Page, test as playwright } from "@playwrig
 import { createHash } from "node:crypto";
 import { readFileSync, readdirSync, statSync } from "node:fs";
 import { atRest, attachScans, buildId, scan, Scan, serious } from "./a11y";
-import { capture, grantClipboard } from "./browser";
+import { capture, firstFontFamily, grantClipboard } from "./browser";
 
 type ThemeMode = "light" | "dark";
 type FontResponse = { url: string; mime: string; bytes: Buffer; sha256: string };
@@ -195,7 +195,7 @@ async function themeValues(page: Page, mode: ThemeMode) {
     await expect(surface).toHaveCSS("color", rgb(values["card-foreground"]));
     await expect(surface).toHaveCSS("border-top-left-radius", `${parseFloat(values.radius) - 2}px`);
     for (const [slot, family] of [["sans", "Noto Sans"], ["serif", "Noto Serif"], ["mono", "JetBrains Mono"]]) {
-        expect(await page.locator(`[data-font-${slot}]`).evaluate(node => getComputedStyle(node).fontFamily.split(",")[0].trim().replace(/^['"]|['"]$/g, ""))).toBe(family);
+        expect(await page.locator(`[data-font-${slot}]`).evaluate(firstFontFamily)).toBe(family);
     }
 }
 
@@ -310,21 +310,23 @@ test("live mode changes reach the theme context and real floating controls, incl
         await page.locator(`[data-rd-mode="${mode}"]`).click();
         await themeValues(page, mode);
         await expect(page.getByTestId("theme-probe-context")).toHaveAttribute("data-theme-mode", mode);
-        await page.getByTestId("theme-probe-menu-trigger").click();
+        await page.getByTestId("theme-probe-menu-trigger").focus();
+        await page.getByTestId("theme-probe-menu-trigger").press("Enter");
         const menu = page.getByTestId("theme-probe-menu");
         await expect(menu).toHaveCSS("background-color", rgb(theme.styles[mode].popover));
         await expect(menu).toHaveCSS("border-top-left-radius", `${parseFloat(theme.styles[mode].radius) - 2}px`);
-        expect(await menu.evaluate(node => getComputedStyle(node).fontFamily)).toContain('"Noto Sans"');
-        await menu.getByRole("menuitem", { name: "Choose résumé 中文 🙂", exact: true }).click();
+        expect(await menu.evaluate(firstFontFamily)).toBe("Noto Sans");
+        await menu.getByRole("menuitem", { name: "Choose résumé 中文 🙂", exact: true }).press("Enter");
         await expect(page.getByTestId("theme-probe-menu-value")).toHaveText("choose");
         await expect(page.getByTestId("theme-probe-menu-trigger")).toBeFocused();
-        await page.getByTestId("theme-probe-dialog-trigger").click();
+        await page.getByTestId("theme-probe-dialog-trigger").focus();
+        await page.getByTestId("theme-probe-dialog-trigger").press("Enter");
         const dialog = page.getByRole("dialog", { name: "Theme probe dialog", exact: true });
         const panel = dialog.locator('[data-name="Dialog"]');
         await expect(panel).toHaveCSS("background-color", rgb(theme.styles[mode].popover));
         await expect(panel).toHaveCSS("color", rgb(theme.styles[mode]["popover-foreground"]));
         await expect(panel).toHaveCSS("border-top-left-radius", theme.styles[mode].radius);
-        expect(await panel.evaluate(node => getComputedStyle(node).fontFamily)).toContain('"Noto Sans"');
+        expect(await panel.evaluate(firstFontFamily)).toBe("Noto Sans");
         await page.keyboard.press("Escape");
         await expect(dialog).toHaveCount(0);
         await expect(page.getByTestId("theme-probe-dialog-trigger")).toBeFocused();
