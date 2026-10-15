@@ -2,6 +2,7 @@ import { expect, Locator, Page, Route, test as playwright } from "@playwright/te
 import { readFileSync } from "node:fs";
 import { attachMotion, expectNormal, expectStill, installMotionProbe, motionTargets, sampleMotion } from "./motion";
 import { atRest, attachScans, buildId, scan, Scan, serious } from "./a11y";
+import { capture, grantClipboard } from "./browser";
 
 type RuntimeStats = { tasks: number; timers: number; observers: number; errors: number; aborted: boolean };
 type Coordinator = { state(): string; failure(): string | null; stats(): RuntimeStats | null };
@@ -352,7 +353,7 @@ test("no script keeps real SSR views and both source panels readable with native
 });
 
 test("loading gates native and captured input while source controls remain usable", async ({ page, context, audit }) => {
-    await context.grantPermissions(["clipboard-read", "clipboard-write"]);
+    await grantClipboard(context);
     const held = await openPaused(page, "counter/");
     try {
         const island = islands(page).first();
@@ -478,7 +479,7 @@ test("static builtins need no script or wasm and retain every panel, native link
         for (const width of [1280, 375]) {
             await page.setViewportSize({ width, height: 800 });
             expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(0);
-            await page.screenshot({ path: test.info().outputPath(`builtins-no-script-${width}.png`), fullPage: true });
+            await capture(page, { path: test.info().outputPath(`builtins-no-script-${width}.png`), fullPage: true });
         }
         expect(audit.requests.filter(request => /\/assets\/islands\//.test(new URL(request).pathname) || new URL(request).pathname.endsWith(".wasm"))).toEqual([]);
         expect(audit.failures).toEqual([]);
@@ -492,7 +493,7 @@ test("static builtins need no script or wasm and retain every panel, native link
 });
 
 test("static tabs use unique ARIA mappings and keyboard state stays local to each peer", async ({ page, context, audit }) => {
-    await context.grantPermissions(["clipboard-read", "clipboard-write"]);
+    await grantClipboard(context);
     await page.goto(url("builtins/"));
     const groups = page.locator("[data-rd-static-tabs]");
     await expect(page.locator("[data-rd-static-tabs][data-rd-static-enhanced]")).toHaveCount(2);
@@ -548,7 +549,7 @@ test("static tabs use unique ARIA mappings and keyboard state stays local to eac
 });
 
 test("a real callback trap restores every initial island and keeps source, navigation and reload alive", async ({ page, context, audit }) => {
-    await context.grantPermissions(["clipboard-read", "clipboard-write"]);
+    await grantClipboard(context);
     const held = await openPaused(page, "failure/");
     held.release();
     await ready(page, 2);
@@ -611,7 +612,7 @@ for (const file of ["islands.js", "app.js", "app_bg.wasm"]) {
 }
 
 test("an imported SDK snippet's real 404 restores SSR and leaves source, navigation and reload usable", async ({ page, context, audit }) => {
-    await context.grantPermissions(["clipboard-read", "clipboard-write"]);
+    await grantClipboard(context);
     const held = await openPaused(page, "counter/");
     const glueUrl = new URL("app.js", await held.seen).href;
     const glue = await page.request.get(glueUrl);
@@ -634,7 +635,7 @@ test("an imported SDK snippet's real 404 restores SSR and leaves source, navigat
 });
 
 test("invalid wasm bytes in a successful HTTP response fail terminally before attachment", async ({ page, context, audit }) => {
-    await context.grantPermissions(["clipboard-read", "clipboard-write"]);
+    await grantClipboard(context);
     let replaced = 0;
     const corruptWasm = async (route: Route) => {
         replaced++;
@@ -653,7 +654,7 @@ test("invalid wasm bytes in a successful HTTP response fail terminally before at
 });
 
 test("a glue init exception after real wasm instantiation preserves SSR and recovers through reload", async ({ page, context, audit }) => {
-    await context.grantPermissions(["clipboard-read", "clipboard-write"]);
+    await grantClipboard(context);
     let replaced = 0;
     const failInit = async (route: Route) => {
         const response = await route.fetch();
@@ -757,11 +758,13 @@ test("the release proxy attaches every real category, then opens floating contro
     const category = (name: string) => page.locator(`[data-category="${name}"]`);
     await category("text field").getByRole("textbox", { name: "Editable text", exact: true }).fill("Attached text");
     await expect(category("text field").locator('[data-testid$="-text-result"]')).toHaveText("Attached text");
+    await category("menu").getByRole("button", { name: "Open menu", exact: true }).focus();
     await category("menu").getByRole("button", { name: "Open menu", exact: true }).click();
     await expect(page.getByRole("menu", { name: "Fixture actions" })).toBeVisible();
     await page.getByRole("menuitem", { name: "Copy", exact: true }).click();
     await expect(page.getByRole("menu", { name: "Fixture actions" })).toHaveCount(0);
     await expect(category("menu").getByRole("button", { name: "Open menu", exact: true })).toBeFocused();
+    await category("dialog").getByRole("button", { name: "Open dialog", exact: true }).focus();
     await category("dialog").getByRole("button", { name: "Open dialog", exact: true }).click();
     await expect(page.getByRole("dialog", { name: "Fixture dialog" })).toBeVisible();
     await page.keyboard.press("Escape");
@@ -850,7 +853,7 @@ for (const colorScheme of ["light", "dark"] as const) {
                 await captureOriginals(page);
             }
             await page.evaluate(() => window.scrollTo(0, 0));
-            await page.screenshot({ path: test.info().outputPath(`loading-${colorScheme}-${layout.width}.png`), fullPage: true });
+            await capture(page, { path: test.info().outputPath(`loading-${colorScheme}-${layout.width}.png`), fullPage: true });
             held.release();
             await ready(page, 2);
             await identity(page);
@@ -881,10 +884,11 @@ for (const colorScheme of ["light", "dark"] as const) {
             await expect(source.getByRole("tab", { name: "Full file", exact: true })).toBeEnabled();
             await expect(islands(page).last().getByRole("button", { name: "Reload page", exact: true })).toBeInViewport();
             await page.evaluate(() => window.scrollTo(0, 0));
-            await page.screenshot({ path: test.info().outputPath(`failure-${colorScheme}-${layout.width}.png`), fullPage: true });
+            await capture(page, { path: test.info().outputPath(`failure-${colorScheme}-${layout.width}.png`), fullPage: true });
             expect(audit.console.filter(message => !/^Interactive examples failed/.test(message.text) && !/docs fixture callback failure/.test(message.text))).toEqual([]);
             expect(audit.console.filter(message => /^Interactive examples failed/.test(message.text))).toHaveLength(1);
-            expect(audit.pageErrors.filter(error => !/^RuntimeError: unreachable$/.test(error))).toEqual([]);
+            expect(audit.pageErrors).toHaveLength(1);
+            expect(audit.pageErrors[0]).toMatch(/^RuntimeError: (?:unreachable$|Unreachable code should not be executed\b)/);
             expect(audit.failures).toEqual([]);
             expect(audit.responses).toEqual([]);
             expect(await page.evaluate(() => window.__docs_island_csp)).toEqual([]);
@@ -936,7 +940,8 @@ for (const colorScheme of ["light", "dark"] as const) for (const width of [1280,
         expect(await page.evaluate(() => window.__docs_island_csp)).toEqual([]);
         expect(audit.failures).toEqual([]);
         expect(audit.responses).toEqual([]);
-        expect(audit.pageErrors.filter(error => !/^RuntimeError: unreachable$/.test(error))).toEqual([]);
+        expect(audit.pageErrors).toHaveLength(1);
+        expect(audit.pageErrors[0]).toMatch(/^RuntimeError: (?:unreachable$|Unreachable code should not be executed\b)/);
         expect(audit.console.filter(message => !/^Interactive examples failed/.test(message.text) && !/docs fixture callback failure/.test(message.text))).toEqual([]);
         expect(audit.requests.filter(request => new URL(request).origin !== new URL(url("./")).origin)).toEqual([]);
     });

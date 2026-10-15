@@ -2,6 +2,7 @@ import { CDPSession, expect, Locator, Page, test as playwright } from "@playwrig
 import { createHash } from "node:crypto";
 import { readFileSync, readdirSync, statSync } from "node:fs";
 import { atRest, attachScans, buildId, scan, Scan, serious } from "./a11y";
+import { capture, grantClipboard } from "./browser";
 
 type ThemeMode = "light" | "dark";
 type FontResponse = { url: string; mime: string; bytes: Buffer; sha256: string };
@@ -194,7 +195,7 @@ async function themeValues(page: Page, mode: ThemeMode) {
     await expect(surface).toHaveCSS("color", rgb(values["card-foreground"]));
     await expect(surface).toHaveCSS("border-top-left-radius", `${parseFloat(values.radius) - 2}px`);
     for (const [slot, family] of [["sans", "Noto Sans"], ["serif", "Noto Serif"], ["mono", "JetBrains Mono"]]) {
-        expect(await page.locator(`[data-font-${slot}]`).evaluate(node => getComputedStyle(node).fontFamily)).toContain(`"${family}"`);
+        expect(await page.locator(`[data-font-${slot}]`).evaluate(node => getComputedStyle(node).fontFamily.split(",")[0].trim().replace(/^['"]|['"]$/g, ""))).toBe(family);
     }
 }
 
@@ -244,7 +245,7 @@ test("all seven slots share canonical context across Markdown, custom pages and 
         if (context === "/404/") {
             await expect(page.getByRole("heading", { level: 1 })).toHaveText("Page not found");
             await flushFonts(page, audit);
-            await page.screenshot({ path: test.info().outputPath("custom-deep-404.png"), fullPage: true });
+            await capture(page, { path: test.info().outputPath("custom-deep-404.png"), fullPage: true });
             await page.getByRole("link", { name: "return home", exact: true }).click();
             await expect(page).toHaveURL(route("./"));
         }
@@ -253,7 +254,7 @@ test("all seven slots share canonical context across Markdown, custom pages and 
 });
 
 test("nested page and slot demos retain actual SSR nodes, source and distinct identities", async ({ page, context, audit }) => {
-    await context.grantPermissions(["clipboard-read", "clipboard-write"]);
+    await grantClipboard(context);
     const release = await pausedCustom(page);
     const metadata = await islands(page).evaluateAll(nodes => nodes.map(node => JSON.parse(node.getAttribute("data-rustify-island-metadata")!)));
     expect(metadata.map(item => item.target.name)).toEqual(["CounterDemo", "CounterDemo", "CounterDemo", "ThemeProbeDemo"]);
@@ -287,7 +288,7 @@ for (const [scheme, preference, effective] of [["light", "light", "light"], ["da
         const release = await pausedCustom(page);
         await expect(page.locator("html")).toHaveAttribute("data-theme", preference);
         await themeValues(page, effective);
-        await page.screenshot({ path: test.info().outputPath(`first-frame-${preference}-${scheme}.png`), fullPage: true });
+        await capture(page, { path: test.info().outputPath(`first-frame-${preference}-${scheme}.png`), fullPage: true });
         release();
         await ready(page);
         await retainOriginals(page);
@@ -443,7 +444,7 @@ test("no script preserves custom views, sources, navigation and theme at 375px a
             expect(controlFontPixels).toBeGreaterThan(0);
             expect(parseFloat(zoom.controlFont) * scale).toBe(controlFontPixels * scale);
             await test.info().attach(`custom-no-script-zoom-${width}.json`, { body: JSON.stringify({ ...zoom, kind: "layout zoom emulation", physicalControlFontPixels: parseFloat(zoom.controlFont) * scale }), contentType: "application/json" });
-            await page.screenshot({ path: test.info().outputPath(`custom-no-script-${width}.png`), fullPage: true });
+            await capture(page, { path: test.info().outputPath(`custom-no-script-${width}.png`), fullPage: true });
             await flushFonts(page, audit);
             await page.locator("[data-custom-page]").getByRole("link", { name: "Static custom page", exact: true }).click();
             await expect(page).toHaveURL(route("plain/#plain-details"));
