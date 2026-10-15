@@ -1,0 +1,357 @@
+{
+  "binary": {
+    "path": "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/p4/install-96a739c9/bin/rustify-docs",
+    "sha256": "5570a44bd04d21284c3cfc12018d0fd925347b32ce3f69605093d0bc2657ca0b",
+    "buildInfo": "rustify-docs 0.1.22\npanic: unwind\ngrammars: syntect-5.3.0+two-face-0.5.2+bat-0.26.1+fancy\nsource: 96a739c9f9d8f3e4b8214f648d14de2bd3c31bbd\n"
+  },
+  "buildId": "5fa6f81fa57818a6",
+  "tags": [
+    "wcag2a",
+    "wcag2aa",
+    "wcag21a",
+    "wcag21aa",
+    "wcag22aa"
+  ],
+  "scans": [
+    {
+      "route": "zh/",
+      "state": "search-light-1280",
+      "width": 1280,
+      "colorScheme": "light",
+      "motion": "reduce",
+      "buildId": "5fa6f81fa57818a6",
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "tags": [
+            "cat.color",
+            "wcag2aa",
+            "wcag143",
+            "TTv5",
+            "TT13.c",
+            "EN-301-549",
+            "EN-9.1.4.3",
+            "ACT",
+            "RGAAv4",
+            "RGAA-3.2.1"
+          ],
+          "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=playwright",
+          "nodes": [
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "fgColor": "#667085",
+                    "bgColor": "#ecf2fd",
+                    "contrastRatio": 4.42,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "messageKey": null,
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<a id=\"rd-search-option-1-1-0\" class=\"rd-search-result\" role=\"option\" aria-selected=\"true\" tabindex=\"-1\" href=\"http://127.0.0.1:4205/rustify-ui/zh/page-0002/\">",
+                      "target": [
+                        "#rd-search-option-1-1-0"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element has insufficient color contrast of 4.42 (foreground color: #667085, background color: #ecf2fd, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<span class=\"rd-search-path\" lang=\"zh\">\u4f7f\u7528ThemeScope \u203a \u72b6\u6001\u4e8b\u4ef6\u5e94\u7528</span>",
+              "target": [
+                ".rd-search-path[lang=\"zh\"]:nth-child(2)"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.42 (foreground color: #667085, background color: #ecf2fd, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "fgColor": "#667085",
+                    "bgColor": "#ecf2fd",
+                    "contrastRatio": 4.42,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "messageKey": null,
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<a id=\"rd-search-option-1-1-0\" class=\"rd-search-result\" role=\"option\" aria-selected=\"true\" tabindex=\"-1\" href=\"http://127.0.0.1:4205/rustify-ui/zh/page-0002/\">",
+                      "target": [
+                        "#rd-search-option-1-1-0"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element has insufficient color contrast of 4.42 (foreground color: #667085, background color: #ecf2fd, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<span class=\"rd-search-path\" lang=\"zh\">\u4f7f\u7528ThemeScope \u203a \u4e3b\u9898\u5c5e\u6027\u52a8\u4f5c</span>",
+              "target": [
+                ".rd-search-path[lang=\"zh\"]:nth-child(3)"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.42 (foreground color: #667085, background color: #ecf2fd, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ]
+        }
+      ],
+      "incomplete": []
+    },
+    {
+      "route": "zh/",
+      "state": "search-light-375",
+      "width": 375,
+      "colorScheme": "light",
+      "motion": "reduce",
+      "buildId": "5fa6f81fa57818a6",
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "tags": [
+            "cat.color",
+            "wcag2aa",
+            "wcag143",
+            "TTv5",
+            "TT13.c",
+            "EN-301-549",
+            "EN-9.1.4.3",
+            "ACT",
+            "RGAAv4",
+            "RGAA-3.2.1"
+          ],
+          "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=playwright",
+          "nodes": [
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "fgColor": "#667085",
+                    "bgColor": "#ecf2fd",
+                    "contrastRatio": 4.42,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "messageKey": null,
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<a id=\"rd-search-option-1-1-0\" class=\"rd-search-result\" role=\"option\" aria-selected=\"true\" tabindex=\"-1\" href=\"http://127.0.0.1:4205/rustify-ui/zh/page-0002/\">",
+                      "target": [
+                        "#rd-search-option-1-1-0"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element has insufficient color contrast of 4.42 (foreground color: #667085, background color: #ecf2fd, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<span class=\"rd-search-path\" lang=\"zh\">\u4f7f\u7528ThemeScope \u203a \u72b6\u6001\u4e8b\u4ef6\u5e94\u7528</span>",
+              "target": [
+                ".rd-search-path[lang=\"zh\"]:nth-child(2)"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.42 (foreground color: #667085, background color: #ecf2fd, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "fgColor": "#667085",
+                    "bgColor": "#ecf2fd",
+                    "contrastRatio": 4.42,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "messageKey": null,
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<a id=\"rd-search-option-1-1-0\" class=\"rd-search-result\" role=\"option\" aria-selected=\"true\" tabindex=\"-1\" href=\"http://127.0.0.1:4205/rustify-ui/zh/page-0002/\">",
+                      "target": [
+                        "#rd-search-option-1-1-0"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element has insufficient color contrast of 4.42 (foreground color: #667085, background color: #ecf2fd, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<span class=\"rd-search-path\" lang=\"zh\">\u4f7f\u7528ThemeScope \u203a \u4e3b\u9898\u5c5e\u6027\u52a8\u4f5c</span>",
+              "target": [
+                ".rd-search-path[lang=\"zh\"]:nth-child(3)"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.42 (foreground color: #667085, background color: #ecf2fd, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ]
+        }
+      ],
+      "incomplete": []
+    },
+    {
+      "route": "zh/",
+      "state": "search-light-320",
+      "width": 320,
+      "colorScheme": "light",
+      "motion": "reduce",
+      "buildId": "5fa6f81fa57818a6",
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "tags": [
+            "cat.color",
+            "wcag2aa",
+            "wcag143",
+            "TTv5",
+            "TT13.c",
+            "EN-301-549",
+            "EN-9.1.4.3",
+            "ACT",
+            "RGAAv4",
+            "RGAA-3.2.1"
+          ],
+          "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.13/color-contrast?application=playwright",
+          "nodes": [
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "fgColor": "#667085",
+                    "bgColor": "#ecf2fd",
+                    "contrastRatio": 4.42,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "messageKey": null,
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<a id=\"rd-search-option-1-1-0\" class=\"rd-search-result\" role=\"option\" aria-selected=\"true\" tabindex=\"-1\" href=\"http://127.0.0.1:4205/rustify-ui/zh/page-0002/\">",
+                      "target": [
+                        "#rd-search-option-1-1-0"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element has insufficient color contrast of 4.42 (foreground color: #667085, background color: #ecf2fd, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<span class=\"rd-search-path\" lang=\"zh\">\u4f7f\u7528ThemeScope \u203a \u72b6\u6001\u4e8b\u4ef6\u5e94\u7528</span>",
+              "target": [
+                ".rd-search-path[lang=\"zh\"]:nth-child(2)"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.42 (foreground color: #667085, background color: #ecf2fd, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "any": [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "fgColor": "#667085",
+                    "bgColor": "#ecf2fd",
+                    "contrastRatio": 4.42,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "messageKey": null,
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [
+                    {
+                      "html": "<a id=\"rd-search-option-1-1-0\" class=\"rd-search-result\" role=\"option\" aria-selected=\"true\" tabindex=\"-1\" href=\"http://127.0.0.1:4205/rustify-ui/zh/page-0002/\">",
+                      "target": [
+                        "#rd-search-option-1-1-0"
+                      ]
+                    }
+                  ],
+                  "impact": "serious",
+                  "message": "Element has insufficient color contrast of 4.42 (foreground color: #667085, background color: #ecf2fd, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+                }
+              ],
+              "all": [],
+              "none": [],
+              "impact": "serious",
+              "html": "<span class=\"rd-search-path\" lang=\"zh\">\u4f7f\u7528ThemeScope \u203a \u4e3b\u9898\u5c5e\u6027\u52a8\u4f5c</span>",
+              "target": [
+                ".rd-search-path[lang=\"zh\"]:nth-child(3)"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.42 (foreground color: #667085, background color: #ecf2fd, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ]
+        }
+      ],
+      "incomplete": []
+    },
+    {
+      "route": "zh/",
+      "state": "search-dark-1280",
+      "width": 1280,
+      "colorScheme": "dark",
+      "motion": "reduce",
+      "buildId": "5fa6f81fa57818a6",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "route": "zh/",
+      "state": "search-dark-375",
+      "width": 375,
+      "colorScheme": "dark",
+      "motion": "reduce",
+      "buildId": "5fa6f81fa57818a6",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "route": "zh/",
+      "state": "search-dark-320",
+      "width": 320,
+      "colorScheme": "dark",
+      "motion": "reduce",
+      "buildId": "5fa6f81fa57818a6",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "route": "zh/",
+      "state": "search-200-percent-layout-text-emulation",
+      "width": 640,
+      "colorScheme": "light",
+      "motion": "reduce",
+      "buildId": "5fa6f81fa57818a6",
+      "violations": [],
+      "incomplete": []
+    }
+  ]
+}

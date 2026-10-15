@@ -1,0 +1,87 @@
+{
+  "binary": {
+    "path": "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/p4/install-d0d84d7b/bin/rustify-docs",
+    "sha256": "15e32885711228472d4cbbabade54f785da1cf04d5605ef5e26a8547c4b00a4f",
+    "buildInfo": "rustify-docs 0.1.23\npanic: unwind\ngrammars: syntect-5.3.0+two-face-0.5.2+bat-0.26.1+fancy\nsource: d0d84d7b60b46b542994479cadb7c11da1e0c28a\n"
+  },
+  "buildId": "b2280193b66d1af9",
+  "tags": [
+    "wcag2a",
+    "wcag2aa",
+    "wcag21a",
+    "wcag21aa",
+    "wcag22aa"
+  ],
+  "scans": [
+    {
+      "route": "zh/",
+      "state": "search-light-1280",
+      "width": 1280,
+      "colorScheme": "light",
+      "motion": "reduce",
+      "buildId": "b2280193b66d1af9",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "route": "zh/",
+      "state": "search-light-375",
+      "width": 375,
+      "colorScheme": "light",
+      "motion": "reduce",
+      "buildId": "b2280193b66d1af9",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "route": "zh/",
+      "state": "search-light-320",
+      "width": 320,
+      "colorScheme": "light",
+      "motion": "reduce",
+      "buildId": "b2280193b66d1af9",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "route": "zh/",
+      "state": "search-dark-1280",
+      "width": 1280,
+      "colorScheme": "dark",
+      "motion": "reduce",
+      "buildId": "b2280193b66d1af9",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "route": "zh/",
+      "state": "search-dark-375",
+      "width": 375,
+      "colorScheme": "dark",
+      "motion": "reduce",
+      "buildId": "b2280193b66d1af9",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "route": "zh/",
+      "state": "search-dark-320",
+      "width": 320,
+      "colorScheme": "dark",
+      "motion": "reduce",
+      "buildId": "b2280193b66d1af9",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "route": "zh/",
+      "state": "search-200-percent-layout-text-emulation",
+      "width": 640,
+      "colorScheme": "light",
+      "motion": "reduce",
+      "buildId": "b2280193b66d1af9",
+      "violations": [],
+      "incomplete": []
+    }
+  ]
+}

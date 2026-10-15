@@ -136,7 +136,8 @@ function installMeter(entry) {
       const block = blocks[0], field = block.querySelector("fieldset[data-rd-island-controls]");
       const metadata = JSON.parse(block.getAttribute("data-rustify-island-metadata"));
       meter.metadata = metadata;
-      if (metadata.target.type !== "demo" || metadata.target.name !== entry.demo || metadata.environment.lang !== "en"
+      if (metadata.target.type !== "demo" || metadata.target.name !== entry.demo || !document.documentElement.lang
+          || metadata.environment.lang !== document.documentElement.lang
           || field.disabled || field.inert || field.firstElementChild?.getAttribute("data-rustify-mounted") !== metadata.seed
           || document.querySelector("[data-component-category]")?.getAttribute("data-component-category") !== entry.name
           || field.querySelector("[style]")) throw new Error("the real registered official demo did not attach");

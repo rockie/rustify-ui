@@ -1,0 +1,915 @@
+{
+  "config": {
+    "argv": [
+      "/Users/rockie/.nvm/versions/node/v26.1.0/bin/node",
+      "/Users/rockie/Documents/gh-rockie/rustify-ui/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "playwright.docs.config.ts",
+      "--project=components-i18n-root"
+    ],
+    "configFile": "/Users/rockie/Documents/gh-rockie/rustify-ui/playwright.docs.config.ts",
+    "rootDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": {},
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/docs",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "dom-only",
+        "name": "dom-only",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [
+          "dom-only/hydration.spec.ts"
+        ],
+        "testMatch": [
+          "dom-only/**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/docs",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "dom-hydrate",
+        "name": "dom-hydrate",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "dom-only/hydration.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/docs",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "docs-root",
+        "name": "docs-root",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [
+          "docs-ssg/dev*.spec.ts",
+          "docs-ssg/islands.spec.ts",
+          "docs-ssg/custom.spec.ts",
+          "docs-ssg/official.spec.ts",
+          "docs-ssg/i18n*.spec.ts",
+          "docs-ssg/search*.spec.ts"
+        ],
+        "testMatch": [
+          "docs-ssg/**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/docs",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "docs-subpath",
+        "name": "docs-subpath",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [
+          "docs-ssg/dev*.spec.ts",
+          "docs-ssg/islands.spec.ts",
+          "docs-ssg/custom.spec.ts",
+          "docs-ssg/official.spec.ts",
+          "docs-ssg/i18n*.spec.ts",
+          "docs-ssg/search*.spec.ts"
+        ],
+        "testMatch": [
+          "docs-ssg/**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/docs",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "docs-meta",
+        "name": "docs-meta",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [
+          "docs-ssg/dev*.spec.ts",
+          "docs-ssg/islands.spec.ts",
+          "docs-ssg/custom.spec.ts",
+          "docs-ssg/official.spec.ts",
+          "docs-ssg/i18n*.spec.ts",
+          "docs-ssg/search*.spec.ts"
+        ],
+        "testMatch": [
+          "docs-ssg/**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/docs",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "components-root",
+        "name": "components-root",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/islands.spec.ts",
+          "docs-ssg/custom.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/docs",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "components-subpath",
+        "name": "components-subpath",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/islands.spec.ts",
+          "docs-ssg/custom.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/docs",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "components-meta",
+        "name": "components-meta",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/islands.spec.ts",
+          "docs-ssg/custom.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/docs",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "official-root",
+        "name": "official-root",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/official.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/docs",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "official-subpath",
+        "name": "official-subpath",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/official.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/docs",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "official-meta",
+        "name": "official-meta",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/official.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/docs",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "docs-i18n-root",
+        "name": "docs-i18n-root",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/i18n.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/docs",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "docs-i18n-subpath",
+        "name": "docs-i18n-subpath",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/i18n.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/docs",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "docs-i18n-meta",
+        "name": "docs-i18n-meta",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/i18n.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/docs",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "components-i18n-root",
+        "name": "components-i18n-root",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/i18n-islands.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/docs",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "components-i18n-subpath",
+        "name": "components-i18n-subpath",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/i18n-islands.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/docs",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "components-i18n-meta",
+        "name": "components-i18n-meta",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/i18n-islands.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/docs",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "docs-search-root",
+        "name": "docs-search-root",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/search.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/docs",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "docs-search-subpath",
+        "name": "docs-search-subpath",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [
+          "docs-ssg/search-perf.spec.ts"
+        ],
+        "testMatch": [
+          "docs-ssg/search*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/docs",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "docs-search-meta",
+        "name": "docs-search-meta",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/search.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/docs",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "docs-search-perf",
+        "name": "docs-search-perf",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/search-perf.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/docs",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "components-webkit",
+        "name": "components-webkit",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/islands.spec.ts",
+          "docs-ssg/custom.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/docs",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "docs-firefox",
+        "name": "docs-firefox",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [
+          "docs-ssg/dev*.spec.ts",
+          "docs-ssg/islands.spec.ts",
+          "docs-ssg/custom.spec.ts",
+          "docs-ssg/official.spec.ts",
+          "docs-ssg/i18n*.spec.ts",
+          "docs-ssg/search*.spec.ts"
+        ],
+        "testMatch": [
+          "docs-ssg/**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/docs",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "docs-webkit",
+        "name": "docs-webkit",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [
+          "docs-ssg/dev*.spec.ts",
+          "docs-ssg/islands.spec.ts",
+          "docs-ssg/custom.spec.ts",
+          "docs-ssg/official.spec.ts",
+          "docs-ssg/i18n*.spec.ts",
+          "docs-ssg/search*.spec.ts"
+        ],
+        "testMatch": [
+          "docs-ssg/**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/docs",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "docs-dev",
+        "name": "docs-dev",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/dev*.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results/docs/results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "docs-ssg/i18n-islands.spec.ts",
+      "file": "docs-ssg/i18n-islands.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "locale/ retains SSR nodes and its target language through real island attachment",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "components-i18n-root",
+              "projectName": "components-i18n-root",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 961,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T19:37:51.252Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "i18n-before-boot.json",
+                      "contentType": "application/json",
+                      "body": "ewogICJsYW5nIjogImVuIiwKICAic3RhdGUiOiAibG9hZGluZyIsCiAgInN0YXRzIjogbnVsbCwKICAidGVtcGxhdGVzIjogMCwKICAiY29ubmVjdGVkIjogdHJ1ZSwKICAia2V5cyI6IFsKICAgICJzdXJmYWNlLWQwODI0YjdiMTctcGFnZS1Mb2NhbGVFbi1kZW1vLTAiLAogICAgInN1cmZhY2UtZDA4MjRiN2IxNy1wYWdlLUxvY2FsZUVuLWRlbW8tMSIKICBdLAogICJhY3RpdmUiOiBbCiAgICAic3VyZmFjZS1kMDgyNGI3YjE3LXBhZ2UtTG9jYWxlRW4tZGVtby0wIiwKICAgICJzdXJmYWNlLWQwODI0YjdiMTctcGFnZS1Mb2NhbGVFbi1kZW1vLTEiCiAgXSwKICAibGFuZ3MiOiBbCiAgICAiZW4iLAogICAgImVuIgogIF0sCiAgIm1vdW50ZWQiOiAwCn0="
+                    },
+                    {
+                      "name": "i18n-original-ssr.json",
+                      "contentType": "application/json",
+                      "body": "WwogIHsKICAgICJrZXkiOiAic3VyZmFjZS1kMDgyNGI3YjE3LXBhZ2UtTG9jYWxlRW4tZGVtby0wIiwKICAgICJub2RlcyI6IDE0LAogICAgImh0bWwiOiAiPGRpdiBkYXRhLXJ1c3RpZnktc2NvcGU9XCJzdXJmYWNlLWQwODI0YjdiMTctcGFnZS1Mb2NhbGVFbi1kZW1vLTBcIiBkYXRhLXJ1c3RpZnktc2VlZD1cInN1cmZhY2UtZDA4MjRiN2IxNy1wYWdlLUxvY2FsZUVuLWRlbW8tMFwiIGRhdGEtcnVzdGlmeS1zc3I9XCIxXCIgZGF0YS1ydXN0aWZ5LWJhc2U9XCIvXCIgdGFiaW5kZXg9XCItMVwiPjxkaXYgZGF0YS1ydXN0aWZ5LWNvbnRlbnQ9XCJcIj48ZGl2IGRhdGEtY291bnRlcj1cIlwiIGNsYXNzPVwibWluLWgtMjQgc3BhY2UteS0zXCI+PHA+UsOpc3Vtw6kg4oCUIGEgcmVhbCByZWdpc3RlcmVkIGNvdW50ZXI8L3A+PGRpdiBjbGFzcz1cImZsZXggZmxleC13cmFwIGl0ZW1zLWNlbnRlciBnYXAtM1wiPjxidXR0b24gdHlwZT1cImJ1dHRvblwiIGRhdGEtbmFtZT1cIkJ1dHRvblwiIGRhdGEtdGVzdGlkPVwiY291bnRlci1pbmNyZW1lbnRcIiBjbGFzcz1cImlubGluZS1mbGV4IGl0ZW1zLWNlbnRlciBqdXN0aWZ5LWNlbnRlciBnYXAtMiB3aGl0ZXNwYWNlLW5vd3JhcCByb3VuZGVkLW1kIHRleHQtc20gZm9udC1tZWRpdW0gc2hyaW5rLTAgdy1maXQgc2VsZWN0LW5vbmUgdHJhbnNpdGlvbi1hbGwgb3V0bGluZS1ub25lIGN1cnNvci1wb2ludGVyIGRpc2FibGVkOnBvaW50ZXItZXZlbnRzLW5vbmUgZGlzYWJsZWQ6b3BhY2l0eS01MCBhcmlhLWRpc2FibGVkOm9wYWNpdHktNTAgYXJpYS1kaXNhYmxlZDpjdXJzb3Itbm90LWFsbG93ZWQgZm9jdXMtdmlzaWJsZTpyaW5nLXJpbmcvNTAgZm9jdXMtdmlzaWJsZTpyaW5nLVszcHhdIGFyaWEtaW52YWxpZDpib3JkZXItZGVzdHJ1Y3RpdmUgYmctcHJpbWFyeSB0ZXh0LXByaW1hcnktZm9yZWdyb3VuZCBob3ZlcjpiZy1wcmltYXJ5LzkwIGgtOSBweC00IHB5LTJcIj5JbmNyZW1lbnQ8L2J1dHRvbj48b3V0cHV0IGRhdGEtdGVzdGlkPVwiY291bnRlci12YWx1ZVwiPjc8L291dHB1dD48aW5wdXQgdHlwZT1cInRleHRcIiBpZD1cInJ1aS1zdXJmYWNlLWQwODI0YjdiMTctcGFnZS1Mb2NhbGVFbi1kZW1vLTAtZmllbGQtMVwiIGRhdGEtbmFtZT1cIlRleHRGaWVsZFwiIGRhdGEtdGVzdGlkPVwiY291bnRlci1pbnB1dFwiIGFyaWEtbGFiZWw9XCJDb3VudGVyIHZhbHVlXCIgdmFsdWU9XCI3XCIgY2xhc3M9XCJmbGV4IGgtOSB3LWZ1bGwgbWluLXctMCByb3VuZGVkLW1kIGJvcmRlciBib3JkZXItYm9yZGVyIGJnLWlucHV0IHRleHQtZm9yZWdyb3VuZCBweC0zIHB5LTEgdGV4dC1zbSB0cmFuc2l0aW9uLWNvbG9ycyBvdXRsaW5lLW5vbmUgcGxhY2Vob2xkZXI6dGV4dC1tdXRlZC1mb3JlZ3JvdW5kIGZvY3VzLXZpc2libGU6cmluZy1yaW5nLzUwIGZvY3VzLXZpc2libGU6cmluZy1bM3B4XSBkaXNhYmxlZDpjdXJzb3Itbm90LWFsbG93ZWQgZGlzYWJsZWQ6b3BhY2l0eS01MCByZWFkLW9ubHk6YmctbXV0ZWQgYXJpYS1pbnZhbGlkOmJvcmRlci1kZXN0cnVjdGl2ZSBhcmlhLWludmFsaWQ6cmluZy1kZXN0cnVjdGl2ZS80MFwiPjwvZGl2PjxwPlRoaXMgY2hpbGQgaXMgcGFydCBvZiB0aGUgc2FtZSB2aWV3IG9uIGJvdGggdGFyZ2V0cy48L3A+PC9kaXY+PC9kaXY+PGRpdiBkYXRhLXJ1c3RpZnktb3ZlcmxheT1cIlwiPjwvZGl2PjwvZGl2PiIKICB9LAogIHsKICAgICJrZXkiOiAic3VyZmFjZS1kMDgyNGI3YjE3LXBhZ2UtTG9jYWxlRW4tZGVtby0xIiwKICAgICJub2RlcyI6IDIxLAogICAgImh0bWwiOiAiPGRpdiBkYXRhLXJ1c3RpZnktc2NvcGU9XCJzdXJmYWNlLWQwODI0YjdiMTctcGFnZS1Mb2NhbGVFbi1kZW1vLTFcIiBkYXRhLXJ1c3RpZnktc2VlZD1cInN1cmZhY2UtZDA4MjRiN2IxNy1wYWdlLUxvY2FsZUVuLWRlbW8tMVwiIGRhdGEtcnVzdGlmeS1zc3I9XCIxXCIgZGF0YS1ydXN0aWZ5LWJhc2U9XCIvXCIgdGFiaW5kZXg9XCItMVwiPjxkaXYgZGF0YS1ydXN0aWZ5LWNvbnRlbnQ9XCJcIj48ZGl2IGRhdGEtdGhlbWUtcHJvYmU9XCJcIiBjbGFzcz1cInNwYWNlLXktM1wiPjxwIGRhdGEtdGVzdGlkPVwidGhlbWUtcHJvYmUtY29udGV4dFwiIGRhdGEtdGhlbWUtZG9jdW1lbnQ9XCJkb2NzLWN1c3RvbS1maXh0dXJlXCIgZGF0YS10aGVtZS1tb2RlPVwibGlnaHRcIiBkYXRhLXRoZW1lLXJhZGl1cz1cIjEwXCI+VGhlbWUgc2FtcGxlIOKAlCByw6lzdW3DqSwg5Lit5paHLCDwn5mCPC9wPjxkaXYgY2xhc3M9XCJmbGV4IGZsZXgtd3JhcCBpdGVtcy1jZW50ZXIgZ2FwLTNcIj48YnV0dG9uIHR5cGU9XCJidXR0b25cIiBkYXRhLXRlc3RpZD1cInRoZW1lLXByb2JlLW1lbnUtdHJpZ2dlclwiIGNsYXNzPVwicm91bmRlZC1tZCBib3JkZXIgYm9yZGVyLWJvcmRlciBiZy1iYWNrZ3JvdW5kIHB4LTMgcHktMiB0ZXh0LWZvcmVncm91bmRcIj5PcGVuIHRoZW1lZCBtZW51PC9idXR0b24+PGJ1dHRvbiB0eXBlPVwiYnV0dG9uXCIgZGF0YS1uYW1lPVwiQnV0dG9uXCIgZGF0YS10ZXN0aWQ9XCJ0aGVtZS1wcm9iZS1kaWFsb2ctdHJpZ2dlclwiIGNsYXNzPVwiaW5saW5lLWZsZXggaXRlbXMtY2VudGVyIGp1c3RpZnktY2VudGVyIGdhcC0yIHdoaXRlc3BhY2Utbm93cmFwIHJvdW5kZWQtbWQgdGV4dC1zbSBmb250LW1lZGl1bSBzaHJpbmstMCB3LWZpdCBzZWxlY3Qtbm9uZSB0cmFuc2l0aW9uLWFsbCBvdXRsaW5lLW5vbmUgY3Vyc29yLXBvaW50ZXIgZGlzYWJsZWQ6cG9pbnRlci1ldmVudHMtbm9uZSBkaXNhYmxlZDpvcGFjaXR5LTUwIGFyaWEtZGlzYWJsZWQ6b3BhY2l0eS01MCBhcmlhLWRpc2FibGVkOmN1cnNvci1ub3QtYWxsb3dlZCBmb2N1cy12aXNpYmxlOnJpbmctcmluZy81MCBmb2N1cy12aXNpYmxlOnJpbmctWzNweF0gYXJpYS1pbnZhbGlkOmJvcmRlci1kZXN0cnVjdGl2ZSBiZy1wcmltYXJ5IHRleHQtcHJpbWFyeS1mb3JlZ3JvdW5kIGhvdmVyOmJnLXByaW1hcnkvOTAgaC05IHB4LTQgcHktMlwiPk9wZW4gdGhlbWVkIGRpYWxvZzwvYnV0dG9uPjxidXR0b24gdHlwZT1cImJ1dHRvblwiIGRhdGEtbmFtZT1cIkJ1dHRvblwiIGRhdGEtdGVzdGlkPVwidGhlbWUtcHJvYmUtcmV2ZWFsXCIgY2xhc3M9XCJpbmxpbmUtZmxleCBpdGVtcy1jZW50ZXIganVzdGlmeS1jZW50ZXIgZ2FwLTIgd2hpdGVzcGFjZS1ub3dyYXAgcm91bmRlZC1tZCB0ZXh0LXNtIGZvbnQtbWVkaXVtIHNocmluay0wIHctZml0IHNlbGVjdC1ub25lIHRyYW5zaXRpb24tYWxsIG91dGxpbmUtbm9uZSBjdXJzb3ItcG9pbnRlciBkaXNhYmxlZDpwb2ludGVyLWV2ZW50cy1ub25lIGRpc2FibGVkOm9wYWNpdHktNTAgYXJpYS1kaXNhYmxlZDpvcGFjaXR5LTUwIGFyaWEtZGlzYWJsZWQ6Y3Vyc29yLW5vdC1hbGxvd2VkIGZvY3VzLXZpc2libGU6cmluZy1yaW5nLzUwIGZvY3VzLXZpc2libGU6cmluZy1bM3B4XSBhcmlhLWludmFsaWQ6Ym9yZGVyLWRlc3RydWN0aXZlIGJnLXByaW1hcnkgdGV4dC1wcmltYXJ5LWZvcmVncm91bmQgaG92ZXI6YmctcHJpbWFyeS85MCBoLTkgcHgtNCBweS0yXCI+U2hvdyBhIHN0eWxlIHNhbXBsZTwvYnV0dG9uPjwvZGl2PjwhLS0tLT48IS0tPCgpIC8+LS0+PG91dHB1dCBkYXRhLXRlc3RpZD1cInRoZW1lLXByb2JlLW1lbnUtdmFsdWVcIj4gPC9vdXRwdXQ+PCEtLS0tPjwhLS08KCkgLz4tLT48IS0tLS0+PCEtLTwoKSAvPi0tPjwvZGl2PjwvZGl2PjxkaXYgZGF0YS1ydXN0aWZ5LW92ZXJsYXk9XCJcIj48L2Rpdj48L2Rpdj4iCiAgfQpd"
+                    },
+                    {
+                      "name": "i18n-attached-identity.json",
+                      "contentType": "application/json",
+                      "body": "WwogIHsKICAgICJrZXkiOiAic3VyZmFjZS1kMDgyNGI3YjE3LXBhZ2UtTG9jYWxlRW4tZGVtby0wIiwKICAgICJzYW1lUm9vdCI6IHRydWUsCiAgICAibm9kZXMiOiAxNCwKICAgICJyZXRhaW5lZCI6IDE0LAogICAgInNhbWVJZHMiOiB0cnVlLAogICAgInNhbWVWYWx1ZXMiOiB0cnVlLAogICAgInNhbWVTb3VyY2UiOiB0cnVlCiAgfSwKICB7CiAgICAia2V5IjogInN1cmZhY2UtZDA4MjRiN2IxNy1wYWdlLUxvY2FsZUVuLWRlbW8tMSIsCiAgICAic2FtZVJvb3QiOiB0cnVlLAogICAgIm5vZGVzIjogMjEsCiAgICAicmV0YWluZWQiOiAyMSwKICAgICJzYW1lSWRzIjogdHJ1ZSwKICAgICJzYW1lVmFsdWVzIjogdHJ1ZSwKICAgICJzYW1lU291cmNlIjogdHJ1ZQogIH0KXQ=="
+                    },
+                    {
+                      "name": "i18n-islands-audit.json",
+                      "contentType": "application/json",
+                      "body": "ewogICJyZXF1ZXN0cyI6IFsKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDcvbG9jYWxlLyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA3L2Fzc2V0cy9zaXRlLjY2YjFhN2NjOTUuY3NzIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDcvYXNzZXRzL21vZGUuMWQ2YTliZjE0NS5qcyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA3L2Fzc2V0cy9zaXRlLjUzZTg1OTlkZGQuanMiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNy9hc3NldHMvaXNsYW5kcy8xYzhhNGZkZGMxNTZjZGE2Nzg3N2MzNzI5MmEzMTg3M2Q2NTQ1NDNiOWM2MzVhMDk0NjA5MWVhYjhjMmY3NmVmL2lzbGFuZHMuanMiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNy9hc3NldHMvZm9udHMvMzcxOTI0ZTc0ODBkM2QwMTgwN2ZkYzFiZDMwNDQyZDBhNjY1MWU2YjVlYTU0NjQ4MmY1ODgzZDYxM2NmMDQxOS50dGYiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNy9hc3NldHMvZm9udHMvNjYyYTE5NmQ1OGYxMTgzYmYyZDc3NDI4YjZkNTI4M2ZlM2Y0NTE2MWFiMDIxYmVhNDAzNmJjOThlNWNhYzAxNi50dGYiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNy9hc3NldHMvZm9udHMvMWQ0YjJmMDA4YWM3ZTAyNzgwYzE5ODAxZDRiMDRkZDQ1MzhlNDAyMTU5NDNjYzhhZDM3NGRiYThlYzIyNzhjMC50dGYiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNy9hc3NldHMvZm9udHMvMzllZTNjNTg3ZTEwZTg5NjY5YjlmZjMyNzAzMjYxZDEwZDVmOWM0ZGQ1YWQxNDdiNmI1YTFjNTIwMDU5MTgxNy50dGYiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNy9hc3NldHMvaXNsYW5kcy8xYzhhNGZkZGMxNTZjZGE2Nzg3N2MzNzI5MmEzMTg3M2Q2NTQ1NDNiOWM2MzVhMDk0NjA5MWVhYjhjMmY3NmVmL2RvbS1sb2FkZXIuanMiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNy9hc3NldHMvaXNsYW5kcy8xYzhhNGZkZGMxNTZjZGE2Nzg3N2MzNzI5MmEzMTg3M2Q2NTQ1NDNiOWM2MzVhMDk0NjA5MWVhYjhjMmY3NmVmL2FwcF9iZy53YXNtIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDcvYXNzZXRzL2lzbGFuZHMvMWM4YTRmZGRjMTU2Y2RhNjc4NzdjMzcyOTJhMzE4NzNkNjU0NTQzYjljNjM1YTA5NDYwOTFlYWI4YzJmNzZlZi9hcHAuanMiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNy9hc3NldHMvaXNsYW5kcy8xYzhhNGZkZGMxNTZjZGE2Nzg3N2MzNzI5MmEzMTg3M2Q2NTQ1NDNiOWM2MzVhMDk0NjA5MWVhYjhjMmY3NmVmL3NuaXBwZXRzL3J1c3RpZnktdWktNGRiMmYxMGYxMDc4OGY0Yy93ZWIvZG9tLXJ1bnRpbWUuanMiCiAgXSwKICAiZmFpbHVyZXMiOiBbXSwKICAicmVzcG9uc2VzIjogW10sCiAgImNvbnNvbGUiOiBbXSwKICAicGFnZUVycm9ycyI6IFtdLAogICJkb2N1bWVudDQwNCI6IFtdLAogICJicm93c2VyIjogewogICAgImNzcCI6IFtdLAogICAgInN0YXRlIjogInJlYWR5IiwKICAgICJmYWlsdXJlIjogbnVsbAogIH0KfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "54d149dee3a7a79e9dd0-5e1d028a6244b66d4655",
+          "file": "docs-ssg/i18n-islands.spec.ts",
+          "line": 274,
+          "column": 5
+        },
+        {
+          "title": "zh/locale/ retains SSR nodes and its target language through real island attachment",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "components-i18n-root",
+              "projectName": "components-i18n-root",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 834,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T19:37:52.347Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "i18n-before-boot.json",
+                      "contentType": "application/json",
+                      "body": "ewogICJsYW5nIjogInpoIiwKICAic3RhdGUiOiAibG9hZGluZyIsCiAgInN0YXRzIjogbnVsbCwKICAidGVtcGxhdGVzIjogMCwKICAiY29ubmVjdGVkIjogdHJ1ZSwKICAia2V5cyI6IFsKICAgICJzdXJmYWNlLWM5MzA2MDFkY2YtcGFnZS1Mb2NhbGVaaC1kZW1vLTAiLAogICAgInN1cmZhY2UtYzkzMDYwMWRjZi1wYWdlLUxvY2FsZVpoLWRlbW8tMSIKICBdLAogICJhY3RpdmUiOiBbCiAgICAic3VyZmFjZS1jOTMwNjAxZGNmLXBhZ2UtTG9jYWxlWmgtZGVtby0wIiwKICAgICJzdXJmYWNlLWM5MzA2MDFkY2YtcGFnZS1Mb2NhbGVaaC1kZW1vLTEiCiAgXSwKICAibGFuZ3MiOiBbCiAgICAiemgiLAogICAgInpoIgogIF0sCiAgIm1vdW50ZWQiOiAwCn0="
+                    },
+                    {
+                      "name": "i18n-original-ssr.json",
+                      "contentType": "application/json",
+                      "body": "WwogIHsKICAgICJrZXkiOiAic3VyZmFjZS1jOTMwNjAxZGNmLXBhZ2UtTG9jYWxlWmgtZGVtby0wIiwKICAgICJub2RlcyI6IDE0LAogICAgImh0bWwiOiAiPGRpdiBkYXRhLXJ1c3RpZnktc2NvcGU9XCJzdXJmYWNlLWM5MzA2MDFkY2YtcGFnZS1Mb2NhbGVaaC1kZW1vLTBcIiBkYXRhLXJ1c3RpZnktc2VlZD1cInN1cmZhY2UtYzkzMDYwMWRjZi1wYWdlLUxvY2FsZVpoLWRlbW8tMFwiIGRhdGEtcnVzdGlmeS1zc3I9XCIxXCIgZGF0YS1ydXN0aWZ5LWJhc2U9XCIvXCIgdGFiaW5kZXg9XCItMVwiPjxkaXYgZGF0YS1ydXN0aWZ5LWNvbnRlbnQ9XCJcIj48ZGl2IGRhdGEtY291bnRlcj1cIlwiIGNsYXNzPVwibWluLWgtMjQgc3BhY2UteS0zXCI+PHA+UsOpc3Vtw6kg4oCUIGEgcmVhbCByZWdpc3RlcmVkIGNvdW50ZXI8L3A+PGRpdiBjbGFzcz1cImZsZXggZmxleC13cmFwIGl0ZW1zLWNlbnRlciBnYXAtM1wiPjxidXR0b24gdHlwZT1cImJ1dHRvblwiIGRhdGEtbmFtZT1cIkJ1dHRvblwiIGRhdGEtdGVzdGlkPVwiY291bnRlci1pbmNyZW1lbnRcIiBjbGFzcz1cImlubGluZS1mbGV4IGl0ZW1zLWNlbnRlciBqdXN0aWZ5LWNlbnRlciBnYXAtMiB3aGl0ZXNwYWNlLW5vd3JhcCByb3VuZGVkLW1kIHRleHQtc20gZm9udC1tZWRpdW0gc2hyaW5rLTAgdy1maXQgc2VsZWN0LW5vbmUgdHJhbnNpdGlvbi1hbGwgb3V0bGluZS1ub25lIGN1cnNvci1wb2ludGVyIGRpc2FibGVkOnBvaW50ZXItZXZlbnRzLW5vbmUgZGlzYWJsZWQ6b3BhY2l0eS01MCBhcmlhLWRpc2FibGVkOm9wYWNpdHktNTAgYXJpYS1kaXNhYmxlZDpjdXJzb3Itbm90LWFsbG93ZWQgZm9jdXMtdmlzaWJsZTpyaW5nLXJpbmcvNTAgZm9jdXMtdmlzaWJsZTpyaW5nLVszcHhdIGFyaWEtaW52YWxpZDpib3JkZXItZGVzdHJ1Y3RpdmUgYmctcHJpbWFyeSB0ZXh0LXByaW1hcnktZm9yZWdyb3VuZCBob3ZlcjpiZy1wcmltYXJ5LzkwIGgtOSBweC00IHB5LTJcIj5JbmNyZW1lbnQ8L2J1dHRvbj48b3V0cHV0IGRhdGEtdGVzdGlkPVwiY291bnRlci12YWx1ZVwiPjc8L291dHB1dD48aW5wdXQgdHlwZT1cInRleHRcIiBpZD1cInJ1aS1zdXJmYWNlLWM5MzA2MDFkY2YtcGFnZS1Mb2NhbGVaaC1kZW1vLTAtZmllbGQtMVwiIGRhdGEtbmFtZT1cIlRleHRGaWVsZFwiIGRhdGEtdGVzdGlkPVwiY291bnRlci1pbnB1dFwiIGFyaWEtbGFiZWw9XCJDb3VudGVyIHZhbHVlXCIgdmFsdWU9XCI3XCIgY2xhc3M9XCJmbGV4IGgtOSB3LWZ1bGwgbWluLXctMCByb3VuZGVkLW1kIGJvcmRlciBib3JkZXItYm9yZGVyIGJnLWlucHV0IHRleHQtZm9yZWdyb3VuZCBweC0zIHB5LTEgdGV4dC1zbSB0cmFuc2l0aW9uLWNvbG9ycyBvdXRsaW5lLW5vbmUgcGxhY2Vob2xkZXI6dGV4dC1tdXRlZC1mb3JlZ3JvdW5kIGZvY3VzLXZpc2libGU6cmluZy1yaW5nLzUwIGZvY3VzLXZpc2libGU6cmluZy1bM3B4XSBkaXNhYmxlZDpjdXJzb3Itbm90LWFsbG93ZWQgZGlzYWJsZWQ6b3BhY2l0eS01MCByZWFkLW9ubHk6YmctbXV0ZWQgYXJpYS1pbnZhbGlkOmJvcmRlci1kZXN0cnVjdGl2ZSBhcmlhLWludmFsaWQ6cmluZy1kZXN0cnVjdGl2ZS80MFwiPjwvZGl2PjxwPlRoaXMgY2hpbGQgaXMgcGFydCBvZiB0aGUgc2FtZSB2aWV3IG9uIGJvdGggdGFyZ2V0cy48L3A+PC9kaXY+PC9kaXY+PGRpdiBkYXRhLXJ1c3RpZnktb3ZlcmxheT1cIlwiPjwvZGl2PjwvZGl2PiIKICB9LAogIHsKICAgICJrZXkiOiAic3VyZmFjZS1jOTMwNjAxZGNmLXBhZ2UtTG9jYWxlWmgtZGVtby0xIiwKICAgICJub2RlcyI6IDIxLAogICAgImh0bWwiOiAiPGRpdiBkYXRhLXJ1c3RpZnktc2NvcGU9XCJzdXJmYWNlLWM5MzA2MDFkY2YtcGFnZS1Mb2NhbGVaaC1kZW1vLTFcIiBkYXRhLXJ1c3RpZnktc2VlZD1cInN1cmZhY2UtYzkzMDYwMWRjZi1wYWdlLUxvY2FsZVpoLWRlbW8tMVwiIGRhdGEtcnVzdGlmeS1zc3I9XCIxXCIgZGF0YS1ydXN0aWZ5LWJhc2U9XCIvXCIgdGFiaW5kZXg9XCItMVwiPjxkaXYgZGF0YS1ydXN0aWZ5LWNvbnRlbnQ9XCJcIj48ZGl2IGRhdGEtdGhlbWUtcHJvYmU9XCJcIiBjbGFzcz1cInNwYWNlLXktM1wiPjxwIGRhdGEtdGVzdGlkPVwidGhlbWUtcHJvYmUtY29udGV4dFwiIGRhdGEtdGhlbWUtZG9jdW1lbnQ9XCJkb2NzLWN1c3RvbS1maXh0dXJlXCIgZGF0YS10aGVtZS1tb2RlPVwibGlnaHRcIiBkYXRhLXRoZW1lLXJhZGl1cz1cIjEwXCI+VGhlbWUgc2FtcGxlIOKAlCByw6lzdW3DqSwg5Lit5paHLCDwn5mCPC9wPjxkaXYgY2xhc3M9XCJmbGV4IGZsZXgtd3JhcCBpdGVtcy1jZW50ZXIgZ2FwLTNcIj48YnV0dG9uIHR5cGU9XCJidXR0b25cIiBkYXRhLXRlc3RpZD1cInRoZW1lLXByb2JlLW1lbnUtdHJpZ2dlclwiIGNsYXNzPVwicm91bmRlZC1tZCBib3JkZXIgYm9yZGVyLWJvcmRlciBiZy1iYWNrZ3JvdW5kIHB4LTMgcHktMiB0ZXh0LWZvcmVncm91bmRcIj5PcGVuIHRoZW1lZCBtZW51PC9idXR0b24+PGJ1dHRvbiB0eXBlPVwiYnV0dG9uXCIgZGF0YS1uYW1lPVwiQnV0dG9uXCIgZGF0YS10ZXN0aWQ9XCJ0aGVtZS1wcm9iZS1kaWFsb2ctdHJpZ2dlclwiIGNsYXNzPVwiaW5saW5lLWZsZXggaXRlbXMtY2VudGVyIGp1c3RpZnktY2VudGVyIGdhcC0yIHdoaXRlc3BhY2Utbm93cmFwIHJvdW5kZWQtbWQgdGV4dC1zbSBmb250LW1lZGl1bSBzaHJpbmstMCB3LWZpdCBzZWxlY3Qtbm9uZSB0cmFuc2l0aW9uLWFsbCBvdXRsaW5lLW5vbmUgY3Vyc29yLXBvaW50ZXIgZGlzYWJsZWQ6cG9pbnRlci1ldmVudHMtbm9uZSBkaXNhYmxlZDpvcGFjaXR5LTUwIGFyaWEtZGlzYWJsZWQ6b3BhY2l0eS01MCBhcmlhLWRpc2FibGVkOmN1cnNvci1ub3QtYWxsb3dlZCBmb2N1cy12aXNpYmxlOnJpbmctcmluZy81MCBmb2N1cy12aXNpYmxlOnJpbmctWzNweF0gYXJpYS1pbnZhbGlkOmJvcmRlci1kZXN0cnVjdGl2ZSBiZy1wcmltYXJ5IHRleHQtcHJpbWFyeS1mb3JlZ3JvdW5kIGhvdmVyOmJnLXByaW1hcnkvOTAgaC05IHB4LTQgcHktMlwiPk9wZW4gdGhlbWVkIGRpYWxvZzwvYnV0dG9uPjxidXR0b24gdHlwZT1cImJ1dHRvblwiIGRhdGEtbmFtZT1cIkJ1dHRvblwiIGRhdGEtdGVzdGlkPVwidGhlbWUtcHJvYmUtcmV2ZWFsXCIgY2xhc3M9XCJpbmxpbmUtZmxleCBpdGVtcy1jZW50ZXIganVzdGlmeS1jZW50ZXIgZ2FwLTIgd2hpdGVzcGFjZS1ub3dyYXAgcm91bmRlZC1tZCB0ZXh0LXNtIGZvbnQtbWVkaXVtIHNocmluay0wIHctZml0IHNlbGVjdC1ub25lIHRyYW5zaXRpb24tYWxsIG91dGxpbmUtbm9uZSBjdXJzb3ItcG9pbnRlciBkaXNhYmxlZDpwb2ludGVyLWV2ZW50cy1ub25lIGRpc2FibGVkOm9wYWNpdHktNTAgYXJpYS1kaXNhYmxlZDpvcGFjaXR5LTUwIGFyaWEtZGlzYWJsZWQ6Y3Vyc29yLW5vdC1hbGxvd2VkIGZvY3VzLXZpc2libGU6cmluZy1yaW5nLzUwIGZvY3VzLXZpc2libGU6cmluZy1bM3B4XSBhcmlhLWludmFsaWQ6Ym9yZGVyLWRlc3RydWN0aXZlIGJnLXByaW1hcnkgdGV4dC1wcmltYXJ5LWZvcmVncm91bmQgaG92ZXI6YmctcHJpbWFyeS85MCBoLTkgcHgtNCBweS0yXCI+U2hvdyBhIHN0eWxlIHNhbXBsZTwvYnV0dG9uPjwvZGl2PjwhLS0tLT48IS0tPCgpIC8+LS0+PG91dHB1dCBkYXRhLXRlc3RpZD1cInRoZW1lLXByb2JlLW1lbnUtdmFsdWVcIj4gPC9vdXRwdXQ+PCEtLS0tPjwhLS08KCkgLz4tLT48IS0tLS0+PCEtLTwoKSAvPi0tPjwvZGl2PjwvZGl2PjxkaXYgZGF0YS1ydXN0aWZ5LW92ZXJsYXk9XCJcIj48L2Rpdj48L2Rpdj4iCiAgfQpd"
+                    },
+                    {
+                      "name": "i18n-attached-identity.json",
+                      "contentType": "application/json",
+                      "body": "WwogIHsKICAgICJrZXkiOiAic3VyZmFjZS1jOTMwNjAxZGNmLXBhZ2UtTG9jYWxlWmgtZGVtby0wIiwKICAgICJzYW1lUm9vdCI6IHRydWUsCiAgICAibm9kZXMiOiAxNCwKICAgICJyZXRhaW5lZCI6IDE0LAogICAgInNhbWVJZHMiOiB0cnVlLAogICAgInNhbWVWYWx1ZXMiOiB0cnVlLAogICAgInNhbWVTb3VyY2UiOiB0cnVlCiAgfSwKICB7CiAgICAia2V5IjogInN1cmZhY2UtYzkzMDYwMWRjZi1wYWdlLUxvY2FsZVpoLWRlbW8tMSIsCiAgICAic2FtZVJvb3QiOiB0cnVlLAogICAgIm5vZGVzIjogMjEsCiAgICAicmV0YWluZWQiOiAyMSwKICAgICJzYW1lSWRzIjogdHJ1ZSwKICAgICJzYW1lVmFsdWVzIjogdHJ1ZSwKICAgICJzYW1lU291cmNlIjogdHJ1ZQogIH0KXQ=="
+                    },
+                    {
+                      "name": "i18n-islands-audit.json",
+                      "contentType": "application/json",
+                      "body": "ewogICJyZXF1ZXN0cyI6IFsKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDcvemgvbG9jYWxlLyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA3L2Fzc2V0cy9zaXRlLjY2YjFhN2NjOTUuY3NzIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDcvYXNzZXRzL21vZGUuMWQ2YTliZjE0NS5qcyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA3L2Fzc2V0cy9zaXRlLjUzZTg1OTlkZGQuanMiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNy9hc3NldHMvaXNsYW5kcy8xYzhhNGZkZGMxNTZjZGE2Nzg3N2MzNzI5MmEzMTg3M2Q2NTQ1NDNiOWM2MzVhMDk0NjA5MWVhYjhjMmY3NmVmL2lzbGFuZHMuanMiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNy9hc3NldHMvZm9udHMvMzcxOTI0ZTc0ODBkM2QwMTgwN2ZkYzFiZDMwNDQyZDBhNjY1MWU2YjVlYTU0NjQ4MmY1ODgzZDYxM2NmMDQxOS50dGYiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNy9hc3NldHMvZm9udHMvNjYyYTE5NmQ1OGYxMTgzYmYyZDc3NDI4YjZkNTI4M2ZlM2Y0NTE2MWFiMDIxYmVhNDAzNmJjOThlNWNhYzAxNi50dGYiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNy9hc3NldHMvZm9udHMvMWQ0YjJmMDA4YWM3ZTAyNzgwYzE5ODAxZDRiMDRkZDQ1MzhlNDAyMTU5NDNjYzhhZDM3NGRiYThlYzIyNzhjMC50dGYiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNy9hc3NldHMvZm9udHMvMzllZTNjNTg3ZTEwZTg5NjY5YjlmZjMyNzAzMjYxZDEwZDVmOWM0ZGQ1YWQxNDdiNmI1YTFjNTIwMDU5MTgxNy50dGYiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNy9hc3NldHMvaXNsYW5kcy8xYzhhNGZkZGMxNTZjZGE2Nzg3N2MzNzI5MmEzMTg3M2Q2NTQ1NDNiOWM2MzVhMDk0NjA5MWVhYjhjMmY3NmVmL2RvbS1sb2FkZXIuanMiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNy9hc3NldHMvaXNsYW5kcy8xYzhhNGZkZGMxNTZjZGE2Nzg3N2MzNzI5MmEzMTg3M2Q2NTQ1NDNiOWM2MzVhMDk0NjA5MWVhYjhjMmY3NmVmL2FwcF9iZy53YXNtIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDcvYXNzZXRzL2lzbGFuZHMvMWM4YTRmZGRjMTU2Y2RhNjc4NzdjMzcyOTJhMzE4NzNkNjU0NTQzYjljNjM1YTA5NDYwOTFlYWI4YzJmNzZlZi9hcHAuanMiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNy9hc3NldHMvaXNsYW5kcy8xYzhhNGZkZGMxNTZjZGE2Nzg3N2MzNzI5MmEzMTg3M2Q2NTQ1NDNiOWM2MzVhMDk0NjA5MWVhYjhjMmY3NmVmL3NuaXBwZXRzL3J1c3RpZnktdWktNGRiMmYxMGYxMDc4OGY0Yy93ZWIvZG9tLXJ1bnRpbWUuanMiCiAgXSwKICAiZmFpbHVyZXMiOiBbXSwKICAicmVzcG9uc2VzIjogW10sCiAgImNvbnNvbGUiOiBbXSwKICAicGFnZUVycm9ycyI6IFtdLAogICJkb2N1bWVudDQwNCI6IFtdLAogICJicm93c2VyIjogewogICAgImNzcCI6IFtdLAogICAgInN0YXRlIjogInJlYWR5IiwKICAgICJmYWlsdXJlIjogbnVsbAogIH0KfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "54d149dee3a7a79e9dd0-3135a5a97276e4b82ea4",
+          "file": "docs-ssg/i18n-islands.spec.ts",
+          "line": 274,
+          "column": 5
+        },
+        {
+          "title": "fr/locale/ retains SSR nodes and its target language through real island attachment",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "components-i18n-root",
+              "projectName": "components-i18n-root",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 999,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T19:37:53.184Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "i18n-before-boot.json",
+                      "contentType": "application/json",
+                      "body": "ewogICJsYW5nIjogImZyIiwKICAic3RhdGUiOiAibG9hZGluZyIsCiAgInN0YXRzIjogbnVsbCwKICAidGVtcGxhdGVzIjogMCwKICAiY29ubmVjdGVkIjogdHJ1ZSwKICAia2V5cyI6IFsKICAgICJzdXJmYWNlLWVmNzFiNjU2NmYtcGFnZS1Mb2NhbGVFbi1kZW1vLTAiLAogICAgInN1cmZhY2UtZWY3MWI2NTY2Zi1wYWdlLUxvY2FsZUVuLWRlbW8tMSIKICBdLAogICJhY3RpdmUiOiBbCiAgICAic3VyZmFjZS1lZjcxYjY1NjZmLXBhZ2UtTG9jYWxlRW4tZGVtby0wIiwKICAgICJzdXJmYWNlLWVmNzFiNjU2NmYtcGFnZS1Mb2NhbGVFbi1kZW1vLTEiCiAgXSwKICAibGFuZ3MiOiBbCiAgICAiZnIiLAogICAgImZyIgogIF0sCiAgIm1vdW50ZWQiOiAwCn0="
+                    },
+                    {
+                      "name": "i18n-original-ssr.json",
+                      "contentType": "application/json",
+                      "body": "WwogIHsKICAgICJrZXkiOiAic3VyZmFjZS1lZjcxYjY1NjZmLXBhZ2UtTG9jYWxlRW4tZGVtby0wIiwKICAgICJub2RlcyI6IDE0LAogICAgImh0bWwiOiAiPGRpdiBkYXRhLXJ1c3RpZnktc2NvcGU9XCJzdXJmYWNlLWVmNzFiNjU2NmYtcGFnZS1Mb2NhbGVFbi1kZW1vLTBcIiBkYXRhLXJ1c3RpZnktc2VlZD1cInN1cmZhY2UtZWY3MWI2NTY2Zi1wYWdlLUxvY2FsZUVuLWRlbW8tMFwiIGRhdGEtcnVzdGlmeS1zc3I9XCIxXCIgZGF0YS1ydXN0aWZ5LWJhc2U9XCIvXCIgdGFiaW5kZXg9XCItMVwiPjxkaXYgZGF0YS1ydXN0aWZ5LWNvbnRlbnQ9XCJcIj48ZGl2IGRhdGEtY291bnRlcj1cIlwiIGNsYXNzPVwibWluLWgtMjQgc3BhY2UteS0zXCI+PHA+UsOpc3Vtw6kg4oCUIGEgcmVhbCByZWdpc3RlcmVkIGNvdW50ZXI8L3A+PGRpdiBjbGFzcz1cImZsZXggZmxleC13cmFwIGl0ZW1zLWNlbnRlciBnYXAtM1wiPjxidXR0b24gdHlwZT1cImJ1dHRvblwiIGRhdGEtbmFtZT1cIkJ1dHRvblwiIGRhdGEtdGVzdGlkPVwiY291bnRlci1pbmNyZW1lbnRcIiBjbGFzcz1cImlubGluZS1mbGV4IGl0ZW1zLWNlbnRlciBqdXN0aWZ5LWNlbnRlciBnYXAtMiB3aGl0ZXNwYWNlLW5vd3JhcCByb3VuZGVkLW1kIHRleHQtc20gZm9udC1tZWRpdW0gc2hyaW5rLTAgdy1maXQgc2VsZWN0LW5vbmUgdHJhbnNpdGlvbi1hbGwgb3V0bGluZS1ub25lIGN1cnNvci1wb2ludGVyIGRpc2FibGVkOnBvaW50ZXItZXZlbnRzLW5vbmUgZGlzYWJsZWQ6b3BhY2l0eS01MCBhcmlhLWRpc2FibGVkOm9wYWNpdHktNTAgYXJpYS1kaXNhYmxlZDpjdXJzb3Itbm90LWFsbG93ZWQgZm9jdXMtdmlzaWJsZTpyaW5nLXJpbmcvNTAgZm9jdXMtdmlzaWJsZTpyaW5nLVszcHhdIGFyaWEtaW52YWxpZDpib3JkZXItZGVzdHJ1Y3RpdmUgYmctcHJpbWFyeSB0ZXh0LXByaW1hcnktZm9yZWdyb3VuZCBob3ZlcjpiZy1wcmltYXJ5LzkwIGgtOSBweC00IHB5LTJcIj5JbmNyZW1lbnQ8L2J1dHRvbj48b3V0cHV0IGRhdGEtdGVzdGlkPVwiY291bnRlci12YWx1ZVwiPjc8L291dHB1dD48aW5wdXQgdHlwZT1cInRleHRcIiBpZD1cInJ1aS1zdXJmYWNlLWVmNzFiNjU2NmYtcGFnZS1Mb2NhbGVFbi1kZW1vLTAtZmllbGQtMVwiIGRhdGEtbmFtZT1cIlRleHRGaWVsZFwiIGRhdGEtdGVzdGlkPVwiY291bnRlci1pbnB1dFwiIGFyaWEtbGFiZWw9XCJDb3VudGVyIHZhbHVlXCIgdmFsdWU9XCI3XCIgY2xhc3M9XCJmbGV4IGgtOSB3LWZ1bGwgbWluLXctMCByb3VuZGVkLW1kIGJvcmRlciBib3JkZXItYm9yZGVyIGJnLWlucHV0IHRleHQtZm9yZWdyb3VuZCBweC0zIHB5LTEgdGV4dC1zbSB0cmFuc2l0aW9uLWNvbG9ycyBvdXRsaW5lLW5vbmUgcGxhY2Vob2xkZXI6dGV4dC1tdXRlZC1mb3JlZ3JvdW5kIGZvY3VzLXZpc2libGU6cmluZy1yaW5nLzUwIGZvY3VzLXZpc2libGU6cmluZy1bM3B4XSBkaXNhYmxlZDpjdXJzb3Itbm90LWFsbG93ZWQgZGlzYWJsZWQ6b3BhY2l0eS01MCByZWFkLW9ubHk6YmctbXV0ZWQgYXJpYS1pbnZhbGlkOmJvcmRlci1kZXN0cnVjdGl2ZSBhcmlhLWludmFsaWQ6cmluZy1kZXN0cnVjdGl2ZS80MFwiPjwvZGl2PjxwPlRoaXMgY2hpbGQgaXMgcGFydCBvZiB0aGUgc2FtZSB2aWV3IG9uIGJvdGggdGFyZ2V0cy48L3A+PC9kaXY+PC9kaXY+PGRpdiBkYXRhLXJ1c3RpZnktb3ZlcmxheT1cIlwiPjwvZGl2PjwvZGl2PiIKICB9LAogIHsKICAgICJrZXkiOiAic3VyZmFjZS1lZjcxYjY1NjZmLXBhZ2UtTG9jYWxlRW4tZGVtby0xIiwKICAgICJub2RlcyI6IDIxLAogICAgImh0bWwiOiAiPGRpdiBkYXRhLXJ1c3RpZnktc2NvcGU9XCJzdXJmYWNlLWVmNzFiNjU2NmYtcGFnZS1Mb2NhbGVFbi1kZW1vLTFcIiBkYXRhLXJ1c3RpZnktc2VlZD1cInN1cmZhY2UtZWY3MWI2NTY2Zi1wYWdlLUxvY2FsZUVuLWRlbW8tMVwiIGRhdGEtcnVzdGlmeS1zc3I9XCIxXCIgZGF0YS1ydXN0aWZ5LWJhc2U9XCIvXCIgdGFiaW5kZXg9XCItMVwiPjxkaXYgZGF0YS1ydXN0aWZ5LWNvbnRlbnQ9XCJcIj48ZGl2IGRhdGEtdGhlbWUtcHJvYmU9XCJcIiBjbGFzcz1cInNwYWNlLXktM1wiPjxwIGRhdGEtdGVzdGlkPVwidGhlbWUtcHJvYmUtY29udGV4dFwiIGRhdGEtdGhlbWUtZG9jdW1lbnQ9XCJkb2NzLWN1c3RvbS1maXh0dXJlXCIgZGF0YS10aGVtZS1tb2RlPVwibGlnaHRcIiBkYXRhLXRoZW1lLXJhZGl1cz1cIjEwXCI+VGhlbWUgc2FtcGxlIOKAlCByw6lzdW3DqSwg5Lit5paHLCDwn5mCPC9wPjxkaXYgY2xhc3M9XCJmbGV4IGZsZXgtd3JhcCBpdGVtcy1jZW50ZXIgZ2FwLTNcIj48YnV0dG9uIHR5cGU9XCJidXR0b25cIiBkYXRhLXRlc3RpZD1cInRoZW1lLXByb2JlLW1lbnUtdHJpZ2dlclwiIGNsYXNzPVwicm91bmRlZC1tZCBib3JkZXIgYm9yZGVyLWJvcmRlciBiZy1iYWNrZ3JvdW5kIHB4LTMgcHktMiB0ZXh0LWZvcmVncm91bmRcIj5PcGVuIHRoZW1lZCBtZW51PC9idXR0b24+PGJ1dHRvbiB0eXBlPVwiYnV0dG9uXCIgZGF0YS1uYW1lPVwiQnV0dG9uXCIgZGF0YS10ZXN0aWQ9XCJ0aGVtZS1wcm9iZS1kaWFsb2ctdHJpZ2dlclwiIGNsYXNzPVwiaW5saW5lLWZsZXggaXRlbXMtY2VudGVyIGp1c3RpZnktY2VudGVyIGdhcC0yIHdoaXRlc3BhY2Utbm93cmFwIHJvdW5kZWQtbWQgdGV4dC1zbSBmb250LW1lZGl1bSBzaHJpbmstMCB3LWZpdCBzZWxlY3Qtbm9uZSB0cmFuc2l0aW9uLWFsbCBvdXRsaW5lLW5vbmUgY3Vyc29yLXBvaW50ZXIgZGlzYWJsZWQ6cG9pbnRlci1ldmVudHMtbm9uZSBkaXNhYmxlZDpvcGFjaXR5LTUwIGFyaWEtZGlzYWJsZWQ6b3BhY2l0eS01MCBhcmlhLWRpc2FibGVkOmN1cnNvci1ub3QtYWxsb3dlZCBmb2N1cy12aXNpYmxlOnJpbmctcmluZy81MCBmb2N1cy12aXNpYmxlOnJpbmctWzNweF0gYXJpYS1pbnZhbGlkOmJvcmRlci1kZXN0cnVjdGl2ZSBiZy1wcmltYXJ5IHRleHQtcHJpbWFyeS1mb3JlZ3JvdW5kIGhvdmVyOmJnLXByaW1hcnkvOTAgaC05IHB4LTQgcHktMlwiPk9wZW4gdGhlbWVkIGRpYWxvZzwvYnV0dG9uPjxidXR0b24gdHlwZT1cImJ1dHRvblwiIGRhdGEtbmFtZT1cIkJ1dHRvblwiIGRhdGEtdGVzdGlkPVwidGhlbWUtcHJvYmUtcmV2ZWFsXCIgY2xhc3M9XCJpbmxpbmUtZmxleCBpdGVtcy1jZW50ZXIganVzdGlmeS1jZW50ZXIgZ2FwLTIgd2hpdGVzcGFjZS1ub3dyYXAgcm91bmRlZC1tZCB0ZXh0LXNtIGZvbnQtbWVkaXVtIHNocmluay0wIHctZml0IHNlbGVjdC1ub25lIHRyYW5zaXRpb24tYWxsIG91dGxpbmUtbm9uZSBjdXJzb3ItcG9pbnRlciBkaXNhYmxlZDpwb2ludGVyLWV2ZW50cy1ub25lIGRpc2FibGVkOm9wYWNpdHktNTAgYXJpYS1kaXNhYmxlZDpvcGFjaXR5LTUwIGFyaWEtZGlzYWJsZWQ6Y3Vyc29yLW5vdC1hbGxvd2VkIGZvY3VzLXZpc2libGU6cmluZy1yaW5nLzUwIGZvY3VzLXZpc2libGU6cmluZy1bM3B4XSBhcmlhLWludmFsaWQ6Ym9yZGVyLWRlc3RydWN0aXZlIGJnLXByaW1hcnkgdGV4dC1wcmltYXJ5LWZvcmVncm91bmQgaG92ZXI6YmctcHJpbWFyeS85MCBoLTkgcHgtNCBweS0yXCI+U2hvdyBhIHN0eWxlIHNhbXBsZTwvYnV0dG9uPjwvZGl2PjwhLS0tLT48IS0tPCgpIC8+LS0+PG91dHB1dCBkYXRhLXRlc3RpZD1cInRoZW1lLXByb2JlLW1lbnUtdmFsdWVcIj4gPC9vdXRwdXQ+PCEtLS0tPjwhLS08KCkgLz4tLT48IS0tLS0+PCEtLTwoKSAvPi0tPjwvZGl2PjwvZGl2PjxkaXYgZGF0YS1ydXN0aWZ5LW92ZXJsYXk9XCJcIj48L2Rpdj48L2Rpdj4iCiAgfQpd"
+                    },
+                    {
+                      "name": "i18n-attached-identity.json",
+                      "contentType": "application/json",
+                      "body": "WwogIHsKICAgICJrZXkiOiAic3VyZmFjZS1lZjcxYjY1NjZmLXBhZ2UtTG9jYWxlRW4tZGVtby0wIiwKICAgICJzYW1lUm9vdCI6IHRydWUsCiAgICAibm9kZXMiOiAxNCwKICAgICJyZXRhaW5lZCI6IDE0LAogICAgInNhbWVJZHMiOiB0cnVlLAogICAgInNhbWVWYWx1ZXMiOiB0cnVlLAogICAgInNhbWVTb3VyY2UiOiB0cnVlCiAgfSwKICB7CiAgICAia2V5IjogInN1cmZhY2UtZWY3MWI2NTY2Zi1wYWdlLUxvY2FsZUVuLWRlbW8tMSIsCiAgICAic2FtZVJvb3QiOiB0cnVlLAogICAgIm5vZGVzIjogMjEsCiAgICAicmV0YWluZWQiOiAyMSwKICAgICJzYW1lSWRzIjogdHJ1ZSwKICAgICJzYW1lVmFsdWVzIjogdHJ1ZSwKICAgICJzYW1lU291cmNlIjogdHJ1ZQogIH0KXQ=="
+                    },
+                    {
+                      "name": "i18n-islands-audit.json",
+                      "contentType": "application/json",
+                      "body": "ewogICJyZXF1ZXN0cyI6IFsKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDcvZnIvbG9jYWxlLyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA3L2Fzc2V0cy9zaXRlLjY2YjFhN2NjOTUuY3NzIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDcvYXNzZXRzL21vZGUuMWQ2YTliZjE0NS5qcyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA3L2Fzc2V0cy9zaXRlLjUzZTg1OTlkZGQuanMiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNy9hc3NldHMvaXNsYW5kcy8xYzhhNGZkZGMxNTZjZGE2Nzg3N2MzNzI5MmEzMTg3M2Q2NTQ1NDNiOWM2MzVhMDk0NjA5MWVhYjhjMmY3NmVmL2lzbGFuZHMuanMiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNy9hc3NldHMvZm9udHMvMzcxOTI0ZTc0ODBkM2QwMTgwN2ZkYzFiZDMwNDQyZDBhNjY1MWU2YjVlYTU0NjQ4MmY1ODgzZDYxM2NmMDQxOS50dGYiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNy9hc3NldHMvZm9udHMvNjYyYTE5NmQ1OGYxMTgzYmYyZDc3NDI4YjZkNTI4M2ZlM2Y0NTE2MWFiMDIxYmVhNDAzNmJjOThlNWNhYzAxNi50dGYiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNy9hc3NldHMvZm9udHMvMWQ0YjJmMDA4YWM3ZTAyNzgwYzE5ODAxZDRiMDRkZDQ1MzhlNDAyMTU5NDNjYzhhZDM3NGRiYThlYzIyNzhjMC50dGYiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNy9hc3NldHMvZm9udHMvMzllZTNjNTg3ZTEwZTg5NjY5YjlmZjMyNzAzMjYxZDEwZDVmOWM0ZGQ1YWQxNDdiNmI1YTFjNTIwMDU5MTgxNy50dGYiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNy9hc3NldHMvaXNsYW5kcy8xYzhhNGZkZGMxNTZjZGE2Nzg3N2MzNzI5MmEzMTg3M2Q2NTQ1NDNiOWM2MzVhMDk0NjA5MWVhYjhjMmY3NmVmL2RvbS1sb2FkZXIuanMiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNy9hc3NldHMvaXNsYW5kcy8xYzhhNGZkZGMxNTZjZGE2Nzg3N2MzNzI5MmEzMTg3M2Q2NTQ1NDNiOWM2MzVhMDk0NjA5MWVhYjhjMmY3NmVmL2FwcF9iZy53YXNtIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDcvYXNzZXRzL2lzbGFuZHMvMWM4YTRmZGRjMTU2Y2RhNjc4NzdjMzcyOTJhMzE4NzNkNjU0NTQzYjljNjM1YTA5NDYwOTFlYWI4YzJmNzZlZi9hcHAuanMiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNy9hc3NldHMvaXNsYW5kcy8xYzhhNGZkZGMxNTZjZGE2Nzg3N2MzNzI5MmEzMTg3M2Q2NTQ1NDNiOWM2MzVhMDk0NjA5MWVhYjhjMmY3NmVmL3NuaXBwZXRzL3J1c3RpZnktdWktNGRiMmYxMGYxMDc4OGY0Yy93ZWIvZG9tLXJ1bnRpbWUuanMiCiAgXSwKICAiZmFpbHVyZXMiOiBbXSwKICAicmVzcG9uc2VzIjogW10sCiAgImNvbnNvbGUiOiBbXSwKICAicGFnZUVycm9ycyI6IFtdLAogICJkb2N1bWVudDQwNCI6IFtdLAogICJicm93c2VyIjogewogICAgImNzcCI6IFtdLAogICAgInN0YXRlIjogInJlYWR5IiwKICAgICJmYWlsdXJlIjogbnVsbAogIH0KfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "54d149dee3a7a79e9dd0-d3c40e88e9bb042d7288",
+          "file": "docs-ssg/i18n-islands.spec.ts",
+          "line": 274,
+          "column": 5
+        },
+        {
+          "title": "the language menu switches between the two real registered versions of the same page",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "components-i18n-root",
+              "projectName": "components-i18n-root",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1601,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T19:37:54.185Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "i18n-islands-audit.json",
+                      "contentType": "application/json",
+                      "body": "ewogICJyZXF1ZXN0cyI6IFsKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDcvbG9jYWxlLyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA3L2Fzc2V0cy9zaXRlLjY2YjFhN2NjOTUuY3NzIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDcvYXNzZXRzL21vZGUuMWQ2YTliZjE0NS5qcyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA3L2Fzc2V0cy9zaXRlLjUzZTg1OTlkZGQuanMiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNy9hc3NldHMvaXNsYW5kcy8xYzhhNGZkZGMxNTZjZGE2Nzg3N2MzNzI5MmEzMTg3M2Q2NTQ1NDNiOWM2MzVhMDk0NjA5MWVhYjhjMmY3NmVmL2lzbGFuZHMuanMiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNy9hc3NldHMvZm9udHMvMzcxOTI0ZTc0ODBkM2QwMTgwN2ZkYzFiZDMwNDQyZDBhNjY1MWU2YjVlYTU0NjQ4MmY1ODgzZDYxM2NmMDQxOS50dGYiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNy9hc3NldHMvZm9udHMvNjYyYTE5NmQ1OGYxMTgzYmYyZDc3NDI4YjZkNTI4M2ZlM2Y0NTE2MWFiMDIxYmVhNDAzNmJjOThlNWNhYzAxNi50dGYiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNy9hc3NldHMvZm9udHMvMWQ0YjJmMDA4YWM3ZTAyNzgwYzE5ODAxZDRiMDRkZDQ1MzhlNDAyMTU5NDNjYzhhZDM3NGRiYThlYzIyNzhjMC50dGYiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNy9hc3NldHMvaXNsYW5kcy8xYzhhNGZkZGMxNTZjZGE2Nzg3N2MzNzI5MmEzMTg3M2Q2NTQ1NDNiOWM2MzVhMDk0NjA5MWVhYjhjMmY3NmVmL2RvbS1sb2FkZXIuanMiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNy9hc3NldHMvaXNsYW5kcy8xYzhhNGZkZGMxNTZjZGE2Nzg3N2MzNzI5MmEzMTg3M2Q2NTQ1NDNiOWM2MzVhMDk0NjA5MWVhYjhjMmY3NmVmL2FwcF9iZy53YXNtIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDcvYXNzZXRzL2lzbGFuZHMvMWM4YTRmZGRjMTU2Y2RhNjc4NzdjMzcyOTJhMzE4NzNkNjU0NTQzYjljNjM1YTA5NDYwOTFlYWI4YzJmNzZlZi9hcHAuanMiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNy9hc3NldHMvZm9udHMvMzllZTNjNTg3ZTEwZTg5NjY5YjlmZjMyNzAzMjYxZDEwZDVmOWM0ZGQ1YWQxNDdiNmI1YTFjNTIwMDU5MTgxNy50dGYiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNy9hc3NldHMvaXNsYW5kcy8xYzhhNGZkZGMxNTZjZGE2Nzg3N2MzNzI5MmEzMTg3M2Q2NTQ1NDNiOWM2MzVhMDk0NjA5MWVhYjhjMmY3NmVmL3NuaXBwZXRzL3J1c3RpZnktdWktNGRiMmYxMGYxMDc4OGY0Yy93ZWIvZG9tLXJ1bnRpbWUuanMiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNy96aC9sb2NhbGUvIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDcvYXNzZXRzL3NpdGUuNjZiMWE3Y2M5NS5jc3MiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNy9hc3NldHMvbW9kZS4xZDZhOWJmMTQ1LmpzIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDcvYXNzZXRzL3NpdGUuNTNlODU5OWRkZC5qcyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA3L2Fzc2V0cy9pc2xhbmRzLzFjOGE0ZmRkYzE1NmNkYTY3ODc3YzM3MjkyYTMxODczZDY1NDU0M2I5YzYzNWEwOTQ2MDkxZWFiOGMyZjc2ZWYvaXNsYW5kcy5qcyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA3L2Fzc2V0cy9mb250cy8zNzE5MjRlNzQ4MGQzZDAxODA3ZmRjMWJkMzA0NDJkMGE2NjUxZTZiNWVhNTQ2NDgyZjU4ODNkNjEzY2YwNDE5LnR0ZiIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA3L2Fzc2V0cy9mb250cy82NjJhMTk2ZDU4ZjExODNiZjJkNzc0MjhiNmQ1MjgzZmUzZjQ1MTYxYWIwMjFiZWE0MDM2YmM5OGU1Y2FjMDE2LnR0ZiIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA3L2Fzc2V0cy9mb250cy8xZDRiMmYwMDhhYzdlMDI3ODBjMTk4MDFkNGIwNGRkNDUzOGU0MDIxNTk0M2NjOGFkMzc0ZGJhOGVjMjI3OGMwLnR0ZiIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA3L2Fzc2V0cy9pc2xhbmRzLzFjOGE0ZmRkYzE1NmNkYTY3ODc3YzM3MjkyYTMxODczZDY1NDU0M2I5YzYzNWEwOTQ2MDkxZWFiOGMyZjc2ZWYvZG9tLWxvYWRlci5qcyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA3L2Fzc2V0cy9pc2xhbmRzLzFjOGE0ZmRkYzE1NmNkYTY3ODc3YzM3MjkyYTMxODczZDY1NDU0M2I5YzYzNWEwOTQ2MDkxZWFiOGMyZjc2ZWYvYXBwX2JnLndhc20iLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNy9hc3NldHMvZm9udHMvMzllZTNjNTg3ZTEwZTg5NjY5YjlmZjMyNzAzMjYxZDEwZDVmOWM0ZGQ1YWQxNDdiNmI1YTFjNTIwMDU5MTgxNy50dGYiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNy9hc3NldHMvaXNsYW5kcy8xYzhhNGZkZGMxNTZjZGE2Nzg3N2MzNzI5MmEzMTg3M2Q2NTQ1NDNiOWM2MzVhMDk0NjA5MWVhYjhjMmY3NmVmL2FwcC5qcyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA3L2Fzc2V0cy9pc2xhbmRzLzFjOGE0ZmRkYzE1NmNkYTY3ODc3YzM3MjkyYTMxODczZDY1NDU0M2I5YzYzNWEwOTQ2MDkxZWFiOGMyZjc2ZWYvc25pcHBldHMvcnVzdGlmeS11aS00ZGIyZjEwZjEwNzg4ZjRjL3dlYi9kb20tcnVudGltZS5qcyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA3L2xvY2FsZS8iLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNy9hc3NldHMvc2l0ZS42NmIxYTdjYzk1LmNzcyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA3L2Fzc2V0cy9tb2RlLjFkNmE5YmYxNDUuanMiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNy9hc3NldHMvc2l0ZS41M2U4NTk5ZGRkLmpzIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDcvYXNzZXRzL2lzbGFuZHMvMWM4YTRmZGRjMTU2Y2RhNjc4NzdjMzcyOTJhMzE4NzNkNjU0NTQzYjljNjM1YTA5NDYwOTFlYWI4YzJmNzZlZi9pc2xhbmRzLmpzIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDcvYXNzZXRzL2ZvbnRzLzM3MTkyNGU3NDgwZDNkMDE4MDdmZGMxYmQzMDQ0MmQwYTY2NTFlNmI1ZWE1NDY0ODJmNTg4M2Q2MTNjZjA0MTkudHRmIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDcvYXNzZXRzL2ZvbnRzLzY2MmExOTZkNThmMTE4M2JmMmQ3NzQyOGI2ZDUyODNmZTNmNDUxNjFhYjAyMWJlYTQwMzZiYzk4ZTVjYWMwMTYudHRmIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDcvYXNzZXRzL2ZvbnRzLzFkNGIyZjAwOGFjN2UwMjc4MGMxOTgwMWQ0YjA0ZGQ0NTM4ZTQwMjE1OTQzY2M4YWQzNzRkYmE4ZWMyMjc4YzAudHRmIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDcvYXNzZXRzL2lzbGFuZHMvMWM4YTRmZGRjMTU2Y2RhNjc4NzdjMzcyOTJhMzE4NzNkNjU0NTQzYjljNjM1YTA5NDYwOTFlYWI4YzJmNzZlZi9kb20tbG9hZGVyLmpzIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDcvYXNzZXRzL2lzbGFuZHMvMWM4YTRmZGRjMTU2Y2RhNjc4NzdjMzcyOTJhMzE4NzNkNjU0NTQzYjljNjM1YTA5NDYwOTFlYWI4YzJmNzZlZi9hcHBfYmcud2FzbSIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA3L2Fzc2V0cy9mb250cy8zOWVlM2M1ODdlMTBlODk2NjliOWZmMzI3MDMyNjFkMTBkNWY5YzRkZDVhZDE0N2I2YjVhMWM1MjAwNTkxODE3LnR0ZiIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA3L2Fzc2V0cy9pc2xhbmRzLzFjOGE0ZmRkYzE1NmNkYTY3ODc3YzM3MjkyYTMxODczZDY1NDU0M2I5YzYzNWEwOTQ2MDkxZWFiOGMyZjc2ZWYvYXBwLmpzIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDcvYXNzZXRzL2lzbGFuZHMvMWM4YTRmZGRjMTU2Y2RhNjc4NzdjMzcyOTJhMzE4NzNkNjU0NTQzYjljNjM1YTA5NDYwOTFlYWI4YzJmNzZlZi9zbmlwcGV0cy9ydXN0aWZ5LXVpLTRkYjJmMTBmMTA3ODhmNGMvd2ViL2RvbS1ydW50aW1lLmpzIgogIF0sCiAgImZhaWx1cmVzIjogW10sCiAgInJlc3BvbnNlcyI6IFtdLAogICJjb25zb2xlIjogW10sCiAgInBhZ2VFcnJvcnMiOiBbXSwKICAiZG9jdW1lbnQ0MDQiOiBbXSwKICAiYnJvd3NlciI6IHsKICAgICJjc3AiOiBbXSwKICAgICJzdGF0ZSI6ICJyZWFkeSIsCiAgICAiZmFpbHVyZSI6IG51bGwKICB9Cn0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "54d149dee3a7a79e9dd0-6532adbc9f5a1d78c03a",
+          "file": "docs-ssg/i18n-islands.spec.ts",
+          "line": 306,
+          "column": 1
+        },
+        {
+          "title": "the Chinese shell keeps an untranslated static registered page readable without loading islands",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "components-i18n-root",
+              "projectName": "components-i18n-root",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 111,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T19:37:55.789Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "i18n-islands-audit.json",
+                      "contentType": "application/json",
+                      "body": "ewogICJyZXF1ZXN0cyI6IFsKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDcvemgvcGxhaW4vIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDcvYXNzZXRzL3NpdGUuNjZiMWE3Y2M5NS5jc3MiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNy9hc3NldHMvbW9kZS4xZDZhOWJmMTQ1LmpzIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDcvYXNzZXRzL3NpdGUuNTNlODU5OWRkZC5qcyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA3L2Fzc2V0cy9mb250cy8zNzE5MjRlNzQ4MGQzZDAxODA3ZmRjMWJkMzA0NDJkMGE2NjUxZTZiNWVhNTQ2NDgyZjU4ODNkNjEzY2YwNDE5LnR0ZiIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA3L2Fzc2V0cy9mb250cy9jOGY2NjljZWIyYzljNjBjY2Y1NTE5OGIzMDVlMDhhOTk3ZmZjYTc5YTM4Y2M3ZWViNTUxZTY0M2NiZTY2NTA1LnR0ZiIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA3L2Fzc2V0cy9mb250cy8xZDRiMmYwMDhhYzdlMDI3ODBjMTk4MDFkNGIwNGRkNDUzOGU0MDIxNTk0M2NjOGFkMzc0ZGJhOGVjMjI3OGMwLnR0ZiIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA3L2Fzc2V0cy9mb250cy8zOWVlM2M1ODdlMTBlODk2NjliOWZmMzI3MDMyNjFkMTBkNWY5YzRkZDVhZDE0N2I2YjVhMWM1MjAwNTkxODE3LnR0ZiIKICBdLAogICJmYWlsdXJlcyI6IFtdLAogICJyZXNwb25zZXMiOiBbXSwKICAiY29uc29sZSI6IFtdLAogICJwYWdlRXJyb3JzIjogW10sCiAgImRvY3VtZW50NDA0IjogW10sCiAgImJyb3dzZXIiOiB7CiAgICAiY3NwIjogW10sCiAgICAic3RhdGUiOiAiZW1wdHkiLAogICAgImZhaWx1cmUiOiBudWxsCiAgfQp9"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "54d149dee3a7a79e9dd0-b01b1736158a1e769af2",
+          "file": "docs-ssg/i18n-islands.spec.ts",
+          "line": 325,
+          "column": 1
+        },
+        {
+          "title": "zh deep 404 selects one active slot tree before parsed and boot, with real HTTP 404",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "components-i18n-root",
+              "projectName": "components-i18n-root",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 808,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T19:37:55.903Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "i18n-before-boot.json",
+                      "contentType": "application/json",
+                      "body": "ewogICJsYW5nIjogInpoIiwKICAic3RhdGUiOiAibG9hZGluZyIsCiAgInN0YXRzIjogbnVsbCwKICAidGVtcGxhdGVzIjogMCwKICAiY29ubmVjdGVkIjogdHJ1ZSwKICAia2V5cyI6IFsKICAgICJzdXJmYWNlLTFmMTU4NDViYTktc2xvdC1iZWZvcmVfY29udGVudC1kZW1vLTAiLAogICAgInN1cmZhY2UtMWYxNTg0NWJhOS1zbG90LW5vdF9mb3VuZC1kZW1vLTAiCiAgXSwKICAiYWN0aXZlIjogWwogICAgInN1cmZhY2UtMWYxNTg0NWJhOS1zbG90LWJlZm9yZV9jb250ZW50LWRlbW8tMCIsCiAgICAic3VyZmFjZS0xZjE1ODQ1YmE5LXNsb3Qtbm90X2ZvdW5kLWRlbW8tMCIKICBdLAogICJsYW5ncyI6IFsKICAgICJ6aCIsCiAgICAiemgiCiAgXSwKICAibW91bnRlZCI6IDAKfQ=="
+                    },
+                    {
+                      "name": "i18n-original-ssr.json",
+                      "contentType": "application/json",
+                      "body": "WwogIHsKICAgICJrZXkiOiAic3VyZmFjZS0xZjE1ODQ1YmE5LXNsb3QtYmVmb3JlX2NvbnRlbnQtZGVtby0wIiwKICAgICJub2RlcyI6IDE0LAogICAgImh0bWwiOiAiPGRpdiBkYXRhLXJ1c3RpZnktc2NvcGU9XCJzdXJmYWNlLTFmMTU4NDViYTktc2xvdC1iZWZvcmVfY29udGVudC1kZW1vLTBcIiBkYXRhLXJ1c3RpZnktc2VlZD1cInN1cmZhY2UtMWYxNTg0NWJhOS1zbG90LWJlZm9yZV9jb250ZW50LWRlbW8tMFwiIGRhdGEtcnVzdGlmeS1zc3I9XCIxXCIgZGF0YS1ydXN0aWZ5LWJhc2U9XCIvXCIgdGFiaW5kZXg9XCItMVwiPjxkaXYgZGF0YS1ydXN0aWZ5LWNvbnRlbnQ9XCJcIj48ZGl2IGRhdGEtY291bnRlcj1cIlwiIGNsYXNzPVwibWluLWgtMjQgc3BhY2UteS0zXCI+PHA+UsOpc3Vtw6kg4oCUIGEgcmVhbCByZWdpc3RlcmVkIGNvdW50ZXI8L3A+PGRpdiBjbGFzcz1cImZsZXggZmxleC13cmFwIGl0ZW1zLWNlbnRlciBnYXAtM1wiPjxidXR0b24gdHlwZT1cImJ1dHRvblwiIGRhdGEtbmFtZT1cIkJ1dHRvblwiIGRhdGEtdGVzdGlkPVwiY291bnRlci1pbmNyZW1lbnRcIiBjbGFzcz1cImlubGluZS1mbGV4IGl0ZW1zLWNlbnRlciBqdXN0aWZ5LWNlbnRlciBnYXAtMiB3aGl0ZXNwYWNlLW5vd3JhcCByb3VuZGVkLW1kIHRleHQtc20gZm9udC1tZWRpdW0gc2hyaW5rLTAgdy1maXQgc2VsZWN0LW5vbmUgdHJhbnNpdGlvbi1hbGwgb3V0bGluZS1ub25lIGN1cnNvci1wb2ludGVyIGRpc2FibGVkOnBvaW50ZXItZXZlbnRzLW5vbmUgZGlzYWJsZWQ6b3BhY2l0eS01MCBhcmlhLWRpc2FibGVkOm9wYWNpdHktNTAgYXJpYS1kaXNhYmxlZDpjdXJzb3Itbm90LWFsbG93ZWQgZm9jdXMtdmlzaWJsZTpyaW5nLXJpbmcvNTAgZm9jdXMtdmlzaWJsZTpyaW5nLVszcHhdIGFyaWEtaW52YWxpZDpib3JkZXItZGVzdHJ1Y3RpdmUgYmctcHJpbWFyeSB0ZXh0LXByaW1hcnktZm9yZWdyb3VuZCBob3ZlcjpiZy1wcmltYXJ5LzkwIGgtOSBweC00IHB5LTJcIj5JbmNyZW1lbnQ8L2J1dHRvbj48b3V0cHV0IGRhdGEtdGVzdGlkPVwiY291bnRlci12YWx1ZVwiPjc8L291dHB1dD48aW5wdXQgdHlwZT1cInRleHRcIiBpZD1cInJ1aS1zdXJmYWNlLTFmMTU4NDViYTktc2xvdC1iZWZvcmVfNWZjb250ZW50LWRlbW8tMC1maWVsZC0xXCIgZGF0YS1uYW1lPVwiVGV4dEZpZWxkXCIgZGF0YS10ZXN0aWQ9XCJjb3VudGVyLWlucHV0XCIgYXJpYS1sYWJlbD1cIkNvdW50ZXIgdmFsdWVcIiB2YWx1ZT1cIjdcIiBjbGFzcz1cImZsZXggaC05IHctZnVsbCBtaW4tdy0wIHJvdW5kZWQtbWQgYm9yZGVyIGJvcmRlci1ib3JkZXIgYmctaW5wdXQgdGV4dC1mb3JlZ3JvdW5kIHB4LTMgcHktMSB0ZXh0LXNtIHRyYW5zaXRpb24tY29sb3JzIG91dGxpbmUtbm9uZSBwbGFjZWhvbGRlcjp0ZXh0LW11dGVkLWZvcmVncm91bmQgZm9jdXMtdmlzaWJsZTpyaW5nLXJpbmcvNTAgZm9jdXMtdmlzaWJsZTpyaW5nLVszcHhdIGRpc2FibGVkOmN1cnNvci1ub3QtYWxsb3dlZCBkaXNhYmxlZDpvcGFjaXR5LTUwIHJlYWQtb25seTpiZy1tdXRlZCBhcmlhLWludmFsaWQ6Ym9yZGVyLWRlc3RydWN0aXZlIGFyaWEtaW52YWxpZDpyaW5nLWRlc3RydWN0aXZlLzQwXCI+PC9kaXY+PHA+VGhpcyBjaGlsZCBpcyBwYXJ0IG9mIHRoZSBzYW1lIHZpZXcgb24gYm90aCB0YXJnZXRzLjwvcD48L2Rpdj48L2Rpdj48ZGl2IGRhdGEtcnVzdGlmeS1vdmVybGF5PVwiXCI+PC9kaXY+PC9kaXY+IgogIH0sCiAgewogICAgImtleSI6ICJzdXJmYWNlLTFmMTU4NDViYTktc2xvdC1ub3RfZm91bmQtZGVtby0wIiwKICAgICJub2RlcyI6IDIxLAogICAgImh0bWwiOiAiPGRpdiBkYXRhLXJ1c3RpZnktc2NvcGU9XCJzdXJmYWNlLTFmMTU4NDViYTktc2xvdC1ub3RfZm91bmQtZGVtby0wXCIgZGF0YS1ydXN0aWZ5LXNlZWQ9XCJzdXJmYWNlLTFmMTU4NDViYTktc2xvdC1ub3RfZm91bmQtZGVtby0wXCIgZGF0YS1ydXN0aWZ5LXNzcj1cIjFcIiBkYXRhLXJ1c3RpZnktYmFzZT1cIi9cIiB0YWJpbmRleD1cIi0xXCI+PGRpdiBkYXRhLXJ1c3RpZnktY29udGVudD1cIlwiPjxkaXYgZGF0YS10aGVtZS1wcm9iZT1cIlwiIGNsYXNzPVwic3BhY2UteS0zXCI+PHAgZGF0YS10ZXN0aWQ9XCJ0aGVtZS1wcm9iZS1jb250ZXh0XCIgZGF0YS10aGVtZS1kb2N1bWVudD1cImRvY3MtY3VzdG9tLWZpeHR1cmVcIiBkYXRhLXRoZW1lLW1vZGU9XCJsaWdodFwiIGRhdGEtdGhlbWUtcmFkaXVzPVwiMTBcIj5UaGVtZSBzYW1wbGUg4oCUIHLDqXN1bcOpLCDkuK3mlocsIPCfmYI8L3A+PGRpdiBjbGFzcz1cImZsZXggZmxleC13cmFwIGl0ZW1zLWNlbnRlciBnYXAtM1wiPjxidXR0b24gdHlwZT1cImJ1dHRvblwiIGRhdGEtdGVzdGlkPVwidGhlbWUtcHJvYmUtbWVudS10cmlnZ2VyXCIgY2xhc3M9XCJyb3VuZGVkLW1kIGJvcmRlciBib3JkZXItYm9yZGVyIGJnLWJhY2tncm91bmQgcHgtMyBweS0yIHRleHQtZm9yZWdyb3VuZFwiPk9wZW4gdGhlbWVkIG1lbnU8L2J1dHRvbj48YnV0dG9uIHR5cGU9XCJidXR0b25cIiBkYXRhLW5hbWU9XCJCdXR0b25cIiBkYXRhLXRlc3RpZD1cInRoZW1lLXByb2JlLWRpYWxvZy10cmlnZ2VyXCIgY2xhc3M9XCJpbmxpbmUtZmxleCBpdGVtcy1jZW50ZXIganVzdGlmeS1jZW50ZXIgZ2FwLTIgd2hpdGVzcGFjZS1ub3dyYXAgcm91bmRlZC1tZCB0ZXh0LXNtIGZvbnQtbWVkaXVtIHNocmluay0wIHctZml0IHNlbGVjdC1ub25lIHRyYW5zaXRpb24tYWxsIG91dGxpbmUtbm9uZSBjdXJzb3ItcG9pbnRlciBkaXNhYmxlZDpwb2ludGVyLWV2ZW50cy1ub25lIGRpc2FibGVkOm9wYWNpdHktNTAgYXJpYS1kaXNhYmxlZDpvcGFjaXR5LTUwIGFyaWEtZGlzYWJsZWQ6Y3Vyc29yLW5vdC1hbGxvd2VkIGZvY3VzLXZpc2libGU6cmluZy1yaW5nLzUwIGZvY3VzLXZpc2libGU6cmluZy1bM3B4XSBhcmlhLWludmFsaWQ6Ym9yZGVyLWRlc3RydWN0aXZlIGJnLXByaW1hcnkgdGV4dC1wcmltYXJ5LWZvcmVncm91bmQgaG92ZXI6YmctcHJpbWFyeS85MCBoLTkgcHgtNCBweS0yXCI+T3BlbiB0aGVtZWQgZGlhbG9nPC9idXR0b24+PGJ1dHRvbiB0eXBlPVwiYnV0dG9uXCIgZGF0YS1uYW1lPVwiQnV0dG9uXCIgZGF0YS10ZXN0aWQ9XCJ0aGVtZS1wcm9iZS1yZXZlYWxcIiBjbGFzcz1cImlubGluZS1mbGV4IGl0ZW1zLWNlbnRlciBqdXN0aWZ5LWNlbnRlciBnYXAtMiB3aGl0ZXNwYWNlLW5vd3JhcCByb3VuZGVkLW1kIHRleHQtc20gZm9udC1tZWRpdW0gc2hyaW5rLTAgdy1maXQgc2VsZWN0LW5vbmUgdHJhbnNpdGlvbi1hbGwgb3V0bGluZS1ub25lIGN1cnNvci1wb2ludGVyIGRpc2FibGVkOnBvaW50ZXItZXZlbnRzLW5vbmUgZGlzYWJsZWQ6b3BhY2l0eS01MCBhcmlhLWRpc2FibGVkOm9wYWNpdHktNTAgYXJpYS1kaXNhYmxlZDpjdXJzb3Itbm90LWFsbG93ZWQgZm9jdXMtdmlzaWJsZTpyaW5nLXJpbmcvNTAgZm9jdXMtdmlzaWJsZTpyaW5nLVszcHhdIGFyaWEtaW52YWxpZDpib3JkZXItZGVzdHJ1Y3RpdmUgYmctcHJpbWFyeSB0ZXh0LXByaW1hcnktZm9yZWdyb3VuZCBob3ZlcjpiZy1wcmltYXJ5LzkwIGgtOSBweC00IHB5LTJcIj5TaG93IGEgc3R5bGUgc2FtcGxlPC9idXR0b24+PC9kaXY+PCEtLS0tPjwhLS08KCkgLz4tLT48b3V0cHV0IGRhdGEtdGVzdGlkPVwidGhlbWUtcHJvYmUtbWVudS12YWx1ZVwiPiA8L291dHB1dD48IS0tLS0+PCEtLTwoKSAvPi0tPjwhLS0tLT48IS0tPCgpIC8+LS0+PC9kaXY+PC9kaXY+PGRpdiBkYXRhLXJ1c3RpZnktb3ZlcmxheT1cIlwiPjwvZGl2PjwvZGl2PiIKICB9Cl0="
+                    },
+                    {
+                      "name": "i18n-attached-identity.json",
+                      "contentType": "application/json",
+                      "body": "WwogIHsKICAgICJrZXkiOiAic3VyZmFjZS0xZjE1ODQ1YmE5LXNsb3QtYmVmb3JlX2NvbnRlbnQtZGVtby0wIiwKICAgICJzYW1lUm9vdCI6IHRydWUsCiAgICAibm9kZXMiOiAxNCwKICAgICJyZXRhaW5lZCI6IDE0LAogICAgInNhbWVJZHMiOiB0cnVlLAogICAgInNhbWVWYWx1ZXMiOiB0cnVlLAogICAgInNhbWVTb3VyY2UiOiB0cnVlCiAgfSwKICB7CiAgICAia2V5IjogInN1cmZhY2UtMWYxNTg0NWJhOS1zbG90LW5vdF9mb3VuZC1kZW1vLTAiLAogICAgInNhbWVSb290IjogdHJ1ZSwKICAgICJub2RlcyI6IDIxLAogICAgInJldGFpbmVkIjogMjEsCiAgICAic2FtZUlkcyI6IHRydWUsCiAgICAic2FtZVZhbHVlcyI6IHRydWUsCiAgICAic2FtZVNvdXJjZSI6IHRydWUKICB9Cl0="
+                    },
+                    {
+                      "name": "i18n-islands-audit.json",
+                      "contentType": "application/json",
+                      "body": "ewogICJyZXF1ZXN0cyI6IFsKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDcvemgvbWlzc2luZy9hL2IvIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDcvYXNzZXRzL3NpdGUuNjZiMWE3Y2M5NS5jc3MiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNy9hc3NldHMvbW9kZS4xZDZhOWJmMTQ1LmpzIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDcvYXNzZXRzL3NpdGUuNTNlODU5OWRkZC5qcyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA3L2Fzc2V0cy9pc2xhbmRzLzFjOGE0ZmRkYzE1NmNkYTY3ODc3YzM3MjkyYTMxODczZDY1NDU0M2I5YzYzNWEwOTQ2MDkxZWFiOGMyZjc2ZWYvaXNsYW5kcy5qcyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA3L2Fzc2V0cy9mb250cy8zNzE5MjRlNzQ4MGQzZDAxODA3ZmRjMWJkMzA0NDJkMGE2NjUxZTZiNWVhNTQ2NDgyZjU4ODNkNjEzY2YwNDE5LnR0ZiIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA3L2Fzc2V0cy9mb250cy82NjJhMTk2ZDU4ZjExODNiZjJkNzc0MjhiNmQ1MjgzZmUzZjQ1MTYxYWIwMjFiZWE0MDM2YmM5OGU1Y2FjMDE2LnR0ZiIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA3L2Fzc2V0cy9mb250cy8xZDRiMmYwMDhhYzdlMDI3ODBjMTk4MDFkNGIwNGRkNDUzOGU0MDIxNTk0M2NjOGFkMzc0ZGJhOGVjMjI3OGMwLnR0ZiIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA3L2Fzc2V0cy9mb250cy8zOWVlM2M1ODdlMTBlODk2NjliOWZmMzI3MDMyNjFkMTBkNWY5YzRkZDVhZDE0N2I2YjVhMWM1MjAwNTkxODE3LnR0ZiIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA3L2Fzc2V0cy9pc2xhbmRzLzFjOGE0ZmRkYzE1NmNkYTY3ODc3YzM3MjkyYTMxODczZDY1NDU0M2I5YzYzNWEwOTQ2MDkxZWFiOGMyZjc2ZWYvZG9tLWxvYWRlci5qcyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA3L2Fzc2V0cy9pc2xhbmRzLzFjOGE0ZmRkYzE1NmNkYTY3ODc3YzM3MjkyYTMxODczZDY1NDU0M2I5YzYzNWEwOTQ2MDkxZWFiOGMyZjc2ZWYvYXBwX2JnLndhc20iLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNy9hc3NldHMvaXNsYW5kcy8xYzhhNGZkZGMxNTZjZGE2Nzg3N2MzNzI5MmEzMTg3M2Q2NTQ1NDNiOWM2MzVhMDk0NjA5MWVhYjhjMmY3NmVmL2FwcC5qcyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA3L2Fzc2V0cy9pc2xhbmRzLzFjOGE0ZmRkYzE1NmNkYTY3ODc3YzM3MjkyYTMxODczZDY1NDU0M2I5YzYzNWEwOTQ2MDkxZWFiOGMyZjc2ZWYvc25pcHBldHMvcnVzdGlmeS11aS00ZGIyZjEwZjEwNzg4ZjRjL3dlYi9kb20tcnVudGltZS5qcyIKICBdLAogICJmYWlsdXJlcyI6IFtdLAogICJyZXNwb25zZXMiOiBbCiAgICB7CiAgICAgICJ1cmwiOiAiaHR0cDovLzEyNy4wLjAuMTo0MjA3L3poL21pc3NpbmcvYS9iLyIsCiAgICAgICJzdGF0dXMiOiA0MDQsCiAgICAgICJkb2N1bWVudCI6IHRydWUKICAgIH0KICBdLAogICJjb25zb2xlIjogWwogICAgewogICAgICAidGV4dCI6ICJGYWlsZWQgdG8gbG9hZCByZXNvdXJjZTogdGhlIHNlcnZlciByZXNwb25kZWQgd2l0aCBhIHN0YXR1cyBvZiA0MDQgKE5vdCBGb3VuZCkiLAogICAgICAidXJsIjogImh0dHA6Ly8xMjcuMC4wLjE6NDIwNy96aC9taXNzaW5nL2EvYi8iCiAgICB9CiAgXSwKICAicGFnZUVycm9ycyI6IFtdLAogICJkb2N1bWVudDQwNCI6IFsKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDcvemgvbWlzc2luZy9hL2IvIgogIF0sCiAgImJyb3dzZXIiOiB7CiAgICAiY3NwIjogW10sCiAgICAic3RhdGUiOiAicmVhZHkiLAogICAgImZhaWx1cmUiOiBudWxsCiAgfQp9"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "54d149dee3a7a79e9dd0-e2b4886f6bb00e416a38",
+          "file": "docs-ssg/i18n-islands.spec.ts",
+          "line": 341,
+          "column": 5
+        },
+        {
+          "title": "fr deep 404 selects one active slot tree before parsed and boot, with real HTTP 404",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "components-i18n-root",
+              "projectName": "components-i18n-root",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 779,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T19:37:56.714Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "i18n-before-boot.json",
+                      "contentType": "application/json",
+                      "body": "ewogICJsYW5nIjogImZyIiwKICAic3RhdGUiOiAibG9hZGluZyIsCiAgInN0YXRzIjogbnVsbCwKICAidGVtcGxhdGVzIjogMCwKICAiY29ubmVjdGVkIjogdHJ1ZSwKICAia2V5cyI6IFsKICAgICJzdXJmYWNlLTBmODYzNDA0NDAtc2xvdC1iZWZvcmVfY29udGVudC1kZW1vLTAiLAogICAgInN1cmZhY2UtMGY4NjM0MDQ0MC1zbG90LW5vdF9mb3VuZC1kZW1vLTAiCiAgXSwKICAiYWN0aXZlIjogWwogICAgInN1cmZhY2UtMGY4NjM0MDQ0MC1zbG90LWJlZm9yZV9jb250ZW50LWRlbW8tMCIsCiAgICAic3VyZmFjZS0wZjg2MzQwNDQwLXNsb3Qtbm90X2ZvdW5kLWRlbW8tMCIKICBdLAogICJsYW5ncyI6IFsKICAgICJmciIsCiAgICAiZnIiCiAgXSwKICAibW91bnRlZCI6IDAKfQ=="
+                    },
+                    {
+                      "name": "i18n-original-ssr.json",
+                      "contentType": "application/json",
+                      "body": "WwogIHsKICAgICJrZXkiOiAic3VyZmFjZS0wZjg2MzQwNDQwLXNsb3QtYmVmb3JlX2NvbnRlbnQtZGVtby0wIiwKICAgICJub2RlcyI6IDE0LAogICAgImh0bWwiOiAiPGRpdiBkYXRhLXJ1c3RpZnktc2NvcGU9XCJzdXJmYWNlLTBmODYzNDA0NDAtc2xvdC1iZWZvcmVfY29udGVudC1kZW1vLTBcIiBkYXRhLXJ1c3RpZnktc2VlZD1cInN1cmZhY2UtMGY4NjM0MDQ0MC1zbG90LWJlZm9yZV9jb250ZW50LWRlbW8tMFwiIGRhdGEtcnVzdGlmeS1zc3I9XCIxXCIgZGF0YS1ydXN0aWZ5LWJhc2U9XCIvXCIgdGFiaW5kZXg9XCItMVwiPjxkaXYgZGF0YS1ydXN0aWZ5LWNvbnRlbnQ9XCJcIj48ZGl2IGRhdGEtY291bnRlcj1cIlwiIGNsYXNzPVwibWluLWgtMjQgc3BhY2UteS0zXCI+PHA+UsOpc3Vtw6kg4oCUIGEgcmVhbCByZWdpc3RlcmVkIGNvdW50ZXI8L3A+PGRpdiBjbGFzcz1cImZsZXggZmxleC13cmFwIGl0ZW1zLWNlbnRlciBnYXAtM1wiPjxidXR0b24gdHlwZT1cImJ1dHRvblwiIGRhdGEtbmFtZT1cIkJ1dHRvblwiIGRhdGEtdGVzdGlkPVwiY291bnRlci1pbmNyZW1lbnRcIiBjbGFzcz1cImlubGluZS1mbGV4IGl0ZW1zLWNlbnRlciBqdXN0aWZ5LWNlbnRlciBnYXAtMiB3aGl0ZXNwYWNlLW5vd3JhcCByb3VuZGVkLW1kIHRleHQtc20gZm9udC1tZWRpdW0gc2hyaW5rLTAgdy1maXQgc2VsZWN0LW5vbmUgdHJhbnNpdGlvbi1hbGwgb3V0bGluZS1ub25lIGN1cnNvci1wb2ludGVyIGRpc2FibGVkOnBvaW50ZXItZXZlbnRzLW5vbmUgZGlzYWJsZWQ6b3BhY2l0eS01MCBhcmlhLWRpc2FibGVkOm9wYWNpdHktNTAgYXJpYS1kaXNhYmxlZDpjdXJzb3Itbm90LWFsbG93ZWQgZm9jdXMtdmlzaWJsZTpyaW5nLXJpbmcvNTAgZm9jdXMtdmlzaWJsZTpyaW5nLVszcHhdIGFyaWEtaW52YWxpZDpib3JkZXItZGVzdHJ1Y3RpdmUgYmctcHJpbWFyeSB0ZXh0LXByaW1hcnktZm9yZWdyb3VuZCBob3ZlcjpiZy1wcmltYXJ5LzkwIGgtOSBweC00IHB5LTJcIj5JbmNyZW1lbnQ8L2J1dHRvbj48b3V0cHV0IGRhdGEtdGVzdGlkPVwiY291bnRlci12YWx1ZVwiPjc8L291dHB1dD48aW5wdXQgdHlwZT1cInRleHRcIiBpZD1cInJ1aS1zdXJmYWNlLTBmODYzNDA0NDAtc2xvdC1iZWZvcmVfNWZjb250ZW50LWRlbW8tMC1maWVsZC0xXCIgZGF0YS1uYW1lPVwiVGV4dEZpZWxkXCIgZGF0YS10ZXN0aWQ9XCJjb3VudGVyLWlucHV0XCIgYXJpYS1sYWJlbD1cIkNvdW50ZXIgdmFsdWVcIiB2YWx1ZT1cIjdcIiBjbGFzcz1cImZsZXggaC05IHctZnVsbCBtaW4tdy0wIHJvdW5kZWQtbWQgYm9yZGVyIGJvcmRlci1ib3JkZXIgYmctaW5wdXQgdGV4dC1mb3JlZ3JvdW5kIHB4LTMgcHktMSB0ZXh0LXNtIHRyYW5zaXRpb24tY29sb3JzIG91dGxpbmUtbm9uZSBwbGFjZWhvbGRlcjp0ZXh0LW11dGVkLWZvcmVncm91bmQgZm9jdXMtdmlzaWJsZTpyaW5nLXJpbmcvNTAgZm9jdXMtdmlzaWJsZTpyaW5nLVszcHhdIGRpc2FibGVkOmN1cnNvci1ub3QtYWxsb3dlZCBkaXNhYmxlZDpvcGFjaXR5LTUwIHJlYWQtb25seTpiZy1tdXRlZCBhcmlhLWludmFsaWQ6Ym9yZGVyLWRlc3RydWN0aXZlIGFyaWEtaW52YWxpZDpyaW5nLWRlc3RydWN0aXZlLzQwXCI+PC9kaXY+PHA+VGhpcyBjaGlsZCBpcyBwYXJ0IG9mIHRoZSBzYW1lIHZpZXcgb24gYm90aCB0YXJnZXRzLjwvcD48L2Rpdj48L2Rpdj48ZGl2IGRhdGEtcnVzdGlmeS1vdmVybGF5PVwiXCI+PC9kaXY+PC9kaXY+IgogIH0sCiAgewogICAgImtleSI6ICJzdXJmYWNlLTBmODYzNDA0NDAtc2xvdC1ub3RfZm91bmQtZGVtby0wIiwKICAgICJub2RlcyI6IDIxLAogICAgImh0bWwiOiAiPGRpdiBkYXRhLXJ1c3RpZnktc2NvcGU9XCJzdXJmYWNlLTBmODYzNDA0NDAtc2xvdC1ub3RfZm91bmQtZGVtby0wXCIgZGF0YS1ydXN0aWZ5LXNlZWQ9XCJzdXJmYWNlLTBmODYzNDA0NDAtc2xvdC1ub3RfZm91bmQtZGVtby0wXCIgZGF0YS1ydXN0aWZ5LXNzcj1cIjFcIiBkYXRhLXJ1c3RpZnktYmFzZT1cIi9cIiB0YWJpbmRleD1cIi0xXCI+PGRpdiBkYXRhLXJ1c3RpZnktY29udGVudD1cIlwiPjxkaXYgZGF0YS10aGVtZS1wcm9iZT1cIlwiIGNsYXNzPVwic3BhY2UteS0zXCI+PHAgZGF0YS10ZXN0aWQ9XCJ0aGVtZS1wcm9iZS1jb250ZXh0XCIgZGF0YS10aGVtZS1kb2N1bWVudD1cImRvY3MtY3VzdG9tLWZpeHR1cmVcIiBkYXRhLXRoZW1lLW1vZGU9XCJsaWdodFwiIGRhdGEtdGhlbWUtcmFkaXVzPVwiMTBcIj5UaGVtZSBzYW1wbGUg4oCUIHLDqXN1bcOpLCDkuK3mlocsIPCfmYI8L3A+PGRpdiBjbGFzcz1cImZsZXggZmxleC13cmFwIGl0ZW1zLWNlbnRlciBnYXAtM1wiPjxidXR0b24gdHlwZT1cImJ1dHRvblwiIGRhdGEtdGVzdGlkPVwidGhlbWUtcHJvYmUtbWVudS10cmlnZ2VyXCIgY2xhc3M9XCJyb3VuZGVkLW1kIGJvcmRlciBib3JkZXItYm9yZGVyIGJnLWJhY2tncm91bmQgcHgtMyBweS0yIHRleHQtZm9yZWdyb3VuZFwiPk9wZW4gdGhlbWVkIG1lbnU8L2J1dHRvbj48YnV0dG9uIHR5cGU9XCJidXR0b25cIiBkYXRhLW5hbWU9XCJCdXR0b25cIiBkYXRhLXRlc3RpZD1cInRoZW1lLXByb2JlLWRpYWxvZy10cmlnZ2VyXCIgY2xhc3M9XCJpbmxpbmUtZmxleCBpdGVtcy1jZW50ZXIganVzdGlmeS1jZW50ZXIgZ2FwLTIgd2hpdGVzcGFjZS1ub3dyYXAgcm91bmRlZC1tZCB0ZXh0LXNtIGZvbnQtbWVkaXVtIHNocmluay0wIHctZml0IHNlbGVjdC1ub25lIHRyYW5zaXRpb24tYWxsIG91dGxpbmUtbm9uZSBjdXJzb3ItcG9pbnRlciBkaXNhYmxlZDpwb2ludGVyLWV2ZW50cy1ub25lIGRpc2FibGVkOm9wYWNpdHktNTAgYXJpYS1kaXNhYmxlZDpvcGFjaXR5LTUwIGFyaWEtZGlzYWJsZWQ6Y3Vyc29yLW5vdC1hbGxvd2VkIGZvY3VzLXZpc2libGU6cmluZy1yaW5nLzUwIGZvY3VzLXZpc2libGU6cmluZy1bM3B4XSBhcmlhLWludmFsaWQ6Ym9yZGVyLWRlc3RydWN0aXZlIGJnLXByaW1hcnkgdGV4dC1wcmltYXJ5LWZvcmVncm91bmQgaG92ZXI6YmctcHJpbWFyeS85MCBoLTkgcHgtNCBweS0yXCI+T3BlbiB0aGVtZWQgZGlhbG9nPC9idXR0b24+PGJ1dHRvbiB0eXBlPVwiYnV0dG9uXCIgZGF0YS1uYW1lPVwiQnV0dG9uXCIgZGF0YS10ZXN0aWQ9XCJ0aGVtZS1wcm9iZS1yZXZlYWxcIiBjbGFzcz1cImlubGluZS1mbGV4IGl0ZW1zLWNlbnRlciBqdXN0aWZ5LWNlbnRlciBnYXAtMiB3aGl0ZXNwYWNlLW5vd3JhcCByb3VuZGVkLW1kIHRleHQtc20gZm9udC1tZWRpdW0gc2hyaW5rLTAgdy1maXQgc2VsZWN0LW5vbmUgdHJhbnNpdGlvbi1hbGwgb3V0bGluZS1ub25lIGN1cnNvci1wb2ludGVyIGRpc2FibGVkOnBvaW50ZXItZXZlbnRzLW5vbmUgZGlzYWJsZWQ6b3BhY2l0eS01MCBhcmlhLWRpc2FibGVkOm9wYWNpdHktNTAgYXJpYS1kaXNhYmxlZDpjdXJzb3Itbm90LWFsbG93ZWQgZm9jdXMtdmlzaWJsZTpyaW5nLXJpbmcvNTAgZm9jdXMtdmlzaWJsZTpyaW5nLVszcHhdIGFyaWEtaW52YWxpZDpib3JkZXItZGVzdHJ1Y3RpdmUgYmctcHJpbWFyeSB0ZXh0LXByaW1hcnktZm9yZWdyb3VuZCBob3ZlcjpiZy1wcmltYXJ5LzkwIGgtOSBweC00IHB5LTJcIj5TaG93IGEgc3R5bGUgc2FtcGxlPC9idXR0b24+PC9kaXY+PCEtLS0tPjwhLS08KCkgLz4tLT48b3V0cHV0IGRhdGEtdGVzdGlkPVwidGhlbWUtcHJvYmUtbWVudS12YWx1ZVwiPiA8L291dHB1dD48IS0tLS0+PCEtLTwoKSAvPi0tPjwhLS0tLT48IS0tPCgpIC8+LS0+PC9kaXY+PC9kaXY+PGRpdiBkYXRhLXJ1c3RpZnktb3ZlcmxheT1cIlwiPjwvZGl2PjwvZGl2PiIKICB9Cl0="
+                    },
+                    {
+                      "name": "i18n-attached-identity.json",
+                      "contentType": "application/json",
+                      "body": "WwogIHsKICAgICJrZXkiOiAic3VyZmFjZS0wZjg2MzQwNDQwLXNsb3QtYmVmb3JlX2NvbnRlbnQtZGVtby0wIiwKICAgICJzYW1lUm9vdCI6IHRydWUsCiAgICAibm9kZXMiOiAxNCwKICAgICJyZXRhaW5lZCI6IDE0LAogICAgInNhbWVJZHMiOiB0cnVlLAogICAgInNhbWVWYWx1ZXMiOiB0cnVlLAogICAgInNhbWVTb3VyY2UiOiB0cnVlCiAgfSwKICB7CiAgICAia2V5IjogInN1cmZhY2UtMGY4NjM0MDQ0MC1zbG90LW5vdF9mb3VuZC1kZW1vLTAiLAogICAgInNhbWVSb290IjogdHJ1ZSwKICAgICJub2RlcyI6IDIxLAogICAgInJldGFpbmVkIjogMjEsCiAgICAic2FtZUlkcyI6IHRydWUsCiAgICAic2FtZVZhbHVlcyI6IHRydWUsCiAgICAic2FtZVNvdXJjZSI6IHRydWUKICB9Cl0="
+                    },
+                    {
+                      "name": "i18n-islands-audit.json",
+                      "contentType": "application/json",
+                      "body": "ewogICJyZXF1ZXN0cyI6IFsKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDcvZnIvbWlzc2luZy9hL2IvIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDcvYXNzZXRzL3NpdGUuNjZiMWE3Y2M5NS5jc3MiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNy9hc3NldHMvbW9kZS4xZDZhOWJmMTQ1LmpzIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDcvYXNzZXRzL3NpdGUuNTNlODU5OWRkZC5qcyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA3L2Fzc2V0cy9pc2xhbmRzLzFjOGE0ZmRkYzE1NmNkYTY3ODc3YzM3MjkyYTMxODczZDY1NDU0M2I5YzYzNWEwOTQ2MDkxZWFiOGMyZjc2ZWYvaXNsYW5kcy5qcyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA3L2Fzc2V0cy9mb250cy8zNzE5MjRlNzQ4MGQzZDAxODA3ZmRjMWJkMzA0NDJkMGE2NjUxZTZiNWVhNTQ2NDgyZjU4ODNkNjEzY2YwNDE5LnR0ZiIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA3L2Fzc2V0cy9mb250cy82NjJhMTk2ZDU4ZjExODNiZjJkNzc0MjhiNmQ1MjgzZmUzZjQ1MTYxYWIwMjFiZWE0MDM2YmM5OGU1Y2FjMDE2LnR0ZiIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA3L2Fzc2V0cy9mb250cy8xZDRiMmYwMDhhYzdlMDI3ODBjMTk4MDFkNGIwNGRkNDUzOGU0MDIxNTk0M2NjOGFkMzc0ZGJhOGVjMjI3OGMwLnR0ZiIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA3L2Fzc2V0cy9mb250cy8zOWVlM2M1ODdlMTBlODk2NjliOWZmMzI3MDMyNjFkMTBkNWY5YzRkZDVhZDE0N2I2YjVhMWM1MjAwNTkxODE3LnR0ZiIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA3L2Fzc2V0cy9pc2xhbmRzLzFjOGE0ZmRkYzE1NmNkYTY3ODc3YzM3MjkyYTMxODczZDY1NDU0M2I5YzYzNWEwOTQ2MDkxZWFiOGMyZjc2ZWYvZG9tLWxvYWRlci5qcyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA3L2Fzc2V0cy9pc2xhbmRzLzFjOGE0ZmRkYzE1NmNkYTY3ODc3YzM3MjkyYTMxODczZDY1NDU0M2I5YzYzNWEwOTQ2MDkxZWFiOGMyZjc2ZWYvYXBwX2JnLndhc20iLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNy9hc3NldHMvaXNsYW5kcy8xYzhhNGZkZGMxNTZjZGE2Nzg3N2MzNzI5MmEzMTg3M2Q2NTQ1NDNiOWM2MzVhMDk0NjA5MWVhYjhjMmY3NmVmL2FwcC5qcyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA3L2Fzc2V0cy9pc2xhbmRzLzFjOGE0ZmRkYzE1NmNkYTY3ODc3YzM3MjkyYTMxODczZDY1NDU0M2I5YzYzNWEwOTQ2MDkxZWFiOGMyZjc2ZWYvc25pcHBldHMvcnVzdGlmeS11aS00ZGIyZjEwZjEwNzg4ZjRjL3dlYi9kb20tcnVudGltZS5qcyIKICBdLAogICJmYWlsdXJlcyI6IFtdLAogICJyZXNwb25zZXMiOiBbCiAgICB7CiAgICAgICJ1cmwiOiAiaHR0cDovLzEyNy4wLjAuMTo0MjA3L2ZyL21pc3NpbmcvYS9iLyIsCiAgICAgICJzdGF0dXMiOiA0MDQsCiAgICAgICJkb2N1bWVudCI6IHRydWUKICAgIH0KICBdLAogICJjb25zb2xlIjogWwogICAgewogICAgICAidGV4dCI6ICJGYWlsZWQgdG8gbG9hZCByZXNvdXJjZTogdGhlIHNlcnZlciByZXNwb25kZWQgd2l0aCBhIHN0YXR1cyBvZiA0MDQgKE5vdCBGb3VuZCkiLAogICAgICAidXJsIjogImh0dHA6Ly8xMjcuMC4wLjE6NDIwNy9mci9taXNzaW5nL2EvYi8iCiAgICB9CiAgXSwKICAicGFnZUVycm9ycyI6IFtdLAogICJkb2N1bWVudDQwNCI6IFsKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDcvZnIvbWlzc2luZy9hL2IvIgogIF0sCiAgImJyb3dzZXIiOiB7CiAgICAiY3NwIjogW10sCiAgICAic3RhdGUiOiAicmVhZHkiLAogICAgImZhaWx1cmUiOiBudWxsCiAgfQp9"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "54d149dee3a7a79e9dd0-21960d2122e6728194d3",
+          "file": "docs-ssg/i18n-islands.spec.ts",
+          "line": 341,
+          "column": 5
+        },
+        {
+          "title": "without scripts the locale pages, source and language homes stay readable and island controls stay disabled",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "components-i18n-root",
+              "projectName": "components-i18n-root",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2942,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T19:37:57.496Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "i18n-islands-no-script-audit.json",
+                      "contentType": "application/json",
+                      "body": "ewogICJyZXF1ZXN0cyI6IFsKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDcvbG9jYWxlLyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA3L2Fzc2V0cy9zaXRlLjY2YjFhN2NjOTUuY3NzIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDcvYXNzZXRzL2ZvbnRzLzM3MTkyNGU3NDgwZDNkMDE4MDdmZGMxYmQzMDQ0MmQwYTY2NTFlNmI1ZWE1NDY0ODJmNTg4M2Q2MTNjZjA0MTkudHRmIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDcvYXNzZXRzL2ZvbnRzLzY2MmExOTZkNThmMTE4M2JmMmQ3NzQyOGI2ZDUyODNmZTNmNDUxNjFhYjAyMWJlYTQwMzZiYzk4ZTVjYWMwMTYudHRmIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDcvYXNzZXRzL2ZvbnRzLzFkNGIyZjAwOGFjN2UwMjc4MGMxOTgwMWQ0YjA0ZGQ0NTM4ZTQwMjE1OTQzY2M4YWQzNzRkYmE4ZWMyMjc4YzAudHRmIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDcvYXNzZXRzL2ZvbnRzLzM5ZWUzYzU4N2UxMGU4OTY2OWI5ZmYzMjcwMzI2MWQxMGQ1ZjljNGRkNWFkMTQ3YjZiNWExYzUyMDA1OTE4MTcudHRmIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDcvemgvbG9jYWxlLyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA3L2Fzc2V0cy9zaXRlLjY2YjFhN2NjOTUuY3NzIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDcvYXNzZXRzL2ZvbnRzLzM3MTkyNGU3NDgwZDNkMDE4MDdmZGMxYmQzMDQ0MmQwYTY2NTFlNmI1ZWE1NDY0ODJmNTg4M2Q2MTNjZjA0MTkudHRmIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDcvYXNzZXRzL2ZvbnRzLzY2MmExOTZkNThmMTE4M2JmMmQ3NzQyOGI2ZDUyODNmZTNmNDUxNjFhYjAyMWJlYTQwMzZiYzk4ZTVjYWMwMTYudHRmIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDcvYXNzZXRzL2ZvbnRzLzFkNGIyZjAwOGFjN2UwMjc4MGMxOTgwMWQ0YjA0ZGQ0NTM4ZTQwMjE1OTQzY2M4YWQzNzRkYmE4ZWMyMjc4YzAudHRmIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDcvYXNzZXRzL2ZvbnRzLzM5ZWUzYzU4N2UxMGU4OTY2OWI5ZmYzMjcwMzI2MWQxMGQ1ZjljNGRkNWFkMTQ3YjZiNWExYzUyMDA1OTE4MTcudHRmIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDcvZnIvbG9jYWxlLyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA3L2Fzc2V0cy9zaXRlLjY2YjFhN2NjOTUuY3NzIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDcvYXNzZXRzL2ZvbnRzLzM3MTkyNGU3NDgwZDNkMDE4MDdmZGMxYmQzMDQ0MmQwYTY2NTFlNmI1ZWE1NDY0ODJmNTg4M2Q2MTNjZjA0MTkudHRmIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDcvYXNzZXRzL2ZvbnRzLzY2MmExOTZkNThmMTE4M2JmMmQ3NzQyOGI2ZDUyODNmZTNmNDUxNjFhYjAyMWJlYTQwMzZiYzk4ZTVjYWMwMTYudHRmIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDcvYXNzZXRzL2ZvbnRzLzFkNGIyZjAwOGFjN2UwMjc4MGMxOTgwMWQ0YjA0ZGQ0NTM4ZTQwMjE1OTQzY2M4YWQzNzRkYmE4ZWMyMjc4YzAudHRmIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDcvYXNzZXRzL2ZvbnRzLzM5ZWUzYzU4N2UxMGU4OTY2OWI5ZmYzMjcwMzI2MWQxMGQ1ZjljNGRkNWFkMTQ3YjZiNWExYzUyMDA1OTE4MTcudHRmIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDcvemgvcGxhaW4vIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDcvYXNzZXRzL3NpdGUuNjZiMWE3Y2M5NS5jc3MiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNy9hc3NldHMvZm9udHMvMzcxOTI0ZTc0ODBkM2QwMTgwN2ZkYzFiZDMwNDQyZDBhNjY1MWU2YjVlYTU0NjQ4MmY1ODgzZDYxM2NmMDQxOS50dGYiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNy9hc3NldHMvZm9udHMvYzhmNjY5Y2ViMmM5YzYwY2NmNTUxOThiMzA1ZTA4YTk5N2ZmY2E3OWEzOGNjN2VlYjU1MWU2NDNjYmU2NjUwNS50dGYiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNy9hc3NldHMvZm9udHMvMWQ0YjJmMDA4YWM3ZTAyNzgwYzE5ODAxZDRiMDRkZDQ1MzhlNDAyMTU5NDNjYzhhZDM3NGRiYThlYzIyNzhjMC50dGYiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNy96aC9taXNzaW5nL2EvYi8iLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNy9hc3NldHMvc2l0ZS42NmIxYTdjYzk1LmNzcyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA3L2Fzc2V0cy9mb250cy8zNzE5MjRlNzQ4MGQzZDAxODA3ZmRjMWJkMzA0NDJkMGE2NjUxZTZiNWVhNTQ2NDgyZjU4ODNkNjEzY2YwNDE5LnR0ZiIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA3L2Fzc2V0cy9mb250cy82NjJhMTk2ZDU4ZjExODNiZjJkNzc0MjhiNmQ1MjgzZmUzZjQ1MTYxYWIwMjFiZWE0MDM2YmM5OGU1Y2FjMDE2LnR0ZiIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA3L2Fzc2V0cy9mb250cy8xZDRiMmYwMDhhYzdlMDI3ODBjMTk4MDFkNGIwNGRkNDUzOGU0MDIxNTk0M2NjOGFkMzc0ZGJhOGVjMjI3OGMwLnR0ZiIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA3L2Fzc2V0cy9mb250cy8zOWVlM2M1ODdlMTBlODk2NjliOWZmMzI3MDMyNjFkMTBkNWY5YzRkZDVhZDE0N2I2YjVhMWM1MjAwNTkxODE3LnR0ZiIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA3L2ZyL21pc3NpbmcvYS9iLyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA3L2Fzc2V0cy9zaXRlLjY2YjFhN2NjOTUuY3NzIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDcvYXNzZXRzL2ZvbnRzLzM3MTkyNGU3NDgwZDNkMDE4MDdmZGMxYmQzMDQ0MmQwYTY2NTFlNmI1ZWE1NDY0ODJmNTg4M2Q2MTNjZjA0MTkudHRmIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDcvYXNzZXRzL2ZvbnRzLzY2MmExOTZkNThmMTE4M2JmMmQ3NzQyOGI2ZDUyODNmZTNmNDUxNjFhYjAyMWJlYTQwMzZiYzk4ZTVjYWMwMTYudHRmIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDcvYXNzZXRzL2ZvbnRzLzFkNGIyZjAwOGFjN2UwMjc4MGMxOTgwMWQ0YjA0ZGQ0NTM4ZTQwMjE1OTQzY2M4YWQzNzRkYmE4ZWMyMjc4YzAudHRmIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDcvYXNzZXRzL2ZvbnRzLzM5ZWUzYzU4N2UxMGU4OTY2OWI5ZmYzMjcwMzI2MWQxMGQ1ZjljNGRkNWFkMTQ3YjZiNWExYzUyMDA1OTE4MTcudHRmIgogIF0sCiAgImZhaWx1cmVzIjogW10sCiAgInJlc3BvbnNlcyI6IFsKICAgIHsKICAgICAgInVybCI6ICJodHRwOi8vMTI3LjAuMC4xOjQyMDcvemgvbWlzc2luZy9hL2IvIiwKICAgICAgInN0YXR1cyI6IDQwNCwKICAgICAgImRvY3VtZW50IjogdHJ1ZQogICAgfSwKICAgIHsKICAgICAgInVybCI6ICJodHRwOi8vMTI3LjAuMC4xOjQyMDcvZnIvbWlzc2luZy9hL2IvIiwKICAgICAgInN0YXR1cyI6IDQwNCwKICAgICAgImRvY3VtZW50IjogdHJ1ZQogICAgfQogIF0sCiAgImNvbnNvbGUiOiBbCiAgICB7CiAgICAgICJ0ZXh0IjogIkZhaWxlZCB0byBsb2FkIHJlc291cmNlOiB0aGUgc2VydmVyIHJlc3BvbmRlZCB3aXRoIGEgc3RhdHVzIG9mIDQwNCAoTm90IEZvdW5kKSIsCiAgICAgICJ1cmwiOiAiaHR0cDovLzEyNy4wLjAuMTo0MjA3L3poL21pc3NpbmcvYS9iLyIKICAgIH0sCiAgICB7CiAgICAgICJ0ZXh0IjogIkZhaWxlZCB0byBsb2FkIHJlc291cmNlOiB0aGUgc2VydmVyIHJlc3BvbmRlZCB3aXRoIGEgc3RhdHVzIG9mIDQwNCAoTm90IEZvdW5kKSIsCiAgICAgICJ1cmwiOiAiaHR0cDovLzEyNy4wLjAuMTo0MjA3L2ZyL21pc3NpbmcvYS9iLyIKICAgIH0KICBdLAogICJwYWdlRXJyb3JzIjogW10sCiAgImRvY3VtZW50NDA0IjogWwogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNy96aC9taXNzaW5nL2EvYi8iLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNy9mci9taXNzaW5nL2EvYi8iCiAgXQp9"
+                    },
+                    {
+                      "name": "i18n-islands-audit.json",
+                      "contentType": "application/json",
+                      "body": "ewogICJyZXF1ZXN0cyI6IFtdLAogICJmYWlsdXJlcyI6IFtdLAogICJyZXNwb25zZXMiOiBbXSwKICAiY29uc29sZSI6IFtdLAogICJwYWdlRXJyb3JzIjogW10sCiAgImRvY3VtZW50NDA0IjogW10sCiAgImJyb3dzZXIiOiB7CiAgICAiY3NwIjogW10KICB9Cn0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "54d149dee3a7a79e9dd0-611f2f96a5c9f94cdfbd",
+          "file": "docs-ssg/i18n-islands.spec.ts",
+          "line": 366,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-15T19:36:09.644Z",
+    "duration": 110829.29000000001,
+    "expected": 8,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

@@ -1,0 +1,487 @@
+{
+  "candidate_sha": "18b229d9b915a798f561dad14e83d7f90ad7d1a3",
+  "framework_revision": "a2ad3940fd8dc81e25d9b2c4e857f481d95e8cbd",
+  "method": "existing inventory-first-load.py inventory(); complete manifest byte/hash check and declared first-load closure; retain raw and gzip maxima by current page type; no reader performance verdict",
+  "sites": {
+    "A": {
+      "dist": "target/docs-ssg/http/official/subpath/dist",
+      "build_id": "65ded86c0e6910b0",
+      "base": "/rustify-ui/",
+      "verification": {
+        "files": 96,
+        "every_SHA_and_bytes_match": true,
+        "total_declared_bytes": 18176736
+      },
+      "groups": {
+        "home": {
+          "count": 2,
+          "bytes": {
+            "bytes": 111814,
+            "candidates": [
+              {
+                "file": "index.html",
+                "route": "/rustify-ui/",
+                "category": null
+              }
+            ]
+          },
+          "gzip9": {
+            "gzip9": 25226,
+            "candidates": [
+              {
+                "file": "zh/index.html",
+                "route": "/rustify-ui/zh/",
+                "category": null
+              }
+            ]
+          },
+          "selected": [
+            {
+              "file": "index.html",
+              "route": "/rustify-ui/",
+              "lang": "en",
+              "category": null,
+              "islands": 0,
+              "bytes": 111814,
+              "gzip9": 25012,
+              "dependency_set": "set-1"
+            },
+            {
+              "file": "zh/index.html",
+              "route": "/rustify-ui/zh/",
+              "lang": "zh",
+              "category": null,
+              "islands": 0,
+              "bytes": 111420,
+              "gzip9": 25226,
+              "dependency_set": "set-1"
+            }
+          ]
+        },
+        "content": {
+          "count": 24,
+          "bytes": {
+            "bytes": 230877,
+            "candidates": [
+              {
+                "file": "quickstart/index.html",
+                "route": "/rustify-ui/quickstart/",
+                "category": null
+              }
+            ]
+          },
+          "gzip9": {
+            "gzip9": 40150,
+            "candidates": [
+              {
+                "file": "zh/vellum/index.html",
+                "route": "/rustify-ui/zh/vellum/",
+                "category": null
+              }
+            ]
+          },
+          "selected": [
+            {
+              "file": "quickstart/index.html",
+              "route": "/rustify-ui/quickstart/",
+              "lang": "en",
+              "category": null,
+              "islands": 0,
+              "bytes": 230877,
+              "gzip9": 39334,
+              "dependency_set": "set-1"
+            },
+            {
+              "file": "zh/vellum/index.html",
+              "route": "/rustify-ui/zh/vellum/",
+              "lang": "zh",
+              "category": null,
+              "islands": 0,
+              "bytes": 169756,
+              "gzip9": 40150,
+              "dependency_set": "set-1"
+            }
+          ]
+        },
+        "404": {
+          "count": 2,
+          "bytes": {
+            "bytes": 129708,
+            "candidates": [
+              {
+                "file": "404.html",
+                "route": "/rustify-ui/404.html",
+                "category": null
+              }
+            ]
+          },
+          "gzip9": {
+            "gzip9": 26484,
+            "candidates": [
+              {
+                "file": "404.html",
+                "route": "/rustify-ui/404.html",
+                "category": null
+              }
+            ]
+          },
+          "selected": [
+            {
+              "file": "404.html",
+              "route": "/rustify-ui/404.html",
+              "lang": "en",
+              "category": null,
+              "islands": 0,
+              "bytes": 129708,
+              "gzip9": 26484,
+              "dependency_set": "set-1"
+            }
+          ]
+        },
+        "islands": {
+          "count": 48,
+          "bytes": {
+            "bytes": 10173481,
+            "candidates": [
+              {
+                "file": "zh/components/data-table/index.html",
+                "route": "/rustify-ui/zh/components/data-table/",
+                "category": "data table"
+              }
+            ]
+          },
+          "gzip9": {
+            "gzip9": 1241316,
+            "candidates": [
+              {
+                "file": "zh/components/data-table/index.html",
+                "route": "/rustify-ui/zh/components/data-table/",
+                "category": "data table"
+              }
+            ]
+          },
+          "selected": [
+            {
+              "file": "zh/components/data-table/index.html",
+              "route": "/rustify-ui/zh/components/data-table/",
+              "lang": "zh",
+              "category": "data table",
+              "islands": 1,
+              "bytes": 10173481,
+              "gzip9": 1241316,
+              "dependency_set": "set-2"
+            }
+          ]
+        }
+      },
+      "first_load_dependency_sets": [
+        {
+          "id": "set-1",
+          "files": [
+            "assets/mode.1d6a9bf145.js",
+            "assets/site.53e8599ddd.js",
+            "assets/site.fb79fd4da2.css"
+          ],
+          "bytes": 101335,
+          "gzip9": 21763,
+          "sha256": "91737c7ab8d2269194fa379b884fd752258613fadba0662b80956c1f1ca1791d",
+          "conditional_files": [],
+          "html_references": [
+            {
+              "to": "assets/site.fb79fd4da2.css",
+              "reason": "html-link-stylesheet"
+            },
+            {
+              "to": "assets/mode.1d6a9bf145.js",
+              "reason": "html-script"
+            },
+            {
+              "to": "assets/site.53e8599ddd.js",
+              "reason": "html-script"
+            }
+          ]
+        },
+        {
+          "id": "set-2",
+          "files": [
+            "assets/islands/7f44eed27254f75707ca32923338cd0f1484ef1bca2006f4a1e500024c759d06/app.js",
+            "assets/islands/7f44eed27254f75707ca32923338cd0f1484ef1bca2006f4a1e500024c759d06/app_bg.wasm",
+            "assets/islands/7f44eed27254f75707ca32923338cd0f1484ef1bca2006f4a1e500024c759d06/dom-loader.js",
+            "assets/islands/7f44eed27254f75707ca32923338cd0f1484ef1bca2006f4a1e500024c759d06/islands.js",
+            "assets/islands/7f44eed27254f75707ca32923338cd0f1484ef1bca2006f4a1e500024c759d06/snippets/rustify-ui-4db2f10f10788f4c/web/dom-runtime.js",
+            "assets/mode.1d6a9bf145.js",
+            "assets/site.53e8599ddd.js",
+            "assets/site.fb79fd4da2.css"
+          ],
+          "bytes": 9994815,
+          "gzip9": 1227172,
+          "sha256": "23f6284e4f0ba938675500a04d95026d895ba58c8979c64439b5c03475811784",
+          "conditional_files": [],
+          "html_references": [
+            {
+              "to": "assets/site.fb79fd4da2.css",
+              "reason": "html-link-stylesheet"
+            },
+            {
+              "to": "assets/mode.1d6a9bf145.js",
+              "reason": "html-script"
+            },
+            {
+              "to": "assets/site.53e8599ddd.js",
+              "reason": "html-script"
+            },
+            {
+              "to": "assets/islands/7f44eed27254f75707ca32923338cd0f1484ef1bca2006f4a1e500024c759d06/islands.js",
+              "reason": "html-script"
+            }
+          ]
+        }
+      ]
+    },
+    "B_P2": {
+      "dist": "target/docs-ssg/p4/b-p2/dist",
+      "build_id": "92ee15d86748316f",
+      "base": "/",
+      "verification": {
+        "files": 533,
+        "every_SHA_and_bytes_match": true,
+        "total_declared_bytes": 62109185
+      },
+      "groups": {
+        "home": {
+          "count": 1,
+          "bytes": {
+            "bytes": 220585,
+            "candidates": [
+              {
+                "file": "index.html",
+                "route": "/",
+                "category": null
+              }
+            ]
+          },
+          "gzip9": {
+            "gzip9": 35536,
+            "candidates": [
+              {
+                "file": "index.html",
+                "route": "/",
+                "category": null
+              }
+            ]
+          },
+          "selected": [
+            {
+              "file": "index.html",
+              "route": "/",
+              "lang": "en",
+              "category": null,
+              "islands": 0,
+              "bytes": 220585,
+              "gzip9": 35536,
+              "dependency_set": "set-1"
+            }
+          ]
+        },
+        "content": {
+          "count": 499,
+          "bytes": {
+            "bytes": 263809,
+            "candidates": [
+              {
+                "file": "zh/g04/page-024/index.html",
+                "route": "/zh/g04/page-024/",
+                "category": null
+              }
+            ]
+          },
+          "gzip9": {
+            "gzip9": 40320,
+            "candidates": [
+              {
+                "file": "en/g07/page-017/index.html",
+                "route": "/en/g07/page-017/",
+                "category": null
+              }
+            ]
+          },
+          "selected": [
+            {
+              "file": "en/g07/page-017/index.html",
+              "route": "/en/g07/page-017/",
+              "lang": "en",
+              "category": null,
+              "islands": 0,
+              "bytes": 212164,
+              "gzip9": 40320,
+              "dependency_set": "set-1"
+            },
+            {
+              "file": "zh/g04/page-024/index.html",
+              "route": "/zh/g04/page-024/",
+              "lang": "zh",
+              "category": null,
+              "islands": 0,
+              "bytes": 263809,
+              "gzip9": 39855,
+              "dependency_set": "set-1"
+            }
+          ]
+        },
+        "404": {
+          "count": 1,
+          "bytes": {
+            "bytes": 130916,
+            "candidates": [
+              {
+                "file": "404.html",
+                "route": "/404.html",
+                "category": null
+              }
+            ]
+          },
+          "gzip9": {
+            "gzip9": 25652,
+            "candidates": [
+              {
+                "file": "404.html",
+                "route": "/404.html",
+                "category": null
+              }
+            ]
+          },
+          "selected": [
+            {
+              "file": "404.html",
+              "route": "/404.html",
+              "lang": "en",
+              "category": null,
+              "islands": 0,
+              "bytes": 130916,
+              "gzip9": 25652,
+              "dependency_set": "set-1"
+            }
+          ]
+        },
+        "islands": {
+          "count": 12,
+          "bytes": {
+            "bytes": 11524576,
+            "candidates": [
+              {
+                "file": "p2/quickstart/index.html",
+                "route": "/p2/quickstart/",
+                "category": null
+              }
+            ]
+          },
+          "gzip9": {
+            "gzip9": 1207359,
+            "candidates": [
+              {
+                "file": "p2/vellum/index.html",
+                "route": "/p2/vellum/",
+                "category": null
+              }
+            ]
+          },
+          "selected": [
+            {
+              "file": "p2/quickstart/index.html",
+              "route": "/p2/quickstart/",
+              "lang": "en",
+              "category": null,
+              "islands": 4,
+              "bytes": 11524576,
+              "gzip9": 1206593,
+              "dependency_set": "set-2"
+            },
+            {
+              "file": "p2/vellum/index.html",
+              "route": "/p2/vellum/",
+              "lang": "en",
+              "category": null,
+              "islands": 4,
+              "bytes": 11473503,
+              "gzip9": 1207359,
+              "dependency_set": "set-2"
+            }
+          ]
+        }
+      },
+      "first_load_dependency_sets": [
+        {
+          "id": "set-1",
+          "files": [
+            "assets/files/logo.d070a7e79d.svg",
+            "assets/mode.1d6a9bf145.js",
+            "assets/site.53e8599ddd.js",
+            "assets/site.d12897c957.css"
+          ],
+          "bytes": 121218,
+          "gzip9": 23107,
+          "sha256": "c8d385d98f412db522384e8c099b484dd875e7e1254166ad9126cfdf536018a4",
+          "conditional_files": [],
+          "html_references": [
+            {
+              "to": "assets/site.d12897c957.css",
+              "reason": "html-link-stylesheet"
+            },
+            {
+              "to": "assets/mode.1d6a9bf145.js",
+              "reason": "html-script"
+            },
+            {
+              "to": "assets/site.53e8599ddd.js",
+              "reason": "html-script"
+            },
+            {
+              "to": "assets/files/logo.d070a7e79d.svg",
+              "reason": "html-eager-image"
+            }
+          ]
+        },
+        {
+          "id": "set-2",
+          "files": [
+            "assets/files/logo.d070a7e79d.svg",
+            "assets/islands/c29785434424424a48360744650945f5251d3d1816ae7e42c3f2be6948eb9ec3/app.js",
+            "assets/islands/c29785434424424a48360744650945f5251d3d1816ae7e42c3f2be6948eb9ec3/app_bg.wasm",
+            "assets/islands/c29785434424424a48360744650945f5251d3d1816ae7e42c3f2be6948eb9ec3/dom-loader.js",
+            "assets/islands/c29785434424424a48360744650945f5251d3d1816ae7e42c3f2be6948eb9ec3/islands.js",
+            "assets/islands/c29785434424424a48360744650945f5251d3d1816ae7e42c3f2be6948eb9ec3/snippets/rustify-ui-4db2f10f10788f4c/web/dom-runtime.js",
+            "assets/mode.1d6a9bf145.js",
+            "assets/site.53e8599ddd.js",
+            "assets/site.d12897c957.css"
+          ],
+          "bytes": 11308760,
+          "gzip9": 1183805,
+          "sha256": "b785c6f3373a7d7e3c0cae72141e998c41c40c35b634011f0ae29cc8278f6192",
+          "conditional_files": [],
+          "html_references": [
+            {
+              "to": "assets/site.d12897c957.css",
+              "reason": "html-link-stylesheet"
+            },
+            {
+              "to": "assets/mode.1d6a9bf145.js",
+              "reason": "html-script"
+            },
+            {
+              "to": "assets/site.53e8599ddd.js",
+              "reason": "html-script"
+            },
+            {
+              "to": "assets/files/logo.d070a7e79d.svg",
+              "reason": "html-eager-image"
+            },
+            {
+              "to": "assets/islands/c29785434424424a48360744650945f5251d3d1816ae7e42c3f2be6948eb9ec3/islands.js",
+              "reason": "html-script"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

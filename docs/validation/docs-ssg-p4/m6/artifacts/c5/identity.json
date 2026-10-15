@@ -1,0 +1,16 @@
+{
+  "candidate_sha": "936149b91f57f6dbbdb43969c8843f940348a11e",
+  "framework_revision": "58b7a0d9eb913b7656120693905d66d70ab208d8",
+  "projection": {
+    "site/Cargo.lock": {
+      "original_sha256": "8612e4296225fcea2a97374b4eaabaef39d8b65412587af8997fcbebe5f8e37f",
+      "projected_sha256": "2360327633abc42fd52714e9ff95a527cf157465951d46ab506fc9b1153876ba"
+    },
+    "site/Cargo.toml": {
+      "original_sha256": "8f8c68471bf1639bd0f95544449403b1329cdb2f15c90c4e6f9fcdb6f8e1d558",
+      "projected_sha256": "5d7808471480be774b319a72cf96488673c7c6cd24288f31a7c446ff38a0d84b"
+    }
+  },
+  "build_id": "ae467c9c97900d12",
+  "cli_version": "0.1.26"
+}

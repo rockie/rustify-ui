@@ -216,7 +216,7 @@ This is the reading theme's own design document, as required by [docs/plan/DOCS-
 
 **Creative North Star: "A page you read, not a portal you browse"**
 
-The article column owns the screen. The header, sidebar, table of contents and pager are quiet wayfinding in small muted type that steps back from the text. The page uses Rustify's cool neutral surfaces and slate text with one blue. That blue is the configurable primary pair, and it marks only links, the reader's current location and focus. Depth comes from hairlines and a slightly deeper neutral panel, never from shadow. Every page is complete static HTML before any script runs. Script adds the mode switch, copy, code-group tabs and the TOC tracker, and when it is absent nothing is hidden.
+The article column owns the screen. The header, sidebar, table of contents and pager are quiet wayfinding in small muted type that steps back from the text. The page uses Rustify's cool neutral surfaces and slate text with one blue. That blue is the configurable primary pair, and it marks links, the reader's current location, focus and search selection or matches. Depth comes from hairlines and a slightly deeper neutral panel, never from shadow. Every page has complete reading content in static HTML before any script runs. Script adds search, the mode switch, copy, code-group tabs and the TOC tracker; without it, reading content remains available.
 
 Where the theme differs from DESIGN.md:
 
@@ -256,7 +256,7 @@ Each alert has an edge hue (`--rd-<kind>`) and a title hue (`--rd-<kind>-text`).
 - **Code Panel** (`code-bg`, the SDK `muted` values #f2f4f7 / #161b26): code blocks, code groups, inline code and table header cells.
 - **Marked Line** (`line-hl`, #e3ebf8 / #1f2a3d): highlighted code lines.
 - `warning` draws only the draft label's border.
-- **Popover** (`popover`, the SDK's #ffffff / #1d2939): the language menu, dev problem panel and its marker. In dark it equals `secondary`, which is why the dev panel's inner rules use their own mix (below).
+- **Popover** (`popover`, the SDK's #ffffff / #1d2939): the search dialog, language menu, dev problem panel and its marker. In dark it equals `secondary`, which is why the dev panel's inner rules use their own mix (below).
 
 Tints are mixed in `oklab` from these tokens:
 
@@ -265,6 +265,8 @@ Tints are mixed in `oklab` from these tokens:
 - Copy hover: foreground 7%.
 - Overflow cue: foreground 14%.
 - Primary hover: primary 86% into foreground.
+- Search result selection: primary 8% into popover, with a primary edge; matched terms use primary 20% into popover and normal popover text.
+- Search backdrop: foreground 30% into transparent.
 - Dev panel rules (`--rd-dev-divider`): border 35% into popover, mixed in `srgb`. It stands off the popover in both modes where `secondary` disappears in dark.
 
 `docs.css` picks no hue of its own.
@@ -288,7 +290,7 @@ Highlighting is emitted as `hl-` classes, and each colour is held at 4.5:1 or be
 
 ### Named Rules
 
-**The One Blue Rule.** Primary means "link, you are here, or focus". Never use it for decoration, headings or panel fills. The primary home action is the only primary fill on any page, plus the checked task box.
+**The One Blue Rule.** Primary means "link, you are here, focus, or a search selection or match". Never use it for decoration or headings. Full primary fills belong to the primary home action and checked task box; search selection and matched terms use restrained tints.
 
 **The Generated Pair Rule.** Authors choose the primary for each mode, and the theme derives everything else: `ring` copies it, `primary-foreground` and the check mark are computed black or white. Never hand-pick a label colour for a brand primary.
 
@@ -321,7 +323,7 @@ Highlighting is emitted as `hl-` classes, and each colour is held at 4.5:1 or be
 ## Layout
 
 - **Frame:** a centred frame of at most 76rem. Gutters are 1rem below 48rem and 1.5rem from 48rem, with a 2.5rem column gap.
-- **Header:** sticky, at least 3.5rem tall (`--rd-header`), with a bottom hairline. The brand sits left; the language menu, when configured, and mode switch sit right. Let the bar grow when its language summary wraps at narrow widths.
+- **Header:** sticky, at least 3.5rem tall (`--rd-header`), with a bottom hairline. The brand sits left; Search, the language menu when configured, and the mode switch sit right. Let the bar grow when its controls wrap at narrow widths.
 - **Under 48rem (768px):** one column, ordered sidebar → TOC → article. The sidebar and TOC are native `<details>` panels separated by hairlines, with a drawn chevron that rotates when open.
 - **48rem–79.99rem:** a 15rem sticky sidebar column plus the article. The TOC stays a `<details>` panel above the article, constrained to the measure.
 - **From 80rem (1280px):** three columns: 15rem sidebar, flexible article, 14rem TOC. The sidebar and TOC columns are sticky under the header, scroll on their own and have 3rem block padding.
@@ -359,7 +361,7 @@ Depth cues come from state, not elevation:
 
 ## Shapes
 
-- **Panels: one 6px radius (`--rd-radius`, 0.375rem).** This covers code panels, code groups, tables, alerts, images and pager links.
+- **Panels: one 6px radius (`--rd-radius`, 0.375rem).** This covers code panels, code groups, tables, alerts, images, pager links and the search dialog and result options.
 - **Controls: slightly softer (8px).** This covers the home actions and the mode-switch frame. Mode options nest inside at 5px.
 - **Chips: 4px.** This covers inline code and task boxes.
 - **Pill: fully round (999px).** Only the dev marker on screens 640px and wider. On phones it takes the 6px panel radius.
@@ -379,6 +381,23 @@ Depth cues come from state, not elevation:
   - The switch ships `hidden` and appears only once `site.js` runs.
   - `mode.js` applies a stored choice synchronously in `<head>`. The storage key is per base path. When storage is refused, the page stays on system mode.
 - **Header links (`nav.top`, then `nav.social`):** muted 0.875rem links at weight 500, 1.25rem apart, the social group after a 1px `secondary` hairline. Hover turns a link foreground. The link to the page in view (`aria-current="page"`) or to the section it is under (`aria-current="true"`) is primary. From 48rem they sit in the bar before the mode switch and scroll sideways inside it if they must. Below that they are a row of their own under the header with a bottom hairline, scrolling sideways by themselves, so the page never does. The row is not sticky. One of the two navigations is always `display: none`.
+
+### Local search (P4)
+
+Search is an on-demand DOM reading aid in the existing world, independent of demo wasm. It adds no palette, font, shadow or decorative motion.
+
+- **Entry:** a named button beside language and mode, with a 1px `border` edge, panel radius, 0.8125rem type and 0.375rem 0.5rem padding. The desktop Ctrl / Cmd K hint is 0.75rem and hides below 48rem. The button ships disabled; the base script enables it when native modal dialogs are available. Without script it retains its name and disabled state, with a visible explanation and ordinary navigation.
+- **Dialog:** a native `<dialog>` on `popover` with `popover-foreground` text, a 1px `border` edge and the panel radius. Its width is the smaller of the reading measure and the viewport minus two 1rem gutters; its maximum height is the dynamic viewport minus 2rem. Desktop padding is 1.25rem; below 48rem, padding and top margin are 1rem. The backdrop is a foreground-30% tint. There is no second H1.
+- **Reading order:** a visible input label and explicit Close share the first row, followed by the input, status, polite live total, result list and Retry or Show more when relevant. The input uses `background` and `foreground`, the primary caret and an opaque 3px `ring` outline at a 2px offset. Status, paths and excerpts use 0.875rem type with 1.5 leading; result titles use weight 600.
+- **Contained scrolling:** only the result list flexes and scrolls, capped at 55dvh with contained overscroll. Other dialog rows do not shrink. Long results wrap within their option; input, Close and the recovery/pagination controls remain outside the result scroll region.
+- **Focus and selection:** opening from Search or Ctrl/Cmd+K synchronously focuses the input before loading the module, Worker and current-language index. Native modal behavior contains focus. Up/Down select a result through `aria-activedescendant` and `aria-selected`; Enter follows it. The selected or hovered option has a primary edge and primary-8% fill. Matched text keeps normal popover text over a primary-20% tint. IME composition defers query/selection handling until composition ends.
+- **States and recovery:** distinguish closed, idle, loading, results, empty and error. Loading says that typing may continue; empty suggests another word or shorter prefix. Failure is an alert with Retry and preserves the input. Retry returns focus to the input. Results are grouped by page; the live total counts every matching page, while Show more appends the next group without replacing the current selection.
+- **Close and reopen:** Escape or Close returns focus to the actual connected trigger. An unmodified result activation, including a same-page section, closes the dialog. Closing discards that session's pending work; a rapid reopen starts a fresh session, so a late result or queued close event cannot replace or dispose it. Retain the reader's input across retry and reopen.
+- **Language:** titles, paths and excerpts carry their source language. A fallback result displays the target-language code badge and an explicit source-language explanation; catalog labels and totals keep each resolved message's actual language. Search stays within the selected language and deployment base, including on a deep 404.
+
+Sources: [shell.rs](crates/rustify-docs/src/shell.rs), [docs.css](crates/rustify-docs/assets/docs.css), [site.js](crates/rustify-docs/assets/site.js), [search.js](crates/rustify-docs/assets/search.js) and [search-worker.js](crates/rustify-docs/assets/search-worker.js). The [local artifact identity](docs/validation/docs-ssg-p4/m6/artifacts/identity.json) records CLI 0.1.24 / C `18b229d9` / R `a2ad3940`, build `65ded86c0e6910b0`. Its generated search scripts match these sources.
+
+The [finish review](docs/validation/docs-ssg-p4/m6/design/finish-review.md) records `ship` for the local M6 DOM visual scope of fifteen full-page captures: search in both themes at 1280/375/320px, text/layout emulation, loading, failure, 404 and no-script, plus Chinese official home and quickstart at 1280/375px. Search captures are C2 0.1.23/R2 evidence for the unchanged C3 static markup/CSS; the four official captures are C3 0.1.24/R3. The C3 [root](docs/validation/docs-ssg-p4/m6/browser/search-root/results.json) and [meta-CSP](docs/validation/docs-ssg-p4/m6/browser/search-meta/results.json) interaction reports pass 21/21 each; the [affected subpath checks](docs/validation/docs-ssg-p4/m6/browser/search-subpath-c3/results.json) pass 15/15. The earlier [C2 subpath report](docs/validation/docs-ssg-p4/m6/browser/search-subpath/results.json) passes 26/26 for the broader unchanged search styles and behavior. These are local evidence, not full M6 or P4 acceptance. Native stable browsers, physical phones, spoken VoiceOver, native 200% zoom and publication remain M7 gates; `search-text-200.png` is text/layout emulation.
 
 ### Languages and untranslated pages (P3)
 
@@ -498,6 +517,12 @@ Sources: [site registry](site/src/lib.rs), [official pages](site/src/pages.rs), 
 
 The [M5 design synchronization record](docs/validation/docs-ssg-p2/m5/design-documentation.md) separates these source-backed rules from acceptance evidence. The [first finish review](docs/validation/docs-ssg-p2/m5/finish-review.md) recorded `fix` for unreadable dark Data table rows; the [single confirmation](docs/validation/docs-ssg-p2/m5/finish-review-r2.md) recorded `ship` for that resolved fix and visible regressions only. Its nine local Chromium captures cover home, Data table and Quick start first viewports at 1280×900 light/dark and 375×812 light. They do not establish visual acceptance for every page or section, physical phones, Safari, performance or publication; the separate local browser results remain in [M5.md](docs/validation/docs-ssg-p2/M5.md).
 
+### Chinese official reading pages (P4)
+
+The Chinese home uses the existing hero, primary/secondary actions and three hairline features with real Chinese copy; its navigation stays under the chosen language. The translated quickstart keeps the source section IDs so incoming anchors survive. Other guides and component categories retain the P3 source-language and untranslated-note treatment, with their existing DOM demos and source controls. This adds no visual system or GPU presentation.
+
+Sources: [official pages](site/src/pages.rs) and [Chinese quickstart](docs/zh/quickstart.md). The [C3 official subpath report](docs/validation/docs-ssg-p4/m6/browser/official-subpath/results.json) passes 55/55, covering the translated home/quickstart, all twenty-four Chinese fallback categories and English demos, twelve guides, no-script, theme and local automated accessibility/reflow checks. The four Chinese page captures are included in the bounded P4 finish review above; native-device, spoken-assistive and publication acceptance remain separate.
+
 ### Tables
 
 - A table scrolls inside its own panel: a hairline border with the panel radius.
@@ -616,10 +641,10 @@ The [M4 design synchronization record](docs/validation/docs-ssg-p2/m4/design-doc
 ### Do:
 
 - **Do** keep prose, code and tables in the 36rem column, and let wide content scroll inside its own panel.
-- **Do** use primary only for links, the current page or section, the selected tab, checked task boxes, the primary action and focus. Let `ring` and `primary-foreground` follow from the brand pair.
+- **Do** use primary only for links, the current page or section, the selected tab, checked task boxes, the primary action, focus and restrained search selection/match tints. Let `ring` and `primary-foreground` follow from the brand pair.
 - **Do** separate with 1px `secondary` hairlines and the `code-bg` tone. Use the single 6px panel radius for any new panel.
 - **Do** draw new icons on the 24-unit, 2-stroke `currentColor` grid, hidden from assistive technology, next to a word.
-- **Do** ship every script-dependent control `hidden` and reveal it from `site.js`, so that a page without script shows no dead affordance.
+- **Do** ship script-dependent controls `hidden` and reveal them from `site.js`. Search is the explicit exception: it ships disabled with its name and a no-script explanation, while ordinary reading navigation remains available.
 - **Do** confirm actions in place and through the `#rd-status` polite live region, in the page's interface language.
 - **Do** gate any new motion behind `prefers-reduced-motion: no-preference`.
 - **Do** keep dev-only feedback in the corner panel and marker: `caution-text` and `alert-warning-text` for counts and rule ids only, locations as mono `line:col`, and focus moved only by the author's own action.

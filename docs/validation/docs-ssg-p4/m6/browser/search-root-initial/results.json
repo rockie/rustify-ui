@@ -1,0 +1,1315 @@
+{
+  "config": {
+    "argv": [
+      "/Users/rockie/.nvm/versions/node/v26.1.0/bin/node",
+      "/Users/rockie/Documents/gh-rockie/rustify-ui/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "playwright.docs.config.ts",
+      "--project=docs-search-root",
+      "search.spec.ts"
+    ],
+    "configFile": "/Users/rockie/Documents/gh-rockie/rustify-ui/playwright.docs.config.ts",
+    "rootDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": {},
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/docs",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "dom-only",
+        "name": "dom-only",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [
+          "dom-only/hydration.spec.ts"
+        ],
+        "testMatch": [
+          "dom-only/**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/docs",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "dom-hydrate",
+        "name": "dom-hydrate",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "dom-only/hydration.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/docs",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "docs-root",
+        "name": "docs-root",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [
+          "docs-ssg/dev*.spec.ts",
+          "docs-ssg/islands.spec.ts",
+          "docs-ssg/custom.spec.ts",
+          "docs-ssg/official.spec.ts",
+          "docs-ssg/i18n*.spec.ts",
+          "docs-ssg/search*.spec.ts"
+        ],
+        "testMatch": [
+          "docs-ssg/**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/docs",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "docs-subpath",
+        "name": "docs-subpath",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [
+          "docs-ssg/dev*.spec.ts",
+          "docs-ssg/islands.spec.ts",
+          "docs-ssg/custom.spec.ts",
+          "docs-ssg/official.spec.ts",
+          "docs-ssg/i18n*.spec.ts",
+          "docs-ssg/search*.spec.ts"
+        ],
+        "testMatch": [
+          "docs-ssg/**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/docs",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "docs-meta",
+        "name": "docs-meta",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [
+          "docs-ssg/dev*.spec.ts",
+          "docs-ssg/islands.spec.ts",
+          "docs-ssg/custom.spec.ts",
+          "docs-ssg/official.spec.ts",
+          "docs-ssg/i18n*.spec.ts",
+          "docs-ssg/search*.spec.ts"
+        ],
+        "testMatch": [
+          "docs-ssg/**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/docs",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "components-root",
+        "name": "components-root",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/islands.spec.ts",
+          "docs-ssg/custom.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/docs",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "components-subpath",
+        "name": "components-subpath",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/islands.spec.ts",
+          "docs-ssg/custom.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/docs",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "components-meta",
+        "name": "components-meta",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/islands.spec.ts",
+          "docs-ssg/custom.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/docs",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "official-root",
+        "name": "official-root",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/official.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/docs",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "official-subpath",
+        "name": "official-subpath",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/official.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/docs",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "official-meta",
+        "name": "official-meta",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/official.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/docs",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "docs-i18n-root",
+        "name": "docs-i18n-root",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/i18n.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/docs",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "docs-i18n-subpath",
+        "name": "docs-i18n-subpath",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/i18n.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/docs",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "docs-i18n-meta",
+        "name": "docs-i18n-meta",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/i18n.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/docs",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "components-i18n-root",
+        "name": "components-i18n-root",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/i18n-islands.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/docs",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "components-i18n-subpath",
+        "name": "components-i18n-subpath",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/i18n-islands.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/docs",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "components-i18n-meta",
+        "name": "components-i18n-meta",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/i18n-islands.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/docs",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "docs-search-root",
+        "name": "docs-search-root",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/search.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/docs",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "docs-search-subpath",
+        "name": "docs-search-subpath",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [
+          "docs-ssg/search-perf.spec.ts"
+        ],
+        "testMatch": [
+          "docs-ssg/search*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/docs",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "docs-search-meta",
+        "name": "docs-search-meta",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/search.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/docs",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "docs-search-perf",
+        "name": "docs-search-perf",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/search-perf.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/docs",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "components-webkit",
+        "name": "components-webkit",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/islands.spec.ts",
+          "docs-ssg/custom.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/docs",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "docs-firefox",
+        "name": "docs-firefox",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [
+          "docs-ssg/dev*.spec.ts",
+          "docs-ssg/islands.spec.ts",
+          "docs-ssg/custom.spec.ts",
+          "docs-ssg/official.spec.ts",
+          "docs-ssg/i18n*.spec.ts",
+          "docs-ssg/search*.spec.ts"
+        ],
+        "testMatch": [
+          "docs-ssg/**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/docs",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "docs-webkit",
+        "name": "docs-webkit",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [
+          "docs-ssg/dev*.spec.ts",
+          "docs-ssg/islands.spec.ts",
+          "docs-ssg/custom.spec.ts",
+          "docs-ssg/official.spec.ts",
+          "docs-ssg/i18n*.spec.ts",
+          "docs-ssg/search*.spec.ts"
+        ],
+        "testMatch": [
+          "docs-ssg/**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/docs",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "docs-dev",
+        "name": "docs-dev",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/dev*.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results/docs/results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "docs-ssg/search.spec.ts",
+      "file": "docs-ssg/search.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "recovery loads a fresh module URL after first HTTP failure and retains the input",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "docs-search-root",
+              "projectName": "docs-search-root",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 425,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T19:08:45.322Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "search-browser-audit.json",
+                      "contentType": "application/json",
+                      "body": "ewogICJyZXF1ZXN0cyI6IFsKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDQvIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDQvYXNzZXRzL3NpdGUuZGIxMmIzZWYxOS5jc3MiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNC9hc3NldHMvbW9kZS4xZDZhOWJmMTQ1LmpzIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDQvYXNzZXRzL3NpdGUuY2VlNjQ5YTU1Yi5qcyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA0L2Fzc2V0cy9zZWFyY2guYWI1NThjZWJkNi5qcyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA0L2Fzc2V0cy9zZWFyY2guYWI1NThjZWJkNi5qcz9yZF9zZWFyY2hfYXR0ZW1wdD0xIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDQvYXNzZXRzL3NlYXJjaC13b3JrZXIuYmYyZDAwMzZkNS5qcyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA0L2Fzc2V0cy9zZWFyY2guZW4uMzQ1YzA4MWM0NS5qc29uIgogIF0sCiAgImZhaWxlZCI6IFtdLAogICJlcnJvcnMiOiBbXSwKICAiY3NwIjogW10sCiAgInBhZ2VFcnJvcnMiOiBbXQp9"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "be970922455020f7b482-16fd8d43e43e2841f8e0",
+          "file": "docs-ssg/search.spec.ts",
+          "line": 40,
+          "column": 58
+        },
+        {
+          "title": "recovery loads a fresh module URL after first network failure and retains the input",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "docs-search-root",
+              "projectName": "docs-search-root",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 280,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T19:08:45.957Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "search-browser-audit.json",
+                      "contentType": "application/json",
+                      "body": "ewogICJyZXF1ZXN0cyI6IFsKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDQvIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDQvYXNzZXRzL3NpdGUuZGIxMmIzZWYxOS5jc3MiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNC9hc3NldHMvbW9kZS4xZDZhOWJmMTQ1LmpzIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDQvYXNzZXRzL3NpdGUuY2VlNjQ5YTU1Yi5qcyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA0L2Fzc2V0cy9zZWFyY2guYWI1NThjZWJkNi5qcyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA0L2Fzc2V0cy9zZWFyY2guYWI1NThjZWJkNi5qcz9yZF9zZWFyY2hfYXR0ZW1wdD0xIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDQvYXNzZXRzL3NlYXJjaC13b3JrZXIuYmYyZDAwMzZkNS5qcyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA0L2Fzc2V0cy9zZWFyY2guZW4uMzQ1YzA4MWM0NS5qc29uIgogIF0sCiAgImZhaWxlZCI6IFtdLAogICJlcnJvcnMiOiBbXSwKICAiY3NwIjogW10sCiAgInBhZ2VFcnJvcnMiOiBbXQp9"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "be970922455020f7b482-10e489f3c0dd71c1a299",
+          "file": "docs-ssg/search.spec.ts",
+          "line": 40,
+          "column": 58
+        },
+        {
+          "title": "recovery loads a fresh module URL after first module-shape failure and retains the input",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "docs-search-root",
+              "projectName": "docs-search-root",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 283,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T19:08:46.242Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "search-browser-audit.json",
+                      "contentType": "application/json",
+                      "body": "ewogICJyZXF1ZXN0cyI6IFsKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDQvIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDQvYXNzZXRzL3NpdGUuZGIxMmIzZWYxOS5jc3MiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNC9hc3NldHMvbW9kZS4xZDZhOWJmMTQ1LmpzIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDQvYXNzZXRzL3NpdGUuY2VlNjQ5YTU1Yi5qcyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA0L2Fzc2V0cy9zZWFyY2guYWI1NThjZWJkNi5qcyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA0L2Fzc2V0cy9zZWFyY2guYWI1NThjZWJkNi5qcz9yZF9zZWFyY2hfYXR0ZW1wdD0xIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDQvYXNzZXRzL3NlYXJjaC13b3JrZXIuYmYyZDAwMzZkNS5qcyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA0L2Fzc2V0cy9zZWFyY2guZW4uMzQ1YzA4MWM0NS5qc29uIgogIF0sCiAgImZhaWxlZCI6IFtdLAogICJlcnJvcnMiOiBbXSwKICAiY3NwIjogW10sCiAgInBhZ2VFcnJvcnMiOiBbXQp9"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "be970922455020f7b482-36dac295bae0cf2ad459",
+          "file": "docs-ssg/search.spec.ts",
+          "line": 40,
+          "column": 58
+        },
+        {
+          "title": "recovery keeps the latest input through delayed JSON and ignores closed sessions",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "docs-search-root",
+              "projectName": "docs-search-root",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 284,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T19:08:46.530Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "search-browser-audit.json",
+                      "contentType": "application/json",
+                      "body": "ewogICJyZXF1ZXN0cyI6IFsKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDQvIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDQvYXNzZXRzL3NpdGUuZGIxMmIzZWYxOS5jc3MiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNC9hc3NldHMvbW9kZS4xZDZhOWJmMTQ1LmpzIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDQvYXNzZXRzL3NpdGUuY2VlNjQ5YTU1Yi5qcyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA0L2Fzc2V0cy9zZWFyY2guYWI1NThjZWJkNi5qcyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA0L2Fzc2V0cy9zZWFyY2gtd29ya2VyLmJmMmQwMDM2ZDUuanMiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNC9hc3NldHMvc2VhcmNoLmVuLjM0NWMwODFjNDUuanNvbiIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA0L2Fzc2V0cy9zZWFyY2gtd29ya2VyLmJmMmQwMDM2ZDUuanMiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNC9hc3NldHMvc2VhcmNoLmVuLjM0NWMwODFjNDUuanNvbiIKICBdLAogICJmYWlsZWQiOiBbXSwKICAiZXJyb3JzIjogW10sCiAgImNzcCI6IFtdLAogICJwYWdlRXJyb3JzIjogW10KfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "be970922455020f7b482-da10598aaf89dfd1ffec",
+          "file": "docs-ssg/search.spec.ts",
+          "line": 74,
+          "column": 1
+        },
+        {
+          "title": "recovery retries JSON failures with a new Worker and the successful module",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "docs-search-root",
+              "projectName": "docs-search-root",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 280,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T19:08:46.818Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "search-browser-audit.json",
+                      "contentType": "application/json",
+                      "body": "ewogICJyZXF1ZXN0cyI6IFsKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDQvIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDQvYXNzZXRzL3NpdGUuZGIxMmIzZWYxOS5jc3MiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNC9hc3NldHMvbW9kZS4xZDZhOWJmMTQ1LmpzIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDQvYXNzZXRzL3NpdGUuY2VlNjQ5YTU1Yi5qcyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA0L2Fzc2V0cy9zZWFyY2guYWI1NThjZWJkNi5qcyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA0L2Fzc2V0cy9zZWFyY2gtd29ya2VyLmJmMmQwMDM2ZDUuanMiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNC9hc3NldHMvc2VhcmNoLmVuLjM0NWMwODFjNDUuanNvbiIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA0L2Fzc2V0cy9zZWFyY2gtd29ya2VyLmJmMmQwMDM2ZDUuanMiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNC9hc3NldHMvc2VhcmNoLmVuLjM0NWMwODFjNDUuanNvbiIKICBdLAogICJmYWlsZWQiOiBbXSwKICAiZXJyb3JzIjogW10sCiAgImNzcCI6IFtdLAogICJwYWdlRXJyb3JzIjogW10KfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "be970922455020f7b482-2167ebb9a5f78597ee1f",
+          "file": "docs-ssg/search.spec.ts",
+          "line": 99,
+          "column": 1
+        },
+        {
+          "title": "recovery leaves a timed-out import inert after retry succeeds",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "docs-search-root",
+              "projectName": "docs-search-root",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 254,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T19:08:47.102Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "search-browser-audit.json",
+                      "contentType": "application/json",
+                      "body": "ewogICJyZXF1ZXN0cyI6IFsKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDQvIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDQvYXNzZXRzL3NpdGUuZGIxMmIzZWYxOS5jc3MiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNC9hc3NldHMvbW9kZS4xZDZhOWJmMTQ1LmpzIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDQvYXNzZXRzL3NpdGUuY2VlNjQ5YTU1Yi5qcyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA0L2Fzc2V0cy9zZWFyY2guYWI1NThjZWJkNi5qcyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA0L2Fzc2V0cy9zZWFyY2guYWI1NThjZWJkNi5qcz9yZF9zZWFyY2hfYXR0ZW1wdD0xIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDQvYXNzZXRzL3NlYXJjaC13b3JrZXIuYmYyZDAwMzZkNS5qcyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA0L2Fzc2V0cy9zZWFyY2guZW4uMzQ1YzA4MWM0NS5qc29uIgogIF0sCiAgImZhaWxlZCI6IFtdLAogICJlcnJvcnMiOiBbXSwKICAiY3NwIjogW10sCiAgInBhZ2VFcnJvcnMiOiBbXQp9"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "be970922455020f7b482-f29ab7ae60071128da32",
+          "file": "docs-ssg/search.spec.ts",
+          "line": 118,
+          "column": 1
+        },
+        {
+          "title": "recovery abandons an import closed before load and opens a fresh session",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "docs-search-root",
+              "projectName": "docs-search-root",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 270,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T19:08:47.361Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "search-browser-audit.json",
+                      "contentType": "application/json",
+                      "body": "ewogICJyZXF1ZXN0cyI6IFsKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDQvIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDQvYXNzZXRzL3NpdGUuZGIxMmIzZWYxOS5jc3MiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNC9hc3NldHMvbW9kZS4xZDZhOWJmMTQ1LmpzIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDQvYXNzZXRzL3NpdGUuY2VlNjQ5YTU1Yi5qcyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA0L2Fzc2V0cy9zZWFyY2guYWI1NThjZWJkNi5qcyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA0L2Fzc2V0cy9zZWFyY2guYWI1NThjZWJkNi5qcz9yZF9zZWFyY2hfYXR0ZW1wdD0xIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDQvYXNzZXRzL3NlYXJjaC13b3JrZXIuYmYyZDAwMzZkNS5qcyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA0L2Fzc2V0cy9zZWFyY2guZW4uMzQ1YzA4MWM0NS5qc29uIgogIF0sCiAgImZhaWxlZCI6IFtdLAogICJlcnJvcnMiOiBbXSwKICAiY3NwIjogW10sCiAgInBhZ2VFcnJvcnMiOiBbXQp9"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "be970922455020f7b482-1811e16f77d8db01ec26",
+          "file": "docs-ssg/search.spec.ts",
+          "line": 145,
+          "column": 1
+        },
+        {
+          "title": "recovery handles Worker error and keeps input for a successful retry",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "docs-search-root",
+              "projectName": "docs-search-root",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 267,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T19:08:47.637Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "search-browser-audit.json",
+                      "contentType": "application/json",
+                      "body": "ewogICJyZXF1ZXN0cyI6IFsKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDQvIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDQvYXNzZXRzL3NpdGUuZGIxMmIzZWYxOS5jc3MiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNC9hc3NldHMvbW9kZS4xZDZhOWJmMTQ1LmpzIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDQvYXNzZXRzL3NpdGUuY2VlNjQ5YTU1Yi5qcyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA0L2Fzc2V0cy9zZWFyY2guYWI1NThjZWJkNi5qcyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA0L2Fzc2V0cy9zZWFyY2gtd29ya2VyLmJmMmQwMDM2ZDUuanMiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNC9hc3NldHMvc2VhcmNoLXdvcmtlci5iZjJkMDAzNmQ1LmpzIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDQvYXNzZXRzL3NlYXJjaC5lbi4zNDVjMDgxYzQ1Lmpzb24iCiAgXSwKICAiZmFpbGVkIjogW10sCiAgImVycm9ycyI6IFtdLAogICJjc3AiOiBbXSwKICAicGFnZUVycm9ycyI6IFtdCn0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "be970922455020f7b482-e6997efcb687458a6ff4",
+          "file": "docs-ssg/search.spec.ts",
+          "line": 171,
+          "column": 5
+        },
+        {
+          "title": "recovery handles Worker messageerror and keeps input for a successful retry",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "docs-search-root",
+              "projectName": "docs-search-root",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 328,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T19:08:47.908Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "search-browser-audit.json",
+                      "contentType": "application/json",
+                      "body": "ewogICJyZXF1ZXN0cyI6IFsKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDQvIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDQvYXNzZXRzL3NpdGUuZGIxMmIzZWYxOS5jc3MiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNC9hc3NldHMvbW9kZS4xZDZhOWJmMTQ1LmpzIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDQvYXNzZXRzL3NpdGUuY2VlNjQ5YTU1Yi5qcyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA0L2Fzc2V0cy9zZWFyY2guYWI1NThjZWJkNi5qcyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA0L2Fzc2V0cy9zZWFyY2gtd29ya2VyLmJmMmQwMDM2ZDUuanMiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNC9hc3NldHMvc2VhcmNoLXdvcmtlci5iZjJkMDAzNmQ1LmpzIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDQvYXNzZXRzL3NlYXJjaC5lbi4zNDVjMDgxYzQ1Lmpzb24iCiAgXSwKICAiZmFpbGVkIjogW10sCiAgImVycm9ycyI6IFtdLAogICJjc3AiOiBbXSwKICAicGFnZUVycm9ycyI6IFtdCn0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "be970922455020f7b482-1c7c0ed21637bd7cc500",
+          "file": "docs-ssg/search.spec.ts",
+          "line": 171,
+          "column": 5
+        },
+        {
+          "title": "recovery handles Worker timeout and keeps input for a successful retry",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "docs-search-root",
+              "projectName": "docs-search-root",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 295,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T19:08:48.240Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "search-browser-audit.json",
+                      "contentType": "application/json",
+                      "body": "ewogICJyZXF1ZXN0cyI6IFsKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDQvIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDQvYXNzZXRzL3NpdGUuZGIxMmIzZWYxOS5jc3MiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNC9hc3NldHMvbW9kZS4xZDZhOWJmMTQ1LmpzIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDQvYXNzZXRzL3NpdGUuY2VlNjQ5YTU1Yi5qcyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA0L2Fzc2V0cy9zZWFyY2guYWI1NThjZWJkNi5qcyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA0L2Fzc2V0cy9zZWFyY2gtd29ya2VyLmJmMmQwMDM2ZDUuanMiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNC9hc3NldHMvc2VhcmNoLXdvcmtlci5iZjJkMDAzNmQ1LmpzIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDQvYXNzZXRzL3NlYXJjaC5lbi4zNDVjMDgxYzQ1Lmpzb24iCiAgXSwKICAiZmFpbGVkIjogW10sCiAgImVycm9ycyI6IFtdLAogICJjc3AiOiBbXSwKICAicGFnZUVycm9ycyI6IFtdCn0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "be970922455020f7b482-1386f8bd82462d471571",
+          "file": "docs-ssg/search.spec.ts",
+          "line": 171,
+          "column": 5
+        },
+        {
+          "title": "recovery handles Worker query-timeout and keeps input for a successful retry",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "docs-search-root",
+              "projectName": "docs-search-root",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 370,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T19:08:48.541Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "search-browser-audit.json",
+                      "contentType": "application/json",
+                      "body": "ewogICJyZXF1ZXN0cyI6IFsKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDQvIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDQvYXNzZXRzL3NpdGUuZGIxMmIzZWYxOS5jc3MiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNC9hc3NldHMvbW9kZS4xZDZhOWJmMTQ1LmpzIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDQvYXNzZXRzL3NpdGUuY2VlNjQ5YTU1Yi5qcyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA0L2Fzc2V0cy9zZWFyY2guYWI1NThjZWJkNi5qcyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA0L2Fzc2V0cy9zZWFyY2gtd29ya2VyLmJmMmQwMDM2ZDUuanMiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNC9hc3NldHMvc2VhcmNoLmVuLjM0NWMwODFjNDUuanNvbiIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA0L2Fzc2V0cy9zZWFyY2gtd29ya2VyLmJmMmQwMDM2ZDUuanMiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNC9hc3NldHMvc2VhcmNoLmVuLjM0NWMwODFjNDUuanNvbiIKICBdLAogICJmYWlsZWQiOiBbXSwKICAiZXJyb3JzIjogW10sCiAgImNzcCI6IFtdLAogICJwYWdlRXJyb3JzIjogW10KfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "be970922455020f7b482-76ffa9d21f12495285ea",
+          "file": "docs-ssg/search.spec.ts",
+          "line": 171,
+          "column": 5
+        },
+        {
+          "title": "recovery ignores old query and instance messages and defers composing input",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "docs-search-root",
+              "projectName": "docs-search-root",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 226,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T19:08:48.915Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "search-browser-audit.json",
+                      "contentType": "application/json",
+                      "body": "ewogICJyZXF1ZXN0cyI6IFsKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDQvIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDQvYXNzZXRzL3NpdGUuZGIxMmIzZWYxOS5jc3MiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNC9hc3NldHMvbW9kZS4xZDZhOWJmMTQ1LmpzIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDQvYXNzZXRzL3NpdGUuY2VlNjQ5YTU1Yi5qcyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA0L2Fzc2V0cy9zZWFyY2guYWI1NThjZWJkNi5qcyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA0L2Fzc2V0cy9zZWFyY2gtd29ya2VyLmJmMmQwMDM2ZDUuanMiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNC9hc3NldHMvc2VhcmNoLmVuLjM0NWMwODFjNDUuanNvbiIKICBdLAogICJmYWlsZWQiOiBbXSwKICAiZXJyb3JzIjogW10sCiAgImNzcCI6IFtdLAogICJwYWdlRXJyb3JzIjogW10KfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "be970922455020f7b482-65fee051593532d88cfa",
+          "file": "docs-ssg/search.spec.ts",
+          "line": 201,
+          "column": 1
+        },
+        {
+          "title": "search is lazy, focuses synchronously and distinguishes idle, results and no matches",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "docs-search-root",
+              "projectName": "docs-search-root",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 232,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T19:08:49.145Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "search-browser-audit.json",
+                      "contentType": "application/json",
+                      "body": "ewogICJyZXF1ZXN0cyI6IFsKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDQvcGFnZS0wMDAxLyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA0L2Fzc2V0cy9zaXRlLmRiMTJiM2VmMTkuY3NzIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDQvYXNzZXRzL21vZGUuMWQ2YTliZjE0NS5qcyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA0L2Fzc2V0cy9zaXRlLmNlZTY0OWE1NWIuanMiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNC9hc3NldHMvc2VhcmNoLmFiNTU4Y2ViZDYuanMiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNC9hc3NldHMvc2VhcmNoLXdvcmtlci5iZjJkMDAzNmQ1LmpzIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDQvYXNzZXRzL3NlYXJjaC5lbi4zNDVjMDgxYzQ1Lmpzb24iCiAgXSwKICAiZmFpbGVkIjogW10sCiAgImVycm9ycyI6IFtdLAogICJjc3AiOiBbXSwKICAicGFnZUVycm9ycyI6IFtdCn0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "be970922455020f7b482-2bc4161be4e049e2c140",
+          "file": "docs-ssg/search.spec.ts",
+          "line": 229,
+          "column": 1
+        },
+        {
+          "title": "keyboard selection, more results and ordinary links retain the full page count",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "docs-search-root",
+              "projectName": "docs-search-root",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 10350,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCount\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('dialog[data-rd-search]').getByRole('option')\nExpected: \u001b[32m1\u001b[39m\nReceived: \u001b[31m0\u001b[39m\nTimeout:  10000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveCount\" locator('dialog[data-rd-search]').getByRole('option') with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('dialog[data-rd-search]').getByRole('option')\u001b[22m\n\u001b[2m    24 × locator resolved to 0 elements\u001b[22m\n\u001b[2m       - unexpected value \"0\"\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCount\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('dialog[data-rd-search]').getByRole('option')\nExpected: \u001b[32m1\u001b[39m\nReceived: \u001b[31m0\u001b[39m\nTimeout:  10000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveCount\" locator('dialog[data-rd-search]').getByRole('option') with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('dialog[data-rd-search]').getByRole('option')\u001b[22m\n\u001b[2m    24 × locator resolved to 0 elements\u001b[22m\n\u001b[2m       - unexpected value \"0\"\u001b[22m\n\n    at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/docs-ssg/search.spec.ts:283:52",
+                    "location": {
+                      "file": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/docs-ssg/search.spec.ts",
+                      "column": 52,
+                      "line": 283
+                    },
+                    "snippet": "  281 |     await page.keyboard.press(\"Meta+k\");\n  282 |     await input(page).fill(\"ReachableCustomToken\");\n> 283 |     await expect(dialog(page).getByRole(\"option\")).toHaveCount(1);\n      |                                                    ^\n  284 |     await expect(dialog(page).getByRole(\"option\")).toHaveAttribute(\"href\", /#custom-section$/);\n  285 |     await page.keyboard.press(\"Enter\");\n  286 |     await expect(page).toHaveURL(url(\"#custom-section\"));"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/docs-ssg/search.spec.ts",
+                        "column": 52,
+                        "line": 283
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCount\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('dialog[data-rd-search]').getByRole('option')\nExpected: \u001b[32m1\u001b[39m\nReceived: \u001b[31m0\u001b[39m\nTimeout:  10000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveCount\" locator('dialog[data-rd-search]').getByRole('option') with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('dialog[data-rd-search]').getByRole('option')\u001b[22m\n\u001b[2m    24 × locator resolved to 0 elements\u001b[22m\n\u001b[2m       - unexpected value \"0\"\u001b[22m\n\n\n  281 |     await page.keyboard.press(\"Meta+k\");\n  282 |     await input(page).fill(\"ReachableCustomToken\");\n> 283 |     await expect(dialog(page).getByRole(\"option\")).toHaveCount(1);\n      |                                                    ^\n  284 |     await expect(dialog(page).getByRole(\"option\")).toHaveAttribute(\"href\", /#custom-section$/);\n  285 |     await page.keyboard.press(\"Enter\");\n  286 |     await expect(page).toHaveURL(url(\"#custom-section\"));\n    at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/docs-ssg/search.spec.ts:283:52"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T19:08:49.380Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "search-browser-audit.json",
+                      "contentType": "application/json",
+                      "body": "ewogICJyZXF1ZXN0cyI6IFsKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDQvIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDQvYXNzZXRzL3NpdGUuZGIxMmIzZWYxOS5jc3MiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNC9hc3NldHMvbW9kZS4xZDZhOWJmMTQ1LmpzIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDQvYXNzZXRzL3NpdGUuY2VlNjQ5YTU1Yi5qcyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA0L2Fzc2V0cy9zZWFyY2guYWI1NThjZWJkNi5qcyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA0L2Fzc2V0cy9zZWFyY2gtd29ya2VyLmJmMmQwMDM2ZDUuanMiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNC9hc3NldHMvc2VhcmNoLmVuLjM0NWMwODFjNDUuanNvbiIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA0L2Fzc2V0cy9zZWFyY2gtd29ya2VyLmJmMmQwMDM2ZDUuanMiCiAgXSwKICAiZmFpbGVkIjogW10sCiAgImVycm9ycyI6IFtdLAogICJjc3AiOiBbXSwKICAicGFnZUVycm9ycyI6IFtdCn0="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/docs/docs-ssg-search-keyboard-s-d51a8--retain-the-full-page-count-docs-search-root/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/rockie/Documents/gh-rockie/rustify-ui/test-results/docs/docs-ssg-search-keyboard-s-d51a8--retain-the-full-page-count-docs-search-root/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/docs-ssg/search.spec.ts",
+                    "column": 52,
+                    "line": 283
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "be970922455020f7b482-68773d49a1e9cc8e9954",
+          "file": "docs-ssg/search.spec.ts",
+          "line": 256,
+          "column": 1
+        },
+        {
+          "title": "Chinese true content and fallback search retain the target language and source labels",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "docs-search-root",
+              "projectName": "docs-search-root",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 332,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T19:09:00.091Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "search-browser-audit.json",
+                      "contentType": "application/json",
+                      "body": "ewogICJyZXF1ZXN0cyI6IFsKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDQvemgvcGFnZS0wMDAxLyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA0L2Fzc2V0cy9zaXRlLmRiMTJiM2VmMTkuY3NzIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDQvYXNzZXRzL21vZGUuMWQ2YTliZjE0NS5qcyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA0L2Fzc2V0cy9zaXRlLmNlZTY0OWE1NWIuanMiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNC9hc3NldHMvc2VhcmNoLmFiNTU4Y2ViZDYuanMiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNC9hc3NldHMvc2VhcmNoLXdvcmtlci5iZjJkMDAzNmQ1LmpzIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDQvYXNzZXRzL3NlYXJjaC56aC42MzFjZGZlZDU2Lmpzb24iLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNC96aC9wYWdlLTAwNTEvIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDQvYXNzZXRzL3NpdGUuZGIxMmIzZWYxOS5jc3MiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNC9hc3NldHMvbW9kZS4xZDZhOWJmMTQ1LmpzIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDQvYXNzZXRzL3NpdGUuY2VlNjQ5YTU1Yi5qcyIKICBdLAogICJmYWlsZWQiOiBbXSwKICAiZXJyb3JzIjogW10sCiAgImNzcCI6IFtdLAogICJwYWdlRXJyb3JzIjogW10KfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "be970922455020f7b482-279cab679a02663e3b4c",
+          "file": "docs-ssg/search.spec.ts",
+          "line": 291,
+          "column": 1
+        },
+        {
+          "title": "a deep 404 searches its selected language under header and meta CSP",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "docs-search-root",
+              "projectName": "docs-search-root",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 221,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T19:09:00.512Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "search-browser-audit.json",
+                      "contentType": "application/json",
+                      "body": "ewogICJyZXF1ZXN0cyI6IFsKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDQvemgvX19zZWFyY2hfbWlzc2luZ19fL2RlZXAvIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDQvYXNzZXRzL3NpdGUuZGIxMmIzZWYxOS5jc3MiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNC9hc3NldHMvbW9kZS4xZDZhOWJmMTQ1LmpzIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDQvYXNzZXRzL3NpdGUuY2VlNjQ5YTU1Yi5qcyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA0L2Fzc2V0cy9zZWFyY2guYWI1NThjZWJkNi5qcyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA0L2Fzc2V0cy9zZWFyY2gtd29ya2VyLmJmMmQwMDM2ZDUuanMiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNC9hc3NldHMvc2VhcmNoLnpoLjYzMWNkZmVkNTYuanNvbiIKICBdLAogICJmYWlsZWQiOiBbXSwKICAiZXJyb3JzIjogW10sCiAgImNzcCI6IFtdLAogICJwYWdlRXJyb3JzIjogW10KfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "be970922455020f7b482-0a6f9b261474c6327e5a",
+          "file": "docs-ssg/search.spec.ts",
+          "line": 311,
+          "column": 1
+        },
+        {
+          "title": "without scripts the document, source language and ordinary navigation remain readable",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "docs-search-root",
+              "projectName": "docs-search-root",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 281,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T19:09:00.738Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "search-browser-audit.json",
+                      "contentType": "application/json",
+                      "body": "ewogICJyZXF1ZXN0cyI6IFtdLAogICJmYWlsZWQiOiBbXSwKICAiZXJyb3JzIjogW10sCiAgImNzcCI6IFtdLAogICJwYWdlRXJyb3JzIjogW10KfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "be970922455020f7b482-18cec8068089cec40f4e",
+          "file": "docs-ssg/search.spec.ts",
+          "line": 325,
+          "column": 1
+        },
+        {
+          "title": "result text and query text cannot introduce HTML or external navigation",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "docs-search-root",
+              "projectName": "docs-search-root",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 214,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T19:09:01.023Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "search-browser-audit.json",
+                      "contentType": "application/json",
+                      "body": "ewogICJyZXF1ZXN0cyI6IFsKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDQvIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDQvYXNzZXRzL3NpdGUuZGIxMmIzZWYxOS5jc3MiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNC9hc3NldHMvbW9kZS4xZDZhOWJmMTQ1LmpzIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDQvYXNzZXRzL3NpdGUuY2VlNjQ5YTU1Yi5qcyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA0L2Fzc2V0cy9zZWFyY2guYWI1NThjZWJkNi5qcyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA0L2Fzc2V0cy9zZWFyY2gtd29ya2VyLmJmMmQwMDM2ZDUuanMiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNC9hc3NldHMvc2VhcmNoLmVuLjM0NWMwODFjNDUuanNvbiIKICBdLAogICJmYWlsZWQiOiBbXSwKICAiZXJyb3JzIjogW10sCiAgImNzcCI6IFtdLAogICJwYWdlRXJyb3JzIjogW10KfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "be970922455020f7b482-6b040d06a9057ce8f2f2",
+          "file": "docs-ssg/search.spec.ts",
+          "line": 346,
+          "column": 1
+        },
+        {
+          "title": "light, dark, narrow and text reflow states retain focus, contrast and visible controls",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "docs-search-root",
+              "projectName": "docs-search-root",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3450,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T19:09:01.241Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "search-a11y.json",
+                      "contentType": "application/json",
+                      "body": "ewogICJiaW5hcnkiOiB7CiAgICAicGF0aCI6ICIvVXNlcnMvcm9ja2llL0RvY3VtZW50cy9naC1yb2NraWUvcnVzdGlmeS11aS90YXJnZXQvZG9jcy1zc2cvcDQvaW5zdGFsbC1kMGQ4NGQ3Yi9iaW4vcnVzdGlmeS1kb2NzIiwKICAgICJzaGEyNTYiOiAiMTVlMzI4ODU3MTEyMjg0NzJkNGNiYmFiYWRlNTRmNzg1ZGExY2YwNGQ1NjA1ZWY1ZTI2YTg1NDdjNGIwMGE0ZiIsCiAgICAiYnVpbGRJbmZvIjogInJ1c3RpZnktZG9jcyAwLjEuMjNcbnBhbmljOiB1bndpbmRcbmdyYW1tYXJzOiBzeW50ZWN0LTUuMy4wK3R3by1mYWNlLTAuNS4yK2JhdC0wLjI2LjErZmFuY3lcbnNvdXJjZTogZDBkODRkN2I2MGI0NmI1NDI5OTQ0NzljYWRiN2MxMWRhMWUwYzI4YVxuIgogIH0sCiAgImJ1aWxkSWQiOiAiZDJjMTczZDE0MWEzMGVmYiIsCiAgInRhZ3MiOiBbCiAgICAid2NhZzJhIiwKICAgICJ3Y2FnMmFhIiwKICAgICJ3Y2FnMjFhIiwKICAgICJ3Y2FnMjFhYSIsCiAgICAid2NhZzIyYWEiCiAgXSwKICAic2NhbnMiOiBbCiAgICB7CiAgICAgICJyb3V0ZSI6ICJ6aC8iLAogICAgICAic3RhdGUiOiAic2VhcmNoLWxpZ2h0LTEyODAiLAogICAgICAid2lkdGgiOiAxMjgwLAogICAgICAiY29sb3JTY2hlbWUiOiAibGlnaHQiLAogICAgICAibW90aW9uIjogInJlZHVjZSIsCiAgICAgICJidWlsZElkIjogImQyYzE3M2QxNDFhMzBlZmIiLAogICAgICAidmlvbGF0aW9ucyI6IFtdLAogICAgICAiaW5jb21wbGV0ZSI6IFtdCiAgICB9LAogICAgewogICAgICAicm91dGUiOiAiemgvIiwKICAgICAgInN0YXRlIjogInNlYXJjaC1saWdodC0zNzUiLAogICAgICAid2lkdGgiOiAzNzUsCiAgICAgICJjb2xvclNjaGVtZSI6ICJsaWdodCIsCiAgICAgICJtb3Rpb24iOiAicmVkdWNlIiwKICAgICAgImJ1aWxkSWQiOiAiZDJjMTczZDE0MWEzMGVmYiIsCiAgICAgICJ2aW9sYXRpb25zIjogW10sCiAgICAgICJpbmNvbXBsZXRlIjogW10KICAgIH0sCiAgICB7CiAgICAgICJyb3V0ZSI6ICJ6aC8iLAogICAgICAic3RhdGUiOiAic2VhcmNoLWxpZ2h0LTMyMCIsCiAgICAgICJ3aWR0aCI6IDMyMCwKICAgICAgImNvbG9yU2NoZW1lIjogImxpZ2h0IiwKICAgICAgIm1vdGlvbiI6ICJyZWR1Y2UiLAogICAgICAiYnVpbGRJZCI6ICJkMmMxNzNkMTQxYTMwZWZiIiwKICAgICAgInZpb2xhdGlvbnMiOiBbXSwKICAgICAgImluY29tcGxldGUiOiBbXQogICAgfSwKICAgIHsKICAgICAgInJvdXRlIjogInpoLyIsCiAgICAgICJzdGF0ZSI6ICJzZWFyY2gtZGFyay0xMjgwIiwKICAgICAgIndpZHRoIjogMTI4MCwKICAgICAgImNvbG9yU2NoZW1lIjogImRhcmsiLAogICAgICAibW90aW9uIjogInJlZHVjZSIsCiAgICAgICJidWlsZElkIjogImQyYzE3M2QxNDFhMzBlZmIiLAogICAgICAidmlvbGF0aW9ucyI6IFtdLAogICAgICAiaW5jb21wbGV0ZSI6IFtdCiAgICB9LAogICAgewogICAgICAicm91dGUiOiAiemgvIiwKICAgICAgInN0YXRlIjogInNlYXJjaC1kYXJrLTM3NSIsCiAgICAgICJ3aWR0aCI6IDM3NSwKICAgICAgImNvbG9yU2NoZW1lIjogImRhcmsiLAogICAgICAibW90aW9uIjogInJlZHVjZSIsCiAgICAgICJidWlsZElkIjogImQyYzE3M2QxNDFhMzBlZmIiLAogICAgICAidmlvbGF0aW9ucyI6IFtdLAogICAgICAiaW5jb21wbGV0ZSI6IFtdCiAgICB9LAogICAgewogICAgICAicm91dGUiOiAiemgvIiwKICAgICAgInN0YXRlIjogInNlYXJjaC1kYXJrLTMyMCIsCiAgICAgICJ3aWR0aCI6IDMyMCwKICAgICAgImNvbG9yU2NoZW1lIjogImRhcmsiLAogICAgICAibW90aW9uIjogInJlZHVjZSIsCiAgICAgICJidWlsZElkIjogImQyYzE3M2QxNDFhMzBlZmIiLAogICAgICAidmlvbGF0aW9ucyI6IFtdLAogICAgICAiaW5jb21wbGV0ZSI6IFtdCiAgICB9LAogICAgewogICAgICAicm91dGUiOiAiemgvIiwKICAgICAgInN0YXRlIjogInNlYXJjaC0yMDAtcGVyY2VudC1sYXlvdXQtdGV4dC1lbXVsYXRpb24iLAogICAgICAid2lkdGgiOiA2NDAsCiAgICAgICJjb2xvclNjaGVtZSI6ICJsaWdodCIsCiAgICAgICJtb3Rpb24iOiAicmVkdWNlIiwKICAgICAgImJ1aWxkSWQiOiAiZDJjMTczZDE0MWEzMGVmYiIsCiAgICAgICJ2aW9sYXRpb25zIjogW10sCiAgICAgICJpbmNvbXBsZXRlIjogW10KICAgIH0KICBdCn0="
+                    },
+                    {
+                      "name": "search-browser-audit.json",
+                      "contentType": "application/json",
+                      "body": "ewogICJyZXF1ZXN0cyI6IFsKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDQvemgvIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDQvYXNzZXRzL3NpdGUuZGIxMmIzZWYxOS5jc3MiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNC9hc3NldHMvbW9kZS4xZDZhOWJmMTQ1LmpzIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDQvYXNzZXRzL3NpdGUuY2VlNjQ5YTU1Yi5qcyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA0L2Fzc2V0cy9zZWFyY2guYWI1NThjZWJkNi5qcyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA0L2Fzc2V0cy9zZWFyY2gtd29ya2VyLmJmMmQwMDM2ZDUuanMiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNC9hc3NldHMvc2VhcmNoLnpoLjYzMWNkZmVkNTYuanNvbiIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA0L3poLyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA0L2Fzc2V0cy9zaXRlLmRiMTJiM2VmMTkuY3NzIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDQvYXNzZXRzL21vZGUuMWQ2YTliZjE0NS5qcyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA0L2Fzc2V0cy9zaXRlLmNlZTY0OWE1NWIuanMiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNC9hc3NldHMvc2VhcmNoLmFiNTU4Y2ViZDYuanMiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNC9hc3NldHMvc2VhcmNoLXdvcmtlci5iZjJkMDAzNmQ1LmpzIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDQvYXNzZXRzL3NlYXJjaC56aC42MzFjZGZlZDU2Lmpzb24iLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNC96aC8iLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNC9hc3NldHMvc2l0ZS5kYjEyYjNlZjE5LmNzcyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA0L2Fzc2V0cy9tb2RlLjFkNmE5YmYxNDUuanMiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNC9hc3NldHMvc2l0ZS5jZWU2NDlhNTViLmpzIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDQvYXNzZXRzL3NlYXJjaC5hYjU1OGNlYmQ2LmpzIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDQvYXNzZXRzL3NlYXJjaC13b3JrZXIuYmYyZDAwMzZkNS5qcyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA0L2Fzc2V0cy9zZWFyY2guemguNjMxY2RmZWQ1Ni5qc29uIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDQvemgvIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDQvYXNzZXRzL3NpdGUuZGIxMmIzZWYxOS5jc3MiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNC9hc3NldHMvbW9kZS4xZDZhOWJmMTQ1LmpzIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDQvYXNzZXRzL3NpdGUuY2VlNjQ5YTU1Yi5qcyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA0L2Fzc2V0cy9zZWFyY2guYWI1NThjZWJkNi5qcyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA0L2Fzc2V0cy9zZWFyY2gtd29ya2VyLmJmMmQwMDM2ZDUuanMiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNC9hc3NldHMvc2VhcmNoLnpoLjYzMWNkZmVkNTYuanNvbiIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA0L3poLyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA0L2Fzc2V0cy9zaXRlLmRiMTJiM2VmMTkuY3NzIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDQvYXNzZXRzL21vZGUuMWQ2YTliZjE0NS5qcyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA0L2Fzc2V0cy9zaXRlLmNlZTY0OWE1NWIuanMiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNC9hc3NldHMvc2VhcmNoLmFiNTU4Y2ViZDYuanMiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNC9hc3NldHMvc2VhcmNoLXdvcmtlci5iZjJkMDAzNmQ1LmpzIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDQvYXNzZXRzL3NlYXJjaC56aC42MzFjZGZlZDU2Lmpzb24iLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNC96aC8iLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNC9hc3NldHMvc2l0ZS5kYjEyYjNlZjE5LmNzcyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA0L2Fzc2V0cy9tb2RlLjFkNmE5YmYxNDUuanMiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNC9hc3NldHMvc2l0ZS5jZWU2NDlhNTViLmpzIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDQvYXNzZXRzL3NlYXJjaC5hYjU1OGNlYmQ2LmpzIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDQvYXNzZXRzL3NlYXJjaC13b3JrZXIuYmYyZDAwMzZkNS5qcyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA0L2Fzc2V0cy9zZWFyY2guemguNjMxY2RmZWQ1Ni5qc29uIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDQvemgvIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDQvYXNzZXRzL3NpdGUuZGIxMmIzZWYxOS5jc3MiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNC9hc3NldHMvbW9kZS4xZDZhOWJmMTQ1LmpzIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQyMDQvYXNzZXRzL3NpdGUuY2VlNjQ5YTU1Yi5qcyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA0L2Fzc2V0cy9zZWFyY2guYWI1NThjZWJkNi5qcyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MjA0L2Fzc2V0cy9zZWFyY2gtd29ya2VyLmJmMmQwMDM2ZDUuanMiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDIwNC9hc3NldHMvc2VhcmNoLnpoLjYzMWNkZmVkNTYuanNvbiIKICBdLAogICJmYWlsZWQiOiBbXSwKICAiZXJyb3JzIjogW10sCiAgImNzcCI6IFtdLAogICJwYWdlRXJyb3JzIjogW10KfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "be970922455020f7b482-0ce097464dfff7e1fcb5",
+          "file": "docs-ssg/search.spec.ts",
+          "line": 368,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-15T19:08:23.623Z",
+    "duration": 41125.856999999996,
+    "expected": 18,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}

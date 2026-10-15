@@ -15,6 +15,7 @@
 | 5539f718-6df5-42fc-aeec-f8c35dd42147 | [DOCS-SSG-P1-gaps 完整计划评审](../../../../docs/plan/DOCS-SSG-P1-gaps.review.md) | [5539f718](5539f718-6df5-42fc-aeec-f8c35dd42147.md) | 活动 |
 | 5b279eaf-0dc1-4c8f-a54a-672cc942633f | [DOCS-SSG-P1 PRD交付差异核查](../../../../docs/plan/DOCS-SSG-P1.prd-dev-gaps.md) | [对象](5b279eaf-0dc1-4c8f-a54a-672cc942633f.md) | 活动 |
 | 65ddeb43-1845-4bee-b70c-bbf9647aa8b7 | [DOCS-SSG-P1 代码评审 R1](../../../../docs/plan/DOCS-SSG-P1.code-review.md) | [65ddeb43](65ddeb43-1845-4bee-b70c-bbf9647aa8b7.md) | 活动 |
+| 687ef358-5dbb-4e7a-af5f-dc54989a28b6 | [DOCS-SSG-P4 完整计划评审](../../../../docs/plan/DOCS-SSG-P4.review.md) | [对象](687ef358-5dbb-4e7a-af5f-dc54989a28b6.md) | 活动 |
 | 717fad1d-d311-4cf4-9afa-738cb191966f | [DOCS-SSG-P1 代码评审 R6](../../../../docs/plan/DOCS-SSG-P1.code-review.r6.md) | [717fad1d](717fad1d-d311-4cf4-9afa-738cb191966f.md) | 活动 |
 | 8248f8f2-341a-4bfc-98d0-b893b5be44ac | [DOCS-SSG-P2-gaps-2 代码评审 R1](../../../../docs/plan/DOCS-SSG-P2-gaps-2.code-review.md) | [对象](8248f8f2-341a-4bfc-98d0-b893b5be44ac.md) | 活动 |
 | 9972fa15-f73e-47e1-ac84-badd8b8c57cc | [Theme Studio GPU 语言修复复核](../../../../.impeccable/review/finish-verdict.md) | [9972fa15](9972fa15-f73e-47e1-ac84-badd8b8c57cc.md) | 活动 |
