@@ -1,0 +1,37 @@
+[
+  {
+    "name": "cli-affected-tests",
+    "command": [
+      "mbx",
+      "test",
+      "--locked",
+      "-p",
+      "rustify-docs-cli",
+      "--test",
+      "diagnostic_text",
+      "--test",
+      "check",
+      "--test",
+      "components",
+      "--test",
+      "dev"
+    ],
+    "exit": 0,
+    "seconds": 514.82
+  },
+  {
+    "name": "browser-full",
+    "command": [
+      "npx",
+      "playwright",
+      "test",
+      "-c",
+      "playwright.docs.config.ts",
+      "--project=docs-dev",
+      "--workers=1",
+      "--output=/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps2-h2p69rv7/m2-browser-full"
+    ],
+    "exit": 0,
+    "seconds": 412.84
+  }
+]

@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOCS-SSG-P2-gaps-2.records/m2/author-acceptance.py", line 54, in <module>
+    run('workspace-update',['cargo','update','--workspace','--offline']); assert (site/'Cargo.lock').read_bytes()==lock
+                                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

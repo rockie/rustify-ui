@@ -1,0 +1,51 @@
+rustc 1.99.0 (b940084d7 2026-09-28)
+dev: pages show no last-updated date: not a git repository (or any of the parent directories): .git
+watching /private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-yD5CTo/site; drafts are shown, source and published output are unchanged, stop with Ctrl-C
+dev: host
+dev: wasm
+dev: inputs changed; discarding the candidate and rebuilding
+dev: render
+dev: host
+dev: wasm
+dev: render
+warning[not-in-nav]: this page is in no navigation group, so readers can only reach it by a link
+  --> content/index.md
+warning[theme-token]: radius: Light and dark have different author values; editing this common field applies to both
+  --> theme.json
+dev: revision 1: 10 page(s) changed, 2 warning(s), 1602 ms
+dev: render
+dev: render
+dev: reusing the compiled Rust generation
+error[unregistered-component]: component `MissingCounter` is not registered; add it to site! and configure [rust]
+  --> content/counter.md:47:1
+  = help: Use a component from `BrowserCounter`, `CardGrid`, `Counter`, `Steps`, `Tabs`; for an author component, enable `[rust]` and register its name in `site!`.
+error[unknown-property]: component `Counter` has no property `unexpected`
+  --> content/counter.md:54:3
+  = help: Use one of `initial` (`i32`; default expression `2`), `label` (`String`; default expression `"Counter".to_string()`) for `Counter`; rename or remove `unexpected`.
+error[unregistered-demo]: demo `MissingDemo` is not registered in site!
+  --> content/counter.md:57:1
+  = help: Use a demo from `AsyncAfterAttachDemo`, `CatalogProxy`, `CounterDemo`, `FailureDemo`, `ThemeProbeDemo`; register demos in `site!`.
+warning[not-in-nav]: this page is in no navigation group, so readers can only reach it by a link
+  --> content/index.md
+warning[theme-token]: radius: Light and dark have different author values; editing this common field applies to both
+  --> theme.json
+dev: revision 2 failed: 3 error(s), 2 warning(s), 131 ms; still serving revision 1
+dev: render
+dev: render
+dev: reusing the compiled Rust generation
+error[invalid_props]: invalid type: string "wrong-type", expected i32
+  --> content/counter.md:53:3
+  = help: Write `initial: 0` for declared type `i32` (default expression `2`). Reported props path: `initial`.
+warning[not-in-nav]: this page is in no navigation group, so readers can only reach it by a link
+  --> content/index.md
+warning[theme-token]: radius: Light and dark have different author values; editing this common field applies to both
+  --> theme.json
+dev: revision 3 failed: 1 error(s), 2 warning(s), 132 ms; still serving revision 1
+dev: render
+dev: render
+dev: reusing the compiled Rust generation
+warning[not-in-nav]: this page is in no navigation group, so readers can only reach it by a link
+  --> content/index.md
+warning[theme-token]: radius: Light and dark have different author values; editing this common field applies to both
+  --> theme.json
+dev: revision 4: 0 page(s) changed, 2 warning(s), 217 ms

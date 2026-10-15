@@ -1,0 +1,136 @@
+{
+  "cli": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps2-installed.jc9IaV/bin/rustify-docs",
+  "C": "758def9cb3b88a1d06282ddfdb3e8708c8529cdc",
+  "R": "e20daf7f07179d2bd24700c345f577fb9c8dbc15",
+  "steps": [
+    {
+      "name": "build-info",
+      "command": [
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps2-installed.jc9IaV/bin/rustify-docs",
+        "--build-info"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "new",
+      "command": [
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps2-installed.jc9IaV/bin/rustify-docs",
+        "new",
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps2-author.8Eie3z/author-site",
+        "--template",
+        "components"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "fetch",
+      "command": [
+        "cargo",
+        "fetch",
+        "--locked"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "host-metadata",
+      "command": [
+        "mbx",
+        "metadata",
+        "--locked",
+        "--offline",
+        "--format-version",
+        "1",
+        "--no-default-features",
+        "--features",
+        "ssr"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "wasm-metadata",
+      "command": [
+        "mbx",
+        "metadata",
+        "--locked",
+        "--offline",
+        "--format-version",
+        "1",
+        "--no-default-features",
+        "--features",
+        "hydrate",
+        "--filter-platform",
+        "wasm32-unknown-unknown"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "host-check",
+      "command": [
+        "mbx",
+        "check",
+        "--locked",
+        "--offline",
+        "--no-default-features",
+        "--features",
+        "ssr",
+        "--profile",
+        "docs-host",
+        "--bin",
+        "docs-render"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "wasm-check",
+      "command": [
+        "mbx",
+        "check",
+        "--locked",
+        "--offline",
+        "--no-default-features",
+        "--features",
+        "hydrate",
+        "--profile",
+        "docs-wasm",
+        "--lib",
+        "--target",
+        "wasm32-unknown-unknown"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "workspace-update",
+      "command": [
+        "cargo",
+        "update",
+        "--workspace",
+        "--offline"
+      ],
+      "exit": 0
+    }
+  ],
+  "cases": [],
+  "binary_sha256": "6c0b025dfc4e73ec2dfbf519bd353ae795700e29f91f8613aa6ff3cc9ddac1d1",
+  "pins": [
+    "rustify-docs = { git = \"https://github.com/rockie/rustify-ui\", rev = \"e20daf7f07179d2bd24700c345f577fb9c8dbc15\", default-features = false }",
+    "rustify-ui = { git = \"https://github.com/rockie/rustify-ui\", rev = \"e20daf7f07179d2bd24700c345f577fb9c8dbc15\", default-features = false }",
+    "rustify-components = { git = \"https://github.com/rockie/rustify-ui\", rev = \"e20daf7f07179d2bd24700c345f577fb9c8dbc15\", default-features = false }"
+  ],
+  "lock_sha256": "58543c5fc9ed20242153136fb3395b9fe8f871d2181592e484e7e67534a0e9b1",
+  "graphs": {
+    "host": {
+      "packages": 189,
+      "makepad": 0,
+      "sources": [
+        "git+https://github.com/rockie/rustify-ui?rev=e20daf7f07179d2bd24700c345f577fb9c8dbc15#e20daf7f07179d2bd24700c345f577fb9c8dbc15"
+      ]
+    },
+    "wasm": {
+      "packages": 180,
+      "makepad": 0,
+      "sources": [
+        "git+https://github.com/rockie/rustify-ui?rev=e20daf7f07179d2bd24700c345f577fb9c8dbc15#e20daf7f07179d2bd24700c345f577fb9c8dbc15"
+      ]
+    }
+  }
+}

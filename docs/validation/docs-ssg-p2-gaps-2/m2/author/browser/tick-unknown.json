@@ -1,0 +1,238 @@
+{
+  "command": {
+    "action": "show",
+    "label": "tick-unknown",
+    "revision": 2,
+    "rule": "unknown-property",
+    "expected": {
+      "message": "component Counter has no property un`known",
+      "messageCodes": [
+        "Counter",
+        "un`known"
+      ],
+      "suggestion": "Use one of initial (i32; default expression 2), label (String; default expression \"a`b\".to_string()) for Counter; rename or remove un`known.",
+      "suggestionCodes": [
+        "initial",
+        "i32",
+        "2",
+        "label",
+        "String",
+        "\"a`b\".to_string()",
+        "Counter",
+        "un`known"
+      ]
+    }
+  },
+  "actual": {
+    "message": "component Counter has no property un`known",
+    "messageCodes": [
+      "Counter",
+      "un`known"
+    ],
+    "suggestion": "Use one of initial (i32; default expression 2), label (String; default expression \"a`b\".to_string()) for Counter; rename or remove un`known.",
+    "suggestionCodes": [
+      "initial",
+      "i32",
+      "2",
+      "label",
+      "String",
+      "\"a`b\".to_string()",
+      "Counter",
+      "un`known"
+    ]
+  },
+  "views": [
+    {
+      "width": 1280,
+      "theme": "light",
+      "actual": {
+        "message": "component Counter has no property un`known",
+        "messageCodes": [
+          "Counter",
+          "un`known"
+        ],
+        "suggestion": "Use one of initial (i32; default expression 2), label (String; default expression \"a`b\".to_string()) for Counter; rename or remove un`known.",
+        "suggestionCodes": [
+          "initial",
+          "i32",
+          "2",
+          "label",
+          "String",
+          "\"a`b\".to_string()",
+          "Counter",
+          "un`known"
+        ]
+      },
+      "layout": {
+        "page": 0,
+        "prose": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "fonts": [
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace"
+        ]
+      },
+      "screenshot": "tick-unknown-1280-light.png"
+    },
+    {
+      "width": 1280,
+      "theme": "dark",
+      "actual": {
+        "message": "component Counter has no property un`known",
+        "messageCodes": [
+          "Counter",
+          "un`known"
+        ],
+        "suggestion": "Use one of initial (i32; default expression 2), label (String; default expression \"a`b\".to_string()) for Counter; rename or remove un`known.",
+        "suggestionCodes": [
+          "initial",
+          "i32",
+          "2",
+          "label",
+          "String",
+          "\"a`b\".to_string()",
+          "Counter",
+          "un`known"
+        ]
+      },
+      "layout": {
+        "page": 0,
+        "prose": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "fonts": [
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace"
+        ]
+      },
+      "screenshot": "tick-unknown-1280-dark.png"
+    },
+    {
+      "width": 375,
+      "theme": "light",
+      "actual": {
+        "message": "component Counter has no property un`known",
+        "messageCodes": [
+          "Counter",
+          "un`known"
+        ],
+        "suggestion": "Use one of initial (i32; default expression 2), label (String; default expression \"a`b\".to_string()) for Counter; rename or remove un`known.",
+        "suggestionCodes": [
+          "initial",
+          "i32",
+          "2",
+          "label",
+          "String",
+          "\"a`b\".to_string()",
+          "Counter",
+          "un`known"
+        ]
+      },
+      "layout": {
+        "page": 0,
+        "prose": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "fonts": [
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace"
+        ]
+      },
+      "screenshot": "tick-unknown-375-light.png"
+    },
+    {
+      "width": 375,
+      "theme": "dark",
+      "actual": {
+        "message": "component Counter has no property un`known",
+        "messageCodes": [
+          "Counter",
+          "un`known"
+        ],
+        "suggestion": "Use one of initial (i32; default expression 2), label (String; default expression \"a`b\".to_string()) for Counter; rename or remove un`known.",
+        "suggestionCodes": [
+          "initial",
+          "i32",
+          "2",
+          "label",
+          "String",
+          "\"a`b\".to_string()",
+          "Counter",
+          "un`known"
+        ]
+      },
+      "layout": {
+        "page": 0,
+        "prose": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "fonts": [
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace"
+        ]
+      },
+      "screenshot": "tick-unknown-375-dark.png"
+    }
+  ]
+}

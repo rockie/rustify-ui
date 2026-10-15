@@ -1,0 +1,78 @@
+rustc 1.99.0 (b940084d7 2026-09-28)
+dev: pages show no last-updated date: not a git repository (or any of the parent directories): .git
+watching /private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps2-author.T4I6eG/author-site; drafts are shown, source and published output are unchanged, stop with Ctrl-C
+dev: host
+dev: wasm
+dev: render
+warning[not-in-nav]: this page is in no navigation group, so readers can only reach it by a link
+  --> content/a`b`c.md
+warning[not-in-nav]: this page is in no navigation group, so readers can only reach it by a link
+  --> content/index.md
+warning[missing-site-url]: site.url is not set, so pages have no canonical address or preview image and there is no sitemap
+  --> rustify-docs.toml
+  = help: add `url = "https://…"` under [site], the address the site is published at
+dev: revision 1: 5 page(s) changed, 3 warning(s), 1469 ms
+dev: render
+dev: render
+dev: reusing the compiled Rust generation
+warning[not-in-nav]: this page is in no navigation group, so readers can only reach it by a link
+  --> content/a`b`c.md
+warning[not-in-nav]: this page is in no navigation group, so readers can only reach it by a link
+  --> content/gaps.md
+error[unknown-property]: component `Counter` has no property `` un`known ``
+  --> content/gaps.md:10:3
+  = help: Use one of `initial` (`i32`; default expression `2`), `label` (`String`; default expression `` "a`b".to_string() ``) for `Counter`; rename or remove `` un`known ``.
+warning[not-in-nav]: this page is in no navigation group, so readers can only reach it by a link
+  --> content/index.md
+warning[missing-site-url]: site.url is not set, so pages have no canonical address or preview image and there is no sitemap
+  --> rustify-docs.toml
+  = help: add `url = "https://…"` under [site], the address the site is published at
+dev: revision 2 failed: 1 error(s), 4 warning(s), 42 ms; still serving revision 1
+dev: render
+dev: render
+dev: reusing the compiled Rust generation
+warning[not-in-nav]: this page is in no navigation group, so readers can only reach it by a link
+  --> content/a`b`c.md
+warning[not-in-nav]: this page is in no navigation group, so readers can only reach it by a link
+  --> content/gaps.md
+error[invalid_props]: invalid type: sequence, expected a string
+  --> content/gaps.md:10:3
+  = help: Write `label: "text"` for declared type `String` (default expression `` "a`b".to_string() ``). Reported props path: `label`.
+warning[not-in-nav]: this page is in no navigation group, so readers can only reach it by a link
+  --> content/index.md
+warning[missing-site-url]: site.url is not set, so pages have no canonical address or preview image and there is no sitemap
+  --> rustify-docs.toml
+  = help: add `url = "https://…"` under [site], the address the site is published at
+dev: revision 3 failed: 1 error(s), 4 warning(s), 41 ms; still serving revision 1
+dev: render
+dev: render
+dev: reusing the compiled Rust generation
+warning[not-in-nav]: this page is in no navigation group, so readers can only reach it by a link
+  --> content/a`b`c.md
+warning[not-in-nav]: this page is in no navigation group, so readers can only reach it by a link
+  --> content/gaps.md
+error[broken-anchor]: `` content/a`b`c.md `` has no heading `` #a`b ``
+  --> content/gaps.md:7:1
+  = help: link to an existing heading's id; ids are the heading text in lower case with spaces as `-`
+warning[not-in-nav]: this page is in no navigation group, so readers can only reach it by a link
+  --> content/index.md
+warning[missing-site-url]: site.url is not set, so pages have no canonical address or preview image and there is no sitemap
+  --> rustify-docs.toml
+  = help: add `url = "https://…"` under [site], the address the site is published at
+dev: revision 4 failed: 1 error(s), 4 warning(s), 41 ms; still serving revision 1
+dev: render
+error[config-lang]: ``  `` is not a language tag
+  --> rustify-docs.toml:6:8
+  = help: use a tag like `en` or `zh-CN`
+dev: revision 5 failed: 1 error(s), 0 warning(s), 0 ms; still serving revision 1
+dev: render
+dev: render
+dev: reusing the compiled Rust generation
+warning[not-in-nav]: this page is in no navigation group, so readers can only reach it by a link
+  --> content/a`b`c.md
+warning[not-in-nav]: this page is in no navigation group, so readers can only reach it by a link
+  --> content/index.md
+warning[missing-site-url]: site.url is not set, so pages have no canonical address or preview image and there is no sitemap
+  --> rustify-docs.toml
+  = help: add `url = "https://…"` under [site], the address the site is published at
+dev: revision 6: 0 page(s) changed, 3 warning(s), 99 ms

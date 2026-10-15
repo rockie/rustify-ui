@@ -1,0 +1,26 @@
+{
+  "diagnostic": {
+    "severity": "error",
+    "rule": "invalid_props",
+    "file": "content/counter.md",
+    "line": 50,
+    "column": 3,
+    "message": "invalid type: string \"a`b\", expected i32",
+    "suggestion": "Write `initial: 0` for declared type `i32` (default expression `2`). Reported props path: `initial`."
+  },
+  "expected": {
+    "message": "invalid type: string \"a`b\", expected i32",
+    "messageCodes": []
+  },
+  "actual": {
+    "message": "invalid type: string \"a`b\", expected i32",
+    "messageCodes": [],
+    "suggestion": "Write initial: 0 for declared type i32 (default expression 2). Reported props path: initial.",
+    "suggestionCodes": [
+      "initial: 0",
+      "i32",
+      "2",
+      "initial"
+    ]
+  }
+}

@@ -1,0 +1,38 @@
+--- new-author-site.lock
++++ after-extra-update.lock
+@@ -89,6 +89,17 @@
+  "quote",
+  "quote-use",
+  "syn 3.0.9",
++]
++
++[[package]]
++name = "author-site"
++version = "0.1.0"
++dependencies = [
++ "leptos",
++ "rustify-components",
++ "rustify-docs",
++ "rustify-ui",
++ "wasm-bindgen",
+ ]
+ 
+ [[package]]
+@@ -284,17 +295,6 @@
+  "proc-macro2",
+  "quote",
+  "syn 3.0.9",
+-]
+-
+-[[package]]
+-name = "author-site"
+-version = "0.1.0"
+-dependencies = [
+- "leptos",
+- "rustify-components",
+- "rustify-docs",
+- "rustify-ui",
+- "wasm-bindgen",
+ ]
+ 
+ [[package]]

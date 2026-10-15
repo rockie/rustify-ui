@@ -1,0 +1,32 @@
+{
+  "R": "e20daf7f07179d2bd24700c345f577fb9c8dbc15",
+  "prepared_HEAD": "3567285195a1c149f0497e5b274068d7d8828039",
+  "staged_tree": "6c92f6df656b170be9b21875f0a729818b9e1321",
+  "files": [
+    "Cargo.lock",
+    "crates/rustify-docs-cli/Cargo.toml",
+    "crates/rustify-docs-cli/assets/components-Cargo.lock",
+    "crates/rustify-docs-cli/assets/framework-revision.txt",
+    "docs/docs-ssg.md"
+  ],
+  "intervening_commits": [
+    {
+      "sha": "3567285195a1c149f0497e5b274068d7d8828039",
+      "files": [
+        "docs/plan/DOCS-SSG-P2-gaps-2.md"
+      ],
+      "kind": "progress-only"
+    }
+  ],
+  "other_product_differences": [],
+  "before_c_dirty_files_preserved": 406,
+  "third_party_and_two_target_audit": "pair-audit.json",
+  "five_file_sha256": {
+    "Cargo.lock": "e998fb7546a1453e17aa82175cd664a83bf715229c98fb64cab718558e1d45ec",
+    "crates/rustify-docs-cli/Cargo.toml": "c6da6c7369d3725a3f70bf5a69367683bf251be372a69a3c48a1a259be53f6c6",
+    "crates/rustify-docs-cli/assets/components-Cargo.lock": "30bb2e9664eeb81716d71fb56580d62325ee7d8bfd590ff4ea2aac5e9072253c",
+    "crates/rustify-docs-cli/assets/framework-revision.txt": "e95f44ddc121166857eaa79b0d7949d4747759e004b6b8a8ee2ceb16cb249f73",
+    "docs/docs-ssg.md": "2f3d46c1b6674c5691761b99f2e3271ad30bc02979b8ecc0dd5380a85e078b3d"
+  },
+  "passed": true
+}

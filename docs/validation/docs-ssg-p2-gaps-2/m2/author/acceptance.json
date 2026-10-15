@@ -1,0 +1,907 @@
+{
+  "cli": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps2-installed.jc9IaV/bin/rustify-docs",
+  "C": "758def9cb3b88a1d06282ddfdb3e8708c8529cdc",
+  "R": "e20daf7f07179d2bd24700c345f577fb9c8dbc15",
+  "steps": [
+    {
+      "name": "build-info",
+      "command": [
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps2-installed.jc9IaV/bin/rustify-docs",
+        "--build-info"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "new",
+      "command": [
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps2-installed.jc9IaV/bin/rustify-docs",
+        "new",
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps2-author.T4I6eG/author-site",
+        "--template",
+        "components"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "fetch",
+      "command": [
+        "cargo",
+        "fetch",
+        "--locked"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "host-metadata",
+      "command": [
+        "mbx",
+        "metadata",
+        "--locked",
+        "--offline",
+        "--format-version",
+        "1",
+        "--no-default-features",
+        "--features",
+        "ssr"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "wasm-metadata",
+      "command": [
+        "mbx",
+        "metadata",
+        "--locked",
+        "--offline",
+        "--format-version",
+        "1",
+        "--no-default-features",
+        "--features",
+        "hydrate",
+        "--filter-platform",
+        "wasm32-unknown-unknown"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "host-check",
+      "command": [
+        "mbx",
+        "check",
+        "--locked",
+        "--offline",
+        "--no-default-features",
+        "--features",
+        "ssr",
+        "--profile",
+        "docs-host",
+        "--bin",
+        "docs-render"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "wasm-check",
+      "command": [
+        "mbx",
+        "check",
+        "--locked",
+        "--offline",
+        "--no-default-features",
+        "--features",
+        "hydrate",
+        "--profile",
+        "docs-wasm",
+        "--lib",
+        "--target",
+        "wasm32-unknown-unknown"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "check-good",
+      "exit": 0
+    },
+    {
+      "name": "build-good",
+      "command": [
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps2-installed.jc9IaV/bin/rustify-docs",
+        "build",
+        "--format",
+        "json"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "tick-unknown-check",
+      "command": [
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps2-installed.jc9IaV/bin/rustify-docs",
+        "check",
+        "--format",
+        "json"
+      ],
+      "exit": 1
+    },
+    {
+      "name": "tick-unknown-build",
+      "command": [
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps2-installed.jc9IaV/bin/rustify-docs",
+        "build",
+        "--format",
+        "json"
+      ],
+      "exit": 1
+    },
+    {
+      "name": "tick-unknown-text",
+      "command": [
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps2-installed.jc9IaV/bin/rustify-docs",
+        "check"
+      ],
+      "exit": 1
+    },
+    {
+      "name": "tick-typed-check",
+      "command": [
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps2-installed.jc9IaV/bin/rustify-docs",
+        "check",
+        "--format",
+        "json"
+      ],
+      "exit": 1
+    },
+    {
+      "name": "tick-typed-build",
+      "command": [
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps2-installed.jc9IaV/bin/rustify-docs",
+        "build",
+        "--format",
+        "json"
+      ],
+      "exit": 1
+    },
+    {
+      "name": "tick-typed-text",
+      "command": [
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps2-installed.jc9IaV/bin/rustify-docs",
+        "check"
+      ],
+      "exit": 1
+    },
+    {
+      "name": "tick-anchor-check",
+      "command": [
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps2-installed.jc9IaV/bin/rustify-docs",
+        "check",
+        "--format",
+        "json"
+      ],
+      "exit": 1
+    },
+    {
+      "name": "tick-anchor-build",
+      "command": [
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps2-installed.jc9IaV/bin/rustify-docs",
+        "build",
+        "--format",
+        "json"
+      ],
+      "exit": 1
+    },
+    {
+      "name": "tick-anchor-text",
+      "command": [
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps2-installed.jc9IaV/bin/rustify-docs",
+        "check"
+      ],
+      "exit": 1
+    },
+    {
+      "name": "empty-language-check",
+      "command": [
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps2-installed.jc9IaV/bin/rustify-docs",
+        "check",
+        "--format",
+        "json"
+      ],
+      "exit": 1
+    },
+    {
+      "name": "empty-language-build",
+      "command": [
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps2-installed.jc9IaV/bin/rustify-docs",
+        "build",
+        "--format",
+        "json"
+      ],
+      "exit": 1
+    },
+    {
+      "name": "empty-language-text",
+      "command": [
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps2-installed.jc9IaV/bin/rustify-docs",
+        "check"
+      ],
+      "exit": 1
+    },
+    {
+      "name": "check-fixed",
+      "command": [
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps2-installed.jc9IaV/bin/rustify-docs",
+        "check",
+        "--format",
+        "json"
+      ],
+      "exit": 0
+    }
+  ],
+  "cases": [
+    {
+      "name": "tick-unknown",
+      "diagnostic": {
+        "severity": "error",
+        "rule": "unknown-property",
+        "file": "content/gaps.md",
+        "line": 10,
+        "column": 3,
+        "message": "component `Counter` has no property `` un`known ``",
+        "suggestion": "Use one of `initial` (`i32`; default expression `2`), `label` (`String`; default expression `` \"a`b\".to_string() ``) for `Counter`; rename or remove `` un`known ``."
+      },
+      "SSE": {
+        "session": "30a5-18de9d83e3333e38",
+        "revision": 2,
+        "sequence": 8,
+        "building": false,
+        "phase": "render",
+        "compile": {
+          "generation": "c01ed86fdd4c2066f762216fce9526e4461a77154a9f7d5f5ca08a6f3a58bf6c",
+          "completed_at_ms": 1792042892826,
+          "host": {
+            "elapsed_ms": 354,
+            "completed_at_ms": 1792042892516,
+            "fresh_artifacts": 263,
+            "compiled_artifacts": 0,
+            "profile": "docs-host",
+            "target": null,
+            "compiler": "mbx",
+            "flags": [
+              "build",
+              "--locked",
+              "--message-format",
+              "json",
+              "--no-default-features",
+              "--profile",
+              "docs-host",
+              "--features",
+              "ssr",
+              "--manifest-path",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps2-author.T4I6eG/author-site/Cargo.toml",
+              "--target-dir",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps2-author.T4I6eG/author-site/.rustify-docs/target",
+              "--bin",
+              "docs-render"
+            ],
+            "success": true
+          },
+          "wasm": {
+            "elapsed_ms": 308,
+            "completed_at_ms": 1792042892826,
+            "fresh_artifacts": 251,
+            "compiled_artifacts": 0,
+            "profile": "docs-wasm",
+            "target": "wasm32-unknown-unknown",
+            "compiler": "mbx",
+            "flags": [
+              "build",
+              "--locked",
+              "--message-format",
+              "json",
+              "--no-default-features",
+              "--profile",
+              "docs-wasm",
+              "--features",
+              "hydrate",
+              "--manifest-path",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps2-author.T4I6eG/author-site/Cargo.toml",
+              "--target-dir",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps2-author.T4I6eG/author-site/.rustify-docs/target",
+              "--lib",
+              "--target",
+              "wasm32-unknown-unknown"
+            ],
+            "success": true
+          }
+        },
+        "good": 1,
+        "ok": false,
+        "reload": false,
+        "errors": 1,
+        "warnings": 4,
+        "diagnostics": [
+          {
+            "severity": "warning",
+            "rule": "not-in-nav",
+            "file": "content/a`b`c.md",
+            "line": null,
+            "column": null,
+            "message": "this page is in no navigation group, so readers can only reach it by a link",
+            "suggestion": null
+          },
+          {
+            "severity": "warning",
+            "rule": "not-in-nav",
+            "file": "content/gaps.md",
+            "line": null,
+            "column": null,
+            "message": "this page is in no navigation group, so readers can only reach it by a link",
+            "suggestion": null
+          },
+          {
+            "severity": "error",
+            "rule": "unknown-property",
+            "file": "content/gaps.md",
+            "line": 10,
+            "column": 3,
+            "message": "component `Counter` has no property `` un`known ``",
+            "suggestion": "Use one of `initial` (`i32`; default expression `2`), `label` (`String`; default expression `` \"a`b\".to_string() ``) for `Counter`; rename or remove `` un`known ``."
+          },
+          {
+            "severity": "warning",
+            "rule": "not-in-nav",
+            "file": "content/index.md",
+            "line": null,
+            "column": null,
+            "message": "this page is in no navigation group, so readers can only reach it by a link",
+            "suggestion": null
+          },
+          {
+            "severity": "warning",
+            "rule": "missing-site-url",
+            "file": "rustify-docs.toml",
+            "line": null,
+            "column": null,
+            "message": "site.url is not set, so pages have no canonical address or preview image and there is no sitemap",
+            "suggestion": "add `url = \"https://…\"` under [site], the address the site is published at"
+          }
+        ]
+      },
+      "browser": {
+        "passed": "tick-unknown",
+        "views": 4
+      },
+      "dist_unchanged": true,
+      "last_good_bytes_unchanged": true,
+      "terminal_same": true
+    },
+    {
+      "name": "tick-typed",
+      "diagnostic": {
+        "severity": "error",
+        "rule": "invalid_props",
+        "file": "content/gaps.md",
+        "line": 10,
+        "column": 3,
+        "message": "invalid type: sequence, expected a string",
+        "suggestion": "Write `label: \"text\"` for declared type `String` (default expression `` \"a`b\".to_string() ``). Reported props path: `label`."
+      },
+      "SSE": {
+        "session": "30a5-18de9d83e3333e38",
+        "revision": 3,
+        "sequence": 11,
+        "building": false,
+        "phase": "render",
+        "compile": {
+          "generation": "c01ed86fdd4c2066f762216fce9526e4461a77154a9f7d5f5ca08a6f3a58bf6c",
+          "completed_at_ms": 1792042892826,
+          "host": {
+            "elapsed_ms": 354,
+            "completed_at_ms": 1792042892516,
+            "fresh_artifacts": 263,
+            "compiled_artifacts": 0,
+            "profile": "docs-host",
+            "target": null,
+            "compiler": "mbx",
+            "flags": [
+              "build",
+              "--locked",
+              "--message-format",
+              "json",
+              "--no-default-features",
+              "--profile",
+              "docs-host",
+              "--features",
+              "ssr",
+              "--manifest-path",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps2-author.T4I6eG/author-site/Cargo.toml",
+              "--target-dir",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps2-author.T4I6eG/author-site/.rustify-docs/target",
+              "--bin",
+              "docs-render"
+            ],
+            "success": true
+          },
+          "wasm": {
+            "elapsed_ms": 308,
+            "completed_at_ms": 1792042892826,
+            "fresh_artifacts": 251,
+            "compiled_artifacts": 0,
+            "profile": "docs-wasm",
+            "target": "wasm32-unknown-unknown",
+            "compiler": "mbx",
+            "flags": [
+              "build",
+              "--locked",
+              "--message-format",
+              "json",
+              "--no-default-features",
+              "--profile",
+              "docs-wasm",
+              "--features",
+              "hydrate",
+              "--manifest-path",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps2-author.T4I6eG/author-site/Cargo.toml",
+              "--target-dir",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps2-author.T4I6eG/author-site/.rustify-docs/target",
+              "--lib",
+              "--target",
+              "wasm32-unknown-unknown"
+            ],
+            "success": true
+          }
+        },
+        "good": 1,
+        "ok": false,
+        "reload": false,
+        "errors": 1,
+        "warnings": 4,
+        "diagnostics": [
+          {
+            "severity": "warning",
+            "rule": "not-in-nav",
+            "file": "content/a`b`c.md",
+            "line": null,
+            "column": null,
+            "message": "this page is in no navigation group, so readers can only reach it by a link",
+            "suggestion": null
+          },
+          {
+            "severity": "warning",
+            "rule": "not-in-nav",
+            "file": "content/gaps.md",
+            "line": null,
+            "column": null,
+            "message": "this page is in no navigation group, so readers can only reach it by a link",
+            "suggestion": null
+          },
+          {
+            "severity": "error",
+            "rule": "invalid_props",
+            "file": "content/gaps.md",
+            "line": 10,
+            "column": 3,
+            "message": "invalid type: sequence, expected a string",
+            "suggestion": "Write `label: \"text\"` for declared type `String` (default expression `` \"a`b\".to_string() ``). Reported props path: `label`."
+          },
+          {
+            "severity": "warning",
+            "rule": "not-in-nav",
+            "file": "content/index.md",
+            "line": null,
+            "column": null,
+            "message": "this page is in no navigation group, so readers can only reach it by a link",
+            "suggestion": null
+          },
+          {
+            "severity": "warning",
+            "rule": "missing-site-url",
+            "file": "rustify-docs.toml",
+            "line": null,
+            "column": null,
+            "message": "site.url is not set, so pages have no canonical address or preview image and there is no sitemap",
+            "suggestion": "add `url = \"https://…\"` under [site], the address the site is published at"
+          }
+        ]
+      },
+      "browser": {
+        "passed": "tick-typed",
+        "views": 4
+      },
+      "dist_unchanged": true,
+      "last_good_bytes_unchanged": true,
+      "terminal_same": true
+    },
+    {
+      "name": "tick-anchor",
+      "diagnostic": {
+        "severity": "error",
+        "rule": "broken-anchor",
+        "file": "content/gaps.md",
+        "line": 7,
+        "column": 1,
+        "message": "`` content/a`b`c.md `` has no heading `` #a`b ``",
+        "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+      },
+      "SSE": {
+        "session": "30a5-18de9d83e3333e38",
+        "revision": 4,
+        "sequence": 14,
+        "building": false,
+        "phase": "render",
+        "compile": {
+          "generation": "c01ed86fdd4c2066f762216fce9526e4461a77154a9f7d5f5ca08a6f3a58bf6c",
+          "completed_at_ms": 1792042892826,
+          "host": {
+            "elapsed_ms": 354,
+            "completed_at_ms": 1792042892516,
+            "fresh_artifacts": 263,
+            "compiled_artifacts": 0,
+            "profile": "docs-host",
+            "target": null,
+            "compiler": "mbx",
+            "flags": [
+              "build",
+              "--locked",
+              "--message-format",
+              "json",
+              "--no-default-features",
+              "--profile",
+              "docs-host",
+              "--features",
+              "ssr",
+              "--manifest-path",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps2-author.T4I6eG/author-site/Cargo.toml",
+              "--target-dir",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps2-author.T4I6eG/author-site/.rustify-docs/target",
+              "--bin",
+              "docs-render"
+            ],
+            "success": true
+          },
+          "wasm": {
+            "elapsed_ms": 308,
+            "completed_at_ms": 1792042892826,
+            "fresh_artifacts": 251,
+            "compiled_artifacts": 0,
+            "profile": "docs-wasm",
+            "target": "wasm32-unknown-unknown",
+            "compiler": "mbx",
+            "flags": [
+              "build",
+              "--locked",
+              "--message-format",
+              "json",
+              "--no-default-features",
+              "--profile",
+              "docs-wasm",
+              "--features",
+              "hydrate",
+              "--manifest-path",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps2-author.T4I6eG/author-site/Cargo.toml",
+              "--target-dir",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps2-author.T4I6eG/author-site/.rustify-docs/target",
+              "--lib",
+              "--target",
+              "wasm32-unknown-unknown"
+            ],
+            "success": true
+          }
+        },
+        "good": 1,
+        "ok": false,
+        "reload": false,
+        "errors": 1,
+        "warnings": 4,
+        "diagnostics": [
+          {
+            "severity": "warning",
+            "rule": "not-in-nav",
+            "file": "content/a`b`c.md",
+            "line": null,
+            "column": null,
+            "message": "this page is in no navigation group, so readers can only reach it by a link",
+            "suggestion": null
+          },
+          {
+            "severity": "warning",
+            "rule": "not-in-nav",
+            "file": "content/gaps.md",
+            "line": null,
+            "column": null,
+            "message": "this page is in no navigation group, so readers can only reach it by a link",
+            "suggestion": null
+          },
+          {
+            "severity": "error",
+            "rule": "broken-anchor",
+            "file": "content/gaps.md",
+            "line": 7,
+            "column": 1,
+            "message": "`` content/a`b`c.md `` has no heading `` #a`b ``",
+            "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+          },
+          {
+            "severity": "warning",
+            "rule": "not-in-nav",
+            "file": "content/index.md",
+            "line": null,
+            "column": null,
+            "message": "this page is in no navigation group, so readers can only reach it by a link",
+            "suggestion": null
+          },
+          {
+            "severity": "warning",
+            "rule": "missing-site-url",
+            "file": "rustify-docs.toml",
+            "line": null,
+            "column": null,
+            "message": "site.url is not set, so pages have no canonical address or preview image and there is no sitemap",
+            "suggestion": "add `url = \"https://…\"` under [site], the address the site is published at"
+          }
+        ]
+      },
+      "browser": {
+        "passed": "tick-anchor",
+        "views": 4
+      },
+      "dist_unchanged": true,
+      "last_good_bytes_unchanged": true,
+      "terminal_same": true
+    },
+    {
+      "name": "empty-language",
+      "diagnostic": {
+        "severity": "error",
+        "rule": "config-lang",
+        "file": "rustify-docs.toml",
+        "line": 6,
+        "column": 8,
+        "message": "``  `` is not a language tag",
+        "suggestion": "use a tag like `en` or `zh-CN`"
+      },
+      "SSE": {
+        "session": "30a5-18de9d83e3333e38",
+        "revision": 5,
+        "sequence": 16,
+        "building": false,
+        "phase": "render",
+        "compile": {
+          "generation": "c01ed86fdd4c2066f762216fce9526e4461a77154a9f7d5f5ca08a6f3a58bf6c",
+          "completed_at_ms": 1792042892826,
+          "host": {
+            "elapsed_ms": 354,
+            "completed_at_ms": 1792042892516,
+            "fresh_artifacts": 263,
+            "compiled_artifacts": 0,
+            "profile": "docs-host",
+            "target": null,
+            "compiler": "mbx",
+            "flags": [
+              "build",
+              "--locked",
+              "--message-format",
+              "json",
+              "--no-default-features",
+              "--profile",
+              "docs-host",
+              "--features",
+              "ssr",
+              "--manifest-path",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps2-author.T4I6eG/author-site/Cargo.toml",
+              "--target-dir",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps2-author.T4I6eG/author-site/.rustify-docs/target",
+              "--bin",
+              "docs-render"
+            ],
+            "success": true
+          },
+          "wasm": {
+            "elapsed_ms": 308,
+            "completed_at_ms": 1792042892826,
+            "fresh_artifacts": 251,
+            "compiled_artifacts": 0,
+            "profile": "docs-wasm",
+            "target": "wasm32-unknown-unknown",
+            "compiler": "mbx",
+            "flags": [
+              "build",
+              "--locked",
+              "--message-format",
+              "json",
+              "--no-default-features",
+              "--profile",
+              "docs-wasm",
+              "--features",
+              "hydrate",
+              "--manifest-path",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps2-author.T4I6eG/author-site/Cargo.toml",
+              "--target-dir",
+              "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps2-author.T4I6eG/author-site/.rustify-docs/target",
+              "--lib",
+              "--target",
+              "wasm32-unknown-unknown"
+            ],
+            "success": true
+          }
+        },
+        "good": 1,
+        "ok": false,
+        "reload": false,
+        "errors": 1,
+        "warnings": 0,
+        "diagnostics": [
+          {
+            "severity": "error",
+            "rule": "config-lang",
+            "file": "rustify-docs.toml",
+            "line": 6,
+            "column": 8,
+            "message": "``  `` is not a language tag",
+            "suggestion": "use a tag like `en` or `zh-CN`"
+          }
+        ]
+      },
+      "browser": {
+        "passed": "empty-language",
+        "views": 4
+      },
+      "dist_unchanged": true,
+      "last_good_bytes_unchanged": true,
+      "terminal_same": true
+    }
+  ],
+  "binary_sha256": "6c0b025dfc4e73ec2dfbf519bd353ae795700e29f91f8613aa6ff3cc9ddac1d1",
+  "pins": [
+    "rustify-docs = { git = \"https://github.com/rockie/rustify-ui\", rev = \"e20daf7f07179d2bd24700c345f577fb9c8dbc15\", default-features = false }",
+    "rustify-ui = { git = \"https://github.com/rockie/rustify-ui\", rev = \"e20daf7f07179d2bd24700c345f577fb9c8dbc15\", default-features = false }",
+    "rustify-components = { git = \"https://github.com/rockie/rustify-ui\", rev = \"e20daf7f07179d2bd24700c345f577fb9c8dbc15\", default-features = false }"
+  ],
+  "lock_sha256": "58543c5fc9ed20242153136fb3395b9fe8f871d2181592e484e7e67534a0e9b1",
+  "graphs": {
+    "host": {
+      "packages": 189,
+      "makepad": 0,
+      "sources": [
+        "git+https://github.com/rockie/rustify-ui?rev=e20daf7f07179d2bd24700c345f577fb9c8dbc15#e20daf7f07179d2bd24700c345f577fb9c8dbc15"
+      ]
+    },
+    "wasm": {
+      "packages": 180,
+      "makepad": 0,
+      "sources": [
+        "git+https://github.com/rockie/rustify-ui?rev=e20daf7f07179d2bd24700c345f577fb9c8dbc15#e20daf7f07179d2bd24700c345f577fb9c8dbc15"
+      ]
+    }
+  },
+  "good_dist": {
+    ".nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "404.html": "d39cc4ce6213a9329fd72c431f0e5bb6a76feacf79fbaa367d324eb1fcd6198d",
+    "a`b`c/index.html": "797899ac29c2978d0f12b9350ef7fbc7f29262346a52f9a6891be30374605dd4",
+    "assets/islands/710f3b2305a5fb1cc951955925aeefd11c625c71a58129a188ea6bfcc1fca543/app.js": "31a18b0601552dd0d1305cc32fa74635309edfae8833269911caecc9e488c3f0",
+    "assets/islands/710f3b2305a5fb1cc951955925aeefd11c625c71a58129a188ea6bfcc1fca543/app_bg.wasm": "87bef564b32b77273655a2a3387db28a8a9fe49c2b84ae3b9b764f93ce03ba57",
+    "assets/islands/710f3b2305a5fb1cc951955925aeefd11c625c71a58129a188ea6bfcc1fca543/dom-loader.js": "72c911771f7102b184c18b3f311186c94496a4efd47b9d25e46284d8ad2f5dd1",
+    "assets/islands/710f3b2305a5fb1cc951955925aeefd11c625c71a58129a188ea6bfcc1fca543/dom-runtime.css": "7597abd6960f0ed1ce5b365356e5b2c422bf79117a39e0a8575aa447cd350f41",
+    "assets/islands/710f3b2305a5fb1cc951955925aeefd11c625c71a58129a188ea6bfcc1fca543/islands.js": "ecc0183124465813a93fae273b21263b166b75814d4334c388f1b6f1e0cb9801",
+    "assets/islands/710f3b2305a5fb1cc951955925aeefd11c625c71a58129a188ea6bfcc1fca543/snippets/rustify-ui-4db2f10f10788f4c/web/dom-runtime.js": "d3f6018d391b65cfaf609fe1a17d9e47e221c51087a956b9fcd0bc6d11076343",
+    "assets/mode.5e2c2584b0.js": "5e2c2584b0eccb6b7631ffa0f0e110e7316d5f60d532a806bef18f1e017c57cf",
+    "assets/site.2529a0d647.js": "2529a0d647cd2b645277e1dc98c9396c87421748f2bc42488d3031c6db6e203a",
+    "assets/site.c652e43f7d.css": "c652e43f7d6e9c6dbfe1ae1a51996dca7626d8d7d554fd57b7e9a62cf324a808",
+    "guide/getting-started/index.html": "22bca8eaba397ed86c3d23745a5e26773a734c96766263ceda6b4e90900e56f8",
+    "guide/writing-demos/index.html": "426ea1115e235f9657ecefb4136cb02a7c00fd9e669d1b809100054eb73f80c4",
+    "index.html": "bbea5715b8e7e63a281bb2dceffa1151ca566c5eea9a879072f00578df977f49",
+    "robots.txt": "16ceb5ee3e0dc13aa9adf31a3ebbe45a1d965b8c2b9f72eaf84e5911e140ed95",
+    "rustify-docs-manifest.json": "f77e4242c45a6409f0effcf0e8bd44be9c3b9d69948680abd48d8b1b72950923"
+  },
+  "dev_url": "http://127.0.0.1:58359/",
+  "recovered": {
+    "session": "30a5-18de9d83e3333e38",
+    "revision": 6,
+    "sequence": 19,
+    "building": false,
+    "phase": "render",
+    "compile": {
+      "generation": "c01ed86fdd4c2066f762216fce9526e4461a77154a9f7d5f5ca08a6f3a58bf6c",
+      "completed_at_ms": 1792042892826,
+      "host": {
+        "elapsed_ms": 354,
+        "completed_at_ms": 1792042892516,
+        "fresh_artifacts": 263,
+        "compiled_artifacts": 0,
+        "profile": "docs-host",
+        "target": null,
+        "compiler": "mbx",
+        "flags": [
+          "build",
+          "--locked",
+          "--message-format",
+          "json",
+          "--no-default-features",
+          "--profile",
+          "docs-host",
+          "--features",
+          "ssr",
+          "--manifest-path",
+          "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps2-author.T4I6eG/author-site/Cargo.toml",
+          "--target-dir",
+          "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps2-author.T4I6eG/author-site/.rustify-docs/target",
+          "--bin",
+          "docs-render"
+        ],
+        "success": true
+      },
+      "wasm": {
+        "elapsed_ms": 308,
+        "completed_at_ms": 1792042892826,
+        "fresh_artifacts": 251,
+        "compiled_artifacts": 0,
+        "profile": "docs-wasm",
+        "target": "wasm32-unknown-unknown",
+        "compiler": "mbx",
+        "flags": [
+          "build",
+          "--locked",
+          "--message-format",
+          "json",
+          "--no-default-features",
+          "--profile",
+          "docs-wasm",
+          "--features",
+          "hydrate",
+          "--manifest-path",
+          "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps2-author.T4I6eG/author-site/Cargo.toml",
+          "--target-dir",
+          "/private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps2-author.T4I6eG/author-site/.rustify-docs/target",
+          "--lib",
+          "--target",
+          "wasm32-unknown-unknown"
+        ],
+        "success": true
+      }
+    },
+    "good": 6,
+    "ok": true,
+    "reload": false,
+    "errors": 0,
+    "warnings": 3,
+    "diagnostics": [
+      {
+        "severity": "warning",
+        "rule": "not-in-nav",
+        "file": "content/a`b`c.md",
+        "line": null,
+        "column": null,
+        "message": "this page is in no navigation group, so readers can only reach it by a link",
+        "suggestion": null
+      },
+      {
+        "severity": "warning",
+        "rule": "not-in-nav",
+        "file": "content/index.md",
+        "line": null,
+        "column": null,
+        "message": "this page is in no navigation group, so readers can only reach it by a link",
+        "suggestion": null
+      },
+      {
+        "severity": "warning",
+        "rule": "missing-site-url",
+        "file": "rustify-docs.toml",
+        "line": null,
+        "column": null,
+        "message": "site.url is not set, so pages have no canonical address or preview image and there is no sitemap",
+        "suggestion": "add `url = \"https://…\"` under [site], the address the site is published at"
+      }
+    ]
+  },
+  "browser_recovered": {
+    "passed": "clear",
+    "audit": {
+      "console": [],
+      "pageErrors": [],
+      "failures": [],
+      "responses": [],
+      "csp": []
+    },
+    "marker": 1
+  },
+  "passed": true
+}

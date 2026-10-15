@@ -1,0 +1,39 @@
+{
+  "C": "758def9cb3b88a1d06282ddfdb3e8708c8529cdc",
+  "R": "e20daf7f07179d2bd24700c345f577fb9c8dbc15",
+  "author_cases": 4,
+  "author_browser_views": 16,
+  "lock_sha256": "58543c5fc9ed20242153136fb3395b9fe8f871d2181592e484e7e67534a0e9b1",
+  "dist_files_unchanged": 17,
+  "last_good_exact": true,
+  "fixed_errors": 0,
+  "CLI_affected_tests": {
+    "passed": 38,
+    "failed": 0,
+    "ignored": 0,
+    "groups": 4
+  },
+  "installed_browser_project": {
+    "passed": 31,
+    "failed": 0,
+    "selected_clean_audits": 5
+  },
+  "installed_identity_unchanged": true,
+  "C_exactly_five_files": [
+    "Cargo.lock",
+    "crates/rustify-docs-cli/Cargo.toml",
+    "crates/rustify-docs-cli/assets/components-Cargo.lock",
+    "crates/rustify-docs-cli/assets/framework-revision.txt",
+    "docs/docs-ssg.md"
+  ],
+  "other_working_product_differences": [],
+  "M1_inputs_match_frozen_R": true,
+  "V1_V5": {
+    "V-1": "M1 Rust full tests plus M2 diagnostic_text/check/components/dev, 38 passed",
+    "V-2": "M1 per-symbol audit and all-backticks inventory; functional sources unchanged in C",
+    "V-3": "M1 31/31; installed C 31/31, all required new inputs and exact DOM text/code tables",
+    "V-4": "staged pair audit, actual Git install identity and one new author-site, 4 errors/16 views, unchanged original lock/dist/last-good, recovery",
+    "V-5": "M1 command gates and both full docs-dev projects; installed identity stable"
+  },
+  "passed": true
+}

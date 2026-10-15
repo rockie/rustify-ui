@@ -1,0 +1,172 @@
+{
+  "command": {
+    "action": "show",
+    "label": "tick-typed",
+    "revision": 3,
+    "rule": "invalid_props",
+    "expected": {
+      "message": "invalid type: sequence, expected a string",
+      "messageCodes": [],
+      "suggestion": "Write label: \"text\" for declared type String (default expression \"a`b\".to_string()). Reported props path: label.",
+      "suggestionCodes": [
+        "label: \"text\"",
+        "String",
+        "\"a`b\".to_string()",
+        "label"
+      ]
+    }
+  },
+  "actual": {
+    "message": "invalid type: sequence, expected a string",
+    "messageCodes": [],
+    "suggestion": "Write label: \"text\" for declared type String (default expression \"a`b\".to_string()). Reported props path: label.",
+    "suggestionCodes": [
+      "label: \"text\"",
+      "String",
+      "\"a`b\".to_string()",
+      "label"
+    ]
+  },
+  "views": [
+    {
+      "width": 1280,
+      "theme": "light",
+      "actual": {
+        "message": "invalid type: sequence, expected a string",
+        "messageCodes": [],
+        "suggestion": "Write label: \"text\" for declared type String (default expression \"a`b\".to_string()). Reported props path: label.",
+        "suggestionCodes": [
+          "label: \"text\"",
+          "String",
+          "\"a`b\".to_string()",
+          "label"
+        ]
+      },
+      "layout": {
+        "page": 0,
+        "prose": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "fonts": [
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace"
+        ]
+      },
+      "screenshot": "tick-typed-1280-light.png"
+    },
+    {
+      "width": 1280,
+      "theme": "dark",
+      "actual": {
+        "message": "invalid type: sequence, expected a string",
+        "messageCodes": [],
+        "suggestion": "Write label: \"text\" for declared type String (default expression \"a`b\".to_string()). Reported props path: label.",
+        "suggestionCodes": [
+          "label: \"text\"",
+          "String",
+          "\"a`b\".to_string()",
+          "label"
+        ]
+      },
+      "layout": {
+        "page": 0,
+        "prose": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "fonts": [
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace"
+        ]
+      },
+      "screenshot": "tick-typed-1280-dark.png"
+    },
+    {
+      "width": 375,
+      "theme": "light",
+      "actual": {
+        "message": "invalid type: sequence, expected a string",
+        "messageCodes": [],
+        "suggestion": "Write label: \"text\" for declared type String (default expression \"a`b\".to_string()). Reported props path: label.",
+        "suggestionCodes": [
+          "label: \"text\"",
+          "String",
+          "\"a`b\".to_string()",
+          "label"
+        ]
+      },
+      "layout": {
+        "page": 0,
+        "prose": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "fonts": [
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace"
+        ]
+      },
+      "screenshot": "tick-typed-375-light.png"
+    },
+    {
+      "width": 375,
+      "theme": "dark",
+      "actual": {
+        "message": "invalid type: sequence, expected a string",
+        "messageCodes": [],
+        "suggestion": "Write label: \"text\" for declared type String (default expression \"a`b\".to_string()). Reported props path: label.",
+        "suggestionCodes": [
+          "label: \"text\"",
+          "String",
+          "\"a`b\".to_string()",
+          "label"
+        ]
+      },
+      "layout": {
+        "page": 0,
+        "prose": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "fonts": [
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
+          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace"
+        ]
+      },
+      "screenshot": "tick-typed-375-dark.png"
+    }
+  ]
+}

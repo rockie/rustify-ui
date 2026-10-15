@@ -1,0 +1,17 @@
+{
+  "C": "758def9cb3b88a1d06282ddfdb3e8708c8529cdc",
+  "R": "e20daf7f07179d2bd24700c345f577fb9c8dbc15",
+  "author_cases": 4,
+  "author_browser_views": 16,
+  "lock_sha256": "58543c5fc9ed20242153136fb3395b9fe8f871d2181592e484e7e67534a0e9b1",
+  "dist_files_unchanged": 17,
+  "last_good_exact": true,
+  "fixed_errors": 0,
+  "CLI_affected_tests": {
+    "passed": 38,
+    "failed": 0,
+    "ignored": 0,
+    "groups": 4
+  },
+  "installed_browser_project": "still running; excluded from this partial result"
+}
