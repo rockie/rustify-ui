@@ -57,6 +57,7 @@ for (const fault of ["HTTP", "network", "module-shape"]) test(`recovery loads a 
     await input(page).fill("CustomOnlyToken");
     await expect(dialog(page)).toHaveAttribute("data-state", "error");
     await expect(dialog(page).getByRole("alert")).toContainText("try");
+    if (fault === "HTTP" && test.info().project.name === "docs-search-subpath") await page.screenshot({ path: test.info().outputPath("search-error-1280.png"), fullPage: true });
     await dialog(page).getByRole("button", { name: "Retry", exact: true }).click();
     await expect(dialog(page)).toHaveAttribute("data-state", "results");
     await expect(input(page)).toHaveValue("CustomOnlyToken");
@@ -84,6 +85,7 @@ test("recovery keeps the latest input through delayed JSON and ignores closed se
     await input(page).fill("CustomOnlyToken");
     await expect(dialog(page)).toHaveAttribute("data-state", "loading");
     await expect.poll(() => jsonRequests).toBe(1);
+    if (test.info().project.name === "docs-search-subpath") await page.screenshot({ path: test.info().outputPath("search-loading-1280.png"), fullPage: true });
     await page.keyboard.press("Escape");
     await expect(page.locator("[data-rd-search-open]")).toBeFocused();
     release();
@@ -224,6 +226,40 @@ test("recovery ignores old query and instance messages and defers composing inpu
     await expect(dialog(page).getByRole("option")).toHaveCount(1);
 });
 
+for (const phase of ["ready", "module-loading"]) test(`recovery settles a same-turn close and reopen during ${phase}`, async ({ page }) => {
+    let release!: () => void;
+    const held = new Promise<void>(resolve => release = resolve);
+    const imports: string[] = [];
+    if (phase === "module-loading") await page.route(/\/assets\/search\.[a-f0-9]+\.js(?:\?|$)/, async route => {
+        imports.push(route.request().url());
+        if (imports.length === 1) await held;
+        await route.continue();
+    });
+    try {
+        await open(page);
+        if (phase === "ready") {
+            await input(page).fill("CustomOnlyToken");
+            await expect(dialog(page)).toHaveAttribute("data-state", "results");
+        } else await expect.poll(() => imports.length).toBe(1);
+        await page.evaluate(() => {
+            const dialog = document.querySelector<HTMLDialogElement>("dialog[data-rd-search]")!;
+            dialog.close();
+            document.querySelector<HTMLButtonElement>("[data-rd-search-open]")!.click();
+            const input = dialog.querySelector<HTMLInputElement>("input")!;
+            input.value = "ReachableCustomToken";
+            input.dispatchEvent(new InputEvent("input", { bubbles: true }));
+        });
+        await expect(dialog(page)).toHaveAttribute("data-state", "results");
+        await expect(dialog(page).getByRole("option")).toHaveCount(1);
+        await expect(dialog(page).getByRole("option")).toHaveAttribute("href", /#custom-section$/);
+        if (phase === "module-loading") expect(new URL(imports[1]).searchParams.get("rd_search_attempt")).toBe("1");
+        release();
+        await input(page).fill("CustomOnlyToken");
+        await expect(dialog(page)).toHaveAttribute("data-state", "results");
+        await expect(dialog(page).getByRole("option")).toHaveCount(1);
+    } finally { release(); }
+});
+
 test("search is lazy, focuses synchronously and distinguishes idle, results and no matches", async ({ page }) => {
     const requests: string[] = [];
     page.on("request", request => requests.push(request.url()));
@@ -307,10 +343,12 @@ test("Chinese true content and fallback search retain the target language and so
 });
 
 test("a deep 404 searches its selected language under header and meta CSP", async ({ page }) => {
+    await page.setViewportSize({ width: 375, height: 812 });
     await open(page, "zh/__search_missing__/deep/");
     await expect(dialog(page)).toHaveAttribute("data-rd-search-lang", "zh");
     await input(page).fill("主题切换");
     await expect(dialog(page).getByRole("option").first().locator(".rd-search-title")).toHaveText("主题切换");
+    if (test.info().project.name === "docs-search-subpath") await page.screenshot({ path: test.info().outputPath("search-404-375.png"), fullPage: true });
     await page.keyboard.press("Escape");
     await expect(page.locator("[data-rd-search-open]")).toBeFocused();
     const policy = await page.locator('meta[http-equiv="Content-Security-Policy"]').getAttribute("content");
@@ -332,6 +370,10 @@ test("without scripts the document, source language and ordinary navigation rema
         await page.locator(".rd-sidebar-narrow a[href$='/zh/page-0002/']").click();
         await expect(page).toHaveURL(url("zh/page-0002/"));
         expect(requests.filter(value => /\/assets\/search|\.wasm(?:[?#]|$)/.test(value))).toEqual([]);
+        if (test.info().project.name === "docs-search-subpath") {
+            await page.goto(url("zh/"));
+            await page.screenshot({ path: test.info().outputPath("search-no-script-375.png"), fullPage: true });
+        }
     } finally { await context.close(); }
 });
 

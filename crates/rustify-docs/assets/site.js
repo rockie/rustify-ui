@@ -459,6 +459,9 @@
 
     function searchShow(trigger) {
       if (searchDialog.open) { searchInput.focus(); return; }
+      // Native close events are queued; a new open must settle the old session
+      // before that event can accidentally dispose the new Worker or import.
+      searchEnd(false);
       searchTrigger = trigger;
       searchDialog.showModal();
       searchInput.focus({ preventScroll: true });
@@ -482,7 +485,8 @@
     searchDialog.querySelector("[data-rd-search-close]").addEventListener("click", function () { searchDialog.close(); });
     searchInput.addEventListener("compositionstart", function () { searchDialog.setAttribute("data-rd-search-composing", "true"); });
     searchInput.addEventListener("compositionend", function () { searchDialog.setAttribute("data-rd-search-composing", "false"); });
-    searchDialog.addEventListener("close", function () {
+    function searchEnd(restoreFocus) {
+      if (searchDialog.getAttribute("data-state") === "closed") return;
       if (searchPending) searchAttempt++;
       searchInstance++;
       searchPending = null;
@@ -490,7 +494,11 @@
       if (searchModule) searchModule.cleanup(searchDialog);
       searchDialog.setAttribute("data-state", "closed");
       searchDialog.setAttribute("data-rd-search-composing", "false");
-      if (searchTrigger && searchTrigger.isConnected) searchTrigger.focus({ preventScroll: true });
+      if (restoreFocus && searchTrigger && searchTrigger.isConnected) searchTrigger.focus({ preventScroll: true });
+    }
+    searchDialog.addEventListener("close", function () {
+      if (searchDialog.open) return;
+      searchEnd(true);
     });
   }
 

@@ -217,6 +217,7 @@ test("home has one English title, the original README introduction and two first
 });
 
 test("official Chinese home and quick start are real translations with local search and AI discovery", async ({ page, request, audit }) => {
+    await page.setViewportSize({ width: 1280, height: 900 });
     await open(page, "./");
     await page.locator(".rd-language-switch summary").click();
     await page.locator('.rd-language-switch a[hreflang="zh"]').click();
@@ -224,6 +225,12 @@ test("official Chinese home and quick start are real translations with local sea
     await expect(page.locator("html")).toHaveAttribute("lang", "zh");
     await expect(page.locator(".rd-tagline")).toContainText("实验性 Rust SDK");
     await expect(page.locator(".rd-untranslated")).toHaveCount(0);
+    if (test.info().project.name === "official-subpath") {
+        await page.screenshot({ path: test.info().outputPath("official-zh-home-1280.png"), fullPage: true });
+        await page.setViewportSize({ width: 375, height: 812 });
+        await page.screenshot({ path: test.info().outputPath("official-zh-home-375.png"), fullPage: true });
+        await page.setViewportSize({ width: 1280, height: 900 });
+    }
     await page.getByRole("navigation", { name: "开始阅读", exact: true }).getByRole("link", { name: "快速开始", exact: true }).click();
     await expect(page).toHaveURL(url("zh/quickstart/"));
     await expect(page.locator("main article").first()).toHaveAttribute("lang", "zh");
