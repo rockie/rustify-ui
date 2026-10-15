@@ -385,6 +385,115 @@
     });
   });
 
+  // The bootstrap stays usable even when the lazy module cannot be imported.
+  var searchDialog = document.querySelector("[data-rd-search]");
+  var searchOpen = document.querySelector("[data-rd-search-open]");
+  if (searchDialog && searchOpen && typeof searchDialog.showModal === "function") {
+    var searchInput = searchDialog.querySelector("[data-rd-search-input]");
+    var searchStatus = searchDialog.querySelector("[data-rd-search-status]");
+    var searchRetry = searchDialog.querySelector("[data-rd-search-retry]");
+    var searchLabels = JSON.parse(searchDialog.getAttribute("data-rd-search-labels"));
+    var searchModule = null;
+    var searchPending = null;
+    var searchInstance = 0;
+    var searchAttempt = 0;
+    var searchTimer;
+    var searchTrigger;
+
+    function searchMessage(key) {
+      searchStatus.textContent = searchLabels[key].text;
+      searchStatus.lang = searchLabels[key].lang;
+    }
+
+    function searchLoading() {
+      searchDialog.setAttribute("data-state", "loading");
+      searchStatus.removeAttribute("role");
+      searchMessage("loading");
+      searchRetry.hidden = true;
+      searchDialog.querySelector("[data-rd-search-more]").hidden = true;
+      searchDialog.querySelector("[data-rd-search-results]").replaceChildren();
+      searchDialog.querySelector("[data-rd-search-count]").textContent = "";
+      searchInput.setAttribute("aria-expanded", "false");
+      searchInput.removeAttribute("aria-activedescendant");
+    }
+
+    function searchFailure(expected) {
+      if (!searchDialog.open || expected !== searchInstance) return;
+      clearTimeout(searchTimer);
+      searchPending = null;
+      if (searchModule) searchModule.cleanup(searchDialog);
+      searchLoading();
+      searchDialog.setAttribute("data-state", "error");
+      searchStatus.setAttribute("role", "alert");
+      searchMessage("failed");
+      searchRetry.hidden = false;
+    }
+
+    function searchStart() {
+      var expected = ++searchInstance;
+      searchLoading();
+      function initialize(module) {
+        if (!searchDialog.open || expected !== searchInstance) return;
+        try {
+          module.initialize(searchDialog, { instance: expected, onError: function () { searchFailure(expected); } });
+        } catch (failed) { searchFailure(expected); }
+      }
+      if (searchModule) { initialize(searchModule); return; }
+      var moduleURL = new URL(searchDialog.getAttribute("data-rd-search-module"), location.href);
+      if (moduleURL.origin !== location.origin || !moduleURL.pathname.startsWith(base)) { searchFailure(expected); return; }
+      if (searchAttempt) moduleURL.searchParams.set("rd_search_attempt", String(searchAttempt));
+      var request = { instance: expected, attempt: searchAttempt };
+      searchPending = request;
+      searchTimer = setTimeout(function () { if (searchPending === request) searchFailure(expected); }, 10000);
+      import(moduleURL.href).then(function (module) {
+        if (searchPending !== request || request.attempt !== searchAttempt || expected !== searchInstance || !searchDialog.open) return;
+        if (typeof module.initialize !== "function" || typeof module.cleanup !== "function") { searchFailure(expected); return; }
+        clearTimeout(searchTimer);
+        searchPending = null;
+        searchModule = module;
+        initialize(module);
+      }, function () {
+        if (searchPending === request) searchFailure(expected);
+      });
+    }
+
+    function searchShow(trigger) {
+      if (searchDialog.open) { searchInput.focus(); return; }
+      searchTrigger = trigger;
+      searchDialog.showModal();
+      searchInput.focus({ preventScroll: true });
+      searchStart();
+    }
+
+    searchOpen.disabled = false;
+    searchOpen.addEventListener("click", function () { searchShow(searchOpen); });
+    document.addEventListener("keydown", function (event) {
+      if ((event.metaKey || event.ctrlKey) && !event.altKey && event.key.toLowerCase() === "k") {
+        event.preventDefault();
+        searchShow(document.activeElement);
+      }
+    });
+    searchRetry.addEventListener("click", function () {
+      if (searchDialog.getAttribute("data-state") !== "error") return;
+      if (!searchModule) searchAttempt++;
+      searchInput.focus();
+      searchStart();
+    });
+    searchDialog.querySelector("[data-rd-search-close]").addEventListener("click", function () { searchDialog.close(); });
+    searchInput.addEventListener("compositionstart", function () { searchDialog.setAttribute("data-rd-search-composing", "true"); });
+    searchInput.addEventListener("compositionend", function () { searchDialog.setAttribute("data-rd-search-composing", "false"); });
+    searchDialog.addEventListener("close", function () {
+      if (searchPending) searchAttempt++;
+      searchInstance++;
+      searchPending = null;
+      clearTimeout(searchTimer);
+      if (searchModule) searchModule.cleanup(searchDialog);
+      searchDialog.setAttribute("data-state", "closed");
+      searchDialog.setAttribute("data-rd-search-composing", "false");
+      if (searchTrigger && searchTrigger.isConnected) searchTrigger.focus({ preventScroll: true });
+    });
+  }
+
   // The sidebar column starts scrolled to the current page.
   var sidebar = document.querySelector(".rd-sidebar-wide");
   var currentItem = sidebar && sidebar.querySelector("[aria-current=page]");

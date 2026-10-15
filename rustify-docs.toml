@@ -13,6 +13,7 @@ include = [
     "quickstart.md", "architecture.md", "navigation.md", "workspace.md",
     "forms.md", "i18n.md", "data.md", "themes.md", "utility.md",
     "compatibility.md", "components.md", "vellum.md",
+    "zh/quickstart.md",
 ]
 
 [assets]
@@ -51,4 +52,37 @@ routes = [
 
 [[nav.top]]
 label = "GitHub"
+link = "https://github.com/rockie/rustify-ui"
+
+[[i18n.locales]]
+lang = "en"
+label = "English"
+prefix = ""
+
+[[i18n.locales]]
+lang = "zh"
+label = "中文"
+prefix = "zh"
+
+[[i18n.locales.nav.groups]]
+label = "指南"
+items = [
+    "quickstart.md", "architecture.md", "navigation.md", "workspace.md",
+    "forms.md", "i18n.md", "data.md", "themes.md", "utility.md",
+    "compatibility.md", "components.md", "vellum.md",
+]
+
+[[i18n.locales.nav.groups]]
+label = "组件"
+routes = [
+    "/components/button/", "/components/label/", "/components/link/", "/components/icon/",
+    "/components/text-field/", "/components/text-area/", "/components/checkbox/", "/components/radio/",
+    "/components/switch/", "/components/select/", "/components/slider/", "/components/progress/",
+    "/components/loading/", "/components/tooltip/", "/components/menu/", "/components/dialog/",
+    "/components/tabs/", "/components/scroll-area/", "/components/data-table/", "/components/tree/",
+    "/components/toast/", "/components/number-field/", "/components/color-field/", "/components/toggle-group/",
+]
+
+[[i18n.locales.nav.top]]
+label = "GitHub 源码"
 link = "https://github.com/rockie/rustify-ui"

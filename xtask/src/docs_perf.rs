@@ -63,7 +63,7 @@ fn files_under(dir: &Path, prefix: &str, out: &mut BTreeMap<String, u64>) -> Res
 }
 
 /// What machine and toolchain the numbers belong to.
-fn environment() -> serde_json::Value {
+pub(crate) fn environment() -> serde_json::Value {
     let text = |program: &str, args: &[&str]| {
         Command::new(program)
             .args(args)
@@ -127,7 +127,10 @@ pub fn performance(args: &[String]) -> Result<(), String> {
     let shared: u64 = gzipped
         .iter()
         .filter(|(name, _)| {
-            name.starts_with("assets/") && (name.ends_with(".css") || name.ends_with(".js"))
+            name.starts_with("assets/")
+                && (name.ends_with(".css") || name.ends_with(".js"))
+                && !name.starts_with("assets/search.")
+                && !name.starts_with("assets/search-worker.")
         })
         .map(|(_, size)| size)
         .sum();

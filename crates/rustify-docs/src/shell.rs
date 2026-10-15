@@ -531,6 +531,7 @@ fn page_view(site: &Site, page: &Page, slots: &LayoutSlots) -> impl IntoView {
                 </a>
                 {header(site, page, labels, slots)}
                 {body}
+                {search_dialog(site, labels)}
                 <footer class="rd-site-footer mx-auto max-w-[76rem] px-4 md:px-6">
                     {if slots.contains_key(&Slot::Footer) {
                         view! { <div inner_html=slot_marker(Slot::Footer)></div> }.into_any()
@@ -791,6 +792,10 @@ fn header(site: &Site, page: &Page, labels: &Catalog, slots: &LayoutSlots) -> im
                     view! { <a href=site.url(&site.home_route) class="rd-brand" aria-current=at_home.then_some("page")>{logo}<span>{name}</span></a> }.into_any()
                 }}
                 {links}
+                <button type="button" class="rd-search-open" data-rd-search-open="" disabled aria-haspopup="dialog" aria-controls="rd-search-dialog" aria-keyshortcuts="Control+k Meta+k" lang=labels.get("search.open").lang.clone()>
+                    {labels.get("search.open").text.clone()}
+                    <kbd class="rd-search-shortcut">"Ctrl / Cmd K"</kbd>
+                </button>
                 {language_switcher(page, labels)}
                 <div class="rd-mode-switch" data-rd-mode-switch="" hidden="" role="group" aria-label=labels.get("theme").text.clone() lang=labels.get("theme").lang.clone()>
                     {mode_button("system", labels.get("theme_system"))}
@@ -800,6 +805,35 @@ fn header(site: &Site, page: &Page, labels: &Catalog, slots: &LayoutSlots) -> im
             </div>
         </header>
         {narrow}
+    }
+}
+
+fn search_dialog(site: &Site, labels: &Catalog) -> impl IntoView {
+    let words: BTreeMap<_, _> = labels
+        .iter()
+        .filter_map(|(key, value)| key.strip_prefix("search.").map(|key| (key, value)))
+        .collect();
+    view! {
+        <noscript><p class="rd-search-noscript" lang=labels.get("search.no_script").lang.clone()>{labels.get("search.no_script").text.clone()}</p></noscript>
+        <dialog id="rd-search-dialog" class="rd-search-dialog" data-rd-search="" data-state="closed"
+            aria-label=labels.get("search.open").text.clone()
+            lang=labels.get("search.open").lang.clone()
+            data-rd-search-lang=site.lang.clone()
+            data-rd-search-labels=serde_json::to_string(&words).unwrap_or_default()
+            data-rd-search-index=crate::search::index_placeholder(&site.lang)
+            data-rd-search-module=crate::search::MODULE_PLACEHOLDER
+            data-rd-search-worker=crate::search::WORKER_PLACEHOLDER>
+            <div class="rd-search-heading">
+                <label for="rd-search-input" lang=labels.get("search.input").lang.clone()>{labels.get("search.input").text.clone()}</label>
+                <button type="button" data-rd-search-close="" lang=labels.get("search.close").lang.clone()>{labels.get("search.close").text.clone()}</button>
+            </div>
+            <input id="rd-search-input" data-rd-search-input="" role="combobox" aria-controls="rd-search-results" aria-expanded="false" aria-autocomplete="list" autocomplete="off" autocapitalize="off" spellcheck="false" lang=labels.get("search.input").lang.clone() />
+            <p class="rd-search-status" data-rd-search-status="" lang=labels.get("search.hint").lang.clone()>{labels.get("search.hint").text.clone()}</p>
+            <p class="rd-search-count" data-rd-search-count="" aria-live="polite" aria-atomic="true"></p>
+            <div id="rd-search-results" class="rd-search-results" data-rd-search-results="" role="listbox" aria-label=labels.get("search.results").text.clone() lang=labels.get("search.results").lang.clone()></div>
+            <button type="button" class="rd-search-action" data-rd-search-retry="" hidden lang=labels.get("search.retry").lang.clone()>{labels.get("search.retry").text.clone()}</button>
+            <button type="button" class="rd-search-action" data-rd-search-more="" hidden lang=labels.get("search.more").lang.clone()>{labels.get("search.more").text.clone()}</button>
+        </dialog>
     }
 }
 

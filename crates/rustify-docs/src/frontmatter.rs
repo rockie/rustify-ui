@@ -103,7 +103,7 @@ pub struct Front {
     #[serde(default)]
     pub draft: bool,
     /// Whether search engines may index the page. Independent of `search`
-    /// and `ai`, which only record the author's wish for later phases.
+    /// and `ai`, which control the two generated discovery indexes.
     pub index: Option<bool>,
     pub search: Option<bool>,
     pub ai: Option<bool>,

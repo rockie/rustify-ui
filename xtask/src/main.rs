@@ -5,6 +5,7 @@ mod css;
 mod docs;
 mod docs_corpus;
 mod docs_perf;
+mod docs_search;
 mod doctor;
 mod serve;
 mod sources;
@@ -37,8 +38,9 @@ mbx xtask <command> [options]
   verify      --suite p1|p2 [--no-browser] [--no-build]
   docs-verify --group features [--external [--git <url> --rev <sha>]]
   docs-verify --group performance
+  docs-verify --group search [--report <file>]
   docs-verify --group toolchain [--git <url> --rev <sha>]
-  docs-corpus --profile | [--p2] --out <dir> [--seed <n>]
+  docs-corpus --profile | [--p2 | --p4-search [--pages 100]] --out <dir> [--seed <n>]
 ";
 
 fn main() {

@@ -145,6 +145,10 @@ fn an_explicit_empty_include_can_publish_only_a_registered_page() {
     let (project, snapshot) = fixture.read();
     let surfaces = Surfaces {
         pages: vec![RegisteredPage {
+            draft: None,
+            index: None,
+            search: None,
+            ai: None,
             name: "Landing".into(),
             route: "/".into(),
             lang: None,

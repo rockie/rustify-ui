@@ -358,6 +358,10 @@ fn declared_pages(project: &Project, manifest: &Manifest) -> Surfaces {
                 lang: page.lang.clone(),
                 title: page.title.clone(),
                 description: page.description.clone(),
+                draft: page.draft,
+                index: page.index,
+                search: page.search,
+                ai: page.ai,
                 html: String::new(),
                 file: file.to_owned(),
             })

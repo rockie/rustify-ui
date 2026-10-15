@@ -30,6 +30,7 @@ const USAGE: &str = "\
 mbx xtask build-dom --manifest-path <Cargo.toml> [--output <directory>]
 mbx xtask docs-verify --group features [--external [--git <url> --rev <sha>]]
 mbx xtask docs-verify --group performance [--report <file>]
+mbx xtask docs-verify --group search [--report <file>]
 mbx xtask docs-verify --group artifacts
 mbx xtask docs-verify --group reliability
 mbx xtask docs-verify --group toolchain [--git <url> --rev <sha>]";
@@ -52,6 +53,7 @@ pub fn verify(args: &[String]) -> Result<(), String> {
         }
         Some("features") => features(),
         Some("performance") => crate::docs_perf::performance(args),
+        Some("search") => crate::docs_search::verify(args),
         Some("toolchain") => toolchain(option(args, "--git"), option(args, "--rev")),
         // What a production build publishes: every address under the base
         // and resolvable, the manifest, the site files, fingerprints that

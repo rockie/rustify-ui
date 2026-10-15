@@ -48,8 +48,15 @@ const i18nProjects = [
 ] as const;
 const i18nUrl = (variant: string, port: number) => `http://127.0.0.1:${port}${variant === "root" ? "/" : "/rustify-ui/"}`;
 
-type Server = "dom-only" | "dom-hydrate" | Docs | Components | Official | typeof i18nProjects[number][0];
-const docsIgnore = ["docs-ssg/dev*.spec.ts", "docs-ssg/islands.spec.ts", "docs-ssg/custom.spec.ts", "docs-ssg/official.spec.ts", "docs-ssg/i18n*.spec.ts"];
+const searchProjects = [
+    ["docs-search-root", "root", 4204, "search.spec.ts"],
+    ["docs-search-subpath", "subpath", 4205, "search*.spec.ts"],
+    ["docs-search-meta", "meta", 4206, "search.spec.ts"],
+    ["docs-search-perf", "subpath", 4210, "search-perf.spec.ts"],
+] as const;
+
+type Server = "dom-only" | "dom-hydrate" | Docs | Components | Official | typeof i18nProjects[number][0] | typeof searchProjects[number][0];
+const docsIgnore = ["docs-ssg/dev*.spec.ts", "docs-ssg/islands.spec.ts", "docs-ssg/custom.spec.ts", "docs-ssg/official.spec.ts", "docs-ssg/i18n*.spec.ts", "docs-ssg/search*.spec.ts"];
 
 const serversOf: Record<string, Server[]> = {
     "dom-only": ["dom-only"],
@@ -71,6 +78,7 @@ const serversOf: Record<string, Server[]> = {
     // `rustify-docs dev`: each test starts its own on a copy of the fixture.
     "docs-dev": [],
     ...Object.fromEntries(i18nProjects.map(([name]) => [name, [name]])),
+    ...Object.fromEntries(searchProjects.map(([name]) => [name, [name]])),
 };
 
 function requestedProjects(argv: string[]): string[] {
@@ -143,6 +151,12 @@ export default defineConfig({
             testMatch: [`docs-ssg/${spec}`],
             use: { baseURL: i18nUrl(variant, port) },
         })),
+        ...searchProjects.map(([name, variant, port, spec]) => ({
+            name,
+            testMatch: [`docs-ssg/${spec}`],
+            testIgnore: name === "docs-search-subpath" ? ["docs-ssg/search-perf.spec.ts"] : [],
+            use: { baseURL: i18nUrl(variant, port) },
+        })),
         {
             name: "components-webkit",
             testMatch: ["docs-ssg/islands.spec.ts", "docs-ssg/custom.spec.ts"],
@@ -175,6 +189,7 @@ export default defineConfig({
             ...componentsProjects.map((name) => [name, `sh tests/docs-ssg/serve.sh components ${name === "components-root" ? "root" : name === "components-meta" ? "meta" : "subpath"} ${componentsPorts[name]}`, componentsUrl(name)] as const),
             ...officialProjects.map((name) => [name, `sh tests/docs-ssg/serve.sh official ${officialVariant(name)} ${officialPorts[name]}`, officialUrl(name)] as const),
             ...i18nProjects.map(([name, source, variant, port]) => [name, `sh tests/docs-ssg/serve.sh ${source} ${variant} ${port}`, i18nUrl(variant, port)] as const),
+            ...searchProjects.map(([name, variant, port]) => [name, `sh tests/docs-ssg/serve.sh ${name === "docs-search-perf" ? "search-perf" : "search"} ${variant} ${port}`, i18nUrl(variant, port)] as const),
         ] as const
     )
         .filter(([server]) => wanted(server))

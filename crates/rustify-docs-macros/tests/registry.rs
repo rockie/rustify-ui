@@ -34,7 +34,7 @@ fn registry() -> SiteRegistry {
     site! {
         pages {
             Home { route: "/", title: "Home" } => home,
-            HomeZh { route: "/", title: "首页", lang: "zh" } => home_zh,
+            HomeZh { route: "/", title: "首页", lang: "zh", draft: false, index: false, search: true, ai: false } => home_zh,
         }
     }
 }
@@ -48,6 +48,10 @@ fn compiled_macro_and_cold_reader_preserve_page_languages() {
     assert_eq!(compiled.manifest, serde_json::to_value(cold).unwrap());
     assert_eq!(compiled.manifest["pages"][0]["lang"], Value::Null);
     assert_eq!(compiled.manifest["pages"][1]["lang"], "zh");
+    assert_eq!(compiled.manifest["pages"][1]["draft"], false);
+    assert_eq!(compiled.manifest["pages"][1]["index"], false);
+    assert_eq!(compiled.manifest["pages"][1]["search"], true);
+    assert_eq!(compiled.manifest["pages"][1]["ai"], false);
     assert_eq!(compiled.pages, ["Home", "HomeZh"]);
 }
 

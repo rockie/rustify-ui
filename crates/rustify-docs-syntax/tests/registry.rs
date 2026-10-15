@@ -86,6 +86,32 @@ fn page_languages_are_shared_by_cold_and_macro_token_parsing() {
 }
 
 #[test]
+fn page_publication_switches_are_literal_optional_booleans() {
+    let site = rustify_docs_syntax::parse_registry(r#"site! { pages {
+        Home { route: "/", title: "Home", draft: true, index: false, search: false, ai: true } => home,
+    }}"#).unwrap();
+    let value = format!("{:?}", site.manifest().pages[0]);
+    for field in [
+        "draft: Some(true)",
+        "index: Some(false)",
+        "search: Some(false)",
+        "ai: Some(true)",
+    ] {
+        assert!(value.contains(field), "{value}");
+    }
+    for metadata in [
+        "draft: \"true\"",
+        "ai: SOME_FLAG",
+        "index: true, index: false",
+    ] {
+        assert!(rustify_docs_syntax::parse_registry(&format!(
+            "site! {{ pages {{ Home {{ route: \"/\", title: \"Home\", {metadata} }} => home, }} }}"
+        ))
+        .is_err());
+    }
+}
+
+#[test]
 fn one_logical_route_can_register_different_declared_languages() {
     let site = parse(
         r#"pages {

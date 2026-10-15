@@ -24,7 +24,8 @@ use crate::option;
 const USAGE: &str = "\
 mbx xtask docs-corpus --profile                 refreeze tests/docs-ssg/b-profile.json from docs/*.md
 mbx xtask docs-corpus --out <dir> [--seed <n>]  write reference site B into an empty or absent <dir>
-mbx xtask docs-corpus --p2 --out <dir> [--seed <n>]  add twelve four-island measurement candidates";
+mbx xtask docs-corpus --p2 --out <dir> [--seed <n>]  add twelve four-island measurement candidates
+mbx xtask docs-corpus --p4-search --out <dir> [--pages 100] [--seed <n>]  1000 searchable pages per language";
 
 /// The twelve guides the PRD names, in its order.
 pub const GUIDES: [&str; 12] = [
@@ -146,6 +147,13 @@ pub struct Profile {
 pub fn run(args: &[String]) -> Result<(), String> {
     let root = crate::build::repo_root();
     let p2 = args.iter().any(|a| a == "--p2");
+    let search = args.iter().any(|a| a == "--p4-search");
+    if search && (p2 || args.iter().any(|a| a == "--profile")) {
+        return Err("--p4-search cannot be combined with --p2 or --profile".into());
+    }
+    if !search && option(args, "--pages").is_some() {
+        return Err("--pages is only supported with --p4-search".into());
+    }
     if args.iter().any(|a| a == "--profile") {
         if p2 {
             return Err(
@@ -169,7 +177,17 @@ pub fn run(args: &[String]) -> Result<(), String> {
             .map_err(|_| format!("--seed {seed}: not a number"))?,
         None => DEFAULT_SEED,
     };
-    if p2 {
+    if search {
+        let pages = option(args, "--pages")
+            .unwrap_or("1000")
+            .parse()
+            .map_err(|_| "--pages must be 100 or 1000")?;
+        if !matches!(pages, 100 | 1000) {
+            return Err("--pages must be 100 or 1000".into());
+        }
+        generate_search(&root, Path::new(out), seed, pages)?;
+        println!("search corpus: {pages} searchable pages per language in {out} (seed {seed:#x})");
+    } else if p2 {
         let manifest = generate_p2(&root, Path::new(out), seed)?;
         println!(
             "reference site B P2: {} pages ({} baseline + {} demo candidates), {} files, digest {} (seed {seed:#x}) in {out}",
@@ -1113,6 +1131,154 @@ pub fn generate_p2(root: &Path, out: &Path, seed: u64) -> Result<P2Manifest, Str
     Ok(manifest)
 }
 
+/// A bilingual search consumer using the frozen guide distribution. Its
+/// registered home counts toward capacity; excluded sentinels never do.
+pub fn generate_search(root: &Path, out: &Path, seed: u64, pages: usize) -> Result<(), String> {
+    if out.exists()
+        && std::fs::read_dir(out)
+            .map_err(|e| e.to_string())?
+            .next()
+            .is_some()
+    {
+        return Err(format!("{} is not empty", out.display()));
+    }
+    let profile_bytes = std::fs::read(root.join(PROFILE)).map_err(|e| e.to_string())?;
+    let profile: Profile = serde_json::from_slice(&profile_bytes).map_err(|e| e.to_string())?;
+    if profile.guides.len() != GUIDES.len() {
+        return Err("search corpus needs all twelve frozen guide profiles".into());
+    }
+    let mut slots: Vec<PageSlot> = (1..pages)
+        .map(|i| PageSlot {
+            path: format!("page-{i:04}.md"),
+            lang: "en",
+            group: 0,
+            order: i,
+            guide: (i - 1) % GUIDES.len(),
+        })
+        .collect();
+    slots.extend((1..=pages / 2).map(|i| PageSlot {
+        path: format!("zh/page-{i:04}.md"),
+        lang: "zh",
+        group: 0,
+        order: i,
+        guide: (i - 1) % GUIDES.len(),
+    }));
+    let mut files = BTreeMap::new();
+    let mut rng = Rng(seed ^ 0x7034_7365_6172_6368);
+    for slot in &slots {
+        let generated = page(&profile, slot, &slots, &mut rng);
+        let (_, body) = generated
+            .split_once("\n---\n\n")
+            .ok_or("generated search page has no frontmatter boundary")?;
+        let zh = slot.lang == "zh";
+        let title = match (slot.order, zh) {
+            (1, true) => "主题切换".into(),
+            (1, false) => "Theme switching".into(),
+            (2, true) => "使用ThemeScope".into(),
+            (2, false) => "ThemeScope reference".into(),
+            (_, true) => format!("文档示例 {}", slot.order),
+            (_, false) => format!("Guide sample {}", slot.order),
+        };
+        let body = if let Some(rest) = body.strip_prefix("# ") {
+            rest.split_once('\n').map_or(body, |(_, body)| body)
+        } else {
+            body
+        };
+        let marker = if slot.order == pages / 2 + 1 {
+            "FallbackOnlyToken"
+        } else {
+            "SearchCorpusToken"
+        };
+        let distraction = if slot.order == 3 {
+            "ThemeScope ".repeat(100)
+        } else {
+            String::new()
+        };
+        let text = format!("---\ntitle: \"{title}\"\ndescription: \"{}\"\nlang: {}\n---\n# {title}\n\n{marker}. {distraction}\n\n{body}", if zh { "按真实指南分布生成的搜索测试内容。" } else { "Search measurement content shaped like the frozen guides." }, slot.lang);
+        files.insert(format!("content/{}", slot.path), text.into_bytes());
+    }
+    for (name, metadata, text) in [
+        ("draft", "draft: true", "DraftSecretSentinel"),
+        ("search-excluded", "search: false", "SearchExcludedSentinel"),
+        (
+            "ai-excluded",
+            "search: false\nai: false",
+            "AiExcludedSentinel",
+        ),
+    ] {
+        files.insert(format!("content/{name}.md"), format!("---\ntitle: {name}\ndescription: Excluded sentinel\n{metadata}\n---\n# {name}\n\n{text}\n").into_bytes());
+    }
+    let items = (1..pages)
+        .map(|i| format!("\"page-{i:04}.md\""))
+        .collect::<Vec<_>>()
+        .join(", ");
+    let configuration = format!("schema_version=1\n[site]\nname=\"Search corpus\"\nlang=\"en\"\nurl=\"https://docs.example.net/\"\nbase=\"/\"\n[rust]\nmanifest=\"Cargo.toml\"\nregistry=\"src/lib.rs\"\n[[nav.groups]]\nlabel=\"Home\"\nroutes=[\"/\"]\n[[nav.groups]]\nlabel=\"Guides\"\nitems=[{items}]\n[[i18n.locales]]\nlang=\"en\"\nlabel=\"English\"\nprefix=\"\"\n[[i18n.locales]]\nlang=\"zh\"\nlabel=\"中文\"\nprefix=\"zh\"\n");
+    files.insert("rustify-docs.toml".into(), configuration.into_bytes());
+    // Use the existing consumer toolchain and helper, without any demo islands.
+    for path in ["Cargo.toml", "Cargo.lock", "src/bin/docs-render.rs"] {
+        let mut bytes =
+            std::fs::read(root.join(P2_FIXTURE).join(path)).map_err(|e| e.to_string())?;
+        if path == "Cargo.toml" {
+            let mut cargo = String::from_utf8(bytes).map_err(|e| e.to_string())?;
+            for library in ["rustify-ui", "rustify-components", "rustify-docs"] {
+                let old = format!("path = \"../../../../crates/{library}\"");
+                let sdk = std::fs::canonicalize(root.join("crates").join(library))
+                    .map_err(|e| e.to_string())?;
+                let quoted = serde_json::to_string(sdk.to_str().ok_or("SDK path must be UTF-8")?)
+                    .map_err(|e| e.to_string())?;
+                if cargo.matches(&old).count() != 1 {
+                    return Err(format!("consumer template needs one {library} path"));
+                }
+                cargo = cargo.replacen(&old, &format!("path = {quoted}"), 1);
+            }
+            bytes = cargo.into_bytes();
+        }
+        files.insert(path.into(), bytes);
+    }
+    files.insert("src/lib.rs".into(), br##"use leptos::prelude::*;
+use rustify_docs::{RenderContext, SiteRegistry};
+pub fn site() -> SiteRegistry {
+    rustify_docs::site! { pages {
+        Home { route: "/", title: "Custom search home", description: "A real registered page inside the search capacity." } => home,
+        Excluded { route: "/undescribed/", title: "Undescribed custom", search: false } => undescribed,
+    }}
+}
+fn home(_: RenderContext) -> impl IntoView {
+    leptos::view! { <h1>"Custom search home"</h1><p>"CustomOnlyToken from a registered DOM page."</p><h2 id="custom-section">"Custom section"</h2><p>"ReachableCustomToken"</p> }
+}
+fn undescribed(_: RenderContext) -> impl IntoView {
+    leptos::view! { <h1>"Undescribed custom"</h1><p>"UndescribedSentinel"</p> }
+}
+"##.to_vec());
+    for (path, bytes) in &files {
+        let target = out.join(path);
+        if let Some(parent) = target.parent() {
+            std::fs::create_dir_all(parent).map_err(|e| e.to_string())?;
+        }
+        std::fs::write(target, bytes).map_err(|e| e.to_string())?;
+    }
+    let pair = crate::docs::pair_project(root, &out.join("Cargo.toml"), None)?;
+    for path in ["Cargo.toml", "Cargo.lock"] {
+        files.insert(
+            path.into(),
+            std::fs::read(out.join(path)).map_err(|e| e.to_string())?,
+        );
+    }
+    let (digests, digest) = fingerprints(&files);
+    let manifest = serde_json::json!({
+        "generator_version": 1, "seed": seed, "profile_sha256": sha256_hex(&profile_bytes),
+        "pages_per_language": pages, "translated_zh": pages / 2, "fallback_zh": pages / 2,
+        "custom_route": "/", "files": digests, "digest": digest,
+        "framework_pair": { "candidate_sha": pair["candidate_sha"], "framework_revision": pair["framework_revision"] },
+    });
+    std::fs::write(
+        out.join("p4-search-manifest.json"),
+        serde_json::to_vec_pretty(&manifest).map_err(|e| e.to_string())?,
+    )
+    .map_err(|e| e.to_string())?;
+    Ok(())
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -1140,6 +1306,46 @@ mod tests {
         fn drop(&mut self) {
             let _ = std::fs::remove_dir_all(&self.0);
         }
+    }
+
+    #[test]
+    fn p4_search_cli_writes_independent_reproducible_bilingual_inputs() {
+        let scratch = Scratch::new();
+        let first = scratch.0.join("first");
+        let second = scratch.0.join("second");
+        for out in [&first, &second] {
+            run(&[
+                "--p4-search".into(),
+                "--pages".into(),
+                "100".into(),
+                "--out".into(),
+                out.to_str().unwrap().into(),
+            ])
+            .unwrap();
+        }
+        let name = "p4-search-manifest.json";
+        let bytes = std::fs::read(first.join(name)).unwrap();
+        assert_eq!(bytes, std::fs::read(second.join(name)).unwrap());
+        let manifest: serde_json::Value = serde_json::from_slice(&bytes).unwrap();
+        assert_eq!(manifest["pages_per_language"], 100);
+        assert_eq!(manifest["translated_zh"], 50);
+        assert_eq!(manifest["fallback_zh"], 50);
+        for path in manifest["files"].as_object().unwrap().keys() {
+            assert_eq!(
+                std::fs::read(first.join(path)).unwrap(),
+                std::fs::read(second.join(path)).unwrap(),
+                "{path}"
+            );
+        }
+        assert!(!first.join("b-manifest.json").exists());
+        assert!(
+            std::fs::read_to_string(first.join("content/zh/page-0001.md"))
+                .unwrap()
+                .contains("主题切换")
+        );
+        assert!(std::fs::read_to_string(first.join("src/lib.rs"))
+            .unwrap()
+            .contains("search: false"));
     }
 
     #[test]

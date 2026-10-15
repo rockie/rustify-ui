@@ -99,6 +99,12 @@ jobs:
           with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as stream:
               stream.write(f"C: {receipt['candidate_sha']}\n\nR: {receipt['framework_revision']}\n\nBuild: {output['build_id']}\n")
           PY
+      - name: Verify complete language, search and AI artifacts before upload
+        run: |
+          python3 scripts/docs-pages-verify.py --dir "$RUNNER_TEMP/docs-site/site/dist" \
+            --identity "$RUNNER_TEMP/docs-pages-evidence/identity.json" \
+            --candidate-sha "$CANDIDATE_SHA" \
+            --report "$RUNNER_TEMP/docs-pages-evidence/preflight.json"
       - name: Preserve source and build evidence
         if: always()
         uses: actions/upload-artifact@v4

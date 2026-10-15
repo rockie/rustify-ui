@@ -27,7 +27,7 @@ const categories = variants.map(variant => {
 });
 const include = config.match(/\[content\][\s\S]*?include\s*=\s*\[([\s\S]*?)\]/)?.[1];
 if (!include) throw new Error("official content.include must be explicit");
-const guides = [...include.matchAll(/"([^"]+\.md)"/g)].map(match => {
+const guides = [...include.matchAll(/"([^"]+\.md)"/g)].filter(match => !match[1].startsWith("zh/")).map(match => {
     const file = `docs/${match[1]}`;
     const source = readFileSync(file, "utf8");
     const title = source.match(/^# ([^\r\n]+)$/m)?.[1];
@@ -85,10 +85,10 @@ async function healthy(page: Page, audit: Audit) {
     expect(audit.requests.filter(request => new URL(request).origin !== new URL(url("./")).origin || /makepad/i.test(request))).toEqual([]);
 }
 
-async function open(page: Page, route: string) {
+async function open(page: Page, route: string, lang = "en") {
     const response = await page.goto(url(route));
     expect(response?.status()).toBe(200);
-    await expect(page.locator("html")).toHaveAttribute("lang", "en");
+    await expect(page.locator("html")).toHaveAttribute("lang", lang);
     const policy = await page.locator('meta[http-equiv="Content-Security-Policy"]').getAttribute("content");
     expect(policy).toContain("script-src");
     expect(policy).not.toContain("frame-ancestors");
@@ -98,13 +98,13 @@ async function open(page: Page, route: string) {
     return response;
 }
 
-async function attached(page: Page, name: string) {
+async function attached(page: Page, name: string, lang = "en") {
     await expect(island(page)).toHaveCount(1);
     await expect(island(page)).toHaveAttribute("data-rd-island-state", "ready");
     const metadata = JSON.parse((await island(page).getAttribute("data-rustify-island-metadata"))!);
     expect(metadata.target).toEqual({ type: "demo", name });
     expect(metadata.environment.base).toBe(base());
-    expect(metadata.environment.lang).toBe("en");
+    expect(metadata.environment.lang).toBe(lang);
     const field = island(page).locator("fieldset[data-rd-island-controls]");
     await expect(field).toHaveJSProperty("disabled", false);
     await expect(field).toHaveJSProperty("inert", false);
@@ -214,6 +214,62 @@ test("home has one English title, the original README introduction and two first
     await expect(page.locator(".rd-home-prose").getByRole("link", { name: "repository quick start", exact: true })).toHaveAttribute("href", repoQuickstart);
     await expect(island(page)).toHaveCount(0); expect(wasm(audit)).toEqual([]); await healthy(page, audit);
     await quickstart.click(); await expect(page.locator("h1")).toHaveText(guides[0].title); expect(wasm(audit)).toEqual([]);
+});
+
+test("official Chinese home and quick start are real translations with local search and AI discovery", async ({ page, request, audit }) => {
+    await open(page, "./");
+    await page.locator(".rd-language-switch summary").click();
+    await page.locator('.rd-language-switch a[hreflang="zh"]').click();
+    await expect(page).toHaveURL(url("zh/"));
+    await expect(page.locator("html")).toHaveAttribute("lang", "zh");
+    await expect(page.locator(".rd-tagline")).toContainText("实验性 Rust SDK");
+    await expect(page.locator(".rd-untranslated")).toHaveCount(0);
+    await page.getByRole("navigation", { name: "开始阅读", exact: true }).getByRole("link", { name: "快速开始", exact: true }).click();
+    await expect(page).toHaveURL(url("zh/quickstart/"));
+    await expect(page.locator("main article").first()).toHaveAttribute("lang", "zh");
+    await expect(page.locator("#a-dom-application-without-gpu-regions")).toContainText("DOM 应用");
+    await page.locator("[data-rd-search-open]").click();
+    const dialog = page.locator("dialog[data-rd-search]");
+    await dialog.getByRole("combobox").fill("准备工具");
+    await expect(dialog.getByRole("option").first().locator(".rd-search-title")).toHaveText("快速开始");
+    await expect(dialog.getByRole("option").first()).toHaveAttribute("href", /\/zh\/quickstart\/#prerequisites$/);
+    const indexURL = await dialog.getAttribute("data-rd-search-index");
+    const data = await (await request.get(new URL(indexURL!, url("./")).href)).json();
+    expect(data.pages).toHaveLength(37);
+    expect(data.pages.filter((page: any) => page.is_fallback)).toHaveLength(35);
+    await page.keyboard.press("Enter");
+    await expect(dialog).toBeHidden();
+    await expect(page).toHaveURL(url("zh/quickstart/#prerequisites"));
+    for (const [path, expected] of [["llms.txt", "/rustify-ui/quickstart/"], ["zh/llms.txt", "/rustify-ui/zh/quickstart/"]] as const) {
+        const response = await request.get(url(path));
+        expect(response.status()).toBe(200);
+        expect(response.headers()["content-type"]).toContain("text/plain");
+        const text = await response.text();
+        expect(text.split("\n").filter(line => line.startsWith("- ["))).toHaveLength(37);
+        const target = expected.replace("/rustify-ui/", base());
+        expect(text).toContain(`https://rockie.github.io${target}`);
+        if (path.startsWith("zh/")) {
+            expect(text).toContain("尚未翻译");
+            expect(text).toContain(`https://rockie.github.io${base()}components/button/`);
+            expect(text).not.toContain(`https://rockie.github.io${base()}zh/components/button/`);
+        }
+    }
+    await healthy(page, audit);
+});
+
+test("all Chinese fallback categories retain real DOM demos, source and target-language controls", async ({ page, audit }) => {
+    test.setTimeout(240_000);
+    for (const entry of categories) {
+        await open(page, `zh/${entry.route}`, "zh");
+        await expect(page.locator(".rd-untranslated")).toBeVisible();
+        const field = await attached(page, entry.demo, "zh");
+        await sourceText(page, entry);
+        await expect(page.locator(".rd-demo-source").getByRole("tab", { name: "完整文件", exact: true })).toHaveCount(1);
+        const metadata = JSON.parse((await island(page).getAttribute("data-rustify-island-metadata"))!);
+        expect(metadata.environment.lang).toBe("zh");
+        await exercise(page, field, entry.name);
+    }
+    await healthy(page, audit);
 });
 
 test("the ordinary sidebar contains the exact twelve guides and CATALOG pages in configured order", async ({ page, audit }) => {

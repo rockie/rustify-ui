@@ -37,6 +37,21 @@ fi
 rm -rf "$work"
 mkdir -p "$work"
 case $source in
+  search | search-perf)
+    pages=100
+    if [ "$source" = search-perf ]; then pages=1000; fi
+    (cd "$root" && mbx xtask docs-corpus --p4-search --pages "$pages" --out "$work/site" >&2)
+    python3 - "$work/site/rustify-docs.toml" "$base" <<'PY'
+from pathlib import Path
+import sys
+path, base = Path(sys.argv[1]), sys.argv[2]
+text = path.read_text()
+text = text.replace('url="https://docs.example.net/"', 'url="https://docs.example.net' + base + '"')
+text = text.replace('base="/"', 'base="' + base + '"')
+path.write_text(text)
+PY
+    RUSTIFY_DOCS_CARGO=mbx "$bin" build --config "$work/site/rustify-docs.toml" --out "$work/dist" >&2
+    ;;
   content | i18n)
     fixture=$root/tests/docs-ssg/fixtures/content
     if [ "$source" = i18n ]; then

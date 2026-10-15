@@ -144,6 +144,10 @@ fn nested_source_images_enter_the_common_resource_graph_and_keep_the_first_read(
     .unwrap();
     let surfaces = Surfaces {
         pages: vec![content::RegisteredPage {
+            draft: None,
+            index: None,
+            search: None,
+            ai: None,
             lang: None,
             name: "Home".into(),
             route: "/".into(),

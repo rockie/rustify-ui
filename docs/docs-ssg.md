@@ -457,13 +457,14 @@ and every key is known:
 | Key | Meaning |
 | --- | --- |
 | `title` | The page's title. Without it, the first `# heading` is the title; a page with neither is an error. |
-| `description` | One sentence for search results and link previews. Without it the first paragraph is used (warning); a page with neither is an error. |
+| `description` | A description for link previews and AI discovery. Without it the first paragraph is used (warning); an ordinary page with neither is an error. A `layout: home` page may omit both; its AI entry uses the separate fallback below. |
 | `lang` | Without i18n, the page's language tag, defaulting to `site.lang`. With i18n, it must match the language declared for its content directory. Interface strings use that language's catalog with per-key English fallback. |
 | `sidebar.label`, `sidebar.order` | The sidebar's text for the page, and its position in its group (lower first; pages without an order follow, by path). |
 | `sidebar.group` | The nav group the page is listed in, by label, instead of its directory's. It must name a configured group; without `[[nav.groups]]` it starts a group of that name. A group's explicit `items` list is never changed by it. |
 | `draft` | `true` keeps the page out of a production build. |
 | `index` | `false` asks search engines not to index the page (default `true`). |
-| `search`, `ai` | Recorded for later releases; nothing reads them yet. |
+| `search` | `false` excludes this page from the current-language reader search (default `true`), independently of `index` and `ai`. |
+| `ai` | `false` excludes this page from `llms.txt` (default `true`), independently of reader search and search-engine indexing. |
 | `toc.levels` | The heading levels the page's table of contents lists, as `[2, 3]` (the default). |
 | `layout`, `tagline`, `actions`, `features` | A home page: `layout: home`, a tagline, `actions` (`text`, `link`) and `features` (`title`, `details`). |
 
@@ -1009,6 +1010,13 @@ headings, links, images, classes and explicit demos enter the same final
 document checks as Markdown content; a custom function does not bypass the
 CSP or resource graph.
 
+Registered page metadata also accepts literal optional `draft`, `index`,
+`search` and `ai` booleans, with the same defaults as Markdown. A default
+draft keeps every language version out of the production site and both
+discovery indexes. A fallback inherits the source page's switches. A custom
+page needs a nonblank explicit description to appear in `llms.txt`; text in
+its HTML is not used as an inferred description.
+
 The seven slots accept functions with the same `RenderContext`:
 
 | Slot | Replaces or inserts |
@@ -1083,6 +1091,71 @@ JavaScript; the theme script adds independent tab controls. The
 shows two tab groups, cards, steps and rich children. It loads no wasm even
 inside the configured Rust project.
 
+## Offline search and AI discovery
+
+These features require the P4 CLI/framework candidate; the public P1 pin in
+the installation section predates them. Content-only sites still compile no
+Rust and need no Node, search service or search wasm.
+
+Open **Search**, or press Cmd/Ctrl+K. The input receives focus immediately,
+including while the same-origin module, Worker and current-language JSON
+load. Arrow keys choose a result, Enter follows its ordinary page/section
+link, Tab reaches the controls, and Escape closes to the element that opened
+search. A failed load offers **Retry** and retains the input; an empty match
+list instead suggests another word or prefix. Search runs independently of
+interactive examples, so a failed island does not own the search session.
+
+Chinese queries use whole words; English matches ignore ASCII case and
+accept prefixes at word starts. All query words must occur within one
+section's title, heading path or text. Title and heading matches rank ahead
+of repeated body matches. Results are grouped by page, twenty at a time;
+**Show more** keeps the actual total and current selection. Highlighting
+uses the original text, including in titles.
+
+Search stays within the page's UI language, including a legacy per-page
+`lang` without translation pairing. With languages configured,
+Missing translations appear with their source language and link to that
+language's fallback reading address. Custom page bodies, home features,
+ordinary code and initial component text are searchable. Navigation,
+layout slots, example status, source paths, duplicate full-file panels and
+copy controls are excluded. Only headings with an actual document ID get
+their own section link. Drafts, `search: false` and 404 pages are excluded.
+
+No search data or module is requested before opening search. Once an index
+has loaded, queries and pagination use local Worker memory with no network
+request. Query text is neither uploaded nor persisted. “Offline” describes
+that local querying; a first visit without a connection cannot fetch an
+uncached site. There is no Service Worker or persistent search cache.
+Without scripts, the search control remains disabled with an explanation;
+the document and ordinary navigation still work.
+
+Each configured language also gets `llms.txt` at its root. Without i18n
+declarations, the site keeps one root AI index for its unpaired pages.
+It lists the site name and
+description, groups entries by that language's navigation and appends
+allowed unlisted pages under **Other pages**. Entries contain a title,
+public HTML URL and nonempty description. Real translations use their
+translated URL; missing translations identify the source language and link
+to the actual source address, rather than the fallback UI address. With
+`site.url`, URLs are absolute; without it they remain root-relative under
+`site.base` and use the existing missing-URL warning.
+
+AI descriptions try a trimmed explicit description, then the first body
+paragraph. Empty or whitespace-only values do not mask the next candidate.
+A Markdown home with neither uses its tagline, then the source-language
+`ai.home_description` message (“Homepage of {site}.” in English, “{site}首页”
+in Chinese). This fallback does not change the page's SEO description.
+Other AI-enabled Markdown pages with neither candidate fail with
+`missing-description`; add text or opt out with `ai: false`. Registered
+pages require an explicit description. Drafts and 404 pages never appear.
+The build emits no Markdown copies or `llms-full.txt`.
+
+HTML, search JSON and AI indexes are rebuilt from the same candidate and
+published together. A failed candidate leaves the previous complete output.
+`llms.txt` is reserved at every language root, including its directory
+form; authored resources and routes cannot take the framework's
+`assets/search.` or `assets/search-worker.` names.
+
 ## What a build writes
 
 ```text
@@ -1092,6 +1165,10 @@ dist/
   zh/404.html, fr/404.html, …          one error page per configured non-default language
   assets/site.<hash>.css              the stylesheet: the classes the pages use, minified
   assets/mode.<hash>.js, site.<hash>.js   the theme's two small scripts
+  assets/search.<lang>.<hash>.json      each UI language's public search data
+  assets/search.<hash>.js              the search module, loaded on demand
+  assets/search-worker.<hash>.js       the same-origin search Worker
+  llms.txt, zh/llms.txt, …             each language's AI discovery file
   assets/files/<name>.<hash>.<ext>    every file a page shows or links to
   assets/share.<hash>.png             the default link-preview image, without site.image
   logo.svg, favicon.ico, …            the asset directory, at its own paths
@@ -1289,6 +1366,43 @@ the files as they are.
 default-src 'none'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; media-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'
 ```
 
+### Official site delivery
+
+The repository's official sources configure English and Chinese, with real
+Chinese home and quick-start pages. Other guides and component categories
+keep explicit English-content fallback inside the Chinese reading shell.
+The content allowlist excludes plans, reports and validation sources.
+
+The existing `docs-pages.yml` workflow builds a complete fixed Git candidate
+C with its paired library R. It changes only the official consumer's three
+dependency lines and generated lock, checks the remaining frozen inputs,
+then uploads and deploys the same-run artifact. Pages must already use the
+Actions source and the existing `github-pages` environment; the workflow
+does not enable Pages. Deployment and public availability remain separate
+from a successful local build.
+
+After the required browser/device gates and publication authorization,
+assign `DOCS_C` the approved complete CLI commit SHA and run:
+
+```sh
+gh workflow run docs-pages.yml --ref main -f candidate_sha="$DOCS_C"
+python3 scripts/docs-pages-verify.py --url https://rockie.github.io/rustify-ui/ --candidate-sha "$DOCS_C"
+```
+
+Wait for that workflow's build and deployment to succeed before verification.
+The verifier selects its matching successful run (or an explicit
+`--run-id`), checks C/R against the prepare receipt, compares the complete
+Pages artifact and its manifest, then reads every public file and validates
+HTML, search and AI destinations. It needs the run's unexpired artifacts.
+Real online search, language switching, deep 404 and CSP checks still run
+in a browser. The repository does not yet claim those release gates passed.
+
+Keep the previous successful C and its artifact/manifest. Roll back by
+dispatching the same workflow with that C, verify the restored build ID and
+complete files, then restore the approved target C after the rehearsal.
+A first publication needs a separately approved baseline candidate for
+this exercise; an unpublished old revision is not an existing rollback.
+
 ## The default theme
 
 Every page's reading content is complete before any script runs: the
@@ -1316,6 +1430,10 @@ a failure in either hides nothing.
   time; choosing one switches every group of the same name on the page and
   is remembered on the next pages. Arrow keys, Home and End move between
   tabs.
+- **Search.** A native dialog uses the reading width and theme tokens, with
+  immediate input focus, text-node highlights, a live total, selected option
+  semantics and explicit loading, empty and retry states. The result list
+  scrolls independently; no additional H1 or search wasm is needed.
 - **Table of contents.** The section being read is marked as the page
   scrolls; at the end of a page the last section is.
 - **Images.** Raster images and SVGs with a fixed size get their width and

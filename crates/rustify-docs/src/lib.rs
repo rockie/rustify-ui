@@ -39,6 +39,8 @@ pub mod __private {
 }
 
 #[cfg(feature = "pipeline")]
+pub mod ai;
+#[cfg(feature = "pipeline")]
 pub mod autolink;
 #[cfg(feature = "pipeline")]
 pub mod builtins;
@@ -80,6 +82,8 @@ pub mod labels;
 pub mod markdown;
 #[cfg(feature = "pipeline")]
 pub mod publish;
+#[cfg(feature = "pipeline")]
+pub mod search;
 #[cfg(feature = "pipeline")]
 pub mod shell;
 #[cfg(feature = "pipeline")]

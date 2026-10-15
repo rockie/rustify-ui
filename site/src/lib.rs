@@ -35,6 +35,7 @@ pub fn site() -> SiteRegistry {
         }
         pages {
             Home { route: "/", title: "Rustify UI", description: "An experimental Rust SDK with DOM components and optional GPU regions." } => crate::pages::home,
+            HomeZh { route: "/", lang: "zh", title: "Rustify UI", description: "面向浏览器应用的实验性 Rust SDK，提供 DOM 组件和按需启用的 GPU region。" } => crate::pages::home_zh,
             Button { route: "/components/button/", title: "Button", description: "A DOM button example with its exact Rust source." } => crate::pages::category,
             Label { route: "/components/label/", title: "Label", description: "A DOM label example with its exact Rust source." } => crate::pages::category,
             Link { route: "/components/link/", title: "Link", description: "A DOM link example with its exact Rust source." } => crate::pages::category,
@@ -68,4 +69,46 @@ pub fn site() -> SiteRegistry {
 pub fn docs_hydrate() -> Result<(), wasm_bindgen::JsValue> {
     rustify_docs::hydrate_site(site())
         .map_err(|error| wasm_bindgen::JsValue::from_str(&error.to_string()))
+}
+
+#[cfg(all(test, feature = "ssr"))]
+mod tests {
+    use rustify_docs::site::{RenderRequest, RenderTarget, SiteEnvironment};
+
+    #[test]
+    fn official_chinese_home_renders_real_copy_and_local_destinations() {
+        let site = super::site();
+        assert_eq!(
+            site.describe().registry["demos"].as_array().unwrap().len(),
+            24
+        );
+        let rendered = site.render(
+            &RenderRequest {
+                key: "chinese-home".into(),
+                seed: "chinese-home".into(),
+                target: RenderTarget::Page {
+                    name: "HomeZh".into(),
+                    route: "/".into(),
+                },
+            },
+            &SiteEnvironment {
+                lang: "zh".into(),
+                base: "/rustify-ui/".into(),
+                ..Default::default()
+            },
+        );
+        assert!(
+            rendered.diagnostics.is_empty(),
+            "{:?}",
+            rendered.diagnostics
+        );
+        let html = rendered.html.unwrap();
+        assert!(
+            html.contains("快速开始") && html.contains("按需启用 GPU"),
+            "{html}"
+        );
+        assert!(html.contains("href=\"/rustify-ui/zh/quickstart/\""));
+        assert!(html.contains("href=\"/rustify-ui/zh/components/button/\""));
+        assert!(!html.contains("An experimental Rust SDK"));
+    }
 }

@@ -562,6 +562,13 @@ test("a real callback trap restores every initial island and keeps source, navig
     await expect(page.getByTestId("counter-value")).toHaveText("2");
     await expect(page.getByTestId("failure-value")).toHaveText("0");
     expect(await page.evaluate(() => window.__rustify_docs_islands?.stats())).toMatchObject({ tasks: 0, timers: 0, observers: 0, aborted: true });
+    await page.locator("[data-rd-search-open]").click();
+    const search = page.locator("dialog[data-rd-search]");
+    await search.getByRole("combobox").fill("Counter");
+    await expect(search).toHaveAttribute("data-state", "results");
+    await expect(search.getByRole("option").first()).toBeVisible();
+    await page.keyboard.press("Escape");
+    await expect(page.locator("[data-rd-search-open]")).toBeFocused();
     const source = page.locator(".rd-demo-source");
     await source.getByRole("tab", { name: "Full file", exact: true }).click();
     await source.locator(".rd-code-tabs > [data-rd-copy]").click();

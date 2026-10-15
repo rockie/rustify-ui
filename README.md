@@ -154,6 +154,13 @@ npx playwright test -c playwright.docs.config.ts --project=docs-meta
 npx playwright test -c playwright.docs.config.ts --project=docs-dev   # rustify-docs dev, each test on its own copy
 ```
 
+The P4 search fixture has `docs-search-root`, `docs-search-subpath` and
+`docs-search-meta` projects in the same configuration. Run them serially;
+the phase verification binds `RUSTIFY_DOCS_BIN` to the fixed installed CLI.
+`mbx xtask docs-verify --group search` runs the separate 1000-page evidence
+project and rejects missing query samples. See the [author's reference](docs/docs-ssg.md#offline-search-and-ai-discovery)
+for the search, language and AI output contracts.
+
 Vellum has its own configuration:
 
 ```sh
@@ -190,6 +197,11 @@ The default `regression` tier checks behaviour. `RUSTIFY_TIER=evidence` runs tag
 Rustify Docs builds a static site from Markdown with navigation, themes and
 highlighted code, without compiling a site's Rust. Content pages load no wasm;
 authors need stable Rust and the CLI. Node, Tailwind and Makepad are not needed.
+The current P4 implementation adds on-demand, current-language local search
+and one `llms.txt` per language. Its fixed candidate and release gates are
+separate from the verified public P1 installation below; the official
+Chinese sources are the home page and [quick start](docs/zh/quickstart.md),
+with the other guides and component categories using explicit fallback.
 The validated CLI is `0.1.4`, from this pinned source revision:
 
 ```sh

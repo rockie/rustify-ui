@@ -23,7 +23,9 @@ use syn::ext::IdentExt;
 use syn::parse::{Parse, ParseStream};
 use syn::spanned::Spanned;
 use syn::visit::Visit;
-use syn::{braced, Attribute, Error, Expr, ExprPath, Ident, LitStr, Macro, Result, Token, Type};
+use syn::{
+    braced, Attribute, Error, Expr, ExprPath, Ident, LitBool, LitStr, Macro, Result, Token, Type,
+};
 
 /// Quotes a complete code value with a fence longer than any run it contains.
 pub fn code_span(value: &str) -> String {
@@ -95,6 +97,10 @@ pub struct PageDeclaration {
     pub title: LitStr,
     pub description: Option<LitStr>,
     pub lang: Option<LitStr>,
+    pub draft: Option<LitBool>,
+    pub index: Option<LitBool>,
+    pub search: Option<LitBool>,
+    pub ai: Option<LitBool>,
     pub function: ExprPath,
 }
 
@@ -151,6 +157,10 @@ impl SiteDeclaration {
                     title: page.title.value(),
                     description: page.description.as_ref().map(LitStr::value),
                     lang: page.lang.as_ref().map(LitStr::value),
+                    draft: page.draft.as_ref().map(|value| value.value),
+                    index: page.index.as_ref().map(|value| value.value),
+                    search: page.search.as_ref().map(|value| value.value),
+                    ai: page.ai.as_ref().map(|value| value.value),
                     function: normalized(&page.function),
                 })
                 .collect(),
@@ -438,9 +448,32 @@ fn parse_page(input: ParseStream) -> Result<PageDeclaration> {
     let mut title = None;
     let mut description = None;
     let mut lang = None;
+    let mut draft = None;
+    let mut index = None;
+    let mut search = None;
+    let mut ai = None;
     while !content.is_empty() {
         let key: Ident = content.parse()?;
         let key_name = self::name(&key);
+        let flag = match key_name.as_str() {
+            "draft" => Some(&mut draft),
+            "index" => Some(&mut index),
+            "search" => Some(&mut search),
+            "ai" => Some(&mut ai),
+            _ => None,
+        };
+        if let Some(destination) = flag {
+            if destination.is_some() {
+                return Err(Error::new(
+                    key.span(),
+                    format!("duplicate page metadata {}", code_span(&key_name)),
+                ));
+            }
+            content.parse::<Token![:]>()?;
+            *destination = Some(content.parse::<LitBool>()?);
+            separator(&content)?;
+            continue;
+        }
         let destination = match key_name.as_str() {
             "route" => &mut route,
             "title" => &mut title,
@@ -473,6 +506,10 @@ fn parse_page(input: ParseStream) -> Result<PageDeclaration> {
         title,
         description,
         lang,
+        draft,
+        index,
+        search,
+        ai,
         function,
     })
 }

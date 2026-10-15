@@ -201,6 +201,10 @@ fn graph_checks_conflicts_and_reserved_not_found_for_every_locale() {
 
 fn registered(name: &str, route: &str, lang: Option<&str>) -> RegisteredPage {
     RegisteredPage {
+        draft: None,
+        index: None,
+        search: None,
+        ai: None,
         name: name.into(),
         route: route.into(),
         lang: lang.map(String::from),

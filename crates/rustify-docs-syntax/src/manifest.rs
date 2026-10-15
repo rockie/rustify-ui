@@ -49,6 +49,14 @@ pub struct PageManifest {
     pub description: Option<String>,
     #[serde(default)]
     pub lang: Option<String>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub draft: Option<bool>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub index: Option<bool>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub search: Option<bool>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub ai: Option<bool>,
     pub function: String,
 }
 

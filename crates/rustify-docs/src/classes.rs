@@ -10,7 +10,14 @@ use crate::highlight::CLASS_PREFIX;
 
 /// Classes the framework's scripts switch at run time; no rendered page has
 /// them yet, so they are added to every build's candidates.
-pub const SCRIPT_STATE_CLASSES: &[&str] = &[];
+pub const SCRIPT_STATE_CLASSES: &[&str] = &[
+    "rd-search-result",
+    "rd-search-title",
+    "rd-search-badge",
+    "rd-search-source",
+    "rd-search-path",
+    "rd-search-snippet",
+];
 
 /// Adds every class in `html`'s `class` attributes to `into`.
 ///

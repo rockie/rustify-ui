@@ -63,6 +63,32 @@ pub struct Labels {
     pub dev: DevLabels,
     /// The interactive example's controls, outside its locked canvas.
     pub demo: DemoLabels,
+    pub search: SearchLabels,
+    pub ai: AiLabels,
+}
+
+#[derive(Serialize)]
+pub struct AiLabels {
+    pub home_description: &'static str,
+    pub other_pages: &'static str,
+    pub fallback: &'static str,
+}
+
+#[derive(Serialize)]
+pub struct SearchLabels {
+    pub open: &'static str,
+    pub input: &'static str,
+    pub close: &'static str,
+    pub hint: &'static str,
+    pub loading: &'static str,
+    pub empty: &'static str,
+    pub failed: &'static str,
+    pub retry: &'static str,
+    pub count: &'static str,
+    pub more: &'static str,
+    pub results: &'static str,
+    pub fallback: &'static str,
+    pub no_script: &'static str,
 }
 
 #[derive(Serialize)]
@@ -108,6 +134,26 @@ pub struct DevLabels {
 }
 
 pub const EN: Labels = Labels {
+    ai: AiLabels {
+        home_description: "Homepage of {site}.",
+        other_pages: "Other pages",
+        fallback: "Not translated; content language: {lang}",
+    },
+    search: SearchLabels {
+        open: "Search",
+        input: "Search documentation",
+        close: "Close",
+        hint: "Type a word to search this language’s documentation.",
+        loading: "Preparing search… You can keep typing.",
+        empty: "No results. Try a different word or a shorter prefix.",
+        failed: "Search is unavailable. Please try again.",
+        retry: "Retry",
+        count: "{n} results",
+        more: "Show more",
+        results: "Search results",
+        fallback: "Not translated; content language: {lang}",
+        no_script: "Enable JavaScript to search. You can still use the navigation links.",
+    },
     lang: "en",
     note: "Note",
     tip: "Tip",
@@ -177,6 +223,26 @@ pub const EN: Labels = Labels {
 };
 
 pub const ZH: Labels = Labels {
+    ai: AiLabels {
+        home_description: "{site}首页",
+        other_pages: "其他页面",
+        fallback: "尚未翻译，内容语言：{lang}",
+    },
+    search: SearchLabels {
+        open: "搜索",
+        input: "搜索文档",
+        close: "关闭",
+        hint: "输入词语，搜索当前语言的文档。",
+        loading: "正在准备搜索… 你可以继续输入。",
+        empty: "没有找到结果。试试其他词语或更短的前缀。",
+        failed: "搜索暂时不可用，请重试。",
+        retry: "重试",
+        count: "{n} 个结果",
+        more: "显示更多",
+        results: "搜索结果",
+        fallback: "尚未翻译，内容语言：{lang}",
+        no_script: "启用 JavaScript 后可搜索。你仍可通过导航链接阅读文档。",
+    },
     lang: "zh",
     note: "注意",
     tip: "提示",

@@ -865,9 +865,28 @@ fn markdown_locale<'a>(config: &'a Config, path: &'a str) -> (&'a str, &'a str) 
 
 fn reserved_logical_route(config: &Config, route: &str) -> bool {
     route == "/404/"
+        || reserved_output(config, route.trim_matches('/'))
         || config.locales.iter().any(|locale| {
             !locale.prefix.is_empty() && route.starts_with(&format!("/{}/", locale.prefix))
         })
+}
+
+fn reserved_output(config: &Config, output: &str) -> bool {
+    let local = config
+        .locales
+        .iter()
+        .find_map(|locale| {
+            (!locale.prefix.is_empty())
+                .then(|| output.strip_prefix(&format!("{}/", locale.prefix)))
+                .flatten()
+        })
+        .unwrap_or(output);
+    crate::generation::SITE_FILES
+        .iter()
+        .any(|file| local == *file || local.starts_with(&format!("{file}/")))
+        || crate::generation::GENERATED_PREFIXES
+            .iter()
+            .any(|prefix| local.starts_with(prefix))
 }
 
 /// A fragment's cache key: everything that decides its bytes.
@@ -993,6 +1012,10 @@ pub struct RegisteredPage {
     pub lang: Option<String>,
     pub title: String,
     pub description: Option<String>,
+    pub draft: Option<bool>,
+    pub index: Option<bool>,
+    pub search: Option<bool>,
+    pub ai: Option<bool>,
     pub html: String,
     /// Project-relative Rust source, for diagnostics without invented spans.
     pub file: String,
@@ -1979,6 +2002,10 @@ pub fn analyze_with_surfaces(
                 title: Some(registered.title.clone()),
                 description: registered.description.clone(),
                 lang: Some(lang.clone()),
+                draft: registered.draft.unwrap_or(false),
+                index: registered.index,
+                search: registered.search,
+                ai: registered.ai,
                 ..Front::default()
             },
             title: registered.title.clone(),
@@ -1991,7 +2018,7 @@ pub fn analyze_with_surfaces(
                 source_route: route.clone(),
                 is_fallback: false,
             },
-            draft: false,
+            draft: registered.draft.unwrap_or(false),
             fragment,
             targets: Vec::new(),
             action_targets: Vec::new(),
@@ -2552,7 +2579,8 @@ pub fn analyze_with_surfaces(
         if is_private(path) || sources.theme_file(path) || sources.message_file(path) {
             continue;
         }
-        let taken = page_files.contains(output)
+        let taken = reserved_output(config, output)
+            || page_files.contains(output)
             || crate::generation::SITE_FILES.contains(&output)
             || config.locales.iter().any(|locale| {
                 !locale.prefix.is_empty() && output == format!("{}/404.html", locale.prefix)
@@ -4085,6 +4113,10 @@ pub(crate) mod tests {
 
     fn registered(name: &str, route: &str, html: &str) -> RegisteredPage {
         RegisteredPage {
+            draft: None,
+            index: None,
+            search: None,
+            ai: None,
             lang: None,
             name: name.into(),
             route: route.into(),

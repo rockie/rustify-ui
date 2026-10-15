@@ -110,6 +110,7 @@ pub const SITE_FILES: &[&str] = &[
     "404.html",
     "sitemap.xml",
     "robots.txt",
+    "llms.txt",
     ".nojekyll",
     MANIFEST_FILE,
 ];
@@ -120,6 +121,8 @@ pub const GENERATED_PREFIXES: &[&str] = &[
     "assets/mode.",
     "assets/share.",
     "assets/files/",
+    "assets/search.",
+    "assets/search-worker.",
 ];
 
 /// A site's files as a build would write them, by path under the output
@@ -201,6 +204,14 @@ fn link_site(project: &Project) -> Site {
         assets: AssetUrls::default(),
         logo: None,
     }
+}
+
+pub(crate) fn site_origin(project: &Project) -> Option<String> {
+    project.config.site.url.as_ref().map(|url| {
+        url.strip_suffix(project.config.site.base.as_str())
+            .unwrap_or(url.trim_end_matches('/'))
+            .to_owned()
+    })
 }
 
 pub(crate) fn source_fragment(
@@ -896,11 +907,7 @@ pub fn generate_extended(
     };
     // `https://example.com/docs/` with base `/docs/` is origin
     // `https://example.com`; a root-relative URL appended to it is absolute.
-    let origin = config.site.url.as_ref().map(|url| {
-        url.strip_suffix(config.site.base.as_str())
-            .unwrap_or(url.trim_end_matches('/'))
-            .to_owned()
-    });
+    let origin = site_origin(project);
     let absolute = |root_relative: &str| -> Option<String> {
         origin
             .as_ref()
@@ -1363,6 +1370,51 @@ pub fn generate_extended(
         .map(|(path, html, _)| (path, html))
         .collect();
     pages.extend(not_found_pages);
+    let documents = pages
+        .iter()
+        .map(|(path, html)| (path.clone(), Arc::from(html.as_bytes())))
+        .collect();
+    let search = crate::search::build(project, analysis, &documents)?;
+    for (_, html) in &mut pages {
+        for (lang, url) in &search.indexes {
+            *html = html.replace(
+                &format!(
+                    "data-rd-search-index=\"{}\"",
+                    crate::search::index_placeholder(lang)
+                ),
+                &format!(
+                    "data-rd-search-index=\"{}\"",
+                    crate::escape::escape_html(url)
+                ),
+            );
+        }
+        for (attribute, placeholder, url) in [
+            (
+                "module",
+                crate::search::MODULE_PLACEHOLDER,
+                &search.module_url,
+            ),
+            (
+                "worker",
+                crate::search::WORKER_PLACEHOLDER,
+                &search.worker_url,
+            ),
+        ] {
+            *html = html.replace(
+                &format!("data-rd-search-{attribute}=\"{placeholder}\""),
+                &format!(
+                    "data-rd-search-{attribute}=\"{}\"",
+                    crate::escape::escape_html(url)
+                ),
+            );
+        }
+    }
+    for (path, bytes) in search.files {
+        insert_output(&mut files, path, bytes)?;
+    }
+    for (path, bytes) in crate::ai::build(project, analysis)? {
+        insert_output(&mut files, path, bytes)?;
+    }
     let pages: Vec<(String, Arc<[u8]>, Vec<String>)> =
         parallel_map(&pages, workers, |(path, html)| {
             let html = html.replacen(STYLESHEET_PLACEHOLDER, &stylesheet_url, 1);
