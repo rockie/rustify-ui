@@ -48,13 +48,13 @@
     });
     if (selected) {
       var content = selected.content.cloneNode(true);
+      var dev = document.querySelector("script[data-labels]");
       // Keep the original parser-inserted module; template scripts never run.
       Array.prototype.slice.call(document.body.children).forEach(function (node) {
         if (node.tagName === "SCRIPT") content.appendChild(node);
       });
       root.lang = selected.getAttribute("data-rd-not-found-lang");
       document.title = selected.getAttribute("data-rd-not-found-title");
-      var dev = document.querySelector("script[data-labels]");
       if (dev) {
         dev.setAttribute("data-lang", root.lang);
         dev.setAttribute("data-labels", selected.getAttribute("data-rd-dev-labels") || "{}");

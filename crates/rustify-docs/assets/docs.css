@@ -34,8 +34,8 @@
 
 /* The header. */
 .rd-header-bar {
+  position: relative;
   min-height: 3.5rem;
-  flex-wrap: wrap;
   padding-block: 0.5rem;
 }
 
@@ -91,6 +91,17 @@
 
 .rd-language-switch + .rd-mode-switch {
   margin-left: 0;
+}
+
+@media (max-width: 47.999rem) {
+  .rd-language-switch {
+    position: static;
+  }
+
+  .rd-language-switch ul {
+    right: 1rem;
+    top: 100%;
+  }
 }
 
 .rd-language-fallback {
