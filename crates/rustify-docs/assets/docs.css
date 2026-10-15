@@ -202,6 +202,10 @@
 .rd-search-source,
 .rd-search-path { color: var(--muted-foreground); }
 
+.rd-search-result:is(:hover, [aria-selected="true"]) :is(.rd-search-source, .rd-search-path) {
+  color: var(--popover-foreground);
+}
+
 .rd-search-result mark {
   background: color-mix(in oklab, var(--primary) 20%, var(--popover));
   color: var(--popover-foreground);

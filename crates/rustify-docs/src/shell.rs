@@ -830,7 +830,7 @@ fn search_dialog(site: &Site, labels: &Catalog) -> impl IntoView {
             <input id="rd-search-input" data-rd-search-input="" role="combobox" aria-controls="rd-search-results" aria-expanded="false" aria-autocomplete="list" autocomplete="off" autocapitalize="off" spellcheck="false" lang=labels.get("search.input").lang.clone() />
             <p class="rd-search-status" data-rd-search-status="" lang=labels.get("search.hint").lang.clone()>{labels.get("search.hint").text.clone()}</p>
             <p class="rd-search-count" data-rd-search-count="" aria-live="polite" aria-atomic="true"></p>
-            <div id="rd-search-results" class="rd-search-results" data-rd-search-results="" role="listbox" aria-label=labels.get("search.results").text.clone() lang=labels.get("search.results").lang.clone()></div>
+            <div id="rd-search-results" class="rd-search-results" data-rd-search-results="" role="listbox" tabindex="-1" aria-label=labels.get("search.results").text.clone() lang=labels.get("search.results").lang.clone()></div>
             <button type="button" class="rd-search-action" data-rd-search-retry="" hidden lang=labels.get("search.retry").lang.clone()>{labels.get("search.retry").text.clone()}</button>
             <button type="button" class="rd-search-action" data-rd-search-more="" hidden lang=labels.get("search.more").lang.clone()>{labels.get("search.more").text.clone()}</button>
         </dialog>
