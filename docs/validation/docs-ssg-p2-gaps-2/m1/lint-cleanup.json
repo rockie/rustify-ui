@@ -1,0 +1,15 @@
+{
+  "path": "crates/rustify-docs-syntax/src/lib.rs",
+  "before_sha256": "b1da30ab327057a7c1f8a0f32c0681a2762edd1c6f71f70729bdc1fbefdd639a",
+  "after_sha256": "b2f46581af227227c423afea4d5a18e6a5f04f0140b3ebbc7f8132f4c3a18d10",
+  "changes": [
+    "code_span(&slot.key()) -> code_span(slot.key())",
+    "code_span(&other) -> code_span(other)"
+  ],
+  "scope": "remove immediately dereferenced borrows; same &str arguments, grammar and formatted bytes",
+  "verification": [
+    "syntax-test-final",
+    "diagnostic-test-final",
+    "ssr-clippy-final"
+  ]
+}

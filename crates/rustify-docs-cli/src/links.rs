@@ -9,6 +9,7 @@
 //! address is written: a link that could not be checked is not reported as
 //! working.
 
+use rustify_docs::diagnostic_text::code_span;
 use std::collections::BTreeMap;
 use std::ops::Range;
 use std::time::Duration;
@@ -143,15 +144,19 @@ pub fn check(
     for (url, answer) in addresses.iter().zip(answers) {
         let issue = |span: Range<usize>| match &answer {
             Answer::Status(code) if *code >= 400 => Some(
-                Issue::error(span, "external-link", format!("`{url}` answered {code}"))
-                    .suggest("fix the address or remove the link"),
+                Issue::error(
+                    span,
+                    "external-link",
+                    format!("{} answered {code}", code_span(url)),
+                )
+                .suggest("fix the address or remove the link"),
             ),
             Answer::Status(_) => None,
             Answer::Unreachable(reason) => Some(
                 Issue::error(
                     span,
                     "external-link-unreachable",
-                    format!("`{url}` could not be checked: {reason}"),
+                    format!("{} could not be checked: {reason}", code_span(url)),
                 )
                 .suggest(
                     "check the address and the network, or run check without --external-links",

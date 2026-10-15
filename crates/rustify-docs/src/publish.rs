@@ -14,6 +14,7 @@
 //! a preview holds it shared, and neither waits for the other. A directory
 //! that is not a previous build's output is never replaced.
 
+use crate::diagnostic_text::{code_span, literal};
 use std::collections::BTreeMap;
 use std::fs::{self, File, TryLockError};
 use std::io;
@@ -95,12 +96,19 @@ impl Manifest {
         let text = fs::read_to_string(&path).map_err(|error| match error.kind() {
             io::ErrorKind::NotFound => format!(
                 "{} has no {MANIFEST_FILE}; it is not a production build",
-                dir.display()
+                literal(&dir.display().to_string())
             ),
-            _ => format!("cannot read {}: {error}", path.display()),
+            _ => format!(
+                "cannot read {}: {error}",
+                literal(&path.display().to_string())
+            ),
         })?;
-        serde_json::from_str(&text)
-            .map_err(|error| format!("{} is damaged: {error}", path.display()))
+        serde_json::from_str(&text).map_err(|error| {
+            format!(
+                "{} is damaged: {error}",
+                literal(&path.display().to_string())
+            )
+        })
     }
 }
 
@@ -122,14 +130,20 @@ pub struct Area {
 impl Area {
     /// The area of `out` (absolute; it need not exist, its parent must).
     pub fn of(out: &Path) -> Result<Self, String> {
-        let name = out
-            .file_name()
-            .ok_or_else(|| format!("{} is not a directory name", out.display()))?;
-        let parent = out
-            .parent()
-            .ok_or_else(|| format!("{} has no parent directory", out.display()))?;
-        let parent =
-            fs::canonicalize(parent).map_err(|error| format!("{}: {error}", parent.display()))?;
+        let name = out.file_name().ok_or_else(|| {
+            format!(
+                "{} is not a directory name",
+                literal(&out.display().to_string())
+            )
+        })?;
+        let parent = out.parent().ok_or_else(|| {
+            format!(
+                "{} has no parent directory",
+                literal(&out.display().to_string())
+            )
+        })?;
+        let parent = fs::canonicalize(parent)
+            .map_err(|error| format!("{}: {error}", literal(&parent.display().to_string())))?;
         let out = parent.join(name);
         let label: String = name
             .to_string_lossy()
@@ -185,13 +199,18 @@ pub struct Lock {
 /// Locks `area`: exclusively for a build, shared for a preview. Never waits.
 pub fn lock(area: &Area, exclusive: bool) -> Result<Lock, LockError> {
     fs::create_dir_all(&area.dir)
-        .map_err(|e| LockError::Io(format!("{}: {e}", area.dir.display())))?;
+        .map_err(|e| LockError::Io(format!("{}: {e}", literal(&area.dir.display().to_string()))))?;
     let file = File::options()
         .create(true)
         .truncate(false)
         .write(true)
         .open(area.lock_path())
-        .map_err(|e| LockError::Io(format!("{}: {e}", area.lock_path().display())))?;
+        .map_err(|e| {
+            LockError::Io(format!(
+                "{}: {e}",
+                literal(&area.lock_path().display().to_string())
+            ))
+        })?;
     let taken = if exclusive {
         file.try_lock()
     } else {
@@ -216,7 +235,7 @@ fn remove_tree(path: &Path) -> io::Result<()> {
 }
 
 fn io_error(what: &str, path: &Path, error: io::Error) -> String {
-    format!("{what} {}: {error}", path.display())
+    format!("{what} {}: {error}", literal(&path.display().to_string()))
 }
 
 /// What recovering an interrupted build did.
@@ -304,14 +323,14 @@ pub fn check_out(project: &crate::content::Project, out: &Path) -> Result<(), St
     }) {
         return Err(format!(
             "the output {} is inside a repository's or this tool's own directory",
-            out.display()
+            literal(&out.display().to_string())
         ));
     }
     let overlaps = |a: &Path, b: &Path| a.starts_with(b) || b.starts_with(a);
     if root.starts_with(&out) {
         return Err(format!(
             "the output {} would hold the project; a build replaces its output whole",
-            out.display()
+            literal(&out.display().to_string())
         ));
     }
     for (dir, what) in [
@@ -322,8 +341,8 @@ pub fn check_out(project: &crate::content::Project, out: &Path) -> Result<(), St
         if overlaps(&out, &dir) {
             return Err(format!(
                 "the output {} overlaps the {what} {}; a build replaces its output whole",
-                out.display(),
-                dir.display()
+                literal(&out.display().to_string()),
+                literal(&dir.display().to_string())
             ));
         }
     }
@@ -338,7 +357,7 @@ pub fn replaceable(out: &Path) -> Result<(), String> {
     if fs::symlink_metadata(out).is_ok_and(|meta| meta.file_type().is_symlink()) {
         return Err(format!(
             "{} is a symbolic link; give the directory it points to as the output",
-            out.display()
+            literal(&out.display().to_string())
         ));
     }
     match fs::read_dir(out) {
@@ -351,16 +370,12 @@ pub fn replaceable(out: &Path) -> Result<(), String> {
             if !out.join(MANIFEST_FILE).is_file() {
                 return Err(format!(
                     "{} holds files that no build wrote (it has no {MANIFEST_FILE}); it is not replaced",
-                    out.display()
+                    literal(&out.display().to_string())
                 ));
             }
             match Manifest::read(out) {
                 Ok(manifest) if manifest.mode == PRODUCTION => Ok(()),
-                Ok(manifest) => Err(format!(
-                    "{} holds a `{}` output, not a production build; it is not replaced",
-                    out.display(),
-                    manifest.mode
-                )),
+                Ok(manifest) => Err(format!("{} holds a {} output, not a production build; it is not replaced", literal(&out.display().to_string()), code_span(&manifest.mode))),
                 Err(message) => Err(format!(
                     "{message}; whatever wrote it, the directory is not replaced: remove it and build again"
                 )),

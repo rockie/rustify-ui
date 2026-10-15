@@ -2,6 +2,7 @@
 
 use rustify_docs::content::{is_private, Diagnostic, Project, Snapshot};
 use rustify_docs::diagnostic::{Issue, Severity};
+use rustify_docs::diagnostic_text::{code_span, literal};
 use rustify_ui::theme::{
     font_context, import_json, resolve, FontResourceDigest, ResolvedTheme, ThemeDocument,
     ThemeMode, FONT_GLYPH_FALLBACKS, FONT_RESOURCE_DIGESTS, THEME_INPUT_LIMIT,
@@ -130,7 +131,7 @@ pub(super) fn prepare(project: &Project) -> (Option<PreparedTheme>, Vec<Diagnost
                 path,
                 Severity::Warning,
                 "theme-token",
-                format!("{}: {}", warning.field, warning.message),
+                format!("{}: {}", literal(&warning.field), warning.message),
             )
         })
         .collect();
@@ -212,8 +213,12 @@ fn document_path(project: &Project, relative: &str) -> Result<PathBuf, String> {
     }
     let root = fs::canonicalize(&project.root)
         .map_err(|error| format!("cannot resolve the theme's project root: {error}"))?;
-    let path = fs::canonicalize(root.join(relative))
-        .map_err(|error| format!("cannot read theme.document `{relative}`: {error}"))?;
+    let path = fs::canonicalize(root.join(relative)).map_err(|error| {
+        format!(
+            "cannot read theme.document {}: {error}",
+            code_span(relative)
+        )
+    })?;
     let canonical_relative = path
         .strip_prefix(&root)
         .map_err(|_| "theme.document symlink leads outside the project".to_string())?
@@ -227,19 +232,31 @@ fn document_path(project: &Project, relative: &str) -> Result<PathBuf, String> {
         return Err("theme.document must not read private files or generated output".into());
     }
     if !path.is_file() {
-        return Err(format!("theme.document `{relative}` is not a file"));
+        return Err(format!(
+            "theme.document {} is not a file",
+            code_span(relative)
+        ));
     }
     Ok(path)
 }
 
 fn read_document(project: &Project, relative: &str) -> Result<String, String> {
     let path = document_path(project, relative)?;
-    let file = fs::File::open(path)
-        .map_err(|error| format!("cannot read theme.document `{relative}`: {error}"))?;
+    let file = fs::File::open(path).map_err(|error| {
+        format!(
+            "cannot read theme.document {}: {error}",
+            code_span(relative)
+        )
+    })?;
     let mut bytes = Vec::new();
     file.take((THEME_INPUT_LIMIT + 1) as u64)
         .read_to_end(&mut bytes)
-        .map_err(|error| format!("cannot read theme.document `{relative}`: {error}"))?;
+        .map_err(|error| {
+            format!(
+                "cannot read theme.document {}: {error}",
+                code_span(relative)
+            )
+        })?;
     if bytes.len() > THEME_INPUT_LIMIT {
         return Err("theme input exceeds 256 KiB".into());
     }
@@ -270,7 +287,10 @@ fn project_css(
             .find(|font| font.identity.resource_path == resource)
             .filter(|font| !font.bytes.is_empty() && !font.license.is_empty())
             .ok_or_else(|| {
-                format!("the paired CLI has no packaged bytes or license for font `{resource}`")
+                format!(
+                    "the paired CLI has no packaged bytes or license for font {}",
+                    code_span(&resource)
+                )
             })?;
         let digest = font.identity.sha256;
         let path = format!("assets/fonts/{digest}.ttf");

@@ -9,6 +9,7 @@
 //! holds the output's lock shared, so a build of the same output is refused
 //! instead of swapping files under it.
 
+use rustify_docs::diagnostic_text::{code_span, literal};
 use std::io::{BufRead, BufReader, Write};
 use std::net::{SocketAddr, TcpListener, TcpStream};
 use std::path::{Path, PathBuf};
@@ -231,16 +232,16 @@ pub fn bind(host: &str, port: Option<u16>, default: u16) -> Result<TcpListener, 
             format!("{host}:{port}")
         };
         text.parse()
-            .map_err(|_| format!("`{host}` is not an IP address to listen on"))
+            .map_err(|_| format!("{} is not an IP address to listen on", code_span(host)))
     };
     match port {
         Some(port) => TcpListener::bind(address(port)?)
-            .map_err(|error| format!("cannot listen on {host}:{port}: {error}")),
+            .map_err(|error| format!("cannot listen on {}:{port}: {error}", literal(host))),
         None => {
             let (default, any) = (address(default)?, address(0)?);
             TcpListener::bind(default)
                 .or_else(|_| TcpListener::bind(any))
-                .map_err(|error| format!("cannot listen on {host}: {error}"))
+                .map_err(|error| format!("cannot listen on {}: {error}", literal(host)))
         }
     }
 }

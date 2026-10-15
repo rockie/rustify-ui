@@ -1,0 +1,42 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-docs-cli v0.1.17 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-docs-cli)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 3.30s
+     Running tests/diagnostic_text.rs (target/debug/deps/diagnostic_text-84d63445de4d7777)
+
+running 2 tests
+test repairs_encode_the_entire_default_and_author_key ... FAILED
+test check_and_build_encode_plain_paths_prefixed_anchors_yaml_keys_and_empty_language ... FAILED
+
+failures:
+
+---- repairs_encode_the_entire_default_and_author_key stdout ----
+
+thread 'repairs_encode_the_entire_default_and_author_key' (50902950) panicked at crates/rustify-docs-cli/tests/diagnostic_text.rs:17:5:
+assertion `left == right` failed
+  left: "Use one of `label` (`String`; default expression `\"a`b\".to_string()`) for `Counter`; rename or remove `un`known`."
+ right: "Use one of `label` (`String`; default expression `` \"a`b\".to_string() ``) for `Counter`; rename or remove `` un`known ``."
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- check_and_build_encode_plain_paths_prefixed_anchors_yaml_keys_and_empty_language stdout ----
+
+thread 'check_and_build_encode_plain_paths_prefixed_anchors_yaml_keys_and_empty_language' (50902949) panicked at crates/rustify-docs-cli/tests/diagnostic_text.rs:42:5:
+assertion `left == right` failed
+  left: String("content/a`b`c.md has no heading `#a`b`")
+ right: "`` content/a`b`c.md `` has no heading `` #a`b ``"
+
+
+failures:
+    check_and_build_encode_plain_paths_prefixed_anchors_yaml_keys_and_empty_language
+    repairs_encode_the_entire_default_and_author_key
+
+test result: FAILED. 0 passed; 2 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.15s
+
+error: test failed, to rerun pass `-p rustify-docs-cli --test diagnostic_text`
+mbx[cache]: 0 hits, 0 misses, 1 not looked up; 0 B downloaded, 0 B uploaded, 2.0 MiB stored locally
+mbx[savings]: your deleted worktrees left 2.0 TiB logical behind. left. past tense.

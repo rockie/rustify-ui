@@ -6,6 +6,7 @@
 //! failure leaves nothing behind and an existing directory is never written
 //! into.
 
+use rustify_docs::diagnostic_text::{code_span, literal};
 use std::path::{Path, PathBuf};
 use std::process::Command;
 
@@ -252,7 +253,8 @@ pub fn run(dir: &Path, template: &str) -> Result<String, String> {
         "components" => (COMPONENTS, doctor_components()?),
         _ => {
             return Err(format!(
-                "template `{template}` is not in this release; choose `content` or `components`"
+                "template {} is not in this release; choose `content` or `components`",
+                code_span(template)
             ));
         }
     };
@@ -264,26 +266,41 @@ pub fn run(dir: &Path, template: &str) -> Result<String, String> {
         .file_name()
         .and_then(|name| name.to_str())
         .filter(|name| !name.is_empty())
-        .ok_or_else(|| format!("{} does not end in a directory name", dir.display()))?
+        .ok_or_else(|| {
+            format!(
+                "{} does not end in a directory name",
+                literal(&dir.display().to_string())
+            )
+        })?
         .to_owned();
     let parent = match dir.parent() {
         Some(parent) if !parent.as_os_str().is_empty() => parent.to_path_buf(),
         _ => PathBuf::from("."),
     };
     if !parent.is_dir() {
-        return Err(format!("{} does not exist", parent.display()));
+        return Err(format!(
+            "{} does not exist",
+            literal(&parent.display().to_string())
+        ));
     }
     let existed = match std::fs::symlink_metadata(dir) {
         Ok(meta) if meta.is_dir() => {
-            if !is_empty_dir(dir).map_err(|e| format!("{}: {e}", dir.display()))? {
+            if !is_empty_dir(dir)
+                .map_err(|e| format!("{}: {e}", literal(&dir.display().to_string())))?
+            {
                 return Err(format!(
                     "{} is not empty; `new` only writes into a new or empty directory",
-                    dir.display()
+                    literal(&dir.display().to_string())
                 ));
             }
             true
         }
-        Ok(_) => return Err(format!("{} exists and is not a directory", dir.display())),
+        Ok(_) => {
+            return Err(format!(
+                "{} exists and is not a directory",
+                literal(&dir.display().to_string())
+            ))
+        }
         Err(_) => false,
     };
 
@@ -321,7 +338,10 @@ pub fn run(dir: &Path, template: &str) -> Result<String, String> {
         if existed && !dir.exists() {
             let _ = std::fs::create_dir(dir);
         }
-        return Err(format!("writing {}: {error}", dir.display()));
+        return Err(format!(
+            "writing {}: {error}",
+            literal(&dir.display().to_string())
+        ));
     }
     Ok(version)
 }

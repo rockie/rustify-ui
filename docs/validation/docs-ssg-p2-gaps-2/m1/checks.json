@@ -1,0 +1,98 @@
+[
+  {
+    "name": "format",
+    "command": "cargo fmt --all -- --check",
+    "exit": 0,
+    "seconds": 1.55
+  },
+  {
+    "name": "docs-test",
+    "command": "mbx test --locked -p rustify-docs",
+    "exit": 0,
+    "seconds": 58.38
+  },
+  {
+    "name": "cli-test",
+    "command": "mbx test --locked -p rustify-docs-cli",
+    "exit": 0,
+    "seconds": 615.97
+  },
+  {
+    "name": "syntax-test",
+    "command": "mbx test --locked -p rustify-docs-syntax",
+    "exit": 0,
+    "seconds": 4.48
+  },
+  {
+    "name": "ssr-test",
+    "command": "mbx test --locked -p rustify-docs --no-default-features --features site-ssr",
+    "exit": 0,
+    "seconds": 16.52
+  },
+  {
+    "name": "ssr-clippy",
+    "command": "mbx clippy --locked -p rustify-docs --no-default-features --features site-ssr --all-targets -- -D warnings",
+    "exit": 101,
+    "seconds": 4.47
+  },
+  {
+    "name": "format-final",
+    "command": "cargo fmt --all -- --check",
+    "exit": 0,
+    "seconds": 1.56
+  },
+  {
+    "name": "syntax-test-final",
+    "command": "mbx test --locked -p rustify-docs-syntax",
+    "exit": 0,
+    "seconds": 1.78
+  },
+  {
+    "name": "diagnostic-test-final",
+    "command": "mbx test --locked -p rustify-docs-cli --test diagnostic_text",
+    "exit": 0,
+    "seconds": 8.21
+  },
+  {
+    "name": "ssr-clippy-final",
+    "command": "mbx clippy --locked -p rustify-docs --no-default-features --features site-ssr --all-targets -- -D warnings",
+    "exit": 0,
+    "seconds": 6.96
+  },
+  {
+    "name": "hydrate-check",
+    "command": "mbx check --locked -p rustify-docs --no-default-features --features hydrate --target wasm32-unknown-unknown",
+    "exit": 0,
+    "seconds": 15.42
+  },
+  {
+    "name": "ssr-features",
+    "command": "mbx tree --locked -p rustify-docs --no-default-features --features site-ssr -e features -f '{p} [{f}]'",
+    "exit": 0,
+    "seconds": 0.17
+  },
+  {
+    "name": "hydrate-features",
+    "command": "mbx tree --locked -p rustify-docs --no-default-features --features hydrate --target wasm32-unknown-unknown -e features -f '{p} [{f}]'",
+    "exit": 0,
+    "seconds": 0.15
+  },
+  {
+    "name": "docs-clippy",
+    "command": "mbx clippy --locked -p rustify-docs --all-targets -- -D warnings",
+    "exit": 0,
+    "seconds": 4.19
+  },
+  {
+    "name": "cli-clippy",
+    "command": "mbx clippy --locked -p rustify-docs-cli --all-targets -- -D warnings",
+    "exit": 0,
+    "seconds": 4.18
+  },
+  {
+    "name": "cli-build",
+    "command": "mbx build --locked -p rustify-docs-cli --profile docs-cli",
+    "exit": 0,
+    "seconds": 51.4
+  }
+]

@@ -1,6 +1,7 @@
 //! A page's YAML frontmatter: split off with its offsets, then read with
 //! every key known.
 
+use crate::diagnostic_text::code_span;
 use std::ops::Range;
 
 use serde::Deserialize;
@@ -160,7 +161,10 @@ pub(crate) fn language_issue(text: &str) -> Option<Issue> {
                 if crate::config::valid_lang(value) {
                     Ok(value.to_owned())
                 } else {
-                    Err(E::custom(format!("`{value}` is not a language tag")))
+                    Err(E::custom(format!(
+                        "{} is not a language tag",
+                        code_span(value)
+                    )))
                 }
             }
         }

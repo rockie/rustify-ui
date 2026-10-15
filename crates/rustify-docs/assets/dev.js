@@ -207,13 +207,31 @@
 
   function prose(className, text) {
     var node = element("p", className);
-    String(text)
-      .split("`")
-      .forEach(function (piece, i) {
-        if (!piece) return;
-        if (i % 2 === 1) node.appendChild(breakable(element("code", "rd-dev-code"), piece));
-        else node.appendChild(document.createTextNode(piece));
-      });
+    text = String(text);
+    var runs = /`+/g;
+    var start = 0;
+    var opening;
+    while ((opening = runs.exec(text))) {
+      var contentStart = runs.lastIndex;
+      var closing;
+      while ((closing = runs.exec(text))) {
+        if (closing[0].length === opening[0].length) break;
+      }
+      if (!closing) {
+        // An unmatched run belongs to the original prose, including compiler
+        // and parser messages we do not rewrite. Later runs may still pair.
+        runs.lastIndex = contentStart;
+        continue;
+      }
+      node.appendChild(document.createTextNode(text.slice(start, opening.index)));
+      var piece = text.slice(contentStart, closing.index);
+      if (opening[0].length >= 2 && piece.length >= 2 && piece[0] === " " && piece[piece.length - 1] === " ") {
+        piece = piece.slice(1, -1);
+      }
+      node.appendChild(breakable(element("code", "rd-dev-code"), piece));
+      start = runs.lastIndex;
+    }
+    node.appendChild(document.createTextNode(text.slice(start)));
     return node;
   }
 

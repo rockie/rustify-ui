@@ -1,0 +1,35 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+    Checking gloo-utils v0.2.0
+   Compiling cpufeatures v0.2.17
+    Checking tachys v0.2.19
+   Compiling getrandom v0.4.3
+    Checking regex v1.13.1
+    Checking wasm-streams v0.5.0
+    Checking config v0.15.25
+   Compiling rustify-docs-syntax v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-docs-syntax)
+   Compiling sha2 v0.10.9
+   Compiling uuid v1.26.0
+    Checking gloo-net v0.6.0
+    Checking rustify-style v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+   Compiling wasm_split_macros v0.2.2
+    Checking leptos_config v0.8.10
+   Compiling leptos_macro v0.8.19
+    Checking server_fn v0.8.13
+   Compiling rustify-docs-macros v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-docs-macros)
+mbx[warning]: incremental state was not reused: compiler environment input changed: CLIPPY_ARGS
+    Checking wasm_split_helpers v0.2.3
+    Checking leptos_dom v0.8.8
+    Checking leptos_server v0.8.8
+    Checking leptos v0.8.22
+    Checking rustify-ui v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui)
+    Checking rustify-components v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-components)
+    Checking rustify-docs v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-docs)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 6.74s
+mbx[cache]: 1 hits, 28 misses, 9 incremental; 0 B downloaded, 0 B uploaded, 30.7 MiB stored locally
+mbx[savings]: 2.6 TiB logical of build debris has left the building.

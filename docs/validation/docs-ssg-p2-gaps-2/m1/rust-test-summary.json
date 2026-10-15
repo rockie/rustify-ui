@@ -1,0 +1,32 @@
+{
+  "docs-test": {
+    "passed": 277,
+    "failed": 0,
+    "ignored": 0,
+    "groups": 8
+  },
+  "cli-test": {
+    "passed": 157,
+    "failed": 0,
+    "ignored": 1,
+    "groups": 12
+  },
+  "syntax-test-final": {
+    "passed": 31,
+    "failed": 0,
+    "ignored": 0,
+    "groups": 3
+  },
+  "ssr-test": {
+    "passed": 30,
+    "failed": 0,
+    "ignored": 0,
+    "groups": 5
+  },
+  "diagnostic-test-final": {
+    "passed": 5,
+    "failed": 0,
+    "ignored": 0,
+    "groups": 1
+  }
+}

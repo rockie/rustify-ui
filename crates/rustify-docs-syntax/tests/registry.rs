@@ -368,3 +368,20 @@ fn a_bom_and_shebang_preserve_following_line_diagnostics() {
     let second = line.rfind("演示").expect("second name");
     assert_eq!((at.line, at.column), (2, line[..second].chars().count()));
 }
+
+#[test]
+fn diagnostic_spans_keep_empty_values_and_literal_tick_runs() {
+    for (value, encoded) in [
+        ("", "``  ``"),
+        (" a \r\nb ", "` a \r\nb `"),
+        ("`", "`` ` ``"),
+        ("a``b", "``` a``b ```"),
+        (" `\r\n ", "``  `\r\n  ``"),
+    ] {
+        assert_eq!(rustify_docs_syntax::code_span(value), encoded);
+        assert_eq!(
+            rustify_docs_syntax::literal(value),
+            if value.contains('`') { encoded } else { value }
+        );
+    }
+}

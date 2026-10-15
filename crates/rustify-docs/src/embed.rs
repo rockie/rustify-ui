@@ -1,5 +1,6 @@
 //! Located, data-only declarations in Markdown component and demo fences.
 
+use crate::diagnostic_text::code_span;
 use serde::de::{self, DeserializeSeed, IgnoredAny, MapAccess, SeqAccess, Visitor};
 use std::cell::Cell;
 use std::collections::BTreeMap;
@@ -66,7 +67,7 @@ pub fn parse(
     };
     for key in fields.keys() {
         if key != "name" && (kind == Kind::Demo || !matches!(key.as_str(), "props" | "children")) {
-            return Err(error(key, format!("unknown field `{key}`; a demo takes only `name`, a component takes `name`, `props` and `children`")));
+            return Err(error(key, format!("unknown field {}; a demo takes only `name`, a component takes `name`, `props` and `children`", code_span(key))));
         }
     }
     let name = fields
@@ -172,17 +173,24 @@ pub fn unregistered_demo(names: &[&str]) -> String {
 
 pub fn unknown_property(component: &str, fields: &[Field], owner: Owner, field: &str) -> String {
     if fields.is_empty() {
-        return format!("Remove `{field}`; `{component}` declares no props.");
+        return format!(
+            "Remove {}; {} declares no props.",
+            code_span(field),
+            code_span(component)
+        );
     }
     format!(
-        "Use one of {} for `{component}`; rename or remove `{field}`.",
-        fields_list(fields, owner)
+        "Use one of {} for {}; rename or remove {}.",
+        fields_list(fields, owner),
+        code_span(component),
+        code_span(field)
     )
 }
 
 pub fn reserved_component(name: &str) -> String {
     format!(
-        "Rename `{name}` in `site!` and its Markdown references; builtin component names are reserved."
+        "Rename {} in `site!` and its Markdown references; builtin component names are reserved.",
+        code_span(name)
     )
 }
 
@@ -200,7 +208,7 @@ pub fn invalid_props(fields: &[Field], owner: Owner, path: Option<&str>) -> Stri
         ),
     };
     if let Some(path) = path {
-        repair.push_str(&format!(" Reported props path: `{path}`."));
+        repair.push_str(&format!(" Reported props path: {}.", code_span(path)));
     }
     repair
 }
@@ -210,20 +218,18 @@ fn field_repair(field: &Field, owner: Owner) -> String {
     let boundary = boundary(field, owner);
     let name = &field.name;
     match (shape(&ty), owner) {
-        (Some(shape), _) => format!("Write `{name}: {shape}` for declared type `{ty}` ({boundary})."),
-        (None, Owner::Builtin) => format!(
-            "Write `{name}` as `{ty}` ({boundary}); see {BUILTIN_REFERENCE} for its object fields."
-        ),
-        (None, Owner::Registered { registry }) => format!(
-            "Check `{name}` of declared type `{ty}` ({boundary}) in `{registry}`; follow the reported serde requirement."
-        ),
+        (Some(shape), _) => format!("Write {} for declared type {} ({boundary}).", code_span(&format!("{name}: {shape}")), code_span(&ty)),
+        (None, Owner::Builtin) => format!("Write {} as {} ({boundary}); see {BUILTIN_REFERENCE} for its object fields.", code_span(name), code_span(&ty)),
+        (None, Owner::Registered { registry }) => format!("Check {} of declared type {} ({boundary}) in {}; follow the reported serde requirement.", code_span(name), code_span(&ty), code_span(registry)),
     }
 }
 
 fn reference_step(owner: Owner) -> String {
     match owner {
         Owner::Builtin => format!("see {BUILTIN_REFERENCE} for its object fields"),
-        Owner::Registered { registry } => format!("check the registration in `{registry}`"),
+        Owner::Registered { registry } => {
+            format!("check the registration in {}", code_span(registry))
+        }
     }
 }
 
@@ -233,7 +239,7 @@ fn reference_step(owner: Owner) -> String {
 fn boundary(field: &Field, owner: Owner) -> String {
     let ty = display(&field.ty);
     if let Some(default) = &field.default {
-        format!("default expression `{}`", display(default))
+        format!("default expression {}", code_span(&display(default)))
     } else if generic(
         &ty,
         &["Option", "std::option::Option", "core::option::Option"],
@@ -290,7 +296,7 @@ fn names_list(names: &[&str]) -> String {
     }
     names
         .iter()
-        .map(|name| format!("`{name}`"))
+        .map(|name| code_span(name))
         .collect::<Vec<_>>()
         .join(", ")
 }
@@ -306,9 +312,9 @@ fn fields_list(fields: &[Field], owner: Owner) -> String {
         .iter()
         .map(|field| {
             format!(
-                "`{}` (`{}`; {})",
-                field.name,
-                display(&field.ty),
+                "{} ({}; {})",
+                code_span(&field.name),
+                code_span(&display(&field.ty)),
                 boundary(field, owner)
             )
         })

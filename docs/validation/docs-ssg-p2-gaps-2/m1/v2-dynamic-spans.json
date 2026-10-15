@@ -1,0 +1,16 @@
+{
+  "remaining_dynamic_quoted_templates": [],
+  "writer_implementations": [
+    {
+      "path": "crates/rustify-docs/src/diagnostic_text.rs",
+      "line": 14,
+      "template": "`{value}`"
+    },
+    {
+      "path": "crates/rustify-docs-syntax/src/lib.rs",
+      "line": 35,
+      "template": "`{value}`"
+    }
+  ],
+  "limitation": "Supplemental only: ordinary author values require the per-symbol audit in M1.md."
+}

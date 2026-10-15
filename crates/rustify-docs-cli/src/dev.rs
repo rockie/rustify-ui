@@ -19,6 +19,7 @@
 //! whose lock is never taken, so `build` can run alongside. The server
 //! listens on the loopback interface only.
 
+use rustify_docs::diagnostic_text::literal;
 use std::collections::{BTreeMap, BTreeSet, HashMap};
 use std::io::{BufRead, BufReader, Write};
 use std::net::{TcpListener, TcpStream};
@@ -1045,7 +1046,7 @@ pub fn run(options: Options) -> ExitCode {
     let root = crate::project_root(&options.config);
     let root = match std::fs::canonicalize(&root) {
         Ok(root) => root,
-        Err(error) => return fail(format!("{}: {error}", root.display())),
+        Err(error) => return fail(format!("{}: {error}", literal(&root.display().to_string()))),
     };
     let config = match options.config.file_name() {
         Some(name) => root.join(name),
@@ -1059,7 +1060,7 @@ pub fn run(options: Options) -> ExitCode {
             }
             return fail(format!(
                 "{} has errors; fix them and run dev again",
-                config.display()
+                literal(&config.display().to_string())
             ));
         }
     };
@@ -1098,12 +1099,20 @@ pub fn run(options: Options) -> ExitCode {
             }
         }) {
             Ok(watcher) => watcher,
-            Err(error) => return fail(format!("cannot watch {}: {error}", root.display())),
+            Err(error) => {
+                return fail(format!(
+                    "cannot watch {}: {error}",
+                    literal(&root.display().to_string())
+                ))
+            }
         };
     if let Err(error) =
         notify::Watcher::watch(&mut watcher, &root, notify::RecursiveMode::Recursive)
     {
-        return fail(format!("cannot watch {}: {error}", root.display()));
+        return fail(format!(
+            "cannot watch {}: {error}",
+            literal(&root.display().to_string())
+        ));
     }
     let watcher = Arc::new(Mutex::new(watcher));
     let watched = Arc::new(Mutex::new(BTreeSet::from([root.clone()])));
@@ -1212,7 +1221,7 @@ pub fn run(options: Options) -> ExitCode {
     let host = "127.0.0.1";
     let listener = match options.port {
         Some(port) => TcpListener::bind((host, port))
-            .map_err(|error| format!("cannot listen on {host}:{port}: {error}")),
+            .map_err(|error| format!("cannot listen on {}:{port}: {error}", literal(host))),
         None => crate::preview::bind(host, None, project.config.dev_port),
     };
     let listener = match listener {

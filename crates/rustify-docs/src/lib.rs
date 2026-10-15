@@ -18,6 +18,8 @@ compile_error!("build rustify-docs site-ssr and hydrate as separate targets; dis
 
 pub use rustify_docs_macros::site;
 
+pub mod diagnostic_text;
+
 #[cfg(any(feature = "site-ssr", feature = "hydrate"))]
 pub mod site;
 #[cfg(all(feature = "hydrate", target_arch = "wasm32"))]

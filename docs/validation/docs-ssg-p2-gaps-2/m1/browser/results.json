@@ -1,0 +1,411 @@
+{
+  "source": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps2-h2p69rv7/m1-browser-full.json",
+  "stats": {
+    "startTime": "2026-10-15T05:05:43.263Z",
+    "duration": 412333.332,
+    "expected": 31,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "tests": [
+    {
+      "index": 1,
+      "title": "the address and first building shell precede the actual compilation, then content saves reuse its pair",
+      "project": "docs-dev",
+      "status": "passed",
+      "duration_ms": 39896,
+      "attachments": []
+    },
+    {
+      "index": 2,
+      "title": "Rust saves keep the original interactive document until a complete new pair, and diagnostics recover at its scroll position",
+      "project": "docs-dev",
+      "status": "passed",
+      "duration_ms": 90830,
+      "attachments": []
+    },
+    {
+      "index": 3,
+      "title": "hydrate-only dependency manifests invalidate wasm and behavior without compiling Markdown",
+      "project": "docs-dev",
+      "status": "passed",
+      "duration_ms": 44449,
+      "attachments": []
+    },
+    {
+      "index": 4,
+      "title": "renamed same-name build inputs track each dependency save, deletion and recovery",
+      "project": "docs-dev",
+      "status": "passed",
+      "duration_ms": 145923,
+      "attachments": []
+    },
+    {
+      "index": 5,
+      "title": "gaps embedded diagnostics: registered names, props and demos show the CLI repair over the last good page and clear after the fix",
+      "project": "docs-dev",
+      "status": "passed",
+      "duration_ms": 37735,
+      "attachments": [
+        "t05/gaps-registered-375-light.png",
+        "t05/gaps-registered-375-dark.png",
+        "t05/gaps-registered-320-light.png",
+        "t05/gaps-registered-320-dark.png",
+        "t05/dev-component-browser-audit.json",
+        "t05/dev-component-states.json",
+        "t05/dev-component-compiler-commands.json",
+        "t05/dev-component-compiler-lifecycle.json",
+        "t05/dev-component-cli.log",
+        "t05/dev-component-compile-history.json"
+      ],
+      "selected": true
+    },
+    {
+      "index": 6,
+      "title": "gaps embedded diagnostics: without Rust the panel names the builtins and the empty demo registration and wraps the reference",
+      "project": "docs-dev",
+      "status": "passed",
+      "duration_ms": 818,
+      "attachments": [
+        "t06/gaps-builtins-375-light.png",
+        "t06/gaps-builtins-375-dark.png",
+        "t06/gaps-builtins-320-light.png",
+        "t06/gaps-builtins-320-dark.png",
+        "t06/dev-component-browser-audit.json",
+        "t06/dev-component-states.json",
+        "t06/dev-component-compiler-commands.json",
+        "t06/dev-component-compiler-lifecycle.json",
+        "t06/dev-component-cli.log"
+      ],
+      "selected": true
+    },
+    {
+      "index": 7,
+      "title": "gaps-2 code spans: plain author paths, prefixed anchors, YAML keys and empty language remain exact",
+      "project": "docs-dev",
+      "status": "passed",
+      "duration_ms": 1448,
+      "attachments": [
+        "t07/broken-anchor-prose.json",
+        "t07/gaps2-anchor-1280-light.json",
+        "t07/gaps2-anchor-1280-light.png",
+        "t07/gaps2-anchor-1280-dark.json",
+        "t07/gaps2-anchor-1280-dark.png",
+        "t07/gaps2-anchor-375-light.json",
+        "t07/gaps2-anchor-375-light.png",
+        "t07/gaps2-anchor-375-dark.json",
+        "t07/gaps2-anchor-375-dark.png",
+        "t07/embed-payload-prose.json",
+        "t07/gaps2-yaml-1280-light.json",
+        "t07/gaps2-yaml-1280-light.png",
+        "t07/gaps2-yaml-1280-dark.json",
+        "t07/gaps2-yaml-1280-dark.png",
+        "t07/gaps2-yaml-375-light.json",
+        "t07/gaps2-yaml-375-light.png",
+        "t07/gaps2-yaml-375-dark.json",
+        "t07/gaps2-yaml-375-dark.png",
+        "t07/config-lang-prose.json",
+        "t07/gaps2-empty-1280-light.json",
+        "t07/gaps2-empty-1280-light.png",
+        "t07/gaps2-empty-1280-dark.json",
+        "t07/gaps2-empty-1280-dark.png",
+        "t07/gaps2-empty-375-light.json",
+        "t07/gaps2-empty-375-light.png",
+        "t07/gaps2-empty-375-dark.json",
+        "t07/gaps2-empty-375-dark.png",
+        "t07/dev-component-browser-audit.json",
+        "t07/dev-component-states.json",
+        "t07/dev-component-compiler-commands.json",
+        "t07/dev-component-compiler-lifecycle.json",
+        "t07/dev-component-cli.log"
+      ],
+      "selected": true
+    },
+    {
+      "index": 8,
+      "title": "gaps-2 code spans: defaults with literal backticks survive unknown props, type errors and external unmatched ticks",
+      "project": "docs-dev",
+      "status": "passed",
+      "duration_ms": 33449,
+      "attachments": [
+        "t08/unknown-property-prose.json",
+        "t08/gaps2-default-unknown-1280-light.json",
+        "t08/gaps2-default-unknown-1280-light.png",
+        "t08/gaps2-default-unknown-1280-dark.json",
+        "t08/gaps2-default-unknown-1280-dark.png",
+        "t08/gaps2-default-unknown-375-light.json",
+        "t08/gaps2-default-unknown-375-light.png",
+        "t08/gaps2-default-unknown-375-dark.json",
+        "t08/gaps2-default-unknown-375-dark.png",
+        "t08/invalid_props-prose.json",
+        "t08/gaps2-default-type-1280-light.json",
+        "t08/gaps2-default-type-1280-light.png",
+        "t08/gaps2-default-type-1280-dark.json",
+        "t08/gaps2-default-type-1280-dark.png",
+        "t08/gaps2-default-type-375-light.json",
+        "t08/gaps2-default-type-375-light.png",
+        "t08/gaps2-default-type-375-dark.json",
+        "t08/gaps2-default-type-375-dark.png",
+        "t08/invalid_props-prose.json",
+        "t08/gaps2-external-1280-light.json",
+        "t08/gaps2-external-1280-light.png",
+        "t08/gaps2-external-1280-dark.json",
+        "t08/gaps2-external-1280-dark.png",
+        "t08/gaps2-external-375-light.json",
+        "t08/gaps2-external-375-light.png",
+        "t08/gaps2-external-375-dark.json",
+        "t08/gaps2-external-375-dark.png",
+        "t08/dev-component-browser-audit.json",
+        "t08/dev-component-states.json",
+        "t08/dev-component-compiler-commands.json",
+        "t08/dev-component-compiler-lifecycle.json",
+        "t08/dev-component-cli.log",
+        "t08/dev-component-compile-history.json"
+      ],
+      "selected": true
+    },
+    {
+      "index": 9,
+      "title": "gaps-2 code spans: the real DOM reader preserves the handwritten whitespace and delimiter table",
+      "project": "docs-dev",
+      "status": "passed",
+      "duration_ms": 747,
+      "attachments": [
+        "t09/verbatim-table.json",
+        "t09/gaps2-table-1280-light.json",
+        "t09/gaps2-table-1280-light.png",
+        "t09/gaps2-table-1280-dark.json",
+        "t09/gaps2-table-1280-dark.png",
+        "t09/gaps2-table-375-light.json",
+        "t09/gaps2-table-375-light.png",
+        "t09/gaps2-table-375-dark.json",
+        "t09/gaps2-table-375-dark.png",
+        "t09/dev-component-browser-audit.json",
+        "t09/dev-component-states.json",
+        "t09/dev-component-compiler-commands.json",
+        "t09/dev-component-compiler-lifecycle.json",
+        "t09/dev-component-cli.log"
+      ],
+      "selected": true
+    },
+    {
+      "index": 10,
+      "title": "UAT-1 and UAT-2: new, dev, three pages within a minute; then saves, a mistake and its fix in one session",
+      "project": "docs-dev",
+      "status": "passed",
+      "duration_ms": 3954,
+      "attachments": []
+    },
+    {
+      "index": 11,
+      "title": "semantic diagnostics locate the source, preserve the home, and clear on repair",
+      "project": "docs-dev",
+      "status": "passed",
+      "duration_ms": 1335,
+      "attachments": []
+    },
+    {
+      "index": 12,
+      "title": "a new site is readable at once: the home page and its two pages",
+      "project": "docs-dev",
+      "status": "passed",
+      "duration_ms": 311,
+      "attachments": []
+    },
+    {
+      "index": 13,
+      "title": "a save reloads the page it changed in place and leaves the others",
+      "project": "docs-dev",
+      "status": "passed",
+      "duration_ms": 1790,
+      "attachments": []
+    },
+    {
+      "index": 14,
+      "title": "a real symlink target save refreshes its image and survives deletion and recovery",
+      "project": "docs-dev",
+      "status": "passed",
+      "duration_ms": 500,
+      "attachments": []
+    },
+    {
+      "index": 15,
+      "title": "a snapshot attachment in content/manual.pdf recovers when only its target is restored",
+      "project": "docs-dev",
+      "status": "passed",
+      "duration_ms": 400,
+      "attachments": []
+    },
+    {
+      "index": 16,
+      "title": "a snapshot attachment in static/manual.pdf recovers when only its target is restored",
+      "project": "docs-dev",
+      "status": "passed",
+      "duration_ms": 400,
+      "attachments": []
+    },
+    {
+      "index": 17,
+      "title": "arbitrary CSS resources keep numeric entity delimiters and compiler URL decoding",
+      "project": "docs-dev",
+      "status": "passed",
+      "duration_ms": 216,
+      "attachments": []
+    },
+    {
+      "index": 18,
+      "title": "template contents are rejected as anchors while their holder and ordinary IDs navigate",
+      "project": "docs-dev",
+      "status": "passed",
+      "duration_ms": 341,
+      "attachments": []
+    },
+    {
+      "index": 19,
+      "title": "body anchors at / navigate on the same and other pages and recover from ghost links",
+      "project": "docs-dev",
+      "status": "passed",
+      "duration_ms": 404,
+      "attachments": []
+    },
+    {
+      "index": 20,
+      "title": "body anchors at /docs/ navigate on the same and other pages and recover from ghost links",
+      "project": "docs-dev",
+      "status": "passed",
+      "duration_ms": 404,
+      "attachments": []
+    },
+    {
+      "index": 21,
+      "title": "self-closing SVG template preserves document anchors and cross-page navigation",
+      "project": "docs-dev",
+      "status": "passed",
+      "duration_ms": 259,
+      "attachments": []
+    },
+    {
+      "index": 22,
+      "title": "paired SVG template preserves document anchors and cross-page navigation",
+      "project": "docs-dev",
+      "status": "passed",
+      "duration_ms": 252,
+      "attachments": []
+    },
+    {
+      "index": 23,
+      "title": "SVG inside an HTML template preserves document anchors and cross-page navigation",
+      "project": "docs-dev",
+      "status": "passed",
+      "duration_ms": 256,
+      "attachments": []
+    },
+    {
+      "index": 24,
+      "title": "HTML templates at foreign integration points recover from ghost links",
+      "project": "docs-dev",
+      "status": "passed",
+      "duration_ms": 314,
+      "attachments": []
+    },
+    {
+      "index": 25,
+      "title": "a failed build keeps the page readable under a panel that hides to a marker and clears on the fix",
+      "project": "docs-dev",
+      "status": "passed",
+      "duration_ms": 691,
+      "attachments": []
+    },
+    {
+      "index": 26,
+      "title": "while nothing has built, every page says so, and becomes the site once it builds",
+      "project": "docs-dev",
+      "status": "passed",
+      "duration_ms": 239,
+      "attachments": []
+    },
+    {
+      "index": 27,
+      "title": "a restarted dev brings an open page up to date",
+      "project": "docs-dev",
+      "status": "passed",
+      "duration_ms": 1077,
+      "attachments": []
+    },
+    {
+      "index": 28,
+      "title": "a panic in a build is one more problem, and the next build is served",
+      "project": "docs-dev",
+      "status": "passed",
+      "duration_ms": 347,
+      "attachments": []
+    },
+    {
+      "index": 29,
+      "title": "the panel speaks the page's language",
+      "project": "docs-dev",
+      "status": "passed",
+      "duration_ms": 231,
+      "attachments": []
+    },
+    {
+      "index": 30,
+      "title": "on a phone the panel is a sheet along the bottom and nothing scrolls sideways",
+      "project": "docs-dev",
+      "status": "passed",
+      "duration_ms": 344,
+      "attachments": []
+    },
+    {
+      "index": 31,
+      "title": "axe finds no serious or critical problem with the panel open or hidden, in both modes",
+      "project": "docs-dev",
+      "status": "passed",
+      "duration_ms": 1374,
+      "attachments": []
+    }
+  ],
+  "selected_audits": [
+    {
+      "test": "gaps embedded diagnostics: registered names, props and demos show the CLI repair over the last good page and clear after the fix",
+      "console": 0,
+      "page_errors": 0,
+      "CSP": 0,
+      "failed_requests": 0,
+      "failed_responses": 0
+    },
+    {
+      "test": "gaps embedded diagnostics: without Rust the panel names the builtins and the empty demo registration and wraps the reference",
+      "console": 0,
+      "page_errors": 0,
+      "CSP": 0,
+      "failed_requests": 0,
+      "failed_responses": 0
+    },
+    {
+      "test": "gaps-2 code spans: plain author paths, prefixed anchors, YAML keys and empty language remain exact",
+      "console": 0,
+      "page_errors": 0,
+      "CSP": 0,
+      "failed_requests": 0,
+      "failed_responses": 0
+    },
+    {
+      "test": "gaps-2 code spans: defaults with literal backticks survive unknown props, type errors and external unmatched ticks",
+      "console": 0,
+      "page_errors": 0,
+      "CSP": 0,
+      "failed_requests": 0,
+      "failed_responses": 0
+    },
+    {
+      "test": "gaps-2 code spans: the real DOM reader preserves the handwritten whitespace and delimiter table",
+      "console": 0,
+      "page_errors": 0,
+      "CSP": 0,
+      "failed_requests": 0,
+      "failed_responses": 0
+    }
+  ]
+}

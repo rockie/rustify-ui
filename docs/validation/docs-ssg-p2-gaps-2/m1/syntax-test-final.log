@@ -1,0 +1,60 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-docs-syntax v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-docs-syntax)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.37s
+     Running unittests src/lib.rs (target/debug/deps/rustify_docs_syntax-6ec9bb5810d3935a)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/registry.rs (target/debug/deps/registry-be2009d3767f7a3d)
+
+running 30 tests
+test diagnostic_spans_keep_empty_values_and_literal_tick_runs ... ok
+test all_seven_slots_have_the_exact_declared_names ... ok
+test demo_closures_and_calls_are_rejected_as_function_identities ... ok
+test a_whole_site_declaration_cannot_be_empty ... ok
+test client_only_rejects_unknown_repeated_arguments_and_other_attributes ... ok
+test explicit_client_only_metadata_uses_decoded_literals ... ok
+test a_leading_bom_does_not_shift_first_line_diagnostics ... ok
+test page_metadata_is_literal_and_has_no_unknown_or_repeated_keys ... ok
+test names_are_unique_across_components_demos_and_pages ... ok
+test a_complete_declaration_retains_rust_ast_and_normalized_metadata ... ok
+test a_registry_source_must_have_exactly_one_site_invocation ... ok
+test a_bom_and_shebang_preserve_following_line_diagnostics ... ok
+test generic_reference_tuple_and_function_property_types_are_accepted ... ok
+test client_only_requires_a_nonempty_literal_class_and_message ... ok
+test page_route_and_title_are_required ... ok
+test registry_errors_preserve_exact_source_line_and_unicode_column ... ok
+test raw_property_identifiers_use_their_serde_field_name ... ok
+test repeated_names_in_one_section_are_rejected ... ok
+test page_and_slot_render_functions_must_be_paths ... ok
+test repeated_page_routes_are_rejected ... ok
+test repeated_property_names_are_rejected ... ok
+test repeated_slots_are_rejected ... ok
+test repeated_sections_are_rejected ... ok
+test sections_can_be_omitted_or_empty ... ok
+test the_manifest_is_serializable_without_serializing_syn_ast ... ok
+test source_extraction_ignores_comments_strings_and_macro_rules_bodies ... ok
+test unknown_sections_are_rejected ... ok
+test unknown_slots_are_rejected ... ok
+test source_and_macro_token_parsing_produce_the_same_manifest ... ok
+test whitespace_comments_and_crlf_do_not_change_the_manifest ... ok
+
+test result: ok. 30 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests rustify_docs_syntax
+
+running 1 test
+test crates/rustify-docs-syntax/src/lib.rs - parse_registry (line 173) ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.37s
+
+mbx[cache]: 0 hits, 0 misses, 3 incremental, 1 bypassed; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: 325.4 GiB shared among checkouts that each believe they are an only child.

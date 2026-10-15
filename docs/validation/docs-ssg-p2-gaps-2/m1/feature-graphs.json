@@ -1,0 +1,19 @@
+{
+  "graphs": {
+    "site-ssr": {
+      "root": "rustify-docs v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-docs) [site-ssr]",
+      "packages": 183,
+      "makepad_packages": [],
+      "pipeline": false,
+      "source": "ssr-features.log"
+    },
+    "hydrate": {
+      "root": "rustify-docs v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-docs) [hydrate]",
+      "packages": 180,
+      "makepad_packages": [],
+      "pipeline": false,
+      "source": "hydrate-features.log"
+    }
+  },
+  "check": "package names, not repository directory names; smallvec under makepad/libs is a patched general-purpose crate"
+}

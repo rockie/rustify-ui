@@ -712,6 +712,51 @@ and an unknown name point to the fence. Duplicate keys and malformed fences
 say how to write the fence. `check`, `build` and `dev` (the terminal and the
 page's problem panel) report the same location and repair.
 
+Diagnostic messages and repairs use Rustify verbatim code fragments. This
+notation preserves spaces, backslashes and LF/CRLF line endings; it is not
+CommonMark. The JSON structure remains schema version 1 and can be read by
+a standard JSON parser. A consumer formatting `message` or `suggestion`
+must then read the fragment notation as follows:
+
+- A nonempty code value without backticks has one backtick on each side,
+  with no padding. An empty code value has two backticks, two ASCII spaces,
+  then two backticks.
+- A code value containing backticks has a fence one backtick longer than
+  its longest backtick run, with one ASCII space between each fence and
+  the value. Fixed prefixes belong inside the value: quote the complete
+  heading ID or region marker, including `#` or `rustify-region:`.
+- Ordinary author text, such as a file path outside a code fragment, stays
+  unchanged unless it contains a backtick. In that case the whole value
+  uses the same fragment notation and the panel's existing monospace style.
+
+Scan maximal backtick runs from left to right. Pair an opening run with the
+first later maximal run of exactly the same length; runs of other lengths
+are content. An unmatched run stays ordinary text and scanning continues.
+For a single-backtick pair, keep all enclosed characters. For a longer pair,
+remove exactly one leading and one trailing ASCII space only when both are
+present and the enclosed text has at least two characters, including when
+it consists entirely of spaces. Preserve everything else, including newlines.
+An empty fragment creates an empty code node. Keep non-backtick prose between
+fragments so their fences do not merge; adjacent code values must be quoted
+as one complete value.
+
+These examples show the encoded fragment between the arrows; the quoted
+values on either side use JSON string notation:
+
+````text
+""       -> ``  ``         -> ""
+" a "    -> ` a `          -> " a "
+"a`b"    -> `` a`b ``      -> "a`b"
+"a``b"   -> ``` a``b ```   -> "a``b"
+````
+
+The terminal and JSON carry these delimiters; the panel removes them and
+shows the original value. The verbatim guarantee covers Rustify's own
+templates and the author values they insert. External messages from serde,
+YAML parsers, rustc and I/O are passed through unchanged. The panel uses the
+same reader for those messages: unmatched backticks remain visible, while
+paired backticks are still formatted as code and can remain ambiguous.
+
 A demo directly references a site-local function with a
 `crate::module::function` path. Its Function and Full file tabs show and copy
 the original source, including Unicode and line endings, from the same files

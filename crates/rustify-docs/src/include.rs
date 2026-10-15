@@ -7,6 +7,7 @@
 //! syntax. The marker lines are left out; the lines between keep their bytes
 //! and line endings. Nothing is compiled: the file is read as it is now.
 
+use crate::diagnostic_text::code_span;
 use std::ops::Range;
 
 /// An include directive's attributes.
@@ -45,7 +46,7 @@ pub fn directive(html: &str) -> Option<Result<Directive, String>> {
                 "region" => directive.region = Some(value),
                 "lang" => directive.lang = Some(value),
                 "title" => directive.title = Some(value),
-                other => return Err(format!("`{other}` is not an include attribute")),
+                other => return Err(format!("{} is not an include attribute", code_span(other))),
             }
         }
         if directive.path.is_empty() {
@@ -62,15 +63,15 @@ pub fn parse_attributes(text: &str) -> Result<Vec<(String, String)>, String> {
     while !rest.is_empty() {
         let equals = rest
             .find('=')
-            .ok_or_else(|| format!("`{rest}` is not name=\"value\""))?;
+            .ok_or_else(|| format!("{} is not name=\"value\"", code_span(rest)))?;
         let name = rest[..equals].trim().to_owned();
         let after = rest[equals + 1..].trim_start();
         let after = after
             .strip_prefix('"')
-            .ok_or_else(|| format!("the value of `{name}` must be in double quotes"))?;
+            .ok_or_else(|| format!("the value of {} must be in double quotes", code_span(&name)))?;
         let end = after
             .find('"')
-            .ok_or_else(|| format!("the value of `{name}` has no closing quote"))?;
+            .ok_or_else(|| format!("the value of {} has no closing quote", code_span(&name)))?;
         out.push((name, after[..end].to_owned()));
         rest = after[end + 1..].trim_start();
     }
@@ -96,28 +97,42 @@ pub fn extract(source: &str, region: &str) -> Result<String, String> {
     for line in source.split_inclusive('\n') {
         if is_marker(line, &open) {
             if start.is_some() || found.is_some() {
-                return Err(format!("region `{region}` is opened more than once"));
+                return Err(format!(
+                    "region {} is opened more than once",
+                    code_span(region)
+                ));
             }
             start = Some(offset + line.len());
         } else if is_marker(line, &close) {
             match start.take() {
                 Some(begin) => {
                     if found.is_some() {
-                        return Err(format!("region `{region}` is closed more than once"));
+                        return Err(format!(
+                            "region {} is closed more than once",
+                            code_span(region)
+                        ));
                     }
                     found = Some(begin..offset);
                 }
-                None => return Err(format!("region `{region}` is closed before it is opened")),
+                None => {
+                    return Err(format!(
+                        "region {} is closed before it is opened",
+                        code_span(region)
+                    ))
+                }
             }
         }
         offset += line.len();
     }
     if start.is_some() {
-        return Err(format!("region `{region}` is opened but never closed"));
+        return Err(format!(
+            "region {} is opened but never closed",
+            code_span(region)
+        ));
     }
     found
         .map(|range| source[range].to_owned())
-        .ok_or_else(|| format!("there is no region `{region}`"))
+        .ok_or_else(|| format!("there is no region {}", code_span(region)))
 }
 
 #[cfg(test)]

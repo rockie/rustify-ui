@@ -821,6 +821,25 @@ function lineOf(text: string, needle: string, offset = 0) {
     return text.split("\n").findIndex(line => line.includes(needle)) + 1 + offset;
 }
 
+function diagnosticProse(input: string) {
+    const runs = [...input.matchAll(/`+/g)];
+    let text = "";
+    const codes: string[] = [];
+    let start = 0;
+    for (let i = 0; i < runs.length; i++) {
+        const opening = runs[i];
+        const j = runs.findIndex((closing, index) => index > i && closing[0].length === opening[0].length);
+        if (j < 0) continue;
+        let code = input.slice(opening.index! + opening[0].length, runs[j].index!);
+        if (opening[0].length >= 2 && code.length >= 2 && code.startsWith(" ") && code.endsWith(" ")) code = code.slice(1, -1);
+        text += input.slice(start, opening.index!) + code;
+        codes.push(code);
+        start = runs[j].index! + runs[j][0].length;
+        i = j;
+    }
+    return { text: text + input.slice(start), codes };
+}
+
 async function expectRepairs(page: Page, state: State, file: string, repairs: Repair[]) {
     const order = (a: Repair, b: Repair) => a.line - b.line || a.column - b.column || a.rule.localeCompare(b.rule);
     const reported = state.diagnostics.filter(d => d.severity === "error" && d.file === file)
@@ -833,8 +852,9 @@ async function expectRepairs(page: Page, state: State, file: string, repairs: Re
             .filter({ has: page.locator(".rd-dev-rule", { hasText: repair.rule }) });
         await expect(item).toHaveCount(1);
         // The panel shows the same text, formatting only its backticked names.
-        await expect(item.locator(".rd-dev-suggestion")).toHaveText(repair.suggestion.replaceAll("`", ""));
-        await expect(item.locator(".rd-dev-suggestion code")).toHaveText([...repair.suggestion.matchAll(/`([^`]+)`/g)].map(match => match[1]));
+        const expected = diagnosticProse(repair.suggestion);
+        expect(await item.locator(".rd-dev-suggestion").textContent()).toBe(expected.text);
+        expect(await item.locator(".rd-dev-suggestion code").allTextContents()).toEqual(expected.codes);
     }
 }
 
@@ -951,4 +971,166 @@ test("gaps embedded diagnostics: without Rust the panel names the builtins and t
     expect(audit.console).toEqual([]);
     expect(audit.pageErrors).toEqual([]);
     expect(server.streamErrors).toEqual([]);
+});
+
+// Independent display expectations: never derive these from the prose reader.
+async function exactProse(page: Page, state: State, rule: string, expected: { message: string; messageCodes: string[]; suggestion?: string; suggestionCodes?: string[] }) {
+    const item = page.locator('.rd-dev-item').filter({ has: page.locator('.rd-dev-rule', { hasText: rule }) });
+    await expect(item).toHaveCount(1);
+    await expect.poll(() => item.locator('.rd-dev-message').textContent()).toBe(expected.message);
+    expect(await item.locator('.rd-dev-message code').allTextContents()).toEqual(expected.messageCodes);
+    if (expected.suggestion !== undefined) {
+        expect(await item.locator('.rd-dev-suggestion').textContent()).toBe(expected.suggestion);
+        expect(await item.locator('.rd-dev-suggestion code').allTextContents()).toEqual(expected.suggestionCodes);
+    }
+    await test.info().attach(`${rule}-prose.json`, { body: JSON.stringify({ diagnostic: state.diagnostics.find(d => d.rule === rule), expected, actual: await item.evaluate(node => ({ message: node.querySelector('.rd-dev-message')?.textContent, messageCodes: [...node.querySelectorAll('.rd-dev-message code')].map(code => code.textContent), suggestion: node.querySelector('.rd-dev-suggestion')?.textContent, suggestionCodes: [...node.querySelectorAll('.rd-dev-suggestion code')].map(code => code.textContent) })) }, null, 2), contentType: 'application/json' });
+}
+
+async function proseLayouts(page: Page, label: string) {
+    for (const width of [1280, 375]) {
+        for (const theme of ['light', 'dark']) {
+            await page.setViewportSize({ width, height: 900 });
+            await page.locator(`[data-rd-mode="${theme}"]`).click();
+            await expect(page.locator('html')).toHaveAttribute('data-theme', theme);
+            expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(0);
+            const actual = await page.locator('.rd-dev-item').evaluateAll(items => items.map(item => ({ message: item.querySelector('.rd-dev-message')?.textContent, suggestion: item.querySelector('.rd-dev-suggestion')?.textContent, codes: [...item.querySelectorAll('code')].map(code => ({ text: code.textContent, font: getComputedStyle(code).fontFamily })), overflow: [...item.querySelectorAll<HTMLElement>('.rd-dev-message, .rd-dev-suggestion')].map(node => node.scrollWidth - node.clientWidth) })));
+            expect(actual.every(item => item.overflow.every(extra => extra <= 0))).toBe(true);
+            await test.info().attach(`${label}-${width}-${theme}.json`, { body: JSON.stringify({ width, theme, actual }, null, 2), contentType: 'application/json' });
+            await test.info().attach(`${label}-${width}-${theme}.png`, { body: await page.screenshot(), contentType: 'image/png' });
+        }
+    }
+}
+
+test('gaps-2 code spans: plain author paths, prefixed anchors, YAML keys and empty language remain exact', async ({ page }) => {
+    const plain = path.join(site.dir, 'plain');
+    mkdirSync(path.join(plain, 'content'), { recursive: true });
+    const config = "schema_version=1\n[site]\nname='Plain'\nurl='https://example.com/'\n";
+    const good = '---\ndescription: Home\n---\n# Home\n';
+    writeFileSync(path.join(plain, 'rustify-docs.toml'), config);
+    writeFileSync(path.join(plain, 'content/index.md'), good);
+    writeFileSync(path.join(plain, 'content/a`b`c.md'), '---\ndescription: Target\n---\n# Target\n');
+    server = await Dev.start(site, plain);
+    await page.goto(server.url);
+    let state = await settled();
+    writeFileSync(path.join(plain, 'content/index.md'), `${good}\n[Target](a%60b%60c.md#a%60b)\n`);
+    state = await settled(state.revision, false);
+    expect(state.diagnostics.find(d => d.rule === 'broken-anchor')?.message).toBe('`` content/a`b`c.md `` has no heading `` #a`b ``');
+    await exactProse(page, state, 'broken-anchor', { message: 'content/a`b`c.md has no heading #a`b', messageCodes: ['content/a`b`c.md', '#a`b'] });
+    await proseLayouts(page, 'gaps2-anchor');
+    const hide = page.getByRole('button', { name: 'Hide problems' });
+    const marker = page.locator('.rd-dev-marker');
+    await hide.click();
+    await expect(marker).toBeFocused();
+    await page.keyboard.press('Enter');
+    await expect(hide).toBeFocused();
+    await page.keyboard.press('Escape');
+    await expect(marker).toBeFocused();
+    await marker.click();
+
+    writeFileSync(path.join(plain, 'content/index.md'), `${good}\n\`\`\`rustify-component\nname: Steps\nun\`known: 1\n\`\`\`\n`);
+    state = await settled(state.revision, false);
+    await exactProse(page, state, 'embed-payload', { message: 'unknown field un`known; a demo takes only name, a component takes name, props and children', messageCodes: ['un`known', 'name', 'name', 'props', 'children'] });
+    await proseLayouts(page, 'gaps2-yaml');
+
+    writeFileSync(path.join(plain, 'rustify-docs.toml'), `${config}lang=''\n`);
+    state = await settled(state.revision, false);
+    await exactProse(page, state, 'config-lang', { message: ' is not a language tag', messageCodes: [''], suggestion: 'use a tag like en or zh-CN', suggestionCodes: ['en', 'zh-CN'] });
+    await proseLayouts(page, 'gaps2-empty');
+    writeFileSync(path.join(plain, 'content/index.md'), good);
+    writeFileSync(path.join(plain, 'rustify-docs.toml'), config);
+    state = await settled(state.revision);
+    await cleared(page, state);
+    expect(audit.csp).toEqual([]);
+    expect(audit.failures).toEqual([]);
+    expect(audit.console).toEqual([]);
+    expect(audit.pageErrors).toEqual([]);
+    expect(server.streamErrors).toEqual([]);
+});
+
+test('gaps-2 code spans: defaults with literal backticks survive unknown props, type errors and external unmatched ticks', async ({ page }) => {
+    test.setTimeout(900_000);
+    site.edit('src/lib.rs', 'label: String = "Counter".to_string()', 'label: String = "a`b".to_string()');
+    server = await Dev.start(site);
+    await page.goto(new URL('counter/', server.url).href);
+    site.release();
+    await ready(page);
+    let state = await settled();
+    const original = site.read('content/counter.md');
+    await captureTrees(page);
+    site.write('content/counter.md', `${original}\n\`\`\`rustify-component\nname: Counter\nprops:\n  un\`known: 1\n\`\`\`\n`);
+    state = await settled(state.revision, false);
+    await exactProse(page, state, 'unknown-property', { message: 'component Counter has no property un`known', messageCodes: ['Counter', 'un`known'], suggestion: 'Use one of initial (i32; default expression 2), label (String; default expression "a`b".to_string()) for Counter; rename or remove un`known.', suggestionCodes: ['initial', 'i32', '2', 'label', 'String', '"a`b".to_string()', 'Counter', 'un`known'] });
+    await retained(page);
+    await proseLayouts(page, 'gaps2-default-unknown');
+    site.write('content/counter.md', `${original}\n\`\`\`rustify-component\nname: Counter\nprops:\n  label: [wrong]\n\`\`\`\n`);
+    state = await settled(state.revision, false);
+    const typed = state.diagnostics.find(d => d.rule === 'invalid_props')!;
+    expect(typed.suggestion).toBe('Write `label: "text"` for declared type `String` (default expression `` "a`b".to_string() ``). Reported props path: `label`.');
+    await exactProse(page, state, 'invalid_props', { message: 'invalid type: sequence, expected a string', messageCodes: [], suggestion: 'Write label: "text" for declared type String (default expression "a`b".to_string()). Reported props path: label.', suggestionCodes: ['label: "text"', 'String', '"a`b".to_string()', 'label'] });
+    await retained(page);
+    await proseLayouts(page, 'gaps2-default-type');
+    site.write('content/counter.md', `${original}\n\`\`\`rustify-component\nname: Counter\nprops:\n  initial: a\`b\n\`\`\`\n`);
+    state = await settled(state.revision, false);
+    const external = state.diagnostics.find(d => d.rule === 'invalid_props')!;
+    expect(external.message).toContain('a`b');
+    await exactProse(page, state, 'invalid_props', { message: 'invalid type: string "a`b", expected i32', messageCodes: [] });
+    await proseLayouts(page, 'gaps2-external');
+    await page.getByRole('button', { name: 'Hide problems' }).click();
+    await expect(page.locator('.rd-dev-marker')).toBeFocused();
+    site.write('content/counter.md', original);
+    state = await settled(state.revision);
+    await cleared(page, state);
+    await healthy();
+});
+
+test('gaps-2 code spans: the real DOM reader preserves the handwritten whitespace and delimiter table', async ({ page }) => {
+    const plain = path.join(site.dir, 'plain');
+    mkdirSync(path.join(plain, 'content'), { recursive: true });
+    writeFileSync(path.join(plain, 'rustify-docs.toml'), "schema_version=1\n[site]\nname='Plain'\nurl='https://example.com/'\n");
+    writeFileSync(path.join(plain, 'content/index.md'), '---\ndescription: Home\n---\n# Home\n');
+    server = await Dev.start(site, plain);
+    const state = await settled();
+    const cases: { encoded: string; text: string; codes: string[] }[] = [
+        { encoded: '``  ``', text: '', codes: [''] },
+        { encoded: '` `', text: ' ', codes: [' '] },
+        { encoded: '`  `', text: '  ', codes: ['  '] },
+        { encoded: '` a `', text: ' a ', codes: [' a '] },
+        { encoded: '`a\nb`', text: 'a\nb', codes: ['a\nb'] },
+        { encoded: '`a\r\nb`', text: 'a\r\nb', codes: ['a\r\nb'] },
+        { encoded: '`a\\b`', text: 'a\\b', codes: ['a\\b'] },
+        { encoded: '`Counter`', text: 'Counter', codes: ['Counter'] },
+        { encoded: '`` a`b ``', text: 'a`b', codes: ['a`b'] },
+        { encoded: '``` a``b ```', text: 'a``b', codes: ['a``b'] },
+        { encoded: '`` `a` ``', text: '`a`', codes: ['`a`'] },
+        { encoded: '`` ` ``', text: '`', codes: ['`'] },
+        { encoded: '``` `` ```', text: '``', codes: ['``'] },
+        { encoded: '``  `\r\n  ``', text: ' `\r\n ', codes: [' `\r\n '] },
+        { encoded: '``    ``', text: '  ', codes: ['  '] },
+        { encoded: '``a b``', text: 'a b', codes: ['a b'] },
+        { encoded: '``\na\r\n``', text: '\na\r\n', codes: ['\na\r\n'] },
+        { encoded: '``  `` then `` file/a`b `` and `en` / `zh-CN`', text: ' then file/a`b and en / zh-CN', codes: ['', 'file/a`b', 'en', 'zh-CN'] },
+        { encoded: 'plain `unmatched and `` value ``', text: 'plain `unmatched and value', codes: ['value'] },
+        { encoded: 'unknown field `a`b`', text: 'unknown field ab`', codes: ['a'] },
+        { encoded: 'single a`b', text: 'single a`b', codes: [] },
+        { encoded: '`<img src=x onerror=alert(1)>`', text: '<img src=x onerror=alert(1)>', codes: ['<img src=x onerror=alert(1)>'] },
+    ];
+    cases.forEach(({ encoded, text, codes }) => expect(diagnosticProse(encoded)).toEqual({ text, codes }));
+    // This table isolates the DOM reader using a controlled SSE response.
+    // The other gaps-2 tests exercise actual author input through the service.
+    await page.route('**/__rustify-docs/events?**', route => route.fulfill({ contentType: 'text/event-stream', body: `event: state\ndata: ${JSON.stringify({ ...state, ok: false, errors: cases.length, warnings: 0, reload: false, diagnostics: cases.map((entry, i) => ({ severity: 'error', rule: `span-${i}`, file: 'table', line: i + 1, column: 1, message: entry.encoded, suggestion: entry.encoded })) })}\n\n` }));
+    await page.goto(server.url);
+    for (let i = 0; i < cases.length; i++) {
+        const { text, codes } = cases[i];
+        const item = page.locator('.rd-dev-item').nth(i);
+        await expect.poll(() => item.locator('.rd-dev-message').textContent()).toBe(text);
+        expect(await item.locator('.rd-dev-message code').allTextContents()).toEqual(codes);
+        expect(await item.locator('.rd-dev-suggestion').textContent()).toBe(text);
+        expect(await item.locator('.rd-dev-suggestion code').allTextContents()).toEqual(codes);
+        expect(await item.locator('img').count()).toBe(0);
+    }
+    await test.info().attach('verbatim-table.json', { body: JSON.stringify(cases, null, 2), contentType: 'application/json' });
+    await proseLayouts(page, 'gaps2-table');
+    expect(audit.csp).toEqual([]);
+    expect(audit.console).toEqual([]);
+    expect(audit.pageErrors).toEqual([]);
 });

@@ -1,5 +1,6 @@
 //! Finds a registered demo's direct source definition without rewriting it.
 
+use rustify_docs::diagnostic_text::{code_span, literal};
 use sha2::{Digest, Sha256};
 use std::collections::BTreeMap;
 use std::fs;
@@ -139,16 +140,20 @@ impl Resolver {
         let text = match &self.snapshot {
             Some(files) => match files.get(&canonical) {
                 Some(bytes) => std::str::from_utf8(bytes)
-                    .map_err(|error| format!("{path}: cannot read UTF-8 Rust source: {error}"))?
+                    .map_err(|error| {
+                        format!("{}: cannot read UTF-8 Rust source: {error}", literal(&path))
+                    })?
                     .to_string(),
-                None => fs::read_to_string(&canonical)
-                    .map_err(|error| format!("{path}: cannot read UTF-8 Rust source: {error}"))?,
+                None => fs::read_to_string(&canonical).map_err(|error| {
+                    format!("{}: cannot read UTF-8 Rust source: {error}", literal(&path))
+                })?,
             },
-            None => fs::read_to_string(&canonical)
-                .map_err(|error| format!("{path}: cannot read UTF-8 Rust source: {error}"))?,
+            None => fs::read_to_string(&canonical).map_err(|error| {
+                format!("{}: cannot read UTF-8 Rust source: {error}", literal(&path))
+            })?,
         };
         let syntax = syn::parse_file(&text)
-            .map_err(|error| format!("{path}: cannot parse Rust source: {error}"))?;
+            .map_err(|error| format!("{}: cannot parse Rust source: {error}", literal(&path)))?;
         // syn removes the BOM and shebang before parsing. Restore their byte
         // offset so spans still address the original, unmodified file.
         let parse_offset = usize::from(text.starts_with('\u{feff}')) * '\u{feff}'.len_utf8()
@@ -183,8 +188,8 @@ impl Resolver {
                 .collect();
             return match functions.as_slice() {
                 [function] => source.function(function),
-                [] => Err(format!("{}: cannot locate a direct free function named `{name}`; re-exported, generated and external functions need a direct source function path", source.path)),
-                _ => Err(format!("{}: ambiguous function `{name}` has multiple definitions, including possible cfg alternatives; register a uniquely named direct source function", source.path)),
+                [] => Err(format!("{}: cannot locate a direct free function named {}; re-exported, generated and external functions need a direct source function path", literal(&source.path), code_span(name))),
+                _ => Err(format!("{}: ambiguous function {} has multiple definitions, including possible cfg alternatives; register a uniquely named direct source function", literal(&source.path), code_span(name))),
             };
         }
 
@@ -197,11 +202,11 @@ impl Resolver {
             .collect();
         let module = match modules.as_slice() {
             [module] => *module,
-            [] => return Err(format!("{}: cannot locate source module `{name}`; aliases, external crates and methods need a direct source function path", source.path)),
-            _ => return Err(format!("{}: ambiguous module `{name}` has multiple definitions; register a uniquely named direct source function", source.path)),
+            [] => return Err(format!("{}: cannot locate source module {}; aliases, external crates and methods need a direct source function path", literal(&source.path), code_span(name))),
+            _ => return Err(format!("{}: ambiguous module {} has multiple definitions; register a uniquely named direct source function", literal(&source.path), code_span(name))),
         };
-        let explicit =
-            module_path(&module.attrs).map_err(|error| format!("{}: {error}", source.path))?;
+        let explicit = module_path(&module.attrs)
+            .map_err(|error| format!("{}: {error}", literal(&source.path)))?;
         if let Some((_, items)) = &module.content {
             let directory =
                 explicit.map_or_else(|| dirs.normal.join(name), |path| dirs.explicit.join(path));
@@ -263,9 +268,9 @@ impl Resolver {
                 let plain = self.canonical_source(&plain)?;
                 let directory = self.canonical_source(&directory)?;
                 let display = |path: &Path| path.strip_prefix(&self.project_root).ok().and_then(Path::to_str).unwrap_or("a project module").to_string();
-                Err(format!("ambiguous module `{name}` has both `{}` and `{}`; keep one source file and register a direct source function", display(&plain), display(&directory)))
+                Err(format!("ambiguous module {} has both {} and {}; keep one source file and register a direct source function", code_span(&name), code_span(&display(&plain)), code_span(&display(&directory))))
             }
-            (false, false) => Err(format!("cannot find the Rust source for module `{name}`; check its .rs or mod.rs declaration and register a direct source function")),
+            (false, false) => Err(format!("cannot find the Rust source for module {}; check its .rs or mod.rs declaration and register a direct source function", code_span(&name))),
         }
     }
 }
@@ -278,7 +283,7 @@ impl SourceFile {
         if self.text.get(start..end).is_none() {
             return Err(format!(
                 "{}: source spans cannot locate the original function bytes",
-                self.path
+                literal(&self.path)
             ));
         }
         let mut line_start = self.text[..start].rfind('\n').map_or(0, |at| at + 1);

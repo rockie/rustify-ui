@@ -1,5 +1,6 @@
 //! The `rustify-docs` command.
 
+use rustify_docs::diagnostic_text::{code_span, literal};
 use std::collections::BTreeMap;
 use std::path::{Path, PathBuf};
 use std::process::ExitCode;
@@ -201,11 +202,14 @@ impl Args {
             } else if let Some(&known) = flags.iter().find(|known| **known == arg) {
                 parsed.flags.push(known);
             } else if arg.starts_with('-') && arg != "-" {
-                return Err(format!("`{arg}` is not an option of this command"));
+                return Err(format!(
+                    "{} is not an option of this command",
+                    code_span(arg)
+                ));
             } else if parsed.positional.len() < positional {
                 parsed.positional.push(arg.to_owned());
             } else {
-                return Err(format!("unexpected argument `{arg}`"));
+                return Err(format!("unexpected argument {}", code_span(arg)));
             }
             i += 1;
         }
@@ -224,7 +228,7 @@ impl Args {
         match self.get("--format").unwrap_or("text") {
             "text" => Ok(Format::Text),
             "json" => Ok(Format::Json),
-            other => Err(format!("--format {other}: use text or json")),
+            other => Err(format!("--format {}: use text or json", literal(other))),
         }
     }
 
@@ -581,7 +585,10 @@ fn build(args: &[String]) -> ExitCode {
     }
     if let Some(parent) = out.parent() {
         if let Err(error) = std::fs::create_dir_all(parent) {
-            return refuse("output", format!("{}: {error}", parent.display()));
+            return refuse(
+                "output",
+                format!("{}: {error}", literal(&parent.display().to_string())),
+            );
         }
     }
     let area = match Area::of(&out) {
@@ -595,7 +602,7 @@ fn build(args: &[String]) -> ExitCode {
                 "output-busy",
                 format!(
                     "{} is in use by another build or a preview; stop it and build again",
-                    area.out.display()
+                    literal(&area.out.display().to_string())
                 ),
             )
         }
@@ -758,14 +765,14 @@ fn preview(args: &[String]) -> ExitCode {
                     "preview",
                     format!(
                         "{} is being built; preview it when the build ends",
-                        area.out.display()
+                        literal(&area.out.display().to_string())
                     ),
                 ),
                 _ => fail(
                     "preview",
                     format!(
                         "a build of {} stopped half-way; run `rustify-docs build` to recover it",
-                        area.out.display()
+                        literal(&area.out.display().to_string())
                     ),
                 ),
             };
@@ -784,9 +791,9 @@ fn preview(args: &[String]) -> ExitCode {
         return fail(
             "preview",
             format!(
-                "{} is a `{}` output; preview serves production builds only",
-                dir.display(),
-                manifest.mode
+                "{} is a {} output; preview serves production builds only",
+                literal(&dir.display().to_string()),
+                code_span(&manifest.mode)
             ),
         );
     }
@@ -800,7 +807,7 @@ fn preview(args: &[String]) -> ExitCode {
                 "preview",
                 format!(
                     "the output was built for base {}, not {wanted}; build again with --base {wanted}, or preview with --base {}",
-                    manifest.base, manifest.base
+                    literal(&manifest.base), literal(&manifest.base), wanted = literal(&wanted)
                 ),
             );
         }
@@ -816,7 +823,7 @@ fn preview(args: &[String]) -> ExitCode {
                 "preview",
                 format!(
                     "{} is being built; preview it when the build ends",
-                    area.out.display()
+                    literal(&area.out.display().to_string())
                 ),
             )
         }
@@ -827,7 +834,7 @@ fn preview(args: &[String]) -> ExitCode {
             "preview",
             format!(
                 "a build of {} stopped half-way; run `rustify-docs build` to recover it",
-                area.out.display()
+                literal(&area.out.display().to_string())
             ),
         );
     }
@@ -919,6 +926,6 @@ fn main() -> ExitCode {
         Some("preview") => preview(&args[1..]),
         Some("new") => new_site(&args[1..]),
         Some("dev") => dev(&args[1..]),
-        Some(other) => usage(format!("unknown command `{other}`")),
+        Some(other) => usage(format!("unknown command {}", code_span(other))),
     }
 }

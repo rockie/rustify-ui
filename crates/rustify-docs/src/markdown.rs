@@ -17,6 +17,7 @@
 //! each generation. Raw HTML is checked against the site's policy here, and
 //! its URLs become slots the same way.
 
+use crate::diagnostic_text::code_span;
 use std::collections::BTreeMap;
 use std::ops::Range;
 
@@ -508,7 +509,10 @@ impl<'a> Writer<'a> {
                         Issue::error(
                             span.clone(),
                             "duplicate-heading-id",
-                            format!("the heading id `{id}` is used twice on this page"),
+                            format!(
+                                "the heading id {} is used twice on this page",
+                                code_span(id)
+                            ),
                         )
                         .suggest("give one of the headings another {#id}"),
                     );
@@ -733,8 +737,8 @@ impl<'a> Writer<'a> {
                         span,
                         "code-group",
                         format!(
-                            "code group `{}` is still open; groups do not nest",
-                            open.name
+                            "code group {} is still open; groups do not nest",
+                            code_span(&open.name)
                         ),
                     ));
                     return;
@@ -775,8 +779,8 @@ impl<'a> Writer<'a> {
                     span.clone(),
                     "code-group",
                     format!(
-                        "code group `{}` holds something other than code blocks",
-                        group.name
+                        "code group {} holds something other than code blocks",
+                        code_span(&group.name)
                     ),
                 )
                 .suggest("keep only fenced code blocks between the two group comments"),
@@ -786,7 +790,7 @@ impl<'a> Writer<'a> {
             self.out.issues.push(Issue::error(
                 span.clone(),
                 "code-group",
-                format!("code group `{}` has no code blocks", group.name),
+                format!("code group {} has no code blocks", code_span(&group.name)),
             ));
         }
         for (i, label) in group.labels.iter().enumerate() {
@@ -796,8 +800,9 @@ impl<'a> Writer<'a> {
                         span.clone(),
                         "code-group",
                         format!(
-                            "code group `{}` has two tabs labelled `{label}`",
-                            group.name
+                            "code group {} has two tabs labelled {}",
+                            code_span(&group.name),
+                            code_span(label)
                         ),
                     )
                     .suggest("give each block its own title=\"…\""),
@@ -1291,8 +1296,12 @@ impl<'a> Writer<'a> {
             Some(Ok(source)) => source.clone(),
             Some(Err(message)) => {
                 self.out.issues.push(
-                    Issue::error(span, "include-missing", format!("`{path}`: {message}"))
-                        .suggest("the path is relative to the project root"),
+                    Issue::error(
+                        span,
+                        "include-missing",
+                        format!("{}: {message}", code_span(&path)),
+                    )
+                    .suggest("the path is relative to the project root"),
                 );
                 return;
             }
@@ -1300,7 +1309,7 @@ impl<'a> Writer<'a> {
                 self.out.issues.push(Issue::error(
                     span,
                     "include-missing",
-                    format!("`{path}` was not read for this page"),
+                    format!("{} was not read for this page", code_span(&path)),
                 ));
                 return;
             }
@@ -1310,8 +1319,15 @@ impl<'a> Writer<'a> {
                 Ok(text) => text,
                 Err(message) => {
                     self.out.issues.push(
-                        Issue::error(span, "include-region", format!("`{path}`: {message}")).suggest(format!(
-                            "mark the lines with `rustify-region:{region}` and `rustify-endregion:{region}` comments"
+                        Issue::error(
+                            span,
+                            "include-region",
+                            format!("{}: {message}", code_span(&path)),
+                        )
+                        .suggest(format!(
+                            "mark the lines with {} and {} comments",
+                            code_span(&format!("rustify-region:{region}")),
+                            code_span(&format!("rustify-endregion:{region}"))
                         )),
                     );
                     return;
@@ -1426,7 +1442,7 @@ impl<'a> Writer<'a> {
                 Issue::error(
                     group.span.clone(),
                     "code-group",
-                    format!("code group `{}` is never closed", group.name),
+                    format!("code group {} is never closed", code_span(&group.name)),
                 )
                 .suggest("end it with <!-- rustify:end-code-group -->"),
             );
@@ -1579,12 +1595,12 @@ pub fn parse_info(info: &str) -> Result<FenceInfo, String> {
         let name = &rest[..name_end];
         rest = &rest[name_end..];
         let value = if let Some(after) = rest.strip_prefix('=') {
-            let after = after
-                .strip_prefix('"')
-                .ok_or_else(|| format!("the value of `{name}` must be in double quotes"))?;
+            let after = after.strip_prefix('"').ok_or_else(|| {
+                format!("the value of {} must be in double quotes", code_span(name))
+            })?;
             let end = after
                 .find('"')
-                .ok_or_else(|| format!("the value of `{name}` has no closing quote"))?;
+                .ok_or_else(|| format!("the value of {} has no closing quote", code_span(name)))?;
             rest = &after[end + 1..];
             Some(&after[..end])
         } else {
@@ -1596,7 +1612,7 @@ pub fn parse_info(info: &str) -> Result<FenceInfo, String> {
             ("linenos", None) => fence.linenos = true,
             ("title", Some(title)) => fence.title = Some(title.to_owned()),
             ("highlight", Some(lines)) => fence.highlight = parse_ranges(lines)?,
-            (name, _) => return Err(format!("`{name}` is not a code fence attribute")),
+            (name, _) => return Err(format!("{} is not a code fence attribute", code_span(name))),
         }
         first = false;
     }

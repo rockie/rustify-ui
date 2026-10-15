@@ -1,0 +1,59 @@
+npm notice run rustify-ui-browser-tests@0.1.0 npx
+npm notice run 'playwright' test -c playwright.docs.config.ts --project=docs-dev dev-components.spec.ts --grep gaps-2 code spans: plain --workers=1 --output=/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps2-h2p69rv7/red-browser
+
+Running 1 test using 1 worker
+
+(node:6332) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-docs-cli v0.1.17 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-docs-cli)
+mbx[warning]: incremental state was not reused: compiler environment input changed: RUSTIFY_DOCS_SOURCE_REVISION
+mbx[progress]: 15s elapsed; 0 hits, 0 misses, 0 bypassed, 0 not looked up; ~0s compiler work saved
+mbx[progress]: 30s elapsed; 0 hits, 0 misses, 0 bypassed, 0 not looked up; ~0s compiler work saved
+    Finished `docs-cli` profile [optimized] target(s) in 34.40s
+mbx[cache]: 0 hits, 1 misses, 1 incremental; 0 B downloaded, 0 B uploaded, 1.9 KiB stored locally
+mbx[gc]: evicted 0 objects and 0 action results (16.2 MiB logical); 90.0 GiB logical remain
+mbx[savings]: 19h 47m of compilation avoided across 9059 builds. imagine the fan noise. now stop.
+  ✘  1 [docs-dev] › tests/docs-ssg/dev-components.spec.ts:984:5 › gaps-2 code spans: plain author paths, prefixed anchors, YAML keys and empty language remain exact (2.2s)
+
+
+  1) [docs-dev] › tests/docs-ssg/dev-components.spec.ts:984:5 › gaps-2 code spans: plain author paths, prefixed anchors, YAML keys and empty language remain exact 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "`` content/a`b`c.md `` has no heading `` #a`b ``"
+    Received: "content/a`b`c.md has no heading `#a`b`"
+
+       995 |     writeFileSync(path.join(plain, 'content/index.md'), `${good}\n[Target](a%60b%60c.md#a%60b)\n`);
+       996 |     state = await settled(state.revision, false);
+    >  997 |     expect(state.diagnostics.find(d => d.rule === 'broken-anchor')?.message).toBe('`` content/a`b`c.md `` has no heading `` #a`b ``');
+           |                                                                              ^
+       998 |     await exactProse(page, state, 'broken-anchor', { message: 'content/a`b`c.md has no heading #a`b', messageCodes: ['content/a`b`c.md', '#a`b'] });
+       999 |     await proseLayouts(page, 'gaps2-anchor');
+      1000 |     const hide = page.getByRole('button', { name: 'Hide problems' });
+        at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/docs-ssg/dev-components.spec.ts:997:78
+
+    attachment #5: dev-component-cli.log (text/plain) ──────────────────────────────────────────────
+    rustc 1.99.0 (b940084d7 2026-09-28)
+    dev: pages show no last-updated date: not a git repository (or any of the parent directories): .git
+    watching /private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-dev-components-YcBfBR/plain; drafts are shown, source and published output are unchan...
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps2-h2p69rv7/red-browser/docs-ssg-dev-components-ga-30011-empty-language-remain-exact-docs-dev/error-context.md
+
+    attachment #7: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../../var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps2-h2p69rv7/red-browser/docs-ssg-dev-components-ga-30011-empty-language-remain-exact-docs-dev/trace.zip
+    Usage:
+
+        npx playwright show-trace ../../../../../var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps2-h2p69rv7/red-browser/docs-ssg-dev-components-ga-30011-empty-language-remain-exact-docs-dev/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [docs-dev] › tests/docs-ssg/dev-components.spec.ts:984:5 › gaps-2 code spans: plain author paths, prefixed anchors, YAML keys and empty language remain exact 

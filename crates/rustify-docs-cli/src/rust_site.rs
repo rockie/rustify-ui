@@ -3,6 +3,7 @@
 use crate::rust_source::{DemoSource, Resolver};
 use rustify_docs::content::{Diagnostic, Project};
 use rustify_docs::diagnostic::{Issue, Severity};
+use rustify_docs::diagnostic_text::{code_span, literal};
 use rustify_docs::site::{
     Description, HelperOperation, HelperRequest, HelperResponse, HelperResult, RenderRequest,
     RenderResult, SiteEnvironment, PROTOCOL_VERSION,
@@ -529,7 +530,7 @@ pub(super) fn prepare_checked_with(
                 candidates.extend(product_class_candidates(text).map_err(|error| {
                     format!(
                         "cannot scan compiled Rust class source {}: {error}",
-                        path.display()
+                        literal(&path.display().to_string())
                     )
                 })?);
             }
@@ -543,7 +544,8 @@ pub(super) fn prepare_checked_with(
             }
             if files.insert(path.clone(), bytes).is_some() {
                 return Err(format!(
-                    "framework runtime resource conflicts with generated binding `{path}`"
+                    "framework runtime resource conflicts with generated binding {}",
+                    code_span(&path)
                 ));
             }
         }
@@ -743,7 +745,8 @@ fn validate_framework(metadata: &Metadata, expected: &str) -> Result<(), String>
             .collect();
         let [package] = matches.as_slice() else {
             return Err(format!(
-                "Cargo.toml/Cargo.lock must resolve one direct `{name}` dependency. {PAIR_ADVICE}"
+                "Cargo.toml/Cargo.lock must resolve one direct {} dependency. {PAIR_ADVICE}",
+                code_span(name)
             ));
         };
         framework.push(*package);
@@ -761,7 +764,7 @@ fn validate_framework(metadata: &Metadata, expected: &str) -> Result<(), String>
             let requested = source.split_once('?').and_then(|(_, query)| query.split('#').next())
                 .and_then(|query| query.split('&').find_map(|part| part.strip_prefix("rev="))).unwrap_or("");
             if expected.is_empty() || resolved != expected || requested != expected {
-                return Err(format!("Cargo.toml/Cargo.lock framework revision does not match this CLI's explicit expected revision `{expected}`. {PAIR_ADVICE}"));
+                return Err(format!("Cargo.toml/Cargo.lock framework revision does not match this CLI's explicit expected revision {}. {PAIR_ADVICE}", code_span(expected)));
             }
         }
         None if expected.is_empty() => {
@@ -1149,7 +1152,7 @@ fn compiled_sources(message: &Value, package_root: &Path) -> Result<BTreeSet<Pat
         let text = fs::read_to_string(&path).map_err(|error| {
             format!(
                 "cannot read compiled Rust dep-info {}: {error}",
-                path.display()
+                literal(&path.display().to_string())
             )
         })?;
         for source in dep_info_paths(&text) {
@@ -1162,7 +1165,7 @@ fn compiled_sources(message: &Value, package_root: &Path) -> Result<BTreeSet<Pat
         }
     }
     if !found {
-        return Err(format!("Cargo did not leave dep-info for compiled local target `{}`; class scanning needs its actual source set", message.pointer("/target/name").and_then(Value::as_str).unwrap_or("unknown")));
+        return Err(format!("Cargo did not leave dep-info for compiled local target {}; class scanning needs its actual source set", code_span(message.pointer("/target/name").and_then(Value::as_str).unwrap_or("unknown"))));
     }
     Ok(sources)
 }
@@ -1548,8 +1551,8 @@ fn validate_description(
         }
         if digest(resource.content.as_bytes()) != resource.sha256 {
             return Err(format!(
-                "framework resource `{}` does not match its SHA-256",
-                resource.path
+                "framework resource {} does not match its SHA-256",
+                code_span(&resource.path)
             ));
         }
         if resources
@@ -1576,7 +1579,7 @@ fn validate_demo_names(results: &[RenderResult], manifest: &Manifest) -> Result<
                 .iter()
                 .any(|declared| declared.name == demo.name)
         {
-            return Err(format!("docs-render returned HTML for undeclared nested demo `{}`; discard the entire generation", demo.name));
+            return Err(format!("docs-render returned HTML for undeclared nested demo {}; discard the entire generation", code_span(&demo.name)));
         }
     }
     Ok(())
@@ -1591,7 +1594,7 @@ fn manifest_mismatch(cold: &Value, compiled: &Value, path: &str) -> Option<Strin
             for (key, expected) in cold {
                 let path = format!("{path}.{key}");
                 let Some(received) = compiled.get(key) else {
-                    return Some(format!("{path}: missing compiled field"));
+                    return Some(format!("{}: missing compiled field", literal(&path)));
                 };
                 if let Some(difference) = manifest_mismatch(expected, received, &path) {
                     return Some(difference);
@@ -1600,7 +1603,12 @@ fn manifest_mismatch(cold: &Value, compiled: &Value, path: &str) -> Option<Strin
             compiled
                 .keys()
                 .find(|key| !cold.contains_key(*key))
-                .map(|key| format!("{path}.{key}: unexpected compiled field"))
+                .map(|key| {
+                    format!(
+                        "{}: unexpected compiled field",
+                        literal(&format!("{path}.{key}"))
+                    )
+                })
         }
         (Value::Array(cold), Value::Array(compiled)) if cold.len() == compiled.len() => cold
             .iter()
@@ -1619,9 +1627,10 @@ fn manifest_mismatch(cold: &Value, compiled: &Value, path: &str) -> Option<Strin
                 bounded
             };
             Some(format!(
-                "{path}: cold {}, compiled {}",
-                bounded(cold),
-                bounded(compiled)
+                "{}: cold {}, compiled {}",
+                literal(path),
+                literal(&bounded(cold)),
+                literal(&bounded(compiled))
             ))
         }
     }
@@ -2275,7 +2284,7 @@ fn required_string<'a>(value: &'a Value, field: &str) -> Result<&'a str, String>
     value
         .get(field)
         .and_then(Value::as_str)
-        .ok_or_else(|| format!("Cargo metadata is missing `{field}`"))
+        .ok_or_else(|| format!("Cargo metadata is missing {}", code_span(field)))
 }
 fn project_path(root: &Path, relative: &str) -> Result<PathBuf, String> {
     let path = fs::canonicalize(root.join(relative))
@@ -2310,7 +2319,7 @@ fn input_changes(before: &InputSnapshot, after: &InputSnapshot, root: &Path) -> 
                 _ => "changed",
             };
             let display = path.strip_prefix(root).unwrap_or(path).to_string_lossy();
-            examples.push(format!("{kind} file `{display}`"));
+            examples.push(format!("{kind} file {}", code_span(&display)));
         }
     }
     let keys: BTreeSet<_> = before
@@ -2332,7 +2341,10 @@ fn input_changes(before: &InputSnapshot, after: &InputSnapshot, root: &Path) -> 
                 (Some(_), None) => "removed",
                 _ => "changed",
             };
-            examples.push(format!("{kind} build environment dependency `{key}`"));
+            examples.push(format!(
+                "{kind} build environment dependency {}",
+                code_span(key)
+            ));
         }
     }
     let details = if examples.is_empty() {

@@ -11,6 +11,7 @@
 //! The same pass records each URL attribute's raw value range, so links and
 //! resources in author HTML are resolved and rewritten like Markdown ones.
 
+use crate::diagnostic_text::{code_span, literal};
 use std::ops::Range;
 
 use dom_query::Document;
@@ -622,7 +623,10 @@ fn scan_tokens(
                 issues.push(Issue::error(
                     span.clone(),
                     "event-handler",
-                    format!("`{attribute}` runs inline script, which the policy blocks"),
+                    format!(
+                        "{} runs inline script, which the policy blocks",
+                        code_span(&attribute)
+                    ),
                 ));
                 continue;
             }
@@ -641,7 +645,7 @@ fn scan_tokens(
                 issues.push(Issue::error(
                     span.clone(),
                     "script-url",
-                    format!("`{attribute}` holds a script URL"),
+                    format!("{} holds a script URL", code_span(&attribute)),
                 ));
                 continue;
             }
@@ -662,8 +666,15 @@ fn scan_tokens(
                     };
                     if is_cross_origin(&url, true) {
                         issues.push(
-                            Issue::error(span.clone(), "cross-origin-resource", format!("a class loads `{url}` from another origin, which the policy blocks"))
-                                .suggest("download it into static/ and reference it from there"),
+                            Issue::error(
+                                span.clone(),
+                                "cross-origin-resource",
+                                format!(
+                                    "a class loads {} from another origin, which the policy blocks",
+                                    code_span(&url)
+                                ),
+                            )
+                            .suggest("download it into static/ and reference it from there"),
                         );
                     } else if !url.trim_start().to_ascii_lowercase().starts_with("data:") {
                         slots.push(UrlSlot {
@@ -691,8 +702,15 @@ fn scan_tokens(
             if !matches!(role, UrlRole::Link) && urls.iter().any(|url| is_cross_origin(url, image))
             {
                 issues.push(
-                    Issue::error(span.clone(), "cross-origin-resource", format!("<{name} {attribute}> loads from another origin, which the policy blocks"))
-                        .suggest("download it into static/ and reference it from there"),
+                    Issue::error(
+                        span.clone(),
+                        "cross-origin-resource",
+                        format!(
+                            "{} loads from another origin, which the policy blocks",
+                            literal(&format!("<{name} {attribute}>"))
+                        ),
+                    )
+                    .suggest("download it into static/ and reference it from there"),
                 );
                 continue;
             }
@@ -736,17 +754,17 @@ pub fn check_document(html: &str) -> Vec<String> {
                         in_script = !tag.self_closing;
                         match attribute("src") {
                             None => problems.push("an inline <script>".to_owned()),
-                            Some(src) if is_cross_origin(&src, false) => {
-                                problems.push(format!("a script from another origin: {src}"))
-                            }
+                            Some(src) if is_cross_origin(&src, false) => problems
+                                .push(format!("a script from another origin: {}", literal(&src))),
                             Some(_) => {}
                         }
                     }
                     "style" | "iframe" | "frame" | "object" | "embed" | "base" => {
-                        problems.push(format!("a <{name}> element"))
+                        problems.push(format!("a {} element", literal(&format!("<{name}>"))))
                     }
                     "a" | "area" if opens_unguarded_window(attribute) => problems.push(format!(
-                        "a new-window <{name}> to another site without rel=\"noopener\""
+                        "a new-window {} to another site without rel=\"noopener\"",
+                        literal(&format!("<{name}>"))
                     )),
                     "link" => {
                         let rel = attribute("rel").unwrap_or_default().to_ascii_lowercase();
@@ -764,8 +782,11 @@ pub fn check_document(html: &str) -> Vec<String> {
                         if let Some(href) = attribute("href")
                             .filter(|href| loads && is_cross_origin(href, rel == "icon"))
                         {
-                            problems
-                                .push(format!("a <link rel=\"{rel}\"> to another origin: {href}"));
+                            problems.push(format!(
+                                "a {} to another origin: {}",
+                                literal(&format!("<link rel=\"{rel}\">")),
+                                literal(&href)
+                            ));
                         }
                     }
                     _ => {}
@@ -774,9 +795,16 @@ pub fn check_document(html: &str) -> Vec<String> {
                     let key = String::from_utf8_lossy(key).to_ascii_lowercase();
                     let value = String::from_utf8_lossy(&value.value);
                     if key.starts_with("on") || key == "style" {
-                        problems.push(format!("a `{key}` attribute on <{name}>"));
+                        problems.push(format!(
+                            "a {} attribute on {}",
+                            code_span(&key),
+                            literal(&format!("<{name}>"))
+                        ));
                     } else if is_script_url(&value) {
-                        problems.push(format!("a script URL in <{name} {key}>"));
+                        problems.push(format!(
+                            "a script URL in {}",
+                            literal(&format!("<{name} {key}>"))
+                        ));
                     } else if let Some(role) = url_role(&name, &key) {
                         let image =
                             matches!(role, UrlRole::Srcset | UrlRole::Resource { image: true });
@@ -790,8 +818,11 @@ pub fn check_document(html: &str) -> Vec<String> {
                         };
                         if let Some(url) = urls.into_iter().find(|url| is_cross_origin(url, image))
                         {
-                            problems
-                                .push(format!("<{name} {key}> loads from another origin: {url}"));
+                            problems.push(format!(
+                                "{} loads from another origin: {}",
+                                literal(&format!("<{name} {key}>")),
+                                literal(&url)
+                            ));
                         }
                     }
                 }

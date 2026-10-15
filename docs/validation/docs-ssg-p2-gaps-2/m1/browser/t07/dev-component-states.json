@@ -1,0 +1,202 @@
+[
+  {
+    "session": "127c6-18de9be3b98bbf48",
+    "revision": 0,
+    "sequence": 0,
+    "building": true,
+    "phase": "render",
+    "compile": null,
+    "good": null,
+    "ok": true,
+    "reload": false,
+    "errors": 0,
+    "warnings": 0,
+    "diagnostics": []
+  },
+  {
+    "session": "127c6-18de9be3b98bbf48",
+    "revision": 1,
+    "sequence": 1,
+    "building": false,
+    "phase": "render",
+    "compile": null,
+    "good": 1,
+    "ok": true,
+    "reload": true,
+    "errors": 0,
+    "warnings": 0,
+    "diagnostics": []
+  },
+  {
+    "session": "127c6-18de9be3b98bbf48",
+    "revision": 1,
+    "sequence": 2,
+    "building": true,
+    "phase": "render",
+    "compile": null,
+    "good": 1,
+    "ok": true,
+    "reload": false,
+    "errors": 0,
+    "warnings": 0,
+    "diagnostics": []
+  },
+  {
+    "session": "127c6-18de9be3b98bbf48",
+    "revision": 2,
+    "sequence": 3,
+    "building": false,
+    "phase": "render",
+    "compile": null,
+    "good": 1,
+    "ok": false,
+    "reload": false,
+    "errors": 1,
+    "warnings": 0,
+    "diagnostics": [
+      {
+        "severity": "error",
+        "rule": "broken-anchor",
+        "file": "content/index.md",
+        "line": 6,
+        "column": 1,
+        "message": "`` content/a`b`c.md `` has no heading `` #a`b ``",
+        "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+      }
+    ]
+  },
+  {
+    "session": "127c6-18de9be3b98bbf48",
+    "revision": 2,
+    "sequence": 4,
+    "building": true,
+    "phase": "render",
+    "compile": null,
+    "good": 1,
+    "ok": false,
+    "reload": false,
+    "errors": 1,
+    "warnings": 0,
+    "diagnostics": [
+      {
+        "severity": "error",
+        "rule": "broken-anchor",
+        "file": "content/index.md",
+        "line": 6,
+        "column": 1,
+        "message": "`` content/a`b`c.md `` has no heading `` #a`b ``",
+        "suggestion": "link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"
+      }
+    ]
+  },
+  {
+    "session": "127c6-18de9be3b98bbf48",
+    "revision": 3,
+    "sequence": 5,
+    "building": false,
+    "phase": "render",
+    "compile": null,
+    "good": 1,
+    "ok": false,
+    "reload": false,
+    "errors": 1,
+    "warnings": 0,
+    "diagnostics": [
+      {
+        "severity": "error",
+        "rule": "embed-payload",
+        "file": "content/index.md",
+        "line": 8,
+        "column": 1,
+        "message": "unknown field `` un`known ``; a demo takes only `name`, a component takes `name`, `props` and `children`",
+        "suggestion": "Write valid YAML for `rustify-component` (`name`, optional `props` mapping and `children` string) or `rustify-demo` (`name` only); correct the reported payload error."
+      }
+    ]
+  },
+  {
+    "session": "127c6-18de9be3b98bbf48",
+    "revision": 3,
+    "sequence": 6,
+    "building": true,
+    "phase": "render",
+    "compile": null,
+    "good": 1,
+    "ok": false,
+    "reload": false,
+    "errors": 1,
+    "warnings": 0,
+    "diagnostics": [
+      {
+        "severity": "error",
+        "rule": "embed-payload",
+        "file": "content/index.md",
+        "line": 8,
+        "column": 1,
+        "message": "unknown field `` un`known ``; a demo takes only `name`, a component takes `name`, `props` and `children`",
+        "suggestion": "Write valid YAML for `rustify-component` (`name`, optional `props` mapping and `children` string) or `rustify-demo` (`name` only); correct the reported payload error."
+      }
+    ]
+  },
+  {
+    "session": "127c6-18de9be3b98bbf48",
+    "revision": 4,
+    "sequence": 7,
+    "building": false,
+    "phase": "render",
+    "compile": null,
+    "good": 1,
+    "ok": false,
+    "reload": false,
+    "errors": 1,
+    "warnings": 0,
+    "diagnostics": [
+      {
+        "severity": "error",
+        "rule": "config-lang",
+        "file": "rustify-docs.toml",
+        "line": 5,
+        "column": 6,
+        "message": "``  `` is not a language tag",
+        "suggestion": "use a tag like `en` or `zh-CN`"
+      }
+    ]
+  },
+  {
+    "session": "127c6-18de9be3b98bbf48",
+    "revision": 4,
+    "sequence": 8,
+    "building": true,
+    "phase": "render",
+    "compile": null,
+    "good": 1,
+    "ok": false,
+    "reload": false,
+    "errors": 1,
+    "warnings": 0,
+    "diagnostics": [
+      {
+        "severity": "error",
+        "rule": "config-lang",
+        "file": "rustify-docs.toml",
+        "line": 5,
+        "column": 6,
+        "message": "``  `` is not a language tag",
+        "suggestion": "use a tag like `en` or `zh-CN`"
+      }
+    ]
+  },
+  {
+    "session": "127c6-18de9be3b98bbf48",
+    "revision": 5,
+    "sequence": 9,
+    "building": false,
+    "phase": "render",
+    "compile": null,
+    "good": 5,
+    "ok": true,
+    "reload": false,
+    "errors": 0,
+    "warnings": 0,
+    "diagnostics": []
+  }
+]

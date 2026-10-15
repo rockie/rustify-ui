@@ -8,6 +8,7 @@
 //! renders under its own reactive owner, and nothing mutable is shared
 //! between threads but the queue index.
 
+use crate::diagnostic_text::{code_span, literal};
 use std::collections::{BTreeMap, BTreeSet};
 use std::sync::atomic::{AtomicUsize, Ordering};
 use std::sync::Arc;
@@ -600,9 +601,9 @@ fn title_diagnostics(
     groups.into_iter().filter_map(|(title, pages)| {
         let registered = pages.iter().find(|&&i| matches!(analysis.pages[i].origin, crate::content::PageOrigin::Registered(_)))?;
         if pages.len() == 1 && title != not_found { return None; }
-        let routes = pages.iter().map(|&i| analysis.pages[i].route.as_str()).collect::<Vec<_>>().join(", ");
+        let routes = pages.iter().map(|&i| literal(&analysis.pages[i].route)).collect::<Vec<_>>().join(", ");
         Some(Diagnostic::in_file(&analysis.pages[*registered].file, Severity::Error,
-            "document-title", format!("registered page document title `{title}` is duplicated by {routes}{}; give the page a unique title", if title == not_found { " and the generated not-found page" } else { "" })))
+            "document-title", format!("registered page document title {} is duplicated by {routes}{}; give the page a unique title", code_span(title), if title == not_found { " and the generated not-found page" } else { "" })))
     }).collect()
 }
 
@@ -641,7 +642,11 @@ fn final_documents(
                     sources.get(path).map_or(path.as_str(), String::as_str),
                     Severity::Error,
                     "output-conflict",
-                    format!("published file `{prefix}` is also a directory required by `{path}`"),
+                    format!(
+                        "published file {} is also a directory required by {}",
+                        code_span(prefix),
+                        code_span(path)
+                    ),
                 ));
             }
             parent = prefix;
@@ -674,7 +679,11 @@ fn final_documents(
                     source,
                     Severity::Error,
                     "output-check",
-                    format!("generated `{path}` has duplicate document id `#{id}`"),
+                    format!(
+                        "generated {} has duplicate document id {}",
+                        code_span(path),
+                        code_span(&format!("#{id}"))
+                    ),
                 ));
             }
         }
@@ -715,18 +724,34 @@ fn final_documents(
                         .and_then(|absolute| urls.get(absolute).copied())
                 };
                 let missing = match target {
-                    None => Some(format!("references `{url}`, which is not a file or route the site publishes")),
-                    Some(target) => fragment.filter(|anchor| !anchor.is_empty()).and_then(|anchor| {
-                        let anchor = crate::content::percent_decode(anchor);
-                        ids.get(target).filter(|ids| !ids.contains(&anchor)).map(|_| format!("references `{url}`, but the final `{target}` document has no id `#{anchor}`"))
-                    }),
+                    None => Some(format!(
+                        "references {}, which is not a file or route the site publishes",
+                        code_span(url)
+                    )),
+                    Some(target) => {
+                        fragment
+                            .filter(|anchor| !anchor.is_empty())
+                            .and_then(|anchor| {
+                                let anchor = crate::content::percent_decode(anchor);
+                                ids.get(target)
+                                    .filter(|ids| !ids.contains(&anchor))
+                                    .map(|_| {
+                                        format!(
+                                            "references {}, but the final {} document has no id {}",
+                                            code_span(url),
+                                            code_span(target),
+                                            code_span(&format!("#{anchor}"))
+                                        )
+                                    })
+                            })
+                    }
                 };
                 if let Some(missing) = missing {
                     problems.push(Diagnostic::in_file(
                         source,
                         Severity::Error,
                         "output-check",
-                        format!("generated `{path}` {missing}"),
+                        format!("generated {} {missing}", code_span(path)),
                     ));
                 }
             }
@@ -1080,7 +1105,10 @@ pub fn generate_extended(
             Diagnostic::general(
                 Severity::Error,
                 "output-check",
-                format!("the generated stylesheet loads `{url}`, which is not a file the site publishes"),
+                format!(
+                    "the generated stylesheet loads {}, which is not a file the site publishes",
+                    code_span(&url)
+                ),
             )
         })
         .collect();

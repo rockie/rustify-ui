@@ -7,6 +7,7 @@
 //! all of them in one run. It reads files and nothing else: it writes no
 //! output and makes no network request.
 
+use crate::diagnostic_text::{code_span, literal};
 use std::collections::{BTreeMap, BTreeSet, HashMap};
 use std::path::{Path, PathBuf};
 use std::sync::Arc;
@@ -126,7 +127,7 @@ impl Project {
                 name,
                 Severity::Error,
                 "config-missing",
-                format!("cannot read {name}: {error}"),
+                format!("cannot read {}: {error}", literal(name)),
             )]
         })?;
         let mut inputs = InputReceipts::default();
@@ -525,7 +526,7 @@ pub fn snapshot(project: &Project) -> (Snapshot, Vec<Diagnostic>) {
                             &project.config_text,
                             refusal.issue(
                                 &|rule, message| Issue::error(span.clone(), rule, message),
-                                &format!("content.include `{file}`"),
+                                &format!("content.include {}", code_span(file)),
                                 "content-include-missing",
                             ),
                         )),
@@ -616,7 +617,7 @@ pub fn snapshot(project: &Project) -> (Snapshot, Vec<Diagnostic>) {
                     &project.config_text,
                     refusal.issue(
                         &|rule, message| Issue::error(span.clone(), rule, message),
-                        &format!("theme.document `{path}`"),
+                        &format!("theme.document {}", code_span(path)),
                         "theme-document-missing",
                     ),
                 )),
@@ -1051,11 +1052,7 @@ impl Sources<'_> {
     ) -> Target {
         if let Target::Resource(path) = &target {
             if self.theme_file(path) {
-                found.push(Refusal::ThemeDocument.issue(
-                    issue,
-                    &format!("`{path}`"),
-                    "broken-link",
-                ));
+                found.push(Refusal::ThemeDocument.issue(issue, &code_span(path), "broken-link"));
                 return Target::Keep;
             }
         }
@@ -1217,8 +1214,9 @@ pub fn analyze_with_surfaces(
                     Severity::Error,
                     "route-conflict",
                     format!(
-                        "this page and `{}` both become {route}",
-                        file_of(&other.path)
+                        "this page and {} both become {}",
+                        code_span(&file_of(&other.path)),
+                        literal(&route)
                     ),
                 )
                 .with_suggestion("rename or move one of them"),
@@ -1234,7 +1232,7 @@ pub fn analyze_with_surfaces(
                             &file,
                             Severity::Error,
                             "lang",
-                            format!("`{lang}` is not a language tag"),
+                            format!("{} is not a language tag", code_span(lang)),
                         )
                         .with_suggestion("use a language tag such as `en`, `zh-CN` or `fr`")
                     },
@@ -1444,7 +1442,7 @@ pub fn analyze_with_surfaces(
                 &registered.file,
                 Severity::Error,
                 "invalid-route",
-                format!("registered route `{route}` needs a canonical path like `/custom/`, without query or fragment"),
+                format!("registered route {} needs a canonical path like `/custom/`, without query or fragment", code_span(route)),
             ));
             continue;
         }
@@ -1465,7 +1463,10 @@ pub fn analyze_with_surfaces(
                 &registered.file,
                 Severity::Error,
                 "reserved-route",
-                format!("registered route `{route}` is reserved for generated or private output"),
+                format!(
+                    "registered route {} is reserved for generated or private output",
+                    code_span(route)
+                ),
             ));
             continue;
         }
@@ -1475,8 +1476,10 @@ pub fn analyze_with_surfaces(
                 Severity::Error,
                 "route-conflict",
                 format!(
-                    "registered page `{}` and `{}` both become {route}",
-                    registered.name, pages[other].file
+                    "registered page {} and {} both become {}",
+                    code_span(&registered.name),
+                    code_span(&pages[other].file),
+                    literal(route)
                 ),
             ));
             continue;
@@ -1537,23 +1540,31 @@ pub fn analyze_with_surfaces(
         let (message, suggestion) = if !project.content_root().is_dir() {
             (
                 format!(
-                    "the content directory `{content_dir}` does not exist, so the site has no page"
+                    "the content directory {} does not exist, so the site has no page",
+                    code_span(content_dir)
                 ),
                 format!(
                     "create it with an `index.md`, or set content.dir in {}",
-                    project.config_file
+                    literal(&project.config_file)
                 ),
             )
         } else if pages.is_empty() {
             (
                 format!(
-                    "`{content_dir}` holds no page, so the site would have only its not-found page"
+                    "{} holds no page, so the site would have only its not-found page",
+                    code_span(content_dir)
                 ),
-                format!("add a Markdown page, such as `{content_dir}/index.md`"),
+                format!(
+                    "add a Markdown page, such as {}",
+                    code_span(&format!("{content_dir}/index.md"))
+                ),
             )
         } else {
             (
-                format!("every page in `{content_dir}` is a draft, so a production build would publish none"),
+                format!(
+                    "every page in {} is a draft, so a production build would publish none",
+                    code_span(content_dir)
+                ),
                 "set `draft: false` on the pages that are ready".to_owned(),
             )
         };
@@ -1580,7 +1591,7 @@ pub fn analyze_with_surfaces(
                 slot_file,
                 Severity::Error,
                 "slot-route",
-                format!("slots name `{route}`, which is not a page route"),
+                format!("slots name {}, which is not a page route", code_span(route)),
             ));
             continue;
         }
@@ -1638,7 +1649,7 @@ pub fn analyze_with_surfaces(
                         Issue::error(
                             group.span.clone(),
                             "code-group-conflict",
-                            format!("code group `{}` has other tabs in {first}; groups of one name switch together", group.name),
+                            format!("code group {} has other tabs in {}; groups of one name switch together", code_span(&group.name), literal(first)),
                         )
                         .suggest("give the groups the same tabs, or different names"),
                     ));
@@ -1803,7 +1814,7 @@ pub fn analyze_with_surfaces(
                 Issue::error(
                     span.clone(),
                     rule,
-                    format!("source candidate `{candidate}`: {message}"),
+                    format!("source candidate {}: {message}", code_span(candidate)),
                 )
             };
             let target = if url.starts_with('#') {
@@ -1862,7 +1873,7 @@ pub fn analyze_with_surfaces(
                 &project.config_text,
                 refusal.issue(
                     &|rule, message| Issue::error(span.clone(), rule, message),
-                    &format!("{key} `{path}`"),
+                    &format!("{key} {}", code_span(path)),
                     missing,
                 ),
             )),
@@ -1906,7 +1917,8 @@ pub fn analyze_with_surfaces(
                     Severity::Error,
                     "output-conflict",
                     format!(
-                        "this file would be published at `{output}`, which the build writes itself"
+                        "this file would be published at {}, which the build writes itself",
+                        code_span(output)
                     ),
                 )
                 .with_suggestion("rename or move it"),
@@ -1926,7 +1938,7 @@ pub fn analyze_with_surfaces(
                 diagnostics.push(Diagnostic::located(
                     &project.config_file,
                     &project.config_text,
-                    Issue::warning(span.clone(), "brand-contrast", format!("{color} as link text on the {mode_name} background is {link:.2}:1; text needs 4.5:1"))
+                    Issue::warning(span.clone(), "brand-contrast", format!("{} as link text on the {mode_name} background is {link:.2}:1; text needs 4.5:1", literal(color)))
                         .suggest(format!("pick a {} {mode_name} primary", if mode_name == "light" { "darker" } else { "lighter" })),
                 ));
             }
@@ -1937,7 +1949,10 @@ pub fn analyze_with_surfaces(
                     Issue::warning(
                         span.clone(),
                         "brand-contrast",
-                        format!("no button label reaches 4.5:1 on {color} ({button:.2}:1 at best)"),
+                        format!(
+                            "no button label reaches 4.5:1 on {} ({button:.2}:1 at best)",
+                            literal(color)
+                        ),
                     ),
                 ));
             }
@@ -2124,7 +2139,10 @@ fn resolve_source_link(
         )
     };
     let Some(file) = file else {
-        found.push(issue("broken-link", format!("`{path}` leaves the project")));
+        found.push(issue(
+            "broken-link",
+            format!("{} leaves the project", code_span(path)),
+        ));
         return Target::Keep;
     };
     if let Some(page) = file
@@ -2198,7 +2216,10 @@ fn resolve_references(
                     .get(route)
                     .is_some_and(|known| known.contains(&anchor))
                 {
-                    found.push(issue("broken-anchor", format!("{route} has no id `{url}`")));
+                    found.push(issue(
+                        "broken-anchor",
+                        format!("{} has no id {}", literal(route), code_span(url)),
+                    ));
                 }
                 Target::Keep
             }
@@ -2249,7 +2270,10 @@ fn resolve_html_link(
     let (path, fragment) = split_fragment(url);
     let decoded = percent_decode(path.split('?').next().unwrap_or_default());
     let Some(file) = join("", &decoded) else {
-        found.push(issue("broken-link", format!("`{path}` leaves the project")));
+        found.push(issue(
+            "broken-link",
+            format!("{} leaves the project", code_span(path)),
+        ));
         return Target::Keep;
     };
     if excluded_markdown(graph.project, &file) {
@@ -2279,7 +2303,7 @@ fn resolve_html_link(
     match sources.get(&file) {
         Ok(()) => Target::Resource(file),
         Err(refusal) => {
-            found.push(refusal.issue(issue, &format!("`{path}`"), "broken-link"));
+            found.push(refusal.issue(issue, &code_span(path), "broken-link"));
             Target::Keep
         }
     }
@@ -2312,7 +2336,7 @@ fn resolve_link(
         if matches!(scheme.as_str(), "javascript" | "vbscript" | "data") {
             found.push(issue(
                 "script-url",
-                format!("a `{scheme}:` link is not allowed"),
+                format!("a {} link is not allowed", code_span(&format!("{scheme}:"))),
             ));
         }
         return Target::Keep;
@@ -2327,7 +2351,7 @@ fn resolve_link(
             if !known {
                 let file = routes.get(route).map_or(route, |&i| pages[i].file.as_str());
                 found.push(
-                    issue("broken-anchor", format!("{file} has no heading `#{anchor}`"))
+                    issue("broken-anchor", format!("{} has no heading {}", literal(file), code_span(&format!("#{anchor}"))))
                         .suggest("link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"),
                 );
             }
@@ -2339,7 +2363,10 @@ fn resolve_link(
                 .and_then(|route| routes.get(route))
                 .is_some_and(|&i| pages[i].draft)
         {
-            let message = format!("{} is a draft and is not published", pages[target].file);
+            let message = format!(
+                "{} is a draft and is not published",
+                literal(&pages[target].file)
+            );
             match mode {
                 Mode::Production => found.push(issue("draft-link", message)),
                 Mode::Dev => found.push(Issue {
@@ -2362,7 +2389,7 @@ fn resolve_link(
             Some(from) => check_anchor(from, found),
             None => found.push(issue(
                 "broken-link",
-                format!("`{url}` names no page; link to a page or a URL"),
+                format!("{} names no page; link to a page or a URL", code_span(url)),
             )),
         }
         return Target::Keep;
@@ -2383,7 +2410,10 @@ fn resolve_link(
         if snapshot.files.contains_key(&asset) {
             return Target::Resource(asset);
         }
-        found.push(issue("broken-link", format!("no page or file at `{path}`")));
+        found.push(issue(
+            "broken-link",
+            format!("no page or file at {}", code_span(path)),
+        ));
         return Target::Keep;
     }
     match join(dir, &decoded) {
@@ -2438,8 +2468,8 @@ fn resolve_link(
                         found.push(issue(
                             "broken-link",
                             format!(
-                                "there is no page `{}/{markdown}`",
-                                project.config.content_dir
+                                "there is no page {}",
+                                code_span(&format!("{0}/{markdown}", project.config.content_dir))
                             ),
                         ));
                         Target::Keep
@@ -2454,23 +2484,32 @@ fn resolve_link(
                 return match sources.get(&file) {
                     Ok(()) => Target::Resource(file),
                     Err(refusal) => {
-                        found.push(refusal.issue(issue, &format!("`{file}`"), "broken-link"));
+                        found.push(refusal.issue(issue, &code_span(&file), "broken-link"));
                         Target::Keep
                     }
                 };
             }
-            found.push(issue("broken-link", format!("there is no file `{file}`")));
+            found.push(issue(
+                "broken-link",
+                format!("there is no file {}", code_span(&file)),
+            ));
             Target::Keep
         }
         None => {
             // Outside the content: a file in the repository.
             let project_dir = format!("{}/{dir}", project.config.content_dir);
             let Some(file) = join(&project_dir, &decoded) else {
-                found.push(issue("broken-link", format!("`{path}` leaves the project")));
+                found.push(issue(
+                    "broken-link",
+                    format!("{} leaves the project", code_span(path)),
+                ));
                 return Target::Keep;
             };
             if sources.exists(&file).is_err() {
-                found.push(issue("broken-link", format!("there is no file `{file}`")));
+                found.push(issue(
+                    "broken-link",
+                    format!("there is no file {}", code_span(&file)),
+                ));
                 return Target::Keep;
             }
             match &project.config.repo {
@@ -2494,7 +2533,7 @@ fn resolve_link(
                 }
                 None => {
                     found.push(
-                        issue("repo-link", format!("`{file}` is outside the content and the site has no [repo] to link it to"))
+                        issue("repo-link", format!("{} is outside the content and the site has no [repo] to link it to", code_span(&file)))
                             .suggest("add [repo] url and ref to rustify-docs.toml, or link to a page"),
                     );
                     Target::Keep
@@ -2524,7 +2563,7 @@ fn repository_link(
     issue: &dyn Fn(&'static str, String) -> Issue,
 ) -> Target {
     if let Err(refusal) = sources.exists(file) {
-        found.push(refusal.issue(issue, &format!("`{file}`"), "broken-link"));
+        found.push(refusal.issue(issue, &code_span(file), "broken-link"));
         return Target::Keep;
     }
     let Some(repo) = &project.config.repo else {
@@ -2532,7 +2571,8 @@ fn repository_link(
             issue(
                 "repo-link",
                 format!(
-                    "`{file}` is not a published page and the site has no [repo] to link it to"
+                    "{} is not a published page and the site has no [repo] to link it to",
+                    code_span(file)
                 ),
             )
             .suggest("add [repo] url and ref to rustify-docs.toml, or link to a published page"),
@@ -2589,8 +2629,14 @@ fn resolve_resource(
         };
         if crate::html_check::is_cross_origin(&candidate, image) {
             found.push(
-                issue("cross-origin-resource", format!("`{candidate}` is loaded from another origin, which the site's policy blocks"))
-                    .suggest("download it into the asset directory and reference it from there"),
+                issue(
+                    "cross-origin-resource",
+                    format!(
+                        "{} is loaded from another origin, which the site's policy blocks",
+                        code_span(&candidate)
+                    ),
+                )
+                .suggest("download it into the asset directory and reference it from there"),
             );
             keep(&mut resolved);
             continue;
@@ -2628,7 +2674,7 @@ fn resolve_resource(
                 };
                 let mut problem = refusal.unwrap_or(Refusal::Missing).issue(
                     issue,
-                    &format!("`{candidate}`"),
+                    &code_span(&candidate),
                     missing,
                 );
                 if problem.rule == missing {
@@ -2734,11 +2780,11 @@ fn navigation(
         let at = text[yaml.clone()]
             .find(label)
             .map_or(yaml.start, |at| yaml.start + at);
-        let names: Vec<&str> = config
+        let names: Vec<String> = config
             .nav
             .groups
             .iter()
-            .map(|group| group.label.as_str())
+            .map(|group| literal(&group.label))
             .collect();
         diagnostics.push(Diagnostic::located(
             &page.file,
@@ -2747,8 +2793,9 @@ fn navigation(
                 at..at + label.len(),
                 "nav-unknown-group",
                 format!(
-                    "sidebar.group `{label}` is not a nav group in {}",
-                    project.config_file
+                    "sidebar.group {} is not a nav group in {}",
+                    code_span(label),
+                    literal(&project.config_file)
                 ),
             )
             .suggest(format!("use one of: {}", names.join(", "))),
@@ -2805,7 +2852,11 @@ fn navigation(
                         Issue::warning(
                             span.clone(),
                             "nav-empty",
-                            format!("nav group `{}` lists no pages under `{dir}`", group.label),
+                            format!(
+                                "nav group {} lists no pages under {}",
+                                code_span(&group.label),
+                                code_span(dir)
+                            ),
                         ),
                     ));
                 }
@@ -2824,8 +2875,9 @@ fn navigation(
                                 span.clone(),
                                 "nav-missing-page",
                                 format!(
-                                    "nav lists `{path}`, which is not a page in {}",
-                                    config.content_dir
+                                    "nav lists {}, which is not a page in {}",
+                                    code_span(path),
+                                    literal(&config.content_dir)
                                 ),
                             ),
                         )),
@@ -2840,16 +2892,16 @@ fn navigation(
                     let problem = if !selected_routes.insert(route) {
                         Some((
                             "nav-duplicate-route",
-                            format!("nav.routes lists `{route}` more than once"),
+                            format!("nav.routes lists {} more than once", code_span(route)),
                         ))
                     } else {
                         match routes.get(route) {
-                            Some(&i) if pages[i].origin == PageOrigin::Markdown => Some(("nav-route-origin", format!("nav.routes lists `{route}`, which is a Markdown page; use dir or items"))),
+                            Some(&i) if pages[i].origin == PageOrigin::Markdown => Some(("nav-route-origin", format!("nav.routes lists {}, which is a Markdown page; use dir or items", code_span(route)))),
                             Some(&i) => {
                                 if listable(&pages[i]) { found.push(i); }
                                 None
                             }
-                            None => Some(("nav-missing-page", format!("nav.routes lists `{route}`, which is not a registered page"))),
+                            None => Some(("nav-missing-page", format!("nav.routes lists {}, which is not a registered page", code_span(route)))),
                         }
                     };
                     if let Some((rule, message)) = problem {

@@ -1,4 +1,5 @@
 use super::{SiteEnvironment, SiteError, Slot};
+use crate::diagnostic_text::code_span;
 use leptos::prelude::*;
 use serde::{de::DeserializeOwned, Serialize};
 use serde_json::Value;
@@ -142,24 +143,25 @@ impl SiteRegistry {
         props: Value,
     ) -> Result<PreparedComponent, SiteError> {
         self.components.get(name).ok_or_else(|| {
-            SiteError::new("unknown_component", format!("unknown component `{name}`"))
+            SiteError::new(
+                "unknown_component",
+                format!("unknown component {}", code_span(name)),
+            )
         })?(props)
     }
 
     #[cfg(feature = "site-ssr")]
     pub(crate) fn demo_view(&self, name: &str) -> Result<AnyView, SiteError> {
-        self.demos
-            .get(name)
-            .map(|render| render())
-            .ok_or_else(|| SiteError::new("unknown_demo", format!("unknown demo `{name}`")))
+        self.demos.get(name).map(|render| render()).ok_or_else(|| {
+            SiteError::new("unknown_demo", format!("unknown demo {}", code_span(name)))
+        })
     }
 
     #[cfg(all(feature = "hydrate", target_arch = "wasm32"))]
     pub(crate) fn prepare_demo(&self, name: &str) -> Result<ViewFactory, SiteError> {
-        self.demos
-            .get(name)
-            .cloned()
-            .ok_or_else(|| SiteError::new("unknown_demo", format!("unknown demo `{name}`")))
+        self.demos.get(name).cloned().ok_or_else(|| {
+            SiteError::new("unknown_demo", format!("unknown demo {}", code_span(&name)))
+        })
     }
 
     #[cfg(feature = "site-ssr")]
@@ -171,7 +173,9 @@ impl SiteRegistry {
         self.pages
             .get(name)
             .map(|render| render(context))
-            .ok_or_else(|| SiteError::new("unknown_page", format!("unknown page `{name}`")))
+            .ok_or_else(|| {
+                SiteError::new("unknown_page", format!("unknown page {}", code_span(name)))
+            })
     }
 
     #[cfg(feature = "site-ssr")]
@@ -184,7 +188,10 @@ impl SiteRegistry {
             .get(&slot)
             .map(|render| render(context))
             .ok_or_else(|| {
-                SiteError::new("unknown_slot", format!("slot `{slot:?}` has no override"))
+                SiteError::new(
+                    "unknown_slot",
+                    format!("slot {} has no override", code_span(&format!("{slot:?}"))),
+                )
             })
     }
 }
@@ -312,7 +319,7 @@ pub(crate) fn prepare_environment(
     let locale = rustify_ui::Locale::from_tag(&environment.lang).ok_or_else(|| {
         SiteError::new(
             "invalid_environment",
-            format!("unsupported locale `{}`", environment.lang),
+            format!("unsupported locale {}", code_span(&environment.lang)),
         )
     })?;
     let theme = if let Some(theme) = &environment.theme {

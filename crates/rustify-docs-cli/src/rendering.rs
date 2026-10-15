@@ -5,6 +5,7 @@ use rustify_docs::content::{
     self, Analysis, Diagnostic, FragmentCache, Page, Project, RegisteredPage, Snapshot, Surfaces,
 };
 use rustify_docs::diagnostic::{LineIndex, Severity};
+use rustify_docs::diagnostic_text::{code_span, literal};
 use rustify_docs::embed::{self, Kind, Owner};
 use rustify_docs::generation::{self, Extensions};
 use rustify_docs::highlight::Highlighter;
@@ -448,7 +449,7 @@ fn render_surfaces(
                 file,
                 Severity::Error,
                 &error.code,
-                format!("{route}: {}", error.message),
+                format!("{}: {}", literal(route), error.message),
             ));
         }
         let Some(mut html) = result.html else {
@@ -467,7 +468,8 @@ fn render_surfaces(
                     Severity::Error,
                     "markdown-intro-marker",
                     format!(
-                        "{route}: the Markdown introduction placeholder is missing or duplicated"
+                        "{}: the Markdown introduction placeholder is missing or duplicated",
+                        literal(route)
                     ),
                 ));
                 continue;
@@ -524,8 +526,9 @@ fn render_surfaces(
                     Severity::Error,
                     "embed-marker",
                     format!(
-                        "{route}: the nested demo placeholder `{}` is missing or duplicated",
-                        demo.key
+                        "{}: the nested demo placeholder {} is missing or duplicated",
+                        literal(route),
+                        code_span(&demo.key)
                     ),
                 ));
                 continue;
@@ -592,8 +595,8 @@ fn preflight(
                         Severity::Error,
                         "reserved-component",
                         format!(
-                            "`{}` is a builtin component name; choose another registration name",
-                            component.name
+                            "{} is a builtin component name; choose another registration name",
+                            code_span(&component.name)
                         ),
                     )
                     .with_suggestion(embed::reserved_component(&component.name)),
@@ -625,7 +628,7 @@ fn preflight(
                             embed,
                             None,
                             "unregistered-demo",
-                            format!("demo `{name}` is not registered in site!"),
+                            format!("demo {} is not registered in site!", code_span(name)),
                         )
                         .with_suggestion(embed::unregistered_demo(&names)),
                     );
@@ -647,7 +650,7 @@ fn preflight(
                                 embed,
                                 None,
                                 "unregistered-component",
-                                format!("component `{name}` is not registered; add it to site! and configure [rust]"),
+                                format!("component {} is not registered; add it to site! and configure [rust]", code_span(name)),
                             )
                             .with_suggestion(embed::unregistered_component(&names)),
                         );
@@ -670,7 +673,11 @@ fn preflight(
                                     embed,
                                     Some(property),
                                     "unknown-property",
-                                    format!("component `{name}` has no property `{property}`"),
+                                    format!(
+                                        "component {} has no property {}",
+                                        code_span(name),
+                                        code_span(property)
+                                    ),
                                 )
                                 .with_suggestion(repair),
                             );

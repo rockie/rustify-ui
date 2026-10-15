@@ -1,5 +1,6 @@
 //! Typed static content blocks, rendered through the same site registry.
 
+use crate::diagnostic_text::code_span;
 use crate::embed::{Field, Owner};
 use crate::site::{SiteError, SiteRegistry};
 use leptos::prelude::*;
@@ -82,8 +83,8 @@ pub fn advice(name: &str, props: &Value, error: &SiteError) -> Option<String> {
             .default
             .as_deref()?;
         return Some(format!(
-            "Set `columns` to 1, 2 or 3, or omit it for the default expression `{}`.",
-            crate::embed::display(default)
+            "Set `columns` to 1, 2 or 3, or omit it for the default expression {}.",
+            code_span(&crate::embed::display(default))
         ));
     }
     Some(crate::embed::invalid_props(

@@ -1,0 +1,67 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+    Checking once_cell v1.21.4
+    Checking stable_deref_trait v1.2.1
+    Checking indexmap v2.14.2
+   Compiling libc v0.2.189
+    Checking smallvec v1.15.1 (/Users/rockie/Documents/gh-rockie/rustify-ui/makepad/libs/smallvec)
+    Checking aho-corasick v1.1.5
+    Checking wasm-bindgen v0.2.128
+    Checking yoke v0.8.3
+    Checking toml_parser v1.1.3+spec-1.1.0
+    Checking toml_datetime v1.1.1+spec-1.1.0
+    Checking serde_spanned v1.1.1
+    Checking serde_json v1.0.151
+    Checking leptos_hot_reload v0.8.7
+    Checking regex-automata v0.4.18
+   Compiling rustify-docs-syntax v0.1.0 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-docs-syntax)
+    Checking zerovec v0.11.8
+    Checking zerotrie v0.2.5
+    Checking js-sys v0.3.105
+mbx[warning]: incremental state was not reused: compiler environment input changed: CLIPPY_ARGS
+    Checking codee v0.3.5
+    Checking tinystr v0.8.4
+    Checking potential_utf v0.1.6
+    Checking wasm-bindgen-futures v0.4.78
+    Checking web-sys v0.3.105
+    Checking hydration_context v0.3.2
+    Checking icu_collections v2.3.0
+    Checking icu_locale_core v2.3.0
+    Checking any_spawner v0.3.0
+    Checking icu_provider v2.3.1
+    Checking reactive_graph v0.2.15
+    Checking icu_properties v2.3.0
+    Checking icu_normalizer v2.3.0
+    Checking reactive_stores v0.4.4
+    Checking idna_adapter v1.2.2
+    Checking idna v1.1.0
+    Checking url v2.5.8
+    Checking toml v1.1.5+spec-1.1.0
+error: this expression creates a reference which is immediately dereferenced by the compiler
+   --> crates/rustify-docs-syntax/src/lib.rs:292:72
+    |
+292 | ...                   format!("duplicate slot {}", code_span(&slot.key())),
+    |                                                              ^^^^^^^^^^^ help: change this to: `slot.key()`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#needless_borrow
+    = note: `-D clippy::needless-borrow` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::needless_borrow)]`
+
+error: this expression creates a reference which is immediately dereferenced by the compiler
+   --> crates/rustify-docs-syntax/src/lib.rs:482:148
+    |
+482 | ...ntent, after_content or not_found", code_span(&other)),
+    |                                                  ^^^^^^ help: change this to: `other`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.99.0/index.html#needless_borrow
+
+error: could not compile `rustify-docs-syntax` (lib) due to 2 previous errors
+warning: build failed, waiting for other jobs to finish...
+error: could not compile `rustify-docs-syntax` (lib) due to 2 previous errors
+mbx[cache]: 27 hits, 11 misses, 2 incremental; 0 B downloaded, 0 B uploaded, 22.7 MiB stored locally
+mbx[savings]: 20h 14m unspent across 9107 builds. compounding, in a sense.

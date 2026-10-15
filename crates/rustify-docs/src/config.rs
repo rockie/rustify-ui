@@ -6,6 +6,7 @@
 //! root (the directory holding the file); the URL base is normalized once
 //! here and every URL the build writes goes through it.
 
+use crate::diagnostic_text::{code_span, literal};
 use std::collections::BTreeSet;
 use std::ops::Range;
 
@@ -253,7 +254,8 @@ pub fn relative_path(path: &str) -> Result<String, String> {
     let path = path.replace('\\', "/");
     if path.starts_with('/') || path.chars().nth(1) == Some(':') {
         return Err(format!(
-            "`{path}` is absolute; paths are relative to the project root"
+            "{} is absolute; paths are relative to the project root",
+            code_span(&path)
         ));
     }
     let mut parts: Vec<&str> = Vec::new();
@@ -262,7 +264,7 @@ pub fn relative_path(path: &str) -> Result<String, String> {
             "" | "." => {}
             ".." => {
                 if parts.pop().is_none() {
-                    return Err(format!("`{path}` leaves the project"));
+                    return Err(format!("{} leaves the project", code_span(&path)));
                 }
             }
             part => parts.push(part),
@@ -285,9 +287,7 @@ pub fn normalize_base(base: &str) -> Result<String, String> {
                 .chars()
                 .all(|c| c.is_ascii_alphanumeric() || matches!(c, '-' | '_' | '.' | '~'));
         if !valid {
-            return Err(format!(
-                "`{base}` is not a base path; use `/` or segments of letters, digits, `-`, `_`, `.` and `~`, like `/docs/`"
-            ));
+            return Err(format!("{} is not a base path; use `/` or segments of letters, digits, `-`, `_`, `.` and `~`, like `/docs/`", code_span(base)));
         }
     }
     Ok(format!("/{trimmed}/"))
@@ -320,7 +320,9 @@ impl Config {
         if let Some(url) = &self.site.url {
             if !url.ends_with(&base) {
                 return Err(format!(
-                    "--base {base} does not match site.url {url}; change both together"
+                    "--base {} does not match site.url {}; change both together",
+                    literal(&base),
+                    literal(url)
                 ));
             }
         }
@@ -413,7 +415,7 @@ pub fn parse(text: &str) -> Result<(Config, Vec<Issue>), Vec<Issue>> {
                 return None;
             }
             if !selected.insert(file.clone()) {
-                errors.push(error(span, "content-include", format!("content.include lists `{file}` more than once")));
+                errors.push(error(span, "content-include", format!("content.include lists {} more than once", code_span(&file))));
                 return None;
             }
             Some((file, span))
@@ -425,8 +427,16 @@ pub fn parse(text: &str) -> Result<(Config, Vec<Issue>), Vec<Issue>> {
     for (input, name) in [(&content_dir, "content.dir"), (&assets_dir, "assets.dir")] {
         if inside(input, &out_dir) || inside(&out_dir, input) {
             errors.push(
-                error(out_span.clone(), "config-out", format!("build.out `{out_dir}` overlaps {name} `{input}`; a build replaces its output whole"))
-                    .suggest("put the output in a directory of its own, like `dist`"),
+                error(
+                    out_span.clone(),
+                    "config-out",
+                    format!(
+                        "build.out {} overlaps {name} {}; a build replaces its output whole",
+                        code_span(&out_dir),
+                        code_span(input)
+                    ),
+                )
+                .suggest("put the output in a directory of its own, like `dist`"),
             );
         }
     }
@@ -439,7 +449,11 @@ pub fn parse(text: &str) -> Result<(Config, Vec<Issue>), Vec<Issue>> {
                 errors.push(error(
                     out_span.clone(),
                     "config-out",
-                    format!("build.out `{out_dir}` would replace {name} `{input}`"),
+                    format!(
+                        "build.out {} would replace {name} {}",
+                        code_span(&out_dir),
+                        code_span(input)
+                    ),
                 ));
             }
         }
@@ -483,7 +497,7 @@ pub fn parse(text: &str) -> Result<(Config, Vec<Issue>), Vec<Issue>> {
                     error(
                         lang.span(),
                         "config-lang",
-                        format!("`{}` is not a language tag", lang.get_ref()),
+                        format!("{} is not a language tag", code_span(lang.get_ref())),
                     )
                     .suggest("use a tag like `en` or `zh-CN`"),
                 );
@@ -504,7 +518,10 @@ pub fn parse(text: &str) -> Result<(Config, Vec<Issue>), Vec<Issue>> {
             errors.push(error(
                 url.span(),
                 "config-url",
-                format!("`{value}` is not an absolute http(s) URL without a query or fragment"),
+                format!(
+                    "{} is not an absolute http(s) URL without a query or fragment",
+                    code_span(value)
+                ),
             ));
             return None;
         }
@@ -524,8 +541,9 @@ pub fn parse(text: &str) -> Result<(Config, Vec<Issue>), Vec<Issue>> {
                     url.span(),
                     "config-url",
                     format!(
-                        "site.url's path `{}` is not site.base `{base}`",
-                        &value[path_start..]
+                        "site.url's path {} is not site.base {}",
+                        code_span(&value[path_start..]),
+                        code_span(&base)
                     ),
                 )
                 .suggest("site.url is the public address of the site's root, base path included"),
@@ -576,7 +594,7 @@ pub fn parse(text: &str) -> Result<(Config, Vec<Issue>), Vec<Issue>> {
                 errors.push(error(
                     color.span(),
                     "config-color",
-                    format!("`{}` is not a #RRGGBB colour", color.get_ref()),
+                    format!("{} is not a #RRGGBB colour", code_span(color.get_ref())),
                 ));
                 good = false;
             }
@@ -648,8 +666,8 @@ pub fn parse(text: &str) -> Result<(Config, Vec<Issue>), Vec<Issue>> {
                         scope.span(),
                         "config-nav",
                         format!(
-                            "nav scope `{}` is not a route prefix like `/guide/`",
-                            scope.get_ref()
+                            "nav scope {} is not a route prefix like `/guide/`",
+                            code_span(scope.get_ref())
                         ),
                     ));
                     continue;
@@ -666,7 +684,7 @@ pub fn parse(text: &str) -> Result<(Config, Vec<Issue>), Vec<Issue>> {
                     errors.push(error(
                         dir.span(),
                         "config-nav",
-                        format!("nav group `{}`: {message}", group.label),
+                        format!("nav group {}: {message}", code_span(&group.label)),
                     ));
                     continue;
                 }
@@ -699,8 +717,8 @@ pub fn parse(text: &str) -> Result<(Config, Vec<Issue>), Vec<Issue>> {
                     0..0,
                     "config-nav",
                     format!(
-                        "nav group `{}` needs exactly one of `dir`, `items` and `routes`",
-                        group.label
+                        "nav group {} needs exactly one of `dir`, `items` and `routes`",
+                        code_span(&group.label)
                     ),
                 ));
                 continue;

@@ -25,6 +25,28 @@ use syn::spanned::Spanned;
 use syn::visit::Visit;
 use syn::{braced, Attribute, Error, Expr, ExprPath, Ident, LitStr, Macro, Result, Token, Type};
 
+/// Quotes a complete code value with a fence longer than any run it contains.
+pub fn code_span(value: &str) -> String {
+    if value.is_empty() {
+        return "``  ``".into();
+    }
+    let longest = value.split(|ch| ch != '`').map(str::len).max().unwrap_or(0);
+    if longest == 0 {
+        return format!("`{value}`");
+    }
+    let fence = "`".repeat(longest + 1);
+    format!("{fence} {value} {fence}")
+}
+
+/// Keeps ordinary author text as written, quoting the whole value if it has ticks.
+pub fn literal(value: &str) -> String {
+    if value.contains('`') {
+        code_span(value)
+    } else {
+        value.to_owned()
+    }
+}
+
 /// One declaration, with source spans and Rust AST for the procedural macro.
 #[derive(Clone, Default)]
 pub struct SiteDeclaration {
@@ -221,7 +243,7 @@ impl Parse for SiteDeclaration {
             if !sections.insert(section_name.clone()) {
                 return Err(Error::new(
                     section.span(),
-                    format!("duplicate site section `{section_name}`"),
+                    format!("duplicate site section {}", code_span(&section_name)),
                 ));
             }
             let content;
@@ -253,7 +275,7 @@ impl Parse for SiteDeclaration {
                         if !routes.insert(route.clone()) {
                             return Err(Error::new(
                                 page.route.span(),
-                                format!("duplicate page route `{route}`"),
+                                format!("duplicate page route {}", code_span(&route)),
                             ));
                         }
                         declaration.pages.push(page);
@@ -267,7 +289,7 @@ impl Parse for SiteDeclaration {
                         if !slots.insert(slot) {
                             return Err(Error::new(
                                 name.span(),
-                                format!("duplicate slot `{}`", slot.key()),
+                                format!("duplicate slot {}", code_span(slot.key())),
                             ));
                         }
                         content.parse::<Token![=>]>()?;
@@ -283,7 +305,10 @@ impl Parse for SiteDeclaration {
                 _ => {
                     return Err(Error::new(
                         section.span(),
-                        format!("unknown site section `{section_name}`; expected components, demos, pages or slots"),
+                        format!(
+                            "unknown site section {}; expected components, demos, pages or slots",
+                            code_span(&section_name)
+                        ),
                     ));
                 }
             }
@@ -334,7 +359,7 @@ fn parse_component(input: ParseStream) -> Result<ComponentDeclaration> {
         if !seen.insert(field_key.clone()) {
             return Err(Error::new(
                 field_name.span(),
-                format!("duplicate property `{field_key}`"),
+                format!("duplicate property {}", code_span(&field_key)),
             ));
         }
         content.parse::<Token![:]>()?;
@@ -372,16 +397,19 @@ fn parse_client_only(attribute: &Attribute) -> Result<ClientOnlyDeclaration> {
         } else if meta.path.is_ident("message") {
             &mut message
         } else {
-            return Err(meta.error(format!("unknown client_only metadata `{key}`")));
+            return Err(meta.error(format!("unknown client_only metadata {}", code_span(&key))));
         };
         if destination.is_some() {
-            return Err(meta.error(format!("duplicate client_only metadata `{key}`")));
+            return Err(meta.error(format!(
+                "duplicate client_only metadata {}",
+                code_span(&key)
+            )));
         }
         let literal: LitStr = meta.value()?.parse()?;
         if literal.value().trim().is_empty() {
             return Err(Error::new(
                 literal.span(),
-                format!("client_only `{key}` must not be empty"),
+                format!("client_only {} must not be empty", code_span(&key)),
             ));
         }
         *destination = Some(literal);
@@ -413,14 +441,14 @@ fn parse_page(input: ParseStream) -> Result<PageDeclaration> {
             _ => {
                 return Err(Error::new(
                     key.span(),
-                    format!("unknown page metadata `{key_name}`"),
+                    format!("unknown page metadata {}", code_span(&key_name)),
                 ));
             }
         };
         if destination.is_some() {
             return Err(Error::new(
                 key.span(),
-                format!("duplicate page metadata `{key_name}`"),
+                format!("duplicate page metadata {}", code_span(&key_name)),
             ));
         }
         content.parse::<Token![:]>()?;
@@ -451,7 +479,7 @@ fn slot_name(ident: &Ident) -> Result<Slot> {
         "not_found" => Ok(Slot::NotFound),
         other => Err(Error::new(
             ident.span(),
-            format!("unknown slot `{other}`; expected header, footer, sidebar_top, sidebar_bottom, before_content, after_content or not_found"),
+            format!("unknown slot {}; expected header, footer, sidebar_top, sidebar_bottom, before_content, after_content or not_found", code_span(other)),
         )),
     }
 }
@@ -474,7 +502,7 @@ fn register(ident: &Ident, names: &mut HashSet<String>) -> Result<()> {
     } else {
         Err(Error::new(
             ident.span(),
-            format!("duplicate registration name `{key}`"),
+            format!("duplicate registration name {}", code_span(&key)),
         ))
     }
 }

@@ -1,0 +1,454 @@
+crates/rustify-docs/src/labels.rs:3://! A page's `lang` picks them by its primary subtag: `zh…` gets Chinese,
+crates/rustify-docs/src/labels.rs:4://! everything else English. A page in a third language keeps its own `lang`
+crates/rustify-docs/src/labels.rs:5://! on its content, and the interface strings inside it say `lang="en"`, so a
+crates/rustify-docs/src/labels.rs:9:    /// The `lang` the strings are in, written on them when it differs from
+crates/rustify-docs/src/labels.rs:20:    /// The copy button's own word for a refusal; `copy_failed` is what is
+crates/rustify-docs/src/labels.rs:47:    /// What `dev` adds while an author writes; `{n}` is a number.
+crates/rustify-docs/src/labels.rs:63:/// The words of `dev`'s problem panel and of the page shown when nothing
+crates/rustify-docs/src/labels.rs:226:/// The labels for a page in `lang`, and whether they need a `lang` of their
+crates/rustify-docs-cli/src/main.rs:1://! The `rustify-docs` command.
+crates/rustify-docs-cli/src/main.rs:35:/// Whether this binary unwinds on a panic. `dev` keeps serving the last good
+crates/rustify-docs-cli/src/main.rs:37:/// the install command's `--profile docs-cli` is what selects it.
+crates/rustify-docs-cli/src/main.rs:41:/// `panic:<marker>` makes a `dev` build panic on a page containing
+crates/rustify-docs-cli/src/main.rs:42:/// `<marker>`; `stop:<step>` halts `build` at that step of publishing (see
+crates/rustify-docs-cli/src/main.rs:43:/// `publish::Step`) until it is killed. Not part of the command's interface.
+crates/rustify-docs-cli/src/main.rs:142:/// Panics inside `catch_unwind` and reports whether the process survived:
+crates/rustify-docs-cli/src/main.rs:143:/// the install check that the `docs-cli` profile actually took effect.
+crates/rustify-docs-cli/src/main.rs:158:    eprintln!("rustify-docs: {message}\nRun `rustify-docs --help` for usage.");
+crates/rustify-docs-cli/src/main.rs:167:/// A command's arguments: `--name value` (or `--name=value`) options, bare
+crates/rustify-docs-cli/src/main.rs:273:/// Prints `diagnostics`, then the conclusion: one JSON object on stdout, or
+crates/rustify-docs-cli/src/main.rs:312:/// Reads the project whose configuration is `config`, with `--base`
+crates/rustify-docs-cli/src/main.rs:325:/// Everything `check` and `build` share: the analysis and the generation,
+crates/rustify-docs-cli/src/main.rs:326:/// in memory. With `external_links` (only `check` asks), the links to other
+crates/rustify-docs-cli/src/main.rs:774:                        "a build of {} stopped half-way; run `rustify-docs build` to recover it",
+crates/rustify-docs-cli/src/main.rs:786:                format!("{message}; run `rustify-docs build` first"),
+crates/rustify-docs-cli/src/main.rs:836:                "a build of {} stopped half-way; run `rustify-docs build` to recover it",
+crates/rustify-docs-cli/src/rust_site.rs:1271:/// certainly false without `test` removes a source contribution.
+crates/rustify-docs-cli/src/rust_site.rs:3056:            diagnostic.message.contains("changed file `lib.rs`"),
+crates/rustify-docs-cli/src/rust_site.rs:3138:        assert_eq!(diagnostic.message.matches("changed file `").count(), 10);
+crates/rustify-docs/src/escape.rs:3:/// Appends `text` with the five characters that can end a text run or an
+crates/rustify-docs/src/escape.rs:30:/// Appends a URL for an `href` or `src`: percent-encodes the bytes a URL
+crates/rustify-docs/src/escape.rs:31:/// may not carry raw (controls, space, non-ASCII and `"<>\\^`{|}`), keeps
+crates/rustify-docs/src/escape.rs:32:/// existing `%xx` escapes, then escapes it as an attribute value.
+crates/rustify-docs/src/escape.rs:39:                b'"' | b'<' | b'>' | b'\\' | b'^' | b'`' | b'{' | b'|' | b'}'
+crates/rustify-docs/src/escape.rs:50:/// Percent-encodes an element id for a URL's `#fragment`: the bytes a
+crates/rustify-docs/src/escape.rs:51:/// fragment may not carry raw (controls, space, `"`, `<`, `>` and the
+crates/rustify-docs/src/escape.rs:52:/// backquote), and `%` and `#`,
+crates/rustify-docs/src/escape.rs:59:        if c.is_ascii_control() || matches!(c, ' ' | '"' | '<' | '>' | '`' | '%' | '#') {
+crates/rustify-docs/src/escape.rs:69:/// unreserved ones, `/` and the sub-delimiters a path segment may carry raw.
+crates/rustify-docs/src/escape.rs:70:/// Unlike [`escape_url_into`] it encodes `%`, `#` and `?` too, because here
+crates/rustify-docs/src/content.rs:26:/// A located problem, in the shape `check --format json` prints.
+crates/rustify-docs/src/content.rs:29:    /// Project-relative, with `/`; `None` for a problem with no file.
+crates/rustify-docs/src/content.rs:83:    /// `build` and `check`: drafts are left out, and linking to one is an
+crates/rustify-docs/src/content.rs:86:    /// `dev`: drafts are shown and marked; linking to one is a warning.
+crates/rustify-docs/src/content.rs:94:    /// The configuration's file name in `root`: `rustify-docs.toml`, unless
+crates/rustify-docs/src/content.rs:104:    /// Reads `rustify-docs.toml` in `root`.
+crates/rustify-docs/src/content.rs:109:    /// Reads the configuration at `path`; the project is the directory that
+crates/rustify-docs/src/content.rs:187:    /// to the project: what `dev` watches besides the directories.
+crates/rustify-docs/src/content.rs:289:/// Where `path` really leads, relative to `root` (a real root): refused
+crates/rustify-docs/src/content.rs:354:/// The bytes of the project file `path` (project-relative) names, read
+crates/rustify-docs/src/content.rs:376:    /// The error for a reference to a refused file, made by `locate` where
+crates/rustify-docs/src/content.rs:377:    /// the reference is written: `what` is how the message names it,
+crates/rustify-docs/src/content.rs:378:    /// `missing` the rule when the file does not exist.
+crates/rustify-docs/src/content.rs:731:/// A content-relative Markdown path's route: `index.md` is its directory's,
+crates/rustify-docs/src/content.rs:732:/// `a/b.md` is `/a/b/`.
+crates/rustify-docs/src/content.rs:832:    /// A `srcset`: each candidate's published file, or its URL as written
+crates/rustify-docs/src/content.rs:833:    /// (a `data:` URL), with its descriptor.
+crates/rustify-docs/src/content.rs:837:/// One image a `srcset` offers.
+crates/rustify-docs/src/content.rs:867:/// `/404/` names the generated not-found page rather than a registered page.
+crates/rustify-docs/src/content.rs:888:    /// Project-relative, like `content/guide/setup.md`.
+crates/rustify-docs/src/content.rs:899:    /// For each of the frontmatter's `actions`, where its link points.
+crates/rustify-docs/src/content.rs:911:    /// Where each of the configuration's `nav.top` and `nav.social` links
+crates/rustify-docs/src/content.rs:922:    /// dependencies, found or not: what else `dev` watches.
+crates/rustify-docs/src/content.rs:925:    /// what else `dev` watches.
+crates/rustify-docs/src/content.rs:994:    /// Whether the project file `path` names may be published; the first
+crates/rustify-docs/src/content.rs:1063:/// Splits `url` into its path and its `#fragment`.
+crates/rustify-docs/src/content.rs:1087:/// Joins a relative URL path onto a directory, both `/`-separated and
+crates/rustify-docs/src/content.rs:1088:/// relative; `None` when it climbs out of the root.
+crates/rustify-docs/src/content.rs:1122:/// Analyses the project: every page rendered (from `cache` where it can be),
+crates/rustify-docs/src/content.rs:1203:                    "`/404/` is reserved for the generated not-found page",
+crates/rustify-docs/src/content.rs:1237:                        .with_suggestion("use a language tag such as `en`, `zh-CN` or `fr`")
+crates/rustify-docs/src/content.rs:1316:                        "add `title:` to its frontmatter or start it with a `# heading`",
+crates/rustify-docs/src/content.rs:1357:                    "make it an H2 (`##`) heading, or start the body with `# Title` to merge it into the home title"
+crates/rustify-docs/src/content.rs:1359:                    "make it a `##` heading"
+crates/rustify-docs/src/content.rs:1402:                        "no `description:`; the first paragraph is used",
+crates/rustify-docs/src/content.rs:1404:                    .with_suggestion("add `description:` to the frontmatter"),
+crates/rustify-docs/src/content.rs:1411:                        "no `description:` and no paragraph to take one from",
+crates/rustify-docs/src/content.rs:1413:                    .with_suggestion("add `description:` to the frontmatter"),
+crates/rustify-docs/src/content.rs:1445:                format!("registered route {} needs a canonical path like `/custom/`, without query or fragment", code_span(route)),
+crates/rustify-docs/src/content.rs:1547:                    "create it with an `index.md`, or set content.dir in {}",
+crates/rustify-docs/src/content.rs:1568:                "set `draft: false` on the pages that are ready".to_owned(),
+crates/rustify-docs/src/content.rs:1890:            .with_suggestion("add `url = \"https://…\"` under [site], the address the site is published at"),
+crates/rustify-docs/src/content.rs:2355:                        .suggest("link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"),
+crates/rustify-docs/src/content.rs:2397:    // URL separators are syntax before decoding: `%3F` belongs to a name.
+crates/rustify-docs/src/content.rs:2681:                    problem = problem.suggest("check the path; it is relative to this page, or to the asset directory when it starts with `/`");
+crates/rustify-docs/src/content.rs:2718:    // Within a group, pages go by `sidebar.order`, then by path.
+crates/rustify-docs/src/content.rs:2744:        // One group named after the site, then one per `sidebar.group`, in
+crates/rustify-docs/src/content.rs:2766:    // With groups configured, `sidebar.group` names one of them.
+crates/rustify-docs/src/content.rs:4105:            ("content/b.md", "---\ntitle: B\n---\n```sh\nx\n```\n"),
+crates/rustify-docs/src/content.rs:4163:            ("content/index.md", "---\ndescription: d\n---\n# One\n\n<template><h1>Hidden</h1><h4>Hidden</h4></template>\n\n<!-- <h1>Comment</h1> -->\n\n```html\n<h1>Code</h1>\n```\n\n## Visible\n"),
+crates/rustify-docs/src/content.rs:4396:            format!("---\ndescription: d\n---\n# P\n\n<!-- rustify:code-group name=\"install\" -->\n\n```sh title=\"{}\"\na\n```\n\n```sh title=\"{}\"\nb\n```\n\n<!-- rustify:end-code-group -->\n", labels[0], labels[1])
+crates/rustify-docs/src/content.rs:4470:    /// Whether any input the analysis read, or would publish, holds `marker`.
+crates/rustify-docs-syntax/src/manifest.rs:74:    /// The exact identifier used in `site!` and the serializable manifest.
+crates/rustify-docs-cli/src/report.rs:17:    /// Warnings count as failures (`--deny-warnings`).
+crates/rustify-docs-cli/src/report.rs:62:/// One diagnostic as `--format json` and `dev`'s pages receive it.
+crates/rustify-docs-cli/src/new.rs:1://! `rustify-docs new`: a site that previews and builds as it is.
+crates/rustify-docs-cli/src/new.rs:13:/// The `content` template, as `(path, text)`; `{{name}}` is the site's name.
+crates/rustify-docs-cli/src/new.rs:87:/// The Rust toolchain, as `rustc --version` reports it. A content site
+crates/rustify-docs-cli/src/new.rs:88:/// compiles nothing; sites with components of their own will, so `new` and
+crates/rustify-docs-cli/src/new.rs:89:/// `dev` check for it up front rather than half-way into a session.
+crates/rustify-docs-cli/src/new.rs:92:        "Rust is not installed (`rustc --version` did not run).\n\
+crates/rustify-docs-cli/src/new.rs:93:         Install it from https://rustup.rs, then run `rustup toolchain install stable`."
+crates/rustify-docs-cli/src/new.rs:112:         Run `rustup target add wasm32-unknown-unknown`, then retry with that toolchain."
+crates/rustify-docs-cli/src/new.rs:142:/// Escapes `text` for a double-quoted TOML or YAML string.
+crates/rustify-docs-cli/src/new.rs:188:    let install = "Install a published CLI/framework pair with `cargo install --git https://github.com/rockie/rustify-ui --rev <CLI-C> --locked --profile docs-cli rustify-docs-cli`.";
+crates/rustify-docs-cli/src/new.rs:241:        return Err("The embedded components Cargo.lock must contain one source-free `docs-site` root package; reinstall a published paired CLI.".to_owned());
+crates/rustify-docs-cli/src/new.rs:256:                "template {} is not in this release; choose `content` or `components`",
+crates/rustify-docs-cli/src/new.rs:261:    // An existing directory may be named as `.` or `..`; its real path has
+crates/rustify-docs-cli/src/new.rs:292:                    "{} is not empty; `new` only writes into a new or empty directory",
+crates/rustify-docs-cli/src/compile_proxy.rs:3://! Root hook: `#[cfg(test)] mod compile_proxy;`
+crates/rustify-docs-cli/src/compile_proxy.rs:8://! `mbx test --locked --profile docs-cli -p rustify-docs-cli --bin rustify-docs
+crates/rustify-docs-cli/src/compile_proxy.rs:9://! compile_proxy::compile_to_islands_proxy -- --ignored --exact --nocapture`.
+crates/rustify-docs/src/diagnostic.rs:22:/// caller has; see [`LineIndex`].
+crates/rustify-docs/src/diagnostic.rs:27:    /// A stable kebab-case name for the rule, which `--format json` reports.
+crates/rustify-docs-syntax/src/lib.rs:1://! The native syntax shared by the `site!` macro and the cold registry reader.
+crates/rustify-docs-syntax/src/lib.rs:4://! for macro expansion. It never evaluates them. [`Manifest`] is a separate,
+crates/rustify-docs-syntax/src/lib.rs:31:        return "``  ``".into();
+crates/rustify-docs-syntax/src/lib.rs:33:    let longest = value.split(|ch| ch != '`').map(str::len).max().unwrap_or(0);
+crates/rustify-docs-syntax/src/lib.rs:35:        return format!("`{value}`");
+crates/rustify-docs-syntax/src/lib.rs:37:    let fence = "`".repeat(longest + 1);
+crates/rustify-docs-syntax/src/lib.rs:43:    if value.contains('`') {
+crates/rustify-docs-syntax/src/lib.rs:167:/// Parses the single concrete `site!` invocation in a registry source file.
+crates/rustify-docs-syntax/src/lib.rs:170:/// macro bodies are not declarations. Returned `syn::Error` spans retain the
+crates/rustify-docs-syntax/src/lib.rs:173:/// ```
+crates/rustify-docs-syntax/src/lib.rs:179:/// ```
+crates/rustify-docs-syntax/src/lib.rs:420:            .ok_or_else(|| Error::new(attribute.span(), "missing client_only metadata `class`"))?,
+crates/rustify-docs-syntax/src/lib.rs:422:            Error::new(attribute.span(), "missing client_only metadata `message`")
+crates/rustify-docs-syntax/src/lib.rs:458:    let route = route.ok_or_else(|| Error::new(name.span(), "missing page metadata `route`"))?;
+crates/rustify-docs-syntax/src/lib.rs:459:    let title = title.ok_or_else(|| Error::new(name.span(), "missing page metadata `title`"))?;
+crates/rustify-docs/src/style.rs:6://! [`crate::classes`]), so nothing scans the file system and the stylesheet
+crates/rustify-docs/src/style.rs:23:/// What `tailwindcss/utilities.css` holds upstream; not worth a file.
+crates/rustify-docs/src/style.rs:30:/// The SDK layer's dark variant follows a scope's own `data-theme`. A
+crates/rustify-docs/src/style.rs:31:/// document's root is the scope here, and in `system` mode it follows the
+crates/rustify-docs/src/style.rs:78:/// The SDK layer as a site compiles it: no `@source`, and the document's
+crates/rustify-docs/src/style.rs:80:/// `sdk.css` fails here instead of quietly compiling the old behaviour.
+crates/rustify-docs/src/style.rs:111:/// Black or white, whichever has more contrast on `background`.
+crates/rustify-docs/src/style.rs:243:/// Compiles the utilities `candidates` name, with the fixed layers, into
+crates/rustify-docs/src/style.rs:271:/// Lowers `css` for the target browsers and minifies it.
+crates/rustify-docs/src/style.rs:292:/// Every URL the stylesheet loads: the values of its `url(…)`s, quotes
+crates/rustify-docs/src/style.rs:293:/// removed. A `url\(` escaped in a selector is a class name, not a load.
+crates/rustify-docs/src/style.rs:401:/// The site's stylesheet: utilities for `candidates`, the brand's tokens and
+crates/rustify-docs/src/style.rs:512:        // The rule stays in the components layer: its weight is `!important`,
+crates/rustify-docs-cli/src/dev.rs:1://! `rustify-docs dev`: the site served from memory while its author writes.
+crates/rustify-docs-cli/src/dev.rs:19://! whose lock is never taken, so `build` can run alongside. The server
+crates/rustify-docs-cli/src/dev.rs:56:    /// An explicit port; without one, the configuration's `dev.port`, or a
+crates/rustify-docs-cli/src/dev.rs:79:    /// The newest build failed; `diagnostics` are its problems.
+crates/rustify-docs-cli/src/dev.rs:89:    /// Tells this run of `dev` from an earlier one on the same port.
+crates/rustify-docs-cli/src/dev.rs:222:            // `referenced` includes repository targets. They depend on identity,
+crates/rustify-docs-cli/src/dev.rs:320:    /// The configuration file, in `root`.
+crates/rustify-docs-cli/src/dev.rs:691:/// Whether the page at `path`, a copy of build `seen`, is out of date.
+crates/rustify-docs-cli/src/dev.rs:847:/// A page as served: its dev script told which run of `dev` and which
+crates/rustify-docs/src/classes.rs:3://! Only `class` attributes are read, never text, so code and prose that
+crates/rustify-docs/src/classes.rs:5://! (`hl-…`) are styled by their own palette and are left out as well.
+crates/rustify-docs/src/classes.rs:15:/// Adds every class in `html`'s `class` attributes to `into`.
+crates/rustify-docs/src/classes.rs:17:/// `html` is markup this crate wrote or validated, in which a `<` in text is
+crates/rustify-docs/src/classes.rs:18:/// always escaped; a raw-text element's contents (`script`, `style`) are
+crates/rustify-docs/src/classes.rs:87:/// Where `needle` (ASCII) first occurs in `haystack`, ignoring ASCII case.
+crates/rustify-docs-cli/src/rendering.rs:638:                        // Every name a `rustify-component` fence accepts: this
+crates/rustify-docs-cli/src/rendering.rs:694:/// Whether `embed` names a registration of this generation and only its
+crates/rustify-docs/src/generation.rs:7://! Work is split across at most `available_parallelism` threads; each page
+crates/rustify-docs/src/generation.rs:32:/// What `dev` adds to the pages it serves (at [`shell::DEV_SCRIPT_URL`] and
+crates/rustify-docs/src/generation.rs:33:/// [`shell::DEV_STYLE_URL`]); no production build contains either.
+crates/rustify-docs/src/generation.rs:41:/// Maps `items` through `f` on up to `workers` threads, keeping order.
+crates/rustify-docs/src/generation.rs:85:/// The first 10 hex digits of `bytes`' SHA-256: a file name's fingerprint.
+crates/rustify-docs/src/generation.rs:91:/// Where a route's page is written: `/a/b/` → `a/b/index.html`.
+crates/rustify-docs/src/generation.rs:101:/// The framework's link-preview image, used when `site.image` is not set:
+crates/rustify-docs/src/generation.rs:136:/// Content-only callers keep using [`generate`] and never need this value.
+crates/rustify-docs/src/generation.rs:218:/// Where a file the pages reference is published: under `assets/files/`,
+crates/rustify-docs/src/generation.rs:234:/// What follows a file's path in a URL as written: its `?query` and
+crates/rustify-docs/src/generation.rs:235:/// `#fragment`, which the URL of the file as published keeps.
+crates/rustify-docs/src/generation.rs:250:/// The article of page `index`, with every slot filled in. An image whose
+crates/rustify-docs/src/generation.rs:303:                    // Inside `url(…)` in a class, where a bracket or a quote
+crates/rustify-docs/src/generation.rs:343:                // it gets the `rel` such links get, unless it has its own.
+crates/rustify-docs/src/generation.rs:461:/// Where a resolved target, written as `written`, points: a URL for this
+crates/rustify-docs/src/generation.rs:462:/// generation, or `written` itself for a URL kept as written.
+crates/rustify-docs/src/generation.rs:510:/// A `<title>` for every page, unique across the site: `Title | Site`, and
+crates/rustify-docs/src/generation.rs:792:/// Renders every published page of `analysis` and the not-found page,
+crates/rustify-docs/src/generation.rs:842:    // `https://example.com/docs/` with base `/docs/` is origin
+crates/rustify-docs/src/generation.rs:843:    // `https://example.com`; a root-relative URL appended to it is absolute.
+crates/rustify-docs/src/generation.rs:958:                // The hero carries the page's one H1; a leading `# Title` in
+crates/rustify-docs/src/generation.rs:1200:/// Where [`dev_shell`] puts its page.
+crates/rustify-docs/src/generation.rs:1203:/// What `dev` serves while nothing has built: the site's shell saying so
+crates/rustify-docs/src/generation.rs:1204:/// (at [`DEV_SHELL_PAGE`]) with the stylesheet and scripts it needs, under
+crates/rustify-docs/src/include.rs:3://! In Markdown, `<!-- rustify:include path="src/example.rs" region="setup"
+crates/rustify-docs/src/include.rs:4://! lang="rust" -->` (GitHub shows nothing for it) becomes a code block
+crates/rustify-docs/src/include.rs:5://! holding the lines between `rustify-region:setup` and
+crates/rustify-docs/src/include.rs:6://! `rustify-endregion:setup` in that file, which can sit in any comment
+crates/rustify-docs/src/include.rs:24:/// Reads an include directive from an HTML comment, if `html` is exactly
+crates/rustify-docs/src/include.rs:25:/// one. `Err` is a malformed directive, with what is wrong.
+crates/rustify-docs/src/include.rs:59:/// `name="value"` pairs, double-quoted.
+crates/rustify-docs/src/include.rs:81:/// The lines of `region` in `source`, without the marker lines.
+crates/rustify-docs/src/include.rs:87:            // `rustify-region:a` must not match `rustify-region:ab`.
+crates/rustify-docs/src/include.rs:179:            "there is no region `nope`"
+crates/rustify-docs/src/autolink.rs:1://! GitHub's extended autolinks: a bare `www.`, `http://` or `https://` URL,
+crates/rustify-docs/src/autolink.rs:3://! GitHub. pulldown-cmark implements CommonMark's `<…>` autolinks only.
+crates/rustify-docs/src/autolink.rs:7://! `*_~(`; its domain has at least one period and no underscore in its last
+crates/rustify-docs/src/autolink.rs:8://! two labels; trailing `?!.,:*_~` is not part of it, nor a `)` without a
+crates/rustify-docs/src/autolink.rs:9://! matching `(`, nor an `&name;` entity at the very end.
+crates/rustify-docs/src/autolink.rs:40:/// The length of a valid domain at the start of `text`, if there is one.
+crates/rustify-docs/src/autolink.rs:131:/// Every autolink in `text`, in order.
+crates/rustify-docs/src/autolink.rs:175:/// An email address whose `@` is at `at`, starting no earlier than `floor`.
+crates/rustify-docs/src/imagesize.rs:5:/// a shape: an SVG with a `viewBox` and no `width`/`height` scales to its
+crates/rustify-docs/src/imagesize.rs:93:/// `px`. Relative and other units are not a size.
+crates/rustify-docs/src/imagesize.rs:153:/// The size of the image in `bytes`, by its content, not its name.
+crates/rustify-docs/src/embed.rs:27:/// Reads one fence's payload. `origin` maps a byte offset in `payload` to
+crates/rustify-docs/src/embed.rs:70:            return Err(error(key, format!("unknown field {}; a demo takes only `name`, a component takes `name`, `props` and `children`", code_span(key))));
+crates/rustify-docs/src/embed.rs:115:                "children must be a Markdown string; use a YAML block scalar (`|`)".into(),
+crates/rustify-docs/src/embed.rs:138:pub const PAYLOAD: &str = "Write valid YAML for `rustify-component` (`name`, optional `props` mapping and `children` string) or `rustify-demo` (`name` only); correct the reported payload error.";
+crates/rustify-docs/src/embed.rs:140:/// One declared prop as a `site!` manifest lists it, in normalized tokens.
+crates/rustify-docs/src/embed.rs:158:        "Use a component from {}; for an author component, enable `[rust]` and register its name in `site!`.",
+crates/rustify-docs/src/embed.rs:165:        return "Enable `[rust]` and register a demo in `site!` before using a `rustify-demo` block."
+crates/rustify-docs/src/embed.rs:169:        "Use a demo from {}; register demos in `site!`.",
+crates/rustify-docs/src/embed.rs:192:        "Rename {} in `site!` and its Markdown references; builtin component names are reserved.",
+crates/rustify-docs/src/embed.rs:197:/// The repair for props the declared types refused. `path` is the serde
+crates/rustify-docs/src/embed.rs:205:            "Add or correct `props` using the declared fields {}; {}.",
+crates/rustify-docs/src/embed.rs:237:/// type that is neither a direct `Option` nor a recognized form says nothing
+crates/rustify-docs/src/embed.rs:325:/// A manifest's normalized tokens as an author writes them: `Vec<StepSpec>`
+crates/rustify-docs/src/embed.rs:326:/// and `"Counter".to_string()` rather than `Vec < StepSpec >` and
+crates/rustify-docs/src/embed.rs:327:/// `"Counter" . to_string ()`. String literals, raw ones included, and
+crates/rustify-docs/src/embed.rs:371:            // A character literal, not a lifetime such as `'static`.
+crates/rustify-docs/src/embed.rs:401:/// The end of a raw string literal (`r"…"`, `br#"…"#`, `cr##"…"##`) that
+crates/rustify-docs/src/embed.rs:402:/// starts at `start`. Its content has no escapes and may hold quotes and
+crates/rustify-docs/src/embed.rs:405:    // `r` at the end of an identifier such as `bar` opens nothing.
+crates/rustify-docs/src/embed.rs:419:    // A raw identifier such as `r#type` has no quote here.
+crates/rustify-docs/src/embed.rs:532:/// The written key token at `path`, as a byte range of `payload`.
+crates/rustify-docs/src/embed.rs:876:            let boundary = format!("`{field}` (`{ty}`; default expression `{literal}`)");
+crates/rustify-docs/src/embed.rs:881:                refused.contains(&format!("(default expression `{literal}`)")),
+crates/rustify-docs/src/embed.rs:905:            ("initial", "Write `initial: 0` for declared type `i32` (default expression `2`). Reported props path: `initial`."),
+crates/rustify-docs/src/embed.rs:906:            ("label", "Write `label: \"text\"` for declared type `String` (default expression `\"Counter\".to_string()`). Reported props path: `label`."),
+crates/rustify-docs/src/embed.rs:907:            ("enabled", "Write `enabled: false` for declared type `bool` (required). Reported props path: `enabled`."),
+crates/rustify-docs/src/embed.rs:908:            ("ratio", "Write `ratio: 0.0` for declared type `f64` (required). Reported props path: `ratio`."),
+crates/rustify-docs/src/embed.rs:909:            ("mark", "Write `mark: \"a\"` for declared type `char` (required). Reported props path: `mark`."),
+crates/rustify-docs/src/embed.rs:910:            ("limit", "Write `limit: null` for declared type `Option<u32>` (optional; omission is null). Reported props path: `limit`."),
+crates/rustify-docs/src/embed.rs:911:            ("sizes[1]", "Write `sizes: [0]` for declared type `Vec<u16>` (required). Reported props path: `sizes[1]`."),
+crates/rustify-docs/src/embed.rs:912:            ("theme.accent", "Check `theme` of declared type `Palette` (no declared default; confirm omission semantics in the registration) in `src/lib.rs`; follow the reported serde requirement. Reported props path: `theme.accent`."),
+crates/rustify-docs/src/embed.rs:913:            ("alias", "Check `alias` of declared type `Labels` (default expression `Labels::default()`) in `src/lib.rs`; follow the reported serde requirement. Reported props path: `alias`."),
+crates/rustify-docs/src/embed.rs:914:            ("maybe", "Check `maybe` of declared type `Option<Palette>` (optional; omission is null) in `src/lib.rs`; follow the reported serde requirement. Reported props path: `maybe`."),
+crates/rustify-docs/src/embed.rs:919:        // sorted, and the registration; `.` is serde's empty path.
+crates/rustify-docs/src/embed.rs:920:        let missing = "Add or correct `props` using the declared fields `alias` (`Labels`; default expression `Labels::default()`), `enabled` (`bool`; required), `initial` (`i32`; default expression `2`), `label` (`String`; default expression `\"Counter\".to_string()`), `limit` (`Option<u32>`; optional; omission is null), `mark` (`char`; required), `maybe` (`Option<Palette>`; optional; omission is null), `ratio` (`f64`; required), `sizes` (`Vec<u16>`; required), `theme` (`Palette`; no declared default; confirm omission semantics in the registration); check the registration in `src/lib.rs`.";
+crates/rustify-docs/src/embed.rs:925:            format!("{missing} Reported props path: `unexpected`.")
+crates/rustify-docs/src/embed.rs:929:            "Add or correct `props` using the declared fields none; check the registration in `src/lib.rs`."
+crates/rustify-docs/src/embed.rs:941:            format!("Write `cards` as `Vec<CardSpec>` (required); see {BUILTIN_REFERENCE} for its object fields. Reported props path: `cards[0].link`.")
+crates/rustify-docs/src/embed.rs:945:            format!("Add or correct `props` using the declared fields `cards` (`Vec<CardSpec>`; required), `columns` (`u8`; default expression `2`); see {BUILTIN_REFERENCE} for its object fields.")
+crates/rustify-docs/src/embed.rs:953:            "Use a component from `BrowserCounter`, `CardGrid`, `Counter`, `Steps`, `Tabs`; for an author component, enable `[rust]` and register its name in `site!`."
+crates/rustify-docs/src/embed.rs:957:            "Use a demo from `CounterDemo`, `FailureDemo`; register demos in `site!`."
+crates/rustify-docs/src/embed.rs:961:            "Enable `[rust]` and register a demo in `site!` before using a `rustify-demo` block."
+crates/rustify-docs/src/embed.rs:973:            "Use one of `initial` (`i32`; default expression `2`), `label` (`String`; default expression `\"Counter\".to_string()`) for `Counter`; rename or remove `unexpected`."
+crates/rustify-docs/src/embed.rs:977:            "Remove `tone`; `Badge` declares no props."
+crates/rustify-docs/src/embed.rs:981:            "Rename `Tabs` in `site!` and its Markdown references; builtin component names are reserved."
+crates/rustify-docs/src/publish.rs:9://! `<output's parent>/.rustify-docs/<output name>-<hash>/`, on the output's
+crates/rustify-docs/src/publish.rs:29:/// The only mode a published output has; `dev` keeps its site in memory.
+crates/rustify-docs/src/publish.rs:33:/// `preview` before it serves anything. It holds no time, host path or
+crates/rustify-docs/src/publish.rs:54:    /// The manifest of `files` (which must not hold the manifest itself).
+crates/rustify-docs/src/publish.rs:93:    /// Reads the manifest of the output at `dir`.
+crates/rustify-docs/src/publish.rs:115:/// Adds the manifest of `files` to them.
+crates/rustify-docs/src/publish.rs:126:    /// `<out's parent>/.rustify-docs/<name>-<hash>/`.
+crates/rustify-docs/src/publish.rs:131:    /// The area of `out` (absolute; it need not exist, its parent must).
+crates/rustify-docs/src/publish.rs:199:/// Locks `area`: exclusively for a build, shared for a preview. Never waits.
+crates/rustify-docs/src/publish.rs:296:/// Whether `out` (absolute) may be a project's output: not the project, a
+crates/rustify-docs/src/publish.rs:352:/// Whether `out` may be replaced: it does not exist, is empty, or holds a
+crates/rustify-docs/src/publish.rs:387:/// A point in [`publish_with`] at which the old output is in a known state:
+crates/rustify-docs/src/publish.rs:410:/// Writes `files` as the output of `lock`'s area, replacing what was there
+crates/rustify-docs/src/publish.rs:411:/// only once all of it is written. Call [`recover`] first.
+crates/rustify-docs/src/publish.rs:416:/// [`publish`], telling `at` each [`Step`] as it is reached; how the
+crates/rustify-docs-cli/src/links.rs:1://! `check --external-links`: whether the site's links to other sites still
+crates/rustify-docs-cli/src/links.rs:39:/// The address a request goes to: without its `#fragment`.
+crates/rustify-docs-cli/src/links.rs:47:/// Where `needle` first appears in `text`, for links whose position the
+crates/rustify-docs/src/frontmatter.rs:19:/// Finds `---` frontmatter at the very start of `text`. A file that opens a
+crates/rustify-docs/src/frontmatter.rs:36:        .suggest("end it with a line holding only `---`")
+crates/rustify-docs/src/frontmatter.rs:68:    /// The heading levels listed, as `[2, 3]`.
+crates/rustify-docs/src/frontmatter.rs:105:    /// Whether search engines may index the page. Independent of `search`
+crates/rustify-docs/src/frontmatter.rs:106:    /// and `ai`, which only record the author's wish for later phases.
+crates/rustify-docs/src/frontmatter.rs:121:/// Reads the frontmatter of `text` (a whole file). Errors are located in the
+crates/rustify-docs/src/frontmatter.rs:202:        .suggest("use a language tag such as `en`, `zh-CN` or `fr`"),
+crates/rustify-docs/src/shell.rs:5://! system through CSS, and the narrow-screen menu is a native `<details>`.
+crates/rustify-docs/src/shell.rs:39:/// The strict policy every page is served under, as a header. The `meta`
+crates/rustify-docs/src/shell.rs:40:/// copy in each page omits `frame-ancestors`, which only a header can carry.
+crates/rustify-docs/src/shell.rs:43:/// [`CSP`] without the one directive a `meta` element cannot deliver.
+crates/rustify-docs/src/shell.rs:55:    /// The page's route, relative to the site's base: `/guide/setup/`.
+crates/rustify-docs/src/shell.rs:60:/// A titled group of sidebar entries, shown on the pages under `prefix`.
+crates/rustify-docs/src/shell.rs:68:/// Where `dev` serves what it adds to every page: the problem panel's
+crates/rustify-docs/src/shell.rs:75:/// A link the configuration adds to the header: one of `nav.top`, or of
+crates/rustify-docs/src/shell.rs:76:/// `nav.social` after them.
+crates/rustify-docs/src/shell.rs:85:    /// Another site's address, which gets `rel="noopener"`.
+crates/rustify-docs/src/shell.rs:93:    /// Runs in `<head>`, before first paint, to apply a stored mode.
+crates/rustify-docs/src/shell.rs:96:    /// Pages served by `dev`: they load its panel and follow its builds.
+crates/rustify-docs/src/shell.rs:105:    /// `/` or `/segments/`.
+crates/rustify-docs/src/shell.rs:108:    /// The header's links (`nav.top`) and the social ones (`nav.social`).
+crates/rustify-docs/src/shell.rs:126:    /// `route` under the site's base, as a root-relative URL with its path
+crates/rustify-docs/src/shell.rs:133:    /// The groups shown beside `route`.
+crates/rustify-docs/src/shell.rs:140:    /// The pages before and after `route` in sidebar order.
+crates/rustify-docs/src/shell.rs:165:    /// The site's home page, a `website` rather than an `article`.
+crates/rustify-docs/src/shell.rs:167:    /// When the page's file last changed, as `YYYY-MM-DD`.
+crates/rustify-docs/src/shell.rs:176:    /// The document's `<title>`, unique across the site.
+crates/rustify-docs/src/shell.rs:191:    /// A page with `layout: home`.
+crates/rustify-docs/src/shell.rs:253:/// What `dev` serves while no version of the site has built: the site's
+crates/rustify-docs/src/shell.rs:299:/// Renders `page` as a complete document.
+crates/rustify-docs/src/shell.rs:309:    // `<!>` is a hydration marker between dynamic pieces. Nothing hydrates a
+crates/rustify-docs/src/shell.rs:311:    // escapes every `<` it writes as text.
+crates/rustify-docs/src/shell.rs:560:/// An Open Graph `<meta property=… content=…>`; `property` is not an
+crates/rustify-docs/src/shell.rs:569:/// page it links to (`page`), or the section a page under it belongs to.
+crates/rustify-docs/src/shell.rs:605:/// `display: none`), so a narrow screen never scrolls sideways for them.
+crates/rustify-docs/src/shell.rs:666:/// each a bare link styled by one `.rd-nav` rule instead of a class list
+crates/rustify-docs/src/shell.rs:697:/// `display: none`, so focus and assistive technology meet one navigation.
+crates/rustify-docs/src/shell.rs:1016:            "## Install\n\nRun `cargo`.\n\n### Check\n\nDone.\n",
+crates/rustify-docs/src/shell.rs:1155:    /// across lines with `\` and leading spaces.
+crates/rustify-docs/src/builtins.rs:73:/// The repair for a builtin's refused props: the range of `CardGrid.columns`
+crates/rustify-docs/src/builtins.rs:86:            "Set `columns` to 1, 2 or 3, or omit it for the default expression {}.",
+crates/rustify-docs/src/builtins.rs:329:            "Set `columns` to 1, 2 or 3, or omit it for the default expression `2`."
+crates/rustify-docs/src/builtins.rs:333:            format!("Add or correct `props` using the declared fields `items` (`Vec<StepSpec>`; required); see {} for its object fields. Reported props path: `unexpected`.", crate::embed::BUILTIN_REFERENCE)
+crates/rustify-docs/src/builtins.rs:337:            format!("Write `tabs` as `Vec<TabSpec>` (required); see {} for its object fields. Reported props path: `tabs[0]`.", crate::embed::BUILTIN_REFERENCE)
+crates/rustify-docs/src/html_check.rs:5://! script or style written into the page, no event handler, no `javascript:`
+crates/rustify-docs/src/html_check.rs:26:    /// Navigation: `a href`, `area href`.
+crates/rustify-docs/src/html_check.rs:30:    /// A `srcset`, which lists several image URLs.
+crates/rustify-docs/src/html_check.rs:33:    /// `url(…)` such as `bg-[url(/bg.svg)]`, which the class carries into
+crates/rustify-docs/src/html_check.rs:96:/// other than `data:` for images, or a scheme-relative one.
+crates/rustify-docs/src/html_check.rs:114:/// A `srcset`'s candidates as a browser splits them: each URL with its
+crates/rustify-docs/src/html_check.rs:115:/// descriptor (`2x`, `640w`, or empty). A URL may hold commas (a `data:`
+crates/rustify-docs/src/html_check.rs:367:/// window's handle on this one (`rel="noopener"`, or `noreferrer`, which
+crates/rustify-docs/src/html_check.rs:368:/// implies it). `attribute` looks an attribute up by its lowercase name.
+crates/rustify-docs/src/html_check.rs:424:/// This lets a URL rewrite replace `&#47;` without disturbing its class.
+crates/rustify-docs/src/html_check.rs:520:/// `chunk`; the caller places them in the file and in its output.
+crates/rustify-docs/src/html_check.rs:638:                        "a `style` attribute is blocked by the policy",
+crates/rustify-docs/src/html_check.rs:652:            // A class's `url(…)` is loaded by the stylesheet the class
+crates/rustify-docs-cli/src/preview.rs:1://! `rustify-docs preview`: a production output, served as a static host
+crates/rustify-docs-cli/src/preview.rs:26:    /// `/` or `/segments/`.
+crates/rustify-docs-cli/src/preview.rs:28:    /// The bytes of the output's `404.html`.
+crates/rustify-docs-cli/src/preview.rs:68:/// Percent-decodes a request path; `None` for one that does not decode to
+crates/rustify-docs-cli/src/preview.rs:225:/// Binds `host:port`. Without an explicit port, a busy `default` falls back
+crates/rustify-docs-cli/src/preview.rs:249:/// Serves `site` on `listener` until the process ends.
+crates/rustify-docs/src/lib.rs:6://! `pipeline` feature; component sites share a `site!` registry through
+crates/rustify-docs/src/lib.rs:7://! `site-ssr` for the build helper and `hydrate` for browser interaction.
+crates/rustify-docs/src/lib.rs:10:// A page's view is one nested Leptos type; erasing it (`into_any`) needs
+crates/rustify-docs/src/history.rs:3://! One `git log` reads the history of the content directory; the newest
+crates/rustify-docs/src/history.rs:13:/// Project-relative path to the `YYYY-MM-DD` of the last commit touching it.
+crates/rustify-docs/src/history.rs:16:/// Reads the dates of every file under `dir` (project-relative) in `root`.
+crates/rustify-docs/src/history.rs:17:/// `Err` says why there are none.
+crates/rustify-docs/src/history.rs:47:/// Reads `git log --format=%x1e%ct --name-only` output, newest commit first.
+crates/rustify-docs/src/history.rs:63:/// The UTC calendar date of a Unix time, as `YYYY-MM-DD`.
+crates/rustify-docs/src/diagnostic_text.rs:10:        return "``  ``".into();
+crates/rustify-docs/src/diagnostic_text.rs:12:    let longest = value.split(|ch| ch != '`').map(str::len).max().unwrap_or(0);
+crates/rustify-docs/src/diagnostic_text.rs:14:        return format!("`{value}`");
+crates/rustify-docs/src/diagnostic_text.rs:16:    let fence = "`".repeat(longest + 1);
+crates/rustify-docs/src/diagnostic_text.rs:22:    if value.contains('`') {
+crates/rustify-docs/src/diagnostic_text.rs:36:            ("", "``  ``"),
+crates/rustify-docs/src/diagnostic_text.rs:37:            (" ", "` `"),
+crates/rustify-docs/src/diagnostic_text.rs:38:            ("  ", "`  `"),
+crates/rustify-docs/src/diagnostic_text.rs:39:            (" a ", "` a `"),
+crates/rustify-docs/src/diagnostic_text.rs:40:            ("a\nb", "`a\nb`"),
+crates/rustify-docs/src/diagnostic_text.rs:41:            ("a\r\nb", "`a\r\nb`"),
+crates/rustify-docs/src/diagnostic_text.rs:42:            ("a\\b", "`a\\b`"),
+crates/rustify-docs/src/diagnostic_text.rs:43:            ("Counter", "`Counter`"),
+crates/rustify-docs/src/diagnostic_text.rs:44:            ("a`b", "`` a`b ``"),
+crates/rustify-docs/src/diagnostic_text.rs:45:            ("a``b", "``` a``b ```"),
+crates/rustify-docs/src/diagnostic_text.rs:46:            ("`a`", "`` `a` ``"),
+crates/rustify-docs/src/diagnostic_text.rs:47:            ("`", "`` ` ``"),
+crates/rustify-docs/src/diagnostic_text.rs:48:            ("``", "``` `` ```"),
+crates/rustify-docs/src/diagnostic_text.rs:49:            (" `\r\n ", "``  `\r\n  ``"),
+crates/rustify-docs/src/diagnostic_text.rs:54:                if value.contains('`') { encoded } else { value }
+crates/rustify-docs/src/markdown.rs:5://! `pulldown_cmark::html::push_html`, which writes a `style` attribute for
+crates/rustify-docs/src/markdown.rs:14://! What depends on the rest of the site (where a `guide.md#setup` link or an
+crates/rustify-docs/src/markdown.rs:39:/// footnotes, strikethrough and alerts, and `{#id}` on headings.
+crates/rustify-docs/src/markdown.rs:59:    /// Whether the author supplied the id through `{#id}` or raw HTML.
+crates/rustify-docs/src/markdown.rs:67:    /// A Markdown link, or `a href` in raw HTML.
+crates/rustify-docs/src/markdown.rs:73:    /// One URL of a raw `srcset`; the slot holds the whole attribute.
+crates/rustify-docs/src/markdown.rs:76:    /// slot is the URL inside the class's `url(…)`.
+crates/rustify-docs/src/markdown.rs:156:    /// The project-relative files `rustify:include` read.
+crates/rustify-docs/src/markdown.rs:161:/// The files a page's `rustify:include` directives name, read before the
+crates/rustify-docs/src/markdown.rs:166:/// The project-relative paths `source`'s include directives name, so they
+crates/rustify-docs/src/markdown.rs:193:    /// `lang="en"`.
+crates/rustify-docs/src/markdown.rs:198:/// Renders `source`, whose first byte is at `offset` in its file (after any
+crates/rustify-docs/src/markdown.rs:390:    /// Inserts `text` at `at`, moving the slots after it.
+crates/rustify-docs/src/markdown.rs:501:    /// `{#id}` ids are taken before any automatic id is handed out, so an
+crates/rustify-docs/src/markdown.rs:535:    /// Writes `destination` as an attribute value and records it.
+crates/rustify-docs/src/markdown.rs:591:    /// `lang="en"` on an interface string inside foreign-language content.
+crates/rustify-docs/src/markdown.rs:861:                            "a heading accepts only `{#id}`; classes and other attributes are not allowed",
+crates/rustify-docs/src/markdown.rs:863:                        .suggest("keep `{#id}` and remove the rest"),
+crates/rustify-docs/src/markdown.rs:1542:/// `<!-- rustify:code-group name="…" -->` and `<!-- rustify:end-code-group -->`.
+crates/rustify-docs/src/markdown.rs:1577:/// A code fence's info string: the language, then `title="…"`, `linenos`
+crates/rustify-docs/src/markdown.rs:1578:/// and `highlight="1,3-5"` in any order.
+crates/rustify-docs/src/markdown.rs:1729:    /// The HTML with every slot replaced by `[n]`, its reference index.
+crates/rustify-docs/src/markdown.rs:1747:            md("# Title\n\n## Setup {#install}\n\n## Install\n\n## Install\n\n### `code` & more\n");
+crates/rustify-docs/src/markdown.rs:1819:            "> [!TIP]\n> Astuce.\n\n```rust\nfn main() {}\n```\n",
+crates/rustify-docs/src/markdown.rs:1846:        let source = "## Repeated\n\n```rustify-component\nname: Counter\nprops:\n  initial: 2\nchildren: |\n  ## Repeated\n\n  [Guide](guide.md#setup) and **strong**.\n```\n\n```rustify-demo\nname: CounterDemo\n```\n";
+crates/rustify-docs/src/markdown.rs:1870:            "# T\r\n\r\n```rustify-component\r\nname: Counter\r\nprops:\r\n  initial: 2\r\n```\r\n",
+crates/rustify-docs/src/markdown.rs:1871:            "# T\n\n> ```rustify-component\n> name: Counter\n> props:\n>   initial: 2\n> ```\n",
+crates/rustify-docs/src/markdown.rs:1872:            "# T\n\n- item\n\n  ```rustify-component\n  name: Counter\n  props:\n    initial: 2\n  ```\n",
+crates/rustify-docs/src/markdown.rs:1878:        let source = "# T\r\n\r\n```rustify-component\r\nname: Steps\r\nunknown: 2\r\n```\r\n";
+crates/rustify-docs/src/markdown.rs:1889:        let source = "# T\n\n```rustify-component\nname: Steps\nprops:\n  items: wrong\n```\n\n```rustify-component\nname: CardGrid\nprops:\n  cards: []\n  columns: \"2\"\n```\n";
+crates/rustify-docs/src/markdown.rs:1896:        assert_eq!(issues[0].span.start, source.find("```rustify").unwrap());
+crates/rustify-docs/src/markdown.rs:1904:            Some("Write `items` as `Vec<StepSpec>` (required); see https://github.com/rockie/rustify-ui/blob/main/docs/docs-ssg.md#static-builtins for its object fields. Reported props path: `items`.")
+crates/rustify-docs/src/markdown.rs:1908:            Some("Write `columns: 0` for declared type `u8` (default expression `2`). Reported props path: `columns`.")
+crates/rustify-docs/src/markdown.rs:1914:        let nested = "```rustify-component\nname: Counter\nchildren: |\n  ```rustify-demo\n  name: CounterDemo\n  ```\n```\n";
+crates/rustify-docs/src/markdown.rs:1916:        let unsafe_child = "```rustify-component\nname: Counter\nchildren: '<img src=\"javascript:evil()\" onerror=\"evil()\">'\n```\n";
+crates/rustify-docs/src/markdown.rs:1919:            "```rustify-component\nname: Counter\nprops: {initial: 1, initial: 2}\n```\n";
+crates/rustify-docs/src/markdown.rs:1925:        let page = md("```rustify-component\nname: CardGrid\nprops:\n  cards:\n    - title: Guide\n      link: guide.md\n      description: Install the library.\nchildren: '[Details](guide.md#setup)'\n```\n");
+crates/rustify-docs/src/markdown.rs:1947:        let page = md("```rust title=\"main.rs\" linenos highlight=\"2\"\nfn main() {\n    let s = \"<&>\";\n}\n```\n");
+crates/rustify-docs/src/markdown.rs:1967:            md("text\n\n```rust highlight=\"9\"\nx\n```\n\n```rust colour=\"red\"\ny\n```\n");
+crates/rustify-docs/src/markdown.rs:2020:        let page = md("Go to www.example.com/a_b, https://x.example/p?q=1. or `https://not.linked` and [https://kept.example](other.md).\n");
+crates/rustify-docs/src/markdown.rs:2074:        let source = "<!-- rustify:code-group name=\"install\" -->\n\n```sh title=\"Cargo\"\ncargo add x\n```\n\n```toml title=\"Manifest\"\nx = \"1\"\n```\n\n<!-- rustify:end-code-group -->\n";
+crates/rustify-docs/src/markdown.rs:2094:        let page = md("<!-- rustify:code-group name=\"g\" -->\n\nNot code.\n\n```sh\na\n```\n\n```sh\nb\n```\n\n<!-- rustify:end-code-group -->\n");
+crates/rustify-docs/src/markdown.rs:2107:                "<!-- rustify:code-group name=\"g\" -->\n\n```sh\na\n```\n"
+crates/rustify-docs/src/markdown.rs:2133:        assert!(page.issues[0].message.contains("there is no region `nope`"));
+crates/rustify-docs/src/slug.rs:2://! `guide.md#some-heading` link works on both.
+crates/rustify-docs/src/slug.rs:5://! script stay (Chinese included), as do `-` and `_`; each whitespace
+crates/rustify-docs/src/slug.rs:6://! character becomes `-`; all other punctuation and symbols go. Nothing is
+crates/rustify-docs/src/slug.rs:8://! leaves nothing gets `section`.
+crates/rustify-docs/src/slug.rs:32:/// Explicit `{#id}` ids are reserved up front, so an automatic id never
+crates/rustify-docs/src/slug.rs:34:/// automatic id gets `-1`, `-2`, … like GitHub's.
+crates/rustify-docs/src/slug.rs:82:            ("`mount()` & friends!", "mount--friends"),
+crates/rustify-docs/src/config.rs:1://! `rustify-docs.toml`, schema version 1.
+crates/rustify-docs/src/config.rs:151:    /// Directories relative to the project root, normalized with `/`.
+crates/rustify-docs/src/config.rs:154:    /// `None` discovers recursively; an empty list selects no Markdown pages.
+crates/rustify-docs/src/config.rs:168:/// A component site's Cargo project and single `site!` declaration source.
+crates/rustify-docs/src/config.rs:180:    /// The public URL of the site's root, ending in `/`, when known.
+crates/rustify-docs/src/config.rs:182:    /// `/` or `/segments/`.
+crates/rustify-docs/src/config.rs:192:    /// Where the project root sits inside the repository, `""` at its root.
+crates/rustify-docs/src/config.rs:224:    /// Every page under this content directory, in `sidebar.order`.
+crates/rustify-docs/src/config.rs:236:    /// The routes under which the group is shown: `/` for every page.
+crates/rustify-docs/src/config.rs:251:/// A project-relative path, normalized: no absolute paths, no `..` out of
+crates/rustify-docs/src/config.rs:252:/// the project, `/` separators, no `.` segments.
+crates/rustify-docs/src/config.rs:276:/// `site.base`: `/` or `/a/b/`, made of URL-safe segments.
+crates/rustify-docs/src/config.rs:290:            return Err(format!("{} is not a base path; use `/` or segments of letters, digits, `-`, `_`, `.` and `~`, like `/docs/`", code_span(base)));
+crates/rustify-docs/src/config.rs:316:    /// Builds for another base path than the configured one (`--base`).
+crates/rustify-docs/src/config.rs:334:/// Reads `rustify-docs.toml`. On success, also returns the warnings; on
+crates/rustify-docs/src/config.rs:410:                errors.push(error(span, "content-include", "content.include must name a Markdown file ending in `.md`"));
+crates/rustify-docs/src/config.rs:439:                .suggest("put the output in a directory of its own, like `dist`"),
+crates/rustify-docs/src/config.rs:502:                    .suggest("use a tag like `en` or `zh-CN`"),
+crates/rustify-docs/src/config.rs:669:                            "nav scope {} is not a route prefix like `/guide/`",
+crates/rustify-docs/src/config.rs:710:                        _ => errors.push(error(route.span(), "config-nav", "nav.routes needs canonical routes like `/custom/`, without the deployment base, query or fragment")),
+crates/rustify-docs/src/config.rs:720:                        "nav group {} needs exactly one of `dir`, `items` and `routes`",
+crates/rustify-docs/src/demo.rs:17:/// `html` is the real SDK scope; source slices have already passed validation.
+crates/rustify-docs/src/color.rs:1://! `#RRGGBB` colours and the WCAG contrast between two of them.
+crates/rustify-docs/src/color.rs:3:/// Parses `#RRGGBB` into its channels.
+crates/rustify-docs/src/color.rs:26:/// The contrast ratio between two `#RRGGBB` colours, from 1 to 21.
+crates/rustify-docs/src/highlight.rs:3://! Every token becomes a `<span>` whose classes are the atoms of its scope,
+crates/rustify-docs/src/highlight.rs:4://! each prefixed `hl-` (`source.rust` → `hl-source hl-rust`), the same shape
+crates/rustify-docs/src/highlight.rs:5://! syntect's `ClassStyle::SpacedPrefixed { prefix: "hl-" }` produces. The
+crates/rustify-docs/src/highlight.rs:6://! colours live in a stylesheet of their own ([`theme_css`]), so a page
+crates/rustify-docs/src/highlight.rs:7://! carries no `style` attribute, follows the reader's light or dark mode
+crates/rustify-docs/src/highlight.rs:35:    /// The canonical fence tag, which is also what `data-lang` carries.
+crates/rustify-docs/src/highlight.rs:131:    /// The grammar for each entry of [`LANGUAGES`], by the same index.
+crates/rustify-docs/src/highlight.rs:147:    /// When a grammar [`LANGUAGES`] names is missing, which is a defect in
+crates/rustify-docs/src/highlight.rs:177:    /// Highlights `code` as the language `tag` names, or as plain text when
+crates/rustify-docs/src/highlight.rs:178:    /// it names none of [`LANGUAGES`].
+crates/rustify-docs/src/highlight.rs:194:/// The lines of `code`, without their line endings. A final newline ends the
+crates/rustify-docs/src/highlight.rs:313:/// background ([`CODE_BACKGROUND`]) and marked-line background
+crates/rustify-docs/src/highlight.rs:314:/// ([`LINE_HIGHLIGHT`]), which a test checks. Later rules win
+crates/rustify-docs/src/highlight.rs:446:/// The background of a line a fence marks with `highlight`, light then dark.
+crates/rustify-docs/src/highlight.rs:474:/// `dark_root` and `system_root` are the selectors of those two roots.
+crates/rustify-docs/src/highlight.rs:519:            "js" => "const answer = 42; // the answer\nexport function f(x) { return `${x}`; }\n",
+crates/rustify-docs/src/highlight.rs:523:            "md" => "# Title\n\nSome *text* and `code`.\n",
+crates/rustify-docs/src/site/registry.rs:26:/// A registry constructed from the shared parser by `site!` on both targets.
+crates/rustify-docs/src/site/registry.rs:201:/// Immutable page/slot context. `demo` uses the shared island rendering path.
+crates/rustify-docs/src/site/registry.rs:235:    /// `path` is project-relative; links retain their source-file meaning.
