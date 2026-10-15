@@ -18,13 +18,12 @@ Supported on macOS. Linux and Windows are not verified.
 ## Install and maintain the CLI
 
 This section records the verified P1 content-site release. The Rust examples
-below use the current repository checkout's CLI candidate, version **0.1.21**,
-paired with library revision `820cea0f0ea886606427bfd031e17c93d401aca8`.
-The candidate was installed from local Git commit
-`bae5b882d9304a47254d81662b5163981bb0adaf`; public availability is pending.
-`rustify-docs --build-info` and `cargo install --list` identify that CLI
-commit. The pinned P1 install below remains the verified public content-site
-release and does not support the multilingual configuration.
+below use the current repository checkout's CLI candidate, version **0.1.22**,
+paired with library revision `fecc230cad5136c4c3f5cd008fedfe48a8f90f3b`.
+Fixed-pair acceptance and public availability are pending.
+`rustify-docs --build-info` and `cargo install --list` identify the CLI
+source C after installation. The pinned P1 install below remains the verified
+public content-site release and does not support the multilingual configuration.
 
 The CLI is distributed from git, with its dependencies locked and the
 workspace's `docs-cli` profile, which unwinds so that `dev` can recover from a
@@ -286,8 +285,8 @@ route, an unknown route or a Markdown page listed there is an error; use
 
 ### Publish several languages
 
-The multilingual configuration requires the paired CLI 0.1.21 and framework
-revision described above. The older P1 installation cannot read these keys.
+These multilingual examples use the paired CLI 0.1.22 and framework revision
+described above. The older P1 installation cannot read these keys.
 
 Declare every language, including the default `site.lang`. The default has
 an empty prefix and keeps the existing addresses. Other languages each
@@ -700,8 +699,8 @@ The components template requires an installed CLI with a traceable source
 revision, an explicit paired framework revision and its embedded dependency
 lock. A development checkout without that frozen pair refuses generation;
 it does not write an unlocked project or choose a framework revision for
-the author. This checkout's 0.1.21 candidate pins library revision
-`820cea0f0ea886606427bfd031e17c93d401aca8` and embeds its generated dependency
+the author. This checkout's 0.1.22 candidate pins library revision
+`fecc230cad5136c4c3f5cd008fedfe48a8f90f3b` and embeds its generated dependency
 lock. Public Git availability is still being prepared; the installed CLI's
 `--build-info` identifies its paired C commit. The verified P1 installation
 above does not provide this template.
