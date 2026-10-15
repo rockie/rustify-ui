@@ -18,8 +18,8 @@ Supported on macOS. Linux and Windows are not verified.
 ## Install and maintain the CLI
 
 This section records the verified P1 content-site release. The Rust examples
-below use the current repository checkout's CLI candidate, version **0.1.23**,
-paired with library revision `41b19b63b88eba0503a49e291f4a27edd9d2107f`.
+below use the current repository checkout's CLI candidate, version **0.1.24**,
+paired with library revision `a2ad3940fd8dc81e25d9b2c4e857f481d95e8cbd`.
 Fixed-pair acceptance and public availability are pending.
 `rustify-docs --build-info` and `cargo install --list` identify the CLI
 source C after installation. The pinned P1 install below remains the verified
@@ -285,7 +285,7 @@ route, an unknown route or a Markdown page listed there is an error; use
 
 ### Publish several languages
 
-These multilingual examples use the paired CLI 0.1.23 and framework revision
+These multilingual examples use the paired CLI 0.1.24 and framework revision
 described above. The older P1 installation cannot read these keys.
 
 Declare every language, including the default `site.lang`. The default has
@@ -699,8 +699,8 @@ The components template requires an installed CLI with a traceable source
 revision, an explicit paired framework revision and its embedded dependency
 lock. A development checkout without that frozen pair refuses generation;
 it does not write an unlocked project or choose a framework revision for
-the author. This checkout's 0.1.23 candidate pins library revision
-`41b19b63b88eba0503a49e291f4a27edd9d2107f` and embeds its generated dependency
+the author. This checkout's 0.1.24 candidate pins library revision
+`a2ad3940fd8dc81e25d9b2c4e857f481d95e8cbd` and embeds its generated dependency
 lock. Public Git availability is still being prepared; the installed CLI's
 `--build-info` identifies its paired C commit. The verified P1 installation
 above does not provide this template.
