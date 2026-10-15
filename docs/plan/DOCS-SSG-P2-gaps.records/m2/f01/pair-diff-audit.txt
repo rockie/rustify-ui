@@ -1,0 +1,18 @@
+## git diff --name-only HEAD (tracked, excluding the user's pre-existing .xgent-ai ledger and fixture log changes)
+Cargo.lock
+crates/rustify-docs-cli/Cargo.toml
+crates/rustify-docs-cli/assets/components-Cargo.lock
+crates/rustify-docs-cli/assets/framework-revision.txt
+docs/docs-ssg.md
+
+## git diff --name-only 745ba6b720aa6ed042dcf5d4f763641fc2d05165 (working tree vs R′)
+Cargo.lock
+crates/rustify-docs-cli/Cargo.toml
+crates/rustify-docs-cli/assets/components-Cargo.lock
+crates/rustify-docs-cli/assets/framework-revision.txt
+docs/docs-ssg.md
+
+## commits after R′
+
+## library/runtime/source/template paths changed since R′
+(end)

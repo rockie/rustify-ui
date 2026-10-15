@@ -1,0 +1,101 @@
+{
+  "stats": {
+    "startTime": "2026-10-15T02:23:10.754Z",
+    "duration": 134308.652,
+    "expected": 10,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "tests": [
+    {
+      "title": "gaps a11y: the custom page, the plain page and a deep 404 at rest have no serious or critical axe violation, light 1280px",
+      "project": "components-subpath",
+      "status": [
+        "passed"
+      ]
+    },
+    {
+      "title": "gaps a11y: the custom page, the plain page and a deep 404 at rest have no serious or critical axe violation, light 375px",
+      "project": "components-subpath",
+      "status": [
+        "passed"
+      ]
+    },
+    {
+      "title": "gaps a11y: the custom page, the plain page and a deep 404 at rest have no serious or critical axe violation, dark 1280px",
+      "project": "components-subpath",
+      "status": [
+        "passed"
+      ]
+    },
+    {
+      "title": "gaps a11y: the custom page, the plain page and a deep 404 at rest have no serious or critical axe violation, dark 375px",
+      "project": "components-subpath",
+      "status": [
+        "passed"
+      ]
+    },
+    {
+      "title": "gaps reduced motion: under reduce the proxy's controls attach and change with no transition and a still spinner",
+      "project": "components-subpath",
+      "status": [
+        "passed"
+      ]
+    },
+    {
+      "title": "gaps reduced motion: without a preference the proxy keeps the SDK's durations and the spinner's animation",
+      "project": "components-subpath",
+      "status": [
+        "passed"
+      ]
+    },
+    {
+      "title": "gaps a11y: loading, ready, client-only and failed islands at rest have no serious or critical axe violation, light 1280px",
+      "project": "components-subpath",
+      "status": [
+        "passed"
+      ]
+    },
+    {
+      "title": "gaps a11y: loading, ready, client-only and failed islands at rest have no serious or critical axe violation, light 375px",
+      "project": "components-subpath",
+      "status": [
+        "passed"
+      ]
+    },
+    {
+      "title": "gaps a11y: loading, ready, client-only and failed islands at rest have no serious or critical axe violation, dark 1280px",
+      "project": "components-subpath",
+      "status": [
+        "passed"
+      ]
+    },
+    {
+      "title": "gaps a11y: loading, ready, client-only and failed islands at rest have no serious or critical axe violation, dark 375px",
+      "project": "components-subpath",
+      "status": [
+        "passed"
+      ]
+    }
+  ],
+  "a11y": {
+    "files": 8,
+    "scans": 32,
+    "violations": 0,
+    "serious_or_critical": 0,
+    "binaries": [
+      {
+        "buildInfo": "rustify-docs 0.1.17\npanic: unwind\ngrammars: syntect-5.3.0+two-face-0.5.2+bat-0.26.1+fancy\nsource: 79a77825eadd07207154348ee9ffba48195d7766\n",
+        "path": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps-installed.eV4AfO/bin/rustify-docs",
+        "sha256": "47486f96ff0985f63d36590d13f5bbd7ddbcbba3d501f40f6f561f00be8c9d7c"
+      }
+    ],
+    "build_ids": [
+      "166cceb55da50148"
+    ],
+    "incomplete_rules": {
+      "color-contrast": 16
+    }
+  }
+}

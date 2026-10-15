@@ -1,0 +1,74 @@
+{
+  "stats": {
+    "startTime": "2026-10-15T02:26:03.586Z",
+    "duration": 167980.75199999998,
+    "expected": 6,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "tests": [
+    {
+      "title": "gaps reduced motion: under reduce the default theme's controls attach and change with no transition and a still spinner",
+      "project": "official-subpath",
+      "status": [
+        "passed"
+      ]
+    },
+    {
+      "title": "gaps reduced motion: without a preference the default theme keeps 150ms transitions and a turning spinner",
+      "project": "official-subpath",
+      "status": [
+        "passed"
+      ]
+    },
+    {
+      "title": "gaps a11y: every official route at rest has no serious or critical axe violation, light 1280px",
+      "project": "official-subpath",
+      "status": [
+        "passed"
+      ]
+    },
+    {
+      "title": "gaps a11y: every official route at rest has no serious or critical axe violation, light 375px",
+      "project": "official-subpath",
+      "status": [
+        "passed"
+      ]
+    },
+    {
+      "title": "gaps a11y: every official route at rest has no serious or critical axe violation, dark 1280px",
+      "project": "official-subpath",
+      "status": [
+        "passed"
+      ]
+    },
+    {
+      "title": "gaps a11y: every official route at rest has no serious or critical axe violation, dark 375px",
+      "project": "official-subpath",
+      "status": [
+        "passed"
+      ]
+    }
+  ],
+  "a11y": {
+    "files": 4,
+    "scans": 108,
+    "violations": 0,
+    "serious_or_critical": 0,
+    "binaries": [
+      {
+        "buildInfo": "rustify-docs 0.1.17\npanic: unwind\ngrammars: syntect-5.3.0+two-face-0.5.2+bat-0.26.1+fancy\nsource: 79a77825eadd07207154348ee9ffba48195d7766\n",
+        "path": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-gaps-installed.eV4AfO/bin/rustify-docs",
+        "sha256": "47486f96ff0985f63d36590d13f5bbd7ddbcbba3d501f40f6f561f00be8c9d7c"
+      }
+    ],
+    "build_ids": [
+      "66edda8b1a7cba74"
+    ],
+    "incomplete_rules": {
+      "color-contrast": 102,
+      "aria-valid-attr-value": 4
+    }
+  }
+}
