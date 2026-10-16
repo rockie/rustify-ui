@@ -1,0 +1,333 @@
+{
+  "browser": "153.0.8010.12",
+  "time": "2026-10-16T03:29:03.580Z",
+  "motion": "reduce",
+  "dpr": 1,
+  "samples": [
+    {
+      "image": "keyboard-40-1280-light.png",
+      "capturedAt": "2026-10-16T03:29:03.876Z",
+      "url": "http://127.0.0.1:4205/rustify-ui/",
+      "viewport": [
+        1280,
+        900
+      ],
+      "theme": "light",
+      "dialog": {
+        "x": 352,
+        "y": 80,
+        "width": 576,
+        "height": 722,
+        "top": 80,
+        "right": 928,
+        "bottom": 802,
+        "left": 352
+      },
+      "boxSizing": "border-box",
+      "active": "BUTTON",
+      "activeId": "",
+      "activeText": "Show more",
+      "focusOutline": "rgb(23, 92, 211) solid 3px",
+      "options": 40,
+      "selection": "rd-search-option-1-2-1",
+      "count": "98 results",
+      "noteBackground": null,
+      "overflow": 0
+    },
+    {
+      "image": "keyboard-98-1280-light.png",
+      "capturedAt": "2026-10-16T03:29:04.092Z",
+      "url": "http://127.0.0.1:4205/rustify-ui/",
+      "viewport": [
+        1280,
+        900
+      ],
+      "theme": "light",
+      "dialog": {
+        "x": 352,
+        "y": 80,
+        "width": 576,
+        "height": 675,
+        "top": 80,
+        "right": 928,
+        "bottom": 755,
+        "left": 352
+      },
+      "boxSizing": "border-box",
+      "active": "INPUT",
+      "activeId": "rd-search-input",
+      "activeText": "",
+      "focusOutline": "rgb(23, 92, 211) solid 3px",
+      "options": 98,
+      "selection": "rd-search-option-1-2-1",
+      "count": "98 results",
+      "noteBackground": null,
+      "overflow": 0
+    },
+    {
+      "image": "search-1280-light.png",
+      "capturedAt": "2026-10-16T03:29:04.311Z",
+      "url": "http://127.0.0.1:4205/rustify-ui/page-0001/",
+      "viewport": [
+        1280,
+        900
+      ],
+      "theme": "light",
+      "dialog": {
+        "x": 352,
+        "y": 80,
+        "width": 576,
+        "height": 468,
+        "top": 80,
+        "right": 928,
+        "bottom": 548,
+        "left": 352
+      },
+      "boxSizing": "border-box",
+      "active": "INPUT",
+      "activeId": "rd-search-input",
+      "activeText": "",
+      "focusOutline": "rgb(23, 92, 211) solid 3px",
+      "options": 2,
+      "selection": "rd-search-option-1-1-0",
+      "count": "2 results",
+      "noteBackground": null,
+      "overflow": 0
+    },
+    {
+      "image": "search-1280-dark.png",
+      "capturedAt": "2026-10-16T03:29:04.493Z",
+      "url": "http://127.0.0.1:4205/rustify-ui/page-0001/",
+      "viewport": [
+        1280,
+        900
+      ],
+      "theme": "dark",
+      "dialog": {
+        "x": 352,
+        "y": 80,
+        "width": 576,
+        "height": 468,
+        "top": 80,
+        "right": 928,
+        "bottom": 548,
+        "left": 352
+      },
+      "boxSizing": "border-box",
+      "active": "INPUT",
+      "activeId": "rd-search-input",
+      "activeText": "",
+      "focusOutline": "rgb(83, 177, 253) solid 3px",
+      "options": 2,
+      "selection": "rd-search-option-1-1-0",
+      "count": "2 results",
+      "noteBackground": null,
+      "overflow": 0
+    },
+    {
+      "image": "search-375-light.png",
+      "capturedAt": "2026-10-16T03:29:04.683Z",
+      "url": "http://127.0.0.1:4205/rustify-ui/page-0001/",
+      "viewport": [
+        375,
+        812
+      ],
+      "theme": "light",
+      "dialog": {
+        "x": 16,
+        "y": 16,
+        "width": 343,
+        "height": 607,
+        "top": 16,
+        "right": 359,
+        "bottom": 623,
+        "left": 16
+      },
+      "boxSizing": "border-box",
+      "active": "INPUT",
+      "activeId": "rd-search-input",
+      "activeText": "",
+      "focusOutline": "rgb(23, 92, 211) solid 3px",
+      "options": 2,
+      "selection": "rd-search-option-1-1-0",
+      "count": "2 results",
+      "noteBackground": null,
+      "overflow": 0
+    },
+    {
+      "image": "search-375-dark.png",
+      "capturedAt": "2026-10-16T03:29:04.863Z",
+      "url": "http://127.0.0.1:4205/rustify-ui/page-0001/",
+      "viewport": [
+        375,
+        812
+      ],
+      "theme": "dark",
+      "dialog": {
+        "x": 16,
+        "y": 16,
+        "width": 343,
+        "height": 607,
+        "top": 16,
+        "right": 359,
+        "bottom": 623,
+        "left": 16
+      },
+      "boxSizing": "border-box",
+      "active": "INPUT",
+      "activeId": "rd-search-input",
+      "activeText": "",
+      "focusOutline": "rgb(83, 177, 253) solid 3px",
+      "options": 2,
+      "selection": "rd-search-option-1-1-0",
+      "count": "2 results",
+      "noteBackground": null,
+      "overflow": 0
+    },
+    {
+      "image": "search-320-light.png",
+      "capturedAt": "2026-10-16T03:29:05.047Z",
+      "url": "http://127.0.0.1:4205/rustify-ui/page-0001/",
+      "viewport": [
+        320,
+        812
+      ],
+      "theme": "light",
+      "dialog": {
+        "x": 16,
+        "y": 16,
+        "width": 288,
+        "height": 618.59375,
+        "top": 16,
+        "right": 304,
+        "bottom": 634.59375,
+        "left": 16
+      },
+      "boxSizing": "border-box",
+      "active": "INPUT",
+      "activeId": "rd-search-input",
+      "activeText": "",
+      "focusOutline": "rgb(23, 92, 211) solid 3px",
+      "options": 2,
+      "selection": "rd-search-option-1-1-0",
+      "count": "2 results",
+      "noteBackground": null,
+      "overflow": 0
+    },
+    {
+      "image": "search-320-dark.png",
+      "capturedAt": "2026-10-16T03:29:05.230Z",
+      "url": "http://127.0.0.1:4205/rustify-ui/page-0001/",
+      "viewport": [
+        320,
+        812
+      ],
+      "theme": "dark",
+      "dialog": {
+        "x": 16,
+        "y": 16,
+        "width": 288,
+        "height": 618.59375,
+        "top": 16,
+        "right": 304,
+        "bottom": 634.59375,
+        "left": 16
+      },
+      "boxSizing": "border-box",
+      "active": "INPUT",
+      "activeId": "rd-search-input",
+      "activeText": "",
+      "focusOutline": "rgb(83, 177, 253) solid 3px",
+      "options": 2,
+      "selection": "rd-search-option-1-1-0",
+      "count": "2 results",
+      "noteBackground": null,
+      "overflow": 0
+    },
+    {
+      "image": "count-375-dark.png",
+      "capturedAt": "2026-10-16T03:29:05.297Z",
+      "url": "http://127.0.0.1:4205/rustify-ui/page-0001/",
+      "viewport": [
+        375,
+        812
+      ],
+      "theme": "dark",
+      "dialog": {
+        "x": 16,
+        "y": 16,
+        "width": 343,
+        "height": 268,
+        "top": 16,
+        "right": 359,
+        "bottom": 284,
+        "left": 16
+      },
+      "boxSizing": "border-box",
+      "active": "INPUT",
+      "activeId": "rd-search-input",
+      "activeText": "",
+      "focusOutline": "rgb(83, 177, 253) solid 3px",
+      "options": 1,
+      "selection": "rd-search-option-1-2-0",
+      "count": "1 result",
+      "noteBackground": null,
+      "overflow": 0
+    },
+    {
+      "image": "fallback-1280-light.png",
+      "capturedAt": "2026-10-16T03:29:05.446Z",
+      "url": "http://127.0.0.1:4199/rustify-ui/zh/architecture/",
+      "viewport": [
+        1280,
+        900
+      ],
+      "theme": "light",
+      "dialog": null,
+      "boxSizing": "border-box",
+      "active": "BUTTON",
+      "activeId": "",
+      "activeText": "浅色",
+      "focusOutline": "rgb(29, 41, 57) none 3px",
+      "options": 0,
+      "count": "",
+      "noteBackground": "rgb(242, 244, 247)",
+      "overflow": 0
+    },
+    {
+      "image": "fallback-320-dark.png",
+      "capturedAt": "2026-10-16T03:29:05.563Z",
+      "url": "http://127.0.0.1:4199/rustify-ui/zh/architecture/",
+      "viewport": [
+        320,
+        812
+      ],
+      "theme": "dark",
+      "dialog": null,
+      "boxSizing": "border-box",
+      "active": "BUTTON",
+      "activeId": "",
+      "activeText": "深色",
+      "focusOutline": "rgb(249, 250, 251) none 3px",
+      "options": 0,
+      "count": "",
+      "noteBackground": "rgb(22, 27, 38)",
+      "overflow": 0
+    }
+  ],
+  "audit": {
+    "console": [],
+    "failed": [],
+    "pageErrors": []
+  },
+  "builds": {
+    "official": {
+      "cliVersion": "0.1.27",
+      "buildId": "dd5022c567200779"
+    },
+    "search": {
+      "cliVersion": "0.1.27",
+      "buildId": "176bea4ed7e4d96f"
+    }
+  }
+}

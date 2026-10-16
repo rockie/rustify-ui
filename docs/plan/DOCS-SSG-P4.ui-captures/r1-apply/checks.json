@@ -1,0 +1,979 @@
+{
+  "red": {
+    "stats": {
+      "startTime": "2026-10-16T03:15:52.164Z",
+      "duration": 46787.513999999996,
+      "expected": 0,
+      "skipped": 0,
+      "unexpected": 4,
+      "flaky": 0
+    },
+    "tests": [
+      {
+        "title": "keyboard selection, more results and ordinary links retain the full page count",
+        "project": "docs-search-subpath",
+        "outcome": "unexpected",
+        "results": [
+          {
+            "status": "failed",
+            "errors": [
+              "Error: expect(locator).toBeFocused() failed\n\nLocator:  locator('dialog[data-rd-search]').getByRole('button', { name: 'Show more', exact: true })\nExpected: focused\nReceived: inactive\nTimeout:  10000ms\n\nCall log:\n  - Expect \"toBeFocused\" locator('dialog[data-rd-search]').getByRole('button', { name: 'Show more', exact: true }) with timeout 10000ms\n  - waiting for locator('dialog[data-rd-search]').getByRole('button', { name: 'Show more', exact: true })\n    24 × locator resolved to <button lang=\"en\" type=\"button\" data-rd-search-more=\"\" class=\"rd-search-action\">Show more</button>\n       - unexpected value \"inactive\"\n\n\n  309 |     await expect(dialog(page).getByRole(\"option\")).toHaveCount(40);\n  310 |     await atRest(page);\n> 311 |     const more = dialog(page).getByRole(\"button\", { name: \"Show more\", exact: true });\n      |                        ^\n  312 |     await expect(more).toBeFocused();\n  313 |     expect(await more.evaluate(node => {\n  314 |         const style = getComputedStyle(node);\n    at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/docs-ssg/search.spec.ts:311:24"
+            ]
+          }
+        ]
+      },
+      {
+        "title": "search totals use singular and plural labels without changing the live count",
+        "project": "docs-search-subpath",
+        "outcome": "unexpected",
+        "results": [
+          {
+            "status": "failed",
+            "errors": [
+              "Error: expect(locator).toHaveText(expected) failed\n\nLocator:  locator('dialog[data-rd-search]').locator('[data-rd-search-count]')\nExpected: \"1 result\"\nReceived: \"1 results\"\nTimeout:  10000ms\n\nCall log:\n  - Expect \"toHaveText\" locator('dialog[data-rd-search]').locator('[data-rd-search-count]') with timeout 10000ms\n  - waiting for locator('dialog[data-rd-search]').locator('[data-rd-search-count]')\n    - locator resolved to <p aria-live=\"polite\" aria-atomic=\"true\" class=\"rd-search-count\" data-rd-search-count=\"\"></p>\n    - unexpected value \"\"\n    23 × locator resolved to <p lang=\"en\" aria-live=\"polite\" aria-atomic=\"true\" class=\"rd-search-count\" data-rd-search-count=\"\">1 results</p>\n       - unexpected value \"1 results\"\n\n\n  344 | test(\"search totals use singular and plural labels without changing the live count\", async ({ page }) => {\n  345 |     await open(page);\n> 346 |     for (const [query, total] of [[\"CustomOnlyToken\", \"1 result\"], [\"ThemeScope\", \"2 results\"], [\"AbsolutelyNoMatchingWordHere\", \"0 results\"]]) {\n      |                                                                      ^\n  347 |         await input(page).fill(query);\n  348 |         await expect(dialog(page).locator(\"[data-rd-search-count]\")).toHaveText(total);\n  349 |     }\n    at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/docs-ssg/search.spec.ts:346:70"
+            ]
+          }
+        ]
+      },
+      {
+        "title": "Chinese true content and fallback search retain the target language and source labels",
+        "project": "docs-search-subpath",
+        "outcome": "unexpected",
+        "results": [
+          {
+            "status": "failed",
+            "errors": [
+              "Error: expect(locator).toHaveCSS(expected) failed\n\nLocator:  locator('.rd-untranslated')\nExpected: \"rgb(242, 244, 247)\"\nReceived: \"rgba(0, 0, 0, 0)\"\nTimeout:  10000ms\n\nCall log:\n  - Expect \"toHaveCSS\" locator('.rd-untranslated') with timeout 10000ms\n  - waiting for locator('.rd-untranslated')\n    24 × locator resolved to <p lang=\"zh\" role=\"note\" class=\"rd-untranslated\">此页面尚未翻译。</p>\n       - unexpected value \"rgba(0, 0, 0, 0)\"\n\n\n  370 |     await expect(page.locator(\".rd-untranslated\")).toBeVisible();\n  371 |     for (const scheme of [\"light\", \"dark\"] as const) {\n> 372 |         await page.emulateMedia({ colorScheme: scheme });\n      |                                                        ^\n  373 |         await page.locator(`[data-rd-mode=\"${scheme}\"]`).click();\n  374 |         await expect(page.locator(\".rd-untranslated\")).toHaveCSS(\"background-color\", scheme === \"light\" ? \"rgb(242, 244, 247)\" : \"rgb(22, 27, 38)\");\n  375 |     }\n    at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/docs-ssg/search.spec.ts:372:56"
+            ]
+          }
+        ]
+      },
+      {
+        "title": "light, dark, narrow and text reflow states retain focus, contrast and visible controls",
+        "project": "docs-search-subpath",
+        "outcome": "unexpected",
+        "results": [
+          {
+            "status": "failed",
+            "errors": [
+              "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: 343\nReceived: 337\n\n  444 |         await expect(dialog(page)).toHaveAttribute(\"data-state\", \"results\");\n  445 |         await atRest(page);\n> 446 |         expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);\n      |                               ^\n  447 |         const bounds = await dialog(page).boundingBox();\n  448 |         expect(bounds!.width).toBe(Math.min(576, width - 32));\n  449 |         expect(bounds!.x).toBeGreaterThanOrEqual(0);\n    at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/docs-ssg/search.spec.ts:446:31"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "search-subpath": {
+    "stats": {
+      "startTime": "2026-10-16T03:23:16.970Z",
+      "duration": 53110.761,
+      "expected": 29,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "tests": [
+      {
+        "title": "matching uses whole Chinese words, English word starts and UTF-16 offsets",
+        "project": "docs-search-subpath",
+        "outcome": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "errors": []
+          }
+        ]
+      },
+      {
+        "title": "matching ranks titles then headings ahead of repeated body matches",
+        "project": "docs-search-subpath",
+        "outcome": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "errors": []
+          }
+        ]
+      },
+      {
+        "title": "matching requires all words in one section and groups pages with stable pagination",
+        "project": "docs-search-subpath",
+        "outcome": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "errors": []
+          }
+        ]
+      },
+      {
+        "title": "matching retains request identities and serves warm queries without network",
+        "project": "docs-search-subpath",
+        "outcome": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "errors": []
+          }
+        ]
+      },
+      {
+        "title": "matching scans the real 100-page guide corpus with one registered page",
+        "project": "docs-search-subpath",
+        "outcome": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "errors": []
+          }
+        ]
+      },
+      {
+        "title": "recovery refuses nonlocal indexes, failed HTTP and invalid schemas",
+        "project": "docs-search-subpath",
+        "outcome": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "errors": []
+          }
+        ]
+      },
+      {
+        "title": "recovery reports unsupported word boundaries and invalid queries explicitly",
+        "project": "docs-search-subpath",
+        "outcome": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "errors": []
+          }
+        ]
+      },
+      {
+        "title": "recovery loads a fresh module URL after first HTTP failure and retains the input",
+        "project": "docs-search-subpath",
+        "outcome": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "errors": []
+          }
+        ]
+      },
+      {
+        "title": "recovery loads a fresh module URL after first network failure and retains the input",
+        "project": "docs-search-subpath",
+        "outcome": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "errors": []
+          }
+        ]
+      },
+      {
+        "title": "recovery loads a fresh module URL after first module-shape failure and retains the input",
+        "project": "docs-search-subpath",
+        "outcome": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "errors": []
+          }
+        ]
+      },
+      {
+        "title": "recovery keeps the latest input through delayed JSON and ignores closed sessions",
+        "project": "docs-search-subpath",
+        "outcome": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "errors": []
+          }
+        ]
+      },
+      {
+        "title": "recovery retries JSON failures with a new Worker and the successful module",
+        "project": "docs-search-subpath",
+        "outcome": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "errors": []
+          }
+        ]
+      },
+      {
+        "title": "recovery leaves a timed-out import inert after retry succeeds",
+        "project": "docs-search-subpath",
+        "outcome": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "errors": []
+          }
+        ]
+      },
+      {
+        "title": "recovery abandons an import closed before load and opens a fresh session",
+        "project": "docs-search-subpath",
+        "outcome": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "errors": []
+          }
+        ]
+      },
+      {
+        "title": "recovery handles Worker error and keeps input for a successful retry",
+        "project": "docs-search-subpath",
+        "outcome": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "errors": []
+          }
+        ]
+      },
+      {
+        "title": "recovery handles Worker messageerror and keeps input for a successful retry",
+        "project": "docs-search-subpath",
+        "outcome": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "errors": []
+          }
+        ]
+      },
+      {
+        "title": "recovery handles Worker timeout and keeps input for a successful retry",
+        "project": "docs-search-subpath",
+        "outcome": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "errors": []
+          }
+        ]
+      },
+      {
+        "title": "recovery handles Worker query-timeout and keeps input for a successful retry",
+        "project": "docs-search-subpath",
+        "outcome": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "errors": []
+          }
+        ]
+      },
+      {
+        "title": "recovery ignores old query and instance messages and defers composing input",
+        "project": "docs-search-subpath",
+        "outcome": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "errors": []
+          }
+        ]
+      },
+      {
+        "title": "recovery settles a same-turn close and reopen during ready",
+        "project": "docs-search-subpath",
+        "outcome": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "errors": []
+          }
+        ]
+      },
+      {
+        "title": "recovery settles a same-turn close and reopen during module-loading",
+        "project": "docs-search-subpath",
+        "outcome": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "errors": []
+          }
+        ]
+      },
+      {
+        "title": "search is lazy, focuses synchronously and distinguishes idle, results and no matches",
+        "project": "docs-search-subpath",
+        "outcome": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "errors": []
+          }
+        ]
+      },
+      {
+        "title": "keyboard selection, more results and ordinary links retain the full page count",
+        "project": "docs-search-subpath",
+        "outcome": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "errors": []
+          }
+        ]
+      },
+      {
+        "title": "search totals use singular and plural labels without changing the live count",
+        "project": "docs-search-subpath",
+        "outcome": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "errors": []
+          }
+        ]
+      },
+      {
+        "title": "Chinese true content and fallback search retain the target language and source labels",
+        "project": "docs-search-subpath",
+        "outcome": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "errors": []
+          }
+        ]
+      },
+      {
+        "title": "a deep 404 searches its selected language under header and meta CSP",
+        "project": "docs-search-subpath",
+        "outcome": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "errors": []
+          }
+        ]
+      },
+      {
+        "title": "without scripts the document, source language and ordinary navigation remain readable",
+        "project": "docs-search-subpath",
+        "outcome": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "errors": []
+          }
+        ]
+      },
+      {
+        "title": "result text and query text cannot introduce HTML or external navigation",
+        "project": "docs-search-subpath",
+        "outcome": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "errors": []
+          }
+        ]
+      },
+      {
+        "title": "light, dark, narrow and text reflow states retain focus, contrast and visible controls",
+        "project": "docs-search-subpath",
+        "outcome": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "errors": []
+          }
+        ]
+      }
+    ]
+  },
+  "search-root": {
+    "stats": {
+      "startTime": "2026-10-16T03:24:32.103Z",
+      "duration": 30650.418999999998,
+      "expected": 22,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "tests": [
+      {
+        "title": "recovery loads a fresh module URL after first HTTP failure and retains the input",
+        "project": "docs-search-root",
+        "outcome": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "errors": []
+          }
+        ]
+      },
+      {
+        "title": "recovery loads a fresh module URL after first network failure and retains the input",
+        "project": "docs-search-root",
+        "outcome": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "errors": []
+          }
+        ]
+      },
+      {
+        "title": "recovery loads a fresh module URL after first module-shape failure and retains the input",
+        "project": "docs-search-root",
+        "outcome": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "errors": []
+          }
+        ]
+      },
+      {
+        "title": "recovery keeps the latest input through delayed JSON and ignores closed sessions",
+        "project": "docs-search-root",
+        "outcome": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "errors": []
+          }
+        ]
+      },
+      {
+        "title": "recovery retries JSON failures with a new Worker and the successful module",
+        "project": "docs-search-root",
+        "outcome": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "errors": []
+          }
+        ]
+      },
+      {
+        "title": "recovery leaves a timed-out import inert after retry succeeds",
+        "project": "docs-search-root",
+        "outcome": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "errors": []
+          }
+        ]
+      },
+      {
+        "title": "recovery abandons an import closed before load and opens a fresh session",
+        "project": "docs-search-root",
+        "outcome": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "errors": []
+          }
+        ]
+      },
+      {
+        "title": "recovery handles Worker error and keeps input for a successful retry",
+        "project": "docs-search-root",
+        "outcome": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "errors": []
+          }
+        ]
+      },
+      {
+        "title": "recovery handles Worker messageerror and keeps input for a successful retry",
+        "project": "docs-search-root",
+        "outcome": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "errors": []
+          }
+        ]
+      },
+      {
+        "title": "recovery handles Worker timeout and keeps input for a successful retry",
+        "project": "docs-search-root",
+        "outcome": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "errors": []
+          }
+        ]
+      },
+      {
+        "title": "recovery handles Worker query-timeout and keeps input for a successful retry",
+        "project": "docs-search-root",
+        "outcome": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "errors": []
+          }
+        ]
+      },
+      {
+        "title": "recovery ignores old query and instance messages and defers composing input",
+        "project": "docs-search-root",
+        "outcome": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "errors": []
+          }
+        ]
+      },
+      {
+        "title": "recovery settles a same-turn close and reopen during ready",
+        "project": "docs-search-root",
+        "outcome": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "errors": []
+          }
+        ]
+      },
+      {
+        "title": "recovery settles a same-turn close and reopen during module-loading",
+        "project": "docs-search-root",
+        "outcome": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "errors": []
+          }
+        ]
+      },
+      {
+        "title": "search is lazy, focuses synchronously and distinguishes idle, results and no matches",
+        "project": "docs-search-root",
+        "outcome": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "errors": []
+          }
+        ]
+      },
+      {
+        "title": "keyboard selection, more results and ordinary links retain the full page count",
+        "project": "docs-search-root",
+        "outcome": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "errors": []
+          }
+        ]
+      },
+      {
+        "title": "search totals use singular and plural labels without changing the live count",
+        "project": "docs-search-root",
+        "outcome": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "errors": []
+          }
+        ]
+      },
+      {
+        "title": "Chinese true content and fallback search retain the target language and source labels",
+        "project": "docs-search-root",
+        "outcome": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "errors": []
+          }
+        ]
+      },
+      {
+        "title": "a deep 404 searches its selected language under header and meta CSP",
+        "project": "docs-search-root",
+        "outcome": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "errors": []
+          }
+        ]
+      },
+      {
+        "title": "without scripts the document, source language and ordinary navigation remain readable",
+        "project": "docs-search-root",
+        "outcome": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "errors": []
+          }
+        ]
+      },
+      {
+        "title": "result text and query text cannot introduce HTML or external navigation",
+        "project": "docs-search-root",
+        "outcome": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "errors": []
+          }
+        ]
+      },
+      {
+        "title": "light, dark, narrow and text reflow states retain focus, contrast and visible controls",
+        "project": "docs-search-root",
+        "outcome": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "errors": []
+          }
+        ]
+      }
+    ]
+  },
+  "search-meta": {
+    "stats": {
+      "startTime": "2026-10-16T03:25:25.066Z",
+      "duration": 28276.048000000003,
+      "expected": 22,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "tests": [
+      {
+        "title": "recovery loads a fresh module URL after first HTTP failure and retains the input",
+        "project": "docs-search-meta",
+        "outcome": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "errors": []
+          }
+        ]
+      },
+      {
+        "title": "recovery loads a fresh module URL after first network failure and retains the input",
+        "project": "docs-search-meta",
+        "outcome": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "errors": []
+          }
+        ]
+      },
+      {
+        "title": "recovery loads a fresh module URL after first module-shape failure and retains the input",
+        "project": "docs-search-meta",
+        "outcome": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "errors": []
+          }
+        ]
+      },
+      {
+        "title": "recovery keeps the latest input through delayed JSON and ignores closed sessions",
+        "project": "docs-search-meta",
+        "outcome": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "errors": []
+          }
+        ]
+      },
+      {
+        "title": "recovery retries JSON failures with a new Worker and the successful module",
+        "project": "docs-search-meta",
+        "outcome": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "errors": []
+          }
+        ]
+      },
+      {
+        "title": "recovery leaves a timed-out import inert after retry succeeds",
+        "project": "docs-search-meta",
+        "outcome": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "errors": []
+          }
+        ]
+      },
+      {
+        "title": "recovery abandons an import closed before load and opens a fresh session",
+        "project": "docs-search-meta",
+        "outcome": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "errors": []
+          }
+        ]
+      },
+      {
+        "title": "recovery handles Worker error and keeps input for a successful retry",
+        "project": "docs-search-meta",
+        "outcome": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "errors": []
+          }
+        ]
+      },
+      {
+        "title": "recovery handles Worker messageerror and keeps input for a successful retry",
+        "project": "docs-search-meta",
+        "outcome": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "errors": []
+          }
+        ]
+      },
+      {
+        "title": "recovery handles Worker timeout and keeps input for a successful retry",
+        "project": "docs-search-meta",
+        "outcome": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "errors": []
+          }
+        ]
+      },
+      {
+        "title": "recovery handles Worker query-timeout and keeps input for a successful retry",
+        "project": "docs-search-meta",
+        "outcome": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "errors": []
+          }
+        ]
+      },
+      {
+        "title": "recovery ignores old query and instance messages and defers composing input",
+        "project": "docs-search-meta",
+        "outcome": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "errors": []
+          }
+        ]
+      },
+      {
+        "title": "recovery settles a same-turn close and reopen during ready",
+        "project": "docs-search-meta",
+        "outcome": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "errors": []
+          }
+        ]
+      },
+      {
+        "title": "recovery settles a same-turn close and reopen during module-loading",
+        "project": "docs-search-meta",
+        "outcome": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "errors": []
+          }
+        ]
+      },
+      {
+        "title": "search is lazy, focuses synchronously and distinguishes idle, results and no matches",
+        "project": "docs-search-meta",
+        "outcome": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "errors": []
+          }
+        ]
+      },
+      {
+        "title": "keyboard selection, more results and ordinary links retain the full page count",
+        "project": "docs-search-meta",
+        "outcome": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "errors": []
+          }
+        ]
+      },
+      {
+        "title": "search totals use singular and plural labels without changing the live count",
+        "project": "docs-search-meta",
+        "outcome": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "errors": []
+          }
+        ]
+      },
+      {
+        "title": "Chinese true content and fallback search retain the target language and source labels",
+        "project": "docs-search-meta",
+        "outcome": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "errors": []
+          }
+        ]
+      },
+      {
+        "title": "a deep 404 searches its selected language under header and meta CSP",
+        "project": "docs-search-meta",
+        "outcome": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "errors": []
+          }
+        ]
+      },
+      {
+        "title": "without scripts the document, source language and ordinary navigation remain readable",
+        "project": "docs-search-meta",
+        "outcome": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "errors": []
+          }
+        ]
+      },
+      {
+        "title": "result text and query text cannot introduce HTML or external navigation",
+        "project": "docs-search-meta",
+        "outcome": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "errors": []
+          }
+        ]
+      },
+      {
+        "title": "light, dark, narrow and text reflow states retain focus, contrast and visible controls",
+        "project": "docs-search-meta",
+        "outcome": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "errors": []
+          }
+        ]
+      }
+    ]
+  },
+  "official": {
+    "stats": {
+      "startTime": "2026-10-16T03:26:29.238Z",
+      "duration": 119398.139,
+      "expected": 6,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "tests": [
+      {
+        "title": "home has one English title, the original README introduction and two first-viewport ordinary actions",
+        "ok": true
+      },
+      {
+        "title": "official Chinese home and quick start are real translations with local search and AI discovery",
+        "ok": true
+      },
+      {
+        "title": "375px retains reading controls, ordered narrow navigation and bounded long source",
+        "ok": true
+      },
+      {
+        "title": "320px retains reading controls, ordered narrow navigation and bounded long source",
+        "ok": true
+      },
+      {
+        "title": "deep not-found retains same-base ordinary navigation",
+        "ok": true
+      },
+      {
+        "title": "one bounded official home, category and guide capture batch records desktop light/dark and narrow reading",
+        "ok": true
+      }
+    ]
+  },
+  "identity": {
+    "R": "740610db164b3f396b0fcc551f5a5ef8f15da716",
+    "C": "1bbc54b096c6656e9ad2ad48b5acd43cb7ee844a",
+    "cliBuildInfo": "rustify-docs 0.1.27\npanic: unwind\ngrammars: syntect-5.3.0+two-face-0.5.2+bat-0.26.1+fancy\nsource: 1bbc54b096c6656e9ad2ad48b5acd43cb7ee844a\n",
+    "templatePackages": 193,
+    "nonGitPackagesUnchanged": 187,
+    "templateCheck": {
+      "success": true,
+      "errors": 0,
+      "warnings": 3
+    }
+  },
+  "staticChecks": {
+    "rustify-docs --lib": 237,
+    "rustify-docs --test search": 12,
+    "rustify-docs-cli new::tests": 5,
+    "cargo fmt --all -- --check": "passed",
+    "clippy rustify-docs --all-targets -D warnings": "passed",
+    "node --check search.js": "passed",
+    "template ssr": "passed",
+    "template wasm32 hydrate": "passed"
+  },
+  "performance": {
+    "source": "search-performance.json",
+    "passed": true,
+    "cases": 4,
+    "queryMetrics": 24,
+    "samplesPerPhase": 5,
+    "beforeC5": {
+      "coldMaxMedianMs": 164,
+      "warmMaxMedianMs": 49.4,
+      "source": "docs/validation/docs-ssg-p4/m6/performance/search-c5.json"
+    },
+    "afterC": {
+      "coldMaxMedianMs": 176.89999997615814,
+      "warmMaxMedianMs": 63.10000002384186
+    }
+  }
+}
