@@ -86,6 +86,7 @@
 
 .rd-search-dialog {
   width: min(var(--rd-measure), calc(100vw - 2rem));
+  max-width: calc(100vw - 2rem);
   max-height: calc(100dvh - 2rem);
   margin: min(10dvh, 5rem) auto 1rem;
   padding: 1.25rem;
@@ -290,7 +291,7 @@
   padding: 0.75rem 1rem;
   border: 1px solid var(--secondary);
   border-radius: var(--rd-radius);
-  background: var(--code-bg);
+  background: var(--rd-code-bg);
   font-size: 0.875rem;
   line-height: 1.6;
 }

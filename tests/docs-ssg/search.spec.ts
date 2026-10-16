@@ -307,6 +307,25 @@ test("keyboard selection, more results and ordinary links retain the full page c
     await expect(dialog(page).getByRole("button", { name: "Show more", exact: true })).toBeFocused();
     await page.keyboard.press("Enter");
     await expect(dialog(page).getByRole("option")).toHaveCount(40);
+    await atRest(page);
+    const more = dialog(page).getByRole("button", { name: "Show more", exact: true });
+    await expect(more).toBeFocused();
+    expect(await more.evaluate(node => {
+        const style = getComputedStyle(node);
+        return style.outlineStyle !== "none" && parseFloat(style.outlineWidth) >= 2;
+    })).toBe(true);
+    await page.keyboard.press("Shift+Tab");
+    await expect(input(page)).toBeFocused();
+    await page.keyboard.press("Tab");
+    await expect(more).toBeFocused();
+    for (const total of [60, 80, 98]) {
+        await page.keyboard.press("Enter");
+        await expect(dialog(page).getByRole("option")).toHaveCount(total);
+        await atRest(page);
+        await expect(total === 98 ? input(page) : more).toBeFocused();
+        await expect(input(page)).toHaveAttribute("aria-activedescendant", selected!);
+    }
+    await expect(more).toBeHidden();
     await expect(input(page)).toHaveAttribute("aria-activedescendant", selected!);
     await expect(dialog(page).locator("[data-rd-search-count]")).toHaveText("98 results");
     expect(requests).toEqual([]);
@@ -322,6 +341,14 @@ test("keyboard selection, more results and ordinary links retain the full page c
     await expect(page.locator("h2#custom-section")).toBeVisible();
 });
 
+test("search totals use singular and plural labels without changing the live count", async ({ page }) => {
+    await open(page);
+    for (const [query, total] of [["CustomOnlyToken", "1 result"], ["ThemeScope", "2 results"], ["AbsolutelyNoMatchingWordHere", "0 results"]]) {
+        await input(page).fill(query);
+        await expect(dialog(page).locator("[data-rd-search-count]")).toHaveText(total);
+    }
+});
+
 test("Chinese true content and fallback search retain the target language and source labels", async ({ page }) => {
     await open(page, "zh/page-0001/");
     await expect(dialog(page)).toHaveAttribute("data-rd-search-lang", "zh");
@@ -332,6 +359,7 @@ test("Chinese true content and fallback search retain the target language and so
     await input(page).fill("FallbackOnlyToken");
     const result = dialog(page).getByRole("option");
     await expect(result).toHaveCount(1);
+    await expect(dialog(page).locator("[data-rd-search-count]")).toHaveText("1 个结果");
     await expect(result).toHaveAttribute("href", /\/zh\/page-0051\/$/);
     await expect(result.locator(".rd-search-title")).toHaveAttribute("lang", "en");
     await expect(result.locator(".rd-search-badge")).toHaveText("zh");
@@ -340,6 +368,11 @@ test("Chinese true content and fallback search retain the target language and so
     await expect(page).toHaveURL(url("zh/page-0051/"));
     await expect(page.locator("html")).toHaveAttribute("lang", "zh");
     await expect(page.locator(".rd-untranslated")).toBeVisible();
+    for (const scheme of ["light", "dark"] as const) {
+        await page.emulateMedia({ colorScheme: scheme });
+        await page.locator(`[data-rd-mode="${scheme}"]`).click();
+        await expect(page.locator(".rd-untranslated")).toHaveCSS("background-color", scheme === "light" ? "rgb(242, 244, 247)" : "rgb(22, 27, 38)");
+    }
 });
 
 test("a deep 404 searches its selected language under header and meta CSP", async ({ page }) => {
@@ -412,6 +445,7 @@ test("light, dark, narrow and text reflow states retain focus, contrast and visi
         await atRest(page);
         expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
         const bounds = await dialog(page).boundingBox();
+        expect(bounds!.width).toBe(Math.min(576, width - 32));
         expect(bounds!.x).toBeGreaterThanOrEqual(0);
         expect(bounds!.x + bounds!.width).toBeLessThanOrEqual(width);
         await expect(input(page)).toBeFocused();

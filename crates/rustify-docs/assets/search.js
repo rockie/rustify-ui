@@ -87,7 +87,8 @@ export function initialize(dialog, { instance, onError }) {
 
     function send(offset) {
         expectedOffset = offset;
-        more.disabled = true;
+        // Native disabled drops keyboard focus after the browser paints.
+        more.setAttribute("aria-disabled", "true");
         state("loading", "loading");
         arm();
         worker.postMessage({ type: "query", instance, id, query: input.value, offset });
@@ -167,11 +168,12 @@ export function initialize(dialog, { instance, onError }) {
                 list.append(...nodes);
                 input.setAttribute("aria-expanded", String(groups.length > 0));
                 state(groups.length ? "results" : "empty", groups.length ? null : "empty");
-                label(count, "count", { n: data.total });
+                label(count, new Intl.PluralRules(labels.count.lang).select(data.total) === "one" ? "count_one" : "count", { n: data.total });
+                const moreFocused = document.activeElement === more;
                 more.hidden = !data.has_more;
-                more.disabled = false;
+                more.setAttribute("aria-disabled", "false");
                 select(previous >= 0 ? previous : groups.length ? 0 : -1);
-                if (document.activeElement === more && more.hidden) input.focus();
+                if (moreFocused && more.hidden) input.focus();
                 dialog.dataset.rdSearchResultId = String(id);
             } catch { fail(); }
         }
@@ -190,7 +192,7 @@ export function initialize(dialog, { instance, onError }) {
         }
     }
 
-    function next() { if (ready && !more.disabled) send(groups.length); }
+    function next() { if (ready && more.getAttribute("aria-disabled") !== "true") send(groups.length); }
     function pointer(event) { if (event.target.closest("[role=option]")) event.preventDefault(); }
     function activate(event) {
         if (event.button === 0 && !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey
