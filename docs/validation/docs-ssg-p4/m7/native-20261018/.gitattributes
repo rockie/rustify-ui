@@ -1,0 +1,3 @@
+# Preserve whitespace in verbatim accessibility snapshots and terminal output.
+*.ax.txt -whitespace
+*.log -whitespace

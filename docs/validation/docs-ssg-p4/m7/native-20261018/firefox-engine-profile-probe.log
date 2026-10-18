@@ -1,0 +1,23 @@
+{"profile":"/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/p4/m7-a31509aa/firefox-profile-4ENu5m","realpath":"/Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-ssg/p4/m7-a31509aa/firefox-profile-4ENu5m","directory":true}
+Error: browserType.launchPersistentContext: Failed to launch the browser process.
+Browser logs:
+
+<launching> /Users/rockie/Library/Caches/ms-playwright/firefox-1543/firefox/Nightly.app/Contents/MacOS/firefox -no-remote -headless -profile /Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/p4/m7-a31509aa/firefox-profile-4ENu5m -juggler-pipe about:blank
+<launched> pid=65657
+[pid=65657][err] *** You are running in headless mode.
+[pid=65657][err] Could not find profile folder.
+[pid=65657] <process did exit: exitCode=1, signal=null>
+[pid=65657] starting temporary directories cleanup
+Call log:
+[2m  - <launching> /Users/rockie/Library/Caches/ms-playwright/firefox-1543/firefox/Nightly.app/Contents/MacOS/firefox -no-remote -headless -profile /Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/p4/m7-a31509aa/firefox-profile-4ENu5m -juggler-pipe about:blank[22m
+[2m  - <launched> pid=65657[22m
+[2m  - [pid=65657][err] *** You are running in headless mode.[22m
+[2m  - [pid=65657][err] Could not find profile folder.[22m
+[2m  - [pid=65657] <process did exit: exitCode=1, signal=null>[22m
+[2m  - [pid=65657] starting temporary directories cleanup[22m
+[2m  - [pid=65657] <gracefully close start>[22m
+[2m  - [pid=65657] <kill>[22m
+[2m  - [pid=65657] <skipped force kill spawnedProcess.killed=false processClosed=true>[22m
+[2m  - [pid=65657] finished temporary directories cleanup[22m
+[2m  - [pid=65657] <gracefully close end>[22m
+

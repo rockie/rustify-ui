@@ -1,0 +1,8 @@
+{
+  "observed_at": "2026-10-18T17:13:01+08:00",
+  "candidate_sha": "a31509aa9cc069fe81ad55be701c13ffe3a3fdf1",
+  "repository": { "visibility": "public", "default_branch": "main", "has_pages": false },
+  "pages_api": { "status": 404, "message": "Not Found" },
+  "candidate_commit_api": { "status": 422, "message": "No commit found for SHA: a31509aa9cc069fe81ad55be701c13ffe3a3fdf1" },
+  "method": "Read-only gh api repos/rockie/rustify-ui, /pages and /commits/<candidate_sha>. No push, Pages setting change or deployment performed."
+}

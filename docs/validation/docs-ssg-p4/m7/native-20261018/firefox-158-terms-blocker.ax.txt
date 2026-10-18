@@ -1,0 +1,36 @@
+Window: "欢迎使用 Firefox", App: Firefox.
+0 标准窗口 欢迎使用 Firefox, Secondary Actions: Raise
+	1 container 欢迎使用 Firefox
+		2 滚动区
+			3 HTML 内容 chrome://browser/content/spotlight.html
+				4 container 欢迎使用 Firefox
+					5 container 欢迎使用 Firefox 继续使用即表示您同意 Firefox 使用条款和我们的隐私声明。为帮助改进浏览器，Firefox 会向 Mozilla 发送诊断和交互数据。
+						6 container
+							7 container
+								8 标题 欢迎使用 Firefox, Value: 1
+									9 文本 欢迎使用 Firefox
+								10 标题 继续使用即表示您同意 Firefox 使用条款和我们的隐私声明。为帮助改进浏览器，Firefox 会向 Mozilla 发送诊断和交互数据。, Value: 2
+									11 文本 继续使用即表示您同意 Firefox 使用条款和我们的隐私声明。为帮助改进浏览器，Firefox 会向 Mozilla 发送诊断和交互数据。
+								12 按钮 继续
+							13 container
+								14 链接 阅读我们的使用条款
+									15 文本 阅读我们的使用条款
+								16 链接 阅读我们的隐私声明
+									17 文本 阅读我们的隐私声明
+								18 按钮 管理诊断和交互数据
+									19 文本 管理诊断和交互数据
+	20 关闭按钮
+	21 全屏幕按钮 Help: 此按钮也可以执行缩放窗口的操作, Secondary Actions: 缩放窗口
+	22 最小化按钮
+23 menu bar
+	24 Firefox
+	25 文件
+	26 编辑
+	27 查看
+	28 历史
+	29 书签
+	30 工具
+	31 窗口
+	32 帮助
+
+The focused UI element is 1 container 欢迎使用 Firefox

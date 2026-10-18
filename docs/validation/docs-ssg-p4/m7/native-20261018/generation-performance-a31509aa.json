@@ -1,0 +1,153 @@
+{
+  "environment": {
+    "os": "macOS 27.0.1",
+    "arch": "aarch64",
+    "cpu": "Apple M5 Pro",
+    "logical_cpus": 15,
+    "memory_bytes": "51539607552",
+    "rustc": "rustc 1.99.0 (b940084d7 2026-09-28)",
+    "load_average": "{ 14.94 12.07 13.57 }"
+  },
+  "corpus": {
+    "pages": 500,
+    "seed": 1592636672,
+    "profile_sha256": "7c090aa2064f0c843164f70c7488ea9f3514c7f43bf96ece66de6dae06e306d5",
+    "digest": "ecb43f7911fe7512bae279a0214aad39647052c28c3bd7c9a67f6745e4a889ac"
+  },
+  "timing": {
+    "pages": 501,
+    "committed_pages": 501,
+    "workers": 15,
+    "read_ms": 93.5,
+    "errors": 0,
+    "warnings": 0,
+    "cold": {
+      "analyze_ms": 216.1,
+      "generate_ms": 963.5,
+      "render_and_style_ms": 1179.6,
+      "write_ms": 82.1
+    },
+    "hot_config_ms": [
+      972.41075,
+      938.549125,
+      961.949291,
+      1003.656584,
+      947.276083
+    ],
+    "hot_config_median_ms": 961.9,
+    "hot_config_misses": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "hot_body_ms": [
+      1057.170083,
+      960.7175,
+      953.729417,
+      984.905958,
+      1012.805541
+    ],
+    "hot_body_median_ms": 984.9,
+    "html_bytes": 39495685,
+    "css_bytes": 42695,
+    "candidates": 86,
+    "stylesheet": "assets/site.486011b1cd.css",
+    "out": "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/perf/site"
+  },
+  "build": {
+    "rounds_ms": [
+      2509.8441660000003,
+      1488.083208,
+      1492.7758330000001,
+      1570.380125,
+      1535.2147920000002
+    ],
+    "median_ms": 1535.2147920000002,
+    "pages": 500,
+    "files": 516,
+    "bytes": 47856424,
+    "largest": [
+      {
+        "path": "zh/g04/page-024/index.html",
+        "bytes": 140546
+      },
+      {
+        "path": "zh/g04/page-012/index.html",
+        "bytes": 140531
+      },
+      {
+        "path": "zh/g06/page-022/index.html",
+        "bytes": 140531
+      },
+      {
+        "path": "zh/g07/page-021/index.html",
+        "bytes": 140531
+      },
+      {
+        "path": "zh/g01/page-003/index.html",
+        "bytes": 140519
+      }
+    ],
+    "warnings": 1
+  },
+  "sizes": {
+    "shared_gzip": 17206,
+    "files_gzip": {
+      "assets/files/logo.d070a7e79d.svg": 173,
+      "assets/mode.1d6a9bf145.js": 2814,
+      "assets/search-worker.bf2d0036d5.js": 2733,
+      "assets/search.4879fcef9b.js": 2788,
+      "assets/search.en.7c9b8a61f1.json": 1038200,
+      "assets/search.zh.b7f7a358d1.json": 1008188,
+      "assets/share.9f8be38eaf.png": 800,
+      "assets/site.269216efb4.js": 5864,
+      "assets/site.486011b1cd.css": 8528
+    },
+    "largest_content": {
+      "path": "zh/g04/page-024/index.html",
+      "raw": 140546,
+      "gzip": 16556,
+      "total": 33762
+    },
+    "home": {
+      "path": "index.html",
+      "raw": 99463,
+      "gzip": 12439,
+      "total": 29645
+    }
+  },
+  "checks": [
+    {
+      "check": "B analyses without a problem, so the timings are of a site that would publish",
+      "passed": true,
+      "detail": "0 error(s), 0 warning(s)"
+    },
+    {
+      "check": "cold render and stylesheet of 500 pages",
+      "passed": true,
+      "detail": "1179.6 ms (limit 20000 ms)"
+    },
+    {
+      "check": "rustify-docs build of 500 pages into an empty output (median of 5)",
+      "passed": true,
+      "detail": "1535.2 ms (limit 20000 ms), 500 pages"
+    },
+    {
+      "check": "configuration change, all pages re-rendered and committed (median of 5)",
+      "passed": true,
+      "detail": "961.9 ms (limit < 1000 ms; 38.1 ms left for watch, SSE and the browser)"
+    },
+    {
+      "check": "largest content page: HTML + CSS + scripts, gzip -9",
+      "passed": true,
+      "detail": "33762 bytes (zh/g04/page-024/index.html = 140546 raw / 16556 gzip + 17206 shared; limit 100000)"
+    },
+    {
+      "check": "home page: HTML + CSS + scripts, gzip -9",
+      "passed": true,
+      "detail": "29645 bytes (99463 raw / 12439 gzip + 17206 shared; limit 100000)"
+    }
+  ]
+}

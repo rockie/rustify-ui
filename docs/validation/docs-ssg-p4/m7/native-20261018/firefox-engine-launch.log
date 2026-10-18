@@ -1,0 +1,71 @@
+[WebServer] building /Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/http/content/subpath/site into /Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-ssg/http/content/subpath/dist
+[WebServer] warning[no-git-history]: pages show no last-updated date: not a git repository (or any of the parent directories): .git
+[WebServer]   = help: build inside a git repository with the content committed
+[WebServer] build: 4 pages and 404.html in /Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-ssg/http/content/subpath/dist: 168.5 KB in 25 files, 1 warning(s), 77 ms
+[WebServer] largest pages:
+[WebServer]      21.7 KB  guide/setup/index.html
+[WebServer]      15.1 KB  guide/index.html
+[WebServer]      12.9 KB  reference/api/index.html
+[WebServer]       8.9 KB  404.html
+[WebServer]       8.9 KB  index.html
+[WebServer] serving /Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-ssg/http/content/subpath/dist (built by rustify-docs 0.1.28, build 3ee23494e92c6323) until stopped
+
+Running 27 tests using 1 worker
+
+(node:61940) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+building /var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-home-oEX9k0 into /private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-home-oEX9k0/dist
+warning[no-git-history]: pages show no last-updated date: not a git repository (or any of the parent directories): .git
+  = help: build inside a git repository with the content committed
+build: 5 pages and 404.html in /private/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-home-oEX9k0/dist: 143.2 KB in 19 files, 1 warning(s), 28 ms
+largest pages:
+      8.4 KB  guide/index.html
+      7.7 KB  404.html
+      7.6 KB  index.html
+      7.5 KB  raw/index.html
+      7.4 KB  explicit/index.html
+  ✘   1 [docs-firefox] › tests/docs-ssg/home.spec.ts:47:9 › home anchors and empty navigation work with script true (0ms)
+Testing stopped early after 1 maximum allowed failures.
+
+
+  1) [docs-firefox] › tests/docs-ssg/home.spec.ts:47:9 › home anchors and empty navigation work with script true 
+
+    Error: browserType.launch: Failed to launch the browser process.
+    Browser logs:
+
+    <launching> /Users/rockie/Library/Caches/ms-playwright/firefox-1543/firefox/Nightly.app/Contents/MacOS/firefox -no-remote -headless -profile /var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/playwright_firefoxdev_profile-cOtRKc -juggler-pipe -silent
+    <launched> pid=61963
+    [pid=61963][err] *** You are running in headless mode.
+    [pid=61963][err] Could not find profile folder.
+    [pid=61963] <process did exit: exitCode=1, signal=null>
+    [pid=61963] starting temporary directories cleanup
+    Call log:
+      - <launching> /Users/rockie/Library/Caches/ms-playwright/firefox-1543/firefox/Nightly.app/Contents/MacOS/firefox -no-remote -headless -profile /var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/playwright_firefoxdev_profile-cOtRKc -juggler-pipe -silent
+      - <launched> pid=61963
+      - [pid=61963][err] *** You are running in headless mode.
+      - [pid=61963][err] Could not find profile folder.
+      - [pid=61963] <process did exit: exitCode=1, signal=null>
+      - [pid=61963] starting temporary directories cleanup
+      - [pid=61963] <gracefully close start>
+      - [pid=61963] <kill>
+      - [pid=61963] <skipped force kill spawnedProcess.killed=false processClosed=true>
+      - [pid=61963] finished temporary directories cleanup
+      - [pid=61963] <gracefully close end>
+
+
+    Error Context: target/docs-ssg/p4/m7-a31509aa/browser-firefox/docs-ssg-home-home-anchors-98821-ation-work-with-script-true-docs-firefox/error-context.md
+
+    Error Context: target/docs-ssg/p4/m7-a31509aa/browser-firefox/docs-ssg-home-home-anchors-98821-ation-work-with-script-true-docs-firefox/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    target/docs-ssg/p4/m7-a31509aa/browser-firefox/docs-ssg-home-home-anchors-98821-ation-work-with-script-true-docs-firefox/trace.zip
+    Usage:
+
+        npx playwright show-trace target/docs-ssg/p4/m7-a31509aa/browser-firefox/docs-ssg-home-home-anchors-98821-ation-work-with-script-true-docs-firefox/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [docs-firefox] › tests/docs-ssg/home.spec.ts:47:9 › home anchors and empty navigation work with script true 
+  26 did not run
+  1 error was not a part of any test, see above for details

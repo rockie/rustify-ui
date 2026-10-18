@@ -1,0 +1,222 @@
+[
+  {
+    "name": "safari-boundary-themescope",
+    "step": "Cmd+K opens search; paste ThemeScope into the native input.",
+    "utc": "2026-10-18T07:38:01.403Z"
+  },
+  {
+    "name": "safari-boundary-theme",
+    "step": "Replace search input with theme using native click/select-all/paste.",
+    "utc": "2026-10-18T07:38:25.027Z"
+  },
+  {
+    "name": "safari-boundary-heme",
+    "step": "Replace search input with heme using native click/select-all/paste.",
+    "utc": "2026-10-18T07:38:25.739Z"
+  },
+  {
+    "name": "safari-boundary-theme-s",
+    "step": "Replace search input with theme_s using native click/select-all/paste.",
+    "utc": "2026-10-18T07:38:26.436Z"
+  },
+  {
+    "name": "safari-boundary-scope",
+    "step": "Replace search input with Scope using native click/select-all/paste.",
+    "utc": "2026-10-18T07:38:55.607Z"
+  },
+  {
+    "name": "safari-boundary-switch",
+    "step": "Replace search input with 切换 using native click/select-all/paste.",
+    "utc": "2026-10-18T07:38:56.361Z"
+  },
+  {
+    "name": "safari-boundary-middle-cjk",
+    "step": "Replace search input with 换 using native click/select-all/paste.",
+    "utc": "2026-10-18T07:38:57.073Z"
+  },
+  {
+    "name": "safari-module-error",
+    "step": "Fresh document, real search module withheld from isolated built fixture; Cmd+K and type theme_s.",
+    "utc": "2026-10-18T07:41:28.228Z"
+  },
+  {
+    "name": "safari-module-retry",
+    "step": "Restore exact module bytes and click native Retry in the same page, retaining theme_s.",
+    "utc": "2026-10-18T07:41:38.108Z"
+  },
+  {
+    "name": "safari-code-copy",
+    "step": "From the official home, follow Quick start and activate the first code Copy control.",
+    "utc": "2026-10-18T07:45:38.210Z"
+  },
+  {
+    "name": "safari-code-copy-confirm",
+    "step": "Activate the now-visible first code Copy control and read actual feedback.",
+    "utc": "2026-10-18T07:46:09.998Z"
+  },
+  {
+    "name": "safari-zh-quickstart",
+    "step": "Follow the native language-menu link from English Quick start to its Chinese translation.",
+    "utc": "2026-10-18T07:47:51.129Z"
+  },
+  {
+    "name": "safari-zoom-200-setting",
+    "step": "Select 200% explicitly in Safari per-site native preferences; no permission or content-blocker changes.",
+    "utc": "2026-10-18T07:49:12.153Z"
+  },
+  {
+    "name": "safari-zoom-200-reading",
+    "step": "Close native preferences after selecting 200%; inspect Chinese quickstart reflow.",
+    "utc": "2026-10-18T07:49:42.711Z"
+  },
+  {
+    "name": "safari-zoom-200-search",
+    "step": "Open search via Cmd+K at explicit native 200% and query ThemeScope in the current Chinese interface.",
+    "utc": "2026-10-18T07:50:16.275Z"
+  },
+  {
+    "name": "safari-zoom-200-selected",
+    "step": "Use the native Down key to change the selected result at 200%.",
+    "utc": "2026-10-18T07:50:16.963Z"
+  },
+  {
+    "name": "safari-zoom-200-fallback-destination",
+    "step": "Press Enter on the selected Architecture fallback result; verify same Chinese route, anchor and dialog closure.",
+    "utc": "2026-10-18T07:50:27.351Z"
+  },
+  {
+    "name": "safari-zoom-200-empty",
+    "step": "Open search on the fallback page at native 200% and query an absent token.",
+    "utc": "2026-10-18T07:50:27.950Z"
+  },
+  {
+    "name": "safari-zoom-200-fallback-settled",
+    "step": "After the fallback navigation has settled, close search without scrolling and inspect the target heading.",
+    "utc": "2026-10-18T07:50:54.529Z"
+  },
+  {
+    "name": "safari-version",
+    "step": "Open the native About Safari window and read the actual running version.",
+    "utc": "2026-10-18T08:02:17.810Z"
+  },
+  {
+    "name": "safari-c28-zoom-200-quickstart",
+    "step": "Fixed C a31509aa / CLI 0.1.28 served at 4199; native per-site zoom remains 200%; navigate freshly to Chinese Quick start.",
+    "utc": "2026-10-18T08:23:42.693Z"
+  },
+  {
+    "name": "safari-c28-zoom-200-target",
+    "step": "Fixed C 0.1.28: Down selects Architecture; Enter follows /zh/architecture/#versioned-themes at native 200%.",
+    "utc": "2026-10-18T08:23:57.974Z"
+  },
+  {
+    "name": "safari-c28-zoom-200-target-settled",
+    "step": "Fixed C 0.1.28: leave the page untouched after navigation and inspect the settled Versioned themes heading at native 200%.",
+    "utc": "2026-10-18T08:24:24.042Z"
+  },
+  {
+    "name": "safari-c28-zoom-200-many",
+    "step": "Fixed C 0.1.28: query the on the Chinese fallback page to exercise the scrollable result list and pagination at native 200%.",
+    "utc": "2026-10-18T08:25:08.148Z"
+  },
+  {
+    "name": "safari-c28-zoom-200-tab",
+    "step": "Use the native Tab key from the query input and record the actual focused control.",
+    "utc": "2026-10-18T08:25:08.961Z"
+  },
+  {
+    "name": "safari-c28-zoom-200-option-tab",
+    "step": "Safari native Option+Tab reaches controls when plain Tab skips buttons; record actual focus before activation.",
+    "utc": "2026-10-18T08:25:45.163Z"
+  },
+  {
+    "name": "safari-c28-zoom-200-option-tab-next",
+    "step": "Continue Safari native Option+Tab once; preserve the actual focus result without inferring button reachability.",
+    "utc": "2026-10-18T08:26:08.889Z"
+  },
+  {
+    "name": "safari-c28-zoom-200-more-focus",
+    "step": "From Close, traverse the input and then pagination using Safari Option+Tab; record the actual focus ring.",
+    "utc": "2026-10-18T08:26:20.652Z"
+  },
+  {
+    "name": "safari-c28-zoom-200-more-last",
+    "step": "Activate focused Show more with Enter: reach the final 36-result batch; inspect input focus after pagination disappears.",
+    "utc": "2026-10-18T08:26:44.202Z"
+  },
+  {
+    "name": "safari-c28-zoom-200-list-scroll",
+    "step": "Scroll within the native 200% result list after loading all 36 entries; input and Close remain outside the scrolled region.",
+    "utc": "2026-10-18T08:27:01.573Z"
+  },
+  {
+    "name": "safari-c28-zoom-200-dark",
+    "step": "Fixed C 0.1.28: close search, select the visible Dark theme control and inspect the settled anchor at native 200%.",
+    "utc": "2026-10-18T08:27:30.290Z"
+  },
+  {
+    "name": "safari-c28-reopen-dark",
+    "step": "Fixed C: reopen via the actual search button in Dark mode; query the remains preserved.",
+    "utc": "2026-10-18T08:28:27.484Z"
+  },
+  {
+    "name": "safari-c28-close-trigger-dark",
+    "step": "Close with Escape after opening from the Search button; inspect focus return to that actual trigger.",
+    "utc": "2026-10-18T08:28:28.193Z"
+  },
+  {
+    "name": "safari-c28-demo-failure-observed",
+    "step": "Fixed C 0.1.28 Button demo is terminal failed in the native accessibility tree before a foreground retry; do not count demo readiness as passed.",
+    "utc": "2026-10-18T08:37:02.814Z"
+  },
+  {
+    "name": "safari-c27-demo-control",
+    "step": "Original frozen C 1bbc54b0 / CLI 0.1.27 / unchanged dd5022c567200779 artifact at port 4206, same native Safari session, used only as a runtime control.",
+    "utc": "2026-10-18T08:41:44.973Z"
+  },
+  {
+    "name": "safari-c27-console-after-reload",
+    "step": "0.1.27 frozen control, native reload with Console open",
+    "utc": "2026-10-18T08:56:41.211Z"
+  },
+  {
+    "name": "safari-c27-console-startup-deadline",
+    "step": "Native old control Console: island startup deadline exceeded; read-only diagnostic visibility hidden and hasFocus false. Foreground verification requested; no visibility or rAF override.",
+    "utc": "2026-10-18T08:59:15.269Z"
+  },
+  {
+    "name": "safari-c28-console-startup-deadline",
+    "step": "C a31509aa fixed candidate Console records island startup deadline exceeded, matching frozen old control; foreground native demo verification still pending.",
+    "utc": "2026-10-18T09:03:37.958Z"
+  },
+  {
+    "name": "safari-c28-foreground-button-increment",
+    "step": "After user brings Safari foreground, select task Button window via Window menu and reload fixed C. Demo becomes interactive; native Increment changes Count 0 to 1.",
+    "utc": "2026-10-18T09:26:26.309Z"
+  },
+  {
+    "name": "safari-c28-foreground-source-copy",
+    "step": "Native Reset returns Count 1 to 0; Full file tab reveals basics.rs including imports and other demos; native Copy displays copied feedback.",
+    "utc": "2026-10-18T09:28:04.238Z"
+  },
+  {
+    "name": "safari-c28-foreground-console-ready",
+    "step": "Controlled reload with Console open in foreground. Read-only exact input verified before execution: state ready, failure null, visibility visible, CSS viewport 640x210 with docked Inspector, DPR 2. No error indicator after reload.",
+    "utc": "2026-10-18T09:29:19.202Z"
+  },
+  {
+    "name": "safari-c28-noscript-button",
+    "step": "Native Inspector Disable JavaScript=1 and actual reload. Search disabled with enable-script explanation; Button Count 0 initial controls disabled; both function and full-file source present; native language/menu/TOC/previous/next links remain.",
+    "utc": "2026-10-18T09:36:29.633Z"
+  },
+  {
+    "name": "safari-c28-noscript-quickstart-toc",
+    "step": "While JavaScript is disabled, ordinary Next navigates Button to Label; native Menu leads to Chinese Quick start; native TOC expands. The observed click lands at changing-a-components-classes (not the initially intended verification link), updates the URL and scrolls the document; record the actual destination.",
+    "utc": "2026-10-18T09:37:15.460Z"
+  },
+  {
+    "name": "firefox-158-terms-blocker",
+    "step": "New native Firefox 158.0 installation opens a first-run modal: Continue means agreeing to Firefox Terms and Privacy. Do not activate Continue without action-time confirmation; user requested skipping blockers while away. No task page visited.",
+    "utc": "2026-10-18T09:42:52.441Z"
+  }
+]

@@ -1,0 +1,83 @@
+Window: "Architecture | Rustify UI", App: Safari浏览器.
+0 标准窗口 Architecture | Rustify UI, ID: SafariWindow?IsSecure=false&UUID=8B94E202-E355-455B-98DF-40C71253D736, Secondary Actions: Raise
+	1 分离组
+		2 分离器 (disabled, settable, float) -1
+		3 标签页组
+			4 unknown
+				5 滚动区
+					6 HTML内容 Description: Architecture | Rustify UI, URL: 127.0.0.1:4199/rustify-ui/zh/architecture/#versioned-themes
+						7 container 搜索
+							8 文本 搜索文档
+							9 按钮 关闭
+							10 组合框 (settable) 搜索文档, Value: the
+								11 文本 (settable) the
+							12 文本 36 个结果
+							13 列表 (settable) 搜索结果
+								14 文本 (selected) Data larger than thescreenzh 尚未翻译，内容语言：en Data larger than the screen › The table holds no data Data larger than the screen › What is actually in the document DataTable is told how many rowsthere are and given a way to read a cell. It never holds a value. <DataTable rows=rows // Signal<usize> columns=columns // Signal<Vec<Column>> cell=
+								15 文本 Theme documentszh 尚未翻译，内容语言：en Theme documents › Static documentation themes Theme documents › Create and resolve a document A Rustify Docs site can import thecomplete JSON exported by Theme Studio: [theme] document = "theme.json" The path is relative to the site project. Keep the document inside the pr
+								16 文本 Architecturezh 尚未翻译，内容语言：en Architecture › Versioned themes Architecture › Streams, and why they are named Architecture › Deciding in the same turn as the event ThemeDocument retains light/dark author strings. resolve produces one ResolvedTheme containing sRGB RGBA, CSS-pixel geometry, selected fonts, structured shadows and diagnostics. Ap
+								17 文本 Navigationzh 尚未翻译，内容语言：en Navigation › What is in the address, and what is not Navigation › Guards, and the number in history.state Navigation › Guards, and the number in history.state › Known limitations Routes matches static segments and :param, in the order declared, and a path that matches nothing is an answer - the application's not-found view - rather than a failure. There is
+								18 文本 Formszh 尚未翻译，内容语言：en Forms › Why the values are not here Forms › Generations, and the late answer Forms › Fields the form does not have played value comes only from its value prop. If the form kept a second copy, "what is in this field" would have two answers, and the two would differ the moment one path updated wi
+								19 文本 Languages, formatting and textzh 尚未翻译，内容语言：en Languages, formatting and text › What the SDK translates, and what it does not Languages, formatting and text › Choosing the language Languages, formatting and text › Fonts, and the glyphs a font does not have The SDK ships the words it puts on screen on its own account - the label on a retry control, the word for closing a layer, the sentence a refused clipboard shows. Those are rustify
+								20 文本 Runtime utilitieszh 尚未翻译，内容语言：en Runtime utilities › Build and try the source panel Runtime utilities › SDK calls The default build contains a compiler-only Worker. Complete class names work without the scanner: mbx xtask build-web --example utility-lab --release mbx xtask serve --example util
+								21 文本 Compatibility and capability boundaries (P1 research preview)zh 尚未翻译，内容语言：en Compatibility and capability boundaries (P1 research preview) › Instances and what they cost Compatibility and capability boundaries (P1 research preview) › What the resource ledgers count Compatibility and capability boundaries (P1 research preview) › The clipboard is a wasm instance with its own linear memory. They share the compiled WebAssembly.Module, so a second instance is one extra JS request for a copy of the generated glue under a qu
+								22 文本 Component cataloguezh 尚未翻译，内容语言：en Component catalogue › Where they live The twenty-four DOM components — crates/rustify-components/src/, one file per category. The class strings came from Rust/UI; sources.lock.json records what was imported and what th
+								23 文本 快速开始 快速开始 › 构建并预览示例 快速开始 › 在应用中使用 Tailwind v4 快速开始 › 使用 DOM 组件 -example vellum --release；集成指南 解释它的绘制、编辑与持久化路径。Theme Studio 主题编辑器 的入口为： mbx xtask build-web --example theme-studio --release mbx xtask serve --example theme-studio --release 选择预设，
+								24 文本 Workspacezh 尚未翻译，内容语言：en Workspace › Panels and dividers Workspace › Tabs over panels ce Three pieces: panels side by side, tabs over them, and every command in one list. Each has a part that is easy to get wrong silently, and each keeps that part as a function with
+								25 文本 Vellum example and framework capabilitieszh 尚未翻译，内容语言：en Vellum example and framework capabilities › Five-layer mapping Vellum example and framework capabilities › Responsibilities by capability cycle and input across DOM and GPU regions. See the VELLUM plan for implementation status. Final validation passed 142 Rust tests and 80 tests across 11 independent browser scripts
+								26 文本 Buttonzh 尚未翻译，内容语言：en Button › Example Button › Capabilities riant, size, disabled; a disabled button leaves the tab order and calls nothing
+								27 文本 Labelzh 尚未翻译，内容语言：en Label › Capabilities Label › GPU integration Label children as the text, and the id of the control it names
+								28 文本 Linkzh 尚未翻译，内容语言：en Link › Example Link › Capabilities Link › GPU integration Jump to the destination Toggle availability The link points to this paragraph. Link: Available /// A disabled link keeps its label and stops offering a destination. pub fn link_dem
+								29 文本 Iconzh 尚未翻译，内容语言：en Icon › Example Icon › Capabilities Icon one of six glyphs, or any SVG theapplication passes as children; a label makes it an image and no label makes it decoration
+								30 文本 Text fieldzh 尚未翻译，内容语言：en Text field › Capabilities Text field › GPU integration d, described-by; a refused value is replaced by the application's rather than left on screen
+								31 文本 Text areazh 尚未翻译，内容语言：en Text area › Example Text area › Capabilities Text area › GPU integration Notes Keep the view and state together. Use the same function for SSR and hydration. Current text: Keep the view and state together. Use the same function for SSR and hydration. //
+								32 文本 Checkboxzh 尚未翻译，内容语言：en Checkbox › Capabilities Checkbox › GPU integration , disabled, read-only, invalid; read-only takes the click and puts the box back
+								33 文本 Radiozh 尚未翻译，内容语言：en Radio › Capabilities Radio › GPU integration Radio the options, which one is chosen, disabled, read-only; an option can be disabled on its own
+							34 按钮 显示更多
+					35 滚动条 (settable, float) 0.6785426
+	36 工具栏
+		37 container Secondary Actions: 移到上一项, 移到下一项, 从工具栏移除
+			38 按钮 Description: 显示边栏, ID: SidebarButton
+			39 菜单按钮 Description: 标签页组选择器, ID: TabGroupPickerButton?TabGroup=
+		40 container BackForwardSegmentedControl
+			41 按钮 Description: 返回, Help: 显示上一页, ID: BackButton
+			42 按钮 (disabled) Description: 前进, Help: 显示下一页, ID: ForwardButton
+		43 container Secondary Actions: 移到上一项, 移到下一项, 从工具栏移除
+			44 按钮 页面菜单, ID: AssistantButton
+			45 按钮 将页面添加到阅读列表, ID: OneStepBookmarkingButton
+			46 文本栏 (settable) Description: 智能搜索栏, Value: 127.0.0.1:4199/rustify-ui/zh/architecture/#versioned-themes, ID: WEB_BROWSER_ADDRESS_AND_SEARCH_FIELD
+			47 按钮 翻译可用, ID: TranslationButton
+			48 按钮 重新加载此页面, ID: ReloadButton
+		49 按钮 Description: 共享, ID: ShareButton, Secondary Actions: 移到上一项, 移到下一项, 从工具栏移除
+		50 按钮 Description: 新建标签页, ID: NewTabButton, Secondary Actions: 移到上一项, 移到下一项, 从工具栏移除
+		51 按钮 Description: 标签页概览, ID: TabOverviewButton, Secondary Actions: 移到上一项, 从工具栏移除
+	52 标签页组 Description: 标签页栏，8个标签页, ID: TabBar?isSeparate=false
+		53 标签 Home | Home semantics, Value: off, Secondary Actions: 关闭标签页, ID: TabBarTab?isNarrow=true&isExpanded=false&tabCount=&isPinned=false&isCluster=false&clusterID=&isActive=false
+			54 图像 FaviconImageView
+		55 标签 Rustify UI, Value: off, Secondary Actions: 关闭标签页, ID: TabBarTab?isNarrow=true&isExpanded=false&tabCount=&isPinned=false&isCluster=false&clusterID=&isActive=false
+			56 图像 FaviconImageView
+		57 标签 Architecture | Rustify UI, Value: off, Secondary Actions: 关闭标签页, ID: TabBarTab?isNarrow=true&isExpanded=false&tabCount=&isPinned=false&isCluster=false&clusterID=&isActive=false
+			58 图像 FaviconImageView
+		59 标签 Quick start | Rustify UI, Value: off, Secondary Actions: 关闭标签页, ID: TabBarTab?isNarrow=true&isExpanded=false&tabCount=&isPinned=false&isCluster=false&clusterID=&isActive=false
+			60 图像 FaviconImageView
+		61 标签 快速开始 | Rustify UI, Value: off, Secondary Actions: 关闭标签页, ID: TabBarTab?isNarrow=true&isExpanded=false&tabCount=&isPinned=false&isCluster=false&clusterID=&isActive=false
+			62 图像 FaviconImageView
+		63 标签 Native boundary checks, Value: off, Secondary Actions: 关闭标签页, ID: TabBarTab?isNarrow=true&isExpanded=false&tabCount=&isPinned=false&isCluster=false&clusterID=&isActive=false
+			64 图像 FaviconImageView
+		65 标签 Native boundary checks, Value: off, Secondary Actions: 关闭标签页, ID: TabBarTab?isNarrow=true&isExpanded=false&tabCount=&isPinned=false&isCluster=false&clusterID=&isActive=false
+			66 图像 FaviconImageView
+		67 标签 Architecture | Rustify UI, Help: 若要与此按钮中的项目交互，请按下Control-Option-Shift-下箭头键。, Value: on, Secondary Actions: 关闭标签页, ID: TabBarTab?isNarrow=false&isExpanded=false&tabCount=&isPinned=false&isCluster=false&clusterID=&isActive=true
+			68 图像 FaviconImageView
+			69 文本 Value: Architecture | Rustify UI, ID: UnifiedTabBarButton._titleTextField
+	70 关闭按钮
+	71 全屏幕按钮 Help: 此按钮也可以执行缩放窗口的操作, Secondary Actions: 缩放窗口
+	72 最小化按钮
+73 menu bar
+	74 Safari浏览器
+	75 文件
+	76 编辑
+	77 显示, ID: SafariViewMenu
+	78 历史记录
+	79 书签, ID: SafariBookmarksMenu
+	80 窗口, ID: SafariWindowMenu
+	81 帮助, ID: SafariHelpMenu

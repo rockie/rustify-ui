@@ -1,0 +1,16 @@
+{
+  "target/docs-ssg/p4/install-a31509aa-pinned/bin/rustify-docs": {
+    "bytes": 59202944,
+    "sha256": "ecaa3e21795886c8f6935315ad50c2944565936233075a6ab9f7ff5b4c251a5f"
+  },
+  "target/docs-ssg/p4/install-a31509aa-real-cargo/bin/rustify-docs": {
+    "bytes": 59202944,
+    "sha256": "ecaa3e21795886c8f6935315ad50c2944565936233075a6ab9f7ff5b4c251a5f"
+  },
+  "target/docs-cli/rustify-docs": {
+    "bytes": 59202944,
+    "sha256": "df140257cfb6fa4ea2ea889162d122cf4097ac3c36f24e40e44e0dd6dfa25def"
+  },
+  "generation_group_cli_identical_to_install": false,
+  "entry_wrapper_cli_identical_to_real_cargo_install": true
+}

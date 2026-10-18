@@ -1,0 +1,56 @@
+{
+  "recorded_at": "2026-10-16T05:20:54+08:00",
+  "candidate_sha": "936149b91f57f6dbbdb43969c8843f940348a11e",
+  "framework_revision": "58b7a0d9eb913b7656120693905d66d70ab208d8",
+  "scope": "read-only release readiness; no native functional acceptance, upload, settings change or deployment",
+  "native_apps": {
+    "Chrome": {
+      "installed": true,
+      "version": "155.0.8059.41"
+    },
+    "Firefox": {
+      "installed": false
+    },
+    "Safari": {
+      "installed": true,
+      "version": "27.0.1",
+      "cua_bundle_result": "cgWindowNotFound (-10005)",
+      "cua_path_result": "cgWindowNotFound (-10005)",
+      "cua_mac_launch_available": false
+    }
+  },
+  "chrome_release_source": {
+    "url": "https://chromereleases.googleblog.com/2026/10/",
+    "date": "2026-10-15",
+    "stable_windows_mac": "155.0.8059.84/.85",
+    "note": "early stable 156 is a separate listed channel; not used as the required broad stable target"
+  },
+  "github": {
+    "repository": {
+      "private": false,
+      "default_branch": "main",
+      "has_pages": false
+    },
+    "pages": {
+      "http_status": 404,
+      "message": "Not Found"
+    },
+    "candidate_commit": {
+      "http_status": 422,
+      "message": "No commit found for SHA: 936149b91f57f6dbbdb43969c8843f940348a11e"
+    }
+  },
+  "resources": {
+    "iphone_safari": "unavailable per existing user C-5 answer",
+    "android_chrome": "unavailable per existing user C-5 answer",
+    "voiceover_safari": "not supplied; not verified",
+    "native_200_zoom": "not verified"
+  },
+  "goal_blocking_audit": {
+    "turns_at_current_impasse": 3,
+    "note": "first goal turn at M7 impasse after completing M6; do not repeat local tests; external resource or authorization change needed",
+    "last_revalidated_at": "2026-10-16T05:24:09+08:00",
+    "last_result": "same genuine M7 external-resource blocker for three consecutive goal turns; Chrome 155.0.8059.41 unchanged, native Firefox absent, Safari cgWindowNotFound, Pages disabled; no authorized independent action remains",
+    "threshold_met": true
+  }
+}

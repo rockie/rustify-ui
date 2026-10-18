@@ -1,0 +1,595 @@
+{
+  "config": {
+    "argv": [
+      "/Users/rockie/.local/share/mise/installs/node/26.1.0/bin/node",
+      "/Users/rockie/Documents/gh-rockie/rustify-ui/node_modules/@playwright/test/cli.js",
+      "test",
+      "-c",
+      "playwright.docs.config.ts",
+      "--project=official-subpath",
+      "official.spec.ts",
+      "--grep",
+      "search section targets stay below",
+      "--reporter=line,json",
+      "--output=target/docs-ssg/p4/m7-20261018/anchor-red"
+    ],
+    "configFile": "/Users/rockie/Documents/gh-rockie/rustify-ui/playwright.docs.config.ts",
+    "rootDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": {},
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/p4/m7-20261018/anchor-red",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "dom-only",
+        "name": "dom-only",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [
+          "dom-only/hydration.spec.ts"
+        ],
+        "testMatch": [
+          "dom-only/**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/p4/m7-20261018/anchor-red",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "dom-hydrate",
+        "name": "dom-hydrate",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "dom-only/hydration.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/p4/m7-20261018/anchor-red",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "docs-root",
+        "name": "docs-root",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [
+          "docs-ssg/dev*.spec.ts",
+          "docs-ssg/islands.spec.ts",
+          "docs-ssg/custom.spec.ts",
+          "docs-ssg/official.spec.ts",
+          "docs-ssg/i18n*.spec.ts",
+          "docs-ssg/search*.spec.ts"
+        ],
+        "testMatch": [
+          "docs-ssg/**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/p4/m7-20261018/anchor-red",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "docs-subpath",
+        "name": "docs-subpath",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [
+          "docs-ssg/dev*.spec.ts",
+          "docs-ssg/islands.spec.ts",
+          "docs-ssg/custom.spec.ts",
+          "docs-ssg/official.spec.ts",
+          "docs-ssg/i18n*.spec.ts",
+          "docs-ssg/search*.spec.ts"
+        ],
+        "testMatch": [
+          "docs-ssg/**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/p4/m7-20261018/anchor-red",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "docs-meta",
+        "name": "docs-meta",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [
+          "docs-ssg/dev*.spec.ts",
+          "docs-ssg/islands.spec.ts",
+          "docs-ssg/custom.spec.ts",
+          "docs-ssg/official.spec.ts",
+          "docs-ssg/i18n*.spec.ts",
+          "docs-ssg/search*.spec.ts"
+        ],
+        "testMatch": [
+          "docs-ssg/**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/p4/m7-20261018/anchor-red",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "components-root",
+        "name": "components-root",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/islands.spec.ts",
+          "docs-ssg/custom.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/p4/m7-20261018/anchor-red",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "components-subpath",
+        "name": "components-subpath",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/islands.spec.ts",
+          "docs-ssg/custom.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/p4/m7-20261018/anchor-red",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "components-meta",
+        "name": "components-meta",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/islands.spec.ts",
+          "docs-ssg/custom.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/p4/m7-20261018/anchor-red",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "official-root",
+        "name": "official-root",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/official.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/p4/m7-20261018/anchor-red",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "official-subpath",
+        "name": "official-subpath",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/official.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/p4/m7-20261018/anchor-red",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "official-meta",
+        "name": "official-meta",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/official.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/p4/m7-20261018/anchor-red",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "docs-i18n-root",
+        "name": "docs-i18n-root",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/i18n.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/p4/m7-20261018/anchor-red",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "docs-i18n-subpath",
+        "name": "docs-i18n-subpath",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/i18n.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/p4/m7-20261018/anchor-red",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "docs-i18n-meta",
+        "name": "docs-i18n-meta",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/i18n.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/p4/m7-20261018/anchor-red",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "components-i18n-root",
+        "name": "components-i18n-root",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/i18n-islands.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/p4/m7-20261018/anchor-red",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "components-i18n-subpath",
+        "name": "components-i18n-subpath",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/i18n-islands.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/p4/m7-20261018/anchor-red",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "components-i18n-meta",
+        "name": "components-i18n-meta",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/i18n-islands.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/p4/m7-20261018/anchor-red",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "docs-search-root",
+        "name": "docs-search-root",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/search.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/p4/m7-20261018/anchor-red",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "docs-search-subpath",
+        "name": "docs-search-subpath",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [
+          "docs-ssg/search-perf.spec.ts"
+        ],
+        "testMatch": [
+          "docs-ssg/search*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/p4/m7-20261018/anchor-red",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "docs-search-meta",
+        "name": "docs-search-meta",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/search.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/p4/m7-20261018/anchor-red",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "docs-search-perf",
+        "name": "docs-search-perf",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/search-perf.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/p4/m7-20261018/anchor-red",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "components-webkit",
+        "name": "components-webkit",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/islands.spec.ts",
+          "docs-ssg/custom.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/p4/m7-20261018/anchor-red",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "docs-firefox",
+        "name": "docs-firefox",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [
+          "docs-ssg/dev*.spec.ts",
+          "docs-ssg/islands.spec.ts",
+          "docs-ssg/custom.spec.ts",
+          "docs-ssg/official.spec.ts",
+          "docs-ssg/i18n*.spec.ts",
+          "docs-ssg/search*.spec.ts"
+        ],
+        "testMatch": [
+          "docs-ssg/**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/p4/m7-20261018/anchor-red",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "docs-webkit",
+        "name": "docs-webkit",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [
+          "docs-ssg/dev*.spec.ts",
+          "docs-ssg/islands.spec.ts",
+          "docs-ssg/custom.spec.ts",
+          "docs-ssg/official.spec.ts",
+          "docs-ssg/i18n*.spec.ts",
+          "docs-ssg/search*.spec.ts"
+        ],
+        "testMatch": [
+          "docs-ssg/**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/p4/m7-20261018/anchor-red",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "docs-dev",
+        "name": "docs-dev",
+        "testDir": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "docs-ssg/dev*.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "line"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "docs-ssg/official.spec.ts",
+      "file": "docs-ssg/official.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "search section targets stay below a wrapped reading header",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "official-subpath",
+              "projectName": "official-subpath",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 479,
+                  "error": {
+                    "message": "Error: visible section target at 320px in en\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m93.5\u001b[39m\nReceived:    \u001b[31m79.765625\u001b[39m",
+                    "stack": "Error: visible section target at 320px in en\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m93.5\u001b[39m\nReceived:    \u001b[31m79.765625\u001b[39m\n    at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/docs-ssg/official.spec.ts:382:82",
+                    "location": {
+                      "file": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/docs-ssg/official.spec.ts",
+                      "column": 82,
+                      "line": 382
+                    },
+                    "snippet": "  380 |         }));\n  381 |         await test.info().attach(`search-target-${width}-${lang}.json`, { body: JSON.stringify(bounds), contentType: \"application/json\" });\n> 382 |         expect(bounds.target, `visible section target at ${width}px in ${lang}`).toBeGreaterThanOrEqual(bounds.header);\n      |                                                                                  ^\n  383 |         await fits(page);\n  384 |     }\n  385 |     await healthy(page, audit);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/docs-ssg/official.spec.ts",
+                        "column": 82,
+                        "line": 382
+                      },
+                      "message": "Error: visible section target at 320px in en\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m93.5\u001b[39m\nReceived:    \u001b[31m79.765625\u001b[39m\n\n  380 |         }));\n  381 |         await test.info().attach(`search-target-${width}-${lang}.json`, { body: JSON.stringify(bounds), contentType: \"application/json\" });\n> 382 |         expect(bounds.target, `visible section target at ${width}px in ${lang}`).toBeGreaterThanOrEqual(bounds.header);\n      |                                                                                  ^\n  383 |         await fits(page);\n  384 |     }\n  385 |     await healthy(page, audit);\n    at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/docs-ssg/official.spec.ts:382:82"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T07:58:53.616Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "search-target-320-en.json",
+                      "contentType": "application/json",
+                      "body": "eyJ0YXJnZXQiOjc5Ljc2NTYyNSwiaGVhZGVyIjo5My41fQ=="
+                    },
+                    {
+                      "name": "official-browser-audit.json",
+                      "contentType": "application/json",
+                      "body": "ewogICJyZXF1ZXN0cyI6IFsKICAgICJodHRwOi8vMTI3LjAuMC4xOjQxOTkvcnVzdGlmeS11aS9xdWlja3N0YXJ0LyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MTk5L3J1c3RpZnktdWkvYXNzZXRzL3NpdGUuODJjYjA0MzAwNS5jc3MiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDE5OS9ydXN0aWZ5LXVpL2Fzc2V0cy9tb2RlLjFkNmE5YmYxNDUuanMiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDE5OS9ydXN0aWZ5LXVpL2Fzc2V0cy9zaXRlLjUzZTg1OTlkZGQuanMiLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDE5OS9ydXN0aWZ5LXVpL2Fzc2V0cy9zZWFyY2guNDg3OWZjZWY5Yi5qcyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MTk5L3J1c3RpZnktdWkvYXNzZXRzL3NlYXJjaC13b3JrZXIuYmYyZDAwMzZkNS5qcyIsCiAgICAiaHR0cDovLzEyNy4wLjAuMTo0MTk5L3J1c3RpZnktdWkvYXNzZXRzL3NlYXJjaC5lbi5iMjAxNTRlY2VlLmpzb24iLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDE5OS9ydXN0aWZ5LXVpL2FyY2hpdGVjdHVyZS8iLAogICAgImh0dHA6Ly8xMjcuMC4wLjE6NDE5OS9ydXN0aWZ5LXVpL2Fzc2V0cy9zaXRlLjgyY2IwNDMwMDUuY3NzIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQxOTkvcnVzdGlmeS11aS9hc3NldHMvbW9kZS4xZDZhOWJmMTQ1LmpzIiwKICAgICJodHRwOi8vMTI3LjAuMC4xOjQxOTkvcnVzdGlmeS11aS9hc3NldHMvc2l0ZS41M2U4NTk5ZGRkLmpzIgogIF0sCiAgImZhaWx1cmVzIjogW10sCiAgImNvbnNvbGUiOiBbXSwKICAicGFnZUVycm9ycyI6IFtdLAogICJjc3AiOiBbXSwKICAicmVzcG9uc2VzIjogWwogICAgewogICAgICAidXJsIjogImh0dHA6Ly8xMjcuMC4wLjE6NDE5OS9ydXN0aWZ5LXVpL3F1aWNrc3RhcnQvIiwKICAgICAgInN0YXR1cyI6IDIwMCwKICAgICAgIm1pbWUiOiAidGV4dC9odG1sOyBjaGFyc2V0PXV0Zi04IgogICAgfSwKICAgIHsKICAgICAgInVybCI6ICJodHRwOi8vMTI3LjAuMC4xOjQxOTkvcnVzdGlmeS11aS9hc3NldHMvc2l0ZS44MmNiMDQzMDA1LmNzcyIsCiAgICAgICJzdGF0dXMiOiAyMDAsCiAgICAgICJtaW1lIjogInRleHQvY3NzOyBjaGFyc2V0PXV0Zi04IgogICAgfSwKICAgIHsKICAgICAgInVybCI6ICJodHRwOi8vMTI3LjAuMC4xOjQxOTkvcnVzdGlmeS11aS9hc3NldHMvbW9kZS4xZDZhOWJmMTQ1LmpzIiwKICAgICAgInN0YXR1cyI6IDIwMCwKICAgICAgIm1pbWUiOiAidGV4dC9qYXZhc2NyaXB0OyBjaGFyc2V0PXV0Zi04IgogICAgfSwKICAgIHsKICAgICAgInVybCI6ICJodHRwOi8vMTI3LjAuMC4xOjQxOTkvcnVzdGlmeS11aS9hc3NldHMvc2l0ZS41M2U4NTk5ZGRkLmpzIiwKICAgICAgInN0YXR1cyI6IDIwMCwKICAgICAgIm1pbWUiOiAidGV4dC9qYXZhc2NyaXB0OyBjaGFyc2V0PXV0Zi04IgogICAgfSwKICAgIHsKICAgICAgInVybCI6ICJodHRwOi8vMTI3LjAuMC4xOjQxOTkvcnVzdGlmeS11aS9hc3NldHMvc2VhcmNoLjQ4NzlmY2VmOWIuanMiLAogICAgICAic3RhdHVzIjogMjAwLAogICAgICAibWltZSI6ICJ0ZXh0L2phdmFzY3JpcHQ7IGNoYXJzZXQ9dXRmLTgiCiAgICB9LAogICAgewogICAgICAidXJsIjogImh0dHA6Ly8xMjcuMC4wLjE6NDE5OS9ydXN0aWZ5LXVpL2Fzc2V0cy9zZWFyY2gtd29ya2VyLmJmMmQwMDM2ZDUuanMiLAogICAgICAic3RhdHVzIjogMjAwLAogICAgICAibWltZSI6ICJ0ZXh0L2phdmFzY3JpcHQ7IGNoYXJzZXQ9dXRmLTgiCiAgICB9LAogICAgewogICAgICAidXJsIjogImh0dHA6Ly8xMjcuMC4wLjE6NDE5OS9ydXN0aWZ5LXVpL2Fzc2V0cy9zZWFyY2guZW4uYjIwMTU0ZWNlZS5qc29uIiwKICAgICAgInN0YXR1cyI6IDIwMCwKICAgICAgIm1pbWUiOiAiYXBwbGljYXRpb24vanNvbiIKICAgIH0sCiAgICB7CiAgICAgICJ1cmwiOiAiaHR0cDovLzEyNy4wLjAuMTo0MTk5L3J1c3RpZnktdWkvYXJjaGl0ZWN0dXJlLyIsCiAgICAgICJzdGF0dXMiOiAyMDAsCiAgICAgICJtaW1lIjogInRleHQvaHRtbDsgY2hhcnNldD11dGYtOCIKICAgIH0sCiAgICB7CiAgICAgICJ1cmwiOiAiaHR0cDovLzEyNy4wLjAuMTo0MTk5L3J1c3RpZnktdWkvYXNzZXRzL3NpdGUuODJjYjA0MzAwNS5jc3MiLAogICAgICAic3RhdHVzIjogMjAwLAogICAgICAibWltZSI6ICJ0ZXh0L2NzczsgY2hhcnNldD11dGYtOCIKICAgIH0sCiAgICB7CiAgICAgICJ1cmwiOiAiaHR0cDovLzEyNy4wLjAuMTo0MTk5L3J1c3RpZnktdWkvYXNzZXRzL21vZGUuMWQ2YTliZjE0NS5qcyIsCiAgICAgICJzdGF0dXMiOiAyMDAsCiAgICAgICJtaW1lIjogInRleHQvamF2YXNjcmlwdDsgY2hhcnNldD11dGYtOCIKICAgIH0sCiAgICB7CiAgICAgICJ1cmwiOiAiaHR0cDovLzEyNy4wLjAuMTo0MTk5L3J1c3RpZnktdWkvYXNzZXRzL3NpdGUuNTNlODU5OWRkZC5qcyIsCiAgICAgICJzdGF0dXMiOiAyMDAsCiAgICAgICJtaW1lIjogInRleHQvamF2YXNjcmlwdDsgY2hhcnNldD11dGYtOCIKICAgIH0KICBdLAogICJleHBlY3RlZDQwNCI6IFtdLAogICJleHBlY3RlZENvbnNvbGUiOiBbXQp9"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/p4/m7-20261018/anchor-red/docs-ssg-official-search-s-86f47-ow-a-wrapped-reading-header-official-subpath/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/p4/m7-20261018/anchor-red/docs-ssg-official-search-s-86f47-ow-a-wrapped-reading-header-official-subpath/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/rockie/Documents/gh-rockie/rustify-ui/tests/docs-ssg/official.spec.ts",
+                    "column": 82,
+                    "line": 382
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "2d2e215de052a1e7f1c3-ca912af23d03f2d7bf4f",
+          "file": "docs-ssg/official.spec.ts",
+          "line": 367,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-18T07:56:14.505Z",
+    "duration": 159872.089,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}

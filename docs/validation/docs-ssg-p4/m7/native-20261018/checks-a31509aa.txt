@@ -1,0 +1,96 @@
+C a31509aa9cc069fe81ad55be701c13ffe3a3fdf1 / R 78f54b6212a320e6893ad48909f6f6a8a2989a91
+Extracts from actual logs; full logs retained under target/docs-ssg/p4/. The mbx 1.15 entry delegated through the mise Cargo wrapper to global mbx 1.24; rustc remained 1.99. A subsequent real mbx 1.15 -> Cargo 1.99 install produced the identical CLI bytes (cli-rebuild-comparison.json). This file preserves the actual functional results and does not claim the earlier inner wrapper was pinned.
+
+m7-docs-tests-pinned.log
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.67s
+     Running unittests src/lib.rs (target/debug/deps/rustify_docs-a0443a60ac2534b1)
+test result: ok. 237 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 48.60s
+     Running tests/ai.rs (target/debug/deps/ai-f38dd196c544a569)
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.09s
+     Running tests/content_include.rs (target/debug/deps/content_include-52d29f035692fa93)
+test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.68s
+     Running tests/generate.rs (target/debug/deps/generate-de191426b58e2517)
+test result: ok. 17 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 10.26s
+     Running tests/i18n.rs (target/debug/deps/i18n-2a653706767d3f47)
+test result: ok. 33 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.52s
+     Running tests/markdown_intro.rs (target/debug/deps/markdown_intro-99283fb56b3c7927)
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.24s
+     Running tests/registered_generation.rs (target/debug/deps/registered_generation-239eef530cf49654)
+test result: ok. 16 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.78s
+     Running tests/search.rs (target/debug/deps/search-f204fdc0c1b9bdb2)
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.15s
+     Running tests/site_metadata.rs (target/debug/deps/site_metadata-158db3cd0dfaf964)
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+     Running tests/site_registry.rs (target/debug/deps/site_registry-55db77555d57d605)
+test result: ok. 19 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+m7-cli-short-pinned.log
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 6.89s
+     Running unittests src/main.rs (target/debug/deps/rustify_docs-3beb31912c025642)
+test compile_proxy::compile_to_islands_proxy ... ignored, requires the matching compile-islands Chromium sampler and static host
+test result: ok. 80 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 1.57s
+     Running tests/artifacts.rs (target/debug/deps/artifacts-51d0bc3a063ad2b9)
+test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.56s
+     Running tests/check.rs (target/debug/deps/check-b907245df673e209)
+test result: ok. 16 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.97s
+
+m7-cli-components-runner.log
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.13s
+     Running tests/components.rs (target/debug/deps/components-5b5d16d7e51821cd)
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 869.86s
+
+m7-cli-remaining.log
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.85s
+     Running tests/dev.rs (target/debug/deps/dev-53f6c41f0d5e6c2a)
+test result: ok. 15 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.45s
+     Running tests/diagnostic_text.rs (target/debug/deps/diagnostic_text-1b646c24be59becb)
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.98s
+     Running tests/external.rs (target/debug/deps/external-dbf451cc920628ad)
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.19s
+     Running tests/faults.rs (target/debug/deps/faults-2f64855641e3c9ee)
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 13.90s
+     Running tests/i18n.rs (target/debug/deps/i18n-e9025466246fd0a4)
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 189.63s
+     Running tests/new_build.rs (target/debug/deps/new_build-79ef4cdeafe555f3)
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.33s
+     Running tests/new_components.rs (target/debug/deps/new_components-c3ebec52a14950f4)
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.27s
+     Running tests/reliability.rs (target/debug/deps/reliability-e7e2988741ca7745)
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.73s
+     Running tests/rust_dev.rs (target/debug/deps/rust_dev-7780977c04fb0e19)
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 239.21s
+     Running tests/search.rs (target/debug/deps/search-56377c9b5db1795d)
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.78s
+
+m7-pair-ssr-pinned.log
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 29.34s
+
+m7-pair-hydrate-pinned.log
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 14.40s
+
+m7-toolchain.log
+CLI source: file:///Users/rockie/Documents/gh-rockie/rustify-ui at a31509aa9cc069fe81ad55be701c13ffe3a3fdf1
+    Finished `docs-cli` profile [optimized] target(s) in 2m 22s
+rustify-docs 0.1.28
+rustify-docs 0.1.28
+source: a31509aa9cc069fe81ad55be701c13ffe3a3fdf1
+panic probe: recovered
+installed identity: --build-info source and Cargo Git source match a31509aa9cc069fe81ad55be701c13ffe3a3fdf1
+toolchain calls: 3 x `rustc --version` (new and dev check for Rust); no cargo, nothing compiled
+components template (no network, no build): generated by the installed CLI; all three Git dependencies and unchanged lock resolve to framework 78f54b6212a320e6893ad48909f6f6a8a2989a91; lock retained at /var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-docs-verify/components-author/site/Cargo.lock (48585 bytes)
+toolchain: rustify-docs 0.1.28 installed from a31509aa9cc069fe81ad55be701c13ffe3a3fdf1 with the docs-cli profile (59202944 bytes, unwinds); new, check, build, preview and dev ran with only Rust and the CLI on PATH, single-language and French check/build with no network; nothing was compiled
+
+
+m7-generation-performance.log (current worktree product source C; the group builds its own CLI, not RUSTIFY_DOCS_BIN)
+reference site B: 500 pages, digest ecb43f7911fe7512bae279a0214aad39647052c28c3bd7c9a67f6745e4a889ac
+rustify-docs build of B into an empty output: median 1535.2 ms of [2509.8441660000003, 1488.083208, 1492.7758330000001, 1570.380125, 1535.2147920000002]; 500 pages, 516 files, 47856424 bytes
+pass B analyses without a problem, so the timings are of a site that would publish: 0 error(s), 0 warning(s)
+pass cold render and stylesheet of 500 pages: 1179.6 ms (limit 20000 ms)
+pass rustify-docs build of 500 pages into an empty output (median of 5): 1535.2 ms (limit 20000 ms), 500 pages
+pass configuration change, all pages re-rendered and committed (median of 5): 961.9 ms (limit < 1000 ms; 38.1 ms left for watch, SSE and the browser)
+pass largest content page: HTML + CSS + scripts, gzip -9: 33762 bytes (zh/g04/page-024/index.html = 140546 raw / 16556 gzip + 17206 shared; limit 100000)
+pass home page: HTML + CSS + scripts, gzip -9: 29645 bytes (99463 raw / 12439 gzip + 17206 shared; limit 100000)
+report: docs/validation/docs-ssg-p4/m7/native-20261018/generation-performance-a31509aa.json
+
+Generation group CLI --build-info: rustify-docs 0.1.28, panic unwind, source a31509aa9cc069fe81ad55be701c13ffe3a3fdf1. Different build locations produce a different executable SHA; see cli-rebuild-comparison.json.

@@ -1,0 +1,818 @@
+{
+  "candidate_sha": "a31509aa9cc069fe81ad55be701c13ffe3a3fdf1",
+  "framework_revision": "78f54b6212a320e6893ad48909f6f6a8a2989a91",
+  "method": "existing manifest-verified inventory(); per-language content raw/gzip maxima, each home/error variant and island maxima; no performance verdict",
+  "sites": {
+    "A": {
+      "dist": "/Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-ssg/p4/m7-a31509aa/official/site/dist-pinned",
+      "base": "/rustify-ui/",
+      "build_id": "16176499b5809237",
+      "cli_version": "0.1.28",
+      "verification": {
+        "files": 96,
+        "every_SHA_and_bytes_match": true,
+        "total_declared_bytes": 18190961
+      },
+      "first_load_dependency_sets": [
+        {
+          "id": "set-1",
+          "files": [
+            "assets/mode.1d6a9bf145.js",
+            "assets/site.269216efb4.js",
+            "assets/site.82cb043005.css"
+          ],
+          "bytes": 102029,
+          "gzip9": 22009,
+          "sha256": "ae3d406fc9116e96ba76a261ee940c9cf480c8b4a85bc004546e5112e8997c2f",
+          "conditional_files": [],
+          "html_references": [
+            {
+              "to": "assets/site.82cb043005.css",
+              "reason": "html-link-stylesheet"
+            },
+            {
+              "to": "assets/mode.1d6a9bf145.js",
+              "reason": "html-script"
+            },
+            {
+              "to": "assets/site.269216efb4.js",
+              "reason": "html-script"
+            }
+          ]
+        },
+        {
+          "id": "set-2",
+          "files": [
+            "assets/islands/d6a121a4b3a65a2105f0105d941015b42843ce72424af315aa8c3b883c768f57/app.js",
+            "assets/islands/d6a121a4b3a65a2105f0105d941015b42843ce72424af315aa8c3b883c768f57/app_bg.wasm",
+            "assets/islands/d6a121a4b3a65a2105f0105d941015b42843ce72424af315aa8c3b883c768f57/dom-loader.js",
+            "assets/islands/d6a121a4b3a65a2105f0105d941015b42843ce72424af315aa8c3b883c768f57/islands.js",
+            "assets/islands/d6a121a4b3a65a2105f0105d941015b42843ce72424af315aa8c3b883c768f57/snippets/rustify-ui-4db2f10f10788f4c/web/dom-runtime.js",
+            "assets/mode.1d6a9bf145.js",
+            "assets/site.269216efb4.js",
+            "assets/site.82cb043005.css"
+          ],
+          "bytes": 10001248,
+          "gzip9": 1234950,
+          "sha256": "5522f3b8cf9a6ceaca65bfa9993395f02964517cb6223b43b5c5381acf432d79",
+          "conditional_files": [],
+          "html_references": [
+            {
+              "to": "assets/site.82cb043005.css",
+              "reason": "html-link-stylesheet"
+            },
+            {
+              "to": "assets/mode.1d6a9bf145.js",
+              "reason": "html-script"
+            },
+            {
+              "to": "assets/site.269216efb4.js",
+              "reason": "html-script"
+            },
+            {
+              "to": "assets/islands/d6a121a4b3a65a2105f0105d941015b42843ce72424af315aa8c3b883c768f57/islands.js",
+              "reason": "html-script"
+            }
+          ]
+        }
+      ],
+      "groups": {
+        "home": {
+          "count": 2,
+          "bytes": {
+            "bytes": 112604,
+            "candidates": [
+              {
+                "file": "index.html",
+                "route": "/rustify-ui/",
+                "category": null
+              }
+            ]
+          },
+          "gzip9": {
+            "gzip9": 25482,
+            "candidates": [
+              {
+                "file": "zh/index.html",
+                "route": "/rustify-ui/zh/",
+                "category": null
+              }
+            ]
+          },
+          "selected": [
+            {
+              "file": "index.html",
+              "route": "/rustify-ui/",
+              "lang": "en",
+              "category": null,
+              "islands": 0,
+              "dependency_set": "set-1",
+              "bytes": 112604,
+              "gzip9": 25265,
+              "closure_sha256": "f044e02222911d1101d8e4269be8618abd2ae1ff257702f719193d4463d22e5e"
+            },
+            {
+              "file": "zh/index.html",
+              "route": "/rustify-ui/zh/",
+              "lang": "zh",
+              "category": null,
+              "islands": 0,
+              "dependency_set": "set-1",
+              "bytes": 112213,
+              "gzip9": 25482,
+              "closure_sha256": "3d37f42abc2bd5d21c3a289cc6b3987315954cd284ee68bc3dc4cc7864886135"
+            }
+          ]
+        },
+        "404": {
+          "count": 2,
+          "bytes": {
+            "bytes": 130597,
+            "candidates": [
+              {
+                "file": "404.html",
+                "route": "/rustify-ui/404.html",
+                "category": null
+              }
+            ]
+          },
+          "gzip9": {
+            "gzip9": 26746,
+            "candidates": [
+              {
+                "file": "404.html",
+                "route": "/rustify-ui/404.html",
+                "category": null
+              }
+            ]
+          },
+          "selected": [
+            {
+              "file": "404.html",
+              "route": "/rustify-ui/404.html",
+              "lang": "en",
+              "category": null,
+              "islands": 0,
+              "dependency_set": "set-1",
+              "bytes": 130597,
+              "gzip9": 26746,
+              "closure_sha256": "4b888d3eec5b9f7e1f97b6f282b792d504e48d8f270457dbb269e47176035ee2"
+            },
+            {
+              "file": "zh/404.html",
+              "route": "/rustify-ui/zh/404.html",
+              "lang": "zh",
+              "category": null,
+              "islands": 0,
+              "dependency_set": "set-1",
+              "bytes": 116090,
+              "gzip9": 25288,
+              "closure_sha256": "b31b6d7622e7a7c33d677c88daee15bcd3b197be60a8473d7427651cb2d8b554"
+            }
+          ]
+        },
+        "content_en": {
+          "count": 12,
+          "bytes": {
+            "bytes": 231667,
+            "candidates": [
+              {
+                "file": "quickstart/index.html",
+                "route": "/rustify-ui/quickstart/",
+                "category": null
+              }
+            ]
+          },
+          "gzip9": {
+            "gzip9": 39974,
+            "candidates": [
+              {
+                "file": "vellum/index.html",
+                "route": "/rustify-ui/vellum/",
+                "category": null
+              }
+            ]
+          },
+          "selected": [
+            {
+              "file": "quickstart/index.html",
+              "route": "/rustify-ui/quickstart/",
+              "lang": "en",
+              "category": null,
+              "islands": 0,
+              "dependency_set": "set-1",
+              "bytes": 231667,
+              "gzip9": 39591,
+              "closure_sha256": "b64157dc212c6ed090380014f726b1a8709e88e9621e8ca46b8114a308f6bb17"
+            },
+            {
+              "file": "vellum/index.html",
+              "route": "/rustify-ui/vellum/",
+              "lang": "en",
+              "category": null,
+              "islands": 0,
+              "dependency_set": "set-1",
+              "bytes": 170153,
+              "gzip9": 39974,
+              "closure_sha256": "c7b06a7f4e5194d3c674608592523bf6eb1cb7b6fed01e1a223e4d758d252480"
+            }
+          ]
+        },
+        "content_zh": {
+          "count": 12,
+          "bytes": {
+            "bytes": 224474,
+            "candidates": [
+              {
+                "file": "zh/quickstart/index.html",
+                "route": "/rustify-ui/zh/quickstart/",
+                "category": null
+              }
+            ]
+          },
+          "gzip9": {
+            "gzip9": 40404,
+            "candidates": [
+              {
+                "file": "zh/vellum/index.html",
+                "route": "/rustify-ui/zh/vellum/",
+                "category": null
+              }
+            ]
+          },
+          "selected": [
+            {
+              "file": "zh/quickstart/index.html",
+              "route": "/rustify-ui/zh/quickstart/",
+              "lang": "zh",
+              "category": null,
+              "islands": 0,
+              "dependency_set": "set-1",
+              "bytes": 224474,
+              "gzip9": 39305,
+              "closure_sha256": "840633eee69b118d58458819729802cf17d2b7d6149efda412f243c4e1b27c33"
+            },
+            {
+              "file": "zh/vellum/index.html",
+              "route": "/rustify-ui/zh/vellum/",
+              "lang": "zh",
+              "category": null,
+              "islands": 0,
+              "dependency_set": "set-1",
+              "bytes": 170549,
+              "gzip9": 40404,
+              "closure_sha256": "30e42bc6a238aba6b837375aa2f0e5621608bab87d2d20805b6aa3fda438ffbd"
+            }
+          ]
+        },
+        "islands": {
+          "count": 48,
+          "bytes": {
+            "bytes": 10180013,
+            "candidates": [
+              {
+                "file": "zh/components/data-table/index.html",
+                "route": "/rustify-ui/zh/components/data-table/",
+                "category": "data table"
+              }
+            ]
+          },
+          "gzip9": {
+            "gzip9": 1249101,
+            "candidates": [
+              {
+                "file": "zh/components/data-table/index.html",
+                "route": "/rustify-ui/zh/components/data-table/",
+                "category": "data table"
+              }
+            ]
+          },
+          "selected": [
+            {
+              "file": "zh/components/data-table/index.html",
+              "route": "/rustify-ui/zh/components/data-table/",
+              "lang": "zh",
+              "category": "data table",
+              "islands": 1,
+              "dependency_set": "set-2",
+              "bytes": 10180013,
+              "gzip9": 1249101,
+              "closure_sha256": "88fc9549a59f7872f11da8b7e285f3e6d0f6cdab074b09658b50e3e29116fdab"
+            }
+          ]
+        }
+      }
+    },
+    "B_P2": {
+      "dist": "/Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-ssg/p4/m7-a31509aa/reader-b-p2/dist",
+      "base": "/",
+      "build_id": "ca4c8dea747af02f",
+      "cli_version": "0.1.28",
+      "verification": {
+        "files": 533,
+        "every_SHA_and_bytes_match": true,
+        "total_declared_bytes": 62160065
+      },
+      "first_load_dependency_sets": [
+        {
+          "id": "set-1",
+          "files": [
+            "assets/files/logo.d070a7e79d.svg",
+            "assets/mode.1d6a9bf145.js",
+            "assets/site.269216efb4.js",
+            "assets/site.b393b8b44e.css"
+          ],
+          "bytes": 121912,
+          "gzip9": 23361,
+          "sha256": "98b3c07f1a5084b7ff17c673ab56ea73d29a9dca42c787c07506e2e154146e5b",
+          "conditional_files": [],
+          "html_references": [
+            {
+              "to": "assets/site.b393b8b44e.css",
+              "reason": "html-link-stylesheet"
+            },
+            {
+              "to": "assets/mode.1d6a9bf145.js",
+              "reason": "html-script"
+            },
+            {
+              "to": "assets/site.269216efb4.js",
+              "reason": "html-script"
+            },
+            {
+              "to": "assets/files/logo.d070a7e79d.svg",
+              "reason": "html-eager-image"
+            }
+          ]
+        },
+        {
+          "id": "set-2",
+          "files": [
+            "assets/files/logo.d070a7e79d.svg",
+            "assets/islands/9dfeb0d39ce2bb1052fa5af5e385b8d3dfb3aeb6a9b79f8fe0818dac807452df/app.js",
+            "assets/islands/9dfeb0d39ce2bb1052fa5af5e385b8d3dfb3aeb6a9b79f8fe0818dac807452df/app_bg.wasm",
+            "assets/islands/9dfeb0d39ce2bb1052fa5af5e385b8d3dfb3aeb6a9b79f8fe0818dac807452df/dom-loader.js",
+            "assets/islands/9dfeb0d39ce2bb1052fa5af5e385b8d3dfb3aeb6a9b79f8fe0818dac807452df/islands.js",
+            "assets/islands/9dfeb0d39ce2bb1052fa5af5e385b8d3dfb3aeb6a9b79f8fe0818dac807452df/snippets/rustify-ui-4db2f10f10788f4c/web/dom-runtime.js",
+            "assets/mode.1d6a9bf145.js",
+            "assets/site.269216efb4.js",
+            "assets/site.b393b8b44e.css"
+          ],
+          "bytes": 11309359,
+          "gzip9": 1183977,
+          "sha256": "0b8c4a4e1432a0cb7f08cc459fb3ba00cc99b90cca8a94abae23155ae2b99832",
+          "conditional_files": [],
+          "html_references": [
+            {
+              "to": "assets/site.b393b8b44e.css",
+              "reason": "html-link-stylesheet"
+            },
+            {
+              "to": "assets/mode.1d6a9bf145.js",
+              "reason": "html-script"
+            },
+            {
+              "to": "assets/site.269216efb4.js",
+              "reason": "html-script"
+            },
+            {
+              "to": "assets/files/logo.d070a7e79d.svg",
+              "reason": "html-eager-image"
+            },
+            {
+              "to": "assets/islands/9dfeb0d39ce2bb1052fa5af5e385b8d3dfb3aeb6a9b79f8fe0818dac807452df/islands.js",
+              "reason": "html-script"
+            }
+          ]
+        }
+      ],
+      "groups": {
+        "home": {
+          "count": 1,
+          "bytes": {
+            "bytes": 221375,
+            "candidates": [
+              {
+                "file": "index.html",
+                "route": "/",
+                "category": null
+              }
+            ]
+          },
+          "gzip9": {
+            "gzip9": 35800,
+            "candidates": [
+              {
+                "file": "index.html",
+                "route": "/",
+                "category": null
+              }
+            ]
+          },
+          "selected": [
+            {
+              "file": "index.html",
+              "route": "/",
+              "lang": "en",
+              "category": null,
+              "islands": 0,
+              "dependency_set": "set-1",
+              "bytes": 221375,
+              "gzip9": 35800,
+              "closure_sha256": "c81f970121dfa50b559426636c6f866d712af90080feaa0c21468e0e4ee44289"
+            }
+          ]
+        },
+        "404": {
+          "count": 1,
+          "bytes": {
+            "bytes": 131706,
+            "candidates": [
+              {
+                "file": "404.html",
+                "route": "/404.html",
+                "category": null
+              }
+            ]
+          },
+          "gzip9": {
+            "gzip9": 25915,
+            "candidates": [
+              {
+                "file": "404.html",
+                "route": "/404.html",
+                "category": null
+              }
+            ]
+          },
+          "selected": [
+            {
+              "file": "404.html",
+              "route": "/404.html",
+              "lang": "en",
+              "category": null,
+              "islands": 0,
+              "dependency_set": "set-1",
+              "bytes": 131706,
+              "gzip9": 25915,
+              "closure_sha256": "375256a8ed3543a67404c60437c15150f275d8e7df74e6fe4f936c7dd0a984ea"
+            }
+          ]
+        },
+        "content_en": {
+          "count": 249,
+          "bytes": {
+            "bytes": 264054,
+            "candidates": [
+              {
+                "file": "en/g07/page-018/index.html",
+                "route": "/en/g07/page-018/",
+                "category": null
+              }
+            ]
+          },
+          "gzip9": {
+            "gzip9": 40584,
+            "candidates": [
+              {
+                "file": "en/g07/page-017/index.html",
+                "route": "/en/g07/page-017/",
+                "category": null
+              }
+            ]
+          },
+          "selected": [
+            {
+              "file": "en/g07/page-017/index.html",
+              "route": "/en/g07/page-017/",
+              "lang": "en",
+              "category": null,
+              "islands": 0,
+              "dependency_set": "set-1",
+              "bytes": 212954,
+              "gzip9": 40584,
+              "closure_sha256": "5c1b89da94b2cb7fcf3db190a848ee8a436df2c9be28044b4fc03e42f87e1528"
+            },
+            {
+              "file": "en/g07/page-018/index.html",
+              "route": "/en/g07/page-018/",
+              "lang": "en",
+              "category": null,
+              "islands": 0,
+              "dependency_set": "set-1",
+              "bytes": 264054,
+              "gzip9": 39920,
+              "closure_sha256": "c3007120d5d9477173ffa97d3e9821d58c73e4329ff5fbaaf3acd57b21a9922b"
+            }
+          ]
+        },
+        "content_zh": {
+          "count": 250,
+          "bytes": {
+            "bytes": 264602,
+            "candidates": [
+              {
+                "file": "zh/g04/page-024/index.html",
+                "route": "/zh/g04/page-024/",
+                "category": null
+              }
+            ]
+          },
+          "gzip9": {
+            "gzip9": 40501,
+            "candidates": [
+              {
+                "file": "zh/g10/page-005/index.html",
+                "route": "/zh/g10/page-005/",
+                "category": null
+              }
+            ]
+          },
+          "selected": [
+            {
+              "file": "zh/g04/page-024/index.html",
+              "route": "/zh/g04/page-024/",
+              "lang": "zh",
+              "category": null,
+              "islands": 0,
+              "dependency_set": "set-1",
+              "bytes": 264602,
+              "gzip9": 40117,
+              "closure_sha256": "fb54cc801834cdbe5f2296d26f32a0258084cd5df4bc5741737c239f0d26e0e8"
+            },
+            {
+              "file": "zh/g10/page-005/index.html",
+              "route": "/zh/g10/page-005/",
+              "lang": "zh",
+              "category": null,
+              "islands": 0,
+              "dependency_set": "set-1",
+              "bytes": 213477,
+              "gzip9": 40501,
+              "closure_sha256": "f845678f881648a37831f6df20e98c9afc692a6131d4e8f19beaa5fc11999830"
+            }
+          ]
+        },
+        "islands": {
+          "count": 12,
+          "bytes": {
+            "bytes": 11525271,
+            "candidates": [
+              {
+                "file": "p2/quickstart/index.html",
+                "route": "/p2/quickstart/",
+                "category": null
+              }
+            ]
+          },
+          "gzip9": {
+            "gzip9": 1207539,
+            "candidates": [
+              {
+                "file": "p2/vellum/index.html",
+                "route": "/p2/vellum/",
+                "category": null
+              }
+            ]
+          },
+          "selected": [
+            {
+              "file": "p2/quickstart/index.html",
+              "route": "/p2/quickstart/",
+              "lang": "en",
+              "category": null,
+              "islands": 4,
+              "dependency_set": "set-2",
+              "bytes": 11525271,
+              "gzip9": 1206772,
+              "closure_sha256": "c9e30a8a8cbdd652e6a096f2cc9292a94e9a46135f1b0f073ef50805a79d3186"
+            },
+            {
+              "file": "p2/vellum/index.html",
+              "route": "/p2/vellum/",
+              "lang": "en",
+              "category": null,
+              "islands": 4,
+              "dependency_set": "set-2",
+              "bytes": 11474198,
+              "gzip9": 1207539,
+              "closure_sha256": "31edced79dd3a24b98e8d3f068c99fe32b8767c01bec12d1f9d0f6c7971a3e65"
+            }
+          ]
+        }
+      }
+    },
+    "B_P1": {
+      "dist": "/Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-ssg/p4/m7-a31509aa/reader-b-p1/dist",
+      "base": "/",
+      "build_id": "a6cc820cf35ac7de",
+      "cli_version": "0.1.28",
+      "verification": {
+        "files": 515,
+        "every_SHA_and_bytes_match": true,
+        "total_declared_bytes": 47772872
+      },
+      "first_load_dependency_sets": [
+        {
+          "id": "set-1",
+          "files": [
+            "assets/files/logo.d070a7e79d.svg",
+            "assets/mode.1d6a9bf145.js",
+            "assets/site.269216efb4.js",
+            "assets/site.486011b1cd.css"
+          ],
+          "bytes": 72927,
+          "gzip9": 17379,
+          "sha256": "f3985d810095f0aa925b60b248959ee169c2f2fd5cc1957771e80ec3cf108863",
+          "conditional_files": [],
+          "html_references": [
+            {
+              "to": "assets/site.486011b1cd.css",
+              "reason": "html-link-stylesheet"
+            },
+            {
+              "to": "assets/mode.1d6a9bf145.js",
+              "reason": "html-script"
+            },
+            {
+              "to": "assets/site.269216efb4.js",
+              "reason": "html-script"
+            },
+            {
+              "to": "assets/files/logo.d070a7e79d.svg",
+              "reason": "html-eager-image"
+            }
+          ]
+        }
+      ],
+      "groups": {
+        "home": {
+          "count": 1,
+          "bytes": {
+            "bytes": 172390,
+            "candidates": [
+              {
+                "file": "index.html",
+                "route": "/",
+                "category": null
+              }
+            ]
+          },
+          "gzip9": {
+            "gzip9": 29818,
+            "candidates": [
+              {
+                "file": "index.html",
+                "route": "/",
+                "category": null
+              }
+            ]
+          },
+          "selected": [
+            {
+              "file": "index.html",
+              "route": "/",
+              "lang": "en",
+              "category": null,
+              "islands": 0,
+              "dependency_set": "set-1",
+              "bytes": 172390,
+              "gzip9": 29818,
+              "closure_sha256": "1a91621b60171ae6d4bb876df290b327433ae6cc0fcec4b5d881fee3453e9f4e"
+            }
+          ]
+        },
+        "404": {
+          "count": 1,
+          "bytes": {
+            "bytes": 80577,
+            "candidates": [
+              {
+                "file": "404.html",
+                "route": "/404.html",
+                "category": null
+              }
+            ]
+          },
+          "gzip9": {
+            "gzip9": 19716,
+            "candidates": [
+              {
+                "file": "404.html",
+                "route": "/404.html",
+                "category": null
+              }
+            ]
+          },
+          "selected": [
+            {
+              "file": "404.html",
+              "route": "/404.html",
+              "lang": "en",
+              "category": null,
+              "islands": 0,
+              "dependency_set": "set-1",
+              "bytes": 80577,
+              "gzip9": 19716,
+              "closure_sha256": "8358d39a7255d1bd3f21e4c905a2b3f4f6da76badabecb862811e1487be1e39b"
+            }
+          ]
+        },
+        "content_en": {
+          "count": 249,
+          "bytes": {
+            "bytes": 212925,
+            "candidates": [
+              {
+                "file": "en/g07/page-018/index.html",
+                "route": "/en/g07/page-018/",
+                "category": null
+              }
+            ]
+          },
+          "gzip9": {
+            "gzip9": 34411,
+            "candidates": [
+              {
+                "file": "en/g07/page-017/index.html",
+                "route": "/en/g07/page-017/",
+                "category": null
+              }
+            ]
+          },
+          "selected": [
+            {
+              "file": "en/g07/page-017/index.html",
+              "route": "/en/g07/page-017/",
+              "lang": "en",
+              "category": null,
+              "islands": 0,
+              "dependency_set": "set-1",
+              "bytes": 161825,
+              "gzip9": 34411,
+              "closure_sha256": "934a6e4e90fe7473e8097c24a605c6a46ad10928e0bac5d6a79594f1398809f4"
+            },
+            {
+              "file": "en/g07/page-018/index.html",
+              "route": "/en/g07/page-018/",
+              "lang": "en",
+              "category": null,
+              "islands": 0,
+              "dependency_set": "set-1",
+              "bytes": 212925,
+              "gzip9": 33754,
+              "closure_sha256": "c7973773581a0b19b6d6c0acb7d8add593ab87bbb83a208d279d5b7be25d5d6d"
+            }
+          ]
+        },
+        "content_zh": {
+          "count": 250,
+          "bytes": {
+            "bytes": 213473,
+            "candidates": [
+              {
+                "file": "zh/g04/page-024/index.html",
+                "route": "/zh/g04/page-024/",
+                "category": null
+              }
+            ]
+          },
+          "gzip9": {
+            "gzip9": 34311,
+            "candidates": [
+              {
+                "file": "zh/g10/page-005/index.html",
+                "route": "/zh/g10/page-005/",
+                "category": null
+              }
+            ]
+          },
+          "selected": [
+            {
+              "file": "zh/g04/page-024/index.html",
+              "route": "/zh/g04/page-024/",
+              "lang": "zh",
+              "category": null,
+              "islands": 0,
+              "dependency_set": "set-1",
+              "bytes": 213473,
+              "gzip9": 33935,
+              "closure_sha256": "9acf9cbb75c74720d4d061381bd7cd7225f25f53140e7f5b7e5c5cc65e9c2a58"
+            },
+            {
+              "file": "zh/g10/page-005/index.html",
+              "route": "/zh/g10/page-005/",
+              "lang": "zh",
+              "category": null,
+              "islands": 0,
+              "dependency_set": "set-1",
+              "bytes": 162348,
+              "gzip9": 34311,
+              "closure_sha256": "b72772db9daa2d7394d1a149922a8da1b6cec148e231d16c80f94625e65e409d"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

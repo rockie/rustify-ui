@@ -1,0 +1,185 @@
+Window: "Button | Rustify UI", App: Safari浏览器.
+0 标准窗口 Button | Rustify UI, ID: SafariWindow?IsSecure=false&UUID=8B94E202-E355-455B-98DF-40C71253D736, Secondary Actions: Raise
+	1 分离组
+		2 分离器 (disabled, settable, float) -1
+		3 标签页组
+			4 滚动区
+				5 HTML内容 inspector-resource:///Main.html
+					6 按钮 关闭
+					7 按钮 在窗口左侧显示
+					8 按钮 在窗口右侧显示
+					9 按钮 分离到单独的窗口
+					10 按钮 开始选择元素(⇧⌘C)
+					11 按钮 设备设置
+					12 标签页组 (selectable)
+						13 标签 (selectable) 元素
+						14 标签 (selected) 控制台
+						15 标签 (selectable) 来源
+						16 标签 (selectable) 网络
+						17 标签 (selectable) 时间线
+						18 标签 (selectable) 显示隐藏的标签页…
+						19 标签 (selectable) 搜索(⇧⌘F)
+						20 标签 (selectable) 设置(⌘,)
+					21 container 控制台
+						22 搜索文本栏 (settable)  
+						23 按钮 (disabled) 查找上一个(⇧⌘G)
+						24 按钮 (disabled) 查找下一个(⌘G)
+						25 文本 全部
+						26 文本 评估
+						27 文本 错误
+						28 文本 警告
+						29 文本 打印
+						30 按钮 其他过滤选项…
+						31 复选框 (settable, integer) 模拟用户手势, Help: 如同在用户手势中一样运行控制台命令, Value: 0
+						32 按钮 运行控制台片段…
+						33 按钮 收集垃圾
+						34 按钮 清空日志（⌘K或⌃L）
+						35 container
+							36 文本 控制台清除于：17:28:35
+							37 图像
+							38 文本 JSON.stringify({url:location.href,state:window.__rustify_docs_islands.state(),failure:window.__rustify_docs_islands.failure(),visibility:document.visibilityState,viewport:[innerWidth,innerHeight],dpr:devicePixelRatio})
+							39 图像
+							40 文本 "{\"url\":\"
+							41 link http://127.0.0.1:4199/rustify-ui/zh/components/button/\, Value: 127.0.0.1:4199/rustify-ui/zh/components/button//
+							42 文本 ",\"state\":\"ready\",\"failure\":null,\"visibility\":\"visible\",\"viewport\":[640,210],\"dpr\":2}" = $1
+					43 文本输入区 (settable) 控制台提示, Value: [文本输入区: 控制台提示], Secondary Actions: 显示写作工具
+					44 container
+			45 滚动区
+				46 HTML内容 Description: Button | Rustify UI, URL: 127.0.0.1:4199/rustify-ui/zh/components/button/
+					47 link 跳到正文, Value: 127.0.0.1:4199/rustify-ui/zh/components/button/#content
+					48 container
+						49 link Rustify UI, Value: 127.0.0.1:4199/rustify-ui/zh/
+						50 弹出式按钮 搜索
+						51 摘要 中文, Value: off
+							52 文本 中文
+						53 container 主题
+							54 开关按钮 跟随系统, Value: on
+							55 开关按钮 浅色, Value: off
+							56 开关按钮 深色, Value: off
+					57 container 站点链接
+						58 内容列表
+							59 link GitHub 源码, Value: github.com/rockie/rustify-ui
+					60 摘要 菜单, Value: off
+						61 文本 菜单
+					62 摘要 本页目录, Value: off
+						63 文本 本页目录
+					64 container
+						65 标题 Button, Value: 1
+							66 文本 Button
+						67 文本 此页面尚未翻译。
+						68 container Example
+							69 文本 label as children, variant, size, disabled; a disabled button leaves the tab order and calls nothing
+							70 标题 Example, Value: 2
+								71 文本 Example
+							72 container 交互示例
+								73 container
+									74 按钮 Increment
+									75 按钮 Reset
+									76 按钮 (disabled) Unavailable
+									77 container
+										78 文本 Count: 0
+										79 container 0
+							80 文本 交互示例
+							81 文本 site/src/demos/basics.rs
+							82 标签页组 (selectable)
+								83 标签 (selectable) 函数
+								84 标签 (selected) 完整文件
+							85 按钮 复制
+							86 container 完整文件
+								87 container
+									88 text use leptos::prelude::*; use rustify_components::{id, Button, ButtonVariant, Glyph, Icon, Label, Link, Spinner, TextField}; /// Buttons request changes to state owned by the application. pub fn button_demo() -> impl IntoView { let count = RwSignal::new(0_u32); view! { <div class="space-y-4"> <div class="flex flex-wrap items-center gap-3"> <Button on_click=move || count.update(|count| *count += 1)> "Increment" </Button> <Button variant=ButtonVariant::Outline on_click=move || count.set(0)> "Reset" </Button> <Button disabled=true on_click=move || count.update(|count| *count += 100)> "Unavailable" </Button> </div> <p class="text-sm">"Count: "<output data-demo-state="">{move || count.get()}</output></p> </div> } } /// A label points to a field through a deterministic, scope-specific ID. pub fn label_demo() -> impl IntoView { let field_id = id::next("label-demo-field"); let name = RwSignal::new("Rustify UI".to_string()); view! { <div class="space-y-4"> <div class="max-w-sm space-y-2"> <Label control=field_id.clone()>"Project name"</Label> <TextField id=field_id value=name on_change=move |value| name.set(value) /> </div> <p class="text-sm break-words">"Current name: "<output data-demo-state="">{move || name.get()}</output></p> </div> } } /// A disabled link keeps its label and stops offering a destination. pub fn link_demo() -> impl IntoView { let destination_id = id::next("link-demo-destination"); let disabled = RwSignal::new(false); // This anchor targets the document, so `_self` bypasses the island's local router. view! { <div class="space-y-4"> <div class="flex flex-wrap items-center gap-3"> <Link href=format!("#{destination_id}") disabled=disabled attr:target="_self">"Jump to the destination"</Link> <Button variant=ButtonVariant::Outline on_click=move || disabled.update(|disabled| *disabled = !*disabled)> "Toggle availability" </Button> </div> <p id=destination_id tabindex="-1">"The link points to this paragraph."</p> <p class="text-sm">"Link: "<output data-demo-state="">{move || if disabled.get() { "Unavailable" } else { "Available" }}</output></p> </div> } } /// Named icons are images; decorative icons can omit their label. pub fn icon_demo() -> impl IntoView { let checked = RwSignal::new(true); view! { <div class="space-y-4"> <div class="flex flex-wrap items-center gap-3"> <Show when=move || checked.get() fallback=|| view! { <Icon glyph=Glyph::Close label="Not selected" /> }> <Icon glyph=Glyph::Check label="Selected" /> </Show> <Button variant=ButtonVariant::Outline on_click=move || checked.update(|checked| *checked = !*checked)> "Change icon" </Button> </div> <p class="text-sm">"Icon: "<output data-demo-state="">{move || if checked.get() { "Check" } else { "Close" }}</output></p> </div> } } /// A loading indicator uses the scope's motion preference. pub fn loading_demo() -> impl IntoView { let loading = RwSignal::new(true); view! { <div class="space-y-4"> <div class="flex h-8 items-center gap-3"> <Show when=move || loading.get() fallback=|| ()> <Spinner label="Loading example" /> </Show> <output data-demo-state="">{move || if loading.get() { "Loading" } else { "Ready" }}</output> </div> <Button variant=ButtonVariant::Outline on_click=move || loading.update(|loading| *loading = !*loading)> "Toggle loading" </Button> </div> } }
+							89 标题 Capabilities, Value: 2
+								90 文本 Capabilities
+							91 container Component capabilities
+								92 表格
+									93 row (selectable) Capability
+Support
+Details
+									94 row (selectable)
+										95 单元格 (selectable) properties
+										96 单元格 (selectable) yes
+										97 单元格 (selectable) label as children, variant, size, disabled; a disabled button leaves the tab order and calls nothing
+									98 row (selectable)
+										99 单元格 (selectable) actions
+										100 单元格 (selectable) yes
+										101 单元格 (selectable) click; the DOM and the region button call the same application action
+									102 row (selectable)
+										103 单元格 (selectable) theme
+										104 单元格 (selectable) yes
+										105 单元格 (selectable) seven variants and four sizes, all drawn from the scope's tokens
+									106 row (selectable)
+										107 单元格 (selectable) input
+										108 单元格 (selectable) yes
+										109 单元格 (selectable) pointer and Enter/Space, from either half
+									110 row (selectable)
+										111 单元格 (selectable) accessibility
+										112 单元格 (selectable) yes
+										113 单元格 (selectable) a native button; the region's has a DOM control with the same name and action
+									114 row (selectable)
+										115 单元格 (selectable) environment
+										116 单元格 (selectable) yes
+										117 单元格 (selectable) macOS Chrome, strict CSP, WebGL2 region; no inline script or style
+							118 标题 GPU integration, Value: 2
+								119 文本 GPU integration
+							120 container
+								121 文本 GPU drawing support: yes. This documentation example uses the DOM component. See the 
+								122 link component catalogue example, Value: github.com/rockie/rustify-ui/tree/main/examples/component-catalog
+								123 文本  for the available DOM and GPU presentations.
+						124 link 编辑此页, Value: github.com/rockie/rustify-ui/edit/main/site/src/lib.rs
+						125 container 上一页 / 下一页
+							126 link 上一页 Vellum example and framework capabilities, Value: 127.0.0.1:4199/rustify-ui/zh/vellum/
+							127 link 下一页 Label, Value: 127.0.0.1:4199/rustify-ui/zh/components/label/
+					128 container 页脚导航
+						129 link 返回首页, Value: 127.0.0.1:4199/rustify-ui/zh/
+				130 滚动条 (settable, float) 0.1733333
+	131 工具栏
+		132 container Secondary Actions: 移到上一项, 移到下一项, 从工具栏移除
+			133 按钮 Description: 显示边栏, ID: SidebarButton
+			134 菜单按钮 Description: 标签页组选择器, ID: TabGroupPickerButton?TabGroup=
+		135 container BackForwardSegmentedControl
+			136 按钮 Description: 返回, Help: 显示上一页, ID: BackButton
+			137 按钮 (disabled) Description: 前进, Help: 显示下一页, ID: ForwardButton
+		138 container Secondary Actions: 移到上一项, 移到下一项, 从工具栏移除
+			139 按钮 页面菜单, ID: AssistantButton
+			140 按钮 将页面添加到阅读列表, ID: OneStepBookmarkingButton
+			141 文本栏 (settable) Description: 智能搜索栏, Value: 127.0.0.1:4199/rustify-ui/zh/components/button/, ID: WEB_BROWSER_ADDRESS_AND_SEARCH_FIELD
+			142 按钮 翻译可用, ID: TranslationButton
+			143 按钮 重新加载此页面, ID: ReloadButton
+		144 按钮 Description: 共享, ID: ShareButton, Secondary Actions: 移到上一项, 移到下一项, 从工具栏移除
+		145 按钮 Description: 新建标签页, ID: NewTabButton, Secondary Actions: 移到上一项, 移到下一项, 从工具栏移除
+		146 按钮 Description: 标签页概览, ID: TabOverviewButton, Secondary Actions: 移到上一项, 从工具栏移除
+	147 标签页组 Description: 标签页栏，9个标签页, ID: TabBar?isSeparate=false
+		148 标签 Home | Home semantics, Value: off, Secondary Actions: 关闭标签页, ID: TabBarTab?isNarrow=true&isExpanded=false&tabCount=&isPinned=false&isCluster=false&clusterID=&isActive=false
+			149 图像 FaviconImageView
+		150 标签 Rustify UI, Value: off, Secondary Actions: 关闭标签页, ID: TabBarTab?isNarrow=true&isExpanded=false&tabCount=&isPinned=false&isCluster=false&clusterID=&isActive=false
+			151 图像 FaviconImageView
+		152 标签 Architecture | Rustify UI, Value: off, Secondary Actions: 关闭标签页, ID: TabBarTab?isNarrow=true&isExpanded=false&tabCount=&isPinned=false&isCluster=false&clusterID=&isActive=false
+			153 图像 FaviconImageView
+		154 标签 Quick start | Rustify UI, Value: off, Secondary Actions: 关闭标签页, ID: TabBarTab?isNarrow=true&isExpanded=false&tabCount=&isPinned=false&isCluster=false&clusterID=&isActive=false
+			155 图像 FaviconImageView
+		156 标签 快速开始 | Rustify UI, Value: off, Secondary Actions: 关闭标签页, ID: TabBarTab?isNarrow=true&isExpanded=false&tabCount=&isPinned=false&isCluster=false&clusterID=&isActive=false
+			157 图像 FaviconImageView
+		158 标签 Native boundary checks, Value: off, Secondary Actions: 关闭标签页, ID: TabBarTab?isNarrow=true&isExpanded=false&tabCount=&isPinned=false&isCluster=false&clusterID=&isActive=false
+			159 图像 FaviconImageView
+		160 标签 Native boundary checks, Value: off, Secondary Actions: 关闭标签页, ID: TabBarTab?isNarrow=true&isExpanded=false&tabCount=&isPinned=false&isCluster=false&clusterID=&isActive=false
+			161 图像 FaviconImageView
+		162 标签 Button | Rustify UI, Help: 若要与此按钮中的项目交互，请按下Control-Option-Shift-下箭头键。, Value: on, Secondary Actions: 关闭标签页, ID: TabBarTab?isNarrow=false&isExpanded=false&tabCount=&isPinned=false&isCluster=false&clusterID=&isActive=true
+			163 图像 FaviconImageView
+			164 文本 Value: Button | Rustify UI, ID: UnifiedTabBarButton._titleTextField
+		165 标签 Button | Rustify UI, Value: off, Secondary Actions: 关闭标签页, ID: TabBarTab?isNarrow=true&isExpanded=false&tabCount=&isPinned=false&isCluster=false&clusterID=&isActive=false
+			166 图像 FaviconImageView
+	167 关闭按钮
+	168 全屏幕按钮 Help: 此按钮也可以执行缩放窗口的操作, Secondary Actions: 缩放窗口
+	169 最小化按钮
+170 menu bar
+	171 Safari浏览器
+	172 文件
+	173 编辑
+	174 显示, ID: SafariViewMenu
+	175 历史记录
+	176 书签, ID: SafariBookmarksMenu
+	177 开发
+	178 窗口, ID: SafariWindowMenu
+	179 帮助, ID: SafariHelpMenu
+
+The focused UI element is 43 文本输入区 (settable) 控制台提示, Value: [文本输入区: 控制台提示], Secondary Actions: 显示写作工具

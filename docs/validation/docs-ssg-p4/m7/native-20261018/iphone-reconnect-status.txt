@@ -1,0 +1,1 @@
+2026-10-18: native iPhone Mirroring reconnect showed connection interrupted. The UI requests that the phone be nearby, powered on, recently unlocked, with Bluetooth and Wi-Fi enabled. Retry remains visible. The UI does not establish which prerequisite is missing. User is away and requested skipping blockers; no new product-page validation.
