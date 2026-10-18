@@ -323,7 +323,7 @@ Highlighting is emitted as `hl-` classes, and each colour is held at 4.5:1 or be
 ## Layout
 
 - **Frame:** a centred frame of at most 76rem. Gutters are 1rem below 48rem and 1.5rem from 48rem, with a 2.5rem column gap.
-- **Header:** sticky, at least 3.5rem tall (`--rd-header`), with a bottom hairline. The brand sits left; Search, the language menu when configured, and the mode switch sit right. Let the bar grow when its controls wrap at narrow widths.
+- **Header:** sticky, at least 3.5rem tall, with a bottom hairline. The brand sits left; Search, the language menu when configured, and the mode switch sit right. Let the bar grow when its controls wrap at narrow widths. With script, `--rd-header` follows its actual height through CSSOM and a size observer; without script it retains the 3.5rem fallback.
 - **Under 48rem (768px):** one column, ordered sidebar → TOC → article. The sidebar and TOC are native `<details>` panels separated by hairlines, with a drawn chevron that rotates when open.
 - **48rem–79.99rem:** a 15rem sticky sidebar column plus the article. The TOC stays a `<details>` panel above the article, constrained to the measure.
 - **From 80rem (1280px):** three columns: 15rem sidebar, flexible article, 14rem TOC. The sidebar and TOC columns are sticky under the header, scroll on their own and have 3rem block padding.

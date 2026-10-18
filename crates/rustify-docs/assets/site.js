@@ -101,6 +101,21 @@
     modeSwitch.hidden = false;
   }
 
+  // Wrapped controls change the space section links must leave above them.
+  // A CSSOM sheet updates that space without an inline style under strict CSP.
+  var headerBar = document.querySelector(".rd-header-bar");
+  if (headerBar) {
+    var header = headerBar.parentElement;
+    var headerSheet = new CSSStyleSheet();
+    headerSheet.insertRule(":root {}");
+    document.adoptedStyleSheets = document.adoptedStyleSheets.concat(headerSheet);
+    function sizeHeader() {
+      headerSheet.cssRules[0].style.setProperty("--rd-header", header.getBoundingClientRect().height + "px");
+    }
+    sizeHeader();
+    new ResizeObserver(sizeHeader).observe(header);
+  }
+
   // Copying a code block's raw text, never its rendered lines. Where the
   // browser refuses (an insecure origin, a denied permission), the button
   // says so and the code is selected for copying by hand.

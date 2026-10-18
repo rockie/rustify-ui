@@ -364,6 +364,27 @@ for (const layout of [{ name: "375px", width: 375, scaleText: false }, { name: "
     await healthy(page, audit);
 });
 
+test("search section targets stay below a wrapped reading header", async ({ page, audit }) => {
+    await page.emulateMedia({ reducedMotion: "reduce" });
+    for (const [width, lang] of [[320, "en"], [320, "zh"], [375, "zh"], [1280, "zh"]] as const) {
+        await page.setViewportSize({ width, height: 800 });
+        await open(page, `${lang === "zh" ? "zh/" : ""}quickstart/`, lang);
+        await page.locator("[data-rd-search-open]").click();
+        await page.getByRole("combobox").fill("ThemeScope");
+        await page.getByRole("option").filter({ hasText: "Architecture" }).click();
+        await expect(page).toHaveURL(/\/architecture\/#versioned-themes$/);
+        await atRest(page);
+        const bounds = await page.locator("#versioned-themes").evaluate(target => ({
+            target: target.getBoundingClientRect().top,
+            header: document.querySelector(".rd-header-bar")!.parentElement!.getBoundingClientRect().bottom,
+        }));
+        await test.info().attach(`search-target-${width}-${lang}.json`, { body: JSON.stringify(bounds), contentType: "application/json" });
+        expect(bounds.target, `visible section target at ${width}px in ${lang}`).toBeGreaterThanOrEqual(bounds.header);
+        await fits(page);
+    }
+    await healthy(page, audit);
+});
+
 test("deep not-found retains same-base ordinary navigation", async ({ page, audit }) => {
     const missing = url("unavailable/deeper/page/"); audit.expected404.add(missing); const response = await page.goto(missing); expect(response?.status()).toBe(404);
     await expect(page.locator("h1")).toHaveText("Page not found"); await expect(page.locator("html")).toHaveAttribute("lang", "en"); await expect(island(page)).toHaveCount(0); expect(wasm(audit)).toEqual([]);
