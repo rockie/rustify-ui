@@ -1,0 +1,74 @@
+Window: "网页检查器 — 127.0.0.1 — rustify-ui", App: Safari浏览器.
+0 标准窗口 网页检查器 — 127.0.0.1 — rustify-ui, Secondary Actions: Raise
+	1 滚动区
+		2 HTML内容 inspector-resource:///Main.html
+			3 按钮 在窗口左侧显示
+			4 按钮 在窗口底部显示
+			5 按钮 在窗口右侧显示
+			6 按钮 开始选择元素(⇧⌘C)
+			7 按钮 设备设置
+			8 标签页组 (selectable)
+				9 标签 (selectable) 元素
+				10 标签 (selected) 控制台
+				11 标签 (selectable) 来源
+				12 标签 (selectable) 网络
+				13 标签 (selectable) 时间线
+				14 标签 (selectable) 储存空间
+				15 标签 (selectable) 图形
+				16 标签 (selectable) 层
+				17 标签 (selectable) 审核
+				18 标签 (selectable) 搜索(⇧⌘F)
+				19 标签 (selectable) 设置(⌘,)
+			20 container 控制台
+				21 搜索文本栏 (settable)  
+				22 按钮 (disabled) 查找上一个(⇧⌘G)
+				23 按钮 (disabled) 查找下一个(⌘G)
+				24 文本 全部
+				25 文本 评估
+				26 文本 错误
+				27 文本 警告
+				28 文本 打印
+				29 按钮 其他过滤选项…
+				30 复选框 (settable, integer) 模拟用户手势, Help: 如同在用户手势中一样运行控制台命令, Value: 0
+				31 按钮 运行控制台片段…
+				32 按钮 收集垃圾
+				33 按钮 清空日志（⌘K或⌃L）
+				34 文本 控制台打开于：22:47:34
+			35 文本输入区 (settable) 控制台提示, Value: [文本输入区: 控制台提示], Secondary Actions: 显示写作工具
+			36 container
+				37 文本 await new Promise((resolve,reject)=>{const w=new Worker(document.querySelector("[data-rd-search]").dataset.rdSearchWorker,{type:"module"});
+				38 文本 const qs=["ThemeScope","theme","heme","theme_s","Scope","切换","换"];
+				39 文本 const rows=[];
+				40 文本 let next=0;
+				41 文本 const timer=setTimeout(()=>{w.terminate();
+				42 文本 reject(Error("native boundary timeout"));
+				43 文本 },10000);
+				44 文本 const finish=(value,error)=>{clearTimeout(timer);
+				45 文本 w.terminate();
+				46 文本 error?reject(error):resolve(JSON.stringify(value));
+				47 文本 };
+				48 文本 w.onerror=()=>finish(null,Error("Worker error"));
+				49 文本 w.onmessage=({data})=>{if(data.type==="error")finish(null,Error(data.code));
+				50 文本 else if(data.type==="ready"||data.type==="results"){if(data.type==="results")rows.push({query:data.query,routes:data.groups.map(g=>g.route).sort(),emoji:data.groups.find(g=>g.route==="/guide/case-7/")});
+				51 文本 if(next===qs.length)finish({worker:document.querySelector("[data-rd-search]").dataset.rdSearchWorker,url:location.href,ua:navigator.userAgent,viewport:[innerWidth,innerHeight],dpr:devicePixelRatio,rows});
+				52 文本 else{next++;
+				53 文本 w.postMessage({type:"query",instance:7,id:next,query:qs[next-1],offset:0});
+				54 文本 }}};
+				55 文本 w.postMessage({type:"init",instance:7,index_url:new URL("assets/search.test.json",document.baseURI).href});
+				56 文本 })
+	57 关闭按钮
+	58 全屏幕按钮 Help: 此按钮也可以执行缩放窗口的操作, Secondary Actions: 缩放窗口
+	59 最小化按钮
+	60 文本 网页检查器 — 127.0.0.1 — rustify-ui
+61 menu bar
+	62 Safari浏览器
+	63 文件
+	64 编辑
+	65 显示, ID: SafariViewMenu
+	66 历史记录
+	67 书签, ID: SafariBookmarksMenu
+	68 开发
+	69 窗口, ID: SafariWindowMenu
+	70 帮助, ID: SafariHelpMenu
+
+The focused UI element is 35 文本输入区 (settable) 控制台提示, Value: [文本输入区: 控制台提示], Secondary Actions: 显示写作工具

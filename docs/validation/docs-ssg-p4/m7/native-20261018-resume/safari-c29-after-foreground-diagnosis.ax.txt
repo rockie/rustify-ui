@@ -1,0 +1,67 @@
+Window: "网页检查器 — 127.0.0.1 — button", App: Safari浏览器.
+0 标准窗口 网页检查器 — 127.0.0.1 — button, Secondary Actions: Raise
+	1 滚动区
+		2 HTML内容 inspector-resource:///Main.html
+			3 按钮 在窗口左侧显示
+			4 按钮 在窗口底部显示
+			5 按钮 在窗口右侧显示
+			6 按钮 开始选择元素(⇧⌘C)
+			7 按钮 设备设置
+			8 按钮 点按以在控制台中显示1个错误
+			9 标签页组 (selectable)
+				10 标签 (selectable) 元素
+				11 标签 (selected) 控制台
+				12 标签 (selectable) 来源
+				13 标签 (selectable) 网络
+				14 标签 (selectable) 时间线
+				15 标签 (selectable) 储存空间
+				16 标签 (selectable) 图形
+				17 标签 (selectable) 层
+				18 标签 (selectable) 审核
+				19 标签 (selectable) 搜索(⇧⌘F)
+				20 标签 (selectable) 设置(⌘,)
+			21 container 控制台
+				22 搜索文本栏 (settable)  
+				23 按钮 (disabled) 查找上一个(⇧⌘G)
+				24 按钮 (disabled) 查找下一个(⌘G)
+				25 文本 全部
+				26 文本 评估
+				27 文本 错误
+				28 文本 警告
+				29 文本 打印
+				30 按钮 其他过滤选项…
+				31 复选框 (settable, integer) 模拟用户手势, Help: 如同在用户手势中一样运行控制台命令, Value: 0
+				32 按钮 运行控制台片段…
+				33 按钮 收集垃圾
+				34 按钮 清空日志（⌘K或⌃L）
+				35 container
+					36 文本 控制台打开于：23:34:10
+					37 图像
+					38 container
+						39 图像
+						40 text fail  — 
+						41 link mode.1d6a9bf145.js:124, Help: http://127.0.0.1:4199/rustify-ui/assets/mode.1d6a9bf145.js:124:19, Value: 127.0.0.1:4199/rustify-ui/assets/mode.1d6a9bf145.js
+					42 文本 Interactive examples failed – 
+					43 文本 Object
+					44 图像
+					45 文本 JSON.stringify({visibility:document.visibilityState,hasFocus:document.hasFocus(),state:document.querySelector("[data-rustify-island]").getAttribute("data-rd-island-state")})
+					46 图像
+					47 文本 "{\"visibility\":\"hidden\",\"hasFocus\":false,\"state\":\"failed\"}" = $1
+			48 文本输入区 (settable) 控制台提示, Value: [文本输入区: 控制台提示], Secondary Actions: 显示写作工具
+			49 container
+	50 关闭按钮
+	51 全屏幕按钮 Help: 此按钮也可以执行缩放窗口的操作, Secondary Actions: 缩放窗口
+	52 最小化按钮
+	53 文本 网页检查器 — 127.0.0.1 — button
+54 menu bar
+	55 Safari浏览器
+	56 文件
+	57 编辑
+	58 显示, ID: SafariViewMenu
+	59 历史记录
+	60 书签, ID: SafariBookmarksMenu
+	61 开发
+	62 窗口, ID: SafariWindowMenu
+	63 帮助, ID: SafariHelpMenu
+
+The focused UI element is 48 文本输入区 (settable) 控制台提示, Value: [文本输入区: 控制台提示], Secondary Actions: 显示写作工具

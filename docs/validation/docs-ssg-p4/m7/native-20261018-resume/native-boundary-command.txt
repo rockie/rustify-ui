@@ -1,0 +1,20 @@
+await new Promise((resolve,reject)=>{const w=new Worker(document.querySelector("[data-rd-search]").dataset.rdSearchWorker,{type:"module"});
+const qs=["ThemeScope","theme","heme","theme_s","Scope","切换","换"];
+const rows=[];
+let next=0;
+const timer=setTimeout(()=>{w.terminate();
+reject(Error("native boundary timeout"));
+},10000);
+const finish=(value,error)=>{clearTimeout(timer);
+w.terminate();
+error?reject(error):resolve(JSON.stringify(value));
+};
+w.onerror=()=>finish(null,Error("Worker error"));
+w.onmessage=({data})=>{if(data.type==="error")finish(null,Error(data.code));
+else if(data.type==="ready"||data.type==="results"){if(data.type==="results")rows.push({query:data.query,routes:data.groups.map(g=>g.route).sort(),emoji:data.groups.find(g=>g.route==="/guide/case-7/")});
+if(next===qs.length)finish({url:location.href,ua:navigator.userAgent,viewport:[innerWidth,innerHeight],dpr:devicePixelRatio,rows});
+else{next++;
+w.postMessage({type:"query",instance:7,id:next,query:qs[next-1],offset:0});
+}}};
+w.postMessage({type:"init",instance:7,index_url:new URL("assets/search.test.json",document.baseURI).href});
+})

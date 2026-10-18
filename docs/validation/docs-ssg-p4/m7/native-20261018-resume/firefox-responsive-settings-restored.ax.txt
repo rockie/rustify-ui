@@ -1,0 +1,196 @@
+Window: "http://127.0.0.1:4199/rustify-ui/zh/architecture/#versioned-themes - Google 搜索", App: Firefox.
+0 标准窗口 http://127.0.0.1:4199/rustify-ui/zh/architecture/#versioned-themes - Google 搜索, Secondary Actions: Raise
+	1 container http://127.0.0.1:4199/rustify-ui/zh/architecture/#versioned-themes - Google 搜索
+		2 工具栏 浏览器标签页
+			3 标签页组
+				4 标签页 (selectable) Value: 欢迎使用 Firefox, 欢迎使用 Firefox
+关闭 1 个标签页
+				5 标签页 (selectable) Value: Architecture | Rustify UI, Architecture | Rustify UI
+关闭 1 个标签页
+				6 标签页 (selected) Value: http://127.0.0.1:4199/rustify-ui/zh/architecture/#versioned-themes - Google 搜索, http://127.0.0.1:4199/rustify-ui/zh/architecture/#versioned-themes - Google 搜索
+关闭 1 个标签页
+				7 按钮 打开新标签页 (⌘T)
+			8 分隔条
+			9 按钮 列出所有标签页
+		10 工具栏 导航
+			11 按钮 Description: 侧栏, Help: 显示侧栏 (⌃Z)
+			12 按钮 后退
+			13 按钮 (disabled) 前进
+			14 按钮 重新加载
+			15 分隔条
+			16 container
+				17 按钮 Description: 查看网站信息, Help: 验证者：Google Trust Services
+				18 组合框 (settable) Description: 使用 Google 搜索，或者输入网址, Value: www.google.com/search?client=firefox-b-d&q=http%3A%2F%2F127.0.0.1%3A4199%2Frustify-ui%2Fzh%2Farchitecture%2F%23versioned-themes
+					19 文本 www.google.com/search?client=firefox-b-d&q=http%3A%2F%2F127.0.0.1%3A4199%2Frustify-ui%2Fzh%2Farchitecture%2F%23versioned-themes
+				20 按钮 为此页面添加书签 (⌘D)
+			21 分隔条
+			22 按钮 账户
+			23 按钮 扩展
+			24 按钮 Description: Firefox, Help: 打开应用程序菜单
+		25 工具栏
+		26 container
+			27 滚动区
+				28 HTML 内容 Description: chrome://devtools/content/responsive/toolbar.xhtml, URL: …
+					29 container
+						30 按钮 设备型号
+						31 步进器 (settable, float) 320
+							32 文本 320
+						33 文本 ×
+						34 步进器 (settable, float) 480
+							35 文本 480
+						36 按钮 旋转视区
+						37 按钮 像素比：2, Help: 更改视窗的设备像素比
+							38 文本 像素比：2
+						39 按钮 不节流
+						40 container
+							41 文本 UA:
+							42 文本栏 (settable) UA: 选择预定义的用户代理, Placeholder: 自定义 User Agent
+							43 按钮 选择预定义的用户代理
+						44 按钮 启用触摸模拟
+						45 按钮 截取视区 (viewport) 图像
+						46 按钮
+						47 按钮 关闭响应式设计模式
+			48 滚动区
+				49 HTML 内容 Description: http://127.0.0.1:4199/rustify-ui/zh/architecture/#versioned-themes - Google 搜索, URL: …
+					50 container
+						51 链接 跳到主要内容
+							52 文本 跳到主要内容
+						53 link 无障碍功能帮助, Value: support.google.com/websearch/answer/181196?hl=zh-CN
+						54 container
+							55 link Description: Google 首页, Value: google.com/webhp?hl=zh-CN&sa=X&ved=2ahUKEwj0w5HH6sOXAxUdXusIHX_1LUYQPHoECAYQBA
+							56 组合框 (settable) Description: 搜索, Value: http://127.0.0.1:4199/rustify-ui/zh/architecture/#versioned-themes
+								57 文本 http://127.0.0.1:4199/rustify-ui/zh/architecture/#versioned-themes
+							58 按钮 清除
+							59 按钮 按语音搜索
+							60 按钮 按图搜索
+							61 按钮 设置
+							62 按钮 分享
+							63 按钮 Google 应用
+							64 link Description: 登录, Value: accounts.google.com/ServiceLogin?hl=zh-CN&passive=true&continue=https://www.google.com/search%3Fclient%3Dfirefox-b-d%26q%3Dhttp%253A%252F%252F127.0.0.1%253A4199%252Frustify-ui%252Fzh%252Farchitecture%252F%2523versioned-themes&ec=futura_srp_og_si_72236_p
+						65 container
+							66 container
+								67 内容列表
+									68 link AI 模式, Value: google.com/search?q=http://127.0.0.1:4199/rustify-ui/zh/architecture/%23versioned-themes&client=firefox-b-d&hs=hdAW&sca_esv=4b11636d9b65765a&sxsrf=APpeQnsOoWRTeoED1h5z_bmtcQFwtqsqCA:1792335635839&udm=50&fbs=ABfTbFUhNGvvPEUFOvrsPMHwBXgOm668fbRC_a7Vhb8DCgbMq8eqV8bT1VY7Sa-SsVne4NkpLkz0HZk_YZmMHm1pm89L59KJYuF9TdpA3egywsERvIDxYxHPt7qJMWOGcvrCT7S4x9G6-lV0KI0nIjdc_Hjddvy9zDGJvSJvspODh7K54z7UKlLLtfOA-70BIYtzp_O84AJ2AINoBychhFY1geoZJVvxhQ&vsint=&aep=1&ntc=1&cs=0&sa=X&ved=2ahUKEwj0w5HH6sOXAxUdXusIHX_1LUYQ2J8OegQICRAD
+									69 链接 (disabled) 全部
+										70 文本 全部
+									71 link 图片, Value: google.com/search?client=firefox-b-d&hs=hdAW&sca_esv=4b11636d9b65765a&sxsrf=APpeQnsOoWRTeoED1h5z_bmtcQFwtqsqCA:1792335635839&udm=2&fbs=ABfTbFUhNGvvPEUFOvrsPMHwBXgOm668fbRC_a7Vhb8DCgbMq8eqV8bT1VY7Sa-SsVne4NkpLkz0HZk_YZmMHm1pm89L59KJYuF9TdpA3egywsERvIDxYxHPt7qJMWOGcvrCT7S4x9G6-lV0KI0nIjdc_Hjddvy9zDGJvSJvspODh7K54z7UKlLLtfOA-70BIYtzp_O84AJ2AINoBychhFY1geoZJVvxhQ&q=http://127.0.0.1:4199/rustify-ui/zh/architecture/%23versioned-themes&sa=X&ved=2ahUKEwj0w5HH6sOXAxUdXusIHX_1LUYQtKgLegQIDBAB
+									72 link 购物, Value: google.com/search?client=firefox-b-d&hs=hdAW&sca_esv=4b11636d9b65765a&sxsrf=APpeQnsOoWRTeoED1h5z_bmtcQFwtqsqCA:1792335635839&udm=28&fbs=ABfTbFUhNGvvPEUFOvrsPMHwBXgOm668fbRC_a7Vhb8DCgbMq8eqV8bT1VY7Sa-SsVne4NkpLkz0HZk_YZmMHm1pm89L59KJYuF9TdpA3egywsERvIDxYxHPt7qJMWOGcvrCT7S4x9G6-lV0KI0nIjdc_Hjddvy9zDGJvSJvspODh7K54z7UKlLLtfOA-70BIYtzp_O84AJ2AINoBychhFY1geoZJVvxhQ&q=http://127.0.0.1:4199/rustify-ui/zh/architecture/%23versioned-themes&ved=1t:220175&ictx=111
+									73 link 视频, Value: google.com/search?client=firefox-b-d&hs=hdAW&sca_esv=4b11636d9b65765a&sxsrf=APpeQnsOoWRTeoED1h5z_bmtcQFwtqsqCA:1792335635839&udm=vids&fbs=ABfTbFUhNGvvPEUFOvrsPMHwBXgOm668fbRC_a7Vhb8DCgbMq8eqV8bT1VY7Sa-SsVne4NkpLkz0HZk_YZmMHm1pm89L59KJYuF9TdpA3egywsERvIDxYxHPt7qJMWOGcvrCT7S4x9G6-lV0KI0nIjdc_Hjddvy9zDGJvSJvspODh7K54z7UKlLLtfOA-70BIYtzp_O84AJ2AINoBychhFY1geoZJVvxhQ&q=http://127.0.0.1:4199/rustify-ui/zh/architecture/%23versioned-themes&sa=X&ved=2ahUKEwj0w5HH6sOXAxUdXusIHX_1LUYQtKgLegQIEBAB
+									74 link 短视频, Value: google.com/search?client=firefox-b-d&hs=hdAW&sca_esv=4b11636d9b65765a&sxsrf=APpeQnsOoWRTeoED1h5z_bmtcQFwtqsqCA:1792335635839&udm=39&fbs=ABfTbFUhNGvvPEUFOvrsPMHwBXgOm668fbRC_a7Vhb8DCgbMq8eqV8bT1VY7Sa-SsVne4NkpLkz0HZk_YZmMHm1pm89L59KJYuF9TdpA3egywsERvIDxYxHPt7qJMWOGcvrCT7S4x9G6-lV0KI0nIjdc_Hjddvy9zDGJvSJvspODh7K54z7UKlLLtfOA-70BIYtzp_O84AJ2AINoBychhFY1geoZJVvxhQ&q=http://127.0.0.1:4199/rustify-ui/zh/architecture/%23versioned-themes&sa=X&ved=2ahUKEwj0w5HH6sOXAxUdXusIHX_1LUYQs6gLegQIDhAB
+									75 link 图书, Value: google.com/search?client=firefox-b-d&hs=hdAW&sca_esv=4b11636d9b65765a&sxsrf=APpeQnsOoWRTeoED1h5z_bmtcQFwtqsqCA:1792335635839&q=http://127.0.0.1:4199/rustify-ui/zh/architecture/%23versioned-themes&udm=36&source=lnms&fbs=ABfTbFUhNGvvPEUFOvrsPMHwBXgOm668fbRC_a7Vhb8DCgbMq8eqV8bT1VY7Sa-SsVne4NkpLkz0HZk_YZmMHm1pm89L59KJYuF9TdpA3egywsERvIDxYxHPt7qJMWOGcvrCT7S4x9G6-lV0KI0nIjdc_Hjddvy9zDGJvSJvspODh7K54z7UKlLLtfOA-70BIYtzp_O84AJ2AINoBychhFY1geoZJVvxhQ&sa=X&ved=2ahUKEwj0w5HH6sOXAxUdXusIHX_1LUYQ0pQJegQIDRAB
+									76 按钮 更多过滤条件
+										77 container 更多过滤条件
+											78 文本 更多
+								79 按钮 工具
+									80 文本 工具
+							81 标题 搜索结果, Value: 1
+								82 文本 搜索结果
+							83 container
+								84 container
+									85 标题 Web results, Value: 2
+										86 文本 Web results
+									87 link rust-ui repositories GitHub https://github.com › orgs › repositories, Value: google.com/goto?url=CAESZwHrOzAVjRrWdbhE8Y0cfl5qTPLhZPrJyuf1WtkYy29w6vxek9MRq9T-sZGJF7K1ubfuSLVdU5NL92cozhiCEY7ifqFbfqLjKIIUTEycHTkdmGIhbWgekiVJzJTrdRYvX9GNHlMwRrw
+									88 文本 · 
+									89 link 翻译此页, Value: google.com/goto?url=CAESswEB6zswFQS1gNInn6zspN0SPLiOgV0UVWJJtNBbEzBy8zdU0aGwAoy76TVjTVuVeQ-0r046ZLb_AZzwWd2b9N63SXFCI7b8_iQIsCjF-XAGhw3MCjuebp4SG4cyAtP-qHhQd64ms-v5S7szTxMoZMGtw3b-lHN6t6bXH4DXlce_vnGQLkKzU3PU1ZJpfUiSUC5Aof9UxIJvHO4ivWiz0VEbsUVvjrL5mX2sE5lWYz0Hog4zkg
+									90 按钮 关于这条结果的详细信息
+									91 container
+										92 text A Shadcn-inspired component registry for  Rust . Build cross-platform apps for Web, Desktop, iOS and Android.  rust componentsmobile + 10.
+									93 link docker-rust/stable/trixie/Dockerfile at master GitHub https://github.com › docker-rust › blob › Do..., Value: google.com/goto?url=CAESiAEB6zswFYFNjcqfk6zAO8IYzwWboEuRLcb-qh1hGgi4FBI8lSMpQ_AN2kfjlz5o4gxBeIPXSUBQ_dopuKt-tEGb36jCkZ29DRT_B3Xz7tDp_9Xrr9mEmQJKGeNJljjyE7aXuKyMBUANmUyAX_w4XwHNoIvAG-Y7u7aPs79dSKwvx2PuJwwimrPP
+									94 文本 · 
+									95 link 翻译此页, Value: …
+									96 按钮 关于这条结果的详细信息
+									97 container
+										98 text The official Docker images for  Rust . Contribute to  rust -lang/docker- rust  development by creating an account on GitHub.
+									99 link rustui - crates.io: Rust Package Registry Crates.io https://crates.io › crates › rustui, Value: …
+									100 文本 · 
+									101 link 翻译此页, Value: …
+									102 按钮 关于这条结果的详细信息
+									103 container
+										104 text 2026年3月12日  —  Terminal  UI  library for Linux and Unix-like systems.
+									105 link rust nightly-slim-2026-10-10 Public Latest GitHub https://github.com › pkgs › container › rust, Value: …
+									106 文本 · 
+									107 link 翻译此页, Value: …
+									108 按钮 关于这条结果的详细信息
+									109 container
+										110 text This is the Git repo of the Docker official image for  rust . See the Docker Hub page for the full readme on how to use this Docker image and for information ...
+									111 link README.md - KaiserY/trpl-zh-cn GitHub https://github.com › KaiserY › trpl-zh-cn › blob › main, Value: …
+									112 按钮 关于这条结果的详细信息
+									113 container
+										114 text 你可以将本mdbook 构建成一系列静态html 页面。这里我们采用mdbook 打包出静态网页。在这之前，你需要安装 Rust 。 全局安装mdbook. cargo install mdbook.
+									115 link Rustify - A Rust Project Template GitHub https://github.com › gvatsal60 › rustify, Value: …
+									116 文本 · 
+									117 link 翻译此页, Value: …
+									118 按钮 关于这条结果的详细信息
+									119 container
+										120 text Welcome to Rustify!.  Rustify is a template for kickstarting your Rust projects . Whether you're a seasoned Rustacean or just getting started with the ...
+									121 link Value: …, Official Rust Websites - Web Presence Rust Internals https://internals.rust-lang.org › official-rust-...
+									122 文本 · 
+									123 link 翻译此页, Value: …
+									124 按钮 关于这条结果的详细信息
+									125 container
+										126 text 2025年12月2日  —  Define one or more  themes  that convey the websites are from the same group. I say "one or more" because we may want to use  themes  to convey ...
+									127 link Value: …, docker-rust/stable/bullseye/Dockerfile at master GitHub https://github.com › docker-rust › blob › Do...
+									128 文本 · 
+									129 link 翻译此页, Value: …
+									130 按钮 关于这条结果的详细信息
+									131 container
+										132 text The official Docker images for  Rust . Contribute to  rust -lang/docker- rust  development by creating an account on GitHub.
+									133 link Value: …, rust-docker-image/beta/trixie/Dockerfile at main GitHub https://github.com › rust-docker-image › blob
+									134 文本 · 
+									135 link 翻译此页, Value: …
+									136 按钮 关于这条结果的详细信息
+									137 container
+										138 text 2026年4月14日  —  [Closed]  Rust Docker image . Contribute to instrumentisto/rust-docker-image development by creating an account on GitHub.
+									139 link Value: …, wallust_themes - crates.io: Rust Package Registry Crates.io https://crates.io › crates › wallust_themes
+									140 文本 · 
+									141 link 翻译此页, Value: …
+									142 按钮 关于这条结果的详细信息
+									143 container
+										144 text 2025年3月22日  —  wallust-themes  - built in colorschemes for wallust. This is a simple crate that stores const s colorschemes in arrays (slices).
+								145 container
+									146 未知
+									147 标题 网页导航, Value: 1
+										148 文本 网页导航
+									149 container
+										150 文本 1
+									151 link Description: Page 2, Value: …
+									152 link Description: Page 3, Value: …
+									153 link Description: Page 4, Value: …
+									154 link Description: Page 5, Value: …
+									155 link Description: Page 6, Value: …
+									156 link Description: Page 7, Value: …
+									157 link Description: Page 8, Value: …
+									158 标题 下一页, Value: 2
+										159 link 下一页, Value: …
+							160 标题 页脚链接, Value: 1
+								161 文本 页脚链接
+							162 container
+								163 文本 香港
+								164 container
+									165 按钮 香港 - 是根据您的 IP 地址推断出来的
+										166 container
+											167 文本 香港
+										168 container
+											169 text  -  是根据您的 IP 地址推断出来的
+									170 文本  - 
+									171 按钮 更新位置信息
+								172 link 帮助, Value: …
+								173 link 发送反馈, Value: …
+								174 link 隐私权, Value: …
+								175 link 条款, Value: …
+	176 关闭按钮
+	177 全屏幕按钮 Help: 此按钮也可以执行缩放窗口的操作, Secondary Actions: 缩放窗口
+	178 最小化按钮
+179 menu bar
+	180 Firefox
+	181 文件
+	182 编辑
+	183 查看
+	184 历史
+	185 书签
+	186 配置文件
+	187 工具
+	188 窗口
+	189 帮助
+
+The focused UI element is 34 步进器 (settable, float) 480

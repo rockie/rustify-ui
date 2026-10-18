@@ -1,0 +1,102 @@
+Window: "Architecture | Rustify UI", App: Firefox.
+0 标准窗口 Architecture | Rustify UI, Secondary Actions: Raise
+	1 container Architecture | Rustify UI
+		2 工具栏 浏览器标签页
+			3 标签页组
+				4 标签页 (selectable) Value: 欢迎使用 Firefox, 欢迎使用 Firefox
+关闭 1 个标签页
+				5 标签页 (selectable) Value: Architecture | Rustify UI, Architecture | Rustify UI
+关闭 1 个标签页
+				6 标签页 (selected) Value: Architecture | Rustify UI, Architecture | Rustify UI
+关闭 1 个标签页
+				7 按钮 打开新标签页 (⌘T)
+			8 分隔条
+			9 按钮 列出所有标签页
+		10 工具栏 导航
+			11 按钮 Description: 侧栏, Help: 显示侧栏 (⌃Z)
+			12 按钮 后退
+			13 按钮 前进
+			14 按钮 重新加载
+			15 分隔条
+			16 container
+				17 按钮 查看网站信息
+				18 组合框 (settable) Description: 使用 Google 搜索，或者输入网址, Value: http://127.0.0.1:4199/rustify-ui/zh/architecture/#versioned-themes
+					19 文本 http://127.0.0.1:4199/rustify-ui/zh/architecture/#versioned-themes
+				20 按钮 进入阅读模式
+				21 按钮 试试 Firefox 注重隐私的翻译功能 - Beta
+				22 按钮 为此页面添加书签 (⌘D)
+			23 分隔条
+			24 按钮 账户
+			25 按钮 扩展
+			26 按钮 Description: Firefox, Help: 打开应用程序菜单
+		27 工具栏
+		28 container
+			29 滚动区
+				30 HTML 内容 chrome://devtools/content/responsive/toolbar.xhtml
+					31 container
+						32 按钮 设备型号
+						33 步进器 (settable, float) 375
+							34 文本 375
+						35 文本 ×
+						36 步进器 (settable, float) 667
+							37 文本 667
+						38 按钮 旋转视区
+						39 按钮 像素比：2, Help: 更改视窗的设备像素比
+							40 文本 像素比：2
+						41 按钮 不节流
+						42 container
+							43 文本 UA:
+							44 文本栏 (settable) UA: 选择预定义的用户代理, Placeholder: 自定义 User Agent
+							45 按钮 选择预定义的用户代理
+						46 按钮 启用触摸模拟
+						47 按钮 截取视区 (viewport) 图像
+						48 按钮
+						49 按钮 关闭响应式设计模式
+			50 滚动区
+				51 HTML 内容 Description: Architecture | Rustify UI, URL: 127.0.0.1:4199/rustify-ui/zh/architecture/#versioned-themes
+					52 container 搜索
+						53 文本 搜索文档
+						54 按钮 关闭
+						55 组合框 (settable) 搜索文档, Value: ThemeScope
+							56 文本 ThemeScope
+						57 文本 3 个结果
+						58 列表 搜索结果
+							59 文本 (selectable) 快速开始 快速开始 › 在应用中使用 Tailwind v4 ope 外。 使用版本化主题文档时，在 sdk.css 后紧接着导入 theme-v4.css。ThemeScope 在根节点提供文档解析后的颜色、字体、间距、圆角和阴影；这些 scope 的 utility 间距读取 --rustify-unit，--layout-gap 仍是独立布局值。ThemedScope 保留旧值回退，两种 provider 的显式
+快速开始
+快速开始 › 在应用中使用 Tailwind v4
+ope 外。 使用版本化主题文档时，在 sdk.css 后紧接着导入 theme-v4.css。
+ThemeScope
+在根节点提供文档解析后的颜色、字体、间距、圆角和阴影；这些 scope 的 utility 间距读取 --rustify-unit，--layout-gap 仍是独立布局值。ThemedScope 保留旧值回退，两种 provider 的显式
+							60 文本 (selected) Architecturezh 尚未翻译，内容语言：en Architecture › Versioned themes ResolvedTheme> alongside its application state. ThemeScope claims the mount root, projects the snapshot through CSSOM and restores prior values on cleanup. ThemeBoundary re-resolve
+								61 文本 Architecture
+								62 文本 zh
+								63 文本 尚未翻译，内容语言：en
+								64 文本 Architecture › Versioned themes
+								65 container
+									66 text ResolvedTheme> alongside its application state.  ThemeScope  claims the mount root, projects the snapshot through CSSOM and restores prior values on cleanup. ThemeBoundary re-resolve
+							67 文本 (selectable) Theme documentszh 尚未翻译，内容语言：en Theme documents › Mount a browser scope Theme documents › Fonts and GPU consumers Theme documents › Import and export :{mount, AppHandle, MountConfig, ResolvedTheme, ThemeScope}; use rustify_ui::theme::{font_context, import_json, resolve, ThemeError, ThemeMode}; use std::sync::Arc; // Put the down
+Theme documents
+zh
+尚未翻译，内容语言：en
+Theme documents › Mount a browser scope
+Theme documents › Fonts and GPU consumers
+Theme documents › Import and export
+:{mount, AppHandle, MountConfig, ResolvedTheme,
+ThemeScope
+}; use rustify_ui::theme::{font_context, import_json, resolve, ThemeError, ThemeMode}; use std::sync::Arc; // Put the down
+	68 关闭按钮
+	69 全屏幕按钮 Help: 此按钮也可以执行缩放窗口的操作, Secondary Actions: 缩放窗口
+	70 最小化按钮
+71 menu bar
+	72 Firefox
+	73 文件
+	74 编辑
+	75 查看
+	76 历史
+	77 书签
+	78 配置文件
+	79 工具
+	80 窗口
+	81 帮助
+
+The focused UI element is 60 文本 (selected) Architecturezh 尚未翻译，内容语言：en Architecture › Versioned themes ResolvedTheme> alongside its application state. ThemeScope claims the mount root, projects the snapshot through CSSOM and restores prior values on cleanup. ThemeBoundary re-resolve

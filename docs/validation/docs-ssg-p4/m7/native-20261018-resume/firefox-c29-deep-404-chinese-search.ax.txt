@@ -1,0 +1,67 @@
+Window: "页面不存在 | Rustify UI", App: Firefox.
+0 标准窗口 页面不存在 | Rustify UI, Secondary Actions: Raise
+	1 container 页面不存在 | Rustify UI
+		2 工具栏 浏览器标签页
+			3 标签页组
+				4 标签页 (selectable) Value: 欢迎使用 Firefox, 欢迎使用 Firefox
+关闭 1 个标签页
+				5 标签页 (selectable) Value: Architecture | Rustify UI, Architecture | Rustify UI
+关闭 1 个标签页
+				6 标签页 (selectable) Value: Architecture | Rustify UI, Architecture | Rustify UI
+关闭 1 个标签页
+				7 标签页 (selected) Value: 页面不存在 | Rustify UI, 页面不存在 | Rustify UI
+关闭 1 个标签页
+				8 按钮 打开新标签页 (⌘T)
+			9 分隔条
+			10 按钮 列出所有标签页
+		11 工具栏 导航
+			12 按钮 Description: 侧栏, Help: 显示侧栏 (⌃Z)
+			13 按钮 后退
+			14 按钮 (disabled) 前进
+			15 按钮 重新加载
+			16 分隔条
+			17 container
+				18 按钮 查看网站信息
+				19 组合框 (settable) Description: 使用 Google 搜索，或者输入网址, Value: http://127.0.0.1:4199/rustify-ui/zh/missing/deep/
+					20 文本 http://127.0.0.1:4199/rustify-ui/zh/missing/deep/
+				21 按钮 为此页面添加书签 (⌘D)
+			22 分隔条
+			23 按钮 账户
+			24 按钮 扩展
+			25 按钮 Description: Firefox, Help: 打开应用程序菜单
+		26 工具栏
+		27 滚动区
+			28 HTML 内容 Description: 页面不存在 | Rustify UI, URL: 127.0.0.1:4199/rustify-ui/zh/missing/deep/
+				29 container 搜索
+					30 文本 搜索文档
+					31 按钮 关闭
+					32 组合框 (settable) 搜索文档, Value: 快速开始
+						33 文本 快速开始
+					34 文本 2 个结果
+					35 列表 搜索结果
+						36 文本 (selected) 快速开始 快速开始 › 准备工具 快速开始 › 构建并预览示例 快速开始
+							37 文本 快速开始
+							38 文本 快速开始 › 准备工具
+							39 文本 快速开始 › 构建并预览示例
+							40 文本 快速开始
+						41 文本 (selectable) Rustify UI OM 组件、Makepad fork 和可运行示例。工作区版本为 0.1.0，尚未开放包发布；从快速开始进入本地构建，或在组件文档中操作实际 DOM 示例并查看 Rust 源码。
+Rustify UI
+OM 组件、Makepad fork 和可运行示例。工作区版本为 0.1.0，尚未开放包发布；从
+快速开始
+进入本地构建，或在组件文档中操作实际 DOM 示例并查看 Rust 源码。
+	42 关闭按钮
+	43 全屏幕按钮 Help: 此按钮也可以执行缩放窗口的操作, Secondary Actions: 缩放窗口
+	44 最小化按钮
+45 menu bar
+	46 Firefox
+	47 文件
+	48 编辑
+	49 查看
+	50 历史
+	51 书签
+	52 配置文件
+	53 工具
+	54 窗口
+	55 帮助
+
+The focused UI element is 36 文本 (selected) 快速开始 快速开始 › 准备工具 快速开始 › 构建并预览示例 快速开始

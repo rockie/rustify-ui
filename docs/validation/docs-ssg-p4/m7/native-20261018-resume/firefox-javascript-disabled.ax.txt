@@ -1,0 +1,209 @@
+Window: "开发者工具 — Button | Rustify UI — http://127.0.0.1:4199/rustify-ui/components/button/", App: Firefox.
+0 标准窗口 开发者工具 — Button | Rustify UI — http://127.0.0.1:4199/rustify-ui/components/button/, Secondary Actions: Raise
+	1 container 开发者工具 — Button | Rustify UI — http://127.0.0.1:4199/rustify-ui/components/button/
+		2 滚动区
+			3 HTML 内容 about:devtools-toolbox
+				4 container
+					5 工具栏 开发者工具
+						6 开关按钮 选取页面中的元素（Cmd+Shift+C 或 Cmd+Opt+C）, Value: off
+						7 container
+							8 开关按钮 查看器, Help: DOM 和样式探查器 (Cmd+Shift+C 或 Cmd+Opt+C), Value: off
+								9 文本 查看器
+							10 开关按钮 控制台, Help: Web 控制台 (Cmd+Opt+K), Value: off
+								11 文本 控制台
+							12 开关按钮 调试器, Help: JavaScript 调试器 (Cmd+Opt+Z), Value: off
+								13 文本 调试器
+							14 开关按钮 网络, Help: 网络监视器 (Cmd+Opt+E), Value: off
+								15 文本 网络
+							16 开关按钮 样式编辑器, Help: 样式表编辑器 (CSS) (Shift+F7), Value: off
+								17 文本 样式编辑器
+							18 开关按钮 性能, Help: 性能 (Shift+F5), Value: off
+								19 文本 性能
+							20 开关按钮 内存, Value: off
+								21 文本 内存
+							22 开关按钮 存储, Help: 存储探查器（Cookie、本地存储等） (Shift+F9), Value: off
+								23 文本 存储
+							24 开关按钮 无障碍环境, Help: 无障碍环境（Shift+F12）, Value: off
+								25 文本 无障碍环境
+							26 开关按钮 应用程序, Help: 应用程序面板, Value: off
+								27 文本 应用程序
+						28 container
+							29 按钮 (disabled) 此按钮仅在具有多个 iframe 的页面上可用
+							30 开关按钮 响应式设计模式 (Cmd+Opt+M), Value: off
+						31 按钮 定制开发者工具及获取帮助
+					32 滚动区 工具箱选项面板
+						33 HTML 内容 Description: 工具箱选项面板, URL: chrome://devtools/content/framework/toolbox-options.html
+							34 container
+								35 container 默认的开发者工具
+									36 文本 默认的开发者工具
+									37 container
+										38 复选框 网络, Help: 网络监视器 (Cmd+Opt+E), Value: 1
+										39 文本 网络
+									40 container
+										41 复选框 样式编辑器, Help: 样式表编辑器 (CSS) (Shift+F7), Value: 1
+										42 文本 样式编辑器
+									43 container
+										44 复选框 性能, Help: 性能 (Shift+F5), Value: 1
+										45 文本 性能
+									46 container
+										47 复选框 内存, Value: 1
+										48 文本 内存
+									49 container
+										50 复选框 存储, Help: 存储探查器（Cookie、本地存储等） (Shift+F9), Value: 1
+										51 文本 存储
+									52 container
+										53 复选框 无障碍环境, Help: 无障碍环境（Shift+F12）, Value: 1
+										54 文本 无障碍环境
+									55 container
+										56 复选框 应用程序, Help: 应用程序面板, Value: 1
+										57 文本 应用程序
+									58 container
+										59 复选框 DOM, Help: DOM (Cmd+Opt+W), Value: 0
+										60 文本 DOM
+								61 container 可用的工具箱按钮
+									62 文本 可用的工具箱按钮
+									63 container
+										64 复选框 显示页面上的错误数量, Value: 1
+										65 文本 显示页面上的错误数量
+									66 container
+										67 复选框 选取页面中的元素（Cmd+Shift+C 或 Cmd+Opt+C）, Value: 1
+										68 文本 选取页面中的元素（Cmd+Shift+C 或 Cmd+Opt+C）
+									69 container
+										70 复选框 选择一个 iframe 作为当前的目标文档, Value: 1
+										71 文本 选择一个 iframe 作为当前的目标文档
+									72 container
+										73 复选框 响应式设计模式 (Cmd+Opt+M), Value: 1
+										74 文本 响应式设计模式 (Cmd+Opt+M)
+									75 container
+										76 复选框 截取整个页面, Value: 0
+										77 文本 截取整个页面
+									78 container
+										79 复选框 切换页面上的标尺, Value: 0
+										80 文本 切换页面上的标尺
+									81 container
+										82 复选框 测量页面中的部分, Value: 0
+										83 文本 测量页面中的部分
+								84 container 实验性功能
+									85 文本 实验性功能
+									86 container List and view stylesheets in the debugger
+										87 复选框 Show stylesheets in the debugger （需要重新打开工具箱）, Value: 0
+										88 文本 Show stylesheets in the debugger
+										89 文本 （需要重新打开工具箱）
+								90 container 主题
+									91 文本 主题
+									92 container
+										93 单选按钮 自动, Value: 1
+										94 文本 自动
+									95 container
+										96 单选按钮 深色, Value: 0
+										97 文本 深色
+									98 container
+										99 单选按钮 浅色, Value: 0
+										100 文本 浅色
+								101 container 查看器
+									102 文本 查看器
+									103 container 启用此选项将显示由浏览器加载的默认样式。
+										104 复选框 显示浏览器样式, Value: 0
+										105 文本 显示浏览器样式
+									106 container 启用此选项后，将显示由浏览器处理的影子 DOM 元素。
+										107 复选框 显示浏览器影子 DOM （将重新加载页面）, Value: 0
+										108 文本 显示浏览器影子 DOM
+										109 文本 （将重新加载页面）
+									110 container 在查看器中显示注释节点
+										111 复选框 显示注释 （将重新加载页面）, Value: 1
+										112 文本 显示注释
+										113 文本 （将重新加载页面）
+									114 container 截短查看器中的长属性
+										115 复选框 截短 DOM 属性, Value: 1
+										116 文本 截短 DOM 属性
+									117 container 在查看器规则视图中单击并拖动编辑大小值。
+										118 复选框 点击并拖动编辑大小值, Value: 1
+										119 文本 点击并拖动编辑大小值
+									120 container 设置 prefers-reduced-motion 首选项启用简化的高亮显示。在突出显示的元素周围绘制线条而不是填充矩形，以避免闪烁效果。
+										121 复选框 通过 prefers-reduced-motion 使用更简明的高亮显示。, Value: 0
+										122 文本 通过 prefers-reduced-motion 使用更简明的高亮显示。
+									123 container 启用后，在编辑选择器、属性名称或值时按下 Enter 键会将焦点移动到下一个输入部分。
+										124 复选框 按下 Enter 时聚焦下一个输入部分, Value: 1
+										125 container
+											126 text 按下  Enter  时聚焦下一个输入部分
+									127 container
+										128 文本 默认颜色单位
+										129 弹出式按钮 按原单位
+								130 container Web 控制台
+									131 文本 Web 控制台
+									132 container 使用 ESC 键打开分离式控制台
+										133 复选框 启用分离式控制台, Value: 1
+										134 文本 启用分离式控制台
+								135 container 网络监视器
+									136 文本 网络监视器
+									137 container Request or response bodies which exceed the specified size will be truncated when displayed or downloaded in the Network Monitor. Set to 0 to have no limitation.
+										138 text Maximum request and response body size (set to 0 for unlimited): 1.05 MB
+										139 按钮 Edit the maximum request/response body size.
+								140 container 样式编辑器
+									141 文本 样式编辑器
+									142 container 在样式编辑器中自动补全您输入的 CSS 属性、值和选择器
+										143 复选框 自动补全 CSS, Value: 1
+										144 文本 自动补全 CSS
+								145 container 截图行为
+									146 文本 截图行为
+									147 container 直接将截图保存到剪贴板
+										148 复选框 截图仅保存到剪贴板, Value: 0
+										149 文本 截图仅保存到剪贴板
+									150 container 截图时播放相机快门声
+										151 复选框 播放相机快门声, Value: 1
+										152 文本 播放相机快门声
+								153 container 本地模式
+									154 文本 Local Mode allows you to load local files via https URL without any external dependency. The URLs can only be loaded from tabs with DevTools opened.
+									155 文本 本地模式
+									156 按钮 Add a new local mapping
+								157 container 编辑器首选项
+									158 文本 编辑器首选项
+									159 container 基于源内容推测缩进
+										160 复选框 检测缩进, Value: 1
+										161 文本 检测缩进
+									162 container 自动插入关闭括号
+										163 复选框 自动关闭括号, Value: 1
+										164 文本 自动关闭括号
+									165 container 使用空格而非制表符缩进
+										166 复选框 使用空格缩进, Value: 1
+										167 文本 使用空格缩进
+									168 container
+										169 文本 制表符宽度
+										170 弹出式按钮 2
+									171 container
+										172 文本 按键绑定
+										173 弹出式按钮 默认设置
+								174 container 高级设置
+									175 文本 高级设置
+									176 container 如果您启用此选项，工具中的源代码将被映射。
+										177 复选框 启用源代码映射, Value: 1
+										178 文本 启用源代码映射
+									179 container 开启此选项将对所有已打开工具箱的标签页禁用 HTTP 缓存。Service Worker 不会受此选项影响。
+										180 复选框 禁用 HTTP 缓存（工具箱打开时）, Value: 0
+										181 文本 禁用 HTTP 缓存（工具箱打开时）
+									182 container 启用这个选项将对当前标签页禁用 JavaScript。如果关闭了该标签页或者工具箱，则这个设置就不再有效。
+										183 复选框 禁用 JavaScript （仅限当前会话，将重新加载当前页面）, Value: 1
+										184 文本 禁用 JavaScript
+										185 文本 （仅限当前会话，将重新加载当前页面）
+									186 container 开启此选项时，将对所有标签页在工具箱打开时启用 Service Workers over HTTP。
+										187 复选框 启用 Service Workers over HTTP（在工具箱打开时）, Value: 0
+										188 文本 启用 Service Workers over HTTP（在工具箱打开时）
+									189 container 打开此选项将允许您使用在浏览器上下文的开发者工具（通过 工具 > Web 开发者 > 浏览器工具箱）和从“附加组件管理器”调试附加组件
+										190 复选框 启用浏览器界面及附加组件的调试工具箱, Value: 0
+										191 文本 启用浏览器界面及附加组件的调试工具箱
+									192 container 启用此选项将允许远程调试此浏览器实例
+										193 复选框 启用远程调试, Value: 0
+										194 文本 启用远程调试
+									195 container 开启此选项后， 将绑定 F12 键用于打开或关闭开发者工具箱
+										196 复选框 使用 F12 键打开或关闭开发者工具, Value: 1
+										197 文本 使用 F12 键打开或关闭开发者工具
+									198 container 打开此选项，将允许网站自行定义 DOM 对象的格式化程序
+										199 复选框 启用自定义格式化程序, Value: 0
+										200 文本 启用自定义格式化程序
+	201 关闭按钮
+	202 全屏幕按钮 Help: 此按钮也可以执行缩放窗口的操作, Secondary Actions: 缩放窗口
+	203 最小化按钮
+204 menu bar
+	205 Firefox
+
+The focused UI element is 33 HTML 内容 Description: 工具箱选项面板, URL: chrome://devtools/content/framework/toolbox-options.html

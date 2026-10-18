@@ -1,0 +1,92 @@
+Window: "开发者工具 — Native boundary checks — http://127.0.0.1:4200/rustify-ui/", App: Firefox.
+0 标准窗口 开发者工具 — Native boundary checks — http://127.0.0.1:4200/rustify-ui/, Secondary Actions: Raise
+	1 container 开发者工具 — Native boundary checks — http://127.0.0.1:4200/rustify-ui/
+		2 滚动区 开发者工具
+			3 HTML 内容 Description: 开发者工具, URL: about:devtools-toolbox
+				4 container
+					5 工具栏 开发者工具
+						6 开关按钮 选取页面中的元素（Cmd+Shift+C 或 Cmd+Opt+C）, Value: off
+						7 container
+							8 开关按钮 查看器, Help: DOM 和样式探查器 (Cmd+Shift+C 或 Cmd+Opt+C), Value: off
+								9 文本 查看器
+							10 开关按钮 控制台, Help: Web 控制台 (Cmd+Opt+K), Value: on
+								11 文本 控制台
+							12 开关按钮 调试器, Help: JavaScript 调试器 (Cmd+Opt+Z), Value: off
+								13 文本 调试器
+							14 开关按钮 网络, Help: 网络监视器 (Cmd+Opt+E), Value: off
+								15 文本 网络
+							16 开关按钮 样式编辑器, Help: 样式表编辑器 (CSS) (Shift+F7), Value: off
+								17 文本 样式编辑器
+							18 开关按钮 性能, Help: 性能 (Shift+F5), Value: off
+								19 文本 性能
+							20 开关按钮 内存, Value: off
+								21 文本 内存
+							22 开关按钮 存储, Help: 存储探查器（Cookie、本地存储等） (Shift+F9), Value: off
+								23 文本 存储
+							24 开关按钮 无障碍环境, Help: 无障碍环境（Shift+F12）, Value: off
+								25 文本 无障碍环境
+							26 开关按钮 应用程序, Help: 应用程序面板, Value: off
+								27 文本 应用程序
+						28 container
+							29 按钮 1
+							30 开关按钮 响应式设计模式 (Cmd+Opt+M), Value: off
+						31 按钮 定制开发者工具及获取帮助
+					32 滚动区 控制台面板
+						33 HTML 内容 Description: 控制台面板, URL: chrome://devtools/content/webconsole/index.html
+							34 container
+								35 按钮 清除 Web 控制台输出（⌘K, Ctrl+L）
+								36 文本搜索栏 (settable) 过滤输出
+								37 开关按钮 错误, Value: on
+								38 开关按钮 警告, Value: on
+								39 开关按钮 信息, Value: on
+								40 开关按钮 日志, Value: on
+								41 开关按钮 调试, Value: on
+								42 开关按钮 CSS, Help: 将重新解析样式表以检查错误。刷新页面也可查看因 Javascript 修改产生的样式表错误。, Value: off
+								43 开关按钮 XHR, Value: off
+								44 开关按钮 请求, Value: off
+								45 按钮 控制台设置
+								46 container
+									47 container 错误
+									48 container
+										49 container
+											50 文本 已拦截加载自“
+											51 link http://127.0.0.1:4200/rustify-ui/assets/search.4879fcef9b.js, Value: 127.0.0.1:4200/rustify-ui/assets/search.4879fcef9b.js
+											52 文本 ”的模块，它使用了不允许的 MIME 类型（“text/html”）。
+										53 link 详细了解, Help: https://developer.mozilla.org/docs/Web/HTTP/Reference/Headers/X-Content-Type-Options, Value: developer.mozilla.org/docs/Web/HTTP/Reference/Headers/X-Content-Type-Options?utm_source=devtools&utm_medium=firefox-console-errors&utm_campaign=default
+										54 link rustify-ui, Help: 在调试器中查看源代码 → http://127.0.0.1:4200/rustify-ui/, Value: 127.0.0.1:4200/rustify-ui/
+									55 container 警告
+									56 container
+										57 container
+											58 文本 来源为“
+											59 link http://127.0.0.1:4200/rustify-ui/assets/search.4879fcef9b.js, Value: 127.0.0.1:4200/rustify-ui/assets/search.4879fcef9b.js
+											60 文本 ”的模块加载失败。
+										61 link site.269216efb4.js, Help: 在调试器中查看源代码 → http://127.0.0.1:4200/rustify-ui/assets/site.269216efb4.js, Value: 127.0.0.1:4200/rustify-ui/assets/site.269216efb4.js
+									62 container 已评估的代码
+									63 container
+										64 text await new Promise ( ( resolve , reject ) => { const w = new Worker ( document . querySelector ( "[data-rd-search]" ) . dataset . rdSearchWorker , { type : "module" } ) ; const qs = [ "ThemeScope" , "theme" , "heme" , "theme_s" , "Scope" , "切换" , "换" ] ; const rows = [ ] ; let next = 0 ; const timer = setTimeout ( ( ) => { w . terminate ( ) ; reject ( Error ( "native boundary timeout" ) ) ; } , 10000 ) ; const finish = ( value , error ) => { clearTimeout ( timer ) ; w . terminate ( ) ; error ? reject ( error ) : resolve ( JSON . stringify ( value ) ) ; } ; w . onerror = ( ) => finish ( null , Error ( "Worker error" ) ) ; w . onmessage = ( { data } ) => { if ( data . type === "error" ) finish ( null , Error ( data . code ) ) ; else if ( data . type === "ready" || data . type === "results" ) { if ( data . type === "results" ) rows . push ( { query : data . query , routes : data . groups . map ( g => g . route ) . sort ( ) , emoji : data . groups . find ( g => g . route === "/guide/case-7/" ) } ) ; if ( next === qs . length ) finish ( { url : location . href , ua : navigator . userAgent , viewport : [ innerWidth , innerHeight ] , dpr : devicePixelRatio , rows } ) ; else { next ++ ; w . postMessage ( { type : "query" , instance : 7 , id : next , query : qs [ next - 1 ] , offset : 0 } ) ; } } } ; w . postMessage ( { type : "init" , instance : 7 , index_url : new URL ( "assets/search.test.json" , document . baseURI ) . href } ) ; } )
+									65 container 评估结果
+									66 container
+										67 文本 '{"url":"
+										68 link http://127.0.0.1:4200/rustify-ui/, Value: 127.0.0.1:4200/rustify-ui/
+										69 文本 ","ua":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:158.0) Gecko/20100101 Firefox/158.0","viewport":[1280,716],"dpr":2,"rows":[{"query":"ThemeScope","routes":["/guide/case-0/","/guide/case-1/","/guide/case-7/"],"emoji":{"route":"/guide/case-7/","href":"
+										70 link http://127.0.0.1:4200/rustify-ui/guide/case-7/, Value: 127.0.0.1:4200/rustify-ui/guide/case-7/
+										71 文本 ","title":"Cases","title_highlights":[],"source_lang":"en","is_fallback":false,"anchor":null,"paths":[{"anchor":null,"path":["Cases"]}],"snippet":"😀ThemeScope","highlights":[[2,12]]}},{"query":"theme","routes":["/guide/case-0/","/guide/case-1/","/guide/case-2/","/guide/case-6/","/guide/case-7/"],"emoji":{"route":"/guide/case-7/","href":"
+										72 link http://127.0.0.1:4200/rustify-ui/guide/case-7/, Value: 127.0.0.1:4200/rustify-ui/guide/case-7/
+										73 文本 ","title":"Cases","title_highlights":[],"source_lang":"en","is_fallback":false,"anchor":null,"paths":[{"anchor":null,"path":["Cases"]}],"snippet":"😀ThemeScope","highlights":[[2,7]]}},{"query":"heme","routes":[]},{"query":"theme_s","routes":["/guide/case-2/"]},{"query":"Scope","routes":[]},{"query":"切换","routes":[]},{"query":"换","routes":[]}]}'
+									74 container 已评估的代码
+									75 container
+										76 text JSON . stringify ( [ "切换" , "主题切换" , "主题切换器" , "换" ] . map ( s => [ s , Array . from ( new Intl . Segmenter ( "zh" , { granularity : "word" } ) . segment ( s ) , v => [ v . segment , v . index , v . isWordLike ] ) ] ) )
+									77 container 评估结果
+									78 文本 '[["切换",[["切换",0,false]]],["主题切换",[["主题",0,true],["切换",2,true]]],["主题切换器",[["主题",0,true],["切换",2,true],["器",4,true]]],["换",[["换",0,true]]]]'
+								79 container
+									80 按钮 切换为多行编辑器模式（Cmd + B）
+									81 文本输入区 (settable)
+									82 container
+										83 文本 ​
+	84 关闭按钮
+	85 全屏幕按钮 Help: 此按钮也可以执行缩放窗口的操作, Secondary Actions: 缩放窗口
+	86 最小化按钮
+87 menu bar
+	88 Firefox
+
+The focused UI element is 81 文本输入区 (settable)

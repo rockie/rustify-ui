@@ -1,0 +1,380 @@
+[
+  {
+    "name": "firefox-c28-zh-home",
+    "step": "Native Firefox after user-confirmed Terms; new task tab at fixed C a31509aa official Chinese home.",
+    "utc": "2026-10-18T12:29:03.034Z",
+    "image": "firefox-c28-zh-home.jpg"
+  },
+  {
+    "name": "safari-c28-full-viewport",
+    "step": "Initial measurement attempt without returned geometry; full-viewport-result contains the actual values.",
+    "utc": "2026-10-18T12:30:40.873Z",
+    "image": "safari-c28-full-viewport.jpg"
+  },
+  {
+    "name": "safari-c28-full-viewport-result",
+    "step": "Detached Inspector read-only result: task Quick start viewport 640\u00d7710 CSS px, DPR2, visual scale1, documentWidth640, header57; visibility hidden and focus false while the separate Inspector is shown. This is geometry evidence, not a foreground interactive-state claim.",
+    "utc": "2026-10-18T12:33:21.033Z",
+    "image": "safari-c28-full-viewport-result.jpg"
+  },
+  {
+    "name": "firefox-native-version",
+    "step": "Native About Firefox after installation; record actual running release, not the pinned Playwright engine.",
+    "utc": "2026-10-18T12:33:56.778Z",
+    "image": "firefox-native-version.jpg"
+  },
+  {
+    "name": "firefox-c28-copy",
+    "step": "Followed Chinese home \u2192 Quick start \u2192 native TOC Build and preview, then activated the first code Copy control; actual feedback captured.",
+    "utc": "2026-10-18T12:34:33.134Z",
+    "image": "firefox-c28-copy.jpg"
+  },
+  {
+    "name": "firefox-c28-search-selected",
+    "step": "Cmd+K opened current-language search, ThemeScope returned 3 groups; Down selects the Architecture fallback in the Chinese route.",
+    "utc": "2026-10-18T12:34:52.936Z",
+    "image": "firefox-c28-search-selected.jpg"
+  },
+  {
+    "name": "firefox-c28-fallback-anchor",
+    "step": "Enter followed the selected result to /zh/architecture/#versioned-themes; dismissed Firefox's translation prompt without translation. Inspect actual settled heading and fallback notice.",
+    "utc": "2026-10-18T12:35:08.641Z",
+    "image": "firefox-c28-fallback-anchor.jpg"
+  },
+  {
+    "name": "firefox-c28-more-focus",
+    "step": "Dark mode, query the has 36 total results. Native Tab from search input reaches Show more with visible focus.",
+    "utc": "2026-10-18T12:35:30.912Z",
+    "image": "firefox-c28-more-focus.jpg"
+  },
+  {
+    "name": "firefox-c28-last-batch-scroll",
+    "step": "After keyboard Show more, the final batch is present and Show more is absent; native scroll is confined to the result list while input/status stay above it.",
+    "utc": "2026-10-18T12:35:59.614Z",
+    "image": "firefox-c28-last-batch-scroll.jpg"
+  },
+  {
+    "name": "firefox-c28-empty-refocus",
+    "step": "Without clicking the input after final-batch loading, Cmd+A and native paste replace the query. Zero-result feedback verifies returned input focus and empty state.",
+    "utc": "2026-10-18T12:36:11.664Z",
+    "image": "firefox-c28-empty-refocus.jpg"
+  },
+  {
+    "name": "firefox-c28-english-route",
+    "step": "Follow the actual language-menu English link from Chinese fallback Architecture; ordinary navigation changes route and UI language while retaining dark theme.",
+    "utc": "2026-10-18T12:36:34.593Z",
+    "image": "firefox-c28-english-route.jpg"
+  },
+  {
+    "name": "firefox-c28-demo-increment",
+    "step": "Navigate from the English guide's real Button link; native Increment changes Count 0\u21921. Dark theme retained.",
+    "utc": "2026-10-18T12:36:52.917Z",
+    "image": "firefox-c28-demo-increment.jpg"
+  },
+  {
+    "name": "firefox-c28-full-source-copy",
+    "step": "Native Reset returned Count to0; Full file exposes imports and other demo functions. Copy feedback captured for the full source.",
+    "utc": "2026-10-18T12:37:15.335Z",
+    "image": "firefox-c28-full-source-copy.jpg"
+  },
+  {
+    "name": "safari-c28-boundary-themescope",
+    "step": "Fixed CLI0.1.28 rebuilt the unchanged ten-case fixture as build51b085642c9294d1. Native ThemeScope query returned exactly Case0/1/7.",
+    "utc": "2026-10-18T12:39:25.842Z",
+    "image": "safari-c28-boundary-themescope.jpg"
+  },
+  {
+    "name": "firefox-c28-viewport-ready",
+    "step": "Detached Firefox DevTools reads actual full task viewport1280\u00d7716 CSS px, DPR2, island ready and no HTTP\u2265400 entries. The earlier allow-pasting SyntaxError was caused by the user handling the protection prompt, not by product code.",
+    "utc": "2026-10-18T12:43:08.982Z",
+    "image": "firefox-c28-viewport-ready.jpg"
+  },
+  {
+    "name": "safari-c28-worker-boundaries",
+    "step": "The production Worker in native Safari27.0.1 executed the seven original query assertions against a separate same-origin ten-string protocol fixture. Results: ThemeScope0/1/7; theme0/1/2/6/7; heme/Scope/\u6362 empty; theme_s2; \u5207\u63628/9. Exact emoji snippet \ud83d\ude00ThemeScope has UTF-16 highlights[[2,12]] (theme prefix[[2,7]]). Worker terminated after completion. Reported640\u00d7710 viewport belongs to execution before expanding the window to reveal the buffered Console output.",
+    "utc": "2026-10-18T12:44:37.039Z",
+    "image": "safari-c28-worker-boundaries.jpg"
+  },
+  {
+    "name": "firefox-c28-noscript-button",
+    "step": "DevTools current-tab Disable JavaScript was explicitly authorized and changed0\u21921, automatically reloading Button. Actual SSR Count0, disabled demo controls, readable function and full-file source, and enable-JavaScript search explanation inspected.",
+    "utc": "2026-10-18T12:45:59.068Z",
+    "image": "firefox-c28-noscript-button.jpg"
+  },
+  {
+    "name": "firefox-c28-noscript-next",
+    "step": "With current-tab JavaScript disabled, the inert search trigger did not open a dialog; its page-level enable-JavaScript explanation remains visible. Native Next Label link navigated to Label and preserves static content.",
+    "utc": "2026-10-18T12:46:43.862Z",
+    "image": "firefox-c28-noscript-next.jpg"
+  },
+  {
+    "name": "firefox-c28-noscript-zh-toc",
+    "step": "With JavaScript still disabled, ordinary navigation Label\u2192Quick start, native details language menu\u2192Chinese, and native TOC\u2192#verification-commands all work. Actual URL and static commands inspected.",
+    "utc": "2026-10-18T12:47:16.453Z",
+    "image": "firefox-c28-noscript-zh-toc.jpg"
+  },
+  {
+    "name": "firefox-c28-native-200-reading",
+    "step": "Native Firefox toolbar explicitly reads200% (ten native zoom-in steps from reset100%). Chinese Quick start reflows at this browser zoom; this is separate from320/375 responsive-mode checks.",
+    "utc": "2026-10-18T12:49:08.887Z",
+    "image": "firefox-c28-native-200-reading.jpg"
+  },
+  {
+    "name": "firefox-c28-native-200-search",
+    "step": "Native200% search remains operable; Down selects the Architecture fallback while the input retains visible focus.",
+    "utc": "2026-10-18T12:49:18.520Z",
+    "image": "firefox-c28-native-200-search.jpg"
+  },
+  {
+    "name": "firefox-c28-native-200-target",
+    "step": "At native200%, Enter navigated to /zh/architecture/#versioned-themes. Settled heading is visible below the sticky header.",
+    "utc": "2026-10-18T12:49:37.401Z",
+    "image": "firefox-c28-native-200-target.jpg"
+  },
+  {
+    "name": "firefox-c28-native-200-geometry",
+    "step": "Detached Inspector read-only geometry for native200% actual CSS viewport and stable target/header bounds. This record is distinct from responsive-mode dimensions.",
+    "utc": "2026-10-18T12:50:09.633Z",
+    "image": "firefox-c28-native-200-geometry.jpg"
+  },
+  {
+    "name": "safari-c28-rdm-320-reading",
+    "step": "Native Safari Responsive Design Mode custom width320 and height667, display scale100% and pixel ratio2x; Chinese Quick start reading. This desktop responsive mode is separate from native200% and does not substitute for iPhone.",
+    "utc": "2026-10-18T12:51:42.056Z",
+    "image": "safari-c28-rdm-320-reading.jpg"
+  },
+  {
+    "name": "safari-c28-rdm-320-reloaded",
+    "step": "At native Safari Responsive Design Mode320\u00d7667, reload before judging stability; no OS/device emulation claim.",
+    "utc": "2026-10-18T12:52:09.584Z",
+    "image": "safari-c28-rdm-320-reloaded.jpg"
+  },
+  {
+    "name": "safari-c28-rdm-320-search",
+    "step": "Reloaded320\u00d7667 native Safari responsive viewport; real search trigger, focused input and three current-language results with fallback labels.",
+    "utc": "2026-10-18T12:52:28.572Z",
+    "image": "safari-c28-rdm-320-search.jpg"
+  },
+  {
+    "name": "firefox-c28-module-error",
+    "step": "Fresh native Firefox fixture document, never-opened search module withheld from isolated built directory; actual404 verified. Search remains open, exact query theme_s retained and Retry rendered.",
+    "utc": "2026-10-18T12:53:20.184Z",
+    "image": "firefox-c28-module-error.jpg"
+  },
+  {
+    "name": "firefox-c28-module-retry",
+    "step": "Same Firefox document after restoring identical production module bytes: native Retry retains theme_s and returns exactly Case2; no navigation/reload was used between error and Retry.",
+    "utc": "2026-10-18T12:53:36.287Z",
+    "image": "firefox-c28-module-retry.jpg"
+  },
+  {
+    "name": "firefox-c28-worker-boundaries-failure",
+    "step": "Native Firefox158 production Worker: English word-start assertions and exact emoji[[2,12]] pass, but \u5207\u6362 returns no routes instead of containing Case8. This native failure remains open; the same isolated input passed in Safari. Expected MIME/module warnings above are from the deliberate404/retry exercise.",
+    "utc": "2026-10-18T12:56:04.900Z",
+    "image": "firefox-c28-worker-boundaries-failure.jpg"
+  },
+  {
+    "name": "firefox-c28-segmenter-diagnosis",
+    "step": "Read-only native Intl.Segmenter diagnostic: standalone \u5207\u6362 is a single segment at0 with isWordLike=false, while the same \u5207\u6362 segment inside \u4e3b\u9898\u5207\u6362 is at2 with true. Existing query filtering therefore removes the standalone query before matching. Native boundaries themselves are correct.",
+    "utc": "2026-10-18T12:58:50.357Z",
+    "image": "firefox-c28-segmenter-diagnosis.jpg"
+  },
+  {
+    "name": "safari-c28-rdm-320-target",
+    "step": "At Safari native Responsive Design Mode320\u00d7667, Down/Enter follows the real Chinese fallback result to #versioned-themes. Settled heading remains below the wrapped sticky header.",
+    "utc": "2026-10-18T12:59:22.756Z",
+    "image": "safari-c28-rdm-320-target.jpg"
+  },
+  {
+    "name": "safari-c28-rdm-375-reading",
+    "step": "Native Safari Responsive Design Mode changed320\u2192375 at height667, scale100%,2x; existing fallback section remains readable beneath the header. Responsive width evidence is separate from native200% and physical mobile acceptance.",
+    "utc": "2026-10-18T13:01:20.640Z",
+    "image": "safari-c28-rdm-375-reading.jpg"
+  },
+  {
+    "name": "safari-c28-rdm-375-target",
+    "step": "At375\u00d7667 native Safari responsive mode, repeat search\u2192Down\u2192Enter to the actual#versioned-themes fragment; settled heading and header inspected after navigation.",
+    "utc": "2026-10-18T13:01:57.723Z",
+    "image": "safari-c28-rdm-375-target.jpg"
+  },
+  {
+    "name": "safari-c28-rdm-375-geometry",
+    "step": "Native Safari responsive mode read-only measurement: viewport375\u00d7667 CSS px,DPR2,documentWidth375,headerBottom57,targetTop80.90625. Inspector only changes display scale to27%; the CSS viewport stays375\u00d7667.",
+    "utc": "2026-10-18T13:04:06.974Z",
+    "image": "safari-c28-rdm-375-geometry.jpg"
+  },
+  {
+    "name": "firefox-c29-chinese-ui-green",
+    "step": "Fixed C3dbb079a/CLI0.1.29 fixture build5750cabf891596fc, freshly reloaded in native Firefox158. Actual Chinese query\u5207\u6362 now returns Case8/9 with whole-word highlighting.",
+    "utc": "2026-10-18T13:41:41.277Z",
+    "image": "firefox-c29-chinese-ui-green.jpg"
+  },
+  {
+    "name": "firefox-c29-whole-word-ui",
+    "step": "Same fixed C29 native Firefox page: replacing\u5207\u6362 with\u6362 returns0 results, preserving whole-word matching after the compatibility fix.",
+    "utc": "2026-10-18T13:42:11.823Z",
+    "image": "firefox-c29-whole-word-ui.jpg"
+  },
+  {
+    "name": "firefox-c29-worker-boundaries-green",
+    "step": "Fixed C29 native Firefox158 uses actual fingerprinted production Worker8225fc0ff7. All seven original query assertions pass; exact emoji highlights[[2,12]], prefix[[2,7]], Chinese\u5207\u6362\u2192Case8/9 and\u6362\u2192empty. Worker terminated after the run.",
+    "utc": "2026-10-18T13:45:32.536Z",
+    "image": "firefox-c29-worker-boundaries-green.jpg"
+  },
+  {
+    "name": "safari-c29-rdm-320-search",
+    "step": "Fresh fixed C29 official build7e1e5c9e7e7392df. Native Safari Responsive Design Mode width320/height667 at1x; exact CSS width320 and media(width:320px)=true were confirmed at this ratio. Real search input/results fit at this width; this is separate from native200% and physical iPhone.",
+    "utc": "2026-10-18T14:05:57.371Z",
+    "image": "safari-c29-rdm-320-search.jpg"
+  },
+  {
+    "name": "safari-c29-rdm-320-target",
+    "step": "At exact320 CSS px under native Safari responsive1x, real search\u2192Down\u2192Enter lands on#versioned-themes. The full target heading stays below the wrapped header.",
+    "utc": "2026-10-18T14:06:28.921Z",
+    "image": "safari-c29-rdm-320-target.jpg"
+  },
+  {
+    "name": "safari-c29-rdm-320-geometry",
+    "step": "Fixed C29 read-only actual Worker fingerprint and exact320 CSS viewport, DPR and target/header bounds after the real search navigation. Separate native responsive mode, not native200% or iPhone.",
+    "utc": "2026-10-18T14:07:37.381Z",
+    "image": "safari-c29-rdm-320-geometry.jpg"
+  },
+  {
+    "name": "safari-c29-worker-boundaries-green",
+    "step": "Safari 27.0.1; C29 production Worker 8225fc0ff7; seven native boundary cases and UTF-16 emoji offsets.",
+    "utc": "2026-10-18T14:48:59.214Z",
+    "image": "safari-c29-worker-boundaries-green.jpg"
+  },
+  {
+    "name": "safari-c29-zoom-popover-attempt",
+    "step": "200% appears while site-preferences popover is active; Escape later cancels it. Not a stable 200% acceptance sample.",
+    "utc": "2026-10-18T14:50:55.617Z",
+    "image": "safari-c29-zoom-popover-attempt.jpg"
+  },
+  {
+    "name": "safari-c29-zoom-cancelled-search",
+    "step": "Search attempt after Escape cancelled the native zoom change; actual native setting returned to100%.",
+    "utc": "2026-10-18T14:51:25.814Z",
+    "image": "safari-c29-zoom-cancelled-search.jpg"
+  },
+  {
+    "name": "safari-c29-zoom-cancelled-target",
+    "step": "Target reached after cancelled zoom change; excluded from200% acceptance.",
+    "utc": "2026-10-18T14:51:26.727Z",
+    "image": "safari-c29-zoom-cancelled-target.jpg"
+  },
+  {
+    "name": "safari-c29-native-200-search-committed",
+    "step": "200% applied in website preferences and committed by clicking page content; Cmd+K ThemeScope and Down.",
+    "utc": "2026-10-18T14:53:09.397Z",
+    "image": "safari-c29-native-200-search-committed.jpg"
+  },
+  {
+    "name": "safari-c29-native-200-target-committed",
+    "step": "Committed native 200% zoom; Enter navigates to Versioned themes; title remains visible under wrapped sticky header.",
+    "utc": "2026-10-18T14:53:23.210Z",
+    "image": "safari-c29-native-200-target-committed.jpg"
+  },
+  {
+    "name": "safari-c29-native-200-geometry",
+    "step": "Native 200%: full page viewport 320x355 CSS, DPR4, documentWidth320, header93.5, target117.3203125. Detached inspector reports hidden/unfocused; geometry only.",
+    "utc": "2026-10-18T14:54:21.833Z",
+    "image": "safari-c29-native-200-geometry.jpg"
+  },
+  {
+    "name": "firefox-c29-rdm-320-reader",
+    "step": "Firefox158 native responsive mode320x667/DPR2; Chinese home real Quickstart navigation; dark reader.",
+    "utc": "2026-10-18T14:58:08.852Z",
+    "image": "firefox-c29-rdm-320-reader.jpg"
+  },
+  {
+    "name": "firefox-c29-rdm-320-toc-target",
+    "step": "320x667 responsive width; native TOC link reaches #verification-commands.",
+    "utc": "2026-10-18T14:58:48.904Z",
+    "image": "firefox-c29-rdm-320-toc-target.jpg"
+  },
+  {
+    "name": "firefox-c29-rdm-320-search",
+    "step": "320x667 native responsive mode: ThemeScope returns three groups and Down selects fallback Architecture.",
+    "utc": "2026-10-18T14:58:49.481Z",
+    "image": "firefox-c29-rdm-320-search.jpg"
+  },
+  {
+    "name": "firefox-c29-rdm-320-target",
+    "step": "320x667 native responsive mode: keyboard search navigates to #versioned-themes without clipping.",
+    "utc": "2026-10-18T14:58:50.496Z",
+    "image": "firefox-c29-rdm-320-target.jpg"
+  },
+  {
+    "name": "firefox-c29-rdm-320-geometry",
+    "step": "Actual CSS320x667/DPR2, documentWidth320, header93.5, target117.5; C29 Worker8225; detached Console visible/unfocused.",
+    "utc": "2026-10-18T14:59:42.567Z",
+    "image": "firefox-c29-rdm-320-geometry.jpg"
+  },
+  {
+    "name": "firefox-c29-rdm-375-toolbar-focus-attempt",
+    "step": "After resize focus remained in browser toolbar; Cmd+K opened browser search. Excluded from product acceptance.",
+    "utc": "2026-10-18T15:00:10.938Z",
+    "image": "firefox-c29-rdm-375-toolbar-focus-attempt.jpg"
+  },
+  {
+    "name": "firefox-c29-rdm-375-browser-search-attempt",
+    "step": "Toolbar-focus mistake navigated to a public ThemeScope search. Excluded from product acceptance; subsequent attempt to return local was blocked by cgWindowNotFound.",
+    "utc": "2026-10-18T15:00:12.060Z",
+    "image": "firefox-c29-rdm-375-browser-search-attempt.jpg"
+  },
+  {
+    "name": "firefox-c29-rdm-375-search-green",
+    "step": "375x667/DPR2 native responsive mode; actual page Search button focused input; ThemeScope3 and Down selects Architecture.",
+    "utc": "2026-10-18T15:18:27.336Z",
+    "image": "firefox-c29-rdm-375-search-green.jpg"
+  },
+  {
+    "name": "firefox-c29-rdm-375-target-green",
+    "step": "375x667 native responsive mode; actual page search Enter reaches local #versioned-themes below sticky header.",
+    "utc": "2026-10-18T15:18:28.441Z",
+    "image": "firefox-c29-rdm-375-target-green.jpg"
+  },
+  {
+    "name": "firefox-c29-deep-404",
+    "step": "Firefox158 native stable C29 official Chinese deep404; language-aware shell and Search trigger.",
+    "utc": "2026-10-18T15:21:33.835Z",
+    "image": "firefox-c29-deep-404.jpg"
+  },
+  {
+    "name": "firefox-c29-deep-404-chinese-search",
+    "step": "Chinese deep404 actual Search: \u5feb\u901f\u5f00\u59cb returns two groups, first Quickstart; current-language index usable.",
+    "utc": "2026-10-18T15:22:18.680Z",
+    "image": "firefox-c29-deep-404-chinese-search.jpg"
+  },
+  {
+    "name": "firefox-c29-demo-increment",
+    "step": "C29 new island bytes; real Increment click changes Count0 to1 in native Firefox158.",
+    "utc": "2026-10-18T15:22:58.232Z",
+    "image": "firefox-c29-demo-increment.jpg"
+  },
+  {
+    "name": "firefox-c29-source-copy",
+    "step": "Native Firefox C29 Button reset1 to0, full-file source selected including imports, Copy reports \u5df2\u590d\u5236.",
+    "utc": "2026-10-18T15:23:35.169Z",
+    "image": "firefox-c29-source-copy.jpg"
+  },
+  {
+    "name": "safari-c29-demo-initial",
+    "step": "Safari C29 native real search navigates to Button; initial state recorded before readiness.",
+    "utc": "2026-10-18T15:27:12.402Z",
+    "image": "safari-c29-demo-initial.jpg"
+  },
+  {
+    "name": "safari-c29-deep-404",
+    "step": "Safari27.0.1 native stable C29 official Chinese deep404; readable language-aware fallback, search and home links.",
+    "utc": "2026-10-18T15:39:12.019Z",
+    "image": "safari-c29-deep-404.jpg"
+  },
+  {
+    "name": "safari-c29-deep-404-chinese-search",
+    "step": "Safari native C29 Chinese deep404 actual Search \u5feb\u901f\u5f00\u59cb returns two groups.",
+    "utc": "2026-10-18T15:39:38.118Z",
+    "image": "safari-c29-deep-404-chinese-search.jpg"
+  }
+]

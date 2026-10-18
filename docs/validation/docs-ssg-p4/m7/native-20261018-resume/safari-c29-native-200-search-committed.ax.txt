@@ -1,0 +1,69 @@
+Window: "Architecture | Rustify UI", App: Safari浏览器.
+0 标准窗口 Architecture | Rustify UI, ID: SafariWindow?IsSecure=false&UUID=8B94E202-E355-455B-98DF-40C71253D736, Secondary Actions: Raise
+	1 分离组
+		2 分离器 (disabled, settable, float) -1
+		3 标签页组
+			4 滚动区
+				5 HTML内容 Description: Architecture | Rustify UI, URL: 127.0.0.1:4199/rustify-ui/zh/architecture/#versioned-themes
+					6 container 搜索
+						7 文本 搜索文档
+						8 按钮 关闭
+						9 组合框 (expanded, settable) 搜索文档, Value: ThemeScope, Secondary Actions: Collapse
+							10 文本 (settable) ThemeScope
+						11 文本 3 个结果
+						12 列表 (settable) 搜索结果
+							13 文本 快速开始 快速开始 › 在应用中使用 Tailwind v4 ope 外。 使用版本化主题文档时，在 sdk.css 后紧接着导入 theme-v4.css。ThemeScope 在根节点提供文档解析后的颜色、字体、间距、圆角和阴影；这些 scope 的 utility 间距读取 --rustify-unit，--layout-gap 仍是独立布局值。ThemedScope 保留旧值回退，两种 provider 的显式
+							14 文本 (selected) Architecturezh 尚未翻译，内容语言：en Architecture › Versioned themes ResolvedTheme> alongside its application state. ThemeScope claims the mount root, projects the snapshot through CSSOM and restores prior values on cleanup. ThemeBoundary re-resolve
+							15 文本 Theme documentszh 尚未翻译，内容语言：en Theme documents › Mount a browser scope Theme documents › Fonts and GPU consumers Theme documents › Import and export :{mount, AppHandle, MountConfig, ResolvedTheme, ThemeScope}; use rustify_ui::theme::{font_context, import_json, resolve, ThemeError, ThemeMode}; use std::sync::Arc; // Put the down
+				16 滚动条 (settable, float) 0.6766511
+	17 工具栏
+		18 container Secondary Actions: 移到上一项, 移到下一项, 从工具栏移除
+			19 按钮 Description: 显示边栏, ID: SidebarButton
+			20 菜单按钮 Description: 标签页组选择器, ID: TabGroupPickerButton?TabGroup=
+		21 container BackForwardSegmentedControl
+			22 按钮 Description: 返回, Help: 显示上一页, ID: BackButton
+			23 按钮 (disabled) Description: 前进, Help: 显示下一页, ID: ForwardButton
+		24 container Secondary Actions: 移到上一项, 移到下一项, 从工具栏移除
+			25 按钮 页面菜单, ID: AssistantButton
+			26 按钮 将页面添加到阅读列表, ID: OneStepBookmarkingButton
+			27 文本栏 (settable) Description: 智能搜索栏, Value: 127.0.0.1:4199/rustify-ui/zh/architecture/#versioned-themes, ID: WEB_BROWSER_ADDRESS_AND_SEARCH_FIELD
+			28 按钮 翻译可用, ID: TranslationButton
+			29 按钮 重新加载此页面, ID: ReloadButton
+		30 按钮 Description: 共享, ID: ShareButton, Secondary Actions: 移到上一项, 移到下一项, 从工具栏移除
+		31 按钮 Description: 新建标签页, ID: NewTabButton, Secondary Actions: 移到上一项, 移到下一项, 从工具栏移除
+		32 按钮 Description: 标签页概览, ID: TabOverviewButton, Secondary Actions: 移到上一项, 从工具栏移除
+	33 标签页组 Description: 标签页栏，10个标签页, ID: TabBar?isSeparate=false
+		34 标签 Home | Home semantics, Value: off, Secondary Actions: 关闭标签页, ID: TabBarTab?isNarrow=true&isExpanded=false&tabCount=&isPinned=false&isCluster=false&clusterID=&isActive=false
+			35 图像 FaviconImageView
+		36 标签 Rustify UI, Value: off, Secondary Actions: 关闭标签页, ID: TabBarTab?isNarrow=true&isExpanded=false&tabCount=&isPinned=false&isCluster=false&clusterID=&isActive=false
+			37 图像 FaviconImageView
+		38 标签 Architecture | Rustify UI, Value: off, Secondary Actions: 关闭标签页, ID: TabBarTab?isNarrow=true&isExpanded=false&tabCount=&isPinned=false&isCluster=false&clusterID=&isActive=false
+			39 图像 FaviconImageView
+		40 标签 Quick start | Rustify UI, Value: off, Secondary Actions: 关闭标签页, ID: TabBarTab?isNarrow=true&isExpanded=false&tabCount=&isPinned=false&isCluster=false&clusterID=&isActive=false
+			41 图像 FaviconImageView
+		42 标签 快速开始 | Rustify UI, Value: off, Secondary Actions: 关闭标签页, ID: TabBarTab?isNarrow=true&isExpanded=false&tabCount=&isPinned=false&isCluster=false&clusterID=&isActive=false
+			43 图像 FaviconImageView
+		44 标签 Native boundary checks, Value: off, Secondary Actions: 关闭标签页, ID: TabBarTab?isNarrow=true&isExpanded=false&tabCount=&isPinned=false&isCluster=false&clusterID=&isActive=false
+			45 图像 FaviconImageView
+		46 标签 Native boundary checks, Value: off, Secondary Actions: 关闭标签页, ID: TabBarTab?isNarrow=true&isExpanded=false&tabCount=&isPinned=false&isCluster=false&clusterID=&isActive=false
+			47 图像 FaviconImageView
+		48 标签 Architecture | Rustify UI, Help: 若要与此按钮中的项目交互，请按下Control-Option-Shift-下箭头键。, Value: on, Secondary Actions: 关闭标签页, ID: TabBarTab?isNarrow=false&isExpanded=false&tabCount=&isPinned=false&isCluster=false&clusterID=&isActive=true
+			49 图像 FaviconImageView
+			50 文本 Value: Architecture | Rustify UI, ID: UnifiedTabBarButton._titleTextField
+		51 标签 Button | Rustify UI, Value: off, Secondary Actions: 关闭标签页, ID: TabBarTab?isNarrow=true&isExpanded=false&tabCount=&isPinned=false&isCluster=false&clusterID=&isActive=false
+			52 图像 FaviconImageView
+		53 标签 Native boundary checks, Value: off, Secondary Actions: 关闭标签页, ID: TabBarTab?isNarrow=true&isExpanded=false&tabCount=&isPinned=false&isCluster=false&clusterID=&isActive=false
+			54 图像 FaviconImageView
+	55 关闭按钮
+	56 全屏幕按钮 Help: 此按钮也可以执行缩放窗口的操作, Secondary Actions: 缩放窗口
+	57 最小化按钮
+58 menu bar
+	59 Safari浏览器
+	60 文件
+	61 编辑
+	62 显示, ID: SafariViewMenu
+	63 历史记录
+	64 书签, ID: SafariBookmarksMenu
+	65 开发
+	66 窗口, ID: SafariWindowMenu
+	67 帮助, ID: SafariHelpMenu

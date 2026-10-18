@@ -1,0 +1,89 @@
+Window: "Rustify UI", App: Firefox.
+0 标准窗口 Rustify UI, Secondary Actions: Raise
+	1 container Rustify UI
+		2 工具栏 浏览器标签页
+			3 标签页组
+				4 标签页 (selectable) Value: 欢迎使用 Firefox, 欢迎使用 Firefox
+关闭 1 个标签页
+				5 标签页 (selected) Value: Rustify UI, Rustify UI
+关闭 1 个标签页
+				6 按钮 打开新标签页 (⌘T)
+			7 分隔条
+			8 按钮 列出所有标签页
+		9 工具栏 导航
+			10 按钮 Description: 侧栏, Help: 显示侧栏 (⌃Z)
+			11 按钮 后退
+			12 按钮 (disabled) 前进
+			13 按钮 重新加载
+			14 分隔条
+			15 container
+				16 按钮 查看网站信息
+				17 组合框 (settable) Description: 使用 Google 搜索，或者输入网址, Value: http://127.0.0.1:4199/rustify-ui/zh/
+					18 文本 http://127.0.0.1:4199/rustify-ui/zh/
+				19 按钮 为此页面添加书签 (⌘D)
+			20 分隔条
+			21 按钮 账户
+			22 按钮 扩展
+			23 按钮 Description: Firefox, Help: 打开应用程序菜单
+		24 工具栏
+		25 滚动区
+			26 HTML 内容 Description: Rustify UI, URL: 127.0.0.1:4199/rustify-ui/zh/
+				27 link 跳到正文, Value: 127.0.0.1:4199/rustify-ui/zh/#content
+				28 container
+					29 link Rustify UI, Value: 127.0.0.1:4199/rustify-ui/zh/
+					30 container 站点链接
+						31 内容列表
+							32 link GitHub 源码, Value: github.com/rockie/rustify-ui
+					33 按钮 搜索 Ctrl / Cmd K
+						34 文本 搜索
+						35 文本 Ctrl / Cmd K
+					36 摘要 中文
+						37 文本 中文
+					38 container 主题
+						39 开关按钮 跟随系统, Value: on
+							40 文本 跟随系统
+						41 开关按钮 浅色, Value: off
+							42 文本 浅色
+						43 开关按钮 深色, Value: off
+							44 文本 深色
+				45 container
+					46 标题 Rustify UI, Value: 1
+						47 文本 Rustify UI
+					48 文本 面向浏览器应用的实验性 Rust SDK，提供 DOM 组件和按需启用的 GPU region。
+					49 container 开始阅读
+						50 link 快速开始, Value: 127.0.0.1:4199/rustify-ui/zh/quickstart/
+						51 link 组件, Value: 127.0.0.1:4199/rustify-ui/zh/components/button/
+					52 内容列表
+						53 container
+							54 标题 DOM 界面, Value: 2
+								55 文本 DOM 界面
+							56 文本 Leptos 管理 DOM、布局和响应式应用状态。
+						57 container
+							58 标题 按需启用 GPU, Value: 2
+								59 文本 按需启用 GPU
+							60 文本 需要自定义绘制的交互内容可使用 GPU region。
+						61 container
+							62 标题 静态部署, Value: 2
+								63 文本 静态部署
+							64 文本 构建浏览器资源后通过 HTTP 托管，无需后端服务。
+					65 文本 Rustify UI 以 Leptos CSR 管理浏览器界面，默认构建仅使用 DOM。启用 SDK 的 gpu feature 后，GpuRegion 在由 DOM 定位的 canvas 中运行 Makepad WebGL2 绘制；应用向 region 传入 props，并接收类型化动作。
+					66 文本 每项任务按实际需要选择呈现路径。共享状态和主题 token 不要求 DOM 与 GPU 拥有相同的组件目录或 CSS 支持；只有明确需要两端或跨区协作时，才同时实现两端。当前尚未选定具体业务场景。
+					67 文本 本仓包含 SDK、DOM 组件、Makepad fork 和可运行示例。工作区版本为 0.1.0，尚未开放包发布；从快速开始进入本地构建，或在组件文档中操作实际 DOM 示例并查看 Rust 源码。
+				68 container 页脚导航
+					69 link 返回首页, Value: 127.0.0.1:4199/rustify-ui/zh/
+	70 关闭按钮
+	71 全屏幕按钮 Help: 此按钮也可以执行缩放窗口的操作, Secondary Actions: 缩放窗口
+	72 最小化按钮
+73 menu bar
+	74 Firefox
+	75 文件
+	76 编辑
+	77 查看
+	78 历史
+	79 书签
+	80 配置文件
+	81 工具
+	82 窗口
+	83 帮助
+
+The focused UI element is 26 HTML 内容 Description: Rustify UI, URL: 127.0.0.1:4199/rustify-ui/zh/

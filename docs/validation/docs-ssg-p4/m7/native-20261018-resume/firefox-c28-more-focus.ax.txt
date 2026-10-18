@@ -1,0 +1,240 @@
+Window: "Architecture | Rustify UI", App: Firefox.
+0 标准窗口 Architecture | Rustify UI, Secondary Actions: Raise
+	1 container Architecture | Rustify UI
+		2 工具栏 浏览器标签页
+			3 标签页组
+				4 标签页 (selectable) Value: 欢迎使用 Firefox, 欢迎使用 Firefox
+关闭 1 个标签页
+				5 标签页 (selected) Value: Architecture | Rustify UI, Architecture | Rustify UI
+关闭 1 个标签页
+				6 按钮 打开新标签页 (⌘T)
+			7 分隔条
+			8 按钮 列出所有标签页
+		9 工具栏 导航
+			10 按钮 Description: 侧栏, Help: 显示侧栏 (⌃Z)
+			11 按钮 后退
+			12 按钮 (disabled) 前进
+			13 按钮 重新加载
+			14 分隔条
+			15 container
+				16 按钮 查看网站信息
+				17 组合框 (settable) Description: 使用 Google 搜索，或者输入网址, Value: http://127.0.0.1:4199/rustify-ui/zh/architecture/#versioned-themes
+					18 文本 http://127.0.0.1:4199/rustify-ui/zh/architecture/#versioned-themes
+				19 按钮 进入阅读模式
+				20 按钮 试试 Firefox 注重隐私的翻译功能 - Beta
+				21 按钮 为此页面添加书签 (⌘D)
+			22 分隔条
+			23 按钮 账户
+			24 按钮 扩展
+			25 按钮 Description: Firefox, Help: 打开应用程序菜单
+		26 工具栏
+		27 滚动区
+			28 HTML 内容 Description: Architecture | Rustify UI, URL: 127.0.0.1:4199/rustify-ui/zh/architecture/#versioned-themes
+				29 container 搜索
+					30 文本 搜索文档
+					31 按钮 关闭
+					32 组合框 (settable) 搜索文档, Value: the
+						33 文本 the
+					34 文本 36 个结果
+					35 列表 搜索结果
+						36 文本 (selected) Data larger than the screenzh 尚未翻译，内容语言：en Data larger than the screen › The table holds no data Data larger than the screen › What is actually in the document DataTable is told how many rows there are and given a way to read a cell. It never holds a value. <DataTable rows=rows // Signal<usize> columns=columns // Signal<Vec<Column>> cell=
+Data larger than
+the
+screen
+zh
+尚未翻译，内容语言：en
+Data larger than the screen › The table holds no data
+Data larger than the screen › What is actually in the document
+DataTable is told how many rows
+the
+re are and given a way to read a cell. It never holds a value. <DataTable rows=rows // Signal<usize> columns=columns // Signal<Vec<Column>> cell=
+						37 文本 (selectable) Theme documentszh 尚未翻译，内容语言：en Theme documents › Static documentation themes Theme documents › Create and resolve a document A Rustify Docs site can import the complete JSON exported by Theme Studio: [theme] document = "theme.json" The path is relative to the site project. Keep the document inside the pr
+The
+me documents
+zh
+尚未翻译，内容语言：en
+Theme documents › Static documentation themes
+Theme documents › Create and resolve a document
+A Rustify Docs site can import
+the
+complete JSON exported by Theme Studio: [theme] document = "theme.json" The path is relative to the site project. Keep the document inside the pr
+						38 文本 (selectable) Architecturezh 尚未翻译，内容语言：en Architecture › Versioned themes Architecture › Streams, and why they are named Architecture › Deciding in the same turn as the event ThemeDocument retains light/dark author strings. resolve produces one ResolvedTheme containing sRGB RGBA, CSS-pixel geometry, selected fonts, structured shadows and diagnostics. Ap
+Architecture
+zh
+尚未翻译，内容语言：en
+Architecture › Versioned themes
+Architecture › Streams, and why they are named
+Architecture › Deciding in the same turn as the event
+The
+meDocument retains light/dark author strings. resolve produces one ResolvedTheme containing sRGB RGBA, CSS-pixel geometry, selected fonts, structured shadows and diagnostics. Ap
+						39 文本 (selectable) Navigationzh 尚未翻译，内容语言：en Navigation › What is in the address, and what is not Navigation › Guards, and the number in history.state Navigation › Guards, and the number in history.state › Known limitations Routes matches static segments and :param, in the order declared, and a path that matches nothing is an answer - the application's not-found view - rather than a failure. There is
+Navigation
+zh
+尚未翻译，内容语言：en
+Navigation › What is in the address, and what is not
+Navigation › Guards, and the number in history.state
+Navigation › Guards, and the number in history.state › Known limitations
+Routes matches static segments and :param, in
+the
+order declared, and a path that matches nothing is an answer - the application's not-found view - rather than a failure. There is
+						40 文本 (selectable) Formszh 尚未翻译，内容语言：en Forms › Why the values are not here Forms › Generations, and the late answer Forms › Fields the form does not have played value comes only from its value prop. If the form kept a second copy, "what is in this field" would have two answers, and the two would differ the moment one path updated wi
+Forms
+zh
+尚未翻译，内容语言：en
+Forms › Why the values are not here
+Forms › Generations, and the late answer
+Forms › Fields the form does not have
+played value comes only from its value prop. If
+the
+form kept a second copy, "what is in this field" would have two answers, and the two would differ the moment one path updated wi
+						41 文本 (selectable) Languages, formatting and textzh 尚未翻译，内容语言：en Languages, formatting and text › What the SDK translates, and what it does not Languages, formatting and text › Choosing the language Languages, formatting and text › Fonts, and the glyphs a font does not have The SDK ships the words it puts on screen on its own account - the label on a retry control, the word for closing a layer, the sentence a refused clipboard shows. Those are rustify
+Languages, formatting and text
+zh
+尚未翻译，内容语言：en
+Languages, formatting and text › What the SDK translates, and what it does not
+Languages, formatting and text › Choosing the language
+Languages, formatting and text › Fonts, and the glyphs a font does not have
+The
+SDK ships the words it puts on screen on its own account - the label on a retry control, the word for closing a layer, the sentence a refused clipboard shows. Those are rustify
+						42 文本 (selectable) Runtime utilitieszh 尚未翻译，内容语言：en Runtime utilities › Build and try the source panel Runtime utilities › SDK calls The default build contains a compiler-only Worker. Complete class names work without the scanner: mbx xtask build-web --example utility-lab --release mbx xtask serve --example util
+Runtime utilities
+zh
+尚未翻译，内容语言：en
+Runtime utilities › Build and try the source panel
+Runtime utilities › SDK calls
+The
+default build contains a compiler-only Worker. Complete class names work without the scanner: mbx xtask build-web --example utility-lab --release mbx xtask serve --example util
+						43 文本 (selectable) Compatibility and capability boundaries (P1 research preview)zh 尚未翻译，内容语言：en Compatibility and capability boundaries (P1 research preview) › Instances and what they cost Compatibility and capability boundaries (P1 research preview) › What the resource ledgers count Compatibility and capability boundaries (P1 research preview) › The clipboard is a wasm instance with its own linear memory. They share the compiled WebAssembly.Module, so a second instance is one extra JS request for a copy of the generated glue
+Compatibility and capability boundaries (P1 research preview)
+zh
+尚未翻译，内容语言：en
+Compatibility and capability boundaries (P1 research preview) › Instances and what they cost
+Compatibility and capability boundaries (P1 research preview) › What the resource ledgers count
+Compatibility and capability boundaries (P1 research preview) › The clipboard
+is a wasm instance with its own linear memory.
+The
+y share the compiled WebAssembly.Module, so a second instance is one extra JS request for a copy of the generated glue under a qu
+						44 文本 (selectable) Component cataloguezh 尚未翻译，内容语言：en Component catalogue › Where they live The twenty-four DOM components — crates/rustify-components/src/, one file per category. The class strings came from Rust/UI; sources.lock.json records what was imported and what th
+Component catalogue
+zh
+尚未翻译，内容语言：en
+Component catalogue › Where they live
+The
+twenty-four DOM components — crates/rustify-components/src/, one file per category. The class strings came from Rust/UI; sources.lock.json records what was imported and what th
+						45 文本 (selectable) 快速开始 快速开始 › 构建并预览示例 快速开始 › 在应用中使用 Tailwind v4 快速开始 › 使用 DOM 组件 -example vellum --release；集成指南 解释它的绘制、编辑与持久化路径。 Theme Studio 主题编辑器 的入口为： mbx xtask build-web --example theme-studio --release mbx xtask serve --example theme-studio --release 选择预设，
+快速开始
+快速开始 › 构建并预览示例
+快速开始 › 在应用中使用 Tailwind v4
+快速开始 › 使用 DOM 组件
+-example vellum --release；集成指南 解释它的绘制、编辑与持久化路径。
+The
+me Studio 主题编辑器 的入口为： mbx xtask build-web --example theme-studio --release mbx xtask serve --example theme-studio --release 选择预设，
+						46 文本 (selectable) Workspacezh 尚未翻译，内容语言：en Workspace › Panels and dividers Workspace › Tabs over panels ce Three pieces: panels side by side, tabs over them, and every command in one list. Each has a part that is easy to get wrong silently, and each keeps that part as a function with
+Workspace
+zh
+尚未翻译，内容语言：en
+Workspace › Panels and dividers
+Workspace › Tabs over panels
+ce Three pieces: panels side by side, tabs over
+the
+m, and every command in one list. Each has a part that is easy to get wrong silently, and each keeps that part as a function with
+						47 文本 (selectable) Vellum example and framework capabilitieszh 尚未翻译，内容语言：en Vellum example and framework capabilities › Five-layer mapping Vellum example and framework capabilities › Responsibilities by capability cycle and input across DOM and GPU regions. See the VELLUM plan for implementation status. Final validation passed 142 Rust tests and 80 tests across 11 independent browser scripts
+Vellum example and framework capabilities
+zh
+尚未翻译，内容语言：en
+Vellum example and framework capabilities › Five-layer mapping
+Vellum example and framework capabilities › Responsibilities by capability
+cycle and input across DOM and GPU regions. See
+the
+VELLUM plan for implementation status. Final validation passed 142 Rust tests and 80 tests across 11 independent browser scripts
+						48 文本 (selectable) Buttonzh 尚未翻译，内容语言：en Button › Example Button › Capabilities riant, size, disabled; a disabled button leaves the tab order and calls nothing
+Button
+zh
+尚未翻译，内容语言：en
+Button › Example
+Button › Capabilities
+riant, size, disabled; a disabled button leaves
+the
+tab order and calls nothing
+						49 文本 (selectable) Labelzh 尚未翻译，内容语言：en Label › Capabilities Label › GPU integration Label children as the text, and the id of the control it names
+Label
+zh
+尚未翻译，内容语言：en
+Label › Capabilities
+Label › GPU integration
+Label children as
+the
+text, and the id of the control it names
+						50 文本 (selectable) Linkzh 尚未翻译，内容语言：en Link › Example Link › Capabilities Link › GPU integration Jump to the destination Toggle availability The link points to this paragraph. Link: Available /// A disabled link keeps its label and stops offering a destination. pub fn link_dem
+Link
+zh
+尚未翻译，内容语言：en
+Link › Example
+Link › Capabilities
+Link › GPU integration
+Jump to
+the
+destination Toggle availability The link points to this paragraph. Link: Available /// A disabled link keeps its label and stops offering a destination. pub fn link_dem
+						51 文本 (selectable) Iconzh 尚未翻译，内容语言：en Icon › Example Icon › Capabilities Icon one of six glyphs, or any SVG the application passes as children; a label makes it an image and no label makes it decoration
+Icon
+zh
+尚未翻译，内容语言：en
+Icon › Example
+Icon › Capabilities
+Icon one of six glyphs, or any SVG
+the
+application passes as children; a label makes it an image and no label makes it decoration
+						52 文本 (selectable) Text fieldzh 尚未翻译，内容语言：en Text field › Capabilities Text field › GPU integration d, described-by; a refused value is replaced by the application's rather than left on screen
+Text field
+zh
+尚未翻译，内容语言：en
+Text field › Capabilities
+Text field › GPU integration
+d, described-by; a refused value is replaced by
+the
+application's rather than left on screen
+						53 文本 (selectable) Text areazh 尚未翻译，内容语言：en Text area › Example Text area › Capabilities Text area › GPU integration Notes Keep the view and state together. Use the same function for SSR and hydration. Current text: Keep the view and state together. Use the same function for SSR and hydration. //
+Text area
+zh
+尚未翻译，内容语言：en
+Text area › Example
+Text area › Capabilities
+Text area › GPU integration
+Notes Keep
+the
+view and state together. Use the same function for SSR and hydration. Current text: Keep the view and state together. Use the same function for SSR and hydration. //
+						54 文本 (selectable) Checkboxzh 尚未翻译，内容语言：en Checkbox › Capabilities Checkbox › GPU integration , disabled, read-only, invalid; read-only takes the click and puts the box back
+Checkbox
+zh
+尚未翻译，内容语言：en
+Checkbox › Capabilities
+Checkbox › GPU integration
+, disabled, read-only, invalid; read-only takes
+the
+click and puts the box back
+						55 文本 (selectable) Radiozh 尚未翻译，内容语言：en Radio › Capabilities Radio › GPU integration Radio the options, which one is chosen, disabled, read-only; an option can be disabled on its own
+Radio
+zh
+尚未翻译，内容语言：en
+Radio › Capabilities
+Radio › GPU integration
+Radio
+the
+options, which one is chosen, disabled, read-only; an option can be disabled on its own
+					56 按钮 显示更多
+	57 关闭按钮
+	58 全屏幕按钮 Help: 此按钮也可以执行缩放窗口的操作, Secondary Actions: 缩放窗口
+	59 最小化按钮
+60 menu bar
+	61 Firefox
+	62 文件
+	63 编辑
+	64 查看
+	65 历史
+	66 书签
+	67 配置文件
+	68 工具
+	69 窗口
+	70 帮助
+
+The focused UI element is 56 按钮 显示更多

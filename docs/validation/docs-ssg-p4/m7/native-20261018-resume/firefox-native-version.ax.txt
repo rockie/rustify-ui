@@ -1,0 +1,37 @@
+Window: "", App: Firefox.
+0 标准窗口 Secondary Actions: Raise
+	1 container
+		2 container
+			3 text 正在检查更新… 158.0 (aarch64)
+			4 link 新版变化, Value: firefox.com/zh-CN/firefox/158.0/releasenotes/?utm_source=firefox-browser&utm_medium=firefox-desktop&utm_campaign=about-dialog
+			5 链接 Firefox 帮助
+				6 文本 Firefox 帮助
+			7 链接 提交反馈
+				8 文本 提交反馈
+			9 文本 Firefox 诞生于 
+			10 link Mozilla, Value: mozilla.org/?utm_source=firefox-browser&utm_medium=firefox-desktop&utm_campaign=about-dialog
+			11 文本 。我们是一个
+			12 link 全球社区, Value: about:credits
+			13 text ，携手致力于让互联网保持开放、公开且人人可用。 想支持我们吗？
+			14 link 向我们捐款, Value: foundation.mozilla.org/?form=firefox-about
+			15 文本 或者
+			16 link 参与进来, Value: mozilla.org/contribute/?utm_source=firefox-browser&utm_medium=firefox-desktop&utm_campaign=about-dialog
+			17 文本 ！
+			18 link 许可信息, Value: about:license
+			19 link 使用条款, Value: mozilla.org/about/legal/terms/firefox/
+			20 link 隐私声明, Value: mozilla.org/privacy/firefox/?utm_source=firefox-browser&utm_medium=firefox-desktop&utm_campaign=about-dialog
+			21 文本 Firefox 以及 Firefox 标志均为 Mozilla 基金会所有的商标。
+	22 关闭按钮
+	23 缩放按钮 (disabled)
+24 menu bar
+	25 Firefox
+	26 文件
+	27 编辑
+	28 查看
+	29 历史
+	30 书签
+	31 工具
+	32 窗口
+	33 帮助
+
+The focused UI element is 1 container

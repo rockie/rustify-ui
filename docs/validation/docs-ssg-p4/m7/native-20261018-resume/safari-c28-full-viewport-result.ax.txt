@@ -1,0 +1,65 @@
+Window: "网页检查器 — 127.0.0.1 — quickstart", App: Safari浏览器.
+0 标准窗口 网页检查器 — 127.0.0.1 — quickstart, Secondary Actions: Raise
+	1 滚动区
+		2 HTML内容 inspector-resource:///Main.html
+			3 按钮 在窗口左侧显示
+			4 按钮 在窗口底部显示
+			5 按钮 在窗口右侧显示
+			6 按钮 开始选择元素(⇧⌘C)
+			7 按钮 设备设置
+			8 标签页组 (selectable)
+				9 标签 (selectable) 元素
+				10 标签 (selected) 控制台
+				11 标签 (selectable) 来源
+				12 标签 (selectable) 网络
+				13 标签 (selectable) 时间线
+				14 标签 (selectable) 储存空间
+				15 标签 (selectable) 图形
+				16 标签 (selectable) 层
+				17 标签 (selectable) 审核
+				18 标签 (selectable) 搜索(⇧⌘F)
+				19 标签 (selectable) 设置(⌘,)
+			20 container 控制台
+				21 搜索文本栏 (settable)  
+				22 按钮 (disabled) 查找上一个(⇧⌘G)
+				23 按钮 (disabled) 查找下一个(⌘G)
+				24 文本 全部
+				25 文本 评估
+				26 文本 错误
+				27 文本 警告
+				28 文本 打印
+				29 按钮 其他过滤选项…
+				30 复选框 (settable, integer) 模拟用户手势, Help: 如同在用户手势中一样运行控制台命令, Value: 0
+				31 按钮 运行控制台片段…
+				32 按钮 收集垃圾
+				33 按钮 清空日志（⌘K或⌃L）
+				34 container
+					35 文本 控制台打开于：20:31:30
+					36 图像
+					37 文本 JSON.stringify({url:location.href,viewport:[innerWidth,innerHeight],visual:[visualViewport.width,visualViewport.height,visualViewport.scale],dpr:devicePixelRatio,visibility:document.visibilityState,focus:document.hasFocus(),documentWidth:document.documentElement.scrollWidth,header:document.querySelector(".rd-header-bar").parentElement.getBoundingClientRect().toJSON()})
+					38 图像
+					39 文本 "{\"url\":\"
+					40 link http://127.0.0.1:4199/rustify-ui/zh/quickstart/\, Value: 127.0.0.1:4199/rustify-ui/zh/quickstart//
+					41 文本 ",\"viewport\":[640,710],\"visual\":[640,710,1],\"dpr\":2,\"visibility\":\"hidden\",\"focus\":false,\"documentWidth\":640,\"header\":{\"x\":0,\"y\":0,\"width\":640,\"height\":57,\"top\":0,\"right\":640,\"bottom\":57,\"left\":0}}" = $1
+					42 图像
+					43 文本 1+1
+					44 图像
+					45 文本 2 = $2
+					46 图像
+					47 文本 2 = $2
+			48 文本输入区 (settable) 控制台提示, Value: [文本输入区: 控制台提示], Secondary Actions: 显示写作工具
+			49 container
+	50 关闭按钮
+	51 全屏幕按钮 Help: 此按钮也可以执行缩放窗口的操作, Secondary Actions: 缩放窗口
+	52 最小化按钮
+	53 文本 网页检查器 — 127.0.0.1 — quickstart
+54 menu bar
+	55 Safari浏览器
+	56 文件
+	57 编辑
+	58 显示, ID: SafariViewMenu
+	59 历史记录
+	60 书签, ID: SafariBookmarksMenu
+	61 开发
+	62 窗口, ID: SafariWindowMenu
+	63 帮助, ID: SafariHelpMenu

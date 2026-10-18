@@ -1,0 +1,225 @@
+Window: "ThemeScope - Google 搜索", App: Firefox.
+0 标准窗口 ThemeScope - Google 搜索, Secondary Actions: Raise
+	1 container ThemeScope - Google 搜索
+		2 工具栏 浏览器标签页
+			3 标签页组
+				4 标签页 (selectable) Value: 欢迎使用 Firefox, 欢迎使用 Firefox
+关闭 1 个标签页
+				5 标签页 (selectable) Value: Architecture | Rustify UI, Architecture | Rustify UI
+关闭 1 个标签页
+				6 标签页 (selected) Value: ThemeScope - Google 搜索, ThemeScope - Google 搜索
+关闭 1 个标签页
+				7 按钮 打开新标签页 (⌘T)
+			8 分隔条
+			9 按钮 列出所有标签页
+		10 工具栏 导航
+			11 按钮 Description: 侧栏, Help: 显示侧栏 (⌃Z)
+			12 按钮 后退
+			13 按钮 (disabled) 前进
+			14 按钮 停止
+			15 分隔条
+			16 container
+				17 按钮 Google，选取搜索引擎
+					18 container
+						19 文本 Google
+						20 按钮 关闭
+				21 组合框 (settable) Description: 使用 Google 搜索, Value: ThemeScope, Placeholder: 网上搜索
+					22 文本 ThemeScope
+				23 按钮 在地址栏中显示网址
+			24 分隔条
+			25 按钮 账户
+			26 按钮 扩展
+			27 按钮 Description: Firefox, Help: 打开应用程序菜单
+		28 工具栏
+		29 container
+			30 滚动区
+				31 HTML 内容 chrome://devtools/content/responsive/toolbar.xhtml
+					32 container
+						33 按钮 设备型号
+						34 步进器 (settable, float) 375
+							35 文本 375
+						36 文本 ×
+						37 步进器 (settable, float) 667
+							38 文本 667
+						39 按钮 旋转视区
+						40 按钮 像素比：2, Help: 更改视窗的设备像素比
+							41 文本 像素比：2
+						42 按钮 不节流
+						43 container
+							44 文本 UA:
+							45 文本栏 (settable) UA: 选择预定义的用户代理, Placeholder: 自定义 User Agent
+							46 按钮 选择预定义的用户代理
+						47 按钮 启用触摸模拟
+						48 按钮 截取视区 (viewport) 图像
+						49 按钮
+						50 按钮 关闭响应式设计模式
+			51 滚动区
+				52 HTML 内容 Description: ThemeScope - Google 搜索, URL: google.com/search?client=firefox-b-d&q=ThemeScope&sei=-97UapLZBNKyrfcP1vzE2QI
+					53 container
+						54 链接 跳到主要内容
+							55 文本 跳到主要内容
+						56 link 无障碍功能帮助, Value: support.google.com/websearch/answer/181196?hl=zh-CN
+					57 container
+						58 link Description: Google 首页, Value: google.com/webhp?hl=zh-CN&sa=X&ved=2ahUKEwiIwrW76sOXAxVlausIHS7QBLMQPHoECAYQBA
+						59 组合框 (settable) Description: 搜索, Value: ThemeScope
+							60 文本 ThemeScope
+						61 按钮 清除
+						62 按钮 按语音搜索
+						63 按钮 按图搜索
+						64 按钮 设置
+						65 按钮 分享
+						66 按钮 Google 应用
+						67 link Description: 登录, Value: accounts.google.com/ServiceLogin?hl=zh-CN&passive=true&continue=https://www.google.com/search%3Fclient%3Dfirefox-b-d%26q%3DThemeScope%26sei%3D-97UapLZBNKyrfcP1vzE2QI&ec=futura_srp_og_si_72236_p
+					68 container
+						69 内容列表
+							70 link AI 模式, Value: google.com/search?q=ThemeScope&client=firefox-b-d&hs=hdAW&sca_esv=4b11636d9b65765a&sxsrf=APpeQnuAi4vXSVZbEzwnm24JsMB-Utbw4w:1792335611277&udm=50&fbs=ABfTbFUhNGvvPEUFOvrsPMHwBXgOm668fbRC_a7Vhb8DCgbMq5qkXH1ll5RuIouPLh5wQptRTkPmeI3L39F3xC_zgkMvpMC0YJf-Rdyxp6ixVLartPbF1UFEztuFD6lm73QIfIIm7pLSlqRx27wlRX_g62-9vZaDfBdOzGwh3U2_DsD3gdKr0vJIcThdMwPXlM2nO_3dcwxoY4wXyE0FRI2ryJslm-91Xw&vsint=&aep=1&ntc=1&cs=0&sa=X&ved=2ahUKEwiIwrW76sOXAxVlausIHS7QBLMQ2J8OegQIGRAD
+							71 链接 (disabled) 全部
+								72 文本 全部
+							73 link 图片, Value: google.com/search?client=firefox-b-d&hs=hdAW&sca_esv=4b11636d9b65765a&sxsrf=APpeQnuAi4vXSVZbEzwnm24JsMB-Utbw4w:1792335611277&udm=2&fbs=ABfTbFUhNGvvPEUFOvrsPMHwBXgOm668fbRC_a7Vhb8DCgbMq5qkXH1ll5RuIouPLh5wQptRTkPmeI3L39F3xC_zgkMvpMC0YJf-Rdyxp6ixVLartPbF1UFEztuFD6lm73QIfIIm7pLSlqRx27wlRX_g62-9vZaDfBdOzGwh3U2_DsD3gdKr0vJIcThdMwPXlM2nO_3dcwxoY4wXyE0FRI2ryJslm-91Xw&q=ThemeScope&sa=X&ved=2ahUKEwiIwrW76sOXAxVlausIHS7QBLMQtKgLegQIHhAB
+							74 link 视频, Value: google.com/search?client=firefox-b-d&hs=hdAW&sca_esv=4b11636d9b65765a&sxsrf=APpeQnuAi4vXSVZbEzwnm24JsMB-Utbw4w:1792335611277&udm=vids&fbs=ABfTbFUhNGvvPEUFOvrsPMHwBXgOm668fbRC_a7Vhb8DCgbMq5qkXH1ll5RuIouPLh5wQptRTkPmeI3L39F3xC_zgkMvpMC0YJf-Rdyxp6ixVLartPbF1UFEztuFD6lm73QIfIIm7pLSlqRx27wlRX_g62-9vZaDfBdOzGwh3U2_DsD3gdKr0vJIcThdMwPXlM2nO_3dcwxoY4wXyE0FRI2ryJslm-91Xw&q=ThemeScope&sa=X&ved=2ahUKEwiIwrW76sOXAxVlausIHS7QBLMQtKgLegQIHxAB
+							75 link 购物, Value: google.com/search?client=firefox-b-d&hs=hdAW&sca_esv=4b11636d9b65765a&sxsrf=APpeQnuAi4vXSVZbEzwnm24JsMB-Utbw4w:1792335611277&udm=28&fbs=ABfTbFUhNGvvPEUFOvrsPMHwBXgOm668fbRC_a7Vhb8DCgbMq5qkXH1ll5RuIouPLh5wQptRTkPmeI3L39F3xC_zgkMvpMC0YJf-Rdyxp6ixVLartPbF1UFEztuFD6lm73QIfIIm7pLSlqRx27wlRX_g62-9vZaDfBdOzGwh3U2_DsD3gdKr0vJIcThdMwPXlM2nO_3dcwxoY4wXyE0FRI2ryJslm-91Xw&q=ThemeScope&ved=1t:220175&ictx=111
+							76 link 短视频, Value: google.com/search?client=firefox-b-d&hs=hdAW&sca_esv=4b11636d9b65765a&sxsrf=APpeQnuAi4vXSVZbEzwnm24JsMB-Utbw4w:1792335611277&udm=39&fbs=ABfTbFUhNGvvPEUFOvrsPMHwBXgOm668fbRC_a7Vhb8DCgbMq5qkXH1ll5RuIouPLh5wQptRTkPmeI3L39F3xC_zgkMvpMC0YJf-Rdyxp6ixVLartPbF1UFEztuFD6lm73QIfIIm7pLSlqRx27wlRX_g62-9vZaDfBdOzGwh3U2_DsD3gdKr0vJIcThdMwPXlM2nO_3dcwxoY4wXyE0FRI2ryJslm-91Xw&q=ThemeScope&sa=X&ved=2ahUKEwiIwrW76sOXAxVlausIHS7QBLMQs6gLegQIGxAB
+							77 link 地图, Value: maps.google.com/maps?client=firefox-b-d&hs=hdAW&sca_esv=4b11636d9b65765a&output=search&q=ThemeScope&source=lnms&fbs=ABfTbFUhNGvvPEUFOvrsPMHwBXgOm668fbRC_a7Vhb8DCgbMq5qkXH1ll5RuIouPLh5wQptRTkPmeI3L39F3xC_zgkMvpMC0YJf-Rdyxp6ixVLartPbF1UFEztuFD6lm73QIfIIm7pLSlqRx27wlRX_g62-9vZaDfBdOzGwh3U2_DsD3gdKr0vJIcThdMwPXlM2nO_3dcwxoY4wXyE0FRI2ryJslm-91Xw&entry=mc&ved=1t:200715&ictx=111
+							78 按钮 更多过滤条件
+								79 container 更多过滤条件
+									80 文本 更多
+						81 标题 搜索结果, Value: 1
+							82 文本 搜索结果
+						83 container
+							84 标题 您是不是要找： ThemeScape, Value: 2
+								85 文本 您是不是要找：
+								86 link ThemeScape, Value: google.com/search?client=firefox-b-d&hs=hdAW&sca_esv=4b11636d9b65765a&sxsrf=APpeQnuAi4vXSVZbEzwnm24JsMB-Utbw4w:1792335611277&q=ThemeScape&spell=1&sa=X&ved=2ahUKEwiIwrW76sOXAxVlausIHS7QBLMQBSgAegQIDxAB
+							87 container 广告
+								88 标题 赞助商搜索结果, Value: 2
+									89 文本 赞助商搜索结果
+								90 container
+									91 container
+										92 link AI-Powered Web Analytics | Analytics Without the Wait Amplitude https://www.amplitude.com › web_analytics › request_demo, Value: google.com/goto?url=CAESbgHrOzAVgWPdBuJOCGagDGhwbbqq-eplVJTuXbBhLTRNwYTBSYWS95XZwUOiWfdsoy8T7dKZjabPsKN5mSDHU4Jp3WkOvDPffmaJh2QfGO1m8f32iQ6OIFEXTmIgRci-nPI9cvhBgtkASkHh_-IW
+										93 按钮 为什么会显示该广告？
+									94 文本 Stop stitching together tools and spreadsheets - use one platform for all your web data. Go beyond the usual analytics KPIs - connect web behavior to conversions & revenue. AI Agents built in。
+									95 文本 过去一个月内访问量超过 10 万次
+									96 link AI text analyzer for research Lumivero https://www.lumivero.com, Value: google.com/goto?url=CAESbwHrOzAVh_N_w64RlHbcfrNrqzDLV5VhFFwTgT07DtbF9clfH_oXuEUhNm10epS5d_T3_QR3Xv6ygF5DVv65RB1J31WwP2dRUf7_-vr7RkxQazPV1ZOK3vZqECg9v9kpWQmXg3l_BR8undDh90O9XQ
+									97 container
+										98 按钮 为什么会显示该广告？
+									99 文本 AI-assisted qualitative coding — Let AI suggest topics, then refine codes and build concepts as your analysis evolves. Apply grounded theory, thematic, or framework analysis with AI support at every step. Literature review tool。
+									100 link NVivo AI Cloud by Lumivero, Value: google.com/aclk?sa=L&ai=DChsSEwiDvLy76sOXAxXSbg8CHQJyOZgYACICCAEQAxoCdGI&co=1&gclid=EAIaIQobChMIg7y8u-rDlwMV0m4PAh0CcjmYEAAYAiACEgIpXfD_BwE&cid=CAASugHkaJhQUuNF6tHAsIktpYQdwvMIk4Y9N7pK6CrOXan9yBAbuqHKKzAHtnvBsrc5ybXqmrCPsqWXJP_PMiDM-bFqcAYPNczA872ppSP1xQj1VIkFu2MDKjb_0wPXadZUi-vDZOq0AGslMDcu6LxmDRW9ivThKMSnyIKC0nPwj-dJ6DdsTll-SNyNiv35brXrAWsSMsi3OvmAhwSnGhjR3UvtumCXnQX_kb-O_oRAnEToviAJ7k6J9Rq7K_o&cce=2&sig=AOD64_3rLVvjY8H51Cypq-Mbjyph2rqKew&adurl=&q=
+									101 文本  · 
+									102 link Grounded Theory in NVivo, Value: …
+									103 文本  · 
+									104 link Get NVivo AI Cloud for coding, Value: …
+								105 按钮 隐藏赞助商搜索结果
+									106 文本 隐藏赞助商搜索结果
+							107 container
+								108 标题 Web results, Value: 2
+									109 文本 Web results
+								110 link Value: …, Is a thematic analysis the right thing to do? ResearchGate https://www.researchgate.net › post › Is_a_t...
+								111 文本 · 
+								112 link 翻译此页, Value: …
+								113 按钮 关于这条结果的详细信息
+								114 container
+									115 text 2023年10月20日  —  I am completing an evaluation using pre collected data from a training group which has been around for a few years. The way the data was collected was ...
+								116 link 5 个回答, Value: …
+								117 文本 · 
+								118 文本 最佳答案: 
+								119 文本 Braun and Clarke have always maintained that there are several ways to do Thematic Analysis, ...
+								120 container
+									121 标题 正在思考, Value: 2
+										122 文本 正在思考
+									123 进度指示条 Description: 正在生成, Value: 50
+								124 container
+									125 link AutoThemeGenerator: User Guide YouTube · Apply AI like a Pro 170+ 次观看 · 2年前, Value: …
+									126 按钮 关于这条结果的详细信息
+									127 按钮 AutoThemeGenerator: User Guide，由Apply AI like a Pro上传到YouTube上. 在 Google 上播放. 8:57
+									128 文本 Content summary: Learn how to use AutoThemeGenerator, a powerful package for performing thematic analysis in qualitative studies using ...
+									129 按钮 在此视频中，有 6 个重要时刻
+										130 文本 在此视频中，有 6 个重要时刻
+								131 link Value: …, Best Thematic Analysis Tool for Dissertations in 2026 Usercall https://www.usercall.co › post › dissertation...
+								132 文本 · 
+								133 link 翻译此页, Value: …
+								134 按钮 关于这条结果的详细信息
+								135 text 2026年9月9日  —  The best dissertation thematic analysis tool 
+								136 文本 helps you separate mechanics from interpretation
+								137 文本 . The job of software is to reduce analytic drag.
+								138 link Value: …, What is Thematic Analysis in UX Design? | Design eLearning YouTube · Design eLearning Tutorials 170+ 次观看 · 5年前
+								139 按钮 关于这条结果的详细信息
+								140 按钮 What is Thematic Analysis in UX Design? | Design eLearning，由Design eLearning Tutorials上传到YouTube上. 在 Google 上播放. 6:22
+								141 文本 Like, Comment, and Subscribe for more content like this Follow On Twitter: https://twitter.com/UserGenDesign LISTEN: THE UX USABILITY ...
+								142 link Examples Of Thematic Analysis: Guide Speak AI https://speakai.co › examples-of-thematic-a..., Value: …
+								143 文本 · 
+								144 link 翻译此页, Value: …
+								145 按钮 关于这条结果的详细信息
+								146 文本 What Is Thematic Analysis? Thematic analysis is 
+								147 文本 a method of analyzing qualitative data
+								148 文本 . It's used to identify, analyze, and interpret patterns in data.
+								149 link Value: …, AI Thematic Analysis: Benefits for Qualitative Research BlockSurvey https://blocksurvey.io › is-ai-powered-them...
+								150 文本 · 
+								151 link 翻译此页, Value: …
+								152 按钮 关于这条结果的详细信息
+								153 text 2024年11月26日  —  Discover how 
+								154 文本 AI-powered thematic analysis
+								155 文本  is revolutionizing qualitative research in our latest blog post.
+								156 link Everything You Need to Know About Thematic Analysis Medium · Pomaline Moses Olanrewaju 1年前, Value: …
+								157 按钮 关于这条结果的详细信息
+								158 文本 It's a simple yet powerful method for 
+								159 文本 identifying patterns and themes in qualitative data
+								160 文本 , making it easier to uncover insights and tell ...
+								161 link Value: …, Unlocking Insights with Thematic Analysis: How Software ... Leximancer https://www.leximancer.com › blog › unloc...
+								162 文本 · 
+								163 link 翻译此页, Value: …
+								164 按钮 关于这条结果的详细信息
+								165 text 2023年11月3日  —  It involves 
+								166 文本 identifying, analyzing, and reporting patterns or themes within a dataset
+								167 文本 . These themes represent key concepts, ideas, or recurring ...
+								168 link Thematic Analysis University at Buffalo https://publichealth.buffalo.edu › cat › the..., Value: …
+								169 文本 · 
+								170 link 翻译此页, Value: …
+								171 按钮 关于这条结果的详细信息
+								172 文本 Description: Thematic analysis is 
+								173 文本 a method for organizing and analyzing qualitative data
+								174 文本 . It involves assigning codes to important data points, which are then ...
+								175 container 广告
+									176 标题 赞助商搜索结果, Value: 2
+										177 文本 赞助商搜索结果
+									178 container
+										179 link AI text analyzer for research Lumivero https://www.lumivero.com, Value: …
+										180 container
+											181 按钮 为什么会显示该广告？
+										182 文本 Qualitative coding with AI — Let AI suggest topics, then refine codes and build concepts as your analysis evolves. Apply...
+										183 link NVivo AI Cloud by Lumivero, Value: …
+										184 文本  · 
+										185 link Grounded Theory in NVivo, Value: …
+										186 文本  · 
+										187 link Get NVivo AI Cloud for coding, Value: …
+									188 按钮 隐藏赞助商搜索结果
+										189 文本 隐藏赞助商搜索结果
+							190 未知
+							191 container
+								192 标题 网页导航, Value: 1
+									193 文本 网页导航
+								194 文本 1
+								195 link Description: Page 2, Value: …
+								196 link Description: Page 3, Value: …
+								197 link Description: Page 4, Value: …
+								198 link Description: Page 5, Value: …
+								199 link Description: Page 6, Value: …
+								200 标题 下一页, Value: 2
+									201 link 下一页, Value: …
+						202 标题 页脚链接, Value: 1
+							203 文本 页脚链接
+			204 文本 等待 www.google.com…
+	205 关闭按钮
+	206 全屏幕按钮 Help: 此按钮也可以执行缩放窗口的操作, Secondary Actions: 缩放窗口
+	207 最小化按钮
+208 menu bar
+	209 Firefox
+	210 文件
+	211 编辑
+	212 查看
+	213 历史
+	214 书签
+	215 配置文件
+	216 工具
+	217 窗口
+	218 帮助
+
+The focused UI element is 52 HTML 内容 Description: ThemeScope - Google 搜索, URL: …

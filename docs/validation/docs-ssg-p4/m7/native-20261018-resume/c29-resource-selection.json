@@ -1,0 +1,2185 @@
+{
+  "candidate_sha": "3dbb079a7b188edd56071225fad84fd6b92c4c52",
+  "framework_revision": "0fd34edaffda1926b38ea64c023b2fe1fc5115c5",
+  "method": "Existing manifest-verified inventory(); official first-load maxima; no browser performance verdict.",
+  "sites": {
+    "A": {
+      "dist": "/Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-ssg/p4/m7-3dbb079a/official/site/dist",
+      "base": "/rustify-ui/",
+      "build_id": "7e1e5c9e7e7392df",
+      "cli_version": "0.1.29",
+      "manifest_sha256": "9c34a28cd8af0c2385676c4d436a7e3d3a4bf91181c1a1d2aa21332fbe52bb81",
+      "verification": {
+        "files": 96,
+        "every_SHA_and_bytes_match": true,
+        "total_declared_bytes": 18185190
+      },
+      "inventory_sha256": "828bab5b3fc3d710436576c67303f9c2d2690fe157cfa3ea8b9b1c6fc4a7fa00",
+      "files": {
+        ".nojekyll": {
+          "bytes": 0,
+          "gzip9": 20,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "404.html": {
+          "bytes": 28568,
+          "gzip9": 4737,
+          "sha256": "9b751590243e2ff005831389b4cbbba181b4aadd8c4ee73377ca98a9f4e68d66"
+        },
+        "architecture/index.html": {
+          "bytes": 55640,
+          "gzip9": 16584,
+          "sha256": "a246325335e97a2fb5041ea719627f2babf3003e55fcbf3d51dbaf94360a293a"
+        },
+        "assets/files/theme-document.schema.d97f50ae4a.json": {
+          "bytes": 5525,
+          "gzip9": 942,
+          "sha256": "d97f50ae4a55502a3d2c1f8fa11999c469c84b7f138152f20868106ca22207ac"
+        },
+        "assets/islands/b9140be330acf58d887929efe7a96140f8a70fe13c1bbb84392b75d9e6b5d31e/app.js": {
+          "bytes": 61177,
+          "gzip9": 10430,
+          "sha256": "e00d6d57d10e0f6b55969906218c41d1ac7f284f5e0419538e71119350733830"
+        },
+        "assets/islands/b9140be330acf58d887929efe7a96140f8a70fe13c1bbb84392b75d9e6b5d31e/app_bg.wasm": {
+          "bytes": 9811091,
+          "gzip9": 1187439,
+          "sha256": "64348813b899488087dac9c5e3445ec02464ce777fbae0a48ee050e8165d4c4b"
+        },
+        "assets/islands/b9140be330acf58d887929efe7a96140f8a70fe13c1bbb84392b75d9e6b5d31e/dom-loader.js": {
+          "bytes": 11686,
+          "gzip9": 4090,
+          "sha256": "72c911771f7102b184c18b3f311186c94496a4efd47b9d25e46284d8ad2f5dd1"
+        },
+        "assets/islands/b9140be330acf58d887929efe7a96140f8a70fe13c1bbb84392b75d9e6b5d31e/dom-runtime.css": {
+          "bytes": 796,
+          "gzip9": 442,
+          "sha256": "7597abd6960f0ed1ce5b365356e5b2c422bf79117a39e0a8575aa447cd350f41"
+        },
+        "assets/islands/b9140be330acf58d887929efe7a96140f8a70fe13c1bbb84392b75d9e6b5d31e/islands.js": {
+          "bytes": 2275,
+          "gzip9": 928,
+          "sha256": "ecc0183124465813a93fae273b21263b166b75814d4334c388f1b6f1e0cb9801"
+        },
+        "assets/islands/b9140be330acf58d887929efe7a96140f8a70fe13c1bbb84392b75d9e6b5d31e/snippets/rustify-ui-4db2f10f10788f4c/web/dom-runtime.js": {
+          "bytes": 7096,
+          "gzip9": 2381,
+          "sha256": "d3f6018d391b65cfaf609fe1a17d9e47e221c51087a956b9fcd0bc6d11076343"
+        },
+        "assets/mode.1d6a9bf145.js": {
+          "bytes": 8581,
+          "gzip9": 2814,
+          "sha256": "1d6a9bf14575d8f90bc25aa4f532092fdf3b283309755745eb3de371338a7168"
+        },
+        "assets/search-worker.8225fc0ff7.js": {
+          "bytes": 8544,
+          "gzip9": 2780,
+          "sha256": "8225fc0ff714940beaea937737a718f8ba0ad4e50e2d95a16306bd51657d4f73"
+        },
+        "assets/search.4879fcef9b.js": {
+          "bytes": 9829,
+          "gzip9": 2788,
+          "sha256": "4879fcef9b8ec96cd0bc12ee699fcbbb0bd823e3f72d6289a810f3da853be15f"
+        },
+        "assets/search.en.b20154ecee.json": {
+          "bytes": 247108,
+          "gzip9": 79242,
+          "sha256": "b20154ecee7cae1130d962780a092280599b978297e10397bcd6f8be7c25546b"
+        },
+        "assets/search.zh.786007931d.json": {
+          "bytes": 242651,
+          "gzip9": 80721,
+          "sha256": "786007931d23a842a7ab26f36d5ecf8479a4e2472ecc093218909a8d109da2b5"
+        },
+        "assets/share.9f8be38eaf.png": {
+          "bytes": 3964,
+          "gzip9": 800,
+          "sha256": "9f8be38eafa7450a22835777de9ff300878deff236dd54fa9a91e00e206be673"
+        },
+        "assets/site.269216efb4.js": {
+          "bytes": 21450,
+          "gzip9": 5864,
+          "sha256": "269216efb48946c4387cb25698e52734ae704d73d65f687c6974efa4613190f5"
+        },
+        "assets/site.82cb043005.css": {
+          "bytes": 71998,
+          "gzip9": 13331,
+          "sha256": "82cb043005f45e40b34e94f776a0c6a788fed75180acefa1f4da99c784ce9e36"
+        },
+        "compatibility/index.html": {
+          "bytes": 45839,
+          "gzip9": 13702,
+          "sha256": "f9ed4b5947fe71bc3e811283205a3218d0b33dab8923277f600f392508e1433e"
+        },
+        "components/button/index.html": {
+          "bytes": 119287,
+          "gzip9": 9384,
+          "sha256": "4b8fdd7f5ad56d27338972b0686137cb0a457250e9f8b653997891935b76cad3"
+        },
+        "components/checkbox/index.html": {
+          "bytes": 131577,
+          "gzip9": 9738,
+          "sha256": "63b14283a8954441ebe56dd410665699860ddbab08821b84c238b45ecf20d860"
+        },
+        "components/color-field/index.html": {
+          "bytes": 105421,
+          "gzip9": 9251,
+          "sha256": "8f562c9ee2548fa9926419529113b1cabdf193052252f272b038b4475dd2cfc7"
+        },
+        "components/data-table/index.html": {
+          "bytes": 178319,
+          "gzip9": 13623,
+          "sha256": "581dd7c61a859154a90ba4c39f8d3ebc4eca236b04a8db82fa0575d21e09ba97"
+        },
+        "components/dialog/index.html": {
+          "bytes": 138463,
+          "gzip9": 11007,
+          "sha256": "6a2591fdcf27aed43897018a4f12a512cc6a054ad492c1524d4494ab0627861c"
+        },
+        "components/icon/index.html": {
+          "bytes": 118887,
+          "gzip9": 9660,
+          "sha256": "8b166b11bfedcf6566cb68db30fba61959220b2f912fdf68987d1f39d5229525"
+        },
+        "components/index.html": {
+          "bytes": 39512,
+          "gzip9": 9964,
+          "sha256": "31baa7c1854e157ac6fb083a2a9e3bc1091f419ac7a1ac3f6d4c3b0b328b456a"
+        },
+        "components/label/index.html": {
+          "bytes": 114788,
+          "gzip9": 9265,
+          "sha256": "8f5204a07570c0dcf302cc9fc9d8466e62a7b504c8cd7aa287224e2e736b5cd6"
+        },
+        "components/link/index.html": {
+          "bytes": 120166,
+          "gzip9": 9840,
+          "sha256": "7611dbdbd566816562be20db6ba4cf5c933884bca2a663aaab5b2d086ccdee31"
+        },
+        "components/loading/index.html": {
+          "bytes": 117032,
+          "gzip9": 9566,
+          "sha256": "e0ee7f64debb6545eb64d58e75420400764df4aff711de5fb220aafe75823f12"
+        },
+        "components/menu/index.html": {
+          "bytes": 150838,
+          "gzip9": 11793,
+          "sha256": "507c0aa18aace4d773513e8217e93aa4724f666709c8a78965de23db2f36188e"
+        },
+        "components/number-field/index.html": {
+          "bytes": 106267,
+          "gzip9": 9332,
+          "sha256": "20c7e9b947012ba3e3aaba9bdf02e530a53af4a62aeb6f23453ecfbefe4fd018"
+        },
+        "components/progress/index.html": {
+          "bytes": 137760,
+          "gzip9": 10736,
+          "sha256": "70e3e25f4502179a89ed9f91d6c9da399d8ef1a7be1f12caa16b83eb464ba197"
+        },
+        "components/radio/index.html": {
+          "bytes": 134540,
+          "gzip9": 9880,
+          "sha256": "9bfae72a1a9a356ad2bc2d9c58989ced994faa156eb492290256b04f758485cd"
+        },
+        "components/scroll-area/index.html": {
+          "bytes": 149732,
+          "gzip9": 11586,
+          "sha256": "21a5f80f5f91f099e36969e8017a9bf56eb8373ca9f995eb942354640e1ae14e"
+        },
+        "components/select/index.html": {
+          "bytes": 138078,
+          "gzip9": 10171,
+          "sha256": "fd14cb2e1014db8d15e5dd9ed5ba9c2a0ed91559c92264b3c75dbf013dfe99ac"
+        },
+        "components/slider/index.html": {
+          "bytes": 130866,
+          "gzip9": 9667,
+          "sha256": "d2bbd13c0a9eb166d825b2eba29ef2df8f8cc27bf2c1f24623d4aa1443177333"
+        },
+        "components/switch/index.html": {
+          "bytes": 130982,
+          "gzip9": 9646,
+          "sha256": "f1931667e2baa7e5fff30a745063ff151352dd830edd59805552884e007c98b5"
+        },
+        "components/tabs/index.html": {
+          "bytes": 149887,
+          "gzip9": 11436,
+          "sha256": "c46cc7784b451ab2a5f73fe4fed97b56c3f64d2fa0cba913e6f31bc478089097"
+        },
+        "components/text-area/index.html": {
+          "bytes": 102428,
+          "gzip9": 8716,
+          "sha256": "40391067cfb8975d666d638356a137dcec88d5ccd36683cfcb43916ccfee7cc3"
+        },
+        "components/text-field/index.html": {
+          "bytes": 104750,
+          "gzip9": 8959,
+          "sha256": "0aac8e9010c9fd4685a403774d2d9fee8e870be0e68bdf681690fac7f667036b"
+        },
+        "components/toast/index.html": {
+          "bytes": 135865,
+          "gzip9": 10978,
+          "sha256": "db2547fd47d7bfdd7383974c588fbe7516bdfe17799b9d51f0eb47c9cb34864e"
+        },
+        "components/toggle-group/index.html": {
+          "bytes": 138725,
+          "gzip9": 10270,
+          "sha256": "37ba0b423e8c411cec4c61f9a5b13b559d8ef2ae6fb2a1cc0d37c1ae255db4da"
+        },
+        "components/tooltip/index.html": {
+          "bytes": 132108,
+          "gzip9": 10547,
+          "sha256": "21a7eeb61549f35e02cc0fe77a614ced4428c4eedf2345972245449b61631dc0"
+        },
+        "components/tree/index.html": {
+          "bytes": 166421,
+          "gzip9": 12705,
+          "sha256": "64dd346b8869cc57bba49317d1ae828cbbee14be545006f50b57e5a4eb8628c2"
+        },
+        "data/index.html": {
+          "bytes": 47385,
+          "gzip9": 10549,
+          "sha256": "1b7d015524af65261346928435b03ed7f64d37b6b19a2a9920a3f6c2f07402c3"
+        },
+        "forms/index.html": {
+          "bytes": 29181,
+          "gzip9": 6558,
+          "sha256": "ff2f906c9b170a671db85ab79cf6961c1d59353317fc6f7525911e6fbae71e46"
+        },
+        "i18n/index.html": {
+          "bytes": 32104,
+          "gzip9": 6602,
+          "sha256": "ffc4438336e736d0b1b2044d607d5d51b3ed7822afe2cd1964a2d144b958e508"
+        },
+        "index.html": {
+          "bytes": 10575,
+          "gzip9": 3256,
+          "sha256": "626b7226b2a1f2939bf528bb453a30bd0859ff7334c79ac56ee42937790c3711"
+        },
+        "llms.txt": {
+          "bytes": 7091,
+          "gzip9": 2281,
+          "sha256": "dc39735ea948a2b8abd199f591a07cf374e69e426fa4992a0fcf63bfc1b61d5d"
+        },
+        "navigation/index.html": {
+          "bytes": 29596,
+          "gzip9": 7056,
+          "sha256": "4ecb33b22d1eca14bd0d347d7ddef49a9851f1692a966274878952214f22121c"
+        },
+        "quickstart/index.html": {
+          "bytes": 129638,
+          "gzip9": 17582,
+          "sha256": "49485004a8c8c24b0c78d5ed78cddbf36a4f575d5ce409e9f97904c6e5d09e67"
+        },
+        "robots.txt": {
+          "bytes": 81,
+          "gzip9": 97,
+          "sha256": "7d180e0cdfc5af37d4faa5068de03ec8f95288ad45018f031b6754f8d9c934c8"
+        },
+        "sitemap.xml": {
+          "bytes": 3371,
+          "gzip9": 451,
+          "sha256": "7de917317d789c504e7a9b96e0c1b270007493681e1c78e68b5aa69cfaacea27"
+        },
+        "themes/index.html": {
+          "bytes": 93105,
+          "gzip9": 15830,
+          "sha256": "f2b9e80a31751dff53702ba8979ce1839cba7882b98955ea47519de2ff23998d"
+        },
+        "utility/index.html": {
+          "bytes": 36985,
+          "gzip9": 8944,
+          "sha256": "9e7f086104408601ba4dca7b750a279a39b53f918dc00fa3350a7db4cc1e814c"
+        },
+        "vellum/index.html": {
+          "bytes": 68124,
+          "gzip9": 17965,
+          "sha256": "81b40c0200aea4384f25653405be5309637f40cabc4eb62f1b32f3a065788174"
+        },
+        "workspace/index.html": {
+          "bytes": 30338,
+          "gzip9": 7626,
+          "sha256": "87ba97efba6406befedff2774fbb3a8822d68e24e8f2078523447766058792b2"
+        },
+        "zh/404.html": {
+          "bytes": 14061,
+          "gzip9": 3280,
+          "sha256": "3a2e0a9584d987a62457c7ca24f9d801320a737dd0eab0ed891334a168022597"
+        },
+        "zh/architecture/index.html": {
+          "bytes": 56036,
+          "gzip9": 17083,
+          "sha256": "cd49cb96ea5b2106bc5b50b008f73c03151991be2ae31d91ea4b819769c443e9"
+        },
+        "zh/compatibility/index.html": {
+          "bytes": 46203,
+          "gzip9": 14096,
+          "sha256": "599a11398f7a37bdf790f12c382aa060e6061886a22285372a6ab14014bd3859"
+        },
+        "zh/components/button/index.html": {
+          "bytes": 119733,
+          "gzip9": 9828,
+          "sha256": "c20eb684e1b5a52acdcb151e3772af8d596b0ad88952e4c09190c3a058d66fef"
+        },
+        "zh/components/checkbox/index.html": {
+          "bytes": 132023,
+          "gzip9": 10178,
+          "sha256": "92eabe656a57ed716ea1fbd2ea7a125164cc04e92aca5fde71e9d7d75a72d020"
+        },
+        "zh/components/color-field/index.html": {
+          "bytes": 105867,
+          "gzip9": 9693,
+          "sha256": "a164af69de67cfcf3738bc2a548f54e3e4c782462e506042d7963bfac9dbad32"
+        },
+        "zh/components/data-table/index.html": {
+          "bytes": 178765,
+          "gzip9": 14150,
+          "sha256": "b82654a669c6593aacaa685b8d4b9975d2b0e0096c9b7ae4753c2efd48747295"
+        },
+        "zh/components/dialog/index.html": {
+          "bytes": 138909,
+          "gzip9": 11477,
+          "sha256": "0fad552d2f76122ce3a993cbea245dd3800199aae9e253489de22e2235ff4623"
+        },
+        "zh/components/icon/index.html": {
+          "bytes": 119333,
+          "gzip9": 10117,
+          "sha256": "6197c6872aa898939ca2dec586aee0de98bddcc9e7233b76f97acce8ff24cba6"
+        },
+        "zh/components/index.html": {
+          "bytes": 39876,
+          "gzip9": 10334,
+          "sha256": "655652f09fd09145c1496f04d31ece944238e52aca44dcd8a634481eb706e70c"
+        },
+        "zh/components/label/index.html": {
+          "bytes": 115234,
+          "gzip9": 9717,
+          "sha256": "e55528bd46f7f1e0c86f720833cf84f1bce25dada8c15eccd4a30d4f26475dc9"
+        },
+        "zh/components/link/index.html": {
+          "bytes": 120612,
+          "gzip9": 10301,
+          "sha256": "df29f644e51a73815bf3bcdc7bac9f7ed7484348ca2fd00c59de82e393b6d5e1"
+        },
+        "zh/components/loading/index.html": {
+          "bytes": 117478,
+          "gzip9": 10017,
+          "sha256": "7b6314e928668c2fd8bcf5095580a24a6d3dda4623d52d6a4f305e4213f228a9"
+        },
+        "zh/components/menu/index.html": {
+          "bytes": 151284,
+          "gzip9": 12273,
+          "sha256": "6145f3c37800e4d08ed092cf26cdf72a476cb86a3ee99c7e10eb52a0869bc0b9"
+        },
+        "zh/components/number-field/index.html": {
+          "bytes": 106713,
+          "gzip9": 9779,
+          "sha256": "ebab07fa6716b99029af1b141a071e3edf887d591aa77366b3b124fe919d6254"
+        },
+        "zh/components/progress/index.html": {
+          "bytes": 138206,
+          "gzip9": 11206,
+          "sha256": "a303f82121f8099d005ec61e67c5d3ed7aada5c4e9ff7e8f506ea8d5f7ebd9c6"
+        },
+        "zh/components/radio/index.html": {
+          "bytes": 134986,
+          "gzip9": 10324,
+          "sha256": "08866030e5d79ad1ffe6b254687e011420db66db4410b694e1b2843669364761"
+        },
+        "zh/components/scroll-area/index.html": {
+          "bytes": 150178,
+          "gzip9": 12056,
+          "sha256": "1068343c9262dbe71f9b17faa89a4f4540195191b3972f587087a8553660b26c"
+        },
+        "zh/components/select/index.html": {
+          "bytes": 138524,
+          "gzip9": 10618,
+          "sha256": "76631cf732cf001e3c81139b246a96b36039046acbf1b03144a46f494277b93f"
+        },
+        "zh/components/slider/index.html": {
+          "bytes": 131312,
+          "gzip9": 10114,
+          "sha256": "3ec816ce7ff952fe80e69dcbf60672903a022ecbc6236f33f43f8ef6a247957a"
+        },
+        "zh/components/switch/index.html": {
+          "bytes": 131428,
+          "gzip9": 10084,
+          "sha256": "1fdbc0ec79cc2faf4b0c2078e41484575731f6d0849764397798324a7c8193cc"
+        },
+        "zh/components/tabs/index.html": {
+          "bytes": 150333,
+          "gzip9": 11899,
+          "sha256": "41d0d0a03633fdf5ab70e28180cdd5e1a62297e5ee8df026a3274b4f72c85a4f"
+        },
+        "zh/components/text-area/index.html": {
+          "bytes": 102874,
+          "gzip9": 9152,
+          "sha256": "17daa3ffb4c2cddb26c776309b112cd3c3a7ab2f51cae72f5fd95064004ac9d6"
+        },
+        "zh/components/text-field/index.html": {
+          "bytes": 105196,
+          "gzip9": 9401,
+          "sha256": "d833811404f340feb7026eafc4f2bd41085ee05ce6bfb3ab0e69951248bf3dfd"
+        },
+        "zh/components/toast/index.html": {
+          "bytes": 136311,
+          "gzip9": 11455,
+          "sha256": "bffc71cff849f0fc299bc127bf68efcb728dd97adf0b620907c3735f7df22397"
+        },
+        "zh/components/toggle-group/index.html": {
+          "bytes": 139163,
+          "gzip9": 10718,
+          "sha256": "a44339b90c193d6c407c60e9a8a50d1eabe75e4bb2990420970c2af6a35fe0d6"
+        },
+        "zh/components/tooltip/index.html": {
+          "bytes": 132554,
+          "gzip9": 11016,
+          "sha256": "b3e49128faef106d2c3f0687c01d2e97f66955e4c0c648dd7993e06dd04aa998"
+        },
+        "zh/components/tree/index.html": {
+          "bytes": 166867,
+          "gzip9": 13218,
+          "sha256": "afe08cf80f4458311999f553a19329292742a53a518630039cbea385508760ef"
+        },
+        "zh/data/index.html": {
+          "bytes": 47797,
+          "gzip9": 10926,
+          "sha256": "78cab2059bd97b3d7a3b974eb44aefe0ad9dce1be5c8151cb0bcd6468397f116"
+        },
+        "zh/forms/index.html": {
+          "bytes": 29561,
+          "gzip9": 6893,
+          "sha256": "25b8bc1693cfb26fb50bda35a2ab915e58428104fbab8e2db9f7e6e89c1436d2"
+        },
+        "zh/i18n/index.html": {
+          "bytes": 32500,
+          "gzip9": 6931,
+          "sha256": "9b35619dc5550903d5f57aad4a0ebf2ef15a9d3621558b4cb274c6c81febf076"
+        },
+        "zh/index.html": {
+          "bytes": 10184,
+          "gzip9": 3474,
+          "sha256": "ad8a84606ed640e1a7e0bddebff7103fc1d480ed9902f134a36c76a4706497c6"
+        },
+        "zh/llms.txt": {
+          "bytes": 8362,
+          "gzip9": 2526,
+          "sha256": "355814de57251f36f3c719812aa87f4bd1cf904744b5aa56b0a17f6d567e07d5"
+        },
+        "zh/navigation/index.html": {
+          "bytes": 30004,
+          "gzip9": 7394,
+          "sha256": "eea8ab74e34d3e91fbeafad2f2a1def0ae770471b7ad0240e7dcc00979000280"
+        },
+        "zh/quickstart/index.html": {
+          "bytes": 122445,
+          "gzip9": 17296,
+          "sha256": "e033f72f32acfa9a0f34266b949ac1f4fab2d4173284b5d1a1a39be12388c442"
+        },
+        "zh/themes/index.html": {
+          "bytes": 93568,
+          "gzip9": 16288,
+          "sha256": "51c4cb75cdb19153876920e69150ac9526e07c7ea00fbae80f1146a231ac9a95"
+        },
+        "zh/utility/index.html": {
+          "bytes": 37381,
+          "gzip9": 9309,
+          "sha256": "76d96381db54f5450702a7327ed81718f1e000745be3432edeaf308e7a5906f5"
+        },
+        "zh/vellum/index.html": {
+          "bytes": 68520,
+          "gzip9": 18396,
+          "sha256": "604f1ea5d88b3a8747d18ba3b3d7e8fa7d33de4798693f515d3cd528b37098c3"
+        },
+        "zh/workspace/index.html": {
+          "bytes": 30718,
+          "gzip9": 7969,
+          "sha256": "aa48020ccc5e24531ee75e2a5a6c75b8571f4b29ea9e8f1306de2e31a70be3bc"
+        }
+      },
+      "pages": [
+        {
+          "file": "404.html",
+          "route": "/rustify-ui/404.html",
+          "lang": "en",
+          "category": null,
+          "islands": 0,
+          "dependency_set": "set-1",
+          "bytes": 130597,
+          "gzip9": 26746,
+          "closure_sha256": "0e183065772ed6ac8b4339c1eca48d45470430e515107455a1835127d3a0a33f"
+        },
+        {
+          "file": "architecture/index.html",
+          "route": "/rustify-ui/architecture/",
+          "lang": "en",
+          "category": null,
+          "islands": 0,
+          "dependency_set": "set-1",
+          "bytes": 157669,
+          "gzip9": 38593,
+          "closure_sha256": "f17f6aa49bb2388750a24e0f516e0ccf61c39d1ce7e567062ff86059a7d6ab07"
+        },
+        {
+          "file": "compatibility/index.html",
+          "route": "/rustify-ui/compatibility/",
+          "lang": "en",
+          "category": null,
+          "islands": 0,
+          "dependency_set": "set-1",
+          "bytes": 147868,
+          "gzip9": 35711,
+          "closure_sha256": "1e57c0302d4e5e842ed43cd1388b9dabb6d24c5ab74c79a3c812a4ceac0ed86e"
+        },
+        {
+          "file": "components/button/index.html",
+          "route": "/rustify-ui/components/button/",
+          "lang": "en",
+          "category": "button",
+          "islands": 1,
+          "dependency_set": "set-2",
+          "bytes": 10114641,
+          "gzip9": 1236661,
+          "closure_sha256": "a66a2e24097d5bd79caf56e900e5328792fddf2a26e7a26df9783e0053c2780c"
+        },
+        {
+          "file": "components/checkbox/index.html",
+          "route": "/rustify-ui/components/checkbox/",
+          "lang": "en",
+          "category": "checkbox",
+          "islands": 1,
+          "dependency_set": "set-2",
+          "bytes": 10126931,
+          "gzip9": 1237015,
+          "closure_sha256": "f143bcc1c4528c5989d5a17273595cd0714cee0ea77a0f942d7c68c105a1f075"
+        },
+        {
+          "file": "components/color-field/index.html",
+          "route": "/rustify-ui/components/color-field/",
+          "lang": "en",
+          "category": "color field",
+          "islands": 1,
+          "dependency_set": "set-2",
+          "bytes": 10100775,
+          "gzip9": 1236528,
+          "closure_sha256": "d1ee8d97c05afbdd816fa2fbfce9ab0737123f41eb22d8dbee64c92958404748"
+        },
+        {
+          "file": "components/data-table/index.html",
+          "route": "/rustify-ui/components/data-table/",
+          "lang": "en",
+          "category": "data table",
+          "islands": 1,
+          "dependency_set": "set-2",
+          "bytes": 10173673,
+          "gzip9": 1240900,
+          "closure_sha256": "baaebb43fd1120c26c268b758ab866d0a491f8f08fb63560772b82a9827f6c52"
+        },
+        {
+          "file": "components/dialog/index.html",
+          "route": "/rustify-ui/components/dialog/",
+          "lang": "en",
+          "category": "dialog",
+          "islands": 1,
+          "dependency_set": "set-2",
+          "bytes": 10133817,
+          "gzip9": 1238284,
+          "closure_sha256": "4891fe52e1c6df312286d15ae56bb127afb7589d7e8eccce5a5150f73dd1acde"
+        },
+        {
+          "file": "components/icon/index.html",
+          "route": "/rustify-ui/components/icon/",
+          "lang": "en",
+          "category": "icon",
+          "islands": 1,
+          "dependency_set": "set-2",
+          "bytes": 10114241,
+          "gzip9": 1236937,
+          "closure_sha256": "a4b2fed2c4738a443d0ee0a841d8b98a605852015dae87184147dfde583d7c3f"
+        },
+        {
+          "file": "components/index.html",
+          "route": "/rustify-ui/components/",
+          "lang": "en",
+          "category": null,
+          "islands": 0,
+          "dependency_set": "set-1",
+          "bytes": 141541,
+          "gzip9": 31973,
+          "closure_sha256": "747b4458338893c59372ceaad65039adbc945a3de390bacdbc58eb45f2505987"
+        },
+        {
+          "file": "components/label/index.html",
+          "route": "/rustify-ui/components/label/",
+          "lang": "en",
+          "category": "label",
+          "islands": 1,
+          "dependency_set": "set-2",
+          "bytes": 10110142,
+          "gzip9": 1236542,
+          "closure_sha256": "d4c256116e1be612e9e74d1b803ff743e9ca7173d35107d880d0c0581f6c05ee"
+        },
+        {
+          "file": "components/link/index.html",
+          "route": "/rustify-ui/components/link/",
+          "lang": "en",
+          "category": "link",
+          "islands": 1,
+          "dependency_set": "set-2",
+          "bytes": 10115520,
+          "gzip9": 1237117,
+          "closure_sha256": "8f7a4a2812ec04aabb45c5e76f6d81eb2a7d656d061b7bcdc2d80ad990b63103"
+        },
+        {
+          "file": "components/loading/index.html",
+          "route": "/rustify-ui/components/loading/",
+          "lang": "en",
+          "category": "loading",
+          "islands": 1,
+          "dependency_set": "set-2",
+          "bytes": 10112386,
+          "gzip9": 1236843,
+          "closure_sha256": "90b08d1c669b81d52f7f333a755602ca9d9cdac61405c274e6a86359c6399726"
+        },
+        {
+          "file": "components/menu/index.html",
+          "route": "/rustify-ui/components/menu/",
+          "lang": "en",
+          "category": "menu",
+          "islands": 1,
+          "dependency_set": "set-2",
+          "bytes": 10146192,
+          "gzip9": 1239070,
+          "closure_sha256": "16dfc178be386c5dfcda220abecb8136ce347c67095dce58ce9d9d2bac6c72a9"
+        },
+        {
+          "file": "components/number-field/index.html",
+          "route": "/rustify-ui/components/number-field/",
+          "lang": "en",
+          "category": "number field",
+          "islands": 1,
+          "dependency_set": "set-2",
+          "bytes": 10101621,
+          "gzip9": 1236609,
+          "closure_sha256": "cfef8d544a0f0eb34e4e014d98862e1306722df8cc3999c461870bb56df9d60d"
+        },
+        {
+          "file": "components/progress/index.html",
+          "route": "/rustify-ui/components/progress/",
+          "lang": "en",
+          "category": "progress",
+          "islands": 1,
+          "dependency_set": "set-2",
+          "bytes": 10133114,
+          "gzip9": 1238013,
+          "closure_sha256": "04528339affa934af480b9513169fa951ed9d3ebcdd5fc0eef38dd42375ffb5a"
+        },
+        {
+          "file": "components/radio/index.html",
+          "route": "/rustify-ui/components/radio/",
+          "lang": "en",
+          "category": "radio",
+          "islands": 1,
+          "dependency_set": "set-2",
+          "bytes": 10129894,
+          "gzip9": 1237157,
+          "closure_sha256": "f105d6243bedbafa18aacfcd59db283de534a209de777a90a49f1f00a478320e"
+        },
+        {
+          "file": "components/scroll-area/index.html",
+          "route": "/rustify-ui/components/scroll-area/",
+          "lang": "en",
+          "category": "scroll area",
+          "islands": 1,
+          "dependency_set": "set-2",
+          "bytes": 10145086,
+          "gzip9": 1238863,
+          "closure_sha256": "1cee7c0851ef85e3dd79bd4c1882f015fd0d26eed786cc6e3670f7ac6871cc0e"
+        },
+        {
+          "file": "components/select/index.html",
+          "route": "/rustify-ui/components/select/",
+          "lang": "en",
+          "category": "select",
+          "islands": 1,
+          "dependency_set": "set-2",
+          "bytes": 10133432,
+          "gzip9": 1237448,
+          "closure_sha256": "ce3264521551588ea7ed1c332b28acd836b23be31312dbed97c886b07f58ba4b"
+        },
+        {
+          "file": "components/slider/index.html",
+          "route": "/rustify-ui/components/slider/",
+          "lang": "en",
+          "category": "slider",
+          "islands": 1,
+          "dependency_set": "set-2",
+          "bytes": 10126220,
+          "gzip9": 1236944,
+          "closure_sha256": "81ab0c9e5b9ef55956f443b05bf6037828acbe51eb3fd9026a2828f98cd384f3"
+        },
+        {
+          "file": "components/switch/index.html",
+          "route": "/rustify-ui/components/switch/",
+          "lang": "en",
+          "category": "switch",
+          "islands": 1,
+          "dependency_set": "set-2",
+          "bytes": 10126336,
+          "gzip9": 1236923,
+          "closure_sha256": "fc9eaaabd7b27a4297fbdbd5a94726851d231e863421df99429af1ee18edab42"
+        },
+        {
+          "file": "components/tabs/index.html",
+          "route": "/rustify-ui/components/tabs/",
+          "lang": "en",
+          "category": "tabs",
+          "islands": 1,
+          "dependency_set": "set-2",
+          "bytes": 10145241,
+          "gzip9": 1238713,
+          "closure_sha256": "7586d18c096390fb05ab220c8a4130fee8454cfb8cf049a5cae6bcce5889b0fc"
+        },
+        {
+          "file": "components/text-area/index.html",
+          "route": "/rustify-ui/components/text-area/",
+          "lang": "en",
+          "category": "text area",
+          "islands": 1,
+          "dependency_set": "set-2",
+          "bytes": 10097782,
+          "gzip9": 1235993,
+          "closure_sha256": "d01462bce8a66cf41465b34479f1930d1bba5b2f81d2e70e9f020e7a9ba107d2"
+        },
+        {
+          "file": "components/text-field/index.html",
+          "route": "/rustify-ui/components/text-field/",
+          "lang": "en",
+          "category": "text field",
+          "islands": 1,
+          "dependency_set": "set-2",
+          "bytes": 10100104,
+          "gzip9": 1236236,
+          "closure_sha256": "85ad7da6f77e78db5b62536fa646af4e87c9a0e6d9ff12a860429ab3fcba064b"
+        },
+        {
+          "file": "components/toast/index.html",
+          "route": "/rustify-ui/components/toast/",
+          "lang": "en",
+          "category": "toast",
+          "islands": 1,
+          "dependency_set": "set-2",
+          "bytes": 10131219,
+          "gzip9": 1238255,
+          "closure_sha256": "550291e56abdd42e45145159669315401921c4c5aeab0eb415983b1b9afd4fe3"
+        },
+        {
+          "file": "components/toggle-group/index.html",
+          "route": "/rustify-ui/components/toggle-group/",
+          "lang": "en",
+          "category": "toggle group",
+          "islands": 1,
+          "dependency_set": "set-2",
+          "bytes": 10134079,
+          "gzip9": 1237547,
+          "closure_sha256": "19248b4b567da03cc12e55c48827ec68434136e17fb09b2dd80a321fd11b65d3"
+        },
+        {
+          "file": "components/tooltip/index.html",
+          "route": "/rustify-ui/components/tooltip/",
+          "lang": "en",
+          "category": "tooltip",
+          "islands": 1,
+          "dependency_set": "set-2",
+          "bytes": 10127462,
+          "gzip9": 1237824,
+          "closure_sha256": "2a5a807399f76155f83ea2a8dd6092e19e194392cb6b2bd4a2e175ad68034bb9"
+        },
+        {
+          "file": "components/tree/index.html",
+          "route": "/rustify-ui/components/tree/",
+          "lang": "en",
+          "category": "tree",
+          "islands": 1,
+          "dependency_set": "set-2",
+          "bytes": 10161775,
+          "gzip9": 1239982,
+          "closure_sha256": "01035cf830c33780742d6212371257e3dfed966601cfd5204ee8ceb5143125b3"
+        },
+        {
+          "file": "data/index.html",
+          "route": "/rustify-ui/data/",
+          "lang": "en",
+          "category": null,
+          "islands": 0,
+          "dependency_set": "set-1",
+          "bytes": 149414,
+          "gzip9": 32558,
+          "closure_sha256": "444a2b8ca1bd26aa22362802b406755fa276d60a27a993a1e0a211c20a9fe1e8"
+        },
+        {
+          "file": "forms/index.html",
+          "route": "/rustify-ui/forms/",
+          "lang": "en",
+          "category": null,
+          "islands": 0,
+          "dependency_set": "set-1",
+          "bytes": 131210,
+          "gzip9": 28567,
+          "closure_sha256": "33b9f27b626335e5187ad575e6fd86d868d99fb6375debd0d8f873c975480281"
+        },
+        {
+          "file": "i18n/index.html",
+          "route": "/rustify-ui/i18n/",
+          "lang": "en",
+          "category": null,
+          "islands": 0,
+          "dependency_set": "set-1",
+          "bytes": 134133,
+          "gzip9": 28611,
+          "closure_sha256": "9bc6413914dc3448dfa1ef28037052709d02b622e4b65f50484e126e419dd2e5"
+        },
+        {
+          "file": "index.html",
+          "route": "/rustify-ui/",
+          "lang": "en",
+          "category": null,
+          "islands": 0,
+          "dependency_set": "set-1",
+          "bytes": 112604,
+          "gzip9": 25265,
+          "closure_sha256": "8043f0c4aa5d757370b2af7549a414fb4427adffa30e0d1554d15e0f5b41c1f3"
+        },
+        {
+          "file": "navigation/index.html",
+          "route": "/rustify-ui/navigation/",
+          "lang": "en",
+          "category": null,
+          "islands": 0,
+          "dependency_set": "set-1",
+          "bytes": 131625,
+          "gzip9": 29065,
+          "closure_sha256": "42a3fd51150833fa4f93dcb5bb284159b07b2d624b259251be0cf3a8d61a3990"
+        },
+        {
+          "file": "quickstart/index.html",
+          "route": "/rustify-ui/quickstart/",
+          "lang": "en",
+          "category": null,
+          "islands": 0,
+          "dependency_set": "set-1",
+          "bytes": 231667,
+          "gzip9": 39591,
+          "closure_sha256": "ad212aa53dd9b2beb549c8a805fc6dec513dc040914ff767ebde37a1a19d03cb"
+        },
+        {
+          "file": "themes/index.html",
+          "route": "/rustify-ui/themes/",
+          "lang": "en",
+          "category": null,
+          "islands": 0,
+          "dependency_set": "set-1",
+          "bytes": 195134,
+          "gzip9": 37839,
+          "closure_sha256": "e01e05046ac15e93674274f5e3bf7579c439a325f1028fafc5031a1b6827b1c2"
+        },
+        {
+          "file": "utility/index.html",
+          "route": "/rustify-ui/utility/",
+          "lang": "en",
+          "category": null,
+          "islands": 0,
+          "dependency_set": "set-1",
+          "bytes": 139014,
+          "gzip9": 30953,
+          "closure_sha256": "c0c2d91774c6d440e8b87f9e509543c84c3736588a9a6858be30ddb7f7c3d9df"
+        },
+        {
+          "file": "vellum/index.html",
+          "route": "/rustify-ui/vellum/",
+          "lang": "en",
+          "category": null,
+          "islands": 0,
+          "dependency_set": "set-1",
+          "bytes": 170153,
+          "gzip9": 39974,
+          "closure_sha256": "3e9b8b88a4155275db3818df9cfc3cfaee28e45f161bfa4c9153accb0c204c8d"
+        },
+        {
+          "file": "workspace/index.html",
+          "route": "/rustify-ui/workspace/",
+          "lang": "en",
+          "category": null,
+          "islands": 0,
+          "dependency_set": "set-1",
+          "bytes": 132367,
+          "gzip9": 29635,
+          "closure_sha256": "d0f4ae4ddf65bf64aa0d78372b2162ac16bed85f4555c46d08fb665d22221dd7"
+        },
+        {
+          "file": "zh/404.html",
+          "route": "/rustify-ui/zh/404.html",
+          "lang": "zh",
+          "category": null,
+          "islands": 0,
+          "dependency_set": "set-1",
+          "bytes": 116090,
+          "gzip9": 25289,
+          "closure_sha256": "ff213261f4c602ef18b8f957d1ba0cafd8996c8693d08aff3880df766af930e3"
+        },
+        {
+          "file": "zh/architecture/index.html",
+          "route": "/rustify-ui/zh/architecture/",
+          "lang": "zh",
+          "category": null,
+          "islands": 0,
+          "dependency_set": "set-1",
+          "bytes": 158065,
+          "gzip9": 39092,
+          "closure_sha256": "45a918c4e8aedbad224d8c91ffece15aa41e1306484491563f335b4a5fda34aa"
+        },
+        {
+          "file": "zh/compatibility/index.html",
+          "route": "/rustify-ui/zh/compatibility/",
+          "lang": "zh",
+          "category": null,
+          "islands": 0,
+          "dependency_set": "set-1",
+          "bytes": 148232,
+          "gzip9": 36105,
+          "closure_sha256": "26a4c98743923275eff6f7a91822db6df4d7640702e10902557fb2c4c0c267af"
+        },
+        {
+          "file": "zh/components/button/index.html",
+          "route": "/rustify-ui/zh/components/button/",
+          "lang": "zh",
+          "category": "button",
+          "islands": 1,
+          "dependency_set": "set-2",
+          "bytes": 10115087,
+          "gzip9": 1237105,
+          "closure_sha256": "c51df815b9aa85632bcd68487dd79b42f9eb684b21df8158983958e02a1080cc"
+        },
+        {
+          "file": "zh/components/checkbox/index.html",
+          "route": "/rustify-ui/zh/components/checkbox/",
+          "lang": "zh",
+          "category": "checkbox",
+          "islands": 1,
+          "dependency_set": "set-2",
+          "bytes": 10127377,
+          "gzip9": 1237455,
+          "closure_sha256": "f7edd22504d1e512c31cb48d7524fdf00c4ae1b167f11ac5b54539b824a9f46b"
+        },
+        {
+          "file": "zh/components/color-field/index.html",
+          "route": "/rustify-ui/zh/components/color-field/",
+          "lang": "zh",
+          "category": "color field",
+          "islands": 1,
+          "dependency_set": "set-2",
+          "bytes": 10101221,
+          "gzip9": 1236970,
+          "closure_sha256": "dbb492aa03d6591f541a2c575473f5dcf93cc289170b5821b57a0f7d3de20b35"
+        },
+        {
+          "file": "zh/components/data-table/index.html",
+          "route": "/rustify-ui/zh/components/data-table/",
+          "lang": "zh",
+          "category": "data table",
+          "islands": 1,
+          "dependency_set": "set-2",
+          "bytes": 10174119,
+          "gzip9": 1241427,
+          "closure_sha256": "b4e8f73d2653e13c4e032611af0b1037845b8bc6010eb9d3bb3b6f13f09b93e8"
+        },
+        {
+          "file": "zh/components/dialog/index.html",
+          "route": "/rustify-ui/zh/components/dialog/",
+          "lang": "zh",
+          "category": "dialog",
+          "islands": 1,
+          "dependency_set": "set-2",
+          "bytes": 10134263,
+          "gzip9": 1238754,
+          "closure_sha256": "837856b728745a1cf0ca2a269db34095ecc4cd1da5cd1835bc7581cfdb900a59"
+        },
+        {
+          "file": "zh/components/icon/index.html",
+          "route": "/rustify-ui/zh/components/icon/",
+          "lang": "zh",
+          "category": "icon",
+          "islands": 1,
+          "dependency_set": "set-2",
+          "bytes": 10114687,
+          "gzip9": 1237394,
+          "closure_sha256": "6ce945961fe1a45fd06930303d1b22ddd230de835be05a54e70161dea659c91c"
+        },
+        {
+          "file": "zh/components/index.html",
+          "route": "/rustify-ui/zh/components/",
+          "lang": "zh",
+          "category": null,
+          "islands": 0,
+          "dependency_set": "set-1",
+          "bytes": 141905,
+          "gzip9": 32343,
+          "closure_sha256": "75dfd84c166cc9ff6e0db4c56d830d01428f311dbd712592da45d6383a8dd178"
+        },
+        {
+          "file": "zh/components/label/index.html",
+          "route": "/rustify-ui/zh/components/label/",
+          "lang": "zh",
+          "category": "label",
+          "islands": 1,
+          "dependency_set": "set-2",
+          "bytes": 10110588,
+          "gzip9": 1236994,
+          "closure_sha256": "0537b695c94c1c770e538b69f0b70681be1946eb31d6e04fc3ed07b93bc94bec"
+        },
+        {
+          "file": "zh/components/link/index.html",
+          "route": "/rustify-ui/zh/components/link/",
+          "lang": "zh",
+          "category": "link",
+          "islands": 1,
+          "dependency_set": "set-2",
+          "bytes": 10115966,
+          "gzip9": 1237578,
+          "closure_sha256": "f8f3c73400d5c96414e44e592c49fcc0096d6a7789579616bd95f9dc570ee7b7"
+        },
+        {
+          "file": "zh/components/loading/index.html",
+          "route": "/rustify-ui/zh/components/loading/",
+          "lang": "zh",
+          "category": "loading",
+          "islands": 1,
+          "dependency_set": "set-2",
+          "bytes": 10112832,
+          "gzip9": 1237294,
+          "closure_sha256": "a0e68aa5c76d125342bb3bc54430afb204c42bbbb473fd4f811101a33a19b131"
+        },
+        {
+          "file": "zh/components/menu/index.html",
+          "route": "/rustify-ui/zh/components/menu/",
+          "lang": "zh",
+          "category": "menu",
+          "islands": 1,
+          "dependency_set": "set-2",
+          "bytes": 10146638,
+          "gzip9": 1239550,
+          "closure_sha256": "2ddc2da0bf1cbcb88c5f54911ed5d749a70259b8a9665972150b54ed5179f726"
+        },
+        {
+          "file": "zh/components/number-field/index.html",
+          "route": "/rustify-ui/zh/components/number-field/",
+          "lang": "zh",
+          "category": "number field",
+          "islands": 1,
+          "dependency_set": "set-2",
+          "bytes": 10102067,
+          "gzip9": 1237056,
+          "closure_sha256": "583ee0b394233f5cd9e08f8b9e7cf3c5725467fd1c73d396e219815bc1aeb1f9"
+        },
+        {
+          "file": "zh/components/progress/index.html",
+          "route": "/rustify-ui/zh/components/progress/",
+          "lang": "zh",
+          "category": "progress",
+          "islands": 1,
+          "dependency_set": "set-2",
+          "bytes": 10133560,
+          "gzip9": 1238483,
+          "closure_sha256": "1347023ee9d26ec0461c9eeae63a50eff02ca6b80d030b2ce22a689ba9b5afe5"
+        },
+        {
+          "file": "zh/components/radio/index.html",
+          "route": "/rustify-ui/zh/components/radio/",
+          "lang": "zh",
+          "category": "radio",
+          "islands": 1,
+          "dependency_set": "set-2",
+          "bytes": 10130340,
+          "gzip9": 1237601,
+          "closure_sha256": "71edacac337fd5696ca6777c3466d6eb4165492071513b2d7ee44b5a5f4f8cb3"
+        },
+        {
+          "file": "zh/components/scroll-area/index.html",
+          "route": "/rustify-ui/zh/components/scroll-area/",
+          "lang": "zh",
+          "category": "scroll area",
+          "islands": 1,
+          "dependency_set": "set-2",
+          "bytes": 10145532,
+          "gzip9": 1239333,
+          "closure_sha256": "abc4583157a24fb4a764cc27c6bdc827154d14aa503397e84ee8bd0ea63eeb66"
+        },
+        {
+          "file": "zh/components/select/index.html",
+          "route": "/rustify-ui/zh/components/select/",
+          "lang": "zh",
+          "category": "select",
+          "islands": 1,
+          "dependency_set": "set-2",
+          "bytes": 10133878,
+          "gzip9": 1237895,
+          "closure_sha256": "65c001987722f9b06cebba20136633ec8e2a3ee084749a0050bfd33a2856241d"
+        },
+        {
+          "file": "zh/components/slider/index.html",
+          "route": "/rustify-ui/zh/components/slider/",
+          "lang": "zh",
+          "category": "slider",
+          "islands": 1,
+          "dependency_set": "set-2",
+          "bytes": 10126666,
+          "gzip9": 1237391,
+          "closure_sha256": "da3d75e070ca204f147ed3ce9d44499d7af05a198b6280f58e037c0656426b7c"
+        },
+        {
+          "file": "zh/components/switch/index.html",
+          "route": "/rustify-ui/zh/components/switch/",
+          "lang": "zh",
+          "category": "switch",
+          "islands": 1,
+          "dependency_set": "set-2",
+          "bytes": 10126782,
+          "gzip9": 1237361,
+          "closure_sha256": "ef9c184cc17e1aa20d3adc11c2af17e749f853d58e82a9bd0fd0fa7800a8fdb6"
+        },
+        {
+          "file": "zh/components/tabs/index.html",
+          "route": "/rustify-ui/zh/components/tabs/",
+          "lang": "zh",
+          "category": "tabs",
+          "islands": 1,
+          "dependency_set": "set-2",
+          "bytes": 10145687,
+          "gzip9": 1239176,
+          "closure_sha256": "323935c12ee7b014857638aac808d36c8cfdcc6bbefdc30bb929bb31ed52a03a"
+        },
+        {
+          "file": "zh/components/text-area/index.html",
+          "route": "/rustify-ui/zh/components/text-area/",
+          "lang": "zh",
+          "category": "text area",
+          "islands": 1,
+          "dependency_set": "set-2",
+          "bytes": 10098228,
+          "gzip9": 1236429,
+          "closure_sha256": "30a1c3d581353b2778bff07e1aef93aca53868de4c58a9698a2f89db050902dd"
+        },
+        {
+          "file": "zh/components/text-field/index.html",
+          "route": "/rustify-ui/zh/components/text-field/",
+          "lang": "zh",
+          "category": "text field",
+          "islands": 1,
+          "dependency_set": "set-2",
+          "bytes": 10100550,
+          "gzip9": 1236678,
+          "closure_sha256": "4ca3fc94dd11f48cd127aed6791630d651ed1e761d6a6b1bf693158fbee24835"
+        },
+        {
+          "file": "zh/components/toast/index.html",
+          "route": "/rustify-ui/zh/components/toast/",
+          "lang": "zh",
+          "category": "toast",
+          "islands": 1,
+          "dependency_set": "set-2",
+          "bytes": 10131665,
+          "gzip9": 1238732,
+          "closure_sha256": "abcd1604fed75346ba61e5f8012e2d249ae9c3b4b2b763f2961a1e1d03cdc4ef"
+        },
+        {
+          "file": "zh/components/toggle-group/index.html",
+          "route": "/rustify-ui/zh/components/toggle-group/",
+          "lang": "zh",
+          "category": "toggle group",
+          "islands": 1,
+          "dependency_set": "set-2",
+          "bytes": 10134517,
+          "gzip9": 1237995,
+          "closure_sha256": "9d757df7e3958087ea842ceb9e2135d478f881ee0bfad0293dcf5427eb9eb260"
+        },
+        {
+          "file": "zh/components/tooltip/index.html",
+          "route": "/rustify-ui/zh/components/tooltip/",
+          "lang": "zh",
+          "category": "tooltip",
+          "islands": 1,
+          "dependency_set": "set-2",
+          "bytes": 10127908,
+          "gzip9": 1238293,
+          "closure_sha256": "8a201accf7dd879fb17b0678471f1bd99eaae786a344786aa4e2b8b44538eef5"
+        },
+        {
+          "file": "zh/components/tree/index.html",
+          "route": "/rustify-ui/zh/components/tree/",
+          "lang": "zh",
+          "category": "tree",
+          "islands": 1,
+          "dependency_set": "set-2",
+          "bytes": 10162221,
+          "gzip9": 1240495,
+          "closure_sha256": "fe1608e1f3131d99b5010ed730ed687ff34a03258f326eca788841a66a9c108f"
+        },
+        {
+          "file": "zh/data/index.html",
+          "route": "/rustify-ui/zh/data/",
+          "lang": "zh",
+          "category": null,
+          "islands": 0,
+          "dependency_set": "set-1",
+          "bytes": 149826,
+          "gzip9": 32935,
+          "closure_sha256": "77f254826626022304a5e27d7d935d9e71a3472b9c628d1a441b7c826601590a"
+        },
+        {
+          "file": "zh/forms/index.html",
+          "route": "/rustify-ui/zh/forms/",
+          "lang": "zh",
+          "category": null,
+          "islands": 0,
+          "dependency_set": "set-1",
+          "bytes": 131590,
+          "gzip9": 28902,
+          "closure_sha256": "ed56ed371c7ab3d2a178d0cd5e8ecf9723d247c5efcea488597c635f3d539e7f"
+        },
+        {
+          "file": "zh/i18n/index.html",
+          "route": "/rustify-ui/zh/i18n/",
+          "lang": "zh",
+          "category": null,
+          "islands": 0,
+          "dependency_set": "set-1",
+          "bytes": 134529,
+          "gzip9": 28940,
+          "closure_sha256": "7bb01ed1bcbf6c4a79620952f1dac0926ad3f6a6f3caeb3a411ae684a9e745ad"
+        },
+        {
+          "file": "zh/index.html",
+          "route": "/rustify-ui/zh/",
+          "lang": "zh",
+          "category": null,
+          "islands": 0,
+          "dependency_set": "set-1",
+          "bytes": 112213,
+          "gzip9": 25483,
+          "closure_sha256": "216564e549f26fe8c919b9aac9677c44bf4509de9569119d18379c4475336134"
+        },
+        {
+          "file": "zh/navigation/index.html",
+          "route": "/rustify-ui/zh/navigation/",
+          "lang": "zh",
+          "category": null,
+          "islands": 0,
+          "dependency_set": "set-1",
+          "bytes": 132033,
+          "gzip9": 29403,
+          "closure_sha256": "d2dfeedb95f41e72bf252f39aa9747497988fcbdbc1119e909596e372270545e"
+        },
+        {
+          "file": "zh/quickstart/index.html",
+          "route": "/rustify-ui/zh/quickstart/",
+          "lang": "zh",
+          "category": null,
+          "islands": 0,
+          "dependency_set": "set-1",
+          "bytes": 224474,
+          "gzip9": 39305,
+          "closure_sha256": "0f7f1361fe2414563ee2063a12ac6f637a438e8d113a334314c65fc6afadffbd"
+        },
+        {
+          "file": "zh/themes/index.html",
+          "route": "/rustify-ui/zh/themes/",
+          "lang": "zh",
+          "category": null,
+          "islands": 0,
+          "dependency_set": "set-1",
+          "bytes": 195597,
+          "gzip9": 38297,
+          "closure_sha256": "9275777fbde94ef30a3fed84131a11995fd8cc2018cede02f8afec364dca2e86"
+        },
+        {
+          "file": "zh/utility/index.html",
+          "route": "/rustify-ui/zh/utility/",
+          "lang": "zh",
+          "category": null,
+          "islands": 0,
+          "dependency_set": "set-1",
+          "bytes": 139410,
+          "gzip9": 31318,
+          "closure_sha256": "39ab198d2b780ba3d6c9783629a58719904143c87f275d23cdc0e6d618a94c06"
+        },
+        {
+          "file": "zh/vellum/index.html",
+          "route": "/rustify-ui/zh/vellum/",
+          "lang": "zh",
+          "category": null,
+          "islands": 0,
+          "dependency_set": "set-1",
+          "bytes": 170549,
+          "gzip9": 40405,
+          "closure_sha256": "e239137abe6fef80fdea2cc0b2cf52778611a0fb64d892eaea442e87a2a85347"
+        },
+        {
+          "file": "zh/workspace/index.html",
+          "route": "/rustify-ui/zh/workspace/",
+          "lang": "zh",
+          "category": null,
+          "islands": 0,
+          "dependency_set": "set-1",
+          "bytes": 132747,
+          "gzip9": 29978,
+          "closure_sha256": "a773031180ffdee708d1236241eb39ac731f2fb667aef4dc7f13a4949487316d"
+        }
+      ],
+      "groups": {
+        "home": {
+          "count": 1,
+          "max_raw": {
+            "bytes": 112604,
+            "candidates": [
+              {
+                "file": "index.html",
+                "route": "/rustify-ui/",
+                "category": null
+              }
+            ]
+          },
+          "max_gzip9": {
+            "gzip9": 25265,
+            "candidates": [
+              {
+                "file": "index.html",
+                "route": "/rustify-ui/",
+                "category": null
+              }
+            ]
+          }
+        },
+        "404": {
+          "count": 1,
+          "max_raw": {
+            "bytes": 130597,
+            "candidates": [
+              {
+                "file": "404.html",
+                "route": "/rustify-ui/404.html",
+                "category": null
+              }
+            ]
+          },
+          "max_gzip9": {
+            "gzip9": 26746,
+            "candidates": [
+              {
+                "file": "404.html",
+                "route": "/rustify-ui/404.html",
+                "category": null
+              }
+            ]
+          }
+        },
+        "islands_all": {
+          "count": 48,
+          "max_raw": {
+            "bytes": 10174119,
+            "candidates": [
+              {
+                "file": "zh/components/data-table/index.html",
+                "route": "/rustify-ui/zh/components/data-table/",
+                "category": "data table"
+              }
+            ]
+          },
+          "max_gzip9": {
+            "gzip9": 1241427,
+            "candidates": [
+              {
+                "file": "zh/components/data-table/index.html",
+                "route": "/rustify-ui/zh/components/data-table/",
+                "category": "data table"
+              }
+            ]
+          }
+        },
+        "guides_all": {
+          "count": 26,
+          "max_raw": {
+            "bytes": 231667,
+            "candidates": [
+              {
+                "file": "quickstart/index.html",
+                "route": "/rustify-ui/quickstart/",
+                "category": null
+              }
+            ]
+          },
+          "max_gzip9": {
+            "gzip9": 40405,
+            "candidates": [
+              {
+                "file": "zh/vellum/index.html",
+                "route": "/rustify-ui/zh/vellum/",
+                "category": null
+              }
+            ]
+          }
+        },
+        "guides_en": {
+          "count": 12,
+          "max_raw": {
+            "bytes": 231667,
+            "candidates": [
+              {
+                "file": "quickstart/index.html",
+                "route": "/rustify-ui/quickstart/",
+                "category": null
+              }
+            ]
+          },
+          "max_gzip9": {
+            "gzip9": 39974,
+            "candidates": [
+              {
+                "file": "vellum/index.html",
+                "route": "/rustify-ui/vellum/",
+                "category": null
+              }
+            ]
+          }
+        },
+        "guides_zh": {
+          "count": 14,
+          "max_raw": {
+            "bytes": 224474,
+            "candidates": [
+              {
+                "file": "zh/quickstart/index.html",
+                "route": "/rustify-ui/zh/quickstart/",
+                "category": null
+              }
+            ]
+          },
+          "max_gzip9": {
+            "gzip9": 40405,
+            "candidates": [
+              {
+                "file": "zh/vellum/index.html",
+                "route": "/rustify-ui/zh/vellum/",
+                "category": null
+              }
+            ]
+          }
+        },
+        "category:button": {
+          "count": 1,
+          "max_raw": {
+            "bytes": 10115087,
+            "candidates": [
+              {
+                "file": "zh/components/button/index.html",
+                "route": "/rustify-ui/zh/components/button/",
+                "category": "button"
+              }
+            ]
+          },
+          "max_gzip9": {
+            "gzip9": 1237105,
+            "candidates": [
+              {
+                "file": "zh/components/button/index.html",
+                "route": "/rustify-ui/zh/components/button/",
+                "category": "button"
+              }
+            ]
+          }
+        },
+        "category:checkbox": {
+          "count": 1,
+          "max_raw": {
+            "bytes": 10127377,
+            "candidates": [
+              {
+                "file": "zh/components/checkbox/index.html",
+                "route": "/rustify-ui/zh/components/checkbox/",
+                "category": "checkbox"
+              }
+            ]
+          },
+          "max_gzip9": {
+            "gzip9": 1237455,
+            "candidates": [
+              {
+                "file": "zh/components/checkbox/index.html",
+                "route": "/rustify-ui/zh/components/checkbox/",
+                "category": "checkbox"
+              }
+            ]
+          }
+        },
+        "category:color field": {
+          "count": 1,
+          "max_raw": {
+            "bytes": 10101221,
+            "candidates": [
+              {
+                "file": "zh/components/color-field/index.html",
+                "route": "/rustify-ui/zh/components/color-field/",
+                "category": "color field"
+              }
+            ]
+          },
+          "max_gzip9": {
+            "gzip9": 1236970,
+            "candidates": [
+              {
+                "file": "zh/components/color-field/index.html",
+                "route": "/rustify-ui/zh/components/color-field/",
+                "category": "color field"
+              }
+            ]
+          }
+        },
+        "category:data table": {
+          "count": 1,
+          "max_raw": {
+            "bytes": 10174119,
+            "candidates": [
+              {
+                "file": "zh/components/data-table/index.html",
+                "route": "/rustify-ui/zh/components/data-table/",
+                "category": "data table"
+              }
+            ]
+          },
+          "max_gzip9": {
+            "gzip9": 1241427,
+            "candidates": [
+              {
+                "file": "zh/components/data-table/index.html",
+                "route": "/rustify-ui/zh/components/data-table/",
+                "category": "data table"
+              }
+            ]
+          }
+        },
+        "category:dialog": {
+          "count": 1,
+          "max_raw": {
+            "bytes": 10134263,
+            "candidates": [
+              {
+                "file": "zh/components/dialog/index.html",
+                "route": "/rustify-ui/zh/components/dialog/",
+                "category": "dialog"
+              }
+            ]
+          },
+          "max_gzip9": {
+            "gzip9": 1238754,
+            "candidates": [
+              {
+                "file": "zh/components/dialog/index.html",
+                "route": "/rustify-ui/zh/components/dialog/",
+                "category": "dialog"
+              }
+            ]
+          }
+        },
+        "category:icon": {
+          "count": 1,
+          "max_raw": {
+            "bytes": 10114687,
+            "candidates": [
+              {
+                "file": "zh/components/icon/index.html",
+                "route": "/rustify-ui/zh/components/icon/",
+                "category": "icon"
+              }
+            ]
+          },
+          "max_gzip9": {
+            "gzip9": 1237394,
+            "candidates": [
+              {
+                "file": "zh/components/icon/index.html",
+                "route": "/rustify-ui/zh/components/icon/",
+                "category": "icon"
+              }
+            ]
+          }
+        },
+        "category:label": {
+          "count": 1,
+          "max_raw": {
+            "bytes": 10110588,
+            "candidates": [
+              {
+                "file": "zh/components/label/index.html",
+                "route": "/rustify-ui/zh/components/label/",
+                "category": "label"
+              }
+            ]
+          },
+          "max_gzip9": {
+            "gzip9": 1236994,
+            "candidates": [
+              {
+                "file": "zh/components/label/index.html",
+                "route": "/rustify-ui/zh/components/label/",
+                "category": "label"
+              }
+            ]
+          }
+        },
+        "category:link": {
+          "count": 1,
+          "max_raw": {
+            "bytes": 10115966,
+            "candidates": [
+              {
+                "file": "zh/components/link/index.html",
+                "route": "/rustify-ui/zh/components/link/",
+                "category": "link"
+              }
+            ]
+          },
+          "max_gzip9": {
+            "gzip9": 1237578,
+            "candidates": [
+              {
+                "file": "zh/components/link/index.html",
+                "route": "/rustify-ui/zh/components/link/",
+                "category": "link"
+              }
+            ]
+          }
+        },
+        "category:loading": {
+          "count": 1,
+          "max_raw": {
+            "bytes": 10112832,
+            "candidates": [
+              {
+                "file": "zh/components/loading/index.html",
+                "route": "/rustify-ui/zh/components/loading/",
+                "category": "loading"
+              }
+            ]
+          },
+          "max_gzip9": {
+            "gzip9": 1237294,
+            "candidates": [
+              {
+                "file": "zh/components/loading/index.html",
+                "route": "/rustify-ui/zh/components/loading/",
+                "category": "loading"
+              }
+            ]
+          }
+        },
+        "category:menu": {
+          "count": 1,
+          "max_raw": {
+            "bytes": 10146638,
+            "candidates": [
+              {
+                "file": "zh/components/menu/index.html",
+                "route": "/rustify-ui/zh/components/menu/",
+                "category": "menu"
+              }
+            ]
+          },
+          "max_gzip9": {
+            "gzip9": 1239550,
+            "candidates": [
+              {
+                "file": "zh/components/menu/index.html",
+                "route": "/rustify-ui/zh/components/menu/",
+                "category": "menu"
+              }
+            ]
+          }
+        },
+        "category:number field": {
+          "count": 1,
+          "max_raw": {
+            "bytes": 10102067,
+            "candidates": [
+              {
+                "file": "zh/components/number-field/index.html",
+                "route": "/rustify-ui/zh/components/number-field/",
+                "category": "number field"
+              }
+            ]
+          },
+          "max_gzip9": {
+            "gzip9": 1237056,
+            "candidates": [
+              {
+                "file": "zh/components/number-field/index.html",
+                "route": "/rustify-ui/zh/components/number-field/",
+                "category": "number field"
+              }
+            ]
+          }
+        },
+        "category:progress": {
+          "count": 1,
+          "max_raw": {
+            "bytes": 10133560,
+            "candidates": [
+              {
+                "file": "zh/components/progress/index.html",
+                "route": "/rustify-ui/zh/components/progress/",
+                "category": "progress"
+              }
+            ]
+          },
+          "max_gzip9": {
+            "gzip9": 1238483,
+            "candidates": [
+              {
+                "file": "zh/components/progress/index.html",
+                "route": "/rustify-ui/zh/components/progress/",
+                "category": "progress"
+              }
+            ]
+          }
+        },
+        "category:radio": {
+          "count": 1,
+          "max_raw": {
+            "bytes": 10130340,
+            "candidates": [
+              {
+                "file": "zh/components/radio/index.html",
+                "route": "/rustify-ui/zh/components/radio/",
+                "category": "radio"
+              }
+            ]
+          },
+          "max_gzip9": {
+            "gzip9": 1237601,
+            "candidates": [
+              {
+                "file": "zh/components/radio/index.html",
+                "route": "/rustify-ui/zh/components/radio/",
+                "category": "radio"
+              }
+            ]
+          }
+        },
+        "category:scroll area": {
+          "count": 1,
+          "max_raw": {
+            "bytes": 10145532,
+            "candidates": [
+              {
+                "file": "zh/components/scroll-area/index.html",
+                "route": "/rustify-ui/zh/components/scroll-area/",
+                "category": "scroll area"
+              }
+            ]
+          },
+          "max_gzip9": {
+            "gzip9": 1239333,
+            "candidates": [
+              {
+                "file": "zh/components/scroll-area/index.html",
+                "route": "/rustify-ui/zh/components/scroll-area/",
+                "category": "scroll area"
+              }
+            ]
+          }
+        },
+        "category:select": {
+          "count": 1,
+          "max_raw": {
+            "bytes": 10133878,
+            "candidates": [
+              {
+                "file": "zh/components/select/index.html",
+                "route": "/rustify-ui/zh/components/select/",
+                "category": "select"
+              }
+            ]
+          },
+          "max_gzip9": {
+            "gzip9": 1237895,
+            "candidates": [
+              {
+                "file": "zh/components/select/index.html",
+                "route": "/rustify-ui/zh/components/select/",
+                "category": "select"
+              }
+            ]
+          }
+        },
+        "category:slider": {
+          "count": 1,
+          "max_raw": {
+            "bytes": 10126666,
+            "candidates": [
+              {
+                "file": "zh/components/slider/index.html",
+                "route": "/rustify-ui/zh/components/slider/",
+                "category": "slider"
+              }
+            ]
+          },
+          "max_gzip9": {
+            "gzip9": 1237391,
+            "candidates": [
+              {
+                "file": "zh/components/slider/index.html",
+                "route": "/rustify-ui/zh/components/slider/",
+                "category": "slider"
+              }
+            ]
+          }
+        },
+        "category:switch": {
+          "count": 1,
+          "max_raw": {
+            "bytes": 10126782,
+            "candidates": [
+              {
+                "file": "zh/components/switch/index.html",
+                "route": "/rustify-ui/zh/components/switch/",
+                "category": "switch"
+              }
+            ]
+          },
+          "max_gzip9": {
+            "gzip9": 1237361,
+            "candidates": [
+              {
+                "file": "zh/components/switch/index.html",
+                "route": "/rustify-ui/zh/components/switch/",
+                "category": "switch"
+              }
+            ]
+          }
+        },
+        "category:tabs": {
+          "count": 1,
+          "max_raw": {
+            "bytes": 10145687,
+            "candidates": [
+              {
+                "file": "zh/components/tabs/index.html",
+                "route": "/rustify-ui/zh/components/tabs/",
+                "category": "tabs"
+              }
+            ]
+          },
+          "max_gzip9": {
+            "gzip9": 1239176,
+            "candidates": [
+              {
+                "file": "zh/components/tabs/index.html",
+                "route": "/rustify-ui/zh/components/tabs/",
+                "category": "tabs"
+              }
+            ]
+          }
+        },
+        "category:text area": {
+          "count": 1,
+          "max_raw": {
+            "bytes": 10098228,
+            "candidates": [
+              {
+                "file": "zh/components/text-area/index.html",
+                "route": "/rustify-ui/zh/components/text-area/",
+                "category": "text area"
+              }
+            ]
+          },
+          "max_gzip9": {
+            "gzip9": 1236429,
+            "candidates": [
+              {
+                "file": "zh/components/text-area/index.html",
+                "route": "/rustify-ui/zh/components/text-area/",
+                "category": "text area"
+              }
+            ]
+          }
+        },
+        "category:text field": {
+          "count": 1,
+          "max_raw": {
+            "bytes": 10100550,
+            "candidates": [
+              {
+                "file": "zh/components/text-field/index.html",
+                "route": "/rustify-ui/zh/components/text-field/",
+                "category": "text field"
+              }
+            ]
+          },
+          "max_gzip9": {
+            "gzip9": 1236678,
+            "candidates": [
+              {
+                "file": "zh/components/text-field/index.html",
+                "route": "/rustify-ui/zh/components/text-field/",
+                "category": "text field"
+              }
+            ]
+          }
+        },
+        "category:toast": {
+          "count": 1,
+          "max_raw": {
+            "bytes": 10131665,
+            "candidates": [
+              {
+                "file": "zh/components/toast/index.html",
+                "route": "/rustify-ui/zh/components/toast/",
+                "category": "toast"
+              }
+            ]
+          },
+          "max_gzip9": {
+            "gzip9": 1238732,
+            "candidates": [
+              {
+                "file": "zh/components/toast/index.html",
+                "route": "/rustify-ui/zh/components/toast/",
+                "category": "toast"
+              }
+            ]
+          }
+        },
+        "category:toggle group": {
+          "count": 1,
+          "max_raw": {
+            "bytes": 10134517,
+            "candidates": [
+              {
+                "file": "zh/components/toggle-group/index.html",
+                "route": "/rustify-ui/zh/components/toggle-group/",
+                "category": "toggle group"
+              }
+            ]
+          },
+          "max_gzip9": {
+            "gzip9": 1237995,
+            "candidates": [
+              {
+                "file": "zh/components/toggle-group/index.html",
+                "route": "/rustify-ui/zh/components/toggle-group/",
+                "category": "toggle group"
+              }
+            ]
+          }
+        },
+        "category:tooltip": {
+          "count": 1,
+          "max_raw": {
+            "bytes": 10127908,
+            "candidates": [
+              {
+                "file": "zh/components/tooltip/index.html",
+                "route": "/rustify-ui/zh/components/tooltip/",
+                "category": "tooltip"
+              }
+            ]
+          },
+          "max_gzip9": {
+            "gzip9": 1238293,
+            "candidates": [
+              {
+                "file": "zh/components/tooltip/index.html",
+                "route": "/rustify-ui/zh/components/tooltip/",
+                "category": "tooltip"
+              }
+            ]
+          }
+        },
+        "category:tree": {
+          "count": 1,
+          "max_raw": {
+            "bytes": 10162221,
+            "candidates": [
+              {
+                "file": "zh/components/tree/index.html",
+                "route": "/rustify-ui/zh/components/tree/",
+                "category": "tree"
+              }
+            ]
+          },
+          "max_gzip9": {
+            "gzip9": 1240495,
+            "candidates": [
+              {
+                "file": "zh/components/tree/index.html",
+                "route": "/rustify-ui/zh/components/tree/",
+                "category": "tree"
+              }
+            ]
+          }
+        }
+      },
+      "first_load_dependency_sets": [
+        {
+          "id": "set-1",
+          "files": [
+            "assets/mode.1d6a9bf145.js",
+            "assets/site.269216efb4.js",
+            "assets/site.82cb043005.css"
+          ],
+          "bytes": 102029,
+          "gzip9": 22009,
+          "sha256": "ae3d406fc9116e96ba76a261ee940c9cf480c8b4a85bc004546e5112e8997c2f",
+          "conditional_files": [],
+          "html_references": [
+            {
+              "to": "assets/site.82cb043005.css",
+              "reason": "html-link-stylesheet"
+            },
+            {
+              "to": "assets/mode.1d6a9bf145.js",
+              "reason": "html-script"
+            },
+            {
+              "to": "assets/site.269216efb4.js",
+              "reason": "html-script"
+            }
+          ]
+        },
+        {
+          "id": "set-2",
+          "files": [
+            "assets/islands/b9140be330acf58d887929efe7a96140f8a70fe13c1bbb84392b75d9e6b5d31e/app.js",
+            "assets/islands/b9140be330acf58d887929efe7a96140f8a70fe13c1bbb84392b75d9e6b5d31e/app_bg.wasm",
+            "assets/islands/b9140be330acf58d887929efe7a96140f8a70fe13c1bbb84392b75d9e6b5d31e/dom-loader.js",
+            "assets/islands/b9140be330acf58d887929efe7a96140f8a70fe13c1bbb84392b75d9e6b5d31e/islands.js",
+            "assets/islands/b9140be330acf58d887929efe7a96140f8a70fe13c1bbb84392b75d9e6b5d31e/snippets/rustify-ui-4db2f10f10788f4c/web/dom-runtime.js",
+            "assets/mode.1d6a9bf145.js",
+            "assets/site.269216efb4.js",
+            "assets/site.82cb043005.css"
+          ],
+          "bytes": 9995354,
+          "gzip9": 1227277,
+          "sha256": "300a7194459147beb8c81d46e7e94a6b6d83a453b5ebb5d4857daaecf5fb7e06",
+          "conditional_files": [],
+          "html_references": [
+            {
+              "to": "assets/site.82cb043005.css",
+              "reason": "html-link-stylesheet"
+            },
+            {
+              "to": "assets/mode.1d6a9bf145.js",
+              "reason": "html-script"
+            },
+            {
+              "to": "assets/site.269216efb4.js",
+              "reason": "html-script"
+            },
+            {
+              "to": "assets/islands/b9140be330acf58d887929efe7a96140f8a70fe13c1bbb84392b75d9e6b5d31e/islands.js",
+              "reason": "html-script"
+            }
+          ]
+        }
+      ],
+      "excluded_HTML_references_totals": {
+        "navigation": 7035,
+        "download": 0,
+        "metadata": 526,
+        "lazy": 0,
+        "template": 292,
+        "inline_data": 76
+      },
+      "dependency_graph": {
+        "assets/site.269216efb4.js": {
+          "refs": [],
+          "inline_css_urls": 0,
+          "unexecuted_url_literals": []
+        },
+        "assets/mode.1d6a9bf145.js": {
+          "refs": [],
+          "inline_css_urls": 0,
+          "unexecuted_url_literals": []
+        },
+        "assets/site.82cb043005.css": {
+          "refs": [],
+          "inline_css_urls": 3,
+          "unexecuted_url_literals": []
+        },
+        "assets/islands/b9140be330acf58d887929efe7a96140f8a70fe13c1bbb84392b75d9e6b5d31e/islands.js": {
+          "refs": [
+            [
+              "./dom-loader.js",
+              "static-module-import",
+              false
+            ],
+            [
+              "./app.js",
+              "eager-island-boot-option",
+              false
+            ],
+            [
+              "./app_bg.wasm",
+              "eager-island-boot-option",
+              false
+            ]
+          ],
+          "inline_css_urls": 0,
+          "unexecuted_url_literals": []
+        },
+        "assets/islands/b9140be330acf58d887929efe7a96140f8a70fe13c1bbb84392b75d9e6b5d31e/app_bg.wasm": {
+          "refs": [],
+          "inline_css_urls": 0,
+          "unexecuted_url_literals": []
+        },
+        "assets/islands/b9140be330acf58d887929efe7a96140f8a70fe13c1bbb84392b75d9e6b5d31e/app.js": {
+          "refs": [
+            [
+              "./snippets/rustify-ui-4db2f10f10788f4c/web/dom-runtime.js",
+              "static-module-import",
+              false
+            ]
+          ],
+          "inline_css_urls": 0,
+          "unexecuted_url_literals": []
+        },
+        "assets/islands/b9140be330acf58d887929efe7a96140f8a70fe13c1bbb84392b75d9e6b5d31e/snippets/rustify-ui-4db2f10f10788f4c/web/dom-runtime.js": {
+          "refs": [],
+          "inline_css_urls": 0,
+          "unexecuted_url_literals": []
+        },
+        "assets/islands/b9140be330acf58d887929efe7a96140f8a70fe13c1bbb84392b75d9e6b5d31e/dom-loader.js": {
+          "refs": [],
+          "inline_css_urls": 0,
+          "unexecuted_url_literals": []
+        }
+      },
+      "unused_first_load_manifest_files": [
+        ".nojekyll",
+        "assets/files/theme-document.schema.d97f50ae4a.json",
+        "assets/islands/b9140be330acf58d887929efe7a96140f8a70fe13c1bbb84392b75d9e6b5d31e/dom-runtime.css",
+        "assets/search-worker.8225fc0ff7.js",
+        "assets/search.4879fcef9b.js",
+        "assets/search.en.b20154ecee.json",
+        "assets/search.zh.786007931d.json",
+        "assets/share.9f8be38eaf.png",
+        "llms.txt",
+        "robots.txt",
+        "sitemap.xml",
+        "zh/llms.txt"
+      ],
+      "referenced_network_font_files": [],
+      "island_non_HTML_dependency_sets": [
+        "set-2"
+      ]
+    }
+  }
+}

@@ -1,0 +1,555 @@
+Window: "Architecture | Rustify UI", App: Firefox.
+0 标准窗口 Architecture | Rustify UI, Secondary Actions: Raise
+	1 container Architecture | Rustify UI
+		2 工具栏 浏览器标签页
+			3 标签页组
+				4 标签页 (selectable) Value: 欢迎使用 Firefox, 欢迎使用 Firefox
+关闭 1 个标签页
+				5 标签页 (selected) Value: Architecture | Rustify UI, Architecture | Rustify UI
+关闭 1 个标签页
+				6 按钮 打开新标签页 (⌘T)
+			7 分隔条
+			8 按钮 列出所有标签页
+		9 工具栏 导航
+			10 按钮 Description: 侧栏, Help: 显示侧栏 (⌃Z)
+			11 按钮 后退
+			12 按钮 (disabled) 前进
+			13 按钮 重新加载
+			14 分隔条
+			15 container
+				16 按钮 查看网站信息
+				17 组合框 (settable) Description: 使用 Google 搜索，或者输入网址, Value: http://127.0.0.1:4199/rustify-ui/zh/architecture/#versioned-themes
+					18 文本 http://127.0.0.1:4199/rustify-ui/zh/architecture/#versioned-themes
+				19 按钮 进入阅读模式
+				20 按钮 试试 Firefox 注重隐私的翻译功能 - Beta
+				21 按钮 为此页面添加书签 (⌘D)
+			22 分隔条
+			23 按钮 账户
+			24 按钮 扩展
+			25 按钮 Description: Firefox, Help: 打开应用程序菜单
+		26 工具栏
+		27 滚动区
+			28 HTML 内容 Description: Architecture | Rustify UI, URL: …
+				29 link 跳到正文, Value: 127.0.0.1:4199/rustify-ui/zh/architecture/#content
+				30 container
+					31 link Rustify UI, Value: 127.0.0.1:4199/rustify-ui/zh/
+					32 container 站点链接
+						33 内容列表
+							34 link GitHub 源码, Value: github.com/rockie/rustify-ui
+					35 按钮 搜索 Ctrl / Cmd K
+						36 文本 搜索
+						37 文本 Ctrl / Cmd K
+					38 摘要 中文
+						39 文本 中文
+					40 container 主题
+						41 开关按钮 跟随系统, Value: off
+							42 文本 跟随系统
+						43 开关按钮 浅色, Value: off
+							44 文本 浅色
+						45 开关按钮 深色, Value: on
+							46 文本 深色
+				47 container 菜单
+					48 container
+						49 标题 指南, Value: 2
+							50 文本 指南
+						51 内容列表
+							52 link 快速开始, Value: 127.0.0.1:4199/rustify-ui/zh/quickstart/
+							53 link Architecture, Value: 127.0.0.1:4199/rustify-ui/zh/architecture/
+							54 link Navigation, Value: 127.0.0.1:4199/rustify-ui/zh/navigation/
+							55 link Workspace, Value: 127.0.0.1:4199/rustify-ui/zh/workspace/
+							56 link Forms, Value: 127.0.0.1:4199/rustify-ui/zh/forms/
+							57 link Languages, formatting and text, Value: 127.0.0.1:4199/rustify-ui/zh/i18n/
+							58 link Data larger than the screen, Value: 127.0.0.1:4199/rustify-ui/zh/data/
+							59 link Theme documents, Value: 127.0.0.1:4199/rustify-ui/zh/themes/
+							60 link Runtime utilities, Value: 127.0.0.1:4199/rustify-ui/zh/utility/
+							61 link Compatibility and capability boundaries (P1 research preview), Value: 127.0.0.1:4199/rustify-ui/zh/compatibility/
+							62 link Component catalogue, Value: 127.0.0.1:4199/rustify-ui/zh/components/
+							63 link Vellum example and framework capabilities, Value: 127.0.0.1:4199/rustify-ui/zh/vellum/
+					64 container
+						65 标题 组件, Value: 2
+							66 文本 组件
+						67 内容列表
+							68 link Button, Value: 127.0.0.1:4199/rustify-ui/zh/components/button/
+							69 link Label, Value: 127.0.0.1:4199/rustify-ui/zh/components/label/
+							70 link Link, Value: 127.0.0.1:4199/rustify-ui/zh/components/link/
+							71 link Icon, Value: 127.0.0.1:4199/rustify-ui/zh/components/icon/
+							72 link Text field, Value: 127.0.0.1:4199/rustify-ui/zh/components/text-field/
+							73 link Text area, Value: 127.0.0.1:4199/rustify-ui/zh/components/text-area/
+							74 link Checkbox, Value: 127.0.0.1:4199/rustify-ui/zh/components/checkbox/
+							75 link Radio, Value: 127.0.0.1:4199/rustify-ui/zh/components/radio/
+							76 link Switch, Value: 127.0.0.1:4199/rustify-ui/zh/components/switch/
+							77 link Select, Value: 127.0.0.1:4199/rustify-ui/zh/components/select/
+							78 link Slider, Value: 127.0.0.1:4199/rustify-ui/zh/components/slider/
+							79 link Progress, Value: 127.0.0.1:4199/rustify-ui/zh/components/progress/
+							80 link Loading, Value: 127.0.0.1:4199/rustify-ui/zh/components/loading/
+							81 link Tooltip, Value: 127.0.0.1:4199/rustify-ui/zh/components/tooltip/
+							82 link Menu, Value: 127.0.0.1:4199/rustify-ui/zh/components/menu/
+							83 link Dialog, Value: 127.0.0.1:4199/rustify-ui/zh/components/dialog/
+							84 link Tabs, Value: 127.0.0.1:4199/rustify-ui/zh/components/tabs/
+							85 link Scroll area, Value: 127.0.0.1:4199/rustify-ui/zh/components/scroll-area/
+							86 link Data table, Value: 127.0.0.1:4199/rustify-ui/zh/components/data-table/
+							87 link Tree, Value: 127.0.0.1:4199/rustify-ui/zh/components/tree/
+							88 link Toast, Value: 127.0.0.1:4199/rustify-ui/zh/components/toast/
+							89 link Number field, Value: 127.0.0.1:4199/rustify-ui/zh/components/number-field/
+							90 link Color field, Value: 127.0.0.1:4199/rustify-ui/zh/components/color-field/
+							91 link Toggle group, Value: 127.0.0.1:4199/rustify-ui/zh/components/toggle-group/
+				92 container 本页目录
+					93 文本 本页目录
+					94 内容列表
+						95 link Crates and files, Value: 127.0.0.1:4199/rustify-ui/zh/architecture/#crates-and-files
+						96 link Runtime contracts, Value: 127.0.0.1:4199/rustify-ui/zh/architecture/#runtime-contracts
+						97 link Static scopes and hydration, Value: 127.0.0.1:4199/rustify-ui/zh/architecture/#static-scopes-and-hydration
+						98 link Versioned themes, Value: 127.0.0.1:4199/rustify-ui/zh/architecture/#versioned-themes
+						99 link Build pipeline, Value: 127.0.0.1:4199/rustify-ui/zh/architecture/#build-pipeline
+						100 link Browser tests: two tiers, one page, Value: 127.0.0.1:4199/rustify-ui/zh/architecture/#browser-tests-two-tiers-one-page
+						101 link What is delivered, and what is deferred, Value: 127.0.0.1:4199/rustify-ui/zh/architecture/#what-is-delivered-and-what-is-deferred
+						102 link Streams, and why they are named, Value: 127.0.0.1:4199/rustify-ui/zh/architecture/#streams-and-why-they-are-named
+						103 link Deciding in the same turn as the event, Value: 127.0.0.1:4199/rustify-ui/zh/architecture/#deciding-in-the-same-turn-as-the-event
+				104 container
+					105 标题 Architecture, Value: 1
+						106 文本 Architecture
+					107 文本 此页面尚未翻译。
+					108 container
+						109 文本 Theme integration below was checked against the working tree of 
+						110 link rockie/rustify-ui, Value: github.com/rockie/rustify-ui
+						111 text , branch  dev , based on commit  7f5e504  (2026-10-03,  docs: update spec ), including the uncommitted Theme Studio implementation.
+					112 container
+						113 text One browser page can run several  instances , and each instance is a wasm instance: its own linear memory, its own host hooks, its own diagnostics ring, its own everything. Inside one instance are  scopes  - the mount points Leptos owns - and inside a scope are the DOM and, when the application turns on the SDK's  gpu  feature, the  GpuRegion s. The default build is DOM only and links no Makepad. Leptos owns the DOM and the application's reactive state; every  GpuRegion  owns a Makepad  Cx  that draws into a canvas the DOM laid out. The two never share widgets or state: the application projects state into regions as props and receives typed actions back.
+					114 文本 A trap stops at the instance boundary. Everything in the instance it happened in is gone - every scope, every region, every task - and nothing outside it is touched, which is what lets an application be embedded on a page it does not own.
+					115 container mermaid 复制
+						116 container
+							117 文本 mermaid
+							118 按钮 复制
+								119 文本 复制
+						120 container
+							121 text flowchart TD     Loader[web/loader.js] --> Runtime[instance 1: wasm instance + host hooks]     Loader --> Second[instance 2: its own memory and runtime]     Runtime --> ScopeA[mount scope A / Leptos Owner]     Runtime --> ScopeB[mount scope B / Leptos Owner]     ScopeA --> Signals[application signals]     Signals --> DOM[Leptos DOM]     Signals --> Props[GpuRegion props effect]     Props --> Region[rustify-makepad region: Cx + app]     Region --> Host[EmbeddedRegion JS host: canvas, GL, listeners]     Host --> Region     Region --> Actions[typed actions delivered after the pump]     Actions --> Signals
+					122 标题 Crates and files, Value: 2
+						123 文本 Crates and files
+					124 表格
+						125 row
+							126 单元格
+								127 文本 Path
+							128 单元格
+								129 文本 Responsibility
+						130 row
+							131 单元格
+								132 文本 crates/rustify-ui
+							133 单元格
+								134 文本 Public SDK. Features: 
+								135 文本 csr
+								136 文本  (default; the browser runtime), 
+								137 文本 ssr
+								138 文本  (rendering on a host, built on its own), 
+								139 文本 hydrate
+								140 文本  (taking over generated DOM, with default features disabled) and 
+								141 文本 gpu
+								142 文本  (Makepad regions, off by default). 
+								143 文本 runtime
+								144 文本  (the neutral host binding every instance starts with, and the DOM loader and stylesheet as constants), 
+								145 文本 mount
+								146 文本  / 
+								147 文本 AppHandle
+								148 文本  (container checks, owner cleanup before DOM unmount), with 
+								149 文本 gpu
+								150 文本  the 
+								151 文本 GpuRegion
+								152 文本  component (canvas node, region lifecycle, props projection, cleanup), 
+								153 文本 UiError
+								154 文本 , the layer stack (
+								155 文本 overlay
+								156 文本 ), native text sessions (
+								157 文本 text
+								158 文本 ), the theme table and its local overrides (
+								159 文本 theme
+								160 文本 ), asynchronous state and tickets (
+								161 文本 task
+								162 文本 ), the DOM component subset (
+								163 文本 components
+								164 文本 ), the GPU halves of the controls that have one on both sides (
+								165 文本 gpu
+								166 文本 ), and the capability catalogue (
+								167 文本 catalog
+								168 文本 ).
+						169 row
+							170 单元格
+								171 文本 crates/rustify-components
+							172 单元格
+								173 文本 DOM components for applications: the two class-string macros forked from Rust/UI (
+								174 文本 clx!
+								175 文本 , 
+								176 文本 variants!
+								177 文本 ), the merge rule they share, the current-path seam a link marks itself current from, and under 
+								178 文本 css/
+								179 文本  the SDK's Tailwind layer (
+								180 文本 sdk.css
+								181 文本 ), the input that compiles it on its own and the committed product (
+								182 文本 rustify.css
+								183 文本 ).
+						184 row
+							185 单元格
+								186 文本 crates/rustify-style
+							187 单元格
+								188 文本 Pure Rust class tooling without DOM or Makepad: the 
+								189 文本 cn
+								190 文本  merge engine and the 
+								191 文本 class_variants!
+								192 文本  generator components use (default feature), the Oxide-derived scanner (
+								193 文本 scanner
+								194 文本 , 
+								195 文本 scanner-fs
+								196 文本 ), and the Tailwind 4.1.13 compiler with its renderer programs (
+								197 文本 compiler
+								198 文本 ).
+						199 row
+							200 单元格
+								201 文本 crates/rustify-style-wasm
+							202 单元格
+								203 文本 The single-threaded WASM facade: the cn JS API and the compiler Worker session. 
+								204 文本 build-web
+								205 文本  packages it as the 
+								206 文本 utility/
+								207 文本  Worker product.
+						208 row
+							209 单元格
+								210 文本 crates/rustify-ui/src/utility
+								211 文本 , 
+								212 文本 web/utility-worker.js
+							213 单元格
+								214 文本 Feature 
+								215 文本 utility
+								216 文本 : 
+								217 文本 UtilityScope
+								218 文本  (Worker transport, CSSOM installation, observer, configuration epochs, recovery) and the GPU resolver; 
+								219 link guide, Value: 127.0.0.1:4199/rustify-ui/zh/utility/
+								220 文本 .
+						221 row
+							222 单元格
+								223 文本 crates/rustify-makepad
+							224 单元格
+								225 文本 Private Makepad integration: 
+								226 文本 RegionApp
+								227 文本  trait, region registry with never-reused ids, pump entry points exported to JS, deferred props application, action outbox delivery, 
+								228 文本 HostHooks
+								229 文本  binding, 
+								230 文本 web/embedded.js
+								231 文本  (JS host for regions).
+						232 row
+							233 单元格
+								234 文本 makepad/
+							235 单元格
+								236 文本 Hard fork of the Makepad wasm closure. Changed for embedding: 
+								237 文本 platform/src/os/web/web.js
+								238 文本 , 
+								239 文本 web_gl.js
+								240 文本 , 
+								241 文本 libs/wasm_bridge/src/wasm_bridge.js
+								242 文本 , 
+								243 文本 platform/src/os/web/web.rs
+								244 文本 , 
+								245 文本 platform/src/action.rs
+								246 文本 , 
+								247 文本 platform/src/cx.rs
+								248 文本 ; trimmed to the browser backend; 
+								249 文本 tools/cargo_makepad
+								250 文本  reduced to the single-threaded browser build.
+						251 row
+							252 单元格
+								253 文本 web/loader.js
+								254 文本 , 
+								255 文本 web/runtime.css
+							256 单元格
+								257 文本 Page-side boot of a GPU build: wasm instantiation, bridge fingerprint and runtime protocol checks, host hooks handed to both Makepad and the SDK runtime, static failure notice.
+						258 row
+							259 单元格
+								260 文本 crates/rustify-ui/web/dom-loader.js
+								261 文本 , 
+								262 文本 dom-runtime.js
+								263 文本 , 
+								264 文本 dom-runtime.css
+							265 单元格
+								266 文本 Page-side boot of a DOM build: the loader (
+								267 文本 runtime::DOM_LOADER_JS
+								268 文本 ) instantiates the wasm-bindgen output the page names and checks the runtime protocol; the host (
+								269 文本 dom-runtime.js
+								270 文本 , a wasm-bindgen snippet of the SDK) owns the instance's abort signal, tasks, timers and size observers; the stylesheet (
+								271 文本 runtime::DOM_RUNTIME_CSS
+								272 文本 ) covers the failure notice and the scope's planes.
+						273 row
+							274 单元格
+								275 文本 xtask
+							276 单元格
+								277 文本 doctor
+								278 文本 , 
+								279 文本 build-web
+								280 文本  (with 
+								281 文本 --utility-scanner
+								282 文本 ), 
+								283 文本 serve
+								284 文本  (with 
+								285 文本 --base
+								286 文本 , 
+								287 文本 --spa
+								288 文本  and 
+								289 文本 --fault
+								290 文本 ), 
+								291 文本 report-size
+								292 文本  (with 
+								293 文本 --compressed
+								294 文本 ), 
+								295 文本 css
+								296 文本  (with 
+								297 文本 --check
+								298 文本 ), 
+								299 文本 catalog
+								300 文本  (with 
+								301 文本 --check
+								302 文本 ), 
+								303 文本 sources verify
+								304 文本 , `verify --suite p1
+						305 row
+							306 单元格
+								307 文本 examples/fusion-basic
+							308 单元格
+								309 文本 Two mount scopes, each with a DOM counter and two GPU regions bound to the same signal.
+						310 row
+							311 单元格
+								312 文本 examples/component-catalog
+							313 单元格
+								314 文本 The twenty-four categories, what each supports and where: a nav, a page per category, a status table, a theme switch, a language switch, and one GPU region that draws the scope's tokens so a theme change can be seen reaching both halves.
+						315 row
+							316 单元格
+								317 文本 examples/property-workbench
+							318 单元格
+								319 文本 A thousand objects with stable ids: a DOM property panel renames, recolours and deletes the selection, a GPU region draws it, and both sides move the selection through the same rule. Also carries the one fixed-version third-party DOM component (
+								320 文本 vendor/nouislider
+								321 文本 , 
+								322 文本 src/third_party.rs
+								323 文本 ) and the rendered capability catalogue.
+						324 row
+							325 单元格
+								326 link examples/vellum, Value: github.com/rockie/rustify-ui/tree/main/examples/vellum
+							327 单元格
+								328 文本 A design editor combining one GPU scene with DOM controls, native text sessions and SDK layers; 
+								329 link framework integration and validation, Value: 127.0.0.1:4199/rustify-ui/zh/vellum/
+								330 文本 .
+						331 row
+							332 单元格
+								333 link examples/theme-studio, Value: github.com/rockie/rustify-ui/blob/main/examples/theme-studio/README.md
+							334 单元格
+								335 文本 Local theme documents, presets, edit history, saved themes, import/export and DOM/GPU preview scenes. The SDK owns resolution and projection; the example owns editor and persistence state.
+						336 row
+							337 单元格
+								338 link examples/utility-lab, Value: 127.0.0.1:4199/rustify-ui/zh/utility/
+							339 单元格
+								340 文本 cn merge input, runtime class compilation and an optional source panel, with scoped DOM and GPU previews side by side.
+						341 row
+							342 单元格
+								343 文本 tests/browser
+							344 单元格
+								345 文本 Playwright probes run against the release build.
+						346 row
+							347 单元格
+								348 文本 tests/dom-only
+							349 单元格
+								350 文本 An outside consumer's DOM application (plain Cargo and wasm-bindgen, its own workspace and lock), the GPU opt-in and negative probes, and its browser checks under 
+								351 文本 playwright.docs.config.ts
+								352 文本 .
+					353 标题 Runtime contracts, Value: 2
+						354 文本 Runtime contracts
+					355 内容列表
+						356 container
+							357 AXListMarker • 
+							358 text Region identity. RegionId s come from a monotonic counter and are never reused; a stale id fails every lookup. The JS host carries the id in every export call.
+						359 container
+							360 AXListMarker • 
+							361 text Two hosts, one contract.  Whatever an instance hands back to the browser - a listener, a task, a timer, a size observer - goes through the hooks its loader handed to  rustify_runtime_boot : an abort signal,  defer ,  defer_after ,  observe_resize , the instance number and the protocol ( runtime::PROTOCOL ). A GPU build hands over the Makepad host, so the SDK and the regions share one; a DOM build gets one from  dom-runtime.js . Both loaders compare the wasm's protocol with their own before creating anything, the boot compares the hooks' again, and a mismatch is a  BuildContractMismatch  that releases what was created.  mount  refuses with  RuntimeNotStarted  until the runtime has started: a scope whose listeners nothing could end is worse than no scope.  Pace  is the Makepad integration's type with  gpu  and an identical SDK enum without it.
+						362 container
+							363 AXListMarker • 
+							364 text Instances. boot()  is one instance. The first evaluates the generated glue by static import; each later one evaluates a copy of it under  ./bindgen.js?instance=<n> , because the glue keeps its instance in a module-level binding whose initialiser returns early once it is set - a second  init  of the same module record is a no-op, and a different URL is a different record. All of them share one  WebAssembly.Module , so there is one compile and one wasm request; what they do not share is linear memory.
+						365 container
+							366 AXListMarker • 
+							367 text The instance boundary.  Everything the page hands back is wrapped in a call boundary: an export called after the instance has failed throws  InstanceDead  rather than trapping again, and one that throws  WebAssembly.RuntimeError  reports the failure before rethrowing it. A trap that leaves through a DOM event handler has no code of ours on the stack, so it is attributed by the glue URL in the uncaught error's own stack - each instance has its own. The DOM loader raises V8's ten-frame stack limit (to 200, never lowering it), because without fat LTO a panic spends most of those ten frames before the handler and the glue frame falls off. When an instance fails, the host releases what it holds in a fixed order: abort the signal every p
+						368 container
+							369 AXListMarker • 
+							370 text Page-level listeners. window ,  document  and a scope's container outlive the scope, and  panic = "abort"  runs no destructor. So every listener the SDK puts on one of them is registered with the instance's abort signal as well ( rustify_ui::runtime::listener_options ): dropping is still the normal path, and aborting is the one removal that works when no Rust can run. An application gets the same through  rustify_ui::listen , and  release_on_abort  covers what the instance keeps on the page that is not a listener.
+						371 container
+							372 AXListMarker • 
+							373 text One address bar, one owner.  The owner is a mark on the document's root element -  data-rustify-url-owner , valued  <instance>:<scope>  - rather than a flag inside the module. Two instances each have their own copy of everything inside, and each would otherwise conclude it was the only one. The instance number is in the value so that the host can clear the mark of the instance that died and no one else's.
+						374 container
+							375 AXListMarker • 
+							376 text Restarting.  A failed instance can be replaced in the same slot at most three times. Every restart evaluates a fresh copy of the glue under a new URL, and a module record lives as long as the document: the dead instance's linear memory is never returned. After the third the only thing left is reloading the page, and the notice says so.
+						377 container
+							378 AXListMarker • 
+							379 text Pump.  JS calls  rustify_region_process(region, msg) ; the region's  Cx  is taken out of the registry for the duration of the pump, deferred closures run first inside the same outgoing-message frame ( Cx::process_to_wasm_with ), then Makepad handles the batch. Handlers therefore never observe a borrowed registry, and re-entrant  apply  calls simply queue for the next pump.
+						380 container
+							381 AXListMarker • 
+							382 text Props and actions. apply(id, f)  queues  f(cx, app)  and asks the host for a pump (coalesced on the microtask queue). Actions pushed into the outbox during a pump are delivered to the application callback after the pump returns, so handlers may write signals or apply new props freely.
+						383 container
+							384 AXListMarker • 
+							385 text Presentation.  A pump that only applied props leaves the region wanting to draw, and what Makepad asks for is an animation frame - the next one. The host serves that request itself, at the end of the same microtask, so the picture a projection asked for is in the frame the projection was made in. Without this, two requests fell in one browser frame (the second is dropped as a duplicate while the first is still pending) and a third frame went by unpainted: a region driven once a frame presented every second frame, and a 6
+						386 container
+							387 AXListMarker • 
+							388 text Suspending.  A region whose canvas has no area - hidden,  display: none , a zero-sized box - suspends: it stops presenting and keeps everything it holds, and the application is told, because a region nobody can see is not a broken one. A pump asked for while it is away is remembered and served when it comes back, so the first frame after it returns is the current state rather than the one it left.
+						389 container
+							390 AXListMarker • 
+							391 text Resource ledgers. stats()  carries two of them.  frames  counts presentations, incremented where a batch binds and clears the canvas;  gpu_bytes  is what the regions' own renderers have allocated - buffers at their last allocated size, textures at width x height x bytes-per-pixel - summed over the instance's live regions and zero once they are gone. Both are accountings the runtime keeps, not readings from the browser or the driver;  docs/compatibility.md  says exactly what the second one does and does not include.
+						392 container
+							393 AXListMarker • 
+							394 text Teardown. destroy_region  marks the region disposing; if it is idle the JS host releases its browser resources first and the  Cx  is dropped, otherwise the teardown completes when the running pump returns.  AppHandle::dispose  runs the mount scope's reactive cleanups (which destroy its regions) before unmounting the DOM. A  GpuRegion  whose owner was cleaned up before its creation effect ran never creates a region.
+						395 container
+							396 AXListMarker • 
+							397 text Process-wide Makepad state. Cx::post_action  now targets the  Cx  whose pump is running (the global sender only serves code that runs outside any pump); UI/action signal flags stay global and are polled once per runtime and broadcast to all regions; the live-id interner and widget uid counter are shared by design.
+						398 container
+							399 AXListMarker • 
+							400 text Memory views.  Every bridge re-validates its typed-array views of wasm memory on access, because any Rust code in the module (another region, the Leptos application) can grow memory between two calls made through one bridge.
+						401 container
+							402 AXListMarker • 
+							403 text Controlled values.  A control never holds the value it shows. In the DOM half, every input event asks the application and then puts the control back in step with whatever the application decided, so a refused value is not left on screen; in the GPU half the widget reports the request and draws the projection that comes back. Disabled and read-only controls ask for nothing at all.
+							404 内容列表
+								405 container
+									406 AXListMarker • 
+									407 text The one exception: a draft.  A text-like input built on  rustify_ui::Draft  - the catalogue's number and colour fields, the editor example's fields - keeps what is being typed while it has focus, because  - ,  1e  and  #1f  are on the way to a value without being one and an application would refuse them from under the person typing. The exception lives only inside the focused input. Until something is typed there, a change to the application's value shows at once; once something is, every input that parses is a preview request the application may refuse without the draft being lost, Enter or leaving the field is one commit request, and Escape drops the draft and asks for the previews to be taken back. Leaving the field ends t
+						408 container
+							409 AXListMarker • 
+							410 text Theme.  One table of tokens per scope, written onto the scope's own root through the CSSOM (never a  style  attribute, so a strict  style-src  needs no exception) and handed to regions as props.  ThemeOverride  changes part of it for one area: it writes the properties the patch names onto its own element and removes the ones it stops naming, so everything else inherits and the override can be turned off.
+						411 container
+							412 AXListMarker • 
+							413 text Styles.  The component classes are unprefixed Tailwind v4 utilities, the same ones an application writes, and a caller's  class  is merged with a component's through  tw_merge , so it replaces the component's class of the same kind in the same state. This replaces P2's isolation, where a  rui:  prefix kept the SDK's classes apart from a host page's. Three things still keep the SDK off the host's markup: the stylesheet has no preflight and no bare element selector;  dark:  means a scope whose theme is dark ( [data-rustify-scope][data-theme="dark"] ), not a  .dark  ancestor; and the tokens are written only to a scope root - even Tailwind's spacing unit, which shares the name  --spacing , is compiled into the utilities rather than written to  :root . What is given up is two Tailwind builds on one page: a host with its own build imports  css/sdk.css  into it rather than also linking  rustify.css , whose utilities have the same names. A page with no Tailwind links  rustify.css ; an application with its own input gets one stylesheet with both sets of classes.
+						414 container
+							415 AXListMarker • 
+							416 text A lost GPU context.  The host prevents the loss from being permanent and stops pumping into the dead context; the region publishes  Lost , is torn down, and is built again on  webglcontextrestored  with the application's current projection applied before the first draw. Nothing the application holds was ever in the region, so nothing is recovered - it is projected.
+						417 container
+							418 AXListMarker • 
+							419 text Diagnostics.  One bounded record per runtime, in  diagnostics : twenty registered failure classes each with a next step, a count and a byte ceiling, and a  dropped  counter every report leads with. Entry details are  &'static str , so a user's text has no path into a log.
+						420 container
+							421 AXListMarker • 
+							422 text Message bridge.  The web backend's message list is one Rust function ( web_bridge_js_sources ). The build extracts the generated JS from the wasm with  wasmi  and ships it as an ES module with the fingerprint the wasm also exports; the loader compares both before driving the module. No runtime code generation exists in the shipped JS.
+					423 标题 Static scopes and hydration, Value: 2
+						424 文本 Static scopes and hydration
+					425 container
+						426 text The static-scope API is implemented in the working tree on  main , based on  785f51ad9fdcb69e624a0c8f85d91e3541d58e90  (2026-10-13). The documentation pipeline uses it to generate HTML during a build; readers receive static files.
+					427 container
+						428 text ssr_scope(MountConfig, view)  creates a scope with one content root, one empty overlay root and an explicit server-rendered marker. The scope name seeds an independent ID sequence.  hydrate(container, MountConfig, view)  requires the same scope, base and deterministic initial view, and preserves the existing content nodes. Build the host with  ssr  and the browser with  hydrate  in separate Cargo invocations; enabling  csr  and  hydrate  together is rejected. See 
+						429 link mount.rs, Value: github.com/rockie/rustify-ui/blob/main/crates/rustify-ui/src/mount.rs
+						430 文本  and 
+						431 link id.rs, Value: github.com/rockie/rustify-ui/blob/main/crates/rustify-ui/src/id.rs
+						432 文本 .
+					433 container
+						434 text Boot the DOM runtime before hydration. An external startup script must initialize Leptos' empty  __RESOLVED_RESOURCES ,  __INCOMPLETE_CHUNKS  and  __SERIALIZED_ERRORS  arrays. The hydration view closure establishes the SDK roots, action sink, embedded router, overlay stack, ID allocator and initial locale; author contexts belong inside that closure because Leptos creates a new root Owner. Use  provide_static_theme  when the matching theme CSS has already been generated; it publishes the snapshot without rewriting DOM styles (
+						435 link provider.rs, Value: github.com/rockie/rustify-ui/blob/main/crates/rustify-ui/src/theme/provider.rs
+						436 文本 ). Start asynchronous browser work after attachment. Floating demonstrations generate closed triggers; Leptos portals create their overlay content in the browser.
+					437 container
+						438 text A runtime occupation marker is separate from the server-rendered marker.  InvalidHydrationRoot  reports missing or malformed generated roots;  HydrationIdentityMismatch  reports a different scope, seed or base. These refusals leave the original DOM intact. Duplicate attachment uses  OccupiedContainer ; attachment before boot uses  RuntimeNotStarted . Normal  AppHandle::dispose  cleans the owning root and removes its DOM. A trapped instance requires JavaScript to restore its static snapshot; it cannot run Rust cleanup (
+						439 link diagnostics.rs, Value: github.com/rockie/rustify-ui/blob/main/crates/rustify-ui/src/diagnostics.rs
+						440 文本 ).
+					441 container
+						442 text Components that need initial geometry collect external rules through  provide_geometry_styles(GeometryStyles) ; the build writes  styles.css()  to an external stylesheet. Browser updates use a scope-owned constructed stylesheet, with independent selectors across wasm instances. DataTable names its visible row and cell rules by stable pool slots, so different construction order cannot change which rule a node uses. No geometry rule is emitted as a  style  attribute (
+						443 link geometry.rs, Value: github.com/rockie/rustify-ui/blob/main/crates/rustify-components/src/geometry.rs
+						444 文本 , 
+						445 link DataTable, Value: github.com/rockie/rustify-ui/blob/main/crates/rustify-components/src/data_table/view.rs
+						446 文本 ).
+					447 标题 Versioned themes, Value: 2
+						448 文本 Versioned themes
+					449 container
+						450 text ThemeDocument  retains light/dark author strings.  resolve  produces one  ResolvedTheme  containing sRGB RGBA, CSS-pixel geometry, selected fonts, structured shadows and diagnostics. Applications publish that snapshot to both renderers; GPU code does not read computed CSS back into its state. The document and snapshot contracts are in 
+						451 link document.rs, Value: github.com/rockie/rustify-ui/blob/main/crates/rustify-ui/src/theme/document.rs#L108
+						452 文本  and 
+						453 link resolve.rs, Value: github.com/rockie/rustify-ui/blob/main/crates/rustify-ui/src/theme/resolve.rs#L118
+						454 文本 ; the studio's 
+						455 link PreviewProps, Value: github.com/rockie/rustify-ui/blob/main/examples/theme-studio/src/preview_region.rs#L43
+						456 text  carries an  Arc<ResolvedTheme>  alongside its application state.
+					457 container
+						458 link ThemeScope, Value: github.com/rockie/rustify-ui/blob/main/crates/rustify-ui/src/theme/provider.rs#L89
+						459 文本  claims the mount root, projects the snapshot through CSSOM and restores prior values on cleanup. 
+						460 link ThemeBoundary, Value: github.com/rockie/rustify-ui/blob/main/crates/rustify-ui/src/theme/provider.rs#L128
+						461 文本  re-resolves local patches without changing mode; clearing a patch restores inheritance. An overlay captures the effective theme signal at its creation point and updates its layer from that signal (
+						462 link overlay.rs, Value: github.com/rockie/rustify-ui/blob/main/crates/rustify-ui/src/overlay.rs#L721
+						463 文本 ).
+					464 container
+						465 文本 Applications opt into the document's geometry, fonts and shadows by importing 
+						466 link theme-v4.css, Value: github.com/rockie/rustify-ui/blob/main/crates/rustify-components/css/theme-v4.css#L1
+						467 text  after  sdk.css  in their one Tailwind build. Spacing utilities use  --rustify-unit , while  --layout-gap  is separate. Missing runtime variables retain legacy fallbacks, so  Theme / ThemePatch  and  ThemedScope / ThemeOverride  remain usable. 
+						468 link ThemeDocument::from_legacy, Value: github.com/rockie/rustify-ui/blob/main/crates/rustify-ui/src/theme/document.rs#L212
+						469 文本  fills a complete document from two legacy themes; the extended author model has no lossless conversion back to the opaque legacy palette.
+					470 container
+						471 文本 The SDK codec returns validated import candidates without changing editor state. JSON keeps author values; CSS exports describe the resolved preview. Static CSS consumers use exported selectors, while dynamic applications import JSON and update their provider's signal. See 
+						472 link Theme documents, Value: 127.0.0.1:4199/rustify-ui/zh/themes/
+						473 文本  for the schema, scope integration, font packaging and compatibility rules, and the 
+						474 link Theme Studio guide, Value: github.com/rockie/rustify-ui/blob/main/examples/theme-studio/README.md
+						475 文本  for editing and local persistence.
+					476 标题 Build pipeline, Value: 2
+						477 文本 Build pipeline
+					478 内容列表
+						479 container
+							480 AXListMarker 1. 
+							481 text cargo-makepad wasm build  (from  makepad/tools/cargo_makepad , run by xtask through  mbx run ):  mbx build  on the stable toolchain  mise.toml  pins, for the built-in single-threaded  wasm32-unknown-unknown  target with its prebuilt  std , the fork's link flags with any caller  RUSTFLAGS  appended, resource copy for every dependency crate, in-process  wasm-bindgen , asserted glue patching ( bindgen_glue.rs ), optional custom-section stripping.
+						482 container
+							483 AXListMarker 2. 
+							484 text mbx xtask build-web : clears the output directory, runs step 1, extracts the message bridge, copies  embedded.js ,  loader.js ,  runtime.css  and the example page, compiles the example's  tailwind.css  with the pinned Tailwind CLI (minified, to  tailwind.css ) or, for an example without one that uses the components, copies the committed  rustify.css , writes  build-manifest.json  (build id, schema hash, toolchain, per-file sizes, six-category size report).
+						485 container
+							486 AXListMarker 3. 
+							487 text mbx xtask serve : loopback static server with the release CSP, sub-path support and a negative CSP mode;  --dir  serves any static directory, such as a DOM build.
+					488 container
+						489 text A DOM application is built without any of the above, the way an outside consumer builds one:  cargo build --release --target wasm32-unknown-unknown --lib  with  --cfg=web_sys_unstable_apis , the wasm-bindgen CLI at the SDK's pinned version ( --target web ), and the application's own small host program that writes  runtime::DOM_LOADER_JS ,  runtime::DOM_RUNTIME_CSS  and  rustify_components::CSS  beside it (
+						490 link recipe, Value: 127.0.0.1:4199/rustify-ui/zh/quickstart/#a-dom-application-without-gpu-regions
+						491 text ).  mbx xtask build-dom --manifest-path <Cargo.toml>  does the same inside this repository, and  mbx xtask docs-verify --group features [--external]  checks that the default graph and product carry no Makepad, in the repository and from a git commit outside it.
+					492 标题 Browser tests: two tiers, one page, Value: 2
+						493 文本 Browser tests: two tiers, one page
+					494 container
+						495 text The Playwright specs ask two different questions, and  tests/tier.ts  decides which one a run asks:
+					496 内容列表
+						497 container
+							498 AXListMarker • 
+							499 text Regression  (the default, and every pull request): is the behaviour still right? Every test not tagged  @evidence , with loops cut to three rounds by  rounds(n)  and parameter matrices cut to a representative subset by  pick(all, representative) . A deterministic behaviour that holds three times holds; the long counts are there to catch races and leaks.
+						500 container
+							501 AXListMarker • 
+							502 text Evidence  ( RUSTIFY_TIER=evidence ;  .github/workflows/evidence.yml  on request and weekly): does a number still meet its budget? Percentiles, bytes, memory tails, frame rates, long runs, idle CPU, the twin comparisons, at their full round counts. A test belongs here when what it asserts is a measurement rather than an outcome.  RUSTIFY_TIER=all  runs both at full strength, and that is what  xtask verify  runs for a release. The frame budgets are the exception to "on request": they are about a machine with a GPU, and headless Chromium draws with SwiftShader, so they skip themselves headless ( GPU_ONLY ) and are run by hand with  --headed  on such a machine.
+					503 container
+						504 text What makes a regression run slow is not the checks but starting a GPU region: under a software rasteriser every new WebGL context compiles its shaders for seconds. So a worker keeps one page per project, and before each test the fixture in  tests/browser/support.ts  (Vellum:  tests/vellum/support.ts ) calls the example handle's  reset() , which puts the application back to its first-load state in place, regions kept. Each example's own spec proves that a reset page and a freshly loaded one are the same. A test that has to own its page load - a trap, a deep link, an init script, a context option - declares  test.use({ fresh: true })  and pays for a new context.
+					505 标题 What is delivered, and what is deferred, Value: 2
+						506 文本 What is delivered, and what is deferred
+					507 container
+						508 text The component catalogue is twenty-four categories ( crates/rustify-components );  docs/components.md  is printed from it and records what each supports and what a GPU region draws of it. Routing, workspaces, cross-region drag, the clipboard and file import arrived with P2; large data - a windowed table over a hundred thousand rows, sliced jobs, and a scene of ten thousand GPU objects - arrived with P3, and  docs/data.md  describes it.
+					509 container
+						510 text Still not provided: threads and  SharedArrayBuffer  (a plain deployment is not cross-origin isolated, so large work is sliced on the one thread there is), a GPU-drawn table, region-level trap isolation, server-side paging, a formula engine, and hot module replacement. What each release measured, and what it could not, is in  docs/reports/p1/ ,  docs/reports/p2/  and  docs/reports/p3/ ; the per-release limitation lists are the authority on what a pass does not mean.
+					511 标题 Streams, and why they are named, Value: 2
+						512 文本 Streams, and why they are named
+					513 文本 A scope's action queue holds two kinds of thing. A click, a submit or a cancel is its own event: dropping or reordering one changes what the application did, so those are queued in arrival order and never merged. A pointer that keeps moving is a stream of states rather than a history, so only the latest is worth delivering - and it must not be able to fill the queue and push a click out of it.
+					514 container
+						515 text Pace::Continuous  carries the stream's name, and that name is load-bearing. One region can have several streams running at once: where the pointer is, what a drag would land on, how far a list has scrolled, where it drew its controls. They supersede  themselves  and nothing else. A single slot for the whole scope
+					516 内容列表
+						517 container
+							518 AXListMarker • 
+							519 文本 which is what this was until M6 - means whichever stream reported last silently ate the others, and the symptom is not a crash but a report that never arrives: the workbench's region drew its controls, said so, and the scroll report that followed in the same pump took its place.
+					520 文本 Each stream keeps the arrival position of its newest state, so a state still lands on the correct side of the clicks around it.
+					521 标题 Deciding in the same turn as the event, Value: 2
+						522 文本 Deciding in the same turn as the event
+					523 container
+						524 text Some things cannot be decided by the region, because the browser needs the answer before the region can run. A wheel event is the example:  preventDefault  has to be called during the event, and by the time the region has been pumped the browser has already been told.
+					525 container
+						526 text The shape that works is a  report from the last draw . The region says where its scrolling has run out at the moment that is a fact - after it draws - and the host consults that report synchronously when the next wheel arrives. The consequence is deliberate: the wheel that reaches an edge is still the region's, because it is judged against the report from before it arrived. Only the next one belongs to the page, which is also what a person expects.
+					527 文本 The same shape covers anything else where the host must answer immediately and the region is the only one who knows: report the state, decide from the report, accept that the answer is one event old.
+					528 link 编辑此页, Value: github.com/rockie/rustify-ui/edit/main/docs/architecture.md
+					529 container
+						530 text 最后更新 2026-10-13
+					531 container 上一页 / 下一页
+						532 link 上一页 快速开始, Value: 127.0.0.1:4199/rustify-ui/zh/quickstart/
+						533 link 下一页 Navigation, Value: …
+				534 container 页脚导航
+					535 link 返回首页, Value: …
+	536 关闭按钮
+	537 全屏幕按钮 Help: 此按钮也可以执行缩放窗口的操作, Secondary Actions: 缩放窗口
+	538 最小化按钮
+539 menu bar
+	540 Firefox
+	541 文件
+	542 编辑
+	543 查看
+	544 历史
+	545 书签
+	546 配置文件
+	547 工具
+	548 窗口
+	549 帮助
+
+The focused UI element is 45 开关按钮 深色, Value: on

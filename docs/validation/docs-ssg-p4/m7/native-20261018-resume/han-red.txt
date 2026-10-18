@@ -1,0 +1,7 @@
+Development regression before the production fix
+Baseline: fixed C a31509aa / CLI0.1.28; only the new test was dirty.
+Command: npx --no-install playwright test -c playwright.docs.config.ts --project=docs-search-subpath tests/docs-ssg/search-worker.spec.ts --grep "matching retains Han words" --reporter=line
+Result: exit1, 1 failed at search-worker.spec.ts:69.
+Expected routes: ["/joined/", "/standalone/"]
+Received routes: []
+This is a compact transcription of the actual terminal failure; the native Firefox red result is separately preserved as original AX and screenshot.

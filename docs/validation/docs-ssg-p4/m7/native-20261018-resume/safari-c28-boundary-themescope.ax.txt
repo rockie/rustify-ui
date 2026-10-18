@@ -1,0 +1,68 @@
+Window: "Native boundary checks", App: Safari浏览器.
+0 标准窗口 Native boundary checks, ID: SafariWindow?IsSecure=false&UUID=8B94E202-E355-455B-98DF-40C71253D736, Secondary Actions: Raise
+	1 分离组
+		2 分离器 (disabled, settable, float) -1
+		3 标签页组
+			4 滚动区
+				5 HTML内容 Description: Native boundary checks, URL: 127.0.0.1:4200/rustify-ui/
+					6 container Search
+						7 文本 Search documentation
+						8 按钮 Close
+						9 组合框 (expanded, settable) Search documentation, Value: ThemeScope, Secondary Actions: Collapse
+							10 文本 (settable) ThemeScope
+						11 文本 3 results
+						12 列表 (settable) Search results
+							13 文本 (selected) Case 0 Case 0 使用ThemeScope
+							14 文本 Case 1 Case 1 ThemeScope主题
+							15 文本 Case 7 Case 7 😀ThemeScope
+	16 工具栏
+		17 container Secondary Actions: 移到上一项, 移到下一项, 从工具栏移除
+			18 按钮 Description: 显示边栏, ID: SidebarButton
+			19 菜单按钮 Description: 标签页组选择器, ID: TabGroupPickerButton?TabGroup=
+		20 container BackForwardSegmentedControl
+			21 按钮 Description: 返回, Help: 显示上一页, ID: BackButton
+			22 按钮 (disabled) Description: 前进, Help: 显示下一页, ID: ForwardButton
+		23 container Secondary Actions: 移到上一项, 移到下一项, 从工具栏移除
+			24 按钮 页面菜单, ID: AssistantButton
+			25 按钮 将页面添加到阅读列表, ID: OneStepBookmarkingButton
+			26 文本栏 (settable) Description: 智能搜索栏, Value: 127.0.0.1:4200/rustify-ui/, ID: WEB_BROWSER_ADDRESS_AND_SEARCH_FIELD
+			27 按钮 翻译可用, ID: TranslationButton
+			28 按钮 重新加载此页面, ID: ReloadButton
+		29 按钮 Description: 共享, ID: ShareButton, Secondary Actions: 移到上一项, 移到下一项, 从工具栏移除
+		30 按钮 Description: 新建标签页, ID: NewTabButton, Secondary Actions: 移到上一项, 移到下一项, 从工具栏移除
+		31 按钮 Description: 标签页概览, ID: TabOverviewButton, Secondary Actions: 移到上一项, 从工具栏移除
+	32 标签页组 Description: 标签页栏，10个标签页, ID: TabBar?isSeparate=false
+		33 标签 Home | Home semantics, Value: off, Secondary Actions: 关闭标签页, ID: TabBarTab?isNarrow=true&isExpanded=false&tabCount=&isPinned=false&isCluster=false&clusterID=&isActive=false
+			34 图像 FaviconImageView
+		35 标签 Rustify UI, Value: off, Secondary Actions: 关闭标签页, ID: TabBarTab?isNarrow=true&isExpanded=false&tabCount=&isPinned=false&isCluster=false&clusterID=&isActive=false
+			36 图像 FaviconImageView
+		37 标签 Architecture | Rustify UI, Value: off, Secondary Actions: 关闭标签页, ID: TabBarTab?isNarrow=true&isExpanded=false&tabCount=&isPinned=false&isCluster=false&clusterID=&isActive=false
+			38 图像 FaviconImageView
+		39 标签 Quick start | Rustify UI, Value: off, Secondary Actions: 关闭标签页, ID: TabBarTab?isNarrow=true&isExpanded=false&tabCount=&isPinned=false&isCluster=false&clusterID=&isActive=false
+			40 图像 FaviconImageView
+		41 标签 快速开始 | Rustify UI, Value: off, Secondary Actions: 关闭标签页, ID: TabBarTab?isNarrow=true&isExpanded=false&tabCount=&isPinned=false&isCluster=false&clusterID=&isActive=false
+			42 图像 FaviconImageView
+		43 标签 Native boundary checks, Value: off, Secondary Actions: 关闭标签页, ID: TabBarTab?isNarrow=true&isExpanded=false&tabCount=&isPinned=false&isCluster=false&clusterID=&isActive=false
+			44 图像 FaviconImageView
+		45 标签 Native boundary checks, Value: off, Secondary Actions: 关闭标签页, ID: TabBarTab?isNarrow=true&isExpanded=false&tabCount=&isPinned=false&isCluster=false&clusterID=&isActive=false
+			46 图像 FaviconImageView
+		47 标签 快速开始 | Rustify UI, Value: off, Secondary Actions: 关闭标签页, ID: TabBarTab?isNarrow=true&isExpanded=false&tabCount=&isPinned=false&isCluster=false&clusterID=&isActive=false
+			48 图像 FaviconImageView
+		49 标签 Button | Rustify UI, Value: off, Secondary Actions: 关闭标签页, ID: TabBarTab?isNarrow=true&isExpanded=false&tabCount=&isPinned=false&isCluster=false&clusterID=&isActive=false
+			50 图像 FaviconImageView
+		51 标签 Native boundary checks, Help: 若要与此按钮中的项目交互，请按下Control-Option-Shift-下箭头键。, Value: on, Secondary Actions: 关闭标签页, ID: TabBarTab?isNarrow=false&isExpanded=false&tabCount=&isPinned=false&isCluster=false&clusterID=&isActive=true
+			52 图像 FaviconImageView
+			53 文本 Value: Native boundary checks, ID: UnifiedTabBarButton._titleTextField
+	54 关闭按钮
+	55 全屏幕按钮 Help: 此按钮也可以执行缩放窗口的操作, Secondary Actions: 缩放窗口
+	56 最小化按钮
+57 menu bar
+	58 Safari浏览器
+	59 文件
+	60 编辑
+	61 显示, ID: SafariViewMenu
+	62 历史记录
+	63 书签, ID: SafariBookmarksMenu
+	64 开发
+	65 窗口, ID: SafariWindowMenu
+	66 帮助, ID: SafariHelpMenu

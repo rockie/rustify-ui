@@ -1,0 +1,78 @@
+Window: "快速开始 | Rustify UI", App: Firefox.
+0 标准窗口 快速开始 | Rustify UI, Secondary Actions: Raise
+	1 container 快速开始 | Rustify UI
+		2 工具栏 浏览器标签页
+			3 标签页组
+				4 标签页 (selectable) Value: 欢迎使用 Firefox, 欢迎使用 Firefox
+关闭 1 个标签页
+				5 标签页 (selected) Value: 快速开始 | Rustify UI, 快速开始 | Rustify UI
+关闭 1 个标签页
+				6 按钮 打开新标签页 (⌘T)
+			7 分隔条
+			8 按钮 列出所有标签页
+		9 工具栏 导航
+			10 按钮 Description: 侧栏, Help: 显示侧栏 (⌃Z)
+			11 按钮 后退
+			12 按钮 (disabled) 前进
+			13 按钮 重新加载
+			14 分隔条
+			15 container
+				16 按钮 查看网站信息
+				17 组合框 (settable) Description: 使用 Google 搜索，或者输入网址, Value: http://127.0.0.1:4199/rustify-ui/zh/quickstart/#verification-commands
+					18 文本 http://127.0.0.1:4199/rustify-ui/zh/quickstart/#verification-commands
+				19 按钮 进入阅读模式
+				20 按钮 200%，重置缩放级别
+				21 按钮 为此页面添加书签 (⌘D)
+			22 分隔条
+			23 按钮 账户
+			24 按钮 扩展
+			25 按钮 Description: Firefox, Help: 打开应用程序菜单
+		26 工具栏
+		27 滚动区
+			28 HTML 内容 Description: 快速开始 | Rustify UI, URL: 127.0.0.1:4199/rustify-ui/zh/quickstart/#verification-commands
+				29 container 搜索
+					30 文本 搜索文档
+					31 按钮 关闭
+					32 组合框 (settable) 搜索文档, Value: ThemeScope
+						33 文本 ThemeScope
+					34 文本 3 个结果
+					35 列表 搜索结果
+						36 文本 (selectable) 快速开始 快速开始 › 在应用中使用 Tailwind v4 ope 外。 使用版本化主题文档时，在 sdk.css 后紧接着导入 theme-v4.css。ThemeScope 在根节点提供文档解析后的颜色、字体、间距、圆角和阴影；这些 scope 的 utility 间距读取 --rustify-unit，--layout-gap 仍是独立布局值。ThemedScope 保留旧值回退，两种 provider 的显式
+快速开始
+快速开始 › 在应用中使用 Tailwind v4
+ope 外。 使用版本化主题文档时，在 sdk.css 后紧接着导入 theme-v4.css。
+ThemeScope
+在根节点提供文档解析后的颜色、字体、间距、圆角和阴影；这些 scope 的 utility 间距读取 --rustify-unit，--layout-gap 仍是独立布局值。ThemedScope 保留旧值回退，两种 provider 的显式
+						37 文本 (selected) Architecturezh 尚未翻译，内容语言：en Architecture › Versioned themes ResolvedTheme> alongside its application state. ThemeScope claims the mount root, projects the snapshot through CSSOM and restores prior values on cleanup. ThemeBoundary re-resolve
+							38 文本 Architecture
+							39 文本 zh
+							40 文本 尚未翻译，内容语言：en
+							41 文本 Architecture › Versioned themes
+							42 container
+								43 text ResolvedTheme> alongside its application state.  ThemeScope  claims the mount root, projects the snapshot through CSSOM and restores prior values on cleanup. ThemeBoundary re-resolve
+						44 文本 (selectable) Theme documentszh 尚未翻译，内容语言：en Theme documents › Mount a browser scope Theme documents › Fonts and GPU consumers Theme documents › Import and export :{mount, AppHandle, MountConfig, ResolvedTheme, ThemeScope}; use rustify_ui::theme::{font_context, import_json, resolve, ThemeError, ThemeMode}; use std::sync::Arc; // Put the down
+Theme documents
+zh
+尚未翻译，内容语言：en
+Theme documents › Mount a browser scope
+Theme documents › Fonts and GPU consumers
+Theme documents › Import and export
+:{mount, AppHandle, MountConfig, ResolvedTheme,
+ThemeScope
+}; use rustify_ui::theme::{font_context, import_json, resolve, ThemeError, ThemeMode}; use std::sync::Arc; // Put the down
+	45 关闭按钮
+	46 全屏幕按钮 Help: 此按钮也可以执行缩放窗口的操作, Secondary Actions: 缩放窗口
+	47 最小化按钮
+48 menu bar
+	49 Firefox
+	50 文件
+	51 编辑
+	52 查看
+	53 历史
+	54 书签
+	55 配置文件
+	56 工具
+	57 窗口
+	58 帮助
+
+The focused UI element is 37 文本 (selected) Architecturezh 尚未翻译，内容语言：en Architecture › Versioned themes ResolvedTheme> alongside its application state. ThemeScope claims the mount root, projects the snapshot through CSSOM and restores prior values on cleanup. ThemeBoundary re-resolve

@@ -1,0 +1,50 @@
+[
+  {
+    "path": "app_bg.wasm",
+    "identical": false,
+    "old_bytes": 9816985,
+    "new_bytes": 9811091,
+    "old_gzip": 1195112,
+    "new_gzip": 1187439
+  },
+  {
+    "path": "dom-runtime.css",
+    "identical": true,
+    "old_bytes": 796,
+    "new_bytes": 796,
+    "old_gzip": 442,
+    "new_gzip": 442
+  },
+  {
+    "path": "islands.js",
+    "identical": true,
+    "old_bytes": 2275,
+    "new_bytes": 2275,
+    "old_gzip": 928,
+    "new_gzip": 928
+  },
+  {
+    "path": "dom-loader.js",
+    "identical": true,
+    "old_bytes": 11686,
+    "new_bytes": 11686,
+    "old_gzip": 4090,
+    "new_gzip": 4090
+  },
+  {
+    "path": "app.js",
+    "identical": true,
+    "old_bytes": 61177,
+    "new_bytes": 61177,
+    "old_gzip": 10430,
+    "new_gzip": 10430
+  },
+  {
+    "path": "snippets/rustify-ui-4db2f10f10788f4c/web/dom-runtime.js",
+    "identical": true,
+    "old_bytes": 7096,
+    "new_bytes": 7096,
+    "old_gzip": 2381,
+    "new_gzip": 2381
+  }
+]

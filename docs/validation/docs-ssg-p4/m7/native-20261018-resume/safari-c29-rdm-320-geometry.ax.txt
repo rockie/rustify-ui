@@ -1,0 +1,61 @@
+Window: "网页检查器 — 127.0.0.1 — architecture", App: Safari浏览器.
+0 标准窗口 网页检查器 — 127.0.0.1 — architecture, Secondary Actions: Raise
+	1 滚动区
+		2 HTML内容 inspector-resource:///Main.html
+			3 按钮 在窗口左侧显示
+			4 按钮 在窗口底部显示
+			5 按钮 在窗口右侧显示
+			6 按钮 开始选择元素(⇧⌘C)
+			7 按钮 设备设置
+			8 标签页组 (selectable)
+				9 标签 (selectable) 元素
+				10 标签 (selected) 控制台
+				11 标签 (selectable) 来源
+				12 标签 (selectable) 网络
+				13 标签 (selectable) 时间线
+				14 标签 (selectable) 储存空间
+				15 标签 (selectable) 图形
+				16 标签 (selectable) 层
+				17 标签 (selectable) 审核
+				18 标签 (selectable) 搜索(⇧⌘F)
+				19 标签 (selectable) 设置(⌘,)
+			20 container 控制台
+				21 搜索文本栏 (settable)  
+				22 按钮 (disabled) 查找上一个(⇧⌘G)
+				23 按钮 (disabled) 查找下一个(⌘G)
+				24 文本 全部
+				25 文本 评估
+				26 文本 错误
+				27 文本 警告
+				28 文本 打印
+				29 按钮 其他过滤选项…
+				30 复选框 (settable, integer) 模拟用户手势, Help: 如同在用户手势中一样运行控制台命令, Value: 0
+				31 按钮 运行控制台片段…
+				32 按钮 收集垃圾
+				33 按钮 清空日志（⌘K或⌃L）
+				34 container
+					35 文本 控制台打开于：22:06:29
+					36 图像
+					37 文本 JSON.stringify({worker:document.querySelector("[data-rd-search]").dataset.rdSearchWorker,url:location.href,viewport:[innerWidth,innerHeight],dpr:devicePixelRatio,documentWidth:document.documentElement.scrollWidth,headerBottom:document.querySelector(".rd-header-bar").parentElement.getBoundingClientRect().bottom,targetTop:document.querySelector(location.hash).getBoundingClientRect().top})
+					38 图像
+					39 文本 "{\"worker\":\"/rustify-ui/assets/search-worker.8225fc0ff7.js\",\"url\":\"
+					40 link http://127.0.0.1:4199/rustify-ui/zh/architecture/#versioned-themes\, Value: 127.0.0.1:4199/rustify-ui/zh/architecture/#versioned-themes%5C
+					41 文本 ",\"viewport\":[320,667],\"dpr\":1,\"documentWidth\":320,\"headerBottom\":93.5,\"targetTop\":117.40625}" = $1
+			42 文本输入区 (settable) 控制台提示, Value: [文本输入区: 控制台提示], Secondary Actions: 显示写作工具
+			43 container
+	44 关闭按钮
+	45 全屏幕按钮 Help: 此按钮也可以执行缩放窗口的操作, Secondary Actions: 缩放窗口
+	46 最小化按钮
+	47 文本 网页检查器 — 127.0.0.1 — architecture
+48 menu bar
+	49 Safari浏览器
+	50 文件
+	51 编辑
+	52 显示, ID: SafariViewMenu
+	53 历史记录
+	54 书签, ID: SafariBookmarksMenu
+	55 开发
+	56 窗口, ID: SafariWindowMenu
+	57 帮助, ID: SafariHelpMenu
+
+The focused UI element is 42 文本输入区 (settable) 控制台提示, Value: [文本输入区: 控制台提示], Secondary Actions: 显示写作工具

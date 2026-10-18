@@ -1,0 +1,62 @@
+Window: "Native boundary checks", App: Firefox.
+0 标准窗口 Native boundary checks, Secondary Actions: Raise
+	1 container Native boundary checks
+		2 工具栏 浏览器标签页
+			3 标签页组
+				4 标签页 (selectable) Value: 欢迎使用 Firefox, 欢迎使用 Firefox
+关闭 1 个标签页
+				5 标签页 (selectable) Value: Architecture | Rustify UI, Architecture | Rustify UI
+关闭 1 个标签页
+				6 标签页 (selected) Value: Native boundary checks, Native boundary checks
+关闭 1 个标签页
+				7 按钮 打开新标签页 (⌘T)
+			8 分隔条
+			9 按钮 列出所有标签页
+		10 工具栏 导航
+			11 按钮 Description: 侧栏, Help: 显示侧栏 (⌃Z)
+			12 按钮 后退
+			13 按钮 (disabled) 前进
+			14 按钮 重新加载
+			15 分隔条
+			16 container
+				17 按钮 查看网站信息
+				18 组合框 (settable) Description: 使用 Google 搜索，或者输入网址, Value: http://127.0.0.1:4200/rustify-ui/
+					19 文本 http://127.0.0.1:4200/rustify-ui/
+				20 按钮 试试 Firefox 注重隐私的翻译功能 - Beta
+				21 按钮 为此页面添加书签 (⌘D)
+			22 分隔条
+			23 按钮 账户
+			24 按钮 扩展
+			25 按钮 Description: Firefox, Help: 打开应用程序菜单
+		26 工具栏
+		27 container
+			28 滚动区
+				29 HTML 内容 Description: Native boundary checks, URL: 127.0.0.1:4200/rustify-ui/
+					30 container Search
+						31 文本 Search documentation
+						32 按钮 Close
+						33 组合框 (settable) Search documentation, Value: theme_s
+							34 文本 theme_s
+						35 文本 1 result
+						36 列表 Search results
+							37 文本 (selected) Case 2 Case 2 Theme_Scope2
+								38 文本 Case 2
+								39 container
+									40 text Case 2  Theme_S cope2
+			41 文本 http://127.0.0.1:4200/rustify-ui/guide/case-2/
+	42 关闭按钮
+	43 全屏幕按钮 Help: 此按钮也可以执行缩放窗口的操作, Secondary Actions: 缩放窗口
+	44 最小化按钮
+45 menu bar
+	46 Firefox
+	47 文件
+	48 编辑
+	49 查看
+	50 历史
+	51 书签
+	52 配置文件
+	53 工具
+	54 窗口
+	55 帮助
+
+The focused UI element is 37 文本 (selected) Case 2 Case 2 Theme_Scope2

@@ -1,0 +1,404 @@
+Window: "Label | Rustify UI", App: Firefox.
+0 标准窗口 Label | Rustify UI, Secondary Actions: Raise
+	1 container Label | Rustify UI
+		2 工具栏 浏览器标签页
+			3 标签页组
+				4 标签页 (selectable) Value: 欢迎使用 Firefox, 欢迎使用 Firefox
+关闭 1 个标签页
+				5 标签页 (selected) Value: Label | Rustify UI, Label | Rustify UI
+关闭 1 个标签页
+				6 按钮 打开新标签页 (⌘T)
+			7 分隔条
+			8 按钮 列出所有标签页
+		9 工具栏 导航
+			10 按钮 Description: 侧栏, Help: 显示侧栏 (⌃Z)
+			11 按钮 后退
+			12 按钮 (disabled) 前进
+			13 按钮 (disabled) 重新加载
+			14 分隔条
+			15 container
+				16 按钮 查看网站信息
+				17 组合框 (settable) Description: 使用 Google 搜索，或者输入网址, Value: http://127.0.0.1:4199/rustify-ui/components/label/
+					18 文本 http://127.0.0.1:4199/rustify-ui/components/label/
+				19 按钮 进入阅读模式
+				20 按钮 试试 Firefox 注重隐私的翻译功能 - Beta
+				21 按钮 为此页面添加书签 (⌘D)
+			22 分隔条
+			23 按钮 账户
+			24 按钮 扩展
+			25 按钮 Description: Firefox, Help: 打开应用程序菜单
+		26 工具栏
+		27 container
+			28 滚动区
+				29 HTML 内容 Description: Label | Rustify UI, URL: 127.0.0.1:4199/rustify-ui/components/label/
+					30 link Skip to content, Value: 127.0.0.1:4199/rustify-ui/components/label/#content
+					31 container
+						32 link Rustify UI, Value: 127.0.0.1:4199/rustify-ui/
+						33 container Site links
+							34 内容列表
+								35 link GitHub, Value: github.com/rockie/rustify-ui
+						36 按钮 (disabled) Search Ctrl / Cmd K
+							37 文本 Search
+							38 文本 Ctrl / Cmd K
+						39 摘要 English
+							40 文本 English
+					41 container Menu
+						42 container
+							43 标题 Guides, Value: 2
+								44 文本 Guides
+							45 内容列表
+								46 link Quick start, Value: 127.0.0.1:4199/rustify-ui/quickstart/
+								47 link Architecture, Value: 127.0.0.1:4199/rustify-ui/architecture/
+								48 link Navigation, Value: 127.0.0.1:4199/rustify-ui/navigation/
+								49 link Workspace, Value: 127.0.0.1:4199/rustify-ui/workspace/
+								50 link Forms, Value: 127.0.0.1:4199/rustify-ui/forms/
+								51 link Languages, formatting and text, Value: 127.0.0.1:4199/rustify-ui/i18n/
+								52 link Data larger than the screen, Value: 127.0.0.1:4199/rustify-ui/data/
+								53 link Theme documents, Value: 127.0.0.1:4199/rustify-ui/themes/
+								54 link Runtime utilities, Value: 127.0.0.1:4199/rustify-ui/utility/
+								55 link Compatibility and capability boundaries (P1 research preview), Value: 127.0.0.1:4199/rustify-ui/compatibility/
+								56 link Component catalogue, Value: 127.0.0.1:4199/rustify-ui/components/
+								57 link Vellum example and framework capabilities, Value: 127.0.0.1:4199/rustify-ui/vellum/
+						58 container
+							59 标题 Components, Value: 2
+								60 文本 Components
+							61 内容列表
+								62 link Button, Value: 127.0.0.1:4199/rustify-ui/components/button/
+								63 link Label, Value: 127.0.0.1:4199/rustify-ui/components/label/
+								64 link Link, Value: 127.0.0.1:4199/rustify-ui/components/link/
+								65 link Icon, Value: 127.0.0.1:4199/rustify-ui/components/icon/
+								66 link Text field, Value: 127.0.0.1:4199/rustify-ui/components/text-field/
+								67 link Text area, Value: 127.0.0.1:4199/rustify-ui/components/text-area/
+								68 link Checkbox, Value: 127.0.0.1:4199/rustify-ui/components/checkbox/
+								69 link Radio, Value: 127.0.0.1:4199/rustify-ui/components/radio/
+								70 link Switch, Value: 127.0.0.1:4199/rustify-ui/components/switch/
+								71 link Select, Value: 127.0.0.1:4199/rustify-ui/components/select/
+								72 link Slider, Value: 127.0.0.1:4199/rustify-ui/components/slider/
+								73 link Progress, Value: 127.0.0.1:4199/rustify-ui/components/progress/
+								74 link Loading, Value: 127.0.0.1:4199/rustify-ui/components/loading/
+								75 link Tooltip, Value: 127.0.0.1:4199/rustify-ui/components/tooltip/
+								76 link Menu, Value: 127.0.0.1:4199/rustify-ui/components/menu/
+								77 link Dialog, Value: 127.0.0.1:4199/rustify-ui/components/dialog/
+								78 link Tabs, Value: 127.0.0.1:4199/rustify-ui/components/tabs/
+								79 link Scroll area, Value: 127.0.0.1:4199/rustify-ui/components/scroll-area/
+								80 link Data table, Value: 127.0.0.1:4199/rustify-ui/components/data-table/
+								81 link Tree, Value: 127.0.0.1:4199/rustify-ui/components/tree/
+								82 link Toast, Value: 127.0.0.1:4199/rustify-ui/components/toast/
+								83 link Number field, Value: 127.0.0.1:4199/rustify-ui/components/number-field/
+								84 link Color field, Value: 127.0.0.1:4199/rustify-ui/components/color-field/
+								85 link Toggle group, Value: 127.0.0.1:4199/rustify-ui/components/toggle-group/
+					86 container On this page
+						87 文本 On this page
+						88 内容列表
+							89 link Example, Value: 127.0.0.1:4199/rustify-ui/components/label/#example
+							90 link Capabilities, Value: 127.0.0.1:4199/rustify-ui/components/label/#capabilities
+							91 link GPU integration, Value: 127.0.0.1:4199/rustify-ui/components/label/#gpu-integration
+					92 container
+						93 标题 Label, Value: 1
+							94 文本 Label
+						95 文本 children as the text, and the id of the control it names
+						96 标题 Example, Value: 2
+							97 文本 Example
+						98 container
+							99 container Interactive example
+								100 container
+									101 文本 Project name
+									102 文本栏 (disabled, settable) Project name, Value: Rustify UI
+									103 container
+										104 text Current name:  Rustify UI
+							105 文本 Interactive example
+							106 文本 Enable JavaScript to interact
+							107 文本 site/src/demos/basics.rs
+							108 container Function
+								109 文本 Function
+								110 container
+									111 text ///  A label points to a field through a deterministic, scope-specific ID. pub fn label_demo ( ) ->  impl IntoView { let  field_id  = id :: next ( " label-demo-field " ) ; let  name  = RwSignal :: new ( " Rustify UI " . to_string ( ) ) ; view! { < div class = " space-y-4 " > < div class = " max-w-sm space-y-2 " > < Label control = field_id . clone ( ) > " Project name " < / Label > < TextField id = field_id value = name on_change = move | value |  name . set ( value ) / > < / div > < p class = " text-sm break-words " > " Current name:  " < output data - demo - state = " " > { move ||  name . get ( ) } < / output > < / p > < / div > } }
+							112 container Full file
+								113 文本 Full file
+								114 container
+									115 text use leptos :: prelude :: * ; use rustify_components :: { id ,  Button ,  ButtonVariant ,  Glyph ,  Icon ,  Label ,  Link ,  Spinner ,  TextField } ; ///  Buttons request changes to state owned by the application. pub fn button_demo ( ) ->  impl IntoView { let  count  = RwSignal :: new ( 0_ u32 ) ; view! { < div class = " space-y-4 " > < div class = " flex flex-wrap items-center gap-3 " > < Button on_click = move ||  count . update ( | count | * count  += 1 ) > " Increment " < / Button > < Button variant = ButtonVariant :: Outline on_click = move ||  count . set ( 0 ) > " Reset " < / Button > < Button disabled = true  on_click = move ||  count . update ( | count | * count  += 100 ) > " Unavailable " < / Button > < / div > < p class = " text-sm " > " Count:  " < output data - demo - state = " " > { move ||  count . get ( ) } < / output > < / p > < / div > } } ///  A label points to a field through a deterministic, scope-specific ID. pub fn label_demo ( ) ->  impl IntoView { let  field_id  = id :: next ( " label-demo-field " ) ; let  name  = RwSignal :: new ( " Rustify UI " . to_string ( ) ) ; view! { < div class = " space-y-4 " > < div class = " max-w-sm space-y-2 " > < Label control = field_id . clone ( ) > " Project name " < / Label > < TextField id = field_id value = name on_change = move | value |  name . set ( value ) / > < / div > < p class = " text-sm break-words " > " Current name:  " < output data - demo - state = " " > { move ||  name . get ( ) } < / output > < / p > < / div > } } ///  A disabled link keeps its label and stops offering a destination. pub fn link_demo ( ) ->  impl IntoView { let  destination_id  = id :: next ( " link-demo-destination " ) ; let  disabled  = RwSignal :: new ( false ) ; //  This anchor targets the document, so `_self` bypasses the island's local router. view! { < div class = " space-y-4 " > < div class = " flex flex-wrap items-center gap-3 " > < Link href = format! ( " # {destination_id} " )  disabled = disabled attr : target = " _self " > " Jump to the destination " < / Link > < Button variant = ButtonVariant :: Outline on_click = move ||  disabled . update ( | disabled | * disabled  = ! * disabled ) > " Toggle availability " < / Button > < / div > < p id = destination_id tabindex = " -1 " > " The link points to this paragraph. " < / p > < p class = " text-sm " > " Link:  " < output data - demo - state = " " > { move || if  disabled . get ( ) { " Unavailable " } else { " Available " } } < / output > < / p > < / div > } } ///  Named icons are images; decorative icons can omit their label. pub fn icon_demo ( ) ->  impl IntoView { let  checked  = RwSignal :: new ( true ) ; view! { < div class = " space-y-4 " > < div class = " flex flex-wrap items-center gap-3 " > < Show when = move ||  checked . get ( ) fallback = | | view! { < Icon glyph = Glyph :: Close label = " Not selected " / > } > < Icon glyph = Glyph :: Check label = " Selected " / > < / Show > < Button variant = ButtonVariant :: Outline on_click = move ||  checked . update ( | checked | * checked  = ! * checked ) > " Change icon " < / Button > < / div > < p class = " text-sm " > " Icon:  " < output data - demo - state = " " > { move || if  checked . get ( ) { " Check " } else { " Close " } } < / output > < / p > < / div > } } ///  A loading indicator uses the scope's motion preference. pub fn loading_demo ( ) ->  impl IntoView { let  loading  = RwSignal :: new ( true ) ; view! { < div class = " space-y-4 " > < div class = " flex h-8 items-center gap-3 " > < Show when = move ||  loading . get ( ) fallback = | | ( ) > < Spinner label = " Loading example " / > < / Show > < output data - demo - state = " " > { move || if  loading . get ( ) { " Loading " } else { " Ready " } } < / output > < / div > < Button variant = ButtonVariant :: Outline on_click = move ||  loading . update ( | loading | * loading  = ! * loading ) > " Toggle loading " < / Button > < / div > } }
+						116 标题 Capabilities, Value: 2
+							117 文本 Capabilities
+						118 container Component capabilities
+							119 表格
+								120 row
+									121 单元格
+										122 文本 Capability
+									123 单元格
+										124 文本 Support
+									125 单元格
+										126 文本 Details
+								127 row
+									128 单元格
+										129 文本 properties
+									130 单元格
+										131 文本 yes
+									132 单元格
+										133 文本 children as the text, and the id of the control it names
+								134 row
+									135 单元格
+										136 文本 actions
+									137 单元格
+										138 文本 no
+									139 单元格
+										140 文本 a label has none; clicking one moves focus to the control it names
+								141 row
+									142 单元格
+										143 文本 theme
+									144 单元格
+										145 文本 yes
+									146 单元格
+										147 文本 foreground, at the size the scope's text token sets
+								148 row
+									149 单元格
+										150 文本 input
+									151 单元格
+										152 文本 yes
+									153 单元格
+										154 文本 selectable text in the DOM
+								155 row
+									156 单元格
+										157 文本 accessibility
+									158 单元格
+										159 文本 yes
+									160 单元格
+										161 文本 names the control it points at; a region's label is decoration and stays out of the tree
+								162 row
+									163 单元格
+										164 文本 environment
+									165 单元格
+										166 文本 yes
+									167 单元格
+										168 文本 macOS Chrome, strict CSP; a region's text needs that region's font
+						169 标题 GPU integration, Value: 2
+							170 文本 GPU integration
+						171 container
+							172 text GPU drawing support:  yes . This documentation example uses the DOM component. See the 
+							173 link component catalogue example, Value: github.com/rockie/rustify-ui/tree/main/examples/component-catalog
+							174 文本  for the available DOM and GPU presentations.
+						175 link Edit this page, Value: github.com/rockie/rustify-ui/edit/main/site/src/lib.rs
+						176 container Previous / Next
+							177 link Previous Button, Value: 127.0.0.1:4199/rustify-ui/components/button/
+							178 link Next Link, Value: 127.0.0.1:4199/rustify-ui/components/link/
+					179 文本 Enable JavaScript to search. You can still use the navigation links.
+					180 container Footer links
+						181 link Back to the home page, Value: 127.0.0.1:4199/rustify-ui/
+			182 分隔条 Description: 调整开发者工具面板大小, Value: 250
+			183 滚动区
+				184 HTML 内容 about:devtools-toolbox
+					185 container
+						186 工具栏 开发者工具
+							187 开关按钮 选取页面中的元素（Cmd+Shift+C 或 Cmd+Opt+C）, Value: off
+							188 container
+								189 开关按钮 查看器, Help: DOM 和样式探查器 (Cmd+Shift+C 或 Cmd+Opt+C), Value: off
+									190 文本 查看器
+								191 开关按钮 控制台, Help: Web 控制台 (Cmd+Opt+K), Value: off
+									192 文本 控制台
+								193 开关按钮 调试器, Help: JavaScript 调试器 (Cmd+Opt+Z), Value: off
+									194 文本 调试器
+								195 开关按钮 网络, Help: 网络监视器 (Cmd+Opt+E), Value: off
+									196 文本 网络
+								197 开关按钮 样式编辑器, Help: 样式表编辑器 (CSS) (Shift+F7), Value: off
+									198 文本 样式编辑器
+								199 开关按钮 性能, Help: 性能 (Shift+F5), Value: off
+									200 文本 性能
+								201 开关按钮 内存, Value: off
+									202 文本 内存
+								203 开关按钮 存储, Help: 存储探查器（Cookie、本地存储等） (Shift+F9), Value: off
+									204 文本 存储
+								205 开关按钮 无障碍环境, Help: 无障碍环境（Shift+F12）, Value: off
+									206 文本 无障碍环境
+								207 开关按钮 应用程序, Help: 应用程序面板, Value: off
+									208 文本 应用程序
+							209 container
+								210 按钮 (disabled) 此按钮仅在具有多个 iframe 的页面上可用
+								211 开关按钮 响应式设计模式 (Cmd+Opt+M), Value: off
+							212 container
+								213 按钮 定制开发者工具及获取帮助
+								214 按钮 关闭开发者工具
+						215 滚动区 工具箱选项面板
+							216 HTML 内容 Description: 工具箱选项面板, URL: chrome://devtools/content/framework/toolbox-options.html
+								217 container
+									218 container 默认的开发者工具
+										219 文本 默认的开发者工具
+										220 container
+											221 复选框 网络, Help: 网络监视器 (Cmd+Opt+E), Value: 1
+											222 文本 网络
+										223 container
+											224 复选框 样式编辑器, Help: 样式表编辑器 (CSS) (Shift+F7), Value: 1
+											225 文本 样式编辑器
+										226 container
+											227 复选框 性能, Help: 性能 (Shift+F5), Value: 1
+											228 文本 性能
+										229 container
+											230 复选框 内存, Value: 1
+											231 文本 内存
+										232 container
+											233 复选框 存储, Help: 存储探查器（Cookie、本地存储等） (Shift+F9), Value: 1
+											234 文本 存储
+										235 container
+											236 复选框 无障碍环境, Help: 无障碍环境（Shift+F12）, Value: 1
+											237 文本 无障碍环境
+										238 container
+											239 复选框 应用程序, Help: 应用程序面板, Value: 1
+											240 文本 应用程序
+										241 container
+											242 复选框 DOM, Help: DOM (Cmd+Opt+W), Value: 0
+											243 文本 DOM
+									244 container 可用的工具箱按钮
+										245 文本 可用的工具箱按钮
+										246 container
+											247 复选框 显示页面上的错误数量, Value: 1
+											248 文本 显示页面上的错误数量
+										249 container
+											250 复选框 选取页面中的元素（Cmd+Shift+C 或 Cmd+Opt+C）, Value: 1
+											251 文本 选取页面中的元素（Cmd+Shift+C 或 Cmd+Opt+C）
+										252 container
+											253 复选框 选择一个 iframe 作为当前的目标文档, Value: 1
+											254 文本 选择一个 iframe 作为当前的目标文档
+										255 container
+											256 复选框 响应式设计模式 (Cmd+Opt+M), Value: 1
+											257 文本 响应式设计模式 (Cmd+Opt+M)
+										258 container
+											259 复选框 截取整个页面, Value: 0
+											260 文本 截取整个页面
+										261 container
+											262 复选框 切换页面上的标尺, Value: 0
+											263 文本 切换页面上的标尺
+										264 container
+											265 复选框 测量页面中的部分, Value: 0
+											266 文本 测量页面中的部分
+									267 container 实验性功能
+										268 文本 实验性功能
+										269 container List and view stylesheets in the debugger
+											270 复选框 Show stylesheets in the debugger （需要重新打开工具箱）, Value: 0
+											271 文本 Show stylesheets in the debugger
+											272 文本 （需要重新打开工具箱）
+									273 container 主题
+										274 文本 主题
+										275 container
+											276 单选按钮 自动, Value: 1
+											277 文本 自动
+										278 container
+											279 单选按钮 深色, Value: 0
+											280 文本 深色
+										281 container
+											282 单选按钮 浅色, Value: 0
+											283 文本 浅色
+									284 container 查看器
+										285 文本 查看器
+										286 container 启用此选项将显示由浏览器加载的默认样式。
+											287 复选框 显示浏览器样式, Value: 0
+											288 文本 显示浏览器样式
+										289 container 启用此选项后，将显示由浏览器处理的影子 DOM 元素。
+											290 复选框 显示浏览器影子 DOM （将重新加载页面）, Value: 0
+											291 文本 显示浏览器影子 DOM
+											292 文本 （将重新加载页面）
+										293 container 在查看器中显示注释节点
+											294 复选框 显示注释 （将重新加载页面）, Value: 1
+											295 文本 显示注释
+											296 文本 （将重新加载页面）
+										297 container 截短查看器中的长属性
+											298 复选框 截短 DOM 属性, Value: 1
+											299 文本 截短 DOM 属性
+										300 container 在查看器规则视图中单击并拖动编辑大小值。
+											301 复选框 点击并拖动编辑大小值, Value: 1
+											302 文本 点击并拖动编辑大小值
+										303 container 设置 prefers-reduced-motion 首选项启用简化的高亮显示。在突出显示的元素周围绘制线条而不是填充矩形，以避免闪烁效果。
+											304 复选框 通过 prefers-reduced-motion 使用更简明的高亮显示。, Value: 0
+											305 文本 通过 prefers-reduced-motion 使用更简明的高亮显示。
+										306 container 启用后，在编辑选择器、属性名称或值时按下 Enter 键会将焦点移动到下一个输入部分。
+											307 复选框 按下 Enter 时聚焦下一个输入部分, Value: 1
+											308 container
+												309 text 按下  Enter  时聚焦下一个输入部分
+										310 container
+											311 文本 默认颜色单位
+											312 弹出式按钮 按原单位
+									313 container Web 控制台
+										314 文本 Web 控制台
+										315 container 使用 ESC 键打开分离式控制台
+											316 复选框 启用分离式控制台, Value: 1
+											317 文本 启用分离式控制台
+									318 container 网络监视器
+										319 文本 网络监视器
+										320 container Request or response bodies which exceed the specified size will be truncated when displayed or downloaded in the Network Monitor. Set to 0 to have no limitation.
+											321 文本 Maximum request and response body size (set to 0 for unlimited):
+											322 文本 1.05 MB
+											323 按钮 Edit the maximum request/response body size.
+									324 container 样式编辑器
+										325 文本 样式编辑器
+										326 container 在样式编辑器中自动补全您输入的 CSS 属性、值和选择器
+											327 复选框 自动补全 CSS, Value: 1
+											328 文本 自动补全 CSS
+									329 container 截图行为
+										330 文本 截图行为
+										331 container 直接将截图保存到剪贴板
+											332 复选框 截图仅保存到剪贴板, Value: 0
+											333 文本 截图仅保存到剪贴板
+										334 container 截图时播放相机快门声
+											335 复选框 播放相机快门声, Value: 1
+											336 文本 播放相机快门声
+									337 container 本地模式
+										338 文本 Local Mode allows you to load local files via https URL without any external dependency. The URLs can only be loaded from tabs with DevTools opened.
+										339 文本 本地模式
+										340 按钮 Add a new local mapping
+									341 container 编辑器首选项
+										342 文本 编辑器首选项
+										343 container 基于源内容推测缩进
+											344 复选框 检测缩进, Value: 1
+											345 文本 检测缩进
+										346 container 自动插入关闭括号
+											347 复选框 自动关闭括号, Value: 1
+											348 文本 自动关闭括号
+										349 container 使用空格而非制表符缩进
+											350 复选框 使用空格缩进, Value: 1
+											351 文本 使用空格缩进
+										352 container
+											353 文本 制表符宽度
+											354 弹出式按钮 2
+										355 container
+											356 文本 按键绑定
+											357 弹出式按钮 默认设置
+									358 container 高级设置
+										359 文本 高级设置
+										360 container 如果您启用此选项，工具中的源代码将被映射。
+											361 复选框 启用源代码映射, Value: 1
+											362 文本 启用源代码映射
+										363 container 开启此选项将对所有已打开工具箱的标签页禁用 HTTP 缓存。Service Worker 不会受此选项影响。
+											364 复选框 禁用 HTTP 缓存（工具箱打开时）, Value: 0
+											365 文本 禁用 HTTP 缓存（工具箱打开时）
+										366 container 启用这个选项将对当前标签页禁用 JavaScript。如果关闭了该标签页或者工具箱，则这个设置就不再有效。
+											367 复选框 禁用 JavaScript （仅限当前会话，将重新加载当前页面）, Value: 1
+											368 文本 禁用 JavaScript
+											369 文本 （仅限当前会话，将重新加载当前页面）
+										370 container 开启此选项时，将对所有标签页在工具箱打开时启用 Service Workers over HTTP。
+											371 复选框 启用 Service Workers over HTTP（在工具箱打开时）, Value: 0
+											372 文本 启用 Service Workers over HTTP（在工具箱打开时）
+										373 container 打开此选项将允许您使用在浏览器上下文的开发者工具（通过 工具 > Web 开发者 > 浏览器工具箱）和从“附加组件管理器”调试附加组件
+											374 复选框 启用浏览器界面及附加组件的调试工具箱, Value: 0
+											375 文本 启用浏览器界面及附加组件的调试工具箱
+										376 container 启用此选项将允许远程调试此浏览器实例
+											377 复选框 启用远程调试, Value: 0
+											378 文本 启用远程调试
+										379 container 开启此选项后， 将绑定 F12 键用于打开或关闭开发者工具箱
+											380 复选框 使用 F12 键打开或关闭开发者工具, Value: 1
+											381 文本 使用 F12 键打开或关闭开发者工具
+										382 container 打开此选项，将允许网站自行定义 DOM 对象的格式化程序
+											383 复选框 启用自定义格式化程序, Value: 0
+											384 文本 启用自定义格式化程序
+	385 关闭按钮
+	386 全屏幕按钮 Help: 此按钮也可以执行缩放窗口的操作, Secondary Actions: 缩放窗口
+	387 最小化按钮
+388 menu bar
+	389 Firefox
+	390 文件
+	391 编辑
+	392 查看
+	393 历史
+	394 书签
+	395 配置文件
+	396 工具
+	397 窗口
+	398 帮助
+
+The focused UI element is 29 HTML 内容 Description: Label | Rustify UI, URL: 127.0.0.1:4199/rustify-ui/components/label/

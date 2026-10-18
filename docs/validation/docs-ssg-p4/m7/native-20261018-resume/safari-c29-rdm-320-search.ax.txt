@@ -1,0 +1,88 @@
+Window: "Architecture | Rustify UI", App: Safari浏览器.
+0 标准窗口 Architecture | Rustify UI, ID: SafariWindow?IsSecure=false&UUID=8B94E202-E355-455B-98DF-40C71253D736, Secondary Actions: Raise
+	1 分离组
+		2 分离器 (disabled, settable, float) -1
+		3 标签页组
+			4 弹出式按钮 Description: 视口大小, Value: 自定义大小, ID: ViewportPresetButton
+			5 开关按钮 Description: 向左旋转, Help: 旋转视口, Value: off
+			6 文本栏 (settable) Description: 宽度, Value: 320
+			7 文本 ×
+			8 文本栏 (settable) Description: 高度, Value: 667
+			9 文本 Description: 缩放比例, Value: ( 100% )
+			10 弹出式按钮 Description: 像素比, Value: 1倍
+			11 菜单按钮 通过模拟器打开, ID: OpenWithSimulatorButton
+			12 滚动区
+				13 HTML内容 Description: Architecture | Rustify UI, URL: 127.0.0.1:4199/rustify-ui/zh/architecture/#versioned-themes
+					14 container 搜索
+						15 文本 搜索文档
+						16 按钮 关闭
+						17 组合框 (expanded, settable) 搜索文档, Value: ThemeScope, Secondary Actions: Collapse
+							18 文本 (settable) ThemeScope
+						19 文本 3 个结果
+						20 列表 (settable) 搜索结果
+							21 文本 (selected) 快速开始 快速开始 › 在应用中使用 Tailwind v4 ope 外。 使用版本化主题文档时，在 sdk.css 后紧接着导入 theme-v4.css。ThemeScope 在根节点提供文档解析后的颜色、字体、间距、圆角和阴影；这些 scope 的 utility 间距读取 --rustify-unit，--layout-gap 仍是独立布局值。ThemedScope 保留旧值回退，两种 provider 的显式
+							22 文本 Architecturezh 尚未翻译，内容语言：en Architecture › Versioned themes ResolvedTheme> alongside its application state. ThemeScopeclaims the mount root, projects the snapshot through CSSOM and restores prior values on cleanup. ThemeBoundary re-resolve
+							23 文本 Theme documentszh 尚未翻译，内容语言：en Theme documents › Mount a browser scope Theme documents › Fonts and GPU consumers Theme documents › Import and export :{mount, AppHandle, MountConfig, ResolvedTheme, ThemeScope}; use rustify_ui::theme::{font_context, import_json, resolve, ThemeError, ThemeMode}; use std::sync::Arc; // Put the down
+				24 滚动条 (settable, float) 0.554984
+	25 工具栏
+		26 container Secondary Actions: 移到上一项, 移到下一项, 从工具栏移除
+			27 按钮 Description: 显示边栏, ID: SidebarButton
+			28 菜单按钮 Description: 标签页组选择器, ID: TabGroupPickerButton?TabGroup=
+		29 container BackForwardSegmentedControl
+			30 按钮 Description: 返回, Help: 显示上一页, ID: BackButton
+			31 按钮 (disabled) Description: 前进, Help: 显示下一页, ID: ForwardButton
+		32 container Secondary Actions: 移到上一项, 移到下一项, 从工具栏移除
+			33 按钮 页面菜单, ID: AssistantButton
+			34 按钮 将页面添加到阅读列表, ID: OneStepBookmarkingButton
+			35 文本栏 (settable) Description: 智能搜索栏, Value: 127.0.0.1:4199/rustify-ui/zh/architecture/#versioned-themes, ID: WEB_BROWSER_ADDRESS_AND_SEARCH_FIELD
+			36 按钮 翻译可用, ID: TranslationButton
+			37 按钮 重新加载此页面, ID: ReloadButton
+		38 按钮 Description: 共享, ID: ShareButton, Secondary Actions: 移到上一项, 移到下一项, 从工具栏移除
+		39 按钮 Description: 新建标签页, ID: NewTabButton, Secondary Actions: 移到上一项, 移到下一项, 从工具栏移除
+		40 按钮 Description: 标签页概览, ID: TabOverviewButton, Secondary Actions: 移到上一项, 从工具栏移除
+	41 标签页组 Description: 标签页栏，10个标签页, ID: TabBar?isSeparate=false
+		42 标签 Home | Home semantics, Value: off, Secondary Actions: 关闭标签页, ID: TabBarTab?isNarrow=false&isExpanded=false&tabCount=&isPinned=false&isCluster=false&clusterID=&isActive=false
+			43 图像 FaviconImageView
+			44 文本 Value: Home | Home semantics, ID: UnifiedTabBarButton._titleTextField
+		45 标签 Rustify UI, Value: off, Secondary Actions: 关闭标签页, ID: TabBarTab?isNarrow=false&isExpanded=false&tabCount=&isPinned=false&isCluster=false&clusterID=&isActive=false
+			46 图像 FaviconImageView
+			47 文本 Value: Rustify UI, ID: UnifiedTabBarButton._titleTextField
+		48 标签 Architecture | Rustify UI, Value: off, Secondary Actions: 关闭标签页, ID: TabBarTab?isNarrow=false&isExpanded=false&tabCount=&isPinned=false&isCluster=false&clusterID=&isActive=false
+			49 图像 FaviconImageView
+			50 文本 Value: Architecture | Rustify UI, ID: UnifiedTabBarButton._titleTextField
+		51 标签 Quick start | Rustify UI, Value: off, Secondary Actions: 关闭标签页, ID: TabBarTab?isNarrow=false&isExpanded=false&tabCount=&isPinned=false&isCluster=false&clusterID=&isActive=false
+			52 图像 FaviconImageView
+			53 文本 Value: Quick start | Rustify UI, ID: UnifiedTabBarButton._titleTextField
+		54 标签 快速开始 | Rustify UI, Value: off, Secondary Actions: 关闭标签页, ID: TabBarTab?isNarrow=false&isExpanded=false&tabCount=&isPinned=false&isCluster=false&clusterID=&isActive=false
+			55 图像 FaviconImageView
+			56 文本 Value: 快速开始 | Rustify UI, ID: UnifiedTabBarButton._titleTextField
+		57 标签 Native boundary checks, Value: off, Secondary Actions: 关闭标签页, ID: TabBarTab?isNarrow=false&isExpanded=false&tabCount=&isPinned=false&isCluster=false&clusterID=&isActive=false
+			58 图像 FaviconImageView
+			59 文本 Value: Native boundary checks, ID: UnifiedTabBarButton._titleTextField
+		60 标签 Native boundary checks, Value: off, Secondary Actions: 关闭标签页, ID: TabBarTab?isNarrow=false&isExpanded=false&tabCount=&isPinned=false&isCluster=false&clusterID=&isActive=false
+			61 图像 FaviconImageView
+			62 文本 Value: Native boundary checks, ID: UnifiedTabBarButton._titleTextField
+		63 标签 Architecture | Rustify UI, Help: 若要与此按钮中的项目交互，请按下Control-Option-Shift-下箭头键。, Value: on, Secondary Actions: 关闭标签页, ID: TabBarTab?isNarrow=false&isExpanded=false&tabCount=&isPinned=false&isCluster=false&clusterID=&isActive=true
+			64 图像 FaviconImageView
+			65 文本 Value: Architecture | Rustify UI, ID: UnifiedTabBarButton._titleTextField
+		66 标签 Button | Rustify UI, Value: off, Secondary Actions: 关闭标签页, ID: TabBarTab?isNarrow=false&isExpanded=false&tabCount=&isPinned=false&isCluster=false&clusterID=&isActive=false
+			67 图像 FaviconImageView
+			68 文本 Value: Button | Rustify UI, ID: UnifiedTabBarButton._titleTextField
+		69 标签 Native boundary checks, Value: off, Secondary Actions: 关闭标签页, ID: TabBarTab?isNarrow=false&isExpanded=false&tabCount=&isPinned=false&isCluster=false&clusterID=&isActive=false
+			70 图像 FaviconImageView
+			71 文本 Value: Native boundary checks, ID: UnifiedTabBarButton._titleTextField
+	72 关闭按钮
+	73 全屏幕按钮 Help: 此按钮也可以执行缩放窗口的操作, Secondary Actions: 缩放窗口
+	74 最小化按钮
+75 menu bar
+	76 Safari浏览器
+	77 文件
+	78 编辑
+	79 显示, ID: SafariViewMenu
+	80 历史记录
+	81 书签, ID: SafariBookmarksMenu
+	82 开发
+	83 窗口, ID: SafariWindowMenu
+	84 帮助, ID: SafariHelpMenu
+
+The focused UI element is 21 文本 (selected) 快速开始 快速开始 › 在应用中使用 Tailwind v4 ope 外。 使用版本化主题文档时，在 sdk.css 后紧接着导入 theme-v4.css。ThemeScope 在根节点提供文档解析后的颜色、字体、间距、圆角和阴影；这些 scope 的 utility 间距读取 --rustify-unit，--layout-gap 仍是独立布局值。ThemedScope 保留旧值回退，两种 provider 的显式
