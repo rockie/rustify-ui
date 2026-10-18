@@ -3,6 +3,8 @@
 const base = new URL("../", self.location.href);
 const fold = value => value.replace(/[A-Z]/g, letter => letter.toLowerCase());
 const han = /\p{Script=Han}/u;
+// Some segmenters mark a complete Han word as non-word-like.
+const wordLike = word => word && (word.isWordLike || han.test(word.segment));
 const segmenters = new Map();
 let pages = null;
 let instance = 0;
@@ -57,7 +59,7 @@ function prepare(index) {
 
 function words(query) {
     return Array.from(segmenter("zh").segment(query))
-        .filter(word => word.isWordLike)
+        .filter(wordLike)
         .map(word => ({ text: fold(word.segment), lang: han.test(word.segment) ? "zh" : "en" }));
 }
 
@@ -68,7 +70,7 @@ function matches(value, tokens) {
         while (start !== -1) {
             if (!segments.has(token.lang)) segments.set(token.lang, segmenter(token.lang).segment(value.text));
             const word = segments.get(token.lang).containing(start);
-            if (word?.isWordLike && word.index === start
+            if (wordLike(word) && word.index === start
                 && (token.lang === "zh" ? fold(word.segment) === token.text : fold(word.segment).startsWith(token.text))) {
                 return [start, start + token.text.length];
             }

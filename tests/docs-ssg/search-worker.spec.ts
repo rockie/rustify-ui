@@ -48,6 +48,28 @@ test("matching uses whole Chinese words, English word starts and UTF-16 offsets"
     expect(emoji.highlights).toEqual([[2, 12]]);
 });
 
+test("matching retains Han words when their word-like flag is false", async ({ page }) => {
+    await page.context().route(/\/assets\/search-worker\.[a-f0-9]+\.js$/, async route => {
+        const response = await route.fetch();
+        await route.fulfill({ response, body: `
+const NativeSegmenter = Intl.Segmenter;
+Intl.Segmenter = class extends NativeSegmenter {
+    segment(text) {
+        const segments = super.segment(text);
+        const normalize = word => word?.segment === "切换" ? { ...word, isWordLike: false } : word;
+        return {
+            *[Symbol.iterator]() { for (const word of segments) yield normalize(word); },
+            containing(index) { return normalize(segments.containing(index)); },
+        };
+    }
+};
+` + await response.text() });
+    });
+    await start(page, [entry("/standalone/", "Guide", "切换"), entry("/joined/", "Guide", "主题切换")]);
+    expect((await query(page, "切换", 1)).groups.map((group: any) => group.route).sort()).toEqual(["/joined/", "/standalone/"]);
+    expect((await query(page, "换", 2)).groups).toEqual([]);
+});
+
 test("matching ranks titles then headings ahead of repeated body matches", async ({ page }) => {
     const pages = [entry("/body/", "Other", "ThemeScope ".repeat(200)), entry("/title/", "使用ThemeScope", "Unrelated", 9), entry("/heading/", "Guide", "Unrelated", 2)];
     pages[2].sections.push({ anchor: "setup", path: ["Guide", "ThemeScope setup"], text: "Use it" });
