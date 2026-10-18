@@ -1,0 +1,23 @@
+{"profile":"/private/tmp/rustify-p4-ff-I0lYkr","directory":true,"owner":501,"processUid":501,"executable":"/Users/rockie/Library/Caches/ms-playwright/firefox-1543/firefox/Nightly.app/Contents/MacOS/firefox"}
+Error: browserType.launchPersistentContext: Failed to launch the browser process.
+Browser logs:
+
+<launching> /Users/rockie/Library/Caches/ms-playwright/firefox-1543/firefox/Nightly.app/Contents/MacOS/firefox -no-remote -headless -profile /private/tmp/rustify-p4-ff-I0lYkr -juggler-pipe about:blank
+<launched> pid=42240
+[pid=42240][err] *** You are running in headless mode.
+[pid=42240][err] Could not find profile folder.
+[pid=42240] <process did exit: exitCode=1, signal=null>
+[pid=42240] starting temporary directories cleanup
+Call log:
+[2m  - <launching> /Users/rockie/Library/Caches/ms-playwright/firefox-1543/firefox/Nightly.app/Contents/MacOS/firefox -no-remote -headless -profile /private/tmp/rustify-p4-ff-I0lYkr -juggler-pipe about:blank[22m
+[2m  - <launched> pid=42240[22m
+[2m  - [pid=42240][err] *** You are running in headless mode.[22m
+[2m  - [pid=42240][err] Could not find profile folder.[22m
+[2m  - [pid=42240] <process did exit: exitCode=1, signal=null>[22m
+[2m  - [pid=42240] starting temporary directories cleanup[22m
+[2m  - [pid=42240] <gracefully close start>[22m
+[2m  - [pid=42240] <kill>[22m
+[2m  - [pid=42240] <skipped force kill spawnedProcess.killed=false processClosed=true>[22m
+[2m  - [pid=42240] finished temporary directories cleanup[22m
+[2m  - [pid=42240] <gracefully close end>[22m
+

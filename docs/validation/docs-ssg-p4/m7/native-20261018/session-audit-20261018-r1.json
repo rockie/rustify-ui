@@ -1,0 +1,52 @@
+{
+  "observed_at": "2026-10-18T18:30:36+08:00",
+  "candidate_sha": "a31509aa9cc069fe81ad55be701c13ffe3a3fdf1",
+  "source_head": "3ddc49c01b211c2cbb906609dffe49a7559ed353",
+  "native_sessions": {
+    "safari_existing_binding": "cgWindowNotFound (-10005)",
+    "safari_fresh_binding": "cgWindowNotFound (-10005)",
+    "safari_new_window_key_attempt": "cgWindowNotFound (-10005)",
+    "firefox_fresh_binding": "cgWindowNotFound (-10005)",
+    "client_reset": "completed; inventory again lists Safari, Firefox and iPhone Mirroring as running, no browser providers",
+    "safari_binding_after_reset": "cgWindowNotFound (-10005)",
+    "iphone_mirroring_binding_after_reset": "cgWindowNotFound (-10005)",
+    "interpretation": "Running process metadata does not prove an operable native window. No cause such as screen lock is inferred."
+  },
+  "firefox_engine": {
+    "playwright_version": "1.63.0",
+    "fixed_firefox_version": "155.0",
+    "fixed_firefox_revision": 1543,
+    "isolated_runtime_root": "target/docs-ssg/p4/m7-firefox-runtime",
+    "downloaded_components": [
+      "Firefox 155.0 / revision1543",
+      "FFmpeg / revision1011"
+    ],
+    "old_main_executable_sha256": "e75d92f6f3210c9c31056d10b912f43c139f0cf7a2a3d0f2e002e88c1c7fbf5a",
+    "isolated_main_executable_sha256": "e75d92f6f3210c9c31056d10b912f43c139f0cf7a2a3d0f2e002e88c1c7fbf5a",
+    "main_executables_identical": true,
+    "short_canonical_profile": "/private/tmp/rustify-p4-ff-I0lYkr",
+    "short_profile_probe": "failed before page execution: Could not find profile folder",
+    "isolated_runtime_probe": "failed before page execution: sandbox_extension_issue_file_to_process ... Operation not permitted; Could not find profile folder",
+    "scope": "Existing global browser cache and native Firefox installation were not replaced; OS security and user-browser settings were not changed.",
+    "profile_observations_before_launch": {
+      "short_original_runtime": {
+        "profile": "/private/tmp/rustify-p4-ff-I0lYkr",
+        "directory": true,
+        "owner": 501,
+        "processUid": 501,
+        "executable": "/Users/rockie/Library/Caches/ms-playwright/firefox-1543/firefox/Nightly.app/Contents/MacOS/firefox"
+      },
+      "same_profile_isolated_runtime": {
+        "profile": "/private/tmp/rustify-p4-ff-I0lYkr",
+        "directory": true,
+        "owner": 501,
+        "processUid": 501,
+        "executable": "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/p4/m7-firefox-runtime/firefox-1543/firefox/Nightly.app/Contents/MacOS/firefox"
+      }
+    }
+  },
+  "new_native_product_page_checks": 0,
+  "previews_started": 0,
+  "task_handles": "isolated download completed exit0; short-profile and isolated-runtime probes exited1; no live test or preview handle remains",
+  "user_browser_preference_changes": false
+}
