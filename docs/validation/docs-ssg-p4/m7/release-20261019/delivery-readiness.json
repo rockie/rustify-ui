@@ -1,0 +1,72 @@
+{
+  "observed_at": "2026-10-19T12:28:17+08:00",
+  "read_only": true,
+  "repository": {
+    "exit_code": 0,
+    "response": {
+      "full_name": "rockie/rustify-ui",
+      "visibility": "public",
+      "default_branch": "main",
+      "has_pages": false,
+      "permissions": {
+        "admin": true,
+        "maintain": true,
+        "push": true,
+        "triage": true,
+        "pull": true
+      }
+    },
+    "stderr": ""
+  },
+  "main": {
+    "exit_code": 0,
+    "response": {
+      "sha": "3803148929ebb2f69d7549c9f054ff81eb9a6d20"
+    },
+    "stderr": ""
+  },
+  "pages": {
+    "exit_code": 1,
+    "response": {
+      "message": "Not Found",
+      "documentation_url": "https://docs.github.com/rest/pages/pages#get-a-apiname-pages-site",
+      "status": "404"
+    },
+    "stderr": "gh: Not Found (HTTP 404)"
+  },
+  "environments": {
+    "exit_code": 0,
+    "response": {
+      "total_count": 0,
+      "environments": []
+    },
+    "stderr": ""
+  },
+  "c0": {
+    "exit_code": 1,
+    "response": {
+      "message": "No commit found for SHA: 3dbb079a7b188edd56071225fad84fd6b92c4c52",
+      "documentation_url": "https://docs.github.com/rest/commits/commits#get-a-commit",
+      "status": "422"
+    },
+    "stderr": "gh: No commit found for SHA: 3dbb079a7b188edd56071225fad84fd6b92c4c52 (HTTP 422)"
+  },
+  "c1": {
+    "exit_code": 1,
+    "response": {
+      "message": "No commit found for SHA: b3f30fbd2c86768c5070edac4d37bff7120aa41d",
+      "documentation_url": "https://docs.github.com/rest/commits/commits#get-a-commit",
+      "status": "422"
+    },
+    "stderr": "gh: No commit found for SHA: b3f30fbd2c86768c5070edac4d37bff7120aa41d (HTTP 422)"
+  },
+  "r1": {
+    "exit_code": 1,
+    "response": {
+      "message": "No commit found for SHA: d19af882e0a0700f76c4d987e3d98f781dafe1b3",
+      "documentation_url": "https://docs.github.com/rest/commits/commits#get-a-commit",
+      "status": "422"
+    },
+    "stderr": "gh: No commit found for SHA: d19af882e0a0700f76c4d987e3d98f781dafe1b3 (HTTP 422)"
+  }
+}

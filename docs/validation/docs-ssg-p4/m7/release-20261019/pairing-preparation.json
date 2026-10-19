@@ -1,0 +1,15 @@
+{
+  "framework_revision": "d19af882e0a0700f76c4d987e3d98f781dafe1b3",
+  "version": "0.1.30",
+  "packages": 193,
+  "git_source_only_changes": [
+    "rustify-components",
+    "rustify-docs",
+    "rustify-docs-macros",
+    "rustify-docs-syntax",
+    "rustify-style",
+    "rustify-ui"
+  ],
+  "unchanged_packages": 187,
+  "lock_origin": "Cargo metadata resolution of real Git R; inherited lock retained"
+}

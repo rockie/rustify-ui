@@ -1,0 +1,56 @@
+{
+  "observed_at": "2026-10-19T12:39:51+08:00",
+  "candidate_sha": "b3f30fbd2c86768c5070edac4d37bff7120aa41d",
+  "framework_revision": "d19af882e0a0700f76c4d987e3d98f781dafe1b3",
+  "environment": "/Users/rockie/Documents/gh-rockie/rustify-ui/.rustify-docs/p4-release/c30-6uqi3hxs/env.sh",
+  "official_site": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-p4-c30-74xzfgs6/official",
+  "checks": {
+    "check": {
+      "success": true,
+      "errors": 0,
+      "warnings": 47
+    },
+    "build": {
+      "success": true,
+      "errors": 0,
+      "warnings": 47
+    }
+  },
+  "browser": {
+    "startTime": "2026-10-19T04:36:26.053Z",
+    "duration": 87906.87000000001,
+    "expected": 56,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "browser_method": "Unchanged official-subpath project/spec, temporary config imports repository config and uses already-built verified C1 server; only webServer/testDir/output/report destinations overridden.",
+  "native_c1": {
+    "verified": false,
+    "cause": "Native Safari, Chrome and Firefox bindings returned cgWindowNotFound -10005; CUA browser providers empty. User asked to restore desktop; no settings changed.",
+    "observed_at": "2026-10-19T12:39:51+08:00"
+  },
+  "public_actions": {
+    "pushed": false,
+    "pages_enabled": false,
+    "deployed": false,
+    "rolled_back": false
+  },
+  "prepare": {
+    "protected_files": 15106,
+    "only_projected": [
+      "site/Cargo.toml",
+      "site/Cargo.lock"
+    ]
+  },
+  "preview": {
+    "pid": 91750,
+    "session": 10222,
+    "stop": "SIGTERM; exit143 collected",
+    "exit_code": 143,
+    "ports_released": [
+      4199,
+      4200
+    ]
+  }
+}

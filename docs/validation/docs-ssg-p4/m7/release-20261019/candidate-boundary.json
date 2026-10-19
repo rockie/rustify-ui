@@ -1,0 +1,15 @@
+{
+  "c0": "3dbb079a7b188edd56071225fad84fd6b92c4c52",
+  "c1": "b3f30fbd2c86768c5070edac4d37bff7120aa41d",
+  "r1": "d19af882e0a0700f76c4d987e3d98f781dafe1b3",
+  "c1_parent_is_r1": true,
+  "c1_changed_files": [
+    "Cargo.lock",
+    "crates/rustify-docs-cli/Cargo.toml",
+    "crates/rustify-docs-cli/assets/components-Cargo.lock",
+    "crates/rustify-docs-cli/assets/framework-revision.txt",
+    "docs/docs-ssg.md"
+  ],
+  "c0_to_r1_product_source_changes": [],
+  "local_only": true
+}

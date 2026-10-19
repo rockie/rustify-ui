@@ -1,0 +1,13 @@
+{
+  "all_76_html_equal_after_bundle_path_normalization": true,
+  "html_bundle_path_changes": 48,
+  "bundle_files": 6,
+  "bundle_files_changed": [
+    "app_bg.wasm"
+  ],
+  "bundle_files_unchanged": 5,
+  "old_bundle": "b9140be330acf58d887929efe7a96140f8a70fe13c1bbb84392b75d9e6b5d31e",
+  "new_bundle": "8c1cf2d92f27c565d9219eb40e237b380d9fb987b92c22f0ad68af70a62043a4",
+  "wasm_change_cause": "not determined; product Rust sources unchanged; new Git framework identity",
+  "search_worker_module_css_ai_unchanged": true
+}

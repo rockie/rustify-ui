@@ -1,0 +1,64 @@
+
+Running 56 tests using 1 worker
+
+(node:93106) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1/56] [official-subpath] › tests/docs-ssg/official.spec.ts:202:1 › home has one English title, the original README introduction and two first-viewport ordinary actions
+[2/56] [official-subpath] › tests/docs-ssg/official.spec.ts:219:1 › official Chinese home and quick start are real translations with local search and AI discovery
+[3/56] [official-subpath] › tests/docs-ssg/official.spec.ts:267:1 › all Chinese fallback categories retain real DOM demos, source and target-language controls
+[4/56] [official-subpath] › tests/docs-ssg/official.spec.ts:282:1 › the ordinary sidebar contains the exact twelve guides and CATALOG pages in configured order
+[5/56] [official-subpath] › tests/docs-ssg/official.spec.ts:291:29 › guide quickstart/ is English, reachable and requests no wasm
+[6/56] [official-subpath] › tests/docs-ssg/official.spec.ts:291:29 › guide architecture/ is English, reachable and requests no wasm
+[7/56] [official-subpath] › tests/docs-ssg/official.spec.ts:291:29 › guide navigation/ is English, reachable and requests no wasm
+[8/56] [official-subpath] › tests/docs-ssg/official.spec.ts:291:29 › guide workspace/ is English, reachable and requests no wasm
+[9/56] [official-subpath] › tests/docs-ssg/official.spec.ts:291:29 › guide forms/ is English, reachable and requests no wasm
+[10/56] [official-subpath] › tests/docs-ssg/official.spec.ts:291:29 › guide i18n/ is English, reachable and requests no wasm
+[11/56] [official-subpath] › tests/docs-ssg/official.spec.ts:291:29 › guide data/ is English, reachable and requests no wasm
+[12/56] [official-subpath] › tests/docs-ssg/official.spec.ts:291:29 › guide themes/ is English, reachable and requests no wasm
+[13/56] [official-subpath] › tests/docs-ssg/official.spec.ts:291:29 › guide utility/ is English, reachable and requests no wasm
+[14/56] [official-subpath] › tests/docs-ssg/official.spec.ts:291:29 › guide compatibility/ is English, reachable and requests no wasm
+[15/56] [official-subpath] › tests/docs-ssg/official.spec.ts:291:29 › guide components/ is English, reachable and requests no wasm
+[16/56] [official-subpath] › tests/docs-ssg/official.spec.ts:291:29 › guide vellum/ is English, reachable and requests no wasm
+[17/56] [official-subpath] › tests/docs-ssg/official.spec.ts:297:33 › CATALOG button uses its actual function, source and live control
+[18/56] [official-subpath] › tests/docs-ssg/official.spec.ts:297:33 › CATALOG label uses its actual function, source and live control
+[19/56] [official-subpath] › tests/docs-ssg/official.spec.ts:297:33 › CATALOG link uses its actual function, source and live control
+[20/56] [official-subpath] › tests/docs-ssg/official.spec.ts:297:33 › CATALOG icon uses its actual function, source and live control
+[21/56] [official-subpath] › tests/docs-ssg/official.spec.ts:297:33 › CATALOG text field uses its actual function, source and live control
+[22/56] [official-subpath] › tests/docs-ssg/official.spec.ts:297:33 › CATALOG text area uses its actual function, source and live control
+[23/56] [official-subpath] › tests/docs-ssg/official.spec.ts:297:33 › CATALOG checkbox uses its actual function, source and live control
+[24/56] [official-subpath] › tests/docs-ssg/official.spec.ts:297:33 › CATALOG radio uses its actual function, source and live control
+[25/56] [official-subpath] › tests/docs-ssg/official.spec.ts:297:33 › CATALOG switch uses its actual function, source and live control
+[26/56] [official-subpath] › tests/docs-ssg/official.spec.ts:297:33 › CATALOG select uses its actual function, source and live control
+[27/56] [official-subpath] › tests/docs-ssg/official.spec.ts:297:33 › CATALOG slider uses its actual function, source and live control
+[28/56] [official-subpath] › tests/docs-ssg/official.spec.ts:297:33 › CATALOG progress uses its actual function, source and live control
+[29/56] [official-subpath] › tests/docs-ssg/official.spec.ts:297:33 › CATALOG loading uses its actual function, source and live control
+[30/56] [official-subpath] › tests/docs-ssg/official.spec.ts:297:33 › CATALOG tooltip uses its actual function, source and live control
+[31/56] [official-subpath] › tests/docs-ssg/official.spec.ts:297:33 › CATALOG menu uses its actual function, source and live control
+[32/56] [official-subpath] › tests/docs-ssg/official.spec.ts:297:33 › CATALOG dialog uses its actual function, source and live control
+[33/56] [official-subpath] › tests/docs-ssg/official.spec.ts:297:33 › CATALOG tabs uses its actual function, source and live control
+[34/56] [official-subpath] › tests/docs-ssg/official.spec.ts:297:33 › CATALOG scroll area uses its actual function, source and live control
+[35/56] [official-subpath] › tests/docs-ssg/official.spec.ts:297:33 › CATALOG data table uses its actual function, source and live control
+[36/56] [official-subpath] › tests/docs-ssg/official.spec.ts:297:33 › CATALOG tree uses its actual function, source and live control
+[37/56] [official-subpath] › tests/docs-ssg/official.spec.ts:297:33 › CATALOG toast uses its actual function, source and live control
+[38/56] [official-subpath] › tests/docs-ssg/official.spec.ts:297:33 › CATALOG number field uses its actual function, source and live control
+[39/56] [official-subpath] › tests/docs-ssg/official.spec.ts:297:33 › CATALOG color field uses its actual function, source and live control
+[40/56] [official-subpath] › tests/docs-ssg/official.spec.ts:297:33 › CATALOG toggle group uses its actual function, source and live control
+[41/56] [official-subpath] › tests/docs-ssg/official.spec.ts:309:1 › without script every official demo keeps its source and native disabled initial view
+[42/56] [official-subpath] › tests/docs-ssg/official.spec.ts:324:64 › the light first frame and mode controls persist across static and island pages
+[43/56] [official-subpath] › tests/docs-ssg/official.spec.ts:324:64 › the dark first frame and mode controls persist across static and island pages
+[44/56] [official-subpath] › tests/docs-ssg/official.spec.ts:324:64 › the system first frame and mode controls persist across static and island pages
+[45/56] [official-subpath] › tests/docs-ssg/official.spec.ts:345:195 › 375px retains reading controls, ordered narrow navigation and bounded long source
+[46/56] [official-subpath] › tests/docs-ssg/official.spec.ts:345:195 › 320px retains reading controls, ordered narrow navigation and bounded long source
+[47/56] [official-subpath] › tests/docs-ssg/official.spec.ts:345:195 › 200% layout and text emulation retains reading controls, ordered narrow navigation and bounded long source
+[48/56] [official-subpath] › tests/docs-ssg/official.spec.ts:367:1 › search section targets stay below a wrapped reading header
+[49/56] [official-subpath] › tests/docs-ssg/official.spec.ts:388:1 › deep not-found retains same-base ordinary navigation
+[50/56] [official-subpath] › tests/docs-ssg/official.spec.ts:394:1 › one bounded official home, category and guide capture batch records desktop light/dark and narrow reading
+[51/56] [official-subpath] › tests/docs-ssg/official.spec.ts:412:1 › gaps reduced motion: under reduce the default theme's controls attach and change with no transition and a still spinner
+[52/56] [official-subpath] › tests/docs-ssg/official.spec.ts:427:1 › gaps reduced motion: without a preference the default theme keeps 150ms transitions and a turning spinner
+[53/56] [official-subpath] › tests/docs-ssg/official.spec.ts:448:5 › gaps a11y: every official route at rest has no serious or critical axe violation, light 1280px
+[54/56] [official-subpath] › tests/docs-ssg/official.spec.ts:448:5 › gaps a11y: every official route at rest has no serious or critical axe violation, light 375px
+[55/56] [official-subpath] › tests/docs-ssg/official.spec.ts:448:5 › gaps a11y: every official route at rest has no serious or critical axe violation, dark 1280px
+[56/56] [official-subpath] › tests/docs-ssg/official.spec.ts:448:5 › gaps a11y: every official route at rest has no serious or critical axe violation, dark 375px
+  56 passed (1.5m)

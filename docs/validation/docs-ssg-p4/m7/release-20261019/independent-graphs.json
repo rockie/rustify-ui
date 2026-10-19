@@ -1,0 +1,64 @@
+{
+  "ssr": {
+    "target": "aarch64-apple-darwin",
+    "makepad_packages": 0,
+    "selected": {
+      "leptos": {
+        "features": [
+          "hydration",
+          "ssr"
+        ],
+        "source": "registry+https://github.com/rust-lang/crates.io-index"
+      },
+      "rustify-docs": {
+        "features": [
+          "site-ssr"
+        ],
+        "source": "git+https://github.com/rockie/rustify-ui?rev=d19af882e0a0700f76c4d987e3d98f781dafe1b3#d19af882e0a0700f76c4d987e3d98f781dafe1b3"
+      },
+      "rustify-ui": {
+        "features": [
+          "ssr"
+        ],
+        "source": "git+https://github.com/rockie/rustify-ui?rev=d19af882e0a0700f76c4d987e3d98f781dafe1b3#d19af882e0a0700f76c4d987e3d98f781dafe1b3"
+      },
+      "rustify-components": {
+        "features": [
+          "ssr"
+        ],
+        "source": "git+https://github.com/rockie/rustify-ui?rev=d19af882e0a0700f76c4d987e3d98f781dafe1b3#d19af882e0a0700f76c4d987e3d98f781dafe1b3"
+      }
+    }
+  },
+  "hydrate": {
+    "target": "wasm32-unknown-unknown",
+    "makepad_packages": 0,
+    "selected": {
+      "leptos": {
+        "features": [
+          "hydrate",
+          "hydration"
+        ],
+        "source": "registry+https://github.com/rust-lang/crates.io-index"
+      },
+      "rustify-docs": {
+        "features": [
+          "hydrate"
+        ],
+        "source": "git+https://github.com/rockie/rustify-ui?rev=d19af882e0a0700f76c4d987e3d98f781dafe1b3#d19af882e0a0700f76c4d987e3d98f781dafe1b3"
+      },
+      "rustify-ui": {
+        "features": [
+          "hydrate"
+        ],
+        "source": "git+https://github.com/rockie/rustify-ui?rev=d19af882e0a0700f76c4d987e3d98f781dafe1b3#d19af882e0a0700f76c4d987e3d98f781dafe1b3"
+      },
+      "rustify-components": {
+        "features": [
+          "hydrate"
+        ],
+        "source": "git+https://github.com/rockie/rustify-ui?rev=d19af882e0a0700f76c4d987e3d98f781dafe1b3#d19af882e0a0700f76c4d987e3d98f781dafe1b3"
+      }
+    }
+  }
+}
