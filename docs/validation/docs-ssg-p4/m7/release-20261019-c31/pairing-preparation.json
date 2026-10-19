@@ -1,0 +1,16 @@
+{
+  "framework_revision": "0fd34edaffda1926b38ea64c023b2fe1fc5115c5",
+  "version": "0.1.31",
+  "packages": 193,
+  "git_source_only_changes_from_c30": [
+    "rustify-components",
+    "rustify-docs",
+    "rustify-docs-macros",
+    "rustify-docs-syntax",
+    "rustify-style",
+    "rustify-ui"
+  ],
+  "unchanged_packages_from_c30": 187,
+  "complete_lock_identical_to_c0": true,
+  "lock_origin": "Actual C0 new docs-site, Cargo metadata --locked --offline at real R0"
+}

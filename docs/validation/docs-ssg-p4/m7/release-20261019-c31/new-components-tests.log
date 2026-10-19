@@ -1,0 +1,22 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling rustify-docs-cli v0.1.31 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-docs-cli)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 3.91s
+     Running tests/new_components.rs (.rustify-docs/p4-recovery/c29-7mee76lf/compiler-target/debug/deps/new_components-5937aacb776767b9)
+
+running 5 tests
+test components_without_rust_stop_before_checking_the_directory ... ok
+test components_require_wasm_std_from_the_active_compiler_before_directory_checks ... ok
+test components_never_write_into_a_nonempty_directory ... ok
+test components_toolchain_check_handles_an_unsupported_target_query ... ok
+test components_ship_a_complete_paired_lock_or_refuse_without_writing ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.72s
+
+mbx[cache]: 0 hits, 0 misses, 3 not looked up; 0 B downloaded, 0 B uploaded, 144.2 MiB stored locally
+mbx[savings]: 538.9 GiB of target/ is an elaborate illusion. the disk is in on it.

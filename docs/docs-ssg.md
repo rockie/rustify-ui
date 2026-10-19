@@ -20,7 +20,9 @@ Supported on macOS. Linux and Windows are not verified.
 This section records the verified P1 content-site release. The Rust examples
 below use the current repository checkout's CLI candidate, version **0.1.31**,
 paired with library revision `0fd34edaffda1926b38ea64c023b2fe1fc5115c5`.
-Fixed-pair acceptance and public availability are pending.
+Local fixed-pair acceptance passed for CLI source C
+`1146b7d8febdf53ca1bc1a4c01946604e7625a95`. Public Git availability and
+Pages acceptance remain pending.
 `rustify-docs --build-info` and `cargo install --list` identify the CLI
 source C after installation. The pinned P1 install below remains the verified
 public content-site release and does not support the multilingual configuration.

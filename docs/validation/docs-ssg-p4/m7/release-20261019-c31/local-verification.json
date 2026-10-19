@@ -1,0 +1,41 @@
+{
+  "observed_at": "2026-10-19T12:56:05+08:00",
+  "candidate_sha": "1146b7d8febdf53ca1bc1a4c01946604e7625a95",
+  "framework_revision": "0fd34edaffda1926b38ea64c023b2fe1fc5115c5",
+  "environment": "/Users/rockie/Documents/gh-rockie/rustify-ui/.rustify-docs/p4-release/c31-cvyouvfm/env.sh",
+  "official_site": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-p4-c31-gnj5dz_m/official",
+  "factory_manifest_lock_identical_to_c0_generated": true,
+  "prepare_protected_files": 15129,
+  "checks": {
+    "check": {
+      "success": true,
+      "errors": 0,
+      "warnings": 47
+    },
+    "build": {
+      "success": true,
+      "errors": 0,
+      "warnings": 47
+    }
+  },
+  "reader_evidence_reuse": {
+    "from_candidate": "3dbb079a7b188edd56071225fad84fd6b92c4c52",
+    "basis": "All 96 reader files including all 76 HTML, Wasm/glue/runtime, search, CSS and AI byte-identical; only manifest cli_version differs.",
+    "native_c31_new_capture": false,
+    "c0_v11_remains_applicable": true,
+    "scope": "C0 qualified native desktop, D17/D18 scope, browser and performance evidence; older results retain their original bounded scope."
+  },
+  "public_actions": {
+    "pushed": false,
+    "pages_enabled": false,
+    "deployed": false,
+    "rolled_back": false
+  },
+  "cleanup": {
+    "ports_released": [
+      4199,
+      4200
+    ],
+    "owned_build_and_toolchain_handles_collected": true
+  }
+}

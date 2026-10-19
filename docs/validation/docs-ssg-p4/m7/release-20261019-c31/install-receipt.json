@@ -1,0 +1,11 @@
+{
+  "candidate_sha": "1146b7d8febdf53ca1bc1a4c01946604e7625a95",
+  "framework_revision": "0fd34edaffda1926b38ea64c023b2fe1fc5115c5",
+  "build_info": "rustify-docs 0.1.31\npanic: unwind\ngrammars: syntect-5.3.0+two-face-0.5.2+bat-0.26.1+fancy\nsource: 1146b7d8febdf53ca1bc1a4c01946604e7625a95\n",
+  "cargo_install_list": "rustify-docs-cli v0.1.31 (file:///Users/rockie/Documents/gh-rockie/rustify-ui?rev=1146b7d8febdf53ca1bc1a4c01946604e7625a95#1146b7d8):\n    rustify-docs\n",
+  "bytes": 59202928,
+  "sha256": "c6e002e7f8fd0fe40c79465f476de520a9bc4006d9dc6d39eb587e361b9f685c",
+  "install_root": "/Users/rockie/Documents/gh-rockie/rustify-ui/.rustify-docs/p4-release/c31-cvyouvfm/install",
+  "move_preserved_sha256": true,
+  "install_kind": "real Git C, plain Cargo docs-cli, toolchain group"
+}

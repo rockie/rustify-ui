@@ -1,0 +1,72 @@
+{
+  "observed_at": "2026-10-19T12:55:12+08:00",
+  "read_only": true,
+  "repository": {
+    "exit_code": 0,
+    "response": {
+      "full_name": "rockie/rustify-ui",
+      "visibility": "public",
+      "default_branch": "main",
+      "has_pages": false,
+      "permissions": {
+        "admin": true,
+        "maintain": true,
+        "push": true,
+        "triage": true,
+        "pull": true
+      }
+    },
+    "stderr": ""
+  },
+  "main": {
+    "exit_code": 0,
+    "response": {
+      "sha": "3803148929ebb2f69d7549c9f054ff81eb9a6d20"
+    },
+    "stderr": ""
+  },
+  "pages": {
+    "exit_code": 1,
+    "response": {
+      "message": "Not Found",
+      "documentation_url": "https://docs.github.com/rest/pages/pages#get-a-apiname-pages-site",
+      "status": "404"
+    },
+    "stderr": "gh: Not Found (HTTP 404)"
+  },
+  "environments": {
+    "exit_code": 0,
+    "response": {
+      "total_count": 0,
+      "environments": []
+    },
+    "stderr": ""
+  },
+  "c0": {
+    "exit_code": 1,
+    "response": {
+      "message": "No commit found for SHA: 3dbb079a7b188edd56071225fad84fd6b92c4c52",
+      "documentation_url": "https://docs.github.com/rest/commits/commits#get-a-commit",
+      "status": "422"
+    },
+    "stderr": "gh: No commit found for SHA: 3dbb079a7b188edd56071225fad84fd6b92c4c52 (HTTP 422)"
+  },
+  "c1": {
+    "exit_code": 1,
+    "response": {
+      "message": "No commit found for SHA: 1146b7d8febdf53ca1bc1a4c01946604e7625a95",
+      "documentation_url": "https://docs.github.com/rest/commits/commits#get-a-commit",
+      "status": "422"
+    },
+    "stderr": "gh: No commit found for SHA: 1146b7d8febdf53ca1bc1a4c01946604e7625a95 (HTTP 422)"
+  },
+  "framework": {
+    "exit_code": 1,
+    "response": {
+      "message": "No commit found for SHA: 0fd34edaffda1926b38ea64c023b2fe1fc5115c5",
+      "documentation_url": "https://docs.github.com/rest/commits/commits#get-a-commit",
+      "status": "422"
+    },
+    "stderr": "gh: No commit found for SHA: 0fd34edaffda1926b38ea64c023b2fe1fc5115c5 (HTTP 422)"
+  }
+}

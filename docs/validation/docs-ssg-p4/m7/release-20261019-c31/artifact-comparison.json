@@ -1,0 +1,19 @@
+{
+  "c0": "3dbb079a7b188edd56071225fad84fd6b92c4c52",
+  "c1": "1146b7d8febdf53ca1bc1a4c01946604e7625a95",
+  "framework_revision": "0fd34edaffda1926b38ea64c023b2fe1fc5115c5",
+  "files": 97,
+  "reader_files_byte_identical_to_c0": 96,
+  "changed_files": [
+    "rustify-docs-manifest.json"
+  ],
+  "manifest_only_field_change": {
+    "cli_version": {
+      "before": "0.1.29",
+      "after": "0.1.31"
+    }
+  },
+  "build_id": "7e1e5c9e7e7392df",
+  "c1_manifest_sha256": "670a22c72e1971f8f822dc062c8101e6a6afe82b0aba61f4504bba57be2c7ac1",
+  "covers": "All 76 HTMLs, all CSS/JS/search/AI, Wasm/glue/runtime/resources; exact bytes, no normalization."
+}

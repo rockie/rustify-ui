@@ -1,0 +1,21 @@
+{
+  "c0": "3dbb079a7b188edd56071225fad84fd6b92c4c52",
+  "c1": "1146b7d8febdf53ca1bc1a4c01946604e7625a95",
+  "framework_revision": "0fd34edaffda1926b38ea64c023b2fe1fc5115c5",
+  "c1_commit_changed_files": [
+    "Cargo.lock",
+    "crates/rustify-docs-cli/Cargo.toml",
+    "crates/rustify-docs-cli/assets/components-Cargo.lock",
+    "crates/rustify-docs-cli/assets/framework-revision.txt",
+    "docs/docs-ssg.md"
+  ],
+  "c0_to_c1_product_paths_changed": [
+    "Cargo.lock",
+    "crates/rustify-docs-cli/Cargo.toml"
+  ],
+  "product_changes_are_cli_patch_version_only": true,
+  "embedded_pair_identical_to_c0": true,
+  "official_content_identical_to_c0": true,
+  "supersedes_candidate": "b3f30fbd2c86768c5070edac4d37bff7120aa41d",
+  "reason": "Retain the existing verified product R0; no new framework product code requires repinning to a documentation-only R1."
+}
