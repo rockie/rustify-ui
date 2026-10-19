@@ -6,5 +6,11 @@
   "build_id": "fa966f84c940a354",
   "cli_version": "0.1.31",
   "port": 4199,
-  "host": "127.0.0.1"
+  "host": "127.0.0.1",
+  "cleanup": {
+    "pid": 75715,
+    "session": 63180,
+    "exit_code": 143,
+    "stop": "SIGTERM; exit143 collected"
+  }
 }

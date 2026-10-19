@@ -58,7 +58,9 @@ async function watch(page: Page): Promise<Audit> {
     page.on("response", response => audit.responses.push({ url: response.url(), status: response.status(), mime: response.headers()["content-type"] || "" }));
     page.on("console", message => {
         if (message.type() !== "error") return;
-        if (audit.expected404.has(message.location().url) && message.text() === "Failed to load resource: the server responded with a status of 404 (Not Found)") audit.expectedConsole.push(message.text());
+        // HTTP/2 omits the reason phrase; keep the expected document URL guard.
+        const missing = /^Failed to load resource: the server responded with a status of 404 \((?:Not Found)?\)$/.test(message.text());
+        if (audit.expected404.has(message.location().url) && missing) audit.expectedConsole.push(message.text());
         else audit.console.push(message.text());
     });
     return audit;

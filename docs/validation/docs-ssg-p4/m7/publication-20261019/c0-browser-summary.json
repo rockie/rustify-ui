@@ -1,0 +1,28 @@
+{
+  "initial": {
+    "startTime": "2026-10-19T06:31:22.514Z",
+    "duration": 348768.731,
+    "expected": 50,
+    "skipped": 0,
+    "unexpected": 6,
+    "flaky": 0
+  },
+  "transport_recheck": {
+    "startTime": "2026-10-19T06:41:56.351Z",
+    "duration": 84567.461,
+    "expected": 2,
+    "skipped": 0,
+    "unexpected": 4,
+    "flaky": 0
+  },
+  "a11y_recheck": {
+    "startTime": "2026-10-19T06:55:38.032Z",
+    "duration": 103675.283,
+    "expected": 4,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "effective_unique_tests_passed": 56,
+  "scope": "Same 56 official-meta tests against public C0; failed environment/reporting cases rerun only; initial failures retained."
+}

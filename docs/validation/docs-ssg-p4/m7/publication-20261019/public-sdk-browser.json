@@ -3,7 +3,7 @@
   "url": "http://127.0.0.1:4199/",
   "candidate_sha": "1146b7d8febdf53ca1bc1a4c01946604e7625a95",
   "framework_revision": "0fd34edaffda1926b38ea64c023b2fe1fc5115c5",
-  "passed": false,
+  "passed": true,
   "initial": [
     "2",
     "7"
@@ -12,7 +12,8 @@
     "11",
     "8"
   ],
-  "error": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Full file', exact: true }).first()\u001b[22m\n",
+  "clipboard": "use leptos::prelude::*;\nuse rustify_components::{Button, TextField};\n\npub fn counter(initial: i32, label: String, children: AnyView) -> impl IntoView {\n    let value = RwSignal::new(initial);\n    view! {\n        <div class=\"space-y-3\">\n            <p>{label}</p>\n            <div class=\"flex flex-wrap items-center gap-3\">\n                <Button test_id=\"counter-increment\" on_click=move || value.update(|value| *value += 1)>\n                    \"Increment\"\n                </Button>\n                <output data-testid=\"counter-value\">{move || value.get()}</output>\n                <TextField test_id=\"counter-input\" aria_label=\"Counter value\"\n                    value=Signal::derive(move || value.get().to_string())\n                    on_change=move |input: String| {\n                        if let Ok(input) = input.parse() { value.set(input); }\n                    }\n                />\n            </div>\n            {children}\n        </div>\n    }\n}\n\npub fn counter_demo() -> impl IntoView {\n    counter(\n        7,\n        \"A registered counter — résumé\".to_string(),\n        view! { <p>\"This child belongs to the same view on both targets.\"</p> }.into_any(),\n    )\n}\n",
+  "csp": [],
   "errors": [],
   "failures": [],
   "failedResponses": []

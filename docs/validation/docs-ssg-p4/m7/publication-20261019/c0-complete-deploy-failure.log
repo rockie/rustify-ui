@@ -1,0 +1,66 @@
+deploy	Set up job	﻿2026-10-19T07:01:15.9464818Z Current runner version: '2.337.0'
+deploy	Set up job	2026-10-19T07:01:15.9503361Z ##[group]Runner Image Provisioner
+deploy	Set up job	2026-10-19T07:01:15.9504790Z Hosted Compute Agent
+deploy	Set up job	2026-10-19T07:01:15.9505875Z Version: 20261012.601
+deploy	Set up job	2026-10-19T07:01:15.9507453Z Commit: f3dc54e1fb89da6852db922499a0233137369e1d
+deploy	Set up job	2026-10-19T07:01:15.9508833Z Build Date: 2026-10-12T17:48:21Z
+deploy	Set up job	2026-10-19T07:01:15.9510100Z Worker ID: {9761dc43-c9ae-4268-a28c-93d0acc2aca3}
+deploy	Set up job	2026-10-19T07:01:15.9511348Z Region: eastus
+deploy	Set up job	2026-10-19T07:01:15.9512782Z Cloud: Azure
+deploy	Set up job	2026-10-19T07:01:15.9513829Z ##[endgroup]
+deploy	Set up job	2026-10-19T07:01:15.9516251Z ##[group]Operating System
+deploy	Set up job	2026-10-19T07:01:15.9517760Z Ubuntu
+deploy	Set up job	2026-10-19T07:01:15.9518611Z 24.04.5
+deploy	Set up job	2026-10-19T07:01:15.9519565Z LTS
+deploy	Set up job	2026-10-19T07:01:15.9520473Z ##[endgroup]
+deploy	Set up job	2026-10-19T07:01:15.9521375Z ##[group]Runner Image
+deploy	Set up job	2026-10-19T07:01:15.9522481Z Image: ubuntu-24.04
+deploy	Set up job	2026-10-19T07:01:15.9523520Z Version: 20261012.334.1
+deploy	Set up job	2026-10-19T07:01:15.9525429Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261012.334/images/ubuntu/Ubuntu2404-Readme.md
+deploy	Set up job	2026-10-19T07:01:15.9528766Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261012.334
+deploy	Set up job	2026-10-19T07:01:15.9530618Z ##[endgroup]
+deploy	Set up job	2026-10-19T07:01:15.9532609Z ##[group]GITHUB_TOKEN Permissions
+deploy	Set up job	2026-10-19T07:01:15.9535612Z Metadata: read
+deploy	Set up job	2026-10-19T07:01:15.9536582Z Pages: write
+deploy	Set up job	2026-10-19T07:01:15.9537958Z ##[endgroup]
+deploy	Set up job	2026-10-19T07:01:15.9541221Z Secret source: Actions
+deploy	Set up job	2026-10-19T07:01:15.9543017Z Cache mode: write
+deploy	Set up job	2026-10-19T07:01:15.9544452Z Prepare workflow directory
+deploy	Set up job	2026-10-19T07:01:16.0042404Z Prepare all required actions
+deploy	Set up job	2026-10-19T07:01:16.0115919Z Getting action download info
+deploy	Set up job	2026-10-19T07:01:16.1495115Z Download action repository 'actions/deploy-pages@v4' (SHA:d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e)
+deploy	Set up job	2026-10-19T07:01:16.5037493Z Complete job name: deploy
+deploy	Deploy the completed artifact	﻿2026-10-19T07:01:16.5957786Z ##[group]Run actions/deploy-pages@v4
+deploy	Deploy the completed artifact	2026-10-19T07:01:16.5958799Z with:
+deploy	Deploy the completed artifact	2026-10-19T07:01:16.5962465Z   token: ***
+deploy	Deploy the completed artifact	2026-10-19T07:01:16.5962917Z   timeout: 600000
+deploy	Deploy the completed artifact	2026-10-19T07:01:16.5963389Z   error_count: 10
+deploy	Deploy the completed artifact	2026-10-19T07:01:16.5963849Z   reporting_interval: 5000
+deploy	Deploy the completed artifact	2026-10-19T07:01:16.5964366Z   artifact_name: github-pages
+deploy	Deploy the completed artifact	2026-10-19T07:01:16.5964882Z   preview: false
+deploy	Deploy the completed artifact	2026-10-19T07:01:16.5965537Z ##[endgroup]
+deploy	Deploy the completed artifact	2026-10-19T07:01:16.7922495Z (node:2158) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+deploy	Deploy the completed artifact	2026-10-19T07:01:16.7924160Z (Use `node --trace-deprecation ...` to show where the warning was created)
+deploy	Deploy the completed artifact	2026-10-19T07:01:16.9011350Z Fetching artifact metadata for "github-pages" in this workflow run
+deploy	Deploy the completed artifact	2026-10-19T07:01:16.9871395Z Found 2 artifact(s)
+deploy	Deploy the completed artifact	2026-10-19T07:01:16.9882044Z Creating Pages deployment with payload:
+deploy	Deploy the completed artifact	2026-10-19T07:01:16.9882830Z {
+deploy	Deploy the completed artifact	2026-10-19T07:01:16.9883266Z 	"artifact_id": 12168477596,
+deploy	Deploy the completed artifact	2026-10-19T07:01:16.9883971Z 	"pages_build_version": "ab37565a437421bb42f8359959ba2f9e6e662545",
+deploy	Deploy the completed artifact	2026-10-19T07:01:16.9931219Z 	"oidc_token": "***"
+deploy	Deploy the completed artifact	2026-10-19T07:01:16.9931784Z }
+deploy	Deploy the completed artifact	2026-10-19T07:01:17.5050283Z Created deployment for ab37565a437421bb42f8359959ba2f9e6e662545, ID: ab37565a437421bb42f8359959ba2f9e6e662545
+deploy	Deploy the completed artifact	2026-10-19T07:01:22.5057956Z Getting Pages deployment status...
+deploy	Deploy the completed artifact	2026-10-19T07:01:22.7056378Z Current status: deployment_queued
+deploy	Deploy the completed artifact	2026-10-19T07:01:27.7059608Z Getting Pages deployment status...
+deploy	Deploy the completed artifact	2026-10-19T07:01:27.8603161Z Current status: deployment_queued
+deploy	Deploy the completed artifact	2026-10-19T07:01:32.8618509Z Getting Pages deployment status...
+deploy	Deploy the completed artifact	2026-10-19T07:01:33.0898378Z Current status: deployment_queued
+deploy	Deploy the completed artifact	2026-10-19T07:01:38.0900358Z Getting Pages deployment status...
+deploy	Deploy the completed artifact	2026-10-19T07:01:38.2428035Z Current status: deployment_queued
+deploy	Deploy the completed artifact	2026-10-19T07:01:43.2434670Z Getting Pages deployment status...
+deploy	Deploy the completed artifact	2026-10-19T07:01:43.4383591Z ##[error]Deployment failed, try again later.
+deploy	Complete job	﻿2026-10-19T07:01:43.4675991Z Evaluate and set environment url
+deploy	Complete job	2026-10-19T07:01:43.4679842Z Evaluated environment url: https://rockie.github.io/rustify-ui/
+deploy	Complete job	2026-10-19T07:01:43.4680861Z Cleaning up orphan processes
+deploy	Complete job	2026-10-19T07:01:43.5165398Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/deploy-pages@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

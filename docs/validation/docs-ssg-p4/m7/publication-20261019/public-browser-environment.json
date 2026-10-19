@@ -1,0 +1,23 @@
+{
+  "proxyPresent": true,
+  "proxyHasAuthentication": false,
+  "proxyApi": {
+    "status": 200,
+    "cliVersion": "0.1.29"
+  },
+  "missingStatus": 404,
+  "heading": "Page not found",
+  "returned": "https://rockie.github.io/rustify-ui/",
+  "console": [
+    {
+      "text": "Failed to load resource: the server responded with a status of 404 ()",
+      "location": {
+        "url": "https://rockie.github.io/rustify-ui/unavailable/deeper/page/",
+        "line": 0,
+        "column": 0,
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    }
+  ]
+}

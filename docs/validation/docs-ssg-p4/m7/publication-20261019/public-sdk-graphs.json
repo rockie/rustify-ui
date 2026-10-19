@@ -1,0 +1,65 @@
+{
+  "ssr": {
+    "target": "aarch64-apple-darwin",
+    "makepad": 0,
+    "selected": {
+      "leptos": {
+        "features": [
+          "hydration",
+          "ssr"
+        ],
+        "source": "registry+https://github.com/rust-lang/crates.io-index"
+      },
+      "rustify-docs": {
+        "features": [
+          "site-ssr"
+        ],
+        "source": "git+https://github.com/rockie/rustify-ui?rev=0fd34edaffda1926b38ea64c023b2fe1fc5115c5#0fd34edaffda1926b38ea64c023b2fe1fc5115c5"
+      },
+      "rustify-ui": {
+        "features": [
+          "ssr"
+        ],
+        "source": "git+https://github.com/rockie/rustify-ui?rev=0fd34edaffda1926b38ea64c023b2fe1fc5115c5#0fd34edaffda1926b38ea64c023b2fe1fc5115c5"
+      },
+      "rustify-components": {
+        "features": [
+          "ssr"
+        ],
+        "source": "git+https://github.com/rockie/rustify-ui?rev=0fd34edaffda1926b38ea64c023b2fe1fc5115c5#0fd34edaffda1926b38ea64c023b2fe1fc5115c5"
+      }
+    }
+  },
+  "hydrate": {
+    "target": "wasm32-unknown-unknown",
+    "makepad": 0,
+    "selected": {
+      "leptos": {
+        "features": [
+          "hydrate",
+          "hydration"
+        ],
+        "source": "registry+https://github.com/rust-lang/crates.io-index"
+      },
+      "rustify-docs": {
+        "features": [
+          "hydrate"
+        ],
+        "source": "git+https://github.com/rockie/rustify-ui?rev=0fd34edaffda1926b38ea64c023b2fe1fc5115c5#0fd34edaffda1926b38ea64c023b2fe1fc5115c5"
+      },
+      "rustify-ui": {
+        "features": [
+          "hydrate"
+        ],
+        "source": "git+https://github.com/rockie/rustify-ui?rev=0fd34edaffda1926b38ea64c023b2fe1fc5115c5#0fd34edaffda1926b38ea64c023b2fe1fc5115c5"
+      },
+      "rustify-components": {
+        "features": [
+          "hydrate"
+        ],
+        "source": "git+https://github.com/rockie/rustify-ui?rev=0fd34edaffda1926b38ea64c023b2fe1fc5115c5#0fd34edaffda1926b38ea64c023b2fe1fc5115c5"
+      }
+    }
+  },
+  "lock_packages": 193
+}

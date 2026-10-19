@@ -1,0 +1,19 @@
+{
+  "browser": "153.0.8010.12",
+  "url": "http://127.0.0.1:4199/",
+  "candidate_sha": "1146b7d8febdf53ca1bc1a4c01946604e7625a95",
+  "framework_revision": "0fd34edaffda1926b38ea64c023b2fe1fc5115c5",
+  "passed": false,
+  "initial": [
+    "2",
+    "7"
+  ],
+  "after": [
+    "11",
+    "8"
+  ],
+  "error": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Full file', exact: true }).first()\u001b[22m\n",
+  "errors": [],
+  "failures": [],
+  "failedResponses": []
+}

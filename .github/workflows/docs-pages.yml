@@ -109,21 +109,21 @@ jobs:
         run: |
           python3 - <<'PY'
           import hashlib, json, os, runpy, tarfile
-          from pathlib import Path
+          from pathlib import Path, PurePosixPath
           temporary = Path(os.environ['RUNNER_TEMP'])
           root = temporary / 'docs-site/site/dist'
           output = temporary / 'artifact.tar'
           with tarfile.open(output, 'w', format=tarfile.GNU_FORMAT) as archive:
+              archive.add(root, arcname='.', recursive=False)
               for path in sorted(root.rglob('*')):
                   if path.is_symlink():
                       raise SystemExit(f'unexpected symlink: {path}')
-                  if path.is_file():
-                      archive.add(path, arcname=path.relative_to(root).as_posix(), recursive=False)
+                  archive.add(path, arcname='./' + path.relative_to(root).as_posix(), recursive=False)
           with tarfile.open(output) as archive:
-              members = archive.getmembers()
+              members = [member for member in archive.getmembers() if not member.isdir()]
               if any(not member.isfile() for member in members):
                   raise SystemExit('the Pages archive must contain only regular files')
-              files = {member.name: archive.extractfile(member).read() for member in members}
+              files = {PurePosixPath(member.name).as_posix(): archive.extractfile(member).read() for member in members}
               if len(files) != len(members):
                   raise SystemExit('duplicate Pages archive paths')
           evidence = temporary / 'docs-pages-evidence'

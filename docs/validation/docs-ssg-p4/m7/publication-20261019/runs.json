@@ -4,9 +4,20 @@
     "candidate_sha": "3dbb079a7b188edd56071225fad84fd6b92c4c52",
     "run_id": 39203783980,
     "url": "https://github.com/rockie/rustify-ui/actions/runs/39203783980",
+    "status": "completed",
+    "conclusion": "success",
+    "head_sha": "bd101e21434fb4f61ab8b47ed0dc73a3d456c4f6",
+    "created_at": "2026-10-19T05:17:34Z",
+    "verification": "failed: missing .nojekyll in uploaded tar"
+  },
+  {
+    "stage": "c0-complete",
+    "candidate_sha": "3dbb079a7b188edd56071225fad84fd6b92c4c52",
+    "run_id": 39210199901,
+    "url": "https://github.com/rockie/rustify-ui/actions/runs/39210199901",
     "status": "queued",
     "conclusion": null,
-    "head_sha": "bd101e21434fb4f61ab8b47ed0dc73a3d456c4f6",
-    "created_at": "2026-10-19T05:17:34Z"
+    "head_sha": "ab37565a437421bb42f8359959ba2f9e6e662545",
+    "created_at": "2026-10-19T06:29:21Z"
   }
 ]

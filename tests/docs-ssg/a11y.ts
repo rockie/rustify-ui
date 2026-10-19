@@ -76,6 +76,12 @@ export function serious(scans: Scan[]) {
 }
 
 export async function attachScans(info: { attach(name: string, options: { body: string; contentType: string }): Promise<void> }, name: string, scans: Scan[], id: string) {
-    const record = { binary: binary(), buildId: id, tags: axeTags, scans: scans.map(scan => ({ ...scan, buildId: id })) };
+    // An online site uses its verified workflow record, not a local executable.
+    const pages = process.env.RUSTIFY_DOCS_PAGES_RECORD
+        ? JSON.parse(readFileSync(process.env.RUSTIFY_DOCS_PAGES_RECORD, "utf8")) : undefined;
+    if (pages && (pages.build_id !== id || !Number.isInteger(pages.run_id) || !/^[0-9a-f]{40}$/.test(pages.candidate_sha))) {
+        throw new Error("the Pages record must identify the served build and its workflow run");
+    }
+    const record = { ...(pages ? { pages } : { binary: binary() }), buildId: id, tags: axeTags, scans: scans.map(scan => ({ ...scan, buildId: id })) };
     await info.attach(name, { body: JSON.stringify(record, null, 2), contentType: "application/json" });
 }
