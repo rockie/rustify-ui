@@ -105,6 +105,37 @@ jobs:
             --identity "$RUNNER_TEMP/docs-pages-evidence/identity.json" \
             --candidate-sha "$CANDIDATE_SHA" \
             --report "$RUNNER_TEMP/docs-pages-evidence/preflight.json"
+      - name: Archive the complete verified Pages output
+        run: |
+          python3 - <<'PY'
+          import hashlib, json, os, runpy, tarfile
+          from pathlib import Path
+          temporary = Path(os.environ['RUNNER_TEMP'])
+          root = temporary / 'docs-site/site/dist'
+          output = temporary / 'artifact.tar'
+          with tarfile.open(output, 'w', format=tarfile.GNU_FORMAT) as archive:
+              for path in sorted(root.rglob('*')):
+                  if path.is_symlink():
+                      raise SystemExit(f'unexpected symlink: {path}')
+                  if path.is_file():
+                      archive.add(path, arcname=path.relative_to(root).as_posix(), recursive=False)
+          with tarfile.open(output) as archive:
+              members = archive.getmembers()
+              if any(not member.isfile() for member in members):
+                  raise SystemExit('the Pages archive must contain only regular files')
+              files = {member.name: archive.extractfile(member).read() for member in members}
+              if len(files) != len(members):
+                  raise SystemExit('duplicate Pages archive paths')
+          evidence = temporary / 'docs-pages-evidence'
+          identity = json.loads((evidence / 'identity.json').read_text())
+          verify = runpy.run_path('scripts/docs-pages-verify.py')
+          manifest = verify['check_artifact'](files, identity)
+          (evidence / 'packed-artifact.json').write_text(json.dumps({
+              'files': len(files), 'build_id': manifest['build_id'],
+              'cli_version': manifest['cli_version'],
+              'manifest_sha256': hashlib.sha256(files['rustify-docs-manifest.json']).hexdigest(),
+          }, indent=2) + '\n')
+          PY
       - name: Preserve source and build evidence
         if: always()
         uses: actions/upload-artifact@v4
@@ -114,10 +145,12 @@ jobs:
           retention-days: 30
           if-no-files-found: warn
       - name: Upload the same-run complete Pages artifact
-        uses: actions/upload-pages-artifact@v4
+        uses: actions/upload-artifact@v4
         with:
-          path: ${{ runner.temp }}/docs-site/site/dist
+          name: github-pages
+          path: ${{ runner.temp }}/artifact.tar
           retention-days: 1
+          if-no-files-found: error
 
   deploy:
     needs: build

@@ -1,0 +1,30 @@
+{
+  "observed_at": "2026-10-19T13:17:30+08:00",
+  "environment": {
+    "name": "github-pages",
+    "protection_rules": [
+      {
+        "id": 69281510,
+        "node_id": "GA_kwDOUR2qrc4EISbm",
+        "type": "branch_policy"
+      }
+    ],
+    "deployment_branch_policy": {
+      "protected_branches": false,
+      "custom_branch_policies": true
+    }
+  },
+  "deployment_branch_policies": [
+    {
+      "id": 63535607,
+      "node_id": "MDE2OkdhdGVCcmFuY2hQb2xpY3k2MzUzNTYwNw==",
+      "name": "main",
+      "type": "branch"
+    }
+  ],
+  "workflow": {
+    "id": 385374996,
+    "path": ".github/workflows/docs-pages.yml",
+    "state": "active"
+  }
+}

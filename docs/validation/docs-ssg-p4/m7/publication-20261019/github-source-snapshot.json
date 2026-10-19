@@ -1,0 +1,1300 @@
+{
+  "ok": true,
+  "data": {
+    "url": "https://github.com/rockie/rustify-ui/blob/1146b7d8febdf53ca1bc1a4c01946604e7625a95/tests/docs-ssg/fixtures/components/src/demos.rs#L27",
+    "title": "rustify-ui/tests/docs-ssg/fixtures/components/src/demos.rs at 1146b7d8febdf53ca1bc1a4c01946604e7625a95 · rockie/rustify-ui",
+    "tree": [
+      {
+        "role": "banner",
+        "name": "Global navigation menu",
+        "children": [
+          {
+            "role": "button",
+            "name": "Open menu",
+            "ref": "@e527"
+          },
+          {
+            "role": "link",
+            "name": "Homepage ( g then d )",
+            "ref": "@e528"
+          },
+          {
+            "role": "navigation",
+            "name": "Breadcrumbs",
+            "children": [
+              {
+                "role": "list",
+                "children": [
+                  {
+                    "role": "link",
+                    "name": "rockie",
+                    "ref": "@e529",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "rockie"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "listitem",
+                    "children": [
+                      {
+                        "role": "link",
+                        "name": "rustify-ui",
+                        "ref": "@e530",
+                        "children": [
+                          {
+                            "role": "StaticText",
+                            "name": "rustify-ui"
+                          }
+                        ]
+                      },
+                      {
+                        "role": "button",
+                        "name": "Switch repository ( option shift r )",
+                        "ref": "@e531"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "role": "button",
+            "name": "Open quick search dialog, type / to search",
+            "ref": "@e532",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "Type "
+              },
+              {
+                "role": "StaticText",
+                "name": "/"
+              },
+              {
+                "role": "StaticText",
+                "name": " to search"
+              }
+            ]
+          },
+          {
+            "role": "link",
+            "name": "Chat with Copilot",
+            "ref": "@e533"
+          },
+          {
+            "role": "button",
+            "name": "Open Copilot…",
+            "ref": "@e534"
+          },
+          {
+            "role": "button",
+            "name": "Create new...",
+            "ref": "@e535"
+          },
+          {
+            "role": "link",
+            "name": "All issues",
+            "ref": "@e536"
+          },
+          {
+            "role": "link",
+            "name": "All pull requests",
+            "ref": "@e537"
+          },
+          {
+            "role": "link",
+            "name": "All repositories",
+            "ref": "@e538"
+          },
+          {
+            "role": "link",
+            "name": "You have no unread notifications ( g then n )",
+            "ref": "@e539"
+          },
+          {
+            "role": "button",
+            "name": "Open user navigation menu",
+            "ref": "@e540",
+            "children": [
+              {
+                "role": "image",
+                "name": "Rockie Guo"
+              }
+            ]
+          },
+          {
+            "role": "heading",
+            "name": "Repository navigation",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "Repository navigation"
+              }
+            ]
+          },
+          {
+            "role": "navigation",
+            "name": "Repository",
+            "children": [
+              {
+                "role": "list",
+                "children": [
+                  {
+                    "role": "link",
+                    "name": "Code",
+                    "ref": "@e541",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Code"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "Issues",
+                    "ref": "@e542",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Issues"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "Pull requests",
+                    "ref": "@e543",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Pull requests"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "Agents",
+                    "ref": "@e544",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Agents"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "Actions",
+                    "ref": "@e545",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Actions"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "Projects",
+                    "ref": "@e546",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Projects"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "Wiki",
+                    "ref": "@e547",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Wiki"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "Security and quality",
+                    "ref": "@e548",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Security and quality"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "Insights",
+                    "ref": "@e549",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Insights"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "Settings",
+                    "ref": "@e550",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Settings"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "role": "main",
+        "children": [
+          {
+            "role": "heading",
+            "name": "Expand file tree",
+            "children": [
+              {
+                "role": "button",
+                "name": "Expand file tree",
+                "ref": "@e551"
+              }
+            ]
+          },
+          {
+            "role": "button",
+            "name": "1146b7d branch",
+            "ref": "@e552",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "1146b7d"
+              }
+            ]
+          },
+          {
+            "role": "navigation",
+            "name": "Breadcrumbs",
+            "children": [
+              {
+                "role": "heading",
+                "name": "Breadcrumbs",
+                "children": [
+                  {
+                    "role": "StaticText",
+                    "name": "Breadcrumbs"
+                  }
+                ]
+              },
+              {
+                "role": "list",
+                "children": [
+                  {
+                    "role": "link",
+                    "name": "rustify-ui",
+                    "ref": "@e553",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "rustify-ui"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "tests",
+                    "ref": "@e554",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "tests"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "docs-ssg",
+                    "ref": "@e555",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "docs-ssg"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "fixtures",
+                    "ref": "@e556",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "fixtures"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "components",
+                    "ref": "@e557",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "components"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "src",
+                    "ref": "@e558",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "src"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "role": "heading",
+            "name": "demos.rs",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "demos.rs"
+              }
+            ]
+          },
+          {
+            "role": "button",
+            "name": "Copy path",
+            "ref": "@e559"
+          },
+          {
+            "role": "combobox",
+            "name": "Go to file",
+            "description": "t T",
+            "ref": "@e560"
+          },
+          {
+            "role": "button",
+            "name": "More file actions",
+            "ref": "@e561"
+          },
+          {
+            "role": "heading",
+            "name": "Latest commit",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "Latest commit"
+              }
+            ]
+          },
+          {
+            "role": "link",
+            "name": "rockie",
+            "ref": "@e562",
+            "children": [
+              {
+                "role": "image",
+                "name": "rockie"
+              }
+            ]
+          },
+          {
+            "role": "link",
+            "name": "commits by rockie",
+            "ref": "@e563",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "rockie"
+              }
+            ]
+          },
+          {
+            "role": "link",
+            "name": "feat(docs): add typed DOM islands and same-source SSG demos",
+            "ref": "@e564",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "feat(docs): add typed DOM islands and same-source SSG demos"
+              }
+            ]
+          },
+          {
+            "role": "button",
+            "name": "Open commit details",
+            "ref": "@e565"
+          },
+          {
+            "role": "link",
+            "name": "Commit 5632d13",
+            "ref": "@e566",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "5632d13"
+              }
+            ]
+          },
+          {
+            "role": "StaticText",
+            "name": " · "
+          },
+          {
+            "role": "StaticText",
+            "name": "last week"
+          },
+          {
+            "role": "heading",
+            "name": "History",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "History"
+              }
+            ]
+          },
+          {
+            "role": "link",
+            "name": "History",
+            "ref": "@e567",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "History"
+              }
+            ]
+          },
+          {
+            "role": "heading",
+            "name": "File metadata and controls",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "File metadata and controls"
+              }
+            ]
+          },
+          {
+            "role": "list",
+            "name": "File view",
+            "children": [
+              {
+                "role": "button",
+                "name": "Code",
+                "ref": "@e568",
+                "children": [
+                  {
+                    "role": "StaticText",
+                    "name": "Code"
+                  }
+                ]
+              },
+              {
+                "role": "button",
+                "name": "Blame",
+                "ref": "@e569",
+                "children": [
+                  {
+                    "role": "StaticText",
+                    "name": "Blame"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "role": "StaticText",
+            "name": "68 lines (63 loc) · 2.6 KB"
+          },
+          {
+            "role": "button",
+            "name": "Add to space",
+            "ref": "@e570"
+          },
+          {
+            "role": "button",
+            "name": "Ask Copilot about this file",
+            "ref": "@e571"
+          },
+          {
+            "role": "link",
+            "name": "Raw",
+            "ref": "@e572",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "Raw"
+              }
+            ]
+          },
+          {
+            "role": "button",
+            "name": "Copy raw file",
+            "ref": "@e573"
+          },
+          {
+            "role": "button",
+            "name": "Download raw file",
+            "ref": "@e574"
+          },
+          {
+            "role": "button",
+            "name": "You must be on a branch to make or propose changes to this file",
+            "ref": "@e575"
+          },
+          {
+            "role": "button",
+            "name": "More edit options",
+            "ref": "@e576"
+          },
+          {
+            "role": "button",
+            "name": "Close symbols panel",
+            "ref": "@e577"
+          },
+          {
+            "role": "textbox",
+            "name": "file content",
+            "value": "use leptos::prelude::*;\nuse rustify_components::{Button, TextField};\n\npub fn counter(initial: i32, label: String, children: AnyView) -> impl IntoView {\n    let value = RwSignal::new(initial);\n    view! {\n        <div data-counter=\"\" class=\"min-h-24 space-y-3\">\n            <p>{label}</p>\n            <div class=\"flex flex-wrap items-center gap-3\">\n                <Button test_id=\"counter-increment\" on_click=move || value.update(|value| *value += 1)>\n                    \"Increment\"\n                </Button>\n                <output data-testid=\"counter-value\">{move || value.get()}</output>\n                <TextField test_id=\"counter-input\" value=Signal::derive(move || value.get().to_string())\n                    on_change=move |input: String| {\n                        if let Ok(input) = input.parse() { value.set(input); }\n                    }\n                    aria_label=\"Counter value\"\n                />\n            </div>\n            {children}\n        </div>\n    }\n}\n\n/// The function and its containing file are displayed verbatim by the docs.\npub fn counter_demo() -> impl IntoView {\n    counter(\n        7,\n        \"Résumé — a real registered counter\".to_string(),\n        view! { <p>\"This child is part of the same view on both targets.\"</p> }.into_any(),\n    )\n}\n\npub fn async_after_attach_demo() -> impl IntoView {\n    // No asynchronous initial data: the action starts only after a reader clicks.\n    let load = Action::new(|_: &()| async { \"Loaded after attachment\".to_string() });\n    view! {\n        <div data-async-after-attach=\"\" class=\"space-y-3\">\n            <Button test_id=\"async-start\" on_click=move || { load.dispatch(()); }>\n                \"Load browser data\"\n            </Button>\n            <output data-testid=\"async-result\">\n                {move || load.value().get().unwrap_or_else(|| \"Not loaded\".to_string())}\n            </output>\n        </div>\n    }\n}\n\npub fn failure_demo() -> impl IntoView {\n    let value = RwSignal::new(0);\n    view! {\n        <div data-failure-demo=\"\" class=\"space-y-3\">\n            <Button test_id=\"failure-increment\" on_click=move || value.update(|value| *value += 1)>\n                \"Change before failure\"\n            </Button>\n            <output data-testid=\"failure-value\">{move || value.get()}</output>\n            <Button test_id=\"failure-crash\" on_click=|| panic!(\"docs fixture callback failure\")>\n                \"Crash this example\"\n            </Button>\n        </div>\n    }\n}\n\npub fn catalog_proxy() -> impl IntoView {\n    let scope = rustify_ui::id::next(\"catalog\").unwrap_or_else(|| \"catalog\".to_string());\n    view! { <crate::catalog::CatalogView scope=scope /> }\n}",
+            "ref": "@e578",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "use leptos::prelude::*;"
+              },
+              {
+                "role": "LineBreak",
+                "name": "\n"
+              },
+              {
+                "role": "StaticText",
+                "name": "use rustify_components::{Button, TextField};"
+              },
+              {
+                "role": "LineBreak",
+                "name": "\n"
+              },
+              {
+                "role": "LineBreak",
+                "name": "\n"
+              },
+              {
+                "role": "StaticText",
+                "name": "pub fn counter(initial: i32, label: String, children: AnyView) -> impl IntoView {"
+              },
+              {
+                "role": "LineBreak",
+                "name": "\n"
+              },
+              {
+                "role": "StaticText",
+                "name": "    let value = RwSignal::new(initial);"
+              },
+              {
+                "role": "LineBreak",
+                "name": "\n"
+              },
+              {
+                "role": "StaticText",
+                "name": "    view! {"
+              },
+              {
+                "role": "LineBreak",
+                "name": "\n"
+              },
+              {
+                "role": "StaticText",
+                "name": "        <div data-counter=\"\" class=\"min-h-24 space-y-3\">"
+              },
+              {
+                "role": "LineBreak",
+                "name": "\n"
+              },
+              {
+                "role": "StaticText",
+                "name": "            <p>{label}</p>"
+              },
+              {
+                "role": "LineBreak",
+                "name": "\n"
+              },
+              {
+                "role": "StaticText",
+                "name": "            <div class=\"flex flex-wrap items-center gap-3\">"
+              },
+              {
+                "role": "LineBreak",
+                "name": "\n"
+              },
+              {
+                "role": "StaticText",
+                "name": "                <Button test_id=\"counter-increment\" on_click=move || value.update(|value| *value += 1)>"
+              },
+              {
+                "role": "LineBreak",
+                "name": "\n"
+              },
+              {
+                "role": "StaticText",
+                "name": "                    \"Increment\""
+              },
+              {
+                "role": "LineBreak",
+                "name": "\n"
+              },
+              {
+                "role": "StaticText",
+                "name": "                </Button>"
+              },
+              {
+                "role": "LineBreak",
+                "name": "\n"
+              },
+              {
+                "role": "StaticText",
+                "name": "                <output data-testid=\"counter-value\">{move || value.get()}</output>"
+              },
+              {
+                "role": "LineBreak",
+                "name": "\n"
+              },
+              {
+                "role": "StaticText",
+                "name": "                <TextField test_id=\"counter-input\" value=Signal::derive(move || value.get().to_string())"
+              },
+              {
+                "role": "LineBreak",
+                "name": "\n"
+              },
+              {
+                "role": "StaticText",
+                "name": "                    on_change=move |input: String| {"
+              },
+              {
+                "role": "LineBreak",
+                "name": "\n"
+              },
+              {
+                "role": "StaticText",
+                "name": "                        if let Ok(input) = input.parse() { value.set(input); }"
+              },
+              {
+                "role": "LineBreak",
+                "name": "\n"
+              },
+              {
+                "role": "StaticText",
+                "name": "                    }"
+              },
+              {
+                "role": "LineBreak",
+                "name": "\n"
+              },
+              {
+                "role": "StaticText",
+                "name": "                    aria_label=\"Counter value\""
+              },
+              {
+                "role": "LineBreak",
+                "name": "\n"
+              },
+              {
+                "role": "StaticText",
+                "name": "                />"
+              },
+              {
+                "role": "LineBreak",
+                "name": "\n"
+              },
+              {
+                "role": "StaticText",
+                "name": "            </div>"
+              },
+              {
+                "role": "LineBreak",
+                "name": "\n"
+              },
+              {
+                "role": "StaticText",
+                "name": "            {children}"
+              },
+              {
+                "role": "LineBreak",
+                "name": "\n"
+              },
+              {
+                "role": "StaticText",
+                "name": "        </div>"
+              },
+              {
+                "role": "LineBreak",
+                "name": "\n"
+              },
+              {
+                "role": "StaticText",
+                "name": "    }"
+              },
+              {
+                "role": "LineBreak",
+                "name": "\n"
+              },
+              {
+                "role": "StaticText",
+                "name": "}"
+              },
+              {
+                "role": "LineBreak",
+                "name": "\n"
+              },
+              {
+                "role": "LineBreak",
+                "name": "\n"
+              },
+              {
+                "role": "StaticText",
+                "name": "/// The function and its containing file are displayed verbatim by the docs."
+              },
+              {
+                "role": "LineBreak",
+                "name": "\n"
+              },
+              {
+                "role": "StaticText",
+                "name": "pub fn counter_demo() -> impl IntoView {"
+              },
+              {
+                "role": "LineBreak",
+                "name": "\n"
+              },
+              {
+                "role": "StaticText",
+                "name": "    counter("
+              },
+              {
+                "role": "LineBreak",
+                "name": "\n"
+              },
+              {
+                "role": "StaticText",
+                "name": "        7,"
+              },
+              {
+                "role": "LineBreak",
+                "name": "\n"
+              },
+              {
+                "role": "StaticText",
+                "name": "        \"Résumé — a real registered counter\".to_string(),"
+              },
+              {
+                "role": "LineBreak",
+                "name": "\n"
+              },
+              {
+                "role": "StaticText",
+                "name": "        view! { <p>\"This child is part of the same view on both targets.\"</p> }.into_any(),"
+              },
+              {
+                "role": "LineBreak",
+                "name": "\n"
+              },
+              {
+                "role": "StaticText",
+                "name": "    )"
+              },
+              {
+                "role": "LineBreak",
+                "name": "\n"
+              },
+              {
+                "role": "StaticText",
+                "name": "}"
+              },
+              {
+                "role": "LineBreak",
+                "name": "\n"
+              },
+              {
+                "role": "LineBreak",
+                "name": "\n"
+              },
+              {
+                "role": "StaticText",
+                "name": "pub fn async_after_attach_demo() -> impl IntoView {"
+              },
+              {
+                "role": "LineBreak",
+                "name": "\n"
+              },
+              {
+                "role": "StaticText",
+                "name": "    // No asynchronous initial data: the action starts only after a reader clicks."
+              },
+              {
+                "role": "LineBreak",
+                "name": "\n"
+              },
+              {
+                "role": "StaticText",
+                "name": "    let load = Action::new(|_: &()| async { \"Loaded after attachment\".to_string() });"
+              },
+              {
+                "role": "LineBreak",
+                "name": "\n"
+              },
+              {
+                "role": "StaticText",
+                "name": "    view! {"
+              },
+              {
+                "role": "LineBreak",
+                "name": "\n"
+              },
+              {
+                "role": "StaticText",
+                "name": "        <div data-async-after-attach=\"\" class=\"space-y-3\">"
+              },
+              {
+                "role": "LineBreak",
+                "name": "\n"
+              },
+              {
+                "role": "StaticText",
+                "name": "            <Button test_id=\"async-start\" on_click=move || { load.dispatch(()); }>"
+              },
+              {
+                "role": "LineBreak",
+                "name": "\n"
+              },
+              {
+                "role": "StaticText",
+                "name": "                \"Load browser data\""
+              },
+              {
+                "role": "LineBreak",
+                "name": "\n"
+              },
+              {
+                "role": "StaticText",
+                "name": "            </Button>"
+              },
+              {
+                "role": "LineBreak",
+                "name": "\n"
+              },
+              {
+                "role": "StaticText",
+                "name": "            <output data-testid=\"async-result\">"
+              },
+              {
+                "role": "LineBreak",
+                "name": "\n"
+              },
+              {
+                "role": "StaticText",
+                "name": "                {move || load.value().get().unwrap_or_else(|| \"Not loaded\".to_string())}"
+              },
+              {
+                "role": "LineBreak",
+                "name": "\n"
+              },
+              {
+                "role": "StaticText",
+                "name": "            </output>"
+              },
+              {
+                "role": "LineBreak",
+                "name": "\n"
+              },
+              {
+                "role": "StaticText",
+                "name": "        </div>"
+              },
+              {
+                "role": "LineBreak",
+                "name": "\n"
+              },
+              {
+                "role": "StaticText",
+                "name": "    }"
+              },
+              {
+                "role": "LineBreak",
+                "name": "\n"
+              },
+              {
+                "role": "StaticText",
+                "name": "}"
+              },
+              {
+                "role": "LineBreak",
+                "name": "\n"
+              },
+              {
+                "role": "LineBreak",
+                "name": "\n"
+              },
+              {
+                "role": "StaticText",
+                "name": "pub fn failure_demo() -> impl IntoView {"
+              },
+              {
+                "role": "LineBreak",
+                "name": "\n"
+              },
+              {
+                "role": "StaticText",
+                "name": "    let value = RwSignal::new(0);"
+              },
+              {
+                "role": "LineBreak",
+                "name": "\n"
+              },
+              {
+                "role": "StaticText",
+                "name": "    view! {"
+              },
+              {
+                "role": "LineBreak",
+                "name": "\n"
+              },
+              {
+                "role": "StaticText",
+                "name": "        <div data-failure-demo=\"\" class=\"space-y-3\">"
+              },
+              {
+                "role": "LineBreak",
+                "name": "\n"
+              },
+              {
+                "role": "StaticText",
+                "name": "            <Button test_id=\"failure-increment\" on_click=move || value.update(|value| *value += 1)>"
+              },
+              {
+                "role": "LineBreak",
+                "name": "\n"
+              },
+              {
+                "role": "StaticText",
+                "name": "                \"Change before failure\""
+              },
+              {
+                "role": "LineBreak",
+                "name": "\n"
+              },
+              {
+                "role": "StaticText",
+                "name": "            </Button>"
+              },
+              {
+                "role": "LineBreak",
+                "name": "\n"
+              },
+              {
+                "role": "StaticText",
+                "name": "            <output data-testid=\"failure-value\">{move || value.get()}</output>"
+              },
+              {
+                "role": "LineBreak",
+                "name": "\n"
+              },
+              {
+                "role": "StaticText",
+                "name": "            <Button test_id=\"failure-crash\" on_click=|| panic!(\"docs fixture callback failure\")>"
+              },
+              {
+                "role": "LineBreak",
+                "name": "\n"
+              },
+              {
+                "role": "StaticText",
+                "name": "                \"Crash this example\""
+              },
+              {
+                "role": "LineBreak",
+                "name": "\n"
+              },
+              {
+                "role": "StaticText",
+                "name": "            </Button>"
+              },
+              {
+                "role": "LineBreak",
+                "name": "\n"
+              },
+              {
+                "role": "StaticText",
+                "name": "        </div>"
+              },
+              {
+                "role": "LineBreak",
+                "name": "\n"
+              },
+              {
+                "role": "StaticText",
+                "name": "    }"
+              },
+              {
+                "role": "LineBreak",
+                "name": "\n"
+              },
+              {
+                "role": "StaticText",
+                "name": "}"
+              },
+              {
+                "role": "LineBreak",
+                "name": "\n"
+              },
+              {
+                "role": "LineBreak",
+                "name": "\n"
+              },
+              {
+                "role": "StaticText",
+                "name": "pub fn catalog_proxy() -> impl IntoView {"
+              },
+              {
+                "role": "LineBreak",
+                "name": "\n"
+              },
+              {
+                "role": "StaticText",
+                "name": "    let scope = rustify_ui::id::next(\"catalog\").unwrap_or_else(|| \"catalog\".to_string());"
+              },
+              {
+                "role": "LineBreak",
+                "name": "\n"
+              },
+              {
+                "role": "StaticText",
+                "name": "    view! { <crate::catalog::CatalogView scope=scope /> }"
+              },
+              {
+                "role": "LineBreak",
+                "name": "\n"
+              },
+              {
+                "role": "StaticText",
+                "name": "}"
+              }
+            ]
+          },
+          {
+            "role": "group",
+            "children": [
+              {
+                "role": "button",
+                "name": "Back to all symbols",
+                "ref": "@e579",
+                "children": [
+                  {
+                    "role": "StaticText",
+                    "name": "All symbols"
+                  }
+                ]
+              },
+              {
+                "role": "button",
+                "name": "Close symbols",
+                "ref": "@e580"
+              }
+            ]
+          },
+          {
+            "role": "heading",
+            "name": "function counter_demo",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "function"
+              },
+              {
+                "role": "button",
+                "name": "Ask Copilot about this symbol",
+                "ref": "@e581"
+              },
+              {
+                "role": "button",
+                "name": "Copilot menu",
+                "ref": "@e582"
+              },
+              {
+                "role": "StaticText",
+                "name": "‎"
+              },
+              {
+                "role": "button",
+                "name": "counter_demo",
+                "ref": "@e583",
+                "children": [
+                  {
+                    "role": "StaticText",
+                    "name": "counter_demo"
+                  }
+                ]
+              },
+              {
+                "role": "StaticText",
+                "name": "‎"
+              }
+            ]
+          },
+          {
+            "role": "heading",
+            "name": "DefinitionSearch",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "Definition"
+              },
+              {
+                "role": "StaticText",
+                "name": "Search"
+              }
+            ]
+          },
+          {
+            "role": "button",
+            "name": "Definitions in this file",
+            "ref": "@e584",
+            "children": [
+              {
+                "role": "LayoutTable",
+                "children": [
+                  {
+                    "role": "StaticText",
+                    "name": "‎"
+                  },
+                  {
+                    "role": "StaticText",
+                    "name": "In this file"
+                  },
+                  {
+                    "role": "StaticText",
+                    "name": "‎"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "role": "group",
+            "name": "Results in this file",
+            "children": [
+              {
+                "role": "link",
+                "name": "27 pub fn counter_demo() -> impl IntoView {",
+                "ref": "@e585",
+                "children": [
+                  {
+                    "role": "StaticText",
+                    "name": "27"
+                  },
+                  {
+                    "role": "StaticText",
+                    "name": "pub"
+                  },
+                  {
+                    "role": "StaticText",
+                    "name": " "
+                  },
+                  {
+                    "role": "StaticText",
+                    "name": "fn"
+                  },
+                  {
+                    "role": "StaticText",
+                    "name": " "
+                  },
+                  {
+                    "role": "StaticText",
+                    "name": "counter_demo"
+                  },
+                  {
+                    "role": "StaticText",
+                    "name": "("
+                  },
+                  {
+                    "role": "StaticText",
+                    "name": ")"
+                  },
+                  {
+                    "role": "StaticText",
+                    "name": " -> "
+                  },
+                  {
+                    "role": "StaticText",
+                    "name": "impl"
+                  },
+                  {
+                    "role": "StaticText",
+                    "name": " "
+                  },
+                  {
+                    "role": "StaticText",
+                    "name": "IntoView"
+                  },
+                  {
+                    "role": "StaticText",
+                    "name": " "
+                  },
+                  {
+                    "role": "StaticText",
+                    "name": "{"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "role": "link",
+            "name": "Search for this symbol",
+            "ref": "@e586",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "Search for this symbol"
+              }
+            ]
+          },
+          {
+            "role": "button",
+            "name": "Scroll to symbol",
+            "ref": "@e587"
+          }
+        ]
+      },
+      {
+        "role": "alert",
+        "children": [
+          {
+            "role": "StaticText",
+            "name": " "
+          }
+        ]
+      }
+    ]
+  }
+}

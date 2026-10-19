@@ -1,0 +1,15 @@
+{
+  "verified_at": "2026-10-19T13:24:03+08:00",
+  "candidate_sha": "1146b7d8febdf53ca1bc1a4c01946604e7625a95",
+  "framework_revision": "0fd34edaffda1926b38ea64c023b2fe1fc5115c5",
+  "build_info": "rustify-docs 0.1.31\npanic: unwind\ngrammars: syntect-5.3.0+two-face-0.5.2+bat-0.26.1+fancy\nsource: 1146b7d8febdf53ca1bc1a4c01946604e7625a95\n",
+  "cargo_install_list": "rustify-docs-cli v0.1.31 (https://github.com/rockie/rustify-ui?rev=1146b7d8febdf53ca1bc1a4c01946604e7625a95#1146b7d8):\n    rustify-docs\n",
+  "panic_probe": "recovered",
+  "bytes": 59235952,
+  "sha256": "76dad94199e61aa195c7f925770ea2402e84b3c2808f668c95080bd60673c068",
+  "git_cache_isolated": true,
+  "git_cache_empty_before_install": true,
+  "registry_cache_shared_only": true,
+  "git_remap_removed": true,
+  "source_url": "https://github.com/rockie/rustify-ui"
+}

@@ -1,0 +1,27 @@
+{
+  "started_at": "2026-10-19T13:18:37+08:00",
+  "command": [
+    "mbx",
+    "install",
+    "--git",
+    "https://github.com/rockie/rustify-ui",
+    "--rev",
+    "1146b7d8febdf53ca1bc1a4c01946604e7625a95",
+    "--locked",
+    "--profile",
+    "docs-cli",
+    "--root",
+    "/Users/rockie/Documents/gh-rockie/rustify-ui/.rustify-docs/p4-public-g676xxnz/install",
+    "rustify-docs-cli"
+  ],
+  "cwd": "/tmp/p4-public-zk9t49o2",
+  "cargo_home": "/Users/rockie/Documents/gh-rockie/rustify-ui/.rustify-docs/p4-public-g676xxnz/cargo-home",
+  "git_cache_existed_before": false,
+  "registry_cache_shared_only": "/Users/rockie/.cargo/registry",
+  "process_git_remap_removed": true,
+  "git_global_config": "/dev/null",
+  "git_system_config_disabled": true,
+  "network_offline": false,
+  "finished_at": "2026-10-19T13:21:53+08:00",
+  "exit_code": 0
+}

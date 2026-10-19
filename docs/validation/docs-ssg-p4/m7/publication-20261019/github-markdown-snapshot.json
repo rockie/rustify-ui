@@ -1,0 +1,1209 @@
+{
+  "ok": true,
+  "data": {
+    "url": "https://github.com/rockie/rustify-ui/blob/1146b7d8febdf53ca1bc1a4c01946604e7625a95/tests/docs-ssg/fixtures/components/content/counter.md",
+    "title": "rustify-ui/tests/docs-ssg/fixtures/components/content/counter.md at 1146b7d8febdf53ca1bc1a4c01946604e7625a95 · rockie/rustify-ui",
+    "tree": [
+      {
+        "role": "banner",
+        "name": "Global navigation menu",
+        "children": [
+          {
+            "role": "button",
+            "name": "Open menu",
+            "ref": "@e231"
+          },
+          {
+            "role": "link",
+            "name": "Homepage ( g then d )",
+            "ref": "@e232"
+          },
+          {
+            "role": "navigation",
+            "name": "Breadcrumbs",
+            "children": [
+              {
+                "role": "list",
+                "children": [
+                  {
+                    "role": "link",
+                    "name": "rockie",
+                    "ref": "@e233",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "rockie"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "listitem",
+                    "children": [
+                      {
+                        "role": "link",
+                        "name": "rustify-ui",
+                        "ref": "@e234",
+                        "children": [
+                          {
+                            "role": "StaticText",
+                            "name": "rustify-ui"
+                          }
+                        ]
+                      },
+                      {
+                        "role": "button",
+                        "name": "Switch repository ( option shift r )",
+                        "ref": "@e235"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "role": "button",
+            "name": "Open quick search dialog, type / to search",
+            "ref": "@e236",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "Type "
+              },
+              {
+                "role": "StaticText",
+                "name": "/"
+              },
+              {
+                "role": "StaticText",
+                "name": " to search"
+              }
+            ]
+          },
+          {
+            "role": "link",
+            "name": "Chat with Copilot",
+            "ref": "@e237"
+          },
+          {
+            "role": "button",
+            "name": "Open Copilot…",
+            "ref": "@e238"
+          },
+          {
+            "role": "button",
+            "name": "Create new...",
+            "ref": "@e239"
+          },
+          {
+            "role": "link",
+            "name": "All issues",
+            "ref": "@e240"
+          },
+          {
+            "role": "link",
+            "name": "All pull requests",
+            "ref": "@e241"
+          },
+          {
+            "role": "link",
+            "name": "All repositories",
+            "ref": "@e242"
+          },
+          {
+            "role": "link",
+            "name": "You have no unread notifications ( g then n )",
+            "ref": "@e243"
+          },
+          {
+            "role": "button",
+            "name": "Open user navigation menu",
+            "ref": "@e244",
+            "children": [
+              {
+                "role": "image",
+                "name": "Rockie Guo"
+              }
+            ]
+          },
+          {
+            "role": "heading",
+            "name": "Repository navigation",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "Repository navigation"
+              }
+            ]
+          },
+          {
+            "role": "navigation",
+            "name": "Repository",
+            "children": [
+              {
+                "role": "list",
+                "children": [
+                  {
+                    "role": "link",
+                    "name": "Code",
+                    "ref": "@e245",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Code"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "Issues",
+                    "ref": "@e246",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Issues"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "Pull requests",
+                    "ref": "@e247",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Pull requests"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "Agents",
+                    "ref": "@e248",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Agents"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "Actions",
+                    "ref": "@e249",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Actions"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "Projects",
+                    "ref": "@e250",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Projects"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "Wiki",
+                    "ref": "@e251",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Wiki"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "Security and quality",
+                    "ref": "@e252",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Security and quality"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "Insights",
+                    "ref": "@e253",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Insights"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "Settings",
+                    "ref": "@e254",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Settings"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "role": "main",
+        "children": [
+          {
+            "role": "heading",
+            "name": "Collapse file tree",
+            "children": [
+              {
+                "role": "button",
+                "name": "Collapse file tree",
+                "ref": "@e255"
+              }
+            ]
+          },
+          {
+            "role": "heading",
+            "name": "Files",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "Files"
+              }
+            ]
+          },
+          {
+            "role": "link",
+            "name": "View file on default branch",
+            "ref": "@e256"
+          },
+          {
+            "role": "button",
+            "name": "1146b7d branch",
+            "ref": "@e257",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "1146b7d"
+              }
+            ]
+          },
+          {
+            "role": "button",
+            "name": "Search this repository ( forward slash )",
+            "ref": "@e258"
+          },
+          {
+            "role": "combobox",
+            "name": "Go to file",
+            "description": "t T",
+            "ref": "@e259"
+          },
+          {
+            "role": "navigation",
+            "name": "File Tree Navigation",
+            "children": [
+              {
+                "role": "tree",
+                "name": "Files",
+                "children": [
+                  {
+                    "role": "treeitem",
+                    "ref": "@e260"
+                  },
+                  {
+                    "role": "treeitem",
+                    "ref": "@e261"
+                  },
+                  {
+                    "role": "treeitem",
+                    "ref": "@e262"
+                  },
+                  {
+                    "role": "treeitem",
+                    "ref": "@e263"
+                  },
+                  {
+                    "role": "treeitem",
+                    "ref": "@e264"
+                  },
+                  {
+                    "role": "treeitem",
+                    "ref": "@e265"
+                  },
+                  {
+                    "role": "treeitem",
+                    "ref": "@e266"
+                  },
+                  {
+                    "role": "treeitem",
+                    "ref": "@e267"
+                  },
+                  {
+                    "role": "treeitem",
+                    "ref": "@e268"
+                  },
+                  {
+                    "role": "treeitem",
+                    "ref": "@e269"
+                  },
+                  {
+                    "role": "treeitem",
+                    "ref": "@e270"
+                  },
+                  {
+                    "role": "treeitem",
+                    "ref": "@e271"
+                  },
+                  {
+                    "role": "treeitem",
+                    "ref": "@e272"
+                  },
+                  {
+                    "role": "treeitem",
+                    "ref": "@e273"
+                  },
+                  {
+                    "role": "treeitem",
+                    "name": "tests",
+                    "ref": "@e274",
+                    "children": [
+                      {
+                        "role": "group",
+                        "name": "tests",
+                        "children": [
+                          {
+                            "role": "treeitem",
+                            "ref": "@e275"
+                          },
+                          {
+                            "role": "treeitem",
+                            "name": "docs-ssg",
+                            "ref": "@e276",
+                            "children": [
+                              {
+                                "role": "group",
+                                "name": "docs-ssg",
+                                "children": [
+                                  {
+                                    "role": "treeitem",
+                                    "name": "fixtures",
+                                    "ref": "@e277",
+                                    "children": [
+                                      {
+                                        "role": "group",
+                                        "name": "fixtures",
+                                        "children": [
+                                          {
+                                            "role": "treeitem",
+                                            "name": "components",
+                                            "ref": "@e278",
+                                            "children": [
+                                              {
+                                                "role": "group",
+                                                "name": "components",
+                                                "children": [
+                                                  {
+                                                    "role": "treeitem",
+                                                    "name": "content",
+                                                    "ref": "@e279",
+                                                    "children": [
+                                                      {
+                                                        "role": "group",
+                                                        "name": "content",
+                                                        "children": [
+                                                          {
+                                                            "role": "treeitem",
+                                                            "ref": "@e280"
+                                                          },
+                                                          {
+                                                            "role": "treeitem",
+                                                            "ref": "@e281"
+                                                          },
+                                                          {
+                                                            "role": "treeitem",
+                                                            "ref": "@e282"
+                                                          },
+                                                          {
+                                                            "role": "treeitem",
+                                                            "name": "counter.md",
+                                                            "ref": "@e283",
+                                                            "children": [
+                                                              {
+                                                                "role": "StaticText",
+                                                                "name": "counter.md"
+                                                              }
+                                                            ]
+                                                          },
+                                                          {
+                                                            "role": "treeitem",
+                                                            "ref": "@e284"
+                                                          },
+                                                          {
+                                                            "role": "treeitem",
+                                                            "ref": "@e285"
+                                                          },
+                                                          {
+                                                            "role": "treeitem",
+                                                            "ref": "@e286"
+                                                          }
+                                                        ]
+                                                      }
+                                                    ]
+                                                  },
+                                                  {
+                                                    "role": "treeitem",
+                                                    "ref": "@e287"
+                                                  },
+                                                  {
+                                                    "role": "treeitem",
+                                                    "ref": "@e288"
+                                                  },
+                                                  {
+                                                    "role": "treeitem",
+                                                    "ref": "@e289"
+                                                  },
+                                                  {
+                                                    "role": "treeitem",
+                                                    "ref": "@e290"
+                                                  },
+                                                  {
+                                                    "role": "treeitem",
+                                                    "ref": "@e291"
+                                                  },
+                                                  {
+                                                    "role": "treeitem",
+                                                    "ref": "@e292"
+                                                  }
+                                                ]
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "role": "treeitem",
+                                            "ref": "@e293"
+                                          },
+                                          {
+                                            "role": "treeitem",
+                                            "ref": "@e294"
+                                          },
+                                          {
+                                            "role": "treeitem",
+                                            "ref": "@e295"
+                                          },
+                                          {
+                                            "role": "treeitem",
+                                            "ref": "@e296"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "role": "treeitem",
+                                    "ref": "@e297"
+                                  },
+                                  {
+                                    "role": "treeitem",
+                                    "ref": "@e298"
+                                  },
+                                  {
+                                    "role": "treeitem",
+                                    "ref": "@e299"
+                                  },
+                                  {
+                                    "role": "treeitem",
+                                    "ref": "@e300"
+                                  },
+                                  {
+                                    "role": "treeitem",
+                                    "ref": "@e301"
+                                  },
+                                  {
+                                    "role": "treeitem",
+                                    "ref": "@e302"
+                                  },
+                                  {
+                                    "role": "treeitem",
+                                    "ref": "@e303"
+                                  },
+                                  {
+                                    "role": "treeitem",
+                                    "ref": "@e304"
+                                  },
+                                  {
+                                    "role": "treeitem",
+                                    "ref": "@e305"
+                                  },
+                                  {
+                                    "role": "treeitem",
+                                    "ref": "@e306"
+                                  },
+                                  {
+                                    "role": "treeitem",
+                                    "ref": "@e307"
+                                  },
+                                  {
+                                    "role": "treeitem",
+                                    "ref": "@e308"
+                                  },
+                                  {
+                                    "role": "treeitem",
+                                    "ref": "@e309"
+                                  },
+                                  {
+                                    "role": "treeitem",
+                                    "ref": "@e310"
+                                  },
+                                  {
+                                    "role": "treeitem",
+                                    "ref": "@e311"
+                                  },
+                                  {
+                                    "role": "treeitem",
+                                    "ref": "@e312"
+                                  },
+                                  {
+                                    "role": "treeitem",
+                                    "ref": "@e313"
+                                  },
+                                  {
+                                    "role": "treeitem",
+                                    "ref": "@e314"
+                                  },
+                                  {
+                                    "role": "treeitem",
+                                    "ref": "@e315"
+                                  },
+                                  {
+                                    "role": "treeitem",
+                                    "ref": "@e316"
+                                  },
+                                  {
+                                    "role": "treeitem",
+                                    "ref": "@e317"
+                                  },
+                                  {
+                                    "role": "treeitem",
+                                    "ref": "@e318"
+                                  },
+                                  {
+                                    "role": "treeitem",
+                                    "ref": "@e319"
+                                  },
+                                  {
+                                    "role": "treeitem",
+                                    "ref": "@e320"
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "role": "treeitem",
+                            "ref": "@e321"
+                          },
+                          {
+                            "role": "treeitem",
+                            "ref": "@e322"
+                          },
+                          {
+                            "role": "treeitem",
+                            "ref": "@e323"
+                          },
+                          {
+                            "role": "treeitem",
+                            "ref": "@e324"
+                          },
+                          {
+                            "role": "treeitem",
+                            "ref": "@e325"
+                          },
+                          {
+                            "role": "treeitem",
+                            "ref": "@e326"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "role": "treeitem",
+                    "ref": "@e327"
+                  },
+                  {
+                    "role": "treeitem",
+                    "ref": "@e328"
+                  },
+                  {
+                    "role": "treeitem",
+                    "ref": "@e329"
+                  },
+                  {
+                    "role": "treeitem",
+                    "ref": "@e330"
+                  },
+                  {
+                    "role": "treeitem",
+                    "ref": "@e331"
+                  },
+                  {
+                    "role": "treeitem",
+                    "ref": "@e332"
+                  },
+                  {
+                    "role": "treeitem",
+                    "ref": "@e333"
+                  },
+                  {
+                    "role": "treeitem",
+                    "ref": "@e334"
+                  },
+                  {
+                    "role": "treeitem",
+                    "ref": "@e335"
+                  },
+                  {
+                    "role": "treeitem",
+                    "ref": "@e336"
+                  },
+                  {
+                    "role": "treeitem",
+                    "ref": "@e337"
+                  },
+                  {
+                    "role": "treeitem",
+                    "ref": "@e338"
+                  },
+                  {
+                    "role": "treeitem",
+                    "ref": "@e339"
+                  },
+                  {
+                    "role": "treeitem",
+                    "ref": "@e340"
+                  },
+                  {
+                    "role": "treeitem",
+                    "ref": "@e341"
+                  },
+                  {
+                    "role": "treeitem",
+                    "ref": "@e342"
+                  },
+                  {
+                    "role": "treeitem",
+                    "ref": "@e343"
+                  },
+                  {
+                    "role": "treeitem",
+                    "ref": "@e344"
+                  },
+                  {
+                    "role": "treeitem",
+                    "ref": "@e345"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "role": "slider",
+            "name": "Draggable pane splitter",
+            "value": 320,
+            "ref": "@e346"
+          },
+          {
+            "role": "navigation",
+            "name": "Breadcrumbs",
+            "children": [
+              {
+                "role": "heading",
+                "name": "Breadcrumbs",
+                "children": [
+                  {
+                    "role": "StaticText",
+                    "name": "Breadcrumbs"
+                  }
+                ]
+              },
+              {
+                "role": "list",
+                "children": [
+                  {
+                    "role": "link",
+                    "name": "rustify-ui",
+                    "ref": "@e347",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "rustify-ui"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "tests",
+                    "ref": "@e348",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "tests"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "docs-ssg",
+                    "ref": "@e349",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "docs-ssg"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "fixtures",
+                    "ref": "@e350",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "fixtures"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "components",
+                    "ref": "@e351",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "components"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "content",
+                    "ref": "@e352",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "content"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "role": "heading",
+            "name": "counter.md",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "counter.md"
+              }
+            ]
+          },
+          {
+            "role": "button",
+            "name": "Copy path",
+            "ref": "@e353"
+          },
+          {
+            "role": "button",
+            "name": "More file actions",
+            "ref": "@e354"
+          },
+          {
+            "role": "heading",
+            "name": "Latest commit",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "Latest commit"
+              }
+            ]
+          },
+          {
+            "role": "link",
+            "name": "rockie",
+            "ref": "@e355",
+            "children": [
+              {
+                "role": "image",
+                "name": "rockie"
+              }
+            ]
+          },
+          {
+            "role": "link",
+            "name": "commits by rockie",
+            "ref": "@e356",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "rockie"
+              }
+            ]
+          },
+          {
+            "role": "link",
+            "name": "feat(docs): add typed DOM islands and same-source SSG demos",
+            "ref": "@e357",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "feat(docs): add typed DOM islands and same-source SSG demos"
+              }
+            ]
+          },
+          {
+            "role": "button",
+            "name": "Open commit details",
+            "ref": "@e358"
+          },
+          {
+            "role": "link",
+            "name": "Commit 5632d13",
+            "ref": "@e359",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "5632d13"
+              }
+            ]
+          },
+          {
+            "role": "StaticText",
+            "name": " · "
+          },
+          {
+            "role": "StaticText",
+            "name": "last week"
+          },
+          {
+            "role": "heading",
+            "name": "History",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "History"
+              }
+            ]
+          },
+          {
+            "role": "link",
+            "name": "History",
+            "ref": "@e360",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "History"
+              }
+            ]
+          },
+          {
+            "role": "heading",
+            "name": "File metadata and controls",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "File metadata and controls"
+              }
+            ]
+          },
+          {
+            "role": "list",
+            "name": "File view",
+            "children": [
+              {
+                "role": "button",
+                "name": "Preview",
+                "ref": "@e361",
+                "children": [
+                  {
+                    "role": "StaticText",
+                    "name": "Preview"
+                  }
+                ]
+              },
+              {
+                "role": "button",
+                "name": "Code",
+                "ref": "@e362",
+                "children": [
+                  {
+                    "role": "StaticText",
+                    "name": "Code"
+                  }
+                ]
+              },
+              {
+                "role": "button",
+                "name": "Blame",
+                "ref": "@e363",
+                "children": [
+                  {
+                    "role": "StaticText",
+                    "name": "Blame"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "role": "StaticText",
+            "name": "45 lines (36 loc) · 936 Bytes"
+          },
+          {
+            "role": "button",
+            "name": "Add to space",
+            "ref": "@e364"
+          },
+          {
+            "role": "button",
+            "name": "Ask Copilot about this file",
+            "ref": "@e365"
+          },
+          {
+            "role": "link",
+            "name": "Raw",
+            "ref": "@e366",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "Raw"
+              }
+            ]
+          },
+          {
+            "role": "button",
+            "name": "Copy raw file",
+            "ref": "@e367"
+          },
+          {
+            "role": "button",
+            "name": "Download raw file",
+            "ref": "@e368"
+          },
+          {
+            "role": "button",
+            "name": "You must be on a branch to make or propose changes to this file",
+            "ref": "@e369"
+          },
+          {
+            "role": "button",
+            "name": "More edit options",
+            "ref": "@e370"
+          },
+          {
+            "role": "button",
+            "name": "Outline",
+            "ref": "@e371"
+          },
+          {
+            "role": "region",
+            "name": "counter.md",
+            "children": [
+              {
+                "role": "article",
+                "children": [
+                  {
+                    "role": "table",
+                    "children": [
+                      {
+                        "role": "row",
+                        "children": [
+                          {
+                            "role": "rowheader",
+                            "name": "title",
+                            "children": [
+                              {
+                                "role": "StaticText",
+                                "name": "title"
+                              }
+                            ]
+                          },
+                          {
+                            "role": "cell",
+                            "name": "Registered counters",
+                            "children": [
+                              {
+                                "role": "StaticText",
+                                "name": "Registered counters"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "role": "row",
+                        "children": [
+                          {
+                            "role": "rowheader",
+                            "name": "description",
+                            "children": [
+                              {
+                                "role": "StaticText",
+                                "name": "description"
+                              }
+                            ]
+                          },
+                          {
+                            "role": "cell",
+                            "name": "Three instances share declarations while keeping independent state.",
+                            "children": [
+                              {
+                                "role": "StaticText",
+                                "name": "Three instances share declarations while keeping independent state."
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "role": "heading",
+                    "name": "Registered counters",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Registered counters"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "Permalink: Registered counters",
+                    "ref": "@e372"
+                  },
+                  {
+                    "role": "heading",
+                    "name": "Three independent instances",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Three independent instances"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "Permalink: Three independent instances",
+                    "ref": "@e373"
+                  },
+                  {
+                    "role": "StaticText",
+                    "name": "Each counter starts with the same props and child content. Incrementing one leaves the others at two."
+                  },
+                  {
+                    "role": "code",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "name: Counter\nprops:\n  initial: 2\n  label: Shared initial props\nchildren: |\n  The same **safe child Markdown** appears in each instance.\n"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "button",
+                    "name": "Copy code to clipboard",
+                    "ref": "@e374"
+                  },
+                  {
+                    "role": "code",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "name: Counter\nprops:\n  initial: 2\n  label: Shared initial props\nchildren: |\n  The same **safe child Markdown** appears in each instance.\n"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "button",
+                    "name": "Copy code to clipboard",
+                    "ref": "@e375"
+                  },
+                  {
+                    "role": "code",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "name: Counter\nprops:\n  initial: 2\n  label: Shared initial props\nchildren: |\n  The same **safe child Markdown** appears in each instance.\n"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "button",
+                    "name": "Copy code to clipboard",
+                    "ref": "@e376"
+                  },
+                  {
+                    "role": "heading",
+                    "name": "Function and full file",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Function and full file"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "Permalink: Function and full file",
+                    "ref": "@e377"
+                  },
+                  {
+                    "role": "StaticText",
+                    "name": "The registered function starts at seven. Its original function and containing file appear below the view."
+                  },
+                  {
+                    "role": "code",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "name: CounterDemo\n"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "button",
+                    "name": "Copy code to clipboard",
+                    "ref": "@e378"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "role": "alert",
+        "children": [
+          {
+            "role": "StaticText",
+            "name": " "
+          }
+        ]
+      }
+    ]
+  }
+}

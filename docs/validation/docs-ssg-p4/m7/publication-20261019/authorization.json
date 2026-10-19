@@ -1,0 +1,19 @@
+{
+  "approved_at": "2026-10-19T13:14:07+08:00",
+  "user_reply": "\u6279\u51c6",
+  "scope_source": "docs/plan/DOCS-SSG-P4.records/M7.md: current publication scope",
+  "scope": [
+    "Fast-forward push committed plan history and later closeout docs",
+    "Enable existing repository Pages Actions and github-pages environment",
+    "Deploy C0, deploy C1, rollback C0, restore C1 with existing docs-pages.yml",
+    "Real public HTTPS install and source preview, complete online verification"
+  ],
+  "initial_push_head": "bd101e21434fb4f61ab8b47ed0dc73a3d456c4f6",
+  "remote_before": "3803148929ebb2f69d7549c9f054ff81eb9a6d20",
+  "candidate_c0": "3dbb079a7b188edd56071225fad84fd6b92c4c52",
+  "candidate_c1": "1146b7d8febdf53ca1bc1a4c01946604e7625a95",
+  "framework": "0fd34edaffda1926b38ea64c023b2fe1fc5115c5",
+  "environment": "/Users/rockie/Documents/gh-rockie/rustify-ui/.rustify-docs/p4-public-g676xxnz/env.sh",
+  "work_root": "/tmp/p4-public-zk9t49o2",
+  "public_url": "https://rockie.github.io/rustify-ui/"
+}

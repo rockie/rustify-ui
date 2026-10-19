@@ -1,0 +1,150 @@
+{
+  "observed_at": "2026-10-19T13:29:05+08:00",
+  "run": {
+    "id": 39203783980,
+    "status": "in_progress",
+    "conclusion": null,
+    "head_sha": "bd101e21434fb4f61ab8b47ed0dc73a3d456c4f6",
+    "html_url": "https://github.com/rockie/rustify-ui/actions/runs/39203783980",
+    "created_at": "2026-10-19T05:17:34Z",
+    "updated_at": "2026-10-19T05:22:33Z"
+  },
+  "jobs": [
+    {
+      "id": 117902108219,
+      "name": "build",
+      "status": "in_progress",
+      "conclusion": null,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-10-19T05:22:32Z",
+          "completed_at": "2026-10-19T05:22:35Z"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-10-19T05:22:35Z",
+          "completed_at": "2026-10-19T05:22:55Z"
+        },
+        {
+          "name": "Verify the candidate checkout",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-10-19T05:22:55Z",
+          "completed_at": "2026-10-19T05:22:55Z"
+        },
+        {
+          "name": "Repository Rust, mbx and Tailwind",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-10-19T05:22:55Z",
+          "completed_at": "2026-10-19T05:23:09Z"
+        },
+        {
+          "name": "Run jdx/mr-boxington-action@v1",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-10-19T05:23:09Z",
+          "completed_at": "2026-10-19T05:23:33Z"
+        },
+        {
+          "name": "Run actions/setup-python@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-10-19T05:23:33Z",
+          "completed_at": "2026-10-19T05:23:33Z"
+        },
+        {
+          "name": "Read existing Pages configuration",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-10-19T05:23:33Z",
+          "completed_at": "2026-10-19T05:23:33Z"
+        },
+        {
+          "name": "Install the exact Git CLI C",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8,
+          "started_at": "2026-10-19T05:23:33Z",
+          "completed_at": "2026-10-19T05:28:11Z"
+        },
+        {
+          "name": "Prepare the frozen official consumer",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9,
+          "started_at": "2026-10-19T05:28:11Z",
+          "completed_at": "2026-10-19T05:28:24Z"
+        },
+        {
+          "name": "Check and build the complete site",
+          "status": "in_progress",
+          "conclusion": null,
+          "number": 10,
+          "started_at": "2026-10-19T05:28:25Z",
+          "completed_at": null
+        },
+        {
+          "name": "Verify complete language, search and AI artifacts before upload",
+          "status": "pending",
+          "conclusion": null,
+          "number": 11,
+          "started_at": null,
+          "completed_at": null
+        },
+        {
+          "name": "Preserve source and build evidence",
+          "status": "pending",
+          "conclusion": null,
+          "number": 12,
+          "started_at": null,
+          "completed_at": null
+        },
+        {
+          "name": "Upload the same-run complete Pages artifact",
+          "status": "pending",
+          "conclusion": null,
+          "number": 13,
+          "started_at": null,
+          "completed_at": null
+        },
+        {
+          "name": "Post Run actions/setup-python@v5",
+          "status": "pending",
+          "conclusion": null,
+          "number": 24,
+          "started_at": null,
+          "completed_at": null
+        },
+        {
+          "name": "Post Run jdx/mr-boxington-action@v1",
+          "status": "pending",
+          "conclusion": null,
+          "number": 25,
+          "started_at": null,
+          "completed_at": null
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "pending",
+          "conclusion": null,
+          "number": 26,
+          "started_at": null,
+          "completed_at": null
+        }
+      ]
+    }
+  ]
+}
