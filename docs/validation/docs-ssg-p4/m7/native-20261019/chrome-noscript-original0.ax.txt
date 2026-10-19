@@ -1,0 +1,564 @@
+Window: "Button | Rustify UI", App: Google Chrome.
+0 标准窗口 Button | Rustify UI - Google Chrome - Rockie, URL: 127.0.0.1:4199/rustify-ui/zh/components/button/, Secondary Actions: Raise
+	1 container Button | Rustify UI - Google Chrome - Rockie, URL: 127.0.0.1:4199/rustify-ui/zh/components/button/
+		2 container
+			3 工具栏
+				4 按钮 返回
+				5 按钮 (disabled) 前进
+				6 按钮 重新加载
+				7 container
+					8 弹出式按钮 查看网站信息
+					9 文本栏 (settable) 地址和搜索栏, Value: 127.0.0.1:4199/rustify-ui/zh/components/button/, Placeholder: 问问 Google 或输入网址
+					10 按钮 为此标签页添加书签
+				11 container
+					12 弹出式按钮 打开 Kimi
+可以访问此网站
+					13 弹出式按钮 扩展程序
+				14 按钮 Rockie
+				15 弹出式按钮 Chrome
+			16 container
+				17 滚动区
+					18 HTML 内容 DevTools, URL: devtools://devtools/bundled/devtools_app.html?remoteBase=https://chrome-devtools-frontend.appspot.com/serve_file/@0e66b94549a8bd85f03fbdf189b752d6e7b63c32/&targetType=tab&can_dock=true&panel=console
+						19 container
+							20 container
+								21 container
+									22 container
+										23 container
+											24 container Main toolbar
+												25 工具栏
+													26 container Select an element in the page to inspect it, Help: Select an element in the page to inspect it - ⌘ ⇧ C
+														27 切换按钮 Select an element in the page to inspect it - ⌘ ⇧ C, Value: 0
+													28 container Toggle device toolbar, Help: Toggle device toolbar - ⌘ ⇧ M
+														29 切换按钮 Toggle device toolbar - ⌘ ⇧ M, Value: 0
+												30 container
+													31 标签页组 Panels
+														32 标签 (settable, integer) Elements, Value: 0
+														33 标签 (selected) Console, Value: 1
+													34 弹出式按钮 More tabs
+												35 工具栏
+													36 按钮 Page: Main
+													37 container Settings, Help: Settings - F1 - ⇧ ?
+														38 按钮 Settings - F1 - ⇧ ?
+													39 弹出式按钮 Customize and control DevTools
+														40 按钮 Customize and control DevTools
+													41 container Close
+														42 按钮 Close
+											43 container Console panel
+												44 container console
+													45 container
+														46 工具栏
+															47 container Show Console sidebar
+																48 按钮 Show Console sidebar
+															49 container Clear console, Help: Clear console - Ctrl L - ⌘ K
+																50 按钮 Clear console - Ctrl L - ⌘ K
+															51 container Collapse all
+																52 按钮 Collapse all
+															53 按钮 JavaScript context: top
+															54 container Create live expression
+																55 按钮 Create live expression
+															56 文本输入区 (settable) Filter
+																57 文本 Filter
+															58 弹出式按钮 Log level: Default levels
+																59 文本 Default levels
+															60 container Some problems no longer generate console messages, but are surfaced in the Issues tab Click to go to the Issues tab
+																61 按钮 Some problems no longer generate console messages, but are surfaced in the Issues tab Click to go to the Issues tab
+															62 container Console settings
+																63 切换按钮 Console settings, Value: 0
+															64 container 0 messages in console
+														65 container
+															66 container
+																67 container
+																	68 文本输入区 (settable) Console prompt, Value: 
+
+										69 container Drawer
+											70 container
+												71 工具栏
+													72 弹出式按钮 More tools
+														73 按钮 More tools
+												74 标签页组
+													75 标签 (settable, integer) Console, Value: 0
+													76 标签 (settable, integer) AI assistance, Value: 0
+													77 标签 (selected) What’s new, Value: 1
+												78 弹出式按钮 More tabs
+												79 工具栏
+													80 container Toggle drawer orientation
+														81 按钮 Toggle drawer orientation
+													82 container Minimize drawer
+														83 按钮 Minimize drawer
+													84 container Close drawer
+														85 按钮 Close drawer
+												86 container What’s new panel
+													87 container whats-new
+														88 container
+															89 文本 New in DevTools (September 2026)
+															90 按钮 See all new features
+															91 标题 DevTools for agents, Value: 3
+																92 链接 DevTools for agents, Help: https://developer.chrome.com/blog/new-in-devtools-152/#devtools-for-agents
+																	93 文本 DevTools for agents
+															94 container
+																95 text DevTools for agents 1.7 improves memory profiling with the  get_heapsnapshot_object_details  tool and native V8 context filtering.
+															96 标题 Soft navigation metrics in Live Metrics, Value: 3
+																97 链接 Soft navigation metrics in Live Metrics, Help: https://developer.chrome.com/blog/new-in-devtools-152/#performance
+																	98 文本 Soft navigation metrics in Live Metrics
+															99 文本 The Live Metrics view in the Performance panel now captures and reports metrics like LCP and INP for client-side soft navigations in single-page applications by default.
+															100 标题 Nested CSS parent selector interactions, Value: 3
+																101 链接 Nested CSS parent selector interactions, Help: https://developer.chrome.com/blog/new-in-devtools-152/#nested-selectors
+																	102 文本 Nested CSS parent selector interactions
+															103 container
+																104 text Hovering over parent selectors highlights matching elements on the page, nested rules respond to Styles tab filtering, and  @nested-declarations  include specificity tooltips.
+							105 文本 Console cleared
+							106 container
+								107 按钮 Close
+								108 container
+									109 标题 Settings, Value: 1
+										110 文本 Settings
+									111 标签页组
+										112 标签 (selected) Preferences, Value: 1
+										113 标签 (settable, integer) Workspace, Value: 0
+										114 标签 (settable, integer) AI innovations, Value: 0
+										115 标签 (settable, integer) Experiments, Value: 0
+										116 标签 (settable, integer) Ignore list, Value: 0
+										117 标签 (settable, integer) Devices, Value: 0
+										118 标签 (settable, integer) Throttling, Value: 0
+										119 标签 (settable, integer) Locations, Value: 0
+										120 标签 (settable, integer) Shortcuts, Value: 0
+									121 container Preferences panel
+										122 container
+											123 标题 Appearance, Value: 2
+												124 文本 Appearance
+											125 container
+												126 复选框 Show what’s new after each update, Value: 1
+												127 文本 Show what’s new after each update
+											128 文本 Theme:
+											129 弹出式按钮 Theme:, Value: Auto
+												130 (selected) Auto
+											131 container
+												132 container Match DevTools colors to your customized Chrome theme (when enabled)
+													133 复选框 Match Chrome color scheme, Value: 1
+													134 文本 Match Chrome color scheme
+												135 按钮 (disabled) Match DevTools colors to your customized Chrome theme (when enabled)
+											136 文本 Panel layout:
+											137 弹出式按钮 Panel layout:, Value: auto
+												138 (selected) auto
+											139 文本 Language:
+											140 弹出式按钮 Language:, Value: English (US) - English (US)
+												141 (selected) English (US) - English (US)
+											142 container
+												143 复选框 Use ⌘ + 1-9 to switch panels, Value: 0
+												144 文本 Use ⌘ + 1-9 to switch panels
+											145 container
+												146 复选框 Disable paused state overlay, Value: 0
+												147 文本 Disable paused state overlay
+											148 标题 Sources, Value: 2
+												149 文本 Sources
+											150 container
+												151 复选框 Search in anonymous and content scripts, Value: 0
+												152 文本 Search in anonymous and content scripts
+											153 container
+												154 复选框 Automatically reveal files in sidebar, Value: 1
+												155 文本 Automatically reveal files in sidebar
+											156 container
+												157 复选框 Tab moves focus, Value: 0
+												158 文本 Tab moves focus
+											159 container
+												160 复选框 Detect indentation, Value: 1
+												161 文本 Detect indentation
+											162 container
+												163 复选框 Autocompletion, Value: 1
+												164 文本 Autocompletion
+											165 container
+												166 复选框 Auto closing brackets, Value: 1
+												167 文本 Auto closing brackets
+											168 container
+												169 复选框 Bracket matching, Value: 1
+												170 文本 Bracket matching
+											171 container
+												172 复选框 Code folding, Value: 1
+												173 文本 Code folding
+											174 文本 Show whitespace characters:
+											175 弹出式按钮 Show whitespace characters:, Value: None
+												176 (selected) None
+											177 container
+												178 复选框 Word wrap, Value: 0
+												179 文本 Word wrap
+											180 container
+												181 复选框 Variable values inline, Value: 1
+												182 文本 Variable values inline
+											183 container
+												184 复选框 Focus Sources panel when triggering a breakpoint, Value: 1
+												185 文本 Focus Sources panel when triggering a breakpoint
+											186 container
+												187 复选框 Automatically pretty print minified sources, Value: 1
+												188 文本 Automatically pretty print minified sources
+											189 container
+												190 复选框 Allow scrolling past end of file, Value: 1
+												191 文本 Allow scrolling past end of file
+											192 container
+												193 container When debugging Wasm with debug information, try to skip wasm bytecode
+													194 复选框 Wasm auto-stepping bytecode, Value: 1
+													195 文本 Wasm auto-stepping bytecode
+												196 按钮 (disabled) When debugging Wasm with debug information, try to skip wasm bytecode
+											197 文本 Default indentation
+											198 弹出式按钮 Default indentation, Value: 4 spaces
+												199 (selected) 4 spaces
+											200 container
+												201 复选框 JavaScript source maps, Value: 1
+												202 文本 JavaScript source maps
+											203 container
+												204 复选框 CSS source maps, Value: 1
+												205 文本 CSS source maps
+											206 container
+												207 container Example resources are source maps. Disabled by default for security reasons.
+													208 复选框 Allow loading remote file path resources in DevTools, Value: 0
+													209 文本 Allow loading remote file path resources in DevTools
+												210 按钮 (disabled) Example resources are source maps. Disabled by default for security reasons.
+											211 标题 Elements, Value: 2
+												212 文本 Elements
+											213 container
+												214 复选框 User agent shadow DOM, Value: 0
+												215 文本 User agent shadow DOM
+											216 container
+												217 复选框 Word wrap, Value: 1
+												218 文本 Word wrap
+											219 container
+												220 复选框 HTML comments, Value: 1
+												221 文本 HTML comments
+											222 container
+												223 复选框 Reveal DOM node on hover, Value: 1
+												224 文本 Reveal DOM node on hover
+											225 container
+												226 复选框 Detailed inspect tooltip, Value: 1
+												227 文本 Detailed inspect tooltip
+											228 container
+												229 复选框 Show animation styles only when the Animations tab is open, Value: 1
+												230 文本 Show animation styles only when the Animations tab is open
+											231 container
+												232 复选框 Collapse non-contributing CSS rules, Value: 0
+												233 文本 Collapse non-contributing CSS rules
+											234 container
+												235 复选框 Show inactive CSS rules, Value: 0
+												236 文本 Show inactive CSS rules
+											237 container
+												238 复选框 CSS documentation tooltip, Value: 1
+												239 文本 CSS documentation tooltip
+											240 container
+												241 复选框 Rulers on hover, Value: 0
+												242 文本 Rulers on hover
+											243 container
+												244 复选框 Value: 0, Advanced Perceptual Contrast Algorithm (APCA) replacing previous contrast ratio and AA/AAA guidelines
+												245 文本 Advanced Perceptual Contrast Algorithm (APCA) replacing previous contrast ratio and AA/AAA guidelines
+											246 标题 Network, Value: 2
+												247 文本 Network
+											248 container
+												249 container By default generated HAR logs are sanitized and don’t include Cookie, Set-Cookie, or Authorization HTTP headers. When this setting is enabled, options to export/copy HAR with sensitive data are provided.
+													250 复选框 Allow to generate HAR with sensitive data, Value: 0
+													251 文本 Allow to generate HAR with sensitive data
+												252 按钮 (disabled) By default generated HAR logs are sanitized and don’t include Cookie, Set-Cookie, or Authorization HTTP headers. When this setting is enabled, options to export/copy HAR with sensitive data are provided.
+											253 container
+												254 复选框 Color-code resource types, Value: 0
+												255 文本 Color-code resource types
+											256 container
+												257 复选框 Group network log by frame, Value: 0
+												258 文本 Group network log by frame
+											259 container
+												260 复选框 Request blocking and throttling, Value: 0
+												261 文本 Request blocking and throttling
+											262 container
+												263 container Disabling the network cache will simulate a network experience similar to a first time visitor
+													264 复选框 Disable cache while DevTools is open, Value: 0
+													265 文本 Disable cache while DevTools is open
+												266 按钮 (disabled) Disabling the network cache will simulate a network experience similar to a first time visitor
+											267 container
+												268 复选框 Keep log, Value: 0
+												269 文本 Keep log
+											270 container
+												271 复选框 Record network log, Value: 1
+												272 文本 Record network log
+											273 container
+												274 复选框 Force ad blocking on this site, Value: 0
+												275 文本 Force ad blocking on this site
+											276 标题 Performance, Value: 2
+												277 文本 Performance
+											278 文本 Flamechart navigation:
+											279 弹出式按钮 Flamechart navigation:, Value: Classic
+												280 (selected) Classic
+											281 container
+												282 复选框 Chrome frame in Layers view, Value: 1
+												283 文本 Chrome frame in Layers view
+											284 container
+												285 复选框 Invalidation tracking, Value: 0
+												286 文本 Invalidation tracking
+											287 container
+												288 复选框 Show all events, Value: 0
+												289 文本 Show all events
+											290 container
+												291 复选框 Timeline debug mode (trace event details, etc.), Value: 0
+												292 文本 Timeline debug mode (trace event details, etc.)
+											293 container
+												294 复选框 Enable soft navigation performance monitoring, Value: 1
+												295 文本 Enable soft navigation performance monitoring
+											296 标题 Console, Value: 2
+												297 文本 Console
+											298 container
+												299 复选框 AI summaries for console messages, Value: 1
+												300 文本 AI summaries for console messages
+											301 container
+												302 复选框 Network messages, Value: 1
+												303 文本 Network messages
+											304 container
+												305 复选框 Selected context only, Value: 0
+												306 文本 Selected context only
+											307 container
+												308 复选框 Timestamps, Value: 0
+												309 文本 Timestamps
+											310 container
+												311 复选框 Autocomplete from history, Value: 1
+												312 文本 Autocomplete from history
+											313 container
+												314 复选框 Accept autocomplete suggestion on Enter, Value: 0
+												315 文本 Accept autocomplete suggestion on Enter
+											316 container
+												317 复选框 Group similar messages, Value: 1
+												318 文本 Group similar messages
+											319 container
+												320 复选框 CORS errors in console, Value: 1
+												321 文本 CORS errors in console
+											322 container
+												323 复选框 Eager evaluation, Value: 1
+												324 文本 Eager evaluation
+											325 container
+												326 复选框 Treat code evaluation as user action, Value: 1
+												327 文本 Treat code evaluation as user action
+											328 container
+												329 复选框 Automatically expand console.trace() messages, Value: 1
+												330 文本 Automatically expand console.trace() messages
+											331 container
+												332 复选框 Keep log on navigation, Value: 0
+												333 文本 Keep log on navigation
+											334 container
+												335 复选框 Custom formatters, Value: 0
+												336 文本 Custom formatters
+											337 container
+												338 复选框 Log XMLHttpRequests, Value: 0
+												339 文本 Log XMLHttpRequests
+											340 标题 Extension, Value: 2
+												341 文本 Extension
+											342 文本 Link handling
+											343 弹出式按钮 (disabled) Link handling, Value: Auto
+											344 标题 Persistence, Value: 2
+												345 文本 Persistence
+											346 container
+												347 复选框 Local overrides, Value: 0
+												348 文本 Local overrides
+											349 标题 Debugger, Value: 2
+												350 文本 Debugger
+											351 container
+												352 复选框 Disable JavaScript, Value: 0
+												353 文本 Disable JavaScript
+											354 container
+												355 复选框 Disable async stack traces, Value: 0
+												356 文本 Disable async stack traces
+											357 标题 Global, Value: 2
+												358 文本 Global
+											359 container
+												360 复选框 Search as you type, Value: 1
+												361 文本 Search as you type
+											362 container
+												363 复选框 Auto-open DevTools for popups, Value: 0
+												364 文本 Auto-open DevTools for popups
+											365 标题 Account, Value: 2
+												366 文本 Account
+											367 container
+												368 图像 Account avatar
+												369 text Signed in to Chrome as: wsjn.hk@gmail.com
+												370 container
+													371 复选框 Save DevTools settings to your Google account, Value: 0
+													372 文本 Save DevTools settings to your Google account
+												373 图像 Google Developer Program
+												374 按钮 Sign up
+											375 按钮 Restore defaults and reload
+				376 滚动区
+					377 HTML 内容 Button | Rustify UI, URL: 127.0.0.1:4199/rustify-ui/zh/components/button/
+						378 link 跳到正文, Value: 127.0.0.1:4199/rustify-ui/zh/components/button/#content
+						379 container
+							380 link Rustify UI, Value: 127.0.0.1:4199/rustify-ui/zh/
+							381 container 站点链接
+								382 内容列表
+									383 link GitHub 源码, Value: github.com/rockie/rustify-ui
+							384 弹出式按钮 搜索 Ctrl / Cmd K
+							385 开合三角标记 中文
+								386 文本 中文
+							387 container 主题
+								388 切换按钮 跟随系统, Value: 1
+								389 切换按钮 浅色, Value: 0
+								390 切换按钮 深色, Value: 0
+						391 container 菜单
+							392 container
+								393 标题 指南, Value: 2
+									394 文本 指南
+								395 内容列表
+									396 link 快速开始, Value: 127.0.0.1:4199/rustify-ui/zh/quickstart/
+									397 link Architecture, Value: 127.0.0.1:4199/rustify-ui/zh/architecture/
+									398 link Navigation, Value: 127.0.0.1:4199/rustify-ui/zh/navigation/
+									399 link Workspace, Value: 127.0.0.1:4199/rustify-ui/zh/workspace/
+									400 link Forms, Value: 127.0.0.1:4199/rustify-ui/zh/forms/
+									401 link Languages, formatting and text, Value: 127.0.0.1:4199/rustify-ui/zh/i18n/
+									402 link Data larger than the screen, Value: 127.0.0.1:4199/rustify-ui/zh/data/
+									403 link Theme documents, Value: 127.0.0.1:4199/rustify-ui/zh/themes/
+									404 link Runtime utilities, Value: 127.0.0.1:4199/rustify-ui/zh/utility/
+									405 link Compatibility and capability boundaries (P1 research preview), Value: 127.0.0.1:4199/rustify-ui/zh/compatibility/
+									406 link Component catalogue, Value: 127.0.0.1:4199/rustify-ui/zh/components/
+									407 link Vellum example and framework capabilities, Value: 127.0.0.1:4199/rustify-ui/zh/vellum/
+							408 container
+								409 标题 组件, Value: 2
+									410 文本 组件
+								411 内容列表
+									412 link Button, Value: 127.0.0.1:4199/rustify-ui/zh/components/button/
+									413 link Label, Value: 127.0.0.1:4199/rustify-ui/zh/components/label/
+									414 link Link, Value: 127.0.0.1:4199/rustify-ui/zh/components/link/
+									415 link Icon, Value: 127.0.0.1:4199/rustify-ui/zh/components/icon/
+									416 link Text field, Value: 127.0.0.1:4199/rustify-ui/zh/components/text-field/
+									417 link Text area, Value: 127.0.0.1:4199/rustify-ui/zh/components/text-area/
+									418 link Checkbox, Value: 127.0.0.1:4199/rustify-ui/zh/components/checkbox/
+									419 link Radio, Value: 127.0.0.1:4199/rustify-ui/zh/components/radio/
+									420 link Switch, Value: 127.0.0.1:4199/rustify-ui/zh/components/switch/
+									421 link Select, Value: 127.0.0.1:4199/rustify-ui/zh/components/select/
+									422 link Slider, Value: 127.0.0.1:4199/rustify-ui/zh/components/slider/
+									423 link Progress, Value: 127.0.0.1:4199/rustify-ui/zh/components/progress/
+									424 link Loading, Value: 127.0.0.1:4199/rustify-ui/zh/components/loading/
+									425 link Tooltip, Value: 127.0.0.1:4199/rustify-ui/zh/components/tooltip/
+									426 link Menu, Value: 127.0.0.1:4199/rustify-ui/zh/components/menu/
+									427 link Dialog, Value: 127.0.0.1:4199/rustify-ui/zh/components/dialog/
+									428 link Tabs, Value: 127.0.0.1:4199/rustify-ui/zh/components/tabs/
+									429 link Scroll area, Value: 127.0.0.1:4199/rustify-ui/zh/components/scroll-area/
+									430 link Data table, Value: 127.0.0.1:4199/rustify-ui/zh/components/data-table/
+									431 link Tree, Value: 127.0.0.1:4199/rustify-ui/zh/components/tree/
+									432 link Toast, Value: 127.0.0.1:4199/rustify-ui/zh/components/toast/
+									433 link Number field, Value: 127.0.0.1:4199/rustify-ui/zh/components/number-field/
+									434 link Color field, Value: 127.0.0.1:4199/rustify-ui/zh/components/color-field/
+									435 link Toggle group, Value: 127.0.0.1:4199/rustify-ui/zh/components/toggle-group/
+						436 开合三角标记 本页目录
+							437 文本 本页目录
+						438 container
+							439 标题 Button, Value: 1
+								440 文本 Button
+							441 文本 此页面尚未翻译。
+							442 文本 label as children, variant, size, disabled; a disabled button leaves the tab order and calls nothing
+							443 标题 Example, Value: 2
+								444 文本 Example
+							445 container
+								446 container 交互示例
+									447 container
+										448 按钮 Increment
+										449 按钮 Reset
+										450 按钮 (disabled) Unavailable
+										451 文本 Count: 
+										452 文本 0
+								453 文本 交互示例
+								454 文本 site/src/demos/basics.rs
+								455 标签页组
+									456 标签 (selected) 函数, Value: 1
+									457 标签 (settable, integer) 完整文件, Value: 0
+								458 按钮 复制
+								459 container 函数
+									460 container
+										461 text ///  Buttons request changes to state owned by the application. pub fn button_demo ( ) ->  impl IntoView { let  count  = RwSignal :: new ( 0_ u32 ) ; view! { < div class = " space-y-4 " > < div class = " flex flex-wrap items-center gap-3 " > < Button on_click = move ||  count . update ( | count | * count  += 1 ) > " Increment " < / Button > < Button variant = ButtonVariant :: Outline on_click = move ||  count . set ( 0 ) > " Reset " < / Button > < Button disabled = true  on_click = move ||  count . update ( | count | * count  += 100 ) > " Unavailable " < / Button > < / div > < p class = " text-sm " > " Count:  " < output data - demo - state = " " > { move ||  count . get ( ) } < / output > < / p > < / div > } }
+							462 标题 Capabilities, Value: 2
+								463 文本 Capabilities
+							464 container Component capabilities
+								465 表格
+									466 row
+										467 列标题
+											468 文本 Capability
+										469 列标题
+											470 文本 Support
+										471 列标题
+											472 文本 Details
+									473 row
+										474 行标题
+											475 文本 properties
+										476 单元格
+											477 文本 yes
+										478 单元格
+											479 文本 label as children, variant, size, disabled; a disabled button leaves the tab order and calls nothing
+									480 row
+										481 行标题
+											482 文本 actions
+										483 单元格
+											484 文本 yes
+										485 单元格
+											486 文本 click; the DOM and the region button call the same application action
+									487 row
+										488 行标题
+											489 文本 theme
+										490 单元格
+											491 文本 yes
+										492 单元格
+											493 文本 seven variants and four sizes, all drawn from the scope's tokens
+									494 row
+										495 行标题
+											496 文本 input
+										497 单元格
+											498 文本 yes
+										499 单元格
+											500 文本 pointer and Enter/Space, from either half
+									501 row
+										502 行标题
+											503 文本 accessibility
+										504 单元格
+											505 文本 yes
+										506 单元格
+											507 文本 a native button; the region's has a DOM control with the same name and action
+									508 row
+										509 行标题
+											510 文本 environment
+										511 单元格
+											512 文本 yes
+										513 单元格
+											514 文本 macOS Chrome, strict CSP, WebGL2 region; no inline script or style
+							515 标题 GPU integration, Value: 2
+								516 文本 GPU integration
+							517 container
+								518 text GPU drawing support:  yes . This documentation example uses the DOM component. See the 
+								519 link component catalogue example, Value: github.com/rockie/rustify-ui/tree/main/examples/component-catalog
+								520 文本  for the available DOM and GPU presentations.
+							521 link 编辑此页, Value: github.com/rockie/rustify-ui/edit/main/site/src/lib.rs
+							522 container 上一页 / 下一页
+								523 link 上一页 Vellum example and framework capabilities, Value: 127.0.0.1:4199/rustify-ui/zh/vellum/
+								524 link 下一页 Label, Value: 127.0.0.1:4199/rustify-ui/zh/components/label/
+						525 container 页脚导航
+							526 link 返回首页, Value: 127.0.0.1:4199/rustify-ui/zh/
+			527 container 信息栏容器
+				528 container 信息栏
+					529 container
+						530 文本 “Kimi”已开始调试此浏览器
+						531 按钮 取消
+					532 按钮 关闭
+			533 标签页组
+				534 container
+					535 按钮 收起标签页 (⇧⌘L)
+					536 弹出式按钮 标签页分组
+					537 弹出式按钮 标签页搜索
+				538 container
+					539 滚动区
+					540 滚动区
+						541 标签 (selected, settable, boolean) Button | Rustify UI - 内存用量 - 113 MB, Value: on
+							542 按钮 关闭
+				543 按钮 打开新的标签页
+				544 滑块 垂直标签栏大小调整手柄（可拖动）, Secondary Actions: Decrement, Increment
+	545 关闭按钮
+	546 全屏幕按钮 Help: 此按钮也可以执行缩放窗口的操作, Secondary Actions: 缩放窗口
+	547 最小化按钮
+548 menu bar
+	549 Chrome
+	550 文件
+	551 编辑
+	552 显示
+	553 历史记录
+	554 书签
+	555 个人资料
+	556 标签页
+	557 窗口
+	558 帮助
+
+The focused UI element is 112 标签 (selected) Preferences, Value: 1

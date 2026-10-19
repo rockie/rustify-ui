@@ -1,0 +1,122 @@
+Window: "Button | Rustify UI", App: Safari浏览器.
+0 标准窗口 Button | Rustify UI, ID: SafariWindow?IsSecure=false&UUID=D98525CD-4559-4740-BFF8-344A7E4CC5BE, Secondary Actions: Raise
+	1 分离组
+		2 分离器 (disabled, settable, float) -1
+		3 标签页组
+			4 滚动区
+				5 HTML内容 Description: Button | Rustify UI, URL: 127.0.0.1:4199/rustify-ui/zh/components/button/
+					6 link 跳到正文, Value: 127.0.0.1:4199/rustify-ui/zh/components/button/#content
+					7 container
+						8 link Rustify UI, Value: 127.0.0.1:4199/rustify-ui/zh/
+						9 弹出式按钮 搜索
+						10 摘要 中文, Value: off
+							11 文本 中文
+						12 container 主题
+							13 开关按钮 跟随系统, Value: on
+							14 开关按钮 浅色, Value: off
+							15 开关按钮 深色, Value: off
+					16 container 站点链接
+						17 内容列表
+							18 link GitHub 源码, Value: github.com/rockie/rustify-ui
+					19 摘要 菜单, Value: off
+						20 文本 菜单
+					21 摘要 本页目录, Value: off
+						22 文本 本页目录
+					23 container
+						24 标题 Button, Value: 1
+							25 文本 Button
+						26 文本 此页面尚未翻译。
+						27 container Example
+							28 文本 label as children, variant, size, disabled; a disabled button leaves the tab order and calls nothing
+							29 标题 Example, Value: 2
+								30 文本 Example
+							31 container 交互示例
+								32 container
+									33 按钮 Increment
+									34 按钮 Reset
+									35 按钮 (disabled) Unavailable
+									36 container
+										37 文本 Count: 0
+										38 container 0
+							39 文本 交互示例
+							40 文本 site/src/demos/basics.rs
+							41 标签页组 (selectable)
+								42 标签 (selectable) 函数
+								43 标签 (selected) 完整文件
+							44 按钮 复制
+							45 container 完整文件
+								46 container
+									47 text use leptos::prelude::*; use rustify_components::{id, Button, ButtonVariant, Glyph, Icon, Label, Link, Spinner, TextField}; /// Buttons request changes to state owned by the application. pub fn button_demo() -> impl IntoView { let count = RwSignal::new(0_u32); view! { <div class="space-y-4"> <div class="flex flex-wrap items-center gap-3"> <Button on_click=move || count.update(|count| *count += 1)> "Increment" </Button> <Button variant=ButtonVariant::Outline on_click=move || count.set(0)> "Reset" </Button> <Button disabled=true on_click=move || count.update(|count| *count += 100)> "Unavailable" </Button> </div> <p class="text-sm">"Count: "<output data-demo-state="">{move || count.get()}</output></p> </div> } } /// A label points to a field through a deterministic, scope-specific ID. pub fn label_demo() -> impl IntoView { let field_id = id::next("label-demo-field"); let name = RwSignal::new("Rustify UI".to_string()); view! { <div class="space-y-4"> <div class="max-w-sm space-y-2"> <Label control=field_id.clone()>"Project name"</Label> <TextField id=field_id value=name on_change=move |value| name.set(value) /> </div> <p class="text-sm break-words">"Current name: "<output data-demo-state="">{move || name.get()}</output></p> </div> } } /// A disabled link keeps its label and stops offering a destination. pub fn link_demo() -> impl IntoView { let destination_id = id::next("link-demo-destination"); let disabled = RwSignal::new(false); // This anchor targets the document, so `_self` bypasses the island's local router. view! { <div class="space-y-4"> <div class="flex flex-wrap items-center gap-3"> <Link href=format!("#{destination_id}") disabled=disabled attr:target="_self">"Jump to the destination"</Link> <Button variant=ButtonVariant::Outline on_click=move || disabled.update(|disabled| *disabled = !*disabled)> "Toggle availability" </Button> </div> <p id=destination_id tabindex="-1">"The link points to this paragraph."</p> <p class="text-sm">"Link: "<output data-demo-state="">{move || if disabled.get() { "Unavailable" } else { "Available" }}</output></p> </div> } } /// Named icons are images; decorative icons can omit their label. pub fn icon_demo() -> impl IntoView { let checked = RwSignal::new(true); view! { <div class="space-y-4"> <div class="flex flex-wrap items-center gap-3"> <Show when=move || checked.get() fallback=|| view! { <Icon glyph=Glyph::Close label="Not selected" /> }> <Icon glyph=Glyph::Check label="Selected" /> </Show> <Button variant=ButtonVariant::Outline on_click=move || checked.update(|checked| *checked = !*checked)> "Change icon" </Button> </div> <p class="text-sm">"Icon: "<output data-demo-state="">{move || if checked.get() { "Check" } else { "Close" }}</output></p> </div> } } /// A loading indicator uses the scope's motion preference. pub fn loading_demo() -> impl IntoView { let loading = RwSignal::new(true); view! { <div class="space-y-4"> <div class="flex h-8 items-center gap-3"> <Show when=move || loading.get() fallback=|| ()> <Spinner label="Loading example" /> </Show> <output data-demo-state="">{move || if loading.get() { "Loading" } else { "Ready" }}</output> </div> <Button variant=ButtonVariant::Outline on_click=move || loading.update(|loading| *loading = !*loading)> "Toggle loading" </Button> </div> } }
+							48 标题 Capabilities, Value: 2
+								49 文本 Capabilities
+							50 container Component capabilities
+								51 表格
+									52 row (selectable) Capability
+Support
+Details
+									53 row (selectable)
+										54 单元格 (selectable) properties
+										55 单元格 (selectable) yes
+										56 单元格 (selectable) label as children, variant, size, disabled; a disabled button leaves the tab order and calls nothing
+									57 row (selectable)
+										58 单元格 (selectable) actions
+										59 单元格 (selectable) yes
+										60 单元格 (selectable) click; the DOM and the region button call the same application action
+									61 row (selectable)
+										62 单元格 (selectable) theme
+										63 单元格 (selectable) yes
+										64 单元格 (selectable) seven variants and four sizes, all drawn from the scope's tokens
+									65 row (selectable)
+										66 单元格 (selectable) input
+										67 单元格 (selectable) yes
+										68 单元格 (selectable) pointer and Enter/Space, from either half
+									69 row (selectable)
+										70 单元格 (selectable) accessibility
+										71 单元格 (selectable) yes
+										72 单元格 (selectable) a native button; the region's has a DOM control with the same name and action
+									73 row (selectable)
+										74 单元格 (selectable) environment
+										75 单元格 (selectable) yes
+										76 单元格 (selectable) macOS Chrome, strict CSP, WebGL2 region; no inline script or style
+							77 标题 GPU integration, Value: 2
+								78 文本 GPU integration
+							79 container
+								80 文本 GPU drawing support: yes. This documentation example uses the DOM component. See the 
+								81 link component catalogue example, Value: github.com/rockie/rustify-ui/tree/main/examples/component-catalog
+								82 文本  for the available DOM and GPU presentations.
+						83 link 编辑此页, Value: github.com/rockie/rustify-ui/edit/main/site/src/lib.rs
+						84 container 上一页 / 下一页
+							85 link 上一页 Vellum example and framework capabilities, Value: 127.0.0.1:4199/rustify-ui/zh/vellum/
+							86 link 下一页 Label, Value: 127.0.0.1:4199/rustify-ui/zh/components/label/
+					87 container 页脚导航
+						88 link 返回首页, Value: 127.0.0.1:4199/rustify-ui/zh/
+					89 文本 已复制
+				90 滚动条 (settable, float) 0.4334278
+	91 工具栏
+		92 container Secondary Actions: 移到上一项, 移到下一项, 从工具栏移除
+			93 按钮 Description: 显示边栏, ID: SidebarButton
+			94 菜单按钮 Description: 标签页组选择器, ID: TabGroupPickerButton?TabGroup=
+		95 container BackForwardSegmentedControl
+			96 按钮 Description: 返回, Help: 显示上一页, ID: BackButton
+			97 按钮 (disabled) Description: 前进, Help: 显示下一页, ID: ForwardButton
+		98 container Secondary Actions: 移到上一项, 移到下一项, 从工具栏移除
+			99 按钮 页面菜单, ID: AssistantButton
+			100 按钮 将页面添加到阅读列表, ID: OneStepBookmarkingButton
+			101 文本栏 (settable) Description: 智能搜索栏, Value: 127.0.0.1:4199/rustify-ui/zh/components/button/, ID: WEB_BROWSER_ADDRESS_AND_SEARCH_FIELD
+			102 按钮 翻译可用, ID: TranslationButton
+			103 按钮 重新加载此页面, ID: ReloadButton
+		104 按钮 Description: 共享, ID: ShareButton, Secondary Actions: 移到上一项, 移到下一项, 从工具栏移除
+		105 按钮 Description: 新建标签页, ID: NewTabButton, Secondary Actions: 移到上一项, 移到下一项, 从工具栏移除
+		106 按钮 Description: 标签页概览, ID: TabOverviewButton, Secondary Actions: 移到上一项, 从工具栏移除
+	107 关闭按钮
+	108 全屏幕按钮 Help: 此按钮也可以执行缩放窗口的操作, Secondary Actions: 缩放窗口
+	109 最小化按钮
+110 menu bar
+	111 Safari浏览器
+	112 文件
+	113 编辑
+	114 显示, ID: SafariViewMenu
+	115 历史记录
+	116 书签, ID: SafariBookmarksMenu
+	117 窗口, ID: SafariWindowMenu
+	118 帮助, ID: SafariHelpMenu

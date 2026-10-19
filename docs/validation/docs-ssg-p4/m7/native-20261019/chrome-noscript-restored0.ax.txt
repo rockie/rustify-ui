@@ -1,0 +1,733 @@
+Window: "快速开始 | Rustify UI", App: Google Chrome.
+0 标准窗口 快速开始 | Rustify UI - Google Chrome - Rockie, URL: 127.0.0.1:4199/rustify-ui/zh/quickstart/#verification-commands, Secondary Actions: Raise
+	1 container 快速开始 | Rustify UI - Google Chrome - Rockie, URL: 127.0.0.1:4199/rustify-ui/zh/quickstart/#verification-commands
+		2 container
+			3 工具栏
+				4 按钮 返回
+				5 按钮 (disabled) 前进
+				6 按钮 重新加载
+				7 container
+					8 弹出式按钮 查看网站信息
+					9 文本栏 (settable) 地址和搜索栏, Value: 127.0.0.1:4199/rustify-ui/zh/quickstart/#verification-commands, Placeholder: 问问 Google 或输入网址
+					10 按钮 已拦截此网页上的 JavaScript。
+					11 按钮 为此标签页添加书签
+				12 container
+					13 弹出式按钮 打开 Kimi
+可以访问此网站
+					14 弹出式按钮 扩展程序
+				15 按钮 Rockie
+				16 弹出式按钮 Chrome
+			17 container
+				18 滚动区
+					19 HTML 内容 DevTools, URL: …
+						20 container
+							21 container
+								22 container
+									23 container
+										24 container
+											25 container Main toolbar
+												26 工具栏
+													27 container Select an element in the page to inspect it, Help: Select an element in the page to inspect it - ⌘ ⇧ C
+														28 切换按钮 Select an element in the page to inspect it - ⌘ ⇧ C, Value: 0
+													29 container Toggle device toolbar, Help: Toggle device toolbar - ⌘ ⇧ M
+														30 切换按钮 Toggle device toolbar - ⌘ ⇧ M, Value: 0
+												31 container
+													32 标签页组 Panels
+														33 标签 (settable, integer) Elements, Value: 0
+														34 标签 (selected) Console, Value: 1
+													35 弹出式按钮 More tabs
+												36 工具栏
+													37 按钮 Page: Main
+													38 container Settings, Help: Settings - F1 - ⇧ ?
+														39 按钮 Settings - F1 - ⇧ ?
+													40 弹出式按钮 Customize and control DevTools
+														41 按钮 Customize and control DevTools
+													42 container Close
+														43 按钮 Close
+											44 container Console panel
+												45 container console
+													46 container
+														47 工具栏
+															48 container Show Console sidebar
+																49 按钮 Show Console sidebar
+															50 container Clear console, Help: Clear console - Ctrl L - ⌘ K
+																51 按钮 Clear console - Ctrl L - ⌘ K
+															52 container Collapse all
+																53 按钮 Collapse all
+															54 按钮 JavaScript context: top
+															55 container Create live expression
+																56 按钮 Create live expression
+															57 文本输入区 (settable) Filter
+																58 文本 Filter
+															59 弹出式按钮 Log level: Default levels
+																60 文本 Default levels
+															61 container Some problems no longer generate console messages, but are surfaced in the Issues tab Click to go to the Issues tab
+																62 按钮 Some problems no longer generate console messages, but are surfaced in the Issues tab Click to go to the Issues tab
+															63 container Console settings
+																64 切换按钮 Console settings, Value: 0
+															65 container 0 messages in console
+														66 container
+															67 container
+																68 container
+																	69 文本输入区 (settable) Console prompt, Value: 
+
+										70 container Drawer
+											71 container
+												72 工具栏
+													73 弹出式按钮 More tools
+														74 按钮 More tools
+												75 标签页组
+													76 标签 (settable, integer) Console, Value: 0
+													77 标签 (settable, integer) AI assistance, Value: 0
+													78 标签 (selected) What’s new, Value: 1
+												79 弹出式按钮 More tabs
+												80 工具栏
+													81 container Toggle drawer orientation
+														82 按钮 Toggle drawer orientation
+													83 container Minimize drawer
+														84 按钮 Minimize drawer
+													85 container Close drawer
+														86 按钮 Close drawer
+												87 container What’s new panel
+													88 container whats-new
+														89 container
+															90 文本 New in DevTools (September 2026)
+															91 按钮 See all new features
+															92 标题 DevTools for agents, Value: 3
+																93 链接 DevTools for agents, Help: https://developer.chrome.com/blog/new-in-devtools-152/#devtools-for-agents
+																	94 文本 DevTools for agents
+															95 container
+																96 text DevTools for agents 1.7 improves memory profiling with the  get_heapsnapshot_object_details  tool and native V8 context filtering.
+															97 标题 Soft navigation metrics in Live Metrics, Value: 3
+																98 链接 Soft navigation metrics in Live Metrics, Help: https://developer.chrome.com/blog/new-in-devtools-152/#performance
+																	99 文本 Soft navigation metrics in Live Metrics
+															100 文本 The Live Metrics view in the Performance panel now captures and reports metrics like LCP and INP for client-side soft navigations in single-page applications by default.
+															101 标题 Nested CSS parent selector interactions, Value: 3
+																102 链接 Nested CSS parent selector interactions, Help: https://developer.chrome.com/blog/new-in-devtools-152/#nested-selectors
+																	103 文本 Nested CSS parent selector interactions
+															104 container
+																105 text Hovering over parent selectors highlights matching elements on the page, nested rules respond to Styles tab filtering, and  @nested-declarations  include specificity tooltips.
+							106 文本 Console cleared 
+							107 container
+								108 按钮 Close
+								109 container
+									110 标题 Settings, Value: 1
+										111 文本 Settings
+									112 标签页组
+										113 标签 (selected) Preferences, Value: 1
+										114 标签 (settable, integer) Workspace, Value: 0
+										115 标签 (settable, integer) AI innovations, Value: 0
+										116 标签 (settable, integer) Experiments, Value: 0
+										117 标签 (settable, integer) Ignore list, Value: 0
+										118 标签 (settable, integer) Devices, Value: 0
+										119 标签 (settable, integer) Throttling, Value: 0
+										120 标签 (settable, integer) Locations, Value: 0
+										121 标签 (settable, integer) Shortcuts, Value: 0
+									122 container Preferences panel
+										123 container
+											124 标题 Appearance, Value: 2
+												125 文本 Appearance
+											126 container
+												127 复选框 Show what’s new after each update, Value: 1
+												128 文本 Show what’s new after each update
+											129 文本 Theme:
+											130 弹出式按钮 Theme:, Value: Auto
+												131 (selected) Auto
+											132 container
+												133 container Match DevTools colors to your customized Chrome theme (when enabled)
+													134 复选框 Match Chrome color scheme, Value: 1
+													135 文本 Match Chrome color scheme
+												136 按钮 (disabled) Match DevTools colors to your customized Chrome theme (when enabled)
+											137 文本 Panel layout:
+											138 弹出式按钮 Panel layout:, Value: auto
+												139 (selected) auto
+											140 文本 Language:
+											141 弹出式按钮 Language:, Value: English (US) - English (US)
+												142 (selected) English (US) - English (US)
+											143 container
+												144 复选框 Use ⌘ + 1-9 to switch panels, Value: 0
+												145 文本 Use ⌘ + 1-9 to switch panels
+											146 container
+												147 复选框 Disable paused state overlay, Value: 0
+												148 文本 Disable paused state overlay
+											149 标题 Sources, Value: 2
+												150 文本 Sources
+											151 container
+												152 复选框 Search in anonymous and content scripts, Value: 0
+												153 文本 Search in anonymous and content scripts
+											154 container
+												155 复选框 Automatically reveal files in sidebar, Value: 1
+												156 文本 Automatically reveal files in sidebar
+											157 container
+												158 复选框 Tab moves focus, Value: 0
+												159 文本 Tab moves focus
+											160 container
+												161 复选框 Detect indentation, Value: 1
+												162 文本 Detect indentation
+											163 container
+												164 复选框 Autocompletion, Value: 1
+												165 文本 Autocompletion
+											166 container
+												167 复选框 Auto closing brackets, Value: 1
+												168 文本 Auto closing brackets
+											169 container
+												170 复选框 Bracket matching, Value: 1
+												171 文本 Bracket matching
+											172 container
+												173 复选框 Code folding, Value: 1
+												174 文本 Code folding
+											175 文本 Show whitespace characters:
+											176 弹出式按钮 Show whitespace characters:, Value: None
+												177 (selected) None
+											178 container
+												179 复选框 Word wrap, Value: 0
+												180 文本 Word wrap
+											181 container
+												182 复选框 Variable values inline, Value: 1
+												183 文本 Variable values inline
+											184 container
+												185 复选框 Focus Sources panel when triggering a breakpoint, Value: 1
+												186 文本 Focus Sources panel when triggering a breakpoint
+											187 container
+												188 复选框 Automatically pretty print minified sources, Value: 1
+												189 文本 Automatically pretty print minified sources
+											190 container
+												191 复选框 Allow scrolling past end of file, Value: 1
+												192 文本 Allow scrolling past end of file
+											193 container
+												194 container When debugging Wasm with debug information, try to skip wasm bytecode
+													195 复选框 Wasm auto-stepping bytecode, Value: 1
+													196 文本 Wasm auto-stepping bytecode
+												197 按钮 (disabled) When debugging Wasm with debug information, try to skip wasm bytecode
+											198 文本 Default indentation
+											199 弹出式按钮 Default indentation, Value: 4 spaces
+												200 (selected) 4 spaces
+											201 container
+												202 复选框 JavaScript source maps, Value: 1
+												203 文本 JavaScript source maps
+											204 container
+												205 复选框 CSS source maps, Value: 1
+												206 文本 CSS source maps
+											207 container
+												208 container Example resources are source maps. Disabled by default for security reasons.
+													209 复选框 Allow loading remote file path resources in DevTools, Value: 0
+													210 文本 Allow loading remote file path resources in DevTools
+												211 按钮 (disabled) Example resources are source maps. Disabled by default for security reasons.
+											212 标题 Elements, Value: 2
+												213 文本 Elements
+											214 container
+												215 复选框 User agent shadow DOM, Value: 0
+												216 文本 User agent shadow DOM
+											217 container
+												218 复选框 Word wrap, Value: 1
+												219 文本 Word wrap
+											220 container
+												221 复选框 HTML comments, Value: 1
+												222 文本 HTML comments
+											223 container
+												224 复选框 Reveal DOM node on hover, Value: 1
+												225 文本 Reveal DOM node on hover
+											226 container
+												227 复选框 Detailed inspect tooltip, Value: 1
+												228 文本 Detailed inspect tooltip
+											229 container
+												230 复选框 Show animation styles only when the Animations tab is open, Value: 1
+												231 文本 Show animation styles only when the Animations tab is open
+											232 container
+												233 复选框 Collapse non-contributing CSS rules, Value: 0
+												234 文本 Collapse non-contributing CSS rules
+											235 container
+												236 复选框 Show inactive CSS rules, Value: 0
+												237 文本 Show inactive CSS rules
+											238 container
+												239 复选框 CSS documentation tooltip, Value: 1
+												240 文本 CSS documentation tooltip
+											241 container
+												242 复选框 Rulers on hover, Value: 0
+												243 文本 Rulers on hover
+											244 container
+												245 复选框 Value: 0, Advanced Perceptual Contrast Algorithm (APCA) replacing previous contrast ratio and AA/AAA guidelines
+												246 文本 Advanced Perceptual Contrast Algorithm (APCA) replacing previous contrast ratio and AA/AAA guidelines
+											247 标题 Network, Value: 2
+												248 文本 Network
+											249 container
+												250 container By default generated HAR logs are sanitized and don’t include Cookie, Set-Cookie, or Authorization HTTP headers. When this setting is enabled, options to export/copy HAR with sensitive data are provided.
+													251 复选框 Allow to generate HAR with sensitive data, Value: 0
+													252 文本 Allow to generate HAR with sensitive data
+												253 按钮 (disabled) By default generated HAR logs are sanitized and don’t include Cookie, Set-Cookie, or Authorization HTTP headers. When this setting is enabled, options to export/copy HAR with sensitive data are provided.
+											254 container
+												255 复选框 Color-code resource types, Value: 0
+												256 文本 Color-code resource types
+											257 container
+												258 复选框 Group network log by frame, Value: 0
+												259 文本 Group network log by frame
+											260 container
+												261 复选框 Request blocking and throttling, Value: 0
+												262 文本 Request blocking and throttling
+											263 container
+												264 container Disabling the network cache will simulate a network experience similar to a first time visitor
+													265 复选框 Disable cache while DevTools is open, Value: 0
+													266 文本 Disable cache while DevTools is open
+												267 按钮 (disabled) Disabling the network cache will simulate a network experience similar to a first time visitor
+											268 container
+												269 复选框 Keep log, Value: 0
+												270 文本 Keep log
+											271 container
+												272 复选框 Record network log, Value: 1
+												273 文本 Record network log
+											274 container
+												275 复选框 Force ad blocking on this site, Value: 0
+												276 文本 Force ad blocking on this site
+											277 标题 Performance, Value: 2
+												278 文本 Performance
+											279 文本 Flamechart navigation:
+											280 弹出式按钮 Flamechart navigation:, Value: Classic
+												281 (selected) Classic
+											282 container
+												283 复选框 Chrome frame in Layers view, Value: 1
+												284 文本 Chrome frame in Layers view
+											285 container
+												286 复选框 Invalidation tracking, Value: 0
+												287 文本 Invalidation tracking
+											288 container
+												289 复选框 Show all events, Value: 0
+												290 文本 Show all events
+											291 container
+												292 复选框 Timeline debug mode (trace event details, etc.), Value: 0
+												293 文本 Timeline debug mode (trace event details, etc.)
+											294 container
+												295 复选框 Enable soft navigation performance monitoring, Value: 1
+												296 文本 Enable soft navigation performance monitoring
+											297 标题 Console, Value: 2
+												298 文本 Console
+											299 container
+												300 复选框 AI summaries for console messages, Value: 1
+												301 文本 AI summaries for console messages
+											302 container
+												303 复选框 Network messages, Value: 1
+												304 文本 Network messages
+											305 container
+												306 复选框 Selected context only, Value: 0
+												307 文本 Selected context only
+											308 container
+												309 复选框 Timestamps, Value: 0
+												310 文本 Timestamps
+											311 container
+												312 复选框 Autocomplete from history, Value: 1
+												313 文本 Autocomplete from history
+											314 container
+												315 复选框 Accept autocomplete suggestion on Enter, Value: 0
+												316 文本 Accept autocomplete suggestion on Enter
+											317 container
+												318 复选框 Group similar messages, Value: 1
+												319 文本 Group similar messages
+											320 container
+												321 复选框 CORS errors in console, Value: 1
+												322 文本 CORS errors in console
+											323 container
+												324 复选框 Eager evaluation, Value: 1
+												325 文本 Eager evaluation
+											326 container
+												327 复选框 Treat code evaluation as user action, Value: 1
+												328 文本 Treat code evaluation as user action
+											329 container
+												330 复选框 Automatically expand console.trace() messages, Value: 1
+												331 文本 Automatically expand console.trace() messages
+											332 container
+												333 复选框 Keep log on navigation, Value: 0
+												334 文本 Keep log on navigation
+											335 container
+												336 复选框 Custom formatters, Value: 0
+												337 文本 Custom formatters
+											338 container
+												339 复选框 Log XMLHttpRequests, Value: 0
+												340 文本 Log XMLHttpRequests
+											341 标题 Extension, Value: 2
+												342 文本 Extension
+											343 文本 Link handling
+											344 弹出式按钮 (disabled) Link handling, Value: Auto
+											345 标题 Persistence, Value: 2
+												346 文本 Persistence
+											347 container
+												348 复选框 Local overrides, Value: 0
+												349 文本 Local overrides
+											350 标题 Debugger, Value: 2
+												351 文本 Debugger
+											352 container
+												353 复选框 Disable JavaScript, Value: 0
+												354 文本 Disable JavaScript
+											355 container
+												356 复选框 Disable async stack traces, Value: 0
+												357 文本 Disable async stack traces
+											358 标题 Global, Value: 2
+												359 文本 Global
+											360 container
+												361 复选框 Search as you type, Value: 1
+												362 文本 Search as you type
+											363 container
+												364 复选框 Auto-open DevTools for popups, Value: 0
+												365 文本 Auto-open DevTools for popups
+											366 标题 Account, Value: 2
+												367 文本 Account
+											368 container
+												369 图像 Account avatar
+												370 text Signed in to Chrome as: wsjn.hk@gmail.com
+												371 container
+													372 复选框 Save DevTools settings to your Google account, Value: 0
+													373 文本 Save DevTools settings to your Google account
+												374 图像 Google Developer Program
+												375 按钮 Sign up
+											376 按钮 Restore defaults and reload
+				377 滚动区
+					378 HTML 内容 快速开始 | Rustify UI, URL: 127.0.0.1:4199/rustify-ui/zh/quickstart/#verification-commands
+						379 link 跳到正文, Value: 127.0.0.1:4199/rustify-ui/zh/quickstart/#content
+						380 container
+							381 link Rustify UI, Value: 127.0.0.1:4199/rustify-ui/zh/
+							382 container 站点链接
+								383 内容列表
+									384 link GitHub 源码, Value: github.com/rockie/rustify-ui
+							385 弹出式按钮 (disabled) 搜索 Ctrl / Cmd K
+							386 开合三角标记 中文
+								387 文本 中文
+						388 container 菜单
+							389 container
+								390 标题 指南, Value: 2
+									391 文本 指南
+								392 内容列表
+									393 link 快速开始, Value: 127.0.0.1:4199/rustify-ui/zh/quickstart/
+									394 link Architecture, Value: 127.0.0.1:4199/rustify-ui/zh/architecture/
+									395 link Navigation, Value: 127.0.0.1:4199/rustify-ui/zh/navigation/
+									396 link Workspace, Value: 127.0.0.1:4199/rustify-ui/zh/workspace/
+									397 link Forms, Value: 127.0.0.1:4199/rustify-ui/zh/forms/
+									398 link Languages, formatting and text, Value: 127.0.0.1:4199/rustify-ui/zh/i18n/
+									399 link Data larger than the screen, Value: 127.0.0.1:4199/rustify-ui/zh/data/
+									400 link Theme documents, Value: 127.0.0.1:4199/rustify-ui/zh/themes/
+									401 link Runtime utilities, Value: 127.0.0.1:4199/rustify-ui/zh/utility/
+									402 link Compatibility and capability boundaries (P1 research preview), Value: 127.0.0.1:4199/rustify-ui/zh/compatibility/
+									403 link Component catalogue, Value: 127.0.0.1:4199/rustify-ui/zh/components/
+									404 link Vellum example and framework capabilities, Value: 127.0.0.1:4199/rustify-ui/zh/vellum/
+							405 container
+								406 标题 组件, Value: 2
+									407 文本 组件
+								408 内容列表
+									409 link Button, Value: 127.0.0.1:4199/rustify-ui/zh/components/button/
+									410 link Label, Value: 127.0.0.1:4199/rustify-ui/zh/components/label/
+									411 link Link, Value: 127.0.0.1:4199/rustify-ui/zh/components/link/
+									412 link Icon, Value: 127.0.0.1:4199/rustify-ui/zh/components/icon/
+									413 link Text field, Value: 127.0.0.1:4199/rustify-ui/zh/components/text-field/
+									414 link Text area, Value: 127.0.0.1:4199/rustify-ui/zh/components/text-area/
+									415 link Checkbox, Value: 127.0.0.1:4199/rustify-ui/zh/components/checkbox/
+									416 link Radio, Value: 127.0.0.1:4199/rustify-ui/zh/components/radio/
+									417 link Switch, Value: 127.0.0.1:4199/rustify-ui/zh/components/switch/
+									418 link Select, Value: 127.0.0.1:4199/rustify-ui/zh/components/select/
+									419 link Slider, Value: 127.0.0.1:4199/rustify-ui/zh/components/slider/
+									420 link Progress, Value: 127.0.0.1:4199/rustify-ui/zh/components/progress/
+									421 link Loading, Value: 127.0.0.1:4199/rustify-ui/zh/components/loading/
+									422 link Tooltip, Value: 127.0.0.1:4199/rustify-ui/zh/components/tooltip/
+									423 link Menu, Value: 127.0.0.1:4199/rustify-ui/zh/components/menu/
+									424 link Dialog, Value: 127.0.0.1:4199/rustify-ui/zh/components/dialog/
+									425 link Tabs, Value: 127.0.0.1:4199/rustify-ui/zh/components/tabs/
+									426 link Scroll area, Value: 127.0.0.1:4199/rustify-ui/zh/components/scroll-area/
+									427 link Data table, Value: 127.0.0.1:4199/rustify-ui/zh/components/data-table/
+									428 link Tree, Value: 127.0.0.1:4199/rustify-ui/zh/components/tree/
+									429 link Toast, Value: 127.0.0.1:4199/rustify-ui/zh/components/toast/
+									430 link Number field, Value: 127.0.0.1:4199/rustify-ui/zh/components/number-field/
+									431 link Color field, Value: 127.0.0.1:4199/rustify-ui/zh/components/color-field/
+									432 link Toggle group, Value: 127.0.0.1:4199/rustify-ui/zh/components/toggle-group/
+						433 container
+							434 开合三角标记 本页目录
+								435 文本 本页目录
+							436 container 本页目录
+								437 内容列表
+									438 link 准备工具, Value: 127.0.0.1:4199/rustify-ui/zh/quickstart/#prerequisites
+									439 link 构建并预览示例, Value: 127.0.0.1:4199/rustify-ui/zh/quickstart/#build-and-preview-an-example
+									440 link 运行验证, Value: 127.0.0.1:4199/rustify-ui/zh/quickstart/#verification-commands
+									441 link 修改组件的 class, Value: 127.0.0.1:4199/rustify-ui/zh/quickstart/#changing-a-components-classes
+									442 link 在应用中使用 Tailwind v4, Value: 127.0.0.1:4199/rustify-ui/zh/quickstart/#using-tailwind-v4-in-your-app
+									443 link 不使用 GPU region 的 DOM 应用, Value: 127.0.0.1:4199/rustify-ui/zh/quickstart/#a-dom-application-without-gpu-regions
+									444 link 编写 GPU region, Value: 127.0.0.1:4199/rustify-ui/zh/quickstart/#writing-a-gpu-region
+									445 link 使用 DOM 组件, Value: 127.0.0.1:4199/rustify-ui/zh/quickstart/#using-the-dom-components
+									446 link 同一页面上的多个应用, Value: 127.0.0.1:4199/rustify-ui/zh/quickstart/#more-than-one-application-on-a-page
+									447 link 当前预览的边界, Value: 127.0.0.1:4199/rustify-ui/zh/quickstart/#limits-of-the-preview
+						448 container
+							449 标题 快速开始, Value: 1
+								450 文本 快速开始
+							451 标题 准备工具, Value: 2
+								452 文本 准备工具
+							453 内容列表
+								454 container
+									455 AXListMarker • 
+									456 text 安装并激活  mise （2026.9.2 或更新版本），在仓库根运行  mise install 。它按  mise.toml  安装稳定版 Rust 1.99.0、 rustfmt 、 clippy 、 wasm32-unknown-unknown  target、编译缓存 mbx 1.15.0 和 Tailwind 独立 CLI 4.1.13。组件样式生成不需要 Node。示例自带 Tailwind 输入时， build-web  也使用这个 CLI； RUSTIFY_TAILWIND=<path>  可指定同版本的另一个可执行文件。
+								457 container
+									458 AXListMarker • 
+									459 text Rust 安装后，mise 执行  scripts/link-libllvm.sh ，在  rust-lld  旁建立  libLLVM  链接。mbx 直接启动工具链 Cargo，不经过 rustup 代理；缺少链接时 wasm 链接器无法加载 LLVM。 mbx xtask doctor  会报告这个问题。
+								460 container
+									461 AXListMarker • 
+									462 text 浏览器测试另需 Node 26 和 npm：运行  npm ci ，再运行  npx playwright install chromium 。
+								463 container
+									464 AXListMarker • 
+									465 文本 手动验收使用 macOS 上的 Google Chrome。
+							466 container
+								467 text mbx xtask doctor  检查这些工具的状态，不修改环境。
+							468 标题 构建并预览示例, Value: 2
+								469 文本 构建并预览示例
+							470 文本 在仓库根运行：
+							471 container
+								472 文本 Shell
+								473 container
+									474 text mbx  xtask build-web  -- example  fusion-basic  -- release mbx  xtask build-web  -- example  property-workbench  -- release mbx  xtask build-web  -- example  component-catalog  -- release mbx  xtask serve  -- example  fusion-basic  -- release
+							475 container
+								476 text 最后一条命令输出  http://127.0.0.1:<port>/ 。打开地址，等待状态变为  ready ，再操作 DOM 控件和 GPU region。修改源码后重新构建并刷新； serve  只提供已有产物，不负责重建。
+							477 文本 需要子路径、部署故障或体积报告时，使用现有参数：
+							478 container
+								479 文本 Shell
+								480 container
+									481 text mbx  xtask build-web  -- example  fusion-basic  -- release  -- base  /tools/demo/ mbx  xtask serve  -- example  fusion-basic  -- release  -- base  /tools/demo/  -- port  4173 mbx  xtask serve  -- example  fusion-basic  -- release  -- csp  no-wasm mbx  xtask serve  -- example  fusion-basic  -- release  -- fault  missing:makepad_widgets/resources/IBMPlexSans-Text.ttf mbx  xtask report-size  -- example  fusion-basic  -- release mbx  xtask report-size  -- example  fusion-basic  -- release  -- compressed
+							482 container
+								483 text serve --fault  在运行中的产物上注入一种故障： missing:<path> 、 corrupt:<path> 、 truncated:<path>  或  stale-bridge 。服务启动后也接受  GET <base>__fault/<spec> ；访问  .../none  停止注入，浏览器测试用它切换故障而不重启服务。
+							484 container
+								485 text build-web  使用 fork 内的  cargo-makepad ，以稳定工具链、内置 wasm target 和单线程 wasm 构建，并在进程内运行 wasm-bindgen。它通过宿主解释器从 wasm 提取静态消息桥，复制运行期脚本和示例页面，写入包含体积报告的  build-manifest.json 。产物位于  target/makepad-wasm-app/release/<example>/ ，可作为静态目录部署。
+							486 container
+								487 link Vellum 设计编辑器, Value: github.com/rockie/rustify-ui/tree/main/examples/vellum
+								488 text  使用  mbx xtask build-web --example vellum --release ；
+								489 link 集成指南, Value: 127.0.0.1:4199/rustify-ui/zh/vellum/
+								490 文本  解释它的绘制、编辑与持久化路径。
+							491 container
+								492 link Theme Studio 主题编辑器, Value: github.com/rockie/rustify-ui/blob/main/examples/theme-studio/README.md
+								493 文本  的入口为：
+							494 container
+								495 文本 Shell
+								496 container
+									497 text mbx  xtask build-web  -- example  theme-studio  -- release mbx  xtask serve  -- example  theme-studio  -- release
+							498 container
+								499 文本 选择预设，编辑浅色和深色值，对比 DOM/GPU 预览，再导出供动态应用使用的 JSON 或供静态页面使用的 CSS。
+								500 link 主题指南, Value: 127.0.0.1:4199/rustify-ui/zh/themes/
+								501 文本  介绍两种导出格式、字体资源和 Rust 集成片段；示例 README 说明本地存储、子路径托管与浏览器检查。
+							502 标题 运行验证, Value: 2
+								503 文本 运行验证
+							504 container
+								505 文本 Shell
+								506 container
+									507 text mbx  test  -- locked  -- workspace  -- exclude  rustify-docs  -- exclude  rustify-docs-cli  -- lib  -- bins mbx  xtask css  -- check mbx  clippy  -- locked  -- workspace  -- exclude  rustify-docs  -- exclude  rustify-docs-cli  -- all-targets  --  -D warnings mbx  test  -- locked  - p  rustify-docs mbx  test  -- locked  - p  rustify-docs-cli cargo  fmt  -- all  --  --check mbx  xtask sources verify mbx  test  -- locked  - p  rustify-ui  -- lib mbx  test  -- locked  - p  rustify-ui  -- features  gpu  -- lib mbx  test  -- locked  - p  rustify-ui  -- no-default-features  -- features  ssr  -- lib mbx  xtask docs-verify  -- group  features npx  playwright test  - c  playwright.docs.config.ts  -- project = dom-only npx  playwright test  - c  playwright.docs.config.ts  -- project = docs-root npx  playwright test  -- project = component-catalog RUSTIFY_TIER = evidence npx  playwright test  -- project = budget ( cd  makepad && mbx  test  - p  cargo-makepad ) mbx  xtask verify  -- suite  p3
+							508 container
+								509 text 文档库与 CLI 使用宿主 SSR，须分别测试，避免与工作区 CSR feature 合并。 --bins  将 xtask 和示例二进制一并纳入。文档站还有  docs-subpath 、 docs-meta  项目； docs-dev  检查  rustify-docs dev 。
+							510 container
+								511 text 浏览器检查分为默认的 regression 和  RUSTIFY_TIER=evidence  两层。前者检查行为，后者执行完整次数的预算、长时间运行、内存和空闲开销测量； .github/workflows/evidence.yml  支持手动和每周运行。每次指定一个 project，避免同时启动整个测试集造成内存不足。
+							512 container
+								513 text verify  还会双构建、运行各浏览器项目，并列出 VoiceOver、真实拼音输入、示例对照和缩放走查等人工记录。没有证据的项目标为缺失，不算通过。
+							514 标题 修改组件的 class, Value: 2
+								515 文本 修改组件的 class
+							516 文本 组件 crate 使用无前缀的 Tailwind v4 utility，并提交生成后的样式表，因此 wasm 构建无需 Node。改动组件 class 后运行：
+							517 container
+								518 文本 Shell
+								519 container
+									520 text mbx  xtask css mbx  xtask css  -- check
+							521 container
+								522 text 第一条更新  crates/rustify-components/css/rustify.css ，第二条核对生成结果。增加 class 而未重新生成会导致缺少规则。 build-web  将该样式表复制到依赖组件 crate 的示例；示例自带 Tailwind 输入时使用下一节的构建路径。组件样式表只包含组件用到的 class。
+							523 container
+								524 text 应用传入的  class  通过  tw_merge  与组件 class 合并，调用方在后： p-6  会替换组件的  p-4 ，同状态下的  hover:bg-accent  替换原 hover 背景，其他类别保留。
+							525 container
+								526 text SDK 样式不带 Preflight 或裸元素选择器，主题 token 只写在 scope 根节点上。 dark  绑定 SDK 的 scope 属性，不会因宿主页的  .dark  class 而改变主题。不过 class 名与宿主页共享；宿主页自己的 Tailwind 产物再叠加  rustify.css  时，同名 utility 会出现两份规则。
+							527 标题 在应用中使用 Tailwind v4, Value: 2
+								528 文本 在应用中使用 Tailwind v4
+							529 container
+								530 text 把  tailwind.css  放在应用的  Cargo.toml  旁。 build-web  用固定版本的独立 CLI 编译并压缩到产物的  tailwind.css ；缺少 CLI 或版本不符会在 wasm 构建前失败。修改应用 class 后用同一个构建命令更新 wasm 和 CSS，不提交生成产物。
+							531 container
+								532 text examples/component-catalog/tailwind.css  的输入方式如下，路径相对于该输入文件：
+							533 container
+								534 文本 CSS
+								535 container
+									536 text @ import " tailwindcss/theme.css "  layer ( theme ) ; @ import " tailwindcss/utilities.css "  layer ( utilities )  source ( none ) ; /*  整个页面由应用拥有时，才考虑导入 preflight.css 到 base 层。  */ @ import " ../../crates/rustify-components/css/sdk.css " ; @ source  ". / src";
+							537 container
+								538 text 页面用这个产物替换  rustify.css ，通过外部  <link>  引入。严格的  style-src 'self'  策略不允许  <style> ：
+							539 container
+								540 文本 HTML
+								541 container
+									542 text < link rel = " stylesheet " href = " ./tailwind.css " >
+							543 内容列表
+								544 container
+									545 AXListMarker • 
+									546 text sdk.css  包含组件源文件、 dark  variant、token utility、原生样式和默认 scope token，不自行导入 Tailwind；应用决定使用哪些 Tailwind 层。
+								547 container
+									548 AXListMarker • 
+									549 text source(none)  必须保留。CLI 在仓库根运行，省略后会把全仓看起来像 class 的词语都生成规则。用  @source  指定输入；被指定源码中的注释也参与扫描，例如注释里的  table  会生成  .table 。
+								550 container
+									551 AXListMarker • 
+									552 文本 Preflight 会重置整页元素。宿主页上有其他所有者的内容时不要导入；SDK 自带样式始终不含它。
+							553 container
+								554 text 颜色 utility（ bg- 、 text- 、 border- 、 ring- 、 fill-  等）可用主题名： background 、 foreground 、 primary 、 primary-foreground 、 secondary 、 secondary-foreground 、 muted 、 muted-foreground 、 accent 、 accent-foreground 、 destructive 、 destructive-foreground 、 card 、 popover 、 success 、 warning 、 border 、 input  和  ring ，也支持  bg-primary/90  这类透明度。
+							555 container
+								556 text rounded-sm 、 rounded-md 、 rounded-lg  随 scope 的  --radius  变化；颜色最终解析为  var(--primary)  等值，会跟随 scope 和内部的  ThemeOverride ，离开已挂载 scope 则没有这些值。传统 scope 中  p-4  仍是 Tailwind 的  1rem ； --spacing  是手写布局 CSS 的间距，不是 Tailwind 单位。
+							557 container
+								558 text dark:  表示位于  [data-rustify-scope][data-theme="dark"]  内，跟随  ThemedScope  的显式模式，不跟随页面  .dark  或  prefers-color-scheme ，也不作用于 scope 外。
+							559 container
+								560 text 使用版本化主题文档时，在  sdk.css  后紧接着导入 
+								561 link theme-v4.css, Value: github.com/rockie/rustify-ui/blob/main/crates/rustify-components/css/theme-v4.css
+								562 text 。 ThemeScope  在根节点提供文档解析后的颜色、字体、间距、圆角和阴影；这些 scope 的 utility 间距读取  --rustify-unit ， --layout-gap  仍是独立布局值。 ThemedScope  保留旧值回退，两种 provider 的显式深色模式都适用于  dark: 。
+							563 container
+								564 text 通过  import_json  载入 JSON，用宿主根字号和减少动效偏好构造  font_context ，解析得到  Arc<ResolvedTheme> ，再传给  ThemeScope  和 GPU region 的类型化 props。局部补丁使用  ThemeBoundary 。
+								565 link 挂载示例, Value: 127.0.0.1:4199/rustify-ui/zh/themes/#mount-a-browser-scope
+								566 文本  给出完整代码和样式表顺序。运行中的 provider 拥有 CSSOM 值，应更新它的解析后信号；粘贴静态导出 CSS 无法替换这些运行期值。
+							567 container
+								568 text 组件的  class  继续按调用方在后合并。同一种类、同一状态的 class 被替换，其他 class 增加到结果中。
+							569 container
+								570 text 宿主页已有 Tailwind 构建时，在自己的 Tailwind 导入后接入  sdk.css ，只链接一个最终产物，不再额外链接  rustify.css 。同一构建中，最后声明的  @custom-variant dark  影响所有 class，最后声明的  @theme  值决定同名颜色，包括组件的 utility。宿主若需要不同含义的  dark  或  bg-primary ，必须先解决这两个定义的冲突。
+							571 文本 SDK 自带自身控件使用的界面文案，应用业务词汇由应用维护：
+							572 container
+								573 文本 Rust
+								574 container
+									575 text let  locale  = rustify_ui :: provide_locale ( Locale :: English ) ; locale . text ( Message :: Retry )
+							576 container
+								577 text 在 scope 根调用一次  provide_locale ； text  会跟踪语言变化。 format_number  和  format_date  接受应用构造的 Intl 参数，因为数值含义决定展示格式。参见
+								578 link 本地化指南, Value: 127.0.0.1:4199/rustify-ui/zh/i18n/
+								579 文本 。
+							580 标题 不使用 GPU region 的 DOM 应用, Value: 2
+								581 文本 不使用 GPU region 的 DOM 应用
+							582 container
+								583 text rustify-ui  和  rustify-components  默认仅使用 DOM，不链接 Makepad。 GpuRegion 、 RegionApp 、 RegionId 、 RegionState 、 makepad_widgets  只在  gpu  feature 下可用；挂载、浮层、toast、任务、监听、延迟操作、尺寸观察、路由、主题和 DOM 组件沿用相同接口。
+							584 container
+								585 text 独立应用需要稳定版 Rust、 wasm32-unknown-unknown  target 和 SDK 固定版本的 wasm-bindgen CLI，不需要本仓的 mbx、xtask、Node 或 Makepad。
+							586 container
+								587 text 应用是一个导出启动函数的  cdylib ，另用小型宿主程序把 SDK loader 和样式表写到 wasm 旁。
+								588 link 完整消费示例, Value: github.com/rockie/rustify-ui/tree/main/tests/dom-only/consumer
+								589 text  的  Cargo.toml  使用本仓 path 依赖，
+								590 link 资源导出程序, Value: github.com/rockie/rustify-ui/blob/main/tests/dom-only/consumer/src/bin/export-dom-assets.rs
+								591 文本  负责输出资源。在仓库外，两个 SDK 依赖改为已验证的 Git 来源：
+							592 container
+								593 文本 TOML
+								594 container
+									595 text rustify-ui = { git = " https://github.com/rockie/rustify-ui " , rev = " 1b81de25f23a25702f61dbfd3d0ecdfe323d4d44 " } rustify-components = { git = " https://github.com/rockie/rustify-ui " , rev = " 1b81de25f23a25702f61dbfd3d0ecdfe323d4d44 " }
+							596 container
+								597 text 这个来源已通过本地 Git 与 GitHub 的独立消费构建和 DOM 浏览器检查，不依赖仓根 patches。保留示例中其他依赖版本，让 Cargo 首次解析 Git 依赖，再提交生成的  Cargo.lock 。构建命令为：
+							598 container
+								599 文本 Shell
+								600 container
+									601 text cargo  install wasm-bindgen-cli  -- version  0.2.128  -- locked RUSTFLAGS = " $ { RUSTFLAGS :+ $ RUSTFLAGS } --cfg=web_sys_unstable_apis " \ cargo  build  -- locked  -- release  -- target  wasm32-unknown-unknown  -- lib wasm-bindgen  target/wasm32-unknown-unknown/release/dom_consumer.wasm  \   -- target  web  -- out-name  app  -- out-dir  public/pkg cargo  run  -- locked  -- bin  export-dom-assets
+							602 文本 构建后得到以下静态目录。保留完整的 pkg 目录及其中的 snippets，SDK 运行期代码位于其中：
+							603 container
+								604 文本 text
+								605 container
+									606 text public/   index.html   app.js   pkg/     app.js     app_bg.wasm     snippets/   rustify-dom-loader.js   rustify-runtime.css   rustify.css
+							607 文本 页面先启动一个实例，再调用应用自己导出的挂载函数，例如：
+							608 container
+								609 文本 JavaScript
+								610 container
+									611 text import { boot } from " ./rustify-dom-loader.js " ; const runtime = await boot ( { glue_url : " ./pkg/app.js " , wasm_url : " ./pkg/app_bg.wasm " } ) ; runtime . app . my_app_mount ( " app " ) ;
+							612 container
+								613 text glue_url 、 wasm_url  相对于 loader 解析。 boot  检查运行期协议并先启动宿主；更早调用  mount （例如放在  #[wasm_bindgen(start)]  中）会得到  RuntimeNotStarted 。输出 loader 的宿主程序与 wasm 必须使用同一 SDK 版本。 web_sys_unstable_apis  使  clipboard::available()  可用，每次复制和粘贴仍由浏览器权限决定。
+							614 container
+								615 text 仓库内可用  mbx xtask build-dom --manifest-path tests/dom-only/consumer/Cargo.toml  构建到  target/dom/dom-consumer/ ，用  mbx xtask serve --dir target/dom/dom-consumer  预览，再运行  mbx xtask docs-verify --group features  与  npx playwright test -c playwright.docs.config.ts --project=dom-only 。
+							616 标题 编写 GPU region, Value: 2
+								617 文本 编写 GPU region
+							618 container
+								619 text 已有 GPU 示例启用 SDK 的  gpu  feature：
+							620 container
+								621 文本 TOML
+								622 container
+									623 text rustify-ui = { path = " ../../crates/rustify-ui " , features = [ " gpu " ] }
+							624 container
+								625 text GPU 应用通过  mbx xtask build-web  构建，由  web/loader.js  启动，并向 Makepad 与 SDK 运行期提供同一宿主。
+							626 container
+								627 text Region 是实现  RegionApp  的 Makepad app：通过  script_mod!  声明控件树，用  apply_props  投影宿主状态，在事件处理中把类型化动作放入 outbox。宿主用  GpuRegion  挂载，传入 props 的  Signal  和动作回调；信号变化在 region 的下一个安全点应用，动作在产生它的 pump 结束后送达。
+							628 container
+								629 文本 Rust
+								630 container
+									631 text impl RegionApp  for CounterRegion { type Props =  CounterProps ; type Action =  CounterAction ; fn script_mod ( vm : & mut  ScriptVm ) ->  ScriptValue { makepad_widgets :: script_mod ( vm ) ; self :: script_mod ( vm ) } fn apply_props ( & mut self ,  cx : & mut  Cx,  props : & CounterProps ) { self . ui . label ( cx , ids! ( counter_label ) ) . set_text ( cx , & format! ( " Count:  {} " ,  props . count ) ) ; self . ui . redraw ( cx ) ; } fn handle_event ( & mut self ,  cx : & mut  Cx,  event : & Event,  outbox : & mut Vec < CounterAction > ) { if let Event :: Actions ( actions ) =  event  { if self . ui . button ( cx , ids! ( increment_button ) ) . clicked ( actions ) {                 outbox . push ( CounterAction :: Increment ) ; } } self . ui . handle_event ( cx ,  event , & mut Scope :: empty ( ) ) ; } }
+							632 container
+								633 文本 Rust
+								634 container
+									635 text view! { < GpuRegion app = PhantomData :: < CounterRegion >  props = props on_action = on_action class = " gpu-region " / > }
+							636 标题 使用 DOM 组件, Value: 2
+								637 文本 使用 DOM 组件
+							638 container
+								639 text DOM 组件可从  rustify_ui::components  使用。控件值由应用控制：用户操作提出修改请求，应用状态决定最终显示值。应用拒绝修改时，控件恢复有效值。
+							640 container
+								641 文本 Rust
+								642 container
+									643 text view! { < TextField         label = " name "         value = Signal :: derive ( move ||  current . get ( ) . map ( | o | o . name ) . unwrap_or_default ( ) )         on_input = move | value | { rename ( value ) ; }         read_only = Signal :: derive ( move ||  current . get ( ) . is_some_and ( | o | o . locked ) ) / > < Slider label = " size "  min = 0. 0  max = 100. 0  step = 5. 0  value = size on_change = move | v | set_size ( v ) / > < LoadView label = " details "  value = details on_retry = move || reload ( ) / > }
+							644 container
+								645 text ThemedScope  只向自身根节点写主题 token，两个 scope 可使用不同主题，宿主页保持自己的值。 ThemeOverride  局部修改主题，其他字段继承；其中的 region 收到同一份补丁后 token。 rustify_components::CATALOG  的
+								646 link 组件参考, Value: 127.0.0.1:4199/rustify-ui/zh/components/
+								647 文本  列出类别与各自支持的能力。
+							648 container
+								649 text rustify_ui::mount(container, config, view)  返回  AppHandle 。销毁 handle 会执行 scope 清理、销毁所属 region 并卸载 DOM。GPU 页面通过  web/loader.js  的  boot(...)  校验桥指纹和运行期协议，把宿主 hook 交给运行期后，才调用应用的导出入口；
+								650 link fusion-basic 页面脚本, Value: github.com/rockie/rustify-ui/blob/main/examples/fusion-basic/app.js
+								651 文本  是参考。DOM 构建使用
+								652 link 上文的独立 loader, Value: 127.0.0.1:4199/rustify-ui/zh/quickstart/#a-dom-application-without-gpu-regions
+								653 文本 ，
+								654 link DOM 消费页, Value: github.com/rockie/rustify-ui/blob/main/tests/dom-only/consumer/public/app.js
+								655 文本  提供完整参考。
+							656 标题 同一页面上的多个应用, Value: 2
+								657 文本 同一页面上的多个应用
+							658 container
+								659 text 一次  boot(...)  启动一个应用实例，拥有独立 wasm 内存、宿主 hook 和诊断。再次调用会共享已编译模块，但创建独立实例；返回的 handle 携带实例编号。
+							660 container
+								661 text 一个实例 trap 后，loader 终止该实例的页面监听，释放 URL 所有权并显示重启入口；同页其他实例继续工作。每个 slot 最多重启三次，因为死亡实例的线性内存直到页面卸载才释放。一个实例可多次  mount(...)  建立多个 scope，这些 scope 仍共享实例的生死边界。
+							662 标题 当前预览的边界, Value: 2
+								663 文本 当前预览的边界
+							664 container
+								665 text 组件类别都有 DOM 实现；已有 GPU 绘制或其他呈现路径见各类别的能力表。当前不提供线程、 SharedArrayBuffer 、服务端分页、公式引擎、GPU 绘制的表格或热模块替换。普通部署不具备跨源隔离，大任务在单线程上切片执行。
+								666 link 已知限制, Value: github.com/rockie/rustify-ui/blob/main/docs/reports/p3/known-limitations.md
+								667 文本  保留版本范围与未验证项。
+							668 container
+								669 文本 继续阅读
+								670 link 大数据处理, Value: 127.0.0.1:4199/rustify-ui/zh/data/
+								671 文本 、
+								672 link 导航, Value: 127.0.0.1:4199/rustify-ui/zh/navigation/
+								673 文本 、
+								674 link 工作区, Value: 127.0.0.1:4199/rustify-ui/zh/workspace/
+								675 文本 、
+								676 link 表单, Value: 127.0.0.1:4199/rustify-ui/zh/forms/
+								677 文本 、
+								678 link 本地化, Value: 127.0.0.1:4199/rustify-ui/zh/i18n/
+								679 文本 、
+								680 link 架构, Value: 127.0.0.1:4199/rustify-ui/zh/architecture/
+								681 文本  和
+								682 link 兼容性, Value: 127.0.0.1:4199/rustify-ui/zh/compatibility/
+								683 文本 。
+								684 link P3 报告, Value: github.com/rockie/rustify-ui/tree/main/docs/reports/p3
+								685 文本  与
+								686 link 开发计划, Value: github.com/rockie/rustify-ui/tree/main/docs/plan
+								687 文本  保存实际测量及进度。
+							688 link 编辑此页, Value: github.com/rockie/rustify-ui/edit/main/docs/zh/quickstart.md
+							689 container
+								690 text 最后更新 2026-10-15
+							691 container 上一页 / 下一页
+								692 link 下一页 Architecture, Value: 127.0.0.1:4199/rustify-ui/zh/architecture/
+						693 文本 启用 JavaScript 后可搜索。你仍可通过导航链接阅读文档。
+						694 container 页脚导航
+							695 link 返回首页, Value: 127.0.0.1:4199/rustify-ui/zh/
+			696 container 信息栏容器
+				697 container 信息栏
+					698 container
+						699 文本 “Kimi”已开始调试此浏览器
+						700 按钮 取消
+					701 按钮 关闭
+			702 标签页组
+				703 container
+					704 按钮 收起标签页 (⇧⌘L)
+					705 弹出式按钮 标签页分组
+					706 弹出式按钮 标签页搜索
+				707 container
+					708 滚动区
+					709 滚动区
+						710 标签 (selected, settable, boolean) 快速开始 | Rustify UI - 内存用量 - 149 MB, Value: on
+							711 按钮 关闭
+				712 按钮 打开新的标签页
+				713 滑块 垂直标签栏大小调整手柄（可拖动）, Secondary Actions: Decrement, Increment
+	714 关闭按钮
+	715 全屏幕按钮 Help: 此按钮也可以执行缩放窗口的操作, Secondary Actions: 缩放窗口
+	716 最小化按钮
+717 menu bar
+	718 Chrome
+	719 文件
+	720 编辑
+	721 显示
+	722 历史记录
+	723 书签
+	724 个人资料
+	725 标签页
+	726 窗口
+	727 帮助
+
+The focused UI element is 353 复选框 Disable JavaScript, Value: 0

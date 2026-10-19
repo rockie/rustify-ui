@@ -1,0 +1,72 @@
+{
+  "observed_at": "2026-10-19T12:00:03+08:00",
+  "candidate_sha": "3dbb079a7b188edd56071225fad84fd6b92c4c52",
+  "framework_revision": "0fd34edaffda1926b38ea64c023b2fe1fc5115c5",
+  "missing_original_cache_target": "/Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341",
+  "cache_loss_cause": "not determined",
+  "environment": "/Users/rockie/Documents/gh-rockie/rustify-ui/.rustify-docs/p4-recovery/c29-7mee76lf/env.sh",
+  "install_root": "/Users/rockie/Documents/gh-rockie/rustify-ui/.rustify-docs/p4-recovery/c29-7mee76lf/install",
+  "compiler_target": "/Users/rockie/Documents/gh-rockie/rustify-ui/.rustify-docs/p4-recovery/c29-7mee76lf/compiler-target",
+  "compiler_target_is_symlink": false,
+  "official_consumer": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-p4-c29-site-fu4_a3p6/official",
+  "dist": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-p4-c29-site-fu4_a3p6/official/site/dist",
+  "cli": {
+    "build_info": "rustify-docs 0.1.29\npanic: unwind\ngrammars: syntect-5.3.0+two-face-0.5.2+bat-0.26.1+fancy\nsource: 3dbb079a7b188edd56071225fad84fd6b92c4c52\n",
+    "bytes": 59202928,
+    "sha256": "7a67ee13b5a965963a26e5fff6491421d1a7fea2bbfb92f8f3449d65415ced40",
+    "prior_sha256": "1f2af9586db568e976a4dda0d3626613b112adf254506dfdcb45c49f9b57ef6e",
+    "identical_binary": false
+  },
+  "prepare": {
+    "protected_files": 14833,
+    "inputs_match_prior": true,
+    "projection_matches_prior": true
+  },
+  "check": {
+    "success": true,
+    "warnings": 47
+  },
+  "initial_build_failure": [
+    {
+      "severity": "error",
+      "rule": "output",
+      "file": null,
+      "line": null,
+      "column": null,
+      "message": "the output /Users/rockie/Documents/gh-rockie/rustify-ui/.rustify-docs/p4-recovery/c29-7mee76lf/official/site/dist is inside a repository's or this tool's own directory",
+      "suggestion": null
+    }
+  ],
+  "recovered_build": {
+    "success": true,
+    "warnings": 47
+  },
+  "artifact_comparison": {
+    "files_including_manifest": 97,
+    "all_file_bytes_and_sha_match_prior": true,
+    "manifest_sha256": "9c34a28cd8af0c2385676c4d436a7e3d3a4bf91181c1a1d2aa21332fbe52bb81",
+    "matches_prior_manifest": true,
+    "build_id": "7e1e5c9e7e7392df",
+    "prior_inventory": "docs/validation/docs-ssg-p4/m7/native-20261018-resume/c29-resource-selection.json"
+  },
+  "preflight": {
+    "verification": "local artifact and graph",
+    "passed": true,
+    "candidate_sha": "3dbb079a7b188edd56071225fad84fd6b92c4c52",
+    "framework_revision": "0fd34edaffda1926b38ea64c023b2fe1fc5115c5",
+    "build_id": "7e1e5c9e7e7392df",
+    "files": 97,
+    "html": 76,
+    "search_indexes": 2,
+    "ai_indexes": 2
+  },
+  "preview": {
+    "host": "127.0.0.1",
+    "port": 4199,
+    "pid": 20540,
+    "session": 50714,
+    "stop": "SIGTERM; exit143 collected",
+    "exit_code": 143
+  },
+  "public_install_scope": "Local Git remap only. Public HTTPS install and deployment are not claimed."
+}

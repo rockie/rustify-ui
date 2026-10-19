@@ -1,0 +1,299 @@
+Window: "Button | Rustify UI", App: Safari浏览器.
+0 标准窗口 Button | Rustify UI, ID: SafariWindow?IsSecure=false&UUID=D98525CD-4559-4740-BFF8-344A7E4CC5BE, Secondary Actions: Raise
+	1 分离组
+		2 分离器 (disabled, settable, float) -1
+		3 标签页组
+			4 滚动区
+				5 HTML内容 inspector-resource:///Main.html
+					6 按钮 关闭
+					7 按钮 在窗口左侧显示
+					8 按钮 在窗口右侧显示
+					9 按钮 分离到单独的窗口
+					10 按钮 开始选择元素(⇧⌘C)
+					11 按钮 设备设置
+					12 标签页组 (selectable)
+						13 标签 (selectable) 元素
+						14 标签 (selectable) 控制台
+						15 标签 (selectable) 来源
+						16 标签 (selected) 网络
+						17 标签 (selectable) 时间线
+						18 标签 (selectable) 储存空间
+						19 标签 (selectable) 图形
+						20 标签 (selectable) 层
+						21 标签 (selectable) 审核
+						22 标签 (selectable) 搜索(⇧⌘F)
+						23 标签 (selectable) 设置(⌘,)
+					24 container 网络
+						25 搜索文本栏 (settable) 过滤完整URL
+							26 文本 过滤完整URL
+						27 container
+							28 文本 全部
+							29 弹出式按钮 (collapsed) Value: 全部, Secondary Actions: Expand
+							30 图像
+						31 按钮 其他过滤选项…
+						32 复选框 (settable, integer) 停用缓存, Value: 0
+						33 按钮 导入, Help: HAR导入
+						34 按钮 导出, Help: HAR导出(⌘S)
+						35 按钮 清除网络项目(⌘K)
+						36 container
+							37 文本 名称
+							38 文本 域
+							39 文本 类型
+							40 文本 状态
+							41 文本 初始化程序
+							42 文本 传输大小
+							43 文本 时间
+							44 文本 瀑布流
+							45 container button 127.0.0.1 文稿 200 — 120.17 KB 3.98毫秒
+								46 图像
+									47 图像
+									48 图像
+								49 text button 127.0.0.1 文稿 200 — 120.17 KB 3.98毫秒
+								50 container
+							51 container site.82cb043005.css 127.0.0.1 css 200 button:1 72.43 KB 3.37毫秒
+								52 图像
+									53 图像
+									54 图像
+								55 text site.82cb043005.css 127.0.0.1 css 200
+								56 链接 button:1, Help: http://127.0.0.1:4199/rustify-ui/zh/components/button/:1
+									57 文本 button:1
+								58 text 72.43 KB 3.37毫秒
+								59 container
+							60 container mode.1d6a9bf145.js 127.0.0.1 js 200 button:1 9.02 KB 3.90毫秒
+								61 图像
+								62 text mode.1d6a9bf145.js 127.0.0.1 js 200
+								63 链接 button:1, Help: http://127.0.0.1:4199/rustify-ui/zh/components/button/:1
+									64 文本 button:1
+								65 text 9.02 KB 3.90毫秒
+								66 container
+							67 container site.269216efb4.js 127.0.0.1 js 200 button:1 21.89 KB 2.98毫秒
+								68 图像
+								69 text site.269216efb4.js 127.0.0.1 js 200
+								70 链接 button:1, Help: http://127.0.0.1:4199/rustify-ui/zh/components/button/:1
+									71 文本 button:1
+								72 text 21.89 KB 2.98毫秒
+								73 container
+							74 container islands.js 127.0.0.1 js 200 button:1 2.72 KB 3.49毫秒
+								75 图像
+								76 text islands.js 127.0.0.1 js 200
+								77 链接 button:1, Help: http://127.0.0.1:4199/rustify-ui/zh/components/button/:1
+									78 文本 button:1
+								79 text 2.72 KB 3.49毫秒
+								80 container
+							81 container dom-loader.js 127.0.0.1 js 200 button:247 12.13 KB 2.39毫秒
+								82 图像
+								83 text dom-loader.js 127.0.0.1 js 200
+								84 链接 button:247, Help: http://127.0.0.1:4199/rustify-ui/zh/components/button/:247
+									85 文本 button:247
+								86 text 12.13 KB 2.39毫秒
+								87 container
+							88 container app_bg.wasm 127.0.0.1 fetch 200 dom-loader.js:67 9.81 MB 8.30毫秒
+								89 图像
+									90 图像
+								91 text app_bg.wasm 127.0.0.1 fetch 200
+								92 链接 dom-loader.js:67, Help: http://127.0.0.1:4199/rustify-ui/assets/islands/b9140be330acf58d887929efe7a96140f8a70fe13c1bbb84392b75d9e6b5d31e/dom-loader.js:67:53
+									93 文本 dom-loader.js:67
+								94 text 9.81 MB 8.30毫秒
+								95 container
+							96 container data:image/svg+xml,%3C…%3E — svg 200 — （内存） 0.04毫秒
+								97 图像
+									98 图像
+									99 图像
+								100 text data:image/svg+xml,%3C…%3E — svg 200 — （内存） 0.04毫秒
+								101 container
+							102 container app.js 127.0.0.1 js 200 dom-loader.js:141 61.62 KB 2.28毫秒
+								103 图像
+								104 text app.js 127.0.0.1 js 200
+								105 链接 dom-loader.js:141, Help: http://127.0.0.1:4199/rustify-ui/assets/islands/b9140be330acf58d887929efe7a96140f8a70fe13c1bbb84392b75d9e6b5d31e/dom-loader.js:141:31
+									106 文本 dom-loader.js:141
+								107 text 61.62 KB 2.28毫秒
+								108 container
+							109 container dom-runtime.js 127.0.0.1 js 200 — 7.54 KB 2.93毫秒
+								110 图像
+									111 图像
+									112 图像
+								113 text dom-runtime.js 127.0.0.1 js 200 — 7.54 KB 2.93毫秒
+								114 container
+							115 文本 0毫秒
+							116 文本 20毫秒
+							117 文本 40毫秒
+							118 文本 60毫秒
+							119 文本 80毫秒
+							120 文本 100毫秒
+							121 文本 120毫秒
+						122 link ?, Help: https://webkit.org/web-inspector/network-tab/, Value: webkit.org/web-inspector/network-tab/
+						123 container 2个域
+							124 文本 2
+						125 container 10个资源
+							126 文本 10
+						127 container 总共10.1 MB
+							128 文本 10.1 MB
+						129 container 已传输10.1 MB
+							130 文本 10.1 MB
+						131 container 0次重定向
+							132 文本 0
+						133 container 已在93.2毫秒中加载
+							134 文本 93.2毫秒
+					135 文本输入区 (settable) 控制台提示, Value: [文本输入区: 控制台提示], Secondary Actions: 显示写作工具
+					136 container
+			137 滚动区
+				138 HTML内容 Description: Button | Rustify UI, URL: 127.0.0.1:4199/rustify-ui/zh/components/button/
+					139 link 跳到正文, Value: 127.0.0.1:4199/rustify-ui/zh/components/button/#content
+					140 container
+						141 link Rustify UI, Value: 127.0.0.1:4199/rustify-ui/zh/
+						142 container 站点链接
+							143 内容列表
+								144 link GitHub 源码, Value: github.com/rockie/rustify-ui
+						145 弹出式按钮 搜索 Ctrl / Cmd K
+						146 摘要 中文, Value: off
+							147 文本 中文
+						148 container 主题
+							149 开关按钮 跟随系统, Value: on
+							150 开关按钮 浅色, Value: off
+							151 开关按钮 深色, Value: off
+					152 container 菜单
+						153 标题 指南, Value: 2
+							154 文本 指南
+						155 内容列表
+							156 link 快速开始, Value: 127.0.0.1:4199/rustify-ui/zh/quickstart/
+							157 link Architecture, Value: 127.0.0.1:4199/rustify-ui/zh/architecture/
+							158 link Navigation, Value: 127.0.0.1:4199/rustify-ui/zh/navigation/
+							159 link Workspace, Value: 127.0.0.1:4199/rustify-ui/zh/workspace/
+							160 link Forms, Value: 127.0.0.1:4199/rustify-ui/zh/forms/
+							161 link Languages, formatting and text, Value: 127.0.0.1:4199/rustify-ui/zh/i18n/
+							162 link Data larger than the screen, Value: 127.0.0.1:4199/rustify-ui/zh/data/
+							163 link Theme documents, Value: 127.0.0.1:4199/rustify-ui/zh/themes/
+							164 link Runtime utilities, Value: 127.0.0.1:4199/rustify-ui/zh/utility/
+							165 link Compatibility and capability boundaries (P1 research preview), Value: 127.0.0.1:4199/rustify-ui/zh/compatibility/
+							166 link Component catalogue, Value: 127.0.0.1:4199/rustify-ui/zh/components/
+							167 link Vellum example and framework capabilities, Value: 127.0.0.1:4199/rustify-ui/zh/vellum/
+						168 标题 组件, Value: 2
+							169 文本 组件
+						170 内容列表
+							171 link Button, Value: 127.0.0.1:4199/rustify-ui/zh/components/button/
+							172 link Label, Value: 127.0.0.1:4199/rustify-ui/zh/components/label/
+							173 link Link, Value: 127.0.0.1:4199/rustify-ui/zh/components/link/
+							174 link Icon, Value: 127.0.0.1:4199/rustify-ui/zh/components/icon/
+							175 link Text field, Value: 127.0.0.1:4199/rustify-ui/zh/components/text-field/
+							176 link Text area, Value: 127.0.0.1:4199/rustify-ui/zh/components/text-area/
+							177 link Checkbox, Value: 127.0.0.1:4199/rustify-ui/zh/components/checkbox/
+							178 link Radio, Value: 127.0.0.1:4199/rustify-ui/zh/components/radio/
+							179 link Switch, Value: 127.0.0.1:4199/rustify-ui/zh/components/switch/
+							180 link Select, Value: 127.0.0.1:4199/rustify-ui/zh/components/select/
+							181 link Slider, Value: 127.0.0.1:4199/rustify-ui/zh/components/slider/
+							182 link Progress, Value: 127.0.0.1:4199/rustify-ui/zh/components/progress/
+							183 link Loading, Value: 127.0.0.1:4199/rustify-ui/zh/components/loading/
+							184 link Tooltip, Value: 127.0.0.1:4199/rustify-ui/zh/components/tooltip/
+							185 link Menu, Value: 127.0.0.1:4199/rustify-ui/zh/components/menu/
+							186 link Dialog, Value: 127.0.0.1:4199/rustify-ui/zh/components/dialog/
+							187 link Tabs, Value: 127.0.0.1:4199/rustify-ui/zh/components/tabs/
+							188 link Scroll area, Value: 127.0.0.1:4199/rustify-ui/zh/components/scroll-area/
+							189 link Data table, Value: 127.0.0.1:4199/rustify-ui/zh/components/data-table/
+							190 link Tree, Value: 127.0.0.1:4199/rustify-ui/zh/components/tree/
+							191 link Toast, Value: 127.0.0.1:4199/rustify-ui/zh/components/toast/
+							192 link Number field, Value: 127.0.0.1:4199/rustify-ui/zh/components/number-field/
+							193 link Color field, Value: 127.0.0.1:4199/rustify-ui/zh/components/color-field/
+							194 link Toggle group, Value: 127.0.0.1:4199/rustify-ui/zh/components/toggle-group/
+					195 container 本页目录
+						196 文本 本页目录
+						197 内容列表
+							198 link Example, Value: 127.0.0.1:4199/rustify-ui/zh/components/button/#example
+							199 link Capabilities, Value: 127.0.0.1:4199/rustify-ui/zh/components/button/#capabilities
+							200 link GPU integration, Value: 127.0.0.1:4199/rustify-ui/zh/components/button/#gpu-integration
+					201 container
+						202 标题 Button, Value: 1
+							203 文本 Button
+						204 文本 此页面尚未翻译。
+						205 container Example
+							206 文本 label as children, variant, size, disabled; a disabled button leaves the tab order and calls nothing
+							207 标题 Example, Value: 2
+								208 文本 Example
+							209 container 交互示例
+								210 container
+									211 按钮 Increment
+									212 按钮 Reset
+									213 按钮 (disabled) Unavailable
+									214 container
+										215 文本 Count: 0
+										216 container 0
+							217 文本 交互示例
+							218 文本 site/src/demos/basics.rs
+							219 标签页组 (selectable)
+								220 标签 (selectable) 函数
+								221 标签 (selected) 完整文件
+							222 按钮 复制
+							223 container 完整文件
+								224 container
+									225 text use leptos::prelude::*; use rustify_components::{id, Button, ButtonVariant, Glyph, Icon, Label, Link, Spinner, TextField}; /// Buttons request changes to state owned by the application. pub fn button_demo() -> impl IntoView { let count = RwSignal::new(0_u32); view! { <div class="space-y-4"> <div class="flex flex-wrap items-center gap-3"> <Button on_click=move || count.update(|count| *count += 1)> "Increment" </Button> <Button variant=ButtonVariant::Outline on_click=move || count.set(0)> "Reset" </Button> <Button disabled=true on_click=move || count.update(|count| *count += 100)> "Unavailable" </Button> </div> <p class="text-sm">"Count: "<output data-demo-state="">{move || count.get()}</output></p> </div> } } /// A label points to a field through a deterministic, scope-specific ID. pub fn label_demo() -> impl IntoView { let field_id = id::next("label-demo-field"); let name = RwSignal::new("Rustify UI".to_string()); view! { <div class="space-y-4"> <div class="max-w-sm space-y-2"> <Label control=field_id.clone()>"Project name"</Label> <TextField id=field_id value=name on_change=move |value| name.set(value) /> </div> <p class="text-sm break-words">"Current name: "<output data-demo-state="">{move || name.get()}</output></p> </div> } } /// A disabled link keeps its label and stops offering a destination. pub fn link_demo() -> impl IntoView { let destination_id = id::next("link-demo-destination"); let disabled = RwSignal::new(false); // This anchor targets the document, so `_self` bypasses the island's local router. view! { <div class="space-y-4"> <div class="flex flex-wrap items-center gap-3"> <Link href=format!("#{destination_id}") disabled=disabled attr:target="_self">"Jump to the destination"</Link> <Button variant=ButtonVariant::Outline on_click=move || disabled.update(|disabled| *disabled = !*disabled)> "Toggle availability" </Button> </div> <p id=destination_id tabindex="-1">"The link points to this paragraph."</p> <p class="text-sm">"Link: "<output data-demo-state="">{move || if disabled.get() { "Unavailable" } else { "Available" }}</output></p> </div> } } /// Named icons are images; decorative icons can omit their label. pub fn icon_demo() -> impl IntoView { let checked = RwSignal::new(true); view! { <div class="space-y-4"> <div class="flex flex-wrap items-center gap-3"> <Show when=move || checked.get() fallback=|| view! { <Icon glyph=Glyph::Close label="Not selected" /> }> <Icon glyph=Glyph::Check label="Selected" /> </Show> <Button variant=ButtonVariant::Outline on_click=move || checked.update(|checked| *checked = !*checked)> "Change icon" </Button> </div> <p class="text-sm">"Icon: "<output data-demo-state="">{move || if checked.get() { "Check" } else { "Close" }}</output></p> </div> } } /// A loading indicator uses the scope's motion preference. pub fn loading_demo() -> impl IntoView { let loading = RwSignal::new(true); view! { <div class="space-y-4"> <div class="flex h-8 items-center gap-3"> <Show when=move || loading.get() fallback=|| ()> <Spinner label="Loading example" /> </Show> <output data-demo-state="">{move || if loading.get() { "Loading" } else { "Ready" }}</output> </div> <Button variant=ButtonVariant::Outline on_click=move || loading.update(|loading| *loading = !*loading)> "Toggle loading" </Button> </div> } }
+							226 标题 Capabilities, Value: 2
+								227 文本 Capabilities
+							228 container Component capabilities
+								229 表格
+									230 row (selectable) Capability
+Support
+Details
+									231 row (selectable)
+										232 单元格 (selectable) properties
+										233 单元格 (selectable) yes
+										234 单元格 (selectable) label as children, variant, size, disabled; a disabled button leaves the tab order and calls nothing
+									235 row (selectable)
+										236 单元格 (selectable) actions
+										237 单元格 (selectable) yes
+										238 单元格 (selectable) click; the DOM and the region button call the same application action
+									239 row (selectable)
+										240 单元格 (selectable) theme
+										241 单元格 (selectable) yes
+										242 单元格 (selectable) seven variants and four sizes, all drawn from the scope's tokens
+									243 row (selectable)
+										244 单元格 (selectable) input
+										245 单元格 (selectable) yes
+										246 单元格 (selectable) pointer and Enter/Space, from either half
+									247 row (selectable)
+										248 单元格 (selectable) accessibility
+										249 单元格 (selectable) yes
+										250 单元格 (selectable) a native button; the region's has a DOM control with the same name and action
+									251 row (selectable)
+										252 单元格 (selectable) environment
+										253 单元格 (selectable) yes
+										254 单元格 (selectable) macOS Chrome, strict CSP, WebGL2 region; no inline script or style
+							255 标题 GPU integration, Value: 2
+								256 文本 GPU integration
+							257 container
+								258 文本 GPU drawing support: yes. This documentation example uses the DOM component. See the 
+								259 link component catalogue example, Value: github.com/rockie/rustify-ui/tree/main/examples/component-catalog
+								260 文本  for the available DOM and GPU presentations.
+						261 link 编辑此页, Value: github.com/rockie/rustify-ui/edit/main/site/src/lib.rs
+						262 container 上一页 / 下一页
+							263 link 上一页 Vellum example and framework capabilities, Value: 127.0.0.1:4199/rustify-ui/zh/vellum/
+							264 link 下一页 Label, Value: 127.0.0.1:4199/rustify-ui/zh/components/label/
+					265 container 页脚导航
+						266 link 返回首页, Value: 127.0.0.1:4199/rustify-ui/zh/
+				267 滚动条 (settable, float) 0.3691194
+	268 工具栏
+		269 container Secondary Actions: 移到上一项, 移到下一项, 从工具栏移除
+			270 按钮 Description: 显示边栏, ID: SidebarButton
+			271 菜单按钮 Description: 标签页组选择器, ID: TabGroupPickerButton?TabGroup=
+		272 container BackForwardSegmentedControl
+			273 按钮 Description: 返回, Help: 显示上一页, ID: BackButton
+			274 按钮 (disabled) Description: 前进, Help: 显示下一页, ID: ForwardButton
+		275 container Secondary Actions: 移到上一项, 移到下一项, 从工具栏移除
+			276 按钮 页面菜单, ID: AssistantButton
+			277 按钮 将页面添加到阅读列表, ID: OneStepBookmarkingButton
+			278 文本栏 (settable) Description: 智能搜索栏, Value: 127.0.0.1:4199/rustify-ui/zh/components/button/, ID: WEB_BROWSER_ADDRESS_AND_SEARCH_FIELD
+			279 按钮 翻译可用, ID: TranslationButton
+			280 按钮 重新加载此页面, ID: ReloadButton
+		281 按钮 Description: 共享, ID: ShareButton, Secondary Actions: 移到上一项, 移到下一项, 从工具栏移除
+		282 按钮 Description: 新建标签页, ID: NewTabButton, Secondary Actions: 移到上一项, 移到下一项, 从工具栏移除
+		283 按钮 Description: 标签页概览, ID: TabOverviewButton, Secondary Actions: 移到上一项, 从工具栏移除
+284 menu bar
+	285 Safari浏览器
+	286 文件
+	287 编辑
+	288 显示, ID: SafariViewMenu
+	289 历史记录
+	290 书签, ID: SafariBookmarksMenu
+	291 开发
+	292 窗口, ID: SafariWindowMenu
+	293 帮助, ID: SafariHelpMenu
+
+The focused UI element is 135 文本输入区 (settable) 控制台提示, Value: [文本输入区: 控制台提示], Secondary Actions: 显示写作工具

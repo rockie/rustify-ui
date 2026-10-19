@@ -103,5 +103,46 @@
     "name": "chrome-more-final",
     "step": "Native Chrome155.0.8059.85: the initially renders20 groups with Show more. Tab/Enter loads37 direct list groups; Show more is absent, query remains the. Full AX retained before replacement.",
     "at": "2026-10-19T02:23:16.714Z"
+  },
+  {
+    "name": "safari-c29-recovered-reset-copy",
+    "step": "Actual Reset returns Count1 to0; Full file selected and native Copy reports 已复制. Full AX contains imports; source panel reached with native page scrolling.",
+    "at": "2026-10-19T03:29:04.945Z"
+  },
+  {
+    "name": "safari-c29-fullscreen-network",
+    "step": "Fresh native fullscreen Safari reload with Network open: document, CSS, mode/site scripts, islands loader, newWasm, glue and runtime all show200 (data icon200memory). ResourceTiming.responseStatus is unsupported, so use native Network rather than infer status from it.",
+    "at": "2026-10-19T03:37:02.224Z"
+  },
+  {
+    "name": "safari-c29-fullscreen-console-ready",
+    "step": "Fresh fullscreen reload: native Safari27.0.1 Console has no startup error; read-only visibility visible, islands ready, Worker8225,newWasm b914, CSS1512×397/DPR2 with Inspector open. statusSupported=false, so HTTP statuses come from native Network capture.",
+    "at": "2026-10-19T03:38:26.317Z"
+  },
+  {
+    "name": "safari-c29-fullscreen-increment-green",
+    "step": "After clean fullscreen reload and visible/ready Console+native Network200, close Inspector, ordinary TOC Example anchor, actual Increment changes Count0 to1.",
+    "at": "2026-10-19T03:38:28.341Z"
+  },
+  {
+    "name": "chrome-noscript-button",
+    "step": "Authorized DevTools DisableJavaScript0→1 then real reload C29 Button. Static Chinese reading and code, initial Count0 with disabled interaction, disabled search and localized no-script explanation are observed.",
+    "at": "2026-10-19T03:45:36.605Z"
+  },
+  {
+    "name": "chrome-noscript-full-source",
+    "step": "With JavaScript blocked, native page scroll reveals Full file and rendered leptos/rustify imports; function source is also visible. Button→Label used ordinary Next link.",
+    "at": "2026-10-19T03:49:37.695Z"
+  },
+  {
+    "name": "chrome-noscript-quickstart-toc",
+    "step": "JavaScript still blocked: ordinary Label sidebar→Chinese Quickstart, native TOC details opens and plain verification-commands anchor navigates. Search stays disabled with readable explanation.",
+    "at": "2026-10-19T03:50:41.259Z"
+  },
+  {
+    "name": "safari-c29-recovered-increment",
+    "step": "Preliminary restored Safari interaction after Finder Open: actual Count0→1. Later Inspector sample was hidden/ready and retained startup error; final clean success is in fullscreen-console-ready/network/increment-green.",
+    "at": null,
+    "timestamp_note": "Original capture metadata was absent; screenshot and full AX retained. This entry is recovered from actual artifacts, not a reconstructed capture time."
   }
 ]
