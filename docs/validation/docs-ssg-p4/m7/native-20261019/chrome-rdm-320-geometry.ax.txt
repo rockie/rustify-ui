@@ -1,0 +1,121 @@
+Window: "DevTools - 127.0.0.1:4199/rustify-ui/zh/architecture/", App: Google Chrome.
+0 标准窗口 DevTools - 127.0.0.1:4199/rustify-ui/zh/architecture/ - Rockie, Secondary Actions: Raise, URL: devtools://devtools/bundled/devtools_app.html?remoteBase=https://chrome-devtools-frontend.appspot.com/serve_file/@0e66b94549a8bd85f03fbdf189b752d6e7b63c32/&targetType=tab&can_dock=true&panel=console
+	1 container DevTools - 127.0.0.1:4199/rustify-ui/zh/architecture/ - Rockie, URL: devtools://devtools/bundled/devtools_app.html?remoteBase=https://chrome-devtools-frontend.appspot.com/serve_file/@0e66b94549a8bd85f03fbdf189b752d6e7b63c32/&targetType=tab&can_dock=true&panel=console
+		2 container
+			3 container
+				4 滚动区
+					5 HTML 内容 DevTools, URL: devtools://devtools/bundled/devtools_app.html?remoteBase=https://chrome-devtools-frontend.appspot.com/serve_file/@0e66b94549a8bd85f03fbdf189b752d6e7b63c32/&targetType=tab&can_dock=true&panel=console
+						6 container
+							7 container
+								8 container
+									9 container
+										10 container Main toolbar
+											11 工具栏
+												12 container Select an element in the page to inspect it, Help: Select an element in the page to inspect it - ⌘ ⇧ C
+													13 切换按钮 Select an element in the page to inspect it - ⌘ ⇧ C, Value: 0
+												14 container Toggle device toolbar, Help: Toggle device toolbar - ⌘ ⇧ M
+													15 切换按钮 Toggle device toolbar - ⌘ ⇧ M, Value: 1
+											16 container
+												17 标签页组 Panels
+													18 标签 (settable, integer) Elements, Value: 0
+													19 标签 (selected) Console, Value: 1
+													20 标签 (settable, integer) Sources, Value: 0
+													21 标签 (settable, integer) Network, Value: 0
+													22 标签 (settable, integer) Performance, Value: 0
+													23 标签 (settable, integer) Memory, Value: 0
+												24 弹出式按钮 More tabs
+											25 工具栏
+												26 container Settings, Help: Settings - F1 - ⇧ ?
+													27 按钮 Settings - F1 - ⇧ ?
+												28 弹出式按钮 Customize and control DevTools
+													29 按钮 Customize and control DevTools
+										30 container Console panel
+											31 container console
+												32 container
+													33 工具栏
+														34 container Show Console sidebar
+															35 按钮 Show Console sidebar
+														36 container Clear console, Help: Clear console - Ctrl L - ⌘ K
+															37 按钮 Clear console - Ctrl L - ⌘ K
+														38 container Collapse all
+															39 按钮 Collapse all
+														40 按钮 JavaScript context: top
+														41 container Create live expression
+															42 按钮 Create live expression
+														43 文本输入区 (settable) Filter
+															44 文本 Filter
+														45 弹出式按钮 Log level: Default levels
+															46 文本 Default levels
+														47 container Some problems no longer generate console messages, but are surfaced in the Issues tab Click to go to the Issues tab
+															48 按钮 Some problems no longer generate console messages, but are surfaced in the Issues tab Click to go to the Issues tab
+														49 container Console settings
+															50 切换按钮 Console settings, Value: 0
+														51 container 0 messages in console
+													52 container
+														53 container
+															54 container
+																55 text JSON . stringify ({ url : location . href , viewport :[ innerWidth , innerHeight ], dpr : devicePixelRatio , documentWidth : document . documentElement . scrollWidth , headerBottom : document . querySelector ( "header" ). getBoundingClientRect (). bottom , targetTop : document . getElementById ( decodeURIComponent ( location . hash . slice ( 1 )))?. getBoundingClientRect (). top , worker : document . querySelector ( "[data-rd-search]" ). dataset . rdSearchWorker })
+															56 container '{"url":"http://127.0.0.1:4199/rustify-ui/zh/architecture/#versioned-themes","viewport":[320,667],"dpr":2,"documentWidth":320,"headerBottom":93.5,"targetTop":117.671875,"worker":"/rustify-ui/assets/search-worker.8225fc0ff7.js"}' Stack table collapsed
+																57 container
+																	58 文本 '{"url":"
+																	59 链接 http://127.0.0.1:4199/rustify-ui/zh/architecture/#versioned-themes
+																		60 文本 http://127.0.0.1:4199/rustify-ui/zh/architecture/#versioned-themes
+																	61 文本 ","viewport":[320,667],"dpr":2,"documentWidth":320,"headerBottom":93.5,"targetTop":117.671875,"worker":"/rustify-ui/assets/search-worker.8225fc0ff7.js"}'
+														62 container
+															63 container
+																64 文本输入区 (settable) Console prompt, Value: 
+
+									65 container Drawer
+										66 container
+											67 工具栏
+												68 弹出式按钮 More tools
+													69 按钮 More tools
+											70 标签页组
+												71 标签 (settable, integer) Console, Value: 0
+												72 标签 (settable, integer) AI assistance, Value: 0
+												73 标签 (settable, integer) Network conditions, Value: 0
+												74 标签 (selected) What’s new, Value: 1
+											75 工具栏
+												76 container Toggle drawer orientation
+													77 按钮 Toggle drawer orientation
+												78 container Minimize drawer
+													79 按钮 Minimize drawer
+												80 container Close drawer
+													81 按钮 Close drawer
+											82 container What’s new panel
+												83 container whats-new
+													84 container
+														85 文本 New in DevTools (September 2026)
+														86 按钮 See all new features
+														87 标题 DevTools for agents, Value: 3
+															88 链接 DevTools for agents, Help: https://developer.chrome.com/blog/new-in-devtools-152/#devtools-for-agents
+																89 文本 DevTools for agents
+														90 container
+															91 text DevTools for agents 1.7 improves memory profiling with the  get_heapsnapshot_object_details  tool and native V8 context filtering.
+														92 标题 Soft navigation metrics in Live Metrics, Value: 3
+															93 链接 Soft navigation metrics in Live Metrics, Help: https://developer.chrome.com/blog/new-in-devtools-152/#performance
+																94 文本 Soft navigation metrics in Live Metrics
+														95 文本 The Live Metrics view in the Performance panel now captures and reports metrics like LCP and INP for client-side soft navigations in single-page applications by default.
+														96 标题 Nested CSS parent selector interactions, Value: 3
+															97 链接 Nested CSS parent selector interactions, Help: https://developer.chrome.com/blog/new-in-devtools-152/#nested-selectors
+																98 文本 Nested CSS parent selector interactions
+														99 container
+															100 text Hovering over parent selectors highlights matching elements on the page, nested rules respond to Styles tab filtering, and  @nested-declarations  include specificity tooltips.
+							101 文本 Console cleared 
+	102 关闭按钮
+	103 全屏幕按钮 Help: 此按钮也可以执行缩放窗口的操作, Secondary Actions: 缩放窗口
+	104 最小化按钮
+	105 文本 DevTools - 127.0.0.1:4199/rustify-ui/zh/architecture/
+106 menu bar
+	107 Chrome
+	108 文件
+	109 编辑
+	110 显示
+	111 历史记录
+	112 书签
+	113 个人资料
+	114 标签页
+	115 窗口
+	116 帮助
+
+The focused UI element is 64 文本输入区 (settable) Console prompt, Value: 

@@ -1,0 +1,82 @@
+Window: "快速开始 | Rustify UI", App: Google Chrome.
+0 标准窗口 快速开始 | Rustify UI - Google Chrome - Rockie, URL: 127.0.0.1:4199/rustify-ui/zh/quickstart/#verification-commands, Secondary Actions: Raise
+	1 container 快速开始 | Rustify UI - Google Chrome - Rockie, URL: 127.0.0.1:4199/rustify-ui/zh/quickstart/#verification-commands
+		2 container
+			3 工具栏
+				4 按钮 返回
+				5 按钮 (disabled) 前进
+				6 按钮 重新加载
+				7 container
+					8 弹出式按钮 查看网站信息
+					9 文本栏 (settable) 地址和搜索栏, Value: 127.0.0.1:4199/rustify-ui/zh/quickstart/#verification-commands, Placeholder: 问问 Google 或输入网址
+					10 按钮 为此标签页添加书签
+				11 container
+					12 弹出式按钮 打开 Kimi
+可以访问此网站
+					13 弹出式按钮 扩展程序
+				14 按钮 Rockie
+				15 弹出式按钮 Chrome
+			16 container
+				17 滚动区
+					18 HTML 内容 快速开始 | Rustify UI, URL: 127.0.0.1:4199/rustify-ui/zh/quickstart/#verification-commands
+						19 container 搜索
+							20 文本 搜索文档
+							21 按钮 关闭
+							22 组合框 (settable) 搜索文档, Value: ThemeScope
+							23 文本 3 个结果
+							24 列表框 搜索结果
+								25 文本 (selected) 快速开始 快速开始 › 在应用中使用 Tailwind v4 ope 外。 使用版本化主题文档时，在 sdk.css 后紧接着导入 theme-v4.css。ThemeScope 在根节点提供文档解析后的颜色、字体、间距、圆角和阴影；这些 scope 的 utility 间距读取 --rustify-unit，--layout-gap 仍是独立布局值。ThemedScope 保留旧值回退，两种 provider 的显式
+									26 文本 快速开始
+									27 文本 快速开始 › 在应用中使用 Tailwind v4
+									28 文本 ope 外。 使用版本化主题文档时，在 sdk.css 后紧接着导入 theme-v4.css。
+									29 文本 ThemeScope
+									30 文本  在根节点提供文档解析后的颜色、字体、间距、圆角和阴影；这些 scope 的 utility 间距读取 --rustify-unit，--layout-gap 仍是独立布局值。ThemedScope 保留旧值回退，两种 provider 的显式
+								31 文本 Architecturezh 尚未翻译，内容语言：en Architecture › Versioned themes ResolvedTheme> alongside its application state. ThemeScope claims the mount root, projects the snapshot through CSSOM and restores prior values on cleanup. ThemeBoundary re-resolve
+									32 文本 Architecture
+									33 文本 zh
+									34 文本 尚未翻译，内容语言：en
+									35 文本 Architecture › Versioned themes
+									36 文本 ResolvedTheme> alongside its application state. 
+									37 文本 ThemeScope
+									38 文本  claims the mount root, projects the snapshot through CSSOM and restores prior values on cleanup. ThemeBoundary re-resolve
+								39 文本 Theme documentszh 尚未翻译，内容语言：en Theme documents › Mount a browser scope Theme documents › Fonts and GPU consumers Theme documents › Import and export :{mount, AppHandle, MountConfig, ResolvedTheme, ThemeScope}; use rustify_ui::theme::{font_context, import_json, resolve, ThemeError, ThemeMode}; use std::sync::Arc; // Put the down
+									40 文本 Theme documents
+									41 文本 zh
+									42 文本 尚未翻译，内容语言：en
+									43 文本 Theme documents › Mount a browser scope
+									44 文本 Theme documents › Fonts and GPU consumers
+									45 文本 Theme documents › Import and export
+									46 文本 :{mount, AppHandle, MountConfig, ResolvedTheme, 
+									47 文本 ThemeScope
+									48 文本 }; use rustify_ui::theme::{font_context, import_json, resolve, ThemeError, ThemeMode}; use std::sync::Arc; // Put the down
+			49 标签页组
+				50 container
+					51 按钮 收起标签页 (⇧⌘L)
+					52 弹出式按钮 标签页分组
+					53 弹出式按钮 标签页搜索
+				54 container
+					55 滚动区
+					56 滚动区
+						57 container
+							58 标签 (settable, boolean) 设置 - 关于 Chrome - 内存用量 - 68.5 MB, Value: off
+							59 标签 (selected, settable, boolean) 快速开始 | Rustify UI - 内存用量 - 110 MB, Value: on
+								60 按钮 关闭
+				61 按钮 打开新的标签页
+				62 滑块 垂直标签栏大小调整手柄（可拖动）, Secondary Actions: Decrement, Increment
+		63 文本 127.0.0.1:4199/rustify-ui/zh/quickstart/#using-tailwind-v4-in-your-app
+	64 关闭按钮
+	65 全屏幕按钮 Help: 此按钮也可以执行缩放窗口的操作, Secondary Actions: 缩放窗口
+	66 最小化按钮
+67 menu bar
+	68 Chrome
+	69 文件
+	70 编辑
+	71 显示
+	72 历史记录
+	73 书签
+	74 个人资料
+	75 标签页
+	76 窗口
+	77 帮助
+
+The focused UI element is 25 文本 (selected) 快速开始 快速开始 › 在应用中使用 Tailwind v4 ope 外。 使用版本化主题文档时，在 sdk.css 后紧接着导入 theme-v4.css。ThemeScope 在根节点提供文档解析后的颜色、字体、间距、圆角和阴影；这些 scope 的 utility 间距读取 --rustify-unit，--layout-gap 仍是独立布局值。ThemedScope 保留旧值回退，两种 provider 的显式

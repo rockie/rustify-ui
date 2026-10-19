@@ -1,0 +1,314 @@
+Window: "Button | Rustify UI", App: Google Chrome.
+0 标准窗口 Button | Rustify UI - Google Chrome - Rockie, URL: 127.0.0.1:4199/rustify-ui/components/button/, Secondary Actions: Raise
+	1 container Button | Rustify UI - Google Chrome - Rockie, URL: 127.0.0.1:4199/rustify-ui/components/button/
+		2 container
+			3 工具栏
+				4 按钮 返回
+				5 按钮 (disabled) 前进
+				6 按钮 重新加载
+				7 container
+					8 弹出式按钮 查看网站信息
+					9 文本栏 (settable) 地址和搜索栏, Value: 127.0.0.1:4199/rustify-ui/components/button/, Placeholder: 问问 Google 或输入网址
+					10 按钮 为此标签页添加书签
+				11 container
+					12 弹出式按钮 打开 Kimi
+可以访问此网站
+					13 弹出式按钮 扩展程序
+				14 按钮 Rockie
+				15 弹出式按钮 Chrome
+			16 container
+				17 滚动区
+					18 HTML 内容 DevTools, URL: devtools://devtools/bundled/devtools_app.html?remoteBase=https://chrome-devtools-frontend.appspot.com/serve_file/@0e66b94549a8bd85f03fbdf189b752d6e7b63c32/&targetType=tab&can_dock=true&panel=console
+						19 container
+							20 container
+								21 container
+									22 container
+										23 container
+											24 container Main toolbar
+												25 工具栏
+													26 container Select an element in the page to inspect it, Help: Select an element in the page to inspect it - ⌘ ⇧ C
+														27 切换按钮 Select an element in the page to inspect it - ⌘ ⇧ C, Value: 0
+													28 container Toggle device toolbar, Help: Toggle device toolbar - ⌘ ⇧ M
+														29 切换按钮 Toggle device toolbar - ⌘ ⇧ M, Value: 0
+												30 container
+													31 标签页组 Panels
+														32 标签 (settable, integer) Elements, Value: 0
+														33 标签 (selected) Console, Value: 1
+													34 弹出式按钮 More tabs
+												35 工具栏
+													36 按钮 Page: Main
+													37 container Settings, Help: Settings - F1 - ⇧ ?
+														38 按钮 Settings - F1 - ⇧ ?
+													39 弹出式按钮 Customize and control DevTools
+														40 按钮 Customize and control DevTools
+													41 container Close
+														42 按钮 Close
+											43 container Console panel
+												44 container console
+													45 container
+														46 工具栏
+															47 container Show Console sidebar
+																48 按钮 Show Console sidebar
+															49 container Clear console, Help: Clear console - Ctrl L - ⌘ K
+																50 按钮 Clear console - Ctrl L - ⌘ K
+															51 container Collapse all
+																52 按钮 Collapse all
+															53 按钮 JavaScript context: top
+															54 container Create live expression
+																55 按钮 Create live expression
+															56 文本输入区 (settable) Filter
+																57 文本 Filter
+															58 弹出式按钮 Log level: Default levels
+																59 文本 Default levels
+															60 container Some problems no longer generate console messages, but are surfaced in the Issues tab Click to go to the Issues tab
+																61 按钮 Some problems no longer generate console messages, but are surfaced in the Issues tab Click to go to the Issues tab
+															62 container Console settings
+																63 切换按钮 Console settings, Value: 0
+															64 container 0 messages in console
+														65 container
+															66 container
+																67 container Warning: Don’t paste code into the DevTools Console that you don’t understand or haven’t reviewed yourself. This could allow attackers to steal your identity or take control of your computer. Type "allow pasting" below and press Enter to allow pasting.
+																	68 container Warning, Repeated 2 times
+																		69 文本 2
+																	70 container Warning: Don’t paste code into the DevTools Console that you don’t understand or haven’t reviewed yourself. This could allow attackers to steal your identity or take control of your computer. Type "allow pasting" below and press Enter to allow pasting. Stack table collapsed
+																		71 文本 Warning: Don’t paste code into the DevTools Console that you don’t understand or haven’t reviewed yourself. This could allow attackers to steal your identity or take control of your computer. Type "allow pasting" below and press Enter to allow pasting.
+																72 container allow pasting
+																	73 container allow pasting Stack table collapsed
+																		74 文本 allow pasting
+																75 container
+																	76 text JSON . stringify ({ ua : navigator . userAgent , url : location . href , viewport :[ innerWidth , innerHeight ], dpr : devicePixelRatio , visibility : document . visibilityState , hasFocus : document . hasFocus (), worker : document . querySelector ( "[data-rd-search]" ). dataset . rdSearchWorker , islands :[... document . querySelectorAll ( "[data-rustify-island]" )]. map ( x => x . getAttribute ( "data-rd-island-state" )), wasm : performance . getEntriesByType ( "resource" ). filter ( x => x . name . includes ( ".wasm" )). map ( x =>({ url : x . name , status : x . responseStatus })), failed : performance . getEntriesByType ( "resource" ). filter ( x => x . responseStatus >= 400 ). map ( x =>({ url : x . name , status : x . responseStatus }))})
+																77 container '{"ua":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36","url":"http://127.0.0.1:4199/rustify-ui/components/button/","viewport":[834,845],"dpr":2,"visibility":"visible","hasFocus":false,"worker":"/rustify-ui/assets/search-worker.8225fc0ff7.js","islands":["ready"],"wasm":[{"url":"http://127.0.0.1:4199/rustify-ui/assets/islands/b9140be…/app_bg.wasm","status":200}],"failed":[]}' Stack table collapsed
+																	78 container
+																		79 文本 '{"ua":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36","url":"
+																		80 链接 http://127.0.0.1:4199/rustify-ui/components/button/
+																			81 文本 http://127.0.0.1:4199/rustify-ui/components/button/
+																		82 文本 ","viewport":[834,845],"dpr":2,"visibility":"visible","hasFocus":false,"worker":"/rustify-ui/assets/search-worker.8225fc0ff7.js","islands":["ready"],"wasm":[{"url":"
+																		83 链接 http://127.0.0.1:4199/rustify-ui/assets/islands/b9140be…/app_bg.wasm
+																			84 文本 http://127.0.0.1:4199/rustify-ui/assets/islands/
+																			85 文本 b9140be
+																			86 文本 …
+																			87 文本 /app_bg.wasm
+																		88 文本 ","status":200}],"failed":[]}'
+															89 container
+																90 container
+																	91 文本输入区 (settable) Console prompt, Value: 
+
+										92 container Drawer
+											93 container
+												94 工具栏
+													95 弹出式按钮 More tools
+														96 按钮 More tools
+												97 标签页组
+													98 标签 (settable, integer) Console, Value: 0
+													99 标签 (settable, integer) AI assistance, Value: 0
+													100 标签 (selected) What’s new, Value: 1
+												101 弹出式按钮 More tabs
+												102 工具栏
+													103 container Toggle drawer orientation
+														104 按钮 Toggle drawer orientation
+													105 container Minimize drawer
+														106 按钮 Minimize drawer
+													107 container Close drawer
+														108 按钮 Close drawer
+												109 container What’s new panel
+													110 container whats-new
+														111 container
+															112 文本 New in DevTools (September 2026)
+															113 按钮 See all new features
+															114 标题 DevTools for agents, Value: 3
+																115 链接 DevTools for agents, Help: https://developer.chrome.com/blog/new-in-devtools-152/#devtools-for-agents
+																	116 文本 DevTools for agents
+															117 container
+																118 text DevTools for agents 1.7 improves memory profiling with the  get_heapsnapshot_object_details  tool and native V8 context filtering.
+															119 标题 Soft navigation metrics in Live Metrics, Value: 3
+																120 链接 Soft navigation metrics in Live Metrics, Help: https://developer.chrome.com/blog/new-in-devtools-152/#performance
+																	121 文本 Soft navigation metrics in Live Metrics
+															122 文本 The Live Metrics view in the Performance panel now captures and reports metrics like LCP and INP for client-side soft navigations in single-page applications by default.
+															123 标题 Nested CSS parent selector interactions, Value: 3
+																124 链接 Nested CSS parent selector interactions, Help: https://developer.chrome.com/blog/new-in-devtools-152/#nested-selectors
+																	125 文本 Nested CSS parent selector interactions
+															126 container
+																127 text Hovering over parent selectors highlights matching elements on the page, nested rules respond to Styles tab filtering, and  @nested-declarations  include specificity tooltips.
+							128 文本 DevTools is docked to right 
+				129 滚动区
+					130 HTML 内容 Button | Rustify UI, URL: 127.0.0.1:4199/rustify-ui/components/button/
+						131 link Skip to content, Value: 127.0.0.1:4199/rustify-ui/components/button/#content
+						132 container
+							133 link Rustify UI, Value: 127.0.0.1:4199/rustify-ui/
+							134 container Site links
+								135 内容列表
+									136 link GitHub, Value: github.com/rockie/rustify-ui
+							137 弹出式按钮 Search Ctrl / Cmd K
+							138 开合三角标记 English
+								139 文本 English
+							140 container Theme
+								141 切换按钮 System, Value: 0
+								142 切换按钮 Light, Value: 0
+								143 切换按钮 Dark, Value: 1
+						144 container Menu
+							145 container
+								146 标题 Guides, Value: 2
+									147 文本 Guides
+								148 内容列表
+									149 link Quick start, Value: 127.0.0.1:4199/rustify-ui/quickstart/
+									150 link Architecture, Value: 127.0.0.1:4199/rustify-ui/architecture/
+									151 link Navigation, Value: 127.0.0.1:4199/rustify-ui/navigation/
+									152 link Workspace, Value: 127.0.0.1:4199/rustify-ui/workspace/
+									153 link Forms, Value: 127.0.0.1:4199/rustify-ui/forms/
+									154 link Languages, formatting and text, Value: 127.0.0.1:4199/rustify-ui/i18n/
+									155 link Data larger than the screen, Value: 127.0.0.1:4199/rustify-ui/data/
+									156 link Theme documents, Value: 127.0.0.1:4199/rustify-ui/themes/
+									157 link Runtime utilities, Value: 127.0.0.1:4199/rustify-ui/utility/
+									158 link Compatibility and capability boundaries (P1 research preview), Value: 127.0.0.1:4199/rustify-ui/compatibility/
+									159 link Component catalogue, Value: 127.0.0.1:4199/rustify-ui/components/
+									160 link Vellum example and framework capabilities, Value: 127.0.0.1:4199/rustify-ui/vellum/
+							161 container
+								162 标题 Components, Value: 2
+									163 文本 Components
+								164 内容列表
+									165 link Button, Value: 127.0.0.1:4199/rustify-ui/components/button/
+									166 link Label, Value: 127.0.0.1:4199/rustify-ui/components/label/
+									167 link Link, Value: 127.0.0.1:4199/rustify-ui/components/link/
+									168 link Icon, Value: 127.0.0.1:4199/rustify-ui/components/icon/
+									169 link Text field, Value: 127.0.0.1:4199/rustify-ui/components/text-field/
+									170 link Text area, Value: 127.0.0.1:4199/rustify-ui/components/text-area/
+									171 link Checkbox, Value: 127.0.0.1:4199/rustify-ui/components/checkbox/
+									172 link Radio, Value: 127.0.0.1:4199/rustify-ui/components/radio/
+									173 link Switch, Value: 127.0.0.1:4199/rustify-ui/components/switch/
+									174 link Select, Value: 127.0.0.1:4199/rustify-ui/components/select/
+									175 link Slider, Value: 127.0.0.1:4199/rustify-ui/components/slider/
+									176 link Progress, Value: 127.0.0.1:4199/rustify-ui/components/progress/
+									177 link Loading, Value: 127.0.0.1:4199/rustify-ui/components/loading/
+									178 link Tooltip, Value: 127.0.0.1:4199/rustify-ui/components/tooltip/
+									179 link Menu, Value: 127.0.0.1:4199/rustify-ui/components/menu/
+									180 link Dialog, Value: 127.0.0.1:4199/rustify-ui/components/dialog/
+									181 link Tabs, Value: 127.0.0.1:4199/rustify-ui/components/tabs/
+									182 link Scroll area, Value: 127.0.0.1:4199/rustify-ui/components/scroll-area/
+									183 link Data table, Value: 127.0.0.1:4199/rustify-ui/components/data-table/
+									184 link Tree, Value: 127.0.0.1:4199/rustify-ui/components/tree/
+									185 link Toast, Value: 127.0.0.1:4199/rustify-ui/components/toast/
+									186 link Number field, Value: 127.0.0.1:4199/rustify-ui/components/number-field/
+									187 link Color field, Value: 127.0.0.1:4199/rustify-ui/components/color-field/
+									188 link Toggle group, Value: 127.0.0.1:4199/rustify-ui/components/toggle-group/
+						189 开合三角标记 On this page
+							190 文本 On this page
+						191 container
+							192 标题 Button, Value: 1
+								193 文本 Button
+							194 文本 label as children, variant, size, disabled; a disabled button leaves the tab order and calls nothing
+							195 标题 Example, Value: 2
+								196 文本 Example
+							197 container
+								198 container Interactive example
+									199 container
+										200 按钮 Increment
+										201 按钮 Reset
+										202 按钮 (disabled) Unavailable
+										203 文本 Count: 
+										204 文本 0
+								205 文本 Interactive example
+								206 文本 site/src/demos/basics.rs
+								207 标签页组
+									208 标签 (settable, integer) Function, Value: 0
+									209 标签 (selected) Full file, Value: 1
+								210 按钮 Copy
+								211 container Full file
+									212 container
+										213 container (showing 0-100 of 186 items)
+											214 text use leptos :: prelude :: * ; use rustify_components :: { id ,  Button ,  ButtonVariant ,  Glyph ,  Icon ,  Label ,  Link ,  Spinner ,  TextField } ; ///  Buttons request changes to state owned by the application. pub fn button_demo ( ) ->  impl IntoView { let  count  = RwSignal :: new ( 0_ u32 ) ; view! { < div class = " space-y-4 " > < div class = " flex flex-wrap items-center gap-3 " > < Button on_click = move ||  count . update ( | count | * count  += 1 ) > " Increment " < / Button > < Button variant = ButtonVariant :: Outline on_click = move ||  count . set ( 0 ) > " Reset " < / Button > < Button disabled = true  on_click = move ||  count . update ( | count | * count  += 100 ) > " Unavailable " < / Button > < / div > < p class = " text-sm " > " Count:  " < output data - demo - state = " " > { move ||  count . get ( ) } < / output > < / p > < / div > } } ///  A label points to a field through a deterministic, scope-specific ID. pub fn label_demo ( ) ->  impl IntoView { let  field_id  = id :: next ( " label-demo-field " ) ; let  name  = RwSignal :: new ( " Rustify UI " . to_string ( ) ) ; view! { < div class = " space-y-4 " > < div class = " max-w-sm space-y-2 " > < Label control = field_id . clone ( ) > " Project name " < / Label > < TextField id = field_id value = name on_change = move | value |  name . set ( value ) / > < / div > < p class = " text-sm break-words " > " Current name:  " < output data - demo - state = " " > { move ||  name . get ( ) } < / output > < / p > < / div > } } ///  A disabled link keeps its label and stops offering a destination. pub fn link_demo ( ) ->  impl IntoView { let  destination_id  = id :: next ( " link-demo-destination " ) ; let  disabled  = RwSignal :: new ( false ) ; //  This anchor targets the document, so `_self` bypasses the island's local router. view! { < div class = " space-y-4 " > < div class = " flex flex-wrap items-center gap-3 " > < Link href = format! ( " # {destination_id} " )  disabled = disabled attr : target = " _self " > " Jump to the destination " < / Link > < Button variant = ButtonVariant :: Outline on_click = move ||  disabled . update ( | disabled | * disabled  = ! * disabled ) > " Toggle availability "
+							215 标题 Capabilities, Value: 2
+								216 文本 Capabilities
+							217 container Component capabilities
+								218 表格
+									219 row
+										220 列标题
+											221 文本 Capability
+										222 列标题
+											223 文本 Support
+										224 列标题
+											225 文本 Details
+									226 row
+										227 行标题
+											228 文本 properties
+										229 单元格
+											230 文本 yes
+										231 单元格
+											232 文本 label as children, variant, size, disabled; a disabled button leaves the tab order and calls nothing
+									233 row
+										234 行标题
+											235 文本 actions
+										236 单元格
+											237 文本 yes
+										238 单元格
+											239 文本 click; the DOM and the region button call the same application action
+									240 row
+										241 行标题
+											242 文本 theme
+										243 单元格
+											244 文本 yes
+										245 单元格
+											246 文本 seven variants and four sizes, all drawn from the scope's tokens
+									247 row
+										248 行标题
+											249 文本 input
+										250 单元格
+											251 文本 yes
+										252 单元格
+											253 文本 pointer and Enter/Space, from either half
+									254 row
+										255 行标题
+											256 文本 accessibility
+										257 单元格
+											258 文本 yes
+										259 单元格
+											260 文本 a native button; the region's has a DOM control with the same name and action
+									261 row
+										262 行标题
+											263 文本 environment
+										264 单元格
+											265 文本 yes
+										266 单元格
+											267 文本 macOS Chrome, strict CSP, WebGL2 region; no inline script or style
+							268 标题 GPU integration, Value: 2
+								269 文本 GPU integration
+							270 container
+								271 text GPU drawing support:  yes . This documentation example uses the DOM component. See the 
+								272 link component catalogue example, Value: github.com/rockie/rustify-ui/tree/main/examples/component-catalog
+								273 文本  for the available DOM and GPU presentations.
+							274 link Edit this page, Value: github.com/rockie/rustify-ui/edit/main/site/src/lib.rs
+							275 container Previous / Next
+								276 link Previous Vellum example and framework capabilities, Value: 127.0.0.1:4199/rustify-ui/vellum/
+								277 link Next Label, Value: 127.0.0.1:4199/rustify-ui/components/label/
+						278 container Footer links
+							279 link Back to the home page, Value: 127.0.0.1:4199/rustify-ui/
+						280 文本 Copied
+			281 标签页组
+				282 container
+					283 按钮 收起标签页 (⇧⌘L)
+					284 弹出式按钮 标签页分组
+					285 弹出式按钮 标签页搜索
+				286 container
+					287 滚动区
+					288 滚动区
+						289 container
+							290 标签 (settable, boolean) 设置 - 关于 Chrome - 内存用量 - 68.5 MB, Value: off
+							291 标签 (selected, settable, boolean) Button | Rustify UI - 内存用量 - 156 MB, Value: on
+								292 按钮 关闭
+				293 按钮 打开新的标签页
+				294 滑块 垂直标签栏大小调整手柄（可拖动）, Secondary Actions: Decrement, Increment
+	295 关闭按钮
+	296 全屏幕按钮 Help: 此按钮也可以执行缩放窗口的操作, Secondary Actions: 缩放窗口
+	297 最小化按钮
+298 menu bar
+	299 Chrome
+	300 文件
+	301 编辑
+	302 显示
+	303 历史记录
+	304 书签
+	305 个人资料
+	306 标签页
+	307 窗口
+	308 帮助
+
+The focused UI element is 91 文本输入区 (settable) Console prompt, Value: 

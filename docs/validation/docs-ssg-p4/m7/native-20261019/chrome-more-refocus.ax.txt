@@ -1,0 +1,65 @@
+Window: "Rustify UI", App: Google Chrome.
+0 标准窗口 Rustify UI - Google Chrome - Rockie, URL: 127.0.0.1:4199/rustify-ui/, Secondary Actions: Raise
+	1 container Rustify UI - Google Chrome - Rockie, URL: 127.0.0.1:4199/rustify-ui/
+		2 container
+			3 工具栏
+				4 按钮 返回
+				5 按钮 (disabled) 前进
+				6 按钮 重新加载
+				7 container
+					8 弹出式按钮 查看网站信息
+					9 文本栏 (settable) 地址和搜索栏, Value: 127.0.0.1:4199/rustify-ui/, Placeholder: 问问 Google 或输入网址
+					10 按钮 为此标签页添加书签
+				11 container
+					12 弹出式按钮 打开 Kimi
+可以访问此网站
+					13 弹出式按钮 扩展程序
+				14 按钮 Rockie
+				15 弹出式按钮 Chrome
+			16 container
+				17 滚动区
+					18 HTML 内容 Rustify UI, URL: 127.0.0.1:4199/rustify-ui/
+						19 container Search
+							20 文本 Search documentation
+							21 按钮 Close
+							22 组合框 (settable) Search documentation, Value: no-such-p4-token
+							23 文本 No results. Try a different word or a shorter prefix.
+							24 文本 0 results
+							25 列表框 Search results
+			26 container 信息栏容器
+				27 container 信息栏
+					28 container
+						29 文本 “Kimi”已开始调试此浏览器
+						30 按钮 取消
+					31 按钮 关闭
+			32 标签页组
+				33 container
+					34 按钮 收起标签页 (⇧⌘L)
+					35 弹出式按钮 标签页分组
+					36 弹出式按钮 标签页搜索
+				37 container
+					38 滚动区
+					39 滚动区
+						40 container
+							41 标签 (settable, boolean) 设置 - 关于 Chrome - 内存用量 - 68.5 MB, Value: off
+							42 标签 (selected, settable, boolean) Rustify UI - 内存用量 - 111 MB, Value: on
+								43 按钮 关闭
+							44 标签 (settable, boolean) Native boundary checks - 内存用量 - 66.2 MB, Value: off
+				45 按钮 打开新的标签页
+				46 滑块 垂直标签栏大小调整手柄（可拖动）, Secondary Actions: Decrement, Increment
+	47 关闭按钮
+	48 全屏幕按钮 Help: 此按钮也可以执行缩放窗口的操作, Secondary Actions: 缩放窗口
+	49 最小化按钮
+50 menu bar
+	51 Chrome
+	52 文件
+	53 编辑
+	54 显示
+	55 历史记录
+	56 书签
+	57 个人资料
+	58 标签页
+	59 窗口
+	60 帮助
+
+The focused UI element is 22 组合框 (settable) Search documentation, Value: no-such-p4-token

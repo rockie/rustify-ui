@@ -1,0 +1,143 @@
+Window: "DevTools - 127.0.0.1:4199/rustify-ui/components/button/", App: Google Chrome.
+0 标准窗口 DevTools - 127.0.0.1:4199/rustify-ui/components/button/ - Rockie, Secondary Actions: Raise, URL: devtools://devtools/bundled/devtools_app.html?remoteBase=https://chrome-devtools-frontend.appspot.com/serve_file/@0e66b94549a8bd85f03fbdf189b752d6e7b63c32/&targetType=tab&can_dock=true&panel=console
+	1 container DevTools - 127.0.0.1:4199/rustify-ui/components/button/ - Rockie, URL: devtools://devtools/bundled/devtools_app.html?remoteBase=https://chrome-devtools-frontend.appspot.com/serve_file/@0e66b94549a8bd85f03fbdf189b752d6e7b63c32/&targetType=tab&can_dock=true&panel=console
+		2 container
+			3 container
+				4 滚动区
+					5 HTML 内容 DevTools, URL: devtools://devtools/bundled/devtools_app.html?remoteBase=https://chrome-devtools-frontend.appspot.com/serve_file/@0e66b94549a8bd85f03fbdf189b752d6e7b63c32/&targetType=tab&can_dock=true&panel=console
+						6 container
+							7 container
+								8 container
+									9 container
+										10 container Main toolbar
+											11 工具栏
+												12 container Select an element in the page to inspect it, Help: Select an element in the page to inspect it - ⌘ ⇧ C
+													13 切换按钮 Select an element in the page to inspect it - ⌘ ⇧ C, Value: 0
+												14 container Toggle device toolbar, Help: Toggle device toolbar - ⌘ ⇧ M
+													15 切换按钮 Toggle device toolbar - ⌘ ⇧ M, Value: 0
+											16 container
+												17 标签页组 Panels
+													18 标签 (settable, integer) Elements, Value: 0
+													19 标签 (selected) Console, Value: 1
+													20 标签 (settable, integer) Sources, Value: 0
+													21 标签 (settable, integer) Network, Value: 0
+													22 标签 (settable, integer) Performance, Value: 0
+													23 标签 (settable, integer) Memory, Value: 0
+												24 弹出式按钮 More tabs
+											25 工具栏
+												26 container Settings, Help: Settings - F1 - ⇧ ?
+													27 按钮 Settings - F1 - ⇧ ?
+												28 弹出式按钮 Customize and control DevTools
+													29 按钮 Customize and control DevTools
+										30 container Console panel
+											31 container console
+												32 container
+													33 工具栏
+														34 container Show Console sidebar
+															35 按钮 Show Console sidebar
+														36 container Clear console, Help: Clear console - Ctrl L - ⌘ K
+															37 按钮 Clear console - Ctrl L - ⌘ K
+														38 container Collapse all
+															39 按钮 Collapse all
+														40 按钮 JavaScript context: top
+														41 container Create live expression
+															42 按钮 Create live expression
+														43 文本输入区 (settable) Filter
+															44 文本 Filter
+														45 弹出式按钮 Log level: Default levels
+															46 文本 Default levels
+														47 container Some problems no longer generate console messages, but are surfaced in the Issues tab Click to go to the Issues tab
+															48 按钮 Some problems no longer generate console messages, but are surfaced in the Issues tab Click to go to the Issues tab
+														49 container Console settings
+															50 切换按钮 Console settings, Value: 0
+														51 container 0 messages in console
+													52 container
+														53 container
+															54 container Warning: Don’t paste code into the DevTools Console that you don’t understand or haven’t reviewed yourself. This could allow attackers to steal your identity or take control of your computer. Type "allow pasting" below and press Enter to allow pasting.
+																55 container Warning, Repeated 2 times
+																	56 文本 2
+																57 container Warning: Don’t paste code into the DevTools Console that you don’t understand or haven’t reviewed yourself. This could allow attackers to steal your identity or take control of your computer. Type "allow pasting" below and press Enter to allow pasting. Stack table collapsed
+																	58 文本 Warning: Don’t paste code into the DevTools Console that you don’t understand or haven’t reviewed yourself. This could allow attackers to steal your identity or take control of your computer. Type "allow pasting" below and press Enter to allow pasting.
+															59 container allow pasting
+																60 container allow pasting Stack table collapsed
+																	61 文本 allow pasting
+															62 container (showing 38-138 of 138 items)
+																63 text worker : document . querySelector ( "[data-rd-search]" ). dataset . rdSearchWorker , islands :[... document . querySelectorAll ( "[data-rustify-island]" )]. map ( x => x . getAttribute ( "data-rd-island-state" )), wasm : performance . getEntriesByType ( "resource" ). filter ( x => x . name . includes ( ".wasm" )). map ( x =>({ url : x . name , status : x . responseStatus })), failed : performance . getEntriesByType ( "resource" ). filter ( x => x . responseStatus >= 400 ). map ( x =>({ url : x . name , status : x . responseStatus }))})
+															64 container '{"ua":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36","url":"http://127.0.0.1:4199/rustify-ui/components/button/","viewport":[834,845],"dpr":2,"visibility":"visible","hasFocus":false,"worker":"/rustify-ui/assets/search-worker.8225fc0ff7.js","islands":["ready"],"wasm":[{"url":"http://127.0.0.1:4199/rustify-ui/assets/islands/b9140be…/app_bg.wasm","status":200}],"failed":[]}' Stack table collapsed
+																65 container
+																	66 文本 '{"ua":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36","url":"
+																	67 链接 http://127.0.0.1:4199/rustify-ui/components/button/
+																		68 文本 http://127.0.0.1:4199/rustify-ui/components/button/
+																	69 文本 ","viewport":[834,845],"dpr":2,"visibility":"visible","hasFocus":false,"worker":"/rustify-ui/assets/search-worker.8225fc0ff7.js","islands":["ready"],"wasm":[{"url":"
+																	70 链接 http://127.0.0.1:4199/rustify-ui/assets/islands/b9140be…/app_bg.wasm
+																		71 文本 http://127.0.0.1:4199/rustify-ui/assets/islands/
+																		72 文本 b9140be
+																		73 文本 …
+																		74 文本 /app_bg.wasm
+																	75 文本 ","status":200}],"failed":[]}'
+															76 container
+																77 text JSON . stringify ({ url : location . href , viewport :[ innerWidth , innerHeight ], dpr : devicePixelRatio , documentWidth : document . documentElement . scrollWidth , wasm : performance . getEntriesByType ( "resource" ). filter ( x => x . name . includes ( ".wasm" )). map ( x =>({ path : new URL ( x . name ). pathname , status : x . responseStatus })), failed : performance . getEntriesByType ( "resource" ). filter ( x => x . responseStatus >= 400 ). map ( x =>({ path : new URL ( x . name ). pathname , status : x . responseStatus }))})
+															78 container '{"url":"http://127.0.0.1:4199/rustify-ui/components/button/","viewport":[1272,844],"dpr":2,"documentWidth":1272,"wasm":[{"path":"/rustify-ui/assets/islands/b9140be330acf58d887929efe7a96140f8a70fe13c1bbb84392b75d9e6b5d31e/app_bg.wasm","status":200}],"failed":[]}' Stack table collapsed
+																79 container
+																	80 文本 '{"url":"
+																	81 链接 http://127.0.0.1:4199/rustify-ui/components/button/
+																		82 文本 http://127.0.0.1:4199/rustify-ui/components/button/
+																	83 文本 ","viewport":[1272,844],"dpr":2,"documentWidth":1272,"wasm":[{"path":"/rustify-ui/assets/islands/b9140be330acf58d887929efe7a96140f8a70fe13c1bbb84392b75d9e6b5d31e/app_bg.wasm","status":200}],"failed":[]}'
+														84 container
+															85 container
+																86 文本输入区 (settable) Console prompt, Value: 
+
+									87 container Drawer
+										88 container
+											89 工具栏
+												90 弹出式按钮 More tools
+													91 按钮 More tools
+											92 标签页组
+												93 标签 (settable, integer) Console, Value: 0
+												94 标签 (settable, integer) AI assistance, Value: 0
+												95 标签 (settable, integer) Network conditions, Value: 0
+												96 标签 (selected) What’s new, Value: 1
+											97 工具栏
+												98 container Toggle drawer orientation
+													99 按钮 Toggle drawer orientation
+												100 container Minimize drawer
+													101 按钮 Minimize drawer
+												102 container Close drawer
+													103 按钮 Close drawer
+											104 container What’s new panel
+												105 container whats-new
+													106 container
+														107 文本 New in DevTools (September 2026)
+														108 按钮 See all new features
+														109 标题 DevTools for agents, Value: 3
+															110 链接 DevTools for agents, Help: https://developer.chrome.com/blog/new-in-devtools-152/#devtools-for-agents
+																111 文本 DevTools for agents
+														112 container
+															113 text DevTools for agents 1.7 improves memory profiling with the  get_heapsnapshot_object_details  tool and native V8 context filtering.
+														114 标题 Soft navigation metrics in Live Metrics, Value: 3
+															115 链接 Soft navigation metrics in Live Metrics, Help: https://developer.chrome.com/blog/new-in-devtools-152/#performance
+																116 文本 Soft navigation metrics in Live Metrics
+														117 文本 The Live Metrics view in the Performance panel now captures and reports metrics like LCP and INP for client-side soft navigations in single-page applications by default.
+														118 标题 Nested CSS parent selector interactions, Value: 3
+															119 链接 Nested CSS parent selector interactions, Help: https://developer.chrome.com/blog/new-in-devtools-152/#nested-selectors
+																120 文本 Nested CSS parent selector interactions
+														121 container
+															122 text Hovering over parent selectors highlights matching elements on the page, nested rules respond to Styles tab filtering, and  @nested-declarations  include specificity tooltips.
+							123 文本 DevTools is undocked
+	124 关闭按钮
+	125 全屏幕按钮 Help: 此按钮也可以执行缩放窗口的操作, Secondary Actions: 缩放窗口
+	126 最小化按钮
+	127 文本 DevTools - 127.0.0.1:4199/rustify-ui/components/button/
+128 menu bar
+	129 Chrome
+	130 文件
+	131 编辑
+	132 显示
+	133 历史记录
+	134 书签
+	135 个人资料
+	136 标签页
+	137 窗口
+	138 帮助
+
+The focused UI element is 86 文本输入区 (settable) Console prompt, Value: 

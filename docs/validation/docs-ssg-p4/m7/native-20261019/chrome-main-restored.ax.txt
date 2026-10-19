@@ -1,0 +1,90 @@
+Window: "Rustify UI", App: Google Chrome.
+0 标准窗口 Rustify UI - Google Chrome - Rockie, URL: 127.0.0.1:4199/rustify-ui/zh/, Secondary Actions: Raise
+	1 container Rustify UI - Google Chrome - Rockie, URL: 127.0.0.1:4199/rustify-ui/zh/
+		2 container
+			3 工具栏
+				4 按钮 返回
+				5 按钮 (disabled) 前进
+				6 按钮 重新加载
+				7 container
+					8 弹出式按钮 查看网站信息
+					9 文本栏 (settable) 地址和搜索栏, Value: 127.0.0.1:4199/rustify-ui/zh/, Placeholder: 问问 Google 或输入网址
+					10 按钮 为此标签页添加书签
+				11 container
+					12 弹出式按钮 打开 Kimi
+可以访问此网站
+					13 弹出式按钮 扩展程序
+				14 按钮 Rockie
+				15 弹出式按钮 Chrome
+			16 container
+				17 滚动区
+					18 HTML 内容 Rustify UI, URL: 127.0.0.1:4199/rustify-ui/zh/
+						19 link 跳到正文, Value: 127.0.0.1:4199/rustify-ui/zh/#content
+						20 container
+							21 link Rustify UI, Value: 127.0.0.1:4199/rustify-ui/zh/
+							22 container 站点链接
+								23 内容列表
+									24 link GitHub 源码, Value: github.com/rockie/rustify-ui
+							25 弹出式按钮 搜索 Ctrl / Cmd K
+							26 开合三角标记 中文
+								27 文本 中文
+							28 container 主题
+								29 切换按钮 跟随系统, Value: 1
+								30 切换按钮 浅色, Value: 0
+								31 切换按钮 深色, Value: 0
+						32 container
+							33 标题 Rustify UI, Value: 1
+								34 文本 Rustify UI
+							35 文本 面向浏览器应用的实验性 Rust SDK，提供 DOM 组件和按需启用的 GPU region。
+							36 container 开始阅读
+								37 link 快速开始, Value: 127.0.0.1:4199/rustify-ui/zh/quickstart/
+								38 link 组件, Value: 127.0.0.1:4199/rustify-ui/zh/components/button/
+							39 内容列表
+								40 container
+									41 标题 DOM 界面, Value: 2
+										42 文本 DOM 界面
+									43 文本 Leptos 管理 DOM、布局和响应式应用状态。
+								44 container
+									45 标题 按需启用 GPU, Value: 2
+										46 文本 按需启用 GPU
+									47 文本 需要自定义绘制的交互内容可使用 GPU region。
+								48 container
+									49 标题 静态部署, Value: 2
+										50 文本 静态部署
+									51 文本 构建浏览器资源后通过 HTTP 托管，无需后端服务。
+							52 文本 Rustify UI 以 Leptos CSR 管理浏览器界面，默认构建仅使用 DOM。启用 SDK 的 gpu feature 后，GpuRegion 在由 DOM 定位的 canvas 中运行 Makepad WebGL2 绘制；应用向 region 传入 props，并接收类型化动作。
+							53 文本 每项任务按实际需要选择呈现路径。共享状态和主题 token 不要求 DOM 与 GPU 拥有相同的组件目录或 CSS 支持；只有明确需要两端或跨区协作时，才同时实现两端。当前尚未选定具体业务场景。
+							54 文本 本仓包含 SDK、DOM 组件、Makepad fork 和可运行示例。工作区版本为 0.1.0，尚未开放包发布；从快速开始进入本地构建，或在组件文档中操作实际 DOM 示例并查看 Rust 源码。
+						55 container 页脚导航
+							56 link 返回首页, Value: 127.0.0.1:4199/rustify-ui/zh/
+			57 标签页组
+				58 container
+					59 按钮 收起标签页 (⇧⌘L)
+					60 弹出式按钮 标签页分组
+					61 弹出式按钮 标签页搜索
+				62 container
+					63 滚动区
+					64 滚动区
+						65 container
+							66 标签 (settable, boolean) 设置 - 关于 Chrome - 内存用量 - 68.5 MB, Value: off
+							67 标签 (selected, settable, boolean) Rustify UI, Value: on
+								68 按钮 关闭
+							69 标签 (settable, boolean) Native boundary checks - 内存用量 - 66.2 MB, Value: off
+				70 按钮 打开新的标签页
+				71 滑块 垂直标签栏大小调整手柄（可拖动）, Secondary Actions: Decrement, Increment
+	72 关闭按钮
+	73 全屏幕按钮 Help: 此按钮也可以执行缩放窗口的操作, Secondary Actions: 缩放窗口
+	74 最小化按钮
+75 menu bar
+	76 Chrome
+	77 文件
+	78 编辑
+	79 显示
+	80 历史记录
+	81 书签
+	82 个人资料
+	83 标签页
+	84 窗口
+	85 帮助
+
+The focused UI element is 18 HTML 内容 Rustify UI, URL: 127.0.0.1:4199/rustify-ui/zh/

@@ -1,0 +1,105 @@
+Window: "设置 - 关于 Chrome", App: Google Chrome.
+0 标准窗口 设置 - 关于 Chrome - Google Chrome - Rockie, URL: chrome://settings/help, Secondary Actions: Raise
+	1 container 设置 - 关于 Chrome - Google Chrome - Rockie, URL: chrome://settings/help
+		2 container
+			3 工具栏
+				4 按钮 返回
+				5 按钮 (disabled) 前进
+				6 按钮 重新加载
+				7 container
+					8 弹出式按钮 Chrome
+					9 文本栏 (settable) 地址和搜索栏, Value: chrome://settings/help, Placeholder: 问问 Google 或输入网址
+					10 按钮 为此标签页添加书签
+				11 container
+					12 弹出式按钮 打开 Kimi
+					13 弹出式按钮 扩展程序
+				14 按钮 Rockie
+				15 弹出式按钮 Chrome
+			16 container
+				17 滚动区
+					18 HTML 内容 设置 - 关于 Chrome, URL: chrome://settings/help
+						19 container
+							20 标题 设置, Value: 1
+								21 文本 设置
+							22 搜索文本字段 (settable) 搜索设置
+						23 container
+							24 菜单 Secondary Actions: Cancel
+								25 我与 Google
+									26 文本 我与 Google
+								27 自动填充和密码
+									28 文本 自动填充和密码
+								29 隐私与安全
+									30 文本 隐私与安全
+								31 性能
+									32 文本 性能
+								33 AI 创新功能
+									34 文本 AI 创新功能
+								35 外观
+									36 文本 外观
+								37 搜索引擎
+									38 文本 搜索引擎
+								39 默认浏览器
+									40 文本 默认浏览器
+								41 起始页面
+									42 文本 起始页面
+								43 语言
+									44 文本 语言
+								45 下载内容
+									46 文本 下载内容
+								47 无障碍
+									48 文本 无障碍
+								49 系统
+									50 文本 系统
+								51 重置设置
+									52 文本 重置设置
+								53 扩展程序, Help: 在新标签页中打开
+									54 文本 扩展程序
+								55 关于 Chrome
+									56 文本 关于 Chrome
+							57 container
+								58 标题 关于 Chrome, Value: 2
+									59 文本 关于 Chrome
+								60 文本 Google Chrome
+								61 图像 /throbber_small.svg
+								62 文本 正在检查更新
+								63 文本 版本 155.0.8059.85（正式版本） (arm64)
+								64 链接 获取有关 Chrome 的帮助
+								65 链接 报告问题
+								66 链接 隐私权政策
+								67 文本 Google Chrome
+								68 文本 版权所有 2026 Google LLC. 保留所有权利。
+								69 container
+									70 文本 Chrome 的诞生离不开 
+									71 link Chromium, Value: chromium.org/
+									72 文本  开源项目以及其他
+									73 link 开源软件, Value: chrome://credits/
+									74 文本 。
+								75 link 服务条款, Value: chrome://terms/
+			76 标签页组
+				77 container
+					78 按钮 收起标签页 (⇧⌘L)
+					79 弹出式按钮 标签页分组
+					80 弹出式按钮 标签页搜索
+				81 container
+					82 滚动区
+					83 滚动区
+						84 标签 (selected, settable, boolean) 设置 - 关于 Chrome - 内存用量 - 68.5 MB, Value: on
+							85 按钮 关闭
+				86 按钮 打开新的标签页
+				87 滑块 垂直标签栏大小调整手柄（可拖动）, Secondary Actions: Decrement, Increment
+	88 关闭按钮
+	89 全屏幕按钮 Help: 此按钮也可以执行缩放窗口的操作, Secondary Actions: 缩放窗口
+	90 最小化按钮
+91 menu bar
+	92 Chrome
+	93 文件
+	94 编辑
+	95 显示
+	96 历史记录
+	97 书签
+	98 个人资料
+	99 标签页
+	100 窗口
+	101 帮助
+
+The focused UI element is 22 搜索文本字段 (settable) 搜索设置

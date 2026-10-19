@@ -1,0 +1,85 @@
+Window: "快速开始 | Rustify UI", App: Google Chrome.
+0 标准窗口 快速开始 | Rustify UI - Google Chrome - Rockie, URL: 127.0.0.1:4199/rustify-ui/zh/quickstart/, Secondary Actions: Raise
+	1 container 快速开始 | Rustify UI - Google Chrome - Rockie, URL: 127.0.0.1:4199/rustify-ui/zh/quickstart/
+		2 container
+			3 工具栏
+				4 按钮 返回
+				5 按钮 (disabled) 前进
+				6 按钮 重新加载
+				7 container
+					8 弹出式按钮 查看网站信息
+					9 文本栏 (settable) 地址和搜索栏, Value: 127.0.0.1:4199/rustify-ui/zh/quickstart/, Placeholder: 问问 Google 或输入网址
+					10 按钮 缩放比例：200%
+					11 按钮 为此标签页添加书签
+				12 container
+					13 弹出式按钮 打开 Kimi
+可以访问此网站
+					14 弹出式按钮 扩展程序
+				15 按钮 Rockie
+				16 弹出式按钮 Chrome
+			17 container
+				18 滚动区
+					19 HTML 内容 DevTools, URL: devtools://devtools/bundled/device_mode_emulation_frame.html?remoteBase=https://chrome-devtools-frontend.appspot.com/serve_file/@0e66b94549a8bd85f03fbdf189b752d6e7b63c32/&targetType=tab&can_dock=true&panel=console
+				20 滚动区
+					21 HTML 内容 快速开始 | Rustify UI, URL: 127.0.0.1:4199/rustify-ui/zh/quickstart/
+						22 container 搜索
+							23 文本 搜索文档
+							24 按钮 关闭
+							25 组合框 (settable) 搜索文档, Value: ThemeScope
+							26 文本 3 个结果
+							27 列表框 搜索结果
+								28 文本 (selected) 快速开始 快速开始 › 在应用中使用 Tailwind v4 ope 外。 使用版本化主题文档时，在 sdk.css 后紧接着导入 theme-v4.css。ThemeScope 在根节点提供文档解析后的颜色、字体、间距、圆角和阴影；这些 scope 的 utility 间距读取 --rustify-unit，--layout-gap 仍是独立布局值。ThemedScope 保留旧值回退，两种 provider 的显式
+									29 文本 快速开始
+									30 文本 快速开始 › 在应用中使用 Tailwind v4
+									31 文本 ope 外。 使用版本化主题文档时，在 sdk.css 后紧接着导入 theme-v4.css。
+									32 文本 ThemeScope
+									33 文本  在根节点提供文档解析后的颜色、字体、间距、圆角和阴影；这些 scope 的 utility 间距读取 --rustify-unit，--layout-gap 仍是独立布局值。ThemedScope 保留旧值回退，两种 provider 的显式
+								34 文本 Architecturezh 尚未翻译，内容语言：en Architecture › Versioned themes ResolvedTheme> alongside its application state. ThemeScope claims the mount root, projects the snapshot through CSSOM and restores prior values on cleanup. ThemeBoundary re-resolve
+									35 文本 Architecture
+									36 文本 zh
+									37 文本 尚未翻译，内容语言：en
+									38 文本 Architecture › Versioned themes
+									39 文本 ResolvedTheme> alongside its application state. 
+									40 文本 ThemeScope
+									41 文本  claims the mount root, projects the snapshot through CSSOM and restores prior values on cleanup. ThemeBoundary re-resolve
+								42 文本 Theme documentszh 尚未翻译，内容语言：en Theme documents › Mount a browser scope Theme documents › Fonts and GPU consumers Theme documents › Import and export :{mount, AppHandle, MountConfig, ResolvedTheme, ThemeScope}; use rustify_ui::theme::{font_context, import_json, resolve, ThemeError, ThemeMode}; use std::sync::Arc; // Put the down
+									43 文本 Theme documents
+									44 文本 zh
+									45 文本 尚未翻译，内容语言：en
+									46 文本 Theme documents › Mount a browser scope
+									47 文本 Theme documents › Fonts and GPU consumers
+									48 文本 Theme documents › Import and export
+									49 文本 :{mount, AppHandle, MountConfig, ResolvedTheme, 
+									50 文本 ThemeScope
+									51 文本 }; use rustify_ui::theme::{font_context, import_json, resolve, ThemeError, ThemeMode}; use std::sync::Arc; // Put the down
+			52 标签页组
+				53 container
+					54 按钮 收起标签页 (⇧⌘L)
+					55 弹出式按钮 标签页分组
+					56 弹出式按钮 标签页搜索
+				57 container
+					58 滚动区
+					59 滚动区
+						60 container
+							61 标签 (settable, boolean) 设置 - 关于 Chrome - 内存用量 - 68.5 MB, Value: off
+							62 标签 (selected, settable, boolean) 快速开始 | Rustify UI - 内存用量 - 121 MB, Value: on
+								63 按钮 关闭
+							64 标签 (settable, boolean) Native boundary checks - 内存用量 - 66.2 MB, Value: off
+				65 按钮 打开新的标签页
+				66 滑块 垂直标签栏大小调整手柄（可拖动）, Secondary Actions: Decrement, Increment
+	67 关闭按钮
+	68 全屏幕按钮 Help: 此按钮也可以执行缩放窗口的操作, Secondary Actions: 缩放窗口
+	69 最小化按钮
+70 menu bar
+	71 Chrome
+	72 文件
+	73 编辑
+	74 显示
+	75 历史记录
+	76 书签
+	77 个人资料
+	78 标签页
+	79 窗口
+	80 帮助
+
+The focused UI element is 28 文本 (selected) 快速开始 快速开始 › 在应用中使用 Tailwind v4 ope 外。 使用版本化主题文档时，在 sdk.css 后紧接着导入 theme-v4.css。ThemeScope 在根节点提供文档解析后的颜色、字体、间距、圆角和阴影；这些 scope 的 utility 间距读取 --rustify-unit，--layout-gap 仍是独立布局值。ThemedScope 保留旧值回退，两种 provider 的显式

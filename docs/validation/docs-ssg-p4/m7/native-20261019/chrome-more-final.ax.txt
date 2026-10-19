@@ -1,0 +1,329 @@
+Window: "Rustify UI", App: Google Chrome.
+0 标准窗口 Rustify UI - Google Chrome - Rockie, URL: 127.0.0.1:4199/rustify-ui/, Secondary Actions: Raise
+	1 container Rustify UI - Google Chrome - Rockie, URL: 127.0.0.1:4199/rustify-ui/
+		2 container
+			3 工具栏
+				4 按钮 返回
+				5 按钮 (disabled) 前进
+				6 按钮 重新加载
+				7 container
+					8 弹出式按钮 查看网站信息
+					9 文本栏 (settable) 地址和搜索栏, Value: 127.0.0.1:4199/rustify-ui/, Placeholder: 问问 Google 或输入网址
+					10 按钮 为此标签页添加书签
+				11 container
+					12 弹出式按钮 打开 Kimi
+可以访问此网站
+					13 弹出式按钮 扩展程序
+				14 按钮 Rockie
+				15 弹出式按钮 Chrome
+			16 container
+				17 滚动区
+					18 HTML 内容 Rustify UI, URL: 127.0.0.1:4199/rustify-ui/
+						19 container Search
+							20 文本 Search documentation
+							21 按钮 Close
+							22 组合框 (settable) Search documentation, Value: the
+							23 文本 37 results
+							24 列表框 Search results
+								25 文本 (selected) Data larger than the screen Data larger than the screen › The table holds no data Data larger than the screen › What is actually in the document DataTable is told how many rows there are and given a way to read a cell. It never holds a value. <DataTable rows=rows // Signal<usize> columns=columns // Signal<Vec<Column>> cell=
+									26 文本 Data larger than 
+									27 文本 the
+									28 文本  screen
+									29 文本 Data larger than the screen › The table holds no data
+									30 文本 Data larger than the screen › What is actually in the document
+									31 文本 DataTable is told how many rows 
+									32 文本 the
+									33 文本 re are and given a way to read a cell. It never holds a value. <DataTable rows=rows // Signal<usize> columns=columns // Signal<Vec<Column>> cell=
+								34 文本 Theme documents Theme documents › Static documentation themes Theme documents › Create and resolve a document A Rustify Docs site can import the complete JSON exported by Theme Studio: [theme] document = "theme.json" The path is relative to the site project. Keep the document inside the pr
+									35 文本 The
+									36 文本 me documents
+									37 文本 Theme documents › Static documentation themes
+									38 文本 Theme documents › Create and resolve a document
+									39 文本 A Rustify Docs site can import 
+									40 文本 the
+									41 文本  complete JSON exported by Theme Studio: [theme] document = "theme.json" The path is relative to the site project. Keep the document inside the pr
+								42 文本 Quick start Quick start › Using the DOM components Quick start › Limits of the preview Quick start › Prerequisites The DOM half of the component subset lives in rustify_ui::components. Every control is controlled by the application: the user's action is a request, and what the control shows aft
+									43 文本 Quick start
+									44 文本 Quick start › Using the DOM components
+									45 文本 Quick start › Limits of the preview
+									46 文本 Quick start › Prerequisites
+									47 文本 The
+									48 文本  DOM half of the component subset lives in rustify_ui::components. Every control is controlled by the application: the user's action is a request, and what the control shows aft
+								49 文本 Architecture Architecture › Versioned themes Architecture › Streams, and why they are named Architecture › Deciding in the same turn as the event ThemeDocument retains light/dark author strings. resolve produces one ResolvedTheme containing sRGB RGBA, CSS-pixel geometry, selected fonts, structured shadows and diagnostics. Ap
+									50 文本 Architecture
+									51 文本 Architecture › Versioned themes
+									52 文本 Architecture › Streams, and why they are named
+									53 文本 Architecture › Deciding in the same turn as the event
+									54 文本 The
+									55 文本 meDocument retains light/dark author strings. resolve produces one ResolvedTheme containing sRGB RGBA, CSS-pixel geometry, selected fonts, structured shadows and diagnostics. Ap
+								56 文本 Navigation Navigation › What is in the address, and what is not Navigation › Guards, and the number in history.state Navigation › Guards, and the number in history.state › Known limitations Routes matches static segments and :param, in the order declared, and a path that matches nothing is an answer - the application's not-found view - rather than a failure. There is
+									57 文本 Navigation
+									58 文本 Navigation › What is in the address, and what is not
+									59 文本 Navigation › Guards, and the number in history.state
+									60 文本 Navigation › Guards, and the number in history.state › Known limitations
+									61 文本 Routes matches static segments and :param, in 
+									62 文本 the
+									63 文本  order declared, and a path that matches nothing is an answer - the application's not-found view - rather than a failure. There is
+								64 文本 Forms Forms › Why the values are not here Forms › Generations, and the late answer Forms › Fields the form does not have played value comes only from its value prop. If the form kept a second copy, "what is in this field" would have two answers, and the two would differ the moment one path updated wi
+									65 文本 Forms
+									66 文本 Forms › Why the values are not here
+									67 文本 Forms › Generations, and the late answer
+									68 文本 Forms › Fields the form does not have
+									69 文本 played value comes only from its value prop. If 
+									70 文本 the
+									71 文本  form kept a second copy, "what is in this field" would have two answers, and the two would differ the moment one path updated wi
+								72 文本 Languages, formatting and text Languages, formatting and text › What the SDK translates, and what it does not Languages, formatting and text › Choosing the language Languages, formatting and text › Fonts, and the glyphs a font does not have The SDK ships the words it puts on screen on its own account - the label on a retry control, the word for closing a layer, the sentence a refused clipboard shows. Those are rustify
+									73 文本 Languages, formatting and text
+									74 文本 Languages, formatting and text › What the SDK translates, and what it does not
+									75 文本 Languages, formatting and text › Choosing the language
+									76 文本 Languages, formatting and text › Fonts, and the glyphs a font does not have
+									77 文本 The
+									78 文本  SDK ships the words it puts on screen on its own account - the label on a retry control, the word for closing a layer, the sentence a refused clipboard shows. Those are rustify
+								79 文本 Runtime utilities Runtime utilities › Build and try the source panel Runtime utilities › SDK calls The default build contains a compiler-only Worker. Complete class names work without the scanner: mbx xtask build-web --example utility-lab --release mbx xtask serve --example util
+									80 文本 Runtime utilities
+									81 文本 Runtime utilities › Build and try the source panel
+									82 文本 Runtime utilities › SDK calls
+									83 文本 The
+									84 文本  default build contains a compiler-only Worker. Complete class names work without the scanner: mbx xtask build-web --example utility-lab --release mbx xtask serve --example util
+								85 文本 Compatibility and capability boundaries (P1 research preview) Compatibility and capability boundaries (P1 research preview) › Instances and what they cost Compatibility and capability boundaries (P1 research preview) › What the resource ledgers count Compatibility and capability boundaries (P1 research preview) › The clipboard is a wasm instance with its own linear memory. They share the compiled WebAssembly.Module, so a second instance is one extra JS request for a copy of the generated glue under a qu
+									86 文本 Compatibility and capability boundaries (P1 research preview)
+									87 文本 Compatibility and capability boundaries (P1 research preview) › Instances and what they cost
+									88 文本 Compatibility and capability boundaries (P1 research preview) › What the resource ledgers count
+									89 文本 Compatibility and capability boundaries (P1 research preview) › The clipboard
+									90 文本 is a wasm instance with its own linear memory. 
+									91 文本 The
+									92 文本 y share the compiled WebAssembly.Module, so a second instance is one extra JS request for a copy of the generated glue under a qu
+								93 文本 Component catalogue Component catalogue › Where they live The twenty-four DOM components — crates/rustify-components/src/, one file per category. The class strings came from Rust/UI; sources.lock.json records what was imported and what th
+									94 文本 Component catalogue
+									95 文本 Component catalogue › Where they live
+									96 文本 The
+									97 文本  twenty-four DOM components — crates/rustify-components/src/, one file per category. The class strings came from Rust/UI; sources.lock.json records what was imported and what th
+								98 文本 Workspace Workspace › Panels and dividers Workspace › Tabs over panels ce Three pieces: panels side by side, tabs over them, and every command in one list. Each has a part that is easy to get wrong silently, and each keeps that part as a function with
+									99 文本 Workspace
+									100 文本 Workspace › Panels and dividers
+									101 文本 Workspace › Tabs over panels
+									102 文本 ce Three pieces: panels side by side, tabs over 
+									103 文本 the
+									104 文本 m, and every command in one list. Each has a part that is easy to get wrong silently, and each keeps that part as a function with
+								105 文本 Vellum example and framework capabilities Vellum example and framework capabilities › Five-layer mapping Vellum example and framework capabilities › Responsibilities by capability cycle and input across DOM and GPU regions. See the VELLUM plan for implementation status. Final validation passed 142 Rust tests and 80 tests across 11 independent browser scripts
+									106 文本 Vellum example and framework capabilities
+									107 文本 Vellum example and framework capabilities › Five-layer mapping
+									108 文本 Vellum example and framework capabilities › Responsibilities by capability
+									109 文本 cycle and input across DOM and GPU regions. See 
+									110 文本 the
+									111 文本  VELLUM plan for implementation status. Final validation passed 142 Rust tests and 80 tests across 11 independent browser scripts
+								112 文本 Button Button › Example Button › Capabilities riant, size, disabled; a disabled button leaves the tab order and calls nothing
+									113 文本 Button
+									114 文本 Button › Example
+									115 文本 Button › Capabilities
+									116 文本 riant, size, disabled; a disabled button leaves 
+									117 文本 the
+									118 文本  tab order and calls nothing
+								119 文本 Label Label › Capabilities Label › GPU integration Label children as the text, and the id of the control it names
+									120 文本 Label
+									121 文本 Label › Capabilities
+									122 文本 Label › GPU integration
+									123 文本 Label children as 
+									124 文本 the
+									125 文本  text, and the id of the control it names
+								126 文本 Link Link › Example Link › Capabilities Link › GPU integration Jump to the destination Toggle availability The link points to this paragraph. Link: Available /// A disabled link keeps its label and stops offering a destination. pub fn link_dem
+									127 文本 Link
+									128 文本 Link › Example
+									129 文本 Link › Capabilities
+									130 文本 Link › GPU integration
+									131 文本 Jump to 
+									132 文本 the
+									133 文本  destination Toggle availability The link points to this paragraph. Link: Available /// A disabled link keeps its label and stops offering a destination. pub fn link_dem
+								134 文本 Icon Icon › Example Icon › Capabilities Icon one of six glyphs, or any SVG the application passes as children; a label makes it an image and no label makes it decoration
+									135 文本 Icon
+									136 文本 Icon › Example
+									137 文本 Icon › Capabilities
+									138 文本 Icon one of six glyphs, or any SVG 
+									139 文本 the
+									140 文本  application passes as children; a label makes it an image and no label makes it decoration
+								141 文本 Text field Text field › Capabilities Text field › GPU integration d, described-by; a refused value is replaced by the application's rather than left on screen
+									142 文本 Text field
+									143 文本 Text field › Capabilities
+									144 文本 Text field › GPU integration
+									145 文本 d, described-by; a refused value is replaced by 
+									146 文本 the
+									147 文本  application's rather than left on screen
+								148 文本 Text area Text area › Example Text area › Capabilities Text area › GPU integration Notes Keep the view and state together. Use the same function for SSR and hydration. Current text: Keep the view and state together. Use the same function for SSR and hydration. //
+									149 文本 Text area
+									150 文本 Text area › Example
+									151 文本 Text area › Capabilities
+									152 文本 Text area › GPU integration
+									153 文本 Notes Keep 
+									154 文本 the
+									155 文本  view and state together. Use the same function for SSR and hydration. Current text: Keep the view and state together. Use the same function for SSR and hydration. //
+								156 文本 Checkbox Checkbox › Capabilities Checkbox › GPU integration , disabled, read-only, invalid; read-only takes the click and puts the box back
+									157 文本 Checkbox
+									158 文本 Checkbox › Capabilities
+									159 文本 Checkbox › GPU integration
+									160 文本 , disabled, read-only, invalid; read-only takes 
+									161 文本 the
+									162 文本  click and puts the box back
+								163 文本 Radio Radio › Capabilities Radio › GPU integration Radio the options, which one is chosen, disabled, read-only; an option can be disabled on its own
+									164 文本 Radio
+									165 文本 Radio › Capabilities
+									166 文本 Radio › GPU integration
+									167 文本 Radio 
+									168 文本 the
+									169 文本  options, which one is chosen, disabled, read-only; an option can be disabled on its own
+								170 文本 Switch Switch › Example Switch › Capabilities Switch › GPU integration ch requests a change while its state stays with the application. pub fn switch_demo() -> impl IntoView { let field_id = id::next("switch-demo-field"); let enabled = RwSignal::new(f
+									171 文本 Switch
+									172 文本 Switch › Example
+									173 文本 Switch › Capabilities
+									174 文本 Switch › GPU integration
+									175 文本 ch requests a change while its state stays with 
+									176 文本 the
+									177 文本  application. pub fn switch_demo() -> impl IntoView { let field_id = id::next("switch-demo-field"); let enabled = RwSignal::new(f
+								178 文本 Select Select › Example Select › Capabilities Select value, the options, open, placeholder, disabled, read-only, invalid; an option can be disabled on its own
+									179 文本 Select
+									180 文本 Select › Example
+									181 文本 Select › Capabilities
+									182 文本 Select value, 
+									183 文本 the
+									184 文本  options, open, placeholder, disabled, read-only, invalid; an option can be disabled on its own
+								185 文本 Slider Slider › Example Slider › Capabilities der value, min, max, step, disabled, read-only; the value is clamped and snapped before the application sees it
+									186 文本 Slider
+									187 文本 Slider › Example
+									188 文本 Slider › Capabilities
+									189 文本 der value, min, max, step, disabled, read-only; 
+									190 文本 the
+									191 文本  value is clamped and snapped before the application sees it
+								192 文本 Progress Progress › Capabilities Progress › GPU integration Progress value, max, and whether the quantity is known at all
+									193 文本 Progress
+									194 文本 Progress › Capabilities
+									195 文本 Progress › GPU integration
+									196 文本 Progress value, max, and whether 
+									197 文本 the
+									198 文本  quantity is known at all
+								199 文本 Loading Loading › Example Loading › Capabilities Loading whether it is spinning, and the four states of Load in the SDK's own LoadView: loading, empty, ready, error
+									200 文本 Loading
+									201 文本 Loading › Example
+									202 文本 Loading › Capabilities
+									203 文本 Loading whether it is spinning, and 
+									204 文本 the
+									205 文本  four states of Load in the SDK's own LoadView: loading, empty, ready, error
+								206 文本 Tooltip Tooltip › Capabilities Tooltip › GPU integration Tooltip open and the text; the application owns whether it is showing
+									207 文本 Tooltip
+									208 文本 Tooltip › Capabilities
+									209 文本 Tooltip › GPU integration
+									210 文本 Tooltip open and 
+									211 文本 the
+									212 文本  text; the application owns whether it is showing
+								213 文本 Menu Menu › Example Menu › Capabilities Menu open, the items, group headings, separators, the application's shortcut beside a command, and a reason on any item that cannot run; a command that cannot run stays in the list
+									214 文本 Menu
+									215 文本 Menu › Example
+									216 文本 Menu › Capabilities
+									217 文本 Menu open, 
+									218 文本 the
+									219 文本  items, group headings, separators, the application's shortcut beside a command, and a reason on any item that cannot run; a command that cannot run stays in the list
+								220 文本 Dialog Dialog › Example Dialog › Capabilities Dialog open, title, description, modal, whether the backdrop dismisses it, and a title bar whose close button is named in the scope's language unless the application names it
+									221 文本 Dialog
+									222 文本 Dialog › Example
+									223 文本 Dialog › Capabilities
+									224 文本 Dialog open, title, description, modal, whether 
+									225 文本 the
+									226 文本  backdrop dismisses it, and a title bar whose close button is named in the scope's language unless the application names it
+								227 文本 Tabs Tabs › Example Tabs › Capabilities Tabs the tabs, which is active, and whether one is disabled; the panels stay in the document so what is in them survives a look elsewhere
+									228 文本 Tabs
+									229 文本 Tabs › Example
+									230 文本 Tabs › Capabilities
+									231 文本 Tabs 
+									232 文本 the
+									233 文本  tabs, which is active, and whether one is disabled; the panels stay in the document so what is in them survives a look elsewhere
+								234 文本 Scroll area Scroll area › Capabilities Scroll area › GPU integration at it contains, and whether a wheel arriving at the edge scrolls the page behind it
+									235 文本 Scroll area
+									236 文本 Scroll area › Capabilities
+									237 文本 Scroll area › GPU integration
+									238 文本 at it contains, and whether a wheel arriving at 
+									239 文本 the
+									240 文本  edge scrolls the page behind it
+								241 文本 Data table Data table › Capabilities Data table › GPU integration o data, so a sorted, filtered or edited view is the same table asked different questions
+									242 文本 Data table
+									243 文本 Data table › Capabilities
+									244 文本 Data table › GPU integration
+									245 文本 o data, so a sorted, filtered or edited view is 
+									246 文本 the
+									247 文本  same table asked different questions
+								248 文本 Tree Tree › Example Tree › Capabilities Tree › GPU integration -level tree shares expansion and selection with the application. pub fn tree_demo() -> impl IntoView { let expanded = RwSignal::new(BTreeSet::from(["components".to_string()])); let
+									249 文本 Tree
+									250 文本 Tree › Example
+									251 文本 Tree › Capabilities
+									252 文本 Tree › GPU integration
+									253 文本 -level tree shares expansion and selection with 
+									254 文本 the
+									255 文本  application. pub fn tree_demo() -> impl IntoView { let expanded = RwSignal::new(BTreeSet::from(["components".to_string()])); let
+								256 文本 Toast Toast › Example Toast › Capabilities Toast the message, how long it stays and a tone; a newer message replaces the one showing rather than queueing behind it
+									257 文本 Toast
+									258 文本 Toast › Example
+									259 文本 Toast › Capabilities
+									260 文本 Toast 
+									261 文本 the
+									262 文本  message, how long it stays and a tone; a newer message replaces the one showing rather than queueing behind it
+								263 文本 Number field Number field › Example Number field › Capabilities , min, max, step, disabled, read-only, invalid; the bounds are announced, and clamping is the application's
+									264 文本 Number field
+									265 文本 Number field › Example
+									266 文本 Number field › Capabilities
+									267 文本 , min, max, step, disabled, read-only, invalid; 
+									268 文本 the
+									269 文本  bounds are announced, and clamping is the application's
+								270 文本 Color field Color field › Example Color field › Capabilities Color field › GPU integration Color Enter six or eight hex digits, then press Enter or leave the field. Committed color: #1f6feb80 /// A color field commits hexadecimal color and optional alpha together. pub fn
+									271 文本 Color field
+									272 文本 Color field › Example
+									273 文本 Color field › Capabilities
+									274 文本 Color field › GPU integration
+									275 文本 Color Enter six or eight hex digits, 
+									276 文本 the
+									277 文本 n press Enter or leave the field. Committed color: #1f6feb80 /// A color field commits hexadecimal color and optional alpha together. pub fn
+								278 文本 Toggle group Toggle group › Capabilities Toggle group › GPU integration up which are pressed, one at a time or several, the buttons, disabled, and whether it is a toolbar; a button can be disabled on its own
+									279 文本 Toggle group
+									280 文本 Toggle group › Capabilities
+									281 文本 Toggle group › GPU integration
+									282 文本 up which are pressed, one at a time or several, 
+									283 文本 the
+									284 文本  buttons, disabled, and whether it is a toolbar; a button can be disabled on its own
+								285 文本 Rustify UI ptional GPU regions. DOM interfaces Leptos owns the DOM, layout and reactive application state. GPU when needed Opt in to GPU regions for content that needs custom drawing. Static
+									286 文本 Rustify UI
+									287 文本 ptional GPU regions. DOM interfaces Leptos owns 
+									288 文本 the
+									289 文本  DOM, layout and reactive application state. GPU when needed Opt in to GPU regions for content that needs custom drawing. Static
+			290 container 信息栏容器
+				291 container 信息栏
+					292 container
+						293 文本 “Kimi”已开始调试此浏览器
+						294 按钮 取消
+					295 按钮 关闭
+			296 标签页组
+				297 container
+					298 按钮 收起标签页 (⇧⌘L)
+					299 弹出式按钮 标签页分组
+					300 弹出式按钮 标签页搜索
+				301 container
+					302 滚动区
+					303 滚动区
+						304 container
+							305 标签 (settable, boolean) 设置 - 关于 Chrome - 内存用量 - 68.5 MB, Value: off
+							306 标签 (selected, settable, boolean) Rustify UI - 内存用量 - 111 MB, Value: on
+								307 按钮 关闭
+							308 标签 (settable, boolean) Native boundary checks - 内存用量 - 66.2 MB, Value: off
+				309 按钮 打开新的标签页
+				310 滑块 垂直标签栏大小调整手柄（可拖动）, Secondary Actions: Decrement, Increment
+	311 关闭按钮
+	312 全屏幕按钮 Help: 此按钮也可以执行缩放窗口的操作, Secondary Actions: 缩放窗口
+	313 最小化按钮
+314 menu bar
+	315 Chrome
+	316 文件
+	317 编辑
+	318 显示
+	319 历史记录
+	320 书签
+	321 个人资料
+	322 标签页
+	323 窗口
+	324 帮助
+
+The focused UI element is 25 文本 (selected) Data larger than the screen Data larger than the screen › The table holds no data Data larger than the screen › What is actually in the document DataTable is told how many rows there are and given a way to read a cell. It never holds a value. <DataTable rows=rows // Signal<usize> columns=columns // Signal<Vec<Column>> cell=

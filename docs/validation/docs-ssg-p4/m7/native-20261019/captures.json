@@ -1,0 +1,107 @@
+[
+  {
+    "name": "chrome-15585-running",
+    "step": "After authorized Chrome relaunch, native About page confirms actual runtime 155.0.8059.85 arm64.",
+    "at": "2026-10-19T01:30:18.664Z"
+  },
+  {
+    "name": "chrome-quickstart-toc-copy",
+    "step": "Chinese home ordinary link to quickstart, native TOC to verification-commands, code Copy produced 已复制.",
+    "at": "2026-10-19T01:31:18.736Z"
+  },
+  {
+    "name": "chrome-zh-search",
+    "step": "Cmd+K opens native search; ThemeScope produces three current-language groups with fallback language labels and highlighted matches.",
+    "at": "2026-10-19T01:31:26.321Z"
+  },
+  {
+    "name": "chrome-english-dark",
+    "step": "Search Down/Enter reached Chinese fallback architecture/#versioned-themes; select Dark then English normal link preserves dark theme.",
+    "at": "2026-10-19T01:31:59.439Z"
+  },
+  {
+    "name": "chrome-search-last-batch-refocus",
+    "step": "First round: the reports37 total, Tab focuses Show more and Enter; replacement without clicking proves input refocus and zero results. Full post-Enter state was missing initially and first supplemental attempt hit cgWindowNotFound; completed after reconnection in chrome-more-initial/final/refocus.",
+    "at": "2026-10-19T01:32:37.569Z"
+  },
+  {
+    "name": "chrome-button-increment",
+    "step": "C29 native Button island: actual Increment changes Count 0 to 1.",
+    "at": "2026-10-19T01:33:00.998Z"
+  },
+  {
+    "name": "chrome-button-reset-source-copy",
+    "step": "Reset returns Count to 0; Full file contains leptos and rustify imports; native Copy reports Copied.",
+    "at": "2026-10-19T01:33:20.424Z"
+  },
+  {
+    "name": "chrome-demo-runtime",
+    "step": "Native Console after user handled paste warning. Read-only UA, CSS viewport, actual production Worker and C29 Wasm, island state, resource statuses; DevTools docked right.",
+    "at": "2026-10-19T01:38:35.957Z"
+  },
+  {
+    "name": "chrome-module-first-failure",
+    "step": "Fresh native document, first search module physically absent in isolated fixture. UI shows failure and Retry while preserving theme_s.",
+    "at": "2026-10-19T01:39:19.417Z"
+  },
+  {
+    "name": "chrome-module-same-page-retry",
+    "step": "Restore identical search module bytes, click Retry without navigation/reload; theme_s retained and Case 2 result appears.",
+    "at": "2026-10-19T01:39:48.169Z"
+  },
+  {
+    "name": "chrome-worker-boundaries-green",
+    "step": "C29 actual production Worker8225 with isolated ten-string index: seven native query groups all match expected routes; emoji full offsets[[2,12]], prefix[[2,7]]. Earlier404 is deliberate first-module injection.",
+    "at": "2026-10-19T01:43:00.510Z"
+  },
+  {
+    "name": "chrome-native-200-search",
+    "step": "Native browser zoom200%, Chinese Quickstart reading and Cmd+K ThemeScope query give three groups with fallback labels.",
+    "at": "2026-10-19T01:45:15.772Z"
+  },
+  {
+    "name": "chrome-native-200-target",
+    "step": "At native200%, Down/Enter from ThemeScope opens Chinese fallback Architecture/#versioned-themes.",
+    "at": "2026-10-19T01:45:34.066Z"
+  },
+  {
+    "name": "chrome-rdm-320-search",
+    "step": "Native RDM width320 height667, after correcting initial sizing input: home ordinary link to Chinese Quickstart, TOC verification-commands, ThemeScope search3.",
+    "at": "2026-10-19T02:05:30.222Z"
+  },
+  {
+    "name": "chrome-rdm-320-target-initial",
+    "step": "Native RDM320×667: Down/Enter navigates to Chinese fallback Architecture/#versioned-themes. First paint was not settled; final geometry and following green capture are authoritative.",
+    "at": "2026-10-19T02:05:41.164Z"
+  },
+  {
+    "name": "chrome-rdm-320-target-green",
+    "step": "Stable native320×667 target after complete navigation/paint. Console verifies documentWidth320, DPR2, header93.5 and target117.671875.",
+    "at": "2026-10-19T02:07:23.481Z"
+  },
+  {
+    "name": "chrome-rdm-375-search",
+    "step": "Native RDM375×667, Chinese home ordinary link to Quickstart, ThemeScope3 with fallback labels.",
+    "at": "2026-10-19T02:07:59.498Z"
+  },
+  {
+    "name": "chrome-rdm-375-target-green",
+    "step": "Stable native375×667 target: documentWidth375, DPR2, header57,target81.171875.",
+    "at": "2026-10-19T02:08:54.368Z"
+  },
+  {
+    "name": "chrome-deep-404-chinese-search",
+    "step": "Real Chinese deep404 document; current-language 快速开始 query returns two groups and localized recovery navigation.",
+    "at": "2026-10-19T02:10:42.994Z"
+  },
+  {
+    "name": "chrome-latest-stable-confirmed",
+    "step": "Native About confirms Chrome已是最新版本, actual155.0.8059.85 arm64 after authorized updater/relaunch. Original S/X and Rockie/Claude windows were visible in Window menu; no unrelated contents captured.",
+    "at": "2026-10-19T02:11:35.539Z"
+  },
+  {
+    "name": "chrome-more-final",
+    "step": "Native Chrome155.0.8059.85: the initially renders20 groups with Show more. Tab/Enter loads37 direct list groups; Show more is absent, query remains the. Full AX retained before replacement.",
+    "at": "2026-10-19T02:23:16.714Z"
+  }
+]

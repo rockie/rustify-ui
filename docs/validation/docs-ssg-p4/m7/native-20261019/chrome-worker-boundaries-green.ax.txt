@@ -1,0 +1,197 @@
+Window: "Native boundary checks", App: Google Chrome.
+0 标准窗口 Native boundary checks - Google Chrome - Rockie, URL: 127.0.0.1:4200/rustify-ui/, Secondary Actions: Raise
+	1 container Native boundary checks - Google Chrome - Rockie, URL: 127.0.0.1:4200/rustify-ui/
+		2 container
+			3 工具栏
+				4 按钮 返回
+				5 按钮 (disabled) 前进
+				6 按钮 重新加载
+				7 container
+					8 弹出式按钮 查看网站信息
+					9 文本栏 (settable) 地址和搜索栏, Value: 127.0.0.1:4200/rustify-ui/, Placeholder: 问问 Google 或输入网址
+					10 按钮 为此标签页添加书签
+				11 container
+					12 弹出式按钮 打开 Kimi
+可以访问此网站
+					13 弹出式按钮 扩展程序
+				14 按钮 Rockie
+				15 弹出式按钮 Chrome
+			16 container
+				17 滚动区
+					18 HTML 内容 DevTools, URL: devtools://devtools/bundled/devtools_app.html?remoteBase=https://chrome-devtools-frontend.appspot.com/serve_file/@0e66b94549a8bd85f03fbdf189b752d6e7b63c32/&targetType=tab&can_dock=true&panel=console
+						19 container
+							20 container
+								21 container
+									22 container
+										23 container
+											24 container Main toolbar
+												25 工具栏
+													26 container Select an element in the page to inspect it, Help: Select an element in the page to inspect it - ⌘ ⇧ C
+														27 切换按钮 Select an element in the page to inspect it - ⌘ ⇧ C, Value: 0
+													28 container Toggle device toolbar, Help: Toggle device toolbar - ⌘ ⇧ M
+														29 切换按钮 Toggle device toolbar - ⌘ ⇧ M, Value: 0
+												30 container
+													31 标签页组 Panels
+														32 标签 (settable, integer) Elements, Value: 0
+														33 标签 (selected) Console, Value: 1
+													34 弹出式按钮 More tabs
+												35 工具栏
+													36 container Open Console to view 1 error
+														37 按钮 Open Console to view 1 error
+													38 按钮 Page: Main
+													39 container Settings, Help: Settings - F1 - ⇧ ?
+														40 按钮 Settings - F1 - ⇧ ?
+													41 弹出式按钮 Customize and control DevTools
+														42 按钮 Customize and control DevTools
+													43 container Close
+														44 按钮 Close
+											45 container Console panel
+												46 container console
+													47 container
+														48 工具栏
+															49 container Show Console sidebar
+																50 按钮 Show Console sidebar
+															51 container Clear console, Help: Clear console - Ctrl L - ⌘ K
+																52 按钮 Clear console - Ctrl L - ⌘ K
+															53 container Collapse all
+																54 按钮 Collapse all
+															55 按钮 JavaScript context: top
+															56 container Create live expression
+																57 按钮 Create live expression
+															58 文本输入区 (settable) Filter
+																59 文本 Filter
+															60 弹出式按钮 Log level: Default levels
+																61 文本 Default levels
+															62 container Some problems no longer generate console messages, but are surfaced in the Issues tab Click to go to the Issues tab
+																63 按钮 Some problems no longer generate console messages, but are surfaced in the Issues tab Click to go to the Issues tab
+															64 container Console settings
+																65 切换按钮 Console settings, Value: 0
+															66 container 0 messages in console
+														67 container
+															68 container
+																69 container Failed to load resource: the server responded with a status of 404 (Not Found)
+																	70 container
+																		71 container Error
+																		72 container rustify-ui/assets/search.4879fcef9b.js:1 Failed to load resource: the server responded with a status of 404 (Not Found) Stack table collapsed
+																			73 container
+																				74 链接 rustify-ui/assets/search.4879fcef9b.js:1, Help: http://127.0.0.1:4200/rustify-ui/assets/search.4879fcef9b.js
+																					75 文本 rustify-ui/assets/search.4879fcef9b.js:1
+																				76 按钮 Request unavailable in the Network panel. Try reloading the inspected page.
+																				77 text Failed to load resource: the server responded with a status of 404 (Not Found)
+																78 container (showing 111-314 of 314 items)
+																	79 text =()=> finish ( null , Error ( "Worker error" )); w . onmessage =({ data })=>{ if ( data . type === "error" ) finish ( null , Error ( data . code )); else if ( data . type === "ready" || data . type === "results" ){ if ( data . type === "results" ) rows . push ({ query : data . query , routes : data . groups . map ( g => g . route ). sort (), emoji : data . groups . find ( g => g . route === "/guide/case-7/" )}); if ( next === qs . length ) finish ({ worker : document . querySelector ( "[data-rd-search]" ). dataset . rdSearchWorker , url : location . href , ua : navigator . userAgent , viewport :[ innerWidth , innerHeight ], dpr : devicePixelRatio , rows }); else { next ++; w . postMessage ({ type : "query" , instance : 7 , id : next , query : qs [ next - 1 ], offset : 0 });}}}; w . postMessage ({ type : "init" , instance : 7 , index_url : new URL ( "assets/search.test.json" , document . baseURI ). href });})
+																80 container '{"worker":"/rustify-ui/assets/search-worker.8225fc0ff7.js","url":"http://127.0.0.1:4200/rustify-ui/","ua":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36","viewport":[834,844],"dpr":2,"rows":[{"query":"ThemeScope","routes":["/guide/case-0/","/guide/case-1/","/guide/case-7/"],"emoji":{"route":"/guide/case-7/","href":"http://127.0.0.1:4200/rustify-ui/guide/case-7/","title":"Cases","title_highlights":[],"source_lang":"en","is_fallback":fal
+																	81 container
+																		82 文本 '{"worker":"/rustify-ui/assets/search-worker.8225fc0ff7.js","url":"
+																		83 链接 http://127.0.0.1:4200/rustify-ui/
+																			84 文本 http://127.0.0.1:4200/rustify-ui/
+																		85 文本 ","ua":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36","viewport":[834,844],"dpr":2,"rows":[{"query":"ThemeScope","routes":["/guide/case-0/","/guide/case-1/","/guide/case-7/"],"emoji":{"route":"/guide/case-7/","href":"
+																		86 链接 http://127.0.0.1:4200/rustify-ui/guide/case-7/
+																			87 文本 http://127.0.0.1:4200/rustify-ui/guide/case-7/
+																		88 文本 ","title":"Cases","title_highlights":[],"source_lang":"en","is_fallback":false,"anchor":null,"paths":[{"anchor":null,"path":["Cases"]}],"snippet":"😀ThemeScope","highlights":[[2,12]]}},{"query":"theme","routes":["/guide/case-0/","/guide/case-1/","/guide/case-2/","/guide/case-6/","/guide/case-7/"],"emoji":{"route":"/guide/case-7/","href":"
+																		89 链接 http://127.0.0.1:4200/rustify-ui/guide/case-7/
+																			90 文本 http://127.0.0.1:4200/rustify-ui/guide/case-7/
+																		91 文本 ","title":"Cases","title_highlights":[],"source_lang":"en","is_fallback":false,"anchor":null,"paths":[{"anchor":null,"path":["Cases"]}],"snippet":"😀ThemeScope","highlights":[[2,7]]}},{"query":"heme","routes":[]},{"query":"theme_s","routes":["/guide/case-2/"]},{"query":"Scope","routes":[]},{"query":"切换","routes":["/guide/case-8/","/guide/case-9/"]},{"query":"换","routes":[]}]}'
+															92 container
+																93 container
+																	94 文本输入区 (settable) Console prompt, Value: 
+
+										95 container Drawer
+											96 container
+												97 工具栏
+													98 弹出式按钮 More tools
+														99 按钮 More tools
+												100 标签页组
+													101 标签 (settable, integer) Console, Value: 0
+													102 标签 (settable, integer) AI assistance, Value: 0
+													103 标签 (selected) What’s new, Value: 1
+												104 弹出式按钮 More tabs
+												105 工具栏
+													106 container Toggle drawer orientation
+														107 按钮 Toggle drawer orientation
+													108 container Minimize drawer
+														109 按钮 Minimize drawer
+													110 container Close drawer
+														111 按钮 Close drawer
+												112 container What’s new panel
+													113 container whats-new
+														114 container
+															115 文本 New in DevTools (September 2026)
+															116 按钮 See all new features
+															117 标题 DevTools for agents, Value: 3
+																118 链接 DevTools for agents, Help: https://developer.chrome.com/blog/new-in-devtools-152/#devtools-for-agents
+																	119 文本 DevTools for agents
+															120 container
+																121 text DevTools for agents 1.7 improves memory profiling with the  get_heapsnapshot_object_details  tool and native V8 context filtering.
+															122 标题 Soft navigation metrics in Live Metrics, Value: 3
+																123 链接 Soft navigation metrics in Live Metrics, Help: https://developer.chrome.com/blog/new-in-devtools-152/#performance
+																	124 文本 Soft navigation metrics in Live Metrics
+															125 文本 The Live Metrics view in the Performance panel now captures and reports metrics like LCP and INP for client-side soft navigations in single-page applications by default.
+															126 标题 Nested CSS parent selector interactions, Value: 3
+																127 链接 Nested CSS parent selector interactions, Help: https://developer.chrome.com/blog/new-in-devtools-152/#nested-selectors
+																	128 文本 Nested CSS parent selector interactions
+															129 container
+																130 text Hovering over parent selectors highlights matching elements on the page, nested rules respond to Styles tab filtering, and  @nested-declarations  include specificity tooltips.
+							131 文本 DevTools is docked to right 
+				132 滚动区
+					133 HTML 内容 Native boundary checks, URL: 127.0.0.1:4200/rustify-ui/
+						134 link Skip to content, Value: 127.0.0.1:4200/rustify-ui/#content
+						135 container
+							136 link Native boundary checks, Value: 127.0.0.1:4200/rustify-ui/
+							137 弹出式按钮 Search Ctrl / Cmd K
+							138 container Theme
+								139 切换按钮 System, Value: 1
+								140 切换按钮 Light, Value: 0
+								141 切换按钮 Dark, Value: 0
+						142 container Menu
+							143 container
+								144 标题 Cases, Value: 2
+									145 文本 Cases
+								146 内容列表
+									147 link Case 0, Value: 127.0.0.1:4200/rustify-ui/guide/case-0/
+									148 link Case 1, Value: 127.0.0.1:4200/rustify-ui/guide/case-1/
+									149 link Case 2, Value: 127.0.0.1:4200/rustify-ui/guide/case-2/
+									150 link Case 3, Value: 127.0.0.1:4200/rustify-ui/guide/case-3/
+									151 link Case 4, Value: 127.0.0.1:4200/rustify-ui/guide/case-4/
+									152 link Case 5, Value: 127.0.0.1:4200/rustify-ui/guide/case-5/
+									153 link Case 6, Value: 127.0.0.1:4200/rustify-ui/guide/case-6/
+									154 link Case 7, Value: 127.0.0.1:4200/rustify-ui/guide/case-7/
+									155 link Case 8, Value: 127.0.0.1:4200/rustify-ui/guide/case-8/
+									156 link Case 9, Value: 127.0.0.1:4200/rustify-ui/guide/case-9/
+						157 container
+							158 标题 Native boundary checks, Value: 1
+								159 文本 Native boundary checks
+							160 文本 Use the navigation to read each sample.
+						161 container Footer links
+							162 link Back to the home page, Value: 127.0.0.1:4200/rustify-ui/
+			163 标签页组
+				164 container
+					165 按钮 收起标签页 (⇧⌘L)
+					166 弹出式按钮 标签页分组
+					167 弹出式按钮 标签页搜索
+				168 container
+					169 滚动区
+					170 滚动区
+						171 container
+							172 标签 (settable, boolean) 设置 - 关于 Chrome - 内存用量 - 68.5 MB, Value: off
+							173 标签 (settable, boolean) Button | Rustify UI - 内存用量 - 156 MB, Value: off
+							174 标签 (selected, settable, boolean) Native boundary checks - 内存用量 - 66.2 MB, Value: on
+								175 按钮 关闭
+				176 按钮 打开新的标签页
+				177 滑块 垂直标签栏大小调整手柄（可拖动）, Secondary Actions: Decrement, Increment
+	178 关闭按钮
+	179 全屏幕按钮 Help: 此按钮也可以执行缩放窗口的操作, Secondary Actions: 缩放窗口
+	180 最小化按钮
+181 menu bar
+	182 Chrome
+	183 文件
+	184 编辑
+	185 显示
+	186 历史记录
+	187 书签
+	188 个人资料
+	189 标签页
+	190 窗口
+	191 帮助
+
+The focused UI element is 94 文本输入区 (settable) Console prompt, Value: 
