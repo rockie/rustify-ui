@@ -287,8 +287,8 @@ route, an unknown route or a Markdown page listed there is an error; use
 
 ### Publish several languages
 
-These multilingual examples use the paired CLI 0.1.31 and framework revision
-described above.
+These multilingual examples use the paired CLI candidate 0.1.32 and the
+framework revision described above.
 
 Declare every language, including the default `site.lang`. The default has
 an empty prefix and keeps the existing addresses. Other languages each
@@ -701,11 +701,11 @@ The components template requires an installed CLI with a traceable source
 revision, an explicit paired framework revision and its embedded dependency
 lock. A development checkout without that frozen pair refuses generation;
 it does not write an unlocked project or choose a framework revision for
-the author. The published 0.1.31 CLI pins library revision
+the author. This checkout's 0.1.32 candidate pins library revision
 `0fd34edaffda1926b38ea64c023b2fe1fc5115c5` and embeds its generated dependency
 lock. The installed CLI's `--build-info` identifies its C commit. The public
-Git installation and a newly generated project's check, build and browser
-interactions have been verified on macOS arm64.
+Git installation of the published 0.1.31 CLI and a newly generated project's
+check, build and browser interactions have been verified on macOS arm64.
 
 With a published paired CLI and stable Rust available, install the browser
 target if needed, then create the project:
