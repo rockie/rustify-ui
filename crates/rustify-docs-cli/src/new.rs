@@ -153,6 +153,7 @@ fn fill(template: &str, name: &str) -> String {
         .replace("{{revision}}", crate::install_revision())
         .replace("{{install}}", &crate::install())
         .replace("{{rollback}}", &crate::rollback())
+        .replace("{{rollback-version}}", crate::PREVIOUS_VERSION)
         .replace("\"{{name}}\"", &format!("\"{}\"", quoted(name)))
         .replace("{{name}}", name)
 }

@@ -19,7 +19,7 @@ Reinstall or upgrade to that revision:
 {{install}} --force
 ```
 
-Roll back to the previous version, 0.1.3:
+Roll back to the previous version, {{rollback-version}}:
 
 ```sh
 {{rollback}}

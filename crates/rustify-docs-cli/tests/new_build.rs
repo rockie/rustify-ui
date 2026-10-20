@@ -27,10 +27,29 @@ fn help_and_generated_readme_pin_the_same_installable_source() {
     assert!(revision.bytes().all(|byte| byte.is_ascii_hexdigit()));
     assert!(install.contains("--locked --profile docs-cli"));
 
+    // A build of this source ships after the latest published release, so
+    // that release is where it rolls back to.
+    let mut lines = help.lines().map(str::trim);
+    let rolled_back = lines
+        .find_map(|line| line.strip_prefix("Roll back to rustify-docs "))
+        .expect("help gives a rollback version");
+    let rollback = lines.next().expect("help gives a rollback command");
+    assert_eq!(rolled_back, "0.1.32:");
+    assert!(
+        rollback.contains("--rev 88566ba1ed08223a5834f794840fff5e48f4ba8a"),
+        "{rollback}"
+    );
+    assert!(rollback.ends_with("--force rustify-docs-cli"), "{rollback}");
+
     succeeded(&tools.run_in(&temp.0, &["new", "my-docs"]));
     let readme = temp.read("my-docs/README.md");
     assert!(readme.contains(install), "{readme}");
-    for text in ["--force", "cargo install --list", "0.1.3", revision] {
+    assert!(
+        readme.contains(&format!("Roll back to the previous version, {rolled_back}")),
+        "{readme}"
+    );
+    assert!(readme.contains(rollback), "{readme}");
+    for text in ["--force", "cargo install --list", revision] {
         assert!(help.contains(text), "{help}");
         assert!(readme.contains(text), "{readme}");
     }

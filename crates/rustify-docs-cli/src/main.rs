@@ -29,8 +29,11 @@ use report::{Format, Summary};
 const VERSION: &str = env!("CARGO_PKG_VERSION");
 const SOURCE_REVISION: &str = env!("RUSTIFY_DOCS_SOURCE_REVISION");
 const EXPECTED_FRAMEWORK_REV: &str = include_str!("../assets/framework-revision.txt");
-const PREVIOUS_REVISION: &str = "42757c627cb69456d241ba0de51b34f1ad85be3d";
-const PREVIOUS_VERSION: &str = "0.1.3";
+/// The latest published release. A binary built from this source ships
+/// after it, so this is where help and new sites roll back to; it moves on
+/// before each release is paired.
+const PREVIOUS_REVISION: &str = "88566ba1ed08223a5834f794840fff5e48f4ba8a";
+const PREVIOUS_VERSION: &str = "0.1.32";
 
 /// Whether this binary unwinds on a panic. `dev` keeps serving the last good
 /// generation after a panic in a new one, which only an unwinding build can;
