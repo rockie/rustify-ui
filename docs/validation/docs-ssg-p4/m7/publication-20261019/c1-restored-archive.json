@@ -1,0 +1,18 @@
+{
+  "recorded_at": "2026-10-20T10:15:09+08:00",
+  "run_id": 39355775158,
+  "candidate_sha": "1146b7d8febdf53ca1bc1a4c01946604e7625a95",
+  "framework_revision": "0fd34edaffda1926b38ea64c023b2fe1fc5115c5",
+  "cli_version": "0.1.31",
+  "build_id": "9e8ea80d57750509",
+  "files": 97,
+  "archive": "/Users/rockie/Documents/gh-rockie/rustify-ui/.rustify-docs/p4-public-g676xxnz/c1-restore/artifact.tar",
+  "archive_bytes": 18319360,
+  "archive_sha256": "ee85ed5aad55347358a8a66eaf25accff5ddf56df064afd5196bbe0958f370fb",
+  "manifest_sha256": "5c7db8d1d0eacfff7a5c83be312de268a784c4529188ffc28e1a4d6088b5f6e7",
+  "compared_to_run": 39219151112,
+  "all_97_files_byte_identical": true,
+  "public_verification_passed": true,
+  "browser_tests_passed": 4,
+  "storage": "task-local; source commits and workflow permit rebuilding elsewhere"
+}

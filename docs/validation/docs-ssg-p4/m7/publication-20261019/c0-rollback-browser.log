@@ -1,0 +1,12 @@
+
+Running 4 tests using 1 worker
+
+(node:2354) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1/4] [official-meta] › tests/docs-ssg/official.spec.ts:221:1 › official Chinese home and quick start are real translations with local search and AI discovery
+[2/4] [official-meta] › tests/docs-ssg/official.spec.ts:299:33 › CATALOG button uses its actual function, source and live control
+[3/4] [official-meta] › tests/docs-ssg/official.spec.ts:326:64 › the dark first frame and mode controls persist across static and island pages
+[4/4] [official-meta] › tests/docs-ssg/official.spec.ts:390:1 › deep not-found retains same-base ordinary navigation
+  4 passed (17.1s)

@@ -1,0 +1,22 @@
+{
+  "run_id": 39219151112,
+  "candidate_sha": "1146b7d8febdf53ca1bc1a4c01946604e7625a95",
+  "cli_version": "0.1.31",
+  "build_id": "9e8ea80d57750509",
+  "files": 97,
+  "archive": "/Users/rockie/Documents/gh-rockie/rustify-ui/.rustify-docs/p4-public-g676xxnz/qualified-c1-publish/artifact.tar",
+  "archive_bytes": 18319360,
+  "archive_sha256": "f8b8684959013ed6b3ba00530fe856f290ee414be10dbed03f2d42b57eb2ead2",
+  "manifest_sha256": "5c7db8d1d0eacfff7a5c83be312de268a784c4529188ffc28e1a4d6088b5f6e7",
+  "compared_to_run": 39215301258,
+  "reader_files_byte_identical": 96,
+  "changed_files": [
+    "rustify-docs-manifest.json"
+  ],
+  "manifest_fields_changed": [
+    "cli_version"
+  ],
+  "before_cli_version": "0.1.29",
+  "supports_reuse_of_56_public_browser_tests": true,
+  "storage": "task-local; source commits and workflow permit rebuilding elsewhere"
+}

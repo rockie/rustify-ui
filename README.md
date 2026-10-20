@@ -197,15 +197,15 @@ The default `regression` tier checks behaviour. `RUSTIFY_TIER=evidence` runs tag
 Rustify Docs builds a static site from Markdown with navigation, themes and
 highlighted code, without compiling a site's Rust. Content pages load no wasm;
 authors need stable Rust and the CLI. Node, Tailwind and Makepad are not needed.
-The current P4 implementation adds on-demand, current-language local search
-and one `llms.txt` per language. Its fixed candidate and release gates are
-separate from the verified public P1 installation below; the official
-Chinese sources are the home page and [quick start](docs/zh/quickstart.md),
-with the other guides and component categories using explicit fallback.
-The validated CLI is `0.1.4`, from this pinned source revision:
+It includes on-demand, current-language local search and one `llms.txt` per
+language. The [official documentation](https://rockie.github.io/rustify-ui/)
+has English and Chinese reading shells; the real Chinese sources are the
+home page and [quick start](docs/zh/quickstart.md), with the other guides
+and component categories using explicit English-content fallback.
+The validated CLI is `0.1.31`, from this pinned source revision:
 
 ```sh
-cargo install --git https://github.com/rockie/rustify-ui --rev 1b81de25f23a25702f61dbfd3d0ecdfe323d4d44 --locked --profile docs-cli rustify-docs-cli
+cargo install --git https://github.com/rockie/rustify-ui --rev 1146b7d8febdf53ca1bc1a4c01946604e7625a95 --locked --profile docs-cli rustify-docs-cli
 rustify-docs --version
 rustify-docs --build-info
 cargo install --list

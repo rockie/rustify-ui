@@ -1,0 +1,18 @@
+[
+  {
+    "document": "README.md",
+    "sha256": "5843221d7c355f3e400b6d6a8567bc0c320516b01e05ccd3e2ce5b83c1a947a4",
+    "baseline_path_examples_flagged": 2,
+    "current_path_examples_flagged": 2,
+    "new_errors": [],
+    "warnings": []
+  },
+  {
+    "document": "docs/docs-ssg.md",
+    "sha256": "2886e0648623d9afe4874715aa4bd42553b06bf8044496848237d9d5dc7aa47b",
+    "baseline_path_examples_flagged": 27,
+    "current_path_examples_flagged": 27,
+    "new_errors": [],
+    "warnings": []
+  }
+]

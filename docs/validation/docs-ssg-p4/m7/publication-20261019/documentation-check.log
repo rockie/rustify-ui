@@ -1,0 +1,35 @@
+== README.md
+  [错误] README.md:40 引用的路径不存在：target/makepad-wasm-app/release/fusion-basic/
+  [错误] README.md:200 引用的路径不存在：llms.txt
+  [统计] {'标记': {}, 'Mermaid 图': 0, 'HTML 图链接': 0}
+== docs/docs-ssg.md
+  [错误] docs/docs-ssg.md:87 引用的路径不存在：static/
+  [错误] docs/docs-ssg.md:90 引用的路径不存在：dist/
+  [错误] docs/docs-ssg.md:188 引用的路径不存在：name.md
+  [错误] docs/docs-ssg.md:189 引用的路径不存在：404.md
+  [错误] docs/docs-ssg.md:194 引用的路径不存在：assets/files/
+  [错误] docs/docs-ssg.md:195 引用的路径不存在：.env
+  [错误] docs/docs-ssg.md:197 引用的路径不存在：content/.env.md
+  [错误] docs/docs-ssg.md:265 引用的路径不存在：…/edit/main/docs/content/guide/setup.md
+  [错误] docs/docs-ssg.md:269 引用的路径不存在：guide/setup.md
+  [错误] docs/docs-ssg.md:275 引用的路径不存在：guide/index.md
+  [错误] docs/docs-ssg.md:319 引用的路径不存在：content/guide/setup.md
+  [错误] docs/docs-ssg.md:319 引用的路径不存在：content/zh/guide/setup.md
+  [错误] docs/docs-ssg.md:320 引用的路径不存在：content/fr/guide/setup.md
+  [错误] docs/docs-ssg.md:408 引用的路径不存在：.md
+  [错误] docs/docs-ssg.md:468 引用的路径不存在：llms.txt
+  [错误] docs/docs-ssg.md:538 引用的路径不存在：../reference/api.md#数据-api
+  [错误] docs/docs-ssg.md:539 引用的路径不存在：guide/
+  [错误] docs/docs-ssg.md:542 引用的路径不存在：diagram.svg
+  [错误] docs/docs-ssg.md:542 引用的路径不存在：files/report.pdf
+  [错误] docs/docs-ssg.md:543 引用的路径不存在：../../src/example.rs
+  [错误] docs/docs-ssg.md:1152 引用的路径不存在：llms-full.txt
+  [错误] docs/docs-ssg.md:1267 引用的路径不存在：target/
+  [错误] docs/docs-ssg.md:1340 引用的路径不存在：foo/404.html
+  [错误] docs/docs-ssg.md:1355 引用的路径不存在：.css
+  [错误] docs/docs-ssg.md:1355 引用的路径不存在：.js
+  [错误] docs/docs-ssg.md:1355 引用的路径不存在：.svg
+  [错误] docs/docs-ssg.md:1355 引用的路径不存在：.json
+  [统计] {'标记': {}, 'Mermaid 图': 0, 'HTML 图链接': 0}
+
+共 29 个错误

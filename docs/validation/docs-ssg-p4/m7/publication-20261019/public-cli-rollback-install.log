@@ -1,0 +1,8 @@
+    Updating git repository `https://github.com/rockie/rustify-ui`
+  Installing rustify-docs-cli v0.1.29 (https://github.com/rockie/rustify-ui?rev=3dbb079a7b188edd56071225fad84fd6b92c4c52#3dbb079a)
+    Updating crates.io index
+   Compiling rustify-docs-cli v0.1.29 (/Users/rockie/Documents/gh-rockie/rustify-ui/.rustify-docs/p4-public-g676xxnz/cargo-home/git/checkouts/rustify-ui-8cabc2f0e62e69f4/3dbb079/crates/rustify-docs-cli)
+    Finished `docs-cli` profile [optimized] target(s) in 43.16s
+   Replacing /Users/rockie/Documents/gh-rockie/rustify-ui/.rustify-docs/p4-public-g676xxnz/install/bin/rustify-docs
+    Replaced package `rustify-docs-cli v0.1.31 (https://github.com/rockie/rustify-ui?rev=1146b7d8febdf53ca1bc1a4c01946604e7625a95#1146b7d8)` with `rustify-docs-cli v0.1.29 (https://github.com/rockie/rustify-ui?rev=3dbb079a7b188edd56071225fad84fd6b92c4c52#3dbb079a)` (executable `rustify-docs`)
+warning: be sure to add `/Users/rockie/Documents/gh-rockie/rustify-ui/.rustify-docs/p4-public-g676xxnz/install/bin` to your PATH to be able to run the installed binaries
