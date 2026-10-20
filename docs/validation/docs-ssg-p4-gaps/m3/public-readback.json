@@ -1,0 +1,25 @@
+{
+  "public_main": "c6d49c97c6737968cf59a16cbbc3453bea012b70",
+  "notes_commit": "c6d49c97c6737968cf59a16cbbc3453bea012b70",
+  "checks": {
+    "readme_current_0.1.32": true,
+    "readme_install_c2": true,
+    "readme_rollback_0.1.31": true,
+    "readme_no_c1_install_as_current": true,
+    "guide_current_0.1.32": true,
+    "guide_install_and_upgrade_c2": true,
+    "guide_expect_c2": true,
+    "guide_rollback_c1_0.1.31": true,
+    "guide_no_0.1.29_or_c0": true,
+    "guide_no_0.1.31_as_current": true,
+    "guide_delivery_run_and_last_good": true,
+    "guide_last_good_note": true,
+    "manifest_cli_0.1.32": true,
+    "manifest_build_is_v7_run": true
+  },
+  "passed": true,
+  "manifest": {
+    "cli_version": "0.1.32",
+    "build_id": "f74f4a4ece90f08a"
+  }
+}
