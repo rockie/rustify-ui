@@ -17,8 +17,8 @@ Supported on macOS. Linux and Windows are not verified.
 
 ## Install and maintain the CLI
 
-The verified CLI is **0.1.31**, from source C
-`1146b7d8febdf53ca1bc1a4c01946604e7625a95`, paired with library revision
+The verified CLI is **0.1.32**, from source C
+`88566ba1ed08223a5834f794840fff5e48f4ba8a`, paired with library revision
 `0fd34edaffda1926b38ea64c023b2fe1fc5115c5`. It supports content sites,
 the components template and the multilingual examples below.
 `rustify-docs --build-info` and `cargo install --list` identify the CLI
@@ -26,19 +26,19 @@ source C after installation.
 
 The CLI is distributed from git, with its dependencies locked and the
 workspace's `docs-cli` profile, which unwinds so that `dev` can recover from a
-failed build. The pinned version below is **0.1.31**, verified from both local
+failed build. The pinned version below is **0.1.32**, verified from both local
 git and GitHub on macOS arm64 with Rust 1.99.0. The source revision, profile,
 generated template and production manifest were checked after installation.
 
 ```sh
-cargo install --git https://github.com/rockie/rustify-ui --rev 1146b7d8febdf53ca1bc1a4c01946604e7625a95 --locked --profile docs-cli rustify-docs-cli
+cargo install --git https://github.com/rockie/rustify-ui --rev 88566ba1ed08223a5834f794840fff5e48f4ba8a --locked --profile docs-cli rustify-docs-cli
 rustify-docs --version
 rustify-docs --build-info
 cargo install --list
 ```
 
-Expect `rustify-docs 0.1.31`, `panic: unwind`, and source
-`1146b7d8febdf53ca1bc1a4c01946604e7625a95`. The install listing names that
+Expect `rustify-docs 0.1.32`, `panic: unwind`, and source
+`88566ba1ed08223a5834f794840fff5e48f4ba8a`. The install listing names that
 revision too. To create and preview a content site:
 
 ```sh
@@ -56,14 +56,16 @@ CLI is installed.
 Reinstall or upgrade to this pinned version with `--force`:
 
 ```sh
-cargo install --git https://github.com/rockie/rustify-ui --rev 1146b7d8febdf53ca1bc1a4c01946604e7625a95 --locked --profile docs-cli --force rustify-docs-cli
+cargo install --git https://github.com/rockie/rustify-ui --rev 88566ba1ed08223a5834f794840fff5e48f4ba8a --locked --profile docs-cli --force rustify-docs-cli
 ```
 
-The verified rollback target for this release is **0.1.29**, with the same
-paired library revision. Roll back with:
+The rollback target for this release is **0.1.31**, the previous release,
+from source C `1146b7d8febdf53ca1bc1a4c01946604e7625a95` with the same paired library
+revision. Its public Git installation was verified when it was published.
+Roll back with:
 
 ```sh
-cargo install --git https://github.com/rockie/rustify-ui --rev 3dbb079a7b188edd56071225fad84fd6b92c4c52 --locked --profile docs-cli --force rustify-docs-cli
+cargo install --git https://github.com/rockie/rustify-ui --rev 1146b7d8febdf53ca1bc1a4c01946604e7625a95 --locked --profile docs-cli --force rustify-docs-cli
 ```
 
 After either command, check `--version`, the source in `cargo install --list`
@@ -77,8 +79,8 @@ build. Keep each version's fingerprinted assets together.
 CLI compilation. This reads Cargo's existing git metadata using Rust alone;
 it requires no git command or network request. A source archive without
 that metadata reports `source: unknown` and gives the pinned 0.1.3 recipe.
-The bundled help also retains its older 0.1.3 rollback recipe; use the tested
-0.1.29 target above for this release.
+The bundled help also retains its older 0.1.3 rollback recipe; use the
+0.1.31 target above for this release.
 
 ## Commands
 
@@ -287,8 +289,8 @@ route, an unknown route or a Markdown page listed there is an error; use
 
 ### Publish several languages
 
-These multilingual examples use the paired CLI candidate 0.1.32 and the
-framework revision described above.
+These multilingual examples use the paired CLI 0.1.32 and the framework
+revision described above.
 
 Declare every language, including the default `site.lang`. The default has
 an empty prefix and keeps the existing addresses. Other languages each
@@ -701,11 +703,12 @@ The components template requires an installed CLI with a traceable source
 revision, an explicit paired framework revision and its embedded dependency
 lock. A development checkout without that frozen pair refuses generation;
 it does not write an unlocked project or choose a framework revision for
-the author. This checkout's 0.1.32 candidate pins library revision
+the author. The published 0.1.32 CLI pins library revision
 `0fd34edaffda1926b38ea64c023b2fe1fc5115c5` and embeds its generated dependency
-lock. The installed CLI's `--build-info` identifies its C commit. The public
-Git installation of the published 0.1.31 CLI and a newly generated project's
-check, build and browser interactions have been verified on macOS arm64.
+lock. The installed CLI's `--build-info` identifies its C commit. Its public
+Git installation has been verified on macOS arm64. A newly generated
+project's check, build and browser interactions were verified with 0.1.31,
+which pins the same library revision.
 
 With a published paired CLI and stable Rust available, install the browser
 target if needed, then create the project:
@@ -1384,9 +1387,14 @@ archive includes `.nojekyll`, and its actual members are checked against
 the complete manifest before upload.
 
 The [public site](https://rockie.github.io/rustify-ui/) and public Git
-installation of the pinned 0.1.31 CLI have been verified. The
-[release record](plan/DOCS-SSG-P4.records/M7.md) identifies the actual
-workflow runs, online file checks, browser checks and rollback results.
+installation of the pinned 0.1.32 CLI have been verified. The site was
+published from C2 `88566ba1ed08223a5834f794840fff5e48f4ba8a` by workflow run
+[39388531674](https://github.com/rockie/rustify-ui/actions/runs/39388531674); its
+[release record](plan/DOCS-SSG-P4-gaps.records/M3.md) identifies the online
+file and browser checks. The previous release, C1
+`1146b7d8febdf53ca1bc1a4c01946604e7625a95` (0.1.31), is the last-good C. The
+[P4 release record](plan/DOCS-SSG-P4.records/M7.md) identifies its workflow
+runs, online checks and the rollback rehearsal.
 
 After the required acceptance checks and publication authorization,
 assign `DOCS_C` the approved complete CLI commit SHA and run:
@@ -1411,9 +1419,9 @@ in a browser.
 Keep the previous successful C and its artifact/manifest. Roll back by
 dispatching the same workflow with that C, verify the restored build ID and
 complete files, then restore the approved target C after the rehearsal.
-The tested baseline for this release is C0, the 0.1.29 revision in the CLI
-rollback command above. The rehearsal verified the complete C0 rollback,
-then restored the approved C1 target, version 0.1.31.
+The last-good C for this release is C1, the 0.1.31 revision in the CLI
+rollback command above. The same workflow's complete rollback and restore
+were rehearsed when C1 was published.
 
 ## The default theme
 

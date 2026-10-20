@@ -202,10 +202,10 @@ language. The [official documentation](https://rockie.github.io/rustify-ui/)
 has English and Chinese reading shells; the real Chinese sources are the
 home page and [quick start](docs/zh/quickstart.md), with the other guides
 and component categories using explicit English-content fallback.
-The validated CLI is `0.1.31`, from this pinned source revision:
+The validated CLI is `0.1.32`, from this pinned source revision:
 
 ```sh
-cargo install --git https://github.com/rockie/rustify-ui --rev 1146b7d8febdf53ca1bc1a4c01946604e7625a95 --locked --profile docs-cli rustify-docs-cli
+cargo install --git https://github.com/rockie/rustify-ui --rev 88566ba1ed08223a5834f794840fff5e48f4ba8a --locked --profile docs-cli rustify-docs-cli
 rustify-docs --version
 rustify-docs --build-info
 cargo install --list
@@ -215,7 +215,7 @@ rustify-docs dev
 ```
 
 This revision passed installation from both local git and GitHub on macOS
-arm64 with Rust 1.99.0, including upgrade and rollback source checks.
+arm64 with Rust 1.99.0. Its rollback target is the previous release, `0.1.31`.
 Linux and Windows are not verified. See the [author's reference](docs/docs-ssg.md#install-and-maintain-the-cli)
 for build, preview, hosting, upgrade and rollback commands, and the
 [DOM consumer recipe](docs/quickstart.md#a-dom-application-without-gpu-regions)

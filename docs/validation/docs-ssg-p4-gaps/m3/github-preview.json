@@ -1,0 +1,60 @@
+{
+  "candidate": "88566ba1ed08223a5834f794840fff5e48f4ba8a",
+  "observed_at": "2026-10-20T07:44:19.516Z",
+  "results": [
+    {
+      "name": "quickstart",
+      "url": "https://github.com/rockie/rustify-ui/blob/88566ba1ed08223a5834f794840fff5e48f4ba8a/docs/quickstart.md",
+      "status": 200,
+      "frontmatter_headers": [
+        "description"
+      ],
+      "frontmatter_cells": [
+        "Install the pinned toolchain, build and preview the examples, and start a DOM application, GPU region or Tailwind setup with Rustify UI."
+      ],
+      "table_before_h1": true,
+      "h1": "Quick start",
+      "headings": 10,
+      "code_blocks": 14,
+      "tables": 1,
+      "largest_table_rows": 1,
+      "leaked_dashes": false
+    },
+    {
+      "name": "components",
+      "url": "https://github.com/rockie/rustify-ui/blob/88566ba1ed08223a5834f794840fff5e48f4ba8a/docs/components.md",
+      "status": 200,
+      "frontmatter_headers": [
+        "description"
+      ],
+      "frontmatter_cells": [
+        "The twenty-four component categories, each with a DOM component, and what a GPU region can draw for each of them."
+      ],
+      "table_before_h1": true,
+      "h1": "Component catalogue",
+      "headings": 1,
+      "code_blocks": 0,
+      "tables": 2,
+      "largest_table_rows": 24,
+      "leaked_dashes": false
+    },
+    {
+      "name": "architecture",
+      "url": "https://github.com/rockie/rustify-ui/blob/88566ba1ed08223a5834f794840fff5e48f4ba8a/docs/architecture.md",
+      "status": 200,
+      "frontmatter_headers": [
+        "description"
+      ],
+      "frontmatter_cells": [
+        "How a page's wasm instances, scopes and GPU regions fit together, and the runtime, hydration, theme and build contracts they follow."
+      ],
+      "table_before_h1": true,
+      "h1": "Architecture",
+      "headings": 9,
+      "code_blocks": 1,
+      "tables": 2,
+      "largest_table_rows": 18,
+      "leaked_dashes": false
+    }
+  ]
+}

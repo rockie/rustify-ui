@@ -1,0 +1,10 @@
+npm notice run rustify-ui-browser-tests@0.1.0 npx
+npm notice run 'playwright' test -c .rustify-docs/p4-gaps/playwright.online.config.ts --project=official-meta --grep official Chinese home|CATALOG button uses|deep not-found|the dark first frame
+
+Running 4 tests using 1 worker
+
+[1/4] [official-meta] › tests/docs-ssg/official.spec.ts:226:1 › official Chinese home and quick start are real translations with local search and AI discovery
+[2/4] [official-meta] › tests/docs-ssg/official.spec.ts:323:33 › CATALOG button uses its actual function, source and live control
+[3/4] [official-meta] › tests/docs-ssg/official.spec.ts:350:64 › the dark first frame and mode controls persist across static and island pages
+[4/4] [official-meta] › tests/docs-ssg/official.spec.ts:414:1 › deep not-found retains same-base ordinary navigation
+  4 passed (20.4s)
