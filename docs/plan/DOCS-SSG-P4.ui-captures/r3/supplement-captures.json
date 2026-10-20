@@ -1,0 +1,146 @@
+[
+  {
+    "file": "M1-show-more-after-1280-light.png",
+    "savedAtUTC": "2026-10-16T04:22:42.708Z",
+    "sha256": "08e6a9831b351032a2ac3fe82dd9dedfb7841f6ec6e18e0b21624ea3fc1e5be2",
+    "source": "post-judge Playwright runtime check"
+  },
+  {
+    "file": "M2-close-focus.png",
+    "savedAtUTC": "2026-10-16T04:23:16.295Z",
+    "sha256": "f3d1d7f631e5a6e989dac1cf73c9922cb036b15f4bc7832be8be4bb1c6e63ea9",
+    "source": "post-judge Playwright runtime check"
+  },
+  {
+    "file": "M2-close-return.png",
+    "savedAtUTC": "2026-10-16T04:23:16.328Z",
+    "sha256": "908cd00b887be4fdef1b03c9f89d00f14fca1996616dc40ea01c0a49cd2f53c7",
+    "source": "post-judge Playwright runtime check"
+  },
+  {
+    "file": "M2-code-horizontal.png",
+    "savedAtUTC": "2026-10-16T04:23:16.900Z",
+    "sha256": "9c28670957ab3bf0b6c744cc3633bc8a92a0141577e1838a3bf035294faf7aec",
+    "source": "post-judge Playwright runtime check"
+  },
+  {
+    "file": "M2-edited-error-retry-focus.png",
+    "savedAtUTC": "2026-10-16T04:23:17.211Z",
+    "sha256": "4fa5ee528c93bf269f7a09b67916a40906215de46d893c2006808d9e481b686a",
+    "source": "post-judge Playwright runtime check"
+  },
+  {
+    "file": "M2-edited-error-retry-result.png",
+    "savedAtUTC": "2026-10-16T04:23:17.260Z",
+    "sha256": "f46dc4119ec92e061bfffdc8ecfe36f92578a5632ed458e038bce978f28d3c08",
+    "source": "post-judge Playwright runtime check"
+  },
+  {
+    "file": "M2-language-escape.png",
+    "savedAtUTC": "2026-10-16T04:23:16.112Z",
+    "sha256": "c4bb09f6cc6931252cb7e070d91873b4199f9b3fa173c1c02e95acc419fff6b5",
+    "source": "post-judge Playwright runtime check"
+  },
+  {
+    "file": "M2-language-open.png",
+    "savedAtUTC": "2026-10-16T04:23:16.099Z",
+    "sha256": "2616fab998944192a3eeaeffe2422df2e06e15616ab47ee057184f82ff77a4d2",
+    "source": "post-judge Playwright runtime check"
+  },
+  {
+    "file": "M2-noscript-navigation.png",
+    "savedAtUTC": "2026-10-16T04:23:17.060Z",
+    "sha256": "99801e9b5645f749b9ac9f52e498bf67781e83ab7d7eee726adfb28181b253c0",
+    "source": "post-judge Playwright runtime check"
+  },
+  {
+    "file": "M2-reopen-preserved.png",
+    "savedAtUTC": "2026-10-16T04:23:16.262Z",
+    "sha256": "af045e5fd681ef339d40395d2473ace4adc8524ba911696e48bb99a581266434",
+    "source": "post-judge Playwright runtime check"
+  },
+  {
+    "file": "M2-search-escape.png",
+    "savedAtUTC": "2026-10-16T04:23:16.212Z",
+    "sha256": "908cd00b887be4fdef1b03c9f89d00f14fca1996616dc40ea01c0a49cd2f53c7",
+    "source": "post-judge Playwright runtime check"
+  },
+  {
+    "file": "M2-section-anchor.png",
+    "savedAtUTC": "2026-10-16T04:23:16.670Z",
+    "sha256": "cceb0a0f3ef6e4824e47a4cd45b0a75ebc29d5d5413d36af9865480355417faa",
+    "source": "post-judge Playwright runtime check"
+  },
+  {
+    "file": "M2-skip-focus.png",
+    "savedAtUTC": "2026-10-16T04:23:16.063Z",
+    "sha256": "f835428b9edd6197855a0c2290f48e6d8111eb556e70201d5f5e7830d261dff8",
+    "source": "post-judge Playwright runtime check"
+  },
+  {
+    "file": "M2-tab-cycle-0.png",
+    "savedAtUTC": "2026-10-16T04:23:16.179Z",
+    "sha256": "aa8ed407f373769888b7384ebefaaf6b18f5d207bad6ccf949f4b9cbc6306506",
+    "source": "post-judge Playwright runtime check"
+  },
+  {
+    "file": "U4-native-chrome-search-ready.png",
+    "savedAtUTC": "2026-10-16T04:14:54.073Z",
+    "sha256": "d7aa1ccf7e27fee072d2880f2afbaea2e7f95f482eee8e6b187caf4989aeda76",
+    "source": "Kimi native Chrome"
+  },
+  {
+    "file": "U4-native-chrome-search.png",
+    "savedAtUTC": "2026-10-16T04:14:42.895Z",
+    "sha256": "20bb3a5c1bcdfd77ebb8e5dbcd42728b84f1075528b776de504debd4bff18670",
+    "source": "Kimi native Chrome"
+  },
+  {
+    "file": "U4-native-chrome-tab-boundary.jpg",
+    "savedAtUTC": "2026-10-16T04:23:46.836Z",
+    "sha256": "088ad84b249197b4d48c8e3f88b3dec6736bcbdf7ac48dfdc04d94eb4395756f",
+    "source": "CUA native app"
+  },
+  {
+    "file": "U4-native-chrome-zoom200-read.jpg",
+    "savedAtUTC": "2026-10-16T04:18:10.086Z",
+    "sha256": "58f2de678b5679b4b3fbc1c419575da4b11ea233b1edc78cd8377e61c4642172",
+    "source": "CUA native app"
+  },
+  {
+    "file": "U4-native-chrome-zoom200-search.jpg",
+    "savedAtUTC": "2026-10-16T04:18:30.051Z",
+    "sha256": "c121834eb6d57297ba0f112a4bd25bccf22735ed3501fcb4970bd60018c87520",
+    "source": "CUA native app"
+  },
+  {
+    "file": "U4-native-safari-dark.jpg",
+    "savedAtUTC": "2026-10-16T04:18:50.057Z",
+    "sha256": "0ac668ab3cbb9d3f265144c4b2eca23cfbe9fbede47587cb55c6fa35dc8c56f5",
+    "source": "CUA native app"
+  },
+  {
+    "file": "U4-native-safari-destination.jpg",
+    "savedAtUTC": "2026-10-16T04:16:17.867Z",
+    "sha256": "afcee92f74a92cdc1ac1f84b8e628aacae3c6b7e2d9911ee6ec526981d0d7478",
+    "source": "CUA native app"
+  },
+  {
+    "file": "U4-native-safari-language.jpg",
+    "savedAtUTC": "2026-10-16T04:19:00.530Z",
+    "sha256": "fbb543f09d946671306ebd6978405937e323f33f09217d0c103f64dee0985f61",
+    "source": "CUA native app"
+  },
+  {
+    "file": "U4-native-safari-read.jpg",
+    "savedAtUTC": "2026-10-16T04:16:00.135Z",
+    "sha256": "7987cdb62d88ad1fee30bf5b1849b7d113f5d795688731f5d118a0a7e28a2073",
+    "source": "CUA native app"
+  },
+  {
+    "file": "U4-native-safari-search.jpg",
+    "savedAtUTC": "2026-10-16T04:16:08.794Z",
+    "sha256": "29f3a9587942be3f4c89dda5cd008889068eab80cc9fec5f9e726c82bc51e48d",
+    "source": "CUA native app"
+  }
+]

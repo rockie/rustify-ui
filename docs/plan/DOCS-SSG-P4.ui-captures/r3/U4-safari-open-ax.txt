@@ -1,0 +1,8 @@
+The following is a diff from the previous accessibility tree for Window: "快速开始 | Rustify UI" with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+Removed element IDs: 53-321
++					329 container 搜索
++						330 文本 搜索文档
++						331 按钮 关闭
++						332 组合框 (collapsed, settable) 搜索文档, Secondary Actions: Expand
++						333 文本 输入词语，搜索当前语言的文档。
++						334 container (settable) 搜索结果

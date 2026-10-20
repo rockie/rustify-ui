@@ -1,0 +1,29 @@
+The following is a diff from the previous accessibility tree for Window: "快速开始 | Rustify UI" with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+Removed element IDs: 1053
+~							1052 组合框 (settable) 搜索文档, Value: ThemeScope
++							1055 文本 3 个结果
++								1056 文本 (selected) 快速开始 快速开始 › 在应用中使用 Tailwind v4 ope 外。 使用版本化主题文档时，在 sdk.css 后紧接着导入 theme-v4.css。ThemeScope 在根节点提供文档解析后的颜色、字体、间距、圆角和阴影；这些 scope 的 utility 间距读取 --rustify-unit，--layout-gap 仍是独立布局值。ThemedScope 保留旧值回退，两种 provider 的显式
++									1057 文本 快速开始
++									1058 文本 快速开始 › 在应用中使用 Tailwind v4
++									1059 文本 ope 外。 使用版本化主题文档时，在 sdk.css 后紧接着导入 theme-v4.css。
++									1060 文本 ThemeScope
++									1061 文本  在根节点提供文档解析后的颜色、字体、间距、圆角和阴影；这些 scope 的 utility 间距读取 --rustify-unit，--layout-gap 仍是独立布局值。ThemedScope 保留旧值回退，两种 provider 的显式
++								1062 文本 Architecturezh 尚未翻译，内容语言：en Architecture › Versioned themes ResolvedTheme> alongside its application state. ThemeScope claims the mount root, projects the snapshot through CSSOM and restores prior values on cleanup. ThemeBoundary re-resolve
++									1063 文本 Architecture
++									1064 文本 zh
++									1065 文本 尚未翻译，内容语言：en
++									1066 文本 Architecture › Versioned themes
++									1067 文本 ResolvedTheme> alongside its application state. 
++									1068 文本 ThemeScope
++									1069 文本  claims the mount root, projects the snapshot through CSSOM and restores prior values on cleanup. ThemeBoundary re-resolve
++								1070 文本 Theme documentszh 尚未翻译，内容语言：en Theme documents › Mount a browser scope Theme documents › Fonts and GPU consumers Theme documents › Import and export :{mount, AppHandle, MountConfig, ResolvedTheme, ThemeScope}; use rustify_ui::theme::{font_context, import_json, resolve, ThemeError, ThemeMode}; use std::sync::Arc; // Put the down
++									1071 文本 Theme documents
++									1072 文本 zh
++									1073 文本 尚未翻译，内容语言：en
++									1074 文本 Theme documents › Mount a browser scope
++									1075 文本 Theme documents › Fonts and GPU consumers
++									1076 文本 Theme documents › Import and export
++									1077 文本 :{mount, AppHandle, MountConfig, ResolvedTheme, 
++									1078 文本 ThemeScope
++									1079 文本 }; use rustify_ui::theme::{font_context, import_json, resolve, ThemeError, ThemeMode}; use std::sync::Arc; // Put the down
+The focused UI element is 1056 文本 (selected) 快速开始 快速开始 › 在应用中使用 Tailwind v4 ope 外。 使用版本化主题文档时，在 sdk.css 后紧接着导入 theme-v4.css。ThemeScope 在根节点提供文档解析后的颜色、字体、间距、圆角和阴影；这些 scope 的 utility 间距读取 --rustify-unit，--layout-gap 仍是独立布局值。ThemedScope 保留旧值回退，两种 provider 的显式

@@ -1,0 +1,30 @@
+{
+  "at": "2026-10-16T04:58:20.236Z",
+  "httpManifests": [
+    {
+      "name": "official/subpath",
+      "url": "http://127.0.0.1:4199/rustify-ui/rustify-docs-manifest.json",
+      "status": 200,
+      "sha256": "3d692f971105a13535a1a7f1c0edce9caaafd4db0cc75051a78cce63e3d22888",
+      "matchesCapturedProduct": true
+    },
+    {
+      "name": "search/subpath",
+      "url": "http://127.0.0.1:4205/rustify-ui/rustify-docs-manifest.json",
+      "status": 200,
+      "sha256": "1e337c0a1dd66e8c8d092ca032838eec3faff9348a985c55f0a62477150665a2",
+      "matchesCapturedProduct": true
+    }
+  ],
+  "moduleRestore": {
+    "status": 200,
+    "sha256": "4879fcef9b8ec96cd0bc12ee699fcbbb0bd823e3f72d6289a810f3da853be15f",
+    "matches": true
+  },
+  "realProductCopy": {
+    "files": 228,
+    "mismatches": []
+  },
+  "uiMeasurements": "No new native overflow/axe/console scan; CUA screenshots and actual actions only",
+  "missingModuleHTTPProbe": "http-fault-probe.json"
+}

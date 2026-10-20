@@ -1,0 +1,954 @@
+[
+  {
+    "unit": "U1",
+    "state": "idle",
+    "file": "U1-idle-1280-light.png",
+    "url": "http://127.0.0.1:4205/rustify-ui/page-0001/",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "dpr": 1,
+    "theme": "light",
+    "at": "2026-10-16T02:19:12.492Z",
+    "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12",
+    "interception": "none",
+    "action": "点击页头 Search，等候空查询 idle；输入获焦。",
+    "observation": {
+      "title": "Theme switching | Search corpus",
+      "htmlLang": "en",
+      "theme": "light",
+      "dialogOpen": true,
+      "dialogState": "idle",
+      "input": "",
+      "status": "Type a word to search this language’s documentation.",
+      "total": "",
+      "options": 0,
+      "focused": {
+        "tag": "INPUT",
+        "id": "rd-search-input",
+        "text": "",
+        "searchInput": true
+      }
+    },
+    "sha256": "49fb43e9b1fe2510fa5fd8a995fe4013e81b4b9cfb358217ba003c5dbc842225"
+  },
+  {
+    "unit": "U1",
+    "state": "results",
+    "file": "U1-results-1280-light.png",
+    "url": "http://127.0.0.1:4205/rustify-ui/page-0001/",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "dpr": 1,
+    "theme": "light",
+    "at": "2026-10-16T02:19:12.573Z",
+    "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12",
+    "interception": "none",
+    "action": "输入 ThemeScope，等候真实当前语言结果。",
+    "observation": {
+      "title": "Theme switching | Search corpus",
+      "htmlLang": "en",
+      "theme": "light",
+      "dialogOpen": true,
+      "dialogState": "results",
+      "input": "ThemeScope",
+      "status": "",
+      "total": "2 results",
+      "options": 2,
+      "focused": {
+        "tag": "INPUT",
+        "id": "rd-search-input",
+        "text": "",
+        "searchInput": true
+      }
+    },
+    "sha256": "dc361d69024833696b63b48e23b3e12e7ca123b9d8070a5b2aa2842166ecd801"
+  },
+  {
+    "unit": "U1",
+    "state": "empty",
+    "file": "U1-empty-1280-light.png",
+    "url": "http://127.0.0.1:4205/rustify-ui/page-0001/",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "dpr": 1,
+    "theme": "light",
+    "at": "2026-10-16T02:19:12.641Z",
+    "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12",
+    "interception": "none",
+    "action": "将查询改为不存在的词，等候 empty。",
+    "observation": {
+      "title": "Theme switching | Search corpus",
+      "htmlLang": "en",
+      "theme": "light",
+      "dialogOpen": true,
+      "dialogState": "empty",
+      "input": "AbsolutelyNoMatchingWordHere",
+      "status": "No results. Try a different word or a shorter prefix.",
+      "total": "0 results",
+      "options": 0,
+      "focused": {
+        "tag": "INPUT",
+        "id": "rd-search-input",
+        "text": "",
+        "searchInput": true
+      }
+    },
+    "sha256": "9eb5581ff3f4b594560739c74d816e1c28eb386bca8d66bc1f86db0faa26389b"
+  },
+  {
+    "unit": "U1",
+    "state": "idle",
+    "file": "U1-idle-1280-dark.png",
+    "url": "http://127.0.0.1:4205/rustify-ui/page-0001/",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "dpr": 1,
+    "theme": "dark",
+    "at": "2026-10-16T02:19:13.386Z",
+    "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12",
+    "interception": "none",
+    "action": "点击页头 Search，等候空查询 idle；输入获焦。",
+    "observation": {
+      "title": "Theme switching | Search corpus",
+      "htmlLang": "en",
+      "theme": "dark",
+      "dialogOpen": true,
+      "dialogState": "idle",
+      "input": "",
+      "status": "Type a word to search this language’s documentation.",
+      "total": "",
+      "options": 0,
+      "focused": {
+        "tag": "INPUT",
+        "id": "rd-search-input",
+        "text": "",
+        "searchInput": true
+      }
+    },
+    "sha256": "9c121a1f6b4b69f34c05db1074e8e262de32f06a55c793d611079fe8820a5420"
+  },
+  {
+    "unit": "U1",
+    "state": "results",
+    "file": "U1-results-1280-dark.png",
+    "url": "http://127.0.0.1:4205/rustify-ui/page-0001/",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "dpr": 1,
+    "theme": "dark",
+    "at": "2026-10-16T02:19:13.477Z",
+    "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12",
+    "interception": "none",
+    "action": "输入 ThemeScope，等候真实当前语言结果。",
+    "observation": {
+      "title": "Theme switching | Search corpus",
+      "htmlLang": "en",
+      "theme": "dark",
+      "dialogOpen": true,
+      "dialogState": "results",
+      "input": "ThemeScope",
+      "status": "",
+      "total": "2 results",
+      "options": 2,
+      "focused": {
+        "tag": "INPUT",
+        "id": "rd-search-input",
+        "text": "",
+        "searchInput": true
+      }
+    },
+    "sha256": "92877c68d641636ac321d5549b2e1d8795779adc90eb748852fbfe1080a1e38c"
+  },
+  {
+    "unit": "U1",
+    "state": "empty",
+    "file": "U1-empty-1280-dark.png",
+    "url": "http://127.0.0.1:4205/rustify-ui/page-0001/",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "dpr": 1,
+    "theme": "dark",
+    "at": "2026-10-16T02:19:13.559Z",
+    "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12",
+    "interception": "none",
+    "action": "将查询改为不存在的词，等候 empty。",
+    "observation": {
+      "title": "Theme switching | Search corpus",
+      "htmlLang": "en",
+      "theme": "dark",
+      "dialogOpen": true,
+      "dialogState": "empty",
+      "input": "AbsolutelyNoMatchingWordHere",
+      "status": "No results. Try a different word or a shorter prefix.",
+      "total": "0 results",
+      "options": 0,
+      "focused": {
+        "tag": "INPUT",
+        "id": "rd-search-input",
+        "text": "",
+        "searchInput": true
+      }
+    },
+    "sha256": "ca6a62f3f3262a124754dddea9dcdbd4213c1a1bb1110c33fd75fd53ad1ff601"
+  },
+  {
+    "unit": "U1",
+    "state": "idle",
+    "file": "U1-idle-375-light.png",
+    "url": "http://127.0.0.1:4205/rustify-ui/page-0001/",
+    "viewport": {
+      "width": 375,
+      "height": 812
+    },
+    "dpr": 1,
+    "theme": "light",
+    "at": "2026-10-16T02:19:14.311Z",
+    "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12",
+    "interception": "none",
+    "action": "点击页头 Search，等候空查询 idle；输入获焦。",
+    "observation": {
+      "title": "Theme switching | Search corpus",
+      "htmlLang": "en",
+      "theme": "light",
+      "dialogOpen": true,
+      "dialogState": "idle",
+      "input": "",
+      "status": "Type a word to search this language’s documentation.",
+      "total": "",
+      "options": 0,
+      "focused": {
+        "tag": "INPUT",
+        "id": "rd-search-input",
+        "text": "",
+        "searchInput": true
+      }
+    },
+    "sha256": "8975e47e91475a06965f37574c62f5d0a64c1b8b0ddf754034c85ec7b6f326c4"
+  },
+  {
+    "unit": "U1",
+    "state": "results",
+    "file": "U1-results-375-light.png",
+    "url": "http://127.0.0.1:4205/rustify-ui/page-0001/",
+    "viewport": {
+      "width": 375,
+      "height": 812
+    },
+    "dpr": 1,
+    "theme": "light",
+    "at": "2026-10-16T02:19:14.389Z",
+    "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12",
+    "interception": "none",
+    "action": "输入 ThemeScope，等候真实当前语言结果。",
+    "observation": {
+      "title": "Theme switching | Search corpus",
+      "htmlLang": "en",
+      "theme": "light",
+      "dialogOpen": true,
+      "dialogState": "results",
+      "input": "ThemeScope",
+      "status": "",
+      "total": "2 results",
+      "options": 2,
+      "focused": {
+        "tag": "INPUT",
+        "id": "rd-search-input",
+        "text": "",
+        "searchInput": true
+      }
+    },
+    "sha256": "a2e82a20690608f3cdc5a74ca9f12d135d6322ae68a5a705ef9b19c8ac424c82"
+  },
+  {
+    "unit": "U1",
+    "state": "empty",
+    "file": "U1-empty-375-light.png",
+    "url": "http://127.0.0.1:4205/rustify-ui/page-0001/",
+    "viewport": {
+      "width": 375,
+      "height": 812
+    },
+    "dpr": 1,
+    "theme": "light",
+    "at": "2026-10-16T02:19:14.436Z",
+    "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12",
+    "interception": "none",
+    "action": "将查询改为不存在的词，等候 empty。",
+    "observation": {
+      "title": "Theme switching | Search corpus",
+      "htmlLang": "en",
+      "theme": "light",
+      "dialogOpen": true,
+      "dialogState": "empty",
+      "input": "AbsolutelyNoMatchingWordHere",
+      "status": "No results. Try a different word or a shorter prefix.",
+      "total": "0 results",
+      "options": 0,
+      "focused": {
+        "tag": "INPUT",
+        "id": "rd-search-input",
+        "text": "",
+        "searchInput": true
+      }
+    },
+    "sha256": "c58e7d23cee346042118fc7892a650718548e76a86f34f61f960242b91950d34"
+  },
+  {
+    "unit": "U1",
+    "state": "idle",
+    "file": "U1-idle-375-dark.png",
+    "url": "http://127.0.0.1:4205/rustify-ui/page-0001/",
+    "viewport": {
+      "width": 375,
+      "height": 812
+    },
+    "dpr": 1,
+    "theme": "dark",
+    "at": "2026-10-16T02:19:15.171Z",
+    "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12",
+    "interception": "none",
+    "action": "点击页头 Search，等候空查询 idle；输入获焦。",
+    "observation": {
+      "title": "Theme switching | Search corpus",
+      "htmlLang": "en",
+      "theme": "dark",
+      "dialogOpen": true,
+      "dialogState": "idle",
+      "input": "",
+      "status": "Type a word to search this language’s documentation.",
+      "total": "",
+      "options": 0,
+      "focused": {
+        "tag": "INPUT",
+        "id": "rd-search-input",
+        "text": "",
+        "searchInput": true
+      }
+    },
+    "sha256": "23f5e027e2bcc2197a604fbb06d6b1c250f34550ee86a3a1444f6e8595118124"
+  },
+  {
+    "unit": "U1",
+    "state": "results",
+    "file": "U1-results-375-dark.png",
+    "url": "http://127.0.0.1:4205/rustify-ui/page-0001/",
+    "viewport": {
+      "width": 375,
+      "height": 812
+    },
+    "dpr": 1,
+    "theme": "dark",
+    "at": "2026-10-16T02:19:15.254Z",
+    "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12",
+    "interception": "none",
+    "action": "输入 ThemeScope，等候真实当前语言结果。",
+    "observation": {
+      "title": "Theme switching | Search corpus",
+      "htmlLang": "en",
+      "theme": "dark",
+      "dialogOpen": true,
+      "dialogState": "results",
+      "input": "ThemeScope",
+      "status": "",
+      "total": "2 results",
+      "options": 2,
+      "focused": {
+        "tag": "INPUT",
+        "id": "rd-search-input",
+        "text": "",
+        "searchInput": true
+      }
+    },
+    "sha256": "b8e7958dba191f2039161d7607da04dc37b68daa86b472cda45671770317b3b2"
+  },
+  {
+    "unit": "U1",
+    "state": "empty",
+    "file": "U1-empty-375-dark.png",
+    "url": "http://127.0.0.1:4205/rustify-ui/page-0001/",
+    "viewport": {
+      "width": 375,
+      "height": 812
+    },
+    "dpr": 1,
+    "theme": "dark",
+    "at": "2026-10-16T02:19:15.320Z",
+    "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12",
+    "interception": "none",
+    "action": "将查询改为不存在的词，等候 empty。",
+    "observation": {
+      "title": "Theme switching | Search corpus",
+      "htmlLang": "en",
+      "theme": "dark",
+      "dialogOpen": true,
+      "dialogState": "empty",
+      "input": "AbsolutelyNoMatchingWordHere",
+      "status": "No results. Try a different word or a shorter prefix.",
+      "total": "0 results",
+      "options": 0,
+      "focused": {
+        "tag": "INPUT",
+        "id": "rd-search-input",
+        "text": "",
+        "searchInput": true
+      }
+    },
+    "sha256": "ddd93ac1d0b297164d7832c29de219fad8fa45bb81e943422a3a0130aa7b3668"
+  },
+  {
+    "unit": "U1",
+    "state": "idle",
+    "file": "U1-idle-320-light.png",
+    "url": "http://127.0.0.1:4205/rustify-ui/page-0001/",
+    "viewport": {
+      "width": 320,
+      "height": 812
+    },
+    "dpr": 1,
+    "theme": "light",
+    "at": "2026-10-16T02:19:16.057Z",
+    "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12",
+    "interception": "none",
+    "action": "点击页头 Search，等候空查询 idle；输入获焦。",
+    "observation": {
+      "title": "Theme switching | Search corpus",
+      "htmlLang": "en",
+      "theme": "light",
+      "dialogOpen": true,
+      "dialogState": "idle",
+      "input": "",
+      "status": "Type a word to search this language’s documentation.",
+      "total": "",
+      "options": 0,
+      "focused": {
+        "tag": "INPUT",
+        "id": "rd-search-input",
+        "text": "",
+        "searchInput": true
+      }
+    },
+    "sha256": "015d15127d605b0a917dd6e3a3b50de9132c1e20ad96278a2e4992fc525e7816"
+  },
+  {
+    "unit": "U1",
+    "state": "results",
+    "file": "U1-results-320-light.png",
+    "url": "http://127.0.0.1:4205/rustify-ui/page-0001/",
+    "viewport": {
+      "width": 320,
+      "height": 812
+    },
+    "dpr": 1,
+    "theme": "light",
+    "at": "2026-10-16T02:19:16.138Z",
+    "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12",
+    "interception": "none",
+    "action": "输入 ThemeScope，等候真实当前语言结果。",
+    "observation": {
+      "title": "Theme switching | Search corpus",
+      "htmlLang": "en",
+      "theme": "light",
+      "dialogOpen": true,
+      "dialogState": "results",
+      "input": "ThemeScope",
+      "status": "",
+      "total": "2 results",
+      "options": 2,
+      "focused": {
+        "tag": "INPUT",
+        "id": "rd-search-input",
+        "text": "",
+        "searchInput": true
+      }
+    },
+    "sha256": "94626eece064ffa2243961f51787e70c054ad8a66bdc64ef90250fe585cd7f87"
+  },
+  {
+    "unit": "U1",
+    "state": "empty",
+    "file": "U1-empty-320-light.png",
+    "url": "http://127.0.0.1:4205/rustify-ui/page-0001/",
+    "viewport": {
+      "width": 320,
+      "height": 812
+    },
+    "dpr": 1,
+    "theme": "light",
+    "at": "2026-10-16T02:19:16.206Z",
+    "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12",
+    "interception": "none",
+    "action": "将查询改为不存在的词，等候 empty。",
+    "observation": {
+      "title": "Theme switching | Search corpus",
+      "htmlLang": "en",
+      "theme": "light",
+      "dialogOpen": true,
+      "dialogState": "empty",
+      "input": "AbsolutelyNoMatchingWordHere",
+      "status": "No results. Try a different word or a shorter prefix.",
+      "total": "0 results",
+      "options": 0,
+      "focused": {
+        "tag": "INPUT",
+        "id": "rd-search-input",
+        "text": "",
+        "searchInput": true
+      }
+    },
+    "sha256": "2d768f43cc11b23d4db8a0310f24e0cf161aa844bb8371786299d3852c3a842a"
+  },
+  {
+    "unit": "U1",
+    "state": "idle",
+    "file": "U1-idle-320-dark.png",
+    "url": "http://127.0.0.1:4205/rustify-ui/page-0001/",
+    "viewport": {
+      "width": 320,
+      "height": 812
+    },
+    "dpr": 1,
+    "theme": "dark",
+    "at": "2026-10-16T02:19:16.946Z",
+    "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12",
+    "interception": "none",
+    "action": "点击页头 Search，等候空查询 idle；输入获焦。",
+    "observation": {
+      "title": "Theme switching | Search corpus",
+      "htmlLang": "en",
+      "theme": "dark",
+      "dialogOpen": true,
+      "dialogState": "idle",
+      "input": "",
+      "status": "Type a word to search this language’s documentation.",
+      "total": "",
+      "options": 0,
+      "focused": {
+        "tag": "INPUT",
+        "id": "rd-search-input",
+        "text": "",
+        "searchInput": true
+      }
+    },
+    "sha256": "d2058dec77788d2866d82f1da475b2d68bca02f76f1de75441e31894a596cc72"
+  },
+  {
+    "unit": "U1",
+    "state": "results",
+    "file": "U1-results-320-dark.png",
+    "url": "http://127.0.0.1:4205/rustify-ui/page-0001/",
+    "viewport": {
+      "width": 320,
+      "height": 812
+    },
+    "dpr": 1,
+    "theme": "dark",
+    "at": "2026-10-16T02:19:17.029Z",
+    "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12",
+    "interception": "none",
+    "action": "输入 ThemeScope，等候真实当前语言结果。",
+    "observation": {
+      "title": "Theme switching | Search corpus",
+      "htmlLang": "en",
+      "theme": "dark",
+      "dialogOpen": true,
+      "dialogState": "results",
+      "input": "ThemeScope",
+      "status": "",
+      "total": "2 results",
+      "options": 2,
+      "focused": {
+        "tag": "INPUT",
+        "id": "rd-search-input",
+        "text": "",
+        "searchInput": true
+      }
+    },
+    "sha256": "e91aeedc4f49f8696c16d62059605cb2f5743d3f6e4907075b4437909a5482f5"
+  },
+  {
+    "unit": "U1",
+    "state": "empty",
+    "file": "U1-empty-320-dark.png",
+    "url": "http://127.0.0.1:4205/rustify-ui/page-0001/",
+    "viewport": {
+      "width": 320,
+      "height": 812
+    },
+    "dpr": 1,
+    "theme": "dark",
+    "at": "2026-10-16T02:19:17.095Z",
+    "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12",
+    "interception": "none",
+    "action": "将查询改为不存在的词，等候 empty。",
+    "observation": {
+      "title": "Theme switching | Search corpus",
+      "htmlLang": "en",
+      "theme": "dark",
+      "dialogOpen": true,
+      "dialogState": "empty",
+      "input": "AbsolutelyNoMatchingWordHere",
+      "status": "No results. Try a different word or a shorter prefix.",
+      "total": "0 results",
+      "options": 0,
+      "focused": {
+        "tag": "INPUT",
+        "id": "rd-search-input",
+        "text": "",
+        "searchInput": true
+      }
+    },
+    "sha256": "3c0119690851737b0c9453ff1ddc72eb91970a3b6c42e8f6f70ea301fceca5df"
+  },
+  {
+    "unit": "U1",
+    "state": "keyboard-open-01",
+    "file": "U1-keyboard-open-01-1280-light.png",
+    "url": "http://127.0.0.1:4205/rustify-ui/",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "dpr": 1,
+    "theme": "light",
+    "at": "2026-10-16T02:19:17.809Z",
+    "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12",
+    "interception": "none",
+    "action": "品牌链接获得焦点后，真实按 Control+K 打开搜索。",
+    "observation": {
+      "title": "Custom search home | Search corpus",
+      "htmlLang": "en",
+      "theme": "light",
+      "dialogOpen": true,
+      "dialogState": "idle",
+      "input": "",
+      "status": "Type a word to search this language’s documentation.",
+      "total": "",
+      "options": 0,
+      "focused": {
+        "tag": "INPUT",
+        "id": "rd-search-input",
+        "text": "",
+        "searchInput": true
+      }
+    },
+    "sha256": "21a435b67312b821f848ddbd661db2fda1d669359ae9e9c23cabcb5bf0c422f2"
+  },
+  {
+    "unit": "U1",
+    "state": "keyboard-select-02",
+    "file": "U1-keyboard-select-02-1280-light.png",
+    "url": "http://127.0.0.1:4205/rustify-ui/",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "dpr": 1,
+    "theme": "light",
+    "at": "2026-10-16T02:19:17.898Z",
+    "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12",
+    "interception": "none",
+    "action": "输入 SearchCorpusToken 后真实按 ArrowDown；输入仍获焦，结果选择已变化。",
+    "observation": {
+      "title": "Custom search home | Search corpus",
+      "htmlLang": "en",
+      "theme": "light",
+      "dialogOpen": true,
+      "dialogState": "results",
+      "input": "SearchCorpusToken",
+      "status": "",
+      "total": "98 results",
+      "options": 20,
+      "focused": {
+        "tag": "INPUT",
+        "id": "rd-search-input",
+        "text": "",
+        "searchInput": true
+      }
+    },
+    "sha256": "02c52d80855e83a3c4c5d726bd2fe18f546609c272b2fe4794344fd17eee80ce"
+  },
+  {
+    "unit": "U1",
+    "state": "keyboard-more-focus-03",
+    "file": "U1-keyboard-more-focus-03-1280-light.png",
+    "url": "http://127.0.0.1:4205/rustify-ui/",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "dpr": 1,
+    "theme": "light",
+    "at": "2026-10-16T02:19:17.963Z",
+    "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12",
+    "interception": "none",
+    "action": "真实按 Tab，焦点到 Show more。",
+    "observation": {
+      "title": "Custom search home | Search corpus",
+      "htmlLang": "en",
+      "theme": "light",
+      "dialogOpen": true,
+      "dialogState": "results",
+      "input": "SearchCorpusToken",
+      "status": "",
+      "total": "98 results",
+      "options": 20,
+      "focused": {
+        "tag": "BUTTON",
+        "id": "",
+        "text": "Show more",
+        "searchInput": false
+      }
+    },
+    "sha256": "ad3b5fe3b15f852bcc4c56a655c120c2cb239cf649c1f8edede605a0e15112bd"
+  },
+  {
+    "unit": "U1",
+    "state": "keyboard-more-04",
+    "file": "U1-keyboard-more-04-1280-light.png",
+    "url": "http://127.0.0.1:4205/rustify-ui/",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "dpr": 1,
+    "theme": "light",
+    "at": "2026-10-16T02:19:18.047Z",
+    "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12",
+    "interception": "none",
+    "action": "真实按 Enter 显示更多；可见 DOM 结果从20增加为40。",
+    "observation": {
+      "title": "Custom search home | Search corpus",
+      "htmlLang": "en",
+      "theme": "light",
+      "dialogOpen": true,
+      "dialogState": "results",
+      "input": "SearchCorpusToken",
+      "status": "",
+      "total": "98 results",
+      "options": 40,
+      "focused": {
+        "tag": "BODY",
+        "id": "",
+        "text": "Skip to contentSearch corpusSearchCtrl / Cmd KEnglishEnglish中文 · 此页面尚未翻译。SystemLightDarkCustom searc",
+        "searchInput": false
+      }
+    },
+    "sha256": "c1e2f379d5cbe39613ea2b71b6c8508a6f379a8ad8f666e88b19b014828bd78c"
+  },
+  {
+    "unit": "U1",
+    "state": "keyboard-close-05",
+    "file": "U1-keyboard-close-05-1280-light.png",
+    "url": "http://127.0.0.1:4205/rustify-ui/",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "dpr": 1,
+    "theme": "light",
+    "at": "2026-10-16T02:19:18.102Z",
+    "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12",
+    "interception": "none",
+    "action": "真实按 Escape 关闭，活动元素为原品牌链接。",
+    "observation": {
+      "title": "Custom search home | Search corpus",
+      "htmlLang": "en",
+      "theme": "light",
+      "dialogOpen": false,
+      "dialogState": "closed",
+      "input": "SearchCorpusToken",
+      "status": "",
+      "total": "98 results",
+      "options": 40,
+      "focused": {
+        "tag": "A",
+        "id": "",
+        "text": "Search corpus",
+        "searchInput": false
+      }
+    },
+    "sha256": "7754b8ae5645196927d821bae3254dc525a1e7775927c5e7f2cc6840b2d1559e"
+  },
+  {
+    "unit": "U1",
+    "state": "keyboard-destination-06",
+    "file": "U1-keyboard-destination-06-1280-light.png",
+    "url": "http://127.0.0.1:4205/rustify-ui/#custom-section",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "dpr": 1,
+    "theme": "light",
+    "at": "2026-10-16T02:19:18.185Z",
+    "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12",
+    "interception": "none",
+    "action": "真实按 Meta+K 打开，输入 ReachableCustomToken 并 Enter；导航到定制页 #custom-section，对话框关闭。",
+    "observation": {
+      "title": "Custom search home | Search corpus",
+      "htmlLang": "en",
+      "theme": "light",
+      "dialogOpen": false,
+      "dialogState": "closed",
+      "input": "ReachableCustomToken",
+      "status": "",
+      "total": "1 results",
+      "options": 1,
+      "focused": {
+        "tag": "A",
+        "id": "",
+        "text": "Search corpus",
+        "searchInput": false
+      }
+    },
+    "sha256": "7754b8ae5645196927d821bae3254dc525a1e7775927c5e7f2cc6840b2d1559e"
+  },
+  {
+    "unit": "U1",
+    "state": "zh-translated",
+    "file": "U1-zh-translated-375-dark.png",
+    "url": "http://127.0.0.1:4205/rustify-ui/zh/page-0001/",
+    "viewport": {
+      "width": 375,
+      "height": 812
+    },
+    "dpr": 1,
+    "theme": "dark",
+    "at": "2026-10-16T02:19:18.970Z",
+    "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12",
+    "interception": "none",
+    "action": "中文页输入主题切换。",
+    "observation": {
+      "title": "主题切换 | Search corpus",
+      "htmlLang": "zh",
+      "theme": "dark",
+      "dialogOpen": true,
+      "dialogState": "results",
+      "input": "主题切换",
+      "status": "",
+      "total": "1 个结果",
+      "options": 1,
+      "focused": {
+        "tag": "INPUT",
+        "id": "rd-search-input",
+        "text": "",
+        "searchInput": true
+      }
+    },
+    "sha256": "41dff1b352b229501b9ac6708ae83ff8f90e607324c92ddb019173fb40773b36"
+  },
+  {
+    "unit": "U1",
+    "state": "zh-fallback",
+    "file": "U1-zh-fallback-375-dark.png",
+    "url": "http://127.0.0.1:4205/rustify-ui/zh/page-0001/",
+    "viewport": {
+      "width": 375,
+      "height": 812
+    },
+    "dpr": 1,
+    "theme": "dark",
+    "at": "2026-10-16T02:19:19.037Z",
+    "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12",
+    "interception": "none",
+    "action": "中文界面输入 FallbackOnlyToken，查看缺译标签与中文目标地址。",
+    "observation": {
+      "title": "主题切换 | Search corpus",
+      "htmlLang": "zh",
+      "theme": "dark",
+      "dialogOpen": true,
+      "dialogState": "results",
+      "input": "FallbackOnlyToken",
+      "status": "",
+      "total": "1 个结果",
+      "options": 1,
+      "focused": {
+        "tag": "INPUT",
+        "id": "rd-search-input",
+        "text": "",
+        "searchInput": true
+      }
+    },
+    "sha256": "b161d123b538d3767657214e428bb5a189326b163111070ea20b328906c63f27"
+  },
+  {
+    "unit": "U1",
+    "state": "root-results",
+    "file": "U1-root-results-1280-light.png",
+    "url": "http://127.0.0.1:4204/page-0001/",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "dpr": 1,
+    "theme": "light",
+    "at": "2026-10-16T02:23:40.900Z",
+    "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12",
+    "interception": "none",
+    "action": "从真实根路径/仅meta CSP静态托管打开搜索并输入 ThemeScope。",
+    "observation": {
+      "title": "Theme switching | Search corpus",
+      "htmlLang": "en",
+      "theme": "light",
+      "dialogOpen": true,
+      "dialogState": "results",
+      "input": "ThemeScope",
+      "status": "",
+      "total": "2 results",
+      "options": 2,
+      "focused": {
+        "tag": "INPUT",
+        "id": "rd-search-input",
+        "text": "",
+        "searchInput": true
+      }
+    },
+    "sha256": "dc361d69024833696b63b48e23b3e12e7ca123b9d8070a5b2aa2842166ecd801"
+  },
+  {
+    "unit": "U1",
+    "state": "meta-results",
+    "file": "U1-meta-results-1280-light.png",
+    "url": "http://127.0.0.1:4206/rustify-ui/page-0001/",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "dpr": 1,
+    "theme": "light",
+    "at": "2026-10-16T02:23:41.651Z",
+    "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12",
+    "interception": "none",
+    "action": "从真实根路径/仅meta CSP静态托管打开搜索并输入 ThemeScope。",
+    "observation": {
+      "title": "Theme switching | Search corpus",
+      "htmlLang": "en",
+      "theme": "light",
+      "dialogOpen": true,
+      "dialogState": "results",
+      "input": "ThemeScope",
+      "status": "",
+      "total": "2 results",
+      "options": 2,
+      "focused": {
+        "tag": "INPUT",
+        "id": "rd-search-input",
+        "text": "",
+        "searchInput": true
+      }
+    },
+    "sha256": "dc361d69024833696b63b48e23b3e12e7ca123b9d8070a5b2aa2842166ecd801"
+  }
+]

@@ -1,0 +1,17 @@
+{
+  "head": "a6c076a7ec669aede7ef2ff019ee79cdbbdb102a",
+  "branch": "main",
+  "dirtyDiffSha256": "945d85fd809289533db0ecd2384fd123c2778be790b23ca1c232da6fea6a1493",
+  "status": " M .xgent-ai/sdlc/events/plan/index.md\n M .xgent-ai/sdlc/events/prd/8917bbeb-7add-4826-95ee-5cdf6bdff735/index.md\n M .xgent-ai/sdlc/events/review/index.md\n M .xgent-ai/sdlc/index.md\n M .xgent-ai/sdlc/status/plan/f36dda5e-ce97-49af-926c-0146968daa01.md\n M .xgent-ai/sdlc/status/plan/index.md\n M .xgent-ai/sdlc/status/prd/8917bbeb-7add-4826-95ee-5cdf6bdff735.md\n M .xgent-ai/sdlc/status/review/index.md\n M docs/plan/DOCS-SSG-P4.md\n?? .xgent-ai/sdlc/events/plan/607022f0-588c-4810-a08b-24b7be2dcc6f/\n?? .xgent-ai/sdlc/events/prd/8917bbeb-7add-4826-95ee-5cdf6bdff735/ebfa097b-84ef-4dba-8be4-f51839cc9ae8.md\n?? .xgent-ai/sdlc/events/review/9cd6da78-0bc0-4297-9f6b-6fffde099e72/\n?? .xgent-ai/sdlc/events/review/c34cd2c3-3731-433a-90c7-8bb70fdbc9e8/\n?? .xgent-ai/sdlc/status/plan/607022f0-588c-4810-a08b-24b7be2dcc6f.md\n?? .xgent-ai/sdlc/status/review/9cd6da78-0bc0-4297-9f6b-6fffde099e72.md\n?? .xgent-ai/sdlc/status/review/c34cd2c3-3731-433a-90c7-8bb70fdbc9e8.md\n?? docs/plan/DOCS-SSG-P3.review.md\n?? docs/plan/DOCS-SSG-P4.code-review.md\n?? docs/plan/DOCS-SSG-P4.records/M7.md\n?? docs/plan/DOCS-SSG-P4.ui-target.md\n?? docs/validation/docs-ssg-p4/m7/\n",
+  "targetFileSha256": "c9345802162ea03060991454af1094a494aed59e93c599b909e5d0584e5e93ae",
+  "targetFingerprintAlgorithm": "manual-sha256-normative-sections-v1",
+  "targetFingerprint": "604274d613d8b2915e8c9c17ed09c2be6b1f6ef102adcb9bbef76275062486a4",
+  "fingerprintMethod": "unique level-2 单元 and 规范要点 sections, including headings; LF; each UTF-8 segment prefixed by decimal byte length and colon, concatenated in that order; no local attachments in these sections. Manual fingerprint, not a claim of Phoenix engine compatibility.",
+  "candidate": "936149b91f57f6dbbdb43969c8843f940348a11e",
+  "framework": "58b7a0d9eb913b7656120693905d66d70ab208d8",
+  "cli": "rustify-docs 0.1.26\npanic: unwind\ngrammars: syntect-5.3.0+two-face-0.5.2+bat-0.26.1+fancy\nsource: 936149b91f57f6dbbdb43969c8843f940348a11e\n",
+  "productDiffFromCandidate": "",
+  "browser": "153.0.8010.12",
+  "targetFileSha256Final": "223431cc2750ac769b328994905eb2678889e9352e3f3a8e28f490c1ea5a893f",
+  "targetFileSha256Note": "targetFileSha256 is at capture start; final differs only by user confirmation appended to 变更记录. Normative sections and targetFingerprint unchanged."
+}

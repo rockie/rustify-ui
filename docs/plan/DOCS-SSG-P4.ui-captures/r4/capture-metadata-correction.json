@@ -1,0 +1,38 @@
+{
+  "at": "2026-10-16T04:55:09.665Z",
+  "reason": "Independent reviewer identified incorrect fallback URL classification for incremental AX frames; no product or image change",
+  "preservedOriginal": "native-captures.before-url-correction.json",
+  "preservedSha256": "31e4faf4b5c84c9ec7a0338963b8f9171b568a4c047dca1bb6841adc9493f3b7",
+  "changes": [
+    {
+      "file": "U4-Safari-04-maximized-home.jpg",
+      "before": "原生About对话框",
+      "after": "本帧AX增量未含完整URL；见原图与实际操作记录"
+    },
+    {
+      "file": "U4-Safari-05-search-idle.jpg",
+      "before": "原生About对话框",
+      "after": "本帧AX增量未含完整URL；见原图与实际操作记录"
+    },
+    {
+      "file": "U4-Safari-06-search-results.jpg",
+      "before": "原生About对话框",
+      "after": "本帧AX增量未含完整URL；见原图与实际操作记录"
+    },
+    {
+      "file": "U4-Safari-07-search-selected.jpg",
+      "before": "原生About对话框",
+      "after": "本帧AX增量未含完整URL；见原图与实际操作记录"
+    },
+    {
+      "file": "U4-Safari-08-search-destination.jpg",
+      "before": "原生About对话框",
+      "after": "本帧AX增量未含完整URL；见原图与实际操作记录"
+    },
+    {
+      "file": "U4-Safari-09-ready-selected.jpg",
+      "before": "原生About对话框",
+      "after": "本帧AX增量未含完整URL；见原图与实际操作记录"
+    }
+  ]
+}

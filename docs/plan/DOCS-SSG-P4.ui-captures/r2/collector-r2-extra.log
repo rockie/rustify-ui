@@ -1,0 +1,12 @@
+{"captured":"U1-more-20-focus-1280-light.png","url":"http://127.0.0.1:4205/rustify-ui/"}
+{"captured":"U1-more-40-focus-1280-light.png","url":"http://127.0.0.1:4205/rustify-ui/"}
+{"captured":"U1-more-60-focus-1280-light.png","url":"http://127.0.0.1:4205/rustify-ui/"}
+{"captured":"U1-more-80-focus-1280-light.png","url":"http://127.0.0.1:4205/rustify-ui/"}
+{"captured":"U1-more-98-focus-1280-light.png","url":"http://127.0.0.1:4205/rustify-ui/"}
+{"captured":"U1-more-final-keyboard-1280-light.png","url":"http://127.0.0.1:4205/rustify-ui/"}
+page.evaluate: Execution context was destroyed, most likely because of a navigation
+    at shot (/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOCS-SSG-P4.ui-captures/r2/capture-runner.cjs:74:35)
+    at main (/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOCS-SSG-P4.ui-captures/r2/capture-runner.cjs:98:329) {
+  log: [],
+  name: 'Error'
+}

@@ -1,0 +1,11 @@
+{
+  "observedAt": "2026-10-16T08:12:33.864Z",
+  "deviceModel": "iPhone 14 Pro",
+  "modelSource": "本轮CUA实际读取设置→通用→关于本机的型号名称；含序列号的整页未落盘",
+  "osVersion": "iOS 26.6.2",
+  "osSource": "本轮版本页面实拍",
+  "browser": "iOS系统Safari，独立Safari patch版本未读取",
+  "control": "本机iPhone Mirroring / CUA；真实设备",
+  "cssViewport": "未测量，不从镜像像素推算",
+  "softwareKeyboard": "本轮搜索仅显示输入工具栏；Eject/XF86Eject工具不支持，未取得完整软件键盘图"
+}

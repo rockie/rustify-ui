@@ -1,0 +1,58 @@
+{
+  "checkedAt": "2026-10-16T08:31:31.803741+00:00",
+  "checksAfterJudgesSaved": true,
+  "head": "93c4d101055f16c4493c15abde7b43141f1f8a47",
+  "trackedDiffSha256": "f826227f71ce67a5e4fcb9de710fb46974ff52dd58fd5e33a593b4b1f88ad67d",
+  "productDiffAgainstCandidate": "",
+  "untrackedProductPaths": "",
+  "cliVersion": "rustify-docs 0.1.27",
+  "artifacts": [
+    {
+      "name": "official/subpath",
+      "url": "http://127.0.0.1:4199/rustify-ui/rustify-docs-manifest.json",
+      "status": 200,
+      "sha256": "3d692f971105a13535a1a7f1c0edce9caaafd4db0cc75051a78cce63e3d22888",
+      "matchesBaseline": true,
+      "build_id": "dd5022c567200779",
+      "cli_version": "0.1.27"
+    },
+    {
+      "name": "search/subpath",
+      "url": "http://127.0.0.1:4205/rustify-ui/rustify-docs-manifest.json",
+      "status": 200,
+      "sha256": "1e337c0a1dd66e8c8d092ca032838eec3faff9348a985c55f0a62477150665a2",
+      "matchesBaseline": true,
+      "build_id": "176bea4ed7e4d96f",
+      "cli_version": "0.1.27"
+    }
+  ],
+  "restoredModule": {
+    "url": "http://127.0.0.1:4205/rustify-ui/assets/search.4879fcef9b.js",
+    "status": 200,
+    "sha256": "4879fcef9b8ec96cd0bc12ee699fcbbb0bd823e3f72d6289a810f3da853be15f",
+    "matchesOriginal": true
+  },
+  "isolatedProductCopy": {
+    "sourceFiles": 228,
+    "copyFiles": 228,
+    "missing": [],
+    "extra": [],
+    "changed": [],
+    "allByteIdentical": true
+  },
+  "preservedFiles": [
+    {
+      "path": "docs/plan/DOCS-SSG-P4.md",
+      "sha256": "4ec47edde1ede1fbcd5527a4df0db7d61261cc8d5422206ca94afa5d17b87871"
+    },
+    {
+      "path": "docs/plan/DOCS-SSG-P4.ui-target.md",
+      "sha256": "ed08081e68367b02d7ad695a041909e2c8ec26d78abe377376d1e1b0b7a6ad02"
+    },
+    {
+      "path": "docs/plan/DOCS-SSG-P4.ui-review.r4.md",
+      "sha256": "e35fd772ef2e270d59d7ba9b3d926458d72b7449c4ba224f83cde238dc47f137"
+    }
+  ],
+  "trackedDiffMatchesRoundStart": true
+}

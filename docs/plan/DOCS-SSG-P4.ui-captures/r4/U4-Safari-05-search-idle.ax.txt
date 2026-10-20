@@ -1,0 +1,9 @@
+The following is a diff from the previous accessibility tree for Window: "Rustify UI" with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+Removed element IDs: 6-15, 19-48, 91-93
++					91 container Search
++						92 文本 Search documentation
++						93 按钮 Close
++						94 组合框 (collapsed, settable) Search documentation, Secondary Actions: Expand
++						95 文本 Type a word to search this language’s documentation.
++						96 container (settable) Search results
+The focused UI element is 94 组合框 (collapsed, settable) Search documentation, Secondary Actions: Expand

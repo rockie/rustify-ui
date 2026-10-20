@@ -1,0 +1,360 @@
+{
+  "checks": 57,
+  "scans": 30,
+  "overflows": [],
+  "violations": [],
+  "incomplete": {
+    "color-contrast": 13,
+    "aria-required-children": 2,
+    "aria-valid-attr-value": 22
+  },
+  "errors": [],
+  "finishedAt": "2026-10-16T03:52:02.245Z",
+  "counts": {
+    "request": 361,
+    "http-error": 9,
+    "console:error": 9,
+    "requestfailed": 5
+  },
+  "consoleErrors": [
+    {
+      "text": "Failed to load resource: the server responded with a status of 503 (Service Unavailable)",
+      "url": "http://127.0.0.1:4205/rustify-ui/assets/search.4879fcef9b.js"
+    },
+    {
+      "text": "Failed to load resource: the server responded with a status of 503 (Service Unavailable)",
+      "url": "http://127.0.0.1:4205/rustify-ui/assets/search.4879fcef9b.js"
+    },
+    {
+      "text": "Failed to load resource: the server responded with a status of 503 (Service Unavailable)",
+      "url": "http://127.0.0.1:4205/rustify-ui/assets/search.4879fcef9b.js"
+    },
+    {
+      "text": "Failed to load resource: the server responded with a status of 503 (Service Unavailable)",
+      "url": "http://127.0.0.1:4205/rustify-ui/assets/search.4879fcef9b.js"
+    },
+    {
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "url": "http://127.0.0.1:4199/rustify-ui/zh/__ui_review_missing__/deep/"
+    },
+    {
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "url": "http://127.0.0.1:4199/rustify-ui/zh/__ui_review_missing__/deep/"
+    },
+    {
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "url": "http://127.0.0.1:4199/rustify-ui/zh/__ui_review_missing__/deep/"
+    },
+    {
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "url": "http://127.0.0.1:4199/rustify-ui/zh/__ui_review_missing__/deep/"
+    },
+    {
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "url": "http://127.0.0.1:4199/rustify-ui/zh/__ui_review_missing__/deep/"
+    }
+  ],
+  "requestFailed": [
+    {
+      "at": "2026-10-16T03:38:45.731Z",
+      "type": "requestfailed",
+      "url": "http://127.0.0.1:4205/rustify-ui/assets/search.4879fcef9b.js",
+      "error": {
+        "errorText": "net::ERR_ABORTED"
+      }
+    },
+    {
+      "at": "2026-10-16T03:38:48.263Z",
+      "type": "requestfailed",
+      "url": "http://127.0.0.1:4205/rustify-ui/assets/search.4879fcef9b.js",
+      "error": {
+        "errorText": "net::ERR_ABORTED"
+      }
+    },
+    {
+      "at": "2026-10-16T03:39:10.567Z",
+      "type": "requestfailed",
+      "url": "http://127.0.0.1:4205/rustify-ui/assets/search.4879fcef9b.js",
+      "error": {
+        "errorText": "net::ERR_ABORTED"
+      }
+    },
+    {
+      "at": "2026-10-16T03:40:21.993Z",
+      "type": "requestfailed",
+      "url": "http://127.0.0.1:4205/rustify-ui/assets/search.4879fcef9b.js",
+      "error": {
+        "errorText": "net::ERR_ABORTED"
+      }
+    },
+    {
+      "at": "2026-10-16T03:41:26.509Z",
+      "type": "requestfailed",
+      "url": "http://127.0.0.1:4205/rustify-ui/page-0002/",
+      "error": {
+        "errorText": "net::ERR_ABORTED"
+      }
+    }
+  ],
+  "httpErrors": [
+    {
+      "at": "2026-10-16T03:38:45.731Z",
+      "type": "http-error",
+      "url": "http://127.0.0.1:4205/rustify-ui/assets/search.4879fcef9b.js",
+      "status": 503
+    },
+    {
+      "at": "2026-10-16T03:38:48.262Z",
+      "type": "http-error",
+      "url": "http://127.0.0.1:4205/rustify-ui/assets/search.4879fcef9b.js",
+      "status": 503
+    },
+    {
+      "at": "2026-10-16T03:39:10.567Z",
+      "type": "http-error",
+      "url": "http://127.0.0.1:4205/rustify-ui/assets/search.4879fcef9b.js",
+      "status": 503
+    },
+    {
+      "at": "2026-10-16T03:40:21.993Z",
+      "type": "http-error",
+      "url": "http://127.0.0.1:4205/rustify-ui/assets/search.4879fcef9b.js",
+      "status": 503
+    },
+    {
+      "at": "2026-10-16T03:40:53.541Z",
+      "type": "http-error",
+      "url": "http://127.0.0.1:4199/rustify-ui/zh/__ui_review_missing__/deep/",
+      "status": 404
+    },
+    {
+      "at": "2026-10-16T03:40:54.890Z",
+      "type": "http-error",
+      "url": "http://127.0.0.1:4199/rustify-ui/zh/__ui_review_missing__/deep/",
+      "status": 404
+    },
+    {
+      "at": "2026-10-16T03:40:56.144Z",
+      "type": "http-error",
+      "url": "http://127.0.0.1:4199/rustify-ui/zh/__ui_review_missing__/deep/",
+      "status": 404
+    },
+    {
+      "at": "2026-10-16T03:42:03.744Z",
+      "type": "http-error",
+      "url": "http://127.0.0.1:4199/rustify-ui/zh/__ui_review_missing__/deep/",
+      "status": 404
+    },
+    {
+      "at": "2026-10-16T03:42:04.569Z",
+      "type": "http-error",
+      "url": "http://127.0.0.1:4199/rustify-ui/zh/__ui_review_missing__/deep/",
+      "status": 404
+    }
+  ],
+  "ui01": [
+    {
+      "label": "UI-01-before-keyboard-more",
+      "focus": {
+        "tag": "BUTTON",
+        "id": "",
+        "text": "Show more",
+        "outline": "rgb(23, 92, 211) solid 3px",
+        "visible": true
+      },
+      "dialog": {
+        "x": 352,
+        "y": 80,
+        "width": 576,
+        "height": 722,
+        "padding": "20px",
+        "maxWidth": "1248px",
+        "maxHeight": "868px",
+        "bg": "rgb(255, 255, 255)",
+        "foreground": "rgb(29, 41, 57)",
+        "border": "rgb(133, 143, 158)",
+        "radius": "6px",
+        "rootFont": "16px",
+        "optionCount": 20,
+        "selection": "rd-search-option-1-1-1",
+        "count": "98 results",
+        "list": {
+          "clientHeight": 495,
+          "scrollHeight": 2332,
+          "scrollTop": 0,
+          "overflowY": "auto",
+          "maxHeight": "495px"
+        }
+      }
+    },
+    {
+      "label": "UI-01-after-keyboard-more",
+      "focus": {
+        "tag": "BUTTON",
+        "id": "",
+        "text": "Show more",
+        "outline": "rgb(23, 92, 211) solid 3px",
+        "visible": true
+      },
+      "dialog": {
+        "x": 352,
+        "y": 80,
+        "width": 576,
+        "height": 722,
+        "padding": "20px",
+        "maxWidth": "1248px",
+        "maxHeight": "868px",
+        "bg": "rgb(255, 255, 255)",
+        "foreground": "rgb(29, 41, 57)",
+        "border": "rgb(133, 143, 158)",
+        "radius": "6px",
+        "rootFont": "16px",
+        "optionCount": 40,
+        "selection": "rd-search-option-1-1-1",
+        "count": "98 results",
+        "list": {
+          "clientHeight": 495,
+          "scrollHeight": 4668,
+          "scrollTop": 0,
+          "overflowY": "auto",
+          "maxHeight": "495px"
+        }
+      }
+    },
+    {
+      "label": "UI-01-second-enter",
+      "focus": {
+        "tag": "BUTTON",
+        "id": "",
+        "text": "Show more",
+        "outline": "rgb(23, 92, 211) solid 3px",
+        "visible": true
+      },
+      "dialog": {
+        "x": 352,
+        "y": 80,
+        "width": 576,
+        "height": 755,
+        "padding": "20px",
+        "maxWidth": "1248px",
+        "maxHeight": "868px",
+        "bg": "rgb(255, 255, 255)",
+        "foreground": "rgb(29, 41, 57)",
+        "border": "rgb(133, 143, 158)",
+        "radius": "6px",
+        "rootFont": "16px",
+        "optionCount": 40,
+        "selection": "rd-search-option-1-1-1",
+        "count": "98 results",
+        "list": {
+          "clientHeight": 495,
+          "scrollHeight": 4668,
+          "scrollTop": 0,
+          "overflowY": "auto",
+          "maxHeight": "495px"
+        }
+      }
+    }
+  ],
+  "notes": [
+    {
+      "label": "U3-fallback-1280-light",
+      "note": {
+        "text": "此页面尚未翻译。",
+        "bg": "rgb(242, 244, 247)",
+        "pageBg": "rgb(249, 250, 251)",
+        "codeBg": "#f2f4f7",
+        "font": "14px",
+        "padding": "12px 16px",
+        "lang": "zh"
+      }
+    },
+    {
+      "label": "U3-fallback-320-dark",
+      "note": {
+        "text": "此页面尚未翻译。",
+        "bg": "rgb(22, 27, 38)",
+        "pageBg": "rgb(12, 17, 29)",
+        "codeBg": "#161b26",
+        "font": "14px",
+        "padding": "12px 16px",
+        "lang": "zh"
+      }
+    }
+  ],
+  "widths": [
+    {
+      "label": "U1-results-1280-light",
+      "x": 352,
+      "width": 576
+    },
+    {
+      "label": "U1-results-1280-dark",
+      "x": 352,
+      "width": 576
+    },
+    {
+      "label": "U1-results-375-light",
+      "x": 16,
+      "width": 343
+    },
+    {
+      "label": "U1-results-375-dark",
+      "x": 16,
+      "width": 343
+    },
+    {
+      "label": "U1-results-320-light",
+      "x": 16,
+      "width": 288
+    },
+    {
+      "label": "U1-results-320-dark",
+      "x": 16,
+      "width": 288
+    }
+  ],
+  "flows": [
+    {
+      "label": "keyboard-retry-module-1280-dark",
+      "retryFocus": true,
+      "query": "CustomOnlyToken"
+    },
+    {
+      "label": "keyboard-retry-index-1280-dark",
+      "retryFocus": true,
+      "query": "CustomOnlyToken"
+    },
+    {
+      "label": "keyboard-retry-module-375-light",
+      "retryFocus": true,
+      "query": "CustomOnlyToken"
+    },
+    {
+      "label": "keyboard-retry-index-375-light",
+      "retryFocus": true,
+      "query": "CustomOnlyToken"
+    },
+    {
+      "label": "noscript-zh/quickstart/",
+      "disabled": true,
+      "noScript": [
+        "启用 JavaScript 后可搜索。你仍可通过导航链接阅读文档。"
+      ]
+    },
+    {
+      "label": "noscript-zh/__ui_review_missing__/deep/",
+      "disabled": true,
+      "noScript": [
+        "启用 JavaScript 后可搜索。你仍可通过导航链接阅读文档。"
+      ]
+    },
+    {
+      "label": "UI-01-show-more-focus"
+    },
+    {
+      "label": "zh-fallback-navigation"
+    }
+  ],
+  "motionAuto": 57
+}

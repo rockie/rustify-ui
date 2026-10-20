@@ -1,0 +1,5 @@
+The following is a diff from the previous accessibility tree for Window: "Architecture | Rustify UI" with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+~							337 开关按钮 跟随系统, Value: off
+~							339 开关按钮 深色, Value: on
+~			25 按钮 页面菜单, ID: AssistantButton
++			577 按钮 翻译可用, ID: TranslationButton

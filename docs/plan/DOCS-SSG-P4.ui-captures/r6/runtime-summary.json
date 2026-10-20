@@ -1,0 +1,115 @@
+{
+ "counts": {
+  "request": 323,
+  "http-error": 8,
+  "console": 8,
+  "requestfailed": 3
+ },
+ "consoleErrors": [
+  {
+   "at": "2026-10-16T08:59:26.302Z",
+   "type": "console",
+   "level": "error",
+   "text": "Failed to load resource: the server responded with a status of 503 (Service Unavailable)",
+   "location": {
+    "url": "http://127.0.0.1:4205/rustify-ui/assets/search.4879fcef9b.js",
+    "line": 0,
+    "column": 0,
+    "lineNumber": 0,
+    "columnNumber": 0
+   }
+  },
+  {
+   "at": "2026-10-16T08:59:28.889Z",
+   "type": "console",
+   "level": "error",
+   "text": "Failed to load resource: the server responded with a status of 503 (Service Unavailable)",
+   "location": {
+    "url": "http://127.0.0.1:4205/rustify-ui/assets/search.4879fcef9b.js",
+    "line": 0,
+    "column": 0,
+    "lineNumber": 0,
+    "columnNumber": 0
+   }
+  },
+  {
+   "at": "2026-10-16T08:59:53.180Z",
+   "type": "console",
+   "level": "error",
+   "text": "Failed to load resource: the server responded with a status of 503 (Service Unavailable)",
+   "location": {
+    "url": "http://127.0.0.1:4205/rustify-ui/assets/search.4879fcef9b.js",
+    "line": 0,
+    "column": 0,
+    "lineNumber": 0,
+    "columnNumber": 0
+   }
+  },
+  {
+   "at": "2026-10-16T09:00:18.469Z",
+   "type": "console",
+   "level": "error",
+   "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+   "location": {
+    "url": "http://127.0.0.1:4199/rustify-ui/zh/__ui_review_missing__/deep/",
+    "line": 0,
+    "column": 0,
+    "lineNumber": 0,
+    "columnNumber": 0
+   }
+  },
+  {
+   "at": "2026-10-16T09:00:19.845Z",
+   "type": "console",
+   "level": "error",
+   "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+   "location": {
+    "url": "http://127.0.0.1:4199/rustify-ui/zh/__ui_review_missing__/deep/",
+    "line": 0,
+    "column": 0,
+    "lineNumber": 0,
+    "columnNumber": 0
+   }
+  },
+  {
+   "at": "2026-10-16T09:00:21.104Z",
+   "type": "console",
+   "level": "error",
+   "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+   "location": {
+    "url": "http://127.0.0.1:4199/rustify-ui/zh/__ui_review_missing__/deep/",
+    "line": 0,
+    "column": 0,
+    "lineNumber": 0,
+    "columnNumber": 0
+   }
+  },
+  {
+   "at": "2026-10-16T09:01:28.560Z",
+   "type": "console",
+   "level": "error",
+   "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+   "location": {
+    "url": "http://127.0.0.1:4199/rustify-ui/zh/__ui_review_missing__/deep/",
+    "line": 0,
+    "column": 0,
+    "lineNumber": 0,
+    "columnNumber": 0
+   }
+  },
+  {
+   "at": "2026-10-16T09:01:29.435Z",
+   "type": "console",
+   "level": "error",
+   "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+   "location": {
+    "url": "http://127.0.0.1:4199/rustify-ui/zh/__ui_review_missing__/deep/",
+    "line": 0,
+    "column": 0,
+    "lineNumber": 0,
+    "columnNumber": 0
+   }
+  }
+ ],
+ "pageerrors": []
+}

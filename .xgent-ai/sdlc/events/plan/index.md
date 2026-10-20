@@ -17,6 +17,11 @@
 
 | f2f47f04-3082-4faf-96c8-48f1a319b6d4 | 子目录入口 | [f2f47f04-3082-4faf-96c8-48f1a319b6d4](f2f47f04-3082-4faf-96c8-48f1a319b6d4/index.md) |
 | e9817d55-60e7-4c8f-9abb-4793cc82d5f3 | 子目录入口 | [e9817d55-60e7-4c8f-9abb-4793cc82d5f3](e9817d55-60e7-4c8f-9abb-4793cc82d5f3/index.md) |
+
+| 607022f0-588c-4810-a08b-24b7be2dcc6f | DOCS-SSG-P3 事件 | [入口](607022f0-588c-4810-a08b-24b7be2dcc6f/index.md) |
+
 | f36dda5e-ce97-49af-926c-0146968daa01 | DOCS-SSG-P4 事件 | [入口](f36dda5e-ce97-49af-926c-0146968daa01/index.md) |
+
+| bf977834-399c-4b7d-b3e3-c7724c8d7cff | DOCS-SSG-P4-gaps 事件 | [入口](bf977834-399c-4b7d-b3e3-c7724c8d7cff/index.md) |
 
 维护约定：改变本层内容者同步索引；按稳定 ID/路径保留历史，无变化不重写，索引不作为事件。详见[目录索引维护](../../protocol.md#目录索引维护)。

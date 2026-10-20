@@ -1,0 +1,14 @@
+{
+  "reviewId": "8b66add8-79df-4310-9cea-02a428928dc7",
+  "eventId": "c7e72f78-9dcd-4338-889a-5797e25a4785",
+  "previousReview": "14f8fbe9-fef1-483e-86eb-47a0a8dec8df",
+  "followupId": "89f40275-bb51-44fa-a97e-87b0a1770dc2",
+  "now": "2026-10-16T11:56:43+08:00",
+  "reportHash": "sha256:8cb8124eaed37e317dbc2630191d45fe775119bf93ae9126012f4981b4736cb5",
+  "baseline": {
+    "head": "93c4d101055f16c4493c15abde7b43141f1f8a47",
+    "branch": "main",
+    "worktree": "dirty"
+  },
+  "correctionId": "77626acf-af77-4a87-a6c3-b593f0d6ad61"
+}

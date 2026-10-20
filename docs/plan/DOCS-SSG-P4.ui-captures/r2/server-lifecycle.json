@@ -1,0 +1,30 @@
+[
+  {
+    "port": 4199,
+    "pid": 79936,
+    "command": "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/p4/install-1bbc54b0/bin/rustify-docs preview --dir /Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/http/official/subpath/dist --port 4199",
+    "action": "SIGTERM",
+    "at": "2026-10-16T03:53:37.001Z"
+  },
+  {
+    "port": 4204,
+    "pid": 83599,
+    "command": "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/p4/install-1bbc54b0/bin/rustify-docs preview --dir /Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/http/search/root/dist --port 4204",
+    "action": "SIGTERM",
+    "at": "2026-10-16T03:53:37.157Z"
+  },
+  {
+    "port": 4205,
+    "pid": 80922,
+    "command": "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/p4/install-1bbc54b0/bin/rustify-docs preview --dir /Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/http/search/subpath/dist --port 4205",
+    "action": "SIGTERM",
+    "at": "2026-10-16T03:53:37.312Z"
+  },
+  {
+    "port": 4206,
+    "pid": 85296,
+    "command": "/Users/rockie/.nvm/versions/node/v26.1.0/bin/node /Users/rockie/Documents/gh-rockie/rustify-ui/tests/docs-ssg/static-host.mjs /Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/http/search/meta/dist 4206 /rustify-ui/",
+    "action": "SIGTERM",
+    "at": "2026-10-16T03:53:37.468Z"
+  }
+]

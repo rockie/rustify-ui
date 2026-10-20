@@ -1,0 +1,35 @@
+{
+  "mode": "manual",
+  "agents": [
+    "/root/judge_u1",
+    "/root/judge_u2",
+    "/root/judge_u3"
+  ],
+  "context": "fork_turns none; model and reasoning effort inherited without overrides; no child agents",
+  "whitelist": "Target normative sections and change log; unit current screenshot manifest, screenshots, operations; prior unit judge excerpt and raw judge, prior same-name screenshots. Excludes code, diff, fixes, full reports, machine output and threshold.",
+  "observed": [
+    {
+      "file": "judge-U1-a.md",
+      "sha256": "0ebf618195f4d554c672dccdd1a1325f3610a37b834068617e5a81756c930257"
+    },
+    {
+      "file": "judge-U2-a.md",
+      "sha256": "07612c11f13bc8e09d821a23c5690c739badd5d2f4273ff25108af4aa866a6cb"
+    },
+    {
+      "file": "judge-U2-a-supplement.md",
+      "sha256": "a2598a3da8dd81fe9988ddfe638ad579173b8d5f74c11632472ec233d30da5c7"
+    },
+    {
+      "file": "judge-U3-a.md",
+      "sha256": "baef6a51408efa32fea6ddba1e5732d74d33f9a5b73ff5749ccf9e98fba93edd"
+    },
+    {
+      "file": "judge.md",
+      "sha256": "968f118f01696cbeb05d8384dc5db028064b9f19ab7a2cbc84472032e77bbb63"
+    }
+  ],
+  "inspection": "U1 current38/prior28; U2 current23/prior23 including supplementary read; U3 current30/prior2; primary current91 all opened. Agent raw outputs include tool provenance.",
+  "confirmation": "No confirmation judge: full acceptance cannot pass due U4 missing; no borderline pass adjudication.",
+  "at": "2026-10-16T03:52:55.252Z"
+}

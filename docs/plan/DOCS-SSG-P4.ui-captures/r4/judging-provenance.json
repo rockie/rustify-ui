@@ -1,0 +1,16 @@
+{
+  "agent": "/root/judge_u4_native_r4",
+  "freshContext": true,
+  "readOnly": true,
+  "model": "inherited; resolved identifier not exposed",
+  "reasoningEffort": "inherited; resolved value not exposed",
+  "currentSafariImagesOpened": 36,
+  "deviceEnvironmentImagesOpened": 2,
+  "unit": "U4",
+  "unitScore": null,
+  "raw": "judge-U4-native.md",
+  "materials": "target package, current images/AX/capture/device access only",
+  "excluded": "code,diff,fix records,complete reports,machine results,threshold",
+  "primaryChangedScores": false,
+  "metadataCorrection": "Six displayedURL fallbacks corrected; originals and independent observation preserved"
+}

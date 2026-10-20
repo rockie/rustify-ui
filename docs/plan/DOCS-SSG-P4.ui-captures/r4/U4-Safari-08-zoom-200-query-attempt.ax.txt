@@ -1,0 +1,58 @@
+Window: "Quick start | Rustify UI", App: Safari浏览器.
+0 标准窗口 Quick start | Rustify UI, ID: SafariWindow?IsSecure=false&UUID=8B94E202-E355-455B-98DF-40C71253D736, Secondary Actions: Raise
+	1 分离组
+		2 分离器 (disabled, settable, float) -1
+		3 标签页组
+			4 滚动区
+				5 HTML内容 Description: Quick start | Rustify UI, URL: 127.0.0.1:4199/rustify-ui/quickstart/
+					6 container Search
+						7 文本 Search documentation
+						8 按钮 Close
+						9 组合框 (collapsed, settable) Search documentation, Value: NoSuchPhraseForUiReview, Secondary Actions: Expand
+							10 文本 (settable) NoSuchPhraseForUiReview
+						11 文本 Preparing search… You can keep typing.
+						12 container (settable) Search results
+				13 滚动条 (settable, float) 0.03963674
+	14 工具栏
+		15 container Secondary Actions: 移到上一项, 移到下一项, 从工具栏移除
+			16 按钮 Description: 显示边栏, ID: SidebarButton
+			17 菜单按钮 Description: 标签页组选择器, ID: TabGroupPickerButton?TabGroup=
+		18 container BackForwardSegmentedControl
+			19 按钮 Description: 返回, Help: 显示上一页, ID: BackButton
+			20 按钮 (disabled) Description: 前进, Help: 显示下一页, ID: ForwardButton
+		21 container Secondary Actions: 移到上一项, 移到下一项, 从工具栏移除
+			22 按钮 页面菜单, ID: AssistantButton
+			23 按钮 将页面添加到阅读列表, ID: OneStepBookmarkingButton
+			24 文本栏 (settable) Description: 智能搜索栏, Value: 127.0.0.1:4199/rustify-ui/quickstart/, ID: WEB_BROWSER_ADDRESS_AND_SEARCH_FIELD
+			25 按钮 翻译可用, ID: TranslationButton
+			26 按钮 重新加载此页面, ID: ReloadButton
+		27 按钮 Description: 共享, ID: ShareButton, Secondary Actions: 移到上一项, 移到下一项, 从工具栏移除
+		28 按钮 Description: 新建标签页, ID: NewTabButton, Secondary Actions: 移到上一项, 移到下一项, 从工具栏移除
+		29 按钮 Description: 标签页概览, ID: TabOverviewButton, Secondary Actions: 移到上一项, 从工具栏移除
+	30 标签页组 Description: 标签页栏，4个标签页, ID: TabBar?isSeparate=false
+		31 标签 Home | Home semantics, Value: off, Secondary Actions: 关闭标签页, ID: TabBarTab?isNarrow=false&isExpanded=false&tabCount=&isPinned=false&isCluster=false&clusterID=&isActive=false
+			32 图像 FaviconImageView
+			33 文本 Value: Home | Home semantics, ID: UnifiedTabBarButton._titleTextField
+		34 标签 Rustify UI, Value: off, Secondary Actions: 关闭标签页, ID: TabBarTab?isNarrow=false&isExpanded=false&tabCount=&isPinned=false&isCluster=false&clusterID=&isActive=false
+			35 图像 FaviconImageView
+			36 文本 Value: Rustify UI, ID: UnifiedTabBarButton._titleTextField
+		37 标签 Architecture | Rustify UI, Value: off, Secondary Actions: 关闭标签页, ID: TabBarTab?isNarrow=false&isExpanded=false&tabCount=&isPinned=false&isCluster=false&clusterID=&isActive=false
+			38 图像 FaviconImageView
+			39 文本 Value: Architecture | Rustify UI, ID: UnifiedTabBarButton._titleTextField
+		40 标签 Quick start | Rustify UI, Help: 若要与此按钮中的项目交互，请按下Control-Option-Shift-下箭头键。, Value: on, Secondary Actions: 关闭标签页, ID: TabBarTab?isNarrow=false&isExpanded=false&tabCount=&isPinned=false&isCluster=false&clusterID=&isActive=true
+			41 图像 FaviconImageView
+			42 文本 Value: Quick start | Rustify UI, ID: UnifiedTabBarButton._titleTextField
+	43 关闭按钮
+	44 全屏幕按钮 Help: 此按钮也可以执行缩放窗口的操作, Secondary Actions: 缩放窗口
+	45 最小化按钮
+46 menu bar
+	47 Safari浏览器
+	48 文件
+	49 编辑
+	50 显示, ID: SafariViewMenu
+	51 历史记录
+	52 书签, ID: SafariBookmarksMenu
+	53 窗口, ID: SafariWindowMenu
+	54 帮助, ID: SafariHelpMenu
+
+The focused UI element is 9 组合框 (collapsed, settable) Search documentation, Value: NoSuchPhraseForUiReview, Secondary Actions: Expand

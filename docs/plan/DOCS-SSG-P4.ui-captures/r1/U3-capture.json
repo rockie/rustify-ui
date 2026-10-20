@@ -1,0 +1,886 @@
+[
+  {
+    "unit": "U3",
+    "state": "en-home",
+    "file": "U3-en-home-1280-light.png",
+    "url": "http://127.0.0.1:4199/rustify-ui/",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "dpr": 1,
+    "theme": "light",
+    "at": "2026-10-16T02:20:02.898Z",
+    "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12",
+    "interception": "none",
+    "action": "从官方构建入口普通导航到页面，使用站内主题按钮设置主题。",
+    "observation": {
+      "title": "Rustify UI",
+      "htmlLang": "en",
+      "theme": "light",
+      "dialogOpen": false,
+      "dialogState": "closed",
+      "input": "",
+      "status": "Type a word to search this language’s documentation.",
+      "total": "",
+      "options": 0,
+      "focused": {
+        "tag": "BUTTON",
+        "id": "",
+        "text": "Light",
+        "searchInput": false
+      }
+    },
+    "sha256": "5ddd6da20adf9a3603392a58c3b3119ff5aa02cfaecd315f7ccdcc84db81663c"
+  },
+  {
+    "unit": "U3",
+    "state": "zh-home",
+    "file": "U3-zh-home-1280-light.png",
+    "url": "http://127.0.0.1:4199/rustify-ui/zh/",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "dpr": 1,
+    "theme": "light",
+    "at": "2026-10-16T02:20:03.591Z",
+    "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12",
+    "interception": "none",
+    "action": "从官方构建入口普通导航到页面，使用站内主题按钮设置主题。",
+    "observation": {
+      "title": "Rustify UI",
+      "htmlLang": "zh",
+      "theme": "light",
+      "dialogOpen": false,
+      "dialogState": "closed",
+      "input": "",
+      "status": "输入词语，搜索当前语言的文档。",
+      "total": "",
+      "options": 0,
+      "focused": {
+        "tag": "BUTTON",
+        "id": "",
+        "text": "浅色",
+        "searchInput": false
+      }
+    },
+    "sha256": "44f36a6235596d30b7091bc8b958de3e712285a1a39e99cf168d04c3dd69168b"
+  },
+  {
+    "unit": "U3",
+    "state": "zh-quickstart",
+    "file": "U3-zh-quickstart-1280-light.png",
+    "url": "http://127.0.0.1:4199/rustify-ui/zh/quickstart/",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "dpr": 1,
+    "theme": "light",
+    "at": "2026-10-16T02:20:04.303Z",
+    "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12",
+    "interception": "none",
+    "action": "从官方构建入口普通导航到页面，使用站内主题按钮设置主题。",
+    "observation": {
+      "title": "快速开始 | Rustify UI",
+      "htmlLang": "zh",
+      "theme": "light",
+      "dialogOpen": false,
+      "dialogState": "closed",
+      "input": "",
+      "status": "输入词语，搜索当前语言的文档。",
+      "total": "",
+      "options": 0,
+      "focused": {
+        "tag": "BUTTON",
+        "id": "",
+        "text": "浅色",
+        "searchInput": false
+      }
+    },
+    "sha256": "c4b401a093129466550422c8786f0899b1f17386686cc1ba34febf49b3b1ec78"
+  },
+  {
+    "unit": "U3",
+    "state": "en-home",
+    "file": "U3-en-home-1280-dark.png",
+    "url": "http://127.0.0.1:4199/rustify-ui/",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "dpr": 1,
+    "theme": "dark",
+    "at": "2026-10-16T02:20:04.972Z",
+    "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12",
+    "interception": "none",
+    "action": "从官方构建入口普通导航到页面，使用站内主题按钮设置主题。",
+    "observation": {
+      "title": "Rustify UI",
+      "htmlLang": "en",
+      "theme": "dark",
+      "dialogOpen": false,
+      "dialogState": "closed",
+      "input": "",
+      "status": "Type a word to search this language’s documentation.",
+      "total": "",
+      "options": 0,
+      "focused": {
+        "tag": "BUTTON",
+        "id": "",
+        "text": "Dark",
+        "searchInput": false
+      }
+    },
+    "sha256": "573d21d255b316bf75ea9005a8ad463919eb63750fb87f99122a4309f6f8ed9f"
+  },
+  {
+    "unit": "U3",
+    "state": "zh-home",
+    "file": "U3-zh-home-1280-dark.png",
+    "url": "http://127.0.0.1:4199/rustify-ui/zh/",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "dpr": 1,
+    "theme": "dark",
+    "at": "2026-10-16T02:20:05.659Z",
+    "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12",
+    "interception": "none",
+    "action": "从官方构建入口普通导航到页面，使用站内主题按钮设置主题。",
+    "observation": {
+      "title": "Rustify UI",
+      "htmlLang": "zh",
+      "theme": "dark",
+      "dialogOpen": false,
+      "dialogState": "closed",
+      "input": "",
+      "status": "输入词语，搜索当前语言的文档。",
+      "total": "",
+      "options": 0,
+      "focused": {
+        "tag": "BUTTON",
+        "id": "",
+        "text": "深色",
+        "searchInput": false
+      }
+    },
+    "sha256": "381fbbadc3199f1b08f52b4af97b1ec4e517e5196abaac2e293cf9a2c77dbb3c"
+  },
+  {
+    "unit": "U3",
+    "state": "zh-quickstart",
+    "file": "U3-zh-quickstart-1280-dark.png",
+    "url": "http://127.0.0.1:4199/rustify-ui/zh/quickstart/",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "dpr": 1,
+    "theme": "dark",
+    "at": "2026-10-16T02:20:06.346Z",
+    "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12",
+    "interception": "none",
+    "action": "从官方构建入口普通导航到页面，使用站内主题按钮设置主题。",
+    "observation": {
+      "title": "快速开始 | Rustify UI",
+      "htmlLang": "zh",
+      "theme": "dark",
+      "dialogOpen": false,
+      "dialogState": "closed",
+      "input": "",
+      "status": "输入词语，搜索当前语言的文档。",
+      "total": "",
+      "options": 0,
+      "focused": {
+        "tag": "BUTTON",
+        "id": "",
+        "text": "深色",
+        "searchInput": false
+      }
+    },
+    "sha256": "0596ca9ee4fa9904431f7dcafcef78baf9d5249d0aa7ea04cc71a549e723756e"
+  },
+  {
+    "unit": "U3",
+    "state": "en-home",
+    "file": "U3-en-home-375-light.png",
+    "url": "http://127.0.0.1:4199/rustify-ui/",
+    "viewport": {
+      "width": 375,
+      "height": 812
+    },
+    "dpr": 1,
+    "theme": "light",
+    "at": "2026-10-16T02:20:07.015Z",
+    "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12",
+    "interception": "none",
+    "action": "从官方构建入口普通导航到页面，使用站内主题按钮设置主题。",
+    "observation": {
+      "title": "Rustify UI",
+      "htmlLang": "en",
+      "theme": "light",
+      "dialogOpen": false,
+      "dialogState": "closed",
+      "input": "",
+      "status": "Type a word to search this language’s documentation.",
+      "total": "",
+      "options": 0,
+      "focused": {
+        "tag": "BUTTON",
+        "id": "",
+        "text": "Light",
+        "searchInput": false
+      }
+    },
+    "sha256": "88ff7b8fad4d8e790136c604e3fda969aa5d7f09d541e844d6a67ae6bb94fbe3"
+  },
+  {
+    "unit": "U3",
+    "state": "zh-home",
+    "file": "U3-zh-home-375-light.png",
+    "url": "http://127.0.0.1:4199/rustify-ui/zh/",
+    "viewport": {
+      "width": 375,
+      "height": 812
+    },
+    "dpr": 1,
+    "theme": "light",
+    "at": "2026-10-16T02:20:07.690Z",
+    "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12",
+    "interception": "none",
+    "action": "从官方构建入口普通导航到页面，使用站内主题按钮设置主题。",
+    "observation": {
+      "title": "Rustify UI",
+      "htmlLang": "zh",
+      "theme": "light",
+      "dialogOpen": false,
+      "dialogState": "closed",
+      "input": "",
+      "status": "输入词语，搜索当前语言的文档。",
+      "total": "",
+      "options": 0,
+      "focused": {
+        "tag": "BUTTON",
+        "id": "",
+        "text": "浅色",
+        "searchInput": false
+      }
+    },
+    "sha256": "1675e1046fc36952240b3fc52e833980c84ddee733ce03a63b893cf6c15d78cb"
+  },
+  {
+    "unit": "U3",
+    "state": "zh-quickstart",
+    "file": "U3-zh-quickstart-375-light.png",
+    "url": "http://127.0.0.1:4199/rustify-ui/zh/quickstart/",
+    "viewport": {
+      "width": 375,
+      "height": 812
+    },
+    "dpr": 1,
+    "theme": "light",
+    "at": "2026-10-16T02:20:08.371Z",
+    "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12",
+    "interception": "none",
+    "action": "从官方构建入口普通导航到页面，使用站内主题按钮设置主题。",
+    "observation": {
+      "title": "快速开始 | Rustify UI",
+      "htmlLang": "zh",
+      "theme": "light",
+      "dialogOpen": false,
+      "dialogState": "closed",
+      "input": "",
+      "status": "输入词语，搜索当前语言的文档。",
+      "total": "",
+      "options": 0,
+      "focused": {
+        "tag": "BUTTON",
+        "id": "",
+        "text": "浅色",
+        "searchInput": false
+      }
+    },
+    "sha256": "9b33795ca19f5eb65b97bfc0553ed3e03b1acc5480847146f6257ff3fbe999b2"
+  },
+  {
+    "unit": "U3",
+    "state": "en-home",
+    "file": "U3-en-home-375-dark.png",
+    "url": "http://127.0.0.1:4199/rustify-ui/",
+    "viewport": {
+      "width": 375,
+      "height": 812
+    },
+    "dpr": 1,
+    "theme": "dark",
+    "at": "2026-10-16T02:20:09.030Z",
+    "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12",
+    "interception": "none",
+    "action": "从官方构建入口普通导航到页面，使用站内主题按钮设置主题。",
+    "observation": {
+      "title": "Rustify UI",
+      "htmlLang": "en",
+      "theme": "dark",
+      "dialogOpen": false,
+      "dialogState": "closed",
+      "input": "",
+      "status": "Type a word to search this language’s documentation.",
+      "total": "",
+      "options": 0,
+      "focused": {
+        "tag": "BUTTON",
+        "id": "",
+        "text": "Dark",
+        "searchInput": false
+      }
+    },
+    "sha256": "c66fe7435ebb1417db46a8d1afb82912a2acd244c9144177c9c12f0f0816c8cf"
+  },
+  {
+    "unit": "U3",
+    "state": "zh-home",
+    "file": "U3-zh-home-375-dark.png",
+    "url": "http://127.0.0.1:4199/rustify-ui/zh/",
+    "viewport": {
+      "width": 375,
+      "height": 812
+    },
+    "dpr": 1,
+    "theme": "dark",
+    "at": "2026-10-16T02:20:09.686Z",
+    "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12",
+    "interception": "none",
+    "action": "从官方构建入口普通导航到页面，使用站内主题按钮设置主题。",
+    "observation": {
+      "title": "Rustify UI",
+      "htmlLang": "zh",
+      "theme": "dark",
+      "dialogOpen": false,
+      "dialogState": "closed",
+      "input": "",
+      "status": "输入词语，搜索当前语言的文档。",
+      "total": "",
+      "options": 0,
+      "focused": {
+        "tag": "BUTTON",
+        "id": "",
+        "text": "深色",
+        "searchInput": false
+      }
+    },
+    "sha256": "097ec11ca25622959a211afd0979ed686d51abb9a0dd8861671323f3f7a4719a"
+  },
+  {
+    "unit": "U3",
+    "state": "zh-quickstart",
+    "file": "U3-zh-quickstart-375-dark.png",
+    "url": "http://127.0.0.1:4199/rustify-ui/zh/quickstart/",
+    "viewport": {
+      "width": 375,
+      "height": 812
+    },
+    "dpr": 1,
+    "theme": "dark",
+    "at": "2026-10-16T02:20:10.364Z",
+    "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12",
+    "interception": "none",
+    "action": "从官方构建入口普通导航到页面，使用站内主题按钮设置主题。",
+    "observation": {
+      "title": "快速开始 | Rustify UI",
+      "htmlLang": "zh",
+      "theme": "dark",
+      "dialogOpen": false,
+      "dialogState": "closed",
+      "input": "",
+      "status": "输入词语，搜索当前语言的文档。",
+      "total": "",
+      "options": 0,
+      "focused": {
+        "tag": "BUTTON",
+        "id": "",
+        "text": "深色",
+        "searchInput": false
+      }
+    },
+    "sha256": "37cb09323edd4a155d9ea4e6c5874c14c6b3522086754d3dd1546c7b41aaf373"
+  },
+  {
+    "unit": "U3",
+    "state": "en-home",
+    "file": "U3-en-home-320-light.png",
+    "url": "http://127.0.0.1:4199/rustify-ui/",
+    "viewport": {
+      "width": 320,
+      "height": 812
+    },
+    "dpr": 1,
+    "theme": "light",
+    "at": "2026-10-16T02:20:11.021Z",
+    "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12",
+    "interception": "none",
+    "action": "从官方构建入口普通导航到页面，使用站内主题按钮设置主题。",
+    "observation": {
+      "title": "Rustify UI",
+      "htmlLang": "en",
+      "theme": "light",
+      "dialogOpen": false,
+      "dialogState": "closed",
+      "input": "",
+      "status": "Type a word to search this language’s documentation.",
+      "total": "",
+      "options": 0,
+      "focused": {
+        "tag": "BUTTON",
+        "id": "",
+        "text": "Light",
+        "searchInput": false
+      }
+    },
+    "sha256": "7ea7681ad096f8d337f9c495196d7d0fa8a333123f4abfded18ed4fbffade15f"
+  },
+  {
+    "unit": "U3",
+    "state": "zh-home",
+    "file": "U3-zh-home-320-light.png",
+    "url": "http://127.0.0.1:4199/rustify-ui/zh/",
+    "viewport": {
+      "width": 320,
+      "height": 812
+    },
+    "dpr": 1,
+    "theme": "light",
+    "at": "2026-10-16T02:20:11.697Z",
+    "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12",
+    "interception": "none",
+    "action": "从官方构建入口普通导航到页面，使用站内主题按钮设置主题。",
+    "observation": {
+      "title": "Rustify UI",
+      "htmlLang": "zh",
+      "theme": "light",
+      "dialogOpen": false,
+      "dialogState": "closed",
+      "input": "",
+      "status": "输入词语，搜索当前语言的文档。",
+      "total": "",
+      "options": 0,
+      "focused": {
+        "tag": "BUTTON",
+        "id": "",
+        "text": "浅色",
+        "searchInput": false
+      }
+    },
+    "sha256": "610e51393398afcefb25368c18a3eaa2292835869d83fa0dba7f8363cca26a61"
+  },
+  {
+    "unit": "U3",
+    "state": "zh-quickstart",
+    "file": "U3-zh-quickstart-320-light.png",
+    "url": "http://127.0.0.1:4199/rustify-ui/zh/quickstart/",
+    "viewport": {
+      "width": 320,
+      "height": 812
+    },
+    "dpr": 1,
+    "theme": "light",
+    "at": "2026-10-16T02:20:12.377Z",
+    "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12",
+    "interception": "none",
+    "action": "从官方构建入口普通导航到页面，使用站内主题按钮设置主题。",
+    "observation": {
+      "title": "快速开始 | Rustify UI",
+      "htmlLang": "zh",
+      "theme": "light",
+      "dialogOpen": false,
+      "dialogState": "closed",
+      "input": "",
+      "status": "输入词语，搜索当前语言的文档。",
+      "total": "",
+      "options": 0,
+      "focused": {
+        "tag": "BUTTON",
+        "id": "",
+        "text": "浅色",
+        "searchInput": false
+      }
+    },
+    "sha256": "3f8e4fdfdd1eba6280397c0d66cdd9cf01b51239ab61c182b8930df7af13f0cb"
+  },
+  {
+    "unit": "U3",
+    "state": "en-home",
+    "file": "U3-en-home-320-dark.png",
+    "url": "http://127.0.0.1:4199/rustify-ui/",
+    "viewport": {
+      "width": 320,
+      "height": 812
+    },
+    "dpr": 1,
+    "theme": "dark",
+    "at": "2026-10-16T02:20:13.027Z",
+    "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12",
+    "interception": "none",
+    "action": "从官方构建入口普通导航到页面，使用站内主题按钮设置主题。",
+    "observation": {
+      "title": "Rustify UI",
+      "htmlLang": "en",
+      "theme": "dark",
+      "dialogOpen": false,
+      "dialogState": "closed",
+      "input": "",
+      "status": "Type a word to search this language’s documentation.",
+      "total": "",
+      "options": 0,
+      "focused": {
+        "tag": "BUTTON",
+        "id": "",
+        "text": "Dark",
+        "searchInput": false
+      }
+    },
+    "sha256": "2bb3f6fe1ca6f3ce0d4b6ab942ee40da6a5a2503060f60f6e7869cccc924c3f9"
+  },
+  {
+    "unit": "U3",
+    "state": "zh-home",
+    "file": "U3-zh-home-320-dark.png",
+    "url": "http://127.0.0.1:4199/rustify-ui/zh/",
+    "viewport": {
+      "width": 320,
+      "height": 812
+    },
+    "dpr": 1,
+    "theme": "dark",
+    "at": "2026-10-16T02:20:13.669Z",
+    "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12",
+    "interception": "none",
+    "action": "从官方构建入口普通导航到页面，使用站内主题按钮设置主题。",
+    "observation": {
+      "title": "Rustify UI",
+      "htmlLang": "zh",
+      "theme": "dark",
+      "dialogOpen": false,
+      "dialogState": "closed",
+      "input": "",
+      "status": "输入词语，搜索当前语言的文档。",
+      "total": "",
+      "options": 0,
+      "focused": {
+        "tag": "BUTTON",
+        "id": "",
+        "text": "深色",
+        "searchInput": false
+      }
+    },
+    "sha256": "82d577908560e99356e771f2abce6ebd3a2571f5489263a3dda2c3e423b5b20e"
+  },
+  {
+    "unit": "U3",
+    "state": "zh-quickstart",
+    "file": "U3-zh-quickstart-320-dark.png",
+    "url": "http://127.0.0.1:4199/rustify-ui/zh/quickstart/",
+    "viewport": {
+      "width": 320,
+      "height": 812
+    },
+    "dpr": 1,
+    "theme": "dark",
+    "at": "2026-10-16T02:20:14.337Z",
+    "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12",
+    "interception": "none",
+    "action": "从官方构建入口普通导航到页面，使用站内主题按钮设置主题。",
+    "observation": {
+      "title": "快速开始 | Rustify UI",
+      "htmlLang": "zh",
+      "theme": "dark",
+      "dialogOpen": false,
+      "dialogState": "closed",
+      "input": "",
+      "status": "输入词语，搜索当前语言的文档。",
+      "total": "",
+      "options": 0,
+      "focused": {
+        "tag": "BUTTON",
+        "id": "",
+        "text": "深色",
+        "searchInput": false
+      }
+    },
+    "sha256": "f6ea0ca6b0f967ee09281f568ec5ce10efe1b18479ff381feb9ca9c03f48ffb5"
+  },
+  {
+    "unit": "U3",
+    "state": "fallback",
+    "file": "U3-fallback-1280-light.png",
+    "url": "http://127.0.0.1:4199/rustify-ui/zh/architecture/",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "dpr": 1,
+    "theme": "light",
+    "at": "2026-10-16T02:20:15.054Z",
+    "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12",
+    "interception": "none",
+    "action": "普通导航到中文缺译 architecture 页。",
+    "observation": {
+      "title": "Architecture | Rustify UI",
+      "htmlLang": "zh",
+      "theme": "light",
+      "dialogOpen": false,
+      "dialogState": "closed",
+      "input": "",
+      "status": "输入词语，搜索当前语言的文档。",
+      "total": "",
+      "options": 0,
+      "focused": {
+        "tag": "BUTTON",
+        "id": "",
+        "text": "浅色",
+        "searchInput": false
+      }
+    },
+    "sha256": "d17627032eea900a598c435a4fcb26527d43a8332d9db933e43d4b642134abb8"
+  },
+  {
+    "unit": "U3",
+    "state": "404-search",
+    "file": "U3-404-search-1280-light.png",
+    "url": "http://127.0.0.1:4199/rustify-ui/zh/__ui_review_missing__/deep/",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "dpr": 1,
+    "theme": "light",
+    "at": "2026-10-16T02:20:15.782Z",
+    "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12",
+    "interception": "none",
+    "action": "访问中文不存在的深路径，点击搜索并输入快速开始，显示真实官方站中文结果。",
+    "observation": {
+      "title": "页面不存在 | Rustify UI",
+      "htmlLang": "zh",
+      "theme": "light",
+      "dialogOpen": true,
+      "dialogState": "results",
+      "input": "快速开始",
+      "status": "",
+      "total": "2 个结果",
+      "options": 2,
+      "focused": {
+        "tag": "INPUT",
+        "id": "rd-search-input",
+        "text": "",
+        "searchInput": true
+      }
+    },
+    "sha256": "93c28e494535a133848898eba102e4e7484339eeabacc06adfdeec5f9fd5b3e2"
+  },
+  {
+    "unit": "U3",
+    "state": "fallback",
+    "file": "U3-fallback-320-dark.png",
+    "url": "http://127.0.0.1:4199/rustify-ui/zh/architecture/",
+    "viewport": {
+      "width": 320,
+      "height": 812
+    },
+    "dpr": 1,
+    "theme": "dark",
+    "at": "2026-10-16T02:20:16.453Z",
+    "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12",
+    "interception": "none",
+    "action": "普通导航到中文缺译 architecture 页。",
+    "observation": {
+      "title": "Architecture | Rustify UI",
+      "htmlLang": "zh",
+      "theme": "dark",
+      "dialogOpen": false,
+      "dialogState": "closed",
+      "input": "",
+      "status": "输入词语，搜索当前语言的文档。",
+      "total": "",
+      "options": 0,
+      "focused": {
+        "tag": "BUTTON",
+        "id": "",
+        "text": "深色",
+        "searchInput": false
+      }
+    },
+    "sha256": "a030ac3af1202dbb9367cbf072395fa7106fd76ba95ba6380930df68b4cb01bd"
+  },
+  {
+    "unit": "U3",
+    "state": "404-search",
+    "file": "U3-404-search-320-dark.png",
+    "url": "http://127.0.0.1:4199/rustify-ui/zh/__ui_review_missing__/deep/",
+    "viewport": {
+      "width": 320,
+      "height": 812
+    },
+    "dpr": 1,
+    "theme": "dark",
+    "at": "2026-10-16T02:20:17.148Z",
+    "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12",
+    "interception": "none",
+    "action": "访问中文不存在的深路径，点击搜索并输入快速开始，显示真实官方站中文结果。",
+    "observation": {
+      "title": "页面不存在 | Rustify UI",
+      "htmlLang": "zh",
+      "theme": "dark",
+      "dialogOpen": true,
+      "dialogState": "results",
+      "input": "快速开始",
+      "status": "",
+      "total": "2 个结果",
+      "options": 2,
+      "focused": {
+        "tag": "INPUT",
+        "id": "rd-search-input",
+        "text": "",
+        "searchInput": true
+      }
+    },
+    "sha256": "0ff5b9a7dc5c37c8e88bbf6860f41349b5ffb8424c2b0d476c15a4297f2fa196"
+  },
+  {
+    "unit": "U3",
+    "state": "noscript-quickstart",
+    "file": "U3-noscript-quickstart-375-light.png",
+    "url": "http://127.0.0.1:4199/rustify-ui/zh/quickstart/",
+    "viewport": {
+      "width": 375,
+      "height": 812
+    },
+    "dpr": 1,
+    "theme": "light",
+    "at": "2026-10-16T02:23:07.220Z",
+    "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12",
+    "interception": "browser JavaScript disabled",
+    "action": "新建禁用 JavaScript 的浏览器上下文，普通打开页面；未改界面代码。",
+    "observation": {
+      "title": "快速开始 | Rustify UI",
+      "htmlLang": "zh",
+      "theme": "system",
+      "dialogOpen": false,
+      "dialogState": "closed",
+      "input": "",
+      "status": "输入词语，搜索当前语言的文档。",
+      "total": "",
+      "options": 0,
+      "focused": {
+        "tag": "BODY",
+        "id": "",
+        "text": "跳到正文Rustify UIGitHub 源码搜索Ctrl / Cmd K中文English中文跟随系统浅色深色GitHub 源码指南快速开始ArchitectureNavigationWorkspa",
+        "searchInput": false
+      }
+    },
+    "sha256": "dd3f469677d2f53ab17a23c08e09f9252fefaa3e742589652ec266bec0e9b01c"
+  },
+  {
+    "unit": "U3",
+    "state": "noscript-404",
+    "file": "U3-noscript-404-375-light.png",
+    "url": "http://127.0.0.1:4199/rustify-ui/zh/__ui_review_missing__/deep/",
+    "viewport": {
+      "width": 375,
+      "height": 812
+    },
+    "dpr": 1,
+    "theme": "light",
+    "at": "2026-10-16T02:23:07.798Z",
+    "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12",
+    "interception": "browser JavaScript disabled",
+    "action": "新建禁用 JavaScript 的浏览器上下文，普通打开页面；未改界面代码。",
+    "observation": {
+      "title": "页面不存在 | Rustify UI",
+      "htmlLang": "zh",
+      "theme": "system",
+      "dialogOpen": false,
+      "dialogState": "closed",
+      "input": "",
+      "status": "输入词语，搜索当前语言的文档。",
+      "total": "",
+      "options": 0,
+      "focused": {
+        "tag": "BODY",
+        "id": "",
+        "text": "跳到正文Rustify UIGitHub 源码搜索Ctrl / Cmd K跟随系统浅色深色GitHub 源码指南快速开始ArchitectureNavigationWorkspaceFormsLang",
+        "searchInput": false
+      }
+    },
+    "sha256": "d3ddf086c870865466f56d254cef733275a234e606056c5dcbb050994fe51d68"
+  },
+  {
+    "unit": "U3",
+    "state": "language-open",
+    "file": "U3-language-open-375-light.png",
+    "url": "http://127.0.0.1:4199/rustify-ui/zh/quickstart/",
+    "viewport": {
+      "width": 375,
+      "height": 812
+    },
+    "dpr": 1,
+    "theme": "light",
+    "at": "2026-10-16T02:23:08.549Z",
+    "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12",
+    "interception": "none",
+    "action": "点击中文 quickstart 页的语言菜单 summary。",
+    "observation": {
+      "title": "快速开始 | Rustify UI",
+      "htmlLang": "zh",
+      "theme": "light",
+      "dialogOpen": false,
+      "dialogState": "closed",
+      "input": "",
+      "status": "输入词语，搜索当前语言的文档。",
+      "total": "",
+      "options": 0,
+      "focused": {
+        "tag": "SUMMARY",
+        "id": "",
+        "text": "中文",
+        "searchInput": false
+      }
+    },
+    "sha256": "adab17465358c770bd109233326a03de31437b2dca9b7f8d18a95fdb791ec9e2"
+  },
+  {
+    "unit": "U3",
+    "state": "navigation-open",
+    "file": "U3-navigation-open-375-light.png",
+    "url": "http://127.0.0.1:4199/rustify-ui/zh/quickstart/",
+    "viewport": {
+      "width": 375,
+      "height": 812
+    },
+    "dpr": 1,
+    "theme": "light",
+    "at": "2026-10-16T02:23:08.646Z",
+    "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12",
+    "interception": "none",
+    "action": "真实按 Escape 关闭语言菜单，再点击窄屏导航 summary。",
+    "observation": {
+      "title": "快速开始 | Rustify UI",
+      "htmlLang": "zh",
+      "theme": "light",
+      "dialogOpen": false,
+      "dialogState": "closed",
+      "input": "",
+      "status": "输入词语，搜索当前语言的文档。",
+      "total": "",
+      "options": 0,
+      "focused": {
+        "tag": "SUMMARY",
+        "id": "",
+        "text": "菜单",
+        "searchInput": false
+      }
+    },
+    "sha256": "eaddf433f42f81be93c55ce7f1e41817f2a340216e50631925c123005ac0fd86"
+  }
+]

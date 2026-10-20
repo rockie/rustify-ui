@@ -1,0 +1,15 @@
+{
+  "at": "2026-10-16T05:01:41.959Z",
+  "phase": "post-judge corroboration of identical file-withholding condition; not a Safari network log",
+  "missing": {
+    "status": 404,
+    "contentType": "text/html; charset=utf-8",
+    "bytes": 45579
+  },
+  "restored": {
+    "status": 200,
+    "sha256": "4879fcef9b8ec96cd0bc12ee699fcbbb0bd823e3f72d6289a810f3da853be15f",
+    "expectedSha256": "4879fcef9b8ec96cd0bc12ee699fcbbb0bd823e3f72d6289a810f3da853be15f"
+  },
+  "serverLog": "preview: http://127.0.0.1:4205/rustify-ui/\nserving /Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-ssg/ui-review-r4/search (built by rustify-docs 0.1.27, build 176bea4ed7e4d96f) until stopped\n"
+}

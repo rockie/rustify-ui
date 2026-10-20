@@ -1,0 +1,123 @@
+Window: "页面不存在 | Rustify UI", App: Safari浏览器.
+0 标准窗口 页面不存在 | Rustify UI, ID: SafariWindow?IsSecure=false&UUID=8B94E202-E355-455B-98DF-40C71253D736, Secondary Actions: Raise
+	1 分离组
+		2 分离器 (disabled, settable, float) -1
+		3 标签页组
+			4 滚动区
+				5 HTML内容 Description: 页面不存在 | Rustify UI, URL: 127.0.0.1:4199/rustify-ui/zh/__native_r4_missing__/deep/
+					6 link 跳到正文, Value: 127.0.0.1:4199/rustify-ui/zh/__native_r4_missing__/deep/#content
+					7 container
+						8 link Rustify UI, Value: 127.0.0.1:4199/rustify-ui/zh/
+						9 container 站点链接
+							10 内容列表
+								11 link GitHub 源码, Value: github.com/rockie/rustify-ui
+						12 弹出式按钮 搜索 Ctrl / Cmd K
+						13 container 主题
+							14 开关按钮 跟随系统, Value: off
+							15 开关按钮 浅色, Value: off
+							16 开关按钮 深色, Value: on
+					17 container 菜单
+						18 标题 指南, Value: 2
+							19 文本 指南
+						20 内容列表
+							21 link 快速开始, Value: 127.0.0.1:4199/rustify-ui/zh/quickstart/
+							22 link Architecture, Value: 127.0.0.1:4199/rustify-ui/zh/architecture/
+							23 link Navigation, Value: 127.0.0.1:4199/rustify-ui/zh/navigation/
+							24 link Workspace, Value: 127.0.0.1:4199/rustify-ui/zh/workspace/
+							25 link Forms, Value: 127.0.0.1:4199/rustify-ui/zh/forms/
+							26 link Languages, formatting and text, Value: 127.0.0.1:4199/rustify-ui/zh/i18n/
+							27 link Data larger than the screen, Value: 127.0.0.1:4199/rustify-ui/zh/data/
+							28 link Theme documents, Value: 127.0.0.1:4199/rustify-ui/zh/themes/
+							29 link Runtime utilities, Value: 127.0.0.1:4199/rustify-ui/zh/utility/
+							30 link Compatibility and capability boundaries (P1 research preview), Value: 127.0.0.1:4199/rustify-ui/zh/compatibility/
+							31 link Component catalogue, Value: 127.0.0.1:4199/rustify-ui/zh/components/
+							32 link Vellum example and framework capabilities, Value: 127.0.0.1:4199/rustify-ui/zh/vellum/
+						33 标题 组件, Value: 2
+							34 文本 组件
+						35 内容列表
+							36 link Button, Value: 127.0.0.1:4199/rustify-ui/zh/components/button/
+							37 link Label, Value: 127.0.0.1:4199/rustify-ui/zh/components/label/
+							38 link Link, Value: 127.0.0.1:4199/rustify-ui/zh/components/link/
+							39 link Icon, Value: 127.0.0.1:4199/rustify-ui/zh/components/icon/
+							40 link Text field, Value: 127.0.0.1:4199/rustify-ui/zh/components/text-field/
+							41 link Text area, Value: 127.0.0.1:4199/rustify-ui/zh/components/text-area/
+							42 link Checkbox, Value: 127.0.0.1:4199/rustify-ui/zh/components/checkbox/
+							43 link Radio, Value: 127.0.0.1:4199/rustify-ui/zh/components/radio/
+							44 link Switch, Value: 127.0.0.1:4199/rustify-ui/zh/components/switch/
+							45 link Select, Value: 127.0.0.1:4199/rustify-ui/zh/components/select/
+							46 link Slider, Value: 127.0.0.1:4199/rustify-ui/zh/components/slider/
+							47 link Progress, Value: 127.0.0.1:4199/rustify-ui/zh/components/progress/
+							48 link Loading, Value: 127.0.0.1:4199/rustify-ui/zh/components/loading/
+							49 link Tooltip, Value: 127.0.0.1:4199/rustify-ui/zh/components/tooltip/
+							50 link Menu, Value: 127.0.0.1:4199/rustify-ui/zh/components/menu/
+							51 link Dialog, Value: 127.0.0.1:4199/rustify-ui/zh/components/dialog/
+							52 link Tabs, Value: 127.0.0.1:4199/rustify-ui/zh/components/tabs/
+							53 link Scroll area, Value: 127.0.0.1:4199/rustify-ui/zh/components/scroll-area/
+							54 link Data table, Value: 127.0.0.1:4199/rustify-ui/zh/components/data-table/
+							55 link Tree, Value: 127.0.0.1:4199/rustify-ui/zh/components/tree/
+							56 link Toast, Value: 127.0.0.1:4199/rustify-ui/zh/components/toast/
+							57 link Number field, Value: 127.0.0.1:4199/rustify-ui/zh/components/number-field/
+							58 link Color field, Value: 127.0.0.1:4199/rustify-ui/zh/components/color-field/
+							59 link Toggle group, Value: 127.0.0.1:4199/rustify-ui/zh/components/toggle-group/
+					60 container
+						61 标题 页面不存在, Value: 1
+							62 文本 页面不存在
+						63 文本 这个地址没有页面。
+						64 link 返回首页, Value: 127.0.0.1:4199/rustify-ui/zh/
+						65 container 可用语言
+							66 文本 可用语言
+							67 内容列表
+								68 container
+									69 列表刻度 •
+									70 link English, Value: 127.0.0.1:4199/rustify-ui/
+								71 container
+									72 列表刻度 •
+									73 link 中文, Value: 127.0.0.1:4199/rustify-ui/zh/
+					74 container 页脚导航
+						75 link 返回首页, Value: 127.0.0.1:4199/rustify-ui/zh/
+				76 滚动条 (settable, float) 0
+	77 工具栏
+		78 container Secondary Actions: 移到上一项, 移到下一项, 从工具栏移除
+			79 按钮 Description: 显示边栏, ID: SidebarButton
+			80 菜单按钮 Description: 标签页组选择器, ID: TabGroupPickerButton?TabGroup=
+		81 container BackForwardSegmentedControl
+			82 按钮 Description: 返回, Help: 显示上一页, ID: BackButton
+			83 按钮 (disabled) Description: 前进, Help: 显示下一页, ID: ForwardButton
+		84 container Secondary Actions: 移到上一项, 移到下一项, 从工具栏移除
+			85 按钮 页面菜单，翻译可用, ID: AssistantButton
+			86 按钮 将页面添加到阅读列表, ID: OneStepBookmarkingButton
+			87 文本栏 (settable) Description: 智能搜索栏, Value: 127.0.0.1:4199/rustify-ui/zh/__native_r4_missing__/deep/, ID: WEB_BROWSER_ADDRESS_AND_SEARCH_FIELD
+			88 按钮 重新加载此页面, ID: ReloadButton
+		89 按钮 Description: 共享, ID: ShareButton, Secondary Actions: 移到上一项, 移到下一项, 从工具栏移除
+		90 按钮 Description: 新建标签页, ID: NewTabButton, Secondary Actions: 移到上一项, 移到下一项, 从工具栏移除
+		91 按钮 Description: 标签页概览, ID: TabOverviewButton, Secondary Actions: 移到上一项, 从工具栏移除
+	92 标签页组 Description: 标签页栏，5个标签页, ID: TabBar?isSeparate=false
+		93 标签 Home | Home semantics, Value: off, Secondary Actions: 关闭标签页, ID: TabBarTab?isNarrow=false&isExpanded=false&tabCount=&isPinned=false&isCluster=false&clusterID=&isActive=false
+			94 图像 FaviconImageView
+			95 文本 Value: Home | Home semantics, ID: UnifiedTabBarButton._titleTextField
+		96 标签 Rustify UI, Value: off, Secondary Actions: 关闭标签页, ID: TabBarTab?isNarrow=false&isExpanded=false&tabCount=&isPinned=false&isCluster=false&clusterID=&isActive=false
+			97 图像 FaviconImageView
+			98 文本 Value: Rustify UI, ID: UnifiedTabBarButton._titleTextField
+		99 标签 Architecture | Rustify UI, Value: off, Secondary Actions: 关闭标签页, ID: TabBarTab?isNarrow=false&isExpanded=false&tabCount=&isPinned=false&isCluster=false&clusterID=&isActive=false
+			100 图像 FaviconImageView
+			101 文本 Value: Architecture | Rustify UI, ID: UnifiedTabBarButton._titleTextField
+		102 标签 Quick start | Rustify UI, Value: off, Secondary Actions: 关闭标签页, ID: TabBarTab?isNarrow=false&isExpanded=false&tabCount=&isPinned=false&isCluster=false&clusterID=&isActive=false
+			103 图像 FaviconImageView
+			104 文本 Value: Quick start | Rustify UI, ID: UnifiedTabBarButton._titleTextField
+		105 标签 页面不存在 | Rustify UI, Help: 若要与此按钮中的项目交互，请按下Control-Option-Shift-下箭头键。, Value: on, Secondary Actions: 关闭标签页, ID: TabBarTab?isNarrow=false&isExpanded=false&tabCount=&isPinned=false&isCluster=false&clusterID=&isActive=true
+			106 图像 FaviconImageView
+			107 文本 Value: 页面不存在 | Rustify UI, ID: UnifiedTabBarButton._titleTextField
+	108 关闭按钮
+	109 全屏幕按钮 Help: 此按钮也可以执行缩放窗口的操作, Secondary Actions: 缩放窗口
+	110 最小化按钮
+111 menu bar
+	112 Safari浏览器
+	113 文件
+	114 编辑
+	115 显示, ID: SafariViewMenu
+	116 历史记录
+	117 书签, ID: SafariBookmarksMenu
+	118 窗口, ID: SafariWindowMenu
+	119 帮助, ID: SafariHelpMenu
+
+The focused UI element is 5 HTML内容 Description: 页面不存在 | Rustify UI, URL: 127.0.0.1:4199/rustify-ui/zh/__native_r4_missing__/deep/

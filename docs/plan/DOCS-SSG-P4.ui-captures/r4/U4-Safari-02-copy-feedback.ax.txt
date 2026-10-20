@@ -1,0 +1,324 @@
+Window: "Quick start | Rustify UI", App: Safari浏览器.
+0 标准窗口 Quick start | Rustify UI, ID: SafariWindow?IsSecure=false&UUID=8B94E202-E355-455B-98DF-40C71253D736, Secondary Actions: Raise
+	1 分离组
+		2 分离器 (disabled, settable, float) -1
+		3 标签页组
+			4 滚动区
+				5 HTML内容 Description: Quick start | Rustify UI, URL: 127.0.0.1:4199/rustify-ui/quickstart/
+					6 link Skip to content, Value: 127.0.0.1:4199/rustify-ui/quickstart/#content
+					7 container
+						8 link Rustify UI, Value: 127.0.0.1:4199/rustify-ui/
+						9 container Site links
+							10 内容列表
+								11 link GitHub, Value: github.com/rockie/rustify-ui
+						12 弹出式按钮 Search Ctrl / Cmd K
+						13 摘要 English, Value: off
+							14 文本 English
+						15 container Theme
+							16 开关按钮 System, Value: on
+							17 开关按钮 Light, Value: off
+							18 开关按钮 Dark, Value: off
+					19 container Menu
+						20 标题 Guides, Value: 2
+							21 文本 Guides
+						22 内容列表
+							23 link Quick start, Value: 127.0.0.1:4199/rustify-ui/quickstart/
+							24 link Architecture, Value: 127.0.0.1:4199/rustify-ui/architecture/
+							25 link Navigation, Value: 127.0.0.1:4199/rustify-ui/navigation/
+							26 link Workspace, Value: 127.0.0.1:4199/rustify-ui/workspace/
+							27 link Forms, Value: 127.0.0.1:4199/rustify-ui/forms/
+							28 link Languages, formatting and text, Value: 127.0.0.1:4199/rustify-ui/i18n/
+							29 link Data larger than the screen, Value: 127.0.0.1:4199/rustify-ui/data/
+							30 link Theme documents, Value: 127.0.0.1:4199/rustify-ui/themes/
+							31 link Runtime utilities, Value: 127.0.0.1:4199/rustify-ui/utility/
+							32 link Compatibility and capability boundaries (P1 research preview), Value: 127.0.0.1:4199/rustify-ui/compatibility/
+							33 link Component catalogue, Value: 127.0.0.1:4199/rustify-ui/components/
+							34 link Vellum example and framework capabilities, Value: 127.0.0.1:4199/rustify-ui/vellum/
+						35 标题 Components, Value: 2
+							36 文本 Components
+						37 内容列表
+							38 link Button, Value: 127.0.0.1:4199/rustify-ui/components/button/
+							39 link Label, Value: 127.0.0.1:4199/rustify-ui/components/label/
+							40 link Link, Value: 127.0.0.1:4199/rustify-ui/components/link/
+							41 link Icon, Value: 127.0.0.1:4199/rustify-ui/components/icon/
+							42 link Text field, Value: 127.0.0.1:4199/rustify-ui/components/text-field/
+							43 link Text area, Value: 127.0.0.1:4199/rustify-ui/components/text-area/
+							44 link Checkbox, Value: 127.0.0.1:4199/rustify-ui/components/checkbox/
+							45 link Radio, Value: 127.0.0.1:4199/rustify-ui/components/radio/
+							46 link Switch, Value: 127.0.0.1:4199/rustify-ui/components/switch/
+							47 link Select, Value: 127.0.0.1:4199/rustify-ui/components/select/
+							48 link Slider, Value: 127.0.0.1:4199/rustify-ui/components/slider/
+							49 link Progress, Value: 127.0.0.1:4199/rustify-ui/components/progress/
+							50 link Loading, Value: 127.0.0.1:4199/rustify-ui/components/loading/
+							51 link Tooltip, Value: 127.0.0.1:4199/rustify-ui/components/tooltip/
+							52 link Menu, Value: 127.0.0.1:4199/rustify-ui/components/menu/
+							53 link Dialog, Value: 127.0.0.1:4199/rustify-ui/components/dialog/
+							54 link Tabs, Value: 127.0.0.1:4199/rustify-ui/components/tabs/
+							55 link Scroll area, Value: 127.0.0.1:4199/rustify-ui/components/scroll-area/
+							56 link Data table, Value: 127.0.0.1:4199/rustify-ui/components/data-table/
+							57 link Tree, Value: 127.0.0.1:4199/rustify-ui/components/tree/
+							58 link Toast, Value: 127.0.0.1:4199/rustify-ui/components/toast/
+							59 link Number field, Value: 127.0.0.1:4199/rustify-ui/components/number-field/
+							60 link Color field, Value: 127.0.0.1:4199/rustify-ui/components/color-field/
+							61 link Toggle group, Value: 127.0.0.1:4199/rustify-ui/components/toggle-group/
+					62 container On this page
+						63 文本 On this page
+						64 内容列表
+							65 link Prerequisites, Value: 127.0.0.1:4199/rustify-ui/quickstart/#prerequisites
+							66 link Build and preview an example, Value: 127.0.0.1:4199/rustify-ui/quickstart/#build-and-preview-an-example
+							67 link Verification commands, Value: 127.0.0.1:4199/rustify-ui/quickstart/#verification-commands
+							68 link Changing a component's classes, Value: 127.0.0.1:4199/rustify-ui/quickstart/#changing-a-components-classes
+							69 link Using Tailwind v4 in your app, Value: 127.0.0.1:4199/rustify-ui/quickstart/#using-tailwind-v4-in-your-app
+							70 link A DOM application without GPU regions, Value: 127.0.0.1:4199/rustify-ui/quickstart/#a-dom-application-without-gpu-regions
+							71 link Writing a GPU region, Value: 127.0.0.1:4199/rustify-ui/quickstart/#writing-a-gpu-region
+							72 link Using the DOM components, Value: 127.0.0.1:4199/rustify-ui/quickstart/#using-the-dom-components
+							73 link More than one application on a page, Value: 127.0.0.1:4199/rustify-ui/quickstart/#more-than-one-application-on-a-page
+							74 link Limits of the preview, Value: 127.0.0.1:4199/rustify-ui/quickstart/#limits-of-the-preview
+					75 container
+						76 container Quick start
+							77 标题 Quick start, Value: 1
+								78 文本 Quick start
+							79 标题 Prerequisites, Value: 2
+								80 文本 Prerequisites
+							81 内容列表
+								82 container mise (2026.9.2 or newer). mise install installs what mise.toml pins: Rust 1.99.0 (stable) with rustfmt, clippy and the wasm32 target; mbx 1.15.0, the compiler cache every build goes through; and Tailwind's standalone CLI 4.1.13, which generates the component stylesheet without Node and which build-web needs for an example with a Tailwind input of its own (RUSTIFY_TAILWIND=<path> points at another copy of that version). Nothing else is installed silently.
+									83 文本 • mise (2026.9.2 or newer). mise install installs what mise.toml pins: Rust 1.99.0 (stable) with rustfmt, clippy and the wasm32 target; mbx 1.15.0, the compiler cache every build goes through; and Tailwind's standalone CLI 4.1.13, which generates the component stylesheet without Node and which build-web needs for an example with a Tailwind input of its own (RUSTIFY_TAILWIND=<path> points at another copy of that version). Nothing else is installed silently.
+								84 container After installing Rust, mise runs scripts/link-libllvm.sh, which puts a link to the toolchain's libLLVM next to rust-lld. mbx starts the toolchain's Cargo without rustup's proxy, so without that link the wasm link cannot load LLVM. mbx xtask doctor reports a toolchain that is missing the link.
+									85 文本 • After installing Rust, mise runs scripts/link-libllvm.sh, which puts a link to the toolchain's libLLVM next to rust-lld. mbx starts the toolchain's Cargo without rustup's proxy, so without that link the wasm link cannot load LLVM. mbx xtask doctor reports a toolchain that is missing the link.
+								86 container Node 26 and npm for the browser tests: npm ci then npx playwright install chromium.
+									87 文本 • Node 26 and npm for the browser tests: npm ci then npx playwright install chromium.
+								88 container Google Chrome on macOS for the manual pass gate.
+									89 文本 • Google Chrome on macOS for the manual pass gate.
+							90 文本 mbx xtask doctor reports the state of all of the above and never changes it.
+							91 标题 Build and preview an example, Value: 2
+								92 文本 Build and preview an example
+							93 container
+								94 文本 Shell
+								95 按钮 Copied
+								96 container
+									97 text mbx xtask build-web --example fusion-basic --release mbx xtask build-web --example property-workbench --release mbx xtask build-web --example component-catalog --release mbx xtask serve --example fusion-basic --release          # prints http://127.0.0.1:<port>/ mbx xtask serve --example fusion-basic --release --base /tools/demo/ --port 4173 mbx xtask serve --example fusion-basic --release --csp no-wasm   # negative test: wasm must fail visibly mbx xtask serve --example fusion-basic --release --fault missing:makepad_widgets/resources/IBMPlexSans-Text.ttf mbx xtask report-size --example fusion-basic --release           # six category totals, read off the directory mbx xtask report-size --example fusion-basic --release --compressed  # and what a gzip host would send
+							98 container
+								99 文本 serve --fault makes the server break the deployment in one specific way - missing:<path>, corrupt:<path>, truncated:<path> or stale-bridge - so a failure can be exercised against the running product instead of a doctored copy of it. A running server also takes GET <base>__fault/<spec> (and .../none to stop), which is how the browser tests switch between them without a restart.
+							100 container
+								101 文本 build-web runs the fork's cargo-makepad (stable, the built-in wasm32-unknown-unknown target, single-threaded wasm, in-process wasm-bindgen), extracts the static message bridge from the built wasm with a host interpreter, copies the runtime JS and the example page, and writes build-manifest.json with a size report. Output lives in target/makepad-wasm-app/release/<example>/ and is a plain static directory.
+							102 container
+								103 文本 For the 
+								104 link Vellum design editor, Value: github.com/rockie/rustify-ui/tree/main/examples/vellum
+								105 文本 , use mbx xtask build-web --example vellum --release; its 
+								106 link framework integration guide, Value: 127.0.0.1:4199/rustify-ui/vellum/
+								107 文本  explains the rendering, editing and persistence paths.
+							108 container
+								109 文本 For the 
+								110 link Theme Studio editor, Value: github.com/rockie/rustify-ui/blob/main/examples/theme-studio/README.md
+								111 文本 , run:
+							112 container
+								113 文本 Shell
+								114 按钮 Copy
+								115 container
+									116 text mbx xtask build-web --example theme-studio --release mbx xtask serve --example theme-studio --release
+							117 container
+								118 文本 Choose a preset, edit its light/dark values, compare the DOM and GPU previews, then export JSON for a dynamic application or CSS for a static consumer. The 
+								119 link theme guide, Value: 127.0.0.1:4199/rustify-ui/themes/
+								120 文本  covers both export profiles, font resources and the compiled Rust integration snippet. The example README covers local storage, child-path hosting and its browser checks. Rebuild after edits; serve uses the existing product.
+							121 标题 Verification commands, Value: 2
+								122 文本 Verification commands
+							123 container
+								124 文本 Shell
+								125 按钮 Copy
+								126 container
+									127 text mbx test --locked --workspace --exclude rustify-docs --exclude rustify-docs-cli --lib --bins    # --bins: xtask and the examples are binaries mbx xtask css --check                # the component stylesheet is in step with the classes mbx clippy --locked --workspace --exclude rustify-docs --exclude rustify-docs-cli --all-targets -- -D warnings mbx test --locked -p rustify-docs     # the docs library and CLI render on the host; each runs alone mbx test --locked -p rustify-docs-cli cargo fmt --all -- --check           # the fork under makepad/ is excluded by its rustfmt.toml mbx xtask sources verify             # drift of makepad/ against the import record # The SDK and the components in each of their three builds: the default (DOM # only), with GPU regions, and on a host for server-side rendering. mbx test --locked -p rustify-ui --lib mbx test --locked -p rustify-ui --features gpu --lib mbx test --locked -p rustify-ui --no-default-features --features ssr --lib mbx xtask docs-verify --group features   # the default graph and product carry no Makepad npx playwright test -c playwright.docs.config.ts --project=dom-only   # the DOM build's lifecycle npx playwright test -c playwright.docs.config.ts --project=docs-root  # a built docs site (also docs-subpath, docs-meta; docs-dev for rustify-docs dev) npx playwright test --project=component-catalog              # one example's regression checks RUSTIFY_TIER=evidence npx playwright test --project=budget   # the measurements, on request cd makepad && mbx test -p cargo-makepad mbx xtask verify --suite p3          # all of the above, css --check and catalog --check included, plus what needs a person
+							128 container
+								129 文本 The browser checks come in two tiers (tests/tier.ts). The regression tier, the default, asks whether behaviour is still right: each example's project shares one page per worker, puts it back between tests with the example's reset(), and runs repeated behaviours a few rounds. It is what a pull request runs, one job per example. The evidence tier (RUSTIFY_TIER=evidence) asks whether the numbers still hold - budgets, long runs, memory, idle cost - at their full round counts; .github/workflows/evidence.yml runs
+							130 container
+								131 文本 verify runs the checks, double-builds each example, runs every browser project at full strength (RUSTIFY_TIER=all), and then lists the records only a person can write - the VoiceOver pass, real pinyin input, the sample comparison, the zoom walkthrough. It reports those as missing, never as passed, which is the whole reason it exists.
+							132 标题 Changing a component's classes, Value: 2
+								133 文本 Changing a component's classes
+							134 文本 The component crate's classes are plain Tailwind v4 utilities, with no prefix, and the stylesheet they need is committed, so building the wasm never needs Node:
+							135 container
+								136 文本 Shell
+								137 按钮 Copy
+								138 container
+									139 text mbx xtask css            # regenerate crates/rustify-components/css/rustify.css mbx xtask css --check    # fail if the committed product is not what the input produces
+							140 container
+								141 文本 A class string added without regenerating would simply have no rule; --check is what turns that into a failure. build-web copies the product into any example whose manifest names the component crate, unless the example compiles a Tailwind input of its own (next section). The product holds the components' classes only; an application's own classes are not in it.
+							142 container
+								143 文本 Because an application writes the same utilities, a class passed to a component is merged with the component's own through tw_merge: a caller's p-6 replaces the component's p-4, and hover:bg-accent replaces its hover: background, instead of both reaching the element and the stylesheet's order deciding.
+							144 container
+								145 文本 What still keeps the SDK out of the host page: the stylesheet has no preflight and no bare element selector, the theme tokens are written only onto a scope's root, and dark is bound to the SDK's scope attribute rather than to any .dark ancestor, so a host page using that convention does not darken a scope. The class names themselves are no longer apart: a host page with its own Tailwind build that also links rustify.css gets two rules for a class like bg-primary. The next section says what to do instead.
+							146 标题 Using Tailwind v4 in your app, Value: 2
+								147 文本 Using Tailwind v4 in your app
+							148 container
+								149 文本 An application that styles its own markup with Tailwind puts a tailwind.css next to its Cargo.toml. build-web compiles it with the CLI mise.toml pins, minified, to tailwind.css in the product, and fails before the wasm build if that CLI is missing or another version. Nothing generated is committed, and there is no separate step: a class change means a wasm rebuild anyway, and the same command does both. examples/component-catalog/tailwind.css is one:
+							150 container
+								151 文本 CSS
+								152 按钮 Copy
+								153 container
+									154 text @import "tailwindcss/theme.css" layer(theme); @import "tailwindcss/utilities.css" layer(utilities) source(none); /* @import "tailwindcss/preflight.css" layer(base);  only if the whole page is yours */ @import "../../crates/rustify-components/css/sdk.css"; @source "./src";
+							155 container
+								156 文本 The page links the product in place of rustify.css, with a <link>: the strict policy (style-src 'self') refuses a <style> element.
+							157 container
+								158 文本 HTML
+								159 按钮 Copy
+								160 文本 <link rel="stylesheet" href="./tailwind.css">
+							161 内容列表
+								162 container sdk.css is the SDK's layer: the component sources, the dark variant, the token utilities, the rules no utility expresses and the scope's default tokens. It imports no Tailwind itself, so your input decides which of Tailwind's layers it takes. The product has the components' classes and yours, and nothing else is linked.
+									163 文本 • sdk.css is the SDK's layer: the component sources, the dark variant, the token utilities, the rules no utility expresses and the scope's default tokens. It imports no Tailwind itself, so your input decides which of Tailwind's layers it takes. The product has the components' classes and yours, and nothing else is linked.
+								164 container source(none) is not optional. The CLI runs from the repository root, and without it every class-shaped word in the repository becomes a rule. Name your sources with @source. Words in the comments of a named source still count: a comment that says "table" gives the product a .table rule.
+									165 文本 • source(none) is not optional. The CLI runs from the repository root, and without it every class-shaped word in the repository becomes a rule. Name your sources with @source. Words in the comments of a named source still count: a comment that says "table" gives the product a .table rule.
+								166 container Preflight resets every element on the page. Leave it out when the page hosts markup that is not yours; the SDK's own stylesheet never includes it.
+									167 文本 • Preflight resets every element on the page. Leave it out when the page hosts markup that is not yours; the SDK's own stylesheet never includes it.
+							168 container
+								169 文本 Token utilities. Any colour utility (bg-, text-, border-, ring-, fill- ...) takes the theme's names: background, foreground, primary, primary-foreground, secondary, secondary-foreground, muted, muted-foreground, accent, accent-foreground, destructive, destructive-foreground, card, popover, success, warning, border, input and ring, with opacity as usual (bg-primary/90). rounded-sm, rounded-md and rounded-lg follow the scope's --radius. They resolve to var(--primary) and so on, so they follow the scope's them
+							170 container
+								171 文本 dark: means inside a scope whose theme is dark ([data-rustify-scope][data-theme="dark"]): it follows ThemedScope, not a .dark class on the page and not prefers-color-scheme, and it never applies outside a scope.
+							172 container
+								173 文本 For versioned theme documents, import 
+								174 link theme-v4.css, Value: github.com/rockie/rustify-ui/blob/main/crates/rustify-components/css/theme-v4.css
+								175 文本  immediately after sdk.css, using the same relative directory as in the input above. ThemeScope publishes the document's resolved colors, fonts, spacing, radius and shadows on its mounted root. In these scopes, spacing utilities read --rustify-unit; --layout-gap remains an independent layout value. The mapping keeps the legacy fallbacks for scopes using ThemedScope, and dark: follows either provider's explicit mode.
+							176 container
+								177 文本 Load exported JSON with import_json, resolve it with font_context using the host's root font size and reduced-motion preference, and publish an Arc<ResolvedTheme> to ThemeScope and the GPU region's typed props. Use ThemeBoundary for local patches. The 
+								178 link mount example, Value: 127.0.0.1:4199/rustify-ui/themes/#mount-a-browser-scope
+								179 文本  shows the complete snippet and stylesheet order. A running provider owns its CSSOM values; pasted static export CSS cannot replace them. Update its resolved signal instead.
+							180 文本 class on a component is merged with the component's classes, caller last, as the previous section describes: yours replaces the component's class of the same kind in the same state, and a class of another kind is added.
+							181 container
+								182 文本 A host page with its own Tailwind build imports sdk.css into that build, after its own Tailwind imports (the path is relative to the importing file, and sdk.css names the component sources itself), and links that one product rather than also linking rustify.css. One build has one meaning for each name, so two things are shared: dark, where the @custom-variant declared last applies to every class in the build, the components' included; and the colour names above, where the @theme value declared last wins. A 
+							183 container
+								184 文本 Rust
+								185 按钮 Copy
+								186 container
+									187 text let locale = rustify_ui::provide_locale(Locale::English);   // once, in the scope root locale.text(Message::Retry)                                  // tracked; changes with the language
+							188 container
+								189 文本 The SDK ships the words it puts on screen for itself; the application's vocabulary is the application's. format_number and format_date go through Intl with an options object the application builds, because what a value means decides how it should be written. See docs/i18n.md.
+							190 标题 A DOM application without GPU regions, Value: 2
+								191 文本 A DOM application without GPU regions
+							192 container
+								193 文本 The SDK's default features are DOM only: rustify-ui and rustify-components without gpu link no Makepad, and the GPU API (GpuRegion, RegionApp, RegionId, RegionState, makepad_widgets) does not compile. Everything else - mount, the overlay stack, toasts, jobs, listen, defer, observe_resize, routing, themes and the components - works the same. What such an application needs is stable Rust with the wasm32-unknown-unknown target, the wasm-bindgen CLI at the SDK's pinned version, and nothing from this repository'
+							194 container
+								195 文本 The application is a cdylib whose exports start it, plus a small host program that writes the SDK's loader and stylesheets beside the wasm. 
+								196 link tests/dom-only/consumer, Value: github.com/rockie/rustify-ui/tree/main/tests/dom-only/consumer
+								197 文本  is the complete fixture; its Cargo.toml names the two crates (by path here; a consumer names them by git URL and revision) and src/bin/export-dom-assets.rs is the host program. Outside this repository, replace the two path dependencies with:
+							198 container
+								199 文本 TOML
+								200 按钮 Copy
+								201 container
+									202 text rustify-ui = { git = "https://github.com/rockie/rustify-ui", rev = "1b81de25f23a25702f61dbfd3d0ecdfe323d4d44" } rustify-components = { git = "https://github.com/rockie/rustify-ui", rev = "1b81de25f23a25702f61dbfd3d0ecdfe323d4d44" }
+							203 container
+								204 文本 This source passed the consumer recipe from both local git and GitHub, without the root workspace's patches, including the DOM browser checks. Keep the fixture's other dependency versions, let Cargo resolve these git dependencies once, then commit the resulting Cargo.lock. To build it:
+							205 container
+								206 文本 Shell
+								207 按钮 Copy
+								208 container
+									209 text cargo install wasm-bindgen-cli --version 0.2.128 --locked RUSTFLAGS="${RUSTFLAGS:+$RUSTFLAGS }--cfg=web_sys_unstable_apis" \ cargo build --locked --release --target wasm32-unknown-unknown --lib wasm-bindgen target/wasm32-unknown-unknown/release/dom_consumer.wasm \   --target web --out-name app --out-dir public/pkg cargo run --locked --bin export-dom-assets
+							210 container
+								211 文本 public/ is then a static directory: the page's own index.html and app.js, pkg/ from wasm-bindgen (keep it whole: the SDK's runtime is in pkg/snippets/), and rustify-dom-loader.js, rustify-runtime.css and rustify.css. The page script boots one instance and then calls the application's own start:
+							212 container
+								213 文本 JavaScript
+								214 按钮 Copy
+								215 container
+									216 text import { boot, show_fatal } from "./rustify-dom-loader.js"; const runtime = await boot({ glue_url: "./pkg/app.js", wasm_url: "./pkg/app_bg.wasm", on_fatal }); runtime.app.my_app_mount("app");
+							217 container
+								218 文本 glue_url and wasm_url resolve against the loader. boot checks that the wasm speaks the loader's runtime protocol, creates the instance's host and starts it; only then may the application mount, and mount called any earlier
+							219 内容列表
+								220 container from a #[wasm_bindgen(start)] function, say - is refused withRuntimeNotStarted. The loader and the wasm come from the same release of the SDK because the host program that writes the loader is compiled with it. The web_sys_unstable_apis flag is what makesclipboard::available() true; the browser's permission rules still decide each copy and paste.
+									221 文本 • from a #[wasm_bindgen(start)] function, say - is refused with RuntimeNotStarted. The loader and the wasm come from the same release of the SDK because the host program that writes the loader is compiled with it. The web_sys_unstable_apis flag is what makes clipboard::available() true; the browser's permission rules still decide each copy and paste.
+							222 container
+								223 文本 Inside this repository the same build is mbx xtask build-dom --manifest-path tests/dom-only/consumer/Cargo.toml (to target/dom/dom-consumer/), served with mbx xtask serve --dir target/dom/dom-consumer, and checked with mbx xtask docs-verify --group features and npx playwright test -c playwright.docs.config.ts --project=dom-only.
+							224 标题 Writing a GPU region, Value: 2
+								225 文本 Writing a GPU region
+							226 container
+								227 文本 GPU regions are the SDK's gpu feature, which the examples turn on:
+							228 container
+								229 文本 TOML
+								230 按钮 Copy
+								231 文本 rustify-ui = { path = "../../crates/rustify-ui", features = ["gpu"] }
+							232 container
+								233 文本 A GPU application is built with mbx xtask build-web and booted by web/loader.js, which hands one host to both Makepad and the SDK runtime.
+							234 container
+								235 文本 A region is a Makepad app that implements RegionApp: it declares its widget tree with script_mod!, projects host state in through apply_props, and pushes typed actions into the outbox while handling events. The host renders it with GpuRegion, passing a Signal of props and an action callback; every change to the signal is applied at the region's next safe point, and actions arrive after the pump that produced them.
+							236 container
+								237 文本 Rust
+								238 按钮 Copy
+								239 container
+									240 text impl RegionApp for CounterRegion { type Props = CounterProps; type Action = CounterAction; fn script_mod(vm: &mut ScriptVm) -> ScriptValue { makepad_widgets::script_mod(vm); self::script_mod(vm) } fn apply_props(&mut self, cx: &mut Cx, props: &CounterProps) { self.ui.label(cx, ids!(counter_label)).set_text(cx, &format!("Count: {}", props.count)); self.ui.redraw(cx); } fn handle_event(&mut self, cx: &mut Cx, event: &Event, outbox: &mut Vec<CounterAction>) { if let Event::Actions(actions) = event { if self.ui.button(cx, ids!(increment_button)).clicked(actions) {                 outbox.push(CounterAction::Increment); } } self.ui.handle_event(cx, event, &mut Scope::empty()); } }
+							241 container
+								242 文本 Rust
+								243 按钮 Copy
+								244 container
+									245 text view! { <GpuRegion app=PhantomData::<CounterRegion> props=props on_action=on_action class="gpu-region" /> }
+							246 标题 Using the DOM components, Value: 2
+								247 文本 Using the DOM components
+							248 container
+								249 文本 The DOM half of the component subset lives in rustify_ui::components. Every control is controlled by the application: the user's action is a request, and what the control shows afterwards is the answer. A refused value is replaced by the value in force rather than left on screen as if it had been taken.
+							250 container
+								251 文本 Rust
+								252 按钮 Copy
+								253 container
+									254 text view! { <TextField         label="name"         value=Signal::derive(move || current.get().map(|o| o.name).unwrap_or_default()) // Return without changing the signal and the field goes back to the // value the application holds.         on_input=move |value| { rename(value); }         read_only=Signal::derive(move || current.get().is_some_and(|o| o.locked)) /> <Slider label="size" min=0.0 max=100.0 step=5.0 value=size on_change=move |v| set_size(v) /> <LoadView label="details" value=details on_retry=move || reload() /> }
+							255 container
+								256 文本 ThemedScope writes the scope's tokens onto its own root, so two scopes on one page hold different themes and the host page keeps its own; ThemeOverride changes part of the theme for one area and leaves the rest inherited. A region inside an override is handed the patched table, so both halves draw with the same numbers. rustify_components::CATALOG (printed in docs/components.md) says which categories exist and what each of them supports.
+							257 container
+								258 文本 rustify_ui::mount(container, config, view) returns an AppHandle; disposing it runs the scope's cleanups (destroying its regions) and unmounts the DOM. A GPU build's page loads the wasm through web/loader.js (boot(...)), which validates the bridge fingerprint and the runtime protocol and hands the host hooks to the runtime before the application's own exported entry points are called; examples/fusion-basic/app.js is the reference page script. A DOM build boots through the SDK's own loader instead (
+								259 link above, Value: 127.0.0.1:4199/rustify-ui/quickstart/#a-dom-application-without-gpu-regions
+								260 文本 ); tests/dom-only/consumer/public/app.js is its reference.
+							261 标题 More than one application on a page, Value: 2
+								262 文本 More than one application on a page
+							263 container
+								264 文本 boot(...) starts one application instance: one wasm instance with its own linear memory, its own host hooks and its own diagnostics. Calling it again starts a second, sharing the compiled module but nothing else, and the handle it returns carries the instance number. That boundary is what a trap respects: if one instance traps, the loader aborts its page-level listeners, releases its URL ownership and shows a notice with a restart entry, and the other instance on the page keeps working. Restarts are capped 
+							265 标题 Limits of the preview, Value: 2
+								266 文本 Limits of the preview
+							267 container
+								268 文本 Every component category has a DOM component (rustify_components), and most are drawn by a GPU region as well; the ones that are not say where they are drawn instead. What is not here is listed per release in docs/reports/p3/known-limitations.md - the short version is: no threads or SharedArrayBuffer (a plain deployment is not cross-origin isolated, so large jobs are sliced on the one thread there is), no server-side paging or formula engine, no GPU-drawn table, and no hot module replacement.
+							269 container
+								270 文本 See docs/components.md for what each category supports today, docs/data.md for a table larger than the screen and the sliced jobs over it, docs/navigation.md, docs/workspace.md, docs/forms.md and docs/i18n.md for the application layer, docs/architecture.md for the instance and region model, docs/compatibility.md for the capability state and what the resource ledgers do and do not count, docs/reports/p3/ for what this release measured and what it could not, and docs/plan/ for progress.
+						271 link Edit this page, Value: github.com/rockie/rustify-ui/edit/main/docs/quickstart.md
+						272 container
+							273 文本 Last updated 2026-10-12
+						274 container Previous / Next
+							275 link Next Architecture, Value: 127.0.0.1:4199/rustify-ui/architecture/
+					276 container Footer links
+						277 link Back to the home page, Value: 127.0.0.1:4199/rustify-ui/
+					278 文本 Copied
+				279 滚动条 (settable, float) 0.04014136
+	280 工具栏
+		281 container Secondary Actions: 移到上一项, 移到下一项, 从工具栏移除
+			282 按钮 Description: 显示边栏, ID: SidebarButton
+			283 菜单按钮 Description: 标签页组选择器, ID: TabGroupPickerButton?TabGroup=
+		284 container BackForwardSegmentedControl
+			285 按钮 Description: 返回, Help: 显示上一页, ID: BackButton
+			286 按钮 (disabled) Description: 前进, Help: 显示下一页, ID: ForwardButton
+		287 container Secondary Actions: 移到上一项, 移到下一项, 从工具栏移除
+			288 按钮 页面菜单, ID: AssistantButton
+			289 按钮 将页面添加到阅读列表, ID: OneStepBookmarkingButton
+			290 文本栏 (settable) Description: 智能搜索栏, Value: 127.0.0.1:4199/rustify-ui/quickstart/, ID: WEB_BROWSER_ADDRESS_AND_SEARCH_FIELD
+			291 按钮 翻译可用, ID: TranslationButton
+			292 按钮 重新加载此页面, ID: ReloadButton
+		293 按钮 Description: 共享, ID: ShareButton, Secondary Actions: 移到上一项, 移到下一项, 从工具栏移除
+		294 按钮 Description: 新建标签页, ID: NewTabButton, Secondary Actions: 移到上一项, 移到下一项, 从工具栏移除
+		295 按钮 Description: 标签页概览, ID: TabOverviewButton, Secondary Actions: 移到上一项, 从工具栏移除
+	296 标签页组 Description: 标签页栏，4个标签页, ID: TabBar?isSeparate=false
+		297 标签 Home | Home semantics, Value: off, Secondary Actions: 关闭标签页, ID: TabBarTab?isNarrow=false&isExpanded=false&tabCount=&isPinned=false&isCluster=false&clusterID=&isActive=false
+			298 图像 FaviconImageView
+			299 文本 Value: Home | Home semantics, ID: UnifiedTabBarButton._titleTextField
+		300 标签 Rustify UI, Value: off, Secondary Actions: 关闭标签页, ID: TabBarTab?isNarrow=false&isExpanded=false&tabCount=&isPinned=false&isCluster=false&clusterID=&isActive=false
+			301 图像 FaviconImageView
+			302 文本 Value: Rustify UI, ID: UnifiedTabBarButton._titleTextField
+		303 标签 Architecture | Rustify UI, Value: off, Secondary Actions: 关闭标签页, ID: TabBarTab?isNarrow=false&isExpanded=false&tabCount=&isPinned=false&isCluster=false&clusterID=&isActive=false
+			304 图像 FaviconImageView
+			305 文本 Value: Architecture | Rustify UI, ID: UnifiedTabBarButton._titleTextField
+		306 标签 Quick start | Rustify UI, Help: 若要与此按钮中的项目交互，请按下Control-Option-Shift-下箭头键。, Value: on, Secondary Actions: 关闭标签页, ID: TabBarTab?isNarrow=false&isExpanded=false&tabCount=&isPinned=false&isCluster=false&clusterID=&isActive=true
+			307 图像 FaviconImageView
+			308 文本 Value: Quick start | Rustify UI, ID: UnifiedTabBarButton._titleTextField
+	309 关闭按钮
+	310 全屏幕按钮 Help: 此按钮也可以执行缩放窗口的操作, Secondary Actions: 缩放窗口
+	311 最小化按钮
+312 menu bar
+	313 Safari浏览器
+	314 文件
+	315 编辑
+	316 显示, ID: SafariViewMenu
+	317 历史记录
+	318 书签, ID: SafariBookmarksMenu
+	319 窗口, ID: SafariWindowMenu
+	320 帮助, ID: SafariHelpMenu
+
+The focused UI element is 5 HTML内容 Description: Quick start | Rustify UI, URL: 127.0.0.1:4199/rustify-ui/quickstart/

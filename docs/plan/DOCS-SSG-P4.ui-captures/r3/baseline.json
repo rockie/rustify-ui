@@ -1,0 +1,15 @@
+{
+  "head": "93c4d101055f16c4493c15abde7b43141f1f8a47",
+  "branch": "main",
+  "dirtyDiffSha256": "5b56a9c61406a18ce50c9bac1a2cbdb3913bd31f3604907cc0cf4ce9e3b43042",
+  "status": " M .xgent-ai/experience/f36dda5e-ce97-49af-926c-0146968daa01.md\n M .xgent-ai/sdlc/events/plan/index.md\n M .xgent-ai/sdlc/events/prd/8917bbeb-7add-4826-95ee-5cdf6bdff735/index.md\n M .xgent-ai/sdlc/events/review/index.md\n M .xgent-ai/sdlc/index.md\n M .xgent-ai/sdlc/status/plan/f36dda5e-ce97-49af-926c-0146968daa01.md\n M .xgent-ai/sdlc/status/plan/index.md\n M .xgent-ai/sdlc/status/prd/8917bbeb-7add-4826-95ee-5cdf6bdff735.md\n M .xgent-ai/sdlc/status/review/index.md\n M docs/plan/DOCS-SSG-P4.md\n?? .xgent-ai/sdlc/events/plan/607022f0-588c-4810-a08b-24b7be2dcc6f/\n?? .xgent-ai/sdlc/events/prd/8917bbeb-7add-4826-95ee-5cdf6bdff735/ebfa097b-84ef-4dba-8be4-f51839cc9ae8.md\n?? .xgent-ai/sdlc/events/review/14f8fbe9-fef1-483e-86eb-47a0a8dec8df/\n?? .xgent-ai/sdlc/events/review/8b66add8-79df-4310-9cea-02a428928dc7/\n?? .xgent-ai/sdlc/events/review/9cd6da78-0bc0-4297-9f6b-6fffde099e72/\n?? .xgent-ai/sdlc/events/review/c34cd2c3-3731-433a-90c7-8bb70fdbc9e8/\n?? .xgent-ai/sdlc/status/plan/607022f0-588c-4810-a08b-24b7be2dcc6f.md\n?? .xgent-ai/sdlc/status/review/14f8fbe9-fef1-483e-86eb-47a0a8dec8df.md\n?? .xgent-ai/sdlc/status/review/8b66add8-79df-4310-9cea-02a428928dc7.md\n?? .xgent-ai/sdlc/status/review/9cd6da78-0bc0-4297-9f6b-6fffde099e72.md\n?? .xgent-ai/sdlc/status/review/c34cd2c3-3731-433a-90c7-8bb70fdbc9e8.md\n?? docs/plan/DOCS-SSG-P3.review.md\n?? docs/plan/DOCS-SSG-P4.code-review.md\n?? docs/plan/DOCS-SSG-P4.records/M7.md\n?? docs/plan/DOCS-SSG-P4.ui-captures/r1/\n?? docs/plan/DOCS-SSG-P4.ui-captures/r2/\n?? docs/plan/DOCS-SSG-P4.ui-captures/r3/\n?? docs/plan/DOCS-SSG-P4.ui-review.md\n?? docs/plan/DOCS-SSG-P4.ui-review.r2.md\n?? docs/plan/DOCS-SSG-P4.ui-target.md\n?? docs/validation/docs-ssg-p4/m7/\n",
+  "targetFileSha256": "ed08081e68367b02d7ad695a041909e2c8ec26d78abe377376d1e1b0b7a6ad02",
+  "targetFingerprintAlgorithm": "manual-sha256-normative-sections-v1",
+  "targetFingerprint": "604274d613d8b2915e8c9c17ed09c2be6b1f6ef102adcb9bbef76275062486a4",
+  "fingerprintMethod": "unique level-2 单元 and 规范要点 sections, including headings; LF; each UTF-8 segment prefixed by decimal byte length and colon, concatenated in that order; no local attachments in these sections. Manual fingerprint, not a claim of Phoenix engine compatibility.",
+  "candidate": "1bbc54b096c6656e9ad2ad48b5acd43cb7ee844a",
+  "framework": "740610db164b3f396b0fcc551f5a5ef8f15da716",
+  "cli": "rustify-docs 0.1.27\npanic: unwind\ngrammars: syntect-5.3.0+two-face-0.5.2+bat-0.26.1+fancy\nsource: 1bbc54b096c6656e9ad2ad48b5acd43cb7ee844a\n",
+  "productDiffFromCandidate": "",
+  "browser": "153.0.8010.12"
+}

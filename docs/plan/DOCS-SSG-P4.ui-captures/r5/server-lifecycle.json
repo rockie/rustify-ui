@@ -1,0 +1,32 @@
+{
+  "checkedAt": "2026-10-16T08:31:52.254672+00:00",
+  "stopped": [
+    {
+      "port": 4199,
+      "pid": 36421,
+      "command": "target/docs-ssg/p4/install-1bbc54b0/bin/rustify-docs preview --dir target/docs-ssg/http/official/subpath/dist --host 0.0.0.0 --port 4199",
+      "signal": "SIGTERM"
+    },
+    {
+      "port": 4205,
+      "pid": 57816,
+      "command": "target/docs-ssg/p4/install-1bbc54b0/bin/rustify-docs preview --dir target/docs-ssg/ui-review-r5/search --host 0.0.0.0 --port 4205",
+      "signal": "SIGTERM"
+    }
+  ],
+  "after": [
+    {
+      "port": 4199,
+      "listeningPids": []
+    },
+    {
+      "port": 4205,
+      "listeningPids": []
+    }
+  ],
+  "execSessionExitCodes": {
+    "17877": 143,
+    "1618": 143,
+    "32530": 143
+  }
+}

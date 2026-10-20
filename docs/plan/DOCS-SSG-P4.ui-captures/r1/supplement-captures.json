@@ -1,0 +1,52 @@
+[
+  {
+    "file": "M1-show-more-after-1280-light.png",
+    "pixels": {
+      "width": 1280,
+      "height": 900
+    },
+    "sha256": "04537a23e1e9c6ba7a79825e51e4cfacc85b12dcf4a1a0565baeaf088a7bd6be",
+    "fileMtimeUtc": "2026-10-16T02:54:12.735657+00:00",
+    "source": "Playwright runtime keyboard reproduction"
+  },
+  {
+    "file": "U4-native-safari-home.png",
+    "pixels": {
+      "width": 4718592,
+      "height": 4292935744
+    },
+    "sha256": "39e54090b9f1831b54bceaffcb9927233a3fd61f5f8897b0fc4ff77b4b1a61ca",
+    "fileMtimeUtc": "2026-10-16T02:45:25.379975+00:00",
+    "source": "CUA native Safari"
+  },
+  {
+    "file": "U4-native-safari-search.png",
+    "pixels": {
+      "width": 4718592,
+      "height": 4292935744
+    },
+    "sha256": "0b257f622a07e7ca77b878cd4e3cb1d1e09ffdd9bf1063a78c139483648dd5ae",
+    "fileMtimeUtc": "2026-10-16T02:50:49.138763+00:00",
+    "source": "CUA native Safari"
+  },
+  {
+    "file": "U4-native-supplement-home-1272-dpr2.png",
+    "pixels": {
+      "width": 2544,
+      "height": 1546
+    },
+    "sha256": "425547b83d2d58ecb09e6a740096a8ca9168ca53bd0267917b4013fa31acc968",
+    "fileMtimeUtc": "2026-10-16T02:23:40.786268+00:00",
+    "source": "Kimi native Chrome"
+  },
+  {
+    "file": "U4-native-supplement-search-1272-dpr2.png",
+    "pixels": {
+      "width": 2544,
+      "height": 1546
+    },
+    "sha256": "29b6e6a586fdd0bd00beaa0547b779fc2c9bbff37a96906cd3f2ff0efc61a4b9",
+    "fileMtimeUtc": "2026-10-16T02:41:48.861714+00:00",
+    "source": "Kimi native Chrome"
+  }
+]

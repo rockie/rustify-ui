@@ -1,0 +1,42 @@
+[
+  {
+    "name": "official/subpath",
+    "url": "http://127.0.0.1:4199/rustify-ui/",
+    "manifest": "target/docs-ssg/http/official/subpath/dist/rustify-docs-manifest.json",
+    "sha256": "3d692f971105a13535a1a7f1c0edce9caaafd4db0cc75051a78cce63e3d22888",
+    "status": 200,
+    "cli_version": "0.1.27",
+    "build_id": "dd5022c567200779",
+    "localHTTPByteMatch": true
+  },
+  {
+    "name": "search/root",
+    "url": "http://127.0.0.1:4204/",
+    "manifest": "target/docs-ssg/http/search/root/dist/rustify-docs-manifest.json",
+    "sha256": "5fa5b34aefff36cbf6dc4f52d955eeeb5ec201a21c882ceafe97f741c698bdd1",
+    "status": 200,
+    "cli_version": "0.1.27",
+    "build_id": "80da98ab7be5b50d",
+    "localHTTPByteMatch": true
+  },
+  {
+    "name": "search/subpath",
+    "url": "http://127.0.0.1:4205/rustify-ui/",
+    "manifest": "target/docs-ssg/http/search/subpath/dist/rustify-docs-manifest.json",
+    "sha256": "1e337c0a1dd66e8c8d092ca032838eec3faff9348a985c55f0a62477150665a2",
+    "status": 200,
+    "cli_version": "0.1.27",
+    "build_id": "176bea4ed7e4d96f",
+    "localHTTPByteMatch": true
+  },
+  {
+    "name": "search/meta",
+    "url": "http://127.0.0.1:4206/rustify-ui/",
+    "manifest": "target/docs-ssg/http/search/meta/dist/rustify-docs-manifest.json",
+    "sha256": "1e337c0a1dd66e8c8d092ca032838eec3faff9348a985c55f0a62477150665a2",
+    "status": 200,
+    "cli_version": "0.1.27",
+    "build_id": "176bea4ed7e4d96f",
+    "localHTTPByteMatch": true
+  }
+]

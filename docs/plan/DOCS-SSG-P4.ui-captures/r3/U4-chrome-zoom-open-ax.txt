@@ -1,0 +1,9 @@
+The following is a diff from the previous accessibility tree for Window: "快速开始 | Rustify UI" with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+Removed element IDs: 763-1042
++						1049 container 搜索
++							1050 文本 搜索文档
++							1051 按钮 关闭
++							1052 组合框 (settable) 搜索文档
++							1053 文本 输入词语，搜索当前语言的文档。
++							1054 列表框 搜索结果
+The focused UI element is 1052 组合框 (settable) 搜索文档

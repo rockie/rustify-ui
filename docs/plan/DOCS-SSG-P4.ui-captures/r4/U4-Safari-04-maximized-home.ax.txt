@@ -1,0 +1,7 @@
+The following is a diff from the previous accessibility tree for Window: "Rustify UI" with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+Removed element IDs: 16-18
++						91 container Site links
++							92 内容列表
++								93 link GitHub, Value: github.com/rockie/rustify-ui
+~						9 弹出式按钮 Search Ctrl / Cmd K
+The focused UI element is 5 HTML内容 Description: Rustify UI, URL: 127.0.0.1:4199/rustify-ui/

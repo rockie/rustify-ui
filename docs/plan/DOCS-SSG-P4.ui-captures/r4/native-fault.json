@@ -1,0 +1,14 @@
+{
+  "source": "target/docs-ssg/http/search/subpath/dist",
+  "dest": "target/docs-ssg/ui-review-r4/search",
+  "module": "search.4879fcef9b.js",
+  "sha256": "4879fcef9b8ec96cd0bc12ee699fcbbb0bd823e3f72d6289a810f3da853be15f",
+  "serverBefore": {
+    "pid": 24266,
+    "command": "target/docs-ssg/p4/install-1bbc54b0/bin/rustify-docs preview --dir target/docs-ssg/http/search/subpath/dist --host 0.0.0.0 --port 4205"
+  },
+  "method": "byte-identical copy of real CLI product; only temporarily withhold module to obtain actual HTTP404; no UI/code replacement",
+  "withheldAt": "2026-10-16T04:44:41.627Z",
+  "restoredAt": "2026-10-16T04:45:15.523Z",
+  "restoredSha256": "4879fcef9b8ec96cd0bc12ee699fcbbb0bd823e3f72d6289a810f3da853be15f"
+}

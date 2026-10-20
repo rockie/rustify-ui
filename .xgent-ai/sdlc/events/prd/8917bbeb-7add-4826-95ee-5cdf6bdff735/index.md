@@ -17,6 +17,8 @@
 
 | 3feceebd-251b-4e6a-9e77-98680e56975f | document/document（P2覆盖关联） | [事件](3feceebd-251b-4e6a-9e77-98680e56975f.md) |
 
+| ebfa097b-84ef-4dba-8be4-f51839cc9ae8 | document/document（P3/P4计划承接） | [事件](ebfa097b-84ef-4dba-8be4-f51839cc9ae8.md) |
+
 | 681e37b0-43bb-4814-88a2-80b13e7dcd1c.md | document / document (D17/D18) | [681e37b0-43bb-4814-88a2-80b13e7dcd1c.md](681e37b0-43bb-4814-88a2-80b13e7dcd1c.md) |
 
 维护约定：改变本层内容者同步索引；按稳定 ID/路径保留历史，无变化不重写，索引不作为事件。详见[目录索引维护](../../../protocol.md#目录索引维护)。

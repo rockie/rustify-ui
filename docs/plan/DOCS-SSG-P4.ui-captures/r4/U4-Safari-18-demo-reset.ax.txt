@@ -1,0 +1,184 @@
+Window: "Button | Rustify UI", App: Safari浏览器.
+0 标准窗口 Button | Rustify UI, ID: SafariWindow?IsSecure=false&UUID=8B94E202-E355-455B-98DF-40C71253D736, Secondary Actions: Raise
+	1 分离组
+		2 分离器 (disabled, settable, float) -1
+		3 标签页组
+			4 滚动区
+				5 HTML内容 Description: Button | Rustify UI, URL: 127.0.0.1:4199/rustify-ui/zh/components/button/
+					6 link 跳到正文, Value: 127.0.0.1:4199/rustify-ui/zh/components/button/#content
+					7 container
+						8 link Rustify UI, Value: 127.0.0.1:4199/rustify-ui/zh/
+						9 container 站点链接
+							10 内容列表
+								11 link GitHub 源码, Value: github.com/rockie/rustify-ui
+						12 弹出式按钮 搜索 Ctrl / Cmd K
+						13 摘要 中文, Value: off
+							14 文本 中文
+						15 container 主题
+							16 开关按钮 跟随系统, Value: on
+							17 开关按钮 浅色, Value: off
+							18 开关按钮 深色, Value: off
+					19 container 菜单
+						20 标题 指南, Value: 2
+							21 文本 指南
+						22 内容列表
+							23 link 快速开始, Value: 127.0.0.1:4199/rustify-ui/zh/quickstart/
+							24 link Architecture, Value: 127.0.0.1:4199/rustify-ui/zh/architecture/
+							25 link Navigation, Value: 127.0.0.1:4199/rustify-ui/zh/navigation/
+							26 link Workspace, Value: 127.0.0.1:4199/rustify-ui/zh/workspace/
+							27 link Forms, Value: 127.0.0.1:4199/rustify-ui/zh/forms/
+							28 link Languages, formatting and text, Value: 127.0.0.1:4199/rustify-ui/zh/i18n/
+							29 link Data larger than the screen, Value: 127.0.0.1:4199/rustify-ui/zh/data/
+							30 link Theme documents, Value: 127.0.0.1:4199/rustify-ui/zh/themes/
+							31 link Runtime utilities, Value: 127.0.0.1:4199/rustify-ui/zh/utility/
+							32 link Compatibility and capability boundaries (P1 research preview), Value: 127.0.0.1:4199/rustify-ui/zh/compatibility/
+							33 link Component catalogue, Value: 127.0.0.1:4199/rustify-ui/zh/components/
+							34 link Vellum example and framework capabilities, Value: 127.0.0.1:4199/rustify-ui/zh/vellum/
+						35 标题 组件, Value: 2
+							36 文本 组件
+						37 内容列表
+							38 link Button, Value: 127.0.0.1:4199/rustify-ui/zh/components/button/
+							39 link Label, Value: 127.0.0.1:4199/rustify-ui/zh/components/label/
+							40 link Link, Value: 127.0.0.1:4199/rustify-ui/zh/components/link/
+							41 link Icon, Value: 127.0.0.1:4199/rustify-ui/zh/components/icon/
+							42 link Text field, Value: 127.0.0.1:4199/rustify-ui/zh/components/text-field/
+							43 link Text area, Value: 127.0.0.1:4199/rustify-ui/zh/components/text-area/
+							44 link Checkbox, Value: 127.0.0.1:4199/rustify-ui/zh/components/checkbox/
+							45 link Radio, Value: 127.0.0.1:4199/rustify-ui/zh/components/radio/
+							46 link Switch, Value: 127.0.0.1:4199/rustify-ui/zh/components/switch/
+							47 link Select, Value: 127.0.0.1:4199/rustify-ui/zh/components/select/
+							48 link Slider, Value: 127.0.0.1:4199/rustify-ui/zh/components/slider/
+							49 link Progress, Value: 127.0.0.1:4199/rustify-ui/zh/components/progress/
+							50 link Loading, Value: 127.0.0.1:4199/rustify-ui/zh/components/loading/
+							51 link Tooltip, Value: 127.0.0.1:4199/rustify-ui/zh/components/tooltip/
+							52 link Menu, Value: 127.0.0.1:4199/rustify-ui/zh/components/menu/
+							53 link Dialog, Value: 127.0.0.1:4199/rustify-ui/zh/components/dialog/
+							54 link Tabs, Value: 127.0.0.1:4199/rustify-ui/zh/components/tabs/
+							55 link Scroll area, Value: 127.0.0.1:4199/rustify-ui/zh/components/scroll-area/
+							56 link Data table, Value: 127.0.0.1:4199/rustify-ui/zh/components/data-table/
+							57 link Tree, Value: 127.0.0.1:4199/rustify-ui/zh/components/tree/
+							58 link Toast, Value: 127.0.0.1:4199/rustify-ui/zh/components/toast/
+							59 link Number field, Value: 127.0.0.1:4199/rustify-ui/zh/components/number-field/
+							60 link Color field, Value: 127.0.0.1:4199/rustify-ui/zh/components/color-field/
+							61 link Toggle group, Value: 127.0.0.1:4199/rustify-ui/zh/components/toggle-group/
+					62 container 本页目录
+						63 文本 本页目录
+						64 内容列表
+							65 link Example, Value: 127.0.0.1:4199/rustify-ui/zh/components/button/#example
+							66 link Capabilities, Value: 127.0.0.1:4199/rustify-ui/zh/components/button/#capabilities
+							67 link GPU integration, Value: 127.0.0.1:4199/rustify-ui/zh/components/button/#gpu-integration
+					68 container
+						69 标题 Button, Value: 1
+							70 文本 Button
+						71 文本 此页面尚未翻译。
+						72 container Example
+							73 文本 label as children, variant, size, disabled; a disabled button leaves the tab order and calls nothing
+							74 标题 Example, Value: 2
+								75 文本 Example
+							76 container 交互示例
+								77 container
+									78 container
+										79 按钮 Increment
+										80 按钮 Reset
+										81 按钮 (disabled) Unavailable
+										82 文本 Count: 2
+										83 container 2
+							84 文本 交互示例
+							85 文本 site/src/demos/basics.rs
+							86 标签页组 (selectable)
+								87 标签 (selected) 函数
+								88 标签 (selectable) 完整文件
+							89 按钮 复制
+							90 container 函数
+								91 container
+									92 text /// Buttons request changes to state owned by the application. pub fn button_demo() -> impl IntoView { let count = RwSignal::new(0_u32); view! { <div class="space-y-4"> <div class="flex flex-wrap items-center gap-3"> <Button on_click=move || count.update(|count| *count += 1)> "Increment" </Button> <Button variant=ButtonVariant::Outline on_click=move || count.set(0)> "Reset" </Button> <Button disabled=true on_click=move || count.update(|count| *count += 100)> "Unavailable" </Button> </div> <p class="text-sm">"Count: "<output data-demo-state="">{move || count.get()}</output></p> </div> } }
+							93 标题 Capabilities, Value: 2
+								94 文本 Capabilities
+							95 container Component capabilities
+								96 表格
+									97 row (selectable) Capability
+Support
+Details
+									98 row (selectable)
+										99 单元格 (selectable) properties
+										100 单元格 (selectable) yes
+										101 单元格 (selectable) label as children, variant, size, disabled; a disabled button leaves the tab order and calls nothing
+									102 row (selectable)
+										103 单元格 (selectable) actions
+										104 单元格 (selectable) yes
+										105 单元格 (selectable) click; the DOM and the region button call the same application action
+									106 row (selectable)
+										107 单元格 (selectable) theme
+										108 单元格 (selectable) yes
+										109 单元格 (selectable) seven variants and four sizes, all drawn from the scope's tokens
+									110 row (selectable)
+										111 单元格 (selectable) input
+										112 单元格 (selectable) yes
+										113 单元格 (selectable) pointer and Enter/Space, from either half
+									114 row (selectable)
+										115 单元格 (selectable) accessibility
+										116 单元格 (selectable) yes
+										117 单元格 (selectable) a native button; the region's has a DOM control with the same name and action
+									118 row (selectable)
+										119 单元格 (selectable) environment
+										120 单元格 (selectable) yes
+										121 单元格 (selectable) macOS Chrome, strict CSP, WebGL2 region; no inline script or style
+							122 标题 GPU integration, Value: 2
+								123 文本 GPU integration
+							124 container
+								125 文本 GPU drawing support: yes. This documentation example uses the DOM component. See the 
+								126 link component catalogue example, Value: github.com/rockie/rustify-ui/tree/main/examples/component-catalog
+								127 文本  for the available DOM and GPU presentations.
+						128 link 编辑此页, Value: github.com/rockie/rustify-ui/edit/main/site/src/lib.rs
+						129 container 上一页 / 下一页
+							130 link 上一页 Vellum example and framework capabilities, Value: 127.0.0.1:4199/rustify-ui/zh/vellum/
+							131 link 下一页 Label, Value: 127.0.0.1:4199/rustify-ui/zh/components/label/
+					132 container 页脚导航
+						133 link 返回首页, Value: 127.0.0.1:4199/rustify-ui/zh/
+				134 滚动条 (settable, float) 0
+	135 工具栏
+		136 container Secondary Actions: 移到上一项, 移到下一项, 从工具栏移除
+			137 按钮 Description: 显示边栏, ID: SidebarButton
+			138 菜单按钮 Description: 标签页组选择器, ID: TabGroupPickerButton?TabGroup=
+		139 container BackForwardSegmentedControl
+			140 按钮 Description: 返回, Help: 显示上一页, ID: BackButton
+			141 按钮 (disabled) Description: 前进, Help: 显示下一页, ID: ForwardButton
+		142 container Secondary Actions: 移到上一项, 移到下一项, 从工具栏移除
+			143 按钮 页面菜单, ID: AssistantButton
+			144 按钮 将页面添加到阅读列表, ID: OneStepBookmarkingButton
+			145 文本栏 (settable) Description: 智能搜索栏, Value: 127.0.0.1:4199/rustify-ui/zh/components/button/, ID: WEB_BROWSER_ADDRESS_AND_SEARCH_FIELD
+			146 按钮 翻译可用, ID: TranslationButton
+			147 按钮 重新加载此页面, ID: ReloadButton
+		148 按钮 Description: 共享, ID: ShareButton, Secondary Actions: 移到上一项, 移到下一项, 从工具栏移除
+		149 按钮 Description: 新建标签页, ID: NewTabButton, Secondary Actions: 移到上一项, 移到下一项, 从工具栏移除
+		150 按钮 Description: 标签页概览, ID: TabOverviewButton, Secondary Actions: 移到上一项, 从工具栏移除
+	151 标签页组 Description: 标签页栏，5个标签页, ID: TabBar?isSeparate=false
+		152 标签 Home | Home semantics, Value: off, Secondary Actions: 关闭标签页, ID: TabBarTab?isNarrow=false&isExpanded=false&tabCount=&isPinned=false&isCluster=false&clusterID=&isActive=false
+			153 图像 FaviconImageView
+			154 文本 Value: Home | Home semantics, ID: UnifiedTabBarButton._titleTextField
+		155 标签 Rustify UI, Value: off, Secondary Actions: 关闭标签页, ID: TabBarTab?isNarrow=false&isExpanded=false&tabCount=&isPinned=false&isCluster=false&clusterID=&isActive=false
+			156 图像 FaviconImageView
+			157 文本 Value: Rustify UI, ID: UnifiedTabBarButton._titleTextField
+		158 标签 Architecture | Rustify UI, Value: off, Secondary Actions: 关闭标签页, ID: TabBarTab?isNarrow=false&isExpanded=false&tabCount=&isPinned=false&isCluster=false&clusterID=&isActive=false
+			159 图像 FaviconImageView
+			160 文本 Value: Architecture | Rustify UI, ID: UnifiedTabBarButton._titleTextField
+		161 标签 Quick start | Rustify UI, Value: off, Secondary Actions: 关闭标签页, ID: TabBarTab?isNarrow=false&isExpanded=false&tabCount=&isPinned=false&isCluster=false&clusterID=&isActive=false
+			162 图像 FaviconImageView
+			163 文本 Value: Quick start | Rustify UI, ID: UnifiedTabBarButton._titleTextField
+		164 标签 Button | Rustify UI, Help: 若要与此按钮中的项目交互，请按下Control-Option-Shift-下箭头键。, Value: on, Secondary Actions: 关闭标签页, ID: TabBarTab?isNarrow=false&isExpanded=false&tabCount=&isPinned=false&isCluster=false&clusterID=&isActive=true
+			165 图像 FaviconImageView
+			166 文本 Value: Button | Rustify UI, ID: UnifiedTabBarButton._titleTextField
+	167 关闭按钮
+	168 全屏幕按钮 Help: 此按钮也可以执行缩放窗口的操作, Secondary Actions: 缩放窗口
+	169 最小化按钮
+170 menu bar
+	171 Safari浏览器
+	172 文件
+	173 编辑
+	174 显示, ID: SafariViewMenu
+	175 历史记录
+	176 书签, ID: SafariBookmarksMenu
+	177 窗口, ID: SafariWindowMenu
+	178 帮助, ID: SafariHelpMenu
+
+The focused UI element is 77 container

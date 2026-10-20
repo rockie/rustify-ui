@@ -1,0 +1,565 @@
+[
+  {
+    "label": "skip-focus",
+    "at": "2026-10-16T09:02:21.625Z",
+    "facts": {
+      "url": "http://127.0.0.1:4199/rustify-ui/zh/quickstart/",
+      "viewport": {
+        "width": 375,
+        "height": 812,
+        "dpr": 1
+      },
+      "overflow": 0,
+      "focus": {
+        "tag": "A",
+        "id": "",
+        "text": "跳到正文",
+        "visible": true,
+        "outline": "rgb(23, 92, 211) solid 3px"
+      },
+      "dialog": false,
+      "state": "closed",
+      "query": "",
+      "count": "",
+      "options": 0
+    },
+    "file": "M2-skip-focus.png"
+  },
+  {
+    "label": "skip-destination",
+    "at": "2026-10-16T09:02:21.628Z",
+    "facts": {
+      "url": "http://127.0.0.1:4199/rustify-ui/zh/quickstart/#content",
+      "viewport": {
+        "width": 375,
+        "height": 812,
+        "dpr": 1
+      },
+      "overflow": 0,
+      "focus": {
+        "tag": "BODY",
+        "id": "",
+        "text": "跳到正文Rustify UIGitHub 源码搜索Ctrl / Cmd K中文English中文跟随系统浅色深色GitHub 源码指南快速开始Architect",
+        "visible": false,
+        "outline": "rgb(29, 41, 57) none 3px"
+      },
+      "dialog": false,
+      "state": "closed",
+      "query": "",
+      "count": "",
+      "options": 0
+    },
+    "file": null
+  },
+  {
+    "label": "language-open",
+    "at": "2026-10-16T09:02:21.675Z",
+    "facts": {
+      "url": "http://127.0.0.1:4199/rustify-ui/zh/quickstart/#content",
+      "viewport": {
+        "width": 375,
+        "height": 812,
+        "dpr": 1
+      },
+      "overflow": 0,
+      "focus": {
+        "tag": "SUMMARY",
+        "id": "",
+        "text": "中文",
+        "visible": true,
+        "outline": "rgb(23, 92, 211) solid 3px"
+      },
+      "dialog": false,
+      "state": "closed",
+      "query": "",
+      "count": "",
+      "options": 0
+    },
+    "file": "M2-language-open.png"
+  },
+  {
+    "label": "language-escape",
+    "at": "2026-10-16T09:02:21.708Z",
+    "facts": {
+      "url": "http://127.0.0.1:4199/rustify-ui/zh/quickstart/#content",
+      "viewport": {
+        "width": 375,
+        "height": 812,
+        "dpr": 1
+      },
+      "overflow": 0,
+      "focus": {
+        "tag": "SUMMARY",
+        "id": "",
+        "text": "中文",
+        "visible": true,
+        "outline": "rgb(23, 92, 211) solid 3px"
+      },
+      "dialog": false,
+      "state": "closed",
+      "query": "",
+      "count": "",
+      "options": 0
+    },
+    "file": "M2-language-escape.png"
+  },
+  {
+    "label": "tab-cycle-0",
+    "at": "2026-10-16T09:02:21.775Z",
+    "facts": {
+      "url": "http://127.0.0.1:4199/rustify-ui/zh/quickstart/#content",
+      "viewport": {
+        "width": 375,
+        "height": 812,
+        "dpr": 1
+      },
+      "overflow": 0,
+      "focus": {
+        "tag": "BODY",
+        "id": "",
+        "text": "跳到正文Rustify UIGitHub 源码搜索Ctrl / Cmd K中文English中文跟随系统浅色深色GitHub 源码指南快速开始Architect",
+        "visible": false,
+        "outline": "rgb(29, 41, 57) none 3px"
+      },
+      "dialog": true,
+      "state": "results",
+      "query": "ThemeScope",
+      "count": "3 个结果",
+      "options": 3
+    },
+    "file": "M2-tab-cycle-0.png"
+  },
+  {
+    "label": "tab-cycle-1",
+    "at": "2026-10-16T09:02:21.778Z",
+    "facts": {
+      "url": "http://127.0.0.1:4199/rustify-ui/zh/quickstart/#content",
+      "viewport": {
+        "width": 375,
+        "height": 812,
+        "dpr": 1
+      },
+      "overflow": 0,
+      "focus": {
+        "tag": "BUTTON",
+        "id": "",
+        "text": "关闭",
+        "visible": true,
+        "outline": "rgb(23, 92, 211) solid 3px"
+      },
+      "dialog": true,
+      "state": "results",
+      "query": "ThemeScope",
+      "count": "3 个结果",
+      "options": 3
+    },
+    "file": null
+  },
+  {
+    "label": "tab-cycle-2",
+    "at": "2026-10-16T09:02:21.779Z",
+    "facts": {
+      "url": "http://127.0.0.1:4199/rustify-ui/zh/quickstart/#content",
+      "viewport": {
+        "width": 375,
+        "height": 812,
+        "dpr": 1
+      },
+      "overflow": 0,
+      "focus": {
+        "tag": "INPUT",
+        "id": "rd-search-input",
+        "text": "ThemeScope",
+        "visible": true,
+        "outline": "rgb(23, 92, 211) solid 3px"
+      },
+      "dialog": true,
+      "state": "results",
+      "query": "ThemeScope",
+      "count": "3 个结果",
+      "options": 3
+    },
+    "file": null
+  },
+  {
+    "label": "tab-cycle-3",
+    "at": "2026-10-16T09:02:21.780Z",
+    "facts": {
+      "url": "http://127.0.0.1:4199/rustify-ui/zh/quickstart/#content",
+      "viewport": {
+        "width": 375,
+        "height": 812,
+        "dpr": 1
+      },
+      "overflow": 0,
+      "focus": {
+        "tag": "BODY",
+        "id": "",
+        "text": "跳到正文Rustify UIGitHub 源码搜索Ctrl / Cmd K中文English中文跟随系统浅色深色GitHub 源码指南快速开始Architect",
+        "visible": false,
+        "outline": "rgb(29, 41, 57) none 3px"
+      },
+      "dialog": true,
+      "state": "results",
+      "query": "ThemeScope",
+      "count": "3 个结果",
+      "options": 3
+    },
+    "file": null
+  },
+  {
+    "label": "reverse-tab",
+    "at": "2026-10-16T09:02:21.781Z",
+    "facts": {
+      "url": "http://127.0.0.1:4199/rustify-ui/zh/quickstart/#content",
+      "viewport": {
+        "width": 375,
+        "height": 812,
+        "dpr": 1
+      },
+      "overflow": 0,
+      "focus": {
+        "tag": "INPUT",
+        "id": "rd-search-input",
+        "text": "ThemeScope",
+        "visible": true,
+        "outline": "rgb(23, 92, 211) solid 3px"
+      },
+      "dialog": true,
+      "state": "results",
+      "query": "ThemeScope",
+      "count": "3 个结果",
+      "options": 3
+    },
+    "file": null
+  },
+  {
+    "label": "search-escape",
+    "at": "2026-10-16T09:02:21.809Z",
+    "facts": {
+      "url": "http://127.0.0.1:4199/rustify-ui/zh/quickstart/#content",
+      "viewport": {
+        "width": 375,
+        "height": 812,
+        "dpr": 1
+      },
+      "overflow": 0,
+      "focus": {
+        "tag": "BUTTON",
+        "id": "",
+        "text": "搜索Ctrl / Cmd K",
+        "visible": true,
+        "outline": "rgb(23, 92, 211) solid 3px"
+      },
+      "dialog": false,
+      "state": "results",
+      "query": "ThemeScope",
+      "count": "3 个结果",
+      "options": 3
+    },
+    "file": "M2-search-escape.png"
+  },
+  {
+    "label": "reopen-preserved",
+    "at": "2026-10-16T09:02:21.858Z",
+    "facts": {
+      "url": "http://127.0.0.1:4199/rustify-ui/zh/quickstart/#content",
+      "viewport": {
+        "width": 375,
+        "height": 812,
+        "dpr": 1
+      },
+      "overflow": 0,
+      "focus": {
+        "tag": "INPUT",
+        "id": "rd-search-input",
+        "text": "ThemeScope",
+        "visible": true,
+        "outline": "rgb(23, 92, 211) solid 3px"
+      },
+      "dialog": true,
+      "state": "results",
+      "query": "ThemeScope",
+      "count": "3 个结果",
+      "options": 3
+    },
+    "file": "M2-reopen-preserved.png"
+  },
+  {
+    "label": "close-focus",
+    "at": "2026-10-16T09:02:21.875Z",
+    "facts": {
+      "url": "http://127.0.0.1:4199/rustify-ui/zh/quickstart/#content",
+      "viewport": {
+        "width": 375,
+        "height": 812,
+        "dpr": 1
+      },
+      "overflow": 0,
+      "focus": {
+        "tag": "BUTTON",
+        "id": "",
+        "text": "关闭",
+        "visible": true,
+        "outline": "rgb(23, 92, 211) solid 3px"
+      },
+      "dialog": true,
+      "state": "results",
+      "query": "ThemeScope",
+      "count": "3 个结果",
+      "options": 3
+    },
+    "file": "M2-close-focus.png"
+  },
+  {
+    "label": "close-return",
+    "at": "2026-10-16T09:02:21.892Z",
+    "facts": {
+      "url": "http://127.0.0.1:4199/rustify-ui/zh/quickstart/#content",
+      "viewport": {
+        "width": 375,
+        "height": 812,
+        "dpr": 1
+      },
+      "overflow": 0,
+      "focus": {
+        "tag": "BUTTON",
+        "id": "",
+        "text": "搜索Ctrl / Cmd K",
+        "visible": true,
+        "outline": "rgb(23, 92, 211) solid 3px"
+      },
+      "dialog": false,
+      "state": "results",
+      "query": "ThemeScope",
+      "count": "3 个结果",
+      "options": 3
+    },
+    "file": "M2-close-return.png"
+  },
+  {
+    "label": "home-primary",
+    "at": "2026-10-16T09:02:21.957Z",
+    "facts": {
+      "url": "http://127.0.0.1:4199/rustify-ui/quickstart/",
+      "viewport": {
+        "width": 375,
+        "height": 812,
+        "dpr": 1
+      },
+      "overflow": 0,
+      "focus": {
+        "tag": "BODY",
+        "id": "",
+        "text": "Skip to contentRustify UIGitHubSearchCtrl / Cmd KEnglishEnglish中文SystemLightDark",
+        "visible": false,
+        "outline": "rgb(29, 41, 57) none 3px"
+      },
+      "dialog": false,
+      "state": "closed",
+      "query": "",
+      "count": "",
+      "options": 0
+    },
+    "file": null
+  },
+  {
+    "label": "home-secondary",
+    "at": "2026-10-16T09:02:22.025Z",
+    "facts": {
+      "url": "http://127.0.0.1:4199/rustify-ui/components/button/",
+      "viewport": {
+        "width": 375,
+        "height": 812,
+        "dpr": 1
+      },
+      "overflow": 0,
+      "focus": {
+        "tag": "BODY",
+        "id": "",
+        "text": "Skip to contentRustify UIGitHubSearchCtrl / Cmd KEnglishEnglish中文 · 此页面尚未翻译。Syst",
+        "visible": false,
+        "outline": "rgb(29, 41, 57) none 3px"
+      },
+      "dialog": false,
+      "state": "closed",
+      "query": "",
+      "count": "",
+      "options": 0
+    },
+    "file": null
+  },
+  {
+    "label": "language-link",
+    "at": "2026-10-16T09:02:22.138Z",
+    "facts": {
+      "url": "http://127.0.0.1:4199/rustify-ui/quickstart/",
+      "viewport": {
+        "width": 375,
+        "height": 812,
+        "dpr": 1
+      },
+      "overflow": 0,
+      "focus": {
+        "tag": "BODY",
+        "id": "",
+        "text": "Skip to contentRustify UIGitHubSearchCtrl / Cmd KEnglishEnglish中文SystemLightDark",
+        "visible": false,
+        "outline": "rgb(29, 41, 57) none 3px"
+      },
+      "dialog": false,
+      "state": "closed",
+      "query": "",
+      "count": "",
+      "options": 0
+    },
+    "file": null
+  },
+  {
+    "label": "section-anchor",
+    "at": "2026-10-16T09:02:22.264Z",
+    "facts": {
+      "url": "http://127.0.0.1:4199/rustify-ui/zh/quickstart/#prerequisites",
+      "viewport": {
+        "width": 375,
+        "height": 812,
+        "dpr": 1
+      },
+      "overflow": 0,
+      "focus": {
+        "tag": "BODY",
+        "id": "",
+        "text": "跳到正文Rustify UIGitHub 源码搜索Ctrl / Cmd K中文English中文跟随系统浅色深色GitHub 源码指南快速开始Architect",
+        "visible": false,
+        "outline": "rgb(29, 41, 57) none 3px"
+      },
+      "dialog": false,
+      "state": "closed",
+      "query": "",
+      "count": "",
+      "options": 0
+    },
+    "file": "M2-section-anchor.png"
+  },
+  {
+    "label": "section-href",
+    "href": "#prerequisites"
+  },
+  {
+    "label": "code-horizontal",
+    "at": "2026-10-16T09:02:22.493Z",
+    "facts": {
+      "url": "http://127.0.0.1:4199/rustify-ui/zh/quickstart/#prerequisites",
+      "viewport": {
+        "width": 375,
+        "height": 812,
+        "dpr": 1
+      },
+      "overflow": 0,
+      "focus": {
+        "tag": "BODY",
+        "id": "",
+        "text": "跳到正文Rustify UIGitHub 源码搜索Ctrl / Cmd K中文English中文跟随系统浅色深色GitHub 源码指南快速开始Architect",
+        "visible": false,
+        "outline": "rgb(29, 41, 57) none 3px"
+      },
+      "dialog": false,
+      "state": "closed",
+      "query": "",
+      "count": "",
+      "options": 0
+    },
+    "file": "M2-code-horizontal.png"
+  },
+  {
+    "label": "code-scroll",
+    "initial": {
+      "clientWidth": 341,
+      "scrollWidth": 521,
+      "left": 0
+    },
+    "after": {
+      "left": 180,
+      "clientWidth": 341,
+      "scrollWidth": 521
+    }
+  },
+  {
+    "label": "noscript-navigation",
+    "at": "2026-10-16T09:02:22.690Z",
+    "facts": {
+      "url": "http://127.0.0.1:4199/rustify-ui/zh/architecture/",
+      "viewport": {
+        "width": 375,
+        "height": 812,
+        "dpr": 1
+      },
+      "overflow": 0,
+      "focus": {
+        "tag": "BODY",
+        "id": "",
+        "text": "跳到正文Rustify UIGitHub 源码搜索Ctrl / Cmd K中文English中文 · 此页面尚未翻译。跟随系统浅色深色GitHub 源码指南快速",
+        "visible": false,
+        "outline": "rgb(29, 41, 57) none 3px"
+      },
+      "dialog": false,
+      "state": "closed",
+      "query": "",
+      "count": "",
+      "options": 0
+    },
+    "file": "M2-noscript-navigation.png"
+  },
+  {
+    "label": "edited-error-retry-focus",
+    "at": "2026-10-16T09:02:22.841Z",
+    "facts": {
+      "url": "http://127.0.0.1:4205/rustify-ui/page-0001/",
+      "viewport": {
+        "width": 375,
+        "height": 812,
+        "dpr": 1
+      },
+      "overflow": 0,
+      "focus": {
+        "tag": "BUTTON",
+        "id": "",
+        "text": "Retry",
+        "visible": true,
+        "outline": "rgb(23, 92, 211) solid 3px"
+      },
+      "dialog": true,
+      "state": "error",
+      "query": "ReachableCustomToken",
+      "count": "",
+      "options": 0
+    },
+    "file": "M2-edited-error-retry-focus.png"
+  },
+  {
+    "label": "edited-error-retry-result",
+    "at": "2026-10-16T09:02:22.941Z",
+    "facts": {
+      "url": "http://127.0.0.1:4205/rustify-ui/page-0001/",
+      "viewport": {
+        "width": 375,
+        "height": 812,
+        "dpr": 1
+      },
+      "overflow": 0,
+      "focus": {
+        "tag": "INPUT",
+        "id": "rd-search-input",
+        "text": "ReachableCustomToken",
+        "visible": true,
+        "outline": "rgb(23, 92, 211) solid 3px"
+      },
+      "dialog": true,
+      "state": "results",
+      "query": "ReachableCustomToken",
+      "count": "1 result",
+      "options": 1
+    },
+    "file": "M2-edited-error-retry-result.png"
+  }
+]

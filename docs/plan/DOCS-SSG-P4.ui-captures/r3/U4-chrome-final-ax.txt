@@ -1,0 +1,337 @@
+The following is a diff from the previous accessibility tree for Window: "快速开始 | Rustify UI" with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+Removed element IDs: 1050-1078
+~						1049 link 跳到正文, Value: 127.0.0.1:4199/rustify-ui/zh/quickstart/#content
++						1050 container
++							1051 link Rustify UI, Value: 127.0.0.1:4199/rustify-ui/zh/
++							1052 container 站点链接
++								1053 内容列表
++									1054 link GitHub 源码, Value: github.com/rockie/rustify-ui
++							1055 弹出式按钮 搜索 Ctrl / Cmd K
++							1056 开合三角标记 中文
++								1057 文本 中文
++							1058 container 主题
++								1059 切换按钮 跟随系统, Value: 1
++								1060 切换按钮 浅色, Value: 0
++								1061 切换按钮 深色, Value: 0
++						1062 container 菜单
++							1063 container
++								1064 标题 指南, Value: 2
++									1065 文本 指南
++								1066 内容列表
++									1067 link 快速开始, Value: 127.0.0.1:4199/rustify-ui/zh/quickstart/
++									1068 link Architecture, Value: 127.0.0.1:4199/rustify-ui/zh/architecture/
++									1069 link Navigation, Value: 127.0.0.1:4199/rustify-ui/zh/navigation/
++									1070 link Workspace, Value: 127.0.0.1:4199/rustify-ui/zh/workspace/
++									1071 link Forms, Value: 127.0.0.1:4199/rustify-ui/zh/forms/
++									1072 link Languages, formatting and text, Value: 127.0.0.1:4199/rustify-ui/zh/i18n/
++									1073 link Data larger than the screen, Value: 127.0.0.1:4199/rustify-ui/zh/data/
++									1074 link Theme documents, Value: 127.0.0.1:4199/rustify-ui/zh/themes/
++									1075 link Runtime utilities, Value: 127.0.0.1:4199/rustify-ui/zh/utility/
++									1076 link Compatibility and capability boundaries (P1 research preview), Value: 127.0.0.1:4199/rustify-ui/zh/compatibility/
++									1077 link Component catalogue, Value: 127.0.0.1:4199/rustify-ui/zh/components/
++									1078 link Vellum example and framework capabilities, Value: 127.0.0.1:4199/rustify-ui/zh/vellum/
++							1079 container
++								1080 标题 组件, Value: 2
++									1081 文本 组件
++								1082 内容列表
++									1083 link Button, Value: 127.0.0.1:4199/rustify-ui/zh/components/button/
++									1084 link Label, Value: 127.0.0.1:4199/rustify-ui/zh/components/label/
++									1085 link Link, Value: 127.0.0.1:4199/rustify-ui/zh/components/link/
++									1086 link Icon, Value: 127.0.0.1:4199/rustify-ui/zh/components/icon/
++									1087 link Text field, Value: 127.0.0.1:4199/rustify-ui/zh/components/text-field/
++									1088 link Text area, Value: 127.0.0.1:4199/rustify-ui/zh/components/text-area/
++									1089 link Checkbox, Value: 127.0.0.1:4199/rustify-ui/zh/components/checkbox/
++									1090 link Radio, Value: 127.0.0.1:4199/rustify-ui/zh/components/radio/
++									1091 link Switch, Value: 127.0.0.1:4199/rustify-ui/zh/components/switch/
++									1092 link Select, Value: 127.0.0.1:4199/rustify-ui/zh/components/select/
++									1093 link Slider, Value: 127.0.0.1:4199/rustify-ui/zh/components/slider/
++									1094 link Progress, Value: 127.0.0.1:4199/rustify-ui/zh/components/progress/
++									1095 link Loading, Value: 127.0.0.1:4199/rustify-ui/zh/components/loading/
++									1096 link Tooltip, Value: 127.0.0.1:4199/rustify-ui/zh/components/tooltip/
++									1097 link Menu, Value: 127.0.0.1:4199/rustify-ui/zh/components/menu/
++									1098 link Dialog, Value: 127.0.0.1:4199/rustify-ui/zh/components/dialog/
++									1099 link Tabs, Value: 127.0.0.1:4199/rustify-ui/zh/components/tabs/
++									1100 link Scroll area, Value: 127.0.0.1:4199/rustify-ui/zh/components/scroll-area/
++									1101 link Data table, Value: 127.0.0.1:4199/rustify-ui/zh/components/data-table/
++									1102 link Tree, Value: 127.0.0.1:4199/rustify-ui/zh/components/tree/
++									1103 link Toast, Value: 127.0.0.1:4199/rustify-ui/zh/components/toast/
++									1104 link Number field, Value: 127.0.0.1:4199/rustify-ui/zh/components/number-field/
++									1105 link Color field, Value: 127.0.0.1:4199/rustify-ui/zh/components/color-field/
++									1106 link Toggle group, Value: 127.0.0.1:4199/rustify-ui/zh/components/toggle-group/
++						1107 container 本页目录
++							1108 文本 本页目录
++							1109 内容列表
++								1110 link 准备工具, Value: 127.0.0.1:4199/rustify-ui/zh/quickstart/#prerequisites
++								1111 link 构建并预览示例, Value: 127.0.0.1:4199/rustify-ui/zh/quickstart/#build-and-preview-an-example
++								1112 link 运行验证, Value: 127.0.0.1:4199/rustify-ui/zh/quickstart/#verification-commands
++								1113 link 修改组件的 class, Value: 127.0.0.1:4199/rustify-ui/zh/quickstart/#changing-a-components-classes
++								1114 link 在应用中使用 Tailwind v4, Value: 127.0.0.1:4199/rustify-ui/zh/quickstart/#using-tailwind-v4-in-your-app
++								1115 link 不使用 GPU region 的 DOM 应用, Value: 127.0.0.1:4199/rustify-ui/zh/quickstart/#a-dom-application-without-gpu-regions
++								1116 link 编写 GPU region, Value: 127.0.0.1:4199/rustify-ui/zh/quickstart/#writing-a-gpu-region
++								1117 link 使用 DOM 组件, Value: 127.0.0.1:4199/rustify-ui/zh/quickstart/#using-the-dom-components
++								1118 link 同一页面上的多个应用, Value: 127.0.0.1:4199/rustify-ui/zh/quickstart/#more-than-one-application-on-a-page
++								1119 link 当前预览的边界, Value: 127.0.0.1:4199/rustify-ui/zh/quickstart/#limits-of-the-preview
++						1120 container
++							1121 标题 快速开始, Value: 1
++								1122 文本 快速开始
++							1123 标题 准备工具, Value: 2
++								1124 文本 准备工具
++							1125 内容列表
++								1126 container
++									1127 AXListMarker • 
++									1128 text 安装并激活  mise （2026.9.2 或更新版本），在仓库根运行  mise install 。它按  mise.toml  安装稳定版 Rust 1.99.0、 rustfmt 、 clippy 、 wasm32-unknown-unknown  target、编译缓存 mbx 1.15.0 和 Tailwind 独立 CLI 4.1.13。组件样式生成不需要 Node。示例自带 Tailwind 输入时， build-web  也使用这个 CLI； RUSTIFY_TAILWIND=<path>  可指定同版本的另一个可执行文件。
++								1129 container
++									1130 AXListMarker • 
++									1131 text Rust 安装后，mise 执行  scripts/link-libllvm.sh ，在  rust-lld  旁建立  libLLVM  链接。mbx 直接启动工具链 Cargo，不经过 rustup 代理；缺少链接时 wasm 链接器无法加载 LLVM。 mbx xtask doctor  会报告这个问题。
++								1132 container
++									1133 AXListMarker • 
++									1134 text 浏览器测试另需 Node 26 和 npm：运行  npm ci ，再运行  npx playwright install chromium 。
++								1135 container
++									1136 AXListMarker • 
++									1137 文本 手动验收使用 macOS 上的 Google Chrome。
++							1138 container
++								1139 text mbx xtask doctor  检查这些工具的状态，不修改环境。
++							1140 标题 构建并预览示例, Value: 2
++								1141 文本 构建并预览示例
++							1142 文本 在仓库根运行：
++							1143 container
++								1144 文本 Shell
++								1145 按钮 复制
++								1146 container
++									1147 text mbx  xtask build-web  -- example  fusion-basic  -- release mbx  xtask build-web  -- example  property-workbench  -- release mbx  xtask build-web  -- example  component-catalog  -- release mbx  xtask serve  -- example  fusion-basic  -- release
++							1148 container
++								1149 text 最后一条命令输出  http://127.0.0.1:<port>/ 。打开地址，等待状态变为  ready ，再操作 DOM 控件和 GPU region。修改源码后重新构建并刷新； serve  只提供已有产物，不负责重建。
++							1150 文本 需要子路径、部署故障或体积报告时，使用现有参数：
++							1151 container
++								1152 文本 Shell
++								1153 按钮 复制
++								1154 container
++									1155 text mbx  xtask build-web  -- example  fusion-basic  -- release  -- base  /tools/demo/ mbx  xtask serve  -- example  fusion-basic  -- release  -- base  /tools/demo/  -- port  4173 mbx  xtask serve  -- example  fusion-basic  -- release  -- csp  no-wasm mbx  xtask serve  -- example  fusion-basic  -- release  -- fault  missing:makepad_widgets/resources/IBMPlexSans-Text.ttf mbx  xtask report-size  -- example  fusion-basic  -- release mbx  xtask report-size  -- example  fusion-basic  -- release  -- compressed
++							1156 container
++								1157 text serve --fault  在运行中的产物上注入一种故障： missing:<path> 、 corrupt:<path> 、 truncated:<path>  或  stale-bridge 。服务启动后也接受  GET <base>__fault/<spec> ；访问  .../none  停止注入，浏览器测试用它切换故障而不重启服务。
++							1158 container
++								1159 text build-web  使用 fork 内的  cargo-makepad ，以稳定工具链、内置 wasm target 和单线程 wasm 构建，并在进程内运行 wasm-bindgen。它通过宿主解释器从 wasm 提取静态消息桥，复制运行期脚本和示例页面，写入包含体积报告的  build-manifest.json 。产物位于  target/makepad-wasm-app/release/<example>/ ，可作为静态目录部署。
++							1160 container
++								1161 link Vellum 设计编辑器, Value: github.com/rockie/rustify-ui/tree/main/examples/vellum
++								1162 text  使用  mbx xtask build-web --example vellum --release ；
++								1163 link 集成指南, Value: 127.0.0.1:4199/rustify-ui/zh/vellum/
++								1164 文本  解释它的绘制、编辑与持久化路径。
++							1165 container
++								1166 link Theme Studio 主题编辑器, Value: github.com/rockie/rustify-ui/blob/main/examples/theme-studio/README.md
++								1167 文本  的入口为：
++							1168 container
++								1169 文本 Shell
++								1170 按钮 复制
++								1171 container
++									1172 text mbx  xtask build-web  -- example  theme-studio  -- release mbx  xtask serve  -- example  theme-studio  -- release
++							1173 container
++								1174 文本 选择预设，编辑浅色和深色值，对比 DOM/GPU 预览，再导出供动态应用使用的 JSON 或供静态页面使用的 CSS。
++								1175 link 主题指南, Value: 127.0.0.1:4199/rustify-ui/zh/themes/
++								1176 文本  介绍两种导出格式、字体资源和 Rust 集成片段；示例 README 说明本地存储、子路径托管与浏览器检查。
++							1177 标题 运行验证, Value: 2
++								1178 文本 运行验证
++							1179 container
++								1180 文本 Shell
++								1181 按钮 复制
++								1182 container
++									1183 text mbx  test  -- locked  -- workspace  -- exclude  rustify-docs  -- exclude  rustify-docs-cli  -- lib  -- bins mbx  xtask css  -- check mbx  clippy  -- locked  -- workspace  -- exclude  rustify-docs  -- exclude  rustify-docs-cli  -- all-targets  --  -D warnings mbx  test  -- locked  - p  rustify-docs mbx  test  -- locked  - p  rustify-docs-cli cargo  fmt  -- all  --  --check mbx  xtask sources verify mbx  test  -- locked  - p  rustify-ui  -- lib mbx  test  -- locked  - p  rustify-ui  -- features  gpu  -- lib mbx  test  -- locked  - p  rustify-ui  -- no-default-features  -- features  ssr  -- lib mbx  xtask docs-verify  -- group  features npx  playwright test  - c  playwright.docs.config.ts  -- project = dom-only npx  playwright test  - c  playwright.docs.config.ts  -- project = docs-root npx  playwright test  -- project = component-catalog RUSTIFY_TIER = evidence npx  playwright test  -- project = budget ( cd  makepad && mbx  test  - p  cargo-makepad ) mbx  xtask verify  -- suite  p3
++							1184 container
++								1185 text 文档库与 CLI 使用宿主 SSR，须分别测试，避免与工作区 CSR feature 合并。 --bins  将 xtask 和示例二进制一并纳入。文档站还有  docs-subpath 、 docs-meta  项目； docs-dev  检查  rustify-docs dev 。
++							1186 container
++								1187 text 浏览器检查分为默认的 regression 和  RUSTIFY_TIER=evidence  两层。前者检查行为，后者执行完整次数的预算、长时间运行、内存和空闲开销测量； .github/workflows/evidence.yml  支持手动和每周运行。每次指定一个 project，避免同时启动整个测试集造成内存不足。
++							1188 container
++								1189 text verify  还会双构建、运行各浏览器项目，并列出 VoiceOver、真实拼音输入、示例对照和缩放走查等人工记录。没有证据的项目标为缺失，不算通过。
++							1190 标题 修改组件的 class, Value: 2
++								1191 文本 修改组件的 class
++							1192 文本 组件 crate 使用无前缀的 Tailwind v4 utility，并提交生成后的样式表，因此 wasm 构建无需 Node。改动组件 class 后运行：
++							1193 container
++								1194 文本 Shell
++								1195 按钮 复制
++								1196 container
++									1197 text mbx  xtask css mbx  xtask css  -- check
++							1198 container
++								1199 text 第一条更新  crates/rustify-components/css/rustify.css ，第二条核对生成结果。增加 class 而未重新生成会导致缺少规则。 build-web  将该样式表复制到依赖组件 crate 的示例；示例自带 Tailwind 输入时使用下一节的构建路径。组件样式表只包含组件用到的 class。
++							1200 container
++								1201 text 应用传入的  class  通过  tw_merge  与组件 class 合并，调用方在后： p-6  会替换组件的  p-4 ，同状态下的  hover:bg-accent  替换原 hover 背景，其他类别保留。
++							1202 container
++								1203 text SDK 样式不带 Preflight 或裸元素选择器，主题 token 只写在 scope 根节点上。 dark  绑定 SDK 的 scope 属性，不会因宿主页的  .dark  class 而改变主题。不过 class 名与宿主页共享；宿主页自己的 Tailwind 产物再叠加  rustify.css  时，同名 utility 会出现两份规则。
++							1204 标题 在应用中使用 Tailwind v4, Value: 2
++								1205 文本 在应用中使用 Tailwind v4
++							1206 container
++								1207 text 把  tailwind.css  放在应用的  Cargo.toml  旁。 build-web  用固定版本的独立 CLI 编译并压缩到产物的  tailwind.css ；缺少 CLI 或版本不符会在 wasm 构建前失败。修改应用 class 后用同一个构建命令更新 wasm 和 CSS，不提交生成产物。
++							1208 container
++								1209 text examples/component-catalog/tailwind.css  的输入方式如下，路径相对于该输入文件：
++							1210 container
++								1211 文本 CSS
++								1212 按钮 复制
++								1213 container
++									1214 text @ import " tailwindcss/theme.css "  layer ( theme ) ; @ import " tailwindcss/utilities.css "  layer ( utilities )  source ( none ) ; /*  整个页面由应用拥有时，才考虑导入 preflight.css 到 base 层。  */ @ import " ../../crates/rustify-components/css/sdk.css " ; @ source  ". / src";
++							1215 container
++								1216 text 页面用这个产物替换  rustify.css ，通过外部  <link>  引入。严格的  style-src 'self'  策略不允许  <style> ：
++							1217 container
++								1218 文本 HTML
++								1219 按钮 复制
++								1220 container
++									1221 text < link rel = " stylesheet " href = " ./tailwind.css " >
++							1222 内容列表
++								1223 container
++									1224 AXListMarker • 
++									1225 text sdk.css  包含组件源文件、 dark  variant、token utility、原生样式和默认 scope token，不自行导入 Tailwind；应用决定使用哪些 Tailwind 层。
++								1226 container
++									1227 AXListMarker • 
++									1228 text source(none)  必须保留。CLI 在仓库根运行，省略后会把全仓看起来像 class 的词语都生成规则。用  @source  指定输入；被指定源码中的注释也参与扫描，例如注释里的  table  会生成  .table 。
++								1229 container
++									1230 AXListMarker • 
++									1231 文本 Preflight 会重置整页元素。宿主页上有其他所有者的内容时不要导入；SDK 自带样式始终不含它。
++							1232 container
++								1233 text 颜色 utility（ bg- 、 text- 、 border- 、 ring- 、 fill-  等）可用主题名： background 、 foreground 、 primary 、 primary-foreground 、 secondary 、 secondary-foreground 、 muted 、 muted-foreground 、 accent 、 accent-foreground 、 destructive 、 destructive-foreground 、 card 、 popover 、 success 、 warning 、 border 、 input  和  ring ，也支持  bg-primary/90  这类透明度。
++							1234 container
++								1235 text rounded-sm 、 rounded-md 、 rounded-lg  随 scope 的  --radius  变化；颜色最终解析为  var(--primary)  等值，会跟随 scope 和内部的  ThemeOverride ，离开已挂载 scope 则没有这些值。传统 scope 中  p-4  仍是 Tailwind 的  1rem ； --spacing  是手写布局 CSS 的间距，不是 Tailwind 单位。
++							1236 container
++								1237 text dark:  表示位于  [data-rustify-scope][data-theme="dark"]  内，跟随  ThemedScope  的显式模式，不跟随页面  .dark  或  prefers-color-scheme ，也不作用于 scope 外。
++							1238 container
++								1239 text 使用版本化主题文档时，在  sdk.css  后紧接着导入 
++								1240 link theme-v4.css, Value: github.com/rockie/rustify-ui/blob/main/crates/rustify-components/css/theme-v4.css
++								1241 text 。 ThemeScope  在根节点提供文档解析后的颜色、字体、间距、圆角和阴影；这些 scope 的 utility 间距读取  --rustify-unit ， --layout-gap  仍是独立布局值。 ThemedScope  保留旧值回退，两种 provider 的显式深色模式都适用于  dark: 。
++							1242 container
++								1243 text 通过  import_json  载入 JSON，用宿主根字号和减少动效偏好构造  font_context ，解析得到  Arc<ResolvedTheme> ，再传给  ThemeScope  和 GPU region 的类型化 props。局部补丁使用  ThemeBoundary 。
++								1244 link 挂载示例, Value: 127.0.0.1:4199/rustify-ui/zh/themes/#mount-a-browser-scope
++								1245 文本  给出完整代码和样式表顺序。运行中的 provider 拥有 CSSOM 值，应更新它的解析后信号；粘贴静态导出 CSS 无法替换这些运行期值。
++							1246 container
++								1247 text 组件的  class  继续按调用方在后合并。同一种类、同一状态的 class 被替换，其他 class 增加到结果中。
++							1248 container
++								1249 text 宿主页已有 Tailwind 构建时，在自己的 Tailwind 导入后接入  sdk.css ，只链接一个最终产物，不再额外链接  rustify.css 。同一构建中，最后声明的  @custom-variant dark  影响所有 class，最后声明的  @theme  值决定同名颜色，包括组件的 utility。宿主若需要不同含义的  dark  或  bg-primary ，必须先解决这两个定义的冲突。
++							1250 文本 SDK 自带自身控件使用的界面文案，应用业务词汇由应用维护：
++							1251 container
++								1252 文本 Rust
++								1253 按钮 复制
++								1254 container
++									1255 text let  locale  = rustify_ui :: provide_locale ( Locale :: English ) ; locale . text ( Message :: Retry )
++							1256 container
++								1257 text 在 scope 根调用一次  provide_locale ； text  会跟踪语言变化。 format_number  和  format_date  接受应用构造的 Intl 参数，因为数值含义决定展示格式。参见
++								1258 link 本地化指南, Value: 127.0.0.1:4199/rustify-ui/zh/i18n/
++								1259 文本 。
++							1260 标题 不使用 GPU region 的 DOM 应用, Value: 2
++								1261 文本 不使用 GPU region 的 DOM 应用
++							1262 container
++								1263 text rustify-ui  和  rustify-components  默认仅使用 DOM，不链接 Makepad。 GpuRegion 、 RegionApp 、 RegionId 、 RegionState 、 makepad_widgets  只在  gpu  feature 下可用；挂载、浮层、toast、任务、监听、延迟操作、尺寸观察、路由、主题和 DOM 组件沿用相同接口。
++							1264 container
++								1265 text 独立应用需要稳定版 Rust、 wasm32-unknown-unknown  target 和 SDK 固定版本的 wasm-bindgen CLI，不需要本仓的 mbx、xtask、Node 或 Makepad。
++							1266 container
++								1267 text 应用是一个导出启动函数的  cdylib ，另用小型宿主程序把 SDK loader 和样式表写到 wasm 旁。
++								1268 link 完整消费示例, Value: github.com/rockie/rustify-ui/tree/main/tests/dom-only/consumer
++								1269 text  的  Cargo.toml  使用本仓 path 依赖，
++								1270 link 资源导出程序, Value: github.com/rockie/rustify-ui/blob/main/tests/dom-only/consumer/src/bin/export-dom-assets.rs
++								1271 文本  负责输出资源。在仓库外，两个 SDK 依赖改为已验证的 Git 来源：
++							1272 container
++								1273 文本 TOML
++								1274 按钮 复制
++								1275 container
++									1276 text rustify-ui = { git = " https://github.com/rockie/rustify-ui " , rev = " 1b81de25f23a25702f61dbfd3d0ecdfe323d4d44 " } rustify-components = { git = " https://github.com/rockie/rustify-ui " , rev = " 1b81de25f23a25702f61dbfd3d0ecdfe323d4d44 " }
++							1277 container
++								1278 text 这个来源已通过本地 Git 与 GitHub 的独立消费构建和 DOM 浏览器检查，不依赖仓根 patches。保留示例中其他依赖版本，让 Cargo 首次解析 Git 依赖，再提交生成的  Cargo.lock 。构建命令为：
++							1279 container
++								1280 文本 Shell
++								1281 按钮 复制
++								1282 container
++									1283 text cargo  install wasm-bindgen-cli  -- version  0.2.128  -- locked RUSTFLAGS = " $ { RUSTFLAGS :+ $ RUSTFLAGS } --cfg=web_sys_unstable_apis " \ cargo  build  -- locked  -- release  -- target  wasm32-unknown-unknown  -- lib wasm-bindgen  target/wasm32-unknown-unknown/release/dom_consumer.wasm  \   -- target  web  -- out-name  app  -- out-dir  public/pkg cargo  run  -- locked  -- bin  export-dom-assets
++							1284 文本 构建后得到以下静态目录。保留完整的 pkg 目录及其中的 snippets，SDK 运行期代码位于其中：
++							1285 container
++								1286 文本 text
++								1287 按钮 复制
++								1288 container
++									1289 text public/   index.html   app.js   pkg/     app.js     app_bg.wasm     snippets/   rustify-dom-loader.js   rustify-runtime.css   rustify.css
++							1290 文本 页面先启动一个实例，再调用应用自己导出的挂载函数，例如：
++							1291 container
++								1292 文本 JavaScript
++								1293 按钮 复制
++								1294 container
++									1295 text import { boot } from " ./rustify-dom-loader.js " ; const runtime = await boot ( { glue_url : " ./pkg/app.js " , wasm_url : " ./pkg/app_bg.wasm " } ) ; runtime . app . my_app_mount ( " app " ) ;
++							1296 container
++								1297 text glue_url 、 wasm_url  相对于 loader 解析。 boot  检查运行期协议并先启动宿主；更早调用  mount （例如放在  #[wasm_bindgen(start)]  中）会得到  RuntimeNotStarted 。输出 loader 的宿主程序与 wasm 必须使用同一 SDK 版本。 web_sys_unstable_apis  使  clipboard::available()  可用，每次复制和粘贴仍由浏览器权限决定。
++							1298 container
++								1299 text 仓库内可用  mbx xtask build-dom --manifest-path tests/dom-only/consumer/Cargo.toml  构建到  target/dom/dom-consumer/ ，用  mbx xtask serve --dir target/dom/dom-consumer  预览，再运行  mbx xtask docs-verify --group features  与  npx playwright test -c playwright.docs.config.ts --project=dom-only 。
++							1300 标题 编写 GPU region, Value: 2
++								1301 文本 编写 GPU region
++							1302 container
++								1303 text 已有 GPU 示例启用 SDK 的  gpu  feature：
++							1304 container
++								1305 文本 TOML
++								1306 按钮 复制
++								1307 container
++									1308 text rustify-ui = { path = " ../../crates/rustify-ui " , features = [ " gpu " ] }
++							1309 container
++								1310 text GPU 应用通过  mbx xtask build-web  构建，由  web/loader.js  启动，并向 Makepad 与 SDK 运行期提供同一宿主。
++							1311 container
++								1312 text Region 是实现  RegionApp  的 Makepad app：通过  script_mod!  声明控件树，用  apply_props  投影宿主状态，在事件处理中把类型化动作放入 outbox。宿主用  GpuRegion  挂载，传入 props 的  Signal  和动作回调；信号变化在 region 的下一个安全点应用，动作在产生它的 pump 结束后送达。
++							1313 container
++								1314 文本 Rust
++								1315 按钮 复制
++								1316 container
++									1317 text impl RegionApp  for CounterRegion { type Props =  CounterProps ; type Action =  CounterAction ; fn script_mod ( vm : & mut  ScriptVm ) ->  ScriptValue { makepad_widgets :: script_mod ( vm ) ; self :: script_mod ( vm ) } fn apply_props ( & mut self ,  cx : & mut  Cx,  props : & CounterProps ) { self . ui . label ( cx , ids! ( counter_label ) ) . set_text ( cx , & format! ( " Count:  {} " ,  props . count ) ) ; self . ui . redraw ( cx ) ; } fn handle_event ( & mut self ,  cx : & mut  Cx,  event : & Event,  outbox : & mut Vec < CounterAction > ) { if let Event :: Actions ( actions ) =  event  { if self . ui . button ( cx , ids! ( increment_button ) ) . clicked ( actions ) {                 outbox . push ( CounterAction :: Increment ) ; } } self . ui . handle_event ( cx ,  event , & mut Scope :: empty ( ) ) ; } }
++							1318 container
++								1319 文本 Rust
++								1320 按钮 复制
++								1321 container
++									1322 text view! { < GpuRegion app = PhantomData :: < CounterRegion >  props = props on_action = on_action class = " gpu-region " / > }
++							1323 标题 使用 DOM 组件, Value: 2
++								1324 文本 使用 DOM 组件
++							1325 container
++								1326 text DOM 组件可从  rustify_ui::components  使用。控件值由应用控制：用户操作提出修改请求，应用状态决定最终显示值。应用拒绝修改时，控件恢复有效值。
++							1327 container
++								1328 文本 Rust
++								1329 按钮 复制
++								1330 container
++									1331 text view! { < TextField         label = " name "         value = Signal :: derive ( move ||  current . get ( ) . map ( | o | o . name ) . unwrap_or_default ( ) )         on_input = move | value | { rename ( value ) ; }         read_only = Signal :: derive ( move ||  current . get ( ) . is_some_and ( | o | o . locked ) ) / > < Slider label = " size "  min = 0. 0  max = 100. 0  step = 5. 0  value = size on_change = move | v | set_size ( v ) / > < LoadView label = " details "  value = details on_retry = move || reload ( ) / > }
++							1332 container
++								1333 text ThemedScope  只向自身根节点写主题 token，两个 scope 可使用不同主题，宿主页保持自己的值。 ThemeOverride  局部修改主题，其他字段继承；其中的 region 收到同一份补丁后 token。 rustify_components::CATALOG  的
++								1334 link 组件参考, Value: 127.0.0.1:4199/rustify-ui/zh/components/
++								1335 文本  列出类别与各自支持的能力。
++							1336 container
++								1337 text rustify_ui::mount(container, config, view)  返回  AppHandle 。销毁 handle 会执行 scope 清理、销毁所属 region 并卸载 DOM。GPU 页面通过  web/loader.js  的  boot(...)  校验桥指纹和运行期协议，把宿主 hook 交给运行期后，才调用应用的导出入口；
++								1338 link fusion-basic 页面脚本, Value: github.com/rockie/rustify-ui/blob/main/examples/fusion-basic/app.js
++								1339 文本  是参考。DOM 构建使用
++								1340 link 上文的独立 loader, Value: 127.0.0.1:4199/rustify-ui/zh/quickstart/#a-dom-application-without-gpu-regions
++								1341 文本 ，
++								1342 link DOM 消费页, Value: github.com/rockie/rustify-ui/blob/main/tests/dom-only/consumer/public/app.js
++								1343 文本  提供完整参考。
++							1344 标题 同一页面上的多个应用, Value: 2
++								1345 文本 同一页面上的多个应用
++							1346 container
++								1347 text 一次  boot(...)  启动一个应用实例，拥有独立 wasm 内存、宿主 hook 和诊断。再次调用会共享已编译模块，但创建独立实例；返回的 handle 携带实例编号。
++							1348 container
++								1349 text 一个实例 trap 后，loader 终止该实例的页面监听，释放 URL 所有权并显示重启入口；同页其他实例继续工作。每个 slot 最多重启三次，因为死亡实例的线性内存直到页面卸载才释放。一个实例可多次  mount(...)  建立多个 scope，这些 scope 仍共享实例的生死边界。
++							1350 标题 当前预览的边界, Value: 2
++								1351 文本 当前预览的边界
++							1352 container
++								1353 text 组件类别都有 DOM 实现；已有 GPU 绘制或其他呈现路径见各类别的能力表。当前不提供线程、 SharedArrayBuffer 、服务端分页、公式引擎、GPU 绘制的表格或热模块替换。普通部署不具备跨源隔离，大任务在单线程上切片执行。
++								1354 link 已知限制, Value: github.com/rockie/rustify-ui/blob/main/docs/reports/p3/known-limitations.md
++								1355 文本  保留版本范围与未验证项。
++							1356 container
++								1357 文本 继续阅读
++								1358 link 大数据处理, Value: 127.0.0.1:4199/rustify-ui/zh/data/
++								1359 文本 、
++								1360 link 导航, Value: 127.0.0.1:4199/rustify-ui/zh/navigation/
++								1361 文本 、
++								1362 link 工作区, Value: 127.0.0.1:4199/rustify-ui/zh/workspace/
++								1363 文本 、
++								1364 link 表单, Value: 127.0.0.1:4199/rustify-ui/zh/forms/
++								1365 文本 、
++								1366 link 本地化, Value: 127.0.0.1:4199/rustify-ui/zh/i18n/
++								1367 文本 、
++								1368 link 架构, Value: 127.0.0.1:4199/rustify-ui/zh/architecture/
++								1369 文本  和
++								1370 link 兼容性, Value: 127.0.0.1:4199/rustify-ui/zh/compatibility/
++								1371 文本 。
++								1372 link P3 报告, Value: github.com/rockie/rustify-ui/tree/main/docs/reports/p3
++								1373 文本  与
++								1374 link 开发计划, Value: github.com/rockie/rustify-ui/tree/main/docs/plan
++								1375 文本  保存实际测量及进度。
++							1376 link 编辑此页, Value: github.com/rockie/rustify-ui/edit/main/docs/zh/quickstart.md
++							1377 container
++								1378 text 最后更新 2026-10-15
++							1379 container 上一页 / 下一页
++								1380 link 下一页 Architecture, Value: 127.0.0.1:4199/rustify-ui/zh/architecture/
++						1381 container 页脚导航
++							1382 link 返回首页, Value: 127.0.0.1:4199/rustify-ui/zh/
+The focused UI element is 762 HTML 内容 快速开始 | Rustify UI, URL: 127.0.0.1:4199/rustify-ui/zh/quickstart/

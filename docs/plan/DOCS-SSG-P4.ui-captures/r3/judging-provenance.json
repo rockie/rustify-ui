@@ -1,0 +1,31 @@
+{
+  "method": "three fresh-context read-only subagents; model and reasoning effort inherited, resolved identifiers not exposed",
+  "agents": [
+    {
+      "task": "/root/judge_u1",
+      "unit": "U1",
+      "currentImagesOpened": 38,
+      "previousImagesOpened": 7,
+      "raw": "judge-U1-a.md"
+    },
+    {
+      "task": "/root/judge_u2",
+      "unit": "U2",
+      "currentImagesOpened": 23,
+      "previousImagesOpened": 5,
+      "raw": "judge-U2-a.md"
+    },
+    {
+      "task": "/root/judge_u3",
+      "unit": "U3",
+      "currentImagesOpened": 30,
+      "previousImagesOpened": 2,
+      "raw": "judge-U3-a.md"
+    }
+  ],
+  "allowed": "target package, own-unit current capture/images/operations, own-unit R2 judge and images",
+  "excluded": "code,diff,fix records,full reports,machine check results,threshold",
+  "confirmationReview": false,
+  "scoreChangesByPrimary": false,
+  "packetType": "manual whitelist; not a filesystem permission sandbox"
+}

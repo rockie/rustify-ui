@@ -1,0 +1,16 @@
+[
+  {
+    "port": 4199,
+    "pid": 9862,
+    "command": "target/docs-ssg/p4/install-1bbc54b0/bin/rustify-docs preview --dir target/docs-ssg/http/official/subpath/dist --port 4199",
+    "stoppedAt": "2026-10-16T04:37:59.869Z",
+    "reason": "restart same preview bound to LAN for user-authorized physical iPhone acceptance"
+  },
+  {
+    "port": 4205,
+    "pid": 9908,
+    "command": "target/docs-ssg/p4/install-1bbc54b0/bin/rustify-docs preview --dir target/docs-ssg/http/search/subpath/dist --port 4205",
+    "stoppedAt": "2026-10-16T04:38:00.026Z",
+    "reason": "restart same preview bound to LAN for user-authorized physical iPhone acceptance"
+  }
+]

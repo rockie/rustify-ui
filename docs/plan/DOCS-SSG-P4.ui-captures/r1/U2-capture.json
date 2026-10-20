@@ -1,0 +1,784 @@
+[
+  {
+    "unit": "U2",
+    "state": "loading",
+    "file": "U2-loading-1280-dark.png",
+    "url": "http://127.0.0.1:4205/rustify-ui/page-0001/",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "dpr": 1,
+    "theme": "dark",
+    "at": "2026-10-16T02:19:19.757Z",
+    "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12",
+    "interception": "hold first en search JSON response",
+    "action": "延迟首次索引响应，输入 CustomOnlyToken；保留输入并显示 loading。",
+    "observation": {
+      "title": "Theme switching | Search corpus",
+      "htmlLang": "en",
+      "theme": "dark",
+      "dialogOpen": true,
+      "dialogState": "loading",
+      "input": "CustomOnlyToken",
+      "status": "Preparing search… You can keep typing.",
+      "total": "",
+      "options": 0,
+      "focused": {
+        "tag": "INPUT",
+        "id": "rd-search-input",
+        "text": "",
+        "searchInput": true
+      }
+    },
+    "sha256": "6aff83e7a90a4594c6a72cfe4889a6752a48642f457f4b0d29dd5db6f38a0f89"
+  },
+  {
+    "unit": "U2",
+    "state": "closed-01",
+    "file": "U2-closed-01-1280-dark.png",
+    "url": "http://127.0.0.1:4205/rustify-ui/page-0001/",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "dpr": 1,
+    "theme": "dark",
+    "at": "2026-10-16T02:19:19.837Z",
+    "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12",
+    "interception": "hold first en search JSON response",
+    "action": "索引仍延迟时真实按 Escape，焦点回到 Search。",
+    "observation": {
+      "title": "Theme switching | Search corpus",
+      "htmlLang": "en",
+      "theme": "dark",
+      "dialogOpen": false,
+      "dialogState": "closed",
+      "input": "CustomOnlyToken",
+      "status": "Preparing search… You can keep typing.",
+      "total": "",
+      "options": 0,
+      "focused": {
+        "tag": "BUTTON",
+        "id": "",
+        "text": "SearchCtrl / Cmd K",
+        "searchInput": false
+      }
+    },
+    "sha256": "85ca6809178a1a6840f9bb326c7c0f19af58586ac00327309611ee993f0b10a4"
+  },
+  {
+    "unit": "U2",
+    "state": "reopen-02",
+    "file": "U2-reopen-02-1280-dark.png",
+    "url": "http://127.0.0.1:4205/rustify-ui/page-0001/",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "dpr": 1,
+    "theme": "dark",
+    "at": "2026-10-16T02:19:19.952Z",
+    "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12",
+    "interception": "first JSON request still held; new session uses real next response",
+    "action": "重新点击 Search，重取索引后显示保留查询结果。",
+    "observation": {
+      "title": "Theme switching | Search corpus",
+      "htmlLang": "en",
+      "theme": "dark",
+      "dialogOpen": true,
+      "dialogState": "results",
+      "input": "CustomOnlyToken",
+      "status": "",
+      "total": "1 results",
+      "options": 1,
+      "focused": {
+        "tag": "INPUT",
+        "id": "rd-search-input",
+        "text": "",
+        "searchInput": true
+      }
+    },
+    "sha256": "9f825cf2ac39ad612368402feb830fd200e7373f2e36133402167938fa69bcfc"
+  },
+  {
+    "unit": "U2",
+    "state": "late-response-03",
+    "file": "U2-late-response-03-1280-dark.png",
+    "url": "http://127.0.0.1:4205/rustify-ui/page-0001/",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "dpr": 1,
+    "theme": "dark",
+    "at": "2026-10-16T02:19:20.020Z",
+    "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12",
+    "interception": "release held first JSON response",
+    "action": "释放旧请求，再输入 ReachableCustomToken；当前结果仍为新查询。",
+    "observation": {
+      "title": "Theme switching | Search corpus",
+      "htmlLang": "en",
+      "theme": "dark",
+      "dialogOpen": true,
+      "dialogState": "results",
+      "input": "ReachableCustomToken",
+      "status": "",
+      "total": "1 results",
+      "options": 1,
+      "focused": {
+        "tag": "INPUT",
+        "id": "rd-search-input",
+        "text": "",
+        "searchInput": true
+      }
+    },
+    "sha256": "cda87884655c627df3a12bcc3859ab427840d549def122e3b53660231fcf8c3a"
+  },
+  {
+    "unit": "U2",
+    "state": "module-error",
+    "file": "U2-module-error-1280-dark.png",
+    "url": "http://127.0.0.1:4205/rustify-ui/page-0001/",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "dpr": 1,
+    "theme": "dark",
+    "at": "2026-10-16T02:19:20.777Z",
+    "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12",
+    "interception": "first search module HTTP 503",
+    "action": "首次请求故障后输入 CustomOnlyToken，等候 error；查看 Retry。",
+    "observation": {
+      "title": "Theme switching | Search corpus",
+      "htmlLang": "en",
+      "theme": "dark",
+      "dialogOpen": true,
+      "dialogState": "error",
+      "input": "CustomOnlyToken",
+      "status": "Search is unavailable. Please try again.",
+      "total": "",
+      "options": 0,
+      "focused": {
+        "tag": "INPUT",
+        "id": "rd-search-input",
+        "text": "",
+        "searchInput": true
+      }
+    },
+    "sha256": "ff906e53a8ac0c4aa4152cd209cc236673edc4cac9255e60d8aeb47a368ea365"
+  },
+  {
+    "unit": "U2",
+    "state": "module-retry",
+    "file": "U2-module-retry-1280-dark.png",
+    "url": "http://127.0.0.1:4205/rustify-ui/page-0001/",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "dpr": 1,
+    "theme": "dark",
+    "at": "2026-10-16T02:19:20.976Z",
+    "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12",
+    "interception": "retry uses real resource; only first request was faulted",
+    "action": "点击 Retry，恢复真实同源资源；保留 CustomOnlyToken 并显示结果。",
+    "observation": {
+      "title": "Theme switching | Search corpus",
+      "htmlLang": "en",
+      "theme": "dark",
+      "dialogOpen": true,
+      "dialogState": "results",
+      "input": "CustomOnlyToken",
+      "status": "",
+      "total": "1 results",
+      "options": 1,
+      "focused": {
+        "tag": "INPUT",
+        "id": "rd-search-input",
+        "text": "",
+        "searchInput": true
+      }
+    },
+    "sha256": "d5ae5965bb394df538785b1813eea16a1e093a1953f7130b650c3978dfbc1812"
+  },
+  {
+    "unit": "U2",
+    "state": "index-error",
+    "file": "U2-index-error-1280-dark.png",
+    "url": "http://127.0.0.1:4205/rustify-ui/page-0001/",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "dpr": 1,
+    "theme": "dark",
+    "at": "2026-10-16T02:19:21.767Z",
+    "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12",
+    "interception": "first search JSON schema_version=99",
+    "action": "首次请求故障后输入 CustomOnlyToken，等候 error；查看 Retry。",
+    "observation": {
+      "title": "Theme switching | Search corpus",
+      "htmlLang": "en",
+      "theme": "dark",
+      "dialogOpen": true,
+      "dialogState": "error",
+      "input": "CustomOnlyToken",
+      "status": "Search is unavailable. Please try again.",
+      "total": "",
+      "options": 0,
+      "focused": {
+        "tag": "INPUT",
+        "id": "rd-search-input",
+        "text": "",
+        "searchInput": true
+      }
+    },
+    "sha256": "ff906e53a8ac0c4aa4152cd209cc236673edc4cac9255e60d8aeb47a368ea365"
+  },
+  {
+    "unit": "U2",
+    "state": "index-retry",
+    "file": "U2-index-retry-1280-dark.png",
+    "url": "http://127.0.0.1:4205/rustify-ui/page-0001/",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "dpr": 1,
+    "theme": "dark",
+    "at": "2026-10-16T02:19:21.970Z",
+    "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12",
+    "interception": "retry uses real resource; only first request was faulted",
+    "action": "点击 Retry，恢复真实同源资源；保留 CustomOnlyToken 并显示结果。",
+    "observation": {
+      "title": "Theme switching | Search corpus",
+      "htmlLang": "en",
+      "theme": "dark",
+      "dialogOpen": true,
+      "dialogState": "results",
+      "input": "CustomOnlyToken",
+      "status": "",
+      "total": "1 results",
+      "options": 1,
+      "focused": {
+        "tag": "INPUT",
+        "id": "rd-search-input",
+        "text": "",
+        "searchInput": true
+      }
+    },
+    "sha256": "d5ae5965bb394df538785b1813eea16a1e093a1953f7130b650c3978dfbc1812"
+  },
+  {
+    "unit": "U2",
+    "state": "loading",
+    "file": "U2-loading-375-light.png",
+    "url": "http://127.0.0.1:4205/rustify-ui/page-0001/",
+    "viewport": {
+      "width": 375,
+      "height": 812
+    },
+    "dpr": 1,
+    "theme": "light",
+    "at": "2026-10-16T02:19:22.674Z",
+    "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12",
+    "interception": "hold first en search JSON response",
+    "action": "延迟首次索引响应，输入 CustomOnlyToken；保留输入并显示 loading。",
+    "observation": {
+      "title": "Theme switching | Search corpus",
+      "htmlLang": "en",
+      "theme": "light",
+      "dialogOpen": true,
+      "dialogState": "loading",
+      "input": "CustomOnlyToken",
+      "status": "Preparing search… You can keep typing.",
+      "total": "",
+      "options": 0,
+      "focused": {
+        "tag": "INPUT",
+        "id": "rd-search-input",
+        "text": "",
+        "searchInput": true
+      }
+    },
+    "sha256": "30b30308ec6efea2dca2890f3c7c983f75724831967894958d40278e086685b4"
+  },
+  {
+    "unit": "U2",
+    "state": "module-error",
+    "file": "U2-module-error-375-light.png",
+    "url": "http://127.0.0.1:4205/rustify-ui/page-0001/",
+    "viewport": {
+      "width": 375,
+      "height": 812
+    },
+    "dpr": 1,
+    "theme": "light",
+    "at": "2026-10-16T02:19:23.490Z",
+    "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12",
+    "interception": "first search module HTTP 503",
+    "action": "首次请求故障后输入 CustomOnlyToken，等候 error；查看 Retry。",
+    "observation": {
+      "title": "Theme switching | Search corpus",
+      "htmlLang": "en",
+      "theme": "light",
+      "dialogOpen": true,
+      "dialogState": "error",
+      "input": "CustomOnlyToken",
+      "status": "Search is unavailable. Please try again.",
+      "total": "",
+      "options": 0,
+      "focused": {
+        "tag": "INPUT",
+        "id": "rd-search-input",
+        "text": "",
+        "searchInput": true
+      }
+    },
+    "sha256": "2b07c33de6edd537d8badac5e2a0859062748dd8a56e08e68577eb4c9bcd9d1f"
+  },
+  {
+    "unit": "U2",
+    "state": "module-retry",
+    "file": "U2-module-retry-375-light.png",
+    "url": "http://127.0.0.1:4205/rustify-ui/page-0001/",
+    "viewport": {
+      "width": 375,
+      "height": 812
+    },
+    "dpr": 1,
+    "theme": "light",
+    "at": "2026-10-16T02:19:23.673Z",
+    "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12",
+    "interception": "retry uses real resource; only first request was faulted",
+    "action": "点击 Retry，恢复真实同源资源；保留 CustomOnlyToken 并显示结果。",
+    "observation": {
+      "title": "Theme switching | Search corpus",
+      "htmlLang": "en",
+      "theme": "light",
+      "dialogOpen": true,
+      "dialogState": "results",
+      "input": "CustomOnlyToken",
+      "status": "",
+      "total": "1 results",
+      "options": 1,
+      "focused": {
+        "tag": "INPUT",
+        "id": "rd-search-input",
+        "text": "",
+        "searchInput": true
+      }
+    },
+    "sha256": "e2fcedf202b48c0f42cd23e1a3777f3c0188a98f874332780a5a9327cfd02860"
+  },
+  {
+    "unit": "U2",
+    "state": "index-error",
+    "file": "U2-index-error-375-light.png",
+    "url": "http://127.0.0.1:4205/rustify-ui/page-0001/",
+    "viewport": {
+      "width": 375,
+      "height": 812
+    },
+    "dpr": 1,
+    "theme": "light",
+    "at": "2026-10-16T02:19:24.419Z",
+    "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12",
+    "interception": "first search JSON schema_version=99",
+    "action": "首次请求故障后输入 CustomOnlyToken，等候 error；查看 Retry。",
+    "observation": {
+      "title": "Theme switching | Search corpus",
+      "htmlLang": "en",
+      "theme": "light",
+      "dialogOpen": true,
+      "dialogState": "error",
+      "input": "CustomOnlyToken",
+      "status": "Search is unavailable. Please try again.",
+      "total": "",
+      "options": 0,
+      "focused": {
+        "tag": "INPUT",
+        "id": "rd-search-input",
+        "text": "",
+        "searchInput": true
+      }
+    },
+    "sha256": "2b07c33de6edd537d8badac5e2a0859062748dd8a56e08e68577eb4c9bcd9d1f"
+  },
+  {
+    "unit": "U2",
+    "state": "index-retry",
+    "file": "U2-index-retry-375-light.png",
+    "url": "http://127.0.0.1:4205/rustify-ui/page-0001/",
+    "viewport": {
+      "width": 375,
+      "height": 812
+    },
+    "dpr": 1,
+    "theme": "light",
+    "at": "2026-10-16T02:19:24.592Z",
+    "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12",
+    "interception": "retry uses real resource; only first request was faulted",
+    "action": "点击 Retry，恢复真实同源资源；保留 CustomOnlyToken 并显示结果。",
+    "observation": {
+      "title": "Theme switching | Search corpus",
+      "htmlLang": "en",
+      "theme": "light",
+      "dialogOpen": true,
+      "dialogState": "results",
+      "input": "CustomOnlyToken",
+      "status": "",
+      "total": "1 results",
+      "options": 1,
+      "focused": {
+        "tag": "INPUT",
+        "id": "rd-search-input",
+        "text": "",
+        "searchInput": true
+      }
+    },
+    "sha256": "e2fcedf202b48c0f42cd23e1a3777f3c0188a98f874332780a5a9327cfd02860"
+  },
+  {
+    "unit": "U2",
+    "state": "supp-open-before-module-01",
+    "file": "U2-supp-open-before-module-01-375-light.png",
+    "url": "http://127.0.0.1:4205/rustify-ui/page-0001/",
+    "viewport": {
+      "width": 375,
+      "height": 812
+    },
+    "dpr": 1,
+    "theme": "light",
+    "at": "2026-10-16T02:41:49.044Z",
+    "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12",
+    "interception": "hold first search module response",
+    "action": "点击 Search；首次 module HTTP 响应仍被扣留、尚未执行，输入已获焦。",
+    "observation": {
+      "title": "Theme switching | Search corpus",
+      "htmlLang": "en",
+      "theme": "light",
+      "dialogOpen": true,
+      "dialogState": "loading",
+      "input": "",
+      "status": "Preparing search… You can keep typing.",
+      "total": "",
+      "options": 0,
+      "focused": {
+        "tag": "INPUT",
+        "id": "rd-search-input",
+        "text": "",
+        "searchInput": true
+      }
+    },
+    "sha256": "8f6b83a8ec9116bd3d6eeb4605e5f5481f3c1b2e6ef0708d476b1a9ce73f1ce5"
+  },
+  {
+    "unit": "U2",
+    "state": "supp-loading-edit-02",
+    "file": "U2-supp-loading-edit-02-375-light.png",
+    "url": "http://127.0.0.1:4205/rustify-ui/page-0001/",
+    "viewport": {
+      "width": 375,
+      "height": 812
+    },
+    "dpr": 1,
+    "theme": "light",
+    "at": "2026-10-16T02:41:49.109Z",
+    "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12",
+    "interception": "hold first search module response",
+    "action": "module仍未返回，在loading输入CustomOnlyToken，再真实全选并键入ReachableCustomToken。",
+    "observation": {
+      "title": "Theme switching | Search corpus",
+      "htmlLang": "en",
+      "theme": "light",
+      "dialogOpen": true,
+      "dialogState": "loading",
+      "input": "ReachableCustomToken",
+      "status": "Preparing search… You can keep typing.",
+      "total": "",
+      "options": 0,
+      "focused": {
+        "tag": "INPUT",
+        "id": "rd-search-input",
+        "text": "",
+        "searchInput": true
+      }
+    },
+    "sha256": "4bab78c41c436be90b4ec691db9b9e19eb65a520141226c716e63f43aacc7d80"
+  },
+  {
+    "unit": "U2",
+    "state": "supp-loading-result-03",
+    "file": "U2-supp-loading-result-03-375-light.png",
+    "url": "http://127.0.0.1:4205/rustify-ui/page-0001/",
+    "viewport": {
+      "width": 375,
+      "height": 812
+    },
+    "dpr": 1,
+    "theme": "light",
+    "at": "2026-10-16T02:41:49.194Z",
+    "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12",
+    "interception": "release held module; real Worker/index",
+    "action": "释放module响应后，显示loading期间最终输入ReachableCustomToken的结果。",
+    "observation": {
+      "title": "Theme switching | Search corpus",
+      "htmlLang": "en",
+      "theme": "light",
+      "dialogOpen": true,
+      "dialogState": "results",
+      "input": "ReachableCustomToken",
+      "status": "",
+      "total": "1 results",
+      "options": 1,
+      "focused": {
+        "tag": "INPUT",
+        "id": "rd-search-input",
+        "text": "",
+        "searchInput": true
+      }
+    },
+    "sha256": "6a635eb0405c8ff34e5cc27b9bae29cfc71f35da3d28744fe03eaac2c5be86bf"
+  },
+  {
+    "unit": "U2",
+    "state": "supp-longlist-04",
+    "file": "U2-supp-longlist-04-375-light.png",
+    "url": "http://127.0.0.1:4205/rustify-ui/page-0001/",
+    "viewport": {
+      "width": 375,
+      "height": 812
+    },
+    "dpr": 1,
+    "theme": "light",
+    "at": "2026-10-16T02:41:49.259Z",
+    "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12",
+    "interception": "none",
+    "action": "改搜SearchCorpusToken，连续真实按ArrowDown19次至首批末项；列表滚动，输入、关闭与Show more仍在视口内。",
+    "observation": {
+      "title": "Theme switching | Search corpus",
+      "htmlLang": "en",
+      "theme": "light",
+      "dialogOpen": true,
+      "dialogState": "results",
+      "input": "SearchCorpusToken",
+      "status": "",
+      "total": "98 results",
+      "options": 20,
+      "focused": {
+        "tag": "INPUT",
+        "id": "rd-search-input",
+        "text": "",
+        "searchInput": true
+      }
+    },
+    "sha256": "82da3714b2327c6a7c4f76419dc4e460de580c4345c16f5e1fa64bcc3366cc41"
+  },
+  {
+    "unit": "U2",
+    "state": "supp-retry-focus-05",
+    "file": "U2-supp-retry-focus-05-375-light.png",
+    "url": "http://127.0.0.1:4205/rustify-ui/page-0001/",
+    "viewport": {
+      "width": 375,
+      "height": 812
+    },
+    "dpr": 1,
+    "theme": "light",
+    "at": "2026-10-16T02:41:50.051Z",
+    "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12",
+    "interception": "first module HTTP503",
+    "action": "module503后，输入获焦；真实按Tab到Retry，拍焦点帧。",
+    "observation": {
+      "title": "Theme switching | Search corpus",
+      "htmlLang": "en",
+      "theme": "light",
+      "dialogOpen": true,
+      "dialogState": "error",
+      "input": "CustomOnlyToken",
+      "status": "Search is unavailable. Please try again.",
+      "total": "",
+      "options": 0,
+      "focused": {
+        "tag": "BUTTON",
+        "id": "",
+        "text": "Retry",
+        "searchInput": false
+      }
+    },
+    "sha256": "1fb64b41f82114017509d4c602064abc6c2e75865c21008f5f9025ba6c8246e1"
+  },
+  {
+    "unit": "U2",
+    "state": "supp-keyboard-retry-06",
+    "file": "U2-supp-keyboard-retry-06-375-light.png",
+    "url": "http://127.0.0.1:4205/rustify-ui/page-0001/",
+    "viewport": {
+      "width": 375,
+      "height": 812
+    },
+    "dpr": 1,
+    "theme": "light",
+    "at": "2026-10-16T02:41:50.166Z",
+    "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12",
+    "interception": "none",
+    "action": "真实按Enter激活Retry；输入恢复焦点且保留查询，结果显示。",
+    "observation": {
+      "title": "Theme switching | Search corpus",
+      "htmlLang": "en",
+      "theme": "light",
+      "dialogOpen": true,
+      "dialogState": "results",
+      "input": "CustomOnlyToken",
+      "status": "",
+      "total": "1 results",
+      "options": 1,
+      "focused": {
+        "tag": "INPUT",
+        "id": "rd-search-input",
+        "text": "",
+        "searchInput": true
+      }
+    },
+    "sha256": "e2fcedf202b48c0f42cd23e1a3777f3c0188a98f874332780a5a9327cfd02860"
+  },
+  {
+    "unit": "U2",
+    "state": "supp-close-focus-07",
+    "file": "U2-supp-close-focus-07-375-light.png",
+    "url": "http://127.0.0.1:4205/rustify-ui/page-0001/",
+    "viewport": {
+      "width": 375,
+      "height": 812
+    },
+    "dpr": 1,
+    "theme": "light",
+    "at": "2026-10-16T02:41:50.233Z",
+    "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12",
+    "interception": "none",
+    "action": "从输入真实按Shift+Tab，焦点到Close。",
+    "observation": {
+      "title": "Theme switching | Search corpus",
+      "htmlLang": "en",
+      "theme": "light",
+      "dialogOpen": true,
+      "dialogState": "results",
+      "input": "CustomOnlyToken",
+      "status": "",
+      "total": "1 results",
+      "options": 1,
+      "focused": {
+        "tag": "BUTTON",
+        "id": "",
+        "text": "Close",
+        "searchInput": false
+      }
+    },
+    "sha256": "c89d13d0622a9935f49cb5ace807f13a1ca62ac7bb42aa4e1d69f48050aebbcd"
+  },
+  {
+    "unit": "U2",
+    "state": "supp-close-return-08",
+    "file": "U2-supp-close-return-08-375-light.png",
+    "url": "http://127.0.0.1:4205/rustify-ui/page-0001/",
+    "viewport": {
+      "width": 375,
+      "height": 812
+    },
+    "dpr": 1,
+    "theme": "light",
+    "at": "2026-10-16T02:41:50.298Z",
+    "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12",
+    "interception": "none",
+    "action": "真实按Enter激活Close，对话框关闭，焦点返回页头Search。",
+    "observation": {
+      "title": "Theme switching | Search corpus",
+      "htmlLang": "en",
+      "theme": "light",
+      "dialogOpen": false,
+      "dialogState": "closed",
+      "input": "CustomOnlyToken",
+      "status": "",
+      "total": "1 results",
+      "options": 1,
+      "focused": {
+        "tag": "BUTTON",
+        "id": "",
+        "text": "SearchCtrl / Cmd K",
+        "searchInput": false
+      }
+    },
+    "sha256": "6828a8df7e728960fa22986f94798b6154bfea737fbc8a48fb2352fe799954df"
+  },
+  {
+    "unit": "U2",
+    "state": "supp-new-result-before-old-09",
+    "file": "U2-supp-new-result-before-old-09-1280-dark.png",
+    "url": "http://127.0.0.1:4205/rustify-ui/page-0001/",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "dpr": 1,
+    "theme": "dark",
+    "at": "2026-10-16T02:41:51.193Z",
+    "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12",
+    "interception": "first old-session JSON still held",
+    "action": "旧首个JSON仍被扣留；关闭并重开后，新查询ReachableCustomToken结果已显示。",
+    "observation": {
+      "title": "Theme switching | Search corpus",
+      "htmlLang": "en",
+      "theme": "dark",
+      "dialogOpen": true,
+      "dialogState": "results",
+      "input": "ReachableCustomToken",
+      "status": "",
+      "total": "1 results",
+      "options": 1,
+      "focused": {
+        "tag": "INPUT",
+        "id": "rd-search-input",
+        "text": "",
+        "searchInput": true
+      }
+    },
+    "sha256": "cda87884655c627df3a12bcc3859ab427840d549def122e3b53660231fcf8c3a"
+  },
+  {
+    "unit": "U2",
+    "state": "supp-old-released-after-new-10",
+    "file": "U2-supp-old-released-after-new-10-1280-dark.png",
+    "url": "http://127.0.0.1:4205/rustify-ui/page-0001/",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "dpr": 1,
+    "theme": "dark",
+    "at": "2026-10-16T02:41:51.499Z",
+    "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12",
+    "interception": "release old-session JSON after new query results",
+    "action": "新查询结果已显示之后才释放旧JSON，等250ms；仍显示ReachableCustomToken当前结果。",
+    "observation": {
+      "title": "Theme switching | Search corpus",
+      "htmlLang": "en",
+      "theme": "dark",
+      "dialogOpen": true,
+      "dialogState": "results",
+      "input": "ReachableCustomToken",
+      "status": "",
+      "total": "1 results",
+      "options": 1,
+      "focused": {
+        "tag": "INPUT",
+        "id": "rd-search-input",
+        "text": "",
+        "searchInput": true
+      }
+    },
+    "sha256": "cda87884655c627df3a12bcc3859ab427840d549def122e3b53660231fcf8c3a"
+  }
+]

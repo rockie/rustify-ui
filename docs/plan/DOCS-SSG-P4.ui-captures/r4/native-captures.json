@@ -1,0 +1,362 @@
+[
+  {
+    "file": "U4-Safari-01-about.jpg",
+    "ax": "U4-Safari-01-about.ax.txt",
+    "at": "2026-10-16T04:34:14.478Z",
+    "action": "Safari菜单→关于Safari，直接读取运行版本。",
+    "source": "CUA native macOS Safari; original JPEG",
+    "sha256": "0f4c75dc1e264899d38eaf7f71025d3c3094fb5a688c80a0f1cf02dd95a35328",
+    "displayedURL": "原生About对话框",
+    "axSha256": "8c40265e9f4adce2e977366d265f082b428c0495a5efc8072ed83e06b6b6ea1d"
+  },
+  {
+    "file": "U4-Safari-02-en-home.jpg",
+    "ax": "U4-Safari-02-en-home.ax.txt",
+    "at": "2026-10-16T04:34:43.046Z",
+    "action": "新页键入官方根路径并Cmd+0；本次实际页面为/zh/中文首页，未把入口意图当作已到英文页。",
+    "source": "CUA native macOS Safari; original JPEG",
+    "sha256": "e341ddb3f2cedb3cb0bde00150301da8e4ed0c24c0990f26fb7ac918f785c320",
+    "displayedURL": "127.0.0.1:4199/rustify-ui/zh/",
+    "axSha256": "9914fd4edfacd7be30068e477d29494906f1be2131f5749a157fca7ba10524e9"
+  },
+  {
+    "file": "U4-Safari-03-english-home.jpg",
+    "ax": "U4-Safari-03-english-home.ax.txt",
+    "at": "2026-10-16T04:40:34.162Z",
+    "action": "从中文首页语言菜单点击English普通链接，实际切换到英文首页。",
+    "source": "CUA native macOS Safari; original JPEG",
+    "sha256": "a601d84d8ebab37978888553b274e149afeae839d2e2f5367d1a4681596f32a6",
+    "displayedURL": "127.0.0.1:4199/rustify-ui/",
+    "axSha256": "0156800db5d37cde732e889d091e0797abc869359ee1acfb700321f006011d9e"
+  },
+  {
+    "file": "U4-Safari-04-maximized-home.jpg",
+    "ax": "U4-Safari-04-maximized-home.ax.txt",
+    "at": "2026-10-16T04:40:49.123Z",
+    "action": "使用Safari窗口缩放动作扩大原生窗口，实拍首页；不是CSS视口模拟。",
+    "source": "CUA native macOS Safari; original JPEG",
+    "sha256": "637b6163e6ba9b320ebbf6fca78510e93adec9cb6dcdf09087dee9a10881d8e8",
+    "displayedURL": "本帧AX增量未含完整URL；见原图与实际操作记录",
+    "axSha256": "51b28feb00575437087b2b330df964b5d72bd75f76571cb1c51fb93be9952634"
+  },
+  {
+    "file": "U4-Safari-05-search-idle.jpg",
+    "ax": "U4-Safari-05-search-idle.ax.txt",
+    "at": "2026-10-16T04:41:00.965Z",
+    "action": "在英文首页实际按Cmd+K，搜索对话框打开并输入获焦。",
+    "source": "CUA native macOS Safari; original JPEG",
+    "sha256": "735e986e78f555bc7487a1a374b82721ac89451569df2cb5a5df266c2f884f75",
+    "displayedURL": "本帧AX增量未含完整URL；见原图与实际操作记录",
+    "axSha256": "f82dc9d8183f9c27c7278dc1a922537611d878ddc6578a243c6ad43ff27ec1cd"
+  },
+  {
+    "file": "U4-Safari-06-search-results.jpg",
+    "ax": "U4-Safari-06-search-results.ax.txt",
+    "at": "2026-10-16T04:41:10.705Z",
+    "action": "键入ThemeScope后本帧仍显示Preparing search；记录为真实loading attempt，不记结果成功。",
+    "source": "CUA native macOS Safari; original JPEG",
+    "sha256": "d594dd94b30b005111b06590efcefd5db0317746cd7ea1bd8530f11deaf9e630",
+    "displayedURL": "本帧AX增量未含完整URL；见原图与实际操作记录",
+    "axSha256": "c1820859362ef7ebbe04f8345c9001825121779ba619353ecd8dfa021ea69bf7"
+  },
+  {
+    "file": "U4-Safari-07-search-selected.jpg",
+    "ax": "U4-Safari-07-search-selected.ax.txt",
+    "at": "2026-10-16T04:41:11.111Z",
+    "action": "loading期间按Down，本帧仍为Preparing search，尚无可选结果。",
+    "source": "CUA native macOS Safari; original JPEG",
+    "sha256": "05fff87abcd5f4d2136ac0e3c6cdd09ad9cf912db2cc41c4b7b32bfb6381efff",
+    "displayedURL": "本帧AX增量未含完整URL；见原图与实际操作记录",
+    "axSha256": "edfcb0b6f1c8ef9ee7404964d862f7d9e426711c6fe65a25ec030f9932cb309d"
+  },
+  {
+    "file": "U4-Safari-08-search-destination.jpg",
+    "ax": "U4-Safari-08-search-destination.ax.txt",
+    "at": "2026-10-16T04:41:11.858Z",
+    "action": "按Return后本帧出现3 results且对话框仍开；不记导航成功。",
+    "source": "CUA native macOS Safari; original JPEG",
+    "sha256": "dd78b908cb6b83abc3f250746346665ad19bb7d542b4871840239a17b7ebaf17",
+    "displayedURL": "本帧AX增量未含完整URL；见原图与实际操作记录",
+    "axSha256": "6d474321dc6a7cd17616142e89bf886a0d72075046d59303a928028fde2f7e68"
+  },
+  {
+    "file": "U4-Safari-09-ready-selected.jpg",
+    "ax": "U4-Safari-09-ready-selected.ax.txt",
+    "at": "2026-10-16T04:41:23.880Z",
+    "action": "在3 results已可见后实际按Down，记录当前选择。",
+    "source": "CUA native macOS Safari; original JPEG",
+    "sha256": "37a636459c6795fd845b948077cf6239b81b5fc0dfe223ec3dbb5944e24f0360",
+    "displayedURL": "本帧AX增量未含完整URL；见原图与实际操作记录",
+    "axSha256": "2bb4b1558aaa6a898e578215c501718e01e628cabdcee21e820f5d98a2cb20f6"
+  },
+  {
+    "file": "U4-Safari-10-ready-destination.jpg",
+    "ax": "U4-Safari-10-ready-destination.ax.txt",
+    "at": "2026-10-16T04:41:32.584Z",
+    "action": "已选Architecture后实际按Enter，记录本次真实导航URL与对话框状态。",
+    "source": "CUA native macOS Safari; original JPEG",
+    "sha256": "d919abf3bb173972ec6736934d1ad1230849f57ab0902dbec0dd0e8ca006188c",
+    "displayedURL": "127.0.0.1:4199/rustify-ui/architecture/#versioned-themes",
+    "axSha256": "80ca1d2c63061de8fd70338e2907fa36d8731b3a17e3d80ec3145dddaa496958"
+  },
+  {
+    "file": "U4-Safari-01-quickstart.jpg",
+    "ax": "U4-Safari-01-quickstart.ax.txt",
+    "at": "2026-10-16T04:42:18.698Z",
+    "action": "点击侧栏Quick start，实测普通链接阅读页。",
+    "source": "CUA native macOS Safari; original JPEG",
+    "sha256": "24ce52ce5b46ab32e9df70a5c20b1f7db8f1411b64da4e4527b65fc29a6f616b",
+    "displayedURL": "127.0.0.1:4199/rustify-ui/quickstart/",
+    "axSha256": "87d17b58347c1e11d35f97a445b5f09f1a2544772794d6d0052f59d9803e6d6c"
+  },
+  {
+    "file": "U4-Safari-02-copy-feedback.jpg",
+    "ax": "U4-Safari-02-copy-feedback.ax.txt",
+    "at": "2026-10-16T04:42:25.274Z",
+    "action": "点击第一块代码Copy，记录实际按钮与状态反馈。",
+    "source": "CUA native macOS Safari; original JPEG",
+    "sha256": "2a109ea21d4893ad7996fbb6c46bdf2594c780257acf6e76344595f9dbb75886",
+    "displayedURL": "127.0.0.1:4199/rustify-ui/quickstart/",
+    "axSha256": "49fa09669aa9d16eaf0bd3c83d0014c79bd505a0076339c792cb3bfdaf02f0a6"
+  },
+  {
+    "file": "U4-Safari-03-zoom-attempt.jpg",
+    "ax": "U4-Safari-03-zoom-attempt.ax.txt",
+    "at": "2026-10-16T04:42:44.520Z",
+    "action": "原生Cmd+0后连续五次Cmd+=，先记录实际布局，缩放数值另从原生控件确认。",
+    "source": "CUA native macOS Safari; original JPEG",
+    "sha256": "8274aaf93bec9f432ea2aa78659001d7cdc84dd0fd55a070d129550826806913",
+    "displayedURL": "127.0.0.1:4199/rustify-ui/quickstart/",
+    "axSha256": "0e190d036e6be214c961e1190c597efcb24669e0714abe680bcad169b022e885"
+  },
+  {
+    "file": "U4-Safari-04-zoom-native-value.jpg",
+    "ax": "U4-Safari-04-zoom-native-value.ax.txt",
+    "at": "2026-10-16T04:42:55.762Z",
+    "action": "打开当前网站的Safari原生设置，仅查看页面缩放数值，不改权限。",
+    "source": "CUA native macOS Safari; original JPEG",
+    "sha256": "c83c853bd6267f596d6da2e9cc4380626d8c0d51d600e5d5f55b0e459833f26a",
+    "displayedURL": "127.0.0.1:4199/rustify-ui/quickstart/",
+    "axSha256": "287f8039d9531834705d1db2aee5d4951af7a973d784c614bc6a49bc8e053d0d"
+  },
+  {
+    "file": "U4-Safari-05-zoom-200-setting.jpg",
+    "ax": "U4-Safari-05-zoom-200-setting.ax.txt",
+    "at": "2026-10-16T04:43:23.099Z",
+    "action": "在Safari网站设置明确选择200%，保存原生百分比证据。",
+    "source": "CUA native macOS Safari; original JPEG",
+    "sha256": "a6d15d10d024bd7512bc44ce72f66dc94da1228eef216a83219a03d229d9a533",
+    "displayedURL": "127.0.0.1:4199/rustify-ui/quickstart/",
+    "axSha256": "2f01e322ff3f25d4f98f74c8a4ae4e65684e4d1b0a3d2d7d1a6bf42d4cc5d314"
+  },
+  {
+    "file": "U4-Safari-06-zoom-200-read.jpg",
+    "ax": "U4-Safari-06-zoom-200-read.ax.txt",
+    "at": "2026-10-16T04:43:31.871Z",
+    "action": "关闭原生设置后实拍200%阅读页，观察文字重排与页面边界。",
+    "source": "CUA native macOS Safari; original JPEG",
+    "sha256": "11b967f1a060f999f12501774069b8da702f318727f4ca31f44d8c5fa61a7674",
+    "displayedURL": "127.0.0.1:4199/rustify-ui/quickstart/",
+    "axSha256": "0e190d036e6be214c961e1190c597efcb24669e0714abe680bcad169b022e885"
+  },
+  {
+    "file": "U4-Safari-07-zoom-200-search-open.jpg",
+    "ax": "U4-Safari-07-zoom-200-search-open.ax.txt",
+    "at": "2026-10-16T04:43:32.839Z",
+    "action": "200%原生缩放下Cmd+K打开搜索，检查输入和关闭控件可达。",
+    "source": "CUA native macOS Safari; original JPEG",
+    "sha256": "9988c8f03961f36b6c0616d197b0f499a048cc4701962146e350498195e7bdae",
+    "displayedURL": "127.0.0.1:4199/rustify-ui/quickstart/",
+    "axSha256": "5b8fec581b804b9980f8eb98700db5015334e4ac863f54fb0d9c20c8ee15deda"
+  },
+  {
+    "file": "U4-Safari-08-zoom-200-query-attempt.jpg",
+    "ax": "U4-Safari-08-zoom-200-query-attempt.ax.txt",
+    "at": "2026-10-16T04:43:48.396Z",
+    "action": "200%下输入不存在查询，记录即时状态，不提前假定已完成。",
+    "source": "CUA native macOS Safari; original JPEG",
+    "sha256": "ef46316e3b50ae5aef55a6ae52e19d7070326911a2c9d5e0e081af8e7801cced",
+    "displayedURL": "127.0.0.1:4199/rustify-ui/quickstart/",
+    "axSha256": "5f62c68404fb5c1466b4c4f048f579e7fad72302cab87e9a3c6359464bdec2c9"
+  },
+  {
+    "file": "U4-Safari-09-zoom-200-empty.jpg",
+    "ax": "U4-Safari-09-zoom-200-empty.ax.txt",
+    "at": "2026-10-16T04:44:09.772Z",
+    "action": "输入值不变，实际按Left检查输入仍可编辑；此时记录完成后的搜索状态。",
+    "source": "CUA native macOS Safari; original JPEG",
+    "sha256": "8d99f1a982e3c0d0ba4b9e026a24104c6f16c75414839861a625821f71be30a2",
+    "displayedURL": "127.0.0.1:4199/rustify-ui/quickstart/",
+    "axSha256": "84e56bb90f4a4939bcd888b4424db7b1d6f2edaab799b5ec5b27bb572a28aa1f"
+  },
+  {
+    "file": "U4-Safari-10-fault-entry.jpg",
+    "ax": "U4-Safari-10-fault-entry.ax.txt",
+    "at": "2026-10-16T04:45:02.537Z",
+    "action": "新建Safari页签进入真实100页搜索语料站；仅该产物隔离副本暂扣module以获得真实404。",
+    "source": "CUA native macOS Safari; original JPEG",
+    "sha256": "5b9a57e189599a5c8c96a25cb82f8b9d276198216b941a8a631787b1ac62cd47",
+    "displayedURL": "127.0.0.1:4205/rustify-ui/page-0001/",
+    "axSha256": "8a5fcd42b07714fd61e03ba26e26450146112502abda3d0b6bdfaccc36a80502"
+  },
+  {
+    "file": "U4-Safari-11-module-error-attempt.jpg",
+    "ax": "U4-Safari-11-module-error-attempt.ax.txt",
+    "at": "2026-10-16T04:45:09.190Z",
+    "action": "在首次模块404时Cmd+K打开并输入CustomOnlyToken，记录实际即时错误/加载状态。",
+    "source": "CUA native macOS Safari; original JPEG",
+    "sha256": "e6004bd4a545fb17839d5ad61d1812bf5acf443a157612833ca67e030efafdf3",
+    "displayedURL": "127.0.0.1:4205/rustify-ui/page-0001/",
+    "axSha256": "7408d5cf588fea3f1ddc9f0824a5b126fd3a88da4bb427d34dbd954a51245a18"
+  },
+  {
+    "file": "U4-Safari-12-retry-focus.jpg",
+    "ax": "U4-Safari-12-retry-focus.ax.txt",
+    "at": "2026-10-16T04:45:21.175Z",
+    "action": "从输入实际按Tab，本轮原生焦点到HTML内容，未记录为Retry获焦。",
+    "source": "CUA native macOS Safari; original JPEG",
+    "sha256": "bb1be9eb90c897c2396e674b923a876c86d208947e1da745a9beaf2adbd71605",
+    "displayedURL": "127.0.0.1:4205/rustify-ui/page-0001/",
+    "axSha256": "cc9f38d3d47d52d5402438052c373842bf0b897e6bfce2b925ba7546e8f04c48"
+  },
+  {
+    "file": "U4-Safari-13-retry-attempt.jpg",
+    "ax": "U4-Safari-13-retry-attempt.ax.txt",
+    "at": "2026-10-16T04:45:21.643Z",
+    "action": "焦点停在HTML内容时按Enter，仍显示error；未记录为重试成功。",
+    "source": "CUA native macOS Safari; original JPEG",
+    "sha256": "bb1be9eb90c897c2396e674b923a876c86d208947e1da745a9beaf2adbd71605",
+    "displayedURL": "127.0.0.1:4205/rustify-ui/page-0001/",
+    "axSha256": "cc9f38d3d47d52d5402438052c373842bf0b897e6bfce2b925ba7546e8f04c48"
+  },
+  {
+    "file": "U4-Safari-14-option-tab-focus.jpg",
+    "ax": "U4-Safari-14-option-tab-focus.ax.txt",
+    "at": "2026-10-16T04:45:37.670Z",
+    "action": "按Safari原生Option+Tab检查可达控件；不修改系统键盘偏好。",
+    "source": "CUA native macOS Safari; original JPEG",
+    "sha256": "c69eb31158e4dedaa1008f39eb415a4c4011abc39eab582eefdaa38d7a69cd0c",
+    "displayedURL": "127.0.0.1:4205/rustify-ui/page-0001/",
+    "axSha256": "f1fad5b53c289213df47bdd8c99596c002b8be92b639e635cc817ac8fdd6c3b3"
+  },
+  {
+    "file": "U4-Safari-15-retry-click.jpg",
+    "ax": "U4-Safari-15-retry-click.ax.txt",
+    "at": "2026-10-16T04:45:49.948Z",
+    "action": "点击实际可见Retry，同页重新加载恢复后的原module，记录状态与输入。",
+    "source": "CUA native macOS Safari; original JPEG",
+    "sha256": "1adda48a5c0200e7345d968773f24e15ca6e48840f18f63285e0271810252a80",
+    "displayedURL": "127.0.0.1:4205/rustify-ui/page-0001/",
+    "axSha256": "16bfa6444f76563030fbadcf1b45a105b47342c92b84d3e443e94c857b932d85"
+  },
+  {
+    "file": "U4-Safari-16-zh-button-demo.jpg",
+    "ax": "U4-Safari-16-zh-button-demo.ax.txt",
+    "at": "2026-10-16T04:46:26.644Z",
+    "action": "普通导航到官方中文界面的Button分类，记录真实DOM演示初始状态。",
+    "source": "CUA native macOS Safari; original JPEG",
+    "sha256": "4a0b720dea1faa912b5dc98298d0977f598bc56ba2d1dcb5be3c5b44e84ead8f",
+    "displayedURL": "127.0.0.1:4199/rustify-ui/zh/components/button/",
+    "axSha256": "a9f5ab1730b3679d2fffd57278b6565fd4db893bf3900c48faa28749bc4ae843"
+  },
+  {
+    "file": "U4-Safari-17-demo-increment.jpg",
+    "ax": "U4-Safari-17-demo-increment.ax.txt",
+    "at": "2026-10-16T04:48:36.508Z",
+    "action": "实际点击Increment，记录真实演示输出，不以源码推断。",
+    "source": "CUA native macOS Safari; original JPEG",
+    "sha256": "701723099572473349c164ed02473face71f5b0286ecaac2afbcb2eccee127e5",
+    "displayedURL": "127.0.0.1:4199/rustify-ui/zh/components/button/",
+    "axSha256": "82c2e38c02a79045a99bc49156e253f85e1230adbab6b7a6f8208f5297ed6431"
+  },
+  {
+    "file": "U4-Safari-18-demo-reset.jpg",
+    "ax": "U4-Safari-18-demo-reset.ax.txt",
+    "at": "2026-10-16T04:48:37.088Z",
+    "action": "前一动作后AX索引变化，本次实际再次激活Increment；保留该采集attempt，不记Reset成功。",
+    "source": "CUA native macOS Safari; original JPEG",
+    "sha256": "9e151701ee0ca2aee081615052568c3d45cb2e3e229035479199845c85fb6c2f",
+    "displayedURL": "127.0.0.1:4199/rustify-ui/zh/components/button/",
+    "axSha256": "7765a9e62715563fa3d1393e299dbf099c32d16d90325bd8f39d7fd1181721a9"
+  },
+  {
+    "file": "U4-Safari-19-demo-reset-confirmed.jpg",
+    "ax": "U4-Safari-19-demo-reset-confirmed.ax.txt",
+    "at": "2026-10-16T04:48:55.331Z",
+    "action": "按本次最新AX中的Reset按钮执行，核对计数归零。",
+    "source": "CUA native macOS Safari; original JPEG",
+    "sha256": "b6758bed8f244d7886243195e7e0a5a9601de8cacc912575d133c4c7d159ad56",
+    "displayedURL": "127.0.0.1:4199/rustify-ui/zh/components/button/",
+    "axSha256": "9fa4b4a4ba6aff225634e493081d79d7f10178d6383d3fcb14e289b82f1c7d4c"
+  },
+  {
+    "file": "U4-Safari-20-zh-dark.jpg",
+    "ax": "U4-Safari-20-zh-dark.ax.txt",
+    "at": "2026-10-16T04:49:37.233Z",
+    "action": "在实际中文界面点击深色，记录缺译正文与主题。",
+    "source": "CUA native macOS Safari; original JPEG",
+    "sha256": "deee3eb9092818d7482072125fa5d7eb3ecb148e681810a4d77814ff6fe20774",
+    "displayedURL": "127.0.0.1:4199/rustify-ui/zh/components/button/",
+    "axSha256": "23436b98f51900e18505cb786d3f3ce763f28255a5b42ef10c6259a6b14aaf40"
+  },
+  {
+    "file": "U4-Safari-21-zh-deep-404.jpg",
+    "ax": "U4-Safari-21-zh-deep-404.ax.txt",
+    "at": "2026-10-16T04:49:40.598Z",
+    "action": "在已构建官方站普通访问中文深404，记录当前语言与搜索入口。",
+    "source": "CUA native macOS Safari; original JPEG",
+    "sha256": "2030e1eabe6080de96ed558628dcdc91d1241e13f8fef03d6829eb731a2deee3",
+    "displayedURL": "127.0.0.1:4199/rustify-ui/zh/__native_r4_missing__/deep/",
+    "axSha256": "ffccf3905190d321afe59bb771187bfdf60ae66db1a0f7a2d2d90d66c66ac36b"
+  },
+  {
+    "file": "U4-Safari-22-zh-404-query.jpg",
+    "ax": "U4-Safari-22-zh-404-query.ax.txt",
+    "at": "2026-10-16T04:49:45.555Z",
+    "action": "Cmd+K后尝试typeText中文，实际输入仍为空、显示idle；保留工具输入attempt，不记为已查询。",
+    "source": "CUA native macOS Safari; original JPEG",
+    "sha256": "b260ea3d536f636aa89e7311f0b15e51450384cf087c47d10ab38adea85c70f6",
+    "displayedURL": "127.0.0.1:4199/rustify-ui/zh/__native_r4_missing__/deep/",
+    "axSha256": "267a6bd91544202a50548be164f35f6e1ab6d9d1ed64deb59d44cdba2ef6be95"
+  },
+  {
+    "file": "U4-Safari-23-zh-404-pasted-query.jpg",
+    "ax": "U4-Safari-23-zh-404-pasted-query.ax.txt",
+    "at": "2026-10-16T04:49:55.726Z",
+    "action": "用原生粘贴输入快速开始，记录搜索状态；该操作不证明IME组合输入。",
+    "source": "CUA native macOS Safari; original JPEG",
+    "sha256": "b3c94d0a33cdc35781173e50f8e8215d3df370195bdf38f70eff54dc1eea0903",
+    "displayedURL": "127.0.0.1:4199/rustify-ui/zh/__native_r4_missing__/deep/",
+    "axSha256": "0985ba78e19f0b5c2133ee2e440df59c75c36e00727f58b8b89672be13d61798"
+  },
+  {
+    "file": "U4-Safari-24-zh-404-destination.jpg",
+    "ax": "U4-Safari-24-zh-404-destination.ax.txt",
+    "at": "2026-10-16T04:50:01.072Z",
+    "action": "在2个中文结果已可见后实际Enter，核对中文quickstart目标与关闭状态。",
+    "source": "CUA native macOS Safari; original JPEG",
+    "sha256": "9b7b8872149d129159b5d6d26ba675ba6befe3aee6d653226a0f300a9dd58721",
+    "displayedURL": "127.0.0.1:4199/rustify-ui/zh/quickstart/",
+    "axSha256": "5fc8821c27f42a0bb0bccb35e0177eccb70c434a7b874381e1d91bbf7ba0d8ed"
+  },
+  {
+    "file": "U4-Safari-25-settings-restored.jpg",
+    "ax": "U4-Safari-25-settings-restored.ax.txt",
+    "at": "2026-10-16T04:50:33.479Z",
+    "action": "恢复跟随系统与原生100%缩放，不改其他网站权限。",
+    "source": "CUA native macOS Safari; original JPEG",
+    "sha256": "0d0d5b3247a7cf411b1d5ed04f8133996700bc59cd883a35d26b8d3e967bb29d",
+    "displayedURL": "127.0.0.1:4199/rustify-ui/zh/quickstart/",
+    "axSha256": "c5eb302b212f1b574fafb00b662169aa8ba294bbe1e63a0a8f8f1d295659ba10"
+  },
+  {
+    "file": "U4-Safari-26-window-restored.jpg",
+    "ax": "U4-Safari-26-window-restored.ax.txt",
+    "at": "2026-10-16T04:50:34.541Z",
+    "action": "结束Safari补充采集，使用原窗口缩放动作恢复原窗口尺寸。",
+    "source": "CUA native macOS Safari; original JPEG",
+    "sha256": "618e846d9763b92dbe8d8e73788485de2da9ab5d3b188c1e4c6cdada8eb94ab7",
+    "displayedURL": "127.0.0.1:4199/rustify-ui/zh/quickstart/",
+    "axSha256": "8fb4f8f4de6dddb6e3d3f09bcd425eb60aa2765d9369147942914b0483aac5c6"
+  }
+]

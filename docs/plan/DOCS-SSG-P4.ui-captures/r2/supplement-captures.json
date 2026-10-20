@@ -1,0 +1,20 @@
+[
+  {
+    "file": "M1-show-more-after-1280-light.png",
+    "sha256": "08e6a9831b351032a2ac3fe82dd9dedfb7841f6ec6e18e0b21624ea3fc1e5be2",
+    "fileMtimeUTC": "2026-10-16T03:52:01.516Z",
+    "origin": "R2 runtime-check-runner, 1280x900 DPR1 light, http://127.0.0.1:4205/rustify-ui/; actual keyboard More after40; next check recorded 2026-10-16T03:52:01.517Z"
+  },
+  {
+    "file": "U4-native-chrome-zoom200-read.jpg",
+    "sha256": "e2bbf3e99d0cb363c5206129ffddf2937fdce0d5f3c4cb2971c38e8421d1bc08",
+    "fileMtimeUTC": "2026-10-16T03:39:32.162Z",
+    "origin": "CUA native Chrome, http://127.0.0.1:4205/rustify-ui/, native 200%; actual tool screenshot 3024x1752 JPEG; CSS viewport/DPR unknown in zoom200; actions in capture-notes.md"
+  },
+  {
+    "file": "U4-native-chrome-zoom200-search.jpg",
+    "sha256": "1693bdd8ed2b843eb55824909b984e72d666ff73a62a19d63f69c8a67a4f183a",
+    "fileMtimeUTC": "2026-10-16T03:39:41.581Z",
+    "origin": "CUA native Chrome, http://127.0.0.1:4205/rustify-ui/, native 200%; actual tool screenshot 3024x1752 JPEG; CSS viewport/DPR unknown in zoom200; actions in capture-notes.md"
+  }
+]

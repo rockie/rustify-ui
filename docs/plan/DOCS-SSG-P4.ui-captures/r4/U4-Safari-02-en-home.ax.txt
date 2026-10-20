@@ -1,0 +1,77 @@
+The following is a diff from the previous accessibility tree for Window: "Rustify UI" with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+Removed element IDs: 1-7
++17 标准窗口 Rustify UI, ID: SafariWindow?IsSecure=false&UUID=8B94E202-E355-455B-98DF-40C71253D736, Secondary Actions: Raise
++	18 分离组
++		19 分离器 (disabled, settable, float) -1
++		20 标签页组
++			21 滚动区
++				22 HTML内容 Description: Rustify UI, URL: 127.0.0.1:4199/rustify-ui/zh/
++					23 link 跳到正文, Value: 127.0.0.1:4199/rustify-ui/zh/#content
++					24 container
++						25 link Rustify UI, Value: 127.0.0.1:4199/rustify-ui/zh/
++						26 弹出式按钮 搜索
++						27 摘要 中文, Value: off
++							28 文本 中文
++						29 container 主题
++							30 开关按钮 跟随系统, Value: on
++							31 开关按钮 浅色, Value: off
++							32 开关按钮 深色, Value: off
++					33 container 站点链接
++						34 内容列表
++							35 link GitHub 源码, Value: github.com/rockie/rustify-ui
++					36 container
++						37 标题 Rustify UI, Value: 1
++							38 文本 Rustify UI
++						39 文本 面向浏览器应用的实验性 Rust SDK，提供 DOM 组件和按需启用的 GPU region。
++						40 container 开始阅读
++							41 link 快速开始, Value: 127.0.0.1:4199/rustify-ui/zh/quickstart/
++							42 link 组件, Value: 127.0.0.1:4199/rustify-ui/zh/components/button/
++						43 container DOM 界面 Leptos 管理 DOM、布局和响应式应用状态。
++							44 标题 DOM 界面, Value: 2
++								45 文本 DOM 界面
++							46 文本 Leptos 管理 DOM、布局和响应式应用状态。
++						47 container 按需启用 GPU 需要自定义绘制的交互内容可使用 GPU region。
++							48 标题 按需启用 GPU, Value: 2
++								49 文本 按需启用 GPU
++							50 文本 需要自定义绘制的交互内容可使用 GPU region。
++						51 container 静态部署 构建浏览器资源后通过 HTTP 托管，无需后端服务。
++							52 标题 静态部署, Value: 2
++								53 文本 静态部署
++							54 文本 构建浏览器资源后通过 HTTP 托管，无需后端服务。
++						55 文本 Rustify UI 以 Leptos CSR 管理浏览器界面，默认构建仅使用 DOM。启用 SDK 的 gpu feature 后，GpuRegion 在由 DOM 定位的 canvas 中运行 Makepad WebGL2 绘制；应用向 region 传入 props，并接收类型化动作。
++						56 文本 每项任务按实际需要选择呈现路径。共享状态和主题 token 不要求 DOM 与 GPU 拥有相同的组件目录或 CSS 支持；只有明确需要两端或跨区协作时，才同时实现两端。当前尚未选定具体业务场景。
++						57 文本 本仓包含 SDK、DOM 组件、Makepad fork 和可运行示例。工作区版本为 0.1.0，尚未开放包发布；从快速开始进入本地构建，或在组件文档中操作实际 DOM 示例并查看 Rust 源码。
++					58 container 页脚导航
++						59 link 返回首页, Value: 127.0.0.1:4199/rustify-ui/zh/
++				60 滚动条 (settable, float) 0
++	61 工具栏
++		62 container Secondary Actions: 移到上一项, 移到下一项, 从工具栏移除
++			63 按钮 Description: 显示边栏, ID: SidebarButton
++			64 菜单按钮 Description: 标签页组选择器, ID: TabGroupPickerButton?TabGroup=
++		65 container BackForwardSegmentedControl
++			66 按钮 (disabled) Description: 返回, Help: 显示上一页, ID: BackButton
++			67 按钮 (disabled) Description: 前进, Help: 显示下一页, ID: ForwardButton
++		68 container Secondary Actions: 移到上一项, 移到下一项, 从工具栏移除
++			69 按钮 显示阅读器, ID: AssistantButton
++			70 按钮 将页面添加到阅读列表, ID: OneStepBookmarkingButton
++			71 文本栏 (settable) Description: 智能搜索栏, Value: 127.0.0.1:4199/rustify-ui/zh/, ID: WEB_BROWSER_ADDRESS_AND_SEARCH_FIELD
++			72 按钮 重新加载此页面, ID: ReloadButton
++		73 按钮 Description: 共享, ID: ShareButton, Secondary Actions: 移到上一项, 移到下一项, 从工具栏移除
++		74 按钮 Description: 新建标签页, ID: NewTabButton, Secondary Actions: 移到上一项, 移到下一项, 从工具栏移除
++		75 按钮 Description: 标签页概览, ID: TabOverviewButton, Secondary Actions: 移到上一项, 从工具栏移除
++	76 标签页组 Description: 标签页栏，4个标签页, ID: TabBar?isSeparate=false
++		77 标签 Home | Home semantics, Value: off, Secondary Actions: 关闭标签页, ID: TabBarTab?isNarrow=false&isExpanded=false&tabCount=&isPinned=false&isCluster=false&clusterID=&isActive=false
++			78 图像 FaviconImageView
++			79 文本 Value: Home | Home semantics, ID: UnifiedTabBarButton._titleTextField
++		80 标签 Rustify UI, Value: off, Secondary Actions: 关闭标签页, ID: TabBarTab?isNarrow=false&isExpanded=false&tabCount=&isPinned=false&isCluster=false&clusterID=&isActive=false
++			81 图像 FaviconImageView
++			82 文本 Value: Rustify UI, ID: UnifiedTabBarButton._titleTextField
++		83 标签 Architecture | Rustify UI, Value: off, Secondary Actions: 关闭标签页, ID: TabBarTab?isNarrow=false&isExpanded=false&tabCount=&isPinned=false&isCluster=false&clusterID=&isActive=false
++			84 图像 FaviconImageView
++			85 文本 Value: Architecture | Rustify UI, ID: UnifiedTabBarButton._titleTextField
++		86 标签 Rustify UI, Help: 若要与此按钮中的项目交互，请按下Control-Option-Shift-下箭头键。, Value: on, Secondary Actions: 关闭标签页, ID: TabBarTab?isNarrow=false&isExpanded=false&tabCount=&isPinned=false&isCluster=false&clusterID=&isActive=true
++			87 图像 FaviconImageView
++			88 文本 Value: Rustify UI, ID: UnifiedTabBarButton._titleTextField
++	89 关闭按钮
++	90 全屏幕按钮 Help: 此按钮也可以执行缩放窗口的操作, Secondary Actions: 缩放窗口
++	91 最小化按钮

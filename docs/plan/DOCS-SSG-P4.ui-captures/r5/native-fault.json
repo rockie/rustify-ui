@@ -1,0 +1,22 @@
+{
+  "source": "target/docs-ssg/http/search/subpath/dist",
+  "dest": "target/docs-ssg/ui-review-r5/search",
+  "module": "search.4879fcef9b.js",
+  "sha256": "4879fcef9b8ec96cd0bc12ee699fcbbb0bd823e3f72d6289a810f3da853be15f",
+  "serverBefore": {
+    "pid": 36449,
+    "command": "target/docs-ssg/p4/install-1bbc54b0/bin/rustify-docs preview --dir target/docs-ssg/http/search/subpath/dist --host 0.0.0.0 --port 4205"
+  },
+  "method": "temporarily withhold module in byte-identical real product copy; no content replacement",
+  "withheldAt": "2026-10-16T08:13:37.626Z",
+  "missingHTTP": {
+    "status": 404,
+    "contentType": "text/html; charset=utf-8"
+  },
+  "restoredAt": "2026-10-16T08:14:37.552Z",
+  "restoredHTTP": {
+    "status": 200,
+    "sha256": "4879fcef9b8ec96cd0bc12ee699fcbbb0bd823e3f72d6289a810f3da853be15f",
+    "matches": true
+  }
+}

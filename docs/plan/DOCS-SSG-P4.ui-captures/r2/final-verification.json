@@ -1,0 +1,20 @@
+{
+  "at": "2026-10-16T03:58:31.271Z",
+  "registeredScreenshots": 91,
+  "linksChecked": 167,
+  "eventCoverage": [
+    {
+      "id": "8b66add8-79df-4310-9cea-02a428928dc7",
+      "events": 1
+    },
+    {
+      "id": "14f8fbe9-fef1-483e-86eb-47a0a8dec8df",
+      "events": 5
+    }
+  ],
+  "targetFingerprint": "604274d613d8b2915e8c9c17ed09c2be6b1f6ef102adcb9bbef76275062486a4",
+  "reportHash": "sha256:8cb8124eaed37e317dbc2630191d45fe775119bf93ae9126012f4981b4736cb5",
+  "planUnchanged": true,
+  "productDiffFromCandidate": "",
+  "problems": []
+}

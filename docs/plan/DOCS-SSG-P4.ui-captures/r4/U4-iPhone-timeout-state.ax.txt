@@ -1,0 +1,16 @@
+Window: "iPhone镜像", App: iPhone镜像.
+0 标准窗口 iPhone镜像, ID: iphone-mirroring-main, Secondary Actions: Raise
+	1 container
+		2 图像 iPhoneOff
+		3 text 已超时 因连接期间iPhone被使用，iPhone镜像超时。
+
+连接前请锁定iPhone。
+		4 按钮 连接
+5 menu bar
+	6 iPhone镜像
+	7 编辑
+	8 显示
+	9 窗口
+	10 帮助
+
+The focused UI element is 0 标准窗口 iPhone镜像, ID: iphone-mirroring-main, Secondary Actions: Raise

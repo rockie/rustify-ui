@@ -1,0 +1,9 @@
+The following is a diff from the previous accessibility tree for Window: "Architecture | Rustify UI" with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+Removed element IDs: 334-335
++						578 container (expanded) Secondary Actions: Collapse
++							579 摘要 中文, Value: on
++								580 文本 中文
++							581 container 语言
++								582 内容列表
++									583 link English, Value: 127.0.0.1:4199/rustify-ui/architecture/
++									584 link 中文 · 此页面尚未翻译。, Value: 127.0.0.1:4199/rustify-ui/zh/architecture/

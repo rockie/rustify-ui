@@ -1,0 +1,7 @@
+The following is a diff from the previous accessibility tree for Window: "快速开始 | Rustify UI" with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+~					9 文本栏 (settable) 地址和搜索栏, Value: 127.0.0.1:4199/rustify-ui/zh/quickstart/, Placeholder: 问问 Google 或输入网址
+Selected text: ```
+ThemeScope
+```
+
+Note: Pay special attention to the content selected by the user. If the user asks a question or refers to the content they are looking at on-screen, they might be referring to the selected content (but they might be referring to something else that's visible, too).

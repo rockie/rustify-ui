@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Users/rockie/Documents/gh-rockie/rustify-ui/scripts/docs-pages-prepare.py", line 19, in <module>
+    import tomllib
+ModuleNotFoundError: No module named 'tomllib'
+

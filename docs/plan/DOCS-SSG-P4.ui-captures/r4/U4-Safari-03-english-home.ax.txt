@@ -1,0 +1,51 @@
+The following is a diff from the previous accessibility tree for Window: "Rustify UI" with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+Removed element IDs: 21-26, 29-60, 92-98
++			92 滚动区
++				93 HTML内容 Description: Rustify UI, URL: 127.0.0.1:4199/rustify-ui/
++					94 link Skip to content, Value: 127.0.0.1:4199/rustify-ui/#content
++					95 container
++						96 link Rustify UI, Value: 127.0.0.1:4199/rustify-ui/
++						97 弹出式按钮 Search
++						98 摘要 English, Value: off
++							99 文本 English
++						100 container Theme
++							101 开关按钮 System, Value: on
++							102 开关按钮 Light, Value: off
++							103 开关按钮 Dark, Value: off
++					104 container Site links
++						105 内容列表
++							106 link GitHub, Value: github.com/rockie/rustify-ui
++					107 container
++						108 标题 Rustify UI, Value: 1
++							109 文本 Rustify UI
++						110 文本 An experimental Rust SDK for browser applications, with DOM components and optional GPU regions.
++						111 container Start reading
++							112 link Quick start, Value: 127.0.0.1:4199/rustify-ui/quickstart/
++							113 link Components, Value: 127.0.0.1:4199/rustify-ui/components/button/
++						114 container DOM interfaces Leptos owns the DOM, layout and reactive application state.
++							115 标题 DOM interfaces, Value: 2
++								116 文本 DOM interfaces
++							117 文本 Leptos owns the DOM, layout and reactive application state.
++						118 container GPU when needed Opt in to GPU regions for content that needs custom drawing.
++							119 标题 GPU when needed, Value: 2
++								120 文本 GPU when needed
++							121 文本 Opt in to GPU regions for content that needs custom drawing.
++						122 container Static deployment Build browser assets and serve them over HTTP without a backend.
++							123 标题 Static deployment, Value: 2
++								124 文本 Static deployment
++							125 文本 Build browser assets and serve them over HTTP without a backend.
++						126 container
++							127 文本 Rustify UI is an experimental Rust SDK for Leptos CSR applications in the browser, with Makepad WebGL2 rendering as an opt-in. Leptos owns the DOM, layout and reactive application state. The default build is DOM only and links no Makepad; with the SDK's gpu feature, each GpuRegion renders into a canvas positioned by the DOM, and applications send props into regions and receive typed actions back.
++						128 文本 Each task implements only the rendering path it needs. Work on both paths requires an explicit requirement or a concrete need for cooperation across DOM and GPU regions. Shared state and theme tokens do not require matching component sets or CSS support. A specific application use case has not yet been selected.
++						129 container
++							130 文本 This repository contains the SDK, DOM components, a Makepad fork and six runnable examples. The workspace is version 0.1.0, with publishing disabled. Use the 
++							131 link repository quick start, Value: github.com/rockie/rustify-ui/blob/main/README.md#quick-start
++							132 文本  to build an example; use the 
++							133 link SDK quick start, Value: 127.0.0.1:4199/rustify-ui/quickstart/
++							134 文本  to write a region or integrate the components into an application.
++					135 container Footer links
++						136 link Back to the home page, Value: 127.0.0.1:4199/rustify-ui/
++				137 滚动条 (settable, float) 0
+~			66 按钮 Description: 返回, Help: 显示上一页, ID: BackButton
+~			69 按钮 显示阅读器, ID: AssistantButton
+~			71 文本栏 (settable) Description: 智能搜索栏, Value: 127.0.0.1:4199/rustify-ui/, ID: WEB_BROWSER_ADDRESS_AND_SEARCH_FIELD

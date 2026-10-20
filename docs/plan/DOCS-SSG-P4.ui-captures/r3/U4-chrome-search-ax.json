@@ -1,0 +1,51 @@
+{
+  "ok": true,
+  "data": {
+    "url": "http://127.0.0.1:4205/rustify-ui/zh/page-0001/",
+    "title": "主题切换 | Search corpus",
+    "tree": [
+      {
+        "role": "dialog",
+        "name": "搜索",
+        "children": [
+          {
+            "role": "StaticText",
+            "name": "搜索文档"
+          },
+          {
+            "role": "button",
+            "name": "关闭",
+            "ref": "@e1",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "关闭"
+              }
+            ]
+          },
+          {
+            "role": "combobox",
+            "name": "搜索文档",
+            "value": "主题切换",
+            "ref": "@e2",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "主题切换"
+              }
+            ]
+          },
+          {
+            "role": "StaticText",
+            "name": "正在准备搜索… 你可以继续输入。"
+          },
+          {
+            "role": "listbox",
+            "name": "搜索结果",
+            "ref": "@e3"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,8 @@
+The following is a diff from the previous accessibility tree for Window: "Rustify UI" with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+~						94 组合框 (expanded, settable) Search documentation, Value: ThemeScope, Secondary Actions: Collapse
+~						98 文本 3 results
+~						96 列表 (settable) Search results
++							99 文本 (selected) Quick start Quick start › Using Tailwind v4 in your app same relative directory as in the input above. ThemeScope publishes the document's resolved colors, fonts, spacing, radius and shadows on its mounted root. In these scopes, spacin
++							100 文本 Architecture Architecture › Versioned themes ResolvedTheme> alongside its application state. ThemeScope claims the mount root, projects the snapshot through CSSOM and restores prior values on cleanup. ThemeBoundary re-resolve
++							101 文本 Theme documents Theme documents › Mount a browser scope Theme documents › Fonts and GPU consumers Theme documents › Import and export :{mount, AppHandle, MountConfig, ResolvedTheme, ThemeScope}; use rustify_ui::theme::{font_context, import_json, resolve, ThemeError, ThemeMode}; use std::sync::Arc; // Put the down
+The focused UI element is 99 文本 (selected) Quick start Quick start › Using Tailwind v4 in your app same relative directory as in the input above. ThemeScope publishes the document's resolved colors, fonts, spacing, radius and shadows on its mounted root. In these scopes, spacin
