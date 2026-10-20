@@ -1,3 +1,6 @@
+---
+description: Tables larger than the screen, with windowed rows, selection by identity, going to unseen rows, work sliced across frames, sorting, filtering and editing.
+---
 # Data larger than the screen
 
 A hundred thousand rows do not fit in a document, and they do not need to. What

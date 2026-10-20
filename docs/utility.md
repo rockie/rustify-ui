@@ -1,3 +1,6 @@
+---
+description: Generate CSS at runtime for class names missing from the static build with UtilityScope and its Rust WASM worker.
+---
 # Runtime utilities
 
 `UtilityScope` generates CSS for complete class names that were absent from the

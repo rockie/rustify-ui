@@ -1,3 +1,6 @@
+---
+description: Install the pinned toolchain, build and preview the examples, and start a DOM application, GPU region or Tailwind setup with Rustify UI.
+---
 # Quick start
 
 ## Prerequisites

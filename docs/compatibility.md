@@ -1,3 +1,6 @@
+---
+description: The pinned versions, browser matrix, deployment contract and capability limits this repository has actually verified.
+---
 # Compatibility and capability boundaries (P1 research preview)
 
 Everything below describes what this repository has actually built and

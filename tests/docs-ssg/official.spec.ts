@@ -27,13 +27,18 @@ const categories = variants.map(variant => {
 });
 const include = config.match(/\[content\][\s\S]*?include\s*=\s*\[([\s\S]*?)\]/)?.[1];
 if (!include) throw new Error("official content.include must be explicit");
+// A source's own frontmatter description; a missing one fails only the assertions that read it.
+const frontDescription = (source: string) => source.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n/)?.[1].match(/^description: ([^\r\n]+)$/m)?.[1];
 const guides = [...include.matchAll(/"([^"]+\.md)"/g)].filter(match => !match[1].startsWith("zh/")).map(match => {
     const file = `docs/${match[1]}`;
     const source = readFileSync(file, "utf8");
     const title = source.match(/^# ([^\r\n]+)$/m)?.[1];
     if (!title) throw new Error(`guide ${file} has no source H1`);
-    return { file, route: `${path.basename(match[1], ".md")}/`, title };
+    return { file, route: `${path.basename(match[1], ".md")}/`, title, description: frontDescription(source) };
 });
+const zhQuickstartDescription = frontDescription(readFileSync("docs/zh/quickstart.md", "utf8"));
+// The escaping llms.txt applies to titles and descriptions.
+const llmsText = (value: string) => value.replace(/[\\[\]<>*_`]/g, "\\$&");
 const componentRoutes = config.match(/label = "Components"\s+routes = \[([\s\S]*?)\]/)?.[1];
 const guideItems = config.match(/label = "Guides"\s+items = \[([\s\S]*?)\]/)?.[1];
 if (!componentRoutes || !guideItems) throw new Error("official navigation groups are missing");
@@ -261,6 +266,25 @@ test("official Chinese home and quick start are real translations with local sea
             expect(text).toContain("尚未翻译");
             expect(text).toContain(`https://rockie.github.io${base()}components/button/`);
             expect(text).not.toContain(`https://rockie.github.io${base()}zh/components/button/`);
+        }
+        const lines = text.split("\n");
+        for (const guide of guides) {
+            const translated = path.startsWith("zh/") && guide.route === "quickstart/";
+            const link = `](https://rockie.github.io${base()}${translated ? "zh/" : ""}${guide.route}): `;
+            const line = lines.find(line => line.startsWith("- [") && line.includes(link));
+            expect(line, `${path} lists ${guide.file}`).toBeDefined();
+            const [label, description] = [line!.slice(3, line!.indexOf(link)), line!.slice(line!.indexOf(link) + link.length)];
+            if (translated) {
+                expect(zhQuickstartDescription, "docs/zh/quickstart.md declares a description").toBeDefined();
+                expect(description).toBe(llmsText(zhQuickstartDescription!));
+                continue;
+            }
+            expect(guide.description, `${guide.file} declares a description`).toBeDefined();
+            expect(description, `${path}: ${guide.file} uses its frontmatter description`).toBe(llmsText(guide.description!));
+            if (path.startsWith("zh/")) {
+                expect(label.startsWith(`${llmsText(guide.title)} (`), label).toBe(true);
+                expect(label).toContain("尚未翻译");
+            } else expect(label).toBe(llmsText(guide.title));
         }
     }
     await healthy(page, audit);

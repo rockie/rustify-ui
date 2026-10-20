@@ -1,3 +1,6 @@
+---
+description: How a scope owns or shares the address bar, and how links, guards, sub-path deployment and routed GPU regions behave.
+---
 # Navigation
 
 One page has one address bar. A scope says whether it owns that one or has a

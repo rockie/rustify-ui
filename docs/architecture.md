@@ -1,3 +1,6 @@
+---
+description: How a page's wasm instances, scopes and GPU regions fit together, and the runtime, hydration, theme and build contracts they follow.
+---
 # Architecture
 
 Theme integration below was checked against the working tree of

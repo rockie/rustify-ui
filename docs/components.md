@@ -1,3 +1,6 @@
+---
+description: The twenty-four component categories, each with a DOM component, and what a GPU region can draw for each of them.
+---
 # Component catalogue
 
 R18 asks for eighteen categories with no blank support cell. There are

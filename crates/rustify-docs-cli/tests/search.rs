@@ -42,38 +42,25 @@ fn ai_empty_home_check_and_build_still_succeed_with_a_nonempty_index_description
     assert!(text.contains("Homepage of "), "{text}");
 }
 
-#[test]
-fn official_sources_have_only_two_real_chinese_pages_and_keep_the_existing_catalog() {
+/// The repository's own documentation site, analysed as a production build
+/// sees it, with the registered pages standing in for the Rust surfaces.
+struct Official {
+    project: rustify_docs::content::Project,
+    snapshot: rustify_docs::content::Snapshot,
+    manifest: rustify_docs_syntax::Manifest,
+    analysis: rustify_docs::content::Analysis,
+}
+
+fn official() -> Official {
     use rustify_docs::content::{self, FragmentCache, Mode, Project, RegisteredPage, Surfaces};
     let repository = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("../..");
     let (project, _) = Project::load(&repository).unwrap();
-    assert_eq!(
-        project
-            .config
-            .locales
-            .iter()
-            .map(|locale| locale.lang.as_str())
-            .collect::<Vec<_>>(),
-        ["en", "zh"]
-    );
     let (snapshot, problems) = content::snapshot(&project);
     assert!(problems.is_empty(), "{problems:?}");
-    assert_eq!(snapshot.markdown.len(), 13);
-    assert_eq!(
-        snapshot
-            .markdown
-            .keys()
-            .filter(|path| path.starts_with("zh/"))
-            .map(String::as_str)
-            .collect::<Vec<_>>(),
-        ["zh/quickstart.md"]
-    );
     let registry = std::fs::read_to_string(repository.join("site/src/lib.rs")).unwrap();
     let manifest = rustify_docs_syntax::parse_registry(&registry)
         .unwrap()
         .manifest();
-    assert_eq!(manifest.demos.len(), 24);
-    assert_eq!(manifest.pages.len(), 26);
     let surfaces = Surfaces {
         pages: manifest
             .pages
@@ -103,6 +90,43 @@ fn official_sources_have_only_two_real_chinese_pages_and_keep_the_existing_catal
         1,
         &surfaces,
     );
+    Official {
+        project,
+        snapshot,
+        manifest,
+        analysis,
+    }
+}
+
+#[test]
+fn official_sources_have_only_two_real_chinese_pages_and_keep_the_existing_catalog() {
+    let Official {
+        project,
+        snapshot,
+        manifest,
+        analysis,
+    } = official();
+    assert_eq!(
+        project
+            .config
+            .locales
+            .iter()
+            .map(|locale| locale.lang.as_str())
+            .collect::<Vec<_>>(),
+        ["en", "zh"]
+    );
+    assert_eq!(snapshot.markdown.len(), 13);
+    assert_eq!(
+        snapshot
+            .markdown
+            .keys()
+            .filter(|path| path.starts_with("zh/"))
+            .map(String::as_str)
+            .collect::<Vec<_>>(),
+        ["zh/quickstart.md"]
+    );
+    assert_eq!(manifest.demos.len(), 24);
+    assert_eq!(manifest.pages.len(), 26);
     assert_eq!(analysis.errors(), 0, "{:?}", analysis.diagnostics);
     assert_eq!(analysis.published().count(), 74);
     let zh = &analysis.locales["zh"];
@@ -135,4 +159,83 @@ fn official_sources_have_only_two_real_chinese_pages_and_keep_the_existing_catal
     assert!(pages.iter().all(|file| !file.contains("docs/plan/")
         && !file.contains("docs/validation/")
         && !file.contains("PRD")));
+}
+
+#[test]
+fn official_guides_declare_one_sentence_descriptions() {
+    let Official { analysis, .. } = official();
+    let guides = [
+        "quickstart",
+        "architecture",
+        "navigation",
+        "workspace",
+        "forms",
+        "i18n",
+        "data",
+        "themes",
+        "utility",
+        "compatibility",
+        "components",
+        "vellum",
+    ]
+    .map(|name| format!("docs/{name}.md"));
+    let english = |file: &str| {
+        analysis
+            .pages
+            .iter()
+            .find(|page| page.file == file && page.locale.ui_lang == "en")
+            .unwrap_or_else(|| panic!("no English page for {file}"))
+    };
+    for file in &guides {
+        let page = english(file);
+        let description = page
+            .front
+            .description
+            .as_deref()
+            .unwrap_or_else(|| panic!("{file} has no `description:`"));
+        let body = description.strip_suffix('.').unwrap_or_else(|| {
+            panic!("{file}: the description does not end with a full stop: {description:?}")
+        });
+        assert!(
+            ![". ", "? ", "! "].iter().any(|stop| body.contains(stop)),
+            "{file}: more than one sentence: {description:?}"
+        );
+        assert!(
+            description.chars().count() <= 200,
+            "{file}: longer than 200 characters: {description:?}"
+        );
+        assert_ne!(description, page.title, "{file} repeats its title");
+        assert!(
+            !description.contains(": ") && !description.contains(" #"),
+            "{file}: not a plain YAML scalar: {description:?}"
+        );
+        assert!(
+            !description.as_bytes().windows(3).any(|window| {
+                window[0].is_ascii_digit() && window[1] == b'.' && window[2].is_ascii_digit()
+            }),
+            "{file}: names a version: {description:?}"
+        );
+    }
+    assert!(!analysis.diagnostics.iter().any(|diagnostic| {
+        diagnostic.rule == "missing-description"
+            && diagnostic
+                .file
+                .as_ref()
+                .is_some_and(|file| guides.contains(file))
+    }));
+    let fallbacks: Vec<_> = analysis
+        .pages
+        .iter()
+        .filter(|page| page.locale.ui_lang == "zh" && page.locale.is_fallback)
+        .filter(|page| guides.contains(&page.file))
+        .collect();
+    assert_eq!(fallbacks.len(), 11);
+    for page in fallbacks {
+        assert_eq!(
+            page.front.description,
+            english(&page.file).front.description,
+            "{} falls back to another description",
+            page.route
+        );
+    }
 }

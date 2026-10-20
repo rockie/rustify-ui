@@ -1476,7 +1476,10 @@ a failure in either hides nothing.
 P1 checks require the latest stable Google Chrome and real macOS Safari,
 plus an iPhone/Safari and an Android/Chrome, with actual versions recorded.
 Firefox's real-browser and Playwright-engine checks remain deferred through
-P2; P4 retains the full browser matrix.
+P2. P4 verified the latest stable desktop Chrome, Firefox and Safari. By the
+maintainer's decision P4 ran no physical-phone checks, so no phone browser is
+claimed as verified; VoiceOver with Safari was accepted by the maintainer in
+person.
 Engine emulation and narrow screenshots supplement device checks.
 
 Performance uses the frozen Playwright Chromium `153.0.8010.12`, separately

@@ -1,3 +1,6 @@
+---
+description: Forms as a state machine for field errors, validation, saving and unsaved changes, while the application keeps the values.
+---
 # Forms
 
 A form here is a state machine, not a store. It holds what is wrong with each

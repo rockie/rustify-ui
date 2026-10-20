@@ -1,3 +1,6 @@
+---
+description: How the Vellum editor example maps onto Rustify UI's DOM and GPU layers, with reproducible figures and twin comparison results.
+---
 # Vellum example and framework capabilities
 
 This example ports Vellum's editing rules to Rust and uses Rustify UI to manage projection, lifecycle and input across DOM and GPU regions. See the [VELLUM plan](plan/VELLUM.md) for implementation status.

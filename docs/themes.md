@@ -1,3 +1,6 @@
+---
+description: Create, resolve, import and export versioned theme documents and apply one resolved snapshot to DOM scopes and GPU regions.
+---
 # Theme documents
 
 The versioned theme model preserves author values and resolves one snapshot for DOM and GPU consumers. The legacy `Theme`, `ThemePatch`, `ThemedScope` and `ThemeOverride` APIs keep their existing contracts. Conversion is one way: a complete document cannot be reduced to the legacy opaque palette without losing information.

@@ -1,3 +1,6 @@
+---
+description: Side-by-side panels with dividers, tabs over panels and one command list, plus who owns drag and wheel input between panels.
+---
 # Workspace
 
 Three pieces: panels side by side, tabs over them, and every command in one
