@@ -1,0 +1,9 @@
+{
+  "candidate_sha": "88566ba1ed08223a5834f794840fff5e48f4ba8a",
+  "framework_revision": "0fd34edaffda1926b38ea64c023b2fe1fc5115c5",
+  "build_info": "rustify-docs 0.1.32\npanic: unwind\ngrammars: syntect-5.3.0+two-face-0.5.2+bat-0.26.1+fancy\nsource: 88566ba1ed08223a5834f794840fff5e48f4ba8a\n",
+  "bytes": 59202928,
+  "sha256": "134c650c376fb17f8f4ad27b31956e2efffceaae072770ed2f157b2edacbef87",
+  "install_root": "/Users/rockie/Documents/gh-rockie/rustify-ui/.rustify-docs/p4-gaps/install-c2",
+  "install_kind": "mbx install --git file://<repo> --rev C2 --locked --profile docs-cli, process-level remap only"
+}

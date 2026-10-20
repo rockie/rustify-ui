@@ -1,0 +1,16 @@
+{
+  "candidate_sha": "88566ba1ed08223a5834f794840fff5e48f4ba8a",
+  "framework_revision": "0fd34edaffda1926b38ea64c023b2fe1fc5115c5",
+  "build_id": "dd1c0f93e2457818",
+  "cli_version": "0.1.32",
+  "files": 97,
+  "manifest_sha256": "6ab8582f8a1549792cf228a4e0861faf492b89c81184b00c91f6781bbc002ddc",
+  "archive": "/Users/rockie/Documents/gh-rockie/rustify-ui/.rustify-docs/p4-gaps/artifacts/c2-88566ba1-site.tar.gz",
+  "archive_bytes": 2146969,
+  "archive_sha256": "7a66192d4ff36b0c7d85cc9a760079faac2464345fc3b0023371c1b7810f551b",
+  "baseline": {
+    "receipt": "docs/validation/docs-ssg-p4/m7/release-20261019-c31/c1-archive.json",
+    "archive_sha256_verified": "20101d9aee299a4bf359bf8e84126f406d08ce1d0207c5910ac9e56743800bd5",
+    "toolchain": "macOS 27.0.1 (26A434) arm64, rustc 1.99.0 (b940084d7), cargo 1.99.0, same as the C1 run"
+  }
+}

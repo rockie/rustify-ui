@@ -1,0 +1,319 @@
+{
+  "c1_files": 97,
+  "c2_files": 97,
+  "only_c1": [],
+  "only_c2": [],
+  "identical": 70,
+  "changed": {
+    "architecture/index.html": {
+      "bytes": [
+        55640,
+        55418
+      ],
+      "gzip9_delta": 28,
+      "meta_equals_source": true,
+      "rest_identical": true,
+      "new_dates": [
+        "2026-10-20"
+      ]
+    },
+    "compatibility/index.html": {
+      "bytes": [
+        45839,
+        45719
+      ],
+      "gzip9_delta": 10,
+      "meta_equals_source": true,
+      "rest_identical": true,
+      "new_dates": [
+        "2026-10-20"
+      ]
+    },
+    "components/index.html": {
+      "bytes": [
+        39512,
+        37979
+      ],
+      "gzip9_delta": -29,
+      "meta_equals_source": true,
+      "rest_identical": true,
+      "new_dates": [
+        "2026-10-20"
+      ]
+    },
+    "data/index.html": {
+      "bytes": [
+        47385,
+        46995
+      ],
+      "gzip9_delta": 31,
+      "meta_equals_source": true,
+      "rest_identical": true,
+      "new_dates": [
+        "2026-10-20"
+      ]
+    },
+    "forms/index.html": {
+      "bytes": [
+        29181,
+        28869
+      ],
+      "gzip9_delta": 13,
+      "meta_equals_source": true,
+      "rest_identical": true,
+      "new_dates": [
+        "2026-10-20"
+      ]
+    },
+    "i18n/index.html": {
+      "bytes": [
+        32104,
+        31963
+      ],
+      "gzip9_delta": 21,
+      "meta_equals_source": true,
+      "rest_identical": true,
+      "new_dates": [
+        "2026-10-20"
+      ]
+    },
+    "llms.txt": {
+      "bytes": [
+        7091,
+        5558
+      ],
+      "gzip9_delta": -764
+    },
+    "navigation/index.html": {
+      "bytes": [
+        29596,
+        29521
+      ],
+      "gzip9_delta": 44,
+      "meta_equals_source": true,
+      "rest_identical": true,
+      "new_dates": [
+        "2026-10-20"
+      ]
+    },
+    "quickstart/index.html": {
+      "bytes": [
+        129638,
+        129818
+      ],
+      "gzip9_delta": 39,
+      "meta_equals_source": true,
+      "rest_identical": true,
+      "new_dates": [
+        "2026-10-20"
+      ]
+    },
+    "rustify-docs-manifest.json": {
+      "bytes": [
+        16237,
+        16237
+      ],
+      "gzip9_delta": -13
+    },
+    "sitemap.xml": {
+      "bytes": [
+        3371,
+        3371
+      ],
+      "gzip9_delta": -21,
+      "changed_lines": 12,
+      "only_lastmod": true
+    },
+    "themes/index.html": {
+      "bytes": [
+        93105,
+        92526
+      ],
+      "gzip9_delta": 16,
+      "meta_equals_source": true,
+      "rest_identical": true,
+      "new_dates": [
+        "2026-10-20"
+      ]
+    },
+    "utility/index.html": {
+      "bytes": [
+        36985,
+        35932
+      ],
+      "gzip9_delta": -23,
+      "meta_equals_source": true,
+      "rest_identical": true,
+      "new_dates": [
+        "2026-10-20"
+      ]
+    },
+    "vellum/index.html": {
+      "bytes": [
+        68124,
+        67947
+      ],
+      "gzip9_delta": 25,
+      "meta_equals_source": true,
+      "rest_identical": true,
+      "new_dates": [
+        "2026-10-20"
+      ]
+    },
+    "workspace/index.html": {
+      "bytes": [
+        30338,
+        30134
+      ],
+      "gzip9_delta": 43,
+      "meta_equals_source": true,
+      "rest_identical": true,
+      "new_dates": [
+        "2026-10-20"
+      ]
+    },
+    "zh/architecture/index.html": {
+      "bytes": [
+        56036,
+        55814
+      ],
+      "gzip9_delta": 33,
+      "meta_equals_source": true,
+      "rest_identical": true,
+      "new_dates": [
+        "2026-10-20"
+      ]
+    },
+    "zh/compatibility/index.html": {
+      "bytes": [
+        46203,
+        46083
+      ],
+      "gzip9_delta": 13,
+      "meta_equals_source": true,
+      "rest_identical": true,
+      "new_dates": [
+        "2026-10-20"
+      ]
+    },
+    "zh/components/index.html": {
+      "bytes": [
+        39876,
+        38343
+      ],
+      "gzip9_delta": -32,
+      "meta_equals_source": true,
+      "rest_identical": true,
+      "new_dates": [
+        "2026-10-20"
+      ]
+    },
+    "zh/data/index.html": {
+      "bytes": [
+        47797,
+        47407
+      ],
+      "gzip9_delta": 35,
+      "meta_equals_source": true,
+      "rest_identical": true,
+      "new_dates": [
+        "2026-10-20"
+      ]
+    },
+    "zh/forms/index.html": {
+      "bytes": [
+        29561,
+        29249
+      ],
+      "gzip9_delta": 15,
+      "meta_equals_source": true,
+      "rest_identical": true,
+      "new_dates": [
+        "2026-10-20"
+      ]
+    },
+    "zh/i18n/index.html": {
+      "bytes": [
+        32500,
+        32359
+      ],
+      "gzip9_delta": 24,
+      "meta_equals_source": true,
+      "rest_identical": true,
+      "new_dates": [
+        "2026-10-20"
+      ]
+    },
+    "zh/llms.txt": {
+      "bytes": [
+        8362,
+        6769
+      ],
+      "gzip9_delta": -805
+    },
+    "zh/navigation/index.html": {
+      "bytes": [
+        30004,
+        29929
+      ],
+      "gzip9_delta": 44,
+      "meta_equals_source": true,
+      "rest_identical": true,
+      "new_dates": [
+        "2026-10-20"
+      ]
+    },
+    "zh/themes/index.html": {
+      "bytes": [
+        93568,
+        92989
+      ],
+      "gzip9_delta": 16,
+      "meta_equals_source": true,
+      "rest_identical": true,
+      "new_dates": [
+        "2026-10-20"
+      ]
+    },
+    "zh/utility/index.html": {
+      "bytes": [
+        37381,
+        36328
+      ],
+      "gzip9_delta": -15,
+      "meta_equals_source": true,
+      "rest_identical": true,
+      "new_dates": [
+        "2026-10-20"
+      ]
+    },
+    "zh/vellum/index.html": {
+      "bytes": [
+        68520,
+        68343
+      ],
+      "gzip9_delta": 24,
+      "meta_equals_source": true,
+      "rest_identical": true,
+      "new_dates": [
+        "2026-10-20"
+      ]
+    },
+    "zh/workspace/index.html": {
+      "bytes": [
+        30718,
+        30514
+      ],
+      "gzip9_delta": 43,
+      "meta_equals_source": true,
+      "rest_identical": true,
+      "new_dates": [
+        "2026-10-20"
+      ]
+    }
+  },
+  "unexpected": [],
+  "changed_count": 27,
+  "expected_html_changed": true,
+  "max_gzip9_delta": 44
+}

@@ -47,19 +47,20 @@
 
 ### 恢复快照
 
-- 最近更新：2026-10-20T15:16+08:00
-- 当前进度：1/3 个里程碑完成
-- 当前状态：M1 已完成，内容提交在 `main` 上；M2 未开始
-- 最近完成：M1 · 12 份指南描述、两处 P4 结论同步与新断言；V-1–V-3 通过，V-5 对线上 C1 已红
-- 下一步：M2 · 在内容提交之上按 §5.3 生成只改配对文件的 C2（CLI 0.1.32，R0 不变），本地实装后跑 V-4、V-5（绿）；M1 行的提交 SHA 在 C2 之后随计划回填一并提交，保证内容提交是 C2 的父提交
+- 最近更新：2026-10-20T15:40+08:00
+- 当前进度：2/3 个里程碑完成
+- 当前状态：M2 已完成；C2 `88566ba1`（CLI 0.1.32 / R0）本地核验通过，尚未推送或发布
+- 最近完成：M2 · C2 配对、实装与 V-4、V-5（绿）通过；产物只按预期变化
+- 下一步：M3 · 按 §8 第 2 步向用户呈现 C2、差异摘要与 last-good C1，取得推送、dispatch/回退和说明推送的授权后依次执行 §8 第 3–8 步
 - 当前阻塞：无（M3 的公开推送与发布须在当时取得用户授权，见 §8）
-- 代码基线：M1 内容提交（见完成记录）；SDLC 台账与他人评审文件仍未提交
+- 代码基线：C2 `88566ba1ed08223a5834f794840fff5e48f4ba8a` 之上的登记提交；SDLC 台账与他人评审文件仍未提交
 
 ### 完成记录
 
 | Milestone | 状态 | 更新时间 | 简要记录 | 实现与验收记录 | 提交 |
 | --- | --- | --- | --- | --- | --- |
-| M1 | 已完成 | 2026-10-20T15:16+08:00 | 12 份指南加一句话描述，docs-ssg 与 DESIGN 的 P4 结论按 D17/D18 同步；V-1–V-3 通过，V-5 对线上 C1 红 | [M1 记录](DOCS-SSG-P4-gaps.records/M1.md) | 待提交 |
+| M1 | 已完成 | 2026-10-20T15:16+08:00 | 12 份指南加一句话描述，docs-ssg 与 DESIGN 的 P4 结论按 D17/D18 同步；V-1–V-3 通过，V-5 对线上 C1 红 | [M1 记录](DOCS-SSG-P4-gaps.records/M1.md) | 53087eb7 |
+| M2 | 已完成 | 2026-10-20T15:40+08:00 | C2 只改配对文件（0.1.32，R0 不变）；实装、工具链组、官方 0 error、97 文件预检、与本机 C1 比对只有允许的 27 个变化，official-subpath 56/56 | [M2 记录](DOCS-SSG-P4-gaps.records/M2.md) | 88566ba1 |
 
 ## 0. 需求、范围与决策
 
@@ -292,7 +293,7 @@ export RUSTIFY_DOCS_BIN="$DOCS_INSTALL/bin/rustify-docs"
 | V-1 | WORK-F12、D-01：12 份指南都有显式描述，并满足 §5.1 的规则；官方分析中这些文件没有 `missing-description`；zh 回退沿用源描述。先在改指南之前看到新测试失败 | `mbx test --locked -p rustify-docs-cli --test search official`（含新增测试与原官方图测试） | M1（局部） |
 | V-2 | D3：加了 frontmatter 的 `docs/components.md` 仍与 catalogue 一致 | `mbx xtask catalog --write docs/components.md --check`；`mbx test --locked -p rustify-components --lib catalog::` | M1（局部） |
 | V-3 | G-01：两处陈述与 D17/D18、原 P4 发布记录一致 | `rg -n "P4 retains the full browser matrix\|remain M[0-9] gates" docs/docs-ssg.md DESIGN.docs-ssg.md` 无输出；人工对读 §5.2 的三点要素，并核对链接存在 | M1（局部） |
-| V-4 | C-1、D1、D5、NFR 行：C2 的边界与身份；官方产物 0 error；预检通过；产物只按预期变化 | 先按 §5.3 实装 C2，再运行：<br>• `mbx xtask docs-verify --group toolchain --git "$DOCS_LOCAL_GIT" --rev "$DOCS_C"`；<br>• `python3 scripts/docs-pages-prepare.py --candidate-sha "$DOCS_C" --cli "$RUSTIFY_DOCS_BIN" --out .rustify-docs/p4-gaps/site`，再在 `.rustify-docs/p4-gaps/site` 上执行 `"$RUSTIFY_DOCS_BIN" check/build --config …/rustify-docs.toml --format json`（0 error，指南不再报 missing-description）；<br>• `python3 scripts/docs-pages-verify.py --dir .rustify-docs/p4-gaps/site/site/dist --identity <按工作流格式写的 identity.json> --candidate-sha "$DOCS_C" --report …/preflight.json`；<br>• 与同环境的本机 C1 归档逐文件比对。基线是 §1.1 的本机 C1 收据所记归档，先核对其 SHA-256 与收据一致；归档缺失、哈希不符或本机工具链与当时不同，就按 §5.3 的同一方式实装 C1 `1146b7d8febdf53ca1bc1a4c01946604e7625a95`，走同一 prepare/build 重建 C1 再比较。CI 收据的归档只用于线上证据，不作本项基线。<br>• 只允许这些变化：23 个指南页 HTML，其中只有 meta/og/twitter 三处描述（等于源 frontmatter）和“最后更新”日期；`sitemap.xml` 中 12 条指南的 `lastmod`；两份 `llms.txt`；manifest。记录变化页的 gzip -9 增量 | M2（局部，发布前风险门） |
+| V-4 | C-1、D1、D5、NFR 行：C2 的边界与身份；官方产物 0 error；预检通过；产物只按预期变化 | 先按 §5.3 实装 C2，再运行：<br>• `mbx xtask docs-verify --group toolchain --git "$DOCS_LOCAL_GIT" --rev "$DOCS_C"`；<br>• `python3 scripts/docs-pages-prepare.py --candidate-sha "$DOCS_C" --cli "$RUSTIFY_DOCS_BIN" --out "$DOCS_SITE"`（Python ≥ 3.11；`$DOCS_SITE` 在仓库和任何 `.rustify-docs/` 之外，例如 `$TMPDIR/rustify-p4-gaps-c2-*/official`，否则 build 拒绝输出位置），再在 `$DOCS_SITE` 上执行 `"$RUSTIFY_DOCS_BIN" check/build --config …/rustify-docs.toml --format json`（0 error，指南不再报 missing-description）；<br>• `python3 scripts/docs-pages-verify.py --dir "$DOCS_SITE/site/dist" --identity <按工作流格式写的 identity.json> --candidate-sha "$DOCS_C" --report …/preflight.json`；<br>• 与同环境的本机 C1 归档逐文件比对。基线是 §1.1 的本机 C1 收据所记归档，先核对其 SHA-256 与收据一致；归档缺失、哈希不符或本机工具链与当时不同，就按 §5.3 的同一方式实装 C1 `1146b7d8febdf53ca1bc1a4c01946604e7625a95`，走同一 prepare/build 重建 C1 再比较。CI 收据的归档只用于线上证据，不作本项基线。<br>• 只允许这些变化：23 个指南页 HTML，其中只有 meta/og/twitter 三处描述（等于源 frontmatter）和“最后更新”日期；`sitemap.xml` 中 12 条指南的 `lastmod`；两份 `llms.txt`；manifest。记录变化页的 gzip -9 增量 | M2（局部，发布前风险门） |
 | V-5 | WORK-F12、F16/AC-4 的产物级断言，以及官方站回归 | 先在 M1 用临时配置（写法同 V-8）对线上 C1 跑 `--grep "official Chinese home"`，确认新断言失败（红）。M2 再用 C2 实装：`RUSTIFY_DOCS_BIN="$DOCS_INSTALL/bin/rustify-docs" npx playwright test -c playwright.docs.config.ts --project=official-subpath official.spec.ts`，原 56 项加新断言全部通过 | 红在 M1；绿在 M2（局部回归，单个 project） |
 | V-6 | C-4、A-1：GitHub 预览可读 | 推送后，Agent 用真实浏览器打开 `https://github.com/rockie/rustify-ui/blob/<C2>/docs/quickstart.md`、`docs/components.md`、`docs/architecture.md`：frontmatter 显示为表格，H1 与正文、代码块、catalogue 表正常；保存截图 | M3（收口） |
 | V-7 | WORK-F16/AC-3–4、D16：同 run 完整产物与线上身份 | `gh run watch <run>`，build 与 deploy 成功；`python3 scripts/docs-pages-verify.py --url https://rockie.github.io/rustify-ui/ --candidate-sha "$DOCS_C" --run-id "$DOCS_RUN_ID"` 通过（97 文件、76 个 HTML、2 个搜索索引、2 个 AI 索引，cli_version 0.1.32） | M3（收口） |
