@@ -62,7 +62,7 @@
 | --- | --- | --- | --- | --- | --- |
 | M1 | 已完成 | 2026-10-21 17:26 +0800 | `landing.rs`、配置解析、`Layout::Landing` 与页面交叉校验落地；V-1、V-2 通过 | [M1 记录](DOCS-LANDING.records/M1.md) | b49aa8fe |
 | M2 | 已完成 | 2026-10-21 17:37 +0800 | 落地页外壳、按页 meta 与 `page_policies`、preview/dev 按页头落地；V-3、V-4、V-5 通过 | [M2 记录](DOCS-LANDING.records/M2.md) | b49aa8fe |
-| M3 | 已完成 | 2026-10-21 23:35 +0800 | iframe 与表单的页面级判定和最终闸门、`site.js` 透传、第三方替身与 `landing.spec.ts` 落地；V-6、V-15 通过；代码评审 R1 的 F-01、F-02 与 R2 的 F-03 已修复并验证 | [M3 记录](DOCS-LANDING.records/M3.md) | b49aa8fe；修复 0b27fdb8 |
+| M3 | 已完成 | 2026-10-21 23:35 +0800 | iframe 与表单的页面级判定和最终闸门、`site.js` 透传、第三方替身与 `landing.spec.ts` 落地；V-6、V-15 通过；代码评审 R1 的 F-01、F-02 与 R2 的 F-03 已修复并验证 | [M3 记录](DOCS-LANDING.records/M3.md) | b49aa8fe；修复 0b27fdb8；修复 c3c8b426 |
 | M4 | 已完成 | 2026-10-21 17:54 +0800 | `docs/docs-ssg.md` 新增 Landing pages 一节并增量修改七处；V-8 通过，厂商示例待 V-13 定稿 | [M4 记录](DOCS-LANDING.records/M4.md) | b49aa8fe |
 | M5 | 已完成 | 2026-10-21 20:20 +0800 | V-7、V-9 到 V-14 通过；iframe 透传改为替换元素，JS 关表单测试改用减少动态；百度示例补 `connect`；Firefox 经 BiDi 驱动的稳定版取证 | [M5 记录](DOCS-LANDING.records/M5.md) | 1f49749c |
 
