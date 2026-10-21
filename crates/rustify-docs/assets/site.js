@@ -17,6 +17,14 @@
   var base = root.getAttribute("data-rd-base") || "/";
   var status = document.getElementById("rd-status");
 
+  // The parameters a landing page carries, as its profile lists them. The
+  // list is the theme's own, in the head: a page's content cannot add to
+  // it, nor take it away.
+  function carriedNames() {
+    var meta = document.head && document.head.querySelector('meta[name="rd-carry"]');
+    return ((meta && meta.getAttribute("content")) || "").split(" ").filter(Boolean);
+  }
+
   // A landing page names the query parameters it carries (gclid, utm_*…):
   // each one the address has goes into the hidden fields, links and frames
   // the page marks, its hero's actions among them. The address's value
@@ -24,7 +32,7 @@
   // Nothing is stored or sent, and without this the page works the same,
   // only its visits are harder to attribute.
   (function carry() {
-    var names = (root.getAttribute("data-rd-carry") || "").split(" ").filter(Boolean);
+    var names = carriedNames();
     if (!names.length) return;
     var params = new URLSearchParams(location.search);
     var present = names.filter(function (name) { return params.get(name); });

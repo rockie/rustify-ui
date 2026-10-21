@@ -183,11 +183,15 @@ fn landing_pages_carry_their_profiles_policy_and_nothing_else_does() {
     );
     assert_eq!(dom.select("#rd-status").length(), 1);
 
-    // The hero, and what the theme script carries into it.
+    // The hero, and what the theme script carries into it. The list is the
+    // theme's own, in the head: the root element carries none.
     assert_eq!(
-        dom.select("html").attr("data-rd-carry").as_deref(),
+        dom.select("head meta[name=rd-carry]")
+            .attr("content")
+            .as_deref(),
         Some("gclid utm_source utm_campaign")
     );
+    assert!(dom.select("html").attr("data-rd-carry").is_none(), "{lp}");
     assert_eq!(
         dom.select("h1.rd-home-title").text().as_ref(),
         "Ship docs in an afternoon"
@@ -199,9 +203,8 @@ fn landing_pages_carry_their_profiles_policy_and_nothing_else_does() {
         .nodes()
         .iter()
         .all(|node| node.has_attr("data-rd-carry")));
-    // The html element, two actions, and the page's own link, three
-    // hidden fields and frame.
-    assert_eq!(dom.select("[data-rd-carry]").length(), 8);
+    // Two actions, the page's own link, three hidden fields and frame.
+    assert_eq!(dom.select("[data-rd-carry]").length(), 7);
 
     // The page's form and frame, as written: the profile lets them load.
     let form = dom.select("main form#lead");
@@ -275,16 +278,22 @@ fn landing_pages_carry_their_profiles_policy_and_nothing_else_does() {
     ] {
         let html = text(files, path);
         assert_eq!(meta_policy(&html), shell::meta_csp(), "{path}");
-        assert!(!html.contains("data-rd-carry"), "{path}");
+        assert!(
+            dom_query::Document::from(html.as_str())
+                .select("meta[name=rd-carry]")
+                .is_empty(),
+            "{path}"
+        );
         assert!(!html.contains("127.0.0.1"), "{path}");
     }
     // A profile that adds no source leaves even its own pages strict.
     let offer = text(files, "offer/index.html");
     assert_eq!(meta_policy(&offer), shell::meta_csp());
-    contains(&offer, "data-rd-carry=\"gclid\"");
+    contains(&offer, "<meta name=\"rd-carry\" content=\"gclid\">");
     assert_eq!(
         generation.page_policies,
         BTreeMap::from([
+            ("form/index.html".to_owned(), landing::policy(Some(ads))),
             ("lp/index.html".to_owned(), landing::policy(Some(ads))),
             ("thanks/index.html".to_owned(), landing::policy(Some(ads))),
         ])
@@ -337,7 +346,12 @@ fn a_site_without_profiles_is_as_strict_as_before() {
     let mut pages = 0;
     for (path, html) in html_files(&generation) {
         assert_eq!(meta_policy(&html), shell::meta_csp(), "{path}");
-        assert!(!html.contains("data-rd-carry"), "{path}");
+        assert!(
+            dom_query::Document::from(html.as_str())
+                .select("meta[name=rd-carry]")
+                .is_empty(),
+            "{path}"
+        );
         pages += 1;
     }
     assert!(pages > 3);
@@ -405,5 +419,94 @@ fn forms_on_ordinary_pages_stay_as_written_and_landing_targets_must_exist() {
     contains(
         &text(&generation.files, "lp/index.html"),
         "method=\"post\" action=\"/docs/thanks/\"",
+    );
+}
+
+#[test]
+fn a_form_keeps_the_query_it_submits() {
+    // A form's target is a page on the site, and the query it submits is
+    // part of what the reader sends: it is kept, and a target with only a
+    // query is the page it is written on.
+    let site = Copy::of("landing");
+    site.edit(
+        "content/lp.md",
+        "action=\"http://127.0.0.1:4211/lead\"",
+        "action=\"?campaign=paid\"",
+    );
+    let (_, _, generation) = build(&site.0);
+    contains(
+        &text(&generation.files, "lp/index.html"),
+        "method=\"post\" action=\"/docs/lp/?campaign=paid\"",
+    );
+
+    // A target that names a page on the site keeps the query as well.
+    let site = Copy::of("landing");
+    site.edit(
+        "content/lp.md",
+        "action=\"http://127.0.0.1:4211/lead\"",
+        "action=\"/thanks/?campaign=paid\"",
+    );
+    let (_, _, generation) = build(&site.0);
+    contains(
+        &text(&generation.files, "lp/index.html"),
+        "method=\"post\" action=\"/docs/thanks/?campaign=paid\"",
+    );
+
+    // Under a root deployment the page is at the root.
+    let site = Copy::of("landing");
+    site.edit(
+        "rustify-docs.toml",
+        "url = \"https://example.com/docs/\"",
+        "url = \"https://example.com/\"",
+    );
+    site.edit("rustify-docs.toml", "base = \"/docs/\"", "base = \"/\"");
+    site.edit(
+        "content/lp.md",
+        "action=\"http://127.0.0.1:4211/lead\"",
+        "action=\"?campaign=paid\"",
+    );
+    let (_, _, generation) = build(&site.0);
+    contains(
+        &text(&generation.files, "lp/index.html"),
+        "method=\"post\" action=\"/lp/?campaign=paid\"",
+    );
+}
+
+#[test]
+fn a_page_cannot_write_the_list_of_parameters_the_theme_carries() {
+    // The list is the theme's own, in the head: the root element carries
+    // none. A `<html>` attribute in the content is merged into the root
+    // element by the browser, and the theme does not read it there.
+    let (_, _, generation) = build(&fixture("landing"));
+    let lp = text(&generation.files, "lp/index.html");
+    let root = lp.split("<head>").next().unwrap_or_default();
+    assert!(!root.contains("data-rd-carry"), "{root}");
+    let dom = dom_query::Document::from(lp.as_str());
+    assert_eq!(
+        dom.select("head meta[name=rd-carry]")
+            .attr("content")
+            .as_deref(),
+        Some("gclid utm_source utm_campaign")
+    );
+
+    // A page whose content writes a list of its own gets none.
+    let site = Copy::of("landing");
+    site.edit(
+        "content/guide.md",
+        "and the strict policy.",
+        "and the strict policy.\n\n<html data-rd-carry=\"secret\">\n\n<a data-rd-carry href=\"https://example.org/signup\">Continue</a>",
+    );
+    let (_, _, generation) = build(&site.0);
+    let guide = text(&generation.files, "guide/index.html");
+    let dom = dom_query::Document::from(guide.as_str());
+    assert!(dom.select("meta[name=rd-carry]").is_empty(), "{guide}");
+    let root = guide.split("<head>").next().unwrap_or_default();
+    assert!(!root.contains("data-rd-carry"), "{root}");
+    // The link the content marks is still the one it wrote.
+    assert_eq!(
+        dom.select("article a[data-rd-carry]")
+            .attr("href")
+            .as_deref(),
+        Some("https://example.org/signup")
     );
 }

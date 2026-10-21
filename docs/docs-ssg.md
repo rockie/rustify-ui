@@ -1309,6 +1309,10 @@ script, and a failed measurement script never stops it.
   on an origin the profile lists in `sources.form` (`form-origin`), or be a
   page on the site, which resolves like a link and must exist
   (`broken-link`). A profile with no form targets admits no form.
+- A form's target may carry a query string, which is kept: it is part of
+  what the reader sends. `action="?campaign=paid"` submits to the page
+  itself with that query, and `action="/thanks/?campaign=paid"` submits to
+  the thanks page with it.
 - The endpoint is yours or a form service's: it receives the
   `application/x-www-form-urlencoded` POST, stores the lead, and answers
   with a `303` redirect to a thanks page, on the site (which `'self'`

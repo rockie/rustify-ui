@@ -47,14 +47,14 @@
 
 ### 恢复快照
 
-- 最近更新：2026-10-21 20:20 +0800
+- 最近更新：2026-10-21 22:42 +0800
 - 当前进度：5/5 个里程碑完成
-- 当前状态：全部完成。M5 收口的 V-7、V-9 到 V-14 都有证据，A-1、A-3 成立，A-2 部分不成立并已修订文档示例；收口中修复了 iframe 透传（改为替换元素）和 JS 关表单测试，Firefox 证据经 BiDi 驱动的稳定版取得，偏差与遗留见 [M5 记录](DOCS-LANDING.records/M5.md)
+- 当前状态：全部完成。M5 收口的 V-7、V-9 到 V-14 都有证据，A-1、A-3 成立，A-2 部分不成立并已修订文档示例；收口中修复了 iframe 透传（改为替换元素）和 JS 关表单测试，Firefox 证据经 BiDi 驱动的稳定版取得，偏差与遗留见 [M5 记录](DOCS-LANDING.records/M5.md)。代码评审 R1 的 F-01（参数名单的载体可被正文改写）与 F-02（表单目标丢查询串）已修复并验证，计划 §4、§5.4、§5.5、§5.6、D13、V-3 随之同步，处置与验证见 [M3 记录](DOCS-LANDING.records/M3.md) 的「评审修复」
 - 最近完成：M5 阶段收口
-- 下一步：代码评审。由用户发起 review-code，以本计划路径为参数
+- 下一步：复审。由用户发起 review-code，以本计划路径为参数
 - 当前阻塞：无
 - 环境要点：系统 `python3` 是 3.9，需要 Python 3.12 的检查，以及 Playwright 自带 Firefox 不能启动时的替代做法，见 M5 记录头部与「偏差与修复」
-- 代码基线：M1–M4 在 `b49aa8fe`，M5 收口在 `1f49749c`；均未推送
+- 代码基线：M1–M4 在 `b49aa8fe`，M5 收口在 `1f49749c`；评审 R1 的修复见完成记录 M3 行；均未推送
 
 ### 完成记录
 
@@ -62,7 +62,7 @@
 | --- | --- | --- | --- | --- | --- |
 | M1 | 已完成 | 2026-10-21 17:26 +0800 | `landing.rs`、配置解析、`Layout::Landing` 与页面交叉校验落地；V-1、V-2 通过 | [M1 记录](DOCS-LANDING.records/M1.md) | b49aa8fe |
 | M2 | 已完成 | 2026-10-21 17:37 +0800 | 落地页外壳、按页 meta 与 `page_policies`、preview/dev 按页头落地；V-3、V-4、V-5 通过 | [M2 记录](DOCS-LANDING.records/M2.md) | b49aa8fe |
-| M3 | 已完成 | 2026-10-21 17:50 +0800 | iframe 与表单的页面级判定和最终闸门、`site.js` 透传、第三方替身与 `landing.spec.ts` 落地；V-6、V-15 通过 | [M3 记录](DOCS-LANDING.records/M3.md) | b49aa8fe |
+| M3 | 已完成 | 2026-10-21 22:42 +0800 | iframe 与表单的页面级判定和最终闸门、`site.js` 透传、第三方替身与 `landing.spec.ts` 落地；V-6、V-15 通过；代码评审 R1 的 F-01、F-02 已修复并验证 | [M3 记录](DOCS-LANDING.records/M3.md) | b49aa8fe |
 | M4 | 已完成 | 2026-10-21 17:54 +0800 | `docs/docs-ssg.md` 新增 Landing pages 一节并增量修改七处；V-8 通过，厂商示例待 V-13 定稿 | [M4 记录](DOCS-LANDING.records/M4.md) | b49aa8fe |
 | M5 | 已完成 | 2026-10-21 20:20 +0800 | V-7、V-9 到 V-14 通过；iframe 透传改为替换元素，JS 关表单测试改用减少动态；百度示例补 `connect`；Firefox 经 BiDi 驱动的稳定版取证 | [M5 记录](DOCS-LANDING.records/M5.md) | 1f49749c |
 
@@ -115,7 +115,7 @@
 | D10 | 落地页的 `index`/`search`/`ai` 默认值 | 默认都是 `false`，frontmatter 写 `true` 可以覆盖 | 投放页通常不该被收录，避免和 SEO 页重复；新布局没有旧行为需要兼容 | R-1 |
 | D11 | 落地页的品牌区 | `<div class="rd-brand">`，不是链接；`header` slot 仍可替换它 | 页面只留一个出口；样式复用 slot 版本已有的 `div.rd-brand`（`shell.rs:790`、`docs.css:299-312`）；如果投放实测需要回站链接，改成可配置 | R-1 |
 | D12 | `schema_version` | 保持 1 | 旧 CLI 读到 `[landing]` 会报 unknown field，这是显式失败，不会被误读 | C-5 |
-| D13 | 透传实现 | 由主题 `site.js` 读取 `<html data-rd-carry="…">` 执行；目标只有显式标注的元素和落地页 hero actions；URL 里的值覆盖字段原值 | 不新增脚本文件，不访问网络，不存储；代价是所有站点的 `site.js` 内容及其指纹引用都会变化，NFR-4 按此界定兼容边界 | R-7、NFR-4、NFR-6 |
+| D13 | 透传实现 | 由主题 `site.js` 读取主题写在 `<head>` 的 `<meta name="rd-carry" content="…">` 执行；目标只有显式标注的元素和落地页 hero actions；URL 里的值覆盖字段原值 | 不新增脚本文件，不访问网络，不存储；名单放在 `<head>`（正文写不了 `<meta>`，构建也会报 `meta-element`），根元素上的属性可由正文里的 `<html>` 标签合并写入，不能作为名单；代价是所有站点的 `site.js` 内容及其指纹引用都会变化，NFR-4 按此界定兼容边界 | R-7、NFR-4、NFR-6 |
 | D14 | `style-src` | 不放宽 | 依赖内联样式的脚本式嵌入表单不支持；受支持的嵌入方式是 iframe（iframe 内的页面受它自己的 CSP 约束） | NFR-2 |
 
 ### 0.3 ADR-lite
@@ -274,7 +274,7 @@
 
 V-13 所需的厂商 ID 由用户（站点作者，持有厂商账户）在 M5 收口前提供：GA4 网站数据流的衡量 ID（`G-…`）、Google Ads 转化操作的代码 ID（`AW-…`，以及示例用到的转化标签），只在测试 ID 不触发统计请求时需要；百度统计新增网站后统计代码里 `hm.js?` 之后的 32 位站点 ID，必须提供。建议用专门测试的媒体资源与站点，避免测试流量混入正式数据。这些 ID 本来就会公开写在页面里，记入 M5 记录即可。
 
-需要登记的新增项：配置键见 §5.1；frontmatter 键见 §5.4；诊断规则见 §5.9；manifest 字段见 §3；HTML 属性 `data-rd-carry`（`<html>`、`input`、`a`、`iframe` 上）见 §5.6。
+需要登记的新增项：配置键见 §5.1；frontmatter 键见 §5.4；诊断规则见 §5.9；manifest 字段见 §3；HTML 属性 `data-rd-carry`（`input`、`a`、`iframe` 上）与主题的 `<meta name="rd-carry">` 见 §5.6。
 
 ## 5. 核心机制
 
@@ -418,7 +418,7 @@ pub struct Landing<'a> {
 
 `Page` 增加字段 `pub landing: Option<Landing<'a>>`。落地页的 `home` 与 `landing` 同时为 `Some`。`Home` 增加 `pub carry: bool`，hero 的每个 action 在为真时带 `data-rd-carry=""`。`page_view` 在 `landing.is_some()` 时与普通页面有以下不同：
 
-1. `<html>` 在 `carry` 非空时增加 `data-rd-carry="<以空格连接的参数名>"`；
+1. `<head>` 在 `carry` 非空时增加 `<meta name="rd-carry" content="<以空格连接的参数名>">`；名单只由主题写入，正文改不了它（正文里的 `<meta>` 是错误 `meta-element`，根元素上的属性也会被正文里的 `<html>` 标签合并写入，主题不读那里）；
 2. meta CSP 用 `landing.meta_policy`；
 3. 按 §5.3 挂载脚本；
 4. 头部改用新函数 `landing_header(site, slots)`：
@@ -476,13 +476,13 @@ pub struct Landing<'a> {
   - 落地页但没有配置，或者 `form` 为空 → 错误 `form-origin`（“配置 `<名>` 没有列出表单目标”）；
   - 跨源且 `allows` 为假 → 错误 `form-origin`；
   - 空串或纯 `#…` → `Target::Keep`；
-  - 站内地址 → 与同一页面上的 `<a href>` 同路解析（Markdown 页面走 `resolve_link`，按页面目录解析 `thanks.md`、`/thanks/` 等写法；渲染面走 `resolve_html_link`），加 base 并校验目标存在。
+  - 站内地址 → 与同一页面上的 `<a href>` 同路解析（Markdown 页面走 `resolve_link`，按页面目录解析 `thanks.md`、`/thanks/` 等写法；渲染面走 `resolve_html_link`），加 base 并校验目标存在；查询串不属于路径，原样保留（`Target::Form`），只有查询串的地址（`?campaign=paid`）指向本页。
 
 ### 5.6 参数透传（`site.js`）
 
 插入到 `enhance` 函数开头的公共变量之后（`site.js:15-18`），沿用文件现有的 ES5 风格（`var`、`function`）：
 
-1. `names` = `<html data-rd-carry>` 按空格拆分；为空则不做任何事。
+1. `names` = `<head>` 里主题自己的 `<meta name="rd-carry">` 的 `content` 按空格拆分；为空则不做任何事。
 2. 用 `params = new URLSearchParams(location.search)` 取参数，`present` = `names` 中在 `params` 里存在且值非空的那些。`present` 为空时结束。
 3. 对 `input[type="hidden"][data-rd-carry]`：`name` 在 `present` 中时，令 `input.value = params.get(name)`，URL 中的值覆盖原值。
 4. 对 `a[data-rd-carry][href]` 和 `iframe[data-rd-carry][src]`：
@@ -492,7 +492,7 @@ pub struct Landing<'a> {
    - 有变化时，链接回写 `href`（`url.href`）；iframe 不改原元素的 `src`，而是 `cloneNode(true)` 复制一份、把副本的 `src` 设为 `url.href`，再替换原元素。直接改 `src` 在 frame 加载后会多一条会话历史（返回键先退回嵌入），Chromium 在懒加载刚开始时还会丢掉这次改动（M5 实测）；副本按首次加载处理，只加载一次，并遵循自身的 `loading`。文档建议页面下方的嵌入使用 `loading="lazy"`，并提醒持有该元素的脚本在页面加载后重新查找。
 5. 不读写 cookie、`localStorage`、`sessionStorage`，不发起网络请求，不使用 `innerHTML`。
 
-这段代码随 `site.js` 发给所有站点：没有 `data-rd-carry` 的页面在第 1 步就返回；`site.js` 内容变化带来的指纹文件名与引用变化在 NFR-4 的允许范围内。
+这段代码随 `site.js` 发给所有站点：没有名单的页面在第 1 步就返回；`site.js` 内容变化带来的指纹文件名与引用变化在 NFR-4 的允许范围内。
 
 ### 5.7 策略投递
 
@@ -651,7 +651,7 @@ fixture 与替身的约定（两者都只实现本节列出的契约行为）。
 | --- | --- | --- | --- |
 | V-1 | R-2、R-3、R-4、NFR-1、NFR-2：配置解析的接受与拒绝表（§5.1 第 1–4 条、未知键）；`parse_source` 的接受与拒绝表（D6 的每一类）；显式来源与外部脚本 URL 中的 IPv6 字面量（如 `http://[::1]:4211`）和 `127.0.0.1` 以外的 IP 字面量分别报 `landing-source`、`landing-script`，`allows` 对这类 URL 返回假；`policy(None) == CSP`；`ads` 配置的合成串逐字节相等；`allows` 的匹配表（通配、端口、scheme）；frontmatter 解析 `layout: landing` 和 `landing:`；`indexed`/`searchable`/`discoverable` 的默认值与覆盖 | `mbx test --locked -p rustify-docs --lib landing::`；`mbx test --locked -p rustify-docs --lib config::`；`mbx test --locked -p rustify-docs --lib frontmatter::`；`cargo fmt --all -- --check`；`mbx clippy --locked -p rustify-docs --all-targets -- -D warnings` | M1 |
 | V-2 | R-1、R-2：`landing-profile`、`landing-without-layout` 的定位；`landing-profile-unused`；`landing-script-missing`；落地页不进侧栏；落地页可以省略 description；H1 并入 hero；页脚链接解析出 `broken-link` | `mbx test --locked -p rustify-docs --lib content::tests::landing`（新测试函数统一以 `landing_` 开头） | M1 |
-| V-3 | R-1、R-3、R-7、NFR-1、NFR-3、NFR-4：在 fixture 上生成后检查：<br>· `lp/index.html` 的 meta 等于 `meta_policy(ads)`；脚本按顺序带 `async`/`defer`；`init.js` 以 `assets/files/init.<hash>.js` 发布；<br>· 没有 `data-rd-search`、`rd-header-links`、`rd-sidebar`、`data-rd-mode-switch`；品牌区不是链接；页脚有 Privacy 链接；<br>· `<html data-rd-carry="gclid utm_source utm_campaign">`；hero actions 带 `data-rd-carry`；<br>· `noindex`；不在 sitemap、搜索数据、`llms.txt` 中；<br>· `guide/`、`index`、`404` 的 meta 与 `meta_csp()` 逐字节相同；<br>· `page_policies` 只包含 `lp/`、`thanks/` 两项；<br>· 没有 `[landing]` 的 `content` fixture：`Generation.page_policies` 为空，每页 meta 等于 `meta_csp()`，没有元素带 `data-rd-carry`；<br>· 两次生成逐字节相同；<br>· `offer/` 的 HTML + 站点 CSS + `mode.js` + `site.js` gzip-9 合计 ≤100,000 B；<br>· 已有的 generate、i18n、search、ai 测试照常通过 | `mbx test --locked -p rustify-docs --test landing --test generate --test i18n --test search --test ai`；`mbx test --locked -p rustify-docs --lib shell::`；`cargo fmt --all -- --check`；`mbx clippy --locked -p rustify-docs --all-targets -- -D warnings` | M2 |
+| V-3 | R-1、R-3、R-7、NFR-1、NFR-3、NFR-4：在 fixture 上生成后检查：<br>· `lp/index.html` 的 meta 等于 `meta_policy(ads)`；脚本按顺序带 `async`/`defer`；`init.js` 以 `assets/files/init.<hash>.js` 发布；<br>· 没有 `data-rd-search`、`rd-header-links`、`rd-sidebar`、`data-rd-mode-switch`；品牌区不是链接；页脚有 Privacy 链接；<br>· `<head>` 里 `<meta name="rd-carry" content="gclid utm_source utm_campaign">`、根元素上没有名单；hero actions 带 `data-rd-carry`；<br>· `noindex`；不在 sitemap、搜索数据、`llms.txt` 中；<br>· `guide/`、`index`、`404` 的 meta 与 `meta_csp()` 逐字节相同；<br>· `page_policies` 只包含 `lp/`、`thanks/` 两项；<br>· 没有 `[landing]` 的 `content` fixture：`Generation.page_policies` 为空，每页 meta 等于 `meta_csp()`，没有 `rd-carry` 名单；<br>· 两次生成逐字节相同；<br>· `offer/` 的 HTML + 站点 CSS + `mode.js` + `site.js` gzip-9 合计 ≤100,000 B；<br>· 已有的 generate、i18n、search、ai 测试照常通过 | `mbx test --locked -p rustify-docs --test landing --test generate --test i18n --test search --test ai`；`mbx test --locked -p rustify-docs --lib shell::`；`cargo fmt --all -- --check`；`mbx clippy --locked -p rustify-docs --all-targets -- -D warnings` | M2 |
 | V-4 | R-3、NFR-2：`check_document_under`：跨源脚本在有配置时放行、无配置时拒绝；`check_document(html) == check_document_under(html, None)` | `mbx test --locked -p rustify-docs --lib html_check::` | M2 |
 | V-5 | R-8、NFR-2：manifest 的 `page_policies` 读写；空字段省略；`checked_page_policies` 拒绝换行、非 `.html`、未列出的文件、错误首尾；preview：落地页的头等于 manifest、`guide/` 的头等于 `CSP`、404 用 `CSP`、manifest 损坏时拒绝启动；dev：落地页 HTML 的头是按页策略；既有 reliability、dev 测试照常通过 | `mbx test --locked -p rustify-docs --lib publish::`；`mbx test --locked -p rustify-docs-cli --test landing --test reliability --test dev`；`mbx clippy --locked -p rustify-docs-cli --all-targets -- -D warnings` | M2 |
 | V-6 | R-5、R-6：<br>· 片段：iframe 记为 `Frame` 槽位；`srcdoc` 或缺 `src` → `embedded-frame`；缺 `title` → `frame-title`；<br>· 渲染面：iframe 仍报错；<br>· 页面级：iframe 在 doc 页 → `embedded-frame`；落地页上来源已列出 → 通过，未列出 → `frame-origin`；<br>· 表单：非落地页 → `form-blocked`，输出不变；落地页的跨源目标已列出 → 通过，未列出 → `form-origin`；`plain` 配置下的表单 → `form-origin`；站内 `action` 加 base 并校验目标；<br>· 最终闸门对表单与 iframe 的判定与页面级一致；<br>· 完整生成回归（`tests/landing.rs` 在 fixture 副本上改写页面）：doc 页的 `<form action="/api/lead">` 与 `<button formaction="/api/x">` 指向站点不发布的地址 → 只有 `form-blocked` 警告，生成成功，输出中 `action`/`formaction` 保持原值；落地页表单指向缺失的站内页面 → `broken-link`，生成失败；<br>· fixture 生成照常通过 | `mbx test --locked -p rustify-docs --lib html_check::`；`mbx test --locked -p rustify-docs --lib markdown::`；`mbx test --locked -p rustify-docs --lib content::tests::landing`；`mbx test --locked -p rustify-docs --lib content::tests::form`（非落地页表单的新测试函数以 `form_` 开头）；`mbx test --locked -p rustify-docs --test landing`；`cargo fmt --all -- --check`；`mbx clippy --locked -p rustify-docs --all-targets -- -D warnings` | M3 |
@@ -709,7 +709,7 @@ fixture 与替身的约定（两者都只实现本节列出的契约行为）。
 | T-1 | M2 | `shell.rs`（`Landing`、`landing_header`、脚本、透传属性、页脚）、`generation.rs`（组装、`page_policies`、最终闸门、辅助方法）、`search.rs`、`ai.rs`、`html_check.rs` 的 `check_document_under`（只做脚本部分）、fixture（M2 部分）、`tests/landing.rs`。负责人独占 `shell.rs`、`generation.rs`、`html_check.rs` 和 fixture | V-1、V-2 | V-3、V-4 |
 | T-2 | M2 | `publish.rs`、CLI 的 `main.rs`、`preview.rs`、`dev.rs`、`crates/rustify-docs-cli/tests/landing.rs` | `Generation.page_policies` 字段已由 T-1 加入（可以先是空映射），契约见 §5.7 | V-5 |
 | T-3 | M3 | `html_check.rs` 的角色与片段规则，以及最终闸门中的表单与 iframe 部分；`markdown.rs`；`content.rs` 的 `resolve_references`；`generation.rs` 的 `final_documents` 跳过 `FormTarget`；`tests/landing.rs` 的表单生成回归；fixture 补上表单与 iframe | V-3、V-4 | V-6 |
-| T-4 | M3 | `site.js` 的透传（§5.6） | M2 已在页面上输出 `data-rd-carry` | V-15；完整断言在 M5 的 V-7 |
+| T-4 | M3 | `site.js` 的透传（§5.6） | M2 已在页面上标注 `data-rd-carry` | V-15；完整断言在 M5 的 V-7 |
 | T-5 | M3 | `landing-third-party.mjs`、`landing.spec.ts`（安全门测试标 `@policy`）、`serve.sh` 的 `landing` 来源 | 可以与 T-3、T-4 并行编写；运行 V-15 需要 T-3、T-4 完成 | V-15；完整断言在 M5 的 V-7 |
 
 T-1 与 T-2 写入的文件互不重叠，T-2 只依赖 §5.7 的字段契约。T-3、T-4、T-5 写入的文件也互不重叠：fixture、`tests/landing.rs` 和 `generation.rs` 的 `final_documents` 在 M2 完成后归 T-3，spec 和替身归 T-5。浏览器运行（M3 的 V-15、M5 的 V-10）由主 agent 统一执行，一次一个项目。

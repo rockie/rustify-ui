@@ -499,6 +499,10 @@ fn page_view(site: &Site, page: &Page, slots: &LayoutSlots) -> impl IntoView {
     let main_id = main_id(page, slots);
     let landing = page.landing.as_ref();
     let policy = landing.map_or_else(meta_csp, |landing| landing.meta_policy.clone());
+    // The parameters a landing page carries, as its profile lists them.
+    // They travel in the head, which a page's content cannot reach: a
+    // `<html>` attribute in the content would be merged into the root
+    // element, and the list would be the content's to write.
     let carry = landing
         .filter(|landing| !landing.carry.is_empty())
         .map(|landing| landing.carry.join(" "));
@@ -518,11 +522,12 @@ fn page_view(site: &Site, page: &Page, slots: &LayoutSlots) -> impl IntoView {
         None => doc_layout(site, page, &toc, labels, slots, &main_id).into_any(),
     };
     view! {
-        <html lang=page.lang.to_owned() data-rustify-scope="" data-theme="system" data-rd-base=site.base.clone() data-rd-carry=carry>
+        <html lang=page.lang.to_owned() data-rustify-scope="" data-theme="system" data-rd-base=site.base.clone()>
             <head>
                 <meta charset="utf-8" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <meta http-equiv="Content-Security-Policy" content=policy />
+                {carry.map(|names| view! { <meta name="rd-carry" content=names /> })}
                 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22/%3E" />
                 <title>{document_title}</title>
                 <meta name="description" content=description.clone() />

@@ -258,9 +258,13 @@ fn url_suffix(url: &str) -> &str {
     url.find(['?', '#']).map_or("", |at| &url[at..])
 }
 
-/// A page's URL with an anchor on it.
-fn page_url(site: &Site, route: &str, anchor: Option<&str>) -> String {
+/// A page's URL with an optional query and anchor on it.
+fn page_url(site: &Site, route: &str, query: Option<&str>, anchor: Option<&str>) -> String {
     let mut url = site.url(route);
+    if let Some(query) = query.filter(|query| !query.is_empty()) {
+        url.push('?');
+        url.push_str(query);
+    }
     if let Some(anchor) = anchor.filter(|anchor| !anchor.is_empty()) {
         url.push('#');
         url.push_str(&crate::escape::encode_fragment(anchor));
@@ -314,7 +318,22 @@ fn resolve_fragment(
             Target::Page {
                 page: target,
                 anchor,
-            } => page_url(site, &analysis.pages[*target].route, anchor.as_deref()),
+            } => page_url(
+                site,
+                &analysis.pages[*target].route,
+                None,
+                anchor.as_deref(),
+            ),
+            Target::Form {
+                page,
+                query,
+                anchor,
+            } => page_url(
+                site,
+                &analysis.pages[*page].route,
+                query.as_deref(),
+                anchor.as_deref(),
+            ),
             Target::Resource(path) => {
                 let Some(url) = published(path) else {
                     continue;
@@ -490,8 +509,18 @@ fn target_url(
 ) -> String {
     match target {
         Target::Page { page, anchor } => {
-            page_url(site, &analysis.pages[*page].route, anchor.as_deref())
+            page_url(site, &analysis.pages[*page].route, None, anchor.as_deref())
         }
+        Target::Form {
+            page,
+            query,
+            anchor,
+        } => page_url(
+            site,
+            &analysis.pages[*page].route,
+            query.as_deref(),
+            anchor.as_deref(),
+        ),
         Target::Resource(path) => match outputs.get(path) {
             Some(output) => site.url(&format!("/{output}")) + url_suffix(written),
             None => written.to_owned(),

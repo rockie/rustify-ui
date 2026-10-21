@@ -80,6 +80,13 @@ test.beforeAll(async () => {
         );
     }
     expect(readFileSync(path.join(root, "rustify-docs.toml"), "utf8")).toContain(`base = "${base}"`);
+    // A page whose content writes a list of carried parameters of its own.
+    const guide = path.join(root, "content/guide.md");
+    writeFileSync(
+        guide,
+        readFileSync(guide, "utf8") +
+            '\n<html data-rd-carry="secret">\n\n<a data-rd-carry href="https://example.org/signup">Continue</a>\n',
+    );
     const bin = path.resolve(process.env.RUSTIFY_DOCS_BIN || "target/docs-cli/rustify-docs");
     execFileSync(bin, ["build", "--config", path.join(root, "rustify-docs.toml")]);
     const dist = path.join(root, "dist");
@@ -268,12 +275,56 @@ for (const script of [true, false]) {
     });
 }
 
+test("the list of carried parameters is the theme's own, not the page's @policy", async ({ browser }) => {
+    const context = await browser.newContext();
+    const page = await context.newPage();
+    const list = () => page.evaluate(() => document.querySelector('meta[name="rd-carry"]')?.getAttribute("content") ?? null);
+    // The page wrote a list of its own into the document: the theme reads
+    // none, and carries nothing into the page's marked elements.
+    await page.goto(`${url}guide/?secret=do-not-forward`);
+    expect(await list()).toBeNull();
+    expect(await page.locator("article a[data-rd-carry]").getAttribute("href")).toBe("https://example.org/signup");
+    // A landing page still carries the parameters its profile lists.
+    await page.goto(`${url}lp/?gclid=g1`);
+    expect(await list()).toBe("gclid utm_source utm_campaign");
+    expect(await page.locator("article a[data-rd-carry]").getAttribute("href")).toBe("https://example.org/signup?gclid=g1");
+    await context.close();
+});
+
+test("a form submits to the page it names and keeps the query it sends", async ({ browser }) => {
+    const context = await browser.newContext({ javaScriptEnabled: false, reducedMotion: "reduce" });
+    const page = await context.newPage();
+    // A target with only a query is the page the form is on: a GET
+    // submission replaces the query with the form's own fields, and lands
+    // on that page.
+    await page.goto(`${url}form/`);
+    await page.getByRole("button", { name: "Search this page" }).click();
+    await page.waitForURL((address) => address.pathname === `${base}form/`);
+    const search = new URL(page.url());
+    expect(search.searchParams.get("q")).toBe("boots");
+    // A button's own target is the page the form is on, too.
+    await page.goto(`${url}form/`);
+    await page.getByRole("button", { name: "Search from the button" }).click();
+    await page.waitForURL((address) => address.pathname === `${base}form/`);
+    const button = new URL(page.url());
+    expect(button.searchParams.get("q")).toBe("boots");
+    // A target that names a page keeps the query it sends.
+    await page.goto(`${url}form/`);
+    await page.getByLabel("Your email").fill("lead@example.com");
+    const posted = page.waitForRequest((request) => request.method() === "POST");
+    await page.getByRole("button", { name: "Request a demo" }).click();
+    const target = new URL((await posted).url());
+    expect(target.pathname).toBe(`${base}thanks/`);
+    expect(target.searchParams.get("campaign")).toBe("paid");
+    await context.close();
+});
+
 test("the landing layout has one way on, fits every width and passes axe", async ({ browser }) => {
     const context = await browser.newContext();
     const page = await context.newPage();
     for (const width of [1280, 768, 375, 320]) {
         await page.setViewportSize({ width, height: 800 });
-        for (const route of ["lp/", "thanks/", "offer/"]) {
+        for (const route of ["lp/", "thanks/", "offer/", "form/"]) {
             await page.goto(`${url}${route}`);
             await expect(page.getByRole("heading", { level: 1 })).toHaveCount(1);
             expect(await page.locator("html").evaluate((node) => node.scrollWidth)).toBeLessThanOrEqual(width);

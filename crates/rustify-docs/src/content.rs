@@ -978,6 +978,14 @@ pub enum Target {
     Keep,
     /// A page, with an optional anchor.
     Page { page: usize, anchor: Option<String> },
+    /// A form's target: the page it submits to, with the query it submits
+    /// and the anchor it names. A form keeps its query: it is part of what
+    /// the reader sends.
+    Form {
+        page: usize,
+        query: Option<String>,
+        anchor: Option<String>,
+    },
     /// A file the site publishes, by project-relative path.
     Resource(String),
     /// A file in the repository, outside the content: its web address.
@@ -3070,6 +3078,41 @@ impl LinkGraph<'_> {
         let route = locale_route(config, lang, &self.pages[target].locale.logical_route);
         self.routes.get(&route).copied().unwrap_or(target)
     }
+
+    /// Reports an anchor the page does not have, as a link to it would.
+    fn check_anchor(
+        &self,
+        route: &str,
+        anchor: Option<&str>,
+        found: &mut Vec<Issue>,
+        issue: &dyn Fn(&'static str, String) -> Issue,
+    ) {
+        let Some(anchor) = anchor.filter(|anchor| !anchor.is_empty()) else {
+            return;
+        };
+        if self
+            .anchors
+            .get(route)
+            .is_some_and(|known| known.contains(anchor))
+        {
+            return;
+        }
+        let file = self
+            .routes
+            .get(route)
+            .map_or(route, |&i| self.pages[i].file.as_str());
+        found.push(
+            issue(
+                "broken-anchor",
+                format!(
+                    "{} has no heading {}",
+                    literal(file),
+                    code_span(&format!("#{anchor}"))
+                ),
+            )
+            .suggest("link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"),
+        );
+    }
 }
 
 fn collect_resources(targets: &[Target], resources: &mut BTreeSet<String>) {
@@ -3143,12 +3186,9 @@ fn resolve_references(
             RefKind::Form => {
                 let span = reference.span.clone();
                 form_target(landing, url, &mut found, &issue, span, |found| {
-                    // A target on the site resolves like the page's links.
-                    if rendered {
-                        resolve_html_link(graph, sources, route, url, found, &issue)
-                    } else {
-                        resolve_link(graph, sources, Some(route), dir, url, found, &issue)
-                    }
+                    // A target on the site resolves like the page's links,
+                    // and keeps the query it submits.
+                    form_page_target(graph, sources, route, dir, rendered, url, found, &issue)
                 })
             }
         };
@@ -3261,6 +3301,57 @@ fn form_target(
     on_site(found)
 }
 
+/// Where a form on the site submits: the page its path names, with the
+/// query it submits. The query is not part of the name, so the path
+/// resolves as a link on the page does; a target with only a query is the
+/// page it is written on.
+#[allow(clippy::too_many_arguments)]
+fn form_page_target(
+    graph: &LinkGraph,
+    sources: &mut Sources,
+    route: &str,
+    dir: &str,
+    rendered: bool,
+    url: &str,
+    found: &mut Vec<Issue>,
+    issue: &dyn Fn(&'static str, String) -> Issue,
+) -> Target {
+    let (before, fragment) = split_fragment(url);
+    let (path, query) = match before.split_once('?') {
+        Some((path, query)) => (path, Some(query.to_owned())),
+        None => (before, None),
+    };
+    let anchor = fragment.map(percent_decode);
+    if path.is_empty() {
+        let Some(&page) = graph.routes.get(route) else {
+            return Target::Keep;
+        };
+        graph.check_anchor(route, anchor.as_deref(), found, issue);
+        return Target::Form {
+            page,
+            query,
+            anchor,
+        };
+    }
+    let path = match fragment {
+        Some(fragment) => format!("{path}#{fragment}"),
+        None => path.to_owned(),
+    };
+    let target = if rendered {
+        resolve_html_link(graph, sources, route, &path, found, issue)
+    } else {
+        resolve_link(graph, sources, Some(route), dir, &path, found, issue)
+    };
+    match target {
+        Target::Page { page, anchor } => Target::Form {
+            page,
+            query,
+            anchor,
+        },
+        target => target,
+    }
+}
+
 /// Removes only an exact configured deployment prefix from a browser URL.
 fn without_base<'a>(path: &'a str, base: &str) -> &'a str {
     if base != "/" && path.starts_with(base) {
@@ -3338,8 +3429,8 @@ fn resolve_link(
         pages,
         by_path,
         routes,
-        anchors,
         mode,
+        ..
     } = graph;
     if url.is_empty() {
         found.push(issue("empty-link", "this link has no destination".into()));
@@ -3358,20 +3449,6 @@ fn resolve_link(
     let (path, fragment) = split_fragment(url);
     let fragment = fragment.map(percent_decode);
     let decoded = percent_decode(path.split('?').next().unwrap_or_default());
-    let check_anchor = |route: &str, found: &mut Vec<Issue>| {
-        if let Some(anchor) = fragment.as_deref().filter(|anchor| !anchor.is_empty()) {
-            let known = anchors
-                .get(route)
-                .is_some_and(|known| known.contains(anchor));
-            if !known {
-                let file = routes.get(route).map_or(route, |&i| pages[i].file.as_str());
-                found.push(
-                    issue("broken-anchor", format!("{} has no heading {}", literal(file), code_span(&format!("#{anchor}"))))
-                        .suggest("link to an existing heading's id; ids are the heading text in lower case with spaces as `-`"),
-                );
-            }
-        }
-    };
     let to_page = |target: usize, found: &mut Vec<Issue>| -> Target {
         let target = graph.projected_page(target, from, &decoded);
         if pages[target].draft
@@ -3394,7 +3471,7 @@ fn resolve_link(
                 }),
             }
         }
-        check_anchor(&pages[target].route, found);
+        graph.check_anchor(&pages[target].route, fragment.as_deref(), found, issue);
         Target::Page {
             page: target,
             anchor: fragment.clone(),
@@ -3402,7 +3479,7 @@ fn resolve_link(
     };
     if path.is_empty() {
         match from {
-            Some(from) => check_anchor(from, found),
+            Some(from) => graph.check_anchor(from, fragment.as_deref(), found, issue),
             None => found.push(issue(
                 "broken-link",
                 format!("{} names no page; link to a page or a URL", code_span(url)),
@@ -6235,8 +6312,9 @@ pub(crate) mod tests {
             [
                 Target::Keep,
                 Target::Keep,
-                Target::Page {
+                Target::Form {
                     page: analysis.routes["/thanks/"],
+                    query: None,
                     anchor: None
                 }
             ]

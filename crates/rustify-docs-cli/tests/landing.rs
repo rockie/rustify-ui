@@ -16,7 +16,7 @@ fn built() -> (support::Temp, serde_json::Map<String, serde_json::Value>) {
     let policies = manifest["page_policies"].as_object().unwrap().clone();
     assert_eq!(
         policies.keys().map(String::as_str).collect::<Vec<_>>(),
-        ["lp/index.html", "thanks/index.html"]
+        ["form/index.html", "lp/index.html", "thanks/index.html"]
     );
     (temp, policies)
 }
