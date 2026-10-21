@@ -233,6 +233,7 @@ fn publication(
         &project.config.site.base,
         super::VERSION,
         &generation.locale_not_found,
+        &generation.page_policies,
     );
     publish::publish(&lock, &generation.files)
 }

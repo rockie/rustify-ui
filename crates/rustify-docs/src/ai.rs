@@ -5,7 +5,6 @@ use std::sync::Arc;
 
 use crate::content::{Analysis, Diagnostic, Page, PageOrigin, Project};
 use crate::diagnostic::Severity;
-use crate::frontmatter::Layout;
 use crate::labels::Catalog;
 
 fn clean(value: &str) -> Option<String> {
@@ -33,7 +32,7 @@ fn description(project: &Project, analysis: &Analysis, page: &Page) -> Option<St
     {
         return Some(description);
     }
-    if page.front.layout == Layout::Home {
+    if page.front.layout.has_hero() {
         if let Some(tagline) = page.front.tagline.as_deref().and_then(clean) {
             return Some(tagline);
         }
@@ -122,7 +121,7 @@ pub fn build(
         for page in &analysis.pages {
             if page.draft
                 || default_drafts.contains(page.locale.logical_route.as_str())
-                || page.front.ai == Some(false)
+                || !page.front.discoverable()
                 || (!analysis.locales.is_empty() && page.locale.ui_lang != lang)
             {
                 continue;

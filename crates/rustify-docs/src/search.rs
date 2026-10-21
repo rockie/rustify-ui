@@ -110,7 +110,7 @@ pub fn build(
             let page = &analysis.pages[i];
             if page.draft
                 || default_drafts.contains(page.locale.logical_route.as_str())
-                || page.front.search == Some(false)
+                || !page.front.searchable()
                 || page.locale.ui_lang != lang
             {
                 continue;

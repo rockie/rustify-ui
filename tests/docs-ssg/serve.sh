@@ -1,5 +1,6 @@
 #!/bin/sh
-# Builds the content fixture for one docs browser project and serves it:
+# Builds a fixture (content by default; also i18n, landing and the others
+# below) for one docs browser project and serves it:
 #   serve.sh root <port>     base /, `rustify-docs preview` (CSP as a header)
 #   serve.sh subpath <port>  base /rustify-ui/, `rustify-docs preview`
 #   serve.sh meta <port>     base /rustify-ui/, a plain static host with no
@@ -52,10 +53,12 @@ path.write_text(text)
 PY
     RUSTIFY_DOCS_CARGO=mbx "$bin" build --config "$work/site/rustify-docs.toml" --out "$work/dist" >&2
     ;;
-  content | i18n)
+  content | i18n | landing)
     fixture=$root/tests/docs-ssg/fixtures/content
     if [ "$source" = i18n ]; then
       fixture=$root/tests/docs-ssg/fixtures/i18n/content
+    elif [ "$source" = landing ]; then
+      fixture=$root/tests/docs-ssg/fixtures/landing
     fi
     cp -R "$fixture" "$work/site"
     perl -0pi -e "s#url = \"https://example.com/docs/\"\nbase = \"/docs/\"#url = \"https://docs.example.net$base\"\nbase = \"$base\"#" "$work/site/rustify-docs.toml"

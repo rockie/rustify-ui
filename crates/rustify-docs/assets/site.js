@@ -17,6 +17,39 @@
   var base = root.getAttribute("data-rd-base") || "/";
   var status = document.getElementById("rd-status");
 
+  // A landing page names the query parameters it carries (gclid, utm_*…):
+  // each one the address has goes into the hidden fields, links and frames
+  // the page marks, its hero's actions among them. The address's value
+  // wins over a field's own; a link that has the parameter keeps it.
+  // Nothing is stored or sent, and without this the page works the same,
+  // only its visits are harder to attribute.
+  (function carry() {
+    var names = (root.getAttribute("data-rd-carry") || "").split(" ").filter(Boolean);
+    if (!names.length) return;
+    var params = new URLSearchParams(location.search);
+    var present = names.filter(function (name) { return params.get(name); });
+    if (!present.length) return;
+    var fields = document.querySelectorAll('input[type="hidden"][data-rd-carry]');
+    for (var i = 0; i < fields.length; i++) {
+      if (present.indexOf(fields[i].name) >= 0) fields[i].value = params.get(fields[i].name);
+    }
+    var targets = document.querySelectorAll("a[data-rd-carry][href], iframe[data-rd-carry][src]");
+    for (var j = 0; j < targets.length; j++) {
+      var attribute = targets[j].tagName === "IFRAME" ? "src" : "href";
+      var url;
+      try {
+        url = new URL(targets[j].getAttribute(attribute), location.href);
+      } catch (invalid) {
+        continue;
+      }
+      if (url.protocol !== "http:" && url.protocol !== "https:") continue;
+      var added = present.filter(function (name) { return !url.searchParams.has(name); });
+      added.forEach(function (name) { url.searchParams.set(name, params.get(name)); });
+      // A frame loads again when its address changes, once.
+      if (added.length) targets[j].setAttribute(attribute, url.href);
+    }
+  })();
+
   function stored(key) {
     try {
       return localStorage.getItem(key);

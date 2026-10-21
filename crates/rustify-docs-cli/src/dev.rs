@@ -65,6 +65,8 @@ struct Good {
     base: String,
     locale_not_found: BTreeMap<String, String>,
     locale_changed_at: u64,
+    /// The header policy of each landing page, by its path.
+    page_policies: Arc<BTreeMap<String, String>>,
 }
 
 /// What every connection reads.
@@ -320,6 +322,7 @@ enum Outcome {
         files: FileMap,
         base: String,
         locale_not_found: BTreeMap<String, String>,
+        page_policies: BTreeMap<String, String>,
         diagnostics: Vec<Diagnostic>,
     },
     Failed {
@@ -539,6 +542,7 @@ impl Builder {
                 files: generation.files,
                 base: project.config.site.base.clone(),
                 locale_not_found: generation.locale_not_found,
+                page_policies: generation.page_policies,
                 diagnostics: sorted(diagnostics),
             },
             Err(problems) => {
@@ -604,6 +608,7 @@ fn commit(shared: &Shared, outcome: Outcome) -> Committed {
             files,
             base,
             locale_not_found,
+            page_policies,
             diagnostics,
         } => {
             let changed = changed_paths(state.good.as_ref().map(|good| &*good.files), &files);
@@ -646,6 +651,7 @@ fn commit(shared: &Shared, outcome: Outcome) -> Committed {
                 base,
                 locale_not_found,
                 locale_changed_at,
+                page_policies: Arc::new(page_policies),
             });
             state.failed = false;
             state.diagnostics = Arc::new(diagnostics);
@@ -833,9 +839,10 @@ fn respond(
     body: &[u8],
     head_only: bool,
     extra: &[(&str, String)],
+    csp: &str,
 ) -> std::io::Result<()> {
     let mut head = format!(
-        "HTTP/1.1 {status}\r\nContent-Type: {content_type}\r\nContent-Length: {}\r\nContent-Security-Policy: {CSP}\r\nX-Content-Type-Options: nosniff\r\nCache-Control: no-store\r\nConnection: close\r\n",
+        "HTTP/1.1 {status}\r\nContent-Type: {content_type}\r\nContent-Length: {}\r\nContent-Security-Policy: {csp}\r\nX-Content-Type-Options: nosniff\r\nCache-Control: no-store\r\nConnection: close\r\n",
         body.len()
     );
     for (name, value) in extra {
@@ -925,6 +932,7 @@ fn handle(mut stream: TcpStream, shared: &Shared) -> std::io::Result<()> {
             b"405 method not allowed\n",
             false,
             &[("Allow", "GET, HEAD".into())],
+            CSP,
         );
     }
     let (path, query) = target.split_once('?').unwrap_or((target, ""));
@@ -937,6 +945,7 @@ fn handle(mut stream: TcpStream, shared: &Shared) -> std::io::Result<()> {
                 generation::DEV_SCRIPT.as_bytes(),
                 head_only,
                 &[],
+                CSP,
             ),
             "dev.css" => respond(
                 &mut stream,
@@ -945,6 +954,7 @@ fn handle(mut stream: TcpStream, shared: &Shared) -> std::io::Result<()> {
                 generation::DEV_STYLE.as_bytes(),
                 head_only,
                 &[],
+                CSP,
             ),
             "events" if !head_only => events(stream, shared, query),
             _ => respond(
@@ -954,10 +964,11 @@ fn handle(mut stream: TcpStream, shared: &Shared) -> std::io::Result<()> {
                 b"404 not found\n",
                 head_only,
                 &[],
+                CSP,
             ),
         };
     }
-    let (files, base, error_path, build, built, building) = {
+    let (files, base, error_path, build, built, building, policies) = {
         let state = shared
             .state
             .lock()
@@ -970,6 +981,7 @@ fn handle(mut stream: TcpStream, shared: &Shared) -> std::io::Result<()> {
                 good.revision,
                 true,
                 state.building,
+                good.page_policies.clone(),
             ),
             (None, Some((files, base, mapping))) => (
                 files.clone(),
@@ -978,6 +990,7 @@ fn handle(mut stream: TcpStream, shared: &Shared) -> std::io::Result<()> {
                 0,
                 false,
                 state.building,
+                Arc::default(),
             ),
             (None, None) => {
                 drop(state);
@@ -988,6 +1001,7 @@ fn handle(mut stream: TcpStream, shared: &Shared) -> std::io::Result<()> {
                     b"rustify-docs dev: the site does not build yet; the terminal lists the problems\n",
                     head_only,
                     &[],
+                    CSP,
                 );
             }
         }
@@ -1001,6 +1015,7 @@ fn handle(mut stream: TcpStream, shared: &Shared) -> std::io::Result<()> {
             &html(bytes),
             head_only,
             &[],
+            CSP,
         ),
         None => respond(
             stream,
@@ -1009,6 +1024,7 @@ fn handle(mut stream: TcpStream, shared: &Shared) -> std::io::Result<()> {
             b"404 not found\n",
             head_only,
             &[],
+            CSP,
         ),
     };
     match resolve(&files, &base, target) {
@@ -1023,9 +1039,18 @@ fn handle(mut stream: TcpStream, shared: &Shared) -> std::io::Result<()> {
                     &html(bytes),
                     head_only,
                     &[],
+                    policies.get(&key).map_or(CSP, String::as_str),
                 )
             } else {
-                respond(&mut stream, "200 OK", content_type, bytes, head_only, &[])
+                respond(
+                    &mut stream,
+                    "200 OK",
+                    content_type,
+                    bytes,
+                    head_only,
+                    &[],
+                    CSP,
+                )
             }
         }
         Answer::Redirect(location) => respond(
@@ -1035,6 +1060,7 @@ fn handle(mut stream: TcpStream, shared: &Shared) -> std::io::Result<()> {
             b"moved\n",
             head_only,
             &[("Location", location)],
+            CSP,
         ),
         Answer::BadRequest => respond(
             &mut stream,
@@ -1043,6 +1069,7 @@ fn handle(mut stream: TcpStream, shared: &Shared) -> std::io::Result<()> {
             b"400 bad request\n",
             head_only,
             &[],
+            CSP,
         ),
         // While nothing has built, every page is the shell saying so.
         _ if !built => page(
@@ -1410,6 +1437,7 @@ mod tests {
                 files: files.clone(),
                 base: "/docs/".into(),
                 locale_not_found: mapping.clone(),
+                page_policies: BTreeMap::new(),
                 diagnostics: Vec::new(),
             },
         );
@@ -1440,6 +1468,7 @@ mod tests {
                 files,
                 base: "/docs/".into(),
                 locale_not_found: mapping,
+                page_policies: BTreeMap::new(),
                 diagnostics: Vec::new(),
             },
         );
@@ -1770,6 +1799,7 @@ mod tests {
             base: "/".into(),
             locale_not_found: BTreeMap::new(),
             locale_changed_at: 0,
+            page_policies: Arc::default(),
         });
         // The shell (build 0) gives way to the first build, a missing page
         // to the not-found page.

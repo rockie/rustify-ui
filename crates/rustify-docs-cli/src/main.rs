@@ -667,6 +667,7 @@ fn build(args: &[String]) -> ExitCode {
         &project.config.site.base,
         VERSION,
         &generation.locale_not_found,
+        &generation.page_policies,
     );
     let stop_at = std::env::var(FAULT_VARIABLE)
         .ok()
@@ -850,6 +851,10 @@ fn preview(args: &[String]) -> ExitCode {
         Ok(files) => files,
         Err(message) => return fail("preview", message),
     };
+    let policies = match manifest.checked_page_policies() {
+        Ok(policies) => policies,
+        Err(message) => return fail("preview", message),
+    };
     let not_found = locale_not_found.get("").cloned().unwrap_or_else(|| {
         std::fs::read(area.out.join("404.html")).unwrap_or_else(|_| b"404 not found\n".to_vec())
     });
@@ -875,6 +880,7 @@ fn preview(args: &[String]) -> ExitCode {
             base: manifest.base,
             not_found,
             locale_not_found,
+            policies,
         },
     );
     ExitCode::SUCCESS

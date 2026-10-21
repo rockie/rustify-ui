@@ -33,6 +33,11 @@ pub enum UrlRole {
     /// `url(…)` such as `bg-[url(/bg.svg)]`, which the class carries into
     /// the stylesheet as written.
     ClassImage,
+    /// What an `iframe` embeds: allowed only on a landing page, from the
+    /// origins its profile lists, which the page decides.
+    Frame,
+    /// Where a form submits: `form action`, or a button's `formaction`.
+    FormTarget,
 }
 
 /// A URL attribute in author HTML.
@@ -77,6 +82,8 @@ fn url_role(element: &str, attribute: &str) -> Option<UrlRole> {
         ("video", "poster") => UrlRole::Resource { image: true },
         ("image" | "use" | "feimage", "href" | "xlink:href") => UrlRole::Resource { image: true },
         (_, "background") => UrlRole::Resource { image: true },
+        ("iframe", "src") => UrlRole::Frame,
+        ("form", "action") | ("button" | "input", "formaction") => UrlRole::FormTarget,
         _ => return None,
     })
 }
@@ -613,7 +620,39 @@ fn scan_tokens(
         if tags.is_some_and(|tags| !in_document(&tag_span, tags)) {
             continue;
         }
-        if let Some((_, rule, what)) = FORBIDDEN.iter().find(|(element, _, _)| *element == name) {
+        let has = |key: &str| {
+            tag.attributes
+                .keys()
+                .any(|name| name.eq_ignore_ascii_case(key.as_bytes()))
+        };
+        // Markdown may embed a frame by address; whether its page may load
+        // it depends on the page's profile, which the page decides. Rendered
+        // surfaces never embed one.
+        if name == "iframe" && tags.is_none() {
+            if has("srcdoc") || !has("src") {
+                issues.push(
+                    Issue::error(
+                        tag_span.clone(),
+                        "embedded-frame",
+                        "an <iframe> embeds a page by its `src` address alone, without `srcdoc`",
+                    )
+                    .suggest("give it the address of the page to embed, and no `srcdoc`"),
+                );
+                continue;
+            }
+            if !has("title") {
+                issues.push(
+                    Issue::warning(
+                        tag_span.clone(),
+                        "frame-title",
+                        "this <iframe> has no title, which is how assistive technology names it",
+                    )
+                    .suggest("add title=\"…\" saying what the frame holds"),
+                );
+            }
+        } else if let Some((_, rule, what)) =
+            FORBIDDEN.iter().find(|(element, _, _)| *element == name)
+        {
             issues.push(
                 Issue::error(tag_span.clone(), rule, format!("{what} is not allowed: the site's content security policy would block it"))
                     .suggest("put behaviour in the theme's scripts and styling in classes; reference media from static/"),
@@ -735,7 +774,8 @@ fn scan_tokens(
                 _ => vec![decoded.clone()],
             };
             let image = matches!(role, UrlRole::Srcset | UrlRole::Resource { image: true });
-            if !matches!(role, UrlRole::Link) && urls.iter().any(|url| is_cross_origin(url, image))
+            if !matches!(role, UrlRole::Link | UrlRole::Frame | UrlRole::FormTarget)
+                && urls.iter().any(|url| is_cross_origin(url, image))
             {
                 issues.push(
                     Issue::error(
@@ -770,6 +810,15 @@ fn scan_tokens(
 /// a style, embeds a frame or loads from another origin. Returns what is
 /// wrong; empty when the page may ship.
 pub fn check_document(html: &str) -> Vec<String> {
+    check_document_under(html, None)
+}
+
+/// [`check_document`] for a landing page under `profile`: what the profile
+/// lets the page load passes, everything else is checked the same.
+pub fn check_document_under(html: &str, profile: Option<&crate::landing::Profile>) -> Vec<String> {
+    let scripts = profile
+        .map(crate::landing::script_sources)
+        .unwrap_or_default();
     let mut problems = Vec::new();
     let mut emitter = html5gum::DefaultEmitter::default();
     emitter.naively_switch_states(true);
@@ -790,11 +839,25 @@ pub fn check_document(html: &str) -> Vec<String> {
                         in_script = !tag.self_closing;
                         match attribute("src") {
                             None => problems.push("an inline <script>".to_owned()),
-                            Some(src) if is_cross_origin(&src, false) => problems
-                                .push(format!("a script from another origin: {}", literal(&src))),
+                            Some(src)
+                                if is_cross_origin(&src, false)
+                                    && !crate::landing::allows(&scripts, &src) =>
+                            {
+                                problems.push(format!(
+                                    "a script from another origin: {}",
+                                    literal(&src)
+                                ))
+                            }
                             Some(_) => {}
                         }
                     }
+                    "iframe"
+                        if attribute("srcdoc").is_none()
+                            && profile.is_some_and(|profile| {
+                                attribute("src").is_some_and(|src| {
+                                    crate::landing::allows(&profile.sources.frame, &src)
+                                })
+                            }) => {}
                     "style" | "iframe" | "frame" | "object" | "embed" | "base" => {
                         problems.push(format!("a {} element", literal(&format!("<{name}>"))))
                     }
@@ -830,6 +893,20 @@ pub fn check_document(html: &str) -> Vec<String> {
                 for (key, value) in &tag.attributes {
                     let key = String::from_utf8_lossy(key).to_ascii_lowercase();
                     let value = String::from_utf8_lossy(&value.value);
+                    // Without a profile a form is blocked as a whole by
+                    // `form-action 'none'`; with one, only its listed origins.
+                    if let Some(profile) = profile.filter(|_| {
+                        url_role(&name, &key) == Some(UrlRole::FormTarget)
+                            && is_cross_origin(&value, false)
+                    }) {
+                        if !crate::landing::allows(&profile.sources.form, &value) {
+                            problems.push(format!(
+                                "{} submits to another origin: {}",
+                                literal(&format!("<{name} {key}>")),
+                                literal(&value)
+                            ));
+                        }
+                    }
                     if key.starts_with("on") || key == "style" {
                         problems.push(format!(
                             "a {} attribute on {}",
@@ -845,7 +922,10 @@ pub fn check_document(html: &str) -> Vec<String> {
                         let image =
                             matches!(role, UrlRole::Srcset | UrlRole::Resource { image: true });
                         let urls: Vec<String> = match role {
-                            UrlRole::Link | UrlRole::ClassImage => Vec::new(),
+                            UrlRole::Link
+                            | UrlRole::ClassImage
+                            | UrlRole::Frame
+                            | UrlRole::FormTarget => Vec::new(),
                             UrlRole::Srcset => parse_srcset(&value)
                                 .into_iter()
                                 .map(|(url, _)| url)
@@ -1055,7 +1135,7 @@ mod tests {
         assert_eq!(rules("<p style=\"color:red\">"), ["inline-style"]);
         assert_eq!(rules("<style>p{}</style>"), ["inline-style"]);
         assert_eq!(
-            rules("<iframe src=\"/x\"></iframe><object></object><embed>"),
+            rules("<frame src=\"/x\"><object></object><embed>"),
             ["embedded-frame", "embedded-plugin", "embedded-plugin"]
         );
         assert_eq!(rules("<base href=\"/\">"), ["base-element"]);
@@ -1230,6 +1310,144 @@ mod tests {
         assert!(check_document(ok).is_empty(), "{:?}", check_document(ok));
         let bad = "<script>alert(1)</script><script src=\"https://cdn.example/x.js\"></script><link rel=\"stylesheet\" href=\"//cdn.example/x.css\"><p style=\"color:red\" onclick=\"x()\">t</p><a href=\"JaVaScRiPt:x\">y</a><img src=\"https://img.example/a.png\"><iframe src=\"/a\"></iframe>";
         assert_eq!(check_document(bad).len(), 9, "{:#?}", check_document(bad));
+    }
+
+    #[test]
+    fn a_landing_profile_admits_only_its_own_scripts() {
+        let (config, _) = crate::config::parse(
+            "schema_version = 1\n[site]\nname = \"D\"\n\
+             [[landing.profiles.ads.scripts]]\nsrc = \"https://tag.example/t.js?id=1\"\n\
+             [landing.profiles.ads.sources]\nscript = [\"https://*.cdn.example\"]\n",
+        )
+        .unwrap();
+        let ads = &config.landing["ads"];
+        let page = |src: &str| {
+            format!("<head><script src=\"/assets/site.js\" defer></script><script src=\"{src}\" async></script></head>")
+        };
+        for src in [
+            "https://tag.example/t.js?id=2",
+            "https://a.cdn.example/x.js",
+        ] {
+            assert!(
+                check_document_under(&page(src), Some(ads)).is_empty(),
+                "{src}"
+            );
+            assert_eq!(check_document(&page(src)).len(), 1, "{src}");
+            assert_eq!(
+                check_document(&page(src)),
+                check_document_under(&page(src), None)
+            );
+        }
+        for src in [
+            "https://other.example/x.js",
+            "http://tag.example/t.js",
+            "https://tag.example:8443/t.js",
+            "//tag.example/t.js",
+            "https://cdn.example/x.js",
+        ] {
+            assert_eq!(
+                check_document_under(&page(src), Some(ads)).len(),
+                1,
+                "{src}"
+            );
+        }
+        let inline = "<script>gtag()</script><iframe src=\"https://tag.example/\"></iframe><img src=\"https://tag.example/p.gif\">";
+        // An inline script is two problems: no `src`, and its text.
+        assert_eq!(check_document_under(inline, Some(ads)).len(), 4);
+        assert_eq!(
+            check_document_under(inline, Some(ads)),
+            check_document(inline)
+        );
+    }
+
+    #[test]
+    fn markdown_frames_and_forms_are_url_slots_the_page_decides() {
+        let (issues, slots) = check(
+            "<iframe title=\"Form\" src=\"https://forms.example/f\" loading=\"lazy\"></iframe>\
+             <form method=\"post\" action=\"https://leads.example/lead\"><input type=\"hidden\" name=\"gclid\">\
+             <button formaction=\"/api/x\">Send</button><input type=\"submit\" formaction=\"https://leads.example/b\"></form>",
+        );
+        assert!(issues.is_empty(), "{issues:?}");
+        assert_eq!(
+            slots
+                .iter()
+                .map(|slot| (slot.role, slot.value.as_str()))
+                .collect::<Vec<_>>(),
+            [
+                (UrlRole::Frame, "https://forms.example/f"),
+                (UrlRole::FormTarget, "https://leads.example/lead"),
+                (UrlRole::FormTarget, "/api/x"),
+                (UrlRole::FormTarget, "https://leads.example/b"),
+            ]
+        );
+        for html in [
+            "<iframe title=\"x\" srcdoc=\"<p>x</p>\" src=\"https://forms.example/\"></iframe>",
+            "<iframe title=\"x\"></iframe>",
+        ] {
+            assert_eq!(rules(html), ["embedded-frame"], "{html}");
+            assert!(check(html).1.is_empty(), "{html}");
+        }
+        let (issues, _) = check("<iframe src=\"https://forms.example/f\"></iframe>");
+        assert_eq!(
+            issues
+                .iter()
+                .map(|issue| (issue.rule, issue.severity))
+                .collect::<Vec<_>>(),
+            [("frame-title", crate::diagnostic::Severity::Warning)]
+        );
+        assert_eq!(
+            rules("<frame src=\"https://forms.example/f\">"),
+            ["embedded-frame"]
+        );
+        assert_eq!(
+            rules("<form action=\"javascript:x()\"></form>"),
+            ["script-url"]
+        );
+        // A rendered surface never embeds a frame, whatever its address.
+        let (issues, slots) =
+            check_rendered("<iframe title=\"Form\" src=\"https://forms.example/f\"></iframe>");
+        assert_eq!(
+            issues.iter().map(|issue| issue.rule).collect::<Vec<_>>(),
+            ["embedded-frame"]
+        );
+        assert!(slots.is_empty());
+    }
+
+    #[test]
+    fn the_final_gate_admits_frames_and_forms_only_from_listed_origins() {
+        let (config, _) = crate::config::parse(
+            "schema_version = 1\n[site]\nname = \"D\"\n\
+             [landing.profiles.ads.sources]\nframe = [\"https://forms.example\"]\nform = [\"https://leads.example\"]\n\
+             [landing.profiles.plain]\ncarry = [\"gclid\"]\n",
+        )
+        .unwrap();
+        let (ads, plain) = (&config.landing["ads"], &config.landing["plain"]);
+        let frame = "<iframe title=\"F\" src=\"https://forms.example/f?gclid=1\"></iframe>";
+        assert!(check_document_under(frame, Some(ads)).is_empty());
+        for profile in [None, Some(plain)] {
+            assert_eq!(check_document_under(frame, profile).len(), 1);
+        }
+        for html in [
+            "<iframe src=\"https://other.example/f\"></iframe>",
+            "<iframe src=\"https://forms.example/f\" srcdoc=\"x\"></iframe>",
+            "<iframe></iframe>",
+            "<frame src=\"https://forms.example/f\">",
+        ] {
+            assert_eq!(check_document_under(html, Some(ads)).len(), 1, "{html}");
+        }
+        let form = "<form action=\"https://leads.example/lead\" method=\"post\"><button formaction=\"/docs/thanks/\">x</button></form>";
+        assert!(check_document_under(form, Some(ads)).is_empty());
+        assert_eq!(check_document_under(form, Some(plain)).len(), 1);
+        // Without a profile a form is blocked as a whole, as it always was.
+        assert!(check_document(form).is_empty());
+        for html in [
+            "<form action=\"https://other.example/lead\"></form>",
+            "<form action=\"//leads.example.evil/x\"></form>",
+            "<form><input type=\"submit\" formaction=\"mailto:a@example.com\"></form>",
+        ] {
+            assert_eq!(check_document_under(html, Some(ads)).len(), 1, "{html}");
+            assert!(check_document(html).is_empty(), "{html}");
+        }
     }
 
     #[test]

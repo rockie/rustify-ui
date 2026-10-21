@@ -5,7 +5,8 @@
 //! own. Addresses outside the base, and addresses under it with nothing
 //! behind them, get a real 404 with the site's not-found page; a directory
 //! without its slash is redirected to it, as static hosts do; every response
-//! carries the full content security policy as a header. While it runs it
+//! carries the full content security policy as a header, a landing page its
+//! own from the manifest. While it runs it
 //! holds the output's lock shared, so a build of the same output is refused
 //! instead of swapping files under it.
 
@@ -29,6 +30,9 @@ pub struct Site {
     /// The bytes of the output's `404.html`.
     pub not_found: Vec<u8>,
     pub locale_not_found: BTreeMap<String, Vec<u8>>,
+    /// The header policy of each page the manifest lists one for, by its
+    /// path under the output; every other response is served under [`CSP`].
+    pub policies: BTreeMap<String, String>,
 }
 
 impl Site {
@@ -36,6 +40,21 @@ impl Site {
         locale_prefix(&self.base, target)
             .and_then(|prefix| self.locale_not_found.get(&prefix))
             .map_or(&self.not_found, Vec::as_slice)
+    }
+
+    /// The policy a file of the output is served under.
+    fn policy(&self, file: &Path) -> &str {
+        file.strip_prefix(&self.dir)
+            .ok()
+            .and_then(|relative| {
+                let key = relative
+                    .components()
+                    .map(|part| part.as_os_str().to_string_lossy())
+                    .collect::<Vec<_>>()
+                    .join("/");
+                self.policies.get(&key)
+            })
+            .map_or(CSP, String::as_str)
     }
 }
 
@@ -154,13 +173,14 @@ fn respond(
     headers: &[(&str, String)],
     body: &[u8],
     head_only: bool,
+    csp: &str,
 ) -> std::io::Result<()> {
     let mut head = format!("HTTP/1.1 {status}\r\n");
     for (name, value) in headers {
         head.push_str(&format!("{name}: {value}\r\n"));
     }
     head.push_str(&format!(
-        "Content-Length: {}\r\nContent-Security-Policy: {CSP}\r\nX-Content-Type-Options: nosniff\r\nCache-Control: no-cache\r\nConnection: close\r\n\r\n",
+        "Content-Length: {}\r\nContent-Security-Policy: {csp}\r\nX-Content-Type-Options: nosniff\r\nCache-Control: no-cache\r\nConnection: close\r\n\r\n",
         body.len()
     ));
     stream.write_all(head.as_bytes())?;
@@ -194,6 +214,7 @@ fn handle(mut stream: TcpStream, site: &Site) -> std::io::Result<()> {
             ],
             b"405 method not allowed\n",
             false,
+            CSP,
         );
     }
     match resolve(site, target) {
@@ -204,6 +225,7 @@ fn handle(mut stream: TcpStream, site: &Site) -> std::io::Result<()> {
                 &[("Content-Type", mime(&path).into())],
                 &body,
                 head_only,
+                site.policy(&path),
             ),
             Err(_) => respond(
                 &mut stream,
@@ -211,6 +233,7 @@ fn handle(mut stream: TcpStream, site: &Site) -> std::io::Result<()> {
                 &[("Content-Type", "text/html; charset=utf-8".into())],
                 site.not_found(target),
                 head_only,
+                CSP,
             ),
         },
         Answer::Redirect(location) => respond(
@@ -222,6 +245,7 @@ fn handle(mut stream: TcpStream, site: &Site) -> std::io::Result<()> {
             ],
             b"moved\n",
             head_only,
+            CSP,
         ),
         Answer::NotFound => respond(
             &mut stream,
@@ -229,6 +253,7 @@ fn handle(mut stream: TcpStream, site: &Site) -> std::io::Result<()> {
             &[("Content-Type", "text/html; charset=utf-8".into())],
             site.not_found(target),
             head_only,
+            CSP,
         ),
         Answer::BadRequest => respond(
             &mut stream,
@@ -236,6 +261,7 @@ fn handle(mut stream: TcpStream, site: &Site) -> std::io::Result<()> {
             &[("Content-Type", "text/plain; charset=utf-8".into())],
             b"400 bad request\n",
             head_only,
+            CSP,
         ),
     }
 }
@@ -289,6 +315,7 @@ mod tests {
                 ("".into(), b"default".to_vec()),
                 ("zh".into(), b"Chinese".to_vec()),
             ]),
+            policies: BTreeMap::new(),
         };
         for path in [
             "/docs/zh/missing/a/b/",
@@ -325,6 +352,7 @@ mod tests {
                 base: "/docs/".into(),
                 not_found: b"404".to_vec(),
                 locale_not_found: BTreeMap::new(),
+                policies: BTreeMap::new(),
             },
             real,
         )
@@ -356,6 +384,17 @@ mod tests {
         assert_eq!(resolve(&site, "/docs/..%2f..%2fetc"), Answer::NotFound);
         assert_eq!(resolve(&site, "/docs/a%5cb"), Answer::BadRequest);
         assert_eq!(resolve(&site, "/docs/%ff"), Answer::BadRequest);
+        let _ = std::fs::remove_dir_all(&dir);
+    }
+
+    #[test]
+    fn only_a_listed_page_is_served_under_its_own_policy() {
+        let (mut site, dir) = site();
+        site.policies = BTreeMap::from([("guide/index.html".to_owned(), "landing".to_owned())]);
+        assert_eq!(site.policy(&dir.join("guide/index.html")), "landing");
+        assert_eq!(site.policy(&dir.join("index.html")), CSP);
+        assert_eq!(site.policy(&dir.join("a b.txt")), CSP);
+        assert_eq!(site.policy(Path::new("/elsewhere/guide/index.html")), CSP);
         let _ = std::fs::remove_dir_all(&dir);
     }
 }

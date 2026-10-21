@@ -1095,6 +1095,8 @@ pub struct Analysis {
     /// points, in their order.
     pub top: Vec<Target>,
     pub social: Vec<Target>,
+    /// Where each landing profile's footer links point, by profile name.
+    pub landing_footers: BTreeMap<String, Vec<Target>>,
     /// Project-relative files the pages reference, to be published.
     pub resources: BTreeSet<String>,
     /// URL values from source candidates, resolved without changing selectors.
@@ -1802,7 +1804,7 @@ pub fn analyze_with_surfaces(
                 draft.path.clone()
             }
         };
-        let home = draft.front.layout == Layout::Home;
+        let home = draft.front.layout.has_hero();
         let merged = home && fragment.leading_h1.is_some();
         if merged {
             if let Some(end) = crate::html_check::leading_h1_end(&fragment.html) {
@@ -1874,7 +1876,7 @@ pub fn analyze_with_surfaces(
             .description
             .clone()
             .or_else(|| fragment.summary.clone());
-        if draft.front.layout != Layout::Home {
+        if !draft.front.layout.has_hero() {
             match (&draft.front.description, &fragment.summary) {
                 (Some(_), _) => {}
                 (None, Some(_)) => diagnostics.push(
@@ -1895,6 +1897,56 @@ pub fn analyze_with_surfaces(
                     )
                     .with_suggestion("add `description:` to the frontmatter"),
                 ),
+            }
+        }
+        // Only the configuration names what a landing page may load; a page
+        // just picks one of its profiles.
+        if let Some(name) = &draft.front.landing {
+            let yaml = frontmatter::split(text)
+                .ok()
+                .flatten()
+                .map_or(0..0, |split| split.yaml);
+            let at = text[yaml.clone()]
+                .find("landing:")
+                .and_then(|key| {
+                    let after = yaml.start + key + "landing:".len();
+                    text[after..yaml.end]
+                        .find(name.as_str())
+                        .map(|at| after + at)
+                })
+                .unwrap_or(yaml.start);
+            let span = at..at + name.len();
+            if draft.front.layout != Layout::Landing {
+                diagnostics.push(Diagnostic::located(
+                    &file,
+                    text,
+                    Issue::error(
+                        span,
+                        "landing-without-layout",
+                        "`landing:` selects a profile only for a `layout: landing` page",
+                    )
+                    .suggest("add `layout: landing`, or remove `landing:`"),
+                ));
+            } else if !config.landing.contains_key(name) {
+                let names: Vec<String> = config.landing.keys().map(|name| literal(name)).collect();
+                diagnostics.push(Diagnostic::located(
+                    &file,
+                    text,
+                    Issue::error(
+                        span,
+                        "landing-profile",
+                        format!(
+                            "landing profile {} is not declared in {}",
+                            code_span(name),
+                            literal(&project.config_file)
+                        ),
+                    )
+                    .suggest(if names.is_empty() {
+                        format!("declare it as `[landing.profiles.{name}]`")
+                    } else {
+                        format!("use one of: {}", names.join(", "))
+                    }),
+                ));
             }
         }
         pages.push(Page {
@@ -2267,6 +2319,12 @@ pub fn analyze_with_surfaces(
         } else {
             page.path.rsplit_once('/').map_or("", |(dir, _)| dir)
         };
+        let landing = (page.front.layout == Layout::Landing).then(|| {
+            page.front
+                .landing
+                .as_deref()
+                .and_then(|name| config.landing.get(name))
+        });
         let (targets, mut found) = resolve_references(
             &graph,
             &mut sources,
@@ -2274,6 +2332,7 @@ pub fn analyze_with_surfaces(
             dir,
             rendered,
             &page.fragment,
+            landing,
         );
         collect_resources(&targets, &mut resources);
         // A home page's actions are links too, written in its frontmatter.
@@ -2340,7 +2399,7 @@ pub fn analyze_with_surfaces(
     for (route, rendered) in &mut slots {
         for slot in rendered.values_mut() {
             let (targets, found) =
-                resolve_references(&graph, &mut sources, route, "", true, &slot.fragment);
+                resolve_references(&graph, &mut sources, route, "", true, &slot.fragment, None);
             collect_resources(&targets, &mut resources);
             diagnostics.extend(
                 found
@@ -2398,6 +2457,12 @@ pub fn analyze_with_surfaces(
         view.social = config_links(&nav.social, Some(&view.root_route));
         collect_resources(&view.top, &mut resources);
         collect_resources(&view.social, &mut resources);
+    }
+    let mut landing_footers = BTreeMap::new();
+    for (name, profile) in &config.landing {
+        let targets = config_links(&profile.footer, None);
+        collect_resources(&targets, &mut resources);
+        landing_footers.insert(name.clone(), targets);
     }
     for target in top.iter().chain(&social) {
         if let Target::Resource(path) = target {
@@ -2553,6 +2618,48 @@ pub fn analyze_with_surfaces(
             )),
         }
     }
+    // A landing profile's own scripts are published like the logo.
+    for profile in config.landing.values() {
+        for script in &profile.scripts {
+            let crate::landing::ScriptSrc::Local(path) = &script.src else {
+                continue;
+            };
+            match sources.get(path) {
+                Ok(()) => {
+                    resources.insert(path.clone());
+                }
+                Err(refusal) => diagnostics.push(Diagnostic::located(
+                    &project.config_file,
+                    &project.config_text,
+                    refusal.issue(
+                        &|rule, message| Issue::error(script.span.clone(), rule, message),
+                        &format!("landing script {}", code_span(path)),
+                        "landing-script-missing",
+                    ),
+                )),
+            }
+        }
+    }
+    let selected: BTreeSet<&str> = pages
+        .iter()
+        .filter_map(|page| page.front.landing.as_deref())
+        .collect();
+    for (name, profile) in &config.landing {
+        if !selected.contains(name.as_str()) {
+            diagnostics.push(Diagnostic::located(
+                &project.config_file,
+                &project.config_text,
+                Issue::warning(
+                    profile.span.clone(),
+                    "landing-profile-unused",
+                    format!("no page selects landing profile {}", code_span(name)),
+                )
+                .suggest(format!(
+                    "add `landing: {name}` to a `layout: landing` page, or remove the profile"
+                )),
+            ));
+        }
+    }
     if config.site.url.is_none() {
         diagnostics.push(
             Diagnostic::in_file(
@@ -2649,6 +2756,7 @@ pub fn analyze_with_surfaces(
         nav,
         top,
         social,
+        landing_footers,
         resources,
         candidate_urls,
         outside: sources.outside,
@@ -2797,6 +2905,15 @@ pub fn markdown_intro_with_context(
             RefKind::Link => {
                 resolve_source_link(&graph, &mut sources, &path, url, &mut found, &issue)
             }
+            RefKind::Frame => frame_target(None, url, &mut found, &issue),
+            RefKind::Form => form_target(
+                None,
+                url,
+                &mut found,
+                &issue,
+                reference.span.clone(),
+                |_| Target::Keep,
+            ),
             RefKind::Image | RefKind::Media | RefKind::Srcset | RefKind::ClassImage => {
                 resolve_resource(
                     &mut sources,
@@ -2969,6 +3086,8 @@ fn collect_resources(targets: &[Target], resources: &mut BTreeSet<String>) {
     }
 }
 
+/// Resolves a page's or surface's references. `landing` is `None` off
+/// landing pages, and a landing page's profile, if it has one, on them.
 fn resolve_references(
     graph: &LinkGraph,
     sources: &mut Sources,
@@ -2976,6 +3095,7 @@ fn resolve_references(
     dir: &str,
     rendered: bool,
     fragment: &Fragment,
+    landing: Option<Option<&crate::landing::Profile>>,
 ) -> (Vec<Target>, Vec<Issue>) {
     let mut targets = Vec::with_capacity(fragment.references.len());
     let mut found = Vec::new();
@@ -3019,10 +3139,126 @@ fn resolve_references(
                     &issue,
                 )
             }
+            RefKind::Frame => frame_target(landing, url, &mut found, &issue),
+            RefKind::Form => {
+                let span = reference.span.clone();
+                form_target(landing, url, &mut found, &issue, span, |found| {
+                    // A target on the site resolves like the page's links.
+                    if rendered {
+                        resolve_html_link(graph, sources, route, url, found, &issue)
+                    } else {
+                        resolve_link(graph, sources, Some(route), dir, url, found, &issue)
+                    }
+                })
+            }
         };
         targets.push(sources.refuse_theme(target, &mut found, &issue));
     }
     (targets, found)
+}
+
+/// What an `iframe` may embed: nothing, except on a landing page whose
+/// profile lists the frame's origin in `sources.frame`.
+fn frame_target(
+    landing: Option<Option<&crate::landing::Profile>>,
+    url: &str,
+    found: &mut Vec<Issue>,
+    issue: &dyn Fn(&'static str, String) -> Issue,
+) -> Target {
+    match landing
+        .flatten()
+        .filter(|profile| !profile.sources.frame.is_empty())
+    {
+        None => found.push(
+            issue(
+                "embedded-frame",
+                "an <iframe> is allowed only on a `layout: landing` page whose profile lists its origin in `sources.frame`".into(),
+            )
+            .suggest("move it to a landing page, or link to the page instead"),
+        ),
+        Some(profile) if !crate::landing::allows(&profile.sources.frame, url) => found.push(
+            issue(
+                "frame-origin",
+                format!(
+                    "{} is not an http(s) address on an origin landing profile {} lists in `sources.frame`",
+                    code_span(url),
+                    code_span(&profile.name)
+                ),
+            )
+            .suggest(format!(
+                "list its origin, like `https://forms.example.com`, under [landing.profiles.{}.sources] frame",
+                profile.name
+            )),
+        ),
+        Some(_) => {}
+    }
+    Target::Keep
+}
+
+/// Where a form may submit. Off landing pages every form is blocked, as it
+/// always was, so it is only a warning; on one, the profile must list the
+/// target's origin in `sources.form`, and a target on the site must exist.
+fn form_target(
+    landing: Option<Option<&crate::landing::Profile>>,
+    url: &str,
+    found: &mut Vec<Issue>,
+    issue: &dyn Fn(&'static str, String) -> Issue,
+    span: std::ops::Range<usize>,
+    on_site: impl FnOnce(&mut Vec<Issue>) -> Target,
+) -> Target {
+    let Some(profile) = landing else {
+        found.push(
+            Issue::warning(
+                span,
+                "form-blocked",
+                format!(
+                    "a form submits to {}, but the page's policy blocks every form submission (`form-action 'none'`)",
+                    code_span(url)
+                ),
+            )
+            .suggest("put the form on a `layout: landing` page whose profile lists its target in `sources.form`"),
+        );
+        return Target::Keep;
+    };
+    let Some(profile) = profile.filter(|profile| !profile.sources.form.is_empty()) else {
+        found.push(
+            issue(
+                "form-origin",
+                match profile {
+                    Some(profile) => format!(
+                        "landing profile {} lists no form target, so the page cannot submit a form",
+                        code_span(&profile.name)
+                    ),
+                    None => "this landing page selects no profile with form targets, so it cannot submit a form".into(),
+                },
+            )
+            .suggest("list the form's origin under `sources.form` of the page's landing profile"),
+        );
+        return Target::Keep;
+    };
+    if url.is_empty() || url.starts_with('#') {
+        return Target::Keep;
+    }
+    if crate::html_check::is_cross_origin(url, false) {
+        if !crate::landing::allows(&profile.sources.form, url) {
+            found.push(
+                issue(
+                    "form-origin",
+                    format!(
+                        "{} is not on an origin landing profile {} lists in `sources.form`",
+                        code_span(url),
+                        code_span(&profile.name)
+                    ),
+                )
+                .suggest(format!(
+                    "list its origin, like `https://leads.example.com`, under [landing.profiles.{}.sources] form",
+                    profile.name
+                )),
+            );
+        }
+        return Target::Keep;
+    }
+    on_site(found)
 }
 
 /// Removes only an exact configured deployment prefix from a browser URL.
@@ -3555,7 +3791,7 @@ fn navigation(
     let shown = |page: &Page| mode == Mode::Dev || !page.draft;
     let listable = |page: &Page| {
         shown(page)
-            && page.front.layout != Layout::Home
+            && !page.front.layout.has_hero()
             && (page.origin == PageOrigin::Markdown || page.route != "/")
     };
     fn chosen(page: &Page) -> Option<&str> {
@@ -5736,5 +5972,297 @@ pub(crate) mod tests {
             errors(&analysis),
             [("lang".to_owned(), "content/c.md".to_owned(), 3)]
         );
+    }
+
+    const LANDING: &str = "[landing.profiles.ads]\ncarry = [\"gclid\"]\n[[landing.profiles.ads.scripts]]\nsrc = \"static/landing/init.js\"\n[[landing.profiles.ads.footer]]\nlabel = \"Privacy\"\nlink = \"privacy.md\"\n";
+
+    /// A diagnostic's line and column.
+    type Position = (Option<usize>, Option<usize>);
+
+    /// Line and column of `needle`'s first occurrence in `text`.
+    fn position(text: &str, needle: &str) -> Position {
+        let (line, column) = LineIndex::new(text).position(text.find(needle).unwrap());
+        (Some(line), Some(column))
+    }
+
+    #[test]
+    fn landing_pages_take_the_hero_and_stay_out_of_the_sidebar() {
+        let config = format!("{CONFIG}{LANDING}");
+        let fixture = Fixture::new(&[
+            ("rustify-docs.toml", &config),
+            ("content/index.md", &format!("{FRONT}# Home\n")),
+            ("content/privacy.md", &format!("{FRONT}# Privacy\n")),
+            // No description and no paragraph to take one from.
+            (
+                "content/lp.md",
+                "---\nlayout: landing\nlanding: ads\n---\n# Try it\n\n## Why\n",
+            ),
+            ("static/landing/init.js", "window.ready = true;\n"),
+        ]);
+        let (_, _, analysis) = fixture.analyze(Mode::Production);
+        assert!(
+            analysis.diagnostics.is_empty(),
+            "{:#?}",
+            analysis.diagnostics
+        );
+        let lp = &analysis.pages[analysis.routes["/lp/"]];
+        assert_eq!(
+            (lp.title.as_str(), lp.description.as_deref()),
+            ("Try it", None)
+        );
+        let listed: Vec<&str> = analysis
+            .nav
+            .iter()
+            .flat_map(|group| &group.items)
+            .map(|item| item.route.as_str())
+            .collect();
+        assert!(
+            listed.contains(&"/privacy/") && !listed.contains(&"/lp/"),
+            "{listed:?}"
+        );
+        assert_eq!(
+            analysis.landing_footers["ads"],
+            [Target::Page {
+                page: analysis.routes["/privacy/"],
+                anchor: None
+            }]
+        );
+        assert!(analysis.resources.contains("static/landing/init.js"));
+
+        // The hero's title rule: an H1 after other content is a second one.
+        let fixture = Fixture::new(&[
+            ("rustify-docs.toml", &config),
+            ("content/privacy.md", &format!("{FRONT}# Privacy\n")),
+            (
+                "content/lp.md",
+                "---\ntitle: Try it\nlayout: landing\nlanding: ads\n---\nIntro.\n\n# Author\n",
+            ),
+            ("static/landing/init.js", ""),
+        ]);
+        let (_, _, analysis) = fixture.analyze(Mode::Production);
+        let problem = analysis
+            .diagnostics
+            .iter()
+            .find(|d| d.rule == "multiple-h1")
+            .unwrap_or_else(|| panic!("{:#?}", analysis.diagnostics));
+        assert!(problem.suggestion.as_deref().unwrap().contains("H2"));
+    }
+
+    #[test]
+    fn landing_profile_selection_is_checked_where_it_is_written() {
+        let config = format!("{CONFIG}{LANDING}[landing.profiles.plain]\ncarry = [\"gclid\"]\n");
+        let wrong_layout = "---\ndescription: d\nlanding: ads\n---\n# A\n";
+        let undeclared = "---\nlayout: landing\ntitle: landing\nlanding: nope\n---\n# B\n";
+        let fixture = Fixture::new(&[
+            ("rustify-docs.toml", &config),
+            ("content/privacy.md", &format!("{FRONT}# Privacy\n")),
+            ("content/a.md", wrong_layout),
+            ("content/b.md", undeclared),
+            ("static/landing/init.js", ""),
+        ]);
+        let (_, _, analysis) = fixture.analyze(Mode::Production);
+        let found: Vec<(&str, Severity, &str, Position)> = analysis
+            .diagnostics
+            .iter()
+            .map(|d| {
+                (
+                    d.rule.as_str(),
+                    d.severity,
+                    d.file.as_deref().unwrap_or(""),
+                    (d.line, d.column),
+                )
+            })
+            .collect();
+        assert_eq!(
+            found,
+            [
+                (
+                    "landing-without-layout",
+                    Severity::Error,
+                    "content/a.md",
+                    position(wrong_layout, "ads")
+                ),
+                (
+                    "landing-profile",
+                    Severity::Error,
+                    "content/b.md",
+                    position(undeclared, "nope")
+                ),
+                (
+                    "landing-profile-unused",
+                    Severity::Warning,
+                    "rustify-docs.toml",
+                    position(&config, "[landing.profiles.plain]")
+                ),
+            ]
+        );
+        let undeclared = analysis
+            .diagnostics
+            .iter()
+            .find(|d| d.rule == "landing-profile")
+            .unwrap();
+        assert_eq!(
+            undeclared.suggestion.as_deref(),
+            Some("use one of: ads, plain")
+        );
+    }
+
+    #[test]
+    fn landing_profile_files_and_footer_links_must_exist() {
+        let config = format!(
+            "{CONFIG}[landing.profiles.ads]\n[[landing.profiles.ads.scripts]]\nsrc = \"static/landing/gone.js\"\n[[landing.profiles.ads.scripts]]\nsrc = \".env.js\"\n[[landing.profiles.ads.footer]]\nlabel = \"Gone\"\nlink = \"gone.md\"\n"
+        );
+        let fixture = Fixture::new(&[
+            ("rustify-docs.toml", &config),
+            (
+                "content/lp.md",
+                "---\nlayout: landing\nlanding: ads\n---\n# Try it\n",
+            ),
+            (".env.js", "secret\n"),
+        ]);
+        let (_, _, analysis) = fixture.analyze(Mode::Production);
+        let mut found: Vec<(&str, Position)> = analysis
+            .diagnostics
+            .iter()
+            .filter(|d| d.severity == Severity::Error)
+            .map(|d| {
+                assert_eq!(d.file.as_deref(), Some("rustify-docs.toml"), "{d:?}");
+                (d.rule.as_str(), (d.line, d.column))
+            })
+            .collect();
+        found.sort();
+        assert_eq!(
+            found,
+            [
+                ("broken-link", position(&config, "\"gone.md\"")),
+                (
+                    "landing-script-missing",
+                    position(&config, "\"static/landing/gone.js\"")
+                ),
+                ("private-file", position(&config, "\".env.js\"")),
+            ]
+        );
+        assert!(!analysis.resources.iter().any(|path| path.ends_with(".js")));
+    }
+
+    /// Each file's diagnostics as (rule, severity), in order.
+    fn rules_by_file(analysis: &Analysis) -> BTreeMap<String, Vec<(String, Severity)>> {
+        let mut found: BTreeMap<String, Vec<(String, Severity)>> = BTreeMap::new();
+        for d in &analysis.diagnostics {
+            found
+                .entry(d.file.clone().unwrap_or_default())
+                .or_default()
+                .push((d.rule.clone(), d.severity));
+        }
+        found
+    }
+
+    #[test]
+    fn landing_frames_and_forms_follow_the_pages_profile() {
+        let config = format!(
+            "{CONFIG}[landing.profiles.ads.sources]\nframe = [\"https://forms.example\"]\nform = [\"https://leads.example\"]\n[landing.profiles.plain]\ncarry = [\"gclid\"]\n"
+        );
+        let body = "<iframe title=\"F\" src=\"https://forms.example/f\"></iframe>\n\n<form method=\"post\" action=\"https://leads.example/lead\"><button formaction=\"thanks.md\">Send</button></form>\n";
+        let landing = |profile: &str, body: &str| {
+            format!("---\ntitle: Offer\nlayout: landing\n{profile}---\n{body}")
+        };
+        let fixture = Fixture::new(&[
+            ("rustify-docs.toml", &config),
+            ("content/lp.md", &landing("landing: ads\n", body)),
+            ("content/thanks.md", &landing("landing: ads\n", "Thanks.\n")),
+            ("content/plain.md", &landing("landing: plain\n", body)),
+            ("content/none.md", &landing("", body)),
+            (
+                "content/bad.md",
+                &landing(
+                    "landing: ads\n",
+                    "<iframe title=\"F\" src=\"https://other.example/f\"></iframe>\n\n<form action=\"https://other.example/lead\"><button formaction=\"missing.md\">x</button></form>\n",
+                ),
+            ),
+            (
+                "content/relative.md",
+                &landing("landing: ads\n", "<iframe title=\"F\" src=\"/embed/\"></iframe>\n\n<form action=\"\"></form>\n"),
+            ),
+            (
+                "content/doc.md",
+                &format!("{FRONT}# Doc\n\n<iframe title=\"F\" src=\"https://forms.example/f\"></iframe>\n"),
+            ),
+        ]);
+        let (_, _, analysis) = fixture.analyze(Mode::Production);
+        let error = |rule: &str| (rule.to_owned(), Severity::Error);
+        let expected = BTreeMap::from([
+            (
+                "content/bad.md".to_owned(),
+                vec![
+                    error("frame-origin"),
+                    error("form-origin"),
+                    error("broken-link"),
+                ],
+            ),
+            ("content/doc.md".to_owned(), vec![error("embedded-frame")]),
+            // One `form-origin` for the form and its button: the same
+            // problem at the same place.
+            (
+                "content/none.md".to_owned(),
+                vec![error("embedded-frame"), error("form-origin")],
+            ),
+            (
+                "content/plain.md".to_owned(),
+                vec![error("embedded-frame"), error("form-origin")],
+            ),
+            (
+                "content/relative.md".to_owned(),
+                vec![error("frame-origin")],
+            ),
+        ]);
+        let mut found = rules_by_file(&analysis);
+        for rules in found.values_mut() {
+            rules.sort_by_key(|(rule, _)| {
+                [
+                    "frame-origin",
+                    "embedded-frame",
+                    "form-origin",
+                    "broken-link",
+                ]
+                .iter()
+                .position(|known| known == rule)
+            });
+        }
+        assert_eq!(found, expected);
+        let lp = &analysis.pages[analysis.routes["/lp/"]];
+        assert_eq!(
+            lp.targets,
+            [
+                Target::Keep,
+                Target::Keep,
+                Target::Page {
+                    page: analysis.routes["/thanks/"],
+                    anchor: None
+                }
+            ]
+        );
+    }
+
+    #[test]
+    fn form_on_an_ordinary_page_is_only_a_warning() {
+        let fixture = Fixture::new(&[
+            ("rustify-docs.toml", CONFIG),
+            (
+                "content/index.md",
+                &format!("{FRONT}# Home\n\n<form action=\"/api/lead\" method=\"post\"><button formaction=\"/api/x\">Send</button></form>\n"),
+            ),
+        ]);
+        let (_, _, analysis) = fixture.analyze(Mode::Production);
+        assert_eq!(
+            rules_by_file(&analysis),
+            BTreeMap::from([(
+                "content/index.md".to_owned(),
+                vec![
+                    ("form-blocked".to_owned(), Severity::Warning),
+                    ("form-blocked".to_owned(), Severity::Warning)
+                ]
+            )])
+        );
+        assert_eq!(analysis.pages[0].targets, [Target::Keep, Target::Keep]);
     }
 }

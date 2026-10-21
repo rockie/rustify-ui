@@ -21,6 +21,7 @@ use crate::escape::escape_url_into;
 use crate::frontmatter::Layout;
 use crate::history::Dates;
 use crate::imagesize::Size;
+use crate::landing::{Profile, ScriptSrc};
 use crate::markdown::RefKind;
 use crate::shell::{self, AssetUrls, HeaderLink, Home, Logo, Meta, Page, Site};
 use crate::style::{self, Brand};
@@ -130,6 +131,9 @@ pub const GENERATED_PREFIXES: &[&str] = &[
 pub struct Generation {
     pub files: BTreeMap<String, Arc<[u8]>>,
     pub locale_not_found: BTreeMap<String, String>,
+    /// The header policy of each page served under another than
+    /// [`shell::CSP`], by its path under the output directory.
+    pub page_policies: BTreeMap<String, String>,
     pub stylesheet_path: String,
     /// Pages written, the not-found page included.
     pub pages: usize,
@@ -497,6 +501,17 @@ fn target_url(
     }
 }
 
+/// The profile a landing page loads under; `None` for every other page.
+fn landing_profile<'a>(
+    config: &'a crate::config::Config,
+    page: &crate::content::Page,
+) -> Option<&'a Profile> {
+    if page.front.layout != Layout::Landing {
+        return None;
+    }
+    config.landing.get(page.front.landing.as_deref()?)
+}
+
 /// The configuration's header links, resolved.
 fn header_links(
     analysis: &Analysis,
@@ -720,6 +735,11 @@ fn final_documents(
     }
     for (path, source, _, slots) in documents {
         for slot in slots {
+            // A form submits to an endpoint, not to a file the site publishes;
+            // a landing page's own targets were checked with its page.
+            if slot.role == crate::html_check::UrlRole::FormTarget {
+                continue;
+            }
             let references = if slot.role == crate::html_check::UrlRole::Srcset {
                 crate::html_check::parse_srcset(&slot.value)
                     .into_iter()
@@ -809,7 +829,7 @@ fn sitemap(
         .filter(|&&i| {
             !analysis.pages[i].draft
                 && !analysis.pages[i].locale.is_fallback
-                && analysis.pages[i].front.index != Some(false)
+                && analysis.pages[i].front.indexed()
         })
         .map(|&i| (analysis.pages[i].route.as_str(), i))
         .collect();
@@ -1079,7 +1099,35 @@ pub fn generate_extended(
                 .unwrap_or_else(|| article(analysis, i, site, &outputs, &sizes));
             let custom_home = page.locale.logical_route == "/"
                 && matches!(page.origin, crate::content::PageOrigin::Registered(_));
-            let home = (page.front.layout == Layout::Home || custom_home).then(|| {
+            let profile = landing_profile(config, page);
+            let carry = profile.map_or(&[][..], |profile| &profile.carry);
+            let landing = (page.front.layout == Layout::Landing).then(|| shell::Landing {
+                meta_policy: crate::landing::meta_policy(profile),
+                scripts: profile
+                    .into_iter()
+                    .flat_map(|profile| &profile.scripts)
+                    .filter_map(|script| {
+                        let url = match &script.src {
+                            ScriptSrc::Local(path) => site.url(&format!("/{}", outputs.get(path)?)),
+                            ScriptSrc::External(src) => src.clone(),
+                        };
+                        Some((url, script.load))
+                    })
+                    .collect(),
+                carry,
+                footer: profile
+                    .map(|profile| {
+                        header_links(
+                            analysis,
+                            &profile.footer,
+                            &analysis.landing_footers[&profile.name],
+                            site,
+                            &outputs,
+                        )
+                    })
+                    .unwrap_or_default(),
+            });
+            let home = (page.front.layout.has_hero() || custom_home).then(|| {
                 if custom_home {
                     return Home {
                         custom: true,
@@ -1119,6 +1167,7 @@ pub fn generate_extended(
                         .iter()
                         .map(|feature| (feature.title.as_str(), feature.details.as_str()))
                         .collect(),
+                    carry: !carry.is_empty(),
                 }
             });
             let levels = page
@@ -1134,9 +1183,7 @@ pub fn generate_extended(
                     .filter_map(|view| view.pages.get(&page.locale.logical_route))
                     .map(|&i| &analysis.pages[i])
                     .filter(|target| {
-                        !target.locale.is_fallback
-                            && !target.draft
-                            && target.front.index != Some(false)
+                        !target.locale.is_fallback && !target.draft && target.front.indexed()
                     })
                     .map(|target| shell::AlternateLink {
                         lang: target.lang.clone(),
@@ -1169,13 +1216,14 @@ pub fn generate_extended(
                     meta: Meta {
                         canonical: canonical.as_deref(),
                         image: share_image.as_deref(),
-                        noindex: page.front.index == Some(false) || page.locale.is_fallback,
+                        noindex: !page.front.indexed() || page.locale.is_fallback,
                         home: page.locale.logical_route == "/",
                         updated: dates.get(&page.file).map(String::as_str),
                         edit_url: edit_url.as_deref(),
                         alternates: &alternates,
                     },
                     home,
+                    landing,
                 },
                 &slots,
             );
@@ -1415,10 +1463,25 @@ pub fn generate_extended(
     for (path, bytes) in crate::ai::build(project, analysis)? {
         insert_output(&mut files, path, bytes)?;
     }
+    // The page and its header carry the same policy; the not-found pages
+    // are never landing pages.
+    let profiles: BTreeMap<String, &Profile> = published
+        .iter()
+        .filter_map(|&i| {
+            let page = &analysis.pages[i];
+            Some((page_path(&page.route), landing_profile(config, page)?))
+        })
+        .collect();
+    let page_policies: BTreeMap<String, String> = profiles
+        .iter()
+        .map(|(path, profile)| (path.clone(), crate::landing::policy(Some(profile))))
+        .filter(|(_, policy)| policy != shell::CSP)
+        .collect();
     let pages: Vec<(String, Arc<[u8]>, Vec<String>)> =
         parallel_map(&pages, workers, |(path, html)| {
             let html = html.replacen(STYLESHEET_PLACEHOLDER, &stylesheet_url, 1);
-            let problems = crate::html_check::check_document(&html);
+            let problems =
+                crate::html_check::check_document_under(&html, profiles.get(path).copied());
             (path.clone(), Arc::from(html.into_bytes()), problems)
         });
     let mut sources: BTreeMap<String, String> = published
@@ -1493,6 +1556,7 @@ pub fn generate_extended(
     Ok(Generation {
         files,
         locale_not_found,
+        page_policies,
         stylesheet_path,
         pages: page_count,
         candidates: candidates.len(),
@@ -1617,6 +1681,7 @@ pub fn dev_shell_from_snapshot(
     Ok(Generation {
         files,
         locale_not_found,
+        page_policies: BTreeMap::new(),
         stylesheet_path,
         pages: page_count,
         candidates: candidates.len(),

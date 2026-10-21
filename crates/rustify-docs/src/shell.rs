@@ -213,8 +213,22 @@ pub struct Page<'a> {
     /// The heading levels the table of contents lists.
     pub toc_levels: (u8, u8),
     pub meta: Meta<'a>,
-    /// A page with `layout: home`.
+    /// A page with `layout: home`, or the hero of a landing page.
     pub home: Option<Home<'a>>,
+    /// A page with `layout: landing`.
+    pub landing: Option<Landing<'a>>,
+}
+
+/// What a landing page adds to the shell.
+#[derive(Clone, Debug)]
+pub struct Landing<'a> {
+    /// The page's policy as its `<meta>` carries it.
+    pub meta_policy: String,
+    /// The profile's scripts in order: resolved URL and how each loads.
+    pub scripts: Vec<(String, crate::landing::Load)>,
+    /// Query parameter names the theme script carries; empty for none.
+    pub carry: &'a [String],
+    pub footer: Vec<HeaderLink>,
 }
 
 /// What a home page shows above its own Markdown.
@@ -229,6 +243,8 @@ pub struct Home<'a> {
     pub actions: Vec<(&'a str, String)>,
     /// Each feature's title and one-sentence details.
     pub features: Vec<(&'a str, &'a str)>,
+    /// The actions take the query parameters a landing page carries.
+    pub carry: bool,
 }
 
 /// The page served for an address with nothing at it: the site's shell, one
@@ -314,6 +330,7 @@ pub fn render_not_found_with_languages(
                 ..Meta::default()
             },
             home: None,
+            landing: None,
         },
         slots,
     )
@@ -377,6 +394,7 @@ pub fn render_dev_shell_with_status(site: &Site, building: bool) -> String {
                 ..Meta::default()
             },
             home: None,
+            landing: None,
         },
     )
 }
@@ -479,16 +497,32 @@ fn page_view(site: &Site, page: &Page, slots: &LayoutSlots) -> impl IntoView {
         })
         .collect();
     let main_id = main_id(page, slots);
+    let landing = page.landing.as_ref();
+    let policy = landing.map_or_else(meta_csp, |landing| landing.meta_policy.clone());
+    let carry = landing
+        .filter(|landing| !landing.carry.is_empty())
+        .map(|landing| landing.carry.join(" "));
+    let scripts = landing.map(|landing| {
+        landing
+            .scripts
+            .iter()
+            .map(|(src, load)| {
+                leptos::html::script()
+                    .attr("src", src.clone())
+                    .attr(load.as_str(), "")
+            })
+            .collect_view()
+    });
     let body = match &page.home {
         Some(home) => home_layout(page, home, labels, slots, &main_id).into_any(),
         None => doc_layout(site, page, &toc, labels, slots, &main_id).into_any(),
     };
     view! {
-        <html lang=page.lang.to_owned() data-rustify-scope="" data-theme="system" data-rd-base=site.base.clone()>
+        <html lang=page.lang.to_owned() data-rustify-scope="" data-theme="system" data-rd-base=site.base.clone() data-rd-carry=carry>
             <head>
                 <meta charset="utf-8" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
-                <meta http-equiv="Content-Security-Policy" content=meta_csp() />
+                <meta http-equiv="Content-Security-Policy" content=policy />
                 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22/%3E" />
                 <title>{document_title}</title>
                 <meta name="description" content=description.clone() />
@@ -511,6 +545,7 @@ fn page_view(site: &Site, page: &Page, slots: &LayoutSlots) -> impl IntoView {
                 {site.assets.dev.then(|| view! { <link rel="stylesheet" href=DEV_STYLE_URL /> })}
                 <script src=site.assets.mode_script.clone()></script>
                 <script src=site.assets.site_script.clone() defer=""></script>
+                {scripts}
                 {site.assets.dev.then(|| {
                     let words: BTreeMap<_, _> = labels.iter().filter_map(|(key, value)| key.strip_prefix("dev.").map(|key| (key, &value.text))).collect();
                     let languages: BTreeMap<_, _> = labels.iter().filter_map(|(key, value)| key.strip_prefix("dev.").map(|key| (key, &value.lang))).collect();
@@ -529,18 +564,13 @@ fn page_view(site: &Site, page: &Page, slots: &LayoutSlots) -> impl IntoView {
                 >
                     {labels.get("skip_to_content").text.clone()}
                 </a>
-                {header(site, page, labels, slots)}
+                {match landing {
+                    Some(_) => landing_header(site, slots).into_any(),
+                    None => header(site, page, labels, slots).into_any(),
+                }}
                 {body}
-                {search_dialog(site, labels)}
-                <footer class="rd-site-footer mx-auto max-w-[76rem] px-4 md:px-6">
-                    {if slots.contains_key(&Slot::Footer) {
-                        view! { <div inner_html=slot_marker(Slot::Footer)></div> }.into_any()
-                    } else {
-                        view! { <nav aria-label=labels.get("footer_links").text.clone() lang=labels.get("footer_links").lang.clone()>
-                            <a href=site.url(&site.home_route) lang=labels.get("back_home").lang.clone()>{labels.get("back_home").text.clone()}</a>
-                        </nav> }.into_any()
-                    }}
-                </footer>
+                {landing.is_none().then(|| search_dialog(site, labels))}
+                {site_footer(site, landing, labels, slots)}
                 <p
                     id="rd-status"
                     class="sr-only"
@@ -556,6 +586,36 @@ fn page_view(site: &Site, page: &Page, slots: &LayoutSlots) -> impl IntoView {
             </body>
         </html>
     }
+}
+
+/// The site's footer: a registered footer slot, or else the way home. A
+/// landing page lists its profile's links instead, and without any has no
+/// footer.
+fn site_footer(
+    site: &Site,
+    landing: Option<&Landing>,
+    labels: &Catalog,
+    slots: &LayoutSlots,
+) -> Option<impl IntoView> {
+    let content = if slots.contains_key(&Slot::Footer) {
+        view! { <div inner_html=slot_marker(Slot::Footer)></div> }.into_any()
+    } else {
+        let label = labels.get("footer_links");
+        match landing {
+            None => view! { <nav aria-label=label.text.clone() lang=label.lang.clone()>
+                <a href=site.url(&site.home_route) lang=labels.get("back_home").lang.clone()>{labels.get("back_home").text.clone()}</a>
+            </nav> }.into_any(),
+            Some(landing) if landing.footer.is_empty() => return None,
+            Some(landing) => view! { <nav class="flex flex-wrap gap-x-6 gap-y-2" aria-label=label.text.clone() lang=label.lang.clone()>
+                {landing.footer.iter().map(|link| view! {
+                    <a href=link.url.clone() lang=link.lang.clone() rel=link.external.then_some("noopener")>{link.label.clone()}</a>
+                }).collect_view()}
+            </nav> }.into_any(),
+        }
+    };
+    Some(view! {
+        <footer class="rd-site-footer mx-auto max-w-[76rem] px-4 md:px-6">{content}</footer>
+    })
 }
 
 fn fallback_note(page: &Page, labels: &Catalog) -> Option<impl IntoView> {
@@ -669,7 +729,7 @@ fn home_layout(
             } else {
                 "rd-action rd-action-secondary"
             };
-            view! { <a href=url.clone() class=class lang=page.source_lang.to_owned()>{text.to_string()}</a> }
+            view! { <a href=url.clone() class=class lang=page.source_lang.to_owned() data-rd-carry=home.carry.then_some("")>{text.to_string()}</a> }
         })
         .collect_view();
     let features = (!home.features.is_empty()).then(|| {
@@ -769,20 +829,7 @@ fn header(site: &Site, page: &Page, labels: &Catalog, slots: &LayoutSlots) -> im
     let narrow = (!entries.is_empty()).then(|| {
         view! { <nav class="rd-header-nav rd-header-nav-narrow" aria-label=labels.get("site_links").text.clone() lang=labels.get("site_links").lang.clone() inner_html=entries></nav> }
     });
-    // The name says what the logo shows, so the logo is decoration. A pair
-    // switches with the mode through CSS, with or without script.
-    let logo = site.logo.clone().map(|logo| {
-        let width = logo.width.map(|width| width.to_string());
-        if logo.light == logo.dark {
-            view! { <img src=logo.light alt="" width=width height="24" class="h-6 w-auto" /> }.into_any()
-        } else {
-            view! {
-                <img src=logo.light alt="" width=width.clone() height="24" class="h-6 w-auto dark:hidden" />
-                <img src=logo.dark alt="" width=width height="24" class="hidden h-6 w-auto dark:block" />
-            }
-            .into_any()
-        }
-    });
+    let logo = logo(site);
     view! {
         <header class="sticky top-0 z-40 border-b border-secondary bg-background">
             <div class="rd-header-bar mx-auto flex max-w-[76rem] items-center gap-4 px-4 md:px-6">
@@ -805,6 +852,39 @@ fn header(site: &Site, page: &Page, labels: &Catalog, slots: &LayoutSlots) -> im
             </div>
         </header>
         {narrow}
+    }
+}
+
+/// The name says what the logo shows, so the logo is decoration. A pair
+/// switches with the mode through CSS, with or without script.
+fn logo(site: &Site) -> Option<impl IntoView> {
+    site.logo.clone().map(|logo| {
+        let width = logo.width.map(|width| width.to_string());
+        if logo.light == logo.dark {
+            view! { <img src=logo.light alt="" width=width height="24" class="h-6 w-auto" /> }.into_any()
+        } else {
+            view! {
+                <img src=logo.light alt="" width=width.clone() height="24" class="h-6 w-auto dark:hidden" />
+                <img src=logo.dark alt="" width=width height="24" class="hidden h-6 w-auto dark:block" />
+            }
+            .into_any()
+        }
+    })
+}
+
+/// A landing page's header: the brand alone, not a link, so the page has one
+/// way on; no site links, search, language or mode switch.
+fn landing_header(site: &Site, slots: &LayoutSlots) -> impl IntoView {
+    view! {
+        <header class="sticky top-0 z-40 border-b border-secondary bg-background">
+            <div class="rd-header-bar mx-auto flex max-w-[76rem] items-center gap-4 px-4 md:px-6">
+                {if slots.contains_key(&Slot::Header) {
+                    view! { <div class="rd-brand" inner_html=slot_marker(Slot::Header)></div> }.into_any()
+                } else {
+                    view! { <div class="rd-brand">{logo(site)}<span>{site.name.clone()}</span></div> }.into_any()
+                }}
+            </div>
+        </header>
     }
 }
 
@@ -1116,6 +1196,7 @@ mod tests {
             toc_levels: (2, 3),
             meta: Meta::default(),
             home: None,
+            landing: None,
         };
         let html = render_page(&site, &page);
         let doc = dom_query::Document::from(html.as_str());
@@ -1180,6 +1261,7 @@ mod tests {
                 toc_levels: (2, 3),
                 meta: Meta::default(),
                 home: None,
+                landing: None,
             },
         )
     }
@@ -1210,6 +1292,7 @@ mod tests {
                 toc_levels: (2, 3),
                 meta: Meta::default(),
                 home: None,
+                landing: None,
             },
             slots,
         )
@@ -1396,6 +1479,7 @@ mod tests {
                     toc_levels: (2, 3),
                     meta: Meta::default(),
                     home: None,
+                    landing: None,
                 },
             )
         };

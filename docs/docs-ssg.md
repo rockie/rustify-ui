@@ -263,7 +263,8 @@ port = 4188                           # default
 ```
 
 Paths are relative to the project root and written with `/`. The logo files
-and `site.image` must exist. A page's edit link is `edit_url`, then
+and `site.image` must exist. `[landing.profiles.<name>]` tables declare what
+landing pages may load; see [Landing pages](#landing-pages). A page's edit link is `edit_url`, then
 `repo.path`, then the page's file (`…/edit/main/docs/content/guide/setup.md`). A brand colour that gives link text or button labels less than
 4.5:1 contrast on the theme's background is a warning (`brand-contrast`).
 
@@ -460,16 +461,17 @@ and every key is known:
 | Key | Meaning |
 | --- | --- |
 | `title` | The page's title. Without it, the first `# heading` is the title; a page with neither is an error. |
-| `description` | A description for link previews and AI discovery. Without it the first paragraph is used (warning); an ordinary page with neither is an error. A `layout: home` page may omit both; its AI entry uses the separate fallback below. |
+| `description` | A description for link previews and AI discovery. Without it the first paragraph is used (warning); an ordinary page with neither is an error. A `layout: home` or `layout: landing` page may omit both; a home page's AI entry uses the separate fallback below. |
 | `lang` | Without i18n, the page's language tag, defaulting to `site.lang`. With i18n, it must match the language declared for its content directory. Interface strings use that language's catalog with per-key English fallback. |
 | `sidebar.label`, `sidebar.order` | The sidebar's text for the page, and its position in its group (lower first; pages without an order follow, by path). |
 | `sidebar.group` | The nav group the page is listed in, by label, instead of its directory's. It must name a configured group; without `[[nav.groups]]` it starts a group of that name. A group's explicit `items` list is never changed by it. |
 | `draft` | `true` keeps the page out of a production build. |
-| `index` | `false` asks search engines not to index the page (default `true`). |
-| `search` | `false` excludes this page from the current-language reader search (default `true`), independently of `index` and `ai`. |
-| `ai` | `false` excludes this page from `llms.txt` (default `true`), independently of reader search and search-engine indexing. |
+| `index` | `false` asks search engines not to index the page (default `true`; `false` on a landing page). |
+| `search` | `false` excludes this page from the current-language reader search (default `true`; `false` on a landing page), independently of `index` and `ai`. |
+| `ai` | `false` excludes this page from `llms.txt` (default `true`; `false` on a landing page), independently of reader search and search-engine indexing. |
 | `toc.levels` | The heading levels the page's table of contents lists, as `[2, 3]` (the default). |
-| `layout`, `tagline`, `actions`, `features` | A home page: `layout: home`, a tagline, `actions` (`text`, `link`) and `features` (`title`, `details`). |
+| `layout`, `tagline`, `actions`, `features` | A home page: `layout: home`, a tagline, `actions` (`text`, `link`) and `features` (`title`, `details`). `layout: landing` is a [landing page](#landing-pages) with the same hero. |
+| `landing` | The `[landing.profiles]` entry a `layout: landing` page loads under, by name. |
 
 GitHub shows frontmatter as a small table at the top of the file.
 
@@ -583,7 +585,8 @@ site's content security policy would block them in a reader's browser:
 - `<script>` (`inline-script`), `<style>` and the `style` attribute
   (`inline-style`), `on…` event attributes (`event-handler`);
 - `javascript:` or `vbscript:` URLs, however they are spelled (`script-url`);
-- `<iframe>`, `<frame>` (`embedded-frame`), `<object>`, `<embed>`
+- `<iframe>` (`embedded-frame`), except on a landing page whose profile
+  lists its origin, `<frame>` (`embedded-frame`), `<object>`, `<embed>`
   (`embedded-plugin`), `<base>`, `<meta>` and `<link>`;
 - anything the page would load from another origin: `img`, `srcset`,
   `source`, `video`, `audio`, `poster`, `track`, SVG `href` and the `url(…)`
@@ -599,6 +602,11 @@ or any named target) must say `rel="noopener"` (or `noreferrer`), or it is an
 error (`new-window-opener`): the page it opens could otherwise script this
 one. Links written in Markdown never open new windows, and those to other
 sites always carry `rel="noopener"`.
+
+Forms are allowed, but the strict policy blocks every submission: a form
+on an ordinary page is a warning (`form-blocked`) and stays as written. A
+[landing page](#landing-pages) may post a form to the origins its profile
+lists, and embed frames from them.
 
 ### Code blocks
 
@@ -1160,6 +1168,279 @@ published together. A failed candidate leaves the previous complete output.
 form; authored resources and routes cannot take the framework's
 `assets/search.` or `assets/search-worker.` names.
 
+## Landing pages
+
+A landing page is a Markdown page for paid traffic: `layout: landing`. It
+shows the home page's hero without the site's navigation, and it is the one
+kind of page that may load another origin's measurement script, send its
+requests, embed a form service's frame and post a lead form. Landing pages
+come with the first CLI release after 0.1.32: the pinned 0.1.32 release
+above reports `[landing]` as an unknown key. Until that release, a CLI built
+from the repository's current source has them, although it still reports
+version 0.1.32; `rustify-docs --build-info` names the source it was built
+from.
+
+What a landing page may load is never written on the page. The
+configuration declares named profiles, and a page selects one by name:
+
+- Only a `layout: landing` page that selects a profile is served under a
+  wider policy, and only by what that profile lists. Every other page, the
+  home page and every `404.html` keep the strict policy byte for byte.
+- A profile can add origins to five directives: `script-src`, `connect-src`,
+  `img-src`, `frame-src` and `form-action`, and load scripts in `<head>` by
+  address.
+- Nothing ever allows inline script or style, a nonce or a hash, `eval`,
+  plugins or `<base>`, and every page keeps `frame-ancestors 'none'`.
+
+### Profiles
+
+```toml
+[landing.profiles.ads]                    # a name: a-z, 0-9 and -, up to 32
+carry = ["gclid", "gbraid", "wbraid", "bd_vid", "utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content"]
+
+[[landing.profiles.ads.scripts]]          # loaded in this order, after the theme's
+src = "https://tag.example.com/tag.js?id=T-1"
+load = "async"                            # async, or defer (the default)
+
+[[landing.profiles.ads.scripts]]
+src = "landing/init.js"                   # a .js file in the project, published by content
+
+[landing.profiles.ads.sources]            # every list is optional
+script = []                               # each external script's origin is added already
+connect = ["https://*.tag.example.com"]
+img = ["https://tag.example.com"]
+frame = ["https://forms.example.com"]
+form = ["https://leads.example.com"]
+
+[[landing.profiles.ads.footer]]           # the page's footer links; like nav.top
+label = "Privacy"
+link = "privacy.md"
+```
+
+A source is an origin: `https://host`, `https://host:port` or
+`https://*.suffix` (any host under `suffix`, not `suffix` itself; the suffix
+has at least two labels). Hosts are ASCII; write an international domain in
+its `xn--` form. `http://` is accepted only for `127.0.0.1` and
+`localhost`, for local testing. A path, query, fragment, user name, IP
+address (other than `127.0.0.1`), keyword such as `'unsafe-inline'`, bare
+scheme, `data:` or `blob:` is an error (`landing-source`): CSP matches a
+host-source by domain, and anything wider would widen every directive it is
+in. Origins are compared in lower case without the scheme's default port,
+and repeats are dropped.
+
+A script's `src` is an `https://` address (with the same host rules, so
+`http://` only on `127.0.0.1` and `localhost`; its origin joins
+`script-src`) or a project-relative `.js` file, which must exist and is
+published under `assets/files/` by its content (`landing-script`,
+`landing-script-missing`). Keep such a file outside the asset directory, as
+in `landing/init.js`: a file under `static/` is also published at its own
+path. There is no inline script:
+put a vendor's inline snippet in such a file (the examples below do).
+A profile that no page selects is a warning (`landing-profile-unused`).
+
+A page under a profile is served under this policy; the bracketed parts
+appear only when the profile lists something for them:
+
+```text
+default-src 'none'; script-src 'self' 'wasm-unsafe-eval' [S…]; style-src 'self'; img-src 'self' data: [I…]; font-src 'self'; connect-src 'self' [C…]; media-src 'self'; worker-src 'self'; [frame-src F…;] object-src 'none'; base-uri 'none'; form-action <'none' | 'self' A…>; frame-ancestors 'none'
+```
+
+`form-action` is `'none'` unless the profile lists form targets; then it is
+`'self'` and them, so a form may also post to the site and an endpoint may
+send the reader back to a page on it. A profile that lists no source at
+all (only `carry`, say) leaves its pages under the strict policy.
+
+### The page
+
+```markdown
+---
+title: Ship docs in an afternoon
+description: A landing page for paid traffic.
+layout: landing
+landing: ads
+tagline: Markdown in, a fast static site out.
+actions:
+  - text: Request a demo
+    link: "#lead"
+features:
+  - title: Strict by default
+    details: Every other page keeps the strict policy.
+---
+
+## Request a demo
+
+<form id="lead" method="post" action="https://leads.example.com/lead">
+<label for="lead-email">Work email</label>
+<input id="lead-email" name="email" type="email" autocomplete="email" required>
+<input type="hidden" name="gclid" data-rd-carry>
+<button type="submit">Request a demo</button>
+</form>
+```
+
+`landing:` names a declared profile (`landing-profile` lists the declared
+ones) and is allowed only with `layout: landing`
+(`landing-without-layout`). A landing page without `landing:` has the
+layout under the strict policy.
+
+The layout:
+
+- The header holds only the brand, the logo and the site's name, and it is
+  not a link, so the page has one way on. There are no header links,
+  search, language or colour-mode switch; colours follow the reader's
+  system setting, or a mode they chose elsewhere on the site. A `header`
+  layout slot still replaces the brand.
+- Then the hero as on a home page (`title`, `tagline`, `actions`,
+  `features`; a leading `# Title` merges into it), then the page's
+  Markdown. No sidebar, table of contents, previous/next links, date or
+  edit link; the page is in no sidebar group (so it raises no
+  `not-in-nav`), and it may omit `description`.
+- The footer lists the profile's `footer` links, or a `footer` slot. With
+  neither the page has no footer.
+- `index`, `search` and `ai` default to `false` on a landing page: it is not
+  indexed by search engines, in reader search or in `llms.txt` unless its
+  frontmatter says `true`.
+
+### Forms
+
+A native form is the dependable way to collect a lead: it posts without
+script, and a failed measurement script never stops it.
+
+- On a landing page, a form's `action` (and a button's `formaction`) must be
+  on an origin the profile lists in `sources.form` (`form-origin`), or be a
+  page on the site, which resolves like a link and must exist
+  (`broken-link`). A profile with no form targets admits no form.
+- The endpoint is yours or a form service's: it receives the
+  `application/x-www-form-urlencoded` POST, stores the lead, and answers
+  with a `303` redirect to a thanks page, on the site (which `'self'`
+  admits) or on a listed origin. A thanks page is usually a landing page of
+  its own, under the same profile, so it can report the conversion.
+- On any other page the policy blocks every form, as it always did: a form
+  there is a warning (`form-blocked`) and is published as written.
+- Give a form an explicit `action`; the build checks forms through it.
+
+### Embedded forms
+
+An `<iframe>` is allowed only on a landing page, with a `src` on an origin
+in `sources.frame` (`frame-origin`; elsewhere `embedded-frame`), no
+`srcdoc`, and a `title` naming what it holds (`frame-title` warns without
+one). The framed page is under its own service's policy, and the service
+must allow being framed; if it refuses, the frame is blank and a native form
+is the alternative. Services that embed by script and inline styles cannot
+be used, because the page's `style-src` is never widened. Give a frame below
+the fold `loading="lazy"`: carrying parameters into it (below) changes its
+address, and a lazy frame loads once, with them.
+
+### Carried parameters
+
+`carry` lists the query parameters an advertising click adds (`gclid`,
+`bd_vid`, `utm_*`, …). When a reader arrives with any of them, the theme
+script copies each one the address has into the elements the page marks
+with `data-rd-carry`:
+
+- `<input type="hidden" name="…" data-rd-carry>`: the field named after the
+  parameter takes its value, replacing what the field had;
+- `<a href="…" data-rd-carry>` and `<iframe src="…" data-rd-carry>`: the
+  parameters are added to the http(s) address, unless it has them already;
+- the hero's `actions`, which are marked for you.
+
+Parameters the profile does not list are never copied. Values are copied
+as text, nothing is stored (no cookie, no `localStorage`) and nothing is
+sent. Without script the page and its form still work; only the copied
+values are missing.
+
+### Hosting landing pages
+
+Each landing page carries its policy in its `<meta>` element, and the
+manifest records its header form under `page_policies`, by the page's path
+in the output. `preview` and `dev` send each page's own header; every other
+response keeps the strict one.
+
+Browsers enforce the header and the `<meta>` together, so a host that sends
+the strict `Content-Security-Policy` header on every path blocks a landing
+page's scripts and forms: the page shows, its tag reports nothing and its
+form does not submit. A host that sets headers must send each path in
+`page_policies` its policy from the manifest (or no CSP header on those
+paths); hosts that cannot set headers, such as GitHub Pages, need nothing.
+
+### Privacy and consent
+
+A script a profile loads runs with the page's full access: it can read the
+page and what readers type into its forms. That is the cost of measurement,
+and why it is confined to the landing pages that select the profile. Keep
+the list short and review it like code. Consent banners, Consent Mode and
+the privacy notice are the site's responsibility: put a consent tool's
+setup in the profile's own script file, and link the privacy notice in the
+profile's footer.
+
+### Example: Google tag (GA4 and Google Ads)
+
+The sources are those [Google's CSP guide](https://developers.google.com/tag-platform/security/guides/csp)
+lists for GA4 with advertising features and for Google Ads conversions and
+remarketing, plus two the tag was seen to use beyond it:
+`https://googleads.g.doubleclick.net` as a script and
+`https://ad.doubleclick.net` as an image. CSP has no wildcard for the end of
+a host name, so each Google country domain a reader may be sent through,
+such as `https://www.google.co.uk` or `https://www.google.com.hk`, must be
+added to `img` and `connect` by itself.
+
+```toml
+[landing.profiles.google]
+carry = ["gclid", "gbraid", "wbraid", "utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content"]
+
+[[landing.profiles.google.scripts]]
+src = "https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"
+load = "async"
+
+[[landing.profiles.google.scripts]]
+src = "landing/gtag-init.js"
+
+[landing.profiles.google.sources]
+script = ["https://www.googleadservices.com", "https://www.google.com", "https://googleads.g.doubleclick.net"]
+img = ["https://www.googletagmanager.com", "https://*.google-analytics.com", "https://*.google.com", "https://*.g.doubleclick.net", "https://www.googleadservices.com", "https://pagead2.googlesyndication.com", "https://ad.doubleclick.net"]
+connect = ["https://www.googletagmanager.com", "https://*.google-analytics.com", "https://*.google.com", "https://*.g.doubleclick.net", "https://www.googleadservices.com", "https://pagead2.googlesyndication.com", "https://ad.doubleclick.net"]
+frame = ["https://www.googletagmanager.com"]
+form = ["https://leads.example.com"]         # your lead endpoint, as in the page above
+```
+
+`landing/gtag-init.js` is Google's inline snippet as a file. It
+reports a conversion on the page that marks one, here a thanks page with
+`<p data-conversion>…</p>`:
+
+```js
+window.dataLayer = window.dataLayer || [];
+function gtag() { dataLayer.push(arguments); }
+gtag("js", new Date());
+gtag("config", "G-XXXXXXXXXX");
+gtag("config", "AW-XXXXXXXXX");
+if (document.querySelector("main [data-conversion]")) {
+  gtag("event", "conversion", { send_to: "AW-XXXXXXXXX/XXXXXXXXXXXXXXXXXXXX" });
+}
+```
+
+### Example: Baidu Tongji
+
+Baidu publishes no CSP list. Its `hm.js` sends each page view as an image
+request to its own origin:
+
+```toml
+[landing.profiles.baidu]
+carry = ["bd_vid", "utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content"]
+
+[[landing.profiles.baidu.scripts]]
+src = "https://hm.baidu.com/hm.js?0123456789abcdef0123456789abcdef"   # the site's 32-character id
+load = "async"
+
+[landing.profiles.baidu.sources]
+img = ["https://hm.baidu.com"]
+form = ["https://leads.example.com"]         # your lead endpoint, as in the page above
+```
+
+After deploying either profile, open a landing page with the browser's
+console showing: a request the profile does not admit is reported there as a
+Content Security Policy violation, naming its origin and directive. A host
+that sends the page's policy as a header as well as the `<meta>` reports
+each blocked request once for each.
+
 ## What a build writes
 
 ```text
@@ -1207,6 +1488,9 @@ The manifest records `schema_version`, `mode` (always `production`), `base`,
 `cli_version`, a `build_id` and every other file with its SHA-256 and size.
 Multilingual builds also record `locale_not_found`, an explicit mapping
 from each prefix (including the empty default) to its generated error file.
+Sites with landing pages also record `page_policies`: each landing page's
+path and the policy a host should send with it, for the pages whose profile
+widens it; a site without any has no such field.
 It holds no time, machine path or environment value. Pages with islands also
 reference a fingerprinted `assets/islands/<hash>/` group containing their
 wasm, glue, snippets and locked SDK runtime assets. Rust source is displayed
@@ -1364,7 +1648,9 @@ A host that can set response headers should also send it as the
 carry `frame-ancestors 'none'`, which stops other sites from framing the
 pages. GitHub Pages cannot set headers and uses the `<meta>` alone; it
 serves `404.html` for missing addresses, and `.nojekyll` makes it publish
-the files as they are.
+the files as they are. Landing pages under a profile carry a wider policy
+of their own; a host that sends headers must send theirs from the
+manifest (see [Hosting landing pages](#hosting-landing-pages)).
 
 ```text
 default-src 'none'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; media-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'
@@ -1469,6 +1755,10 @@ a failure in either hides nothing.
   the hero, diagnosed at its source. Use H2 or start the body with `# Title`.
   Authored action text keeps the page's language even when interface labels
   fall back to English.
+- **Landing page.** `layout: landing` shows the brand alone in the header,
+  the home page's hero and the page's Markdown, and its profile's footer
+  links; no navigation, search or switches (see
+  [Landing pages](#landing-pages)).
 - **Landmarks.** Home, content and 404 pages have a header, navigation,
   main and site footer. The footer sits outside main and has a named
   navigation with a return-home link under the site's base. It remains
@@ -1530,7 +1820,15 @@ Errors stop a build; warnings do not, unless `--deny-warnings` is given.
 | `script-url` | error | A `javascript:`, `vbscript:` or `data:` link |
 | `missing-image`, `missing-media` | error | An image or media file that does not exist |
 | `cross-origin-resource` | error | Something the page would load from another origin |
-| `inline-script`, `inline-style`, `event-handler`, `embedded-frame`, `embedded-plugin`, `base-element`, `meta-element`, `link-element` | error | Raw HTML the content security policy forbids |
+| `inline-script`, `inline-style`, `event-handler`, `embedded-frame`, `embedded-plugin`, `base-element`, `meta-element`, `link-element` | error | Raw HTML the content security policy forbids; `embedded-frame` also for an `<iframe>` with `srcdoc` or without `src`, or outside a landing page whose profile lists frame origins |
+| `frame-origin` | error | A landing page's `<iframe>` whose `src` is not on an origin in its profile's `sources.frame` |
+| `frame-title` | warning | An `<iframe>` without a `title` |
+| `form-origin` | error | A landing page's form target not on an origin in its profile's `sources.form`, or a form under a profile with no form targets |
+| `form-blocked` | warning | A form on a page whose policy blocks every submission |
+| `landing-profile-name`, `landing-source`, `landing-script`, `landing-carry` | error | A `[landing.profiles]` name, source, script `src` or carried parameter that is not valid (or is repeated) |
+| `landing-script-missing` | error | A profile's project script that does not exist |
+| `landing-profile-unused` | warning | A profile no page selects |
+| `landing-profile`, `landing-without-layout` | error | A page's `landing:` naming no declared profile, or written without `layout: landing` |
 | `missing-alt` | warning | An image without alt text |
 | `code-fence-info`, `code-highlight-range` | error | A fence info string that cannot be read; marked lines outside the block |
 | `code-group`, `code-group-conflict` | error | A malformed code group; one group name with different tabs |

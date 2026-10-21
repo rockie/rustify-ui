@@ -83,6 +83,7 @@ createServer(async (request, response) => {
     const body = await readFile(file);
     response.writeHead(200, { "Content-Type": types[extname(file)] || "application/octet-stream" });
     response.end(request.method === "HEAD" ? undefined : body);
-}).listen(Number(port), "127.0.0.1", () => {
-    console.log(`static host: http://127.0.0.1:${port}${base}`);
+}).listen(Number(port), "127.0.0.1", function () {
+    // The port in use, which port 0 leaves to the system.
+    console.log(`static host: http://127.0.0.1:${this.address().port}${base}`);
 });

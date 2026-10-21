@@ -75,6 +75,10 @@ name = "markdown_intro"
 required-features = ["pipeline"]
 
 [[test]]
+name = "landing"
+required-features = ["pipeline"]
+
+[[test]]
 name = "site_registry"
 required-features = ["site-ssr"]
 

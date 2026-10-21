@@ -7,7 +7,7 @@
 //! here and every URL the build writes goes through it.
 
 use crate::diagnostic_text::{code_span, literal};
-use std::collections::BTreeSet;
+use std::collections::{BTreeMap, BTreeSet};
 use std::ops::Range;
 
 use serde::Deserialize;
@@ -39,6 +39,49 @@ struct RawConfig {
     dev: RawDev,
     rust: Option<RawRust>,
     i18n: Option<Spanned<RawI18n>>,
+    landing: Option<RawLanding>,
+}
+
+#[derive(Deserialize)]
+#[serde(deny_unknown_fields)]
+struct RawLanding {
+    #[serde(default)]
+    profiles: BTreeMap<String, Spanned<RawProfile>>,
+}
+
+#[derive(Deserialize)]
+#[serde(deny_unknown_fields)]
+struct RawProfile {
+    #[serde(default)]
+    scripts: Vec<RawScript>,
+    #[serde(default)]
+    sources: RawSources,
+    #[serde(default)]
+    carry: Vec<Spanned<String>>,
+    #[serde(default)]
+    footer: Vec<RawLink>,
+}
+
+#[derive(Deserialize)]
+#[serde(deny_unknown_fields)]
+struct RawScript {
+    src: Spanned<String>,
+    load: Option<crate::landing::Load>,
+}
+
+#[derive(Default, Deserialize)]
+#[serde(deny_unknown_fields)]
+struct RawSources {
+    #[serde(default)]
+    script: Vec<Spanned<String>>,
+    #[serde(default)]
+    connect: Vec<Spanned<String>>,
+    #[serde(default)]
+    img: Vec<Spanned<String>>,
+    #[serde(default)]
+    frame: Vec<Spanned<String>>,
+    #[serde(default)]
+    form: Vec<Spanned<String>>,
 }
 
 #[derive(Deserialize)]
@@ -183,6 +226,8 @@ pub struct Config {
     pub locales: Vec<LocaleConfig>,
     pub dev_port: u16,
     pub rust: Option<RustConfig>,
+    /// Landing-page profiles by name.
+    pub landing: BTreeMap<String, crate::landing::Profile>,
 }
 
 /// A component site's Cargo project and single `site!` declaration source.
@@ -433,21 +478,111 @@ fn parse_nav(raw: RawNav, rule: &'static str, errors: &mut Vec<Issue>) -> Nav {
             scope,
         });
     }
-    let links = |links: Vec<RawLink>| -> Vec<NavLink> {
-        links
-            .into_iter()
-            .map(|link| NavLink {
-                label: link.label,
-                span: link.link.span(),
-                link: link.link.into_inner(),
-            })
-            .collect()
-    };
     Nav {
         groups,
-        top: links(raw.top),
-        social: links(raw.social),
+        top: nav_links(raw.top),
+        social: nav_links(raw.social),
     }
+}
+
+fn nav_links(links: Vec<RawLink>) -> Vec<NavLink> {
+    links
+        .into_iter()
+        .map(|link| NavLink {
+            label: link.label,
+            span: link.link.span(),
+            link: link.link.into_inner(),
+        })
+        .collect()
+}
+
+fn parse_landing(
+    raw: Option<RawLanding>,
+    errors: &mut Vec<Issue>,
+) -> BTreeMap<String, crate::landing::Profile> {
+    use crate::landing::{self, Profile, Script, Sources};
+    let mut profiles = BTreeMap::new();
+    for (name, profile) in raw.map(|raw| raw.profiles).unwrap_or_default() {
+        let span = profile.span();
+        let raw = profile.into_inner();
+        if !landing::valid_name(&name) {
+            errors.push(error(
+                span.clone(),
+                "landing-profile-name",
+                format!(
+                    "landing profile name {} must be lower-case letters, digits and `-`, at most 32, starting with a letter or digit",
+                    code_span(&name)
+                ),
+            ));
+        }
+        let mut origins = |list: Vec<Spanned<String>>| -> Vec<String> {
+            let mut kept: Vec<String> = Vec::new();
+            for source in list {
+                match landing::parse_source(source.get_ref()) {
+                    Ok(origin) => {
+                        if !kept.contains(&origin) {
+                            kept.push(origin);
+                        }
+                    }
+                    Err(message) => errors.push(error(source.span(), "landing-source", message)),
+                }
+            }
+            kept
+        };
+        let sources = Sources {
+            script: origins(raw.sources.script),
+            connect: origins(raw.sources.connect),
+            img: origins(raw.sources.img),
+            frame: origins(raw.sources.frame),
+            form: origins(raw.sources.form),
+        };
+        let mut scripts = Vec::new();
+        for script in raw.scripts {
+            let span = script.src.span();
+            match landing::parse_script_src(script.src.get_ref()) {
+                Ok(src) => scripts.push(Script {
+                    src,
+                    load: script.load.unwrap_or_default(),
+                    span,
+                }),
+                Err(message) => errors.push(error(span, "landing-script", message)),
+            }
+        }
+        let mut carry: Vec<String> = Vec::new();
+        for parameter in raw.carry {
+            let value = parameter.get_ref();
+            if !landing::valid_carry(value) {
+                errors.push(error(
+                    parameter.span(),
+                    "landing-carry",
+                    format!(
+                        "carried parameter {} must be 1 to 64 letters, digits, `_`, `.` or `-`",
+                        code_span(value)
+                    ),
+                ));
+            } else if carry.contains(value) {
+                errors.push(error(
+                    parameter.span(),
+                    "landing-carry",
+                    format!("carry lists {} more than once", code_span(value)),
+                ));
+            } else {
+                carry.push(value.clone());
+            }
+        }
+        profiles.insert(
+            name.clone(),
+            Profile {
+                name,
+                scripts,
+                sources,
+                carry,
+                footer: nav_links(raw.footer),
+                span,
+            },
+        );
+    }
+    profiles
 }
 
 fn parse_locales(
@@ -939,6 +1074,7 @@ pub fn parse(text: &str) -> Result<(Config, Vec<Issue>), Vec<Issue>> {
     });
 
     let nav = parse_nav(raw.nav, "config-nav", &mut errors);
+    let landing = parse_landing(raw.landing, &mut errors);
 
     if !errors.is_empty() {
         return Err(errors);
@@ -965,6 +1101,7 @@ pub fn parse(text: &str) -> Result<(Config, Vec<Issue>), Vec<Issue>> {
             locales,
             dev_port: raw.dev.port.unwrap_or(DEFAULT_DEV_PORT),
             rust,
+            landing,
         },
         warnings,
     ))
@@ -1111,6 +1248,175 @@ mod tests {
             .unwrap_err()
             .iter()
             .any(|issue| issue.rule == "config-out"));
+    }
+
+    const ADS: &str = "[landing.profiles.ads]\n\
+         carry = [\"gclid\", \"utm_source\"]\n\
+         [[landing.profiles.ads.scripts]]\n\
+         src = \"https://www.googletagmanager.com/gtag/js?id=AW-1\"\n\
+         load = \"async\"\n\
+         [[landing.profiles.ads.scripts]]\n\
+         src = \"static/./landing/init.js\"\n\
+         [landing.profiles.ads.sources]\n\
+         connect = [\"https://*.Google-Analytics.com\", \"https://*.google-analytics.com:443\"]\n\
+         img = [\"https://www.google.com\"]\n\
+         frame = [\"https://jinshuju.net\"]\n\
+         form = [\"http://127.0.0.1:4211\"]\n\
+         [[landing.profiles.ads.footer]]\n\
+         label = \"Privacy\"\n\
+         link = \"privacy.md\"\n\
+         [landing.profiles.plain]\n\
+         carry = [\"gclid\"]\n";
+
+    #[test]
+    fn landing_profiles_are_parsed_and_normalized() {
+        use crate::landing::{Load, ScriptSrc};
+        let text = format!("{MINIMAL}{ADS}");
+        let (config, warnings) = parse(&text).unwrap_or_else(|errors| panic!("{errors:?}"));
+        assert!(warnings.is_empty());
+        assert_eq!(config.landing.keys().collect::<Vec<_>>(), ["ads", "plain"]);
+        let ads = &config.landing["ads"];
+        assert_eq!(ads.name, "ads");
+        assert_eq!(
+            ads.scripts
+                .iter()
+                .map(|script| (&script.src, script.load))
+                .collect::<Vec<_>>(),
+            [
+                (
+                    &ScriptSrc::External("https://www.googletagmanager.com/gtag/js?id=AW-1".into()),
+                    Load::Async
+                ),
+                (
+                    &ScriptSrc::Local("static/landing/init.js".into()),
+                    Load::Defer
+                ),
+            ]
+        );
+        assert_eq!(
+            &text[ads.scripts[1].span.clone()],
+            "\"static/./landing/init.js\""
+        );
+        assert!(ads.sources.script.is_empty());
+        assert_eq!(ads.sources.connect, ["https://*.google-analytics.com"]);
+        assert_eq!(ads.sources.img, ["https://www.google.com"]);
+        assert_eq!(ads.sources.frame, ["https://jinshuju.net"]);
+        assert_eq!(ads.sources.form, ["http://127.0.0.1:4211"]);
+        assert_eq!(ads.carry, ["gclid", "utm_source"]);
+        assert_eq!(ads.footer[0].link, "privacy.md");
+        assert_eq!(&text[ads.span.clone()], "[landing.profiles.ads]");
+        assert!(config.landing["plain"].scripts.is_empty());
+        assert!(parse(MINIMAL).unwrap().0.landing.is_empty());
+        assert!(parse(&format!("{MINIMAL}[landing]\n"))
+            .unwrap()
+            .0
+            .landing
+            .is_empty());
+    }
+
+    #[test]
+    fn landing_profiles_reject_what_they_cannot_express() {
+        for (profile, rule, token) in [
+            (
+                "[landing.profiles.Ads]\n",
+                "landing-profile-name",
+                Some("[landing.profiles.Ads]"),
+            ),
+            (
+                "[landing.profiles.-ads]\n",
+                "landing-profile-name",
+                Some("[landing.profiles.-ads]"),
+            ),
+            (
+                "[landing.profiles.ads.sources]\nconnect = [\"https://example.com/path\"]\n",
+                "landing-source",
+                Some("\"https://example.com/path\""),
+            ),
+            (
+                "[landing.profiles.ads.sources]\nscript = [\"'unsafe-inline'\"]\n",
+                "landing-source",
+                Some("\"'unsafe-inline'\""),
+            ),
+            (
+                "[landing.profiles.ads.sources]\nimg = [\"data:\"]\n",
+                "landing-source",
+                Some("\"data:\""),
+            ),
+            (
+                "[landing.profiles.ads.sources]\nframe = [\"http://[::1]:4211\"]\n",
+                "landing-source",
+                Some("\"http://[::1]:4211\""),
+            ),
+            (
+                "[landing.profiles.ads.sources]\nform = [\"https://10.0.0.1\"]\n",
+                "landing-source",
+                Some("\"https://10.0.0.1\""),
+            ),
+            (
+                "[landing.profiles.ads.sources]\nconnect = [\"http://example.com\"]\n",
+                "landing-source",
+                Some("\"http://example.com\""),
+            ),
+            (
+                "[[landing.profiles.ads.scripts]]\nsrc = \"http://[::1]:4211/tag.js\"\n",
+                "landing-script",
+                Some("\"http://[::1]:4211/tag.js\""),
+            ),
+            (
+                "[[landing.profiles.ads.scripts]]\nsrc = \"https://192.168.0.1/tag.js\"\n",
+                "landing-script",
+                Some("\"https://192.168.0.1/tag.js\""),
+            ),
+            (
+                "[[landing.profiles.ads.scripts]]\nsrc = \"javascript:alert(1)\"\n",
+                "landing-script",
+                Some("\"javascript:alert(1)\""),
+            ),
+            (
+                "[[landing.profiles.ads.scripts]]\nsrc = \"../init.js\"\n",
+                "landing-script",
+                Some("\"../init.js\""),
+            ),
+            (
+                "[landing.profiles.ads]\ncarry = [\"a b\"]\n",
+                "landing-carry",
+                Some("\"a b\""),
+            ),
+            (
+                "[landing.profiles.ads]\ncarry = [\"gclid\", \"gclid\"]\n",
+                "landing-carry",
+                None,
+            ),
+            (
+                "[landing.profiles.ads]\ninline = \"x\"\n",
+                "config",
+                Some("inline"),
+            ),
+            (
+                "[landing.profiles.ads.sources]\nstyle = []\n",
+                "config",
+                Some("style"),
+            ),
+            (
+                "[[landing.profiles.ads.scripts]]\nsrc = \"a.js\"\nload = \"sync\"\n",
+                "config",
+                Some("\"sync\""),
+            ),
+            ("[landing]\ndefault = \"ads\"\n", "config", Some("default")),
+        ] {
+            let text = format!("{MINIMAL}{profile}");
+            let errors = parse(&text).unwrap_err();
+            assert_eq!(errors.len(), 1, "{profile}: {errors:?}");
+            assert_eq!(errors[0].rule, rule, "{profile}: {errors:?}");
+            if let Some(token) = token {
+                assert_eq!(&text[errors[0].span.clone()], token, "{profile}");
+            } else {
+                assert!(
+                    errors[0].span.start >= MINIMAL.len(),
+                    "{profile}: {errors:?}"
+                );
+            }
+        }
     }
 
     #[test]

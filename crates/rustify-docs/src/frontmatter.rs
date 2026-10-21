@@ -89,6 +89,17 @@ pub enum Layout {
     #[default]
     Doc,
     Home,
+    /// A paid-traffic page: the home page's hero without the site's
+    /// navigation, under the policy of a named `[landing.profiles]` entry.
+    Landing,
+}
+
+impl Layout {
+    /// Whether the page opens with a hero: title, tagline, actions and
+    /// features, its body after them, outside the sidebar.
+    pub fn has_hero(self) -> bool {
+        matches!(self, Self::Home | Self::Landing)
+    }
 }
 
 /// What a page says about itself.
@@ -116,6 +127,26 @@ pub struct Front {
     pub actions: Vec<Action>,
     #[serde(default)]
     pub features: Vec<Feature>,
+    /// The `[landing.profiles]` entry a landing page loads under.
+    pub landing: Option<String>,
+}
+
+impl Front {
+    /// Whether search engines may index the page; landing pages default to
+    /// no, other pages to yes.
+    pub fn indexed(&self) -> bool {
+        self.index.unwrap_or(self.layout != Layout::Landing)
+    }
+
+    /// Whether the page is in the site's search index.
+    pub fn searchable(&self) -> bool {
+        self.search.unwrap_or(self.layout != Layout::Landing)
+    }
+
+    /// Whether the page is in `llms.txt` and the other AI indexes.
+    pub fn discoverable(&self) -> bool {
+        self.ai.unwrap_or(self.layout != Layout::Landing)
+    }
 }
 
 /// Reads the frontmatter of `text` (a whole file). Errors are located in the
@@ -221,6 +252,35 @@ mod tests {
         assert_eq!(&text[split.body..], "# A\r\n");
         assert_eq!(parse(text).unwrap().0.title.as_deref(), Some("A"));
         assert_eq!(split.body, parse(text).unwrap().1);
+    }
+
+    #[test]
+    fn landing_layout_and_profile() {
+        let (front, _) = parse("---\nlayout: landing\nlanding: ads\n---\n").unwrap();
+        assert_eq!(front.layout, Layout::Landing);
+        assert_eq!(front.landing.as_deref(), Some("ads"));
+        assert!(front.layout.has_hero() && Layout::Home.has_hero() && !Layout::Doc.has_hero());
+        assert!(!front.indexed() && !front.searchable() && !front.discoverable());
+        let (front, _) =
+            parse("---\nlayout: landing\nindex: true\nsearch: true\nai: true\n---\n").unwrap();
+        assert!(front.indexed() && front.searchable() && front.discoverable());
+        for layout in ["doc", "home"] {
+            let (front, _) = parse(&format!("---\nlayout: {layout}\n---\n")).unwrap();
+            assert!(front.indexed() && front.searchable() && front.discoverable());
+            let (front, _) = parse(&format!(
+                "---\nlayout: {layout}\nindex: false\nsearch: false\nai: false\n---\n"
+            ))
+            .unwrap();
+            assert!(!front.indexed() && !front.searchable() && !front.discoverable());
+        }
+        assert_eq!(
+            parse("---\nlayout: lander\n---\n").unwrap_err().rule,
+            "frontmatter"
+        );
+        assert_eq!(
+            parse("---\nlanding: [ads]\n---\n").unwrap_err().rule,
+            "frontmatter"
+        );
     }
 
     #[test]

@@ -75,6 +75,10 @@ pub enum RefKind {
     /// An image a raw element's class loads through the stylesheet; the
     /// slot is the URL inside the class's `url(…)`.
     ClassImage,
+    /// What a raw `iframe` embeds.
+    Frame,
+    /// Where a raw form submits.
+    Form,
 }
 
 /// A URL as written, with where it was written.
@@ -327,6 +331,8 @@ pub fn render_html(html: &str) -> Fragment {
                 UrlRole::Resource { image: false } => RefKind::Media,
                 UrlRole::Srcset => RefKind::Srcset,
                 UrlRole::ClassImage => RefKind::ClassImage,
+                UrlRole::Frame => RefKind::Frame,
+                UrlRole::FormTarget => RefKind::Form,
             },
         });
     }
@@ -727,6 +733,8 @@ impl<'a> Writer<'a> {
                 UrlRole::Resource { image: false } => RefKind::Media,
                 UrlRole::Srcset => RefKind::Srcset,
                 UrlRole::ClassImage => RefKind::ClassImage,
+                UrlRole::Frame => RefKind::Frame,
+                UrlRole::FormTarget => RefKind::Form,
             };
             let reference = self.out.references.len();
             self.out.references.push(Reference {
@@ -1720,6 +1728,24 @@ mod tests {
 
     fn rules(fragment: &Fragment) -> Vec<&'static str> {
         fragment.issues.iter().map(|issue| issue.rule).collect()
+    }
+
+    #[test]
+    fn raw_frames_and_forms_become_frame_and_form_references() {
+        let page = md("<iframe title=\"F\" src=\"https://forms.example/f\"></iframe>\n\n<form action=\"/thanks/\"><button formaction=\"https://leads.example/b\">x</button></form>\n");
+        assert_eq!(
+            page.references
+                .iter()
+                .map(|r| (r.kind, r.destination.as_str()))
+                .collect::<Vec<_>>(),
+            [
+                (RefKind::Frame, "https://forms.example/f"),
+                (RefKind::Form, "/thanks/"),
+                (RefKind::Form, "https://leads.example/b"),
+            ]
+        );
+        let rendered = render_html("<form action=\"/thanks/\"></form>");
+        assert_eq!(rendered.references[0].kind, RefKind::Form);
     }
 
     #[test]

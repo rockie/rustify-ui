@@ -79,6 +79,8 @@ pub mod include;
 #[cfg(feature = "pipeline")]
 pub mod labels;
 #[cfg(feature = "pipeline")]
+pub mod landing;
+#[cfg(feature = "pipeline")]
 pub mod markdown;
 #[cfg(feature = "pipeline")]
 pub mod publish;

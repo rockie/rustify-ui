@@ -1,0 +1,41 @@
+schema_version = 1
+
+[site]
+name = "Landing Fixture"
+description = "Landing pages beside ordinary documentation."
+lang = "en"
+url = "https://example.com/docs/"
+base = "/docs/"
+
+[theme]
+logo = "static/logo.svg"
+
+[[nav.top]]
+label = "Guide"
+link = "guide.md"
+
+# A profile whose every source is the local third-party stand-in.
+[landing.profiles.ads]
+carry = ["gclid", "utm_source", "utm_campaign"]
+
+[[landing.profiles.ads.scripts]]
+src = "http://127.0.0.1:4211/tag.js"
+load = "async"
+
+[[landing.profiles.ads.scripts]]
+src = "static/landing/init.js"
+
+[landing.profiles.ads.sources]
+script = ["http://127.0.0.1:4211"]
+connect = ["http://127.0.0.1:4211"]
+img = ["http://127.0.0.1:4211"]
+frame = ["http://127.0.0.1:4211"]
+form = ["http://127.0.0.1:4211"]
+
+[[landing.profiles.ads.footer]]
+label = "Privacy"
+link = "privacy.md"
+
+# Carries a parameter and loads nothing: its pages keep the strict policy.
+[landing.profiles.plain]
+carry = ["gclid"]

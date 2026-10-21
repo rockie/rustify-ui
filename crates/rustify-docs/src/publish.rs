@@ -43,6 +43,11 @@ pub struct Manifest {
     pub files: Vec<ManifestFile>,
     #[serde(default, skip_serializing_if = "BTreeMap::is_empty")]
     pub locale_not_found: BTreeMap<String, String>,
+    /// The header policy of each landing page served under another than
+    /// [`crate::shell::CSP`], by its listed path; every other file is served
+    /// under that one.
+    #[serde(default, skip_serializing_if = "BTreeMap::is_empty")]
+    pub page_policies: BTreeMap<String, String>,
 }
 
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
@@ -84,6 +89,7 @@ impl Manifest {
             build_id,
             files: list,
             locale_not_found: BTreeMap::new(),
+            page_policies: BTreeMap::new(),
         }
     }
 
@@ -164,6 +170,34 @@ impl Manifest {
         }
         Ok(frozen)
     }
+
+    /// Validates this output's per-page policies before any is sent as a
+    /// header: each names a listed page and is one printable line that
+    /// starts and ends as every policy the build writes does.
+    pub fn checked_page_policies(&self) -> Result<BTreeMap<String, String>, String> {
+        let damaged = |message: String| {
+            format!("invalid page_policies: {message}; run `rustify-docs build` again")
+        };
+        let listed: BTreeSet<_> = self.files.iter().map(|file| file.path.as_str()).collect();
+        for (path, policy) in &self.page_policies {
+            if !path.ends_with(".html") || !listed.contains(path.as_str()) {
+                return Err(damaged(format!(
+                    "{} is not a page the output lists",
+                    code_span(path)
+                )));
+            }
+            if !policy.bytes().all(|byte| (0x20..0x7f).contains(&byte))
+                || !policy.starts_with("default-src 'none'; ")
+                || !policy.ends_with("; frame-ancestors 'none'")
+            {
+                return Err(damaged(format!(
+                    "the policy of {} is not one the build writes",
+                    code_span(path)
+                )));
+            }
+        }
+        Ok(self.page_policies.clone())
+    }
 }
 
 /// Adds the manifest of `files` to them.
@@ -172,9 +206,11 @@ pub fn add_manifest(
     base: &str,
     cli_version: &str,
     locale_not_found: &BTreeMap<String, String>,
+    page_policies: &BTreeMap<String, String>,
 ) {
     let mut manifest = Manifest::of(files, base, cli_version);
     manifest.locale_not_found = locale_not_found.clone();
+    manifest.page_policies = page_policies.clone();
     files.insert(MANIFEST_FILE.to_owned(), Arc::from(manifest.to_bytes()));
 }
 
@@ -577,7 +613,7 @@ mod tests {
         let mut files = BTreeMap::new();
         files.insert("index.html".to_owned(), Arc::from(text.as_bytes()));
         files.insert("a/b.txt".to_owned(), Arc::from(&b"b"[..]));
-        add_manifest(&mut files, "/", "0.1.0", &BTreeMap::new());
+        add_manifest(&mut files, "/", "0.1.0", &BTreeMap::new(), &BTreeMap::new());
         files
     }
 
@@ -613,7 +649,7 @@ mod tests {
             ("".into(), "404.html".into()),
             ("zh".into(), "zh/404.html".into()),
         ]);
-        add_manifest(&mut files, "/docs/", "0.1.0", &mapping);
+        add_manifest(&mut files, "/docs/", "0.1.0", &mapping, &BTreeMap::new());
         for (path, bytes) in &files {
             let path = dir.0.join(path);
             fs::create_dir_all(path.parent().unwrap()).unwrap();
@@ -660,6 +696,62 @@ mod tests {
         manifest.locale_not_found = BTreeMap::from([("".into(), "404.html".into())]);
         fs::remove_file(dir.0.join("404.html")).unwrap();
         assert!(manifest.locale_not_found_files(&dir.0).is_err());
+    }
+
+    #[test]
+    fn page_policies_are_recorded_only_when_there_are_some_and_checked_before_use() {
+        let legacy = site("legacy");
+        assert!(!String::from_utf8_lossy(&legacy[MANIFEST_FILE]).contains("page_policies"));
+        let manifest: Manifest = serde_json::from_slice(&legacy[MANIFEST_FILE]).unwrap();
+        assert!(manifest.page_policies.is_empty());
+        assert_eq!(manifest.checked_page_policies(), Ok(BTreeMap::new()));
+
+        let policy = crate::shell::CSP.replace(
+            "form-action 'none'",
+            "form-action 'self' https://leads.example.com",
+        );
+        let mut files = BTreeMap::from([
+            ("lp/index.html".to_owned(), Arc::<[u8]>::from(&b"lp"[..])),
+            ("assets/x.js".to_owned(), Arc::<[u8]>::from(&b"x"[..])),
+        ]);
+        let policies = BTreeMap::from([("lp/index.html".to_owned(), policy.clone())]);
+        add_manifest(&mut files, "/", "0.1.0", &BTreeMap::new(), &policies);
+        let manifest: Manifest = serde_json::from_slice(&files[MANIFEST_FILE]).unwrap();
+        assert_eq!(manifest.page_policies, policies);
+        assert_eq!(manifest.checked_page_policies(), Ok(policies));
+
+        for (path, value) in [
+            ("lp/index.html", format!("{policy}\r\nSet-Cookie: a=b")),
+            (
+                "lp/index.html",
+                policy.replace("form-action", "form-action\n"),
+            ),
+            (
+                "lp/index.html",
+                policy.replace("'self' https", "'self' h\u{e9}ttps"),
+            ),
+            (
+                "lp/index.html",
+                policy.replacen("default-src 'none'; ", "", 1),
+            ),
+            (
+                "lp/index.html",
+                policy.replace("; frame-ancestors 'none'", ""),
+            ),
+            ("lp/index.html", String::new()),
+            ("assets/x.js", policy.clone()),
+            ("other/index.html", policy.clone()),
+            ("../lp/index.html", policy.clone()),
+        ] {
+            let mut damaged = manifest.clone();
+            damaged.page_policies = BTreeMap::from([(path.to_owned(), value.clone())]);
+            let error = damaged.checked_page_policies().unwrap_err();
+            assert!(
+                error.starts_with("invalid page_policies: ")
+                    && error.ends_with("run `rustify-docs build` again"),
+                "{path} {value:?}: {error}"
+            );
+        }
     }
 
     #[cfg(unix)]
