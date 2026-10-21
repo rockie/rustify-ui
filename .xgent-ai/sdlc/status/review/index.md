@@ -43,6 +43,7 @@
 | 5a9ab050-1007-4287-b7ac-2bc6247a96d2 | [Utility GPU 界面第一次复核](../../../../docs/validation/wasm-tailwind/utility-gpu-review.md) | [5a9ab050](5a9ab050-1007-4287-b7ac-2bc6247a96d2.md) | 活动 |
 | a9d8fca5-b4a7-43a0-aab3-8a57deb5fef4 | [Utility GPU 界面初审](../../../../docs/validation/wasm-tailwind/utility-gpu-review.md) | [a9d8fca5](a9d8fca5-b4a7-43a0-aab3-8a57deb5fef4.md) | 活动 |
 | e9b98a4e-7b97-4d3a-8cab-dfcf465d9c31 | [DOCS-LANDING 代码评审 R1](../../../../docs/plan/DOCS-LANDING.code-review.md) | [对象](e9b98a4e-7b97-4d3a-8cab-dfcf465d9c31.md) | 活动 |
+| 75bf2fdb-1034-40aa-8c05-f76eccb6b80c | [DOCS-LANDING 代码复审 R2](../../../../docs/plan/DOCS-LANDING.code-review.r2.md) | [对象](75bf2fdb-1034-40aa-8c05-f76eccb6b80c.md) | 活动 |
 | efac9408-e453-47b6-906e-daeae72c3ffb | [DOCS-SSG-P4-gaps 完整计划评审](../../../../docs/plan/DOCS-SSG-P4-gaps.review.md) | [对象](efac9408-e453-47b6-906e-daeae72c3ffb.md) | 活动 |
 | f92a069c-7bc1-4be0-be7d-947f8041889f | [Utility GPU 界面第二次复核](../../../../docs/validation/wasm-tailwind/utility-gpu-review.md) | [f92a069c](f92a069c-7bc1-4be0-be7d-947f8041889f.md) | 活动 |
 | ab6a1956-23dc-448d-b954-edc43b5bdeb7 | [Utility Lab M3 最小 DOM 示例界面评审](../../../../docs/validation/wasm-tailwind/utility-lab-review.md) | [ab6a1956](ab6a1956-23dc-448d-b954-edc43b5bdeb7.md) | 活动 |
