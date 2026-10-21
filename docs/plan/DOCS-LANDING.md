@@ -47,12 +47,12 @@
 
 ### 恢复快照
 
-- 最近更新：2026-10-21 18:40 +0800
+- 最近更新：2026-10-21 18:45 +0800
 - 当前进度：4/5 个里程碑完成
 - 当前状态：M5 收口进行中（暂停点）。已通过：V-9、V-11、V-13 的 Google 部分、V-14，以及文档修订后重跑的 V-8；V-10 已跑完一轮：components、official、webkit 通过，docs-root/subpath/meta 各有 2 个 `landing.spec.ts` 失败（iframe 参数、JS 关表单），docs-dev 1 个与 docs-firefox 全部为环境问题，详见 [M5 记录](DOCS-LANDING.records/M5.md)
 - 最近完成：M4 作者文档
-- 下一步：M5 · 按 [M5 记录](DOCS-LANDING.records/M5.md)「续做」一节：先查明并修复 V-10 的两个 Chromium 失败、重跑受影响项目，处理 docs-dev 与 docs-firefox 的环境前提后重跑；再跑 V-12；再用用户提供的百度统计站点 ID 跑 V-13 百度部分并定稿文档百度示例、重跑 V-8；全部通过后记 M5 完成、最终提交并回写 SHA
-- 当前阻塞：V-13 的百度部分需要用户提供已授权的百度统计站点 ID（统计代码中 `hm.js?` 之后的 32 位）；缺 ID 时 A-2 保持开放，M5 不能记完成。docs-firefox 需要可启动的 Playwright Firefox（重装浏览器前征得用户同意）。其余工作不受阻
+- 下一步：M5 · 按 [M5 记录](DOCS-LANDING.records/M5.md)「续做」一节：先查明并修复 V-10 的两个 Chromium 失败、重跑受影响项目，设置 `RUSTIFY_DOCS_BIN` 后重跑 docs-dev，运行 `npx playwright install firefox`（用户已同意）后重跑 docs-firefox；再跑 V-12；再用用户提供的百度统计站点 ID（见 M5 记录「用户决策」）跑 V-13 百度部分，定稿文档中的百度示例，然后重跑 V-8；全部通过后记 M5 完成、最终提交并回写 SHA
+- 当前阻塞：无。2026-10-21 用户已提供百度统计站点 ID，并同意重装 Playwright Firefox，两项决策记在 M5 记录「用户决策」，尚未执行
 - 环境要点：系统 `python3` 是 3.9，需要 Python 3.12 的检查及做法见 M5 记录头部
 - 代码基线：`b49aa8fe`（M1–M4 实现与 M5 期间的文档修订，暂停点提交，未推送）；计划、评审、记录与台账在其后的计划提交中
 
@@ -64,7 +64,7 @@
 | M2 | 已完成 | 2026-10-21 17:37 +0800 | 落地页外壳、按页 meta 与 `page_policies`、preview/dev 按页头落地；V-3、V-4、V-5 通过 | [M2 记录](DOCS-LANDING.records/M2.md) | b49aa8fe |
 | M3 | 已完成 | 2026-10-21 17:50 +0800 | iframe 与表单的页面级判定和最终闸门、`site.js` 透传、第三方替身与 `landing.spec.ts` 落地；V-6、V-15 通过 | [M3 记录](DOCS-LANDING.records/M3.md) | b49aa8fe |
 | M4 | 已完成 | 2026-10-21 17:54 +0800 | `docs/docs-ssg.md` 新增 Landing pages 一节并增量修改七处；V-8 通过，厂商示例待 V-13 定稿 | [M4 记录](DOCS-LANDING.records/M4.md) | b49aa8fe |
-| M5 | 进行中 | 2026-10-21 18:40 +0800 | V-9、V-11、V-13（Google）、V-14 通过，文档据此修订；V-10 有 2 个落地页浏览器失败待修和两项环境缺口；V-12 与 V-13（百度）未跑 | [M5 记录](DOCS-LANDING.records/M5.md) | — |
+| M5 | 进行中 | 2026-10-21 18:45 +0800 | V-9、V-11、V-13（Google）、V-14 通过，文档据此修订；V-10 有 2 个落地页浏览器失败待修和两项环境缺口；V-12 与 V-13（百度，站点 ID 已提供）未跑 | [M5 记录](DOCS-LANDING.records/M5.md) | — |
 
 ## 0. 需求、范围与决策
 

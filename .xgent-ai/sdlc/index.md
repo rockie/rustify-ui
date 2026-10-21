@@ -14,7 +14,7 @@
 
 ## 当前重点
 
-- [DOCS-LANDING](status/plan/ca735c8c-bc5e-44af-bb23-f591a378bc94.md)：[完整计划评审](status/review/57186ae5-4fae-4542-bbc9-8c186ed46d73.md)的 6×P2 都已修订并复核（review-applied）。规范状态 dev-plan-ready，实施 4/5（dev-plan-in-progress），M5 收口暂停：V-10 两个落地页浏览器失败待修，百度统计站点 ID 待用户提供。
+- [DOCS-LANDING](status/plan/ca735c8c-bc5e-44af-bb23-f591a378bc94.md)：[完整计划评审](status/review/57186ae5-4fae-4542-bbc9-8c186ed46d73.md)的 6×P2 都已修订并复核（review-applied）。规范状态 dev-plan-ready，实施 4/5（dev-plan-in-progress），M5 收口暂停：V-10 两个落地页浏览器失败待修；百度站点 ID 已提供，Firefox 重装已获同意，均待新对话执行。
 - [WASM-TAILWIND](status/plan/be9305f5-b240-453b-bb54-5ff7d0ed7970.md)：[R5](status/review/03a93f04-5364-4e76-ab5c-f47fe6fa8851.md) 对 R4 修复范围复审**通过验收**；F-08 已解决，F-04 按当前契约不再适用（原行为未变），F-05–F-07 回归通过，新增问题 0。本轮无需 apply；scanner/完整上游/GPU视觉/性能/远端 CI 未重验，历史实施/文档状态另见对象页。
 - [DX-REFINE](status/plan/7493fc99-98cd-4d7e-aaa7-ac842d36d490.md)：6/8，待四个新类别页真人键盘走查，随后 M8。
 - [THEME-STUDIO](status/plan/0222c547-cbeb-412a-8c3e-3399b943670e.md)：6/6 历史交付；F-01/F-02 已修复验证，后续共享改动与独立复审待核对。
