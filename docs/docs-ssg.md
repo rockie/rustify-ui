@@ -1309,10 +1309,13 @@ script, and a failed measurement script never stops it.
   on an origin the profile lists in `sources.form` (`form-origin`), or be a
   page on the site, which resolves like a link and must exist
   (`broken-link`). A profile with no form targets admits no form.
-- A form's target may carry a query string, which is kept: it is part of
-  what the reader sends. `action="?campaign=paid"` submits to the page
-  itself with that query, and `action="/thanks/?campaign=paid"` submits to
-  the thanks page with it.
+- A form's target may carry a query string, which the build keeps. A POST
+  form sends it with its fields:
+  `<form method="post" action="?campaign=paid">` submits to the page itself
+  with that query, and `action="/thanks/?campaign=paid"` submits to the
+  thanks page with it. A GET form does not: the browser replaces the
+  target's query with the form's fields, so give it a hidden field instead
+  (`<input type="hidden" name="campaign" value="paid">`).
 - The endpoint is yours or a form service's: it receives the
   `application/x-www-form-urlencoded` POST, stores the lead, and answers
   with a `303` redirect to a thanks page, on the site (which `'self'`

@@ -47,14 +47,14 @@
 
 ### 恢复快照
 
-- 最近更新：2026-10-21 22:42 +0800
+- 最近更新：2026-10-21 23:35 +0800
 - 当前进度：5/5 个里程碑完成
-- 当前状态：全部完成。M5 收口的 V-7、V-9 到 V-14 都有证据，A-1、A-3 成立，A-2 部分不成立并已修订文档示例；收口中修复了 iframe 透传（改为替换元素）和 JS 关表单测试，Firefox 证据经 BiDi 驱动的稳定版取得，偏差与遗留见 [M5 记录](DOCS-LANDING.records/M5.md)。代码评审 R1 的 F-01（参数名单的载体可被正文改写）与 F-02（表单目标丢查询串）已修复并验证，计划 §4、§5.4、§5.5、§5.6、D13、V-3 随之同步，处置与验证见 [M3 记录](DOCS-LANDING.records/M3.md) 的「评审修复」
+- 当前状态：全部完成。M5 收口的 V-7、V-9 到 V-14 都有证据，A-1、A-3 成立，A-2 部分不成立并已修订文档示例；收口中修复了 iframe 透传（改为替换元素）和 JS 关表单测试，Firefox 证据经 BiDi 驱动的稳定版取得，偏差与遗留见 [M5 记录](DOCS-LANDING.records/M5.md)。代码评审 R1 的 F-01（参数名单的载体可被正文改写）与 F-02（表单目标丢查询串）已修复并验证，计划 §4、§5.4、§5.5、§5.6、D13、V-3 随之同步，处置与验证见 [M3 记录](DOCS-LANDING.records/M3.md) 的「评审修复」。代码复审 R2 确认两项已解决并通过验收；其 F-03（作者文档对 GET 表单的描述）与 V-3、§9.1 的偏差已修复并验证，见 M3 记录的「代码评审 R2」
 - 最近完成：M5 阶段收口
-- 下一步：复审。由用户发起 review-code，以本计划路径为参数
+- 下一步：复审 F-03 的修复（review-code，以本计划路径为参数）。用户 2026-10-21 决定本期只推送 `main`，CLI 新版本与官方站更新另行安排
 - 当前阻塞：无
 - 环境要点：系统 `python3` 是 3.9，需要 Python 3.12 的检查，以及 Playwright 自带 Firefox 不能启动时的替代做法，见 M5 记录头部与「偏差与修复」
-- 代码基线：M1–M4 在 `b49aa8fe`，M5 收口在 `1f49749c`，评审 R1 的修复在 `0b27fdb8`；均未推送
+- 代码基线：M1–M4 在 `b49aa8fe`，M5 收口在 `1f49749c`，评审 R1、R2 的修复见完成记录 M3 行
 
 ### 完成记录
 
@@ -62,7 +62,7 @@
 | --- | --- | --- | --- | --- | --- |
 | M1 | 已完成 | 2026-10-21 17:26 +0800 | `landing.rs`、配置解析、`Layout::Landing` 与页面交叉校验落地；V-1、V-2 通过 | [M1 记录](DOCS-LANDING.records/M1.md) | b49aa8fe |
 | M2 | 已完成 | 2026-10-21 17:37 +0800 | 落地页外壳、按页 meta 与 `page_policies`、preview/dev 按页头落地；V-3、V-4、V-5 通过 | [M2 记录](DOCS-LANDING.records/M2.md) | b49aa8fe |
-| M3 | 已完成 | 2026-10-21 22:42 +0800 | iframe 与表单的页面级判定和最终闸门、`site.js` 透传、第三方替身与 `landing.spec.ts` 落地；V-6、V-15 通过；代码评审 R1 的 F-01、F-02 已修复并验证 | [M3 记录](DOCS-LANDING.records/M3.md) | b49aa8fe；修复 0b27fdb8 |
+| M3 | 已完成 | 2026-10-21 23:35 +0800 | iframe 与表单的页面级判定和最终闸门、`site.js` 透传、第三方替身与 `landing.spec.ts` 落地；V-6、V-15 通过；代码评审 R1 的 F-01、F-02 与 R2 的 F-03 已修复并验证 | [M3 记录](DOCS-LANDING.records/M3.md) | b49aa8fe；修复 0b27fdb8 |
 | M4 | 已完成 | 2026-10-21 17:54 +0800 | `docs/docs-ssg.md` 新增 Landing pages 一节并增量修改七处；V-8 通过，厂商示例待 V-13 定稿 | [M4 记录](DOCS-LANDING.records/M4.md) | b49aa8fe |
 | M5 | 已完成 | 2026-10-21 20:20 +0800 | V-7、V-9 到 V-14 通过；iframe 透传改为替换元素，JS 关表单测试改用减少动态；百度示例补 `connect`；Firefox 经 BiDi 驱动的稳定版取证 | [M5 记录](DOCS-LANDING.records/M5.md) | 1f49749c |
 
@@ -634,6 +634,7 @@ fixture 与替身的约定（两者都只实现本节列出的契约行为）。
   - `guide.md`、`privacy.md`：doc 布局；
   - `lp.md`：landing + `ads`；有 hero 和 features；有 POST 到 `http://127.0.0.1:4211/lead` 的原生表单（含 `<input type="hidden" name="gclid" data-rd-carry>`）；有 `<iframe data-rd-carry title="…" src="http://127.0.0.1:4211/embed">`；有 `<a data-rd-carry href="https://example.org/signup">`；
   - `thanks.md`：landing + `ads`；
+  - `form.md`：landing + `ads`；三个站内表单目标：GET `?campaign=paid`（提交到本页）、POST `/thanks/?campaign=paid`、按钮的 `formaction="?campaign=paid"`；
   - `offer.md`：landing + `plain`，没有第三方资源，供性能测量。
 
 `tests/docs-ssg/landing-third-party.mjs`：
@@ -651,7 +652,7 @@ fixture 与替身的约定（两者都只实现本节列出的契约行为）。
 | --- | --- | --- | --- |
 | V-1 | R-2、R-3、R-4、NFR-1、NFR-2：配置解析的接受与拒绝表（§5.1 第 1–4 条、未知键）；`parse_source` 的接受与拒绝表（D6 的每一类）；显式来源与外部脚本 URL 中的 IPv6 字面量（如 `http://[::1]:4211`）和 `127.0.0.1` 以外的 IP 字面量分别报 `landing-source`、`landing-script`，`allows` 对这类 URL 返回假；`policy(None) == CSP`；`ads` 配置的合成串逐字节相等；`allows` 的匹配表（通配、端口、scheme）；frontmatter 解析 `layout: landing` 和 `landing:`；`indexed`/`searchable`/`discoverable` 的默认值与覆盖 | `mbx test --locked -p rustify-docs --lib landing::`；`mbx test --locked -p rustify-docs --lib config::`；`mbx test --locked -p rustify-docs --lib frontmatter::`；`cargo fmt --all -- --check`；`mbx clippy --locked -p rustify-docs --all-targets -- -D warnings` | M1 |
 | V-2 | R-1、R-2：`landing-profile`、`landing-without-layout` 的定位；`landing-profile-unused`；`landing-script-missing`；落地页不进侧栏；落地页可以省略 description；H1 并入 hero；页脚链接解析出 `broken-link` | `mbx test --locked -p rustify-docs --lib content::tests::landing`（新测试函数统一以 `landing_` 开头） | M1 |
-| V-3 | R-1、R-3、R-7、NFR-1、NFR-3、NFR-4：在 fixture 上生成后检查：<br>· `lp/index.html` 的 meta 等于 `meta_policy(ads)`；脚本按顺序带 `async`/`defer`；`init.js` 以 `assets/files/init.<hash>.js` 发布；<br>· 没有 `data-rd-search`、`rd-header-links`、`rd-sidebar`、`data-rd-mode-switch`；品牌区不是链接；页脚有 Privacy 链接；<br>· `<head>` 里 `<meta name="rd-carry" content="gclid utm_source utm_campaign">`、根元素上没有名单；hero actions 带 `data-rd-carry`；<br>· `noindex`；不在 sitemap、搜索数据、`llms.txt` 中；<br>· `guide/`、`index`、`404` 的 meta 与 `meta_csp()` 逐字节相同；<br>· `page_policies` 只包含 `lp/`、`thanks/` 两项；<br>· 没有 `[landing]` 的 `content` fixture：`Generation.page_policies` 为空，每页 meta 等于 `meta_csp()`，没有 `rd-carry` 名单；<br>· 两次生成逐字节相同；<br>· `offer/` 的 HTML + 站点 CSS + `mode.js` + `site.js` gzip-9 合计 ≤100,000 B；<br>· 已有的 generate、i18n、search、ai 测试照常通过 | `mbx test --locked -p rustify-docs --test landing --test generate --test i18n --test search --test ai`；`mbx test --locked -p rustify-docs --lib shell::`；`cargo fmt --all -- --check`；`mbx clippy --locked -p rustify-docs --all-targets -- -D warnings` | M2 |
+| V-3 | R-1、R-3、R-7、NFR-1、NFR-3、NFR-4：在 fixture 上生成后检查：<br>· `lp/index.html` 的 meta 等于 `meta_policy(ads)`；脚本按顺序带 `async`/`defer`；`init.js` 以 `assets/files/init.<hash>.js` 发布；<br>· 没有 `data-rd-search`、`rd-header-links`、`rd-sidebar`、`data-rd-mode-switch`；品牌区不是链接；页脚有 Privacy 链接；<br>· `<head>` 里 `<meta name="rd-carry" content="gclid utm_source utm_campaign">`、根元素上没有名单；hero actions 带 `data-rd-carry`；<br>· `noindex`；不在 sitemap、搜索数据、`llms.txt` 中；<br>· `guide/`、`index`、`404` 的 meta 与 `meta_csp()` 逐字节相同；<br>· `page_policies` 只包含 `form/`、`lp/`、`thanks/` 三项；<br>· 没有 `[landing]` 的 `content` fixture：`Generation.page_policies` 为空，每页 meta 等于 `meta_csp()`，没有 `rd-carry` 名单；<br>· 两次生成逐字节相同；<br>· `offer/` 的 HTML + 站点 CSS + `mode.js` + `site.js` gzip-9 合计 ≤100,000 B；<br>· 已有的 generate、i18n、search、ai 测试照常通过 | `mbx test --locked -p rustify-docs --test landing --test generate --test i18n --test search --test ai`；`mbx test --locked -p rustify-docs --lib shell::`；`cargo fmt --all -- --check`；`mbx clippy --locked -p rustify-docs --all-targets -- -D warnings` | M2 |
 | V-4 | R-3、NFR-2：`check_document_under`：跨源脚本在有配置时放行、无配置时拒绝；`check_document(html) == check_document_under(html, None)` | `mbx test --locked -p rustify-docs --lib html_check::` | M2 |
 | V-5 | R-8、NFR-2：manifest 的 `page_policies` 读写；空字段省略；`checked_page_policies` 拒绝换行、非 `.html`、未列出的文件、错误首尾；preview：落地页的头等于 manifest、`guide/` 的头等于 `CSP`、404 用 `CSP`、manifest 损坏时拒绝启动；dev：落地页 HTML 的头是按页策略；既有 reliability、dev 测试照常通过 | `mbx test --locked -p rustify-docs --lib publish::`；`mbx test --locked -p rustify-docs-cli --test landing --test reliability --test dev`；`mbx clippy --locked -p rustify-docs-cli --all-targets -- -D warnings` | M2 |
 | V-6 | R-5、R-6：<br>· 片段：iframe 记为 `Frame` 槽位；`srcdoc` 或缺 `src` → `embedded-frame`；缺 `title` → `frame-title`；<br>· 渲染面：iframe 仍报错；<br>· 页面级：iframe 在 doc 页 → `embedded-frame`；落地页上来源已列出 → 通过，未列出 → `frame-origin`；<br>· 表单：非落地页 → `form-blocked`，输出不变；落地页的跨源目标已列出 → 通过，未列出 → `form-origin`；`plain` 配置下的表单 → `form-origin`；站内 `action` 加 base 并校验目标；<br>· 最终闸门对表单与 iframe 的判定与页面级一致；<br>· 完整生成回归（`tests/landing.rs` 在 fixture 副本上改写页面）：doc 页的 `<form action="/api/lead">` 与 `<button formaction="/api/x">` 指向站点不发布的地址 → 只有 `form-blocked` 警告，生成成功，输出中 `action`/`formaction` 保持原值；落地页表单指向缺失的站内页面 → `broken-link`，生成失败；<br>· fixture 生成照常通过 | `mbx test --locked -p rustify-docs --lib html_check::`；`mbx test --locked -p rustify-docs --lib markdown::`；`mbx test --locked -p rustify-docs --lib content::tests::landing`；`mbx test --locked -p rustify-docs --lib content::tests::form`（非落地页表单的新测试函数以 `form_` 开头）；`mbx test --locked -p rustify-docs --test landing`；`cargo fmt --all -- --check`；`mbx clippy --locked -p rustify-docs --all-targets -- -D warnings` | M3 |
