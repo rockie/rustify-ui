@@ -23,5 +23,6 @@
 | f36dda5e-ce97-49af-926c-0146968daa01 | [DOCS-SSG-P4](../../../../docs/plan/DOCS-SSG-P4.md) | [对象](f36dda5e-ce97-49af-926c-0146968daa01.md) | 活动 |
 
 | bf977834-399c-4b7d-b3e3-c7724c8d7cff | [DOCS-SSG-P4-gaps](../../../../docs/plan/DOCS-SSG-P4-gaps.md) | [对象](bf977834-399c-4b7d-b3e3-c7724c8d7cff.md) | 活动 |
+| ca735c8c-bc5e-44af-bb23-f591a378bc94 | [DOCS-LANDING](../../../../docs/plan/DOCS-LANDING.md) | [对象](ca735c8c-bc5e-44af-bb23-f591a378bc94.md) | 活动 |
 
 维护约定：改变本层内容者同步索引；按稳定 ID/路径保留历史，无变化不重写，索引不作为事件。详见[目录索引维护](../../protocol.md#目录索引维护)。
