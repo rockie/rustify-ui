@@ -47,14 +47,14 @@
 
 ### 恢复快照
 
-- 最近更新：2026-10-21 18:45 +0800
-- 当前进度：4/5 个里程碑完成
-- 当前状态：M5 收口进行中（暂停点）。已通过：V-9、V-11、V-13 的 Google 部分、V-14，以及文档修订后重跑的 V-8；V-10 已跑完一轮：components、official、webkit 通过，docs-root/subpath/meta 各有 2 个 `landing.spec.ts` 失败（iframe 参数、JS 关表单），docs-dev 1 个与 docs-firefox 全部为环境问题，详见 [M5 记录](DOCS-LANDING.records/M5.md)
-- 最近完成：M4 作者文档
-- 下一步：M5 · 按 [M5 记录](DOCS-LANDING.records/M5.md)「续做」一节：先查明并修复 V-10 的两个 Chromium 失败、重跑受影响项目，设置 `RUSTIFY_DOCS_BIN` 后重跑 docs-dev，运行 `npx playwright install firefox`（用户已同意）后重跑 docs-firefox；再跑 V-12；再用用户提供的百度统计站点 ID（见 M5 记录「用户决策」）跑 V-13 百度部分，定稿文档中的百度示例，然后重跑 V-8；全部通过后记 M5 完成、最终提交并回写 SHA
-- 当前阻塞：无。2026-10-21 用户已提供百度统计站点 ID，并同意重装 Playwright Firefox，两项决策记在 M5 记录「用户决策」，尚未执行
-- 环境要点：系统 `python3` 是 3.9，需要 Python 3.12 的检查及做法见 M5 记录头部
-- 代码基线：`b49aa8fe`（M1–M4 实现与 M5 期间的文档修订，暂停点提交，未推送）；计划、评审、记录与台账在其后的计划提交中
+- 最近更新：2026-10-21 20:20 +0800
+- 当前进度：5/5 个里程碑完成
+- 当前状态：全部完成。M5 收口的 V-7、V-9 到 V-14 都有证据，A-1、A-3 成立，A-2 部分不成立并已修订文档示例；收口中修复了 iframe 透传（改为替换元素）和 JS 关表单测试，Firefox 证据经 BiDi 驱动的稳定版取得，偏差与遗留见 [M5 记录](DOCS-LANDING.records/M5.md)
+- 最近完成：M5 阶段收口
+- 下一步：代码评审。由用户发起 review-code，以本计划路径为参数
+- 当前阻塞：无
+- 环境要点：系统 `python3` 是 3.9，需要 Python 3.12 的检查，以及 Playwright 自带 Firefox 不能启动时的替代做法，见 M5 记录头部与「偏差与修复」
+- 代码基线：M1–M4 在 `b49aa8fe`，M5 收口修复见完成记录 M5 行；均未推送
 
 ### 完成记录
 
@@ -64,7 +64,7 @@
 | M2 | 已完成 | 2026-10-21 17:37 +0800 | 落地页外壳、按页 meta 与 `page_policies`、preview/dev 按页头落地；V-3、V-4、V-5 通过 | [M2 记录](DOCS-LANDING.records/M2.md) | b49aa8fe |
 | M3 | 已完成 | 2026-10-21 17:50 +0800 | iframe 与表单的页面级判定和最终闸门、`site.js` 透传、第三方替身与 `landing.spec.ts` 落地；V-6、V-15 通过 | [M3 记录](DOCS-LANDING.records/M3.md) | b49aa8fe |
 | M4 | 已完成 | 2026-10-21 17:54 +0800 | `docs/docs-ssg.md` 新增 Landing pages 一节并增量修改七处；V-8 通过，厂商示例待 V-13 定稿 | [M4 记录](DOCS-LANDING.records/M4.md) | b49aa8fe |
-| M5 | 进行中 | 2026-10-21 18:45 +0800 | V-9、V-11、V-13（Google）、V-14 通过，文档据此修订；V-10 有 2 个落地页浏览器失败待修和两项环境缺口；V-12 与 V-13（百度，站点 ID 已提供）未跑 | [M5 记录](DOCS-LANDING.records/M5.md) | — |
+| M5 | 已完成 | 2026-10-21 20:20 +0800 | V-7、V-9 到 V-14 通过；iframe 透传改为替换元素，JS 关表单测试改用减少动态；百度示例补 `connect`；Firefox 经 BiDi 驱动的稳定版取证 | [M5 记录](DOCS-LANDING.records/M5.md) | 待提交 |
 
 ## 0. 需求、范围与决策
 
@@ -95,9 +95,9 @@
 | C-6 | 约束 | `crates/rustify-docs/src/publish.rs:32-35` | 同一输入写出相同字节；manifest 不含时间、路径、环境 | §5.7 | 已确认 |
 | C-7 | 约束 | `CLAUDE.md`：“不新开分支” | 改动直接提交到 `main` | §10 提交点 | 已确认 |
 | C-8 | 约束 | `docs/docs-ssg.md`「Custom pages and layout slots」：注册页元数据只接受字面量 `draft`/`index`/`search`/`ai` | 本期落地页只支持 Markdown 页面 | §0.5 | 已确认 |
-| A-1 | 假设 | Google 的 CSP 指南只对内联容器代码要求 nonce 或 hash（<https://developers.google.com/tag-platform/security/guides/csp>） | 把 gtag 初始化代码放进自托管的外部文件，再配合指南列出的来源，Google tag 即可运行，不需要内联 | V-13 在线核对（判据见 V-13：非空脚本、没有初始化错误、观察到统计请求）；不成立时文档写明本期不支持 Google tag，并另立“hash 内联”计划，本期其余交付不受影响；缺 ID 或无法联网属于缺证，A-1 保持开放，不按“不成立”处理；责任：实施 agent，测试 ID 不触发请求时所需的真实 ID 由用户提供（§4）；最晚 M5 | 开放 |
-| A-2 | 假设 | 百度统计没有官方 CSP 文档（2026-10-21 检索未找到）；全零测试 ID 的 `hm.js` 返回 0 B（2026-10-21 实测） | `hm.js` 只需要 `script` 和 `img` 两类来源放行 `https://hm.baidu.com` | V-13 用用户提供的获授权站点 ID 观察统计请求与违规报告，据此修订文档示例；缺 ID 时 A-2 保持开放；责任：实施 agent，站点 ID 由用户提供（§4）；最晚 M5 | 开放 |
-| A-3 | 假设 | CSP3 对重定向是否检查 `form-action` 未作统一规定 | `form-action` 包含 `'self'` 时，Chromium、WebKit、Firefox 都允许 POST 之后 303 跳回站内感谢页 | V-10 在 `docs-webkit`、`docs-firefox` 下运行 `landing.spec.ts`；某引擎行为不同时，文档写明该引擎的限制；责任：实施 agent；最晚 M5 | 开放 |
+| A-1 | 假设 | Google 的 CSP 指南只对内联容器代码要求 nonce 或 hash（<https://developers.google.com/tag-platform/security/guides/csp>） | 把 gtag 初始化代码放进自托管的外部文件，再配合指南列出的来源，Google tag 即可运行，不需要内联 | V-13 在线核对（判据见 V-13：非空脚本、没有初始化错误、观察到统计请求）；不成立时文档写明本期不支持 Google tag，并另立“hash 内联”计划，本期其余交付不受影响；缺 ID 或无法联网属于缺证，A-1 保持开放，不按“不成立”处理；责任：实施 agent，测试 ID 不触发请求时所需的真实 ID 由用户提供（§4）；最晚 M5 | 已解除：成立（M5 V-13，测试 ID 触发 GA4 与 Ads 请求） |
+| A-2 | 假设 | 百度统计没有官方 CSP 文档（2026-10-21 检索未找到）；全零测试 ID 的 `hm.js` 返回 0 B（2026-10-21 实测） | `hm.js` 只需要 `script` 和 `img` 两类来源放行 `https://hm.baidu.com` | V-13 用用户提供的获授权站点 ID 观察统计请求与违规报告，据此修订文档示例；缺 ID 时 A-2 保持开放；责任：实施 agent，站点 ID 由用户提供（§4）；最晚 M5 | 已解除：部分不成立，还需 `connect`（离开页面时的停留时长请求）；`hm.js` 用 `new Function` 解析数据被策略拒绝，统计照常；文档示例已据此修订（M5 V-13） |
+| A-3 | 假设 | CSP3 对重定向是否检查 `form-action` 未作统一规定 | `form-action` 包含 `'self'` 时，Chromium、WebKit、Firefox 都允许 POST 之后 303 跳回站内感谢页 | V-10 在 `docs-webkit`、`docs-firefox` 下运行 `landing.spec.ts`；某引擎行为不同时，文档写明该引擎的限制；责任：实施 agent；最晚 M5 | 已解除：成立，Chromium、WebKit、Firefox 在 JS 开与关时都跳回感谢页（M5 V-10；Firefox 为 BiDi 驱动的稳定版，见 M5 记录） |
 
 ### 0.2 决策表
 
@@ -489,7 +489,7 @@ pub struct Landing<'a> {
    - `url = new URL(属性值, location.href)`；
    - 协议不是 http(s) 时跳过；
    - `present` 中 `url.searchParams` 还没有的参数，用 `set` 补上；
-   - 有变化时回写属性（`url.href`）。iframe 回写 `src` 会重新导航，文档建议页面下方的嵌入使用 `loading="lazy"`。
+   - 有变化时，链接回写 `href`（`url.href`）；iframe 不改原元素的 `src`，而是 `cloneNode(true)` 复制一份、把副本的 `src` 设为 `url.href`，再替换原元素。直接改 `src` 在 frame 加载后会多一条会话历史（返回键先退回嵌入），Chromium 在懒加载刚开始时还会丢掉这次改动（M5 实测）；副本按首次加载处理，只加载一次，并遵循自身的 `loading`。文档建议页面下方的嵌入使用 `loading="lazy"`，并提醒持有该元素的脚本在页面加载后重新查找。
 5. 不读写 cookie、`localStorage`、`sessionStorage`，不发起网络请求，不使用 `innerHTML`。
 
 这段代码随 `site.js` 发给所有站点：没有 `data-rd-carry` 的页面在第 1 步就返回；`site.js` 内容变化带来的指纹文件名与引用变化在 NFR-4 的允许范围内。
@@ -604,7 +604,7 @@ pub struct Landing<'a> {
 | 线索端点不可用，或重定向到未放行的 origin | 该表单 | 线索丢失 | 端点错误页，或浏览器拦截重定向 | 端点方监控 | 端点修复；把重定向目标改为站内或已放行的来源 | V-7 覆盖“回到 `'self'`”的路径 |
 | manifest 的 `page_policies` 损坏 | 该输出的 preview | 无 | preview 拒绝启动并提示重新构建 | `checked_page_policies` | `rustify-docs build` | V-5 |
 | 旧 CLI 读取含 `[landing]` 的配置 | 该站点的构建 | 无 | unknown-field 错误 | CLI 报错 | 使用包含本功能的 CLI | 设计如此（D12），不另测 |
-| 透传回写 iframe `src` 导致二次加载 | 该嵌入 | 服务方的浏览量偏高 | 嵌入重新加载一次 | — | 文档建议 `loading="lazy"`；接受这一代价 | V-7 断言参数到达 |
+| 透传替换 iframe 导致二次加载 | 该嵌入 | 服务方的浏览量偏高 | 透传前已开始加载的嵌入（非懒加载，或已在懒加载范围内）再加载一次 | — | 文档建议 `loading="lazy"`；接受这一代价 | V-7 断言参数到达、会话历史不增加 |
 | 配置的第三方脚本被劫持 | 引用该配置的落地页 | 表单输入可能泄露 | 无可见表现 | 本方无法检测 | 撤下该配置的脚本并重新构建 | 不在本期（SRI 已放弃，见 §0.5） |
 
 - **发布顺序**：本期只合入 `main`。CLI 版本发布与官方站点不在本期（§0.5），没有灰度门。
@@ -655,10 +655,10 @@ fixture 与替身的约定（两者都只实现本节列出的契约行为）。
 | V-4 | R-3、NFR-2：`check_document_under`：跨源脚本在有配置时放行、无配置时拒绝；`check_document(html) == check_document_under(html, None)` | `mbx test --locked -p rustify-docs --lib html_check::` | M2 |
 | V-5 | R-8、NFR-2：manifest 的 `page_policies` 读写；空字段省略；`checked_page_policies` 拒绝换行、非 `.html`、未列出的文件、错误首尾；preview：落地页的头等于 manifest、`guide/` 的头等于 `CSP`、404 用 `CSP`、manifest 损坏时拒绝启动；dev：落地页 HTML 的头是按页策略；既有 reliability、dev 测试照常通过 | `mbx test --locked -p rustify-docs --lib publish::`；`mbx test --locked -p rustify-docs-cli --test landing --test reliability --test dev`；`mbx clippy --locked -p rustify-docs-cli --all-targets -- -D warnings` | M2 |
 | V-6 | R-5、R-6：<br>· 片段：iframe 记为 `Frame` 槽位；`srcdoc` 或缺 `src` → `embedded-frame`；缺 `title` → `frame-title`；<br>· 渲染面：iframe 仍报错；<br>· 页面级：iframe 在 doc 页 → `embedded-frame`；落地页上来源已列出 → 通过，未列出 → `frame-origin`；<br>· 表单：非落地页 → `form-blocked`，输出不变；落地页的跨源目标已列出 → 通过，未列出 → `form-origin`；`plain` 配置下的表单 → `form-origin`；站内 `action` 加 base 并校验目标；<br>· 最终闸门对表单与 iframe 的判定与页面级一致；<br>· 完整生成回归（`tests/landing.rs` 在 fixture 副本上改写页面）：doc 页的 `<form action="/api/lead">` 与 `<button formaction="/api/x">` 指向站点不发布的地址 → 只有 `form-blocked` 警告，生成成功，输出中 `action`/`formaction` 保持原值；落地页表单指向缺失的站内页面 → `broken-link`，生成失败；<br>· fixture 生成照常通过 | `mbx test --locked -p rustify-docs --lib html_check::`；`mbx test --locked -p rustify-docs --lib markdown::`；`mbx test --locked -p rustify-docs --lib content::tests::landing`；`mbx test --locked -p rustify-docs --lib content::tests::form`（非落地页表单的新测试函数以 `form_` 开头）；`mbx test --locked -p rustify-docs --test landing`；`cargo fmt --all -- --check`；`mbx clippy --locked -p rustify-docs --all-targets -- -D warnings` | M3 |
-| V-7 | R-1、R-3–R-8、NFR-2、NFR-5、NFR-6，浏览器 spec `landing.spec.ts` 的全部断言（含 V-15 的 `@policy` 测试；每个测试复制 fixture、改写端口与 base、构建；`docs-meta` 下用 `static-host.mjs`，其余项目用 `preview --port 0`）：<br>· `lp/` 上 listed 端口收到 `page_view`，以及 `fetch`、`beacon`、`pixel` 三种上报，listed 来源没有违规；blocked 来源的脚本与 iframe 各产生一条违规；<br>· `guide/` 上没有 tag 请求；在 preview 下，`guide/` 的响应头等于 `CSP`，`lp/` 的响应头等于 manifest 中的策略；<br>· 打开 `lp/?gclid=g1&utm_source=s&x=1`：隐藏字段、CTA、外链和 iframe `src` 都带上 `gclid` 与 `utm_source`，都不带 `x`；含 `"><script>` 的值保持字面量；无参数时这些元素都不变；不写 storage 和 cookie；<br>· 表单提交，两个独立浏览器上下文：JS 开时 `/lead` 收到含 `gclid` 的请求体 → 303 → `thanks/` 加载，listed 端口收到 `conversion`；JS 关时 `/lead` 收到原生 POST → 303 → `thanks/` 内容完整显示，listed 端口没有收到 `/collect`、`/pixel.gif` 上报，也没有 `page_view`、`conversion` 事件；<br>· 布局：1280、768、375、320 px 下没有横向滚动；没有搜索、导航、模式切换；页脚链接可以点击；axe 没有违规 | 随 V-10 运行：`docs-root`、`docs-subpath`、`docs-meta`、`docs-webkit`、`docs-firefox` 各收集一次 `landing.spec.ts`，不单独再跑 | M5 收口（M3 只跑其中的 V-15） |
+| V-7 | R-1、R-3–R-8、NFR-2、NFR-5、NFR-6，浏览器 spec `landing.spec.ts` 的全部断言（含 V-15 的 `@policy` 测试；每个测试复制 fixture、改写端口与 base、构建；`docs-meta` 下用 `static-host.mjs`，其余项目用 `preview --port 0`）：<br>· `lp/` 上 listed 端口收到 `page_view`，以及 `fetch`、`beacon`、`pixel` 三种上报，listed 来源没有违规；blocked 来源的脚本与 iframe 各产生一条违规；<br>· `guide/` 上没有 tag 请求；在 preview 下，`guide/` 的响应头等于 `CSP`，`lp/` 的响应头等于 manifest 中的策略；<br>· 打开 `lp/?gclid=g1&utm_source=s&x=1`：隐藏字段、CTA、外链和 iframe `src` 都带上 `gclid` 与 `utm_source`，都不带 `x`；含 `"><script>` 的值保持字面量；无参数时这些元素都不变；不写 storage 和 cookie；嵌入带着参数加载，会话历史条数与不带参数时相同；<br>· 表单提交，两个独立浏览器上下文：JS 开时 `/lead` 收到含 `gclid` 的请求体 → 303 → `thanks/` 加载，listed 端口收到 `conversion`；JS 关时 `/lead` 收到原生 POST → 303 → `thanks/` 内容完整显示，listed 端口没有收到 `/collect`、`/pixel.gif` 上报，也没有 `page_view`、`conversion` 事件；<br>· 布局：1280、768、375、320 px 下没有横向滚动；没有搜索、导航、模式切换；页脚链接可以点击；axe 没有违规 | 随 V-10 运行：`docs-root`、`docs-subpath`、`docs-meta`、`docs-webkit`、`docs-firefox` 各收集一次 `landing.spec.ts`，不单独再跑 | M5 收口（M3 只跑其中的 V-15） |
 | V-8 | R-9：`docs/docs-ssg.md` 新增的每段配置与页面示例，都能在临时项目中通过 `check` | `mbx build --locked -p rustify-docs-cli --profile docs-cli`，然后把每个示例复制到 `$TMPDIR` 下的新项目，运行 `target/docs-cli/rustify-docs check --config <项目>/rustify-docs.toml`；错误为 0，警告只能是文档中写明的那些 | M4 |
 | V-9 | 全部 R、NFR 的主机端全量回归 | `cargo fmt --all -- --check`；`mbx test --locked -p rustify-docs`；`mbx test --locked -p rustify-docs-cli`；`mbx clippy --locked -p rustify-docs --all-targets -- -D warnings`；`mbx clippy --locked -p rustify-docs-cli --all-targets -- -D warnings`；`mbx build --locked -p rustify-docs-cli --profile docs-cli` | M5 收口 |
-| V-10 | R-1、R-8、NFR-1、A-3 以及 V-7 全部断言的浏览器矩阵与回归。`landing.spec.ts`（V-7）在 `docs-root`、`docs-subpath`、`docs-meta`、`docs-webkit`、`docs-firefox` 中各运行一次；`docs-dev` 只收集 `dev*.spec.ts`（`playwright.docs.config.ts:178-180`），这里只算既有回归，dev 的按页响应头由 V-5 覆盖。依次运行，一次一个项目：<br>`npx playwright test -c playwright.docs.config.ts --project=docs-root`<br>`npx playwright test -c playwright.docs.config.ts --project=docs-subpath`<br>`npx playwright test -c playwright.docs.config.ts --project=docs-meta`<br>`npx playwright test -c playwright.docs.config.ts --project=docs-dev`<br>`npx playwright test -c playwright.docs.config.ts --project=docs-webkit`<br>`npx playwright test -c playwright.docs.config.ts --project=docs-firefox`<br>`npx playwright test -c playwright.docs.config.ts --project=components-subpath`<br>`npx playwright test -c playwright.docs.config.ts --project=official-subpath` | 同左；每次运行前确认 `target/docs-cli/rustify-docs` 存在（`serve.sh` 会重建） | M5 收口 |
+| V-10 | R-1、R-8、NFR-1、A-3 以及 V-7 全部断言的浏览器矩阵与回归。`landing.spec.ts`（V-7）在 `docs-root`、`docs-subpath`、`docs-meta`、`docs-webkit`、`docs-firefox` 中各运行一次；`docs-dev` 只收集 `dev*.spec.ts`（`playwright.docs.config.ts:178-180`），这里只算既有回归，dev 的按页响应头由 V-5 覆盖。依次运行，一次一个项目：<br>`npx playwright test -c playwright.docs.config.ts --project=docs-root`<br>`npx playwright test -c playwright.docs.config.ts --project=docs-subpath`<br>`npx playwright test -c playwright.docs.config.ts --project=docs-meta`<br>`npx playwright test -c playwright.docs.config.ts --project=docs-dev`<br>`npx playwright test -c playwright.docs.config.ts --project=docs-webkit`<br>`npx playwright test -c playwright.docs.config.ts --project=docs-firefox`<br>`npx playwright test -c playwright.docs.config.ts --project=components-subpath`<br>`npx playwright test -c playwright.docs.config.ts --project=official-subpath` | 同左；每次运行前确认 `target/docs-cli/rustify-docs` 存在（`serve.sh` 会重建）。Playwright 自带的 Firefox 在本机不能启动时（M5：1543 版在 macOS 27.0.1 上报 “Could not find profile folder”），用只把该项目改为 `channel: "moz-firefox"` 的包装配置，经 WebDriver BiDi 驱动已安装的稳定版 Firefox 运行同一项目；BiDi 驱动不实现 `colorScheme`、`reducedMotion`、`javaScriptEnabled` 仿真，依赖它们的测试不作为 Firefox 证据，JS 关的表单改用 `javascript.enabled=false` 首选项单独验证 | M5 收口 |
 | V-11 | NFR-3：已有特性与性能门禁不回退（`site.js` 变大后文档页仍在预算内）。`artifacts`、`reliability` 两组只是 V-9 已全量运行的测试子集（`xtask/src/docs.rs:62-80`），直接引用 V-9 的通过证据，不再单独运行 | `mbx xtask docs-verify --group features`；`mbx xtask docs-verify --group performance` | M5 收口 |
 | V-12 | NFR-3：落地页 `offer/` 的 LCP ≤2.5 s、CLS ≤0.1（5 次冷启动取中位数，冻结合同，在页面内测量） | `sh tests/docs-ssg/serve.sh landing subpath 4212`（后台运行），然后 `node tests/docs-ssg/harness/measure-load.mjs --origin http://127.0.0.1:4212 --page /rustify-ui/offer/ --samples 5 --out <记录目录>/landing-load.json` | M5 收口 |
 | V-13 | A-1、A-2、R-9：真实厂商脚本在线验证，由 Agent 在联网环境执行 | 用 §5.8 的两个文档示例配置构建临时站点，`preview` 后在 Chromium 中打开落地页，监听 `securitypolicyviolation`、`pageerror` 与网络请求 10 秒。ID（§4）：Google 先用测试 ID `G-TEST000000`、`AW-000000000`，没有触发统计请求时改用用户提供的真实 ID；百度统计必须用用户提供的获授权站点 ID（全零测试 ID 返回 0 B 脚本）。逐厂商判据：脚本响应 200 且响应体非空；没有初始化运行错误；观察到本次配置应触发的统计请求实际发出（如 GA4 的 `collect`、百度的 `hm.gif`；Ads 以示例实际调用的 `config`/`event` 为准）；记录实际请求的域名和对应的 CSP 结果，文档列出的来源没有违规。空响应、没有统计请求、初始化报错都不算通过；只要求请求发出，不要求平台计入。有违规时补进文档示例，再重跑 V-8 和该厂商的 V-13。缺 ID 或无法联网时该厂商记为缺口，对应假设保持开放，M5 不记完成；结论只覆盖实测触发过的厂商功能 | M5 收口 |

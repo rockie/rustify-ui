@@ -1327,8 +1327,10 @@ one). The framed page is under its own service's policy, and the service
 must allow being framed; if it refuses, the frame is blank and a native form
 is the alternative. Services that embed by script and inline styles cannot
 be used, because the page's `style-src` is never widened. Give a frame below
-the fold `loading="lazy"`: carrying parameters into it (below) changes its
-address, and a lazy frame loads once, with them.
+the fold `loading="lazy"`: carrying parameters into it (below) replaces it
+with a copy at the new address, and a lazy frame that has not started
+loading loads once, with them. A script that holds the frame element should
+look it up again once the page has loaded.
 
 ### Carried parameters
 
@@ -1420,7 +1422,8 @@ if (document.querySelector("main [data-conversion]")) {
 ### Example: Baidu Tongji
 
 Baidu publishes no CSP list. Its `hm.js` sends each page view as an image
-request to its own origin:
+request to its own origin, and the time on the page as a request from
+script to the same origin:
 
 ```toml
 [landing.profiles.baidu]
@@ -1432,8 +1435,14 @@ load = "async"
 
 [landing.profiles.baidu.sources]
 img = ["https://hm.baidu.com"]
+connect = ["https://hm.baidu.com"]
 form = ["https://leads.example.com"]         # your lead endpoint, as in the page above
 ```
+
+`hm.js` also reads some values with `new Function`, which a landing page's
+policy never allows (no profile can add `'unsafe-eval'`): the console
+reports it as a `script-src` violation for `eval`, and page views are still
+recorded.
 
 After deploying either profile, open a landing page with the browser's
 console showing: a request the profile does not admit is reported there as a

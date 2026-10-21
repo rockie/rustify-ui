@@ -44,9 +44,19 @@
       }
       if (url.protocol !== "http:" && url.protocol !== "https:") continue;
       var added = present.filter(function (name) { return !url.searchParams.has(name); });
+      if (!added.length) continue;
       added.forEach(function (name) { url.searchParams.set(name, params.get(name)); });
-      // A frame loads again when its address changes, once.
-      if (added.length) targets[j].setAttribute(attribute, url.href);
+      if (attribute === "href") {
+        targets[j].setAttribute("href", url.href);
+        continue;
+      }
+      // A frame is replaced by a copy with the new address rather than
+      // given it: a changed src adds a history entry once the frame has
+      // loaded, and Chromium can drop it while a lazy load is starting.
+      // The copy loads once, as its first load, under its own loading.
+      var frame = targets[j].cloneNode(true);
+      frame.setAttribute("src", url.href);
+      targets[j].parentNode.replaceChild(frame, targets[j]);
     }
   })();
 

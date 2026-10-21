@@ -217,17 +217,30 @@ test("carried parameters reach only marked elements, literally, without storage 
     await context.close();
 });
 
-test("the frame is embedded with the carried parameters", async ({ page }) => {
-    await page.goto(`${url}lp/?gclid=g1&utm_source=s&x=1`);
-    // A lazy frame loads as it nears the viewport.
-    await page.locator("iframe[data-rd-carry]").scrollIntoViewIfNeeded();
-    await expect.poll(async () => (await log(page)).filter((entry) => entry.kind === "embed").map((entry) => entry.query)).toContainEqual({ gclid: "g1", utm_source: "s" });
-    await expect(page.frameLocator("iframe[data-rd-carry]").getByRole("button", { name: "Sign up" })).toBeVisible();
+test("the frame is embedded with the carried parameters", async ({ browser, request }) => {
+    // The session history entries of a fresh page once its frame has loaded.
+    const entries = async (address: string) => {
+        const context = await browser.newContext();
+        const page = await context.newPage();
+        await page.goto(address);
+        // A lazy frame loads as it nears the viewport.
+        await page.locator("iframe[data-rd-carry]").scrollIntoViewIfNeeded();
+        await expect(page.frameLocator("iframe[data-rd-carry]").getByRole("button", { name: "Sign up" })).toBeVisible();
+        const length = await page.evaluate(() => window.history.length);
+        await context.close();
+        return length;
+    };
+    const plain = await entries(`${url}lp/`);
+    const carried = await entries(`${url}lp/?gclid=g1&utm_source=s&x=1`);
+    const embeds = async () => ((await (await request.get(`${listed}/log`)).json()) as Entry[]).filter((entry) => entry.kind === "embed").map((entry) => entry.query);
+    await expect.poll(embeds).toContainEqual({ gclid: "g1", utm_source: "s" });
+    // Carrying into the frame adds no entry: Back still leaves the page.
+    expect(carried).toBe(plain);
 });
 
 for (const script of [true, false]) {
     test(`the lead form submits and returns to the thanks page with script ${script}`, async ({ browser }) => {
-        const context = await browser.newContext({ javaScriptEnabled: script });
+        const context = await browser.newContext({ javaScriptEnabled: script, reducedMotion: "reduce" });
         const page = await context.newPage();
         await page.goto(`${url}lp/?gclid=g1&utm_source=s`);
         await page.getByLabel("Work email").fill("lead@example.com");
