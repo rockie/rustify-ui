@@ -59,7 +59,7 @@ PY
     fi
     cp -R "$fixture" "$work/site"
     perl -0pi -e "s#url = \"https://example.com/docs/\"\nbase = \"/docs/\"#url = \"https://docs.example.net$base\"\nbase = \"$base\"#" "$work/site/rustify-docs.toml"
-    rg -q "base = \"$base\"" "$work/site/rustify-docs.toml"
+    grep -qF "base = \"$base\"" "$work/site/rustify-docs.toml"
     "$bin" build --config "$work/site/rustify-docs.toml" --out "$work/dist" >&2
     ;;
   i18n-components)

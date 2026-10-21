@@ -39,8 +39,8 @@ pub fn cli() -> Result<PathBuf, String> {
             (binary, label, remedy)
         }
     };
-    // The banner is coloured when FORCE_COLOR is set, which would split the
-    // version from the name it follows.
+    // The banner is coloured when CI or FORCE_COLOR is set, which would split
+    // the version from the name it follows.
     let help = Command::new(&binary)
         .arg("--help")
         .env("NO_COLOR", "1")

@@ -17,7 +17,8 @@ done
 case "$export_fixture_base" in /*/) ;; /) ;; *) echo "Use an absolute base with a trailing slash." >&2; exit 2 ;; esac
 mkdir -p "$export_fixture_site"
 export_fixture_site=$(CDPATH= cd -- "$export_fixture_site" && pwd)
-export_fixture_tw_version=$(tailwindcss --help)
+# The banner is coloured under CI or FORCE_COLOR, which splits the name from the version.
+export_fixture_tw_version=$(NO_COLOR=1 tailwindcss --help)
 case "$export_fixture_tw_version" in *"tailwindcss v4.1.13"*) ;; *) echo "Tailwind 4.1.13 is required; use the repository mise toolchain." >&2; exit 1 ;; esac
 
 cd "$export_fixture_dir"
