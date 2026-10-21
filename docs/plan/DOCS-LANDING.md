@@ -54,7 +54,7 @@
 - 下一步：代码评审。由用户发起 review-code，以本计划路径为参数
 - 当前阻塞：无
 - 环境要点：系统 `python3` 是 3.9，需要 Python 3.12 的检查，以及 Playwright 自带 Firefox 不能启动时的替代做法，见 M5 记录头部与「偏差与修复」
-- 代码基线：M1–M4 在 `b49aa8fe`，M5 收口修复见完成记录 M5 行；均未推送
+- 代码基线：M1–M4 在 `b49aa8fe`，M5 收口在 `1f49749c`；均未推送
 
 ### 完成记录
 
@@ -64,7 +64,7 @@
 | M2 | 已完成 | 2026-10-21 17:37 +0800 | 落地页外壳、按页 meta 与 `page_policies`、preview/dev 按页头落地；V-3、V-4、V-5 通过 | [M2 记录](DOCS-LANDING.records/M2.md) | b49aa8fe |
 | M3 | 已完成 | 2026-10-21 17:50 +0800 | iframe 与表单的页面级判定和最终闸门、`site.js` 透传、第三方替身与 `landing.spec.ts` 落地；V-6、V-15 通过 | [M3 记录](DOCS-LANDING.records/M3.md) | b49aa8fe |
 | M4 | 已完成 | 2026-10-21 17:54 +0800 | `docs/docs-ssg.md` 新增 Landing pages 一节并增量修改七处；V-8 通过，厂商示例待 V-13 定稿 | [M4 记录](DOCS-LANDING.records/M4.md) | b49aa8fe |
-| M5 | 已完成 | 2026-10-21 20:20 +0800 | V-7、V-9 到 V-14 通过；iframe 透传改为替换元素，JS 关表单测试改用减少动态；百度示例补 `connect`；Firefox 经 BiDi 驱动的稳定版取证 | [M5 记录](DOCS-LANDING.records/M5.md) | 待提交 |
+| M5 | 已完成 | 2026-10-21 20:20 +0800 | V-7、V-9 到 V-14 通过；iframe 透传改为替换元素，JS 关表单测试改用减少动态；百度示例补 `connect`；Firefox 经 BiDi 驱动的稳定版取证 | [M5 记录](DOCS-LANDING.records/M5.md) | 1f49749c |
 
 ## 0. 需求、范围与决策
 
