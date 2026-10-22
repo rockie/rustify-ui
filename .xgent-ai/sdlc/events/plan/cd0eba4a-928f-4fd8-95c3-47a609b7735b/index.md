@@ -11,4 +11,6 @@
 
 | c28d9603-7b75-426c-acda-9da342bdd474 | implementation/plan | [M1–M2 实施](c28d9603-7b75-426c-acda-9da342bdd474.md) |
 
+| 718489c9-0c81-4179-a981-bfb25314b99c | implementation/plan | [M5 本地通过、V-12 待授权](718489c9-0c81-4179-a981-bfb25314b99c.md) |
+
 维护遵循[目录索引协议](../../../protocol.md#目录索引维护)。
