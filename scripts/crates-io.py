@@ -637,15 +637,6 @@ def package_cli(revision, libraries, output):
         for package in actual["lock"]:
             if package.get("source") and known.get((package["name"], package["version"])) != package["checksum"]:
                 raise ReleaseError(f"CLI archive selected a new registry input after R: {package['name']}")
-        index = Path(cargo.env["CARGO_TARGET_DIR"]) / "package/tmp-registry/index" / registry_key(CLI)
-        entries = [json.loads(line) for line in index.read_text().splitlines()]
-        matching = [e for e in entries if e["vers"] == packaged["version"] and e["cksum"] == packaged["sha256"]]
-        if len(matching) != 1:
-            raise ReleaseError("Cargo's CLI package index does not match its archive")
-        target = output / "registry/index" / registry_key(CLI)
-        target.parent.mkdir(parents=True, exist_ok=True)
-        target.write_text(json.dumps(matching[0]) + "\n")
-        shutil.copyfile(output / packaged["archive"], output / "registry" / Path(packaged["archive"]).name)
         receipt["packages"].append(packaged)
         order = {p["name"]:i for i,p in enumerate(receipt["inventory"])}
         receipt["packages"].sort(key=lambda p:order[p["name"]])
