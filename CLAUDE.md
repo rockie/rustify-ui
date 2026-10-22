@@ -76,7 +76,7 @@ VELLUM_TWIN=baseline VELLUM_BASELINE_DIR=../rustify-ui-vellum-baseline RUSTIFY_T
 
 The workspace excludes `makepad/` (a fork with its own workspace) and `ref/`.
 
-- `crates/rustify-ui` is the public SDK. Features: `csr` (default), `ssr` (host rendering, built on its own) and `gpu` (Makepad regions, off by default). `src/runtime.rs` is the neutral host binding every instance boots (`rustify_runtime_boot`, protocol `runtime::PROTOCOL`); a DOM build's loader, host and stylesheet live in `crates/rustify-ui/web/` (`dom-loader.js` and `dom-runtime.css` as `runtime::DOM_LOADER_JS`/`DOM_RUNTIME_CSS`, `dom-runtime.js` as a wasm-bindgen snippet). `rustify_components::CSS` is the committed stylesheet.
+- `crates/rustify-dom` owns shared state/types and the neutral `src/runtime.rs` host binding (`rustify_runtime_boot`, `runtime::PROTOCOL`). Its DOM loader, host and stylesheet live in `crates/rustify-dom/web/` (`DOM_LOADER_JS`, `DOM_RUNTIME_CSS` and the wasm-bindgen runtime snippet). Rendering features `csr` (default), `ssr` and `hydrate` are built separately. `crates/rustify-ui` is the Git SDK facade: it reexports the same core types and adds opt-in `gpu` Makepad regions. `rustify_components::CSS` is the committed stylesheet.
 - `crates/rustify-components` holds the DOM component catalogue of twenty-four categories:
   - The `clx!` / `variants!` class macros, forked from Rust/UI.
   - `CATALOG`, from which `docs/components.md` is generated.

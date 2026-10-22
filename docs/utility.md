@@ -51,7 +51,7 @@ queue/candidate/cache budgets; a digest mismatch rejects initialization.
 ## SDK calls
 
 The browser-only API is exported from `rustify_ui::utility`. Its signatures are
-defined in [browser.rs](../crates/rustify-ui/src/utility/browser.rs).
+defined in [browser.rs](../crates/rustify-dom/src/utility/browser.rs).
 
 | Call | Input and completion |
 | --- | --- |
@@ -77,7 +77,7 @@ positive `Limits`: `input_bytes`, `asset_bytes`, `candidate_count`, `ast_depth`,
 the queue limit. The SDK estimates owned report/candidate storage and includes
 queued and in-flight inputs in its cache budget. These estimates are not browser
 allocator measurements. See [protocol.rs](../crates/rustify-style/src/protocol.rs#L112)
-and [state.rs](../crates/rustify-ui/src/utility/state.rs).
+and [state.rs](../crates/rustify-dom/src/utility/state.rs).
 
 Async compilation methods return `Outcome`, a
 `Result<Arc<CommittedSnapshot>, UtilityError>`. A completion succeeds after sheet
@@ -107,7 +107,7 @@ resolved complete class name to `ensure_classes` when its value becomes known.
 ignore files and repository markers. Missing information marked `unavailable`
 returns a scan error. Paths are virtual; the Worker does not access the filesystem
 or fetch source files. The types are exported by
-[utility/mod.rs](../crates/rustify-ui/src/utility/mod.rs).
+[utility/mod.rs](../crates/rustify-dom/src/utility/mod.rs).
 
 Each snapshot is rescanned and released after extraction. Compiled candidates
 accumulate, so deleting a source file does not remove its installed CSS until

@@ -44,15 +44,16 @@ flowchart TD
 
 | Path | Responsibility |
 | --- | --- |
-| `crates/rustify-ui` | Public SDK. Features: `csr` (default; the browser runtime), `ssr` (rendering on a host, built on its own), `hydrate` (taking over generated DOM, with default features disabled) and `gpu` (Makepad regions, off by default). `runtime` (the neutral host binding every instance starts with, and the DOM loader and stylesheet as constants), `mount` / `AppHandle` (container checks, owner cleanup before DOM unmount), with `gpu` the `GpuRegion` component (canvas node, region lifecycle, props projection, cleanup), `UiError`, the layer stack (`overlay`), native text sessions (`text`), the theme table and its local overrides (`theme`), asynchronous state and tickets (`task`), the DOM component subset (`components`), the GPU halves of the controls that have one on both sides (`gpu`), and the capability catalogue (`catalog`). |
+| `crates/rustify-dom` | Shared types, application state and DOM runtime. Features: `csr` (default), `ssr` (host rendering), `hydrate` (browser attachment), `utility`, and `external-host` for SDK integration. Owns `runtime`, `mount` / `AppHandle`, IDs, overlays, native text sessions, themes, tasks and the original DOM component subset. Rendering modes are built separately. |
+| `crates/rustify-ui` | Git SDK facade. Reexports the core's exact types and adds opt-in `gpu`: `GpuRegion`, region lifecycle, Makepad integration and GPU control implementations. |
 | `crates/rustify-components` | DOM components for applications: the two class-string macros forked from Rust/UI (`clx!`, `variants!`), the merge rule they share, the current-path seam a link marks itself current from, and under `css/` the SDK's Tailwind layer (`sdk.css`), the input that compiles it on its own and the committed product (`rustify.css`). |
 | `crates/rustify-style` | Pure Rust class tooling without DOM or Makepad: the `cn` merge engine and the `class_variants!` generator components use (default feature), the Oxide-derived scanner (`scanner`, `scanner-fs`), and the Tailwind 4.1.13 compiler with its renderer programs (`compiler`). |
 | `crates/rustify-style-wasm` | The single-threaded WASM facade: the cn JS API and the compiler Worker session. `build-web` packages it as the `utility/` Worker product. |
-| `crates/rustify-ui/src/utility`, `web/utility-worker.js` | Feature `utility`: `UtilityScope` (Worker transport, CSSOM installation, observer, configuration epochs, recovery) and the GPU resolver; [guide](utility.md). |
+| `crates/rustify-dom/src/utility`, `crates/rustify-ui/src/utility/gpu`, `web/utility-worker.js` | Feature `utility`: `UtilityScope` (Worker transport, CSSOM installation, observer, configuration epochs, recovery) and the GPU resolver; [guide](utility.md). |
 | `crates/rustify-makepad` | Private Makepad integration: `RegionApp` trait, region registry with never-reused ids, pump entry points exported to JS, deferred props application, action outbox delivery, `HostHooks` binding, `web/embedded.js` (JS host for regions). |
 | `makepad/` | Hard fork of the Makepad wasm closure. Changed for embedding: `platform/src/os/web/web.js`, `web_gl.js`, `libs/wasm_bridge/src/wasm_bridge.js`, `platform/src/os/web/web.rs`, `platform/src/action.rs`, `platform/src/cx.rs`; trimmed to the browser backend; `tools/cargo_makepad` reduced to the single-threaded browser build. |
 | `web/loader.js`, `web/runtime.css` | Page-side boot of a GPU build: wasm instantiation, bridge fingerprint and runtime protocol checks, host hooks handed to both Makepad and the SDK runtime, static failure notice. |
-| `crates/rustify-ui/web/dom-loader.js`, `dom-runtime.js`, `dom-runtime.css` | Page-side boot of a DOM build: the loader (`runtime::DOM_LOADER_JS`) instantiates the wasm-bindgen output the page names and checks the runtime protocol; the host (`dom-runtime.js`, a wasm-bindgen snippet of the SDK) owns the instance's abort signal, tasks, timers and size observers; the stylesheet (`runtime::DOM_RUNTIME_CSS`) covers the failure notice and the scope's planes. |
+| `crates/rustify-dom/web/dom-loader.js`, `dom-runtime.js`, `dom-runtime.css` | Page-side boot of a DOM build: the loader (`runtime::DOM_LOADER_JS`) instantiates the wasm-bindgen output the page names and checks the runtime protocol; the host (`dom-runtime.js`, a wasm-bindgen snippet of the SDK) owns the instance's abort signal, tasks, timers and size observers; the stylesheet (`runtime::DOM_RUNTIME_CSS`) covers the failure notice and the scope's planes. |
 | `xtask` | `doctor`, `build-web` (with `--utility-scanner`), `serve` (with `--base`, `--spa` and `--fault`), `report-size` (with `--compressed`), `css` (with `--check`), `catalog` (with `--check`), `sources verify`, `verify --suite p1|p2|p3`, and the utility gates `utility-conformance`, `utility-baseline`, `utility-build`, `utility-bench`. |
 | `examples/fusion-basic` | Two mount scopes, each with a DOM counter and two GPU regions bound to the same signal. |
 | `examples/component-catalog` | The twenty-four categories, what each supports and where: a nav, a page per category, a status table, a theme switch, a language switch, and one GPU region that draws the scope's tokens so a theme change can be seen reaching both halves. |
@@ -100,8 +101,8 @@ independent ID sequence. `hydrate(container, MountConfig, view)` requires the
 same scope, base and deterministic initial view, and preserves the existing
 content nodes. Build the host with `ssr` and the browser with `hydrate` in
 separate Cargo invocations; enabling `csr` and `hydrate` together is rejected.
-See [mount.rs](../crates/rustify-ui/src/mount.rs) and
-[id.rs](../crates/rustify-ui/src/id.rs).
+See [mount.rs](../crates/rustify-dom/src/mount.rs) and
+[id.rs](../crates/rustify-dom/src/id.rs).
 
 Boot the DOM runtime before hydration. An external startup script must initialize
 Leptos' empty `__RESOLVED_RESOURCES`, `__INCOMPLETE_CHUNKS` and
@@ -110,7 +111,7 @@ roots, action sink, embedded router, overlay stack, ID allocator and initial
 locale; author contexts belong inside that closure because Leptos creates a
 new root Owner. Use `provide_static_theme` when the matching theme CSS has
 already been generated; it publishes the snapshot without rewriting DOM styles
-([provider.rs](../crates/rustify-ui/src/theme/provider.rs)). Start asynchronous
+([provider.rs](../crates/rustify-dom/src/theme/provider.rs)). Start asynchronous
 browser work after attachment. Floating demonstrations generate closed triggers;
 Leptos portals create their overlay content in the browser.
 
@@ -121,7 +122,7 @@ refusals leave the original DOM intact. Duplicate attachment uses
 `OccupiedContainer`; attachment before boot uses `RuntimeNotStarted`. Normal
 `AppHandle::dispose` cleans the owning root and removes its DOM. A trapped
 instance requires JavaScript to restore its static snapshot; it cannot run Rust
-cleanup ([diagnostics.rs](../crates/rustify-ui/src/diagnostics.rs)).
+cleanup ([diagnostics.rs](../crates/rustify-dom/src/diagnostics.rs)).
 
 Components that need initial geometry collect external rules through
 `provide_geometry_styles(GeometryStyles)`; the build writes `styles.css()` to an
@@ -139,25 +140,25 @@ attribute ([geometry.rs](../crates/rustify-components/src/geometry.rs),
 structured shadows and diagnostics. Applications publish that snapshot to
 both renderers; GPU code does not read computed CSS back into its state.
 The document and snapshot contracts are in
-[document.rs](../crates/rustify-ui/src/theme/document.rs#L108) and
-[resolve.rs](../crates/rustify-ui/src/theme/resolve.rs#L118); the studio's
+[document.rs](../crates/rustify-dom/src/theme/document.rs#L108) and
+[resolve.rs](../crates/rustify-dom/src/theme/resolve.rs#L133); the studio's
 [`PreviewProps`](../examples/theme-studio/src/preview_region.rs#L43) carries
 an `Arc<ResolvedTheme>` alongside its application state.
 
-[`ThemeScope`](../crates/rustify-ui/src/theme/provider.rs#L89) claims the mount
+[`ThemeScope`](../crates/rustify-dom/src/theme/provider.rs#L89) claims the mount
 root, projects the snapshot through CSSOM and restores prior values on cleanup.
-[`ThemeBoundary`](../crates/rustify-ui/src/theme/provider.rs#L128) re-resolves
+[`ThemeBoundary`](../crates/rustify-dom/src/theme/provider.rs#L128) re-resolves
 local patches without changing mode; clearing a patch restores inheritance.
 An overlay captures the effective theme signal at its creation point and
 updates its layer from that signal
-([`overlay.rs`](../crates/rustify-ui/src/overlay.rs#L721)).
+([`overlay.rs`](../crates/rustify-dom/src/overlay.rs#L721)).
 
 Applications opt into the document's geometry, fonts and shadows by importing
 [theme-v4.css](../crates/rustify-components/css/theme-v4.css#L1) after
 `sdk.css` in their one Tailwind build. Spacing utilities use `--rustify-unit`,
 while `--layout-gap` is separate. Missing runtime variables retain legacy
 fallbacks, so `Theme`/`ThemePatch` and `ThemedScope`/`ThemeOverride` remain usable.
-[`ThemeDocument::from_legacy`](../crates/rustify-ui/src/theme/document.rs#L212)
+[`ThemeDocument::from_legacy`](../crates/rustify-dom/src/theme/document.rs#L212)
 fills a complete document from two legacy themes; the extended author model
 has no lossless conversion back to the opaque legacy palette.
 

@@ -201,7 +201,7 @@ The default system pairs cool neutral surfaces with a clear blue action color an
 
 **The Scope Rule.** Keep editing chrome neutral; apply authored colors only inside the intended preview scope and its owned overlays.
 
-Sources: [legacy defaults](crates/rustify-ui/src/theme.rs), [SDK fallback CSS](crates/rustify-components/css/sdk.css), [shell CSS](examples/theme-studio/app.css), [picker CSS](examples/theme-studio/color-editor.css). The sidecar's synthetic tonal ramps are panel visualization aids, not additional shipped color tokens.
+Sources: [legacy defaults](crates/rustify-dom/src/theme.rs), [SDK fallback CSS](crates/rustify-components/css/sdk.css), [shell CSS](examples/theme-studio/app.css), [picker CSS](examples/theme-studio/color-editor.css). The sidecar's synthetic tonal ramps are panel visualization aids, not additional shipped color tokens.
 
 ## Typography
 
@@ -209,7 +209,7 @@ The shell uses IBM Plex Sans with a sans-serif fallback. Its hierarchy is delibe
 
 The legacy SDK's body size is separate from the shell body. The v4 legacy adapter supplies IBM Plex Sans for sans, `ui-serif, serif` for serif, and Liberation Mono for mono. Color strings use the monospace color-code role; import/export areas use the export-code role. User-authored font stacks and letter spacing govern the preview.
 
-[Bundled font declarations](web/theme-fonts.css) provide IBM Plex Sans, Noto Sans, Rustify WenKai, Noto Serif, Liberation Mono and Noto Color Emoji at normal 400, plus JetBrains Mono at 100–800; all use `font-display: swap`. Do not infer separately bundled semibold or italic files from CSS weights. [Theme document defaults](crates/rustify-ui/src/theme/document.rs) and resolved font diagnostics define the preview contract.
+[Bundled font declarations](web/theme-fonts.css) provide IBM Plex Sans, Noto Sans, Rustify WenKai, Noto Serif, Liberation Mono and Noto Color Emoji at normal 400, plus JetBrains Mono at 100–800; all use `font-display: swap`. Do not infer separately bundled semibold or italic files from CSS weights. [Theme document defaults](crates/rustify-dom/src/theme/document.rs) and resolved font diagnostics define the preview contract.
 
 ## Layout
 
@@ -232,7 +232,7 @@ The shell is flat, with white editing surfaces, a quiet workspace and dividers. 
 
 Authored preview shadow parameters replace the opt-in shadow layers. The legacy-to-document adapter starts with zero shadow opacity. Consequently a preview's absent or strong shadow is theme data, not a failure to follow shell styling.
 
-Scope transitions use 150ms by default and 0ms when reduced motion is requested ([theme.rs](crates/rustify-ui/src/theme.rs), [controls.css](crates/rustify-components/css/controls.css)). Color editing updates immediately; the picker additionally resets scroll behavior under `prefers-reduced-motion: reduce`. No decorative shell animation is required.
+Scope transitions use 150ms by default and 0ms when reduced motion is requested ([theme.rs](crates/rustify-dom/src/theme.rs), [controls.css](crates/rustify-components/css/controls.css)). Color editing updates immediately; the picker additionally resets scroll behavior under `prefers-reduced-motion: reduce`. No decorative shell animation is required.
 
 ## Shapes
 
@@ -240,7 +240,7 @@ The frontmatter distinguishes legacy radii from the opt-in v4 scale. Legacy smal
 
 Shell search and color fields use gently curved corners; inspector panels are slightly softer. Color token/reset pairs join into one split control with rounded outer edges. Sliders and swatches retain their circular or compact geometry. Do not turn switch capsules or radio circles into ordinary rounded rectangles when changing theme radius.
 
-Sources: [SDK radius utilities](crates/rustify-components/css/sdk.css), [v4 projection](crates/rustify-components/css/theme-v4.css), [resolved radii](crates/rustify-ui/src/theme/resolve.rs), [picker CSS](examples/theme-studio/color-editor.css).
+Sources: [SDK radius utilities](crates/rustify-components/css/sdk.css), [v4 projection](crates/rustify-components/css/theme-v4.css), [resolved radii](crates/rustify-dom/src/theme/resolve.rs), [picker CSS](examples/theme-studio/color-editor.css).
 
 ## Components
 

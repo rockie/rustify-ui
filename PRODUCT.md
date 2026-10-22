@@ -33,7 +33,7 @@ Rustify UI 是面向复杂 Web 工具的实验性 Rust 集成 SDK：Leptos CSR �
 
 - AGENTS.md：项目定位与新任务的实现范围约束。
 - README.md：产品定位、开发入口和运行限制。
-- crates/rustify-ui/src/theme.rs：现有主题、作用域与局部覆盖。
+- crates/rustify-dom/src/theme.rs：现有主题、作用域与局部覆盖。
 - crates/rustify-components/css/sdk.css：Tailwind v4 集成与作用域 token。
 - ref/tweakcn-main：用户指定的本地参考，属于 gitignored 调查资料，不能成为生产构建依赖。
 - docs/plan/THEME-STUDIO.md：本期主题系统与 demo site 的设计、范围和验收契约。

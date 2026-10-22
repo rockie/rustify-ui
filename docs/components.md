@@ -93,12 +93,12 @@ the editor example's own fields.
   ones, `RustifyDropDown` and `RustifyTabBar`. A scrolling region is makepad's
   own `ScrollBars` on a `View`.
 - The overlay four stand on the SDK's layer stack —
-  `crates/rustify-ui/src/overlay.rs` — which owns anchoring, keeping a menu
+  `crates/rustify-dom/src/overlay.rs` — which owns anchoring, keeping a menu
   inside the viewport, the Escape order, the focus trap and the return of
   focus. The toast is drawn in the same overlay plane but is not a layer: it
-  takes no focus and answers no Escape (`crates/rustify-ui/src/toast.rs`).
-- P1's own component subset is still where it was
-  (`crates/rustify-ui/src/components.rs`) and is unchanged: the two examples
+  takes no focus and answers no Escape (`crates/rustify-dom/src/toast.rs`).
+- P1's original component subset now lives in the shared core
+  (`crates/rustify-dom/src/components.rs`); its API is reexported by the SDK: the two examples
   built on it keep working, and the new crate is where `class` and the
   catalogue contract live.
 
