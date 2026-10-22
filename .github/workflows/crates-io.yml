@@ -56,6 +56,11 @@ jobs:
           python-version: '3.12'
       - name: Single documentation targets
         run: rustup target add --toolchain 1.99.0 x86_64-unknown-linux-gnu wasm32-unknown-unknown
+      - name: Prefetch frozen workspace and author locks
+        run: |
+          mbx fetch --locked
+          mbx fetch --locked --manifest-path site/Cargo.toml
+          mbx fetch --locked --manifest-path tests/docs-ssg/fixtures/components/Cargo.toml
       - name: Package frozen R, reproduce the real template lock, package C
         run: |
           release_dir="$RUNNER_TEMP/rustify-crates-io"

@@ -19,17 +19,28 @@ Never put credentials in this directory, a command argument or a commit.
    package documentation. Leave the unknown library revision unset in the
    initial CLI record. Do not write R into R itself.
 2. Run the plan's library/non-CLI regression gates from a clean detached R.
-   Then assemble libraries:
+   Run the preparation commands from the current release-tooling checkout;
+   the script creates its own clean R/C worktrees. Keep source browser fixtures
+   on that checkout's committed locks. Then assemble libraries:
 
    ```sh
+   mbx fetch --locked
+   mbx fetch --locked --manifest-path site/Cargo.toml
+   mbx fetch --locked --manifest-path tests/docs-ssg/fixtures/components/Cargo.toml
+   mbx fetch --locked --manifest-path tests/dom-only/Cargo.toml
+   mbx fetch --locked --manifest-path tests/dom-only/gpu-negative/Cargo.toml
+   mbx fetch --locked --manifest-path tests/dom-only/hydration/Cargo.toml
+   mbx fetch --locked --manifest-path makepad/Cargo.toml
+   mbx fetch --locked --manifest-path makepad/platform/script/Cargo.toml
    python3.12 scripts/crates-io.py inspect
    python3.12 scripts/crates-io.py package-libraries --rev "$R" --out "$DIR"
    python3.12 scripts/crates-io.py freeze-cli --libraries "$DIR" --library-rev "$R"
    ```
 
-   The script takes real locked registry inputs and Cargo-generated package
-   index entries. It uses local file source replacement, without a registry
-   service. `--no-verify` during assembly is followed by unpacked builds,
+   Fetch all consumer locks: the author projects can pin versions absent from
+   the workspace lock. The script takes real locked registry inputs and
+   Cargo-generated package index entries. It uses local file source replacement,
+   without a registry service. `--no-verify` during assembly is followed by unpacked builds,
    documentation and installation; assembly alone is not a release pass.
 3. Review [framework-release.json](../crates/rustify-docs-cli/assets/framework-release.json)
    and [components-Cargo.lock](../crates/rustify-docs-cli/assets/components-Cargo.lock). The lock must contain the actual archive

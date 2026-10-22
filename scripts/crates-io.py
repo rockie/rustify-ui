@@ -502,8 +502,10 @@ def locked_registry_packages(lockfiles, archives=()):
 def lock_inputs(root, output, packages):
     directory = output / "locks"
     directory.mkdir(exist_ok=True)
-    paths = [root / "Cargo.lock", root / "site/Cargo.lock"]
+    paths = [root / "Cargo.lock", root / "site/Cargo.lock", root / "makepad/Cargo.lock",
+             root / "makepad/platform/script/Cargo.lock"]
     paths.extend(sorted((root / "tests/docs-ssg/fixtures").rglob("Cargo.lock")))
+    paths.extend(sorted((root / "tests/dom-only").rglob("Cargo.lock")))
     # Only committed author fixtures are inputs, never an ignored dev/cache lock.
     tracked = set(run(["git", "ls-files"], cwd=root).splitlines())
     copied = []
