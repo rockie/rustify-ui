@@ -1008,7 +1008,7 @@ pub fn generate_p2(root: &Path, out: &Path, seed: u64) -> Result<P2Manifest, Str
         if path == "Cargo.toml" {
             let mut cargo =
                 String::from_utf8(bytes).map_err(|e| format!("{P2_FIXTURE}/{path}: {e}"))?;
-            for library in ["rustify-ui", "rustify-components", "rustify-docs"] {
+            for library in ["rustify-dom", "rustify-components", "rustify-docs"] {
                 let old = format!("path = \"../../../../crates/{library}\"");
                 if cargo.matches(&old).count() != 1 {
                     return Err(format!(
@@ -1079,10 +1079,19 @@ pub fn generate_p2(root: &Path, out: &Path, seed: u64) -> Result<P2Manifest, Str
         std::fs::write(&target, bytes).map_err(|e| format!("{}: {e}", target.display()))?;
     }
     let pair = crate::docs::pair_project(root, &out.join("Cargo.toml"), None)?;
-    let framework_pair = if pair["framework_revision"].as_str() == Some("") {
+    let framework_pair = if pair["distribution"].as_str() == Some("source")
+        || pair["framework_revision"].as_str() == Some("")
+    {
         None
     } else {
         Some(BTreeMap::from([
+            (
+                "distribution".to_string(),
+                pair["distribution"]
+                    .as_str()
+                    .ok_or("pair helper omitted distribution")?
+                    .to_string(),
+            ),
             (
                 "candidate_sha".to_string(),
                 pair["candidate_sha"]
@@ -1220,7 +1229,7 @@ pub fn generate_search(root: &Path, out: &Path, seed: u64, pages: usize) -> Resu
             std::fs::read(root.join(P2_FIXTURE).join(path)).map_err(|e| e.to_string())?;
         if path == "Cargo.toml" {
             let mut cargo = String::from_utf8(bytes).map_err(|e| e.to_string())?;
-            for library in ["rustify-ui", "rustify-components", "rustify-docs"] {
+            for library in ["rustify-dom", "rustify-components", "rustify-docs"] {
                 let old = format!("path = \"../../../../crates/{library}\"");
                 let sdk = std::fs::canonicalize(root.join("crates").join(library))
                     .map_err(|e| e.to_string())?;
@@ -1475,12 +1484,39 @@ mod tests {
         }
         for library in ["rustify-ui", "rustify-components", "rustify-docs"] {
             if let Some(pair) = &manifest.framework_pair {
-                assert!(cargo.contains(&format!(
+                if pair["distribution"] == "registry" {
+                    let declaration = cargo
+                        .lines()
+                        .find(|line| line.starts_with(&format!("{library} = {{")))
+                        .unwrap();
+                    assert!(declaration.contains("version = \"="));
+                    assert!(!declaration.contains("git = ") && !declaration.contains("path = "));
+                    let actual = if library == "rustify-ui" {
+                        "rustify-dom"
+                    } else {
+                        library
+                    };
+                    let text = std::str::from_utf8(&lock).unwrap();
+                    let entry = text
+                        .split("[[package]]")
+                        .find(|entry| entry.contains(&format!("name = \"{actual}\"")))
+                        .unwrap();
+                    assert!(entry.contains(
+                        "source = \"registry+https://github.com/rust-lang/crates.io-index\""
+                    ));
+                } else {
+                    assert!(cargo.contains(&format!(
                     "{library} = {{ git = \"https://github.com/rockie/rustify-ui\", rev = \"{}\", default-features = false }}",
                     pair["framework_revision"]
                 )));
+                }
             } else {
-                let sdk = root.join("crates").join(library).canonicalize().unwrap();
+                let actual = if library == "rustify-ui" {
+                    "rustify-dom"
+                } else {
+                    library
+                };
+                let sdk = root.join("crates").join(actual).canonicalize().unwrap();
                 let path = serde_json::to_string(sdk.to_str().unwrap()).unwrap();
                 assert!(cargo.contains(&format!("path = {path}")));
             }
