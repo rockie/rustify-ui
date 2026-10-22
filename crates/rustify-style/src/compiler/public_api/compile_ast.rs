@@ -2378,7 +2378,7 @@ impl AstCompiler {
     }
 }
 
-#[cfg(test)]
+#[cfg(all(rustify_repo_tests, test))]
 #[path = "../../../../../tests/utility/compiler/compile-ast-native.rs"]
 mod tests;
 

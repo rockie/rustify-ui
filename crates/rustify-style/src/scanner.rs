@@ -28,7 +28,7 @@ impl std::error::Error for ScanError {}
 #[cfg(all(test, feature = "scanner-fs", not(target_arch = "wasm32")))]
 mod upstream_native_tests;
 
-#[cfg(test)]
+#[cfg(all(rustify_repo_tests, test))]
 #[path = "../../../tests/utility/scanner/source-contracts.rs"]
 mod source_contracts;
 
@@ -95,6 +95,7 @@ pub(crate) fn pre_process_input(content: &[u8], extension: &str) -> Vec<u8> {
 mod tests {
     use super::*;
 
+    #[cfg(rustify_repo_tests)]
     #[derive(serde::Deserialize)]
     struct Fixture {
         name: String,
@@ -105,6 +106,7 @@ mod tests {
     }
 
     #[test]
+    #[cfg(rustify_repo_tests)]
     fn fixed_upstream_corpus_matches() {
         let fixtures: Vec<Fixture> =
             serde_json::from_str(include_str!("../../../tests/utility/scanner/fixtures.json"))
@@ -140,6 +142,7 @@ mod tests {
     }
 
     #[test]
+    #[cfg(rustify_repo_tests)]
     fn css_raw_content_uses_the_full_extractor() {
         let fixtures: Vec<Fixture> =
             serde_json::from_str(include_str!("../../../tests/utility/scanner/fixtures.json"))

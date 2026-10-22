@@ -218,7 +218,7 @@ vocabulary is the application's. `format_number` and `format_date` go through
 
 ## A DOM application without GPU regions
 
-The SDK's default features are DOM only: `rustify-ui` and `rustify-components`
+For the historical Git SDK, default features are DOM only: `rustify-ui` and `rustify-components`
 without `gpu` link no Makepad, and the GPU API (`GpuRegion`, `RegionApp`,
 `RegionId`, `RegionState`, `makepad_widgets`) does not compile. Everything else -
 `mount`, the overlay stack, toasts, jobs, `listen`, `defer`, `observe_resize`,
@@ -229,7 +229,7 @@ mbx, no xtask, no Node, no Makepad.
 
 The application is a `cdylib` whose exports start it, plus a small host program
 that writes the SDK's loader and stylesheets beside the wasm.
-[`tests/dom-only/consumer`](../tests/dom-only/consumer/) is the complete
+[`tests/dom-only/consumer` at that Git revision](https://github.com/rockie/rustify-ui/tree/1b81de25f23a25702f61dbfd3d0ecdfe323d4d44/tests/dom-only/consumer/) is the complete
 fixture; its `Cargo.toml` names the two crates (by path here; a consumer names
 them by git URL and revision) and `src/bin/export-dom-assets.rs` is the host
 program. Outside this repository, replace the two path dependencies with:
@@ -279,6 +279,49 @@ tests/dom-only/consumer/Cargo.toml` (to `target/dom/dom-consumer/`), served with
 `mbx xtask serve --dir target/dom/dom-consumer`, and checked with
 `mbx xtask docs-verify --group features` and
 `npx playwright test -c playwright.docs.config.ts --project=dom-only`.
+
+## 0.2.0 DOM candidate and GPU source pairing
+
+The registry candidate splits the DOM core into rustify-dom. Publication is
+pending; the validated Git recipe above remains the available default.
+A DOM consumer can use these candidate dependencies while keeping existing
+`rustify_ui` imports through a Cargo alias:
+
+```toml
+rustify-ui = { package = "rustify-dom", version = "=0.2.0" }
+rustify-components = { version = "=0.2.0" }
+```
+
+New code may instead depend on rustify-dom directly and import rustify_dom.
+The core owns themes, actions, scheduling and DOM lifecycle; the private
+rustify-ui facade reexports those exact types and adds GPU regions. Components
+have csr/ssr/hydrate/utility rendering features and no gpu feature. Enable gpu
+on a GPU application's SDK dependency.
+
+For GPU, use rustify-ui and components from the same complete Git revision
+(and Docs from that revision if used). To combine a Git SDK with registry
+components, unify the core at the application root:
+
+```toml
+[dependencies]
+rustify-ui = { git = "https://github.com/rockie/rustify-ui", rev = "<complete-revision>", features = ["gpu"] }
+rustify-components = { version = "=0.2.0" }
+
+[patch.crates-io]
+rustify-dom = { git = "https://github.com/rockie/rustify-ui", rev = "<same-complete-revision>" }
+```
+
+Use a revision whose dom version satisfies the component requirement. Check
+`cargo tree -i rustify-dom` and metadata: there must be one core identity.
+Same name/version from Git and crates.io are separate Rust types; without
+this unification Theme/Toast/action values cannot cross them. The Docs CLI's
+registry projects still require all three exact canonical registry packages;
+this GPU recipe does not relax that rule.
+
+For old Docs projects, the [candidate migration steps](docs-ssg.md#020-registry-candidate-and-migration)
+cover a new manifest/lock, import and feature changes, project-owned fonts and
+backup rollback. A content-only author can start with the complete generated
+theme example and local fonts without compiling Theme Studio.
 
 ## Writing a GPU region
 

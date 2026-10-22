@@ -1558,6 +1558,7 @@ mod tests {
     /// read from the serve command's source, where its string continues
     /// across lines with `\` and leading spaces.
     #[test]
+    #[cfg(rustify_repo_tests)]
     fn csp_is_the_strict_serve_policy() {
         let source = include_str!("../../../xtask/src/serve.rs");
         let start = source

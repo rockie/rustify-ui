@@ -14,7 +14,7 @@ use crate::text::Text;
 use indexmap::IndexMap;
 use serde::{ser::SerializeStruct, Deserialize, Deserializer, Serialize, Serializer};
 use serde_json::value::RawValue;
-#[cfg(test)]
+#[cfg(all(test, rustify_repo_tests))]
 use serde_json::{json, Value};
 use std::{
     cmp::Ordering,
@@ -2318,7 +2318,7 @@ fn cached_variant_cmp(
         })
 }
 
-#[cfg(test)]
+#[cfg(all(rustify_repo_tests, test))]
 #[path = "../../../../../tests/utility/compiler/design-system-native.rs"]
 mod tests;
 

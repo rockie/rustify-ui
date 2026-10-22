@@ -565,7 +565,11 @@ mod tests {
             .0
             .insert("font-sans".into(), "Rustify WenKai".into());
         SiteEnvironment {
-            theme: Some(ThemeInput { document, mode }),
+            theme: Some(ThemeInput {
+                document,
+                mode,
+                font_resolution: Default::default(),
+            }),
             ..SiteEnvironment::default()
         }
     }

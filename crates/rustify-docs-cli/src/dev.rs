@@ -192,7 +192,10 @@ impl Filter {
         }
         let mut existence = BTreeMap::new();
         let mut ancestors = BTreeMap::new();
-        for path in content::message_dependencies(project) {
+        for path in content::message_dependencies(project)
+            .into_iter()
+            .chain(content::font_dependencies(project))
+        {
             let path = root.join(path);
             for parent in path
                 .ancestors()
@@ -1869,6 +1872,7 @@ mod tests {
     }
 
     #[test]
+    #[cfg(rustify_repo_tests)]
     fn the_filter_follows_what_a_round_read() {
         let (project, _) = Project::load_file(Path::new(concat!(
             env!("CARGO_MANIFEST_DIR"),

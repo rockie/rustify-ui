@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Prepare the frozen official sources with the Git framework pair emitted by C.
+"""Prepare consumers with the registry, source or historical Git CLI pair.
 
 Python 3.12+, standard library only. Does not build or deploy the site.
 Uses a detached C worktree with real history; git archive supplies byte hashes.
@@ -10,6 +10,7 @@ Project mode adapts test consumers with the same installed/under-test CLI pair.
 import argparse
 import hashlib
 import json
+import os
 from pathlib import Path
 import re
 import shutil
@@ -20,7 +21,9 @@ import tomllib
 
 
 REPOSITORY = "https://github.com/rockie/rustify-ui"
-FRAMEWORKS = ("rustify-docs", "rustify-ui", "rustify-components")
+FRAMEWORKS = ("rustify-docs", "rustify-dom", "rustify-components")
+LEGACY_FRAMEWORKS = ("rustify-docs", "rustify-ui", "rustify-components")
+CRATES_IO = "registry+https://github.com/rust-lang/crates.io-index"
 PROJECTED = {"site/Cargo.toml", "site/Cargo.lock"}
 
 
@@ -48,23 +51,120 @@ def run(command, **kwargs):
     return result
 
 
-def cli_pair(cli):
-    """Read R from the real Git C named by this CLI, never a dirty asset."""
-    cli = cli.resolve(strict=True)
-    info = run([str(cli), "--build-info"], stdout=subprocess.PIPE).stdout.decode()
-    sources = re.findall(r"^source: ([0-9a-f]{40})$", info, re.MULTILINE)
-    if len(sources) != 1:
-        raise ValueError("CLI --build-info must identify one traceable source commit C")
+def read_identity(info, repository):
+    repository = repository.resolve(strict=True)
+    sources = re.findall(r"^source: (\S+)$", info, re.MULTILINE)
+    versions = re.findall(r"^rustify-docs (\S+)$", info, re.MULTILINE)
+    distributions = re.findall(r"^distribution: (\S+)$", info, re.MULTILINE)
+    records = re.findall(r"^framework: (.+)$", info, re.MULTILINE)
+    if len(sources) != 1 or len(versions) != 1:
+        raise ValueError("CLI --build-info must identify one version and source")
     candidate = sources[0]
-    repository = Path(__file__).resolve().parents[1]
-    try:
+    if not distributions and not records:
+        if not re.fullmatch(r"[0-9a-f]{40}", candidate):
+            raise ValueError("historical Git CLI must identify a complete source C")
         framework = run(["git", "show", f"{candidate}:crates/rustify-docs-cli/assets/framework-revision.txt"],
                         cwd=repository, stdout=subprocess.PIPE).stdout.decode().strip()
-    except ValueError as error:
-        raise ValueError(f"cannot read paired R from CLI source C `{candidate}` in the local Git repository: {error}") from error
-    if framework and not re.fullmatch(r"[0-9a-f]{40}", framework):
-        raise ValueError("the CLI's Git C must contain an empty development R or a complete paired R")
-    return candidate, framework, info
+        if framework and not re.fullmatch(r"[0-9a-f]{40}", framework):
+            raise ValueError("historical Git C has an invalid paired R")
+        return {"mode":"legacy", "candidate_sha":candidate, "framework_revision":framework, "info":info}
+    if len(distributions) != 1 or len(records) != 1 or distributions[0] not in ("registry", "source"):
+        raise ValueError("CLI distribution/framework identity is incomplete or unsupported")
+    record = json.loads(records[0])
+    if (record.get("schema") != 1 or record.get("registry") != "crates-io"
+            or set(record.get("packages", {})) != set(FRAMEWORKS)
+            or any(not isinstance(v, str) or not v for v in record["packages"].values())
+            or record.get("wasm_bindgen") != "0.2.128"):
+        raise ValueError("invalid CLI framework release record")
+    mode = distributions[0]
+    framework = record.get("library_rev")
+    if mode == "registry" and not re.fullmatch(r"[0-9a-f]{40}", framework or ""):
+        raise ValueError("registry CLI must have a frozen library R")
+    if mode == "source":
+        actual = run(["git", "rev-parse", "HEAD"], cwd=repository, stdout=subprocess.PIPE).stdout.decode().strip()
+        if candidate != actual or record.get("development_checkout") != hashlib.sha256(str(repository).encode()).hexdigest():
+            raise ValueError("source CLI must match this exact canonical checkout and HEAD")
+        for name, version in {**record["packages"], "rustify-docs-cli":versions[0]}.items():
+            with (repository / "crates" / name / "Cargo.toml").open("rb") as stream:
+                actual_version = tomllib.load(stream)["package"]["version"]
+                if actual_version == {"workspace": True}:
+                    with (repository / "Cargo.toml").open("rb") as workspace:
+                        actual_version = tomllib.load(workspace)["workspace"]["package"]["version"]
+                if actual_version != version:
+                    raise ValueError(f"source CLI version mismatch for {name}")
+    return {"mode":mode, "candidate_sha":candidate, "framework_revision":framework or "", "framework":record, "info":info}
+
+
+def cli_identity(cli):
+    info = run([str(cli.resolve(strict=True)), "--build-info"], stdout=subprocess.PIPE).stdout.decode()
+    repository = Path(__file__).resolve().parents[1]
+    if "\ndistribution: source\n" in info:
+        records = re.findall(r"^framework: (.+)$", info, re.MULTILINE)
+        if len(records) != 1:
+            raise ValueError("source CLI omitted its framework JSON")
+        fingerprint = json.loads(records[0]).get("development_checkout")
+        cargo_home = Path(os.environ.get("CARGO_HOME", Path.home() / ".cargo"))
+        candidates = [repository, *(cargo_home / "git/checkouts").glob("*/*")]
+        matches = {path.resolve() for path in candidates if path.is_dir()
+                   and hashlib.sha256(str(path.resolve()).encode()).hexdigest() == fingerprint}
+        if len(matches) != 1:
+            raise ValueError("cannot locate the exact checkout compiled into this source CLI")
+        repository = matches.pop()
+    identity = read_identity(info, repository)
+    identity["repository"] = repository.resolve()
+    return identity
+
+
+def cli_pair(cli):
+    identity = cli_identity(cli)
+    return identity["candidate_sha"], identity["framework_revision"], identity["info"]
+
+
+def project_manifest(original, identity, repository):
+    """Keep author bytes and dependency aliases; change only framework sources."""
+    document = tomllib.loads(original.decode())
+    projected = original
+    found = set()
+    for key, dependency in document["dependencies"].items():
+        actual = dependency.get("package", key) if isinstance(dependency, dict) else key
+        name = "rustify-dom" if actual == "rustify-ui" else actual
+        if name not in FRAMEWORKS:
+            continue
+        if name in found or not isinstance(dependency, dict):
+            raise ValueError(f"consumer needs one table dependency for {name}")
+        found.add(name)
+        wanted = {k:v for k,v in dependency.items() if k not in ("path", "git", "rev", "branch", "tag", "registry", "version", "package")}
+        if key != name:
+            wanted["package"] = name
+        wanted["version"] = "=" + identity["framework"]["packages"][name]
+        if identity["mode"] == "source":
+            wanted["path"] = str((repository / "crates" / name).resolve(strict=True))
+        lines = [line for line in projected.splitlines(keepends=True) if line.startswith(f"{key} = ".encode())]
+        if len(lines) != 1:
+            raise ValueError(f"expected one dependency line for {key}")
+        fields = ", ".join(f"{k} = {json.dumps(v)}" for k,v in wanted.items())
+        newline = b"\r\n" if lines[0].endswith(b"\r\n") else b"\n"
+        projected = projected.replace(lines[0], f"{key} = {{ {fields} }}".encode() + newline, 1)
+    if found != set(FRAMEWORKS):
+        raise ValueError("consumer must directly depend on all three framework packages")
+    return projected
+
+
+def validate_registry_lock(lock, identity, original):
+    packages = tomllib.loads(lock.decode())["package"]
+    root = tomllib.loads(original.decode())["package"]
+    roots = [p for p in packages if not p.get("source")]
+    if len(roots) != 1 or (roots[0]["name"], roots[0]["version"]) != (root["name"], root["version"]):
+        raise ValueError("new(C) lock has the wrong consumer root package")
+    for package in packages:
+        if package is roots[0]:
+            continue
+        if package.get("source") != CRATES_IO or not re.fullmatch(r"[0-9a-f]{64}", package.get("checksum", "")):
+            raise ValueError("new(C) lock must contain only canonical registry dependencies with checksums")
+    for name, version in {**identity["framework"]["packages"], "wasm-bindgen":identity["framework"]["wasm_bindgen"]}.items():
+        matching = [p for p in packages if p["name"] == name]
+        if len(matching) != 1 or matching[0]["version"] != version:
+            raise ValueError(f"new(C) lock must resolve one {name}@{version}")
 
 
 def project_bytes(original, generated, lock, framework):
@@ -74,7 +174,7 @@ def project_bytes(original, generated, lock, framework):
     if paired["package"] != document["package"]:
         raise ValueError("new(C) package identity differs from the original consumer")
     projected = original
-    for name in FRAMEWORKS:
+    for name in LEGACY_FRAMEWORKS:
         wanted = {"git": REPOSITORY, "rev": framework, "default-features": False}
         if paired["dependencies"][name] != wanted:
             raise ValueError(f"new(C) did not emit the exact Git R dependency for {name}")
@@ -88,7 +188,7 @@ def project_bytes(original, generated, lock, framework):
             raise ValueError(f"expected one dependency line for {name}")
         projected = projected.replace(old[0], new[0], 1)
     packages = tomllib.loads(lock.decode())["package"]
-    for name in FRAMEWORKS:
+    for name in LEGACY_FRAMEWORKS:
         matching = [package for package in packages if package["name"] == name]
         if len(matching) != 1 or matching[0].get("source") != f"git+{REPOSITORY}?rev={framework}#{framework}":
             raise ValueError(f"new(C) lock does not resolve one {name} at Git R")
@@ -113,24 +213,60 @@ def project_pair(cli, manifest, framework):
     manifest.with_name("Cargo.lock").write_bytes(lock)
 
 
+def source_environment(repository):
+    with (repository / "mise.toml").open("rb") as stream:
+        toolchain = tomllib.load(stream)["tools"]["rust"]["version"]
+    sysroot = Path(run(["rustc", "--print", "sysroot"], cwd=repository, stdout=subprocess.PIPE).stdout.decode().strip())
+    compiler = sysroot / "bin/rustc"
+    if not run([str(compiler), "--version"], stdout=subprocess.PIPE).stdout.decode().startswith(f"rustc {toolchain} "):
+        raise ValueError("source projection requires the checkout's mise-pinned compiler")
+    return {**os.environ, "RUSTC":str(compiler), "RUSTDOC":str(sysroot / "bin/rustdoc"),
+            "RUSTUP_TOOLCHAIN":toolchain, "PATH":str(sysroot / "bin") + os.pathsep + os.environ.get("PATH", "")}
+
+
 def prepare_project(cli, manifest, out=None):
-    candidate, framework, _ = cli_pair(cli)
+    identity = cli_identity(cli)
+    repository = identity["repository"]
     manifest = manifest.resolve(strict=True)
-    if framework:
-        if out is not None:
-            if out.is_symlink() or (out.exists() and (not out.is_dir() or any(out.iterdir()))):
-                raise ValueError("--out must be an absent or empty consumer directory")
-            out.mkdir(parents=True, exist_ok=True)
-            for name in ("src", "content", "static", "Cargo.toml", "Cargo.lock", "rustify-docs.toml", "theme.json"):
-                source = manifest.parent / name
-                if source.is_dir():
-                    shutil.copytree(source, out / name, symlinks=True)
-                elif source.exists():
-                    shutil.copy2(source, out / name)
-            manifest = out / manifest.name
-        project_pair(cli.resolve(strict=True), manifest, framework)
-    return {"candidate_sha": candidate, "framework_revision": framework,
-            "manifest": str(manifest), "project": str(manifest.parent)}
+    if out is not None:
+        if out.is_symlink() or (out.exists() and (not out.is_dir() or any(out.iterdir()))):
+            raise ValueError("--out must be an absent or empty consumer directory")
+        out.mkdir(parents=True, exist_ok=True)
+        for name in ("src", "content", "static", "fonts", "Cargo.toml", "Cargo.lock", "rustify-docs.toml", "theme.json", "theme.example.json"):
+            source = manifest.parent / name
+            if source.is_dir():
+                shutil.copytree(source, out / name, symlinks=True)
+            elif source.exists():
+                shutil.copy2(source, out / name)
+        manifest = out / manifest.name
+    if identity["mode"] == "legacy":
+        if identity["framework_revision"]:
+            project_pair(cli.resolve(strict=True), manifest, identity["framework_revision"])
+    else:
+        original = manifest.read_bytes()
+        projected = project_manifest(original, identity, repository)
+        if identity["mode"] == "registry":
+            package = tomllib.loads(original.decode())["package"]["name"]
+            with tempfile.TemporaryDirectory(prefix="rustify-registry-new-") as scratch:
+                generated = Path(scratch) / package
+                run([str(cli.resolve(strict=True)), "new", str(generated), "--template", "components"], stdout=subprocess.PIPE)
+                generated_manifest = tomllib.loads((generated / "Cargo.toml").read_text())
+                for name, version in identity["framework"]["packages"].items():
+                    if generated_manifest["dependencies"][name] != {"version":"="+version, "default-features":False}:
+                        raise ValueError(f"new(C) manifest mismatch for {name}")
+                lock = (generated / "Cargo.lock").read_bytes()
+                validate_registry_lock(lock, identity, original)
+            manifest.write_bytes(projected)
+            manifest.with_name("Cargo.lock").write_bytes(lock)
+        else:
+            manifest.write_bytes(projected)
+            # Source fixtures have their own genuine path lock. Never edit the
+            # embedded registry lock or substitute source strings in it.
+            compiler = os.environ.get("RUSTIFY_DOCS_CARGO", "mbx")
+            run([compiler, "metadata", "--offline", "--format-version", "1", "--manifest-path", str(manifest)],
+                cwd=repository, env=source_environment(repository), stdout=subprocess.PIPE)
+    return {"candidate_sha":identity["candidate_sha"], "framework_revision":identity["framework_revision"],
+            "distribution":identity["mode"], "manifest":str(manifest), "project":str(manifest.parent)}
 
 
 def prepare(candidate, cli, out):
@@ -164,14 +300,8 @@ def prepare(candidate, cli, out):
     run(["git", "worktree", "add", "--detach", str(out), candidate], cwd=repository,
         stdout=subprocess.PIPE)
     verify_inputs(out, original)
-    if not re.fullmatch(r"[0-9a-f]{40}", framework):
-        raise ValueError("candidate C must contain a complete paired framework revision R")
     official = out / "site/Cargo.toml"
-    official_document = tomllib.loads(official.read_text())
-    for name in FRAMEWORKS:
-        if official_document["dependencies"][name] != {"path": f"../crates/{name}", "default-features": False}:
-            raise ValueError(f"unexpected frozen official dependency for {name}")
-    project_pair(cli, official, framework)
+    prepare_project(cli, official)
     protected = {name: checksum for name, checksum in original.items() if name not in PROJECTED}
     verify_inputs(out, protected)
     inputs = dict(protected)

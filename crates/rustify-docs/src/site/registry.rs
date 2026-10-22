@@ -319,7 +319,8 @@ pub(crate) fn prepare_environment(
     let locale =
         rustify_ui::Locale::from_tag(&environment.lang).unwrap_or(rustify_ui::Locale::English);
     let theme = if let Some(theme) = &environment.theme {
-        let context = rustify_ui::theme::font_context(16., false);
+        let mut context = rustify_ui::theme::font_context(16., false);
+        context.font_resolution = theme.font_resolution;
         let resolve = |mode| {
             rustify_ui::resolve(&theme.document, mode, &context)
                 .map(Arc::new)
@@ -388,7 +389,11 @@ mod tests {
             .0
             .insert("primary".into(), "#fedcba".into());
         SiteEnvironment {
-            theme: Some(ThemeInput { document, mode }),
+            theme: Some(ThemeInput {
+                document,
+                mode,
+                font_resolution: Default::default(),
+            }),
             ..SiteEnvironment::default()
         }
     }
@@ -417,6 +422,36 @@ mod tests {
             &dark,
             &environment.resolved(ThemeMode::Dark).unwrap()
         ));
+    }
+
+    #[test]
+    fn serialized_theme_font_policy_keeps_css_choices_and_defaults_old_inputs_to_packaged() {
+        let mut input = themed(ThemeMode::Light);
+        input.theme.as_mut().unwrap().font_resolution = rustify_ui::FontResolution::Css;
+        let encoded = serde_json::to_value(&input).unwrap();
+        assert_eq!(encoded["theme"]["font_resolution"], "css");
+        let decoded: SiteEnvironment = serde_json::from_value(encoded.clone()).unwrap();
+        for mode in [ThemeMode::Light, ThemeMode::Dark] {
+            let theme = prepare_environment(&decoded)
+                .unwrap()
+                .resolved(mode)
+                .unwrap();
+            assert!(theme.fonts.iter().all(|font| font.resource_path.is_none()));
+            assert_eq!(
+                theme.fonts[0].font_resolution,
+                rustify_ui::FontResolution::Css
+            );
+        }
+        let mut previous = encoded;
+        previous["theme"]
+            .as_object_mut()
+            .unwrap()
+            .remove("font_resolution");
+        let decoded: SiteEnvironment = serde_json::from_value(previous).unwrap();
+        assert_eq!(
+            decoded.theme.unwrap().font_resolution,
+            rustify_ui::FontResolution::Packaged
+        );
     }
 
     #[test]

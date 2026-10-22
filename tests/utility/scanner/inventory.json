@@ -736,8 +736,9 @@
       "public_types": [],
       "tests": [],
       "local": "crates/rustify-style/upstream/classification-macros/Cargo.toml",
-      "local_sha256": "9684262395ea0373579eb0f97d2ee27a6c324837080d62b043f5efa484f2b552",
-      "modification": "Explicitly enable syn/full, otherwise missing ExprRange and RangeLimits in isolated closure."
+      "local_sha256": "736875106c72cd9e924c32c63bc3c71f4645c81b80812c91ce4f62698d21f112",
+      "modification": "Explicitly enable syn/full, otherwise missing ExprRange and RangeLimits in isolated closure. Renamed registry package to rustify-classification-macros 0.2.0, retaining the classification_macros library name. Added publish metadata, a package-local upstream MIT license and a single docs.rs target.",
+      "imported_local_sha256": "9684262395ea0373579eb0f97d2ee27a6c324837080d62b043f5efa484f2b552"
     },
     {
       "source": "crates/classification-macros/src/lib.rs",

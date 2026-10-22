@@ -7,7 +7,7 @@ mod support;
 use support::*;
 
 #[test]
-fn help_and_generated_readme_pin_the_same_installable_source() {
+fn help_and_generated_readme_pin_the_same_registry_version() {
     let temp = Temp::new("installation");
     let tools = Toolchain::new(&temp, true);
     let helped = tools.run_in(&temp.0, &["--help"]);
@@ -15,17 +15,17 @@ fn help_and_generated_readme_pin_the_same_installable_source() {
     let help = stdout(&helped);
     let install = help
         .lines()
-        .find(|line| line.trim().starts_with("cargo install --git "))
-        .expect("help gives a git installation command")
+        .find(|line| line.trim().starts_with("cargo install rustify-docs-cli "))
+        .expect("help gives the registry installation command")
         .trim();
-    let revision = install
-        .split_whitespace()
-        .skip_while(|arg| *arg != "--rev")
-        .nth(1)
-        .expect("installation pins a source revision");
-    assert_eq!(revision.len(), 40);
-    assert!(revision.bytes().all(|byte| byte.is_ascii_hexdigit()));
-    assert!(install.contains("--locked --profile docs-cli"));
+    assert_eq!(
+        install,
+        format!(
+            "cargo install rustify-docs-cli --version {} --locked",
+            env!("CARGO_PKG_VERSION")
+        )
+    );
+    assert!(!install.contains("--profile"));
 
     // A build of this source ships after the latest published release, so
     // that release is where it rolls back to.
@@ -45,11 +45,11 @@ fn help_and_generated_readme_pin_the_same_installable_source() {
     let readme = temp.read("my-docs/README.md");
     assert!(readme.contains(install), "{readme}");
     assert!(
-        readme.contains(&format!("Roll back to the previous version, {rolled_back}")),
+        readme.contains(&format!("Historical Git rollback to {rolled_back}")),
         "{readme}"
     );
     assert!(readme.contains(rollback), "{readme}");
-    for text in ["--force", "cargo install --list", revision] {
+    for text in ["--force", "cargo install --list", env!("CARGO_PKG_VERSION")] {
         assert!(help.contains(text), "{help}");
         assert!(readme.contains(text), "{readme}");
     }
@@ -80,6 +80,7 @@ fn a_new_site_builds_and_nothing_is_compiled() {
             "content/index.md",
             "rustify-docs.toml",
             "static/logo.svg",
+            "theme.example.json",
         ]
     );
     assert!(temp

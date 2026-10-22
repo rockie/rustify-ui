@@ -214,19 +214,41 @@ for the complete configuration, validation and static-host behavior.
 
 ## Theme, fonts and included code
 
-Export a complete Theme Studio JSON document into the project, then set:
+The default reading theme uses system fonts and makes no font requests. To
+customize a complete theme without building Theme Studio:
+
+1. Copy `theme.example.json` to `theme.json`. The example is inactive until you
+   set `document` below.
+2. In both `styles.light` and `styles.dark`, set the needed font token, for
+   example `"font-sans": "Brand Sans, sans-serif"`. Keep all other tokens.
+3. Put a font you may redistribute at `fonts/brand-sans.woff2`, then add:
 
 ```toml
 [theme]
 document = "theme.json"
+
+[[theme.fonts]]
+family = "Brand Sans"
+src = "fonts/brand-sans.woff2"
+weight = "400" # or an ascending range such as "100 900"
+style = "normal" # or "italic"
 ```
 
-The build validates both light and dark modes and projects the same theme
-onto reading content and interactive blocks. System mode follows the
-reader's preference. Referenced fonts come from the CLI's bundled font
-bytes and licenses and are published under `assets/fonts/`; there are no
-remote font requests. The theme document itself is an input, not a public
-asset. Without an imported document, the site uses its default appearance.
+Registration alone does not select a font; the document's font stack selects
+it. Paths are project-local, preferably outside `static/`; woff2, woff, ttf
+and otf are supported. URLs, escaping symlinks, private files, output files,
+empty files and duplicate family/weight/style faces fail the build. Keep
+font notices and any redistribution/source obligations with your project.
+The build publishes declared bytes at same-origin `assets/fonts/<sha256>.<ext>`
+URLs with `font-display: swap`. It performs no font download.
+
+Run `rustify-docs check --deny-warnings` and `rustify-docs build`, then preview
+the complete output. Both modes and islands use the same CSS font policy.
+The CLI embeds no font files. An imported but undeclared named family gives
+`theme-font-system`: use a local declaration or change the relevant tokens in
+both modes to `sans-serif`, `serif` or `monospace`. Remaining warnings still
+fail `--deny-warnings`. CJK and emoji now follow the author stack and system
+fallback rather than the old bundled glyph fallbacks.
 
 For a code example that does not need to be interactive, include the real
 file in Markdown:
@@ -242,9 +264,8 @@ and automatically displays its function and full-file source.
 
 ## Keep the CLI and framework paired
 
-This project was generated with CLI {{version}} at source revision
-`{{revision}}`, paired with framework revision `{{framework-revision}}`.
-Reinstall that CLI with:
+This project was generated with CLI {{version}} and the exact crates.io
+versions in `Cargo.toml` and `Cargo.lock`. Reinstall that CLI with:
 
 ```sh
 {{install}} --force
@@ -253,23 +274,38 @@ rustify-docs --build-info
 cargo install --list
 ```
 
-The three `rustify-*` dependencies pin that framework revision;
-wasm-bindgen pins `=0.2.128`. A mismatched CLI, framework source or bindings
-version is rejected before rendering. Keep the profiles in `Cargo.toml`:
-the native renderer uses unwind, while browser wasm uses abort, and the
-CLI builds them separately with `--locked`.
+`rustify-docs`, `rustify-dom` and `rustify-components` pin `=0.2.0`;
+wasm-bindgen pins `=0.2.128`. The lock includes real registry checksums.
+A mismatched version, source or duplicate DOM core is rejected before
+rendering. Cargo dependency aliases are supported. Keep the profiles in
+`Cargo.toml`: the native renderer uses unwind, browser wasm uses abort,
+and the CLI builds them separately with `--locked`.
 
 Before upgrading, back up `Cargo.toml`, `Cargo.lock`, the CLI installation
-command and the complete successful `dist/`. Use a published CLI/framework
-pair together, update all three framework revisions, explicitly generate
-the new dependency lock, and run `check` and `build`. Stop and restart
-`dev` after changing the pair. Ordinary `check`, `build` and `dev` are not
-dependency-update commands.
+command and the complete successful `dist/`. Install a released CLI, update
+all three dependencies to its `--build-info` versions, explicitly generate
+the new lock, then run `check` and `build`. Stop and restart `dev` after
+changing the pair. Ordinary `check`, `build` and `dev` use the existing lock.
 
-To roll back, reinstall the backed-up CLI revision and restore its matching
-manifest, lock and complete output. Restore an entire build rather than
-mixing old HTML with new wasm, scripts or fonts. The output's
+To roll back, reinstall the backed-up CLI version and restore its matching
+manifest, lock and complete output. Restore an entire build so HTML, wasm,
+scripts and fonts share one generation. The output's
 `rustify-docs-manifest.json` records the CLI version and file digests.
+
+For the historical 0.1.32 Git CLI, restore its original Git manifest and
+lock together and reinstall it with:
+
+```sh
+{{rollback}}
+```
+
+When upgrading a 0.1.32 project, replace its `rustify-ui` dependency with
+`rustify-dom` and update `rustify_ui` imports to `rustify_dom`. To keep
+imports, use `rustify-ui = { package = "rustify-dom", version = "=0.2.0",
+default-features = false }` and retain that key in feature lists. Remove
+`rustify-components/gpu` from custom feature lists. Back up an imported
+theme and declare its local fonts as described above; system fallbacks,
+including CJK and emoji, can differ from the old bundled fonts.
 
 ## Publish static output
 

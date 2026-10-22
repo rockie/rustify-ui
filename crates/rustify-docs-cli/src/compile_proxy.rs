@@ -63,7 +63,7 @@ fn prepare(repo: &Path, work: &Path) -> (PathBuf, String, Vec<u8>) {
     let fixture = repo.join("tests/docs-ssg/fixtures/components");
     let site = work.join("site");
     assert!(!site.exists(), "choose a fresh proxy work directory");
-    for directory in ["src", "content", "static"] {
+    for directory in ["src", "content", "static", "fonts"] {
         copy_tree(&fixture.join(directory), &site.join(directory));
     }
     for file in [
@@ -74,21 +74,6 @@ fn prepare(repo: &Path, work: &Path) -> (PathBuf, String, Vec<u8>) {
     ] {
         fs::copy(fixture.join(file), site.join(file)).unwrap();
     }
-    let mut manifest = fs::read_to_string(site.join("Cargo.toml")).unwrap();
-    for library in ["rustify-ui", "rustify-components", "rustify-docs"] {
-        let old = format!("path = \"../../../../crates/{library}\"");
-        assert_eq!(manifest.matches(&old).count(), 1);
-        let path = repo.join("crates").join(library);
-        manifest = manifest.replacen(
-            &old,
-            &format!(
-                "path = {}",
-                serde_json::to_string(path.to_str().unwrap()).unwrap()
-            ),
-            1,
-        );
-    }
-    fs::write(site.join("Cargo.toml"), manifest).unwrap();
     // Use the actual CLI binary of this test build; an installed C can also
     // be selected by the existing browser-harness RUSTIFY_DOCS_BIN variable.
     let cli = std::env::var_os("RUSTIFY_DOCS_BIN")
@@ -123,7 +108,9 @@ fn prepare(repo: &Path, work: &Path) -> (PathBuf, String, Vec<u8>) {
     assert_eq!(pair["candidate_sha"], super::SOURCE_REVISION);
     assert_eq!(
         pair["framework_revision"],
-        super::EXPECTED_FRAMEWORK_REV.trim()
+        super::release::Framework::embedded().unwrap().value["library_rev"]
+            .as_str()
+            .unwrap_or("")
     );
     let source = fs::read_to_string(site.join("src/demos.rs")).unwrap();
     assert_eq!(source.matches(PROXY).count(), 1);

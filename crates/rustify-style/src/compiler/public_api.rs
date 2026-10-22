@@ -426,6 +426,6 @@ impl Compiler {
     }
 }
 
-#[cfg(test)]
+#[cfg(all(rustify_repo_tests, test))]
 #[path = "../../../../tests/utility/compiler/public-api-native.rs"]
 mod tests;

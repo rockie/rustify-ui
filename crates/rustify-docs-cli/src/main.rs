@@ -12,12 +12,13 @@ use rustify_docs::generation;
 use rustify_docs::highlight::Highlighter;
 use rustify_docs::publish::{self, Area, LockError, Manifest, Recovery};
 
-#[cfg(test)]
+#[cfg(all(test, rustify_repo_tests))]
 mod compile_proxy;
 mod dev;
 mod links;
 mod new;
 mod preview;
+mod release;
 mod rendering;
 mod report;
 mod rust_site;
@@ -28,7 +29,6 @@ use report::{Format, Summary};
 
 const VERSION: &str = env!("CARGO_PKG_VERSION");
 const SOURCE_REVISION: &str = env!("RUSTIFY_DOCS_SOURCE_REVISION");
-const EXPECTED_FRAMEWORK_REV: &str = include_str!("../assets/framework-revision.txt");
 /// The latest published release. A binary built from this source ships
 /// after it, so this is where help and new sites roll back to; it moves on
 /// before each release is paired.
@@ -37,7 +37,8 @@ const PREVIOUS_VERSION: &str = "0.1.32";
 
 /// Whether this binary unwinds on a panic. `dev` keeps serving the last good
 /// generation after a panic in a new one, which only an unwinding build can;
-/// the install command's `--profile docs-cli` is what selects it.
+/// registry installation uses the standard release profile; source builds
+/// use `docs-cli` to select it.
 const UNWINDS: bool = cfg!(panic = "unwind");
 
 /// How tests make a command fail where it otherwise would not:
@@ -46,28 +47,9 @@ const UNWINDS: bool = cfg!(panic = "unwind");
 /// `publish::Step`) until it is killed. Not part of the command's interface.
 const FAULT_VARIABLE: &str = "RUSTIFY_DOCS_FAULT";
 
-/// How to install this command so that it unwinds.
+/// The exact registry version paired with this binary.
 fn install() -> String {
-    format!(
-        "cargo install --git https://github.com/rockie/rustify-ui --rev {} --locked --profile docs-cli rustify-docs-cli",
-        install_revision()
-    )
-}
-
-fn install_revision() -> &'static str {
-    if SOURCE_REVISION.is_empty() {
-        PREVIOUS_REVISION
-    } else {
-        SOURCE_REVISION
-    }
-}
-
-fn install_version() -> &'static str {
-    if SOURCE_REVISION.is_empty() {
-        PREVIOUS_VERSION
-    } else {
-        VERSION
-    }
+    format!("cargo install rustify-docs-cli --version {VERSION} --locked")
 }
 
 fn rollback() -> String {
@@ -109,20 +91,17 @@ fn help() -> String {
          when the site has errors (or, with --deny-warnings, warnings) or a\n\
          command fails, 2 for a usage error.\n\n\
          Supported on macOS. Linux and Windows are not verified.\n\n\
-         Install rustify-docs {} from {}:\n\
+         Install rustify-docs {VERSION} from crates.io:\n\
          \x20 {}\n\
          \x20 cargo install --list\n\
-         Reinstall or upgrade to that revision:\n\
+         Reinstall or upgrade to that version:\n\
          \x20 {} --force\n\
          Roll back to rustify-docs {PREVIOUS_VERSION}:\n\
          \x20 {}\n\
          Verify --version, cargo install --list and a fresh build's\n\
-         manifest.cli_version after installing. Archive builds without git\n\
-         metadata use the previous pinned version for installation.\n",
+         manifest.cli_version after installing.\n",
         preview::DEFAULT_PORT,
         rustify_docs::config::DEFAULT_DEV_PORT,
-        install_version(),
-        install_revision(),
         install(),
         install(),
         rollback(),
@@ -131,14 +110,12 @@ fn help() -> String {
 
 fn build_info() -> String {
     format!(
-        "rustify-docs {VERSION}\npanic: {}\ngrammars: {}\nsource: {}\n",
+        "rustify-docs {VERSION}\npanic: {}\ngrammars: {}\nsource: {}\ndistribution: {}\nframework: {}\n",
         if UNWINDS { "unwind" } else { "abort" },
         rustify_docs::highlight::GRAMMAR_VERSION,
-        if SOURCE_REVISION.is_empty() {
-            "unknown"
-        } else {
-            SOURCE_REVISION
-        }
+        SOURCE_REVISION,
+        env!("RUSTIFY_DOCS_DISTRIBUTION"),
+        release::context()["framework"],
     )
 }
 
@@ -949,3 +926,6 @@ fn main() -> ExitCode {
         Some(other) => usage(format!("unknown command {}", code_span(other))),
     }
 }
+
+#[cfg(all(test, rustify_repo_tests))]
+mod repo_tests;

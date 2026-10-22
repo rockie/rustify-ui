@@ -42,3 +42,6 @@ pub fn scan_content(content: &str, extension: &str) -> Result<String, JsValue> {
     }))
     .map_err(|error| JsValue::from_str(&error.to_string()))
 }
+
+#[cfg(all(test, rustify_repo_tests))]
+mod repo_tests;

@@ -755,6 +755,7 @@ mod registration_tests {
 
 #[cfg(test)]
 mod prefix_tests {
+    #[cfg(rustify_repo_tests)]
     use crate::compiler::{Compiler, CompilerInput, Limits};
 
     #[test]
@@ -768,6 +769,7 @@ mod prefix_tests {
     }
 
     #[test]
+    #[cfg(rustify_repo_tests)]
     fn prefix_css_matches_fixed_official_inputs() {
         let fixture: serde_json::Value = serde_json::from_str(include_str!(
             "../../../../tests/utility/compiler/prefix-fixtures.json"

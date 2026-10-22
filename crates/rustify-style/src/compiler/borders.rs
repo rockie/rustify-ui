@@ -343,6 +343,7 @@ mod tests {
     }
 
     #[test]
+    #[cfg(rustify_repo_tests)]
     fn border_branches_match_official_fixtures() {
         let fixture: serde_json::Value = serde_json::from_str(include_str!(
             "../../../../tests/utility/compiler/borders-fixtures.json"

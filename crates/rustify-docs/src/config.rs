@@ -155,6 +155,8 @@ struct RawTheme {
     document: Option<Spanned<String>>,
     primary: Option<Spanned<RawPair>>,
     logo: Option<Spanned<RawLogo>>,
+    #[serde(default)]
+    fonts: Vec<Spanned<toml::Table>>,
 }
 
 #[derive(Deserialize)]
@@ -220,6 +222,7 @@ pub struct Config {
     pub primary: Option<Pair>,
     /// A project-relative Theme Studio JSON file and its configuration span.
     pub theme_document: Option<(String, Range<usize>)>,
+    pub theme_fonts: Vec<FontConfig>,
     pub logo: Option<Logo>,
     pub nav: Nav,
     /// Declared languages; empty preserves the single-language configuration.
@@ -287,6 +290,143 @@ pub struct Logo {
     pub light: String,
     pub dark: String,
     pub span: Range<usize>,
+}
+
+/// A project-owned local font face; registration does not select the site's stack.
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct FontConfig {
+    pub family: String,
+    pub src: String,
+    pub weight: String,
+    pub style: String,
+    pub span: Range<usize>,
+}
+
+fn parse_fonts(
+    raw: Vec<Spanned<toml::Table>>,
+    out: &str,
+    errors: &mut Vec<Issue>,
+) -> Vec<FontConfig> {
+    let mut faces = BTreeSet::new();
+    raw.into_iter()
+        .enumerate()
+        .filter_map(|(index, raw)| {
+            let span = raw.span();
+            let fields = raw.into_inner();
+            let parse = || -> Result<FontConfig, String> {
+                if let Some(key) = fields
+                    .keys()
+                    .find(|key| !["family", "src", "weight", "style"].contains(&key.as_str()))
+                {
+                    return Err(format!("unknown font field {}", code_span(key)));
+                }
+                let string = |key: &str, default: Option<&str>| -> Result<String, String> {
+                    match fields.get(key) {
+                        Some(toml::Value::String(value)) => Ok(value.clone()),
+                        None if default.is_some() => Ok(default.unwrap_or_default().to_owned()),
+                        _ => Err(format!(
+                            "{key} must be a string{}",
+                            if default.is_none() {
+                                " and is required"
+                            } else {
+                                ""
+                            }
+                        )),
+                    }
+                };
+                let family = string("family", None)?;
+                if family.trim().is_empty() || family.chars().any(char::is_control) {
+                    return Err("family must be a non-empty name without control characters".into());
+                }
+                let literal = string("src", None)?;
+                if literal.contains(':') {
+                    return Err(
+                        "src must be a project-local file, not a URL or absolute path".into(),
+                    );
+                }
+                let src = relative_path(&literal)?;
+                if src.is_empty()
+                    || crate::content::is_private(&src)
+                    || src == out
+                    || src.starts_with(&format!("{out}/"))
+                {
+                    return Err("src must name a non-private project file outside build.out".into());
+                }
+                let extension = std::path::Path::new(&src)
+                    .extension()
+                    .and_then(|value| value.to_str())
+                    .unwrap_or_default()
+                    .to_ascii_lowercase();
+                if !["woff2", "woff", "ttf", "otf"].contains(&extension.as_str()) {
+                    return Err("src must be a woff2, woff, ttf or otf file".into());
+                }
+                let weight = string("weight", Some("400"))?;
+                let weights: Vec<_> = weight
+                    .split_whitespace()
+                    .map(|part| {
+                        if part.bytes().all(|byte| byte.is_ascii_digit()) {
+                            part.parse::<u16>().ok()
+                        } else {
+                            None
+                        }
+                    })
+                    .collect();
+                let weights: Option<Vec<_>> = weights.into_iter().collect();
+                let weights = weights
+                    .filter(|values| {
+                        matches!(values.len(), 1 | 2)
+                            && values.iter().all(|weight| (1..=1000).contains(weight))
+                            && (values.len() == 1 || values[0] < values[1])
+                    })
+                    .ok_or_else(|| {
+                        "weight must be one integer or two ascending integers in 1..1000".to_owned()
+                    })?;
+                let weight = weights
+                    .iter()
+                    .map(u16::to_string)
+                    .collect::<Vec<_>>()
+                    .join(" ");
+                let style = string("style", Some("normal"))?;
+                if !["normal", "italic"].contains(&style.as_str()) {
+                    return Err("style must be normal or italic".into());
+                }
+                Ok(FontConfig {
+                    family,
+                    src,
+                    weight,
+                    style,
+                    span: span.clone(),
+                })
+            };
+            match parse() {
+                Ok(font)
+                    if faces.insert((
+                        font.family.to_lowercase(),
+                        font.weight.clone(),
+                        font.style.clone(),
+                    )) =>
+                {
+                    Some(font)
+                }
+                Ok(_) => {
+                    errors.push(error(
+                        span,
+                        "theme-font",
+                        format!("theme.fonts[{index}] duplicates a family/weight/style face"),
+                    ));
+                    None
+                }
+                Err(message) => {
+                    errors.push(error(
+                        span,
+                        "theme-font",
+                        format!("theme.fonts[{index}]: {message}"),
+                    ));
+                    None
+                }
+            }
+        })
+        .collect()
 }
 
 #[derive(Clone, Debug, Default, PartialEq, Eq)]
@@ -1075,6 +1215,7 @@ pub fn parse(text: &str) -> Result<(Config, Vec<Issue>), Vec<Issue>> {
 
     let nav = parse_nav(raw.nav, "config-nav", &mut errors);
     let landing = parse_landing(raw.landing, &mut errors);
+    let theme_fonts = parse_fonts(raw.theme.fonts, &out_dir, &mut errors);
 
     if !errors.is_empty() {
         return Err(errors);
@@ -1096,6 +1237,7 @@ pub fn parse(text: &str) -> Result<(Config, Vec<Issue>), Vec<Issue>> {
             repo,
             primary,
             theme_document,
+            theme_fonts,
             logo,
             nav,
             locales,
@@ -1196,6 +1338,55 @@ mod tests {
                 "{path}: {errors:?}"
             );
         }
+    }
+
+    #[test]
+    fn theme_fonts_validate_descriptors_paths_and_duplicate_faces() {
+        let declaration = "[[theme.fonts]]\nfamily='Brand Sans'\nsrc='fonts/brand.woff2'\n";
+        let (config, _) = parse(&format!("{MINIMAL}{declaration}")).unwrap();
+        assert_eq!(config.theme_fonts[0].weight, "400");
+        assert_eq!(config.theme_fonts[0].style, "normal");
+        let variable = format!("{declaration}weight='100 900'\nstyle='italic'\n");
+        assert!(parse(&format!("{MINIMAL}{variable}")).is_ok());
+        for extra in [
+            "weight='0'",
+            "weight='1001'",
+            "weight='900 100'",
+            "weight='400 400'",
+            "weight='1 2 3'",
+            "weight=400",
+            "style='oblique'",
+            "other='ignored'",
+        ] {
+            let errors = parse(&format!("{MINIMAL}{declaration}{extra}\n")).unwrap_err();
+            assert!(
+                errors.iter().any(|issue| issue.rule == "theme-font"),
+                "{extra}: {errors:?}"
+            );
+        }
+        for path in [
+            "",
+            "https://example.test/f.woff2",
+            "/font.ttf",
+            "../font.ttf",
+            ".git/font.ttf",
+            "dist/font.ttf",
+            "fonts/font.svg",
+        ] {
+            let text = format!("{MINIMAL}[[theme.fonts]]\nfamily='Brand'\nsrc={path:?}\n");
+            assert!(
+                parse(&text)
+                    .unwrap_err()
+                    .iter()
+                    .any(|issue| issue.rule == "theme-font"),
+                "{path}"
+            );
+        }
+        let duplicate = format!("{MINIMAL}{declaration}{declaration}");
+        assert!(parse(&duplicate)
+            .unwrap_err()
+            .iter()
+            .any(|issue| issue.rule == "theme-font"));
     }
 
     #[test]

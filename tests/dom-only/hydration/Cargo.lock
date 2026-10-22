@@ -1194,8 +1194,22 @@ dependencies = [
  "js-sys",
  "leptos",
  "paste",
+ "rustify-dom",
  "rustify-style",
- "rustify-ui",
+ "web-sys",
+]
+
+[[package]]
+name = "rustify-dom"
+version = "0.1.0"
+dependencies = [
+ "js-sys",
+ "leptos",
+ "send_wrapper",
+ "serde",
+ "serde_json",
+ "wasm-bindgen",
+ "wasm-bindgen-futures",
  "web-sys",
 ]
 
@@ -1216,11 +1230,8 @@ version = "0.1.0"
 dependencies = [
  "js-sys",
  "leptos",
- "send_wrapper",
- "serde",
- "serde_json",
+ "rustify-dom",
  "wasm-bindgen",
- "wasm-bindgen-futures",
  "web-sys",
 ]
 

@@ -56,8 +56,7 @@ optional = true
 default-features = false
 
 [dependencies.smallvec]
-version = ">=1.13"
-path = "../smallvec"
+version = "=1.15.1"
 features = ["union"]
 optional = true
 

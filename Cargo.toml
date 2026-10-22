@@ -8,6 +8,7 @@ members = [
     "crates/rustify-docs-macros",
     "crates/rustify-docs-syntax",
     "crates/rustify-docs-cli",
+    "crates/rustify-dom",
     "crates/rustify-ui",
     "crates/rustify-makepad",
     "examples/component-catalog",
@@ -22,7 +23,7 @@ members = [
 exclude = ["makepad", "ref", "site"]
 
 [workspace.package]
-version = "0.1.0"
+version = "0.2.0"
 edition = "2021"
 license = "MIT"
 publish = false
@@ -35,10 +36,6 @@ wasm-bindgen = "=0.2.128"
 js-sys = "=0.3.105"
 web-sys = "=0.3.105"
 makepad-widgets = { path = "makepad/widgets" }
-
-[patch.crates-io]
-bitflags = { path = "makepad/libs/bitflags" }
-smallvec = { path = "makepad/libs/smallvec" }
 
 [profile.release]
 codegen-units = 1

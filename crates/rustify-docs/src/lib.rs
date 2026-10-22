@@ -92,3 +92,6 @@ pub mod shell;
 pub mod slug;
 #[cfg(feature = "pipeline")]
 pub mod style;
+
+#[cfg(all(test, rustify_repo_tests))]
+mod repo_tests;

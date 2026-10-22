@@ -78,6 +78,24 @@ PY
     config=$(mktemp "$fixture/.rustify-docs-browser.XXXXXX")
     trap 'rm -f "$config"' EXIT
     perl -0pe "s#url = \"https://example.com/docs/\"\nbase = \"/docs/\"#url = \"https://docs.example.net$base\"\nbase = \"$base\"#" "$fixture/rustify-docs.toml" > "$config"
+    case ${RUSTIFY_DOCS_FONT_SCENARIO:-declared} in
+      declared) ;;
+      system)
+        python3 - "$config" <<'PYFONT'
+from pathlib import Path
+import sys
+path = Path(sys.argv[1])
+lines, discard = [], False
+for line in path.read_text().splitlines(keepends=True):
+    if line.lstrip().startswith('['):
+        discard = line.strip() == '[[theme.fonts]]'
+    if not discard:
+        lines.append(line)
+path.write_text(''.join(lines))
+PYFONT
+        ;;
+      *) echo "serve.sh: unknown font scenario $RUSTIFY_DOCS_FONT_SCENARIO" >&2; exit 2 ;;
+    esac
     RUSTIFY_DOCS_CARGO=mbx "$bin" build --config "$config" --out "$work/dist" >&2
     rm -f "$config"
     trap - EXIT

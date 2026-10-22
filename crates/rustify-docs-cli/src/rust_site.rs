@@ -25,14 +25,15 @@ use syn::spanned::Spanned;
 use syn::visit::Visit;
 
 const BINDGEN_VERSION: &str = "0.2.128";
-const FRAMEWORKS: [&str; 3] = ["rustify-docs", "rustify-ui", "rustify-components"];
+#[cfg(test)]
+use crate::release::FRAMEWORKS;
 const RUNTIME_ASSETS: [&str; 4] = [
     "dom-loader.js",
     "dom-runtime.css",
     "islands.js",
     "sdk-candidates.json",
 ];
-const PAIR_ADVICE: &str = "Use the paired CLI and framework revisions together; restore both Cargo.toml/Cargo.lock and the paired CLI to roll back.";
+use crate::release::PAIR_ADVICE;
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub(super) enum BuildMode {
@@ -298,9 +299,7 @@ pub(super) fn prepare_checked_with(
                 .and_then(|value| Metadata::read(value, &manifest_path))
             {
                 Ok(metadata) => {
-                    if let Err(error) =
-                        validate_framework(&metadata, crate::EXPECTED_FRAMEWORK_REV.trim())
-                    {
+                    if let Err(error) = validate_framework(&metadata) {
                         diagnostics.push(failure("rust-framework-pair", error));
                     }
                     Some(metadata)
@@ -714,85 +713,8 @@ impl Metadata {
     }
 }
 
-fn validate_framework(metadata: &Metadata, expected: &str) -> Result<(), String> {
-    let packages = metadata
-        .value
-        .get("packages")
-        .and_then(Value::as_array)
-        .ok_or("Cargo metadata has no packages")?;
-    let direct = metadata
-        .value
-        .pointer("/resolve/nodes")
-        .and_then(Value::as_array)
-        .and_then(|nodes| {
-            nodes.iter().find(|node| {
-                node.get("id").and_then(Value::as_str) == Some(metadata.package_id.as_str())
-            })
-        })
-        .and_then(|node| node.get("dependencies"))
-        .and_then(Value::as_array)
-        .ok_or("Cargo metadata has no resolved author dependency graph")?;
-    let mut framework = Vec::new();
-    for name in FRAMEWORKS {
-        let matches: Vec<_> = packages
-            .iter()
-            .filter(|package| {
-                package.get("name").and_then(Value::as_str) == Some(name)
-                    && direct
-                        .iter()
-                        .any(|id| id.as_str() == package.get("id").and_then(Value::as_str))
-            })
-            .collect();
-        let [package] = matches.as_slice() else {
-            return Err(format!(
-                "Cargo.toml/Cargo.lock must resolve one direct {} dependency. {PAIR_ADVICE}",
-                code_span(name)
-            ));
-        };
-        framework.push(*package);
-    }
-    let source = framework[0].get("source").and_then(Value::as_str);
-    if framework
-        .iter()
-        .any(|package| package.get("source").and_then(Value::as_str) != source)
-    {
-        return Err(format!("the three framework packages have different sources/revisions in Cargo.lock. {PAIR_ADVICE}"));
-    }
-    match source {
-        Some(source) if source.starts_with("git+") => {
-            let resolved = source.rsplit_once('#').map(|(_, revision)| revision).unwrap_or("");
-            let requested = source.split_once('?').and_then(|(_, query)| query.split('#').next())
-                .and_then(|query| query.split('&').find_map(|part| part.strip_prefix("rev="))).unwrap_or("");
-            if expected.is_empty() || resolved != expected || requested != expected {
-                return Err(format!("Cargo.toml/Cargo.lock framework revision does not match this CLI's explicit expected revision {}. {PAIR_ADVICE}", code_span(expected)));
-            }
-        }
-        None if expected.is_empty() => {
-            let repository = Path::new(env!("CARGO_MANIFEST_DIR")).parent().and_then(Path::parent)
-                .ok_or("cannot identify the compiled development CLI repository")?;
-            for package in framework {
-                let name = required_string(package, "name")?;
-                let expected = fs::canonicalize(repository.join("crates").join(name).join("Cargo.toml"))
-                    .map_err(|error| format!("cannot verify the compiled CLI's framework path: {error}"))?;
-                let actual = fs::canonicalize(required_string(package, "manifest_path")?)
-                    .map_err(|error| format!("cannot verify a framework manifest: {error}"))?;
-                if actual != expected { return Err(format!("local framework paths must match the exact repository compiled into this development CLI. {PAIR_ADVICE}")); }
-            }
-        }
-        _ => return Err(format!("framework dependencies need the explicit git revision paired with this CLI; local paths are only supported by its own development fixture. {PAIR_ADVICE}")),
-    }
-    let bindings: Vec<_> = packages
-        .iter()
-        .filter(|package| package.get("name").and_then(Value::as_str) == Some("wasm-bindgen"))
-        .collect();
-    if bindings.is_empty()
-        || bindings
-            .iter()
-            .any(|package| package.get("version").and_then(Value::as_str) != Some(BINDGEN_VERSION))
-    {
-        return Err(format!("Cargo.lock must resolve wasm-bindgen exactly {BINDGEN_VERSION} for the paired framework. {PAIR_ADVICE}"));
-    }
-    Ok(())
+fn validate_framework(metadata: &Metadata) -> Result<(), String> {
+    crate::release::validate(&metadata.value, &metadata.package_id)
 }
 
 type CapturedFiles = BTreeMap<PathBuf, Arc<[u8]>>;
@@ -1720,7 +1642,7 @@ impl InputLayout {
             )
         })
         .collect();
-        let context = serde_json::to_string(&json!({"cli": env!("CARGO_PKG_VERSION"), "expected": crate::EXPECTED_FRAMEWORK_REV.trim(),
+        let context = serde_json::to_string(&json!({"cli": env!("CARGO_PKG_VERSION"), "pair": crate::release::context(),
             "protocol": PROTOCOL_VERSION, "bindgen": BINDGEN_VERSION, "profiles": mode.profiles(), "compiler": compiler.to_string_lossy(), "flags": flags,
             "metadata": metadata.iter().map(|metadata| &metadata.value).collect::<Vec<_>>()})).map_err(|error| error.to_string())?;
         let mut package_roots = BTreeMap::new();
@@ -2734,6 +2656,7 @@ mod tests {
     }
 
     #[test]
+    #[cfg(rustify_repo_tests)]
     fn the_actual_extractor_test_url_cannot_enter_product_candidates() {
         let source = include_str!(
             "../../rustify-style/upstream/oxide/extractor/arbitrary_property_machine.rs"
@@ -3024,7 +2947,7 @@ web = { path = "../web" }
     }
 
     #[test]
-    fn source_changes_invalidate_a_snapshot_but_private_outputs_do_not() {
+    fn source_and_registry_pair_changes_invalidate_snapshots_but_private_outputs_do_not() {
         let fixture = Fixture::new();
         fs::write(fixture.0.join("lib.rs"), "first").unwrap();
         let cache = fixture.0.join(".rustify-docs");
@@ -3045,6 +2968,29 @@ web = { path = "../web" }
             default_compile_dirs: BTreeSet::new(),
         };
         let first = layout.capture().unwrap();
+        let context = crate::release::context();
+        let mut paired = layout.clone();
+        paired.context = context.to_string();
+        let baseline = paired.capture().unwrap();
+        let compiled_baseline = paired.compiled(&baseline).digest;
+        for pointer in [
+            "/framework/packages/rustify-dom",
+            "/framework/library_rev",
+            "/distribution",
+            "/font_resolution",
+            "/template_lock",
+        ] {
+            let mut changed = context.clone();
+            *changed.pointer_mut(pointer).unwrap() = json!("changed");
+            paired.context = changed.to_string();
+            let after = paired.capture().unwrap();
+            assert_ne!(after.digest, baseline.digest, "{pointer}");
+            assert_ne!(
+                paired.compiled(&after).digest,
+                compiled_baseline,
+                "{pointer}"
+            );
+        }
         fs::write(cache.join("artifact"), "private output").unwrap();
         assert_eq!(layout.capture().unwrap().digest, first.digest);
         fs::write(fixture.0.join("lib.rs"), "second").unwrap();
@@ -3175,20 +3121,6 @@ web = { path = "../web" }
             framework_release: "rustify-docs@0.1.0".to_string(),
             local_roots: BTreeSet::new(),
         }
-    }
-
-    #[test]
-    fn framework_sources_need_one_explicit_matching_revision_and_exact_bindgen() {
-        assert!(validate_framework(&git_metadata("abcdef"), "abcdef").is_ok());
-        assert!(validate_framework(&git_metadata("abcdef"), "").is_err());
-        assert!(validate_framework(&git_metadata("abcdef"), "changed").is_err());
-        let mut metadata = git_metadata("abcdef");
-        metadata.value["packages"][1]["source"] =
-            json!("git+https://example.com/other?rev=abcdef#abcdef");
-        assert!(validate_framework(&metadata, "abcdef").is_err());
-        let mut metadata = git_metadata("abcdef");
-        metadata.value["packages"][3]["version"] = json!("0.2.127");
-        assert!(validate_framework(&metadata, "abcdef").is_err());
     }
 
     #[test]

@@ -891,6 +891,7 @@ pub fn compile(
 
 #[cfg(test)]
 mod tests {
+    #[cfg(rustify_repo_tests)]
     use crate::compiler::{Compiler, CompilerInput, DiagnosticKind, Limits};
 
     #[test]
@@ -1024,6 +1025,7 @@ mod tests {
     }
 
     #[test]
+    #[cfg(rustify_repo_tests)]
     fn color_branches_match_official_fixtures_and_preserve_pending_interpretations() {
         let fixture: serde_json::Value = serde_json::from_str(include_str!(
             "../../../../tests/utility/compiler/colors-fixtures.json"

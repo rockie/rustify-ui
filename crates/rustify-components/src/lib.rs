@@ -10,7 +10,7 @@
 pub mod button;
 pub mod catalog;
 pub mod checkbox;
-#[cfg(test)]
+#[cfg(all(test, rustify_repo_tests))]
 mod class_migration;
 pub mod color_field;
 pub mod data_table;
@@ -40,6 +40,10 @@ pub mod toast;
 pub mod toggle_group;
 pub mod tree;
 pub mod workspace;
+
+/// The stylesheets this package ships, read by Docs and the CLI through
+/// this API rather than by path.
+pub mod styles;
 
 // Floating controls generate their closed initial view on the host; the
 // SDK's browser overlay stack owns positioning, Escape and focus return.
@@ -292,3 +296,6 @@ mod stylesheet {
             .contains(r#"@custom-variant dark (&:is([data-rustify-scope][data-theme="dark"] *))"#));
     }
 }
+
+#[cfg(all(test, rustify_repo_tests))]
+mod repo_tests;

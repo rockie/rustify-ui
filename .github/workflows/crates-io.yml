@@ -1,0 +1,80 @@
+name: crates.io preflight
+
+on:
+  workflow_dispatch:
+    inputs:
+      library_rev:
+        description: Complete frozen library R commit SHA
+        required: true
+        type: string
+      cli_rev:
+        description: Complete frozen CLI C commit SHA
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: crates-io-preflight
+  cancel-in-progress: false
+
+jobs:
+  archives:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-14, ubuntu-24.04]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 90
+    env:
+      LIBRARY_REV: ${{ inputs.library_rev }}
+      CLI_REV: ${{ inputs.cli_rev }}
+      PYTHONDONTWRITEBYTECODE: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.cli_rev }}
+          fetch-depth: 0
+      - name: Validate immutable inputs
+        run: |
+          python3 - <<'PY'
+          import os, re, subprocess
+          for key in ('LIBRARY_REV', 'CLI_REV'):
+              revision = os.environ[key]
+              if not re.fullmatch(r'[0-9a-f]{40}', revision):
+                  raise SystemExit(f'{key} must be a complete lowercase SHA')
+              if subprocess.check_output(['git','rev-parse',f'{revision}^{{commit}}'], text=True).strip() != revision:
+                  raise SystemExit(f'{key} did not resolve to that commit')
+          if subprocess.check_output(['git','rev-parse','HEAD'], text=True).strip() != os.environ['CLI_REV']:
+              raise SystemExit('checkout must equal C')
+          PY
+      - uses: jdx/mise-action@v4
+      - uses: jdx/mr-boxington-action@v1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Single documentation targets
+        run: rustup target add --toolchain 1.99.0 x86_64-unknown-linux-gnu wasm32-unknown-unknown
+      - name: Package frozen R, reproduce the real template lock, package C
+        run: |
+          release_dir="$RUNNER_TEMP/rustify-crates-io"
+          python3 scripts/crates-io.py package-libraries --rev "$LIBRARY_REV" --out "$release_dir" > "$RUNNER_TEMP/libraries.json"
+          python3 scripts/crates-io.py freeze-cli --libraries "$release_dir" --library-rev "$LIBRARY_REV" > "$RUNNER_TEMP/freeze.json"
+          git diff --exit-code -- crates/rustify-docs-cli/assets
+          python3 scripts/crates-io.py package-cli --rev "$CLI_REV" --libraries "$release_dir" --out "$release_dir" > "$RUNNER_TEMP/cli.json"
+      - name: Package-only dependencies, documentation, installation and author smoke
+        run: |
+          python3 scripts/crates-io.py verify --release "$RUNNER_TEMP/rustify-crates-io" > "$RUNNER_TEMP/verify.json"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: crates-io-${{ matrix.os }}-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/libraries.json
+            ${{ runner.temp }}/freeze.json
+            ${{ runner.temp }}/cli.json
+            ${{ runner.temp }}/verify.json
+            ${{ runner.temp }}/rustify-crates-io/receipt.json
+            ${{ runner.temp }}/rustify-crates-io/crates/*.crate
+            ${{ runner.temp }}/rustify-crates-io/work/*/verification.json

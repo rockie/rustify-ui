@@ -18,6 +18,14 @@ registry = "src/lib.rs"
 [theme]
 document = "theme.json"
 
+[[theme.fonts]]
+family = "Author Sans"
+src = "fonts/author-sans.woff2"
+
+[[theme.fonts]]
+family = "Author Text"
+src = "fonts/author-text.ttf"
+
 [[nav.groups]]
 label = "Custom pages"
 routes = ["/custom/", "/plain/"]

@@ -409,6 +409,7 @@ pub fn compile(
 
 #[cfg(test)]
 mod tests {
+    #[cfg(rustify_repo_tests)]
     use crate::compiler::{Compiler, CompilerInput, GpuValue, Limits};
 
     #[test]
@@ -526,6 +527,7 @@ mod tests {
     }
 
     #[test]
+    #[cfg(rustify_repo_tests)]
     fn spacing_layout_functional_families_match_official_boundary_fixtures() {
         let fixture: serde_json::Value = serde_json::from_str(include_str!(
             "../../../../tests/utility/compiler/functional-spacing-fixtures.json"

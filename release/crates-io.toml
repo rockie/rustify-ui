@@ -1,0 +1,53 @@
+[[packages]]
+name = "rustify-classification-macros"
+path = "crates/rustify-style/upstream/classification-macros"
+group = "docs"
+dependencies = []
+
+[[packages]]
+name = "rustify-style"
+path = "crates/rustify-style"
+group = "docs"
+dependencies = ["rustify-classification-macros"]
+
+[[packages]]
+name = "rustify-docs-syntax"
+path = "crates/rustify-docs-syntax"
+group = "docs"
+dependencies = []
+
+[[packages]]
+name = "rustify-docs-macros"
+path = "crates/rustify-docs-macros"
+group = "docs"
+dependencies = ["rustify-docs-syntax"]
+
+[[packages]]
+name = "rustify-dom"
+path = "crates/rustify-dom"
+group = "docs"
+dependencies = ["rustify-style"]
+
+[[packages]]
+name = "rustify-components"
+path = "crates/rustify-components"
+group = "docs"
+dependencies = ["rustify-dom", "rustify-style"]
+
+[[packages]]
+name = "rustify-docs"
+path = "crates/rustify-docs"
+group = "docs"
+dependencies = ["rustify-dom", "rustify-components", "rustify-docs-macros", "rustify-style"]
+
+[[packages]]
+name = "rustify-docs-cli"
+path = "crates/rustify-docs-cli"
+group = "docs"
+dependencies = ["rustify-docs", "rustify-components", "rustify-dom", "rustify-docs-syntax", "rustify-style"]
+
+[[packages]]
+name = "rustify-style-wasm"
+path = "crates/rustify-style-wasm"
+group = "remaining"
+dependencies = ["rustify-style"]

@@ -24,6 +24,7 @@ fn compiler() -> Compiler {
 }
 
 #[test]
+#[cfg(rustify_repo_tests)]
 fn custom_variant_matrix_matches_official_css_and_errors() {
     assert_official_matrix(include_str!(
         "../../../../tests/utility/compiler/custom-variants-fixtures.json"
@@ -31,6 +32,7 @@ fn custom_variant_matrix_matches_official_css_and_errors() {
 }
 
 #[test]
+#[cfg(rustify_repo_tests)]
 fn parser_error_matrix_matches_official_css_and_errors() {
     assert_official_matrix(include_str!(
         "../../../../tests/utility/compiler/parser-errors-fixtures.json"
@@ -38,6 +40,7 @@ fn parser_error_matrix_matches_official_css_and_errors() {
 }
 
 #[test]
+#[cfg(rustify_repo_tests)]
 fn apply_matrix_matches_official_css_and_errors() {
     assert_official_matrix(include_str!(
         "../../../../tests/utility/compiler/apply-fixtures.json"
@@ -45,6 +48,7 @@ fn apply_matrix_matches_official_css_and_errors() {
 }
 
 #[test]
+#[cfg(rustify_repo_tests)]
 fn variant_parameter_matrix_matches_official_css_and_errors() {
     assert_official_matrix(include_str!(
         "../../../../tests/utility/compiler/variant-parameters-fixtures.json"
@@ -74,6 +78,7 @@ fn applied_global_resources_do_not_reject_flat_gpu_declarations() {
         .contains("@property --tw-border-style"));
 }
 
+#[cfg(rustify_repo_tests)]
 fn assert_official_matrix(fixture: &str) {
     let fixture: serde_json::Value = serde_json::from_str(fixture).unwrap();
     let mut failures = Vec::new();
@@ -222,6 +227,7 @@ fn reference_custom_branches_do_not_change_rule_sorting() {
 }
 
 #[test]
+#[cfg(rustify_repo_tests)]
 fn theme_dependencies_and_keyframes_match_official_css() {
     let fixture: serde_json::Value = serde_json::from_str(include_str!(
         "../../../../tests/utility/compiler/theme-fixtures.json"
@@ -271,6 +277,7 @@ fn gpu_reports_supply_raw_theme_and_registered_property_bindings() {
 }
 
 #[test]
+#[cfg(rustify_repo_tests)]
 fn dynamic_candidates_match_official_smoke_without_a_scanner() {
     let mut compiler = compiler();
     let prepared = compiler
@@ -365,6 +372,7 @@ fn arbitrary_properties_accept_opacity_modifiers() {
 }
 
 #[test]
+#[cfg(rustify_repo_tests)]
 fn arbitrary_property_matrix_matches_official_css() {
     let fixture: serde_json::Value = serde_json::from_str(include_str!(
         "../../../../tests/utility/compiler/arbitrary-properties-fixtures.json"
@@ -432,6 +440,7 @@ fn implemented_branches_are_admitted_and_unknown_roots_are_rejected() {
 }
 
 #[test]
+#[cfg(rustify_repo_tests)]
 fn scope_property_and_pseudo_nesting_match_full_official_fixture() {
     let mut compiler = Compiler::new(
         CompilerInput {
@@ -458,6 +467,7 @@ fn scope_property_and_pseudo_nesting_match_full_official_fixture() {
 }
 
 #[test]
+#[cfg(rustify_repo_tests)]
 fn all_static_utilities_match_each_official_candidate_and_sorted_union() {
     let fixture: serde_json::Value = serde_json::from_str(include_str!(
         "../../../../tests/utility/compiler/static-fixtures.json"
@@ -529,6 +539,7 @@ fn all_static_utilities_match_each_official_candidate_and_sorted_union() {
 }
 
 #[test]
+#[cfg(rustify_repo_tests)]
 fn ring_shadow_content_and_pseudo_variants_match_official_cases() {
     let fixtures: serde_json::Value = serde_json::from_str(include_str!(
         "../../../../tests/utility/compiler/effects-fixtures.json"
@@ -561,6 +572,7 @@ fn ring_shadow_content_and_pseudo_variants_match_official_cases() {
 }
 
 #[test]
+#[cfg(rustify_repo_tests)]
 fn all_nonresponsive_static_variants_match_official_cases_and_union() {
     let fixtures: serde_json::Value = serde_json::from_str(include_str!(
         "../../../../tests/utility/compiler/variant-fixtures.json"
@@ -1021,6 +1033,7 @@ fn generated_and_input_wrapper_ast_depth_are_bounded_before_commit() {
 }
 
 #[test]
+#[cfg(rustify_repo_tests)]
 fn external_variable_inputs_match_official_incremental_builds() {
     let corpus: serde_json::Value = serde_json::from_str(include_str!(
         "../../../../tests/utility/compiler/external-variables-fixtures.json"
@@ -1134,6 +1147,7 @@ fn external_variable_quota_failures_leave_the_committed_snapshot_unchanged() {
 /// same stylesheet as compiling the union once, re-adding is a no-op, and a
 /// discarded preparation leaves no trace in later output.
 #[test]
+#[cfg(rustify_repo_tests)]
 fn fixed_seed_batches_match_the_one_shot_union() {
     fn corpus(file: &str) -> Vec<String> {
         let fixture: serde_json::Value = serde_json::from_str(file).unwrap();

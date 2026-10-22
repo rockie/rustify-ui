@@ -27,7 +27,7 @@ In a browser, supply the document root's actual computed font size as `rem_px`. 
 
 For the bundled catalogue, use `rustify_ui::theme::font_context(rem_px, reduce_motion)`. The second argument supplies the host's reduced-motion preference; the resolved snapshot reduces motion when either the host or the document requests it. Theme Studio reads the root's computed size and watches its style/class, window resize and the media preference. A custom host must refresh its own context when that environment changes.
 
-The public types and validation live in [document.rs](../crates/rustify-ui/src/theme/document.rs), [metrics.rs](../crates/rustify-ui/src/theme/metrics.rs) and [resolve.rs](../crates/rustify-ui/src/theme/resolve.rs). `ThemeValuePatch` contains sparse author values; `ThemeValues::patched` rejects unknown keys, and the resulting values must be resolved before use.
+The public types and validation live in [document.rs](../crates/rustify-dom/src/theme/document.rs), [metrics.rs](../crates/rustify-dom/src/theme/metrics.rs) and [resolve.rs](../crates/rustify-dom/src/theme/resolve.rs). `ThemeValuePatch` contains sparse author values; `ThemeValues::patched` rejects unknown keys, and the resulting values must be resolved before use.
 
 ## JSON structure
 
@@ -49,11 +49,11 @@ The document retains differences between modes, including differences in fields 
 
 ## Color and size rules
 
-Colors accept short or long HEX with optional alpha, `rgb`/`rgba`, `hsl`/`hsla`, `oklch` and `transparent`. RGB/HSL accept the supported comma and space forms, percentage channels and alpha. Hue accepts degrees, radians, turns and grads. Named colors, `var`, `calc`, relative colors, `color-mix` and Display P3 are rejected. See [color.rs](../crates/rustify-ui/src/theme/color.rs) for executable syntax and conversion tests.
+Colors accept short or long HEX with optional alpha, `rgb`/`rgba`, `hsl`/`hsla`, `oklch` and `transparent`. RGB/HSL accept the supported comma and space forms, percentage channels and alpha. Hue accepts degrees, radians, turns and grads. Named colors, `var`, `calc`, relative colors, `color-mix` and Display P3 are rejected. See [color.rs](../crates/rustify-dom/src/theme/color.rs) for executable syntax and conversion tests.
 
 Preview colors are unpremultiplied, gamma encoded sRGB RGBA. OKLCH conversion clips out-of-gamut sRGB channels and adds a diagnostic; the original author value stays in JSON. Alpha must be within 0–1. RGB/HSL channels and OKLCH lightness follow CSS range clamping. `format_color` formats a resolved color without changing the author input. Contrast calculations composite alpha and return `None` when the background is transparent and no opaque canvas color is known.
 
-Lengths accept `px`, `rem` and unitless zero. Every resolved author length is limited to ±4096 CSS pixels; radius and blur cannot be negative, while spacing and font size must be positive. `layout-gap` is independent of the Tailwind utility unit `spacing`. Letter spacing accepts `em`, plus reference preset values in `px`, `rem` or `normal`; the resolved value is in −0.5…0.5em. NaN and infinity are rejected. Font stacks are parsed as family lists; declaration delimiters, functions, URLs and backslash escapes are rejected.
+Lengths accept `px`, `rem` and unitless zero. Every resolved author length is limited to ±4096 CSS pixels; radius and blur cannot be negative, while spacing and font size must be positive. `layout-gap` is independent of the Tailwind utility unit `spacing`. Letter spacing accepts `em`, plus reference preset values in `px`, `rem` or `normal`; the resolved value is in −0.5…0.5em. NaN and infinity are rejected. The default Packaged resolver parses family lists and rejects declaration delimiters, functions, URLs and backslash escapes. The Css policy preserves named families and quoted generic names, supports escaped quotes/backslashes inside quoted family names, and adds an unquoted generic fallback for each slot.
 
 For radius `r`, the resolved sm/md/lg/xl corners are `max(0, r−4)`, `max(0, r−2)`, `r` and `r+4`. At `r=6px`, these are 2/4/6/10px. This does not change the legacy 4/6/8px sm/md/lg scale. Shadow sizes resolve to one or two structured layers; color alpha is multiplied by shadow opacity. A legacy conversion starts with zero shadow opacity.
 
@@ -68,13 +68,68 @@ document = "theme.json"
 
 The path is relative to the site project. Keep the document inside the project and outside private files and generated output. It is a build input and is watched during development; it is never published as a download. Do not combine `theme.document` with `theme.primary`: the imported document supplies both primary colors.
 
-`rustify-docs check` and `build` validate both modes with the bundled font catalogue and the same 256 KiB import limit. Unknown tokens and font fallbacks retain the resolver's diagnostics. An invalid import prevents publication. Omitting `document` keeps the reading theme's system fonts and existing appearance.
+The currently published Git CLI **0.1.32** validates both modes against its
+bundled catalogue and publishes selected faces, existing CJK/emoji fallbacks
+and their notices. Its unchanged recipe and bytes are retained at the
+[fixed 0.1.32 source](https://github.com/rockie/rustify-ui/tree/88566ba1ed08223a5834f794840fff5e48f4ba8a).
 
-The generated stylesheet projects the validated colors, spacing, radius, font size and letter spacing onto the page and its interactive scopes. Reading panels use the imported radius. Light and dark use the document values; system mode follows the browser's color preference. The page owns the saved preference and first-frame CSS. Islands attach using their static initial theme, then follow the page mode through their shared reactive context, including floating menus and dialogs.
+### 0.2.0 candidate Docs font migration
 
-The CLI contains the same seven font files identified by the SDK catalogue. It publishes only the document's selected packaged faces and the existing Chinese/emoji glyph fallbacks, with each face's notice. Files use same-origin `assets/fonts/<sha256>.ttf` URLs. Generic stacks retain their SDK behavior and need no packaged face. Authors of a content-only site need the installed CLI and JSON file; no Makepad source directory or font download step is required.
+The **0.2.0 candidate** keeps the 256 KiB complete JSON import and projects
+colors, metrics, typography and mode onto the page and its island scopes.
+It resolves font stacks as CSS choices and embeds no font bytes. The default
+reading appearance is unchanged when no document is imported. For local
+font setup, use the inactive complete example and these steps:
 
-The catalogue includes IBM Plex Sans, Noto Sans, Rustify WenKai, Noto Serif, Liberation Mono, JetBrains Mono and Noto Color Emoji. These preserve the repository's existing bytes and font modifications. The bundled Liberation Mono 1.04 uses GPL v2 with its original font exceptions; selecting it also publishes the corresponding source archive beside its full notice. The other six faces use OFL 1.1. See [font notices](../makepad/widgets/resources/FONT-LICENSES.md) and the `docs-static-fonts` entry in [sources.lock.json](../sources.lock.json).
+The default reading theme uses system fonts and makes no font requests. To
+customize a complete theme without building Theme Studio:
+
+1. Copy `theme.example.json` to `theme.json`. The example is inactive until you
+   set `document` below.
+2. In both `styles.light` and `styles.dark`, set the needed font token, for
+   example `"font-sans": "Brand Sans, sans-serif"`. Keep all other tokens.
+3. Put a font you may redistribute at `fonts/brand-sans.woff2`, then add:
+
+```toml
+[theme]
+document = "theme.json"
+
+[[theme.fonts]]
+family = "Brand Sans"
+src = "fonts/brand-sans.woff2"
+weight = "400" # or an ascending range such as "100 900"
+style = "normal" # or "italic"
+```
+
+Registration alone does not select a font; the document's font stack selects
+it. Paths are project-local, preferably outside `static/`; woff2, woff, ttf
+and otf are supported. URLs, escaping symlinks, private files, output files,
+empty files and duplicate family/weight/style faces fail the build. Keep
+font notices and any redistribution/source obligations with your project.
+The build publishes declared bytes at same-origin `assets/fonts/<sha256>.<ext>`
+URLs with `font-display: swap`. It performs no font download.
+
+Run `rustify-docs check --deny-warnings` and `rustify-docs build`, then preview
+the complete output. Both modes and islands use the same CSS font policy.
+The CLI embeds no font files. An imported but undeclared named family gives
+`theme-font-system`: use a local declaration or change the relevant tokens in
+both modes to `sans-serif`, `serif` or `monospace`. Remaining warnings still
+fail `--deny-warnings`. CJK and emoji now follow the author stack and system
+fallback rather than the old bundled glyph fallbacks.
+
+When upgrading an old imported theme, either change both modes' three font
+slots to the generic families or explicitly copy and declare licensed local
+files. Exact glyphs and metrics can change with system fallback. The old
+catalogue includes IBM Plex Sans, Noto Sans, Rustify WenKai, Noto Serif,
+Liberation Mono, JetBrains Mono and Noto Color Emoji. Rustify WenKai is the
+repository's repaired and renamed face. Liberation Mono 1.04 uses GPL v2
+with its original font exceptions and source obligations; the other six
+faces use OFL 1.1. Upgrading the CLI does not remove obligations on font files
+you already distribute. Consult the [original notices](../makepad/widgets/resources/FONT-LICENSES.md)
+and the old release's [font provenance](https://github.com/rockie/rustify-ui/blob/88566ba1ed08223a5834f794840fff5e48f4ba8a/sources.lock.json).
+To roll back, restore the backed-up project configuration, manifest/lock,
+theme and font files together, then reinstall the fixed Git CLI 0.1.32 using
+the [author guide](docs-ssg.md#install-and-maintain-the-cli).
 
 Complete class names in registered Rust sources, including initially hidden branches, contribute to the site's stylesheet. A dynamically assembled class still needs an explicit complete candidate in the source; importing a theme does not enable arbitrary runtime CSS.
 
@@ -131,13 +186,13 @@ pub fn mount_exported_theme(
 
 The fixture deliberately uses a 16px root and no host motion preference. Replace those arguments with the current host environment in a dynamic application. Keep the returned `AppHandle` alive. Publish newly resolved `Arc<ResolvedTheme>` values through the signal when the mode or document changes; pass that same snapshot through typed GPU props.
 
-[ThemeScope](../crates/rustify-ui/src/theme/provider.rs#L89) claims the mounted scope root, writes its complete CSSOM projection and `data-theme`, and restores previous values on disposal. Use it inside an SDK `mount`; each independently mounted container can have its own mode. It does not write theme values to `documentElement` or `body`. A root may have one theme provider, including the legacy provider.
+[ThemeScope](../crates/rustify-dom/src/theme/provider.rs#L89) claims the mounted scope root, writes its complete CSSOM projection and `data-theme`, and restores previous values on disposal. Use it inside an SDK `mount`; each independently mounted container can have its own mode. It does not write theme values to `documentElement` or `body`. A root may have one theme provider, including the legacy provider.
 
-[ThemeBoundary](../crates/rustify-ui/src/theme/provider.rs#L128) wraps children with a `Signal<ThemeValuePatch>`. It keeps the enclosing mode and re-resolves radius, typography and shadows from the outer snapshot plus the patch. An empty patch removes local values and restores inheritance. Validate a candidate with `ResolvedTheme::patched` before publishing it; an invalid boundary patch uses the enclosing theme and records a diagnostic. SDK overlay layers consume the effective theme where they were created, including boundary values; they do not need a separate theme provider.
+[ThemeBoundary](../crates/rustify-dom/src/theme/provider.rs#L128) wraps children with a `Signal<ThemeValuePatch>`. It keeps the enclosing mode and re-resolves radius, typography and shadows from the outer snapshot plus the patch. An empty patch removes local values and restores inheritance. Validate a candidate with `ResolvedTheme::patched` before publishing it; an invalid boundary patch uses the enclosing theme and records a diagnostic. SDK overlay layers consume the effective theme where they were created, including boundary values; they do not need a separate theme provider.
 
 ## Fonts and GPU consumers
 
-[fonts.rs](../crates/rustify-ui/src/theme/fonts.rs#L34) defines six selectable faces: IBM Plex Sans, Noto Sans, Rustify WenKai, Noto Serif, Liberation Mono and JetBrains Mono. Slot fallbacks are IBM Plex Sans, Noto Serif and Liberation Mono. `dom_font_stack` and `gpu_font_family` append the bundled CJK and emoji glyph fallbacks in the same order. An unknown author stack stays in JSON while `ResolvedFont::fallback` and diagnostics explain the packaged family used for preview. Language preferences do not rewrite author font stacks or theme names.
+[fonts.rs](../crates/rustify-dom/src/theme/fonts.rs#L34) defines six selectable faces: IBM Plex Sans, Noto Sans, Rustify WenKai, Noto Serif, Liberation Mono and JetBrains Mono. Slot fallbacks are IBM Plex Sans, Noto Serif and Liberation Mono. `dom_font_stack` and `gpu_font_family` append the bundled CJK and emoji glyph fallbacks in the same order. An unknown author stack stays in JSON while `ResolvedFont::fallback` and diagnostics explain the packaged family used for preview. Language preferences do not rewrite author font stacks or theme names.
 
 Rustify WenKai is the repaired, renamed regular WenKai face. Its resource path remains `makepad_widgets/resources/LXGWWenKaiRegular.ttf`. The repair preserves glyph outlines and metrics while replacing the invalid cmap arrangement; see the [font notices](../makepad/widgets/resources/FONT-LICENSES.md), [repair script](../scripts/repair-theme-font.py) and [source records](../sources.lock.json). Copy resources and notices with the static build. CSS exports list their same-origin paths and emit `@font-face`; downloading a stylesheet does not download or embed the font bytes.
 
@@ -147,7 +202,7 @@ DOM and Makepad share color channels, metrics, fonts and structured shadow layer
 
 ## Import and export
 
-The [codec](../crates/rustify-ui/src/theme/codec.rs) exports `import_json`, `import_css`, `export_json`, `export_css`, `ThemeImport`, `CssProfile` and `THEME_INPUT_LIMIT` through `rustify_ui::theme`. Import and export are limited to 256 KiB of UTF-8 text. Import returns a candidate document and diagnostics; it does not mutate application state or apply CSS.
+The [codec](../crates/rustify-dom/src/theme/codec.rs) exports `import_json`, `import_css`, `export_json`, `export_css`, `ThemeImport`, `CssProfile` and `THEME_INPUT_LIMIT` through `rustify_ui::theme`. Import and export are limited to 256 KiB of UTF-8 text. Import returns a candidate document and diagnostics; it does not mutate application state or apply CSS.
 
 JSON import validates the version, identity and both complete modes, rejecting duplicate token keys. It uses the document's own id/name. Unknown string tokens remain in JSON and are excluded from CSS/GPU projection. CSS import takes a base document: it keeps its id/name, overlays imported light values on the base light mode, and overlays imported light then dark values on the base dark mode. Missing values and ignored rules are diagnosed.
 

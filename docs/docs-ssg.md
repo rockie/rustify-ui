@@ -75,12 +75,72 @@ production `build` always reads the complete inputs. Restore a deployment by
 replacing the entire output and its matching manifest with a complete prior
 build. Keep each version's fingerprinted assets together.
 
-`--help` and the generated README use the same source revision recorded at
+In the historical 0.1.32 CLI, `--help` and the generated README use the same source revision recorded at
 CLI compilation. This reads Cargo's existing git metadata using Rust alone;
 it requires no git command or network request. A source archive without
 that metadata reports `source: unknown` and gives the pinned 0.1.3 recipe.
 The bundled help also retains its older 0.1.3 rollback recipe; use the
 0.1.31 target above for this release.
+
+## 0.2.0 registry candidate and migration
+
+Registry 0.2.0 is a candidate pending publication. Keep using the verified Git
+installation above until public installation is confirmed. The candidate
+installation and upgrade command is:
+
+```sh
+cargo install rustify-docs-cli --version 0.2.0 --locked
+rustify-docs --version
+rustify-docs --build-info
+cargo install --list
+```
+
+For reinstall/upgrade, add `--force`. No custom profile is needed. Expect
+`panic: unwind`, `distribution: registry`, and one `framework: <JSON>` line
+with the exact versions of rustify-docs, rustify-dom and rustify-components,
+wasm-bindgen and library commit. `source` identifies the CLI commit when
+archive VCS metadata exists; an unknown source does not disable a valid
+registry template. Package VCS identity takes precedence over an unrelated
+ancestor Git directory.
+
+`rustify-docs new my-site` creates content only; `new my-site --template
+components` creates a Rust project with exact registry dependencies and a
+real checksum-bearing lock. Both include inactive `theme.example.json`.
+The components template uses `rustify_dom` imports and needs the wasm32
+Rust target. Ordinary check/build/dev keep the supplied lock. A wrong version,
+mixed source, duplicate DOM core or non-direct framework dependency produces
+`rust-framework-pair`, listing actual/expected versions and the restore/upgrade
+action. Registry CLIs do not accept arbitrary local paths or Git revisions.
+
+To migrate an existing 0.1.32 component project:
+
+1. Back up its manifest, lock, sources/configuration, theme/fonts, working CLI
+   command and whole successful dist. Leave that backup unchanged.
+2. With the new CLI, create a fresh `--template components` project. Keep its
+   manifest and real lock, then bring over author src/content/static, any
+   project-owned fonts, and configuration/theme. Retain the new profiles and
+   shared-library/bin layout; port custom dependencies explicitly.
+3. For a manual migration, change all three framework dependencies to the
+   versions in the new CLI's build-info, replace rustify-ui with rustify-dom,
+   change `rustify_ui` imports and feature forwards to `rustify_dom`/rustify-dom,
+   and explicitly generate the lock. Alternatively retain the import key with
+   `rustify-ui = { package = "rustify-dom", version = "=0.2.0", default-features = false }`.
+   Remove rustify-components/gpu. Run check, build and preview, then restart dev.
+4. An imported old theme can request previously bundled font names. Choose
+   system generic stacks in both modes, or supply licensed files and declare
+   theme.fonts using the [font instructions below](#020-candidate-project-owned-fonts).
+   `theme-font-system` warns on undeclared named families; `--deny-warnings`
+   still fails while warnings remain. CJK/emoji and line wrapping may change.
+
+Docs component projects use DOM rendering. For a GPU application, keep the
+SDK and components at one complete Git revision; enable gpu on the SDK.
+Combining a Git SDK with registry components needs the root rustify-dom
+patch described in the [source pairing recipe](quickstart.md#020-dom-candidate-and-gpu-source-pairing).
+The Docs registry same-source rule remains strict.
+
+To roll back, reinstall the 0.1.32 Git CLI with its command above and restore
+its original manifest/lock, theme/font files and complete output. Do not mix
+one build's HTML with another build's wasm, CSS or fonts.
 
 ## Commands
 
@@ -445,13 +505,55 @@ both modes and applies the same resolved semantic colours, typography,
 spacing and radius to the page and its island scopes. System mode follows
 the reader's preference; islands do not store separate mode choices.
 
-Referenced fonts and glyph fallbacks come from the CLI's bundled bytes and
-licenses, with font files published as `assets/fonts/<digest>.ttf`. No font is
-downloaded from another origin. Unknown theme tokens or font fallbacks keep
-their diagnostics; missing packaged font bytes or licenses stop the build.
-Without `theme.document`, the default reading theme uses system fonts and
-adds no font assets. See [themes](themes.md) for the document format and
-font selection.
+The published Git CLI **0.1.32** bundles the seven catalogue/glyph fallback
+faces and their notices, and emits the selected fonts under digest paths.
+That historical recipe is fixed at [0.1.32's source](https://github.com/rockie/rustify-ui/tree/88566ba1ed08223a5834f794840fff5e48f4ba8a).
+Without an imported document it uses system fonts. Its font bytes and exact
+fallback behavior belong to that release.
+
+### 0.2.0 candidate: project-owned fonts
+
+The 0.2.0 candidate keeps the system-font default and removes CLI font
+embedding. Do not apply this configuration to 0.1.32; use the candidate CLI
+only after obtaining the matching candidate distribution.
+
+The default reading theme uses system fonts and makes no font requests. To
+customize a complete theme without building Theme Studio:
+
+1. Copy `theme.example.json` to `theme.json`. The example is inactive until you
+   set `document` below.
+2. In both `styles.light` and `styles.dark`, set the needed font token, for
+   example `"font-sans": "Brand Sans, sans-serif"`. Keep all other tokens.
+3. Put a font you may redistribute at `fonts/brand-sans.woff2`, then add:
+
+```toml
+[theme]
+document = "theme.json"
+
+[[theme.fonts]]
+family = "Brand Sans"
+src = "fonts/brand-sans.woff2"
+weight = "400" # or an ascending range such as "100 900"
+style = "normal" # or "italic"
+```
+
+Registration alone does not select a font; the document's font stack selects
+it. Paths are project-local, preferably outside `static/`; woff2, woff, ttf
+and otf are supported. URLs, escaping symlinks, private files, output files,
+empty files and duplicate family/weight/style faces fail the build. Keep
+font notices and any redistribution/source obligations with your project.
+The build publishes declared bytes at same-origin `assets/fonts/<sha256>.<ext>`
+URLs with `font-display: swap`. It performs no font download.
+
+Run `rustify-docs check --deny-warnings` and `rustify-docs build`, then preview
+the complete output. Both modes and islands use the same CSS font policy.
+The CLI embeds no font files. An imported but undeclared named family gives
+`theme-font-system`: use a local declaration or change the relevant tokens in
+both modes to `sans-serif`, `serif` or `monospace`. Remaining warnings still
+fail `--deny-warnings`. CJK and emoji now follow the author stack and system
+fallback rather than the old bundled glyph fallbacks.
+
+See [themes](themes.md#static-documentation-themes) for the document model.
 
 ## Frontmatter
 
@@ -1862,8 +1964,10 @@ Errors stop a build; warnings do not, unless `--deny-warnings` is given.
 | `not-in-nav` | warning | A published page no nav group lists |
 | `logo-missing` | error | `theme.logo` naming a file that does not exist |
 | `brand-contrast` | warning | A primary colour below 4.5:1 for links or button labels |
-| `theme-document`, `theme-font-resource`, `theme-document-resource` | error | An invalid imported theme, missing bundled font resources, or a theme document being published as an asset |
-| `theme-token` | warning | An unknown imported token or resolved font fallback |
+| `theme-document`, `theme-document-resource` | error | An invalid imported theme or a theme document being published as an asset |
+| `theme-font` | error | An invalid local font descriptor, path, unreadable/empty file or duplicate face |
+| `theme-font-system` | warning | An imported named family has no local declaration; the browser uses installed fonts and CSS fallback |
+| `theme-token` | warning | An unknown imported token or other resolver diagnostic |
 | `symlink-outside`, `unreadable`, `not-utf8` | error | An input that cannot be read safely |
 | `private-file` | error | A link, image, logo or preview image that is, or leads to, a private file |
 | `no-pages` | error | Nothing to publish: no content directory, no page, or only drafts |

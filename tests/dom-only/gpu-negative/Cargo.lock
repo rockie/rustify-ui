@@ -1136,7 +1136,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "rustify-ui"
+name = "rustify-dom"
 version = "0.1.0"
 dependencies = [
  "js-sys",
@@ -1146,6 +1146,17 @@ dependencies = [
  "serde_json",
  "wasm-bindgen",
  "wasm-bindgen-futures",
+ "web-sys",
+]
+
+[[package]]
+name = "rustify-ui"
+version = "0.1.0"
+dependencies = [
+ "js-sys",
+ "leptos",
+ "rustify-dom",
+ "wasm-bindgen",
  "web-sys",
 ]
 

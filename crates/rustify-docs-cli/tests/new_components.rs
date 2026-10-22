@@ -99,20 +99,17 @@ fn components_never_write_into_a_nonempty_directory() {
 fn components_ship_a_complete_paired_lock_or_refuse_without_writing() {
     let temp = Temp::new("components-pair");
     let tools = target_toolchain(&temp, true);
-    let framework = include_str!("../assets/framework-revision.txt").trim();
-    let cli = env!("RUSTIFY_DOCS_SOURCE_REVISION");
-    let revision =
-        |value: &str| value.len() == 40 && value.bytes().all(|byte| byte.is_ascii_hexdigit());
+    let record: serde_json::Value =
+        serde_json::from_str(include_str!("../assets/framework-release.json")).unwrap();
     let created = tools.run_in(&temp.0, &["new", "My Docs", "--template", "components"]);
-    if !revision(framework) || !revision(cli) {
+    if record["library_rev"].is_null() {
         assert_eq!(created.status.code(), Some(1));
         let message = stderr(&created);
         assert!(message.contains("components template"), "{message}");
         assert!(
-            message.contains("paired") || message.contains("traceable CLI source revision"),
+            message.contains("not frozen") && message.contains("registry CLI"),
             "{message}"
         );
-        assert!(message.contains("cargo install --git https://github.com/rockie/rustify-ui"));
         assert!(!temp.path("My Docs").exists());
     } else {
         succeeded(&created);
@@ -131,16 +128,14 @@ fn components_ship_a_complete_paired_lock_or_refuse_without_writing() {
                 "src/bin/docs-render.rs",
                 "src/demos.rs",
                 "src/lib.rs",
+                "theme.example.json",
             ]
         );
         let manifest = temp.read("My Docs/Cargo.toml");
         assert!(manifest.starts_with("[package]\nname = \"my-docs\"\n"));
         assert!(manifest.contains("[workspace]"));
         assert!(manifest.contains("name = \"site_docs\""));
-        assert_eq!(
-            manifest.matches(&format!("rev = \"{framework}\"")).count(),
-            3
-        );
+        assert_eq!(manifest.matches("version = \"=0.2.0\"").count(), 3);
         assert!(!manifest.contains("path = \"../../"));
         let embedded = std::fs::read_to_string(
             std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("assets/components-Cargo.lock"),
@@ -156,7 +151,7 @@ fn components_ship_a_complete_paired_lock_or_refuse_without_writing() {
             .contains("name = \"My Docs\""));
         let readme = temp.read("My Docs/README.md");
         assert!(readme.contains("new 'My Docs' --template components"));
-        assert!(readme.contains(cli) && readme.contains(framework));
+        assert!(readme.contains("crates.io") && readme.contains("=0.2.0"));
         assert!(!readme.contains("{{"));
     }
     assert_eq!(

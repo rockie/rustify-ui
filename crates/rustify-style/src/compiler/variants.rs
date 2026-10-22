@@ -1447,9 +1447,11 @@ mod text_tests {
 
 #[cfg(test)]
 mod tests {
+    #[cfg(rustify_repo_tests)]
     use crate::compiler::{Compiler, CompilerInput, Limits};
 
     #[test]
+    #[cfg(rustify_repo_tests)]
     fn dynamic_variants_match_official_css_and_union_order() {
         let fixture: serde_json::Value = serde_json::from_str(include_str!(
             "../../../../tests/utility/compiler/dynamic-variant-fixtures.json"

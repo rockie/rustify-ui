@@ -404,6 +404,7 @@ pub fn compile(
 
 #[cfg(test)]
 mod tests {
+    #[cfg(rustify_repo_tests)]
     use crate::compiler::{Compiler, CompilerInput, Limits};
 
     #[test]
@@ -437,6 +438,7 @@ mod tests {
     }
 
     #[test]
+    #[cfg(rustify_repo_tests)]
     fn typography_branches_match_official_fixtures() {
         let fixture: serde_json::Value = serde_json::from_str(include_str!(
             "../../../../tests/utility/compiler/typography-fixtures.json"

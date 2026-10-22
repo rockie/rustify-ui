@@ -303,7 +303,9 @@ pub(super) fn expand(
 
 #[cfg(test)]
 mod tests {
-    use super::super::{CompileError, Compiler, CompilerInput, Limits, SourceAsset};
+    #[cfg(rustify_repo_tests)]
+    use super::super::SourceAsset;
+    use super::super::{CompileError, Compiler, CompilerInput, Limits};
 
     fn limits() -> Limits {
         Limits {
@@ -409,6 +411,7 @@ mod tests {
     }
 
     #[test]
+    #[cfg(rustify_repo_tests)]
     fn source_directives_match_official_css_errors_and_incremental_builds() {
         let fixtures: serde_json::Value = serde_json::from_str(include_str!(
             "../../../../tests/utility/compiler/source-directives-fixtures.json"

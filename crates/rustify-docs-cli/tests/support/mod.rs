@@ -33,8 +33,13 @@ pub fn pair_component_project(project: &Path) {
     let pair: serde_json::Value = serde_json::from_slice(&output.stdout).unwrap();
     assert_eq!(
         pair["framework_revision"],
-        include_str!("../../assets/framework-revision.txt").trim(),
-        "the tested CLI and its Git source C must have the same paired R"
+        serde_json::from_str::<serde_json::Value>(include_str!(
+            "../../assets/framework-release.json"
+        ))
+        .unwrap()["library_rev"]
+            .as_str()
+            .unwrap_or(""),
+        "the tested CLI and embedded release record must have the same paired R"
     );
 }
 

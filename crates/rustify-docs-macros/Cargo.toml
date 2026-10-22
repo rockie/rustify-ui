@@ -3,15 +3,25 @@ name = "rustify-docs-macros"
 version.workspace = true
 edition.workspace = true
 license.workspace = true
-publish.workspace = true
+publish = ["crates-io"]
 description = "Procedural site registry declarations for Rustify Docs"
+
+repository = "https://github.com/rockie/rustify-ui"
+documentation = "https://docs.rs/rustify-docs-macros/0.2.0"
+readme = "README.md"
+rust-version = "1.99"
+include = ["src/**", "README.md", "LICENSE"]
 
 [lib]
 proc-macro = true
 
 [dependencies]
-rustify-docs-syntax = { path = "../rustify-docs-syntax" }
-syn = { version = "=2.0.119", features = ["full"] }
-proc-macro2 = "=1.0.107"
-quote = "=1.0.47"
-serde_json = "=1.0.151"
+rustify-docs-syntax = { path = "../rustify-docs-syntax", version = "=0.2.0" }
+syn = { version = "2.0.119", features = ["full"] }
+proc-macro2 = "1.0.107"
+quote = "1.0.47"
+serde_json = "1.0.151"
+
+[package.metadata.docs.rs]
+default-target = "x86_64-unknown-linux-gnu"
+targets = []

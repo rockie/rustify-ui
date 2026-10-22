@@ -10,8 +10,11 @@ use rustify_docs::diagnostic_text::{code_span, literal};
 use std::path::{Path, PathBuf};
 use std::process::Command;
 
+const THEME_EXAMPLE: &str = include_str!("../templates/theme.example.json");
+
 /// The `content` template, as `(path, text)`; `{{name}}` is the site's name.
 const CONTENT: &[(&str, &str)] = &[
+    ("theme.example.json", THEME_EXAMPLE),
     (
         "rustify-docs.toml",
         include_str!("../templates/content/rustify-docs.toml"),
@@ -39,6 +42,7 @@ const CONTENT: &[(&str, &str)] = &[
 ];
 
 const COMPONENTS: &[(&str, &str)] = &[
+    ("theme.example.json", THEME_EXAMPLE),
     (
         "Cargo.toml",
         include_str!("../templates/components/Cargo.toml.in"),
@@ -149,8 +153,6 @@ fn quoted(text: &str) -> String {
 fn fill(template: &str, name: &str) -> String {
     template
         .replace("{{version}}", crate::VERSION)
-        .replace("{{install-version}}", crate::install_version())
-        .replace("{{revision}}", crate::install_revision())
         .replace("{{install}}", &crate::install())
         .replace("{{rollback}}", &crate::rollback())
         .replace("{{rollback-version}}", crate::PREVIOUS_VERSION)
@@ -181,41 +183,50 @@ fn package_name(name: &str) -> String {
     }
 }
 
-fn is_revision(revision: &str) -> bool {
-    revision.len() == 40 && revision.bytes().all(|byte| byte.is_ascii_hexdigit())
+fn template_pair(lock: &str) -> Result<(), String> {
+    let record = crate::release::Framework::embedded()?;
+    if record.value["library_rev"].is_null() {
+        return Err(
+            "This CLI's components template is not frozen. Install the released registry CLI."
+                .into(),
+        );
+    }
+    let document: toml::Value =
+        toml::from_str(lock).map_err(|error| format!("invalid template lock: {error}"))?;
+    let packages = document
+        .get("package")
+        .and_then(toml::Value::as_array)
+        .ok_or("template lock has no packages")?;
+    for name in crate::release::FRAMEWORKS {
+        let found: Vec<_> = packages
+            .iter()
+            .filter(|p| p.get("name").and_then(toml::Value::as_str) == Some(name))
+            .collect();
+        let [package] = found.as_slice() else {
+            return Err(format!("template lock must resolve exactly one {name}"));
+        };
+        if package.get("version").and_then(toml::Value::as_str) != Some(record.version(name))
+            || package.get("source").and_then(toml::Value::as_str)
+                != Some(crate::release::CRATES_IO)
+            || package
+                .get("checksum")
+                .and_then(toml::Value::as_str)
+                .is_none_or(|sum| sum.len() != 64 || !sum.bytes().all(|b| b.is_ascii_hexdigit()))
+        {
+            return Err(format!("This CLI's components template lock is not frozen for {name}@{}. Install the released registry CLI. {}", record.version(name), crate::release::PAIR_ADVICE));
+        }
+    }
+    Ok(())
 }
 
-fn framework_revision() -> Result<&'static str, String> {
-    let install = "Install a published CLI/framework pair with `cargo install --git https://github.com/rockie/rustify-ui --rev <CLI-C> --locked --profile docs-cli rustify-docs-cli`.";
-    if !is_revision(crate::SOURCE_REVISION) {
-        return Err(format!(
-            "The components template requires a traceable CLI source revision.\n{install}"
-        ));
-    }
-    let framework = crate::EXPECTED_FRAMEWORK_REV.trim();
-    if !is_revision(framework) {
-        return Err(format!(
-            "The components template has no paired framework revision in this CLI.\n{install}"
-        ));
-    }
-    Ok(framework)
-}
-
-fn fill_components(template: &str, name: &str, package: &str, framework: &str) -> String {
-    let install = format!(
-        "cargo install --git https://github.com/rockie/rustify-ui --rev {} --locked --profile docs-cli rustify-docs-cli",
-        crate::SOURCE_REVISION
-    );
+fn fill_components(template: &str, name: &str, package: &str) -> String {
     let directory = format!("'{}'", name.replace('\'', "'\\''"));
-    template
-        .replace("{{version}}", crate::VERSION)
-        .replace("{{revision}}", crate::SOURCE_REVISION)
-        .replace("{{framework-revision}}", framework)
-        .replace("{{install}}", &install)
-        .replace("{{package}}", package)
-        .replace("{{directory}}", &directory)
-        .replace("\"{{name}}\"", &format!("\"{}\"", quoted(name)))
-        .replace("{{name}}", name)
+    fill(
+        &template
+            .replace("{{package}}", package)
+            .replace("{{directory}}", &directory),
+        name,
+    )
 }
 
 fn named_lock(lock: &str, package: &str) -> Result<String, String> {
@@ -306,10 +317,10 @@ pub fn run(dir: &Path, template: &str) -> Result<String, String> {
     };
 
     let components = if template == "components" {
-        let framework = framework_revision()?;
+        template_pair(COMPONENTS_LOCK)?;
         let package = package_name(&name);
         let lock = named_lock(COMPONENTS_LOCK, &package)?;
-        Some((framework, package, lock))
+        Some((package, lock))
     } else {
         None
     };
@@ -321,12 +332,12 @@ pub fn run(dir: &Path, template: &str) -> Result<String, String> {
             let target = staging.join(path);
             std::fs::create_dir_all(target.parent().expect("template paths have a parent"))?;
             let rendered = match &components {
-                Some((framework, package, _)) => fill_components(text, &name, package, framework),
+                Some((package, _)) => fill_components(text, &name, package),
                 None => fill(text, &name),
             };
             std::fs::write(target, rendered)?;
         }
-        if let Some((_, _, lock)) = &components {
+        if let Some((_, lock)) = &components {
             std::fs::write(staging.join("Cargo.lock"), lock)?;
         }
         if existed {
@@ -381,7 +392,6 @@ mod tests {
             "cd {{directory}}\nname = \"{{name}}\"\npackage = \"{{package}}\"\n# {{name}}\n",
             "My 'Docs' $(touch nope) {{package}}",
             "my-docs-touch-nope-package",
-            "framework",
         );
         assert_eq!(
             text,
@@ -405,15 +415,17 @@ mod tests {
     }
 
     #[test]
-    fn source_identities_must_be_complete_git_revisions() {
-        assert!(is_revision("0123456789abcdef0123456789abcdef01234567"));
-        for revision in [
-            "",
-            "main",
-            "01234567",
-            "g123456789abcdef0123456789abcdef01234567",
-        ] {
-            assert!(!is_revision(revision));
+    fn components_manifest_uses_exact_registry_versions_without_source_revision() {
+        let template = include_str!("../templates/components/Cargo.toml.in");
+        let text = fill_components(template, "Site", "site");
+        let document: toml::Value = toml::from_str(&text).unwrap();
+        for name in crate::release::FRAMEWORKS {
+            let dependency = &document["dependencies"][name];
+            assert_eq!(dependency["version"].as_str(), Some("=0.2.0"));
+            assert!(dependency.get("git").is_none());
+            assert!(dependency.get("path").is_none());
         }
+        assert!(!text.contains("{{"));
+        assert!(template_pair("version = 4\n").is_err());
     }
 }

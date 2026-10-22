@@ -1,0 +1,29 @@
+# Its own workspace on purpose: this probe resolves the crates under test by
+# path, and must not join the repository's - it would inherit that workspace's
+# features and lockfile and stop testing the thing it exists to test.
+[workspace]
+
+[package]
+name = "rustify-dom-compat"
+version = "0.0.0"
+edition = "2021"
+publish = false
+
+[features]
+default = []
+csr = ["rustify-dom/csr", "rustify-components/csr"]
+ssr = ["rustify-dom/ssr", "rustify-components/ssr"]
+hydrate = ["rustify-dom/hydrate", "rustify-components/hydrate"]
+# The only mode that builds the facade and the region bridge with it, and so
+# the only mode that can compare what each of them calls `Pace`.
+gpu = ["rustify-ui/gpu", "rustify-components/csr", "dep:rustify-makepad"]
+
+[dependencies]
+# Both spellings, deliberately: the core is named by its own name, the facade
+# by its own name, and the components crate by the alias it imports under.
+rustify-dom = { path = "../../../crates/rustify-dom", default-features = false }
+rustify-ui = { path = "../../../crates/rustify-ui", default-features = false }
+# Carried so that every mode of this probe builds the components crate against
+# the core rather than the facade. Which is what a DOM-only application gets.
+rustify-components = { path = "../../../crates/rustify-components", default-features = false }
+rustify-makepad = { path = "../../../crates/rustify-makepad", optional = true }

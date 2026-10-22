@@ -18,16 +18,10 @@ def prepare(destination: Path, cli: Path, base: str | None = None) -> Path:
     destination.mkdir(parents=True, exist_ok=True)
     if any(destination.iterdir()):
         raise ValueError("the fixture destination must be empty")
-    for directory in ("content", "src", "static"):
+    for directory in ("content", "src", "static", "fonts"):
         shutil.copytree(source / directory, destination / directory)
     for name in ("Cargo.toml", "Cargo.lock", "rustify-docs.toml", "theme.json"):
         shutil.copyfile(source / name, destination / name)
-    manifest = (destination / "Cargo.toml").read_text()
-    for name in ("rustify-ui", "rustify-components", "rustify-docs"):
-        old = f'path = "../../../../crates/{name}"'
-        assert manifest.count(old) == 1
-        manifest = manifest.replace(old, "path = " + json.dumps(str(repository / "crates" / name)))
-    (destination / "Cargo.toml").write_text(manifest)
     for directory in ("src", "locales"):
         shutil.copytree(overlay / directory, destination / directory, dirs_exist_ok=True)
     registry = (destination / "src/lib.rs").read_text()

@@ -3,26 +3,33 @@ name = "rustify-components"
 version.workspace = true
 edition.workspace = true
 license.workspace = true
-publish.workspace = true
+publish = ["crates-io"]
 description = "DOM components for the Rustify UI SDK, forked from Rust/UI and rewritten to be controlled, CSP-clean and reachable"
+
+repository = "https://github.com/rockie/rustify-ui"
+documentation = "https://docs.rs/rustify-components/0.2.0"
+readme = "README.md"
+rust-version = "1.99"
+include = ["src/**", "README.md", "LICENSE", "css/**", "LICENSE-RUST-UI"]
 
 [features]
 default = ["csr"]
 csr = ["rustify-ui/csr", "leptos/csr"]
 hydrate = ["rustify-ui/hydrate", "leptos/hydrate"]
 ssr = ["rustify-ui/ssr", "leptos/ssr"]
-# A convenience for an application that also draws GPU regions; the
-# components themselves draw none.
-gpu = ["rustify-ui/gpu"]
 utility = ["rustify-ui/utility"]
 
 [dependencies]
 leptos.workspace = true
 # Without its defaults, so that this crate's own csr or ssr is the only one.
-rustify-ui = { path = "../rustify-ui", default-features = false }
+# The core, under the name the components have always imported: they draw no
+# GPU regions, so they take no SDK facade and no Makepad with it. An
+# application that draws regions depends on `rustify-ui` itself and enables
+# gpu there.
+rustify-ui = { package = "rustify-dom", path = "../rustify-dom", version = "=0.2.0", default-features = false }
 # Class-string merging. Pure Rust, no Leptos feature: the component crate
 # decides what a class list means, not the library that merges it.
-rustify-style = { path = "../rustify-style" }
+rustify-style = { path = "../rustify-style", version = "=0.2.0" }
 paste = "1"
 js-sys.workspace = true
 # The drop zone reads a `DragEvent`'s file list, and the picker its input's.
@@ -47,4 +54,13 @@ web-sys = { workspace = true, features = [
 ] }
 
 [dev-dependencies]
-serde_json = "1"
+serde_json = "1.0.151"
+
+[lints.rust]
+unexpected_cfgs = { level = "warn", check-cfg = ['cfg(rustify_repo_tests)'] }
+
+[package.metadata.docs.rs]
+default-target = "x86_64-unknown-linux-gnu"
+targets = []
+no-default-features = true
+features = ["ssr"]

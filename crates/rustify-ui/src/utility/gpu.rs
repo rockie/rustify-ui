@@ -173,6 +173,8 @@ impl Default for GpuComputedStyle {
                 family: "sans-serif".into(),
                 resource_path: None,
                 fallback: false,
+                font_resolution: crate::theme::FontResolution::Packaged,
+                css_stack: None,
             },
             font_size_px: 16.,
             font_size_points: css_px_to_points(16.),

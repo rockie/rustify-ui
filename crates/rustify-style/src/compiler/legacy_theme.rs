@@ -847,6 +847,7 @@ mod tests {
     }
 
     #[test]
+    #[cfg(rustify_repo_tests)]
     fn legacy_theme_matches_all_default_namespaces_and_css_overrides() {
         let fixture: serde_json::Value = serde_json::from_str(include_str!(
             "../../../../tests/utility/compiler/legacy-theme-fixtures.json"

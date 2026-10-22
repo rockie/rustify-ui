@@ -113,13 +113,15 @@ pub(super) fn build_cached(
         };
     };
     if let Some(theme) = &theme {
-        if !prepared.matches_input(&theme.input_path, &theme.input_bytes) {
-            diagnostics.push(Diagnostic::in_file(
-                &theme.input_path,
-                Severity::Error,
-                "rust-generation-changed",
-                "theme.document differs from the compiled generation's input snapshot",
-            ));
+        for input in &theme.inputs {
+            if !prepared.matches_input(&input.path, &input.bytes) {
+                diagnostics.push(Diagnostic::in_file(
+                    &input.path,
+                    Severity::Error,
+                    "rust-generation-changed",
+                    "theme input differs from the compiled generation's input snapshot",
+                ));
+            }
         }
     }
     let info = json!({
@@ -139,10 +141,14 @@ pub(super) fn build_cached(
     let environment = SiteEnvironment {
         base: project.config.site.base.clone(),
         lang: project.config.site.lang.clone(),
-        theme: theme.as_ref().map(|theme| ThemeInput {
-            document: theme.document.clone(),
-            mode: rustify_ui::ThemeMode::Light,
-        }),
+        theme: theme
+            .as_ref()
+            .and_then(|theme| theme.document.as_ref())
+            .map(|document| ThemeInput {
+                document: document.clone(),
+                mode: rustify_ui::ThemeMode::Light,
+                font_resolution: rustify_ui::FontResolution::Css,
+            }),
     };
     analysis = content::analyze_with_surfaces(
         project,

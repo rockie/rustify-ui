@@ -18,14 +18,14 @@ required-features = ["ssr"]
 
 [features]
 default = []
-ssr = ["leptos/ssr", "rustify-docs/site-ssr", "rustify-ui/ssr", "rustify-components/ssr"]
-hydrate = ["leptos/hydrate", "rustify-docs/hydrate", "rustify-ui/hydrate", "rustify-components/hydrate"]
+ssr = ["leptos/ssr", "rustify-docs/site-ssr", "rustify-dom/ssr", "rustify-components/ssr"]
+hydrate = ["leptos/hydrate", "rustify-docs/hydrate", "rustify-dom/hydrate", "rustify-components/hydrate"]
 
 [dependencies]
 leptos = { version = "=0.8.22", default-features = false }
-rustify-docs = { git = "https://github.com/rockie/rustify-ui", rev = "{{framework-revision}}", default-features = false }
-rustify-ui = { git = "https://github.com/rockie/rustify-ui", rev = "{{framework-revision}}", default-features = false }
-rustify-components = { git = "https://github.com/rockie/rustify-ui", rev = "{{framework-revision}}", default-features = false }
+rustify-docs = { version = "=0.2.0", default-features = false }
+rustify-dom = { version = "=0.2.0", default-features = false }
+rustify-components = { version = "=0.2.0", default-features = false }
 
 [target.'cfg(target_arch = "wasm32")'.dependencies]
 wasm-bindgen = "=0.2.128"

@@ -1481,7 +1481,10 @@
       "widgets/src/window.rs": "1526b95c10c74e9b77e41deb2638e3483f23d14c15d751898552c9d665737267",
       "widgets/src/window_menu.rs": "3b108d54a23d9888072e88a2a21982bd89d3fe8f67dc830973409a5e175cfd24",
       "widgets/src/window_voice_input.rs": "fbe3eb16f078839f657d7fd3e06d631e4824c3bb64d08a0b235de51d01bb7133"
-    }
+    },
+    "dependency_source_changes": [
+      "Rustify crates.io preparation: platform, platform/script, platform/studio, libs/rustybuzz, libs/pulldown-cmark and libs/unicode/unicode-bidi use registry bitflags =2.10.0 / smallvec =1.15.1. Root path patches removed; imported copies and original import fingerprints remain unchanged. Cargo.lock files retain registry source/checksum."
+    ]
   },
   "leptos": {
     "source": "crates.io",
@@ -1612,14 +1615,14 @@
     },
     {
       "name": "tailwind-oxide-extraction",
-      "version": "4.1.13-1334c99db8fd26c8ea065375dd9259800863f072",
+      "version": "4.1.13-1334c99db8fd26c8ea065375dd9259800863f072-rustify.1",
       "origin": "https://codeload.github.com/tailwindlabs/tailwindcss/tar.gz/1334c99db8fd26c8ea065375dd9259800863f072",
       "license": "MIT; crates/rustify-style/upstream/LICENSE-TAILWIND",
       "import_rule": "Pure extractor/preprocessor closure and private host classification macro only; no filesystem scanner or Rayon runtime. Oxide Rust sources are unchanged; classification-macros/Cargo.toml explicitly enables syn/full for its standalone host build.",
       "upstream_inventory": "tests/utility/scanner/inventory.json",
       "files": {
         "crates/rustify-style/upstream/LICENSE-TAILWIND": "60e0b68c0f35c078eef3a5d29419d0b03ff84ec1df9c3f9d6e39a519a5ae7985",
-        "crates/rustify-style/upstream/classification-macros/Cargo.toml": "9684262395ea0373579eb0f97d2ee27a6c324837080d62b043f5efa484f2b552",
+        "crates/rustify-style/upstream/classification-macros/Cargo.toml": "736875106c72cd9e924c32c63bc3c71f4645c81b80812c91ce4f62698d21f112",
         "crates/rustify-style/upstream/classification-macros/src/lib.rs": "70ef9013d13442a904d30acac7d0b7923b71899fde58cc5c0a3d2b2cb761447c",
         "crates/rustify-style/upstream/oxide/cursor.rs": "a98f18a4ea42281e9025161e2275df0a74b9b281d30b8223101588053b90032e",
         "crates/rustify-style/upstream/oxide/extractor/arbitrary_property_machine.rs": "16e5c07df62d242ea66480d3e3f2975798f77b909304678b6fcfff842a5dfe8b",
@@ -1655,8 +1658,13 @@
         "crates/rustify-style/upstream/oxide/extractor/variant_machine.rs": "3c9370e43a3067d85b98b854d6fe7b1d4d488fbe668bc79fa10c25183772d3eb",
         "crates/rustify-style/upstream/oxide/fast_skip.rs": "7cc176ff97071a82d0b0536fb64718b594f46dc97719c056770138e0c406eca0",
         "crates/rustify-style/upstream/oxide/fixtures/example.html": "3fd82d209e535801ddfb4c3ecc4aa35e51fd66fd9f87007d6c6f22809c56e438",
-        "crates/rustify-style/upstream/oxide/throughput.rs": "eba948fc4923893488e165b0027d4adcb2f4389f2497a2692a5e77f62e0de146"
-      }
+        "crates/rustify-style/upstream/oxide/throughput.rs": "eba948fc4923893488e165b0027d4adcb2f4389f2497a2692a5e77f62e0de146",
+        "crates/rustify-style/upstream/classification-macros/LICENSE": "60e0b68c0f35c078eef3a5d29419d0b03ff84ec1df9c3f9d6e39a519a5ae7985"
+      },
+      "imported_files": {
+        "crates/rustify-style/upstream/classification-macros/Cargo.toml": "9684262395ea0373579eb0f97d2ee27a6c324837080d62b043f5efa484f2b552"
+      },
+      "changes": "Host macro manifest renamed to rustify-classification-macros 0.2.0 for crates.io; preserved classification_macros library identity, added package metadata, content allowlist and docs.rs target. Copied upstream MIT notice into the package. Rust sources remain unchanged; imported_files preserves the previous manifest fingerprint."
     },
     {
       "name": "cn-reference-data",
@@ -1834,52 +1842,22 @@
       }
     },
     {
-      "name": "docs-static-fonts",
-      "version": "p2-1",
-      "origin": "Same bytes as makepad/widgets/resources: six SDK FONT_FACES plus existing glyph fallbacks, deduplicated to seven faces.",
-      "license": "SIL OFL 1.1 for six faces; GPL v2 with Liberation font exceptions for LiberationMono-Regular.ttf version 1.04. Complete notices accompany each CLI face.",
-      "import_rule": "Copy existing repository font bytes verbatim into the CLI neutral assets/fonts directory. Keep Rustify WenKai repair and name notices. No Makepad crate dependency.",
-      "liberation_release": {
-        "binary_url": "https://releases.pagure.org/liberation-fonts/liberation-fonts-1.04.93.devel.tar.gz",
-        "binary_sha256": "21ef0ebaa50acc10954da8061cc120fd8b6d5d639ebbfcdeb0d9d6445816705a",
-        "binary_bytes": 1014291,
-        "font_sha256": "3e396ddd3d1c7d3dca1fb16dd64802b32f295f856ac10c0c1f2ab1c738196045",
-        "source_url": "https://releases.pagure.org/liberation-fonts/liberation-fonts-1.04.93.devel.src.tar.gz",
-        "source_sha256": "fe3ea5f7a2d3bdea8b8f0d82cdc6c07d14ace67c6e06d7aa33b83fd9e640adae",
-        "source_bytes": 2255959,
-        "source_members": {
-          "liberation-fonts-1.04.93.devel/License.txt": {
-            "bytes": 4009,
-            "sha256": "696c8257e24fbc158549191ab3e0ef2c5edc4582a3c3f0dd096e1efd281195bf"
-          },
-          "liberation-fonts-1.04.93.devel/COPYING": {
-            "bytes": 17992,
-            "sha256": "32b1062f7da84967e7019d01ab805935caa7ab7321a7ced0e30ebe75e5df1670"
-          },
-          "liberation-fonts-1.04.93.devel/src/LiberationMono-Regular.sfd": {
-            "bytes": 722684,
-            "sha256": "6a87039544b012ba755ff0813aef7ff549f429c4406fd5b929e51eebc86d6c63"
-          }
-        },
-        "binary_evidence": "ssr_geometry read the official binary archive in memory; exact font equality and license member hashes were verified. The binary archive is not retained locally.",
-        "source_rule": "Preferred SFD source plus original build scripts is retained. Publish the archive and full license beside this face only when a theme references Liberation Mono."
-      },
+      "name": "docs-author-font-fixtures",
+      "version": "ibm-plex-fixture-1",
+      "origin": "WOFF2: IBM/plex commit 71f558992315a12ca1f06a2215d57962a1992162, packages/plex-sans/fonts/complete/woff2/IBMPlexSans-Text.woff2; TTF: unchanged Makepad import makepad/widgets/resources/IBMPlexSans-Text.ttf, original commit unknown.",
+      "license": "SIL OFL 1.1; each original notice is retained in the fixture directories.",
+      "import_rule": "Test-only unchanged font bytes and notices. The component fixture copies the central font fixtures so each copied author project remains self-contained; browser tests compare actual bytes to the central copies. These files are outside the CLI package content allowlist.",
       "files": {
-        "crates/rustify-docs-cli/assets/fonts/IBMPlexSans-Text.license.txt": "0fa99e8a7c7392c94b9eea694d28b7715003de459fb41bb95153a590ae7a67f6",
-        "crates/rustify-docs-cli/assets/fonts/IBMPlexSans-Text.ttf": "8c358c56c56f76a28cecb8ca10734c1c9cafa01a752dc8364b9ef7de412437dc",
-        "crates/rustify-docs-cli/assets/fonts/LXGWWenKaiRegular.license.txt": "d59ad209cbb29bd79dbedaef76431018ee128fa087ae88773b25aab9b7002118",
-        "crates/rustify-docs-cli/assets/fonts/LXGWWenKaiRegular.ttf": "1d4b2f008ac7e02780c19801d4b04dd4538e40215943cc8ad374dba8ec2278c0",
-        "crates/rustify-docs-cli/assets/fonts/LiberationMono-Regular.license.txt": "54e5e39728ee318f21c608e9aced2fc4e4ce9451fcb69fde883f01f25dd9f9b1",
-        "crates/rustify-docs-cli/assets/fonts/LiberationMono-Regular.ttf": "3e396ddd3d1c7d3dca1fb16dd64802b32f295f856ac10c0c1f2ab1c738196045",
-        "crates/rustify-docs-cli/assets/fonts/NotoColorEmoji.license.txt": "971c32060f2c7ab26bad5e8f711bf3a1f40fcbe53544d47f19be736953967c18",
-        "crates/rustify-docs-cli/assets/fonts/NotoColorEmoji.ttf": "39ee3c587e10e89669b9ff32703261d10d5f9c4dd5ad147b6b5a1c5200591817",
-        "crates/rustify-docs-cli/assets/fonts/NotoSans-Regular.license.txt": "c0dd7d045d607484510ea4b519c52149b6418df18272af4ef334ba21061dde84",
-        "crates/rustify-docs-cli/assets/fonts/NotoSans-Regular.ttf": "371924e7480d3d01807fdc1bd30442d0a6651e6b5ea546482f5883d613cf0419",
-        "crates/rustify-docs-cli/assets/fonts/NotoSerif-Regular.license.txt": "78b65256447a458a1a76ba1482a97d59f33e8fb1af2acdd7a2a6d7f2da56aae5",
-        "crates/rustify-docs-cli/assets/fonts/NotoSerif-Regular.ttf": "c8f669ceb2c9c60ccf55198b305e08a997ffca79a38cc7eeb551e643cbe66505",
-        "crates/rustify-docs-cli/assets/fonts/jetbrains_mono_variable.license.txt": "459e5eaa18989db141b7992f92dab272e92bc08d88a411ab2bbe8e7f57cffb54",
-        "crates/rustify-docs-cli/assets/fonts/jetbrains_mono_variable.ttf": "662a196d58f1183bf2d77428b6d5283fe3f45161ab021bea4036bc98e5cac016",
-        "crates/rustify-docs-cli/assets/fonts/liberation-fonts-1.04.93.devel.src.tar.gz": "fe3ea5f7a2d3bdea8b8f0d82cdc6c07d14ace67c6e06d7aa33b83fd9e640adae"
+        "tests/docs-ssg/fixtures/fonts/LICENSE-IBM-PLEX-TTF.txt": "0fa99e8a7c7392c94b9eea694d28b7715003de459fb41bb95153a590ae7a67f6",
+        "tests/docs-ssg/fixtures/fonts/LICENSE-IBM-PLEX-WOFF2.txt": "7e6b2818edbd8f6a01ae80641cc8f16a51080d08fb4e532be3a0b6f74adb07da",
+        "tests/docs-ssg/fixtures/fonts/README.md": "dcc1249c9991453f93b6b40a06f2bac1ae6c76c10cd4363b69906a83caf1c2e1",
+        "tests/docs-ssg/fixtures/fonts/author-sans.woff2": "6b8e7c7abd64feec0a67599a135402b769ec1f2c7656f6504cc300f60c8be986",
+        "tests/docs-ssg/fixtures/fonts/author-text.ttf": "8c358c56c56f76a28cecb8ca10734c1c9cafa01a752dc8364b9ef7de412437dc",
+        "tests/docs-ssg/fixtures/components/fonts/LICENSE-IBM-PLEX-TTF.txt": "0fa99e8a7c7392c94b9eea694d28b7715003de459fb41bb95153a590ae7a67f6",
+        "tests/docs-ssg/fixtures/components/fonts/LICENSE-IBM-PLEX-WOFF2.txt": "7e6b2818edbd8f6a01ae80641cc8f16a51080d08fb4e532be3a0b6f74adb07da",
+        "tests/docs-ssg/fixtures/components/fonts/README.md": "dcc1249c9991453f93b6b40a06f2bac1ae6c76c10cd4363b69906a83caf1c2e1",
+        "tests/docs-ssg/fixtures/components/fonts/author-sans.woff2": "6b8e7c7abd64feec0a67599a135402b769ec1f2c7656f6504cc300f60c8be986",
+        "tests/docs-ssg/fixtures/components/fonts/author-text.ttf": "8c358c56c56f76a28cecb8ca10734c1c9cafa01a752dc8364b9ef7de412437dc"
       }
     }
   ],

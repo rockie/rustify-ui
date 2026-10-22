@@ -40,3 +40,6 @@ mod fast_skip;
 #[rustfmt::skip]
 #[path = "../upstream/oxide/throughput.rs"]
 mod throughput;
+
+#[cfg(all(test, rustify_repo_tests))]
+mod repo_tests;

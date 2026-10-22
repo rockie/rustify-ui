@@ -32,8 +32,8 @@ async function watch(page: Page): Promise<Audit> {
     } };
     const chromium = page.context().browser()?.browserType().name() === "chromium";
     if (chromium) {
-        const directory = "crates/rustify-docs-cli/assets/fonts";
-        const sizes = readdirSync(directory).filter(file => file.endsWith(".ttf")).map(file => statSync(`${directory}/${file}`).size);
+        const directory = "tests/docs-ssg/fixtures/fonts";
+        const sizes = readdirSync(directory).filter(file => /\.(?:ttf|woff2)$/.test(file)).map(file => statSync(`${directory}/${file}`).size);
         const cdp = capture = await page.context().newCDPSession(page);
         // Own response retention, with measured font bytes plus the fixture's
         // 11 MiB wasm and sub-1 MiB document. HTTP caching is left unchanged.
@@ -43,7 +43,7 @@ async function watch(page: Page): Promise<Audit> {
         });
         const responses = new Map<string, { url: string; mime: string }>();
         cdp.on("Network.responseReceived", ({ requestId, response }) => {
-            if (/\/assets\/fonts\/[^/]+\.ttf$/.test(new URL(response.url).pathname)) responses.set(requestId, { url: response.url, mime: response.mimeType });
+            if (/\/assets\/fonts\/[^/]+\.(?:ttf|woff2)$/.test(new URL(response.url).pathname)) responses.set(requestId, { url: response.url, mime: response.mimeType });
         });
         cdp.on("Network.loadingFinished", ({ requestId }) => {
             const response = responses.get(requestId);
@@ -71,7 +71,7 @@ async function watch(page: Page): Promise<Audit> {
     page.on("pageerror", error => audit.errors.push(String(error)));
     page.on("response", response => {
         if (response.status() >= 400 && response.request().resourceType() !== "document") audit.errors.push(`${response.url()} ${response.status()}`);
-        if (!chromium && /\/assets\/fonts\/[^/]+\.ttf$/.test(new URL(response.url()).pathname)) {
+        if (!chromium && /\/assets\/fonts\/[^/]+\.(?:ttf|woff2)$/.test(new URL(response.url()).pathname)) {
             audit.pending.push(response.body().then(bytes => {
                 audit.fonts.push({ url: response.url(), mime: response.headers()["content-type"], bytes, sha256: createHash("sha256").update(bytes).digest("hex") });
             }, error => { audit.errors.push(`${response.url()} ${String(error)}`); }));
@@ -194,7 +194,7 @@ async function themeValues(page: Page, mode: ThemeMode) {
     await expect(surface).toHaveCSS("background-color", rgb(values.card));
     await expect(surface).toHaveCSS("color", rgb(values["card-foreground"]));
     await expect(surface).toHaveCSS("border-top-left-radius", `${parseFloat(values.radius) - 2}px`);
-    for (const [slot, family] of [["sans", "Noto Sans"], ["serif", "Noto Serif"], ["mono", "JetBrains Mono"]]) {
+    for (const [slot, family] of [["sans", "Author Sans"], ["serif", "Author Text"], ["mono", "monospace"]]) {
         expect(await page.locator(`[data-font-${slot}]`).evaluate(firstFontFamily)).toBe(family);
     }
 }
@@ -315,7 +315,7 @@ test("live mode changes reach the theme context and real floating controls, incl
         const menu = page.getByTestId("theme-probe-menu");
         await expect(menu).toHaveCSS("background-color", rgb(theme.styles[mode].popover));
         await expect(menu).toHaveCSS("border-top-left-radius", `${parseFloat(theme.styles[mode].radius) - 2}px`);
-        expect(await menu.evaluate(firstFontFamily)).toBe("Noto Sans");
+        expect(await menu.evaluate(firstFontFamily)).toBe("Author Sans");
         await menu.getByRole("menuitem", { name: "Choose résumé 中文 🙂", exact: true }).press("Enter");
         await expect(page.getByTestId("theme-probe-menu-value")).toHaveText("choose");
         await expect(page.getByTestId("theme-probe-menu-trigger")).toBeFocused();
@@ -326,7 +326,7 @@ test("live mode changes reach the theme context and real floating controls, incl
         await expect(panel).toHaveCSS("background-color", rgb(theme.styles[mode].popover));
         await expect(panel).toHaveCSS("color", rgb(theme.styles[mode]["popover-foreground"]));
         await expect(panel).toHaveCSS("border-top-left-radius", theme.styles[mode].radius);
-        expect(await panel.evaluate(firstFontFamily)).toBe("Noto Sans");
+        expect(await panel.evaluate(firstFontFamily)).toBe("Author Sans");
         await page.keyboard.press("Escape");
         await expect(dialog).toHaveCount(0);
         await expect(page.getByTestId("theme-probe-dialog-trigger")).toBeFocused();
@@ -358,17 +358,19 @@ test("live mode changes reach the theme context and real floating controls, incl
     await healthy(page, audit);
 });
 
-test("the actual browser font responses match the CLI's packaged bytes and neutral digests", async ({ page, audit }) => {
+test("the actual browser font responses match project-owned bytes and content digests", async ({ page, audit }) => {
+    test.skip(process.env.RUSTIFY_DOCS_FONT_SCENARIO === "system", "declared font fixture");
     await page.goto(route("custom/"));
     await ready(page);
     await page.evaluate(async sample => {
-        await Promise.all(["Noto Sans", "Noto Serif", "JetBrains Mono"].map(family => document.fonts.load(`16px "${family}"`, sample)));
+        await Promise.all(["Author Sans", "Author Text"].map(family => document.fonts.load(`16px "${family}"`, sample)));
         await document.fonts.ready;
     }, sample);
+    expect(await page.evaluate(() => ["Author Sans", "Author Text"].every(family => document.fonts.check(`16px "${family}"`)))).toBe(true);
     await Promise.all(audit.pending);
-    const filenames = ["NotoSans-Regular.ttf", "NotoSerif-Regular.ttf", "jetbrains_mono_variable.ttf", "LXGWWenKaiRegular.ttf", "NotoColorEmoji.ttf"];
+    const filenames = ["author-sans.woff2", "author-text.ttf"];
     const expected = new Map(filenames.map(file => {
-        const bytes = readFileSync(`crates/rustify-docs-cli/assets/fonts/${file}`);
+        const bytes = readFileSync(`tests/docs-ssg/fixtures/fonts/${file}`);
         return [createHash("sha256").update(bytes).digest("hex"), { file, bytes }] as const;
     }));
     const observed = new Set<string>();
@@ -376,8 +378,9 @@ test("the actual browser font responses match the CLI's packaged bytes and neutr
         const packaged = expected.get(font.sha256);
         expect(packaged, font.url).toBeDefined();
         expect(font.bytes.equals(packaged!.bytes), font.url).toBe(true);
-        expect(new URL(font.url).pathname).toBe(`${base()}assets/fonts/${font.sha256}.ttf`);
-        expect(font.mime.split(";")[0]).toBe("font/ttf");
+        const extension = packaged!.file.split(".").at(-1)!;
+        expect(new URL(font.url).pathname).toBe(`${base()}assets/fonts/${font.sha256}.${extension}`);
+        expect(font.mime.split(";")[0]).toBe(`font/${extension}`);
         observed.add(font.sha256);
     }
     expect([...observed].sort()).toEqual([...expected.keys()].sort());
@@ -482,3 +485,20 @@ for (const colorScheme of ["light", "dark"] as const) for (const width of [1280,
         await healthy(page, audit);
     });
 }
+
+
+test("system font fallback preserves the author stack without font requests or missing resources", async ({ page, audit }) => {
+    test.skip(process.env.RUSTIFY_DOCS_FONT_SCENARIO !== "system", "separate system-font fixture build");
+    await page.goto(route("custom/"));
+    await ready(page);
+    await page.evaluate(() => document.fonts.ready);
+    const stack = await page.locator("[data-font-sans]").evaluate(node => getComputedStyle(node).fontFamily);
+    expect(stack).toContain("Author Sans");
+    expect(stack).toContain("sans-serif");
+    expect(await page.evaluate(() => document.fonts.size)).toBe(0);
+    expect(audit.requests.filter(url => /\/assets\/fonts\//.test(url))).toEqual([]);
+    for (const href of await page.locator('link[rel="stylesheet"]').evaluateAll(nodes => nodes.map(node => (node as HTMLLinkElement).href))) {
+        expect(await (await page.request.get(href)).text()).not.toContain("@font-face");
+    }
+    await healthy(page, audit);
+});

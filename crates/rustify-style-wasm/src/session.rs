@@ -565,6 +565,7 @@ mod tests {
     }
 
     #[test]
+    #[cfg(rustify_repo_tests)]
     fn prepare_commit_discard_keep_a_single_owned_snapshot() {
         let mut session = Session::new(&options(None)).unwrap_or_else(|_| panic!("valid options"));
         let output: serde_json::Value = serde_json::from_str(

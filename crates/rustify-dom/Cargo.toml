@@ -1,0 +1,98 @@
+[package]
+name = "rustify-dom"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+publish = ["crates-io"]
+description = "The shared Rustify core: DOM runtime, bindings, theming and diagnostics, with no GPU dependency"
+
+repository = "https://github.com/rockie/rustify-ui"
+documentation = "https://docs.rs/rustify-dom/0.2.0"
+readme = "README.md"
+rust-version = "1.99"
+include = ["src/**", "README.md", "LICENSE", "web/**", "tests/ssr_scope.rs"]
+
+[features]
+default = ["csr"]
+# Client-side rendering in the browser: the DOM runtime, its host and every
+# browser module.
+csr = ["leptos/csr"]
+hydrate = ["leptos/hydrate"]
+# Rendering on a host into HTML. Built on its own, never together with csr.
+ssr = ["leptos/ssr"]
+# Only a host that brings its own runtime turns this on. A facade that links
+# Makepad creates the page's DOM host itself, so the DOM host export is
+# withdrawn and the region module is in charge of booting instead.
+external-host = []
+utility = ["dep:rustify-style", "dep:futures-channel"]
+
+[dependencies]
+serde = { version = "1.0.229", features = ["derive"] }
+serde_json = { version = "1.0.151", features = ["raw_value"] }
+leptos.workspace = true
+rustify-style = { path = "../rustify-style", version = "=0.2.0", default-features = false, features = ["cn", "protocol"], optional = true }
+futures-channel = { version = "0.3", optional = true }
+# DOM handles have to sit in Leptos context values, which are Send + Sync.
+send_wrapper = "0.6"
+# The router reads and writes `history.state`, which is a JS object; there is no
+# typed accessor for a field an application chose the name of.
+js-sys.workspace = true
+# The overlay stack measures anchors and owns listeners, so it asks for the
+# web-sys features it uses rather than relying on what Leptos happens to enable.
+web-sys = { workspace = true, features = [
+    "AddEventListenerOptions",
+    "Document",
+    "DomRect",
+    "Element",
+    "Event",
+    "History",
+    "Location",
+    "MouseEvent",
+    "Url",
+    "EventTarget",
+    "HtmlElement",
+    "KeyboardEvent",
+    "Performance",
+    "Window",
+    # Importing and exporting: the picker, what it hands over, and the blob an
+    # export is downloaded from.
+    "Blob",
+    "BlobPropertyBag",
+    "File",
+    "FileList",
+    "HtmlAnchorElement",
+    "HtmlInputElement",
+    # The clipboard, for the copy and paste controls. Both accessors are behind
+    # `--cfg=web_sys_unstable_apis`, which `mbx xtask build-web` sets; a build
+    # without it compiles against `clipboard::available() == false` instead.
+    "Clipboard",
+    # A text field has to know whether an input method is composing in it.
+    "CompositionEvent",
+    "Navigator",
+    # Listeners and animation frames end with the instance's abort signal.
+    "AbortSignal",
+    # A draft field's focus and blur.
+    "FocusEvent",
+    # A modal layer's tab stops: found, ordered in the document, and skipped
+    # when they are not rendered or not visible.
+    "CssStyleDeclaration",
+    "DomRectList",
+    "Node",
+    "NodeList",
+] }
+
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+# `JsFuture`, to await the two clipboard promises.
+wasm-bindgen-futures = "0.4.78"
+# The runtime host binding and the JS module it ships as a snippet.
+wasm-bindgen.workspace = true
+
+[lints.rust]
+# `web_sys_unstable_apis` is web-sys's own flag rather than one cargo knows
+# about, and this crate reads it to decide whether it can reach the clipboard.
+unexpected_cfgs = { level = "warn", check-cfg = ['cfg(web_sys_unstable_apis)', 'cfg(rustify_repo_tests)'] }
+[package.metadata.docs.rs]
+default-target = "x86_64-unknown-linux-gnu"
+targets = []
+no-default-features = true
+features = ["ssr"]

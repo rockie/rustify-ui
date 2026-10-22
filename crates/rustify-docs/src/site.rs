@@ -60,6 +60,8 @@ pub type SiteDiagnostic = SiteError;
 pub struct ThemeInput {
     pub document: rustify_ui::ThemeDocument,
     pub mode: rustify_ui::ThemeMode,
+    #[serde(default)]
+    pub font_resolution: rustify_ui::FontResolution,
 }
 
 /// Context supplied identically to static generation and browser attachment.

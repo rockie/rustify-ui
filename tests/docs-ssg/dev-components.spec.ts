@@ -49,15 +49,8 @@ class Site {
     lock: Buffer;
 
     constructor() {
-        for (const directory of ["src", "content", "static"]) cpSync(path.join(fixture, directory), path.join(this.root, directory), { recursive: true });
+        for (const directory of ["src", "content", "static", "fonts"]) cpSync(path.join(fixture, directory), path.join(this.root, directory), { recursive: true });
         for (const file of ["Cargo.toml", "Cargo.lock", "rustify-docs.toml", "theme.json"]) copyFileSync(path.join(fixture, file), path.join(this.root, file));
-        let manifest = this.read("Cargo.toml");
-        for (const library of ["rustify-ui", "rustify-components", "rustify-docs"]) {
-            const old = `path = "../../../../crates/${library}"`;
-            expect(manifest.split(old)).toHaveLength(2);
-            manifest = manifest.replace(old, `path = ${JSON.stringify(path.join(repo, "crates", library))}`);
-        }
-        this.write("Cargo.toml", manifest);
         const pair = JSON.parse(execFileSync("python3", [
             path.join(repo, "scripts/docs-pages-prepare.py"),
             "--project", path.join(this.root, "Cargo.toml"), "--cli", bin,
@@ -582,7 +575,7 @@ function lockLocalDependencies() {
         const author = metadata.resolve.root;
         const packages = metadata.packages.filter(pkg => pkg.id === author
             || (pkg.source === null && ["browser-palette", "payload"].includes(pkg.name))
-            || ["rustify-ui", "rustify-components", "rustify-docs"].includes(pkg.name))
+            || ["rustify-dom", "rustify-components", "rustify-docs"].includes(pkg.name))
             .map(({ id, name, version, manifest_path, source }) => ({ id, name, version, manifest_path, source }));
         const ids = new Set(packages.map(pkg => pkg.id));
         const nodes = metadata.resolve.nodes.filter(node => ids.has(node.id)).map(({ id, features, deps }) => ({

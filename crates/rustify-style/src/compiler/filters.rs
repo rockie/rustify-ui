@@ -514,6 +514,7 @@ mod tests {
     use crate::program::GpuCondition;
 
     #[test]
+    #[cfg(rustify_repo_tests)]
     fn filter_branches_match_official_fixtures_and_prefix() {
         let fixture: serde_json::Value = serde_json::from_str(include_str!(
             "../../../../tests/utility/compiler/filters-fixtures.json"

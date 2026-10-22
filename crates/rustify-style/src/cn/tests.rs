@@ -2,6 +2,7 @@ use super::*;
 use serde_json::Value;
 
 #[test]
+#[cfg(rustify_repo_tests)]
 fn frozen_default_reference_outputs() {
     let fixtures: Value = serde_json::from_str(include_str!(
         "../../../../tests/utility/cn/runtime-fixtures.json"
@@ -26,6 +27,7 @@ fn frozen_default_reference_outputs() {
 }
 
 #[test]
+#[cfg(rustify_repo_tests)]
 fn frozen_validator_predicates() {
     let fixtures: Value = serde_json::from_str(include_str!(
         "../../../../tests/utility/cn/compiler-fixtures.json"
@@ -49,6 +51,7 @@ fn frozen_validator_predicates() {
 }
 
 #[test]
+#[cfg(rustify_repo_tests)]
 fn frozen_compiled_tables() {
     let fixtures: Value = serde_json::from_str(include_str!(
         "../../../../tests/utility/cn/compiler-fixtures.json"
@@ -97,6 +100,7 @@ fn frozen_compiled_tables() {
     }
 }
 
+#[cfg(rustify_repo_tests)]
 fn class_value(value: &Value) -> ClassValue<'_> {
     if value.is_null() {
         return ClassValue::Null;
@@ -136,6 +140,7 @@ fn class_value(value: &Value) -> ClassValue<'_> {
     }
 }
 
+#[cfg(rustify_repo_tests)]
 fn recipe(name: &str) -> Result<Cn, CnError> {
     use std::rc::Rc;
     let extension = match name {
@@ -201,6 +206,7 @@ fn recipe(name: &str) -> Result<Cn, CnError> {
 }
 
 #[test]
+#[cfg(rustify_repo_tests)]
 fn all_frozen_runtime_outputs_include_join_config_and_callbacks() {
     let fixtures: Value = serde_json::from_str(include_str!(
         "../../../../tests/utility/cn/runtime-fixtures.json"
@@ -246,6 +252,7 @@ fn all_frozen_runtime_outputs_include_join_config_and_callbacks() {
 }
 
 #[test]
+#[cfg(rustify_repo_tests)]
 fn frozen_cache_sequences() {
     let fixtures: Value = serde_json::from_str(include_str!(
         "../../../../tests/utility/cn/compiler-fixtures.json"
@@ -329,6 +336,7 @@ fn source_emission_preserves_shared_high_surrogate_prefix() {
 }
 
 #[test]
+#[cfg(rustify_repo_tests)]
 fn frozen_build_token_and_full_artifacts() {
     use sha2::{Digest, Sha256};
     let fixtures: Value = serde_json::from_str(include_str!(
@@ -386,6 +394,7 @@ fn frozen_build_token_and_full_artifacts() {
 }
 
 #[test]
+#[cfg(rustify_repo_tests)]
 fn frozen_build_extractor_cap() {
     let fixtures: Value = serde_json::from_str(include_str!(
         "../../../../tests/utility/cn/build-fixtures.json"

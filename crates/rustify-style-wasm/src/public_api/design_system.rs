@@ -754,6 +754,7 @@ mod tests {
     }
 
     #[test]
+    #[cfg(rustify_repo_tests)]
     fn class_list_progressive_peak_fits_original_public_quota() {
         let fixture: serde_json::Value = serde_json::from_str(include_str!(
             "../../../../tests/utility/compiler/public-api-fixtures.json"

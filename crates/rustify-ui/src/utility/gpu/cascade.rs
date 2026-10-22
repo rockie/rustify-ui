@@ -434,6 +434,8 @@ fn font_stack(
                 family: face.family.clone(),
                 resource_path: Some(face.resource_path.clone()),
                 fallback: !requested[0].eq_ignore_ascii_case(&face.family),
+                font_resolution: crate::theme::FontResolution::Packaged,
+                css_stack: None,
             });
         }
     }

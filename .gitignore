@@ -6,6 +6,7 @@ target/
 /node_modules
 /test-results
 /playwright-report
+__pycache__/
 /artifacts/p1/raw
 .rustify-docs/
 /site/dist

@@ -81,7 +81,7 @@ impl Visit<'_> {
         Ok(Some(captured))
     }
     #[cfg_attr(
-        not(test),
+        not(all(test, rustify_repo_tests)),
         expect(
             dead_code,
             reason = "Registration can edit a separately captured body."
@@ -279,13 +279,17 @@ impl Current {
 mod tests {
     use super::*;
     use crate::text::Text;
-    use serde_json::{json, Value as Json};
+    use serde_json::json;
+    #[cfg(rustify_repo_tests)]
+    use serde_json::Value as Json;
 
+    #[cfg(rustify_repo_tests)]
     struct Fixture {
         input: Json,
         nodes: Vec<Option<Value>>,
         arrays: Vec<Option<Arc<Vec<Value>>>>,
     }
+    #[cfg(rustify_repo_tests)]
     impl Fixture {
         fn node(&mut self, id: usize) -> Value {
             if let Some(node) = &self.nodes[id] {
@@ -321,9 +325,11 @@ mod tests {
             values
         }
     }
+    #[cfg(rustify_repo_tests)]
     fn id(value: &Value) -> usize {
         value["id"].as_u64().unwrap() as usize
     }
+    #[cfg(rustify_repo_tests)]
     fn action(value: &Json) -> Action {
         match value.as_str().unwrap() {
             "continue" => Action::Continue,
@@ -332,6 +338,7 @@ mod tests {
             _ => panic!("fixture action"),
         }
     }
+    #[cfg(rustify_repo_tests)]
     fn array_id(value: &Arc<Vec<Value>>, arrays: &[Arc<Vec<Value>>]) -> usize {
         arrays
             .iter()
@@ -340,6 +347,7 @@ mod tests {
     }
 
     #[test]
+    #[cfg(rustify_repo_tests)]
     fn current_walk_matches_all_fixed_upstream_cursor_cases() {
         let fixture: Json = serde_json::from_str(include_str!(
             "../../../../../../tests/utility/compiler/current-walk-fixtures.json"

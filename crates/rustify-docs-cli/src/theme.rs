@@ -1,11 +1,11 @@
-//! Static projection of an imported theme and its offline font resources.
+//! Static projection of imported themes and project-owned local fonts.
 
 use rustify_docs::content::{is_private, Diagnostic, Project, Snapshot};
 use rustify_docs::diagnostic::{Issue, Severity};
 use rustify_docs::diagnostic_text::{code_span, literal};
 use rustify_ui::theme::{
-    font_context, import_json, resolve, FontResourceDigest, ResolvedTheme, ThemeDocument,
-    ThemeMode, FONT_GLYPH_FALLBACKS, FONT_RESOURCE_DIGESTS, THEME_INPUT_LIMIT,
+    import_json, parse_css_font_stack, resolve, FontResolution, FontResourceDigest, ResolveContext,
+    ResolvedTheme, ThemeDocument, ThemeMode, FONT_RESOURCE_DIGESTS, THEME_INPUT_LIMIT,
 };
 use sha2::{Digest, Sha256};
 use std::collections::{BTreeMap, BTreeSet};
@@ -14,214 +14,252 @@ use std::io::Read;
 use std::path::{Component, Path, PathBuf};
 use std::sync::Arc;
 
-const V4_MAPPINGS: &str = include_str!("../../rustify-components/css/theme-v4.css");
+const V4_MAPPINGS: &str = rustify_components::styles::THEME_V4;
 const LIGHT: &str = ":root[data-rustify-scope], :root[data-rustify-scope] [data-rustify-scope]";
 const DARK: &str =
     ":root[data-rustify-scope][data-theme=\"dark\"], :root[data-rustify-scope][data-theme=\"dark\"] [data-rustify-scope]";
 const SYSTEM: &str =
     ":root[data-rustify-scope][data-theme=\"system\"], :root[data-rustify-scope][data-theme=\"system\"] [data-rustify-scope]";
-const LIBERATION_SOURCE_SHA256: &str =
-    "fe3ea5f7a2d3bdea8b8f0d82cdc6c07d14ace67c6e06d7aa33b83fd9e640adae";
-const LIBERATION_SOURCE: &[u8] =
-    include_bytes!("../assets/fonts/liberation-fonts-1.04.93.devel.src.tar.gz");
 
 type FontFiles = BTreeMap<String, Arc<[u8]>>;
 
+pub(super) struct InputFile {
+    pub path: String,
+    pub bytes: Arc<[u8]>,
+    real: PathBuf,
+}
+
 pub(super) struct PreparedTheme {
-    pub document: ThemeDocument,
-    /// The exact imported read, for the generation's input guard.
-    pub input_path: String,
-    pub input_bytes: Arc<[u8]>,
-    input_real_path: PathBuf,
-    /// Tailwind input mappings, consumed before compiling utility candidates.
+    pub document: Option<ThemeDocument>,
+    pub inputs: Vec<InputFile>,
     pub utilities: String,
-    /// Browser CSS, appended after the site's default token rules.
     pub css: String,
     pub files: FontFiles,
 }
 
-struct EmbeddedFont {
-    identity: FontResourceDigest,
-    bytes: &'static [u8],
-    license: &'static [u8],
-}
-
-const FONTS: [EmbeddedFont; 7] = [
-    EmbeddedFont {
-        identity: FONT_RESOURCE_DIGESTS[0],
-        bytes: include_bytes!("../assets/fonts/IBMPlexSans-Text.ttf"),
-        license: include_bytes!("../assets/fonts/IBMPlexSans-Text.license.txt"),
-    },
-    EmbeddedFont {
-        identity: FONT_RESOURCE_DIGESTS[1],
-        bytes: include_bytes!("../assets/fonts/NotoSans-Regular.ttf"),
-        license: include_bytes!("../assets/fonts/NotoSans-Regular.license.txt"),
-    },
-    EmbeddedFont {
-        identity: FONT_RESOURCE_DIGESTS[2],
-        bytes: include_bytes!("../assets/fonts/LXGWWenKaiRegular.ttf"),
-        license: include_bytes!("../assets/fonts/LXGWWenKaiRegular.license.txt"),
-    },
-    EmbeddedFont {
-        identity: FONT_RESOURCE_DIGESTS[3],
-        bytes: include_bytes!("../assets/fonts/NotoSerif-Regular.ttf"),
-        license: include_bytes!("../assets/fonts/NotoSerif-Regular.license.txt"),
-    },
-    EmbeddedFont {
-        identity: FONT_RESOURCE_DIGESTS[4],
-        bytes: include_bytes!("../assets/fonts/LiberationMono-Regular.ttf"),
-        license: include_bytes!("../assets/fonts/LiberationMono-Regular.license.txt"),
-    },
-    EmbeddedFont {
-        identity: FONT_RESOURCE_DIGESTS[5],
-        bytes: include_bytes!("../assets/fonts/jetbrains_mono_variable.ttf"),
-        license: include_bytes!("../assets/fonts/jetbrains_mono_variable.license.txt"),
-    },
-    EmbeddedFont {
-        identity: FONT_RESOURCE_DIGESTS[6],
-        bytes: include_bytes!("../assets/fonts/NotoColorEmoji.ttf"),
-        license: include_bytes!("../assets/fonts/NotoColorEmoji.license.txt"),
-    },
-];
-
+// This describes the SDK's logical catalogue, not bytes embedded in this CLI.
 pub(super) fn font_catalog() -> &'static [FontResourceDigest] {
     &FONT_RESOURCE_DIGESTS
 }
 
-/// No document is the P1 path: no theme CSS and no font assets.
+fn css_string(value: &str) -> String {
+    format!("\"{}\"", value.replace('\\', "\\\\").replace('"', "\\\""))
+}
+
 pub(super) fn prepare(project: &Project) -> (Option<PreparedTheme>, Vec<Diagnostic>) {
-    let Some((path, span)) = &project.config.theme_document else {
-        return (None, Vec::new());
+    let mut prepared = PreparedTheme {
+        document: None,
+        inputs: Vec::new(),
+        utilities: String::new(),
+        css: String::new(),
+        files: FontFiles::new(),
     };
-    let (input_real_path, input) = match document_path(project, path)
-        .and_then(|real| read_document(project, path).map(|input| (real, input)))
-    {
-        Ok(input) => input,
-        Err(message) => {
-            return (
-                None,
-                vec![Diagnostic::located(
+    let mut diagnostics = Vec::new();
+    for (index, font) in project.config.theme_fonts.iter().enumerate() {
+        let label = format!("theme.fonts[{index}]");
+        let read = input_path(project, &font.src, &label).and_then(|real| {
+            let bytes = fs::read(&real).map_err(|error| {
+                format!("cannot read {label} {}: {error}", code_span(&font.src))
+            })?;
+            if bytes.is_empty() {
+                return Err(format!("{label} {} is empty", code_span(&font.src)));
+            }
+            Ok((real, Arc::<[u8]>::from(bytes)))
+        });
+        let (real, bytes) = match read {
+            Ok(read) => read,
+            Err(message) => {
+                diagnostics.push(Diagnostic::located(
+                    &project.config_file,
+                    &project.config_text,
+                    Issue::error(font.span.clone(), "theme-font", message),
+                ));
+                continue;
+            }
+        };
+        let extension = Path::new(&font.src)
+            .extension()
+            .and_then(|extension| extension.to_str())
+            .unwrap_or_default()
+            .to_ascii_lowercase();
+        let format = match extension.as_str() {
+            "woff2" => "woff2",
+            "woff" => "woff",
+            "ttf" => "truetype",
+            "otf" => "opentype",
+            _ => {
+                diagnostics.push(Diagnostic::located(
+                    &project.config_file,
+                    &project.config_text,
+                    Issue::error(
+                        font.span.clone(),
+                        "theme-font",
+                        format!("{label} has an unsupported font extension"),
+                    ),
+                ));
+                continue;
+            }
+        };
+        let path = format!("assets/fonts/{:x}.{extension}", Sha256::digest(&bytes));
+        let url = format!("{}{path}", project.config.site.base);
+        prepared.css.push_str(&format!(
+            "@font-face {{font-family:{};src:url({}) format(\"{format}\");font-weight:{};font-style:{};font-display:swap;}}\n",
+            css_string(&font.family), css_string(&url), font.weight, font.style,
+        ));
+        prepared.files.insert(path, Arc::clone(&bytes));
+        prepared.inputs.push(InputFile {
+            path: font.src.clone(),
+            bytes,
+            real,
+        });
+    }
+    if let Some((path, span)) = &project.config.theme_document {
+        let read = document_path(project, path)
+            .and_then(|real| read_document(project, path).map(|text| (real, text)));
+        let (real, input) = match read {
+            Ok(read) => read,
+            Err(message) => {
+                diagnostics.push(Diagnostic::located(
                     &project.config_file,
                     &project.config_text,
                     Issue::error(span.clone(), "theme-document", message),
-                )],
-            );
-        }
-    };
-    let context = font_context(16., false);
-    let imported = match import_json(&input, &context) {
-        Ok(imported) => imported,
-        Err(error) => {
-            return (
-                None,
-                vec![Diagnostic::in_file(
+                ));
+                return (None, diagnostics);
+            }
+        };
+        let context = ResolveContext {
+            font_resolution: FontResolution::Css,
+            ..Default::default()
+        };
+        let imported = match import_json(&input, &context) {
+            Ok(imported) => imported,
+            Err(error) => {
+                diagnostics.push(Diagnostic::in_file(
                     path,
                     Severity::Error,
                     "theme-document",
                     error.to_string(),
-                )],
-            );
-        }
-    };
-    let mut diagnostics: Vec<_> = imported
-        .diagnostics
-        .into_iter()
-        .map(|warning| {
+                ));
+                return (None, diagnostics);
+            }
+        };
+        diagnostics.extend(imported.diagnostics.into_iter().map(|warning| {
             Diagnostic::in_file(
                 path,
                 Severity::Warning,
                 "theme-token",
                 format!("{}: {}", literal(&warning.field), warning.message),
             )
-        })
-        .collect();
-    let resolved =
-        [ThemeMode::Light, ThemeMode::Dark].map(|mode| resolve(&imported.document, mode, &context));
-    let [Ok(light), Ok(dark)] = resolved else {
-        for error in resolved.into_iter().filter_map(Result::err) {
-            diagnostics.push(Diagnostic::in_file(
-                path,
-                Severity::Error,
-                "theme-document",
-                error.to_string(),
-            ));
+        }));
+        let themes = [ThemeMode::Light, ThemeMode::Dark]
+            .map(|mode| resolve(&imported.document, mode, &context));
+        let [Ok(light), Ok(dark)] = themes else {
+            diagnostics.extend(themes.into_iter().filter_map(Result::err).map(|error| {
+                Diagnostic::in_file(path, Severity::Error, "theme-document", error.to_string())
+            }));
+            return (None, diagnostics);
+        };
+        let themes = [light, dark];
+        let declared: BTreeSet<_> = project
+            .config
+            .theme_fonts
+            .iter()
+            .map(|font| font.family.to_lowercase())
+            .collect();
+        let mut system = BTreeMap::new();
+        for stack in themes
+            .iter()
+            .flat_map(|theme| &theme.fonts)
+            .filter_map(|font| font.css_stack.as_deref())
+        {
+            if let Ok(families) = parse_css_font_stack(stack) {
+                for (family, generic) in families {
+                    let key = family.to_lowercase();
+                    if !generic && !declared.contains(&key) {
+                        system.entry(key).or_insert(family);
+                    }
+                }
+            }
         }
+        for family in system.into_values() {
+            diagnostics.push(Diagnostic::in_file(path, Severity::Warning, "theme-font-system",
+                format!("Font {} is not declared in theme.fonts; the browser uses installed fonts and CSS fallback. Built-in CJK/emoji fallback fonts are no longer shipped. Declare a licensed local font or select a generic font stack.", literal(&family))));
+        }
+        prepared.css.push_str(&project_css(&themes));
+        prepared.utilities = V4_MAPPINGS.to_owned();
+        prepared.inputs.push(InputFile {
+            path: path.clone(),
+            bytes: Arc::from(input.as_bytes()),
+            real,
+        });
+        prepared.document = Some(imported.document);
+    }
+    if diagnostics
+        .iter()
+        .any(|diagnostic| diagnostic.severity == Severity::Error)
+    {
         return (None, diagnostics);
-    };
-    match project_css(&[light, dark], &project.config.site.base, &FONTS) {
-        Ok((css, files)) => (
-            Some(PreparedTheme {
-                document: imported.document,
-                input_path: path.to_owned(),
-                input_bytes: Arc::from(input.as_bytes()),
-                input_real_path,
-                utilities: V4_MAPPINGS.to_owned(),
-                css,
-                files,
-            }),
-            diagnostics,
-        ),
-        Err(message) => {
-            diagnostics.push(Diagnostic::in_file(
-                path,
-                Severity::Error,
-                "theme-font-resource",
-                message,
-            ));
-            (None, diagnostics)
-        }
+    }
+    if prepared.document.is_none() && project.config.theme_fonts.is_empty() {
+        (None, diagnostics)
+    } else {
+        (Some(prepared), diagnostics)
     }
 }
 
-/// Bind the parsed document to the content and compiled generation's reads.
+/// Bind every parsed document/font read to the generation's snapshot and real target.
 pub(super) fn validate_snapshot(
     project: &Project,
     snapshot: &Snapshot,
     theme: &PreparedTheme,
 ) -> Vec<Diagnostic> {
-    let current = document_path(project, &theme.input_path).and_then(|path| {
-        if path != theme.input_real_path {
-            return Err("theme.document target changed during generation".into());
-        }
-        read_document(project, &theme.input_path)
-    });
-    if snapshot
-        .files
-        .get(&theme.input_path)
-        .is_some_and(|bytes| bytes == &theme.input_bytes)
-        && current.is_ok_and(|text| text.as_bytes() == theme.input_bytes.as_ref())
-    {
-        Vec::new()
-    } else {
-        vec![Diagnostic::in_file(
-            &theme.input_path,
-            Severity::Error,
-            "rust-generation-changed",
-            "theme.document changed during generation; retry with one input snapshot",
-        )]
-    }
+    theme
+        .inputs
+        .iter()
+        .filter_map(|input| {
+            let current = input_path(project, &input.path, "theme input").and_then(|real| {
+                if real != input.real {
+                    return Err("theme input target changed during generation".into());
+                }
+                fs::read(real).map_err(|error| error.to_string())
+            });
+            if snapshot
+                .files
+                .get(&input.path)
+                .is_some_and(|bytes| bytes == &input.bytes)
+                && current.is_ok_and(|bytes| bytes.as_slice() == input.bytes.as_ref())
+            {
+                None
+            } else {
+                Some(Diagnostic::in_file(
+                    &input.path,
+                    Severity::Error,
+                    "rust-generation-changed",
+                    "theme input changed during generation; retry with one input snapshot",
+                ))
+            }
+        })
+        .collect()
 }
 
-fn document_path(project: &Project, relative: &str) -> Result<PathBuf, String> {
+fn input_path(project: &Project, relative: &str, label: &str) -> Result<PathBuf, String> {
     if relative.is_empty()
         || Path::new(relative)
             .components()
             .any(|part| !matches!(part, Component::Normal(_)))
         || is_private(relative)
     {
-        return Err("theme.document must name a non-private file inside the project".into());
+        return Err(format!(
+            "{label} must name a non-private file inside the project"
+        ));
     }
     let root = fs::canonicalize(&project.root)
         .map_err(|error| format!("cannot resolve the theme's project root: {error}"))?;
-    let path = fs::canonicalize(root.join(relative)).map_err(|error| {
-        format!(
-            "cannot read theme.document {}: {error}",
-            code_span(relative)
-        )
-    })?;
+    let path = fs::canonicalize(root.join(relative))
+        .map_err(|error| format!("cannot read {label} {}: {error}", code_span(relative)))?;
     let canonical_relative = path
         .strip_prefix(&root)
-        .map_err(|_| "theme.document symlink leads outside the project".to_string())?
+        .map_err(|_| format!("{label} symlink leads outside the project"))?
         .to_string_lossy()
         .replace('\\', "/");
     let output = &project.config.out_dir;
@@ -229,15 +267,18 @@ fn document_path(project: &Project, relative: &str) -> Result<PathBuf, String> {
         || canonical_relative == *output
         || canonical_relative.starts_with(&format!("{output}/"))
     {
-        return Err("theme.document must not read private files or generated output".into());
-    }
-    if !path.is_file() {
         return Err(format!(
-            "theme.document {} is not a file",
-            code_span(relative)
+            "{label} must not read private files or generated output"
         ));
     }
+    if !path.is_file() {
+        return Err(format!("{label} {} is not a file", code_span(relative)));
+    }
     Ok(path)
+}
+
+fn document_path(project: &Project, relative: &str) -> Result<PathBuf, String> {
+    input_path(project, relative, "theme.document")
 }
 
 fn read_document(project: &Project, relative: &str) -> Result<String, String> {
@@ -251,81 +292,23 @@ fn read_document(project: &Project, relative: &str) -> Result<String, String> {
     let mut bytes = Vec::new();
     file.take((THEME_INPUT_LIMIT + 1) as u64)
         .read_to_end(&mut bytes)
-        .map_err(|error| {
-            format!(
-                "cannot read theme.document {}: {error}",
-                code_span(relative)
-            )
-        })?;
+        .map_err(|error| error.to_string())?;
     if bytes.len() > THEME_INPUT_LIMIT {
         return Err("theme input exceeds 256 KiB".into());
     }
     String::from_utf8(bytes).map_err(|error| format!("theme.document must be UTF-8: {error}"))
 }
 
-fn project_css(
-    themes: &[ResolvedTheme; 2],
-    base: &str,
-    assets: &[EmbeddedFont],
-) -> Result<(String, FontFiles), String> {
-    let mut resources = BTreeSet::new();
-    for font in themes.iter().flat_map(|theme| &theme.fonts) {
-        if let Some(path) = &font.resource_path {
-            resources.insert(path.clone());
-        }
-    }
-    if !resources.is_empty() {
-        for font in FONT_GLYPH_FALLBACKS {
-            resources.insert(font.resource_path.to_owned());
-        }
-    }
+fn project_css(themes: &[ResolvedTheme; 2]) -> String {
     let mut css = String::new();
-    let mut files = FontFiles::new();
-    for resource in resources {
-        let font = assets
-            .iter()
-            .find(|font| font.identity.resource_path == resource)
-            .filter(|font| !font.bytes.is_empty() && !font.license.is_empty())
-            .ok_or_else(|| {
-                format!(
-                    "the paired CLI has no packaged bytes or license for font {}",
-                    code_span(&resource)
-                )
-            })?;
-        let digest = font.identity.sha256;
-        let path = format!("assets/fonts/{digest}.ttf");
-        let url = format!("{base}{path}");
-        let family = font.identity.family;
-        css.push_str(&format!(
-            "@font-face {{font-family:\"{family}\";src:url(\"{url}\") format(\"truetype\");font-display:swap;}}\n"
-        ));
-        files.insert(path, Arc::from(font.bytes));
-        files.insert(
-            format!(
-                "assets/fonts/{:x}.license.txt",
-                Sha256::digest(font.license)
-            ),
-            Arc::from(font.license),
-        );
-        if resource == FONT_RESOURCE_DIGESTS[4].resource_path {
-            files.insert(
-                format!("assets/fonts/{LIBERATION_SOURCE_SHA256}.tar.gz"),
-                Arc::from(LIBERATION_SOURCE),
-            );
-        }
-    }
     properties_rule(&mut css, LIGHT, &themes[0]);
     properties_rule(&mut css, DARK, &themes[1]);
     css.push_str("@media (prefers-color-scheme: dark) {\n");
     properties_rule(&mut css, SYSTEM, &themes[1]);
     css.push_str("}\n@layer utilities {\n");
-    css.push_str(&format!(
-        ":where({LIGHT}) {{font-family:var(--rustify-font-sans);font-size:var(--font-size);letter-spacing:var(--rustify-letter-spacing);}}\n"
-    ));
-    css.push_str(
-        ":root :where(button,input,textarea,select) {font-family:inherit;letter-spacing:inherit;}\n}\n",
-    );
-    Ok((css, files))
+    css.push_str(&format!(":where({LIGHT}) {{font-family:var(--rustify-font-sans);font-size:var(--font-size);letter-spacing:var(--rustify-letter-spacing);}}\n"));
+    css.push_str(":root :where(button,input,textarea,select) {font-family:inherit;letter-spacing:inherit;}\n}\n");
+    css
 }
 
 fn properties_rule(css: &mut String, selector: &str, theme: &ResolvedTheme) {
@@ -341,7 +324,7 @@ fn properties_rule(css: &mut String, selector: &str, theme: &ResolvedTheme) {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use rustify_ui::theme::{dom_font_stack, ResolveContext, Theme, ThemeValues};
+    use rustify_ui::theme::{dom_font_stack, font_context, ResolveContext, Theme, ThemeValues};
     use std::sync::atomic::{AtomicU64, Ordering};
 
     struct Fixture(PathBuf);
@@ -390,7 +373,13 @@ mod tests {
     fn document() -> ThemeDocument {
         let mut document = ThemeDocument::from_legacy(Theme::light(), Theme::dark());
         for values in [&mut document.styles.light, &mut document.styles.dark] {
-            values.0.insert("font-serif".into(), "Noto Serif".into());
+            for (token, family) in [
+                ("font-sans", "sans-serif"),
+                ("font-serif", "serif"),
+                ("font-mono", "monospace"),
+            ] {
+                values.0.insert(token.into(), family.into());
+            }
         }
         document
     }
@@ -409,6 +398,78 @@ mod tests {
     }
 
     #[test]
+    fn local_fonts_register_without_selecting_a_theme_and_deduplicate_bytes() {
+        let fixture = Fixture::new();
+        fixture.write("fonts/brand.woff2", b"author font bytes");
+        let mut project = fixture.project(None);
+        project.config_text.push_str("[[theme.fonts]]\nfamily='Brand Sans'\nsrc='fonts/brand.woff2'\nweight='100 900'\n[[theme.fonts]]\nfamily='Other Name'\nsrc='fonts/brand.woff2'\n");
+        project.config = rustify_docs::config::parse(&project.config_text).unwrap().0;
+        let (prepared, diagnostics) = prepare(&project);
+        assert!(diagnostics.is_empty(), "{diagnostics:?}");
+        let prepared = prepared.expect("declared fonts must be registered without a document");
+        assert_eq!(prepared.files.len(), 1);
+        assert_eq!(prepared.css.matches("@font-face").count(), 2);
+        assert!(prepared.css.contains("format(\"woff2\")"));
+        assert!(prepared.css.contains("font-weight:100 900"));
+        assert!(!prepared.css.contains("--rustify-font-sans"));
+        assert!(prepared.css.contains("/sub/assets/fonts/"));
+    }
+
+    #[test]
+    fn the_complete_example_matches_legacy_tokens_with_system_stacks_in_both_modes() {
+        let input = include_str!("../templates/theme.example.json");
+        let context = ResolveContext {
+            font_resolution: FontResolution::Css,
+            ..Default::default()
+        };
+        let imported = import_json(input, &context).unwrap();
+        let mut expected = ThemeDocument::from_legacy(Theme::light(), Theme::dark());
+        for values in [&mut expected.styles.light, &mut expected.styles.dark] {
+            for (token, generic) in [
+                ("font-sans", "sans-serif"),
+                ("font-serif", "serif"),
+                ("font-mono", "monospace"),
+            ] {
+                values.0.insert(token.into(), generic.into());
+            }
+        }
+        assert_eq!(imported.document.styles, expected.styles);
+        for mode in [ThemeMode::Light, ThemeMode::Dark] {
+            let resolved = resolve(&imported.document, mode, &context).unwrap();
+            assert!(resolved
+                .fonts
+                .iter()
+                .all(|font| font.resource_path.is_none()));
+        }
+    }
+
+    #[test]
+    fn font_reads_are_guarded_against_changes_and_family_names_are_css_strings() {
+        let fixture = Fixture::new();
+        fixture.write("fonts/brand.ttf", b"first font bytes");
+        let mut project = fixture.project(None);
+        let family = "Brand\"; } :root { color: red; } \\";
+        project.config_text.push_str(&format!(
+            "[[theme.fonts]]\nfamily={}\nsrc='fonts/brand.ttf'\n",
+            serde_json::to_string(family).unwrap()
+        ));
+        project.config = rustify_docs::config::parse(&project.config_text).unwrap().0;
+        let (prepared, diagnostics) = prepare(&project);
+        assert!(diagnostics.is_empty(), "{diagnostics:?}");
+        let prepared = prepared.unwrap();
+        assert!(prepared
+            .css
+            .contains(&format!("font-family:{};src:", css_string(family))));
+        let (snapshot, _) = rustify_docs::content::snapshot(&project);
+        assert!(validate_snapshot(&project, &snapshot, &prepared).is_empty());
+        fixture.write("fonts/brand.ttf", b"changed font bytes");
+        assert_eq!(
+            validate_snapshot(&project, &snapshot, &prepared)[0].rule,
+            "rust-generation-changed"
+        );
+    }
+
+    #[test]
     fn input_receipt_keeps_the_exact_imported_bytes_after_the_file_changes() {
         let fixture = Fixture::new();
         let mut original = document();
@@ -419,14 +480,14 @@ mod tests {
         let (prepared, diagnostics) = prepare(&fixture.project(Some("themes/current.json")));
         assert!(diagnostics.is_empty(), "{diagnostics:?}");
         let prepared = prepared.unwrap();
-        assert_eq!(prepared.input_path, "themes/current.json");
-        assert_eq!(prepared.input_bytes.as_ref(), input.as_bytes());
-        assert_eq!(prepared.document, original);
+        assert_eq!(prepared.inputs[0].path, "themes/current.json");
+        assert_eq!(prepared.inputs[0].bytes.as_ref(), input.as_bytes());
+        assert_eq!(prepared.document, Some(original));
 
         fixture.write("themes/current.json", b"new bytes after the imported read");
-        assert_eq!(prepared.input_bytes.as_ref(), input.as_bytes());
+        assert_eq!(prepared.inputs[0].bytes.as_ref(), input.as_bytes());
         assert_ne!(
-            prepared.input_bytes.as_ref(),
+            prepared.inputs[0].bytes.as_ref(),
             fs::read(fixture.0.join("themes/current.json")).unwrap()
         );
     }
@@ -459,9 +520,12 @@ mod tests {
         let (prepared, diagnostics) = prepare(&project);
         assert!(diagnostics.is_empty(), "{diagnostics:?}");
         let prepared = prepared.unwrap();
-        assert_eq!(prepared.document, document);
+        assert_eq!(prepared.document, Some(document.clone()));
         let mut expected = String::new();
-        let context = font_context(16., false);
+        let context = ResolveContext {
+            font_resolution: FontResolution::Css,
+            ..Default::default()
+        };
         properties_rule(
             &mut expected,
             LIGHT,
@@ -495,122 +559,6 @@ mod tests {
     }
 
     #[test]
-    fn all_seven_font_bytes_and_notices_are_paired_with_the_sdk_metadata() {
-        assert_eq!(FONTS.len(), font_catalog().len());
-        for font in &FONTS {
-            assert_eq!(
-                format!("{:x}", Sha256::digest(font.bytes)),
-                font.identity.sha256
-            );
-            let source = Path::new(env!("CARGO_MANIFEST_DIR"))
-                .join("../../makepad/widgets/resources")
-                .join(font.identity.resource_path.rsplit('/').next().unwrap());
-            assert_eq!(fs::read(source).unwrap(), font.bytes);
-            let notice = std::str::from_utf8(font.license).unwrap();
-            assert!(notice.contains("Copyright") || notice.contains("copyright"));
-            assert!(!notice.contains("makepad"));
-            if font.identity.family == "Liberation Mono" {
-                assert!(notice.contains("GNU GENERAL PUBLIC LICENSE"));
-                assert!(notice.contains("As a special exception"));
-                assert!(notice.contains("2007 Ascender"));
-            } else {
-                assert!(notice.contains("SIL OPEN FONT LICENSE Version 1.1"));
-            }
-            if font.identity.family == "Rustify WenKai" {
-                assert!(notice.contains("Modified by Rustify"));
-                assert!(notice.contains("Reserved Font Names"));
-            }
-        }
-    }
-
-    #[test]
-    fn emitted_fonts_are_the_referenced_faces_and_glyph_fallbacks_once() {
-        let fixture = Fixture::new();
-        let mut document = document();
-        for values in [&mut document.styles.light, &mut document.styles.dark] {
-            for token in ["font-sans", "font-serif", "font-mono"] {
-                values.0.insert(token.into(), "Rustify WenKai".into());
-            }
-        }
-        let (prepared, diagnostics) = prepare(&write_document(&fixture, &document));
-        assert!(diagnostics.is_empty(), "{diagnostics:?}");
-        let prepared = prepared.unwrap();
-        assert_eq!(prepared.css.matches("@font-face").count(), 2);
-        assert_eq!(prepared.files.len(), 4);
-        for font in [&FONTS[2], &FONTS[6]] {
-            let path = format!("assets/fonts/{}.ttf", font.identity.sha256);
-            assert_eq!(prepared.files[&path].as_ref(), font.bytes);
-            assert!(prepared.css.contains(&format!("url(\"/sub/{path}\")")));
-            assert_eq!(
-                prepared.files[&format!(
-                    "assets/fonts/{:x}.license.txt",
-                    Sha256::digest(font.license)
-                )]
-                    .as_ref(),
-                font.license
-            );
-        }
-        assert!(!prepared.css.contains("https://"));
-        assert!(prepared.files.keys().all(|path| {
-            path.starts_with("assets/fonts/")
-                && (path.ends_with(".ttf") || path.ends_with(".license.txt"))
-        }));
-    }
-
-    #[test]
-    fn different_mode_faces_are_packaged_together_without_unused_faces() {
-        let mut document = document();
-        document
-            .styles
-            .dark
-            .0
-            .insert("font-sans".into(), "Noto Sans".into());
-        document
-            .styles
-            .dark
-            .0
-            .insert("font-mono".into(), "JetBrains Mono".into());
-        let context = font_context(16., false);
-        let themes = [ThemeMode::Light, ThemeMode::Dark]
-            .map(|mode| resolve(&document, mode, &context).unwrap());
-        let (css, files) = project_css(&themes, "/", &FONTS).unwrap();
-        assert_eq!(css.matches("@font-face").count(), 7);
-        assert_eq!(files.len(), 15);
-    }
-
-    #[test]
-    fn corresponding_source_is_only_emitted_with_the_referenced_liberation_font() {
-        assert_eq!(
-            format!("{:x}", Sha256::digest(LIBERATION_SOURCE)),
-            LIBERATION_SOURCE_SHA256
-        );
-        let mut document = document();
-        for values in [&mut document.styles.light, &mut document.styles.dark] {
-            values.0.insert("font-mono".into(), "JetBrains Mono".into());
-        }
-        let context = font_context(16., false);
-        let resolved = |document: &ThemeDocument| {
-            [ThemeMode::Light, ThemeMode::Dark]
-                .map(|mode| resolve(document, mode, &context).unwrap())
-        };
-        let (_, without) = project_css(&resolved(&document), "/", &FONTS).unwrap();
-        assert!(without.keys().all(|path| !path.ends_with(".tar.gz")));
-
-        document
-            .styles
-            .dark
-            .0
-            .insert("font-mono".into(), "Liberation Mono".into());
-        let (css, with) = project_css(&resolved(&document), "/", &FONTS).unwrap();
-        let path = format!("assets/fonts/{LIBERATION_SOURCE_SHA256}.tar.gz");
-        assert_eq!(with[&path].as_ref(), LIBERATION_SOURCE);
-        assert!(!css.contains(".tar.gz"));
-        assert!(std::str::from_utf8(FONTS[4].license)
-            .unwrap()
-            .contains(&format!("{LIBERATION_SOURCE_SHA256}.tar.gz")));
-    }
-
-    #[test]
     fn unknown_tokens_and_font_fallbacks_keep_the_resolvers_diagnostics() {
         let fixture = Fixture::new();
         let mut document = document();
@@ -632,27 +580,14 @@ mod tests {
             .iter()
             .any(|warning| warning.message.contains("unknown-token")));
         assert!(diagnostics.iter().any(|warning| {
-            warning.message.contains("Unknown Family") && warning.message.contains("IBM Plex Sans")
+            warning.message.contains("Unknown Family") && warning.rule == "theme-font-system"
         }));
         assert_eq!(
-            prepared.document.styles.light.0["unknown-token"],
+            prepared.document.as_ref().unwrap().styles.light.0["unknown-token"],
             "url(https://untrusted.invalid/injected)"
         );
         assert!(!prepared.css.contains("untrusted"));
-        assert!(!prepared.css.contains("Unknown Family"));
-    }
-
-    #[test]
-    fn a_missing_embedded_face_or_license_is_an_error_without_a_network_fallback() {
-        let context = font_context(16., false);
-        let document = document();
-        let themes = [ThemeMode::Light, ThemeMode::Dark]
-            .map(|mode| resolve(&document, mode, &context).unwrap());
-        let error = project_css(&themes, "/", &[]).unwrap_err();
-        assert!(error.contains("no packaged bytes or license"));
-        let mut assets = FONTS;
-        assets[0].license = &[];
-        assert!(project_css(&themes, "/", &assets).is_err());
+        assert!(prepared.css.contains("Unknown Family"));
     }
 
     #[test]
@@ -670,8 +605,7 @@ mod tests {
         let context = ResolveContext::default();
         let themes = [ThemeMode::Light, ThemeMode::Dark]
             .map(|mode| resolve(&document, mode, &context).unwrap());
-        let (css, files) = project_css(&themes, "/", &[]).unwrap();
-        assert!(files.is_empty());
+        let css = project_css(&themes);
         assert!(!css.contains("@font-face"));
         for (slot, font) in ["sans", "serif", "mono"].into_iter().zip(&themes[0].fonts) {
             assert!(css.contains(&format!("--rustify-font-{slot}:{};", dom_font_stack(font))));

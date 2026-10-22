@@ -298,6 +298,7 @@ mod complete_tests {
     }
 
     #[test]
+    #[cfg(rustify_repo_tests)]
     fn complete_radius_and_content_branches_match_official_matrix() {
         let fixture: serde_json::Value = serde_json::from_str(include_str!(
             "../../../../tests/utility/compiler/effects-complete-fixtures.json"

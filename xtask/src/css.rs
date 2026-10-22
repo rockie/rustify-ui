@@ -23,10 +23,13 @@ fn candidates_output(root: &Path) -> PathBuf {
     root.join("crates/rustify-components/css/candidates.json")
 }
 
-const SOURCE_TREES: [(&str, &str); 4] = [
+const SOURCE_TREES: [(&str, &str); 5] = [
+    ("crates/rustify-dom/src", "rs"),
+    ("crates/rustify-dom/web", "css"),
+    // The facade's own sources: it re-exports the core, but the region module
+    // and the GPU halves are written here and are read like any other tree.
     ("crates/rustify-ui/src", "rs"),
     ("crates/rustify-components/src", "rs"),
-    ("crates/rustify-ui/web", "css"),
     ("crates/rustify-components/css", "css"),
 ];
 
@@ -261,7 +264,7 @@ mod tests {
     fn complete_static_candidates_include_hidden_sdk_and_component_branches() {
         let fixture = Fixture::new();
         fixture.write(
-            "crates/rustify-ui/src/overlay.rs",
+            "crates/rustify-dom/src/overlay.rs",
             "if open { \"fixed hidden opacity-0\" }",
         );
         fixture.write(
@@ -269,7 +272,7 @@ mod tests {
             "const OPEN: &str = \"aria-expanded:bg-accent focus-visible:ring-2 fixed transition-[width]\";",
         );
         fixture.write(
-            "crates/rustify-ui/web/dom-runtime.css",
+            "crates/rustify-dom/web/dom-runtime.css",
             ".rustify-floating-state { pointer-events: none; }",
         );
         fixture.write(
@@ -317,7 +320,7 @@ mod tests {
             "target/cached.rs",
             "ref/vendor.css",
             "docs/plan/prose.rs",
-            "crates/rustify-ui/src/target/cached.rs",
+            "crates/rustify-dom/src/target/cached.rs",
             "crates/rustify-components/src/ref/vendor.rs",
             "crates/rustify-components/css/plan/prose.css",
             "crates/rustify-components/css/rustify.css",

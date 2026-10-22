@@ -20,10 +20,18 @@ fn project_build_reads_sources_and_writes_unchanged_output() {
     assert!(!build(&tree, &options, None).unwrap().artifact.changed);
 }
 
-use super::super::{merge_configs, validators, ClassGroupDef, Cn, Config, ConfigExtension};
+#[cfg(rustify_repo_tests)]
+use super::super::merge_configs;
+#[cfg(rustify_repo_tests)]
+use super::super::ConfigExtension;
+use super::super::{validators, ClassGroupDef};
+#[cfg(rustify_repo_tests)]
+use super::super::{Cn, Config};
 use serde_json::{json, Value};
+#[cfg(rustify_repo_tests)]
 use sha2::{Digest, Sha256};
 use std::rc::Rc;
+#[cfg(rustify_repo_tests)]
 fn digest(text: &str) -> String {
     format!("{:x}", Sha256::digest(text.as_bytes()))
 }
@@ -49,6 +57,7 @@ fn group_map(map: &[(String, Vec<ClassGroupDef>)]) -> Value {
             .collect(),
     )
 }
+#[cfg(rustify_repo_tests)]
 fn string_map(map: &[(String, Vec<String>)]) -> Value {
     Value::Object(
         map.iter()
@@ -56,6 +65,7 @@ fn string_map(map: &[(String, Vec<String>)]) -> Value {
             .collect(),
     )
 }
+#[cfg(rustify_repo_tests)]
 fn config_json(config: &Config) -> Value {
     let mut obj = serde_json::Map::new();
     obj.insert("theme".into(), group_map(&config.theme));
@@ -81,9 +91,11 @@ fn config_json(config: &Config) -> Value {
     }
     Value::Object(obj)
 }
+#[cfg(rustify_repo_tests)]
 fn config_hash(config: &Config) -> String {
     digest(&(serde_json::to_string_pretty(&config_json(config)).unwrap() + "\n"))
 }
+#[cfg(rustify_repo_tests)]
 fn fixture_tree() -> BuildSourceTree {
     BuildSourceTree::virtual_files([
         (
@@ -110,6 +122,7 @@ fn fixture_tree() -> BuildSourceTree {
         ),
     ])
 }
+#[cfg(rustify_repo_tests)]
 fn fixture_loader() -> ConfigLoader {
     Rc::new(|_, path, base| {
         let ext = if path.ends_with("bad-config.mjs") {
@@ -120,6 +133,7 @@ fn fixture_loader() -> ConfigLoader {
         Ok(merge_configs(&base, &ConfigExtension::from_json(&ext)?))
     })
 }
+#[cfg(rustify_repo_tests)]
 fn fixture_options(case: &Value) -> ProjectOptions {
     let input = &case["options"];
     let id = case["id"].as_str().unwrap();
@@ -149,6 +163,7 @@ fn fixture_options(case: &Value) -> ProjectOptions {
     }
 }
 #[test]
+#[cfg(rustify_repo_tests)]
 fn frozen_project_build_reports_and_error_contracts() {
     let fixture: Value = serde_json::from_str(include_str!(
         "../../../../../tests/utility/cn/build-fixtures.json"
@@ -261,6 +276,7 @@ fn frozen_project_build_reports_and_error_contracts() {
     assert_eq!(checked, 9);
 }
 #[test]
+#[cfg(rustify_repo_tests)]
 fn frozen_incremental_builder_and_matcher_and_cap() {
     let fixture: Value = serde_json::from_str(include_str!(
         "../../../../../tests/utility/cn/build-fixtures.json"
@@ -314,12 +330,14 @@ fn frozen_incremental_builder_and_matcher_and_cap() {
     assert_eq!(json!({"skippedLong":skipped,"tokens":tokens}), *expected);
 }
 
+#[cfg(rustify_repo_tests)]
 fn contract() -> Value {
     serde_json::from_str(include_str!(
         "../../../../../tests/utility/cn/build-contract-fixtures.json"
     ))
     .unwrap()
 }
+#[cfg(rustify_repo_tests)]
 fn contract_tree(fixture: &Value) -> BuildSourceTree {
     let tree = BuildSourceTree::virtual_files([]);
     for (key, value) in fixture["files"].as_object().unwrap() {
@@ -331,6 +349,7 @@ fn contract_tree(fixture: &Value) -> BuildSourceTree {
     tree
 }
 #[test]
+#[cfg(rustify_repo_tests)]
 fn fixed_glob_matcher_and_css_contracts() {
     let fixture = contract();
     let tree = contract_tree(&fixture);
@@ -409,6 +428,7 @@ fn fixed_glob_matcher_and_css_contracts() {
     }
 }
 #[test]
+#[cfg(rustify_repo_tests)]
 fn fixed_extended_build_contracts() {
     let fixture = contract();
     let tree = contract_tree(&fixture);
@@ -457,6 +477,7 @@ fn fixed_extended_build_contracts() {
     }
 }
 #[test]
+#[cfg(rustify_repo_tests)]
 fn builder_coalesces_concurrent_and_reentrant_requests() {
     use std::cell::{Cell, RefCell};
     use std::future::Future;
@@ -521,6 +542,7 @@ fn builder_coalesces_concurrent_and_reentrant_requests() {
 }
 
 #[test]
+#[cfg(rustify_repo_tests)]
 fn fixed_cli_and_bundler_lifecycle_contracts() {
     let fixture = contract();
     let tree = Rc::new(contract_tree(&fixture));
@@ -691,6 +713,7 @@ fn virtual_output_follows_directory_and_dangling_file_symlinks() {
 }
 #[cfg(unix)]
 #[test]
+#[cfg(rustify_repo_tests)]
 fn native_and_virtual_sources_agree_with_frozen_globs_and_builds() {
     use std::os::unix::fs::symlink;
     let fixture = contract();

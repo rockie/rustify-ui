@@ -8,7 +8,7 @@ use support::*;
 fn project() -> Temp {
     let temp = Temp::new("rust-dev");
     let from = fixture("components");
-    for directory in ["src", "content", "static"] {
+    for directory in ["src", "content", "static", "fonts"] {
         copy_tree(
             &from.join(directory),
             &temp.path(&format!("site/{directory}")),
@@ -22,21 +22,6 @@ fn project() -> Temp {
     ] {
         fs::copy(from.join(file), temp.path(&format!("site/{file}"))).unwrap();
     }
-    let repo = fs::canonicalize(Path::new(env!("CARGO_MANIFEST_DIR")).join("../..")).unwrap();
-    let mut manifest = temp.read("site/Cargo.toml");
-    for library in ["rustify-ui", "rustify-components", "rustify-docs"] {
-        let old = format!("path = \"../../../../crates/{library}\"");
-        assert_eq!(manifest.matches(&old).count(), 1);
-        manifest = manifest.replacen(
-            &old,
-            &format!(
-                "path = {}",
-                serde_json::to_string(&repo.join("crates").join(library)).unwrap()
-            ),
-            1,
-        );
-    }
-    temp.write("site/Cargo.toml", &manifest);
     pair_component_project(&temp.path("site"));
     temp
 }

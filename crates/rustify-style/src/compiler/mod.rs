@@ -1240,34 +1240,34 @@ pub(super) fn compare_classes(left: &Text, right: &Text) -> Ordering {
 #[cfg(test)]
 mod tests;
 
-#[cfg(test)]
+#[cfg(all(rustify_repo_tests, test))]
 #[path = "../../../../tests/utility/compiler/utf16-value-native.rs"]
 mod utf16_value_tests;
 
-#[cfg(test)]
+#[cfg(all(rustify_repo_tests, test))]
 #[path = "../../../../tests/utility/compiler/utf16-declaration-native.rs"]
 mod utf16_declaration_tests;
 
-#[cfg(test)]
+#[cfg(all(rustify_repo_tests, test))]
 #[path = "../../../../tests/utility/compiler/utf16-theme-native.rs"]
 mod utf16_theme_tests;
 
-#[cfg(test)]
+#[cfg(all(rustify_repo_tests, test))]
 #[path = "../../../../tests/utility/compiler/utf16-ast-fields-native.rs"]
 mod utf16_ast_fields_tests;
 
-#[cfg(test)]
+#[cfg(all(rustify_repo_tests, test))]
 #[path = "../../../../tests/utility/compiler/utf16-parser-native.rs"]
 mod utf16_parser_tests;
 
-#[cfg(test)]
+#[cfg(all(rustify_repo_tests, test))]
 #[path = "../../../../tests/utility/compiler/utf16-error-native.rs"]
 mod utf16_error_tests;
 
-#[cfg(test)]
+#[cfg(all(rustify_repo_tests, test))]
 #[path = "../../../../tests/utility/compiler/utf16-family-native.rs"]
 mod utf16_family_tests;
 
-#[cfg(all(test, feature = "scanner"))]
+#[cfg(all(rustify_repo_tests, all(test, feature = "scanner")))]
 #[path = "../../../../tests/utility/compiler/source-pipeline.rs"]
 mod source_pipeline_tests;

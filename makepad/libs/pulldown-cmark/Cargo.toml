@@ -36,8 +36,7 @@ license = "MIT"
 repository = "https://github.com/raphlinus/pulldown-cmark"
 
 [dependencies.bitflags]
-version = "2"
-path = "../bitflags"
+version = "=2.10.0"
 
 [dependencies.getopts]
 version = "0.2"

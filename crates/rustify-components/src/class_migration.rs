@@ -4,6 +4,7 @@ use crate::{ButtonSize, ButtonVariant};
 use serde_json::Value;
 
 #[test]
+#[cfg(rustify_repo_tests)]
 fn captured_component_inputs_match_the_fixed_cn_oracle() {
     let historical: Value = serde_json::from_str(include_str!(
         "../../../tests/utility/migration/fixtures.json"

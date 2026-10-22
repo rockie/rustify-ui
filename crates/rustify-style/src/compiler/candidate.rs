@@ -817,6 +817,7 @@ mod variant_json_tests {
     }
 
     #[test]
+    #[cfg(rustify_repo_tests)]
     fn variant_parameter_parser_matches_official_json_shapes() {
         let fixture: serde_json::Value = serde_json::from_str(include_str!(
             "../../../../tests/utility/compiler/variant-parameters-fixtures.json"

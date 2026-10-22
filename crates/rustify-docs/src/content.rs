@@ -358,6 +358,18 @@ pub fn message_dependencies(project: &Project) -> BTreeSet<String> {
     message_paths(project, &real_root(project))
 }
 
+/// Declared font aliases and their existing or prospective project-local targets.
+#[doc(hidden)]
+pub fn font_dependencies(project: &Project) -> BTreeSet<String> {
+    let root = real_root(project);
+    let mut paths = BTreeSet::new();
+    for font in &project.config.theme_fonts {
+        paths.insert(font.src.clone());
+        paths.extend(watched_source(&root, &project.root.join(&font.src)));
+    }
+    paths
+}
+
 fn matches_theme(project: &Project, root: &Path, theme: &BTreeSet<String>, path: &str) -> bool {
     theme.contains(path)
         || (!theme.is_empty()
@@ -712,6 +724,40 @@ pub fn snapshot(project: &Project) -> (Snapshot, Vec<Diagnostic>) {
                         "theme-document-missing",
                     ),
                 )),
+            }
+        }
+    }
+    for (index, font) in config.theme_fonts.iter().enumerate() {
+        let path = &font.src;
+        if let Some(real) =
+            watched_source(&root, &project.root.join(path)).filter(|real| real != path)
+        {
+            snapshot.linked.insert(real);
+        }
+        match read_source(project, &root, path, &mut snapshot.inputs) {
+            Ok(bytes) if !bytes.is_empty() => {
+                snapshot.files.insert(path.clone(), bytes);
+            }
+            Ok(_) => problems.push(Diagnostic::located(
+                &project.config_file,
+                &project.config_text,
+                Issue::error(
+                    font.span.clone(),
+                    "theme-font",
+                    format!("theme.fonts[{index}] {} is empty", code_span(path)),
+                ),
+            )),
+            Err(refusal) => {
+                let issue = refusal.issue(
+                    &|_, message| Issue::error(font.span.clone(), "theme-font", message),
+                    &format!("theme.fonts[{index}] {}", code_span(path)),
+                    "theme-font",
+                );
+                problems.push(Diagnostic::located(
+                    &project.config_file,
+                    &project.config_text,
+                    issue,
+                ));
             }
         }
     }
@@ -1601,6 +1647,9 @@ pub fn analyze_with_surfaces(
     };
     if let Some((path, _)) = &config.theme_document {
         sources.track(path);
+    }
+    for font in &config.theme_fonts {
+        sources.track(&font.src);
     }
     for (path, _) in config
         .locales
@@ -4902,6 +4951,24 @@ pub(crate) mod tests {
         assert!(!snapshot.files.contains_key("themes/other.md"));
         assert!(analysis.referenced.contains("themes/document.md"));
         assert!(!analysis.resources.contains("themes/document.md"));
+        assert_eq!(analysis.errors(), 0, "{:?}", analysis.diagnostics);
+    }
+
+    #[test]
+    fn declared_fonts_are_snapshot_inputs_and_dependency_graph_nodes() {
+        let config = format!("{CONFIG}[[theme.fonts]]\nfamily='Brand'\nsrc='fonts/brand.ttf'\n");
+        let fixture = Fixture::new(&[
+            ("rustify-docs.toml", &config),
+            ("content/index.md", &format!("{FRONT}# Home\n")),
+            ("fonts/brand.ttf", "font fixture bytes"),
+        ]);
+        let (_, snapshot, analysis) = fixture.analyze(Mode::Production);
+        assert_eq!(
+            snapshot.files["fonts/brand.ttf"].as_ref(),
+            b"font fixture bytes"
+        );
+        assert!(analysis.referenced.contains("fonts/brand.ttf"));
+        assert!(!analysis.resources.contains("fonts/brand.ttf"));
         assert_eq!(analysis.errors(), 0, "{:?}", analysis.diagnostics);
     }
 

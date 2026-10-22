@@ -473,6 +473,7 @@ mod tests {
     }
 
     #[test]
+    #[cfg(rustify_repo_tests)]
     fn mask_branches_match_official_fixtures_and_prefix() {
         let fixture: serde_json::Value = serde_json::from_str(include_str!(
             "../../../../tests/utility/compiler/masks-fixtures.json"

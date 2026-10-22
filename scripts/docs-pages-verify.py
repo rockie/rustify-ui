@@ -42,6 +42,21 @@ def zip_member(archive, name):
     return archive.read(matches[0])
 
 
+def paired_revision(candidate, remote=False):
+    assets = "crates/rustify-docs-cli/assets"
+    if remote:
+        names = {entry["name"] for entry in gh(f"repos/{REPOSITORY}/contents/{assets}?ref={candidate}")}
+        name = "framework-release.json" if "framework-release.json" in names else "framework-revision.txt"
+        raw = gh(f"repos/{REPOSITORY}/contents/{assets}/{name}?ref={candidate}")
+        text = base64.b64decode(raw["content"]).decode()
+    else:
+        root = Path(__file__).resolve().parents[1]
+        exists = subprocess.run(["git", "cat-file", "-e", f"{candidate}:{assets}/framework-release.json"], cwd=root, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL).returncode == 0
+        name = "framework-release.json" if exists else "framework-revision.txt"
+        text = subprocess.check_output(["git", "show", f"{candidate}:{assets}/{name}"], cwd=root, text=True)
+    return json.loads(text)["library_rev"] if name.endswith(".json") else text.strip()
+
+
 def check_identity(candidate, framework, identity, receipt):
     if not re.fullmatch(r"[0-9a-f]{40}", framework) or identity["framework_revision"] != framework or receipt["framework_revision"] != framework:
         raise ValueError("workflow identity does not match the framework R in source C")
@@ -69,8 +84,7 @@ def workflow_artifact(candidate, run_id=None):
                 continue
             receipt = json.loads(zip_member(archive, "pages-prepare.json"))
             manifest = zip_member(archive, MANIFEST)
-        raw = gh(f"repos/{REPOSITORY}/contents/crates/rustify-docs-cli/assets/framework-revision.txt?ref={candidate}")
-        framework = base64.b64decode(raw["content"]).decode().strip()
+        framework = paired_revision(candidate, remote=True)
         check_identity(candidate, framework, identity, receipt)
         with zipfile.ZipFile(io.BytesIO(gh(f"repos/{REPOSITORY}/actions/artifacts/{pages['id']}/zip", True))) as archive:
             members = [name for name in archive.namelist() if name.endswith((".tar", ".tar.gz", ".tgz"))]
@@ -250,7 +264,7 @@ def main():
         if args.dir:
             identity = json.loads(args.identity.read_text())
             receipt = json.loads((args.identity.parent / "pages-prepare.json").read_text())
-            framework = subprocess.check_output(["git", "show", f"{args.candidate_sha}:crates/rustify-docs-cli/assets/framework-revision.txt"], cwd=Path(__file__).resolve().parents[1], text=True).strip()
+            framework = paired_revision(args.candidate_sha)
             check_identity(args.candidate_sha, framework, identity, receipt)
             files = {}
             for path in args.dir.rglob("*"):

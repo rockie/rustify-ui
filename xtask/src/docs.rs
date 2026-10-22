@@ -462,6 +462,11 @@ fn check_product(output: &Path) -> Result<(), String> {
 }
 
 fn check_product_at(output: &Path, bindings: &Path) -> Result<(), String> {
+    check_product_with_prefix(output, bindings, "rustify-dom")
+}
+
+fn check_product_with_prefix(output: &Path, bindings: &Path, runtime: &str) -> Result<(), String> {
+    let snippet_prefix = format!("./snippets/{runtime}-");
     let mut files = Vec::new();
     let mut stack = vec![output.to_path_buf()];
     while let Some(dir) = stack.pop() {
@@ -497,7 +502,7 @@ fn check_product_at(output: &Path, bindings: &Path) -> Result<(), String> {
         .lines()
         .filter(|line| line.trim_start().starts_with("import "))
     {
-        if line.contains("makepad") || !line.contains("./snippets/rustify-ui-") {
+        if line.contains("makepad") || !line.contains(&snippet_prefix) {
             return Err(format!(
                 "the glue imports something other than the SDK runtime: {line}"
             ));
@@ -514,7 +519,7 @@ fn check_product_at(output: &Path, bindings: &Path) -> Result<(), String> {
             // `wbg` before it) and the SDK's snippet; nothing else.
             module.as_str() != "wbg"
                 && module.as_str() != "./app_bg.js"
-                && !module.starts_with("./snippets/rustify-ui-")
+                && !module.starts_with(&snippet_prefix)
         })
         .collect();
     if !unexpected.is_empty() {
@@ -683,6 +688,7 @@ const BROWSER_FEATURES: &[(&str, &[&str])] = &[
     ("leptos", &["csr", "hydrate"]),
     ("reactive_graph", &["effects"]),
     ("rustify-ui", &["csr", "hydrate", "gpu"]),
+    ("rustify-dom", &["csr", "hydrate"]),
     ("rustify-components", &["csr", "hydrate", "gpu"]),
     ("rustify-docs", &["hydrate"]),
 ];
@@ -774,6 +780,7 @@ const SITE_PIPELINE_PACKAGES: &[&str] = &[
     "dom_query",
     "serde_yaml_ng",
     "classification-macros",
+    "rustify-classification-macros",
     "fast-glob",
     "bexpand",
 ];
@@ -1227,10 +1234,19 @@ fn external(git: Option<&str>, rev: Option<&str>) -> Result<(), String> {
         "resolving the git dependencies",
     )?;
     let manifest = consumer.join("Cargo.toml");
+    let consumer_graph = graph(&mut cargo(), &manifest, "dom-consumer")?;
     check_graph(
         "dom-consumer (outside the repository, git dependencies, no patch)",
-        &graph(&mut cargo(), &manifest, "dom-consumer")?,
+        &consumer_graph,
     )?;
+    let runtime = if consumer_graph
+        .iter()
+        .any(|line| line.starts_with("rustify-dom "))
+    {
+        "rustify-dom"
+    } else {
+        "rustify-ui"
+    };
 
     let tools = work.join("tools");
     let bindgen = tools.join("bin/wasm-bindgen");
@@ -1279,7 +1295,7 @@ fn external(git: Option<&str>, rev: Option<&str>) -> Result<(), String> {
         cargo().args(["run", "--locked", "--quiet", "--bin", "export-dom-assets"]),
         "export-dom-assets",
     )?;
-    check_product(&public)?;
+    check_product_with_prefix(&public, &public.join("pkg"), runtime)?;
     println!(
         "features (outside the repository): the default build is DOM only; the product is {}",
         public.display()
@@ -1496,6 +1512,87 @@ fn quoted_assignment<'a>(text: &'a str, field: &str) -> Option<&'a str> {
         .map(|(value, _)| value)
 }
 
+fn cli_framework(info: &str) -> Result<Option<serde_json::Value>, String> {
+    let records: Vec<_> = info
+        .lines()
+        .filter_map(|line| line.strip_prefix("framework: "))
+        .collect();
+    let distributions: Vec<_> = info
+        .lines()
+        .filter_map(|line| line.strip_prefix("distribution: "))
+        .collect();
+    if records.is_empty() && distributions.is_empty() {
+        return Ok(None);
+    }
+    if records.len() != 1
+        || distributions.len() != 1
+        || !matches!(distributions[0], "source" | "registry")
+    {
+        return Err("CLI framework/distribution identity is incomplete".into());
+    }
+    let record: serde_json::Value =
+        serde_json::from_str(records[0]).map_err(|error| error.to_string())?;
+    if record["schema"] != 1
+        || record["registry"] != "crates-io"
+        || record["packages"]
+            .as_object()
+            .is_none_or(|packages| packages.len() != 3)
+        || ["rustify-docs", "rustify-dom", "rustify-components"]
+            .iter()
+            .any(|name| record["packages"][name].as_str().is_none_or(str::is_empty))
+        || record["wasm_bindgen"] != WASM_BINDGEN
+    {
+        return Err("CLI has an invalid framework release record".into());
+    }
+    Ok(Some(record))
+}
+
+fn verify_registry_components(
+    manifest: &str,
+    lock: &str,
+    record: &serde_json::Value,
+) -> Result<(), String> {
+    for package in ["rustify-docs", "rustify-dom", "rustify-components"] {
+        let version = record["packages"][package]
+            .as_str()
+            .ok_or("framework version missing")?;
+        let declarations: Vec<_> = manifest
+            .lines()
+            .filter(|line| line.starts_with(&format!("{package} = {{")))
+            .collect();
+        let [declaration] = declarations.as_slice() else {
+            return Err(format!("template must declare {package} once"));
+        };
+        if quoted_assignment(declaration, "version") != Some(format!("={version}").as_str())
+            || quoted_assignment(declaration, "path").is_some()
+            || quoted_assignment(declaration, "git").is_some()
+        {
+            return Err(format!(
+                "template must declare {package}@={version} from crates.io"
+            ));
+        }
+        let entries: Vec<_> = lock
+            .split("[[package]]")
+            .filter(|entry| quoted_assignment(entry, "name") == Some(package))
+            .collect();
+        let [entry] = entries.as_slice() else {
+            return Err(format!("template lock must contain {package} once"));
+        };
+        if quoted_assignment(entry, "version") != Some(version)
+            || quoted_assignment(entry, "source")
+                != Some("registry+https://github.com/rust-lang/crates.io-index")
+            || quoted_assignment(entry, "checksum").is_none_or(|sum| {
+                sum.len() != 64 || !sum.bytes().all(|byte| byte.is_ascii_hexdigit())
+            })
+        {
+            return Err(format!(
+                "template lock does not match {package}@{version} and its registry checksum"
+            ));
+        }
+    }
+    Ok(())
+}
+
 fn components_template(sysroot: &Path, binary: &Path, dir: &Path) -> Result<(), String> {
     let author = Author::new(sysroot, binary, dir)?;
     author.check_path()?;
@@ -1505,38 +1602,51 @@ fn components_template(sysroot: &Path, binary: &Path, dir: &Path) -> Result<(), 
         std::fs::read_to_string(site.join("Cargo.toml")).map_err(|error| error.to_string())?;
     let lock = std::fs::read(site.join("Cargo.lock")).map_err(|error| error.to_string())?;
     let lock_text = std::str::from_utf8(&lock).map_err(|error| error.to_string())?;
+    let output = Command::new(binary)
+        .arg("--build-info")
+        .output()
+        .map_err(|error| error.to_string())?;
+    if !output.status.success() {
+        return Err("installed CLI build-info failed".into());
+    }
+    let info = String::from_utf8_lossy(&output.stdout);
+    let record = cli_framework(&info)?;
     let mut framework = None;
-    for package in ["rustify-docs", "rustify-ui", "rustify-components"] {
-        let declarations: Vec<_> = manifest
-            .lines()
-            .filter(|line| line.starts_with(&format!("{package} = {{")))
-            .collect();
-        let [declaration] = declarations.as_slice() else {
-            return Err(format!(
-                "the installed components template must declare {package} once"
-            ));
-        };
-        let revision = quoted_assignment(declaration, "rev")
-            .ok_or_else(|| format!("the generated {package} has no Git revision"))?;
-        let git = quoted_assignment(declaration, "git")
-            .ok_or_else(|| format!("the generated {package} has no Git URL"))?;
-        if revision.len() != 40
-            || !revision.bytes().all(|byte| byte.is_ascii_hexdigit())
-            || framework.is_some_and(|previous| previous != revision)
-        {
-            return Err("the generated components dependencies do not share one complete framework revision".into());
-        }
-        framework = Some(revision);
-        let entries: Vec<_> = lock_text
-            .split("[[package]]")
-            .filter(|entry| quoted_assignment(entry, "name") == Some(package))
-            .collect();
-        let [entry] = entries.as_slice() else {
-            return Err(format!("the generated lock must contain {package} once"));
-        };
-        let expected = format!("git+{git}?rev={revision}#{revision}");
-        if quoted_assignment(entry, "source") != Some(expected.as_str()) {
-            return Err(format!("the generated {package} lock source does not match its generated Git revision {revision}"));
+    if let Some(record) = &record {
+        verify_registry_components(&manifest, lock_text, record)?;
+    } else {
+        for package in ["rustify-docs", "rustify-ui", "rustify-components"] {
+            let declarations: Vec<_> = manifest
+                .lines()
+                .filter(|line| line.starts_with(&format!("{package} = {{")))
+                .collect();
+            let [declaration] = declarations.as_slice() else {
+                return Err(format!(
+                    "the installed components template must declare {package} once"
+                ));
+            };
+            let revision = quoted_assignment(declaration, "rev")
+                .ok_or_else(|| format!("the generated {package} has no Git revision"))?;
+            let git = quoted_assignment(declaration, "git")
+                .ok_or_else(|| format!("the generated {package} has no Git URL"))?;
+            if revision.len() != 40
+                || !revision.bytes().all(|byte| byte.is_ascii_hexdigit())
+                || framework.is_some_and(|previous| previous != revision)
+            {
+                return Err("the generated components dependencies do not share one complete framework revision".into());
+            }
+            framework = Some(revision);
+            let entries: Vec<_> = lock_text
+                .split("[[package]]")
+                .filter(|entry| quoted_assignment(entry, "name") == Some(package))
+                .collect();
+            let [entry] = entries.as_slice() else {
+                return Err(format!("the generated lock must contain {package} once"));
+            };
+            let expected = format!("git+{git}?rev={revision}#{revision}");
+            if quoted_assignment(entry, "source") != Some(expected.as_str()) {
+                return Err(format!("the generated {package} lock source does not match its generated Git revision {revision}"));
+            }
         }
     }
     let calls = author.calls()?;
@@ -1555,7 +1665,12 @@ fn components_template(sysroot: &Path, binary: &Path, dir: &Path) -> Result<(), 
             "the generated components lock changed during the template identity check".into(),
         );
     }
-    println!("components template (no network, no build): generated by the installed CLI; all three Git dependencies and unchanged lock resolve to framework {}; lock retained at {} ({} bytes)", framework.unwrap_or_default(), site.join("Cargo.lock").display(), lock.len());
+    let pair = record
+        .as_ref()
+        .and_then(|record| record["library_rev"].as_str())
+        .or(framework)
+        .unwrap_or_default();
+    println!("components template (no network, no build): all three dependencies and the unchanged lock match framework {pair}; lock retained at {} ({} bytes)", site.join("Cargo.lock").display(), lock.len());
     Ok(())
 }
 
@@ -2203,6 +2318,36 @@ mod tests {
     use super::*;
 
     #[test]
+    fn cli_pair_modes_keep_legacy_and_validate_new_registry_templates() {
+        assert!(cli_framework("source: old\n").unwrap().is_none());
+        let record = serde_json::json!({"schema":1, "registry":"crates-io", "library_rev":"a".repeat(40),
+            "packages":{"rustify-docs":"0.2.0", "rustify-dom":"0.2.0", "rustify-components":"0.2.0"}, "wasm_bindgen":WASM_BINDGEN});
+        for mode in ["registry", "source"] {
+            let info = format!("distribution: {mode}\nframework: {record}\n");
+            assert_eq!(cli_framework(&info).unwrap().unwrap(), record);
+        }
+        assert!(cli_framework(&format!("framework: {record}\n")).is_err());
+        assert!(cli_framework("distribution: registry\nframework: broken\n").is_err());
+        let mut manifest = String::new();
+        let mut lock = String::new();
+        for name in ["rustify-docs", "rustify-dom", "rustify-components"] {
+            manifest.push_str(&format!(
+                "{name} = {{ version = \"=0.2.0\", default-features = false }}\n"
+            ));
+            lock.push_str(&format!("[[package]]\nname = \"{name}\"\nversion = \"0.2.0\"\nsource = \"registry+https://github.com/rust-lang/crates.io-index\"\nchecksum = \"{}\"\n", "a".repeat(64)));
+        }
+        assert!(verify_registry_components(&manifest, &lock, &record).is_ok());
+        assert!(
+            verify_registry_components(&manifest.replace("=0.2.0", "=0.1.0"), &lock, &record)
+                .is_err()
+        );
+        assert!(
+            verify_registry_components(&manifest, &lock.replace("registry+", "git+"), &record)
+                .is_err()
+        );
+    }
+
+    #[test]
     fn toolchain_identity_matches_the_complete_build_source_and_cargo_revision() {
         let revision = "b31e28b7f7dd949f7dc89ebc7b5f64380adbb63d";
         let info = format!("rustify-docs 0.1.19\npanic: unwind\nsource: {revision}\n");
@@ -2317,12 +2462,12 @@ mod tests {
                 .unwrap()
                 .as_nanos()
         ));
-        let snippet = directory.join("snippets/rustify-ui-fixture/web/dom-runtime.js");
+        let snippet = directory.join("snippets/rustify-dom-fixture/web/dom-runtime.js");
         std::fs::create_dir_all(snippet.parent().unwrap()).unwrap();
         std::fs::write(&snippet, "export function create_dom_host() {}\n").unwrap();
         std::fs::write(
             directory.join("app.js"),
-            "import { create_dom_host } from './snippets/rustify-ui-fixture/web/dom-runtime.js';\n",
+            "import { create_dom_host } from './snippets/rustify-dom-fixture/web/dom-runtime.js';\n",
         )
         .unwrap();
         std::fs::write(directory.join("app_bg.wasm"), b"\0asm\x01\0\0\0").unwrap();

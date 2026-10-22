@@ -32,8 +32,7 @@ license = "MIT"
 repository = "https://github.com/RazrFalcon/rustybuzz"
 
 [dependencies.bitflags]
-version = "2.4.1"
-path = "../bitflags"
+version = "=2.10.0"
 
 [dependencies.bytemuck]
 version = "1.5"
@@ -45,8 +44,7 @@ version = "1.0.0"
 path = "../error_log"
 
 [dependencies.smallvec]
-version = "1.6"
-path = "../smallvec"
+version = "=1.15.1"
 
 [dependencies.ttf-parser]
 version = "0.24.1"

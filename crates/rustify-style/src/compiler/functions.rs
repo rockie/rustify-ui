@@ -492,6 +492,7 @@ mod tests {
     }
 
     #[test]
+    #[cfg(rustify_repo_tests)]
     fn native_utf16_function_arguments_match_the_fixed_official_compiler() {
         let fixture: serde_json::Value = serde_json::from_str(include_str!(
             "../../../../tests/utility/compiler/utf16-function-fixtures.json"
@@ -528,6 +529,7 @@ mod tests {
     }
 
     #[test]
+    #[cfg(rustify_repo_tests)]
     fn scalar_authored_utf16_escape_and_primitive_outputs_match_the_official_matrix() {
         let fixture: serde_json::Value = serde_json::from_str(include_str!(
             "../../../../tests/utility/compiler/utf16-fixtures.json"
@@ -590,6 +592,7 @@ mod tests {
     }
 
     #[test]
+    #[cfg(rustify_repo_tests)]
     fn official_non_scalar_utf16_outputs_are_lossless() {
         let fixture: serde_json::Value = serde_json::from_str(include_str!(
             "../../../../tests/utility/compiler/legacy-theme-boundaries.json"
@@ -720,6 +723,7 @@ mod tests {
     }
 
     #[test]
+    #[cfg(rustify_repo_tests)]
     fn css_functions_match_official_authored_candidate_and_theme_cases() {
         let fixture: serde_json::Value = serde_json::from_str(include_str!(
             "../../../../tests/utility/compiler/functions-fixtures.json"

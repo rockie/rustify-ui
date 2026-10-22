@@ -725,6 +725,7 @@ mod tests {
     /// `mbx xtask catalog --write docs/components.md` is what writes it;
     /// this is what fails when somebody edits the table and forgets.
     #[test]
+    #[cfg(rustify_repo_tests)]
     fn the_capability_document_holds_the_table_the_code_holds() {
         let path = concat!(env!("CARGO_MANIFEST_DIR"), "/../../docs/components.md");
         let document = std::fs::read_to_string(path).unwrap_or_default();

@@ -4,7 +4,7 @@ Rustify UI is an experimental Rust SDK for Leptos CSR applications in the browse
 
 Each task implements only the rendering path it needs. Work on both paths requires an explicit requirement or a concrete need for cooperation across DOM and GPU regions. Shared state and theme tokens do not require matching component sets or CSS support. A specific application use case has not yet been selected.
 
-This repository contains the SDK, DOM components, a Makepad fork and six runnable examples. The workspace is version `0.1.0`, with publishing disabled. Use the [repository quick start](#quick-start) to build an example; use the [SDK quick start](docs/quickstart.md) to write a region or integrate the components into an application.
+This repository contains the SDK, DOM components, a Makepad fork and six runnable examples. The workspace is version `0.2.0`. Nine Docs/DOM/style packages are being prepared for crates.io; the GPU SDK, Makepad bridge and examples remain private. Registry publication is still pending. Use the [repository quick start](#quick-start) to build an example; use the [SDK quick start](docs/quickstart.md) to write a region or integrate the components into an application.
 
 ## Quick start
 
@@ -221,6 +221,25 @@ for build, preview, hosting, upgrade and rollback commands, and the
 [DOM consumer recipe](docs/quickstart.md#a-dom-application-without-gpu-regions)
 for using the SDK without GPU regions.
 
+### 0.2.0 registry candidate
+
+The candidate command is `cargo install rustify-docs-cli --version 0.2.0 --locked`.
+It becomes the default after real publication and public installation checks;
+use the verified 0.1.32 Git recipe above until then. The candidate uses system
+fonts by default and lets each project declare local font files. Both new
+project types include a complete, inactive `theme.example.json`.
+
+The planned registry packages are `rustify-classification-macros`,
+`rustify-style`, `rustify-docs-syntax`, `rustify-docs-macros`, `rustify-dom`,
+`rustify-components`, `rustify-docs`, `rustify-docs-cli` and `rustify-style-wasm`.
+`rustify-dom` owns the shared types and DOM runtime; `rustify-ui` reexports it
+and keeps the GPU API in Git. Components no longer forward a `gpu` feature.
+See [candidate migration](docs/docs-ssg.md#020-registry-candidate-and-migration),
+[DOM/GPU source pairing](docs/quickstart.md#020-dom-candidate-and-gpu-source-pairing),
+[font migration](docs/themes.md#020-candidate-docs-font-migration) and the
+[release procedure](docs/crates-io-release.md). No official site deployment is
+included in this release.
+
 ## Runtime and deployment boundaries
 
 A DOM application depends on `rustify-ui` and `rustify-components` with their default features and is built with plain Cargo and the wasm-bindgen CLI; the [quick start](docs/quickstart.md#a-dom-application-without-gpu-regions) has the recipe, and it needs none of this repository's tooling. GPU regions are the `gpu` feature, which every example here turns on.
@@ -239,7 +258,7 @@ This preview uses single-threaded wasm and WebGL2. It provides no WebGPU backend
 | [crates/rustify-components](crates/rustify-components/) | DOM components, forms, workspace controls and Tailwind styles |
 | [crates/rustify-makepad](crates/rustify-makepad/) | Private Makepad integration and browser host |
 | [makepad](makepad/) | Checked-in Makepad fork and wasm build tooling |
-| [web](web/) | Instance loader and runtime styles of a GPU build (a DOM build's are in `crates/rustify-ui/web/`) |
+| [web](web/) | Instance loader and runtime styles of a GPU build (a DOM build's are in `crates/rustify-dom/web/`) |
 | [xtask](xtask/) | Build, preview, diagnostics, stylesheet generation and verification commands |
 | [tests/browser](tests/browser/) and [tests/vellum](tests/vellum/) | Browser regression and evidence checks |
 | [tests/dom-only](tests/dom-only/) | An outside consumer's DOM application and the GPU feature probes ([playwright.docs.config.ts](playwright.docs.config.ts)) |

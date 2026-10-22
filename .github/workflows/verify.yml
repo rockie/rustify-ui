@@ -39,21 +39,41 @@ jobs:
         run: |
           mbx test --locked -p rustify-style --all-features --lib
           mbx test --locked -p rustify-style-wasm --no-default-features --features compiler,scanner --lib
+      - name: Repository corpus (portable package tests exclude these fixtures)
+        env:
+          RUSTFLAGS: --cfg rustify_repo_tests
+        run: |
+          mbx test --locked -p rustify-style --all-features --lib
+          mbx test --locked -p rustify-dom --no-default-features --features ssr --lib
+          mbx test --locked -p rustify-components --lib
+          mbx test --locked -p rustify-style-wasm --no-default-features --features compiler,scanner --lib
+          mbx test --locked -p rustify-docs --lib
+          mbx test --locked -p rustify-docs-cli --bin rustify-docs
+          python3 -m unittest discover -s tests/crates-io -p test_boundaries.py -k corpus_flag
+          python3 -m unittest discover -s tests/crates-io -p test_inspect.py
+          python3 -m unittest discover -s tests/crates-io -p test_release.py
+          python3 -m unittest discover -s tests/crates-io -p test_pairing.py
       - name: SDK runtime utilities
         run: mbx test --locked -p rustify-ui -p rustify-components --features rustify-components/utility --lib
       # Each of the SDK's builds on its own: the default is DOM only, `gpu`
       # adds Makepad regions, and `ssr` renders on a host. The workspace run
       # above unifies features, so it proves none of them.
-      - name: SDK and components in their DOM, GPU and SSR builds
+      - name: Core, SDK and components in their DOM, GPU and SSR builds
         run: |
-          for package in rustify-ui rustify-components; do
+          # The core and the components draw no region, so neither has a `gpu`
+          # build; only the facade does, and it is the one that enables it.
+          for package in rustify-dom rustify-components; do
             mbx test --locked -p "$package" --lib
-            mbx test --locked -p "$package" --features gpu --lib
             mbx test --locked -p "$package" --no-default-features --features ssr --lib
             mbx clippy --locked -p "$package" --all-targets -- -D warnings
-            mbx clippy --locked -p "$package" --features gpu --all-targets -- -D warnings
             mbx clippy --locked -p "$package" --no-default-features --features ssr --all-targets -- -D warnings
           done
+          mbx test --locked -p rustify-ui --lib
+          mbx test --locked -p rustify-ui --features gpu --lib
+          mbx test --locked -p rustify-ui --no-default-features --features ssr --lib
+          mbx clippy --locked -p rustify-ui --all-targets -- -D warnings
+          mbx clippy --locked -p rustify-ui --features gpu --all-targets -- -D warnings
+          mbx clippy --locked -p rustify-ui --no-default-features --features ssr --all-targets -- -D warnings
       - name: Docs library and CLI, each on its own
         run: |
           for package in rustify-docs rustify-docs-cli; do

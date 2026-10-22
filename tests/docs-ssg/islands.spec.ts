@@ -619,7 +619,7 @@ test("an imported SDK snippet's real 404 restores SSR and leaves source, navigat
     const glue = await page.request.get(glueUrl);
     expect(glue.status()).toBe(200);
     const imports = [...(await glue.text()).matchAll(/\bfrom\s+['"]([^'"]+)['"]/g)].map(match => match[1]);
-    const sdkImports = imports.filter(path => /\/snippets\/rustify-ui-[^/]+\/web\/dom-runtime\.js$/.test(path));
+    const sdkImports = imports.filter(path => /\/snippets\/rustify-dom-[^/]+\/web\/dom-runtime\.js$/.test(path));
     expect(sdkImports).toHaveLength(1);
     const snippet = new URL(sdkImports[0], glueUrl).href;
     expect((await page.request.get(snippet)).status()).toBe(200);

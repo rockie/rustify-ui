@@ -9,6 +9,8 @@ version = "0.1.8"
 [[package]]
 name = "bitflags"
 version = "2.10.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "812e12b5285cc515a9c72a5c1d3b6d46a19dac5acfef5265968c166106e31dd3"
 
 [[package]]
 name = "bytemuck"
@@ -134,6 +136,8 @@ version = "0.3.9"
 [[package]]
 name = "smallvec"
 version = "1.15.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "67b1b7a3b5fe4f1376887184045fcf45c69e92af734b7aaddc05fb777b6fbd03"
 
 [[package]]
 name = "ttf-parser"

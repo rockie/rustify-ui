@@ -22,9 +22,9 @@ const TAILWIND_THEME: &str = include_str!("../assets/tailwindcss/theme.css");
 const TAILWIND_PREFLIGHT: &str = include_str!("../assets/tailwindcss/preflight.css");
 /// What `tailwindcss/utilities.css` holds upstream; not worth a file.
 const TAILWIND_UTILITIES: &str = "@tailwind utilities;\n";
-const SDK_LAYER: &str = include_str!("../../rustify-components/css/sdk.css");
-const SDK_SLIDER: &str = include_str!("../../rustify-components/css/slider.css");
-const SDK_CONTROLS: &str = include_str!("../../rustify-components/css/controls.css");
+const SDK_LAYER: &str = rustify_components::styles::SDK;
+const SDK_SLIDER: &str = rustify_components::styles::SLIDER;
+const SDK_CONTROLS: &str = rustify_components::styles::CONTROLS;
 const DOCS_LAYER: &str = include_str!("../assets/docs.css");
 
 /// The SDK layer's dark variant follows a scope's own `data-theme`. A

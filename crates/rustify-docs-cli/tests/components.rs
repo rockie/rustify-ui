@@ -65,7 +65,7 @@ fn project() -> Temp {
     let temp = Temp::new("components");
     let from = fixture("components");
     // Copy only author inputs. The fixture's hidden target/cache can be huge.
-    for directory in ["src", "content", "static"] {
+    for directory in ["src", "content", "static", "fonts"] {
         copy_tree(
             &from.join(directory),
             &temp.path(&format!("site/{directory}")),
@@ -79,20 +79,6 @@ fn project() -> Temp {
     ] {
         fs::copy(from.join(file), temp.path(&format!("site/{file}"))).unwrap();
     }
-    let root = fs::canonicalize(Path::new(env!("CARGO_MANIFEST_DIR")).join("../..")).unwrap();
-    let mut manifest = temp.read("site/Cargo.toml");
-    for library in ["rustify-ui", "rustify-components", "rustify-docs"] {
-        let old = format!("path = \"../../../../crates/{library}\"");
-        assert_eq!(
-            manifest.matches(&old).count(),
-            1,
-            "the fixture's direct {library} dependency"
-        );
-        let path = root.join("crates").join(library);
-        let quoted = serde_json::to_string(path.to_str().unwrap()).unwrap();
-        manifest = manifest.replacen(&old, &format!("path = {quoted}"), 1);
-    }
-    temp.write("site/Cargo.toml", &manifest);
     pair_component_project(&temp.path("site"));
     temp
 }
@@ -102,47 +88,15 @@ fn pair_helper_preserves_manifest_bytes_and_refuses_mismatched_generated_pairs()
     let repository = Path::new(env!("CARGO_MANIFEST_DIR")).join("../..");
     let output = Command::new("python3")
         .args([
-            "-c",
-            r#"
-from pathlib import Path
-import runpy, sys, tomllib
-root = Path(sys.argv[1])
-helpers = runpy.run_path(str(root / 'scripts/docs-pages-prepare.py'))
-cli = root / 'crates/rustify-docs-cli'
-original = (root / 'tests/docs-ssg/fixtures/components/Cargo.toml').read_bytes()
-package = tomllib.loads(original.decode())['package']['name']
-embedded = (cli / 'assets/components-Cargo.lock').read_bytes()
-packages = tomllib.loads(embedded.decode())['package']
-source = next(p['source'] for p in packages if p['name'] == 'rustify-docs')
-revision = source.rsplit('#', 1)[1]
-generated = (cli / 'templates/components/Cargo.toml.in').read_bytes()
-generated = generated.replace(b'{{package}}', package.encode()).replace(b'{{framework-revision}}', revision.encode())
-lock = embedded.replace(b'name = "docs-site"\nversion = "0.1.0"\n',
-                        f'name = "{package}"\nversion = "0.1.0"\n'.encode(), 1)
-project = helpers['project_bytes']
-projected = project(original, generated, lock, revision)
-restored = projected
-for name in helpers['FRAMEWORKS']:
-    old = next(line for line in original.splitlines(keepends=True) if line.startswith(f'{name} = '.encode()))
-    new = next(line for line in generated.splitlines(keepends=True) if line.startswith(f'{name} = '.encode()))
-    restored = restored.replace(new, old, 1)
-assert restored == original, 'lib, profiles and every other original byte must survive'
-for bad_manifest, bad_lock, label in (
-    (generated.replace(revision.encode(), b'0' * 40, 1), lock, 'dependency revision'),
-    (generated, lock.replace(source.encode(), source.replace(revision, '0' * 40).encode(), 1), 'lock revision'),
-    (generated, lock.replace(f'name = "{package}"\n'.encode(), b'name = "wrong-author"\n', 1), 'root package'),
-    (generated, lock.replace(b'name = "wasm-bindgen"\nversion = "0.2.128"', b'name = "wasm-bindgen"\nversion = "0.2.127"', 1), 'binding version'),
-):
-    try:
-        project(original, bad_manifest, bad_lock, revision)
-    except ValueError:
-        pass
-    else:
-        raise AssertionError(f'{label} mismatch must refuse projection')
-print('pair projection: exact manifest roundtrip and four identity refusals passed')
-"#,
+            "-m",
+            "unittest",
+            "discover",
+            "-s",
+            "tests/crates-io",
+            "-p",
+            "test_pairing.py",
         ])
-        .arg(repository)
+        .current_dir(repository)
         .output()
         .unwrap();
     succeeded(&output);

@@ -733,6 +733,7 @@ mod tests {
     }
 
     #[test]
+    #[cfg(rustify_repo_tests)]
     fn grammar_version_matches_the_lock() {
         let lock = include_str!("../../../Cargo.lock");
         for (name, version) in [("syntect", "5.3.0"), ("two-face", "0.5.2+bat-0.26.1")] {

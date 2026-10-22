@@ -1350,8 +1350,12 @@ fn infer(value: &Text, data_type: &Text, depth: usize) -> Result<bool, CompileEr
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::compiler::{parser, Compiler, CompilerInput};
-    use crate::protocol::SourceAsset;
+    use crate::compiler::parser;
+    #[cfg(rustify_repo_tests)]
+    use crate::{
+        compiler::{Compiler, CompilerInput},
+        protocol::SourceAsset,
+    };
 
     fn limits() -> Limits {
         Limits {
@@ -1492,6 +1496,7 @@ mod tests {
     }
 
     #[test]
+    #[cfg(rustify_repo_tests)]
     fn custom_utilities_match_official_css_and_configuration_errors() {
         let fixture: serde_json::Value = serde_json::from_str(include_str!(
             "../../../../tests/utility/compiler/custom-utilities-fixtures.json"

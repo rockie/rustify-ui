@@ -526,7 +526,7 @@ fn clone_with_graph(nodes: &[AstNode], mut graph: super::origin::CloneGraph) -> 
     cloned
 }
 
-#[cfg(test)]
+#[cfg(all(test, rustify_repo_tests))]
 pub(super) fn optimize_rule_children(nodes: &mut Vec<AstNode>) {
     optimize_nodes(nodes, true);
 }
