@@ -1,0 +1,96 @@
+# 对接契约文档模板（外部服务 → 平台）
+
+> 本模板自包含，可直接在 App 仓库填写。每个外部服务接入前都要按此结构交一份契约文档，且**与已实现代码 1:1 对齐**（理想状态：有回归测试保证路由表与代码同步）。没有这份文档的接入不算完成。
+
+按节填写，方括号处替换：
+
+```markdown
+# `<listingKey>` App — Platform Contract (resource server → portal)
+
+## 1. Listing 元数据
+| 字段 | 值 |
+| --- | --- |
+| listingKey / aud | `<key>`（覆盖变量名如 `<KEY>_AUDIENCE`） |
+| version | `x.y.z` |
+| type | micro / service |
+| scopes | `<key>.read`, `<key>.write`, …（+ `audit.write` 如写审计） |
+| dependencies | 如 `["files"]`（说明是装机拓扑占位还是运行时真调用） |
+| exchangeTargets | 本服务作为交换发起方要读的目标（无则空） |
+| embedUrl | micro 填 `/apps/<key>/`；service 留空 |
+
+（micro 附 navItems JSON。）
+
+## 2. 运行时契约（已实现）
+- 自省端点、Basic 凭证；校验 ok:true 和 data 对象后解析，失败信封不回退；正缓存默认 30 秒/最高 55 秒、调用者隔离、singleflight 与故障 503；
+- kind 与 credential_type 的矩阵、未知类型拒绝；TDT 必填真实 exp，无过期长期 key 可缺省，缓存命中仍判到期；
+- 自省的 `isPlatformAdmin` 是 Portal 按用户实时计算的全局身份，不在 JWT 里；服务态恒为 false；
+- 四道闸各自的失败码（401 INVALID_TOKEN / 403 INSUFFICIENT_SCOPE / FORBIDDEN / INSUFFICIENT_PERMISSION）；
+- 如有跨租户路由：逐条标明 `isPlatformAdmin === true` 服务端闸，说明不用当前 `role` / `bypass` 或前端自报代替；
+- 服务态 TDT 的处理（scope-only；哪些用户拥有的写操作拒绝服务态）；
+- 租户隔离与限流参数。
+
+## 3. 路由 → scope → PID 表（核心，逐条列）
+| Route | method | scope | PID | 额外门 |
+| --- | --- | --- | --- | --- |
+| `/v1/...` | POST | `<key>.read` | `<key>:page:xxx` | |
+| `/v1/...` | POST | `<key>.write` | `<key>:action:xxx` | require admin / require user ctx |
+| `/health` 等 | GET | — | — | public |
+（新增路由的缺省门策略要写明——fail-safe 默认落最严的写门，绝不无门。）
+
+## 4. ACL Manifest JSON（如声明 ACL；纯 scope 鉴权则写明 aclManifest: null）
+（完整 JSON：pages/actions/roleTemplates；DataScope 与 relations 的校验和执行方式，不支持的受限授予必须拒绝，不能扩大为 all。）
+
+## 5. Env 契约（镜像不含 .env）
+| var | required | default/example | 说明 |
+| --- | --- | --- | --- |
+（**列镜像实际读取的变量名**；有门户契约别名的写清映射；端口变量覆盖顺序、是否读裸 PORT；
+门户三变量 all-or-nothing + fail-fast 行为。必填项**同步声明进 manifest 的 `requiredEnv`**
+——键集合一变发布提案会转入人工审核，平台在批准前就看到，且**缺值时批准会被拒绝**；改名写成
+`{ key, renamedFrom }`。不声明的静默改名无门可拦，症状是换版后 refusing to start 而发布侧只看到成功。）
+
+## 6. 平台侧 checklist（对方的工作量）
+（listing/ACL 登记、服务账号创建并回传凭证 —— ⚠️ 只指**你的服务端**那把；租户拿自己的程序
+调你用的那把由租户管理员在 `/admin/service-accounts` 自助开，不是平台工作量，前提是那条 scope
+在 manifest 的 `scopes` 里（integration-contract.md §3.1）、/svc 白名单、交换 grant、
+（micro）dist 托管与 CORS/CSP、（有配置面）<key>-token + config Section。标出阻塞项。）
+
+## 7. 运维命令
+- DB 迁移：**镜像内的迁移 argv**（填进 `deployDescriptor.migrateArgs`）+ 幂等/建议锁/退出码保证；
+- 每租户 bootstrap：需要则给出精确 SQL/命令（tenants.id 必须 = 门户租户 UUID），不需要则明说；
+- 判活/就绪：匿名 GET /health，平铺 JSON 或 Envelope 均可；给出正常与故障响应，并按 health-contract.md 的平台判据说明结果（信封需要 ok:true + data.db:true，非信封依赖故障用 503）；另有 /healthz 时说明它只检查存活；
+- 镜像交付方式（docker save + sha256 / 私有 registry）与架构（amd64+arm64）。
+
+## 6b. 你用了平台的哪些公共能力（逐项声明「用」还是「自建」）
+- 文件存储 / 站内通知 / 统一审计 / 定时任务 / 用量上报 / 结构化内容 / 选人（通讯录）；
+- 任何一项填「自建」都要写明理由 —— 默认答案是用平台的（基座能力走 `/api/v1/*`，
+  文件/解析/大模型这类 App 型服务走 `/svc/<key>` + 令牌交换）。
+
+## 7b. 配额（若有「每租户上限」诉求）
+- 模型：`seatBased`（门户成员席位，门户在 TDT 签发时收口）或 `seatRoles: [...]`（你自管账号，你自己收口）——二选一；
+- 若 seatRoles：列出角色 key，并说明你在哪条建号/建资源路径上调 `POST /api/v1/seats/quota` 收口，
+  以及 `available=null`（unlimited）时放行的处理；
+- 角色 key 由**你在 `app.manifest.json` 里声明**（`"seatRoles": ["service"]`，需 backed listing）；
+  各套餐的数值不进 manifest、由平台管理员在控制台配 —— 在这里**提议**一组（free/pro/ultra），并列出你会上报的 gauge 指标名；
+- **不要**在自己库里存租户上限；`seats.read` **不要**写进 `serviceScopes`（SERVICE_ONLY，会被拒收）——
+  要用 `privilegedServiceScopes: [{ "scope": "seats.read", "reason": "…" }]` **申请**，经「发布审核」逐条确认批准后授予。
+- 机制全貌（三态处理、兜底值、存量租户、已用上报）见 [quota-and-seats.md](quota-and-seats.md)。
+
+## 8. 自测（无 UI 时的 curl 验收）
+（缺/错 token → 401/403；正确 aud+scope → 200 信封。）
+（/health 单独验收：附 scripts/verify-health.ts 对待发布镜像直连及 /svc/<key>/health 的 ready 结果；新增/修改时在隔离环境验证依赖故障的 not-ready，恢复后再验 ready。不得只贴 HTTP 200。）
+
+## 9. 信任边界（如有）
+（自有认证面清单：API-Key/节点 Token/admin 会话/gRPC 端口——哪些绝不从 /svc 暴露；
+MCP/stdio 之类免鉴权面的使用限制；破玻璃通道的启用条件。）
+```
+
+审阅要点（平台方收到契约时逐项验）：
+
+- §3 路由表是否覆盖**全部** `/v1` 业务路由，公开路由是否只有健康/指标；
+- 如有跨租户路由，是否只认自省 `isPlatformAdmin`，并有普通租户 admin 的负控制测试；
+- §5 是否写清镜像实读变量名（对照 compose/K8s 注入排一遍）；
+- §6b 是否有「自建」项而没有理由 —— 自己存文件 / 自己发通知 / 自己记审计是最常见的三处；
+- §7b 若有配额诉求：模型是否二选一说清、role key 是否已在 manifest 的 `seatRoles` 里声明、`seats.read` 是否走了 `privilegedServiceScopes` 申请（写进 `serviceScopes` 是打回信号）、gauge 指标是否已在 manifest `usageMetrics` 里声明、`available=null` 是否按放行处理；
+- §7 两问是否有显式答案：迁移 argv（**必须在镜像里**，不接受「脚本在我们 repo」）、每租户 bootstrap（目前门户无钩子，要显式定方案）；
+- §7/§8 的健康接口是否符合 [health-contract.md](health-contract.md) 的平台判据，并有检查结果；平铺与 Envelope 均可，禁止把合法 ok:true + data.db:true 误判为错误包装；
+- §9 自有认证面是否与 `/svc` 隔离。

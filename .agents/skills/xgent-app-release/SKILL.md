@@ -1,0 +1,637 @@
+---
+name: xgent-app-release
+description: '用于从 App 仓库发布或排查 XGENT 门户版本：前端 dist、后端镜像、manifest 或首次接入。通过 release-cli 与发布令牌提交提案，处理 CI、待审及发布后故障。'
+when_to_use: "用户会说「发个版」「提案卡在待审」「发布后出故障」时。"
+---
+
+# xgent-app-release · App 版本自助发布
+
+**这个 skill 用在 App 自己的 repo 里**（门户代码不在你手上，也不需要在）。目标是：把构建好的前端
+一次推上门户的某个 listing，并让「线上跑的是哪一版」在控制台上可辨认。
+
+每次提交在门户侧落成一条**发布提案**，按内容自动定级：
+
+- **自动通过档**：`dist`（前端产物）· `version` · `deployDescriptor.image` · 展示字段
+  （name / tagline / desc / icon / color / cat / navItems / dashboardWidgets）· `requiredEnvNotes`（env 键的说明）——
+  自动通过并应用清单/产物；后端与网关需分别确认，且每次留档（时间 + diff + 令牌前缀）。
+- **审核档**：其余一切（scopes / ACL 清单 / 依赖 / 跨应用授权 / 服务地址 / 席位 /
+  授权文案 scopeLabels / iframe 指向 embedUrl / 部署形态 / 部署前置 env 键清单
+  requiredEnv / 服务账号身份 serviceAccount.clientId / 嵌进门户管理面的管理页 adminPages / 首次接入）都会改变权限面，
+  ⇒ 提交成功但进入平台管理员的「发布审核」队列，**批准前库里一字不动**。
+  被拒绝时 `status` 与 `--wait` 都能看到原因。
+- **`helpEntry`（版头那枚帮助按钮）按【值】分档**，同一个字段两种命运：写 App 内路由
+  （`"/help"`）是**自动通过档**——改一条自家路由不该等人审；写外站文档
+  （`"https://docs.example.com"`）进**审核档**——门户版头等于替这个域名背书。
+
+判据只有一条：**这次提交有没有改变权限面** —— 不是一张字段白名单。散字段（往表单里直接塞
+`scopes=...`）仍然直接拒：治理变更只能经 manifest 整份提交。
+
+### 那你 repo 里那份 `app.manifest.json` 呢？
+
+**它就是你 App 清单的唯一事实源**，而且**直接参与发版**：
+`publish --manifest deploy/portal/app.manifest.json` 把它随提案交上去 ——
+无治理变更的自动通过并应用，有治理变更的等平台批准。门户代码里不再保留你清单的副本，
+「改了 manifest 却被门户下次部署改回去」的静默漂移已经从机制上消灭。
+
+manifest **绝不携带密钥值**：`serviceAccount.secret`、`deployDescriptor.env` 有值、
+SERVICE_ONLY scope（如 `seats.read`）写进 `serviceScopes` 都会**提交即拒**。
+要用平台特权 scope，走 `privilegedServiceScopes: [{ "scope": "seats.read", "reason": "为什么需要" }]`
+—— 它是**申请**不是授予：必进「发布审核」，审批人逐条确认后你的服务账号才拿到；
+reason 会原文展示给审批人，写清楚用途能少一轮往返。上报自己的用量指标，先在
+`usageMetrics` 里声明（key 必须以你的 listingKey. 开头；同样治理档）——没声明的
+metricKey 会被上报接口拒收并计入 `rejected`。要声明「部署我需要哪些环境变量」
+用 `requiredEnv`（键名与可选生成规格），值由平台注入、自动供给、声明生成或管理员配置 —— 见下面「镜像要环境变量」。
+
+### 文案字段：哪些支持多语，哪些不支持
+
+门户把 manifest 的文案分两处存，形状要求不同，而**写错的那一组不会报错**：
+
+| 字段 | 形状 | 写错的后果 |
+| --- | --- | --- |
+| `tagline` / `desc` / `icon` / `color` / `cat` / `navItems[].label` / `dashboardWidgets[].title` | **纯字符串** | 给多语对象 ⇒ 存成字面量 `"[object Object]"`，直接显示在每个租户的应用卡片与详情上 |
+| `name` | 纯字符串 | 给对象不报错，但会被**拍平成 zh-CN**，另外两种语言就此丢掉 |
+| `scopeLabels[<scope>]` | 字符串 **或** `{ "zh-CN": …, "zh-TW": …, "en": … }` | 同意屏按门户当前语言解析，回退链 当前语言 → `zh-CN` → `en` → 键名。**`zh-CN` 是回退终点，必写** |
+| `aclManifest` 里的 `label` / `name` / `desc` | 同上（字符串或多语对象） | 角色矩阵按请求语言解析 |
+| `usageMetrics[].label` | **只能是对象** `{ "zh-CN": …, "en"?: …, "zh-TW"?: … }`（语言键同上；旧形状 `{ "zh", "en", "tw" }` 仍收，落库归一） | 给纯字符串或缺 `zh-CN` ⇒ 提交即拒 |
+
+`scopeLabels` 另有两条静默失效，一条报错都没有：
+
+- **键不在 `scopes` 里的会在写入时被直接丢掉** —— 同意屏上那条权限回落成键名。改 scope 名忘了改文案键就中。
+- **平台基础 scope（`userinfo.read` / `audit.write` / `notification.*` / `settings.*` …）的文案别自己写。**
+  那是平台统一维护的措辞；各 App 各写一份，同一条权限在不同应用的同意屏上就会说得不一样，比缺文案更糟。
+  发现平台漏了哪条，找平台补，不要在自己清单里补。
+
+这一整节 `scripts/preflight.mjs` 都会替你查（`--manifest <path>`，不传就按常见路径自己找）。
+
+`deployDescriptor.hostPort`（宿主机发布口）**也不归你定**：它是部署环境相关的事实——
+同一份 manifest 会发到好几套门户，各自的端口地貌不同，而你看不见那台机器上谁占了什么。
+规则：**首次注册**当建议值（撞了自动退让到平台端口池，不会因此拒掉你的注册）；**之后一律
+忽略**，发布响应的 `warnings` 里会告诉你当前实际是哪个口。它**不算治理变更**，所以带着它
+提交不会平白让你的发版进人工审批队列。你要管的只有 `port`（容器内监听口，约定 8080）。
+
+
+> **路径约定**：本 skill **不要求你有门户仓**，也不会让你去打开门户仓里的文件——需要的
+> 一切都在这里的 `references/` 与 `scripts/`，路径以本 `SKILL.md` 所在目录为基准。
+> 命令在 App repo 根目录执行；先按实际加载位置设置 `SKILL_DIR="<本 SKILL.md 所在目录>"`，不假定安装目录名。
+> `dist`、`.npmrc` 和 manifest 路径仍相对于 App repo。
+>
+> ⚠️ 唯一容易误读的是 `/apps/<key>/`：它是**线上 URL 路径**（你的产物在生产被挂载到的
+> 子路径，也就是 vite 的 `base`），**不是**任何仓库里的目录。看到它不要去找、不要去建。
+
+## 先备齐三样，缺一样就发不出去
+
+涉及匿名公开页、CDN 画布、CSP 阻断、改 App key 或“批准且 ready 但不可用”时，
+先读 [references/public-delivery.md](references/public-delivery.md)。现有标准入口是
+`/apps/<key>/…`、`/svc/<key>/…` 或 Sites；审核、部署、网关与业务验收分别核对。
+
+| 你需要 | 从哪来 | 放在哪 |
+| --- | --- | --- |
+| `listingKey` | 平台给的 App 标识，小写字母/数字/连字符。它同时是 `/svc/<key>`、`/apps/<key>/`、scope 命名空间、令牌的 aud —— **四位一体，永不改** | `LISTING_KEY=…` |
+| 发布令牌 `xrel_…` | 门户「开发者应用」› 你的应用 › 凭证 › **生成配置文件**（连同 listingKey、门户地址一次写好），**明文只显示一次**。开发者应用里还没有这个应用 ⇒ 先「申请建立应用」，平台管理员批准后才能生成 | `XGENT_RELEASE_TOKEN=xrel_…` |
+| 目标门户地址 | 问平台要 | `TARGET_XGENT_PLATFORM=…`（旧名 `XGENT_PORTAL_URL` 仍认） |
+
+**五项全部写进同一份本地配置文件 `.xgent-registry.env`**（另两项见下面「顺带投一份到清单目录」），
+`chmod 600` + `.gitignore`。CLI 自己去读它；`--token` / 环境变量保留为覆盖手段，给 CI 用。
+
+> **为什么令牌可以落盘。** 旧规则「密钥别落盘、走 `--token` 或 env」是按**人手敲命令**的模型
+> 写的。今天发版几乎都是**经这个 skill 让 agent 驱动 CLI** —— 强制走 `--token` 意味着 agent
+> 必须先把令牌**取出来**才能传进去，于是它进 agent 上下文、进对话记录、进工具调用日志，
+> 还出现在命令行里（同机其它进程 `ps` 就能看见）。那比落盘更不安全，而且泄露面**不可撤销**。
+> 让 CLI 自己读文件，令牌就**从不经过 agent**。这个文件本来就是凭证文件（`PULLER_AUTH` 一直在里面）。
+>
+> 护栏没删，换成了对的两条 —— CLI 每次运行都替你查：① 文件 mode 允许同组/其他人读 ⇒ 提示
+> `chmod 600`；② `git check-ignore` 判定它**没被忽略** ⇒ 提示（那才是真会泄露的场景）。
+> 两条都**只 warn 不阻断**：把它变成硬失败只会逼人把令牌搬回命令行。
+
+详见 [references/publish-api.md](references/publish-api.md) §0。
+
+### 顺带投一份到清单目录（可选）
+
+配了 `MANIFEST_STORE` 之后，一次 `publish` 会打**两个不同的端点**：
+
+| 站 | 端点 | 语义 |
+| --- | --- | --- |
+| 第一站（真发版，必成） | `POST <TARGET_XGENT_PLATFORM>/api/market/release/<key>` | 落发布提案；失败 ⇒ 整体失败 |
+| 第二站（投目录，best-effort） | `PUT <MANIFEST_STORE>/api/market/catalog/<key>` | 存一份**净化后的公开清单**副本；失败只 warn，退出码不变 |
+
+```
+MANIFEST_STORE=<目录门户地址>        # 不配 ⇒ 整步跳过，不报错也不提示
+MANIFEST_STORE_TOKEN=xrel_…         # 目录那台签给你的发布令牌；不配 ⇒ 回落 XGENT_RELEASE_TOKEN
+```
+
+- **两个地址相同也照发两次**：它们是不同端点，不会互撞。
+- 目录**只是一份只读投影**：它不下发、不部署、不编排任何东西，也不参与任何门户的治理判定。
+  它唯一的消费者是**开发环境** —— 别人起一盒时 `onebox.sh add <key>` 从这里拉你的清单，
+  不再依赖「那版一盒镜像里预置了哪几份样例」。
+- **投递 manifest 不会上传前端包。** 跨平台同步读取主平台已生效的 listing 与原始归档
+  （`/api/federation/apps/:key` 与 `/dist`）。投目录成功、发布 applied、页面能打开，
+  都不能单独证明可同步。带前端的应用按 [前端归档与同步验收](references/frontend-archive.md) 留存、上传并核验。
+- 目录里那份是**净化过的**：`serviceAccount` 只留 `clientId`，`exchangeInitiatorSecret` 与
+  `deployDescriptor` 的 `env` / `envFile` / `hostPort` 一律剔除（密钥与单部署事实不跨部署共享）。
+- **目标门户那边卡在待审不影响投目录**：`PROPOSAL_PENDING` 是目标门户的队列状态，
+  不是「这份清单是什么」的结论 —— 那次 `publish` 的退出码仍是非 0（发版确实没成），
+  但目录会收到这一版。
+
+## 第 0 步：配私有包仓（**`@xgent/release-cli` 自己也在上面**，不需要任何云账号）
+
+`@xgent/release-cli` 与 `@xgent/shared` / `@xgent/portal-sdk` / `@xgent/portal-server-sdk` /
+`@xgent/portal-ui` 发在**同一个私有包仓**上，公共 npm 上一个都没有。所以这一步**不只是装依赖**：
+`.npmrc` 没配 `@xgent:registry`，下面第 1 步的 `npx @xgent/release-cli whoami` 就是第一条撞墙的命令
+（`E404 Not Found - GET https://registry.npmjs.org/@xgent%2frelease-cli`）。
+**App 代码第一次要装 `@xgent/*`（还没到发版）也走这一步**，不必等到发版。
+
+**没有发布令牌就停下，别绕。** 仓里没有 `.xgent-registry.env`、或里面没有 `XGENT_RELEASE_TOKEN`
+⇒ 停止安装，请开发者先去门户「开发者应用」› 你的应用 › 凭证 › **生成配置文件**，把下载的
+`.xgent-registry.env` 放到仓根（`chmod 600`，加进 `.gitignore`）再继续。开发者应用里还没有这个
+应用 ⇒ 先「申请建立应用」，平台管理员批准后才能生成；打开开发者应用提示没有开发者权限 ⇒ 请租户
+管理员在「用户管理」里发「开发者」角色。
+
+### 套件（bundle）：一枚令牌发一组应用
+
+一组 App 由同一支团队交付、**后端跑在同一个镜像里**时，门户里把它编成「套件」：
+开发者应用 › 我的套件 › 新建，把成员应用加进去（成员必须是 descriptor 型出仓 App、
+没有独立部署在跑、镜像与其它成员一致）。
+
+- **令牌**：套件详情 › 凭证 签的 `xrel_` 对**任一成员**都有效 —— 单发照旧走
+  `POST /api/market/release/<成员key>`（CLI 零改动）；凭证页会列明这枚令牌能发哪几个应用，
+  别把套件令牌当单应用令牌随手分发。成员被移出套件 ⇒ 令牌对它即刻 404；维护者离场 ⇒
+  套件令牌连同吊销。
+- **批次**：`POST /api/market/release/bundle/<bundleKey>`（bundle 令牌），一次给全体成员
+  各建一条提案，共享同一批号与同一镜像/版本。字段：`version` / `image` 共享，
+  每成员可选 `dist__<key>`（文件）与 `manifest__<key>`。**带任何 `dist__<key>` 就必须发
+  `multipart/form-data`**（它只认文件字段，JSON 体里塞不进文件）；只有 `version` / `image` /
+  `manifest__<key>` 的纯元数据批次才可以发 JSON。单个包 ≤200 MiB，**整个请求 ≤256 MiB** ——
+  各成员的包加起来也受这一条限制，不能按「成员数 × 200 MiB」估。任一成员的确定性校验不过 ⇒
+  整批不落库；成员镜像已漂移而批次没带镜像 ⇒ `BUNDLE_IMAGE_DIVERGED`（带上镜像即可收敛）。
+  状态轮询：`GET /api/market/release/bundle/<bundleKey>/status`（每成员一条）。
+- **批次的后端只收敛一次**：门户在提交时冻结本批的预期后端成员；它们**全部生效且无 applyError**
+  后共享后端才按新目标收敛一次。之前清单 / 前端可逐个生效，发布状态显示「后端等待成员 x、y」；
+  有成员被拒 / 撤回 ⇒ 原批不再执行：先撤清其余待审，再提交**新的完整批次**（取代旧批）；
+  `applyError` 按既有重试修好即可。前端先于后端生效，**新前端必须兼容旧后端**。批次回执里每个
+  成员的 `warnings` 会写明「自动档被转待审」的原因（缺键、等生成者等）。
+- **共享后端的 manifest**：成员各自的 `deployDescriptor.image` 的**仓库段可以等于 bundleKey**
+  （治理闸对套件镜像放行）。**端口、资源、迁移与健康路径取宿主**（最早加入的有后端成员）；
+  **环境变量由全体后端成员共同提供**——各成员的 SA、交换密钥、库连接、生成密钥都会进同一个容器；
+  **同名表示共享**：同值合并，**异值拒绝**（要么统一取值，要么改用带各自前缀的键）。成员的受管
+  envFile 每行必须是 `KEY=value`，不能写裸 `KEY`。成员的对外地址不变：各自 `/svc/<成员key>`，
+  容器只是同一个（`<bundleKey>-server`）。共享 ⇒ **成员能读到彼此的密钥、故障域合一**：容器挂了，
+  全部成员一起不可用，各自的告警各自到；需要进程级保密的成员继续独立部署。
+- **加不进去的两种真原因**：报 `BUNDLE_BUILTIN_MEMBER` ⇒ 那是仓内内置 App，先出仓再进套件；
+  报 `BUNDLE_MEMBER_ALREADY_DEPLOYED` ⇒ 它已有独立容器在跑，先让平台管理员在
+  「服务部署」里停止，再加入。
+
+**不许 vendor。** 装不上时不要把 `@xgent/*` 的产物或源码拷进仓（`vendor/` 目录、`file:` / `link:`
+依赖、向人要 tar 包、手抄一份 SDK），也不要自己重写 SDK 已有的能力。私有仓上没有你要的版本
+⇒ 停下，请平台团队发布那一版。本地快照不会随平台的修复更新，会和门户协议悄悄漂开。
+
+**动手发版之前先查一眼配没配**（`npm config get` 会把 `./.npmrc`、`~/.npmrc` 整条链解析完）：
+
+```bash
+npm config get @xgent:registry      # 打印 undefined ⇒ 没配，下面这步必须先做
+```
+
+没配就用手上已有的**发布令牌**（`XGENT_RELEASE_TOKEN`，就是发版那枚）向门户换一枚 ≤12 h 的
+**只读**令牌 —— 你**不必**有云账号、不必装云厂商 CLI、不必持任何长期凭据：
+
+```bash
+node "$SKILL_DIR/scripts/npm-token.mjs" --npmrc >> .npmrc   # 写进三行（含明文令牌，这份别提交）
+npm config get @xgent:registry                              # 验收：打印出私有仓地址，不再是 undefined
+npx @xgent/release-cli whoami                               # 验收：CLI 取得到了，顺带验了发布令牌
+```
+
+CI 里用变量形式（`.npmrc` 可以进仓，令牌不进仓）：
+
+```bash
+eval "$(node "$SKILL_DIR/scripts/npm-token.mjs")"     # 导出 XGENT_NPM_AUTH_TOKEN / XGENT_NPM_REGISTRY
+npm install                               # .npmrc 里用 ${XGENT_NPM_AUTH_TOKEN} 引它
+node "$SKILL_DIR/scripts/npm-token.mjs" --check        # 只体检：能不能换到、还剩多久，不打印令牌
+```
+
+`.npmrc` 里这样引（**变量为空 = 空令牌 = 401**，所以 CI 里务必先 `eval` 再 `npm ci`）：
+
+```
+@xgent:registry=${XGENT_NPM_REGISTRY}
+//<仓库 host>/<路径>/:_authToken=${XGENT_NPM_AUTH_TOKEN}
+```
+
+- 令牌**只走 stdout**，诊断走 stderr —— `eval "$(…)"` 不会把日志也吃进去。
+- 平台轮换云凭据时你这边**零改动**：换的是门户持有的那把，你每次拿到的都是新令牌。
+- 报 `NPM_REGISTRY_NOT_CONFIGURED` / `NPM_REGISTRY_UNAUTHORIZED` 是**平台侧**没配好或凭据过期，
+  不是你的配置问题 —— 贴给平台管理员即可，你这边不用改任何东西。
+
+## 发布五步，每步都有验收
+
+```bash
+VER=1.4.2      # 地址、令牌、listingKey 都在 .xgent-registry.env 里，命令里一个都不用重复
+               # （CI 里想覆盖：注入 XGENT_RELEASE_TOKEN / TARGET_XGENT_PLATFORM 环境变量即可）
+```
+
+1. **先验令牌，再构建。** `npx @xgent/release-cli whoami`
+   → 验收：打印 key + 令牌前缀 + 过期时间。放在构建之前是因为构建可能十分钟，
+   而令牌过期/被吊销的现象只有调用时才现形。**这条同时验了第 0 步**：CLI 自己就在私有包仓上，
+   报 `E404 … @xgent%2frelease-cli` 是 `.npmrc` 没配，不是令牌的问题——回第 0 步一条命令就好。
+2. **构建，`base` 必须是 `/apps/<key>/`。** 产物在生产被挂到那个子路径下，
+   `base` 少了 → 资源请求打到站点根 → 页面 200 但白屏。这是本流程翻车率第一名。
+   → 验收：`grep -o 'src="[^"]*"' dist/index.html`，路径都以 `/apps/<key>/` 开头。
+3. **预检。** `node "$SKILL_DIR/scripts/preflight.mjs" --dist dist --version $VER --manifest deploy/portal/app.manifest.json`
+   → 验收：脚本零 ✗ 退出。它把「构建看着成功、线上却坏」的几种成因一次性挡下（base 前缀、
+   根 `index.html`、包大小、dev 地址残留、版本号形状、令牌有效性，以及 manifest 的文案字段形状
+   —— 见上面「文案字段」，那一类**发布成功、审批通过、线上显示 `[object Object]`**）。
+   **本次含外部后端镜像时，还必须检查待发布镜像的 `/health`**：按 `portal-external-app` skill 的
+   `references/health-contract.md` 运行其 `scripts/verify-health.ts`，非零退出不得发布。
+   平铺与 Envelope 都支持：非 2xx 不通过；2xx 顶层有 `ok` 时必须 `ok === true && data.db === true`；
+   没有顶层 `ok` 时按 2xx 判健康。检查脚本与平台同源，不另加包装或字段命名限制。
+4. **发布。**
+   带前端的应用先按 [前端归档与同步验收](references/frontend-archive.md) 生成并持久留存
+   `DIST_ARCHIVE`（根下直接是 index.html 的 `.tgz`）与 SHA-256；下面上传的必须就是这份文件。
+   只发后端/治理变更可省略 dist，但不能据此声称前端归档已补齐；服务型应用不要求前端包。
+   ```bash
+   bunx @xgent/release-cli publish --version "$VER" --dist "$DIST_ARCHIVE" \
+     --manifest deploy/portal/app.manifest.json
+   # 获批后等待本次后端与网关：加 --wait；换镜像另加 --image <key>:$VER
+   ```
+   **每次都带 `--manifest`**：内容没变的重复提交是自动档（不会多一次人工审），而
+   ①它是清单目录唯一的输入 —— 不带就等于目录永远是空的；②`requiredEnv` 这类
+   「不落 listing」的声明只有随清单提交才能刷新基线。
+   → 验收：本次产物 digest 与留存包的 SHA-256 一致，并记录 proposalId。坏包在 staging 校验失败时不会替换线上产物；应用后的部署或网关失败须按阶段检查，不能概括为“什么都没发生”。
+   有治理变更时打印的是「提案已提交」+ 提案号，**同样退出 0 并立即返回** —— 平台管理员
+   在那一刻就收到了通知，流水线没有理由挂在那里等人（见下面「等审批」）。
+5. **线上看一眼。** `npx @xgent/release-cli status` 确认版本与 digest 就是本次这一份；
+   然后浏览器打开门户 → 应用中心 → 你的 App，走通主路径。**`status` 报 404 不等于发布失败**
+   （见下），第 4 步的返回体已经给了版本与 digest，浏览器那一眼照走不误。
+   交付包含跨平台同步时，还须核验主平台条目和 `/dist` 的真实字节；没有读取权限时明示
+   「前端已发布，主平台归档/可同步性未验证」，不能把发布或投目录成功当作同步验收通过。
+
+`@xgent/release-cli` 不在公共 npm 上，**它就在第 0 步那个私有包仓里**。取不到包时先分诊，
+别急着换工具：`npm config get @xgent:registry` 是 `undefined` ⇒ 回第 0 步配 `.npmrc`，一条命令就好。
+只有换令牌这步本身失败（`NPM_REGISTRY_NOT_CONFIGURED` 等**平台侧**原因）才需要兜底——端点就一条
+`POST /api/market/release/:key`，`curl` 版见 [references/publish-api.md](references/publish-api.md) §2。
+
+**只读面（`status` / `--wait`）不保证每个门户都有**——它比发布面晚一版上线。同一枚令牌
+whoami `200` 而 `/status` `404`，就是这种情况：**令牌没问题，别停下来改令牌或改 key**。
+两种 404 的响应体一字不差（门户故意不区分「不属于你」和「不存在」），只能靠 whoami 分诊；
+分诊表与替代验收方式见 [references/troubleshooting.md](references/troubleshooting.md)。
+
+## 五条硬约定（都是「不知道就会中」的那种）
+
+- **`version` 每次都要 bump**——哪怕这次只换产物没改功能。产物 digest 变了而 version
+  没变，控制台上就再也分不清「线上跑的是哪一版」，而这正是发布链路存在的意义。
+  version 归你所有（清单事实源在你仓里）；`--version` 可省略，省略时取 manifest.version。
+- **发布是替换，不是合并。** 上一版的文件不会留着。所以「只补传一个改了的文件」这种操作不存在，
+  每次都传完整 dist。
+- **tar 根必须直接是 `index.html`。** CLI 传目录会生成临时包并在命令收尾删除；本流程先留存
+  完整 `.tgz` 再用 `--dist` 上传该文件，保证留存的是实际上传的字节。套一层 `dist/` 的包会被拒收。
+- **单个包 ≤200 MiB**（`dist` / 每个 `dist__<key>` 各算各的），**整个上传请求 ≤256 MiB**（套件批次所有
+  成员的包合计也在内）；门户只按顶层条目数报数。真超了先查有没有把 source map / 未压缩素材打进去。
+- **本机配了代理就用 `@xgent/release-cli` ≥0.6.0。** Node 内置的 `fetch` **不读** `HTTPS_PROXY`
+  —— curl / git / npm / docker 全都读，唯独发版这一步不读，于是它绕开本机代理直连门户：跨境
+  直连上行实测约 10 KB/s，2MB 产物必然超时，而报出来的是一句没有线索的 `fetch failed`。
+  0.6.0 起 CLI 检测到代理变量就带 `NODE_USE_ENV_PROXY=1` **重启自身**走代理（需 Node ≥22.21
+  或 ≥24；23.x 没收到这个开关，CLI 会告警并照常直连）。Node 版本不够就用
+  [references/publish-api.md](references/publish-api.md) §2 的 curl 兜底 —— curl 自己读代理。
+
+## 顺带换镜像（有后端的 App）
+
+同一次 `publish` 可以带 `--image <name>:<tag>`：镜像引用一变，门户自动排一条重部署任务，
+当前支持的部署驱动异步执行，实际完成状态需回读。三个易错点：**① `<name>` 就是你的 App key，不是
+`<key>-server`；② 只写相对名，仓库前缀由门户拼；③ tag 不可变——同 tag 覆盖推送门户看不出变化，
+不会触发换版。** 该 App 必须已由平台管理员配了 `deployDescriptor`，否则这一项直接 `VALIDATION_FAILED`。
+
+**需要确认交付时加 `--wait`，纯前端也一样。** 支持新 delivery 的门户按本次 proposalId 固定目标，
+等待后端与网关回执；待审不会自动等待，需加 `--wait-review`。unknown 不能当成功，superseded 表示
+已被后续目标取代。旧门户无 delivery 时会明确提示无法核验网关，不能把兼容退出 0 当完整确认。
+版本与 strict/v2 启用前提见 [公开面与交付确认](references/public-delivery.md)，API 见
+[发布 API](references/publish-api.md)。上述新增能力尚待正式发布与受控启用。
+
+## 镜像要环境变量：**键名归你，值归平台**
+
+manifest 里带**值**的 `deployDescriptor.env` 提交即拒（防生产密钥进你的 git 历史）。使用
+**`requiredEnv` 声明键名与可选的生成规格**。值从哪来按下表区分：
+
+| 档 | 键 | 值从哪来 |
+| --- | --- | --- |
+| **平台注入** | `PORT` · `<PREFIX>_SERVER_PORT` · `PORTAL_INTROSPECT_URL` · `API_BASE_URL` · `PORTAL_BASE_URL` · `<PREFIX>_SA_CLIENT_ID` · `<PREFIX>_SA_CLIENT_SECRET` · `<PREFIX>_APP_SECRET` | 平台换版时自己算并注入，没有人需要动手 |
+| **自动供给** | 库连接串 · Redis 地址 · 对象存储五键 | 批准时平台按登记的服务代建资源 / 取地址并注入（见下面「服务怎么绑到键」） |
+| **随机生成** | App 独立密钥，声明 `generate` | 批准时生成、加密保管，后续换版复用，值永不回显 |
+| **自定** | 其余**环境依赖**（第三方服务地址、第三方已有 API key…） | 平台管理员手填：非密钥进控制台的 `deployDescriptor.env`，密钥进宿主机上一个 600 的 `envFile` |
+
+业务参数（超时、阈值、默认文案、功能开关…）**不在这张表里**：先看下面「业务参数」一节。
+
+`<PREFIX>` = 你的 `listingKey` 全大写、连字符换下划线（`wish-list` ⇒ `WISH_LIST`）。
+`PORTAL_BASE_URL` 是**浏览器可达的门户公开地址**，也是你调别的 App `/svc/<key>/…` 的基址；
+`API_BASE_URL` 是内部 portal-api，**不代理 `/svc`** —— 两个别互相顶替。
+
+### 独立密钥：只声明生成规格
+
+```jsonc
+"requiredEnv": [
+  {
+    "key": "WORKER_DATA_KEY",
+    "renamedFrom": "WORKER_LEGACY_DATA_KEY",
+    "generate": { "bytes": 32, "encoding": "base64" }
+  }
+],
+"requiredEnvNotes": { "WORKER_DATA_KEY": "保护应用持久化数据；应用兼容消费旧键名" }
+```
+
+`generate` 只收 `bytes`（16–64 整数）与 `encoding`（标准带填充 `base64` / 小写 `hex`）。
+新增、撤回或改变规格都需审批；首供在批准时完成，生产按 App、按 brand 各自生成，
+加密保管并只向所属独立 descriptor 部署注入。重发、重试、重部署与重启复用原值，
+不覆盖存量值；没有读取值或轮换入口，丢失应从备份恢复，不能重生成修复原密文。
+
+有主键沿用主键；descriptor 旧名可以同值搬到新键。可读 `envFile` 只有旧名时，
+`generate` + `renamedFrom` 表示 App 仍能消费旧名，门户原样注入文件、不创建新主键，
+审批屏显示沿用旧名。不要引导运维改文件或手填 NEW。普通无 `generate` 的改名规则不变。
+不可读 envFile、来源冲突、已保管规格冲突均硬拦；旧键已由平台保管时拒绝改名。
+平台派生键和服务自动供给目标不能声明 `generate`。
+
+**套件里的共享生成密钥**：带自己前缀的键各自 `generate`；**同名共享键只由一个成员声明 `generate`**，
+其他成员只在 `requiredEnv` 写字符串键名消费（两名生成者会被拒）。先批生成者——消费者先到时提案
+保持待审、审批屏点名生成者；批次发布自动把生成者排在消费者前面。生成者退出套件前，先让消费者去掉
+对这个键的依赖。
+
+旧门户 / 旧一盒镜像会拒收 `generate`（`VALIDATION_FAILED`），须先升级平台，不能用手填绕过。
+最低门户提交 / `APP_VERSION`、一盒 runtime / proxy tag、公开 skill 提交与脚本 SHA-256
+目前均**未发布**，发布后按完整组合核对。一盒宿主脚本不随镜像更新：先执行
+`npx skills add XGENT-ai/skills` 更新 `portal-dev-setup`，从实际安装目录用
+`shasum -a 256 <脚本路径>` 核对后再 pull / upgrade / up / add，步骤见该 skill §6。
+新版 `add` 把生成值写进共享的 `<一盒目录>/compose.env`，沿用已有主键或旧别名；同名键共享值，
+主 App 和其他 App 均可能读取，限可信团队调试，不能作为生产 App 隔离证据。
+
+### 业务参数：能不进清单就不进；进了就写 `requiredEnvNotes`
+
+审批你发版的平台管理员只负责**环境**：地址、连接串、密钥、这台机器上的事。你的业务参数他不懂，
+也**不该被要求懂**。照这个顺序判一个配置项该放哪：
+
+1. **环境依赖、全平台一份、部署后不变（改了就要换版）** ⇒ `requiredEnv`，键名尽量按上表的约定名，零手填。
+2. **业务参数、全平台一份、改了要换版** ⇒ **先在代码里给缺省值，不进清单**。确实要让平台在部署时
+   覆盖，才进 `requiredEnv`，并且**必须**在 `requiredEnvNotes` 里写一句：填什么、不确定时填什么。
+   进了 `requiredEnv` 的键批准前**必须有值**（缺了就是 `REQUIRED_ENV_MISSING`），审批人照你这句话填。
+3. **全平台一份、要能随时改、不想换版** ⇒ 这不是环境变量。做成你自己的「平台设置」页，由门户嵌进
+   应用市场的编辑页（见 portal-external-app skill「配置放哪一层」）。
+4. **每个租户不同** ⇒ 租户管理员的应用配置页（同上）。
+5. **应用内的业务设置** ⇒ 你应用里的设置页，按 ACL 授权（租户管理员默认可改）。
+
+```jsonc
+"requiredEnv": ["WISH_LIST_DATABASE_URL", "WISH_LIST_REPORT_TITLE"],
+"requiredEnvNotes": {
+  "WISH_LIST_REPORT_TITLE": "导出报表的抬头。不确定就填「心愿单月报」"
+}
+```
+
+- 只给**需要解释的**键写；键必须在本清单的 `requiredEnv` 里（写错键名提交即拒）；说明非空、≤200 字。
+- 说明显示在审批屏对应键名旁边（标「应用说明」）。**只改说明是自动档**，不会为一句话进人工审。
+- 说明会原样展示给审批人：**别在里面写任何值或密钥**。
+- 旧版门户不认识这个字段：不会拒收，但会把这次发布转人工审一次；门户升级后恢复自动档。
+- 键名会影响审批屏给不给「从平台服务取值」：只有 `…DATABASE_URL` / 带 `POSTGRES` 的键给数据库、
+  带 `REDIS` 的给 Redis，其余一律不给（防止有人给业务参数建一个库）。键名看着像密钥
+  （`…_SECRET` / `…_TOKEN` / `…_KEY` 等）时，审批屏会提醒管理员写进 envFile 而不是明文手填。
+
+### 调用门户内的其他 App：从 `PORTAL_BASE_URL` 派生地址
+
+门户已通过 `/svc/<key>` 统一代理 App 服务。调用这些服务时，在应用代码里用平台注入的
+`PORTAL_BASE_URL` 拼接服务路径；不要求管理员逐个提供目标服务的主机名、容器名或端口。
+以 Page Builder 调用 LLM 网关和文件服务为例：
+
+| 原来的地址变量 | 应用代码使用的默认基址 |
+| --- | --- |
+| `LLM_GATEWAY_SERVER_URL` | `${PORTAL_BASE_URL}/svc/llm-gateway` |
+| `FILES_SERVER_URL` | `${PORTAL_BASE_URL}/svc/files` |
+
+- **manifest**：这两个地址能推导，就不再列入 `requiredEnv`；改为声明 `PORTAL_BASE_URL`，
+  并保留其他确实必需的键。平台会注入门户地址，**不会自动注入这两个旧变量**。
+- **代码**：去掉门户基址末尾的 `/` 后拼接路径，再追加具体 API 路径（例如 LLM 的
+  `/v1/chat/completions`）。如保留旧变量用于本地调试或特殊部署，把它们作为可选覆盖项，
+  未设置时使用上表默认值。不要将 `${PORTAL_BASE_URL}/…` 当成值写进发布 manifest。
+- **迁移**：代码的默认值与启动校验、manifest、包含新代码的新镜像要同步交付；只删
+  `requiredEnv` 不会让仍强制读取旧变量的镜像自动兼容。已有覆盖值仍会优先使用，需由平台侧
+  核对是否保留。发布前在未设置这两个旧变量时，验证经 `/svc` 的实际调用。
+- **鉴权**：统一入口只解决路由。代表用户调用仍需声明 `exchangeTargets` 与目标 scopes，
+  换取目标 App 的令牌；后台服务调用仍用获准的服务账号权限。不要直接转发本 App 的用户令牌。
+
+这是**门户内 App 服务地址**的约定；第三方 API 等无法从门户基址推导的地址，仍按实际需要声明。
+
+### `<PREFIX>_APP_SECRET`：跨应用交换的发起方密钥（归平台，线上永不手填）
+
+只要你的清单声明了 `exchangeTargets`（你要去调别的 App），平台就在**批准那一刻**生成这枚密钥、
+加密保管、每次换版注进容器，同时把它的哈希布到每个已安装租户。你这边只在 `requiredEnv` 里写下
+**键名**，不需要也不可能提供值（`deployDescriptor.env` 带值提交即拒）。
+
+- **本地联调要那一份怎么办**：明文只在批准那一刻**一次性**显示给审批人。找审批你这条提案的平台
+  管理员要；要不到就请他在控制台按「轮换交换密钥」重新生成一枚（会重布全部实例并排一次换版）。
+  **别自己编一个填进去**——你填的那一份会压掉平台保管的那一份（手填优先是有意的），于是容器里跑的
+  和门户布出去的哈希对不上。
+- **两份不一致的症状**：`/oauth/token` 回 `SECRET_INVALID`，而界面上写的是「跨应用授权缺失或未开启」
+  ——报错指向授权，根因是密钥漂了。
+- **没声明 `exchangeTargets` 就别在 `requiredEnv` 里写这个键**：平台不会生成也不会保管它，闸会如实
+  判「缺值」，提案就卡在那儿等一个永远不会来的值。要么补声明 `exchangeTargets`，要么把键去掉。
+
+**这张清单是一道闸，不只是一份提醒**：批准之前门户会拿它比对「已有值」的**键集合**，缺哪个就
+拒绝生效（`REQUIRED_ENV_MISSING`，提案留在 pending 可重批）。所以「批准了、然后线上是坏的」
+这条路径已经关掉 —— 代价是**你的提案可能因为平台那边没配值而多等一轮**（见下面「pending 久了
+先问哪一句」）。它全程只看**键在不在**，不读值。
+
+### 服务怎么绑到键
+
+**按约定名命名，平台就能自动供给**：库连接串写 `<PREFIX>_DATABASE_URL`、Redis 写 `REDIS_CONN_STRING`。
+再在 `requiredServices` 里声明你要哪条服务（`name` 是平台侧登记的服务名，问平台管理员）：
+
+```jsonc
+"requiredEnv": [
+  "PORTAL_INTROSPECT_URL", "API_BASE_URL", "PORTAL_BASE_URL",
+  "WISH_LIST_SA_CLIENT_ID", "WISH_LIST_SA_CLIENT_SECRET",
+  "WISH_LIST_DATABASE_URL", "REDIS_CONN_STRING"
+],
+"requiredServices": [
+  { "kind": "postgres", "name": "main" },
+  { "kind": "redis",    "name": "main" }
+],
+"deployDescriptor": {
+  "image": "wish-list:1.4.2",
+  "port": 8080,                 // 容器内监听口，就这一个归你
+  "healthPath": "/health",
+  "alwaysOn": true              // 常驻型才写：别让它被缩容
+}
+```
+
+批准时平台按登记的那条服务替你建库、生成专用角色与连接串，注进约定名那个键；值加密保管在平台侧，
+**永远不回显给任何人**，换版时注入。
+
+- **`requiredServices` 的每一条只能带 `name` / `kind` / `note` / `envKey`**，多一个字段整份清单会被拒收
+  （`VALIDATION_FAILED`）—— 别往里加自定义键。
+- 连 `requiredServices` 都不写、只在 `requiredEnv` 里写了约定名 ⇒ 用该类型的**缺省服务**，一样能供给。
+- **键名不按约定来（例如 `ZO_META_POSTGRES_DSN` 这种上游定死的名字）⇒ 用 `envKey` 显式绑定**：
+  `{ "kind": "postgres", "name": "main", "envKey": "ZO_META_POSTGRES_DSN" }`，批准时照样自动供给。
+  `envKey` 只对 postgres / redis 这类单键服务有效（kafka / 对象存储 / http 不支持）。不绑定的话，
+  平台管理员要在审批屏上手选一条服务取值，每次发版多等一轮；预检会对这类键给你一条 warn。
+
+### 对象存储：应用池直供 S3 五键
+
+这条路径用于 App 自管的底层对象，后端用 S3 SDK 直连，不经过 Files。需要用户/团队文件空间、
+文件权限、配额、预览或清理时走 Files；两条路径的选型见 `portal-external-app` skill 的
+「文件与对象存储」。**Files 的「应用空间」不等于这里的应用专属 bucket。**
+
+以 `listingKey=wish-list` 为例，下面是合并进现有 manifest 的存储声明片段，其他必需键照常保留：
+
+```jsonc
+"requiredServices": [
+  { "kind": "objectStorage", "name": "main" }
+],
+"requiredEnv": [
+  "WISH_LIST_S3_ENDPOINT",
+  "WISH_LIST_S3_REGION",
+  "WISH_LIST_S3_BUCKET",
+  "WISH_LIST_S3_ACCESS_KEY_ID",
+  "WISH_LIST_S3_SECRET_ACCESS_KEY"
+]
+```
+
+- `main` 换成目标环境已登记的对象存储服务名，用于服务可用性闸；它**不是桶名或池 ID**。
+  首次开通按实际落点 VM 的地域选择应用池，未命中用兜底池；只使用 `role=app`，不回退租户池。
+- 发布提案批准时平台按 `listingKey` 建桶并加密保管整组连接参数，部署时注入。**每应用一个桶，
+  该应用的所有租户共用**；不会为每个租户或安装实例另建桶，也不会自动添加租户目录。
+  App 须自行实现租户隔离、权限、计量和对象清理；它们不自动进入 Files 的配额、计量与退出清理。
+- 五键固定为 `<PREFIX>_S3_ENDPOINT` / `_S3_REGION` / `_S3_BUCKET` / `_S3_ACCESS_KEY_ID` /
+  `_S3_SECRET_ACCESS_KEY`（每项均带 `<PREFIX>`）。`objectStorage` **不支持 `envKey`**，带上即拒；
+  约定名是 `_S3_BUCKET`，镜像若只读 `_S3_BUCKET_NAME` 等其他名字，需在应用配置层适配。
+  只声明该 `requiredServices` 也会整组供给；显式列出五键便于启动校验与交付检查，只交键名、不交值。
+  仅用 `requiredEnv` 的兼容路径以 `<PREFIX>_S3_ACCESS_KEY_ID` 为触发键，仍供给整组；
+  只写 endpoint / region / bucket 不会触发自动供给。
+- **管理员不必逐键取值**：已匹配应用池时，审批页显示「批准时自动供给」，直接批准即可。
+  需要手动选池或提前供给时，在五键任意一行选择 `objectStorage` 应用池并点击「取值」，
+  一次写入全部五键，刷新后整组显示「已取值」。只切换下拉选项、不点「取值」不会保存选择；
+  不要为五个键分别选池。没有可用应用池时先由平台管理员配置，不能拿租户池替代。
+- 注入的是应用池**共用的数据面凭据**，不含管理凭据，也不是 per-App / per-tenant 子凭据；
+  独立桶不等于独立云权限。凭据只留后端，不回显、不写日志、不交给前端。
+- 重发、重试与重部署沿用已登记的桶和存储池；改变落点地域不会自动搬桶或迁移对象。
+  租户卸载也不自动删除这个共用桶。需要迁移、清理或轮换池凭据时由平台与 App 协调。
+
+以上自动供给发生在**发布提案批准链路**。一盒 `onebox.sh add` 的直接注册路径仍须按
+`portal-dev-setup` 配好 RustFS 连接参数和桶名；不能只写这条声明就认为五键已到位。
+
+### 通用环境变量约束
+
+**平台级能力（例如日志写入）会直接出现在你的服务令牌里，不用申请、不用写进 manifest** ——
+拿到令牌就能用，你那侧只管调。
+
+**六条别踩：**
+
+- **`env` / `hostPort` / `envFile` 一个都别写进 manifest。** `env` 带值即拒；`hostPort` 归平台
+  （见前面 `deployDescriptor.hostPort` 那段）；`envFile` 是那台机器上的路径，写了就得和平台实际持有的那份**逐字一致**，
+  不一致就变成一条「部署描述变更」，让你本来能自动通过的发版平白进人工审批队列。
+- **`PORTAL_INTROSPECT_URL` / `API_BASE_URL` / `PORTAL_BASE_URL` 这类地址不是你能定的常量。**
+  同一份 manifest 会发到一盒、pm2 生产、K8s 生产，自省地址分别是
+  `http://host.docker.internal:3000/...`、`http://portal-api:3000/...`、
+  `http://portal-api.<ns>.svc.cluster.local:3000/...`。你只交键名，平台换版时自己填 ——
+  审批屏上这几行会显示「平台注入」，没人要动手。
+- **`requiredEnv` 的键集合属治理档** ⇒ 新增或改名会让这次发版进「发布审核」。这是**有意的**：
+  运维要先看见新键名才能在换版前把值配好。反过来说，**改了 env 键名却不同步改 `requiredEnv`，
+  没有任何机制拦得住**（容器起来就缺变量）—— 改一个键就改一次清单，别嫌一次审批。
+- **改名要写成一条，不要写成一删一加。** 门户看不出「同一个 TTL 换了个名字」和「删一个键、
+  加一个不相干的键」的区别，于是值搬不过去、换版当场缺变量。写对象形态：
+
+  ```jsonc
+  "requiredEnv": [
+    { "key": "OBS_PLATFORM_SCOPE_TTL_MIN", "renamedFrom": "OBS_CROSSTENANT_SESSION_TTL_MIN" },
+    "API_BASE_URL"
+  ]
+  ```
+
+  批准时门户把旧键在 **`descriptor.env`** 里的值搬到新键，审批屏如实显示「将沿用旧键的现有值」。
+  ⚠️ **值在 envFile 里的搬不了**（门户不写主机文件）。普通条目仍判缺；带 `generate` 的条目
+  可兼容沿用文件旧名，由 App 消费，不改文件、不复制值、不生成 NEW。旧键已由平台保管则拒绝改名。
+  两条写法约束：`renamedFrom` 不能等于 `key`；旧键**不能**同时还留在清单里（那等于说「它既被改掉
+  又仍然必需」，提交即拒）。改名生效之后 **`renamedFrom` 留着就行** —— 它是幂等的（新键已有值就不再搬），
+  而摘掉它本身是一次清单变更，会平白再进一次人工审。
+- **重部署看配置指纹，不只看 image。** 新执行链把实际消费的 envFile 字节、平台注入与落点纳入指纹，
+  控制器协调最新目标；Compose 使用其实际消费的全局 env 文件。旧部署可能仍需管理员显式重部署。
+  显式 redeploy 用于强制重建；同 tag 覆盖镜像仍不是可追踪的发版方式。实际运行事实与网关回执要分别核对。
+- **`deployRequirements` / `requiredServices` 也是治理档，而且是【闸】。** 前者说「我的后端要跑在
+  什么样的机器上」（地域 / 规格档位下限 / 要不要 GPU / 必须同时属于哪些**命名**网络），后者说
+  「我运行需要哪些外部服务」（`(kind, name)` 二元组）。批准那一刻门户按目标环境**当时**的资源池与
+  已登记服务清单逐条比对，不满足就**拒绝生效**、提案留在待审队列 —— 平台侧登记或调整之后重新批准
+  即可，你不用重新提交。
+
+  ```jsonc
+  "deployRequirements": { "region": ["ap-shanghai"], "size": "m", "network": ["cube-prod"] },
+  "requiredServices": [{ "name": "chroma", "kind": "vectorStore", "envKey": "XC_VECTOR_URL" }]
+  ```
+
+  三条约束：① **只写名字与档位** —— 网段 / IP / URL / 端口一律提交即拒（那是部署环境的事实，同一份
+  清单要发到 N 套门户）；② `deployRequirements` 需要 `deployDescriptor`（门户不部署你就无从匹配，
+  提交即拒）；③ **被拒时你只收到一句泛化的「当前环境不满足…，提案已转入待审核队列」** —— 逐维
+  原因、池里有哪些地域、最大档位、机器名都只在平台控制台，要知道差在哪找目标环境的运维。
+  首次通过时门户会把**落点固定**在命中的那台机器上，此后不再自动迁移。
+  `requiredServices[].envKey` 是「将来注入到哪个环境变量」的声明位，**当前只被携带，不注入**——
+  现在就要值仍然走 `requiredEnv`。
+
+服务账号的标识与密钥（`<PREFIX>_SA_CLIENT_ID` / `<PREFIX>_SA_CLIENT_SECRET`）你不用管也不用要：
+批准注册时门户随机签发、**由平台保管并在换版时注入你的容器**，没有任何人需要把它抄进 envFile。
+明文仍会**一次性回显**给审批人一次（留给你本地联调），之后再也取不回来。它**永不静默轮换** ——
+要轮换找平台走控制台的「轮换密钥」，那次轮换会顺带排一次换版，线上容器自动拿到新密钥；
+你本地那份副本要自己同步换，否则自省 401 而现场看不出原因。
+
+## 首次发布（你的 App 还不在市场里）
+
+1. 平台管理员在 控制台 › 应用市场 › **接入新应用** 输入你的 `listingKey` ⇒ 建一条草稿占位 +
+   签发 `xrel_` 令牌（经安全渠道交给你）。此刻你的 App 还不存在，只是有了提交的门。
+2. 你第一次 `publish --manifest deploy/portal/app.manifest.json --dist dist/ --image <ref>` ⇒
+   **必然进审核队列**（首次提交携带全部治理字段，无论内容）。
+3. 平台批准 ⇒ listing 建成上架 + 服务账号建出（client secret 明文一次性回显给审批人，
+   平台经外部渠道交给你）；清单/产物应用、后端和网关分阶段完成，不承诺同一时刻切换。
+4. 之后的日常发版与老 App 完全相同 —— 首次与后续是同一条代码路径，没有第二套流程。
+
+## 等审批（pending 之后会发生什么）
+
+- `publish` 返回 pending 时**退出码 0 并立即返回**（提交成功不是失败），打印提案 id 与待审字段清单。
+  **提案落成的那一刻，平台管理员就收到了站内 + 邮件通知**，不必另行催办。
+- **`--wait` 等获批后的本次后端与网关，不等人工审批。** 审批是分钟到小时级的人的动作，把 runner 挂在上面
+  既烧机器又什么都没保证。真要把「审批通过且生效」纳入 CI 门禁，用 **`--wait-review [秒]`**
+  （默认 1800s）：它轮询到 `applied` / `rejected` / `withdrawn`，批准 ⇒ 继续等本次后端与网关，纯前端同样等网关；
+  **被拒绝 ⇒ 打印平台填的原因并非零退出**（CI 该红就红）；超时 ⇒「仍在等审批」+ 非零退出。
+  ⚠️ 从旧版升上来：以前写 `--wait` 指望它等审批的流水线，现在会在提案待审时**直接绿**。
+- 同一 App 同时只允许一条待审提案，且待审期间**任何新提交都被拒**（纯 dist/version 的
+  自动档也一样 —— 放行会「后交先生效」，批准旧提案时把你后发的版本滚回去）：返回
+  `PROPOSAL_PENDING` + 在审提案 id，等审批或先撤回。
+  撤回是你的权利（不是审批动作）：
+  `curl -X DELETE -H "Authorization: Bearer $XGENT_RELEASE_TOKEN" $XGENT_PORTAL_URL/api/market/release/<key>/proposals/<id>`
+- 拒绝原因不推送给你 —— 靠 `status` / `--wait-review` 轮询看（通知面是给平台管理员的，不是给提交方的）。
+
+**pending 久了先问哪一句：** 如果这次改了 `requiredEnv`（新增或改名），**最可能的原因不是没人看，
+是平台那边还没配值** —— 审批人点批准会收到 `REQUIRED_ENV_MISSING` 并被拦下，提案原地留 pending。
+审批屏上逐键标了「已有值 / 平台注入 / 已取值 / 沿用旧键值 / 缺」，所以他知道缺哪几个；你要做的是
+直接问「`<KEY>` 配好了吗」，而不是重发一版或催审。**你不需要、也不应该拿到那些值。**
+—— 但先自查一遍：平台注入档的那七个键、以及按约定名命名的库 / Redis 是不会缺的，真卡住的
+只会是「自定」那一档。
+
+**一条纯自动档的发版也可能变成 pending。** 只发 `dist`/bump 版本、一个治理字段都没碰，如果这个
+App 声明过的某个 `requiredEnv` 键在部署环境里还没有值，这次发版同样会落成待审提案（返回
+`PROPOSAL_PENDING` + 缺的键名，`publish` 退出码仍是 0）。这不是你写错了什么 —— 是平台侧的配置
+缺口，而让它悄悄生效就意味着容器换版即崩。同样：问平台缺哪个键。
+
+## 发之前想在真门户里看一眼
+
+**想连发布链本身一起在本地验**（定级、审批屏、`requiredEnv` 闸）：一盒里 `/api/market/release/*`
+是通的，用平台管理员账号在控制台签一个 `xrel_` 令牌就能对着它发。做法与两条差异（prod 模式
+拒收明文密钥、首次接入必落 pending）见 `portal-dev-setup` skill §2.0。
+
+两条本地通路，各有硬约束，别混用：
+
+| | 用在哪 | 约束 |
+| --- | --- | --- |
+| **devkit 卷挂载**（一盒） | 服务端同学本地跑一个真门户，把你的 `dist` 目录挂进去 | 同源，满足生产同款 CSP；**没有 HMR**，改前端要重新 build |
+| **cross-origin vite dev** | 前端内循环改页面 | 门户 dev 的 CSP 才放行 `localhost:53xx`；**生产 CSP 是 `frame-src 'self'`，此路上不了生产** |
+
+⭐ 无论哪条，**都不需要门户给你开 CORS**：前端从不直连自己的后端，请求都经宿主 `postMessage` 代理发出。
+
+## 按需读
+
+| 场景 | 读 |
+| --- | --- |
+| 产物形状（`base` 双态、tar 根、CSP 与外链、发前在真门户里试） | [references/build-and-package.md](references/build-and-package.md) |
+| 令牌语义、端点原始形状、字段白名单、返回体、`curl` 兜底、CI 范式 | [references/publish-api.md](references/publish-api.md) |
+| 症状 → 原因速查（发布报错 / 线上白屏 / 发了没换版） | [references/troubleshooting.md](references/troubleshooting.md) |
+
+报告结果时如实说清：发了哪个 key、哪个版本、proposalId、digest、原始包持久留存位置、
+有没有在浏览器里实际打开过；涉及同步时另报主平台归档是否已验证。
+「命令返回 ✓」只证明产物落库了，不证明页面能用——第 5 步没做就说没做。

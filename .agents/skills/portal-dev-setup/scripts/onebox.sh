@@ -1,0 +1,1483 @@
+#!/usr/bin/env bash
+# portal-dev-setup — 在【你自己 App 的 repo 里】起一个真实门户（一盒 / one-box）用于本地联调。
+#
+#   onebox.sh init --key <你的listingKey> [--image <门户镜像tag>]
+#                              首次用：登录仓库并拉门户镜像 → 从镜像里取出 compose 资产 →
+#                              生成 compose.env（挑空闲端口、随机密钥），落在 ./portal-onebox/。
+#                              已存在的 compose.env 不覆盖（要整份重来加 --force）。
+#                              不给 --image 就用 <REGISTRY>/<PROJECT>/one-box:latest —— 一盒
+#                              和它的反代都挂了 latest，开新项目不用先去问 tag。
+#   onebox.sh up               ★ 按顺序把整套铺起来（迁移→种子→各库→注册→起栈），幂等可重跑。
+#                              顺序本身是契约（种子会 truncate、反代启动时才读 /svc map），
+#                              这条命令就是为了不让人自己记它。
+#   onebox.sh upgrade [--image <ref>] [--proxy-image <ref>]
+#                              换部署资产并追加版本信息；保留现有配置、端口、密钥与数据，再跑 up。
+#   onebox.sh doctor           ★ 体检：把排查表里能自动判的都判一遍，每条给一行可直接粘的修法。
+#                              跑不通先跑它，别翻文档。
+#   onebox.sh add <key>        ★ 把一个平台侧 App 拉进来陪调（如 omni-parser 多模态解析）：
+#                              注册清单 + 建库 + 起容器。非破坏性、幂等。
+#   onebox.sh pull             只（重）拉门户镜像 —— 换版本、或 latest 移动过之后用
+#   onebox.sh env              生效的关键 env + 配置告警（同键多值、端口、NODE_ENV…）
+#   onebox.sh status           env 摘要 + 容器状态 + 宿主侧健康探测
+#   onebox.sh smoke            只跑宿主侧健康探测
+#   onebox.sh chain            打印它将要用的那串 compose 参数
+#   onebox.sh dc <args...>     docker compose <拼好的参数> <args...>
+#
+# 【拉取凭证】镜像仓库不开放匿名拉取，需要一份只读 puller 凭证。按顺序找第一个存在的：
+#   $XGENT_REGISTRY_CONFIG → ./.xgent-registry.env → ${XDG_CONFIG_HOME:-~/.config}/xgent/registry.env
+#   → ~/.xgent-registry.env → <skill 目录>/registry.env
+# KEY=value 三项：REGISTRY（域名，不带协议）· PULLER_AUTH（base64 的「用户名:口令」）·
+# ONEBOX_PROJECT（【门户一盒镜像】所在的项目名 —— 省掉 --image 时用它拼
+#   <REGISTRY>/<ONEBOX_PROJECT>/one-box:latest）。⚠️ 它多半【不等于】PROJECT：后者是
+#   xgent-image-push 用来推【你自己 App 镜像】的项目，两者同仓不同项目。缺 ONEBOX_PROJECT
+#   时才回退到 PROJECT（老配置兼容），拿它拼出来的引用十有八九 not found。
+# 同名环境变量优先，CI 里注入即可不必落盘。模板：<skill 目录>/puller.env.example
+# 两个镜像本地都已有（比如 docker load 的离线 tar）时会跳过登录与拉取。
+#
+# 【一套就够】一台机器只跑一套一盒，compose 项目名固定 xgent-onebox —— 它不属于某个 App，
+# 本机要联调的 App 都接进这同一套（add 拉平台侧 App / XGENT_ONEBOX_HOME 复用栈 /
+# 宿主进程直连它的 pg/redis/minio，见 SKILL.md §5）。init 发现本机已有别的一盒会停下。
+#
+# 【一盒目录】放 docker-compose.yml 与 compose.env 的那个，按序查找：
+#   $XGENT_ONEBOX_HOME → ./portal-onebox → ./deploy → <git 根>/portal-onebox → <git 根>/deploy
+# 判据是同时有 docker-compose.yml 与 onebox/docker-compose.onebox.yml —— 你自己 repo 里
+# 那个装别的东西的 deploy/ 不会被误认。
+set -euo pipefail
+
+c_red=$'\033[31m'; c_grn=$'\033[32m'; c_ylw=$'\033[33m'; c_dim=$'\033[2m'; c_off=$'\033[0m'
+warn() { printf '%s! %s%s\n' "$c_ylw" "$*" "$c_off"; }
+info() { printf '%s>%s %s\n' "$c_dim" "$c_off" "$*"; }
+die()  { printf '%sERROR: %s%s\n' "$c_red" "$*" "$c_off" >&2; exit 1; }
+
+SKILL_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+
+# --- 镜像仓库凭证 -------------------------------------------------------------
+# 仓库域名与口令都不写在这个 skill 里（域名属内部信息，口令是密钥）。与仓内推镜像那套
+# 用同一份 .xgent-registry.env，只是这里读的是【只读】的 puller 那两项。
+load_registry_config() {
+  local c f key val
+  if [ -z "${REGISTRY_CONFIG:-}" ]; then
+    for c in "${XGENT_REGISTRY_CONFIG:-}" "$PWD/.xgent-registry.env" \
+             "${XDG_CONFIG_HOME:-$HOME/.config}/xgent/registry.env" \
+             "$HOME/.xgent-registry.env" "$SKILL_DIR/registry.env"; do
+      [ -n "$c" ] && [ -f "$c" ] && { REGISTRY_CONFIG="$c"; break; }
+    done
+  fi
+  f="${REGISTRY_CONFIG:-}"
+  [ -n "$f" ] && [ -f "$f" ] || return 0
+  while IFS= read -r line || [ -n "$line" ]; do
+    case "$line" in ''|'#'*) continue ;; esac
+    key="${line%%=*}"; val="${line#*=}"
+    case "$key" in *[!A-Za-z0-9_]*|"") continue ;; esac
+    val="${val%\"}"; val="${val#\"}"; val="${val%\'}"; val="${val#\'}"
+    case "$key" in
+      REGISTRY|PROJECT|ONEBOX_PROJECT|PULLER_AUTH|MANIFEST_STORE|MANIFEST_STORE_READ_TOKEN) [ -n "${!key:-}" ] || printf -v "$key" '%s' "$val" ;;
+    esac
+  done < "$f"
+  # base64 不是加密，同组可读就等于把口令摊在那儿
+  if [ -n "${PULLER_AUTH:-}" ]; then
+    # Only the permission field is read; the filename is never parsed.
+    # shellcheck disable=SC2012
+    case "$(ls -l "$f" | cut -c1-10)" in ??????---*) ;; *) warn "$f 含 PULLER_AUTH 且同组/其他人可读 —— chmod 600 $f";; esac
+  fi
+}
+
+require_puller() {
+  load_registry_config
+  if [ -z "${REGISTRY:-}" ] || [ -z "${PULLER_AUTH:-}" ]; then
+    die "$(cat <<MSG
+没有 puller 凭证，拉不到门户镜像 —— 仓库不开放匿名拉取，一盒起不来。
+
+先找【你们自己的开发团队】要一份 puller key：这是一对只读拉取凭证，按团队发放，
+不是谁的个人密码（一个团队共用一份，有人离职要找他们轮换）。拿到后：
+
+  cp "$SKILL_DIR/puller.env.example" ./.xgent-registry.env
+  chmod 600 ./.xgent-registry.env
+
+填两项：
+  REGISTRY=<仓库域名>        # 不带 https://、不带端口、无尾斜杠
+  PULLER_AUTH=<base64>       # base64 的「用户名:口令」
+
+PULLER_AUTH 就是 ~/.docker/config.json 里 auths.<REGISTRY>.auth 那个值；
+自己算：  printf '%s' '<用户名>:<口令>' | base64
+
+查找顺序：\$XGENT_REGISTRY_CONFIG → ./.xgent-registry.env →
+          \${XDG_CONFIG_HOME:-~/.config}/xgent/registry.env → ~/.xgent-registry.env →
+          $SKILL_DIR/registry.env
+同名环境变量优先，CI 里注入 REGISTRY / PULLER_AUTH 即可，不必落盘。
+
+⚠️ base64 不是加密，base64 -d 一条命令就还原成明文：别提交进 git，别转发出团队。
+   已经拿到离线镜像 tar 的，先 docker load 两个镜像，本脚本会跳过拉取这一步。
+MSG
+)"
+  fi
+  case "$REGISTRY" in *://*) die "REGISTRY 不要带协议（去掉 http:// 或 https://）：$REGISTRY";; esac
+  case "$REGISTRY" in */*) die "REGISTRY 只写域名，别带项目名：$REGISTRY";; esac
+  local dec
+  dec="$(printf '%s' "$PULLER_AUTH" | base64 -d 2>/dev/null || printf '%s' "$PULLER_AUTH" | base64 -D 2>/dev/null || true)"
+  case "$dec" in
+    *:*) PULLER_USER="${dec%%:*}"; PULLER_SECRET="${dec#*:}" ;;
+    *) die "PULLER_AUTH 不是 base64 的「用户名:口令」。自己算一遍：printf '%s' '<用户名>:<口令>' | base64" ;;
+  esac
+}
+
+registry_login() {
+  info "登录 ${REGISTRY}（用户 ${PULLER_USER}，只读）…"
+  printf '%s' "$PULLER_SECRET" | docker login "$REGISTRY" -u "$PULLER_USER" --password-stdin >/dev/null 2>&1 \
+    || die "docker login $REGISTRY 失败。口令可能已被轮换 —— 先 docker logout $REGISTRY 再让开发团队补一份新的 PULLER_AUTH。（陈旧凭证不会提示你去登录，只会一直 401。）"
+}
+
+# do_pull REF HINT [PLATFORM] —— docker pull 的 "What's Next" 提示走 stderr，>/dev/null 挡不住；
+# 但 2>&1 会把真错误一起吞掉，所以收进临时文件、只在失败时回显。
+do_pull() {
+  local ref="$1" hint="$2" errf; errf="$(mktemp)"
+  local -a pf=(); [ -n "${3:-}" ] && pf=(--platform "$3")
+  info "拉 ${ref}${3:+（${3}）} …"
+  if ! docker pull ${pf[@]+"${pf[@]}"} "$ref" >/dev/null 2>"$errf"; then
+    local msg; msg="$(tail -3 "$errf")"; rm -f "$errf"
+    die "docker pull $ref 失败。${hint:+$hint
+}$msg"
+  fi
+  rm -f "$errf"
+}
+
+# pull_images RUNTIME PROXY —— 两个镜像本地都在就跳过（离线 docker load 的场合）
+pull_images() {
+  local rt="$1" px="$2"
+  if docker image inspect "$rt" >/dev/null 2>&1 && docker image inspect "$px" >/dev/null 2>&1; then
+    info "两个镜像本地已有，跳过拉取（要强制重拉用 $0 pull --image ${rt}）"
+    return 0
+  fi
+  local host="${rt%%/*}"
+  case "$host" in
+    *.*|*:*) ;;                       # 带域名的私有仓
+    *) host="" ;;                     # 没有域名段 = docker hub
+  esac
+  require_puller
+  if [ -n "$host" ] && [ "$host" != "$REGISTRY" ]; then
+    die "镜像域名（${host}）与配置里的 REGISTRY（${REGISTRY}）对不上 —— 登录 A 却去 B 拉，必然 401。对齐这两个再来。"
+  fi
+  registry_login
+  do_pull "$rt" "两种可能，按顺序查：① 项目名不对 —— 一盒镜像与你自己 App 的镜像【不在同一个项目】下（配 ONEBOX_PROJECT，或直接 --image 给全）；② tag 写错 —— 一盒只有 :latest（可变指针）和 :v<版本>-<7位sha>（钉住某一版）两种。"
+  do_pull "$px" "代理镜像名是从 runtime 镜像推出来的（同仓同版本、仓库名 proxy），有的部署不叫这个 —— 用 --proxy-image 显式指定。"
+}
+
+# 不给 --image 时用的默认镜像。一盒与它的反代都挂了 latest 指针 —— 这类镜像是【给人手工
+# docker pull】的调试件，没有"部署侧按镜像引用触发重建"那条链，可变 tag 的代价不成立，
+# 而"新人不知道该用哪个 tag"这个洞是真的。要钉住某一版就显式 --image <...>:v<版本>-<sha>。
+default_image() {
+  load_registry_config
+  # ⚠️ 一盒镜像与【你自己 App 的镜像】不在同一个项目下。ONEBOX_PROJECT 是前者；
+  # PROJECT 是后者（xgent-image-push 推镜像用的那个）。只有 ONEBOX_PROJECT 缺席时才
+  # 回退到 PROJECT —— 那是老配置的兼容路径，拼出来的引用多半 not found，所以回退时
+  # 明说一句，别让人对着一个指错方向的 404 猜 tag。
+  local proj="${ONEBOX_PROJECT:-}"
+  if [ -z "$proj" ] && [ -n "${PROJECT:-}" ]; then
+    proj="$PROJECT"
+    warn "配置里没有 ONEBOX_PROJECT，回退用 PROJECT=${PROJECT} 拼一盒镜像 —— 那通常是【推你自己 App 镜像】的项目，不是一盒所在的项目。拉不到就去问开发团队要一盒的项目名，填进 ONEBOX_PROJECT。"
+  fi
+  [ -n "${REGISTRY:-}" ] && [ -n "$proj" ] || return 1
+  printf '%s/%s/one-box:latest' "$REGISTRY" "$proj"
+}
+
+# --- 定位一盒目录 -------------------------------------------------------------
+find_home() {
+  local d git_root
+  if [ -n "${XGENT_ONEBOX_HOME:-}" ]; then printf '%s' "$XGENT_ONEBOX_HOME"; return; fi
+  git_root="$(git rev-parse --show-toplevel 2>/dev/null || true)"
+  for d in ./portal-onebox ./deploy ${git_root:+"$git_root/portal-onebox" "$git_root/deploy"}; do
+    [ -f "$d/docker-compose.yml" ] && [ -f "$d/onebox/docker-compose.onebox.yml" ] && { (cd "$d" && pwd); return; }
+  done
+  printf ''
+}
+
+require_home() {
+  HOME_DIR="$(find_home)"
+  [ -n "$HOME_DIR" ] || die "没找到一盒目录（要有 docker-compose.yml + onebox/docker-compose.onebox.yml）。首次用先跑： $0 init --image <门户镜像tag> --key <你的listingKey>"
+  ENV_FILE="$HOME_DIR/compose.env"
+  [ -f "$ENV_FILE" ] || die "$HOME_DIR 里没有 compose.env。跑 $0 init 生成，或手工按 compose.env.example 拼。"
+}
+
+# 同一目录的配置写入必须串行，不能让两个 add 同时把同一密钥判成缺失。
+ENV_LOCK_DIR=""; ENV_LOCK_OWNER=""
+_env_unlock() {
+  [ -n "$ENV_LOCK_DIR" ] && [ -f "$ENV_LOCK_DIR/owner" ] || return 0
+  [ "$(sed -n '1p' "$ENV_LOCK_DIR/owner")" = "owner=$ENV_LOCK_OWNER" ] || return 0
+  rm -f "$ENV_LOCK_DIR/owner"
+  rmdir "$ENV_LOCK_DIR" 2>/dev/null || true
+}
+_env_lock() {
+  HOME_DIR="$(cd "$HOME_DIR" && pwd -P)"
+  ENV_FILE="$HOME_DIR/compose.env"
+  local lock="$HOME_DIR/.onebox-env.lock" started
+  if ! mkdir "$lock" 2>/dev/null; then
+    die "一盒目录已有配置写锁：${lock}。本次未写入 compose.env，请稍后重试。若上次异常终止，先核对 ${lock}/owner 的 pid、started 与实际进程身份；确认原进程已结束后才手工清理锁目录。不会自动抢锁或重生成密钥。"
+  fi
+  ENV_LOCK_DIR="$lock"; ENV_LOCK_OWNER="$$:$(date +%s):$RANDOM"
+  trap '_env_unlock' EXIT
+  trap 'exit 129' HUP
+  trap 'exit 130' INT
+  trap 'exit 143' TERM
+  started="$(ps -p "$$" -o lstart=)"
+  printf 'owner=%s\npid=%s\nstarted=%s\nscript=%s\n' "$ENV_LOCK_OWNER" "$$" "$started" "$0" > "$lock/owner" \
+    || die "无法记录配置写锁的进程身份，操作中止；请核查 ${lock}。"
+}
+
+# --- env-file 解析（docker compose 是「后定义者胜」，这份文件是拼装出来的）--------
+_assignments() {
+  awk '/^[A-Za-z_][A-Za-z0-9_]*=/ {
+    k = $0; sub(/=.*/, "", k)
+    v = $0; sub(/^[^=]*=/, "", v)
+    sub(/^"(.*)"$/, "\\1", v); sub(/^'"'"'(.*)'"'"'$/, "\\1", v)
+    printf "%d\t%s\t%s\n", NR, k, v
+  }' "$ENV_FILE"
+}
+_eff() { # _eff KEY [default]
+  local v; v="$(_assignments | awk -F'\t' -v k="$1" '$2==k{v=$3} END{print v}')"
+  [ -n "$v" ] && printf '%s' "$v" || printf '%s' "${2-}"
+}
+
+load_env() {
+  APP_KEY="$(_eff APP_KEY)"; APP_IMAGE="$(_eff APP_IMAGE)"; APP_FRONTEND_DIST="$(_eff APP_FRONTEND_DIST)"
+  CATALOG="$(_eff XGENT_APP_CATALOG files,llm-gateway,git,org,observability,user-center)"
+  HTTP_PORT="$(_eff HTTP_PORT 80)"; COMPOSE_PROJECT="$(_eff COMPOSE_PROJECT_NAME xgent)"
+  BASE_URL="http://localhost"; [ "$HTTP_PORT" = "80" ] || BASE_URL="http://localhost:$HTTP_PORT"
+}
+
+# --- compose 参数拼装 ---------------------------------------------------------
+# app-dev.yml 里的 ${APP_IMAGE:?} / ${APP_KEY:?} 是【解析期】求值的（与 profile 无关），
+# 所以还没填自己 App 那两行时必须整层不带，否则连 ps 都跑不了。
+compose_args() {
+  printf '%s\0' --env-file "$ENV_FILE" \
+    -f "$HOME_DIR/docker-compose.yml" \
+    -f "$HOME_DIR/onebox/docker-compose.onebox.yml"
+  if [ -n "$APP_KEY" ] && [ -n "$APP_IMAGE" ]; then
+    printf '%s\0' -f "$HOME_DIR/app-devkit/docker-compose.app-dev.yml"
+    [ -n "$APP_FRONTEND_DIST" ] && printf '%s\0' -f "$HOME_DIR/app-devkit/docker-compose.app-frontend.yml"
+    printf '%s\0' --profile app-external
+  fi
+  printf '%s\0' --profile local-infra
+  local k; for k in ${CATALOG//,/ }; do
+    _is_portal_hosted "$k" && continue
+    printf '%s\0' --profile "app-$k"
+    # 清单型 App（onebox.sh add 生成过片段的）也归 dc 管：这样 up/ps/logs/down 都看得见它们，
+    # 而不是只有 add 那一次 -f 才带上。
+    [ -f "$HOME_DIR/generated/$k.yml" ] && printf '%s\0' -f "$HOME_DIR/generated/$k.yml"
+    [ -f "$SKILL_DIR/services/$k.extra.yml" ] && printf '%s\0' -f "$SKILL_DIR/services/$k.extra.yml"
+  done
+  # 门户日志采集段已并入 docker-compose.onebox.yml。这行只为【老抽取资产】的家目录兜底：
+  # 那些 portal-onebox/ 里还有独立的 portal-logs.yml（旧镜像取出的），照老规矩叠加；
+  # 新资产里文件不存在，[ -f ] 自动跳过。
+  _has_catalog observability && [ -f "$HOME_DIR/onebox/docker-compose.portal-logs.yml" ] \
+    && printf '%s\0' -f "$HOME_DIR/onebox/docker-compose.portal-logs.yml"
+  return 0
+}
+_has_catalog() { case ",$CATALOG," in *",$1,"*) return 0;; *) return 1;; esac; }
+# 用户中心只有身份 owner 清单，运行时由 portal-api 承载，无独立库、容器与 /svc。
+_is_portal_hosted() { [ "$1" = "user-center" ]; }
+# 目录里「清单型」的 key = 一盒镜像/目录里有 app-devkit/manifests/<key>.manifest.json 且不是门户内置 workspace
+_is_manifest_app() { [ -f "$HOME_DIR/app-devkit/manifests/$1.manifest.json" ]; }
+dc() { local a=(); while IFS= read -r -d '' x; do a+=("$x"); done < <(compose_args); docker compose "${a[@]}" "$@"; }
+
+# --- init ---------------------------------------------------------------------
+port_free() { ! (exec 3<>"/dev/tcp/127.0.0.1/$1") >/dev/null 2>&1; }
+pick_port() { local p; for p in "$@"; do port_free "$p" && { printf '%s' "$p"; return; }; done; printf '%s' "$1"; }
+rand_hex() { openssl rand -hex 32 2>/dev/null || head -c32 /dev/urandom | od -An -tx1 | tr -d ' \n'; }
+
+_image_version() {
+  local image="$1" id created
+  id="$(docker image inspect "$image" --format '{{.Id}}' 2>/dev/null | cut -c8-14 || true)"
+  created="$(docker image inspect "$image" --format '{{.Created}}' 2>/dev/null | cut -c1-10 || true)"
+  [ -z "$id" ] || printf 'onebox %s %s%s' "${image##*:}" "$id" "${created:+ built ${created}}"
+}
+
+# Shared by init and upgrade. Machine-owned state must never come from an image.
+_extract_assets() {
+  local image="$1" home="$2" postgres_volume="${3:-}" tmp cid
+  info "从 ${image} 取出 compose 资产…"
+  tmp="$(mktemp -d)"
+  cid="$(docker create "$image")" || { rm -rf "$tmp"; die "docker create 失败，请确认镜像已就位。"; }
+  if ! docker cp "$cid:/app/deploy" "$tmp/deploy" >/dev/null; then
+    docker rm -f "$cid" >/dev/null; rm -rf "$tmp"
+    die "镜像里没有 /app/deploy，请使用门户一盒镜像。"
+  fi
+  docker rm -f "$cid" >/dev/null
+  if ! grep -qE '^  rustfs:' "$tmp/deploy/docker-compose.yml" \
+    || [ ! -f "$tmp/deploy/scripts/objectstore-cutover.sh" ] \
+    || [ ! -f "$tmp/deploy/scripts/objectstore-manifest.ts" ]; then
+    rm -rf "$tmp"; die "镜像里的对象存储资产还是旧版，请 upgrade --image <新版一盒镜像>。"
+  fi
+  ( cd "$tmp/deploy" && rm -rf .DS_Store k8s oauth pm2 caddy knowledge-devkit onebox/Dockerfile \
+      compose.env generated backup scripts/tests \
+      app-devkit/manifests/pagebuilder.manifest.json app-devkit/manifests/task-gateway.manifest.json )
+  # Persist volume identity in staging before replacing assets. If a later version
+  # check refuses an unknown layout, the next run must still find the same data.
+  if [ -n "$postgres_volume" ]; then
+    if ! awk -v volume="$postgres_volume" '
+      /^volumes:/{volumes=1}
+      volumes && /^  pg-data:/{print "  pg-data:"; print "    name: " volume; pg=1; count++; next}
+      volumes && /^  [A-Za-z0-9_-]+:/{pg=0}
+      pg && /^    name:/{next}
+      {print}
+      END{if(count!=1)exit 1}
+    ' "$tmp/deploy/docker-compose.yml" > "$tmp/compose-pinned.yml"; then
+      rm -rf "$tmp"; die "新版资产缺少唯一 pg-data 卷定义，未替换现有资产。"
+    fi
+    mv "$tmp/compose-pinned.yml" "$tmp/deploy/docker-compose.yml" \
+      || { rm -rf "$tmp"; die "无法保留 PostgreSQL 卷名，未替换现有资产。"; }
+  fi
+  # This retired overlay otherwise survives extraction and duplicates logging mounts.
+  [ -f "$tmp/deploy/onebox/docker-compose.portal-logs.yml" ] \
+    || rm -f "$home/onebox/docker-compose.portal-logs.yml"
+  ( cd "$tmp/deploy" && tar -cf - . ) | ( cd "$home" && tar -xf - )
+  rm -rf "$tmp"
+}
+
+cmd_upgrade() {
+  local image="" proxy=""
+  while [ $# -gt 0 ]; do
+    case "$1" in
+      --image) image="${2:?}"; shift 2 ;;
+      --proxy-image) proxy="${2:?}"; shift 2 ;;
+      *) die "upgrade: 不认识的参数 '$1'" ;;
+    esac
+  done
+  if [ -z "$image" ]; then
+    image="$(_eff XGENT_IMAGE)"
+    [ -n "$proxy" ] || proxy="$(_eff XGENT_PROXY_IMAGE)"
+  fi
+  [ -n "$image" ] || die "compose.env 缺 XGENT_IMAGE，请 upgrade --image <新版一盒镜像>。"
+  [ -n "$proxy" ] || proxy="${image%/*}/proxy:${image##*:}"
+  pull_images "$image" "$proxy"
+  # Retain the old volume identity even after down and with a custom volume name.
+  local postgres_volume; postgres_volume="$(_postgres_volume)" || die "无法确认升级前的 PostgreSQL 数据卷。"
+  _extract_assets "$image" "$HOME_DIR" "$postgres_volume"
+  _env_set XGENT_IMAGE "$image"
+  _env_set XGENT_PROXY_IMAGE "$proxy"
+  local version; version="$(_image_version "$image")"
+  [ -z "$version" ] || _env_set APP_VERSION "$version"
+  _objectstore_image
+  _pin_postgres "$postgres_volume"
+  _kafka_defaults
+  info "部署资产已升级；现有配置、generated/、backup/、端口与数据卷保留。"
+  info "下一步：$0 up（仍会重种门户库；App 自己的库不重置）。"
+}
+
+cmd_init() {
+  local image="${XGENT_IMAGE:-}" proxy="" key="" home="./portal-onebox" force=0
+  while [ $# -gt 0 ]; do
+    case "$1" in
+      --image) image="${2:?}"; shift 2 ;;
+      --proxy-image) proxy="${2:?}"; shift 2 ;;
+      --key) key="${2:?}"; shift 2 ;;
+      --home) home="${2:?}"; shift 2 ;;
+      --force) force=1; shift ;;
+      *) die "init: 不认识的参数 '$1'" ;;
+    esac
+  done
+  [ -n "$image" ] || image="$(default_image || true)"
+  [ -n "$image" ] || die "init 不知道该拉哪个镜像：给 --image <registry>/<一盒项目>/one-box:<版本>，或在 puller 配置里补上 REGISTRY 与 ONEBOX_PROJECT（补了就默认用 <REGISTRY>/<ONEBOX_PROJECT>/one-box:latest，不必再去问 tag）。⚠️ ONEBOX_PROJECT 是【一盒镜像】的项目，不是你推自己 App 镜像的那个 PROJECT。"
+  case "$image" in *:latest) info "用 ${image}（可变指针）—— 它跟着最新一版走，开工前 $0 pull 一次就是最新；要钉住某一版改用 --image <...>:v<版本>-<sha>。";; esac
+  [ -n "$proxy" ] || proxy="${image%/*}/proxy:${image##*:}"   # 代理镜像同仓同版本
+  [ -n "$key" ] || warn "没给 --key，先用占位 your-app —— 起 app-backend 之前必须把 compose.env 里的 APP_KEY 改成你的 listingKey（它同时是 /svc/<key>、iframe 路径、scope 命名空间和令牌 aud）。"
+  key="${key:-your-app}"
+
+  # 先把路径算出来但【不建目录】—— 下面任何一步停下时都不该留一个空壳
+  home="$(cd "$(dirname "$home")" 2>/dev/null && pwd || printf '%s' "$PWD")/$(basename "$home")"
+  local envf="$home/compose.env"
+  if [ -f "$envf" ] && [ "$force" = 0 ]; then
+    die "$envf 已存在（里面是这台机器的密钥）。要整份重来加 --force；只想补配置就直接往它末尾加。"
+  fi
+
+  # 一台机器一套一盒（SKILL.md 文首「一套就够」）：本机已有【别的】一盒在跑/跑过时停下，
+  # 而不是再铺第二套 —— 两套之间只有端口退让、没有数据互通，要调的 App 应该接进现有那套。
+  # 自己这套（容器 config_files 落在本 home 下）不算；--force 时降级为提醒。
+  local other
+  other="$(docker ps -a --filter 'label=com.docker.compose.project' \
+    --format '{{.Label "com.docker.compose.project"}}\t{{.Label "com.docker.compose.project.config_files"}}' 2>/dev/null \
+    | awk -F'\t' -v h="$home/" '($1=="xgent-onebox" || $1 ~ /^onebox-/) && index($2, h)!=1 { print $1; exit }' || true)"
+  if [ -n "$other" ]; then
+    [ "$force" = 1 ] || die "本机已有一套一盒（compose 项目 ${other}）—— 一台机器只共用一套，别再铺第二套。
+要调你的 App：XGENT_ONEBOX_HOME=<那套 portal-onebox/ 的路径> 复用它的栈跑 register-app / dc；
+宿主上的 dev 后端直连它的 pg/redis/minio（SKILL.md §5）。那套的路径查看：docker compose ls。
+确需整份重来（--force 会连 compose.env 一起重建）：$0 init --force …"
+    warn "本机已有另一套一盒（${other}）—— --force 放行，但请确认那套已 down 掉，别长期并存。"
+  fi
+
+  # 1) 备齐镜像 —— 没有 puller 凭证就在这里停下，而不是让人跑到一半才发现
+  pull_images "$image" "$proxy"
+  mkdir -p "$home"
+  HOME_DIR="$home"; _env_lock
+  # 首次检查后可能已有另一个 init 完成；持锁后再检查，不能覆盖它刚写的密钥。
+  [ ! -f "$envf" ] || [ "$force" = 1 ] \
+    || die "$envf 已存在（里面是这台机器的密钥）。已有一盒请用 upgrade。"
+
+  # 门户的 /health 报的 version 取自 APP_VERSION 环境变量，compose 缺省填 "dev" ——
+  # 于是一盒对使用者【完全不自报版本】。而「照文档做但行为不符」十有八九就是镜像比文档旧
+  # （CR-4：自动授予租户那段代码比某一版镜像新一天，症状是市场里没有卡片且零报错）。
+  # 这里把 tag + 镜像 ID + 构建日期钉进 compose.env，`/health` 与 `status` 立刻能回答
+  # 「我跑的是哪一版」。取不到就留空，不编。
+  local ver; ver="$(_image_version "$image")"
+
+  # 2) 从镜像里取 compose 资产 —— 版本天然与镜像对齐，不需要门户仓
+  _extract_assets "$image" "$home"
+
+  # 3) 挑空闲端口 —— 首次用最常见的翻车就是 80/5432/6379/9000 已被别的东西占着
+  local hp hsp pgp rdp mnp mncp kfp base kafka_cluster_id kafka_password
+  hp="$(pick_port 80 8080 8090 18080)"; hsp="$(pick_port 443 8443 18443)"
+  pgp="$(pick_port 5432 15432 25432)"; rdp="$(pick_port 6379 16379 26379)"
+  mnp="$(pick_port 9000 19000 29000)"; mncp="$(pick_port 9001 19001 29001)"
+  kfp="$(pick_port 9092 19092 29092)"
+  kafka_cluster_id="$(_kafka_cluster_id)" || die "无法生成 Kafka 集群 ID，初始化中止。"
+  kafka_password="$(_kafka_admin_password)" || die "无法生成 Kafka 管理密码，初始化中止。"
+  base="http://localhost"; [ "$hp" = "80" ] || base="http://localhost:$hp"
+
+  # 4) 三段模板 + 本机覆盖块（覆盖块必须在最末尾）
+  cat "$home/compose.env.example" "$home/onebox/compose.env.onebox.example" \
+      "$home/app-devkit/compose.env.app.example" > "$envf"
+  cat >> "$envf" <<EOF
+
+# ============================================================================
+# 本机覆盖 —— 由 onebox.sh init 生成。docker compose 是【后定义者胜】，所以这一段
+# 必须留在文件最末尾；以后要改配置，也往这下面加，别回上面改。
+# ============================================================================
+# 全机一套共用这个名字（不带 App 名；init 的撞栈检测也认它），别改名来「并存」两套。
+COMPOSE_PROJECT_NAME=xgent-onebox
+NODE_ENV=development
+DEV_MOCK_OAUTH=true
+
+XGENT_IMAGE=$image
+XGENT_PROXY_IMAGE=$proxy
+# 这台一盒的身份（/health 的 version 字段读它）。换镜像后重跑 init，或自己改这一行。
+APP_VERSION=$ver
+
+# 宿主发布端口（init 挑的是当时空闲的口）。改了 HTTP_PORT 要同步下面两行。
+HTTP_PORT=$hp
+HTTPS_PORT=$hsp
+POSTGRES_PORT=$pgp
+REDIS_PORT=$rdp
+MINIO_PORT=$mnp
+MINIO_CONSOLE_PORT=$mncp
+KAFKA_PORT=$kfp
+KAFKA_CLUSTER_ID=$kafka_cluster_id
+KAFKA_ADMIN_PASSWORD=$kafka_password
+PORTAL_BASE_URL=$base
+FILES_APP_URL=$base
+
+# 门户自身密钥（本机随机，只在这台机器上有意义）
+SESSION_SECRET=$(rand_hex)
+TDT_SIGNING_KEY=$(rand_hex)
+PLATFORM_ADMIN_KEY=$(rand_hex)
+FILES_ENC_KEY=$(rand_hex)
+LLM_GATEWAY_SECRET_ENC_KEY=$(rand_hex)
+
+# files 的服务账号：种子把这里的值种进库，files-server 也读这里 —— 同源即一致。
+# 用已知的 dev 明文，这样重跑种子/换机器都能对上（一盒是调试底座，不是门户）。
+FILES_SA_CLIENT_SECRET=files-dev-resource-key
+FILES_RESOURCE_KEY=files-dev-resource-key
+
+# 一盒不装 ffmpeg：这一项必须留空，填 auto 会让每次转换去 exec 一个不存在的二进制。
+PREVIEW_MEDIA_CONVERTER_URL=
+
+# ---- 你的 App（填完 APP_IMAGE 才会起 app-backend）----
+APP_KEY=$key
+APP_IMAGE=
+# micro（有前端、iframe 嵌入）才要，且必须是【绝对路径】、目录里有 index.html：
+#APP_FRONTEND_DIST=/abs/path/to/your/frontend/dist
+EOF
+  chmod 600 "$envf" || die "无法保护 compose.env 权限，初始化中止。"
+
+  # 5) 别让它进版本库：里面是密钥，且随时能从镜像重新生成
+  local root; root="$(git rev-parse --show-toplevel 2>/dev/null || true)"
+  if [ -n "$root" ] && [ -f "$root/.gitignore" ] && ! grep -qx "$(basename "$home")/" "$root/.gitignore" 2>/dev/null; then
+    printf '\n# 门户一盒本地联调栈（含密钥，可用 onebox.sh init 重新生成）\n%s/\n' "$(basename "$home")" >> "$root/.gitignore"
+    info "已把 $(basename "$home")/ 加进 .gitignore"
+  fi
+
+  echo
+  printf '%s一盒资产就位：%s%s\n' "$c_grn" "$home" "$c_off"
+  printf '  门户地址   %s\n' "$base"
+  printf '  端口       http=%s pg=%s redis=%s minio=%s/%s kafka=%s\n' "$hp" "$pgp" "$rdp" "$mnp" "$mncp" "$kfp"
+  printf '  项目名     xgent-onebox（全机一套共用，别改名）\n'
+  echo
+  echo "下一步（顺序本身是契约，见 SKILL.md §3）。先记一个短名："
+  echo "  S=$0"
+  echo
+  echo "  1. 编辑 $envf 末尾：填 APP_IMAGE（micro 再加 APP_FRONTEND_DIST）"
+  echo "  2. \$S up"
+  echo "  3. \$S doctor"
+}
+
+cmd_pull() {
+  local image="${XGENT_IMAGE:-}" proxy=""
+  while [ $# -gt 0 ]; do
+    case "$1" in
+      --image) image="${2:?}"; shift 2 ;;
+      --proxy-image) proxy="${2:?}"; shift 2 ;;
+      *) die "pull: 不认识的参数 '$1'" ;;
+    esac
+  done
+  if [ -z "$image" ] && [ -n "$(find_home)" ]; then          # 已 init 过就从 compose.env 取
+    ENV_FILE="$(find_home)/compose.env"
+    [ -f "$ENV_FILE" ] && { image="$(_eff XGENT_IMAGE)"; [ -n "$proxy" ] || proxy="$(_eff XGENT_PROXY_IMAGE)"; }
+  fi
+  [ -n "$image" ] || image="$(default_image || true)"
+  [ -n "$image" ] || die "pull 不知道该拉哪个镜像：给 --image <门户镜像tag>，或先 init（之后它会从 compose.env 里读），或在 puller 配置里补上 REGISTRY 与 ONEBOX_PROJECT（默认 one-box:latest）。"
+  [ -n "$proxy" ] || proxy="${image%/*}/proxy:${image##*:}"
+  require_puller; registry_login
+  do_pull "$image" "tag 写错了？一盒只有两种：:latest（可变指针，跟着最新一版走）和 :v<版本>-<7位sha>（钉住某一版）。"
+  do_pull "$proxy" "代理镜像名是从 runtime 镜像推出来的，有的部署不叫 proxy —— 用 --proxy-image 指定。"
+  printf '%s两个镜像就位%s\n' "$c_grn" "$c_off"
+  echo "镜像就位后跑 $0 upgrade --image ${image} --proxy-image ${proxy}，再跑 $0 up。"
+}
+
+# --- 其余子命令 ---------------------------------------------------------------
+cmd_env() {
+  echo "一盒目录:    $HOME_DIR"
+  echo "compose.env: $ENV_FILE"
+  echo
+  local k v n
+  for k in COMPOSE_PROJECT_NAME XGENT_IMAGE XGENT_PROXY_IMAGE XGENT_APP_CATALOG NODE_ENV DEV_MOCK_OAUTH \
+           HTTP_PORT HTTPS_PORT POSTGRES_PORT REDIS_PORT MINIO_PORT MINIO_CONSOLE_PORT KAFKA_PORT PORTAL_BASE_URL \
+           APP_KEY APP_IMAGE APP_FRONTEND_DIST PREVIEW_MEDIA_CONVERTER_URL; do
+    v="$(_eff "$k")"
+    n="$(_assignments | awk -F'\t' -v k="$k" '$2==k{seen[$3]=1} END{print length(seen)}')"
+    printf '  %-28s %s' "$k" "${v:-${c_dim}(空)${c_off}}"
+    [ "$n" -gt 1 ] && printf '   %s← 同键 %s 个不同值，取最后一个%s' "$c_ylw" "$n" "$c_off"
+    printf '\n'
+  done
+  echo
+  [ "$COMPOSE_PROJECT" = "xgent" ] && warn "COMPOSE_PROJECT_NAME 还是模板默认的 xgent —— 同机另一套 compose 会被当成同一项目（容器被接管、命名卷共享）。改成 xgent-onebox（全机一套共用这个名字，init 现在就是这么设的）。"
+  [ "$(_eff NODE_ENV)" = "development" ] || warn "NODE_ENV 不是 development —— 镜像烘的是 production，不覆盖则 portal-api 拒绝在 DEV_MOCK_OAUTH=true 下启动，register-app 也拒跑。"
+  [ "$(_eff DEV_MOCK_OAUTH)" = "true" ] || warn "DEV_MOCK_OAUTH 不是 true —— 没有 dev 登录门，浏览器进不去。"
+  [ -n "$(_eff PREVIEW_MEDIA_CONVERTER_URL)" ] && warn "PREVIEW_MEDIA_CONVERTER_URL 非空 —— 一盒不装 ffmpeg，非空会让每次转换 exec 一个不存在的二进制。留空。"
+  case "$(_eff XGENT_IMAGE)" in *:latest) info "XGENT_IMAGE 是 latest（可变指针）—— 本地已经有同名镜像时 compose 不会回仓库看一眼，开工前先 $0 pull；要钉住某一版就写成 :v<版本>-<sha>。";; esac
+  [ -z "$APP_IMAGE" ] && warn "APP_IMAGE 还没填 —— 你的 app-backend 不会被拉起。（门户本身照常可用；先把门户跑通本来也是对的第一步。）"
+  case "$(_eff PORTAL_BASE_URL)" in
+    ""|"http://localhost:$HTTP_PORT") ;;
+    "http://localhost") [ "$HTTP_PORT" = "80" ] || warn "PORTAL_BASE_URL 是 http://localhost 但 HTTP_PORT=$HTTP_PORT —— 浏览器侧的绝对链接会指错端口。";;
+    *) warn "PORTAL_BASE_URL（$(_eff PORTAL_BASE_URL)）与 HTTP_PORT（${HTTP_PORT}）对不上。";;
+  esac
+  if [ -n "$APP_FRONTEND_DIST" ]; then
+    [ -f "$APP_FRONTEND_DIST/index.html" ] || warn "APP_FRONTEND_DIST 下没有 index.html（${APP_FRONTEND_DIST}）—— iframe 会 404。要绝对路径、且指向构建产物目录。"
+  fi
+  return 0
+}
+
+cmd_smoke() {
+  echo "宿主侧健康探测（${BASE_URL}）"
+  local k keys="$CATALOG" tmp; tmp="$(mktemp)"
+  case ",$CATALOG," in *",$APP_KEY,"*) ;; *) [ -n "$APP_KEY" ] && keys="$CATALOG,$APP_KEY";; esac
+  _probe() { # _probe LABEL PATH
+    local code body
+    # curl 自己在失败时就打印 000；再 || echo 000 会拼成 000000
+    code="$(curl -s -m 8 -o "$tmp" -w '%{http_code}' "$BASE_URL$2" 2>/dev/null || true)"
+    code="${code:-000}"
+    body="$(head -c 160 "$tmp" 2>/dev/null || true)"
+    if [ "$code" = "200" ]; then printf '  %s✓%s %-22s %s\n' "$c_grn" "$c_off" "$1" "$body"
+    else printf '  %s✗%s %-22s HTTP %s  %s\n' "$c_red" "$c_off" "$1" "$code" "$body"; fi
+  }
+  _probe "/health" /health
+  for k in ${keys//,/ }; do
+    _is_portal_hosted "$k" && continue
+    _probe "/svc/$k/health" "/svc/$k/health"
+  done
+
+  # dev 登录入口。登录页那枚「本地开发账号」按钮由 /auth/providers 的 dev 字段驱动 ——
+  # 字段在而按钮不在，就是这版镜像的前端与 API 对不齐（换镜像，或直接走 /auth/dev/start）；
+  # 字段不在就是 DEV_MOCK_OAUTH 没生效。此前这一步只能靠读门户源码才知道（CR-4 #4）。
+  curl -s -m 8 -o "$tmp" "$BASE_URL/auth/providers" 2>/dev/null || true
+  if grep -q '"dev"' "$tmp" 2>/dev/null; then
+    printf '  %s✓%s %-22s %s\n' "$c_grn" "$c_off" "dev 登录" "登录页的「本地开发账号」按钮；按钮没出现就直接开 ${BASE_URL}/auth/dev/start"
+  else
+    printf '  %s✗%s %-22s %s\n' "$c_red" "$c_off" "dev 登录" "/auth/providers 里没有 dev —— DEV_MOCK_OAUTH 没生效（compose.env 末尾要有 NODE_ENV=development + DEV_MOCK_OAUTH=true，改完 dc up -d portal-api）"
+  fi
+  rm -f "$tmp"
+  echo
+  echo "${c_dim}404 = /svc 放行 map 没写成，或反代在写 map 之前就起了（跑 register-app，再 dc exec reverse-proxy caddy reload）${c_off}"
+  echo "${c_dim}502 = 后端容器没起/崩了/没听 8080/网络别名 <key>-server 没命中（dc logs <key>-server 或 app-backend）${c_off}"
+  echo "${c_dim}000 = 反代本身没起，或你探的端口不是 HTTP_PORT（dc ps / dc logs reverse-proxy）${c_off}"
+  return 0
+}
+
+cmd_status() {
+  cmd_env
+  echo "容器（project: ${COMPOSE_PROJECT}）"
+  dc ps || true
+  echo
+  # 「unhealthy 是假红」这句必须按【容器里实际生效的那条探针】给，不能无条件打印：旧镜像的
+  # 基础层 compose 有两条永远失败的探针 —— `curl -fsS …/health`（精简镜像没装 curl）与反代的
+  # `wget … http://127.0.0.1:80/`（站点地址是主机名时被 308 到 https://IP/，IP 不能作 SNI，
+  # 回 SSL alert 80）。新镜像两条都换掉了，那之后 unhealthy 就是真的；照旧提示「假红不用查」
+  # 会让人放过真的配置漂移（典型：只用 -f docker-compose.yml 重建了一个服务，overlay 的
+  # logging.driver 一起丢了，日志静默不再进 observability）。
+  local cid nm tst stale=""
+  for cid in $(dc ps -q 2>/dev/null || true); do
+    tst="$(docker inspect "$cid" --format '{{json .Config.Healthcheck.Test}}' 2>/dev/null || true)"
+    case "$tst" in
+      *"curl -fsS http://127.0.0.1:8080/health"*|*"wget -q -O /dev/null http://127.0.0.1:80/"*)
+        nm="$(docker inspect "$cid" --format '{{.Name}}' 2>/dev/null | sed 's#^/##')"
+        stale="$stale ${nm:-$cid}" ;;
+    esac
+  done
+  if [ -n "$stale" ]; then
+    warn "这些容器的 healthcheck 还是旧镜像里那条永远失败的探针，它们的 unhealthy 是假红（判活只看下面的探测）：$stale"
+    _note "新镜像已换成 bun / 不跟随重定向的 curl。$0 pull 后跑 $0 upgrade，再跑 $0 up；upgrade 保留配置与数据。"
+  else
+    _note "healthcheck 都是新探针 —— 这里的 unhealthy 就是真红，别当假红放过去（先看 $0 dc logs <服务>）。"
+  fi
+  echo
+  cmd_smoke
+}
+
+# --- 小工具 -------------------------------------------------------------------
+_env_set() { # _env_set KEY VALUE —— 追加到 compose.env 末尾（后定义者胜），已是同值则跳过
+  local k="$1" v="$2"
+  [ "$(_eff "$k")" = "$v" ] && return 0
+  printf '%s=%s\n' "$k" "$v" >> "$ENV_FILE" || die "无法写入 compose.env，操作中止。"
+  info "compose.env += ${k}=${v}"
+}
+_env_append_secret() {
+  printf '%s=%s\n' "$1" "$2" >> "$ENV_FILE" || die "无法写入 compose.env，操作中止。"
+  info "compose.env += ${1}=***"
+}
+_kafka_cluster_id() {
+  local value
+  value="$(openssl rand -base64 16 | tr '+/' '-_' | tr -d '=')" || return 1
+  [ "${#value}" = 22 ] || return 1
+  printf '%s' "$value"
+}
+_kafka_admin_password() {
+  local value
+  value="$(openssl rand -hex 24)" || return 1
+  [ "${#value}" = 48 ] || return 1
+  printf '%s' "$value"
+}
+_kafka_defaults() {
+  # Only absent keys are filled. An existing cluster ID/password must never rotate.
+  local value
+  if ! grep -q '^KAFKA_CLUSTER_ID=' "$ENV_FILE"; then
+    value="$(_kafka_cluster_id)" || die "无法生成 Kafka 集群 ID，升级中止。"
+    _env_set KAFKA_CLUSTER_ID "$value"
+  fi
+  if ! grep -q '^KAFKA_ADMIN_PASSWORD=' "$ENV_FILE"; then
+    value="$(_kafka_admin_password)" || die "无法生成 Kafka 管理密码，升级中止。"
+    _env_append_secret KAFKA_ADMIN_PASSWORD "$value"
+  fi
+  if ! grep -q '^KAFKA_PORT=' "$ENV_FILE"; then _env_set KAFKA_PORT "$(pick_port 9092 19092 29092)"; fi
+  chmod 600 "$ENV_FILE" || die "无法保护 compose.env 权限，升级中止。"
+}
+_kafka_assets_current() {
+  grep -qE '^  kafka:' "$HOME_DIR/docker-compose.yml" \
+    && grep -q '^KAFKA_CLUSTER_ID=' "$ENV_FILE" \
+    && grep -q '^KAFKA_ADMIN_PASSWORD=' "$ENV_FILE" \
+    && grep -q '^KAFKA_PORT=' "$ENV_FILE"
+}
+_require_kafka_assets() {
+  _kafka_assets_current || die "一盒 Kafka 资产或配置是旧版，先跑 $0 upgrade --image <新版一盒镜像>，再跑 $0 up。"
+}
+_kafka_up() {
+  local deadline cid state
+  if ! dc up -d kafka </dev/null; then
+    warn "Kafka 启动失败，门户继续；查看下方日志。"
+    dc logs --tail 50 kafka </dev/null || true
+    return 0
+  fi
+  deadline=$((SECONDS+60))
+  while [ "$SECONDS" -lt "$deadline" ]; do
+    cid="$(dc ps -q kafka </dev/null 2>/dev/null || true)"; state=''
+    [ -z "$cid" ] || state="$(docker inspect --format '{{if .State.Health}}{{.State.Health.Status}}{{end}}' "$cid" </dev/null 2>/dev/null || true)"
+    if [ "$state" = healthy ]; then info "Kafka: healthy"; return 0; fi
+    [ "$SECONDS" -ge "$deadline" ] || sleep 1
+  done
+  warn "Kafka 60s 内未健康，门户继续；依赖 Kafka 的应用需等服务恢复。"
+  dc logs --tail 50 kafka </dev/null || true
+  return 0
+}
+_ensure_kafka() { # _ensure_kafka LISTING_KEY ENV_PREFIX
+  local key="$1" prefix="$2" username password admin deadline
+  [[ "$key" =~ ^[a-z0-9][a-z0-9-]*$ ]] || return 1
+  _kafka_assets_current || return 1
+  dc up -d kafka </dev/null >/dev/null 2>&1 || return 1
+  deadline=$((SECONDS+60))
+  until dc exec -T kafka nc -z 127.0.0.1 9092 </dev/null >/dev/null 2>&1; do
+    [ "$SECONDS" -lt "$deadline" ] || return 1
+    sleep 1
+  done
+  username="app_${key//-/_}"
+  password="$(_eff "${prefix}_KAFKA_PASSWORD")"
+  if [ -z "$password" ]; then
+    password="$(_kafka_admin_password)" || return 1
+    # Persist before contacting the broker: a partial ACL failure must reuse this password.
+    _env_append_secret "${prefix}_KAFKA_PASSWORD" "$password"
+  fi
+  admin="$(_eff KAFKA_ADMIN_PASSWORD)"
+  [ -n "$admin" ] || return 1
+  case "$admin" in *$'\n'*|*$'\r'*) return 1 ;; esac
+  # Generated passwords are hex; preserve existing safe base64/url-safe passwords too.
+  [[ "$password" =~ ^[A-Za-z0-9_+/=-]+$ ]] || return 1
+  chmod 600 "$ENV_FILE" || return 1
+  # Secrets enter through stdin, never command arguments or raw CLI output. The temporary
+  # properties live only inside the broker and are removed on success, failure or signal.
+  # shellcheck disable=SC2016
+  if ! printf '%s\n%s\n' "$admin" "$password" | dc exec -T kafka bash -ec '
+    umask 077
+    IFS= read -r admin
+    IFS= read -r password
+    dir=$(mktemp -d /tmp/xgent-kafka-admin.XXXXXX)
+    trap '\''rm -rf "$dir"'\'' EXIT
+    trap '\''exit 1'\'' HUP INT TERM
+    escaped=${admin//\\/\\\\}; escaped=${escaped//\"/\\\"}
+    jaas="org.apache.kafka.common.security.plain.PlainLoginModule required username=\"admin\" password=\"$escaped\";"
+    printf "security.protocol=SASL_PLAINTEXT\nsasl.mechanism=PLAIN\nsasl.jaas.config=%s\nrequest.timeout.ms=10000\ndefault.api.timeout.ms=15000\n" "${jaas//\\/\\\\}" > "$dir/admin.properties"
+    printf "SCRAM-SHA-512=iterations=8192,password=%s\n" "$password" > "$dir/scram.properties"
+    /opt/kafka/bin/kafka-configs.sh --bootstrap-server kafka:9092 --command-config "$dir/admin.properties" --alter --add-config-file "$dir/scram.properties" --entity-type users --entity-name "$1"
+    acl=(--bootstrap-server kafka:9092 --command-config "$dir/admin.properties" --add --allow-principal "User:$1" --allow-host "*" --resource-pattern-type prefixed)
+    /opt/kafka/bin/kafka-acls.sh "${acl[@]}" --topic "$2" --operation Create --operation Delete --operation Describe --operation DescribeConfigs --operation Read --operation Write
+    /opt/kafka/bin/kafka-acls.sh "${acl[@]}" --group "$2" --operation Read --operation Describe --operation Delete
+    /opt/kafka/bin/kafka-acls.sh "${acl[@]}" --transactional-id "$2" --operation Write --operation Describe
+  ' bash "$username" "app.${key}." >/dev/null 2>&1; then return 1; fi
+  _env_set "${prefix}_KAFKA_BROKERS" kafka:9092
+  _env_set "${prefix}_KAFKA_USERNAME" "$username"
+  _env_set "${prefix}_KAFKA_SASL_MECHANISM" SCRAM-SHA-512
+  _env_set "${prefix}_KAFKA_TOPIC_PREFIX" "app.${key}."
+  info "Kafka 用户 ${username} 与前缀 app.${key}. 就绪"
+}
+_kafka_add_warning() {
+  warn "Kafka 供给失败；门户与应用初始化继续。已保存的密码保持不变，检查 Kafka 日志后重试："
+  printf '  XGENT_ONEBOX_HOME=%q bash %q add %q' "$HOME_DIR" "$0" "$1"
+  [ -z "${ADD_MANIFEST:-}" ] || printf ' --manifest %q' "$ADD_MANIFEST"
+  [ -z "${ADD_FROM:-}" ] || printf ' --from %q' "$ADD_FROM"
+  printf '\n'
+  _note "手工修复命令见《平台 Kafka 接入指引》的一盒故障恢复；不要把管理员密码填进 App requiredEnv。"
+}
+_portal_services_up() {
+  # Kafka has its own non-blocking startup; do not retry it in the hard-fail group.
+  local enabled svc services=()
+  enabled="$(dc config --services)" || die "无法读取一盒服务清单。"
+  while IFS= read -r svc; do
+    [ -z "$svc" ] || [ "$svc" = kafka ] || services+=("$svc")
+  done <<< "$enabled"
+  [ "${#services[@]}" -gt 0 ] || die "一盒服务清单为空。"
+  dc up -d "${services[@]}"
+}
+_svc_running() { [ -n "$(dc ps -q "$1" 2>/dev/null || true)" ]; }
+# v1 的放行表只在 Caddy load 时读取；v2 由唯一发布器生成、验证并应用整代配置。
+# 必须先询问镜像的受管 selector；模式损坏时不能按旧镜像降级，更不能重读兼容模板。
+_reload_proxy() {
+  _svc_running reverse-proxy || return 0
+  local selected out
+  if ! selected="$(dc exec -T reverse-proxy sh -c '
+    selector=/usr/local/libexec/xgent-gateway-config
+    if [ -e "$selector" ] || [ -L "$selector" ]; then
+      [ -f "$selector" ] && [ -x "$selector" ] || exit 1
+      exec "$selector"
+    fi
+    # 旧镜像只有完全没有受管状态时才允许兼容 reload。
+    for path in /etc/caddy/sites/gateway-v2.enabled /etc/caddy/sites/current /etc/caddy/gateway-operation.conf; do
+      if [ -e "$path" ] || [ -L "$path" ]; then exit 1; fi
+    done
+    printf "/etc/caddy/Caddyfile\n"
+  ' 2>/dev/null)"; then
+    die "无法确认反代模式；已停止 reload。请检查受管模式与 current 快照，再按网关维护文档恢复。"
+  fi
+  case "$selected" in
+    /etc/caddy/Caddyfile) ;;
+    /*/current/Caddyfile)
+      info "   反代为 v2，路由变更由唯一发布器应用；请查看发布状态确认结果"
+      return 0 ;;
+    *) die "反代模式返回无效；已停止 reload，不会回退到兼容模板。" ;;
+  esac
+  if out="$(dc exec -T reverse-proxy caddy reload --config /etc/caddy/Caddyfile --adapter caddyfile 2>&1)"; then
+    info "   反代已重读 /svc 放行表"
+  else
+    warn "反代重读失败，/svc 仍是改动前那份：$(printf '%s' "$out" | tail -2 | tr '\n' ' ')"
+  fi
+}
+_ok()   { printf '  %s✓%s %s\n' "$c_grn" "$c_off" "$*"; }
+_bad()  { printf '  %s✗%s %s\n' "$c_red" "$c_off" "$1"; shift; [ $# -gt 0 ] && printf '      %s↳ %s%s\n' "$c_dim" "$*" "$c_off"; DOCTOR_BAD=$((DOCTOR_BAD+1)); return 0; }
+_note() { printf '      %s↳ %s%s\n' "$c_dim" "$*" "$c_off"; }
+
+# --- up：按顺序铺一遍（幂等）---------------------------------------------------
+_objectstore_assets_current() {
+  grep -qE '^  rustfs:' "$HOME_DIR/docker-compose.yml" \
+    && [ -f "$HOME_DIR/scripts/objectstore-cutover.sh" ] \
+    && [ -f "$HOME_DIR/scripts/objectstore-manifest.ts" ]
+}
+_require_objectstore_assets() {
+  _objectstore_assets_current || die "一盒资产是旧版，先跑 $0 upgrade --image <新版一盒镜像>，再跑 $0 up。"
+}
+_objectstore_image() {
+  local image
+  image="$(dc config --images rustfs)" || die "无法读取 RustFS 镜像配置；旧对象存储未切换。"
+  [ -n "$image" ] || die "Compose 配置里没有 RustFS 镜像；旧对象存储未切换。"
+  docker image inspect "$image" >/dev/null 2>&1 && return 0
+  dc pull rustfs </dev/null || die "RustFS 镜像尚未就位；拉取失败，旧对象存储未切换。修复镜像拉取后重跑。"
+}
+
+# An asset upgrade must not upgrade/downgrade an existing PostgreSQL data directory.
+# Inspect only this project's real mount, then read it through a read-only container.
+_postgres_volume() {
+  local project ids cid volume volumes configured
+  project="$(_eff COMPOSE_PROJECT_NAME xgent-onebox)"
+  ids="$(docker ps -aq --filter "label=com.docker.compose.project=$project" --filter label=com.docker.compose.service=postgres)" \
+    || die "无法检查本项目 PostgreSQL 容器；未启动服务。"
+  if [ -n "$ids" ]; then
+    [ "$(printf '%s\n' "$ids" | wc -l | tr -d ' ')" = 1 ] || die "本项目有多个 PostgreSQL 容器，无法确定权威数据卷；请人工确认，勿删卷。"
+    cid="$ids"
+    volume="$(docker inspect "$cid" --format '{{range .Mounts}}{{if eq .Type "volume"}}{{if or (eq .Destination "/var/lib/postgresql") (eq .Destination "/var/lib/postgresql/data")}}{{println .Name}}{{end}}{{end}}{{end}}')" \
+      || die "无法读取 PostgreSQL 挂载，勿删卷。"
+    [ -n "$volume" ] && [ "$(printf '%s\n' "$volume" | wc -l | tr -d ' ')" = 1 ] \
+      || die "PostgreSQL 挂载不是唯一命名卷；请人工确认，勿删卷。"
+  else
+    volume="$(docker volume ls --filter "label=com.docker.compose.project=$project" --filter label=com.docker.compose.volume=pg-data --format '{{.Name}}')" \
+      || die "无法查询 PostgreSQL 数据卷；未启动服务。"
+    if [ -n "$volume" ]; then
+      [ "$(printf '%s\n' "$volume" | wc -l | tr -d ' ')" = 1 ] || die "本项目有多个 pg-data 卷，拒绝自动选择。"
+    else
+      configured="$(awk '
+        /^volumes:/{volumes=1; next}
+        volumes && /^  pg-data:/{pg=1; next}
+        volumes && /^  [A-Za-z0-9_-]+:/{pg=0}
+        pg && /^    name:/{sub(/^    name:[[:space:]]*/, ""); print}
+      ' "$HOME_DIR/docker-compose.yml" | sed "s/^[\"']//; s/[\"']$//")"
+      volume="${configured:-${project}_pg-data}"
+      [[ "$volume" =~ ^[A-Za-z0-9][A-Za-z0-9_.-]*$ ]] || die "pg-data 自定义卷名无法确定；请人工确认，勿删卷。"
+      volumes="$(docker volume ls --format '{{.Name}}')" || die "无法查询 Docker 数据卷；未启动服务。"
+      printf '%s\n' "$volumes" | grep -qxF "$volume" || return 0
+    fi
+  fi
+  printf '%s' "$volume"
+}
+_pin_postgres() {
+  local volume state major layout file next
+  if [ $# -gt 0 ]; then volume="$1"
+  else volume="$(_postgres_volume)" || die "无法确认 PostgreSQL 数据卷；未启动服务。"; fi
+  [ -n "$volume" ] || return 0
+  state="$(docker run --rm --network none -u 0 --entrypoint sh -v "$volume:/probe:ro" rustfs/rustfs:1.0.0 -c '
+    set -eu
+    count=0
+    for f in /probe/PG_VERSION /probe/[0-9]*/docker/PG_VERSION; do
+      [ -f "$f" ] || continue
+      count=$((count+1)); major=$(cat "$f")
+      if [ "$f" = /probe/PG_VERSION ]; then layout=legacy
+      elif [ "$f" = "/probe/$major/docker/PG_VERSION" ]; then layout=parent
+      else echo unknown; exit 1; fi
+      printf "%s %s\n" "$major" "$layout"
+    done
+    if [ "$count" = 0 ]; then
+      if [ -z "$(ls -A /probe)" ]; then echo empty; else echo unknown; fi
+    fi
+  ' </dev/null)" || die "PostgreSQL 只读卷检查失败；未启动服务，勿删卷。"
+  [ "$state" = empty ] && return 0
+  [ "$(printf '%s\n' "$state" | wc -l | tr -d ' ')" = 1 ] \
+    || die "PostgreSQL 卷内有多个版本目录，拒绝自动选择；勿删卷。"
+  major="${state%% *}"; layout="${state#* }"
+  [[ "$major" =~ ^[1-9][0-9]$ ]] || die "PostgreSQL 卷布局或版本未知；拒绝启动，勿删卷。"
+  if [ "$layout" = legacy ] && [ "$major" -lt 18 ]; then
+    layout=/var/lib/postgresql/data
+  elif [ "$layout" = parent ] && [ "$major" -ge 18 ]; then
+    layout=/var/lib/postgresql
+  else
+    die "PostgreSQL 版本与目录布局不一致；拒绝启动，勿删卷。"
+  fi
+  file="$HOME_DIR/docker-compose.yml"; next="$(mktemp "$HOME_DIR/.postgres-compose.XXXXXX")"
+  if ! awk -v major="$major" -v mount="$layout" -v volume="$volume" '
+    /^  postgres:/{svc=1; print; next}
+    svc && /^  [A-Za-z0-9_-]+:/{svc=0}
+    /^volumes:/{svc=0; volumes=1}
+    svc && /^    image:/{print "    image: postgres:" major "-alpine"; images++; next}
+    svc && /^[[:space:]]*- pg-data:\/var\/lib\/postgresql(\/data)?[[:space:]]*$/{print "      - pg-data:" mount; mounts++; next}
+    volumes && /^  pg-data:/{print "  pg-data:"; print "    name: " volume; named=1; names++; next}
+    volumes && /^  [A-Za-z0-9_-]+:/{named=0}
+    named && /^    name:/{next}
+    {print}
+    END{if(images!=1 || mounts!=1 || names!=1)exit 1}
+  ' "$file" > "$next"; then
+    rm -f "$next"; die "PostgreSQL compose 布局不符合预期，未覆盖文件；请人工确认，勿删卷。"
+  fi
+  # 运行中的 portal-api / controller 按 inode 单文件挂载它；内容没变就不换文件，免得它们读到已删除的旧文件。
+  if cmp -s "$next" "$file"; then rm -f "$next"
+  else mv "$next" "$file" || { rm -f "$next"; die "无法保存 PostgreSQL 版本保护；未启动服务。"; }; fi
+  info "PostgreSQL 存量卷保持 PG${major} 与 ${layout} 挂载；大版本迁移需另行安排。"
+}
+
+_objectstore_up() {
+  _require_objectstore_assets
+  _objectstore_image
+  local code deadline
+  if "$HOME_DIR/scripts/objectstore-cutover.sh" \
+    --project "$(_eff COMPOSE_PROJECT_NAME xgent-onebox)" --env-file "$ENV_FILE" \
+    --backup-dir "$HOME_DIR/backup" </dev/null; then
+    :
+  else
+    code=$?
+    die "对象存储切换中止（退出 ${code}）；按上方提示处理，未启动正式 RustFS。"
+  fi
+  dc up -d rustfs </dev/null || die "RustFS 启动失败；已过提交点，rustfs-data 是权威，勿删。看 $0 dc logs rustfs；回退只执行 $HOME_DIR/backup/rollback-minio.sh。"
+  deadline=$((SECONDS+60))
+  while [ "$SECONDS" -lt "$deadline" ]; do
+    if dc exec -T rustfs curl -fsS --max-time 1 http://127.0.0.1:9000/health </dev/null >/dev/null 2>&1; then return 0; fi
+    [ "$SECONDS" -ge "$deadline" ] || sleep 1
+  done
+  die "RustFS 60s 未就绪；已过提交点，rustfs-data 是权威，勿删。看 $0 dc logs rustfs；回退只执行 $HOME_DIR/backup/rollback-minio.sh。"
+}
+
+cmd_up() {
+  _require_objectstore_assets
+  _require_kafka_assets
+  [ -n "$APP_KEY" ] || die "compose.env 里还没有 APP_KEY —— 先跑 $0 init --key <你的listingKey>。"
+  info "① 基础设施（postgres / redis / RustFS / Kafka）"
+  _objectstore_image
+  _pin_postgres
+  _objectstore_up
+  dc up -d postgres redis
+  _kafka_up
+  info "   等 postgres 就绪…"
+  # 首次初始化时 initdb 会先起一个临时实例再重启，单次 pg_isready 会在那个窗口里误判就绪，
+  # 紧接着的 db:migrate 就撞 ECONNREFUSED（实测）。要求连续 3 秒都就绪才算。
+  local i=0 okc=0; until [ "$okc" -ge 3 ]; do
+    if dc exec -T postgres pg_isready -U postgres >/dev/null 2>&1; then okc=$((okc+1)); else okc=0; fi
+    i=$((i+1)); [ "$i" -gt 90 ] && die "postgres 90s 还没就绪，看 $0 dc logs postgres"
+    sleep 1
+  done
+  info "② 门户库 + 目录里各服务自己的库（迁移）"
+  dc run --rm portal-api bun run db:migrate
+  # ⚠️ 必须在种子之前：种子要替 deploy-controller（一盒里它启动即拒）跑各 App 的
+  #    逐租户基线（org 的预置档案字段就是这么来的），表还没建就只能眼看着它失败。
+  local k
+  for k in ${CATALOG//,/ }; do
+    case "$k" in files|llm-gateway|git|org) dc run --rm portal-api bun run "db:$k:migrate" || warn "db:$k:migrate 失败，继续";; esac
+  done
+  info "②b 你自己的库 xgent-${APP_KEY}"
+  _ensure_db "xgent-${APP_KEY}"
+  info "③ 一盒种子（★ 破坏性：truncate cascade）"
+  dc run --rm portal-api bun run db:seed:onebox
+  if [ -n "${ONEBOX_MANIFEST:-}" ] || [ -f "app.manifest.json" ]; then
+    local mf="${ONEBOX_MANIFEST:-app.manifest.json}"
+    info "④ 注册你的 App（${mf}）"
+    dc run --rm -v "$(cd "$(dirname "$mf")" && pwd):/devkit:ro" portal-api bun run register-app "/devkit/$(basename "$mf")" \
+      || warn "register-app 失败 —— 看上面的报错；改完重跑 $0 up 即可（幂等）"
+  else
+    warn "④ 跳过 register-app：当前目录没有 app.manifest.json。有的话设 ONEBOX_MANIFEST=<路径> 再跑一次 $0 up。"
+  fi
+  # ④b 目录里的清单型 App（如 observability 日志与监控）：按 add 的流程拉镜像 → 注册 → 建库 →
+  #     migrate → 生成片段。非破坏性、幂等；失败只告警，不挡门户三件套。
+  local mk
+  for mk in ${CATALOG//,/ }; do
+    _is_manifest_app "$mk" || continue
+    info "④b 目录里的清单型 App：${mk}"
+    ADD_QUIET=1 cmd_add "$mk" || warn "add ${mk} 失败 —— 看上面的报错；修完重跑 $0 up（幂等）"
+  done
+  info "⑤ 起门户三件套 + 基础服务" ; _portal_services_up
+  _reload_proxy
+  _has_catalog observability && _portal_logs_up
+  echo; info "跑一次体检："; cmd_doctor
+}
+
+# 门户自身控制台日志 → 日志与监控（采集段在 onebox/docker-compose.onebox.yml 内，
+# portal-logs 服务挂 onebox-logs profile，这里签密钥后【显式】起）：
+# 用 portal-self 签一把只带 observability.ingest 的 xsak_ 写进 compose.env，再起 portal-logs。
+# 前提（observability 已注册 + 已登记为平台基础服务应用 + portal-self 在）由 portal-logs-key.ts 判，
+# 不成立 ⇒ 退出码 3 ⇒ 这里只告警。密钥只签一次：已有 OBS_ACCESS_KEY 就不动。
+_portal_logs_up() {
+  info "⑥ 门户控制台日志采集（portal-api → portal-logs → observability）"
+  if [ -z "$(_eff OBS_ACCESS_KEY)" ]; then
+    local sec rc=0 err; err="$(mktemp)"
+    # 容器的 workdir 是 /app（monorepo 根），脚本在 apps/api 下；不走 package script 是因为它带 --env-file=../../.env，镜像里没有那份文件。
+    sec="$(dc run --rm --no-deps -T -w /app/apps/api portal-api bun run scripts/portal-logs-key.ts 2>"$err")" || rc=$?
+    if [ "$rc" -eq 0 ] && [ -n "$sec" ]; then
+      _env_append_secret OBS_ACCESS_KEY "$sec"
+    else
+      warn "采集密钥没签成（rc=${rc}）：$(grep -v xsak_ "$err" | tail -3 | tr '\n' ' ')"; rm -f "$err"; return 0
+    fi
+    rm -f "$err"
+  fi
+  dc up -d portal-logs portal-api
+  _ok "portal-logs 已起；portal-api 的 stdout/stderr 经 fluentd 驱动进 app_portal_console（观测：$0 dc logs portal-logs）"
+}
+
+# 使用 RustFS 自带 curl 与容器内凭据建桶；不依赖已停止分发的 mc。
+_ensure_bucket() { # _ensure_bucket <bucket>
+  local bucket="$1"
+  [[ "$bucket" =~ ^[a-z0-9][a-z0-9.-]{1,61}[a-z0-9]$ ]] || die "对象存储桶名不合法。"
+  _objectstore_up
+  # Credentials and bucket positional argument expand in the container shell.
+  # shellcheck disable=SC2016
+  if dc exec -T rustfs sh -c 'exec curl -fsS --max-time 10 --retry 10 --retry-delay 1 --retry-all-errors \
+    --aws-sigv4 "aws:amz:us-east-1:s3" --user "$RUSTFS_ACCESS_KEY:$RUSTFS_SECRET_KEY" \
+    -X PUT "http://127.0.0.1:9000/$1"' sh "$bucket" </dev/null >/dev/null; then
+    info "桶 ${bucket} 就绪"
+  else die "桶 ${bucket} 没建成；检查 $0 dc logs rustfs，修复后重跑原命令。"; fi
+}
+_ensure_db() { # _ensure_db <dbname>
+  if dc exec -T postgres psql -U postgres -lqt 2>/dev/null | cut -d'|' -f1 | grep -qw "$1"; then
+    info "   库 $1 已存在"
+  else
+    dc exec -T postgres psql -U postgres -c "CREATE DATABASE \"$1\"" >/dev/null && info "   建库 $1"
+  fi
+}
+
+# --- add：把一个平台侧 App 拉进来陪调 ------------------------------------------
+# 关键设计：compose 片段【从 manifest 生成】，不是每个 App 在 skill 里写一份 YAML —— 那样
+# 每接一个新 App 就得改一次 skill，等于把问题搬了个地方。manifest 里已经有全部所需：
+#   deployDescriptor.image → 镜像（相对名按 <REGISTRY>/<ONEBOX_PROJECT>/ 补全，版本由清单钉住）
+#   deployDescriptor.port  → 容器内端口        listingKey → 网络别名 <key>-server + 库名 xgent-<key>
+#   serviceAccount.clientId→ 自省身份          type       → micro 要不要前端
+# 密钥【不从 manifest 来】：一盒现生成一个，同时写进本地门户 DB 与容器 env。所以清单里
+# 有没有明文密钥都无所谓（release 提交的那份本来就被 prod 模式拒收）。
+#
+# 少数 App 有 manifest 描述不了的自带 infra（knowledge 要一个 Chroma 边车）。那种情况下
+# skill 的 services/<key>.extra.yml 补一层——只有例外才需要文件，不是每个 App 都要。
+_manifest_json() { # _manifest_json KEY  → 把 manifest JSON 打到 stdout
+  local key="$1"
+  if [ -n "${ADD_MANIFEST:-}" ]; then cat "$ADD_MANIFEST"; return; fi
+  if [ -n "${ADD_FROM:-}" ]; then
+    # ⚠️ 门户【所有】200 都是信封 {ok,data} —— manifest 在 data.manifest，不在响应根。
+    #    把响应体直接当 manifest 解，症状是「字段全 undefined」而不是「解析失败」，更难查。
+    # 头必须走数组：`${X:+-H "a: b"}` 不加引号会按空白拆成四个参数（连引号一起）。
+    local http body; local -a hdr=()
+    if [ -n "${MANIFEST_STORE_READ_TOKEN:-}" ]; then hdr=(-H "Authorization: Bearer ${MANIFEST_STORE_READ_TOKEN}"); fi
+    # 刻意不加 -f：4xx 的响应体正是要读的那一份（业务失败走 200 + 错误体，闸走 4xx）。
+    body="$(curl -sS -m 20 -w $'\n%{http_code}' ${hdr[@]+"${hdr[@]}"} \
+      "${ADD_FROM%/}/api/market/catalog/${key}" 2>/dev/null)" \
+      || die "连不上 ${ADD_FROM} —— 检查地址与网络，或用 --manifest <本地文件> 顶上。"
+    http="${body##*$'\n'}"; body="${body%$'\n'*}"
+    case "$http" in
+      404) die "${ADD_FROM} 没有目录接口（那个门户没开目录能力，或地址不对）。出路：--manifest <本地文件>，或不带 --from 用镜像自带的样例清单。" ;;
+      401) die "目录读取令牌无效或已失效 —— 在 .xgent-registry.env 里更新 MANIFEST_STORE_READ_TOKEN（找门户团队要新的）。" ;;
+      200) ;;
+      *)   die "目录返回 HTTP ${http}。出路：--manifest <本地文件>，或不带 --from 用镜像自带的样例清单。" ;;
+    esac
+    # data:null = 目录里还没有这个 key；ok:false = 业务失败。
+    # 出错信息走【stdout】：`dc run` 的 stderr 混着 compose 自己的噪音，捞不干净。
+    local mout rc
+    mout="$(printf '%s' "$body" | dc run --rm --no-deps -T portal-api bun -e '
+      let raw=""; for await (const c of Bun.stdin.stream()) raw += new TextDecoder().decode(c);
+      let r; try { r = JSON.parse(raw); } catch { console.log("目录返回的不是 JSON"); process.exit(3); }
+      if (r?.ok === false) { console.log(r?.error?.message ?? "目录拒绝了这次请求"); process.exit(4); }
+      if (r?.data == null) process.exit(5);
+      if (!r?.data?.manifest) { console.log("目录条目里没有 manifest 字段"); process.exit(3); }
+      console.log(JSON.stringify(r.data.manifest));
+    ' 2>/dev/null)"; rc=$?
+    local outs="出路：--manifest <本地文件>，或不带 --from 用镜像自带的样例清单。"
+    case "$rc" in
+      0) printf '%s' "$mout"; return ;;
+      5) die "目录里还没有 ${key}（那个 App 还没发过版？）。${outs}" ;;
+      4) die "目录拒绝了这次请求：${mout}。${outs}" ;;
+      *) die "读取目录条目失败：${mout:-未知错误}。${outs}" ;;
+    esac
+  fi
+  # 默认：一盒镜像自带的那批样例清单
+  dc run --rm --no-deps -T portal-api cat "/app/deploy/app-devkit/manifests/${key}.manifest.json" 2>/dev/null \
+    || die "这版一盒镜像里没有 ${key} 的清单。三条出路：① ${0} pull 换新镜像；② --manifest <你手上那份 app.manifest.json>；③ --from <在线门户地址> 从平台目录拉。"
+}
+
+cmd_add() {
+  _require_objectstore_assets
+  _objectstore_image
+  _pin_postgres
+  local key="" want_image=""
+  ADD_MANIFEST=""; ADD_FROM=""
+  while [ $# -gt 0 ]; do
+    case "$1" in
+      --image)    want_image="${2:-}"; shift 2 ;;
+      --manifest) ADD_MANIFEST="${2:-}"; shift 2 ;;
+      --from)     ADD_FROM="${2:-}"; shift 2 ;;
+      -*) die "未知参数 $1（支持 --image <ref> / --manifest <文件> / --from <门户地址>）" ;;
+      *) key="$1"; shift ;;
+    esac
+  done
+  [ -n "$key" ] || die "用法：${0} add <key> [--image <ref>] [--manifest <文件>] [--from <门户地址>]"
+  # 清单来源优先级：--manifest <文件> > --from / MANIFEST_STORE > 镜像自带样例。
+  # 配了 MANIFEST_STORE 就不必每次敲 --from（地址与只读令牌都在 .xgent-registry.env 里）。
+  load_registry_config || true
+  [ -n "${ADD_FROM:-}" ] || ADD_FROM="${MANIFEST_STORE:-}"
+
+  info "① 取清单"
+  local mj; mj="$(_manifest_json "$key")"
+  [ -n "$mj" ] || die "清单是空的。"
+
+  # 用 portal-api 里的 bun 解析（不对宿主机的 python/jq 做任何假设）
+  local fields
+  # JavaScript template expressions must reach Bun without shell expansion.
+  # shellcheck disable=SC2016
+  fields="$(printf '%s' "$mj" | dc run --rm --no-deps -T portal-api bun -e '
+    let raw=""; for await (const c of Bun.stdin.stream()) raw += new TextDecoder().decode(c);
+    const m = JSON.parse(raw); const d = m.deployDescriptor ?? {};
+    const q = (v) => String(v ?? "").replace(/\n/g, " ");
+    console.log(`M_KEY=${q(m.listingKey)}`);
+    console.log(`M_TYPE=${q(m.type)}`);
+    console.log(`M_IMAGE=${q(d.image)}`);
+    console.log(`M_PORT=${q(d.port ?? 8080)}`);
+    console.log(`M_HEALTH=${q(d.healthPath ?? "/health")}`);
+    console.log(`M_SA=${q((m.serviceAccount ?? {}).clientId)}`);
+    console.log(`M_ENV=${(m.requiredEnv ?? []).map((e) => (typeof e === "string" ? e : e.key)).join(" ")}`);
+    const generated = (m.requiredEnv ?? []).filter((e) => typeof e === "object" && e !== null && e.generate !== undefined);
+    for (const e of generated) {
+      const g = e.generate;
+      if (!/^[A-Z][A-Z0-9_]*$/.test(e.key) || (e.renamedFrom != null && !/^[A-Z][A-Z0-9_]*$/.test(e.renamedFrom)) ||
+          !g || typeof g !== "object" || Array.isArray(g) || Object.keys(g).some((k) => k !== "bytes" && k !== "encoding") ||
+          !Number.isInteger(g.bytes) || g.bytes < 16 || g.bytes > 64 || !["base64", "hex"].includes(g.encoding)) {
+        throw new Error(`requiredEnv ${e.key}: invalid generate declaration`);
+      }
+    }
+    console.log(`M_GEN=${generated.map((e) => `${e.key}:${e.generate.encoding}:${e.generate.bytes}:${e.renamedFrom ?? ""}`).join(" ")}`);
+    console.log(`M_KAFKA=${(m.requiredServices ?? []).some((s) => s.kind === "kafka") ? "1" : "0"}`);
+    // 非空 ⇒ 它是跨应用交换的【发起方】，需要一把 App Secret（下面与 SA 密钥同源生成注入）。
+    console.log(`M_XTARGETS=${(m.exchangeTargets ?? []).join(" ")}`);
+    console.log(`M_MIGRATE=${(d.migrateArgs ?? []).join(" ")}`);
+    console.log(`M_DEPS=${(m.dependencies ?? []).join(" ")}`);
+  ' 2>/dev/null)" || die "解析清单失败 —— 它可能不是一份合法的 app.manifest.json。"
+  local M_KEY="" M_TYPE="" M_IMAGE="" M_PORT="" M_HEALTH="" M_SA="" M_ENV="" M_GEN="" M_KAFKA="" M_XTARGETS="" M_MIGRATE="" M_DEPS=""
+  eval "$(printf '%s' "$fields" | sed 's/^\([A-Z_]*\)=\(.*\)$/\1="\2"/')"
+  [ "$M_KEY" = "$key" ] || die "清单里的 listingKey 是「${M_KEY}」，与你要加的「${key}」对不上。"
+  info "   ${M_KEY}  type=${M_TYPE}  port=${M_PORT}  sa=${M_SA}"
+
+  # 依赖预检：register-app 要求 dependencies 里每个 key 在【这台门户】已有清单，否则
+  # DEPENDENCY_UNAVAILABLE —— 而且只报第一个、带一屏堆栈。拉镜像之前一次点名全部缺的。
+  # 只卡「有没有清单」：装不装由「应用管理 → 应用市场」安装时按依赖一并装上，不归这里。
+  if [ -n "$M_DEPS" ]; then
+    dc up -d postgres >/dev/null 2>&1 || true
+    local rows dep dmiss=""
+    if rows="$(dc exec -T postgres psql -U postgres -d "$(_eff POSTGRES_DB xgent-portal)" -tAc 'select listing_key from marketplace_listings' 2>/dev/null)"; then
+      rows=" $(printf '%s' "$rows" | tr -d '\r' | tr '\n' ' ') "
+      for dep in $M_DEPS; do
+        _is_portal_hosted "$dep" && continue
+        case "$rows" in *" $dep "*) ;; *) dmiss="${dmiss:+$dmiss }$dep" ;; esac
+      done
+    else
+      warn "读不到本地门户的清单表（postgres 还没就绪或还没 migrate），跳过依赖预检，交给 register-app 判。"
+    fi
+    [ -z "$dmiss" ] || die "「${key}」依赖 ${dmiss}，这台一盒里还没有它们的清单 —— 直接注册会被拒（DEPENDENCY_UNAVAILABLE）。
+先逐个 ${0} add <依赖>（配了 MANIFEST_STORE 就从目录取清单；镜像在 <REGISTRY>/<ONEBOX_PROJECT>/ 下，清单没写 deployDescriptor.image 时加 --image <全引用>），再重跑 ${0} add ${key}。
+之后在「应用管理 → 应用市场」里安装 ${key}，依赖会被一并装上、自动授予。"
+  fi
+
+  # ② 镜像：清单里的相对名按 <REGISTRY>/<ONEBOX_PROJECT>/ 补全（版本由清单钉住，可复现）
+  local ivar ref; ivar="$(printf '%s' "$key" | tr 'a-z-' 'A-Z_')_IMAGE"
+  ref="${want_image:-$(_eff "$ivar")}"
+  if [ -z "$ref" ]; then
+    [ -n "$M_IMAGE" ] || die "清单里没有 deployDescriptor.image，也没给 --image。
+陪调用的平台侧 App 镜像在 ${REGISTRY:-<REGISTRY>}/${ONEBOX_PROJECT:-${PROJECT:-<ONEBOX_PROJECT>}}/${key}:<tag> 下 —— 用 --image 给全引用（tag 找门户团队确认），并请该 App 在清单里补上 deployDescriptor.image。"
+    case "$M_IMAGE" in
+      */*) ref="$M_IMAGE" ;;                       # 已经带项目/域名，原样用
+      *) load_registry_config || true
+         [ -n "${REGISTRY:-}" ] || die "还没配拉取凭证 —— 先按 SKILL.md §0 放一份 .xgent-registry.env。"
+         ref="${REGISTRY}/${ONEBOX_PROJECT:-${PROJECT:-}}/${M_IMAGE}" ;;
+    esac
+  fi
+  info "② 镜像 ${ref}"
+  if docker image inspect "$ref" >/dev/null 2>&1; then info "   本地已有，跳过拉取"
+  else
+    require_puller; registry_login
+    # 只发了 amd64 的镜像（buildx 默认带 attestation，推上去是个 index）在 Apple Silicon 上裸 pull
+    # 报 no matching manifest。本机没指定平台、裸 pull 又失败时，看它有没有 amd64 那一份：有就按
+    # amd64 拉（走仿真），并把 <PREFIX>_PLATFORM 记进 compose.env —— 生成片段的 platform: 读它。
+    # 其它失败原因（项目 / tag 不对、没权限）由 do_pull 原样报。
+    local pvar plat; pvar="${ivar%_IMAGE}_PLATFORM"; plat="$(_eff "$pvar" "$(_eff APP_PLATFORM)")"
+    [ -n "$plat" ] || info "拉 ${ref} …"
+    if [ -n "$plat" ] || ! docker pull "$ref" >/dev/null 2>&1; then
+      if [ -z "$plat" ] && docker manifest inspect "$ref" 2>/dev/null | grep -Eq '"architecture": *"amd64"'; then
+        plat="linux/amd64"; warn "${ref} 没有本机架构的版本，改按 ${plat} 拉（仿真运行，冷启动慢）"
+        _env_set "$pvar" "$plat"
+      fi
+      do_pull "$ref" "配合调试用的 App 都发在一盒同一个项目（ONEBOX_PROJECT=${ONEBOX_PROJECT:-未配}）下；确实不在就用 --image 给全引用。" "$plat"
+    fi
+  fi
+  _env_set "$ivar" "$ref"
+
+  # ③ 密钥：一盒现生成，两侧同源（清单里有没有明文都不影响）
+  local svar sec; svar="$(printf '%s' "$key" | tr 'a-z-' 'A-Z_')_SA_SECRET"
+  sec="$(_eff "$svar")"; [ -n "$sec" ] || { sec="$(rand_hex | cut -c1-32)"; _env_append_secret "$svar" "$sec"; }
+  # 声明了 exchangeTargets 的 App 是跨应用交换的【发起方】，它在 /oauth/token 上用
+  # `sk_<key>` + App Secret 换对方的令牌。目录里的清单按红线剥掉了 exchangeInitiatorSecret，
+  # 而 register-app 的 dev 模式只在【清单里有这个字段】时才 wireInitiatorSecret ——
+  # 不补这一把，该 App 的跨应用交换会稳定 401，且症状出现在「发起方」而不是这里。
+  local avar asec=""; avar="$(printf '%s' "$key" | tr 'a-z-' 'A-Z_')_APP_SECRET"
+  if [ -n "$M_XTARGETS" ]; then
+    asec="$(_eff "$avar")"; [ -n "$asec" ] || { asec="$(rand_hex | cut -c1-32)"; _env_append_secret "$avar" "$asec"; }
+  fi
+  local spec gkey encoding bytes old value
+  for spec in $M_GEN; do
+    IFS=: read -r gkey encoding bytes old <<< "$spec"
+    [ -n "$(_eff "$gkey")" ] && continue
+    if [ -n "$old" ] && [ -n "$(_eff "$old")" ]; then
+      warn "${gkey} 沿用 compose.env 中的旧键 ${old}；不生成新主键，应用须兼容消费旧名。"
+      continue
+    fi
+    case "$encoding" in
+      base64) value="$(openssl rand -base64 "$bytes" | tr -d '\n')" || die "无法生成 ${gkey}，操作中止。" ;;
+      hex) value="$(openssl rand -hex "$bytes")" || die "无法生成 ${gkey}，操作中止。" ;;
+    esac
+    [ -n "$value" ] || die "生成 ${gkey} 得到空值，操作中止。"
+    _env_append_secret "$gkey" "$value"
+  done
+
+  info "④ 注册清单（非破坏性、幂等）"
+  # register-app 不带 --prod 是 dev 模式，而 dev 模式【强制要求】serviceAccount.secret；
+  # 目录里的清单按红线只留 clientId。把③那把注进去 —— 于是门户库里那把与容器 env 里那把
+  # 才真的是同一把（这一条对镜像自带样例同样生效：它们自带的明文 dev secret 与容器 env
+  # 里那把本来就不是同一把，只是没人验过自省）。临时文件用完即删。
+  # 两把密钥走 stdin 的前两行，不走 `-e`：命令行参数同机 `ps` 可见。
+  printf '%s\n%s\n%s' "$sec" "$asec" "$mj" | dc run --rm --no-deps -T portal-api bun -e '
+    let raw=""; for await (const c of Bun.stdin.stream()) raw += new TextDecoder().decode(c);
+    const a = raw.indexOf("\n"); const b = raw.indexOf("\n", a + 1);
+    const secret = raw.slice(0, a);
+    const appSecret = raw.slice(a + 1, b);
+    const m = JSON.parse(raw.slice(b + 1));
+    m.serviceAccount = { ...(m.serviceAccount ?? {}), secret };
+    // 空 = 这个 App 不是交换发起方；写进去反而会让 register-app 白跑一次 wire。
+    if (appSecret) m.exchangeInitiatorSecret = appSecret;
+    console.log(JSON.stringify(m, null, 2));
+  ' > "$HOME_DIR/.add-$key.manifest.json" || die "注入 dev 密钥失败。"
+  dc run --rm --no-deps -v "$HOME_DIR:/devkit:ro" portal-api bun run register-app "/devkit/.add-$key.manifest.json" \
+    || { rm -f "$HOME_DIR/.add-$key.manifest.json"; die "注册失败 —— 看上面的报错。"; }
+  rm -f "$HOME_DIR/.add-$key.manifest.json"
+  _reload_proxy
+
+  info "⑤ 建库 xgent-${key}"
+  dc up -d postgres >/dev/null 2>&1 || true
+  _ensure_db "xgent-${key}"
+
+  # ⑥ 从 manifest 生成 compose 片段
+  local gen="$HOME_DIR/generated"; mkdir -p "$gen"
+  local out="$gen/${key}.yml" PREFIX; PREFIX="$(printf '%s' "$key" | tr 'a-z-' 'A-Z_')"
+  case " $M_ENV " in *" ${PREFIX}_KAFKA_USERNAME "*) M_KAFKA=1 ;; esac
+  if [ "$M_KAFKA" = 1 ]; then
+    if ! _ensure_kafka "$key" "$PREFIX"; then _kafka_add_warning "$key"; fi
+  fi
+  {
+    echo "# 由 onebox.sh add ${key} 从 manifest 生成 —— 不要手改，重跑 add 会覆盖。"
+    echo "services:"
+    echo "  ${key}-server:"
+    echo "    image: \${${ivar}:?}"
+    echo "    platform: \${${PREFIX}_PLATFORM:-\${APP_PLATFORM:-}}"
+    echo "    restart: unless-stopped"
+    # ⚠️ 绝对路径。compose 里的相对路径按【第一个 -f】的目录解析（= 一盒根），不是按本文件
+    #    所在目录 —— 写 ../compose.env 会解析到一盒根的上一级，报 env file not found（实测）。
+    #    这是生成文件、随机器走、已被 .gitignore 挡住，绝对路径没有副作用。
+    echo "    env_file: [\"${ENV_FILE}\"]"
+    echo "    environment:"
+    # 一盒反代的通用规则只反代 <key>-server:8080；镜像不听 8080 的（如 observability 8081）
+    # 在 compose.env 里用 <PREFIX>_PORT 改成 8080（值归平台，与生产注入 PORT 同语义）。
+    echo "      PORT: \"\${${PREFIX}_PORT:-${M_PORT}}\""
+    echo "      PORTAL_INTROSPECT_URL: http://portal-api:3000/api/tokens/introspect"
+    echo "      ${PREFIX}_SA_CLIENT_ID: ${M_SA}"
+    echo "      ${PREFIX}_SA_CLIENT_SECRET: \${${svar}}"
+    # 发起方才有：门户库里那把（register-app 从清单读）与容器里这把必须同源，否则
+    # 跨应用交换在【发起方】上 401，而错看起来像是被调方的问题。
+    [ -n "$M_XTARGETS" ] && echo "      ${PREFIX}_APP_SECRET: \${${avar}}"
+    # 库连接串：<PREFIX>_DATABASE_URL 是生产的约定名（批准时按它建库并注入，发版 preflight 也要求它）；
+    # 后两个是旧名，留给还没改名的镜像。三个都指向同一个库。
+    echo "      ${PREFIX}_DATABASE_URL: postgres://postgres:postgres@postgres:5432/xgent-${key}"
+    echo "      ${PREFIX}_PG_DSN: postgres://postgres:postgres@postgres:5432/xgent-${key}"
+    echo "      DATABASE_URL: postgres://postgres:postgres@postgres:5432/xgent-${key}"
+    echo "    expose: [\"\${${PREFIX}_PORT:-${M_PORT}}\"]"
+    echo "    networks: { default: { aliases: [${key}-server] } }"
+  } > "$out"
+  info "⑥ 生成 ${out#"$HOME_DIR"/}"
+  # requiredEnv 里【既不在上面生成的片段、也不在 compose.env】的键 —— 一盒版的 REQUIRED_ENV_MISSING
+  # （生产还会把平台代为供给的键算作已提供，一盒只有这两处来源）。在这里点名，而不是等容器缺变量退出。
+  if [ -n "$M_ENV" ]; then
+    local gen_keys="PORT PORTAL_INTROSPECT_URL ${PREFIX}_SA_CLIENT_ID ${PREFIX}_SA_CLIENT_SECRET ${PREFIX}_DATABASE_URL ${PREFIX}_PG_DSN DATABASE_URL"
+    [ -n "$M_XTARGETS" ] && gen_keys="$gen_keys ${PREFIX}_APP_SECRET"
+    local ek missing=""
+    for ek in $M_ENV; do
+      case " $gen_keys " in *" $ek "*) continue ;; esac
+      [ -n "$(_eff "$ek")" ] && continue
+      old=""
+      for spec in $M_GEN; do
+        IFS=: read -r gkey encoding bytes value <<< "$spec"
+        [ "$gkey" != "$ek" ] || { old="$value"; break; }
+      done
+      if [ -n "$old" ] && [ -n "$(_eff "$old")" ]; then
+        _note "${ek} 由旧键 ${old} 兼容满足；沿用原值，应用继续消费旧名。"
+        continue
+      fi
+      missing="${missing:+$missing }$ek"
+    done
+    if [ -n "$missing" ]; then
+      warn "requiredEnv 里这些键既不在生成的片段里、也不在 compose.env 里：${missing}"
+      _note "值归平台（生产由审批屏填），这里补进 compose.env 末尾，再重跑 ${0} add ${key}。"
+    else
+      _note "requiredEnv 的键都已到位（生成的片段 + compose.env）。"
+    fi
+  fi
+
+  # 例外：manifest 描述不了的自带 infra（如 knowledge 的 Chroma）
+  local extra_args=() extra="$SKILL_DIR/services/${key}.extra.yml"
+  [ -f "$extra" ] && { extra_args=(-f "$extra"); info "   叠加自带依赖 services/${key}.extra.yml"; }
+
+  # 对象存储桶：清单 requiredEnv 里带 *_S3_BUCKET_NAME / ZO_S3_BUCKET_NAME 的，按 compose.env 在 RustFS 建桶
+  local bvar bname
+  # M_ENV is a validated whitespace-delimited list of environment key names.
+  # shellcheck disable=SC2086
+  for bvar in $(printf '%s\n' $M_ENV | grep -E '_S3_BUCKET(_NAME)?$' || true); do
+    bname="$(_eff "$bvar")"; [ -n "$bname" ] && _ensure_bucket "$bname"
+  done
+
+  # 清单声明了 deployDescriptor.migrateArgs（生产由 deploy-controller 在换容器前跑）：起容器前先跑一次
+  if [ -n "$M_MIGRATE" ]; then
+    info "⑥b 迁移：${key}-server ${M_MIGRATE}"
+    _objectstore_up
+    dc up -d postgres >/dev/null
+    # shellcheck disable=SC2086
+    XGENT_ONEBOX_HOME="$HOME_DIR" dc -f "$out" ${extra_args[@]+"${extra_args[@]}"} run --rm --no-deps "${key}-server" $M_MIGRATE \
+      || warn "${key}-server ${M_MIGRATE} 失败 —— 看上面的报错（多半是 env 值没到位）"
+  fi
+
+  info "⑦ 起容器"
+  XGENT_ONEBOX_HOME="$HOME_DIR" dc -f "$out" ${extra_args[@]+"${extra_args[@]}"} up -d "${key}-server"
+
+  echo; info "⑧ 冒烟"
+  # amd64 镜像在 Apple Silicon 上走仿真，冷启动能到两分钟（observability 实测 ~100s）：等 120s。
+  local i=0 code=""
+  while [ "$i" -lt 60 ]; do
+    code="$(curl -s -m 5 -o /dev/null -w '%{http_code}' "${BASE_URL}/svc/${key}${M_HEALTH}" || true)"
+    [ "$code" = "200" ] && break; i=$((i+1)); sleep 2
+  done
+  if [ "$code" = "200" ]; then _ok "/svc/${key}${M_HEALTH} 200"
+  else _bad "/svc/${key}${M_HEALTH} HTTP ${code:-000}（等了 120s）" "${0} dc logs ${key}-server —— 多半是镜像认的 env 变量名与上面生成的那几个不同名，补进 compose.env 末尾即可"; fi
+
+  [ -n "${ADD_QUIET:-}" ] && return 0
+  echo
+  info "还差最后一步（浏览器里点一下）：rockie@xgent.ai 登控制台 → 租户 → 可用应用 → 勾上「${key}」保存。"
+  _note "service 型 App 的勾选【就是】安装；不装的话跨应用交换拿不到它的 scope。"
+  # wireInitiatorSecret 只能写【已安装】的 apps 行 —— 先勾选安装、再重跑一次 add 才落得下去。
+  [ -n "$M_XTARGETS" ] && _note "它声明了 exchangeTargets（${M_XTARGETS}）—— 勾选安装【之后】再跑一次 ${0} add ${key}，那把 App Secret 才写得进已安装的行（幂等，不会重复建东西）。"
+  echo
+  info "然后在【你自己】的 manifest 里两处一起加，再 ${0} up："
+  printf '    "scopes":          […, "%s.read", …]\n' "$(printf '%s' "$key" | tr '-' '_')"
+  printf '    "exchangeTargets": ["%s"]\n' "$key"
+}
+
+# --- doctor：把排查表能自动判的都判一遍 ----------------------------------------
+DOCTOR_BAD=0
+cmd_doctor() {
+  DOCTOR_BAD=0
+  echo "一盒体检（${BASE_URL}）"
+  echo
+
+  echo "对象存储"
+  if ! _objectstore_assets_current; then
+    _bad "对象存储部署资产是旧版" "$0 upgrade --image <新版一盒镜像> && $0 up"
+  elif dc exec -T rustfs curl -fsS --max-time 5 http://127.0.0.1:9000/health </dev/null >/dev/null 2>&1; then
+    _ok "RustFS /health 正常"
+  else
+    _bad "RustFS 未就绪" "$0 up；失败时保留 rustfs-data，查看 $0 dc logs rustfs。"
+  fi
+
+  echo "Kafka"
+  if ! _kafka_assets_current; then
+    _bad "Kafka 部署资产或配置是旧版" "$0 upgrade --image <新版一盒镜像> && $0 up"
+  elif dc exec -T kafka nc -z 127.0.0.1 9092 </dev/null >/dev/null 2>&1; then
+    _ok "Kafka INTERNAL 监听正常（SASL 认证由服务探测验证）"
+  else
+    _bad "Kafka 未就绪；门户与现有应用可继续运行" "$0 dc logs --tail 50 kafka；修复后重跑 $0 up。"
+  fi
+
+  echo "① 镜像版本"
+  local iv; iv="$(_eff XGENT_IMAGE)"
+  if docker image inspect "$iv" >/dev/null 2>&1; then
+    if docker run --rm --entrypoint sh "$iv" -c '[ -d /srv/www/apps ]' >/dev/null 2>&1; then
+      _ok "门户镜像带有共享目录预建（v1.2.0+）"
+    else
+      _bad "门户镜像是旧版（缺 /srv/www/apps 等预建目录）" "$0 pull && $0 dc down -v && $0 up —— 顺序是【先换镜像、再删卷】，只做一半都不解决"
+    fi
+  else _note "本地没有 ${iv}，跳过（$0 pull）"; fi
+
+  echo "② 命名卷属主（EACCES 一族的根因）"
+  if _svc_running reverse-proxy; then
+    local bad_dirs=""
+    local d
+    for d in /srv/www/apps /etc/caddy/svc-allow /etc/caddy/apps-csp; do
+      local owner; owner="$(dc exec -T -u root reverse-proxy stat -c '%u' "$d" 2>/dev/null | tr -d '\r' || echo "")"
+      [ "$owner" = "1000" ] || bad_dirs="$bad_dirs $d"
+    done
+    if [ -z "$bad_dirs" ]; then _ok "三个共享卷都归 bun(1000)"
+    else _bad "这些卷不归 portal-api：$bad_dirs" "$0 dc exec -u root reverse-proxy chown -R 1000:1000$bad_dirs"; fi
+    # 内联 key 却存在 map 文件 ⇒ duplicate input ⇒ 反代整个起不来
+    local dup; dup="$(dc exec -T reverse-proxy sh -c 'ls /etc/caddy/svc-allow/ 2>/dev/null' 2>/dev/null | tr -d '\r' | grep -E '^(knowledge|omni-parser|task-gateway|pagebuilder)\.map$' | tr '\n' ' ' || true)"
+    if [ -n "$dup" ]; then _bad "内联 key 又写了 map：$dup" "这会让 Caddy 拒绝整份配置（全站 502）。$0 dc exec -u root reverse-proxy sh -c 'cd /etc/caddy/svc-allow && rm -f $dup' && $0 dc restart reverse-proxy"
+    else _ok "没有与内联 key 撞车的 map 文件"; fi
+  else _note "reverse-proxy 没在跑，跳过（$0 up）"; fi
+
+  echo "③ 架构匹配"
+  local host_arch img_arch; host_arch="$(docker version --format '{{.Server.Arch}}' 2>/dev/null || echo '?')"
+  if [ -n "$APP_IMAGE" ] && docker image inspect "$APP_IMAGE" >/dev/null 2>&1; then
+    img_arch="$(docker image inspect --format '{{.Architecture}}' "$APP_IMAGE" 2>/dev/null || echo '?')"
+    if [ "$img_arch" = "$host_arch" ] || [ -n "$(_eff APP_PLATFORM)" ]; then _ok "APP_IMAGE ($img_arch) 与本机 ($host_arch) 兼容"
+    else _bad "APP_IMAGE 是 ${img_arch}，本机是 $host_arch" "compose.env 末尾加：APP_PLATFORM=linux/${img_arch}（Apple Silicon 走 Rosetta，慢但能跑）"; fi
+  else _note "APP_IMAGE 未填或本地没有，跳过"; fi
+
+  echo "④ 数据库"
+  if _svc_running postgres; then
+    local want="$CATALOG"; [ -n "$APP_KEY" ] && want="$CATALOG,$APP_KEY"
+    local dbs; dbs="$(dc exec -T postgres psql -U postgres -lqt 2>/dev/null | cut -d'|' -f1 | tr -d ' \r' || true)"
+    local miss=""
+    for k in ${want//,/ }; do
+      _is_portal_hosted "$k" && continue
+      printf '%s\n' "$dbs" | grep -qx "xgent-$k" || miss="$miss xgent-$k"
+    done
+    if [ -z "$miss" ]; then _ok "目录里每个 App 的库都在"
+    else _bad "缺库：$miss" "$0 dc exec postgres psql -U postgres -c 'CREATE DATABASE \"<库名>\"'（$0 add <key> 会顺手建）"; fi
+  else _note "postgres 没在跑，跳过"; fi
+
+  # 栈没起的时候，⑤⑥ 每一格都会红，而真正的下一步只有一个 —— 别拿 8 行红字淹掉它。
+  if ! _svc_running portal-api; then
+    echo "⑤⑥ 目录/路由"
+    _bad "栈还没起来（portal-api 没在跑）" "${0} up —— 它会按顺序铺完再自动跑一次体检"
+    echo; printf '%s先把栈起来，其余的判断才有意义。%s\n' "$c_ylw" "$c_off"
+    return 0
+  fi
+
+  echo "⑤ 目录 vs 容器"
+  for k in ${CATALOG//,/ }; do
+    _is_portal_hosted "$k" && continue
+    case "$k" in files|llm-gateway|git|org) continue;; esac
+    if _svc_running "${k}-server"; then _ok "$k 的容器在跑"
+    else _bad "$k 在 XGENT_APP_CATALOG 里但容器没起" "$0 add ${k}（清单已注册的话它只会补建库+起容器）"; fi
+  done
+
+  echo "⑥ 路由与健康"
+  cmd_smoke >/dev/null 2>&1 || true
+  local keys="$CATALOG"; [ -n "$APP_KEY" ] && keys="$CATALOG,$APP_KEY"
+  local code
+  code="$(curl -s -m 8 -o /dev/null -w '%{http_code}' "$BASE_URL/health" || true)"
+  if [ "$code" = "200" ]; then _ok "门户 /health 200"
+  else _bad "门户 /health HTTP ${code:-000}" "000=反代没起或端口不对（$0 dc ps）；其它看 $0 dc logs portal-api"; fi
+  for k in ${keys//,/ }; do
+    _is_portal_hosted "$k" && continue
+    code="$(curl -s -m 8 -o /dev/null -w '%{http_code}' "$BASE_URL/svc/$k/health" || true)"
+    case "$code" in
+      200) _ok "/svc/$k 200";;
+      404) _bad "/svc/$k 404" "放行尚未应用：检查发布状态及 $0 dc logs portal-api，勿手工 reload 兼容模板";;
+      502) _bad "/svc/$k 502" "后端不在/没听 8080/别名没命中：$0 dc logs ${k}-server";;
+      *)   _bad "/svc/$k HTTP ${code:-000}" "$0 dc ps";;
+    esac
+  done
+
+  echo
+  if [ "$DOCTOR_BAD" -eq 0 ]; then printf '%s一切正常。%s\n' "$c_grn" "$c_off"
+  else printf '%s%s 项要处理 —— 每条下面那行可以直接粘。%s\n' "$c_ylw" "$DOCTOR_BAD" "$c_off"
+       printf '%s还有判不了的？排查表按「你看到什么」编排：references/troubleshooting.md%s\n' "$c_dim" "$c_off"; fi
+  return 0
+}
+
+case "${1-status}" in
+  init)   shift; cmd_init "$@" ;;
+  upgrade) require_home; _env_lock; load_env; shift; cmd_upgrade "$@" ;;
+  pull)   shift; cmd_pull "$@" ;;
+  env)    require_home; load_env; cmd_env ;;
+  smoke)  require_home; load_env; cmd_smoke ;;
+  status) require_home; load_env; cmd_status ;;
+  chain)  require_home; load_env; { while IFS= read -r -d '' x; do printf '%s ' "$x"; done < <(compose_args); echo; } ;;
+  up)     require_home; _env_lock; load_env; cmd_up ;;
+  doctor) require_home; load_env; cmd_doctor ;;
+  add)    require_home; _env_lock; load_env; shift; cmd_add "$@" ;;
+  dc)     require_home; load_env; shift; dc "$@" ;;
+  # 打印开头那段注释直到第一条非注释行 —— 别写死行号，加一条子命令就会截断（踩过）。
+  -h|--help|help) awk 'NR>1 && /^#/ {sub(/^# ?/,""); print; next} NR>1 {exit}' "${BASH_SOURCE[0]}" ;;
+  *)      die "未知子命令 '$1'。用 init | upgrade | up | doctor | add <key> | pull | env | status | smoke | chain | dc <args...>" ;;
+esac

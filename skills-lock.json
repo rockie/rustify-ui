@@ -5,31 +5,31 @@
       "source": "XGENT-ai/skills",
       "sourceType": "github",
       "skillPath": "skills/agi-mode/SKILL.md",
-      "computedHash": "43a81dc3b190eb21de2958ec87a877e0f4af10b91eab5011d493ff6d4850b79e"
+      "computedHash": "96b7e5ae8428b58353637437031e57586e9e86dc046799836ff73ae849e9ab0c"
     },
     "apply-code-review": {
       "source": "XGENT-ai/skills",
       "sourceType": "github",
       "skillPath": "skills/apply-code-review/SKILL.md",
-      "computedHash": "d5e8eae7cb28e232684249ee08d9377bc60901964bd1be46eff922e46e4daaf3"
+      "computedHash": "8f417944c8373f65a40db1c291ba91432697ce0c2b0b9266579530f8ad69b0bd"
     },
     "apply-doc-review": {
       "source": "XGENT-ai/skills",
       "sourceType": "github",
       "skillPath": "skills/apply-doc-review/SKILL.md",
-      "computedHash": "485c82e06a46bbd6215f79d2b1ba0ccd0bb48f699880d3997907a2c010108b8d"
+      "computedHash": "dc3a84e62cf1820d50b52e337b470b76176cb494549c926edecd02866d2b5c37"
     },
     "apply-ui-review": {
       "source": "XGENT-ai/skills",
       "sourceType": "github",
       "skillPath": "skills/apply-ui-review/SKILL.md",
-      "computedHash": "a82bd5b8e7d18d7e66e1d5826ea6b97282d167429e4b34edc5994937e81ef6d7"
+      "computedHash": "adfdcd15c53af1409026c05f44bbb3de899f50e99bef26d69501651d0e4cb564"
     },
     "archify": {
       "source": "XGENT-ai/skills",
       "sourceType": "github",
       "skillPath": "skills/archify/SKILL.md",
-      "computedHash": "4c49e22c3b43363885b94beee1897b403159f5fec830aeaed8b7cac8c19792ac"
+      "computedHash": "022cc9b9e572e2d4d7c5614be4fd5b5ed1577799da7faace3d6ecbd79d6ce38e"
     },
     "architect": {
       "source": "XGENT-ai/skills",
@@ -53,49 +53,49 @@
       "source": "XGENT-ai/skills",
       "sourceType": "github",
       "skillPath": "skills/autoresearch/SKILL.md",
-      "computedHash": "3997a3151986bd48f455fc0ada6768e1c6cd72591c555a30f5635bdd98a5dd8b"
+      "computedHash": "b0b3927ec6fd26ceadbd08eb03d1964eadab24aa85736a39298adfe7f6d00347"
     },
     "crd": {
       "source": "XGENT-ai/skills",
       "sourceType": "github",
       "skillPath": "skills/crd/SKILL.md",
-      "computedHash": "ab6893bafb9477c8a557b560ebe91db23a21fcf0cdb8691ba1ac3a1e4009bfe6"
+      "computedHash": "f6dae7328f16be43a6b5d9901716b7e753ef934c6e3cdee0683cc9bd645aa437"
     },
     "crd-respond": {
       "source": "XGENT-ai/skills",
       "sourceType": "github",
       "skillPath": "skills/crd-respond/SKILL.md",
-      "computedHash": "9724e60bff1f4344c6910755eff4674149add4f2aa6cd03fdd7de49d993d071a"
+      "computedHash": "da61cc4059a8f81987584870769130c6b979455cd049a59d51f8f72684d82cbe"
     },
     "create-verification-skill": {
       "source": "XGENT-ai/skills",
       "sourceType": "github",
       "skillPath": "skills/create-verification-skill/SKILL.md",
-      "computedHash": "307f9e924a30e5f92b08fa38fd540f1eb92d12b86f6d7bf2dc7686abcc06cd80"
+      "computedHash": "4b69468ed27a86e2f1caff3b1e10aad3c4a434d24cb953f9e2456bf89d6e1c8f"
     },
     "debugging": {
       "source": "XGENT-ai/skills",
       "sourceType": "github",
       "skillPath": "skills/debugging/SKILL.md",
-      "computedHash": "bc9569009059fd59f0ca043611f5a7054ab65225a16d19b0ab66d474ba4f94e3"
+      "computedHash": "9ee0615fcfe615284c20cd72d89d8d26512730e347e9ce59ca3c909ee21fac44"
     },
     "design-md": {
       "source": "XGENT-ai/skills",
       "sourceType": "github",
       "skillPath": "skills/design-md/SKILL.md",
-      "computedHash": "876e61bd51b1d4ced30ef2ea8f66f8c02dc0c731b85b1437a007486e0d58b17c"
+      "computedHash": "60687ffec994ffdfcc093c785dfdec56bce0d753a5f0700c0a6b033990d14cf4"
     },
     "design-reference": {
       "source": "XGENT-ai/skills",
       "sourceType": "github",
       "skillPath": "skills/design-reference/SKILL.md",
-      "computedHash": "31903a04ce4a9d8123c3439d889d89a8ffb5ecd01e8d057e3cc69c1759f0c413"
+      "computedHash": "89101189ff4293bdfcc38a8dbf8284d3337829d1c686b9a31ab281ac9e524e32"
     },
     "dev-plan": {
       "source": "XGENT-ai/skills",
       "sourceType": "github",
       "skillPath": "skills/dev-plan/SKILL.md",
-      "computedHash": "8757e07c724fe54a9a6d12a9c69779b20c1d4249ad75417067007e18ee6d732e"
+      "computedHash": "ef58fa30ab833f512b627e2cce270cdeaf7fd9e765e1dcc4f58fa10690df447c"
     },
     "documentation-writer": {
       "source": "XGENT-ai/skills",
@@ -107,13 +107,13 @@
       "source": "XGENT-ai/skills",
       "sourceType": "github",
       "skillPath": "skills/elintp/SKILL.md",
-      "computedHash": "17696d96d0c8bec26570917cf57d3eedb0f917eae547cba7cc46bb259ff101e6"
+      "computedHash": "c5509bbe0a5d85e4b0e720d796a2c9f273ecfbdef6cf5bbe03f08d888818259f"
     },
     "experience-capture": {
       "source": "XGENT-ai/skills",
       "sourceType": "github",
       "skillPath": "skills/experience-capture/SKILL.md",
-      "computedHash": "cc874beaa32c887809c6b7ffefd1f1832ab89ba4fa29e076464baa856831b8e1"
+      "computedHash": "795dbc9196ac94cd250b57eb72e42bf3dae8c2ef3cda7947ff4752a15106ab01"
     },
     "figure-it-out": {
       "source": "XGENT-ai/skills",
@@ -125,7 +125,7 @@
       "source": "XGENT-ai/skills",
       "sourceType": "github",
       "skillPath": "skills/gdpr-compliant/SKILL.md",
-      "computedHash": "cfee71ce004650aba0325bec09df7cb2f2e01a61ea45649f07d2197f3f9aa872"
+      "computedHash": "3f4f884035e44432893cab85280ad4ba857b7a2c518d27a583d89cfd71c4f1e0"
     },
     "how": {
       "source": "XGENT-ai/skills",
@@ -143,25 +143,31 @@
       "source": "XGENT-ai/skills",
       "sourceType": "github",
       "skillPath": "skills/kpi-dashboard-design/SKILL.md",
-      "computedHash": "10e9e91962b7dbddcf99509d5e682b05cefa8a4f702cba5e07d2695d79bf43d5"
+      "computedHash": "0ac277292c398a045dd12160f77420743616a277232beb58478e594f8f69edc3"
     },
     "landing-page-conversion-audit": {
       "source": "XGENT-ai/skills",
       "sourceType": "github",
       "skillPath": "skills/landing-page-conversion-audit/SKILL.md",
-      "computedHash": "138676eab8086cabdb991fc40caa64d9059f619f95ff16c802c0691fbebea8b6"
+      "computedHash": "8b32e14d5399e425eed6aa720dda94fa34fb78c531c89a48dfc3b3d83f1ab501"
     },
     "mcp-release-qa": {
       "source": "XGENT-ai/skills",
       "sourceType": "github",
       "skillPath": "skills/mcp-release-qa/SKILL.md",
-      "computedHash": "0be021c85ba692151126f7d31b86e283fb9dd0e92938a9d6a17afedd8742402f"
+      "computedHash": "461094ad7b146cf5fa76249c904b186782cb6ae155dc6ddf966a00b1b03028b2"
     },
     "meeting-minutes": {
       "source": "XGENT-ai/skills",
       "sourceType": "github",
       "skillPath": "skills/meeting-minutes/SKILL.md",
-      "computedHash": "d284bb336dfa19068a223666d11420cc55be53af6fc5986c9fc01cb1a56f85fb"
+      "computedHash": "31211abfd68032b59b69a9e9a95cca8881ad647560b05a1676b4ce0128c977de"
+    },
+    "optimize-agents-md": {
+      "source": "XGENT-ai/skills",
+      "sourceType": "github",
+      "skillPath": "skills/optimize-agents-md/SKILL.md",
+      "computedHash": "e0bb7315c96305ca0daabd95c4c67f3f15578569c2ad6277d0f0baa183fc028d"
     },
     "pardon": {
       "source": "XGENT-ai/skills",
@@ -169,23 +175,59 @@
       "skillPath": "skills/pardon/SKILL.md",
       "computedHash": "534ec84153b033e11d689726baf340b6c5bc357cbc98d3a3747c70b8c69dfc27"
     },
+    "phoenix-diagram": {
+      "source": "XGENT-ai/skills",
+      "sourceType": "github",
+      "skillPath": "skills/phoenix-diagram/SKILL.md",
+      "computedHash": "0b631c1a30864c7cd7b3a356217cb011058fdba9f7697e126f470374997c8eee"
+    },
     "phoenix-ui": {
       "source": "XGENT-ai/skills",
       "sourceType": "github",
       "skillPath": "skills/phoenix-ui/SKILL.md",
-      "computedHash": "e554a2a526d50a2dad7cbc92e0e57d83d0cc32ce6ad274cfc7716fb96fa9bdb4"
+      "computedHash": "5407f93b6f60fc31870fa8b51e71c8f01e16a509d318cd79d57cd48c8e7ff859"
+    },
+    "portal-app-exchange": {
+      "source": "XGENT-ai/skills",
+      "sourceType": "github",
+      "skillPath": "skills/portal-app-exchange/SKILL.md",
+      "computedHash": "ed7cd577fa6073fcb94c46dbec5f5978dbcc675b169db1a17dc91fdb86f11bc7"
+    },
+    "portal-dev-setup": {
+      "source": "XGENT-ai/skills",
+      "sourceType": "github",
+      "skillPath": "skills/portal-dev-setup/SKILL.md",
+      "computedHash": "325917320e39bfe5d21a4b1898348128d4e600522e97a896ef24325e112bc3f7"
+    },
+    "portal-external-app": {
+      "source": "XGENT-ai/skills",
+      "sourceType": "github",
+      "skillPath": "skills/portal-external-app/SKILL.md",
+      "computedHash": "f87e64f815d33187cd04e9ff3c43e4a49d87d2770b2ce9a2f27b18e7ee9eb049"
+    },
+    "portal-logging": {
+      "source": "XGENT-ai/skills",
+      "sourceType": "github",
+      "skillPath": "skills/portal-logging/SKILL.md",
+      "computedHash": "921372df788d51c3ad34c7c1d5697e04114a6bb3e5b34a169ae613b9d2c55564"
+    },
+    "portal-micro-app": {
+      "source": "XGENT-ai/skills",
+      "sourceType": "github",
+      "skillPath": "skills/portal-micro-app/SKILL.md",
+      "computedHash": "4a42ec368ab8a23ff7b4f26e0f8db85774d00a5bdcf3b1657ea9bb2cf4682737"
     },
     "prd": {
       "source": "XGENT-ai/skills",
       "sourceType": "github",
       "skillPath": "skills/prd/SKILL.md",
-      "computedHash": "a3a3dbe788d3bdb12a3eb19b06f88ec265e94ed34d5aaf0604bb9a26d90fd54e"
+      "computedHash": "edab2e2c86205aeedec72de715cc6b031f3a74ee34759b12f6fcd9e6dafdad14"
     },
     "react": {
       "source": "XGENT-ai/skills",
       "sourceType": "github",
       "skillPath": "skills/react/SKILL.md",
-      "computedHash": "1856e00fb7ca57dd297b7fb14e27fb28c4b774f24c9225233f5c7a23c84ac312"
+      "computedHash": "bb99fde7c81871ffe2f3bf02f5b62caa5d6a204b13867c1d808f1e739cdf2f60"
     },
     "reflect": {
       "source": "XGENT-ai/skills",
@@ -197,43 +239,43 @@
       "source": "XGENT-ai/skills",
       "sourceType": "github",
       "skillPath": "skills/resolve-blocked/SKILL.md",
-      "computedHash": "81071eba3680e493d0425934059d6cab7eb1499ff622d4f9ee3c473b76c5038d"
+      "computedHash": "5995ee6cf3837a338546fc76c2571bbbaba59453758c4078fca5098a540023b4"
     },
     "review-code": {
       "source": "XGENT-ai/skills",
       "sourceType": "github",
       "skillPath": "skills/review-code/SKILL.md",
-      "computedHash": "5ccc06e52243d461491c64e31d9c93cc7eee114ad617ace791a2993c8f3a3f36"
+      "computedHash": "4e416aec18d4b9fd9379e0ee0daff577537a590b22407c2d80ee96016ad0c5b6"
     },
     "review-dev-plan": {
       "source": "XGENT-ai/skills",
       "sourceType": "github",
       "skillPath": "skills/review-dev-plan/SKILL.md",
-      "computedHash": "5b470c73495236eb6b57a263aaa6775fcd9e280422da3dea637bb83289b90e16"
+      "computedHash": "e713e28182a33f18cb841aea978c1cc53cc0da9d24dcf7f040c44306bfb259aa"
     },
     "review-prd": {
       "source": "XGENT-ai/skills",
       "sourceType": "github",
       "skillPath": "skills/review-prd/SKILL.md",
-      "computedHash": "5b00ddeb0b8385d09948289878e99196362abeaa2ddcc6a4ec8da749eee58f13"
+      "computedHash": "c6f0e790ec41ea2d258463ac97ee9986550b68266bb36e0e1623c7f4bf96f6e0"
     },
     "review-prd-dev-gaps": {
       "source": "XGENT-ai/skills",
       "sourceType": "github",
       "skillPath": "skills/review-prd-dev-gaps/SKILL.md",
-      "computedHash": "2885c0800a3790033042adcd1f3239f4adcb519cf6e9391907e9508d0829d993"
+      "computedHash": "8bcc21ba06a6d8a8aa53f82853f15eae7c304038b3a118d5bbcb17f403b24ad9"
     },
     "review-ui": {
       "source": "XGENT-ai/skills",
       "sourceType": "github",
       "skillPath": "skills/review-ui/SKILL.md",
-      "computedHash": "d8d60ea9777924fa598c87dbdddebcd40abb8b0e3f77bea08d5fc4a5aba61344"
+      "computedHash": "6491d730ba83ff47c115eea1f18ebe2923d478c226d4bfee563be534f552c404"
     },
     "rust": {
       "source": "XGENT-ai/skills",
       "sourceType": "github",
       "skillPath": "skills/rust/SKILL.md",
-      "computedHash": "74361ede357afa98f716aa30f60c3d9f544e400fa04419d60df411c8eec9dfa2"
+      "computedHash": "51b0af55426fef768ea175a8cb4cb1efa57402f2d452fae85666d29f19b84ea2"
     },
     "rust-async-patterns": {
       "source": "wshobson/agents",
@@ -251,25 +293,25 @@
       "source": "XGENT-ai/skills",
       "sourceType": "github",
       "skillPath": "skills/security-audit/SKILL.md",
-      "computedHash": "f3e534635025cbe7f1336eb271524a1d20eb84d805d2ffbf3a0481f769bb290b"
+      "computedHash": "466bb0676352482b210d9511bee88a0a5b182765c09104f05f256550165c7307"
     },
     "spec-human-decision": {
       "source": "XGENT-ai/skills",
       "sourceType": "github",
       "skillPath": "skills/spec-human-decision/SKILL.md",
-      "computedHash": "56e1adf39efceef02b35a6f10d7994525e3797d36fab1d7796abf6b710105c31"
+      "computedHash": "f588c7db56dc1f36beadb847e1bb231b66f76b9ede7ec719a089b2efe5f1fdf6"
     },
     "sql-optimization": {
       "source": "XGENT-ai/skills",
       "sourceType": "github",
       "skillPath": "skills/sql-optimization/SKILL.md",
-      "computedHash": "3481676e6842fb186116ba92b5f4c348ec2d5f3bb44383ef53b48a6d3600a3f1"
+      "computedHash": "586990232a07e3d615c15dce6ae681b3c46a953fd423574fe1cad08b0919349b"
     },
     "story-points": {
       "source": "XGENT-ai/skills",
       "sourceType": "github",
       "skillPath": "skills/story-points/SKILL.md",
-      "computedHash": "927903542881bdbbd9ddd85fea3a5541f45605bfc3e66e78095635c9cfa67524"
+      "computedHash": "02ca32feebdfbbd338cdb005db8bbd070ebd2e2dacb687786122c66d1b75800a"
     },
     "summarize": {
       "source": "XGENT-ai/skills",
@@ -281,7 +323,7 @@
       "source": "XGENT-ai/skills",
       "sourceType": "github",
       "skillPath": "skills/swarm/SKILL.md",
-      "computedHash": "a9516393bf3a105fc7cf0e6a268af814789b95c687b6c8d8610b920f4b1b54ec"
+      "computedHash": "fb3ee6b107b9c99968082d4c27c391f392dd83a5ddbff04edb83ed24f3890542"
     },
     "tdd": {
       "source": "XGENT-ai/skills",
@@ -299,13 +341,43 @@
       "source": "XGENT-ai/skills",
       "sourceType": "github",
       "skillPath": "skills/test-plan/SKILL.md",
-      "computedHash": "ef5266b8c1962262a345a743c7ed8556a7ea16cf7f6b1b203a5bf9a865c175db"
+      "computedHash": "f887651428dd94e8c68480d9c5155d07166267528ecd21814ee12e678c188d2b"
+    },
+    "ui-loop": {
+      "source": "XGENT-ai/skills",
+      "sourceType": "github",
+      "skillPath": "skills/ui-loop/SKILL.md",
+      "computedHash": "29c6563874be4b3ce39a0f91026c505eba900b8dd9f5961c00305171fdd640dd"
     },
     "ui-pattern-research": {
       "source": "XGENT-ai/skills",
       "sourceType": "github",
       "skillPath": "skills/ui-pattern-research/SKILL.md",
-      "computedHash": "61fd8db4f0f04b11eb5b665573c235dfc841abc0555ffd45a1f9c450617f3308"
+      "computedHash": "4f8b1a2bf6d51810c12d64d1977c67400417071e2807d88a099496b57ec4b963"
+    },
+    "use-llm-gateway": {
+      "source": "XGENT-ai/skills",
+      "sourceType": "github",
+      "skillPath": "skills/use-llm-gateway/SKILL.md",
+      "computedHash": "43733c653ab6623cc807cd096a34c8d765f2d1939dcb9c48ad940d022bd7fefb"
+    },
+    "use-prompt-dsl": {
+      "source": "XGENT-ai/skills",
+      "sourceType": "github",
+      "skillPath": "skills/use-prompt-dsl/SKILL.md",
+      "computedHash": "84a1f748d29384df6ac157d7ffce4a8f91fa3b058a3de214f1d3eb0fc0282df2"
+    },
+    "use-task-gateway": {
+      "source": "XGENT-ai/skills",
+      "sourceType": "github",
+      "skillPath": "skills/use-task-gateway/SKILL.md",
+      "computedHash": "3736f89fb4b01ff0fc1629486ef716c8c065fb2ed8aae36b64f3961aa0866455"
+    },
+    "use-workflow-service": {
+      "source": "XGENT-ai/skills",
+      "sourceType": "github",
+      "skillPath": "skills/use-workflow-service/SKILL.md",
+      "computedHash": "d076d73542073f63b03ce405e2060935c40f9e69342ad0a16361495967e2a0f0"
     },
     "why": {
       "source": "XGENT-ai/skills",
@@ -317,25 +389,25 @@
       "source": "XGENT-ai/skills",
       "sourceType": "github",
       "skillPath": "skills/working-with-mbx/SKILL.md",
-      "computedHash": "86817f39087f2a32f3a7d1621185e596d813e474a732eb7e533c256ddd930593"
+      "computedHash": "665c7013a20f40a23c2fa9f3da45dcc7f175af48fa4fb110e4cdd5de5f2a17e3"
     },
     "working-with-mise": {
       "source": "XGENT-ai/skills",
       "sourceType": "github",
       "skillPath": "skills/working-with-mise/SKILL.md",
-      "computedHash": "cd224f373ebfb299caf929eaccc9631c84c91b43d22ad667f802487420af201b"
+      "computedHash": "08d9a95261cdb8d7322fe754c57d968b44f2c2abae8194d3cd82945ba4f1626f"
     },
     "xgent-app-release": {
       "source": "XGENT-ai/skills",
       "sourceType": "github",
       "skillPath": "skills/xgent-app-release/SKILL.md",
-      "computedHash": "d622a8d8d89df288bbcdc50478a82e87a8c58b8eb53c3b891222f6f7d0c8f918"
+      "computedHash": "09712788552fa88b7028c12d1625c6f929c9eafb53aaa9f034c0b248c5e6386a"
     },
     "xgent-image-push": {
       "source": "XGENT-ai/skills",
       "sourceType": "github",
       "skillPath": "skills/xgent-image-push/SKILL.md",
-      "computedHash": "9c8704f893af471d86095b11f45dfe9a503d370b748b286c5d4ae9b72bae5874"
+      "computedHash": "665b6d8708d1320eb352e57d513474c902222e7b32bba40dc68510355e9a6f17"
     },
     "xgent-init": {
       "source": "XGENT-ai/skills",
