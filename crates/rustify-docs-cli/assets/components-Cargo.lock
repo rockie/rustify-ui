@@ -237,9 +237,9 @@ dependencies = [
 
 [[package]]
 name = "crc32fast"
-version = "1.5.2"
+version = "1.5.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "01a7799fd6b852db0e61728dde9a204c423b44d689dbd432522543614b490e78"
+checksum = "0ba106e844045ddc02c20768ac4b0b7cb45f2cc2ecbd833ac9f5dacb183c2055"
 dependencies = [
  "cfg-if",
 ]
@@ -321,9 +321,9 @@ dependencies = [
 
 [[package]]
 name = "equivalent"
-version = "1.0.2"
+version = "1.0.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "877a4ace8713b0bcf2a4e7eec82529c029f1d0619886d18145fea96c3ffe5c0f"
+checksum = "00d174d5400e5e8fd687ad1049e2f578285fa914201b1af7e8b112a4546bd826"
 
 [[package]]
 name = "erased"
@@ -859,9 +859,9 @@ dependencies = [
 
 [[package]]
 name = "libc"
-version = "0.2.190"
+version = "0.2.191"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ce5d3ddc6d3fa000eb1536d85e147bfe31aacaba692ed6a876f95cb7c855be78"
+checksum = "65cd87c9a6d60536580b316ad985726104730a5151c99845f2490428ef91240a"
 
 [[package]]
 name = "litemap"
@@ -871,9 +871,9 @@ checksum = "47d9d19d1d6efa0109d2f65ff4c85cddd50bd572e5a00127ab10987290bcefae"
 
 [[package]]
 name = "manyhow"
-version = "0.14.0"
+version = "0.14.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8c69ea6e469ca785c846b25dd69eac9e9c916b51d8ada1f212866787ee1da12d"
+checksum = "f1704b073316272a6785b70599f91f73b49022c2e290b065591ee6b9109ed8c7"
 dependencies = [
  "manyhow-macros",
  "proc-macro2",
@@ -883,9 +883,9 @@ dependencies = [
 
 [[package]]
 name = "manyhow-macros"
-version = "0.14.0"
+version = "0.14.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "22fc5c1b2c4000056dae3619fea36e79ce79dabfee4907d2dcad6612b189e370"
+checksum = "31601db71f1f5fb6f831a18aa3052d13a62528ee4f2cba7e8c9a5e258d953725"
 dependencies = [
  "proc-macro-utils",
  "proc-macro2",
@@ -1076,9 +1076,9 @@ checksum = "f8dcc9c7d52a811697d2151c701e0d08956f92b0e24136cf4cf27b57a6a0d9bf"
 
 [[package]]
 name = "reactive_graph"
-version = "0.2.15"
+version = "0.2.16"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "79f11fac67625645add76313dab8dae510fca0654d96ef98fd8f961a7d2e22c1"
+checksum = "3bcec36a2d1b9a53a4129b3270b19e3df6f6b88c2e7c97ed9404dc9307f137d7"
 dependencies = [
  "any_spawner",
  "async-lock",
@@ -1187,9 +1187,9 @@ dependencies = [
 
 [[package]]
 name = "rustify-components"
-version = "0.2.0"
+version = "0.2.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "3c50a65c75c5a7344c3775ccc98be2d1ede796e7d2371f770dfd45138e73f7b9"
+checksum = "d94488c262ad7ac3c8104d9c543cd47dfdac690be1c736e7dfb571b202688058"
 dependencies = [
  "js-sys",
  "leptos",
@@ -1201,9 +1201,9 @@ dependencies = [
 
 [[package]]
 name = "rustify-docs"
-version = "0.2.0"
+version = "0.2.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d9cabaeeec7f6d4be7cde17896b3d5d33fa9884011292912a81bdaaa9f45ebdc"
+checksum = "ce64233fe9d92bc2505cdea209a6efe0806e0fc5c138346e0522b6ced7b91452"
 dependencies = [
  "any_spawner",
  "hydration_context",
@@ -1220,9 +1220,9 @@ dependencies = [
 
 [[package]]
 name = "rustify-docs-macros"
-version = "0.2.0"
+version = "0.2.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b592158a1324a362b087e8c6afdfa4b7acc174b1c3a8a557ccf1fbae32fa3acd"
+checksum = "f815c2b9e25629ac2b7bae4066e3a5c02a839906dc3da8392d4ff1c51397c9f0"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -1233,9 +1233,9 @@ dependencies = [
 
 [[package]]
 name = "rustify-docs-syntax"
-version = "0.2.0"
+version = "0.2.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "bb2468a5cd2045e49d5c8b1a1ce068a7b7b0a8a40e027bc71ec1dbd9e87d9650"
+checksum = "d21149b8eb1b8ad3d574fc4155a38ac4b65113af278271ba00b82498365b8903"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -1245,9 +1245,9 @@ dependencies = [
 
 [[package]]
 name = "rustify-dom"
-version = "0.2.0"
+version = "0.2.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8daff5103158cfd8eab85d8f319a49f009209fcc41169a75377de286fc821b63"
+checksum = "f9aa20f31b5fe085ee1b993768ef99fc5259c0ab94780d0b23e4ce8e2003a617"
 dependencies = [
  "js-sys",
  "leptos",
@@ -1261,9 +1261,9 @@ dependencies = [
 
 [[package]]
 name = "rustify-style"
-version = "0.2.0"
+version = "0.2.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "dc5af400a90f4f69d6bae22dd8a1362a16554279aa5d5871c64726443c19cb21"
+checksum = "35183677202157b6cee38f702b711895208c58fb17447f7ec5a4ddd10892bcb5"
 dependencies = [
  "flate2",
  "regex",
