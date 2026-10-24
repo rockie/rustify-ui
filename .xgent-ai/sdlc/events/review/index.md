@@ -11,6 +11,8 @@
 | 1996cbdf-4d81-4ba7-abac-d31ad78019a5 | 子目录入口 | [1996cbdf-4d81-4ba7-abac-d31ad78019a5](1996cbdf-4d81-4ba7-abac-d31ad78019a5/index.md) |
 | 1b86dee0-14ed-45c9-8800-e3c18a9c4439 | 子目录入口 | [对象事件](1b86dee0-14ed-45c9-8800-e3c18a9c4439/index.md) |
 | 1f739015-f48c-4e90-8370-093b2257e67f | 子目录入口 | [对象事件](1f739015-f48c-4e90-8370-093b2257e67f/index.md) |
+| 36714aee-ee6c-42b0-84d2-2d450716e0f1 | CRATES-IO-P1 代码评审 R1 事件 | [入口](36714aee-ee6c-42b0-84d2-2d450716e0f1/index.md) |
+| 0ce11938-a166-4a20-b109-09e66f4414da | CRATES-IO-P1 代码复审 R2 事件 | [入口](0ce11938-a166-4a20-b109-09e66f4414da/index.md) |
 | 459cfd1e-c07b-491f-9798-9bedd11b6296 | DOCS-SSG-P4 F-01 代码复审 R3 事件 | [入口](459cfd1e-c07b-491f-9798-9bedd11b6296/index.md) |
 | 4a0edc00-c638-4313-af24-7726f88bc321 | 子目录入口 | [4a0edc00-c638-4313-af24-7726f88bc321](4a0edc00-c638-4313-af24-7726f88bc321/index.md) |
 | 46921cbc-95cf-405a-aa5b-6d4c932b6d7f | 子目录入口 | [46921cbc-95cf-405a-aa5b-6d4c932b6d7f](46921cbc-95cf-405a-aa5b-6d4c932b6d7f/index.md) |
