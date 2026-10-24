@@ -216,8 +216,8 @@ rustify-docs dev
 
 Use standard release installation without `--profile docs-cli`. Build-info
 reports `distribution: registry`, `panic: unwind`, CLI source
-`ba9260ee08855a7469e4728403c087f35c8406d0` and library revision
-`4deb101dff9227ac4f0f313c10dc4c7b5815640c`. The rollback target is the
+`8fd7fd63679196e20f8e3572e4234bb51d8faf17` and library revision
+`b32844a489943649a49d9fbe46ee837e32017885`. The rollback target is the
 fixed `0.1.32` Git CLI and its original project files. Archive installation,
 package check/doc and author smoke passed on macOS and Ubuntu with Rust
 1.99.0; the runtime/browser pass gate remains macOS Chrome. Windows and

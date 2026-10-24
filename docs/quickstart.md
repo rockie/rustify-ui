@@ -229,7 +229,7 @@ mbx, no xtask, no Node, no Makepad.
 
 The application is a `cdylib` whose exports start it, plus a small host program
 that writes the SDK's loader and stylesheets beside the wasm.
-[`tests/dom-only/consumer` at the library release](https://github.com/rockie/rustify-ui/tree/4deb101dff9227ac4f0f313c10dc4c7b5815640c/tests/dom-only/consumer/) is the complete
+[`tests/dom-only/consumer` at the library release](https://github.com/rockie/rustify-ui/tree/b32844a489943649a49d9fbe46ee837e32017885/tests/dom-only/consumer/) is the complete
 fixture; `src/bin/export-dom-assets.rs` is the host program. Outside this
 repository, replace its two path dependencies with the following registry
 dependencies. The alias keeps the fixture's `rustify_ui` imports:

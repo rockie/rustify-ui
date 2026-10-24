@@ -33,8 +33,8 @@ cargo install --list
 
 Use the standard release profile, without `--profile docs-cli`. Expect
 `rustify-docs 0.2.1`, `panic: unwind`, `distribution: registry`, source C
-`ba9260ee08855a7469e4728403c087f35c8406d0` and a framework JSON line naming
-library R `4deb101dff9227ac4f0f313c10dc4c7b5815640c`. Its three framework
+`8fd7fd63679196e20f8e3572e4234bb51d8faf17` and a framework JSON line naming
+library R `b32844a489943649a49d9fbe46ee837e32017885`. Its three framework
 packages are all 0.2.1; `cargo install --list` names rustify-docs-cli v0.2.1.
 
 To create and preview a content site:
