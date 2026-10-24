@@ -10,6 +10,7 @@ import subprocess
 import tarfile
 import tempfile
 import unittest
+import urllib.error
 from unittest.mock import Mock, patch
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -143,6 +144,30 @@ class ReleaseTests(unittest.TestCase):
         cargo.assert_called_once_with('publish', '--registry', 'crates-io', '--locked', '-p', 'core', '--dry-run', timeout=3600)
         upload.assert_called_once()
         self.assertEqual(release.read_receipt(self.root)['packages'][0]['state'], 'published')
+
+
+class RegistryRequestTests(unittest.TestCase):
+    def test_transient_connection_failure_retries_the_read(self):
+        response = Mock()
+        with (patch.object(release.urllib.request, 'urlopen', side_effect=[urllib.error.URLError('TLS EOF'), response]) as request,
+              patch.object(release.time, 'sleep')):
+            self.assertIs(release.Registry().request('https://crates.io/api/v1/crates/core/0.2.0'), response)
+        self.assertEqual(request.call_count, 2)
+
+    def test_connection_retries_are_bounded(self):
+        with (patch.object(release.urllib.request, 'urlopen', side_effect=urllib.error.URLError('TLS EOF')) as request,
+              patch.object(release.time, 'sleep')):
+            with self.assertRaises(urllib.error.URLError):
+                release.Registry().request('https://crates.io/api/v1/crates/core/0.2.0')
+        self.assertEqual(request.call_count, 3)
+
+    def test_missing_version_is_not_retried(self):
+        error = urllib.error.HTTPError('https://crates.io', 404, 'Not found', {}, None)
+        with (patch.object(release.urllib.request, 'urlopen', side_effect=error) as request,
+              patch.object(release.time, 'sleep') as sleep):
+            self.assertIsNone(release.Registry().lookup('core', '0.2.0'))
+        request.assert_called_once()
+        sleep.assert_not_called()
 
 
 class CargoReproducibilityTests(unittest.TestCase):

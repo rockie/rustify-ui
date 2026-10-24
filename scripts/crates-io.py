@@ -138,7 +138,15 @@ def retry_time(value, now):
 class Registry:
     def request(self, url):
         request = urllib.request.Request(url, headers={"User-Agent":"rustify-crates-io-release/1"})
-        return urllib.request.urlopen(request, timeout=60)
+        for attempt in range(3):
+            try:
+                return urllib.request.urlopen(request, timeout=60)
+            except urllib.error.HTTPError:
+                raise
+            except urllib.error.URLError:
+                if attempt == 2:
+                    raise
+                time.sleep(attempt + 1)
 
     def lookup(self, name, version):
         # The API can acknowledge an upload before its sparse index is visible.
