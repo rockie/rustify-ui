@@ -12,6 +12,7 @@
 | 1f739015-f48c-4e90-8370-093b2257e67f | [DOCS-SSG-P2-gaps 代码评审 R2](../../../../docs/plan/DOCS-SSG-P2-gaps.code-review.r2.md) | [对象](1f739015-f48c-4e90-8370-093b2257e67f.md) | 活动 |
 | 36714aee-ee6c-42b0-84d2-2d450716e0f1 | [CRATES-IO-P1 代码评审 R1](../../../../docs/plan/CRATES-IO-P1.code-review.md) | [36714aee](36714aee-ee6c-42b0-84d2-2d450716e0f1.md) | 活动 |
 | 0ce11938-a166-4a20-b109-09e66f4414da | [CRATES-IO-P1 代码复审 R2](../../../../docs/plan/CRATES-IO-P1.code-review.r2.md) | [0ce11938](0ce11938-a166-4a20-b109-09e66f4414da.md) | 活动 |
+| c5423b46-21f3-4f6f-9b17-a6a6fc0e5033 | [发行工具按包修订 代码评审（8e77809c..60554d84）](../../../../docs/reviews/range-8e77809c-60554d84.code-review.md) | [c5423b46](c5423b46-21f3-4f6f-9b17-a6a6fc0e5033.md) | 活动 |
 | 459cfd1e-c07b-491f-9798-9bedd11b6296 | [DOCS-SSG-P4 F-01 代码复审 R3](../../../../docs/plan/DOCS-SSG-P4.code-review.r3.md) | [对象](459cfd1e-c07b-491f-9798-9bedd11b6296.md) | 活动 |
 | 4a0edc00-c638-4313-af24-7726f88bc321 | [DOCS-SSG PRD 完整评审](../../../../docs/PRD-DOCS-SSG.review.md) | [4a0edc00](4a0edc00-c638-4313-af24-7726f88bc321.md) | 活动 |
 | 46921cbc-95cf-405a-aa5b-6d4c932b6d7f | [DOCS-SSG-P2 完整计划评审](../../../../docs/plan/DOCS-SSG-P2.review.md) | [对象](46921cbc-95cf-405a-aa5b-6d4c932b6d7f.md) | 活动 |
