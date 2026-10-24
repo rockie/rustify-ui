@@ -6,6 +6,12 @@
 
 pub use rustify_dom::diagnostics::*;
 
+/// Names this runtime in the shared log and watches for GPU assets that fail.
+pub fn identify_runtime(runtime: u32, build: &str) {
+    rustify_dom::identify_runtime(runtime, build);
+    watch_assets();
+}
+
 /// Reports an asset the region asked for and did not get.
 ///
 /// Without this the failure is a log line inside the fork and nothing else:

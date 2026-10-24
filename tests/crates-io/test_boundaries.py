@@ -60,11 +60,12 @@ class BoundaryTests(unittest.TestCase):
                         # The unmodified upstream host macro retains its original broad major floor.
                         self.assertIn(version, (expected[name], expected[name].split(".")[0]))
                         self.assertFalse(version.startswith("="))
-        before = tomllib.loads(run("git", "show", "HEAD:Cargo.lock").stdout)["package"]
         after = tomllib.loads((ROOT / "Cargo.lock").read_text())["package"]
-        for name in expected:
+        # These expectations stay fixed even when a lock change is committed.
+        for name, version in expected.items():
+            versions = {"1.0.109", "2.0.119", "3.0.5"} if name == "syn" else {version}
             self.assertEqual(
-                {(p["version"], p.get("source")) for p in before if p["name"] == name},
+                {(version, release.CRATES_IO) for version in versions},
                 {(p["version"], p.get("source")) for p in after if p["name"] == name}, name,
             )
 

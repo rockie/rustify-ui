@@ -20,6 +20,7 @@ pub use rustify_dom::*;
 // module plus what only a GPU host can add. An explicit item beats a glob
 // import of the same name, so `rustify_ui::theme` is the one declared here.
 pub mod diagnostics;
+pub use diagnostics::{identify_runtime, watch_assets};
 pub mod theme;
 #[cfg(feature = "utility")]
 pub mod utility;

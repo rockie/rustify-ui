@@ -231,6 +231,7 @@ fn fill_components(template: &str, name: &str, package: &str) -> String {
 
 fn named_lock(lock: &str, package: &str) -> Result<String, String> {
     let mut renamed = String::with_capacity(lock.len() + package.len());
+    let name_line = format!("name = \"{package}\"\n");
     let mut roots = 0;
     for (index, record) in lock.split("\n[[package]]\n").enumerate() {
         if index > 0 {
@@ -246,6 +247,12 @@ fn named_lock(lock: &str, package: &str) -> Result<String, String> {
                 1,
             ));
         } else {
+            if record.starts_with(&name_line) {
+                return Err(format!(
+                    "The package name {} is already used by a dependency in the components template lock; choose a different directory name.",
+                    code_span(package)
+                ));
+            }
             renamed.push_str(record);
         }
     }
@@ -427,5 +434,13 @@ mod tests {
         }
         assert!(!text.contains("{{"));
         assert!(template_pair("version = 4\n").is_err());
+    }
+
+    #[test]
+    fn keeping_the_template_root_name_preserves_the_lock_bytes() {
+        assert_eq!(
+            named_lock(COMPONENTS_LOCK, "docs-site").unwrap(),
+            COMPONENTS_LOCK
+        );
     }
 }

@@ -1228,11 +1228,8 @@ dependencies = [
 name = "rustify-ui"
 version = "0.2.0"
 dependencies = [
- "js-sys",
  "leptos",
  "rustify-dom",
- "wasm-bindgen",
- "web-sys",
 ]
 
 [[package]]

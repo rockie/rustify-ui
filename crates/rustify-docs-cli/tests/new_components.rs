@@ -96,6 +96,45 @@ fn components_never_write_into_a_nonempty_directory() {
 }
 
 #[test]
+fn components_reject_dependency_names_before_writing_new_or_existing_directories() {
+    let temp = Temp::new("components-name-conflict");
+    let tools = target_toolchain(&temp, true);
+    for name in [
+        "rustify-docs",
+        "rustify-dom",
+        "leptos",
+        "serde",
+        "Wasm Bindgen",
+    ] {
+        let package = name.to_ascii_lowercase().replace(' ', "-");
+        let refused = tools.run_in(&temp.0, &["new", name, "--template", "components"]);
+        assert_eq!(
+            refused.status.code(),
+            Some(1),
+            "{name}: {}",
+            stderr(&refused)
+        );
+        let message = stderr(&refused);
+        assert!(
+            message.contains(&package) && message.contains("different directory name"),
+            "{message}"
+        );
+        assert!(!temp.path(name).exists());
+        assert_no_staging(&temp);
+    }
+    std::fs::create_dir(temp.path("rustify-components")).unwrap();
+    let refused = tools.run_in(
+        &temp.path("rustify-components"),
+        &["new", ".", "--template", "components"],
+    );
+    assert_eq!(refused.status.code(), Some(1));
+    assert!(stderr(&refused).contains("rustify-components"));
+    assert!(tree(&temp.path("rustify-components")).is_empty());
+    assert_no_staging(&temp);
+    assert!(tools.calls().iter().all(|call| call.starts_with("rustc ")));
+}
+
+#[test]
 fn components_ship_a_complete_paired_lock_or_refuse_without_writing() {
     let temp = Temp::new("components-pair");
     let tools = target_toolchain(&temp, true);

@@ -5,6 +5,7 @@ import io
 import json
 from contextlib import nullcontext
 from pathlib import Path
+import re
 import shutil
 import subprocess
 import tarfile
@@ -47,6 +48,16 @@ class ReleaseTests(unittest.TestCase):
 
     def publish(self, **kwargs):
         return release.publish_packages(self.root, self.receipt, 'docs', self.registry, self.upload, now=1000, **kwargs)
+
+    def test_workflow_prefetch_covers_every_locked_registry_input(self):
+        workflow = (ROOT / '.github/workflows/crates-io.yml').read_text()
+        manifests = re.findall(r'^\s+mbx fetch --locked(?: --manifest-path (\S+))?$', workflow, re.MULTILINE)
+        self.assertTrue(manifests, 'workflow must prefetch dependencies before offline packaging')
+        prefetched = [(ROOT / (manifest or 'Cargo.toml')).with_name('Cargo.lock') for manifest in manifests]
+        available = {(p['name'], p['version'], p['checksum']) for p in release.locked_registry_packages(prefetched)}
+        locks = release.lock_inputs(ROOT, self.root, [])
+        required = {(p['name'], p['version'], p['checksum']) for p in release.locked_registry_packages(locks)}
+        self.assertEqual(required - available, set(), 'workflow prefetch omits locked registry inputs')
 
     def test_existing_same_checksum_resumes_without_repackaging_or_upload(self):
         self.registry.lookup.return_value = self.package['sha256']

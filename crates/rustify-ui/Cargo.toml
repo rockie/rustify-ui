@@ -17,7 +17,7 @@ ssr = ["rustify-dom/ssr"]
 # Makepad GPU regions. Off by default: a DOM application links no Makepad.
 # Turning it on also withdraws the core's DOM host export, because this host
 # creates the page's host itself through the Makepad loader.
-gpu = ["dep:rustify-makepad", "dep:rustify-style", "csr", "rustify-dom/external-host"]
+gpu = ["dep:rustify-makepad", "csr", "rustify-dom/external-host"]
 utility = ["rustify-dom/utility", "dep:rustify-style"]
 
 [dependencies]
@@ -34,29 +34,6 @@ rustify-style = { path = "../rustify-style", default-features = false, features 
 # The region bridge and the GPU controls are components and context values in
 # their own right, not re-exported core items.
 leptos.workspace = true
-js-sys.workspace = true
-web-sys = { workspace = true, features = [
-    "AbortSignal",
-    "AddEventListenerOptions",
-    "Document",
-    "DomRect",
-    "Element",
-    "Event",
-    "EventTarget",
-    "History",
-    "HtmlCanvasElement",
-    "HtmlElement",
-    "KeyboardEvent",
-    "Location",
-    "MouseEvent",
-    "Node",
-    "Performance",
-    "Url",
-    "Window",
-] }
-
-[target.'cfg(target_arch = "wasm32")'.dependencies]
-wasm-bindgen.workspace = true
 
 [lints.rust]
 unexpected_cfgs = { level = "warn", check-cfg = ['cfg(web_sys_unstable_apis)'] }

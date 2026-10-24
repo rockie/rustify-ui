@@ -61,6 +61,11 @@ jobs:
           mbx fetch --locked
           mbx fetch --locked --manifest-path site/Cargo.toml
           mbx fetch --locked --manifest-path tests/docs-ssg/fixtures/components/Cargo.toml
+          mbx fetch --locked --manifest-path tests/dom-only/Cargo.toml
+          mbx fetch --locked --manifest-path tests/dom-only/gpu-negative/Cargo.toml
+          mbx fetch --locked --manifest-path tests/dom-only/hydration/Cargo.toml
+          mbx fetch --locked --manifest-path makepad/Cargo.toml
+          mbx fetch --locked --manifest-path makepad/platform/script/Cargo.toml
       - name: Package frozen R, reproduce the real template lock, package C
         run: |
           release_dir="$RUNNER_TEMP/rustify-crates-io"
