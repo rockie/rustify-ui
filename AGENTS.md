@@ -158,4 +158,4 @@ Rustify UI 按能力分工组合 Leptos CSR 与 Makepad：Leptos 负责 DOM 界�
 - 有前端改动时完成上述真实浏览器验收，报告入口、主路径、关键边界和结果；阻塞项明确列出。
 - 发布时使用 `xgent-app-release`，镜像交付使用 `xgent-image-push`。发布前验证 release-cli 身份；换镜像带 `--wait`，以新版本实际运行作为成功依据。
 - 发布清单不携带密钥值，镜像 tag 不可变；迁移打进镜像、持锁、失败非零退出，并兼容仍在运行的旧版本。onebox 手动迁移与生产控制器迁移分别验证。
-- crates.io 九包发行走 `docs/crates-io-release.md` 与 `scripts/crates-io.py`。每个包的归档绑定自己的 `source_rev`：只有该包的目录/manifest 或它解析到的锁闭包变了才重打并升版，其余用 `package-libraries --reuse <上一发行目录>` 复用原归档、原版本与原校验和；只改 CLI 时不要顺手升库包版本。动手前先 `plan-libraries --reuse … --rev <完整 SHA>` 看谁要重打。框架三包（docs/dom/components）的版本必须同步移动，因为 CLI 的配对记录只带一个 framework revision。
+- crates.io 九包发行走 `docs/crates-io-release.md` 与 `scripts/crates-io.py`。每个包的归档绑定自己的 `source_rev`：只有该包的目录/manifest 或它解析到的锁闭包变了才重打并升版，其余用 `package-libraries --reuse <上一发行目录>` 复用原归档、原版本与原校验和；只改 CLI 时不要顺手升库包版本。动手前先 `plan-libraries --reuse … --rev <完整 SHA>` 看谁要重打。框架三包（docs/dom/components）的版本必须同步移动，因为 CLI 的配对记录只带一个 framework revision；库包版本默认跟随 workspace，要让某个包真正单独发版，先给它自己的 `version`（其余继续继承）。

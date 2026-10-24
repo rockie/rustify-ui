@@ -88,7 +88,9 @@ python3.12 scripts/crates-io.py package-libraries --rev "$R" --reuse "$PREV" --o
 A CLI-only change therefore keeps all eight library archives and needs only a
 new C and CLI archive. A change to rustify-style or the framework trio still
 rebuilds every package that resolves it, because their packaged locks and exact
-pins change. A byte mismatch against the previous receipt is a failure to
+pins change. Library versions are inherited from the workspace, so bumping one
+of them rewrites every manifest and the plan reports all eight; give a package
+its own `version` when it has to move alone. A byte mismatch against the previous receipt is a failure to
 investigate; do not replace receipt hashes or silently regenerate the release
 to hide it.
 
