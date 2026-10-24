@@ -4,7 +4,7 @@ Rustify UI is an experimental Rust SDK for Leptos CSR applications in the browse
 
 Each task implements only the rendering path it needs. Work on both paths requires an explicit requirement or a concrete need for cooperation across DOM and GPU regions. Shared state and theme tokens do not require matching component sets or CSS support. A specific application use case has not yet been selected.
 
-This repository contains the SDK, DOM components, a Makepad fork and six runnable examples. The workspace is version `0.2.0`. Nine Docs/DOM/style packages are being prepared for crates.io; the GPU SDK, Makepad bridge and examples remain private. Registry publication is still pending. Use the [repository quick start](#quick-start) to build an example; use the [SDK quick start](docs/quickstart.md) to write a region or integrate the components into an application.
+This repository contains the SDK, DOM components, a Makepad fork and six runnable examples. The workspace is version `0.2.0`. Nine Docs/DOM/style packages are published on crates.io; the GPU SDK, Makepad bridge and examples remain Git-only. Use the [repository quick start](#quick-start) to build an example; use the [SDK quick start](docs/quickstart.md) to write a region or integrate the components into an application.
 
 ## Quick start
 
@@ -202,10 +202,10 @@ language. The [official documentation](https://rockie.github.io/rustify-ui/)
 has English and Chinese reading shells; the real Chinese sources are the
 home page and [quick start](docs/zh/quickstart.md), with the other guides
 and component categories using explicit English-content fallback.
-The validated CLI is `0.1.32`, from this pinned source revision:
+Install the `0.2.0` CLI from crates.io:
 
 ```sh
-cargo install --git https://github.com/rockie/rustify-ui --rev 88566ba1ed08223a5834f794840fff5e48f4ba8a --locked --profile docs-cli rustify-docs-cli
+cargo install rustify-docs-cli --version 0.2.0 --locked
 rustify-docs --version
 rustify-docs --build-info
 cargo install --list
@@ -214,35 +214,38 @@ cd my-docs
 rustify-docs dev
 ```
 
-This revision passed installation from both local git and GitHub on macOS
-arm64 with Rust 1.99.0. Its rollback target is the previous release, `0.1.31`.
-Linux and Windows are not verified. See the [author's reference](docs/docs-ssg.md#install-and-maintain-the-cli)
+Use standard release installation without `--profile docs-cli`. Build-info
+reports `distribution: registry`, `panic: unwind`, CLI source
+`ba9260ee08855a7469e4728403c087f35c8406d0` and library revision
+`4deb101dff9227ac4f0f313c10dc4c7b5815640c`. The rollback target is the
+fixed `0.1.32` Git CLI and its original project files. Archive installation,
+package check/doc and author smoke passed on macOS and Ubuntu with Rust
+1.99.0; the runtime/browser pass gate remains macOS Chrome. Windows and
+complete Linux runtime support are not verified. See the [author's reference](docs/docs-ssg.md#install-and-maintain-the-cli)
 for build, preview, hosting, upgrade and rollback commands, and the
 [DOM consumer recipe](docs/quickstart.md#a-dom-application-without-gpu-regions)
 for using the SDK without GPU regions.
 
-### 0.2.0 registry candidate
+### 0.2.0 registry release
 
-The candidate command is `cargo install rustify-docs-cli --version 0.2.0 --locked`.
-It becomes the default after real publication and public installation checks;
-use the verified 0.1.32 Git recipe above until then. The candidate uses system
-fonts by default and lets each project declare local font files. Both new
-project types include a complete, inactive `theme.example.json`.
+The CLI uses system fonts by default and lets each project declare local
+font files. Both new project types include a complete, inactive
+`theme.example.json`. Content sites, components and landing pages are included.
 
-The planned registry packages are `rustify-classification-macros`,
+The registry packages are `rustify-classification-macros`,
 `rustify-style`, `rustify-docs-syntax`, `rustify-docs-macros`, `rustify-dom`,
 `rustify-components`, `rustify-docs`, `rustify-docs-cli` and `rustify-style-wasm`.
 `rustify-dom` owns the shared types and DOM runtime; `rustify-ui` reexports it
 and keeps the GPU API in Git. Components no longer forward a `gpu` feature.
-See [candidate migration](docs/docs-ssg.md#020-registry-candidate-and-migration),
-[DOM/GPU source pairing](docs/quickstart.md#020-dom-candidate-and-gpu-source-pairing),
-[font migration](docs/themes.md#020-candidate-docs-font-migration) and the
+See [migration](docs/docs-ssg.md#020-registry-pairing-and-migration),
+[DOM/GPU source pairing](docs/quickstart.md#020-dom-core-and-gpu-source-pairing),
+[font migration](docs/themes.md#020-docs-font-migration) and the
 [release procedure](docs/crates-io-release.md). No official site deployment is
 included in this release.
 
 ## Runtime and deployment boundaries
 
-A DOM application depends on `rustify-ui` and `rustify-components` with their default features and is built with plain Cargo and the wasm-bindgen CLI; the [quick start](docs/quickstart.md#a-dom-application-without-gpu-regions) has the recipe, and it needs none of this repository's tooling. GPU regions are the `gpu` feature, which every example here turns on.
+A DOM application depends on `rustify-dom` and `rustify-components` with their default features and is built with plain Cargo and the wasm-bindgen CLI; the [quick start](docs/quickstart.md#a-dom-application-without-gpu-regions) has the recipe, and it needs none of this repository's tooling. GPU regions are the `gpu` feature, which every example here turns on.
 
 One application instance contains Leptos and, with `gpu`, Makepad in one wasm instance. A page can start multiple independent instances with separate memory and host hooks. A trap ends every scope and region in the affected instance. Restarts are capped at three per slot because dead-instance memory remains until the page unloads.
 
