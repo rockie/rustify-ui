@@ -47,12 +47,12 @@
 
 ### 恢复快照
 
-- 最近更新：2026-10-24 14:38 +0800
+- 最近更新：2026-10-24 15:21 +0800
 - 当前进度：5/6 个里程碑完成
-- 当前状态：M1–M5 已完成；M6 的 V-13 已通过，开始 V-14 Docs 组真实发布
+- 当前状态：M1–M5 已完成；M6 的 V-13/V-14 已通过，九包实际发布，正在准备 V-15 终验
 - 最近完成：M5
-- 下一步：按冻结 receipt 串行上传 Docs 组，通过公开 Docs 安装门后发布 remaining 组；九包齐全后推送公开说明，完成公开安装/docs.rs 终验和标签推送。
-- 当前阻塞：无。用户已明确授权上传/后续推送并选择沿用长期 token；账号、邮箱和权限已核实，本次保留既有凭证配置的例外见 M6 记录
+- 下一步：推送 0.2.0 公开说明，执行另一个全新公开安装及 content/components/landing、回滚和文档链接终验；按已确认的八库 docs.rs / CLI 命令文档边界完成 V-15，再推送标签。
+- 当前阻塞：无。用户已确认八个库验 docs.rs，CLI 验公开 README、帮助和真实安装使用；长期 token 例外已确认，原凭证配置保留
 - 代码基线：修正库候选 R `4deb101dff9227ac4f0f313c10dc4c7b5815640c`，CLI C3 `ba9260ee08855a7469e4728403c087f35c8406d0`；已随 main `2fed1fa9` 推送（初始 R0 `37c77f5e`、C1 `6142e85e`、C2 `a9cfa79a` 留档）
 
 ### 完成记录
@@ -64,7 +64,7 @@
 | M3 | 已完成 | 2026-10-22 18:15 +0800 | Css/Packaged、本地字体快照/产物、完整示例及迁移已交付；局部测试/快速门通过，浏览器用例留 M5 | [M3 记录](CRATES-IO-P1.records/M3.md) | `37c77f5e` |
 | M4 | 已完成 | 2026-10-22 19:03 +0800 | registry 配对/缓存、发行/续接、三模式 helper/CI 及候选文档局部门通过，库候选 R 已提交 | [M4 记录](CRATES-IO-P1.records/M4.md) | `37c77f5e` |
 | M5 | 已完成 | 2026-10-24 14:10 +0800 | V-7 至 V-12、V-16 全部通过；双平台 run 39801397581 成功，九包实际字节/锁/VCS 身份与本地冻结归档一致 | [M5 记录](CRATES-IO-P1.records/M5.md) | `4deb101d`、`6142e85e`、`a9cfa79a`、`ba9260ee`、`cc10ad5e`、`43004b03` |
-| M6 | 进行中 | 2026-10-24 14:38 +0800 | V-13 已通过；用户确认沿用长期 token 并保留既有配置，开始冻结九包的分组真实发布 | [M6 记录](CRATES-IO-P1.records/M6.md) | `43004b03`、`54b4bb77`、`9b7684cd` |
+| M6 | 进行中 | 2026-10-24 15:21 +0800 | 九包已发布，公开 checksum 与组间安装门通过；八库 docs.rs / CLI 命令文档边界已由用户确认，继续最终消费者验收 | [M6 记录](CRATES-IO-P1.records/M6.md) | `43004b03`、`54b4bb77`、`9b7684cd` |
 
 ## 0. 需求、范围与决策
 
@@ -240,6 +240,7 @@ crates.io API 在调查时对首批已查询名称返回 404；`rustify-style-wa
 - 仓内约 304 MB 的外部对照测试资料继续留原位。把直接引用仓根的测试函数/模块限定到 `cfg(all(test, rustify_repo_tests))`，在相关 manifest 的 unexpected_cfgs 白名单登记；普通算法单测继续默认运行。CI 明确增加带 `--cfg rustify_repo_tests` 的专门 corpus 门，并断言该门确实运行了 fixture 检查。不能只加 cfg 后丢失原覆盖，也不增加公开的不可移植 feature。包装后默认 `cargo test --lib` 不得再遇到缺失的外部 include。
 - `sources.lock.json` 与 scanner inventory 登记真实改变的宏包 manifest/许可元数据；Makepad 依赖来源变化按上条记录，CLI 字体 vendor 条目随 §3.3 删除；不把修改后的文件写成未改上游副本。
 - library docs.rs 选一个有效呈现路径：dom/components 用关闭默认 feature 的 ssr，docs 用 pipeline 默认；禁止 all-features 使 SSR/hydrate 或 CSR 混合。各库显式设 `default-target = "x86_64-unknown-linux-gnu"`、`targets = []`；style-wasm 则设 `default-target = "wasm32-unknown-unknown"`、`targets = []` 及 compiler,scanner。README 写明呈现模式、wasm 专属项在 host SSR 文档中不可见及实际支持范围。V-12 的 stable 单目标离线门只验证可移植性，docs.rs 的 nightly 沙箱结果另由 V-15 核对，不将两者视作相同环境（[metadata](https://docs.rs/about/metadata)、[builds](https://docs.rs/about/builds)）。
+- CLI 只有二进制 target，docs.rs 的 `rustdoc --lib` 会报告无库 target。2026-10-24 用户据实际 build 4986709 确认本期文档门为八库 docs.rs 成功，CLI 以公开 README、`--help` 和真实安装/作者流程验收；保留该服务失败记录，不为命令文档增设库或另发补丁版。实际依据见 M6 记录。
 
 ### 2.4 验证接缝
 
@@ -427,7 +428,7 @@ registry 版本不能覆写；yank 只改变新解算，不删除旧字节或废
 | V-12 | NFR-1、C-2：包外文档和安装可编译，无仓根/Makepad 资源依赖 | ★crates-io.yml 仅 workflow_dispatch，完整 SHA 输入 library_rev/cli_rev；授权后先推送含 workflow、R/C 的 main，再 `gh workflow run crates-io.yml --ref main -f library_rev="$R" -f cli_rev="$C"`。校验 R/C/库内容和重包 checksum；macOS 归档安装 smoke，Linux 按 §2.3 metadata 分别 cargo doc/check 及 CLI 安装 smoke，依赖预取后 --offline，style-wasm 用 wasm32；保存 run ID/结论 | M5 阶段收口；不重复本地浏览器全量，不推导完整 Linux/Windows 支持或 docs.rs nightly 已通过 |
 | V-13 | A-1、NFR-3：授权、包名/版本、身份/owner、token 范围/过期时间、归档和 clean R/C 就绪 | 用户确认 §4 的上传与后续推送范围；发布人完成登录/邮箱，核对 publish-new、覆盖九包的名称模式和可覆盖限流窗口的有效期，已有 crate 上传还需 publish-update；Agent 重查包名/owner、receipt 与 V-6 通过证据；不打印凭证。上层包真实 dry-run 在 V-14 按依赖就绪执行 | M6 发布风险门；先于任何上传 |
 | V-14 | R-1、R-2、R-6：真实上传/续接、索引与字节正确、两组之间的公开门明确 | ★publish --group docs；公开下载校验；执行 §5.4 的独立 CARGO_HOME/--root 公开安装门（含 content 与 components），通过后 publish --group remaining；429 按服务端时间记 receipt 并续接。引用 M4 V-6 的故障测试，不在生产注入故障；九包可获取后提交/推送公开说明 | M6 真实发布风险门 |
-| V-15 | R-1、R-6：完全不使用 staging、Git 或 path 的真实安装、公开说明、升级/回滚配方 | 九包齐全且公开说明已推送后，全新 CARGO_HOME/独立目录按包 README 执行 `cargo install rustify-docs-cli --version 0.2.0 --locked --root <目录>`（仓内验证用 mbx 包装）；核对 build-info/listing、content/components/landing 主路径和 §8 回滚；查询九包及其 docs.rs 精确版本页面/构建状态，等待成功，失败或仍排队保留未通过项；公开 README/模板链接须读到 0.2.0 说明 | M6 阶段收口；一次最终终验，与 V-14 的组间门及 staging 证据分开 |
+| V-15 | R-1、R-6：完全不使用 staging、Git 或 path 的真实安装、公开说明、升级/回滚配方 | 九包齐全且公开说明已推送后，全新 CARGO_HOME/独立目录按包 README 执行 `cargo install rustify-docs-cli --version 0.2.0 --locked --root <目录>`（仓内验证用 mbx 包装）；核对 build-info/listing、content/components/landing 主路径和 §8 回滚；查询九包精确版本，八个库的 docs.rs 精确版本页面/构建须成功，失败或排队保留未通过项；仅二进制 CLI 按用户确认核对公开 README、--help 和真实安装使用，保留其无库 target 的 docs.rs 记录；公开 README/模板链接须读到 0.2.0 说明 | M6 阶段收口；一次最终终验，与 V-14 的组间门及 staging 证据分开 |
 | V-16 | R-4、R-5：角色模拟只凭发行候选文档完成站点与自供字体接入 | V-8 通过后，Agent 模拟会 Markdown/HTML、不会 Rust 的作者，仅可读 §6 的归档/模板 README、--help、C 树作者指南；已安装 staging CLI 与替换源由环境准备，角色从空目录创建 landing，复制生成的 theme.example.json、声明本地字体、构建预览并确认加载。卡点先修文档，再按 §5.3 重冻及 §9.2 重验 | M5 阶段收口，早于任何上传；不虚构真人成功率 |
 
 ### 9.2 证据边界

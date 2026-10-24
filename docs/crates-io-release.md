@@ -169,9 +169,13 @@ push within the approval scope. Do not change already validated package README
 or template bytes after freezing. From public links read back the new wording.
 
 Run `verify --release "$DIR" --public` with another fresh Cargo home/root and
-complete the final public author/migration checks. Query every exact package
-version and its docs.rs version/build result, including the CLI; wait for all
-required docs.rs jobs to succeed. A queued or failed job is an unpassed gate.
+complete the final public author/migration checks. Query all nine exact package
+versions and the eight libraries' docs.rs version/build results; wait for all
+eight documentation jobs to succeed. A queued or failed library job is an unpassed gate.
+The CLI is binary-only, while docs.rs invokes `rustdoc --lib`; retain its
+no-library-target build result and verify its public package README, `--help`
+and real installation/use instead. The publishing user confirmed this boundary
+for 0.2.0 in the milestone record.
 Stable preflight is distinct from [docs.rs build configuration](https://docs.rs/about/metadata).
 Record actual platforms, sizes, install times, public documentation commit and
 remaining limits, without claiming untested Windows or full Linux support.

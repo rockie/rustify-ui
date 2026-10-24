@@ -68,14 +68,14 @@ document = "theme.json"
 
 The path is relative to the site project. Keep the document inside the project and outside private files and generated output. It is a build input and is watched during development; it is never published as a download. Do not combine `theme.document` with `theme.primary`: the imported document supplies both primary colors.
 
-The currently published Git CLI **0.1.32** validates both modes against its
+The historical Git CLI **0.1.32** validates both modes against its
 bundled catalogue and publishes selected faces, existing CJK/emoji fallbacks
 and their notices. Its unchanged recipe and bytes are retained at the
 [fixed 0.1.32 source](https://github.com/rockie/rustify-ui/tree/88566ba1ed08223a5834f794840fff5e48f4ba8a).
 
-### 0.2.0 candidate Docs font migration
+### 0.2.0 Docs font migration
 
-The **0.2.0 candidate** keeps the 256 KiB complete JSON import and projects
+The **0.2.0 CLI** keeps the 256 KiB complete JSON import and projects
 colors, metrics, typography and mode onto the page and its island scopes.
 It resolves font stacks as CSS choices and embeds no font bytes. The default
 reading appearance is unchanged when no document is imported. For local

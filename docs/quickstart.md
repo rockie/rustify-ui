@@ -218,8 +218,8 @@ vocabulary is the application's. `format_number` and `format_date` go through
 
 ## A DOM application without GPU regions
 
-For the historical Git SDK, default features are DOM only: `rustify-ui` and `rustify-components`
-without `gpu` link no Makepad, and the GPU API (`GpuRegion`, `RegionApp`,
+Use `rustify-dom` and `rustify-components` from crates.io with their default
+features. They link no Makepad, and the GPU API (`GpuRegion`, `RegionApp`,
 `RegionId`, `RegionState`, `makepad_widgets`) does not compile. Everything else -
 `mount`, the overlay stack, toasts, jobs, `listen`, `defer`, `observe_resize`,
 routing, themes and the components - works the same. What such an application
@@ -229,20 +229,19 @@ mbx, no xtask, no Node, no Makepad.
 
 The application is a `cdylib` whose exports start it, plus a small host program
 that writes the SDK's loader and stylesheets beside the wasm.
-[`tests/dom-only/consumer` at that Git revision](https://github.com/rockie/rustify-ui/tree/1b81de25f23a25702f61dbfd3d0ecdfe323d4d44/tests/dom-only/consumer/) is the complete
-fixture; its `Cargo.toml` names the two crates (by path here; a consumer names
-them by git URL and revision) and `src/bin/export-dom-assets.rs` is the host
-program. Outside this repository, replace the two path dependencies with:
+[`tests/dom-only/consumer` at the library release](https://github.com/rockie/rustify-ui/tree/4deb101dff9227ac4f0f313c10dc4c7b5815640c/tests/dom-only/consumer/) is the complete
+fixture; `src/bin/export-dom-assets.rs` is the host program. Outside this
+repository, replace its two path dependencies with the following registry
+dependencies. The alias keeps the fixture's `rustify_ui` imports:
 
 ```toml
-rustify-ui = { git = "https://github.com/rockie/rustify-ui", rev = "1b81de25f23a25702f61dbfd3d0ecdfe323d4d44" }
-rustify-components = { git = "https://github.com/rockie/rustify-ui", rev = "1b81de25f23a25702f61dbfd3d0ecdfe323d4d44" }
+rustify-ui = { package = "rustify-dom", version = "=0.2.0" }
+rustify-components = { version = "=0.2.0" }
 ```
 
-This source passed the consumer recipe from both local git and GitHub,
-without the root workspace's patches, including the DOM browser checks.
-Keep the fixture's other dependency versions, let Cargo resolve these git
-dependencies once, then commit the resulting `Cargo.lock`. To build it:
+The release passed DOM-only and hydration browser checks. Keep the fixture's
+other dependency versions, generate and commit the consumer's `Cargo.lock`,
+then build it:
 
 ```sh
 cargo install wasm-bindgen-cli --version 0.2.128 --locked
@@ -280,11 +279,10 @@ tests/dom-only/consumer/Cargo.toml` (to `target/dom/dom-consumer/`), served with
 `mbx xtask docs-verify --group features` and
 `npx playwright test -c playwright.docs.config.ts --project=dom-only`.
 
-## 0.2.0 DOM candidate and GPU source pairing
+## 0.2.0 DOM core and GPU source pairing
 
-The registry candidate splits the DOM core into rustify-dom. Publication is
-pending; the validated Git recipe above remains the available default.
-A DOM consumer can use these candidate dependencies while keeping existing
+The registry release splits the DOM core into rustify-dom. A DOM consumer
+uses these dependencies while keeping existing
 `rustify_ui` imports through a Cargo alias:
 
 ```toml
@@ -318,7 +316,7 @@ this unification Theme/Toast/action values cannot cross them. The Docs CLI's
 registry projects still require all three exact canonical registry packages;
 this GPU recipe does not relax that rule.
 
-For old Docs projects, the [candidate migration steps](docs-ssg.md#020-registry-candidate-and-migration)
+For old Docs projects, the [migration steps](docs-ssg.md#020-registry-pairing-and-migration)
 cover a new manifest/lock, import and feature changes, project-owned fonts and
 backup rollback. A content-only author can start with the complete generated
 theme example and local fonts without compiling Theme Studio.

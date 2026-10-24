@@ -13,33 +13,31 @@ This page is the reference for what an author writes: the project layout,
 problems `check` reports. The same Markdown file is meant to read well on
 GitHub; where the two differ, the section says so.
 
-Supported on macOS. Linux and Windows are not verified.
+Runtime/browser support is validated on macOS Chrome. Linux archive installation
+and package check/doc pass preflight; full Linux runtime and Windows are not verified.
 
 ## Install and maintain the CLI
 
-The verified CLI is **0.1.32**, from source C
-`88566ba1ed08223a5834f794840fff5e48f4ba8a`, paired with library revision
-`0fd34edaffda1926b38ea64c023b2fe1fc5115c5`. It supports content sites,
-the components template and the multilingual examples below.
-`rustify-docs --build-info` and `cargo install --list` identify the CLI
-source C after installation.
-
-The CLI is distributed from git, with its dependencies locked and the
-workspace's `docs-cli` profile, which unwinds so that `dev` can recover from a
-failed build. The pinned version below is **0.1.32**, verified from both local
-git and GitHub on macOS arm64 with Rust 1.99.0. The source revision, profile,
-generated template and production manifest were checked after installation.
+Install **0.2.0** from crates.io with stable Rust. It includes content sites,
+the components template, multilingual search and landing pages. Archive
+installation and author smoke passed with Rust 1.99.0 on macOS and Ubuntu;
+package check/doc passed on both runners. The runtime/browser support gate
+remains macOS Chrome; Windows and full Linux runtime support are unverified.
 
 ```sh
-cargo install --git https://github.com/rockie/rustify-ui --rev 88566ba1ed08223a5834f794840fff5e48f4ba8a --locked --profile docs-cli rustify-docs-cli
+cargo install rustify-docs-cli --version 0.2.0 --locked
 rustify-docs --version
 rustify-docs --build-info
 cargo install --list
 ```
 
-Expect `rustify-docs 0.1.32`, `panic: unwind`, and source
-`88566ba1ed08223a5834f794840fff5e48f4ba8a`. The install listing names that
-revision too. To create and preview a content site:
+Use the standard release profile, without `--profile docs-cli`. Expect
+`rustify-docs 0.2.0`, `panic: unwind`, `distribution: registry`, source C
+`ba9260ee08855a7469e4728403c087f35c8406d0` and a framework JSON line naming
+library R `4deb101dff9227ac4f0f313c10dc4c7b5815640c`. Its three framework
+packages are all 0.2.0; `cargo install --list` names rustify-docs-cli v0.2.0.
+
+To create and preview a content site:
 
 ```sh
 rustify-docs new my-docs
@@ -49,53 +47,35 @@ rustify-docs dev
 ```
 
 Stop `dev`, then run `rustify-docs build` and `rustify-docs preview` to test
-the production output. For content-only sites, no site compilation or
-network request is needed by `new`, `build` or the default `check` after the
-CLI is installed.
+the production output. After CLI installation, content-only `new`, `build`
+and default `check` need no site compilation or network request.
 
-Reinstall or upgrade to this pinned version with `--force`:
+Reinstall or upgrade to this version with `--force`:
+
+```sh
+cargo install rustify-docs-cli --version 0.2.0 --locked --force
+```
+
+The rollback target is the historical **0.1.32** Git CLI, source C
+`88566ba1ed08223a5834f794840fff5e48f4ba8a`, paired with library R
+`0fd34edaffda1926b38ea64c023b2fe1fc5115c5`. Restore that version's original
+manifest/lock, sources/configuration, theme/font files and complete output,
+then reinstall it:
 
 ```sh
 cargo install --git https://github.com/rockie/rustify-ui --rev 88566ba1ed08223a5834f794840fff5e48f4ba8a --locked --profile docs-cli --force rustify-docs-cli
 ```
 
-The rollback target for this release is **0.1.31**, the previous release,
-from source C `1146b7d8febdf53ca1bc1a4c01946604e7625a95` with the same paired library
-revision. Its public Git installation was verified when it was published.
-Roll back with:
+This historical Git install still needs `--profile docs-cli` for unwind.
+After changing CLI versions, check `--version`, `--build-info`, the Cargo
+listing and `cli_version` in a fresh build's rustify-docs-manifest.json.
+Restart `dev` to discard its in-memory cache. For deployment rollback, replace
+the entire output and its matching manifest, keeping each build's HTML,
+wasm, CSS and fonts together.
 
-```sh
-cargo install --git https://github.com/rockie/rustify-ui --rev 1146b7d8febdf53ca1bc1a4c01946604e7625a95 --locked --profile docs-cli --force rustify-docs-cli
-```
+## 0.2.0 registry pairing and migration
 
-After either command, check `--version`, the source in `cargo install --list`
-and the `cli_version` in a fresh build's `rustify-docs-manifest.json`.
-Restart `dev` after switching versions to discard its in-memory cache;
-production `build` always reads the complete inputs. Restore a deployment by
-replacing the entire output and its matching manifest with a complete prior
-build. Keep each version's fingerprinted assets together.
-
-In the historical 0.1.32 CLI, `--help` and the generated README use the same source revision recorded at
-CLI compilation. This reads Cargo's existing git metadata using Rust alone;
-it requires no git command or network request. A source archive without
-that metadata reports `source: unknown` and gives the pinned 0.1.3 recipe.
-The bundled help also retains its older 0.1.3 rollback recipe; use the
-0.1.31 target above for this release.
-
-## 0.2.0 registry candidate and migration
-
-Registry 0.2.0 is a candidate pending publication. Keep using the verified Git
-installation above until public installation is confirmed. The candidate
-installation and upgrade command is:
-
-```sh
-cargo install rustify-docs-cli --version 0.2.0 --locked
-rustify-docs --version
-rustify-docs --build-info
-cargo install --list
-```
-
-For reinstall/upgrade, add `--force`. No custom profile is needed. Expect
+The registry release uses the installation and upgrade commands above. Expect
 `panic: unwind`, `distribution: registry`, and one `framework: <JSON>` line
 with the exact versions of rustify-docs, rustify-dom and rustify-components,
 wasm-bindgen and library commit. `source` identifies the CLI commit when
@@ -128,14 +108,14 @@ To migrate an existing 0.1.32 component project:
    Remove rustify-components/gpu. Run check, build and preview, then restart dev.
 4. An imported old theme can request previously bundled font names. Choose
    system generic stacks in both modes, or supply licensed files and declare
-   theme.fonts using the [font instructions below](#020-candidate-project-owned-fonts).
+   theme.fonts using the [font instructions below](#020-project-owned-fonts).
    `theme-font-system` warns on undeclared named families; `--deny-warnings`
    still fails while warnings remain. CJK/emoji and line wrapping may change.
 
 Docs component projects use DOM rendering. For a GPU application, keep the
 SDK and components at one complete Git revision; enable gpu on the SDK.
 Combining a Git SDK with registry components needs the root rustify-dom
-patch described in the [source pairing recipe](quickstart.md#020-dom-candidate-and-gpu-source-pairing).
+patch described in the [source pairing recipe](quickstart.md#020-dom-core-and-gpu-source-pairing).
 The Docs registry same-source rule remains strict.
 
 To roll back, reinstall the 0.1.32 Git CLI with its command above and restore
@@ -350,8 +330,8 @@ route, an unknown route or a Markdown page listed there is an error; use
 
 ### Publish several languages
 
-These multilingual examples use the paired CLI 0.1.32 and the framework
-revision described above.
+These multilingual examples use the paired CLI 0.2.0 and framework versions
+described above.
 
 Declare every language, including the default `site.lang`. The default has
 an empty prefix and keeps the existing addresses. Other languages each
@@ -505,17 +485,17 @@ both modes and applies the same resolved semantic colours, typography,
 spacing and radius to the page and its island scopes. System mode follows
 the reader's preference; islands do not store separate mode choices.
 
-The published Git CLI **0.1.32** bundles the seven catalogue/glyph fallback
+The historical Git CLI **0.1.32** bundles the seven catalogue/glyph fallback
 faces and their notices, and emits the selected fonts under digest paths.
 That historical recipe is fixed at [0.1.32's source](https://github.com/rockie/rustify-ui/tree/88566ba1ed08223a5834f794840fff5e48f4ba8a).
 Without an imported document it uses system fonts. Its font bytes and exact
 fallback behavior belong to that release.
 
-### 0.2.0 candidate: project-owned fonts
+### 0.2.0 project-owned fonts
 
-The 0.2.0 candidate keeps the system-font default and removes CLI font
-embedding. Do not apply this configuration to 0.1.32; use the candidate CLI
-only after obtaining the matching candidate distribution.
+The 0.2.0 CLI keeps the system-font default and removes CLI font embedding.
+This configuration requires the matching 0.2.0 CLI and framework packages;
+it is not available in 0.1.32.
 
 The default reading theme uses system fonts and makes no font requests. To
 customize a complete theme without building Theme Studio:
@@ -757,7 +737,7 @@ labelled by each fence's `title`:
 <!-- rustify:code-group name="install" -->
 
 ```sh title="Cargo"
-cargo install --locked rustify-docs-cli
+cargo install rustify-docs-cli --version 0.2.0 --locked
 ```
 
 ```toml title="Config"
@@ -809,16 +789,14 @@ to a draft is an error in `check` and `build`, and a warning in `dev`.
 
 ### Create a component project
 
-The components template requires an installed CLI with a traceable source
-revision, an explicit paired framework revision and its embedded dependency
-lock. A development checkout without that frozen pair refuses generation;
-it does not write an unlocked project or choose a framework revision for
-the author. The published 0.1.32 CLI pins library revision
-`0fd34edaffda1926b38ea64c023b2fe1fc5115c5` and embeds its generated dependency
-lock. The installed CLI's `--build-info` identifies its C commit. Its public
-Git installation has been verified on macOS arm64. A newly generated
-project's check, build and browser interactions were verified with 0.1.31,
-which pins the same library revision.
+The 0.2.0 components template directly depends on rustify-docs, rustify-dom
+and rustify-components, all at `=0.2.0` from crates.io, with an embedded
+checksum-bearing lock. `new` changes only the root package name; generation
+does not compile, contact the network or resolve a new lock. The CLI's
+`--build-info` identifies its frozen registry pair. Wrong versions, mixed
+sources or duplicate framework packages fail with `rust-framework-pair`.
+The generated project's SSR/hydrate build and browser interactions passed
+release validation.
 
 With a published paired CLI and stable Rust available, install the browser
 target if needed, then create the project:
@@ -1207,9 +1185,8 @@ inside the configured Rust project.
 
 ## Offline search and AI discovery
 
-These features require the P4 CLI/framework candidate; the public P1 pin in
-the installation section predates them. Content-only sites still compile no
-Rust and need no Node, search service or search wasm.
+The 0.2.0 CLI includes these features. Content-only sites compile no Rust
+and need no Node, search service or search wasm.
 
 Open **Search**, or press Cmd/Ctrl+K. The input receives focus immediately,
 including while the same-origin module, Worker and current-language JSON
@@ -1276,11 +1253,8 @@ A landing page is a Markdown page for paid traffic: `layout: landing`. It
 shows the home page's hero without the site's navigation, and it is the one
 kind of page that may load another origin's measurement script, send its
 requests, embed a form service's frame and post a lead form. Landing pages
-come with the first CLI release after 0.1.32: the pinned 0.1.32 release
-above reports `[landing]` as an unknown key. Until that release, a CLI built
-from the repository's current source has them, although it still reports
-version 0.1.32; `rustify-docs --build-info` names the source it was built
-from.
+are included in CLI 0.2.0. The historical 0.1.32 CLI reports `[landing]`
+as an unknown key; upgrade the CLI before enabling a landing profile.
 
 What a landing page may load is never written on the page. The
 configuration declares named profiles, and a page selects one by name:
