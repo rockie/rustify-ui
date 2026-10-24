@@ -7,7 +7,7 @@ publish = ["crates-io"]
 description = "Procedural site registry declarations for Rustify Docs"
 
 repository = "https://github.com/rockie/rustify-ui"
-documentation = "https://docs.rs/rustify-docs-macros/0.2.0"
+documentation = "https://docs.rs/rustify-docs-macros/0.2.1"
 readme = "README.md"
 rust-version = "1.99"
 include = ["src/**", "README.md", "LICENSE"]
@@ -16,7 +16,7 @@ include = ["src/**", "README.md", "LICENSE"]
 proc-macro = true
 
 [dependencies]
-rustify-docs-syntax = { path = "../rustify-docs-syntax", version = "=0.2.0" }
+rustify-docs-syntax = { path = "../rustify-docs-syntax", version = "=0.2.1" }
 syn = { version = "2.0.119", features = ["full"] }
 proc-macro2 = "1.0.107"
 quote = "1.0.47"

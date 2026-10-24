@@ -18,24 +18,24 @@ and package check/doc pass preflight; full Linux runtime and Windows are not ver
 
 ## Install and maintain the CLI
 
-Install **0.2.0** from crates.io with stable Rust. It includes content sites,
+Install **0.2.1** from crates.io with stable Rust. It includes content sites,
 the components template, multilingual search and landing pages. Archive
 installation and author smoke passed with Rust 1.99.0 on macOS and Ubuntu;
 package check/doc passed on both runners. The runtime/browser support gate
 remains macOS Chrome; Windows and full Linux runtime support are unverified.
 
 ```sh
-cargo install rustify-docs-cli --version 0.2.0 --locked
+cargo install rustify-docs-cli --version 0.2.1 --locked
 rustify-docs --version
 rustify-docs --build-info
 cargo install --list
 ```
 
 Use the standard release profile, without `--profile docs-cli`. Expect
-`rustify-docs 0.2.0`, `panic: unwind`, `distribution: registry`, source C
+`rustify-docs 0.2.1`, `panic: unwind`, `distribution: registry`, source C
 `ba9260ee08855a7469e4728403c087f35c8406d0` and a framework JSON line naming
 library R `4deb101dff9227ac4f0f313c10dc4c7b5815640c`. Its three framework
-packages are all 0.2.0; `cargo install --list` names rustify-docs-cli v0.2.0.
+packages are all 0.2.1; `cargo install --list` names rustify-docs-cli v0.2.1.
 
 To create and preview a content site:
 
@@ -53,7 +53,7 @@ and default `check` need no site compilation or network request.
 Reinstall or upgrade to this version with `--force`:
 
 ```sh
-cargo install rustify-docs-cli --version 0.2.0 --locked --force
+cargo install rustify-docs-cli --version 0.2.1 --locked --force
 ```
 
 The rollback target is the historical **0.1.32** Git CLI, source C
@@ -330,7 +330,7 @@ route, an unknown route or a Markdown page listed there is an error; use
 
 ### Publish several languages
 
-These multilingual examples use the paired CLI 0.2.0 and framework versions
+These multilingual examples use the paired CLI 0.2.1 and framework versions
 described above.
 
 Declare every language, including the default `site.lang`. The default has
@@ -737,7 +737,7 @@ labelled by each fence's `title`:
 <!-- rustify:code-group name="install" -->
 
 ```sh title="Cargo"
-cargo install rustify-docs-cli --version 0.2.0 --locked
+cargo install rustify-docs-cli --version 0.2.1 --locked
 ```
 
 ```toml title="Config"
@@ -789,8 +789,8 @@ to a draft is an error in `check` and `build`, and a warning in `dev`.
 
 ### Create a component project
 
-The 0.2.0 components template directly depends on rustify-docs, rustify-dom
-and rustify-components, all at `=0.2.0` from crates.io, with an embedded
+The 0.2.1 components template directly depends on rustify-docs, rustify-dom
+and rustify-components, all at `=0.2.1` from crates.io, with an embedded
 checksum-bearing lock. `new` changes only the root package name; generation
 does not compile, contact the network or resolve a new lock. The CLI's
 `--build-info` identifies its frozen registry pair. Wrong versions, mixed

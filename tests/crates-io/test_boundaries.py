@@ -151,8 +151,8 @@ version = "0.0.0"
 edition = "2021"
 [dependencies]
 rustify-ui = {{ {git}, default-features = false, features = ["ssr"] }}
-rustify-dom = {{ version = "=0.2.0", default-features = false, features = ["ssr"] }}
-rustify-components = {{ version = "=0.2.0", default-features = false, features = ["ssr"] }}
+rustify-dom = {{ version = "=0.2.1", default-features = false, features = ["ssr"] }}
+rustify-components = {{ version = "=0.2.1", default-features = false, features = ["ssr"] }}
 '''
             (probe / "Cargo.toml").write_text(manifest)
             (probe / "src/lib.rs").write_text('''pub fn theme(value: rustify_ui::Theme) -> rustify_dom::Theme { value }
@@ -171,7 +171,7 @@ pub fn toast(value: rustify_ui::Toast) {
             run(*args, env=build_env)
             metadata = json.loads(run("mbx", "metadata", "--offline", "--format-version", "1", "--config", str(config), "--manifest-path", str(probe / "Cargo.toml")).stdout)
             self.assertEqual(len([p for p in metadata["packages"] if p["name"] == "rustify-dom"]), 1)
-            same_source = manifest.replace('version = "=0.2.0"', git)
+            same_source = manifest.replace('version = "=0.2.1"', git)
             (probe / "Cargo.toml").write_text(same_source)
             run(*args, env=build_env)
 

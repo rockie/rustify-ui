@@ -3,14 +3,14 @@ name = "rustify-docs-cli"
 # Its own version, not the workspace's: it changes whenever the binary's
 # sources, embedded assets or resolved dependencies change, and both
 # `--version` and a production manifest's `cli_version` report it.
-version = "0.2.0"
+version = "0.2.1"
 edition.workspace = true
 license.workspace = true
 publish = ["crates-io"]
 description = "The rustify-docs command: new, dev, build, preview and check for Rustify Docs sites"
 
 repository = "https://github.com/rockie/rustify-ui"
-documentation = "https://docs.rs/rustify-docs-cli/0.2.0"
+documentation = "https://docs.rs/rustify-docs-cli/0.2.1"
 readme = "README.md"
 rust-version = "1.99"
 include = ["src/**", "README.md", "LICENSE", "build.rs", "assets/**", "templates/**"]
@@ -20,12 +20,12 @@ name = "rustify-docs"
 path = "src/main.rs"
 
 [dependencies]
-rustify-docs = { path = "../rustify-docs", version = "=0.2.0" }
+rustify-docs = { path = "../rustify-docs", version = "=0.2.1" }
 # The component stylesheets, read through its API instead of by path.
-rustify-components = { path = "../rustify-components", version = "=0.2.0", default-features = false }
-rustify-ui = { package = "rustify-dom", path = "../rustify-dom", version = "=0.2.0", default-features = false, features = ["ssr"] }
-rustify-docs-syntax = { path = "../rustify-docs-syntax", version = "=0.2.0" }
-rustify-style = { path = "../rustify-style", version = "=0.2.0", default-features = false, features = ["scanner"] }
+rustify-components = { path = "../rustify-components", version = "=0.2.1", default-features = false }
+rustify-ui = { package = "rustify-dom", path = "../rustify-dom", version = "=0.2.1", default-features = false, features = ["ssr"] }
+rustify-docs-syntax = { path = "../rustify-docs-syntax", version = "=0.2.1" }
+rustify-style = { path = "../rustify-style", version = "=0.2.1", default-features = false, features = ["scanner"] }
 syn = { version = "2.0.119", features = ["full", "visit"] }
 proc-macro2 = { version = "1.0.107", features = ["span-locations"] }
 wasm-bindgen-cli-support = "=0.2.128"

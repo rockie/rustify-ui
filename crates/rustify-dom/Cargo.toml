@@ -7,7 +7,7 @@ publish = ["crates-io"]
 description = "The shared Rustify core: DOM runtime, bindings, theming and diagnostics, with no GPU dependency"
 
 repository = "https://github.com/rockie/rustify-ui"
-documentation = "https://docs.rs/rustify-dom/0.2.0"
+documentation = "https://docs.rs/rustify-dom/0.2.1"
 readme = "README.md"
 rust-version = "1.99"
 include = ["src/**", "README.md", "LICENSE", "web/**", "tests/ssr_scope.rs"]
@@ -30,7 +30,7 @@ utility = ["dep:rustify-style", "dep:futures-channel"]
 serde = { version = "1.0.229", features = ["derive"] }
 serde_json = { version = "1.0.151", features = ["raw_value"] }
 leptos.workspace = true
-rustify-style = { path = "../rustify-style", version = "=0.2.0", default-features = false, features = ["cn", "protocol"], optional = true }
+rustify-style = { path = "../rustify-style", version = "=0.2.1", default-features = false, features = ["cn", "protocol"], optional = true }
 futures-channel = { version = "0.3", optional = true }
 # DOM handles have to sit in Leptos context values, which are Send + Sync.
 send_wrapper = "0.6"

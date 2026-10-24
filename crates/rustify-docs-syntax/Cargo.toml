@@ -7,7 +7,7 @@ publish = ["crates-io"]
 description = "Shared native parser for Rustify Docs site declarations"
 
 repository = "https://github.com/rockie/rustify-ui"
-documentation = "https://docs.rs/rustify-docs-syntax/0.2.0"
+documentation = "https://docs.rs/rustify-docs-syntax/0.2.1"
 readme = "README.md"
 rust-version = "1.99"
 include = ["src/**", "README.md", "LICENSE"]

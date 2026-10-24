@@ -174,7 +174,7 @@ fn components_ship_a_complete_paired_lock_or_refuse_without_writing() {
         assert!(manifest.starts_with("[package]\nname = \"my-docs\"\n"));
         assert!(manifest.contains("[workspace]"));
         assert!(manifest.contains("name = \"site_docs\""));
-        assert_eq!(manifest.matches("version = \"=0.2.0\"").count(), 3);
+        assert_eq!(manifest.matches("version = \"=0.2.1\"").count(), 3);
         assert!(!manifest.contains("path = \"../../"));
         let embedded = std::fs::read_to_string(
             std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("assets/components-Cargo.lock"),
@@ -190,7 +190,7 @@ fn components_ship_a_complete_paired_lock_or_refuse_without_writing() {
             .contains("name = \"My Docs\""));
         let readme = temp.read("My Docs/README.md");
         assert!(readme.contains("new 'My Docs' --template components"));
-        assert!(readme.contains("crates.io") && readme.contains("=0.2.0"));
+        assert!(readme.contains("crates.io") && readme.contains("=0.2.1"));
         assert!(!readme.contains("{{"));
     }
     assert_eq!(

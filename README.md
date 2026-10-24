@@ -4,7 +4,7 @@ Rustify UI is an experimental Rust SDK for Leptos CSR applications in the browse
 
 Each task implements only the rendering path it needs. Work on both paths requires an explicit requirement or a concrete need for cooperation across DOM and GPU regions. Shared state and theme tokens do not require matching component sets or CSS support. A specific application use case has not yet been selected.
 
-This repository contains the SDK, DOM components, a Makepad fork and six runnable examples. The workspace is version `0.2.0`. Nine Docs/DOM/style packages are published on crates.io; the GPU SDK, Makepad bridge and examples remain Git-only. Use the [repository quick start](#quick-start) to build an example; use the [SDK quick start](docs/quickstart.md) to write a region or integrate the components into an application.
+This repository contains the SDK, DOM components, a Makepad fork and six runnable examples. The workspace is version `0.2.1`. Nine Docs/DOM/style packages are published on crates.io; the GPU SDK, Makepad bridge and examples remain Git-only. Use the [repository quick start](#quick-start) to build an example; use the [SDK quick start](docs/quickstart.md) to write a region or integrate the components into an application.
 
 ## Quick start
 
@@ -202,10 +202,10 @@ language. The [official documentation](https://rockie.github.io/rustify-ui/)
 has English and Chinese reading shells; the real Chinese sources are the
 home page and [quick start](docs/zh/quickstart.md), with the other guides
 and component categories using explicit English-content fallback.
-Install the `0.2.0` CLI from crates.io:
+Install the `0.2.1` CLI from crates.io:
 
 ```sh
-cargo install rustify-docs-cli --version 0.2.0 --locked
+cargo install rustify-docs-cli --version 0.2.1 --locked
 rustify-docs --version
 rustify-docs --build-info
 cargo install --list
@@ -243,7 +243,7 @@ See [migration](docs/docs-ssg.md#020-registry-pairing-and-migration),
 [release procedure](docs/crates-io-release.md). No official site deployment is
 included in this release.
 
-docs.rs hosts API documentation for the library packages. The 0.2.0 CLI is
+docs.rs hosts API documentation for the library packages. The CLI is
 binary-only, so its docs.rs library build is unavailable; use its package
 README, `--help` and the author's reference for command documentation.
 

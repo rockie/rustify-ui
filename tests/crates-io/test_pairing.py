@@ -17,14 +17,14 @@ class PairingTests(unittest.TestCase):
     def info(self, mode='registry'):
         framework = {
             'schema': 1, 'registry': 'crates-io', 'library_rev': 'a' * 40,
-            'packages': {name: '0.2.0' for name in ('rustify-docs', 'rustify-dom', 'rustify-components')},
+            'packages': {name: '0.2.1' for name in ('rustify-docs', 'rustify-dom', 'rustify-components')},
             'wasm_bindgen': '0.2.128',
         }
         revision = 'b' * 40
         if mode == 'source':
             revision = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip()
             framework['development_checkout'] = hashlib.sha256(str(ROOT.resolve()).encode()).hexdigest()
-        return f'rustify-docs 0.2.0\npanic: unwind\nsource: {revision}\ndistribution: {mode}\nframework: {json.dumps(framework)}\n'
+        return f'rustify-docs 0.2.1\npanic: unwind\nsource: {revision}\ndistribution: {mode}\nframework: {json.dumps(framework)}\n'
 
     def test_registry_identity_does_not_require_a_local_git_commit(self):
         identity = pairing.read_identity(self.info(), ROOT)
@@ -37,7 +37,7 @@ class PairingTests(unittest.TestCase):
         self.assertEqual(pairing.read_identity(self.info('source'), ROOT)['mode'], 'source')
         for text in (
             self.info('source').replace('development_checkout', 'wrong_checkout'),
-            self.info('source').replace('"rustify-dom": "0.2.0"', '"rustify-dom": "0.1.0"'),
+            self.info('source').replace('"rustify-dom": "0.2.1"', '"rustify-dom": "0.1.0"'),
             self.info('source').replace('source: ' + subprocess.check_output(['git','rev-parse','HEAD'], cwd=ROOT, text=True).strip(), 'source: ' + '0' * 40),
         ):
             with self.assertRaises(ValueError): pairing.read_identity(text, ROOT)
@@ -49,7 +49,7 @@ class PairingTests(unittest.TestCase):
         projected = pairing.project_manifest(original, identity, ROOT)
         document = tomllib.loads(projected.decode())
         alias = document['dependencies']['rustify-ui']
-        self.assertEqual(alias, {'package':'rustify-dom', 'version':'=0.2.0', 'default-features':False})
+        self.assertEqual(alias, {'package':'rustify-dom', 'version':'=0.2.1', 'default-features':False})
         self.assertEqual(document['features'], tomllib.loads(original.decode())['features'])
         before = [line for line in original.splitlines(keepends=True) if not line.startswith((b'rustify-ui = ', b'rustify-docs = ', b'rustify-components = '))]
         after = [line for line in projected.splitlines(keepends=True) if not line.startswith((b'rustify-ui = ', b'rustify-docs = ', b'rustify-components = '))]
@@ -88,7 +88,7 @@ class PairingTests(unittest.TestCase):
     def test_release_readmes_teach_registry_installation_and_project_owned_fonts(self):
         cli = ROOT / 'crates/rustify-docs-cli'
         package = (cli / 'README.md').read_text()
-        self.assertIn('cargo install rustify-docs-cli --version 0.2.0 --locked', package)
+        self.assertIn('cargo install rustify-docs-cli --version 0.2.1 --locked', package)
         for path in (cli / 'README.md', cli / 'templates/content/README.md', cli / 'templates/components/README.md'):
             text = path.read_text()
             self.assertIn('theme.example.json', text)
@@ -98,7 +98,7 @@ class PairingTests(unittest.TestCase):
             self.assertNotIn('requires a traceable CLI source revision', text)
         template = tomllib.loads((cli / 'templates/components/Cargo.toml.in').read_text().replace('{{package}}','docs-site'))
         for name in pairing.FRAMEWORKS:
-            self.assertEqual(template['dependencies'][name], {'version':'=0.2.0', 'default-features':False})
+            self.assertEqual(template['dependencies'][name], {'version':'=0.2.1', 'default-features':False})
 
 
 if __name__ == '__main__': unittest.main()

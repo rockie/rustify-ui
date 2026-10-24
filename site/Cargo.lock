@@ -1176,7 +1176,7 @@ dependencies = [
 
 [[package]]
 name = "rustify-components"
-version = "0.2.0"
+version = "0.2.1"
 dependencies = [
  "js-sys",
  "leptos",
@@ -1188,7 +1188,7 @@ dependencies = [
 
 [[package]]
 name = "rustify-docs"
-version = "0.2.0"
+version = "0.2.1"
 dependencies = [
  "any_spawner",
  "hydration_context",
@@ -1205,7 +1205,7 @@ dependencies = [
 
 [[package]]
 name = "rustify-docs-macros"
-version = "0.2.0"
+version = "0.2.1"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -1216,7 +1216,7 @@ dependencies = [
 
 [[package]]
 name = "rustify-docs-syntax"
-version = "0.2.0"
+version = "0.2.1"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -1226,7 +1226,7 @@ dependencies = [
 
 [[package]]
 name = "rustify-dom"
-version = "0.2.0"
+version = "0.2.1"
 dependencies = [
  "js-sys",
  "leptos",
@@ -1251,7 +1251,7 @@ dependencies = [
 
 [[package]]
 name = "rustify-style"
-version = "0.2.0"
+version = "0.2.1"
 dependencies = [
  "flate2",
  "regex",

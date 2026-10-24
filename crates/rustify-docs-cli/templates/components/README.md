@@ -274,7 +274,7 @@ rustify-docs --build-info
 cargo install --list
 ```
 
-`rustify-docs`, `rustify-dom` and `rustify-components` pin `=0.2.0`;
+`rustify-docs`, `rustify-dom` and `rustify-components` pin `=0.2.1`;
 wasm-bindgen pins `=0.2.128`. The lock includes real registry checksums.
 A mismatched version, source or duplicate DOM core is rejected before
 rendering. Cargo dependency aliases are supported. Keep the profiles in
@@ -301,7 +301,7 @@ lock together and reinstall it with:
 
 When upgrading a 0.1.32 project, replace its `rustify-ui` dependency with
 `rustify-dom` and update `rustify_ui` imports to `rustify_dom`. To keep
-imports, use `rustify-ui = { package = "rustify-dom", version = "=0.2.0",
+imports, use `rustify-ui = { package = "rustify-dom", version = "=0.2.1",
 default-features = false }` and retain that key in feature lists. Remove
 `rustify-components/gpu` from custom feature lists. Back up an imported
 theme and declare its local fonts as described above; system fallbacks,

@@ -260,7 +260,7 @@ checksum = "2550f75b8cfac212855f6b1885455df8eaee8fe8e246b647d69146142e016084"
 
 [[package]]
 name = "component-catalog"
-version = "0.2.0"
+version = "0.2.1"
 dependencies = [
  "js-sys",
  "leptos",
@@ -436,7 +436,7 @@ checksum = "4583a4551df46e2792f82ceeac45e850d2e2d5debba0b91f102385cda5b11f06"
 
 [[package]]
 name = "data-workbench"
-version = "0.2.0"
+version = "0.2.1"
 dependencies = [
  "leptos",
  "rustify-components",
@@ -686,7 +686,7 @@ dependencies = [
 
 [[package]]
 name = "fusion-basic"
-version = "0.2.0"
+version = "0.2.1"
 dependencies = [
  "leptos",
  "rustify-makepad",
@@ -2147,7 +2147,7 @@ dependencies = [
 
 [[package]]
 name = "property-workbench"
-version = "0.2.0"
+version = "0.2.1"
 dependencies = [
  "leptos",
  "rustify-components",
@@ -2403,7 +2403,7 @@ dependencies = [
 
 [[package]]
 name = "rustify-classification-macros"
-version = "0.2.0"
+version = "0.2.1"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -2412,7 +2412,7 @@ dependencies = [
 
 [[package]]
 name = "rustify-components"
-version = "0.2.0"
+version = "0.2.1"
 dependencies = [
  "js-sys",
  "leptos",
@@ -2425,7 +2425,7 @@ dependencies = [
 
 [[package]]
 name = "rustify-docs"
-version = "0.2.0"
+version = "0.2.1"
 dependencies = [
  "any_spawner",
  "cssparser",
@@ -2456,7 +2456,7 @@ dependencies = [
 
 [[package]]
 name = "rustify-docs-cli"
-version = "0.2.0"
+version = "0.2.1"
 dependencies = [
  "dom_query",
  "kqueue",
@@ -2478,7 +2478,7 @@ dependencies = [
 
 [[package]]
 name = "rustify-docs-macros"
-version = "0.2.0"
+version = "0.2.1"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -2489,7 +2489,7 @@ dependencies = [
 
 [[package]]
 name = "rustify-docs-syntax"
-version = "0.2.0"
+version = "0.2.1"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -2499,7 +2499,7 @@ dependencies = [
 
 [[package]]
 name = "rustify-dom"
-version = "0.2.0"
+version = "0.2.1"
 dependencies = [
  "futures-channel",
  "js-sys",
@@ -2515,7 +2515,7 @@ dependencies = [
 
 [[package]]
 name = "rustify-makepad"
-version = "0.2.0"
+version = "0.2.1"
 dependencies = [
  "js-sys",
  "makepad-widgets",
@@ -2526,7 +2526,7 @@ dependencies = [
 
 [[package]]
 name = "rustify-style"
-version = "0.2.0"
+version = "0.2.1"
 dependencies = [
  "bexpand",
  "bstr",
@@ -2547,7 +2547,7 @@ dependencies = [
 
 [[package]]
 name = "rustify-style-wasm"
-version = "0.2.0"
+version = "0.2.1"
 dependencies = [
  "js-sys",
  "rustify-style",
@@ -2559,7 +2559,7 @@ dependencies = [
 
 [[package]]
 name = "rustify-ui"
-version = "0.2.0"
+version = "0.2.1"
 dependencies = [
  "leptos",
  "rustify-dom",
@@ -3081,7 +3081,7 @@ dependencies = [
 
 [[package]]
 name = "theme-studio"
-version = "0.2.0"
+version = "0.2.1"
 dependencies = [
  "js-sys",
  "leptos",
@@ -3382,7 +3382,7 @@ checksum = "b6c140620e7ffbb22c2dee59cafe6084a59b5ffc27a8859a5f0d494b5d52b6be"
 
 [[package]]
 name = "utility-lab"
-version = "0.2.0"
+version = "0.2.1"
 dependencies = [
  "leptos",
  "rustify-components",
@@ -3406,7 +3406,7 @@ dependencies = [
 
 [[package]]
 name = "vellum"
-version = "0.2.0"
+version = "0.2.1"
 dependencies = [
  "js-sys",
  "leptos",
@@ -3934,7 +3934,7 @@ checksum = "3ad82d2a33cdc9674dc7465672f271e096168fcdbe0f799d9e6db8c5892679dc"
 
 [[package]]
 name = "xtask"
-version = "0.2.0"
+version = "0.2.1"
 dependencies = [
  "pulldown-cmark 0.13.4",
  "rustify-components",

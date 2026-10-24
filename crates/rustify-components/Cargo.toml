@@ -7,7 +7,7 @@ publish = ["crates-io"]
 description = "DOM components for the Rustify UI SDK, forked from Rust/UI and rewritten to be controlled, CSP-clean and reachable"
 
 repository = "https://github.com/rockie/rustify-ui"
-documentation = "https://docs.rs/rustify-components/0.2.0"
+documentation = "https://docs.rs/rustify-components/0.2.1"
 readme = "README.md"
 rust-version = "1.99"
 include = ["src/**", "README.md", "LICENSE", "css/**", "LICENSE-RUST-UI"]
@@ -26,10 +26,10 @@ leptos.workspace = true
 # GPU regions, so they take no SDK facade and no Makepad with it. An
 # application that draws regions depends on `rustify-ui` itself and enables
 # gpu there.
-rustify-ui = { package = "rustify-dom", path = "../rustify-dom", version = "=0.2.0", default-features = false }
+rustify-ui = { package = "rustify-dom", path = "../rustify-dom", version = "=0.2.1", default-features = false }
 # Class-string merging. Pure Rust, no Leptos feature: the component crate
 # decides what a class list means, not the library that merges it.
-rustify-style = { path = "../rustify-style", version = "=0.2.0" }
+rustify-style = { path = "../rustify-style", version = "=0.2.1" }
 paste = "1"
 js-sys.workspace = true
 # The drop zone reads a `DragEvent`'s file list, and the picker its input's.

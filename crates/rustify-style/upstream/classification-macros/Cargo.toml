@@ -1,13 +1,13 @@
 [package]
 name = "rustify-classification-macros"
-version = "0.2.0"
+version = "0.2.1"
 edition = "2021"
 license = "MIT"
 publish = ["crates-io"]
 description = "Byte classification derive for the Rustify Tailwind scanner"
 
 repository = "https://github.com/rockie/rustify-ui"
-documentation = "https://docs.rs/rustify-classification-macros/0.2.0"
+documentation = "https://docs.rs/rustify-classification-macros/0.2.1"
 readme = "README.md"
 rust-version = "1.99"
 include = ["src/**", "README.md", "LICENSE"]

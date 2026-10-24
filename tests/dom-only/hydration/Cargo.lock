@@ -1189,7 +1189,7 @@ dependencies = [
 
 [[package]]
 name = "rustify-components"
-version = "0.2.0"
+version = "0.2.1"
 dependencies = [
  "js-sys",
  "leptos",
@@ -1201,7 +1201,7 @@ dependencies = [
 
 [[package]]
 name = "rustify-dom"
-version = "0.2.0"
+version = "0.2.1"
 dependencies = [
  "js-sys",
  "leptos",
@@ -1215,7 +1215,7 @@ dependencies = [
 
 [[package]]
 name = "rustify-style"
-version = "0.2.0"
+version = "0.2.1"
 dependencies = [
  "flate2",
  "regex",
@@ -1226,7 +1226,7 @@ dependencies = [
 
 [[package]]
 name = "rustify-ui"
-version = "0.2.0"
+version = "0.2.1"
 dependencies = [
  "leptos",
  "rustify-dom",

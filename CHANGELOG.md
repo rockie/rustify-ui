@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.2.1
+
+- Republish the nine crates.io packages at 0.2.1 so the CLI fix ships inside
+the frozen registry pair. The eight library packages keep their 0.2.0 behavior
+and sources; only their version, internal `=0.2.1` pins and archive identity
+move, because a CLI version bump changes the root lock and the release tooling
+ties that lock to the library revision R.
+- `rustify-docs new <directory> --template components` refuses a directory
+  name that is already a package in the embedded template lock, and names the
+  colliding package, instead of writing a project whose lock only renamed the
+  root record. The embedded template lock and existing projects are unchanged
+  apart from the 0.2.1 versions.
+
 ## 0.2.0
 
 - Publish nine crates.io packages: rustify-classification-macros,

@@ -428,7 +428,7 @@ mod tests {
         let document: toml::Value = toml::from_str(&text).unwrap();
         for name in crate::release::FRAMEWORKS {
             let dependency = &document["dependencies"][name];
-            assert_eq!(dependency["version"].as_str(), Some("=0.2.0"));
+            assert_eq!(dependency["version"].as_str(), Some("=0.2.1"));
             assert!(dependency.get("git").is_none());
             assert!(dependency.get("path").is_none());
         }

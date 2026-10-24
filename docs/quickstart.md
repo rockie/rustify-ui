@@ -235,8 +235,8 @@ repository, replace its two path dependencies with the following registry
 dependencies. The alias keeps the fixture's `rustify_ui` imports:
 
 ```toml
-rustify-ui = { package = "rustify-dom", version = "=0.2.0" }
-rustify-components = { version = "=0.2.0" }
+rustify-ui = { package = "rustify-dom", version = "=0.2.1" }
+rustify-components = { version = "=0.2.1" }
 ```
 
 The release passed DOM-only and hydration browser checks. Keep the fixture's
@@ -286,8 +286,8 @@ uses these dependencies while keeping existing
 `rustify_ui` imports through a Cargo alias:
 
 ```toml
-rustify-ui = { package = "rustify-dom", version = "=0.2.0" }
-rustify-components = { version = "=0.2.0" }
+rustify-ui = { package = "rustify-dom", version = "=0.2.1" }
+rustify-components = { version = "=0.2.1" }
 ```
 
 New code may instead depend on rustify-dom directly and import rustify_dom.
@@ -303,7 +303,7 @@ components, unify the core at the application root:
 ```toml
 [dependencies]
 rustify-ui = { git = "https://github.com/rockie/rustify-ui", rev = "<complete-revision>", features = ["gpu"] }
-rustify-components = { version = "=0.2.0" }
+rustify-components = { version = "=0.2.1" }
 
 [patch.crates-io]
 rustify-dom = { git = "https://github.com/rockie/rustify-ui", rev = "<same-complete-revision>" }

@@ -9,7 +9,7 @@ Commands: new, check, build, preview and dev. Content-only sites do not compile 
 Use stable Rust (at least 1.99) on macOS:
 
 ```sh
-cargo install rustify-docs-cli --version 0.2.0 --locked
+cargo install rustify-docs-cli --version 0.2.1 --locked
 rustify-docs --version
 rustify-docs --build-info
 cargo install --list
@@ -20,7 +20,7 @@ rustify-docs build
 rustify-docs preview
 ```
 
-Expect version 0.2.0, `panic: unwind`, `distribution: registry`, and a
+Expect version 0.2.1, `panic: unwind`, `distribution: registry`, and a
 `framework` JSON record naming exact `rustify-docs`, `rustify-dom` and
 `rustify-components` versions plus their library commit. Standard registry
 installation uses the release profile. Content sites need no Node, Tailwind,

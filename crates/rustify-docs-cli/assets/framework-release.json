@@ -1,11 +1,11 @@
 {
   "schema": 1,
   "registry": "crates-io",
-  "library_rev": "4deb101dff9227ac4f0f313c10dc4c7b5815640c",
+  "library_rev": null,
   "wasm_bindgen": "0.2.128",
   "packages": {
-    "rustify-dom": "0.2.0",
-    "rustify-components": "0.2.0",
-    "rustify-docs": "0.2.0"
+    "rustify-docs": "0.2.1",
+    "rustify-dom": "0.2.1",
+    "rustify-components": "0.2.1"
   }
 }
