@@ -5,3 +5,4 @@
 | 事件 ID | 范围 | 入口 |
 | --- | --- | --- |
 | 986696e7-2c9a-44ca-bae7-b4011bdc95ce | review/range | [事件](986696e7-2c9a-44ca-bae7-b4011bdc95ce.md) |
+| eaf04e92-e9e6-461d-a7ba-5dd8493fa83a | disposition/code · F-01/F-02 | [事件](eaf04e92-e9e6-461d-a7ba-5dd8493fa83a.md) |

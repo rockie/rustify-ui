@@ -274,6 +274,53 @@ class PerPackageRevisionTests(unittest.TestCase):
              patch.object(release, 'locked_at', side_effect=lambda root, revision: before if revision == 'a' * 40 else after):
             self.assertTrue(release.library_inputs_changed(receipt, library, 'b' * 40))
 
+    def test_version_qualified_dependencies_only_repackage_the_library_when_used(self):
+        library = {'name':'core', 'path':'crates/core', 'version':'0.2.0', 'source_rev':'a' * 40}
+        previous = {'library_rev':'a' * 40, 'cli_rev':None, 'packages':[library]}
+        for suffix in ('', f' ({release.CRATES_IO})'):
+            for changed in ('1.0.0', '2.0.0'):
+                with self.subTest(source=suffix, changed=changed):
+                    before = [{'name':'core','version':'0.2.0','dependencies':['bridge']},
+                              {'name':'bridge','version':'1.0.0','dependencies':[f'dep 2.0.0{suffix}']},
+                              {'name':'dep','version':'1.0.0','checksum':'1' * 64},
+                              {'name':'dep','version':'2.0.0','checksum':'2' * 64}]
+                    after = [dict(package) for package in before]
+                    for package in after:
+                        if package['name'] == 'dep' and package['version'] == changed:
+                            package.update(version=changed[:-1] + '1', checksum='3' * 64)
+                        if package['name'] == 'bridge' and changed == '2.0.0':
+                            package['dependencies'] = [f'dep 2.0.1{suffix}']
+                    with patch.object(release, 'run', return_value=''), \
+                         patch.object(release, 'locked_at', side_effect=lambda root, revision: before if revision == 'a' * 40 else after):
+                        if changed == '2.0.0':
+                            with self.assertRaisesRegex(release.ReleaseError, 'changed but its version did not'):
+                                release.library_packaging_plan(previous, [library], 'b' * 40)
+                        else:
+                            plan = release.library_packaging_plan(previous, [library], 'b' * 40)
+                            self.assertEqual(plan[0]['action'], 'reuse')
+
+    def test_unqualified_dependencies_keep_all_matching_versions(self):
+        packages = [{'name':'core','version':'0.2.0','dependencies':['dep']},
+                    {'name':'dep','version':'1.0.0'}, {'name':'dep','version':'2.0.0'}]
+        self.assertEqual(release.locked_closure('core', packages),
+                         [('core', '0.2.0', None, None), ('dep', '1.0.0', None, None), ('dep', '2.0.0', None, None)])
+
+    def test_plan_packages_new_libraries_while_reusing_existing_archives(self):
+        prior = self.library_archive('core', '0.2.0', 'a' * 40)
+        previous = {'library_rev':'a' * 40, 'cli_rev':None, 'packages':[prior]}
+        added = {'name':'extra', 'version':'0.1.0', 'path':'crates/extra'}
+        entries = [prior, added, {'name':release.CLI, 'version':'0.2.1'}]
+        with patch.object(release, 'library_inputs_changed', return_value=False):
+            plan = release.library_packaging_plan(previous, entries, 'b' * 40)
+        self.assertEqual([(item['name'], item['action'], item['previous_version'], item['source_rev']) for item in plan],
+                         [('core', 'reuse', '0.2.0', 'a' * 40), ('extra', 'package', None, 'b' * 40)])
+        output = self.root / 'next-release'
+        output.mkdir()
+        reused = release.reuse_archives(self.root, previous, plan, output)
+        self.assertEqual([package['name'] for package in reused], ['core'])
+        release.validate_archives(output, {**previous, 'packages':reused})
+        self.assertEqual((output / reused[0]['archive']).read_bytes(), (self.root / prior['archive']).read_bytes())
+
     def test_plan_reuses_unchanged_archives_and_packages_version_bumps(self):
         previous = {'library_rev':'a' * 40, 'cli_rev':None,
                     'packages':[{'name':'core','path':'crates/core','version':'0.2.0','source_rev':'a' * 40}]}

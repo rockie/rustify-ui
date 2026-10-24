@@ -14,6 +14,7 @@
 | 36714aee-ee6c-42b0-84d2-2d450716e0f1 | CRATES-IO-P1 代码评审 R1 事件 | [入口](36714aee-ee6c-42b0-84d2-2d450716e0f1/index.md) |
 | 0ce11938-a166-4a20-b109-09e66f4414da | CRATES-IO-P1 代码复审 R2 事件 | [入口](0ce11938-a166-4a20-b109-09e66f4414da/index.md) |
 | c5423b46-21f3-4f6f-9b17-a6a6fc0e5033 | 发行工具按包修订代码评审事件 | [入口](c5423b46-21f3-4f6f-9b17-a6a6fc0e5033/index.md) |
+| f842f675-9424-4d76-a778-469c4ef66fba | 发行工具 F-01/F-02 修复复审 R2 事件 | [入口](f842f675-9424-4d76-a778-469c4ef66fba/index.md) |
 | 459cfd1e-c07b-491f-9798-9bedd11b6296 | DOCS-SSG-P4 F-01 代码复审 R3 事件 | [入口](459cfd1e-c07b-491f-9798-9bedd11b6296/index.md) |
 | 4a0edc00-c638-4313-af24-7726f88bc321 | 子目录入口 | [4a0edc00-c638-4313-af24-7726f88bc321](4a0edc00-c638-4313-af24-7726f88bc321/index.md) |
 | 46921cbc-95cf-405a-aa5b-6d4c932b6d7f | 子目录入口 | [46921cbc-95cf-405a-aa5b-6d4c932b6d7f](46921cbc-95cf-405a-aa5b-6d4c932b6d7f/index.md) |

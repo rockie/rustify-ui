@@ -549,20 +549,24 @@ def framework_revision(receipt):
 
 
 def locked_closure(name, packages):
-    """What the root lock resolves for one package. Ambiguous names resolve to every version."""
+    """What the root lock resolves for one package. Unqualified names resolve to every version."""
     by_name = {}
     for package in packages:
         by_name.setdefault(package["name"], []).append(package)
     seen = set()
-    pending = [name]
+    pending = [(name, None)]
     while pending:
-        current = pending.pop()
+        current, version = pending.pop()
         for package in by_name.get(current, []):
+            if version is not None and package["version"] != version:
+                continue
             key = (package["name"], package["version"])
             if key in seen:
                 continue
             seen.add(key)
-            pending.extend(dependency.split(" ")[0] for dependency in package.get("dependencies", []))
+            for dependency in package.get("dependencies", []):
+                parts = dependency.split(" ")
+                pending.append((parts[0], parts[1] if len(parts) > 1 else None))
     return sorted((package["name"], package["version"], package.get("checksum"), package.get("source"))
                   for package in packages if (package["name"], package["version"]) in seen)
 
@@ -597,7 +601,9 @@ def library_packaging_plan(previous, entries, revision, root=ROOT):
             continue
         prior = next((package for package in previous["packages"] if package["name"] == entry["name"]), None)
         if prior is None:
-            raise ReleaseError(f"previous receipt has no {entry['name']} archive to reuse")
+            plan.append({"name":entry["name"], "version":entry["version"], "previous_version":None,
+                         "source_rev":revision, "action":"package"})
+            continue
         inputs = library_inputs_changed(previous, prior, revision, root)
         moved = entry["version"] != prior["version"]
         if inputs and not moved:
