@@ -47,13 +47,13 @@
 
 ### 恢复快照
 
-- 最近更新：2026-10-24 15:21 +0800
-- 当前进度：5/6 个里程碑完成
-- 当前状态：M1–M5 已完成；M6 的 V-13/V-14 已通过，九包实际发布，正在准备 V-15 终验
-- 最近完成：M5
-- 下一步：推送 0.2.0 公开说明，执行另一个全新公开安装及 content/components/landing、回滚和文档链接终验；按已确认的八库 docs.rs / CLI 命令文档边界完成 V-15，再推送标签。
-- 当前阻塞：无。用户已确认八个库验 docs.rs，CLI 验公开 README、帮助和真实安装使用；长期 token 例外已确认，原凭证配置保留
-- 代码基线：修正库候选 R `4deb101dff9227ac4f0f313c10dc4c7b5815640c`，CLI C3 `ba9260ee08855a7469e4728403c087f35c8406d0`；已随 main `2fed1fa9` 推送（初始 R0 `37c77f5e`、C1 `6142e85e`、C2 `a9cfa79a` 留档）
+- 最近更新：2026-10-24 16:08 +0800
+- 当前进度：6/6 个里程碑完成
+- 当前状态：M1–M6 已完成；九包 0.2.0 公开发布、V-15 独立消费者终验、公开说明及两个标签推送均完成
+- 最近完成：M6
+- 下一步：代码评审，由用户以本计划路径发起 review-code。
+- 当前阻塞：无。八库 docs.rs 成功；CLI 按用户确认的公开 README、帮助和真实安装使用通过；既有长期 token 配置保留
+- 代码基线：库 R `4deb101dff9227ac4f0f313c10dc4c7b5815640c`、CLI C3 `ba9260ee08855a7469e4728403c087f35c8406d0`，两个 0.2.0 发行标签已公开指向上述提交；公开说明 `7257d2e3` 已在 main（初始 R0/C1/C2 留档）
 
 ### 完成记录
 
@@ -64,7 +64,7 @@
 | M3 | 已完成 | 2026-10-22 18:15 +0800 | Css/Packaged、本地字体快照/产物、完整示例及迁移已交付；局部测试/快速门通过，浏览器用例留 M5 | [M3 记录](CRATES-IO-P1.records/M3.md) | `37c77f5e` |
 | M4 | 已完成 | 2026-10-22 19:03 +0800 | registry 配对/缓存、发行/续接、三模式 helper/CI 及候选文档局部门通过，库候选 R 已提交 | [M4 记录](CRATES-IO-P1.records/M4.md) | `37c77f5e` |
 | M5 | 已完成 | 2026-10-24 14:10 +0800 | V-7 至 V-12、V-16 全部通过；双平台 run 39801397581 成功，九包实际字节/锁/VCS 身份与本地冻结归档一致 | [M5 记录](CRATES-IO-P1.records/M5.md) | `4deb101d`、`6142e85e`、`a9cfa79a`、`ba9260ee`、`cc10ad5e`、`43004b03` |
-| M6 | 进行中 | 2026-10-24 15:21 +0800 | 九包已发布，公开 checksum 与组间安装门通过；八库 docs.rs / CLI 命令文档边界已由用户确认，继续最终消费者验收 | [M6 记录](CRATES-IO-P1.records/M6.md) | `43004b03`、`54b4bb77`、`9b7684cd`、`7257d2e3` |
+| M6 | 已完成 | 2026-10-24 16:08 +0800 | 九包公开字节、独立安装/作者/浏览器及升级回滚通过；八库 docs.rs 和 CLI 命令文档通过，公开说明及两个标签已推送 | [M6 记录](CRATES-IO-P1.records/M6.md) | `43004b03`、`54b4bb77`、`9b7684cd`、`7257d2e3` |
 
 ## 0. 需求、范围与决策
 
@@ -428,7 +428,7 @@ registry 版本不能覆写；yank 只改变新解算，不删除旧字节或废
 | V-12 | NFR-1、C-2：包外文档和安装可编译，无仓根/Makepad 资源依赖 | ★crates-io.yml 仅 workflow_dispatch，完整 SHA 输入 library_rev/cli_rev；授权后先推送含 workflow、R/C 的 main，再 `gh workflow run crates-io.yml --ref main -f library_rev="$R" -f cli_rev="$C"`。校验 R/C/库内容和重包 checksum；macOS 归档安装 smoke，Linux 按 §2.3 metadata 分别 cargo doc/check 及 CLI 安装 smoke，依赖预取后 --offline，style-wasm 用 wasm32；保存 run ID/结论 | M5 阶段收口；不重复本地浏览器全量，不推导完整 Linux/Windows 支持或 docs.rs nightly 已通过 |
 | V-13 | A-1、NFR-3：授权、包名/版本、身份/owner、token 范围/过期时间、归档和 clean R/C 就绪 | 用户确认 §4 的上传与后续推送范围；发布人完成登录/邮箱，核对 publish-new、覆盖九包的名称模式和可覆盖限流窗口的有效期，已有 crate 上传还需 publish-update；Agent 重查包名/owner、receipt 与 V-6 通过证据；不打印凭证。上层包真实 dry-run 在 V-14 按依赖就绪执行 | M6 发布风险门；先于任何上传 |
 | V-14 | R-1、R-2、R-6：真实上传/续接、索引与字节正确、两组之间的公开门明确 | ★publish --group docs；公开下载校验；执行 §5.4 的独立 CARGO_HOME/--root 公开安装门（含 content 与 components），通过后 publish --group remaining；429 按服务端时间记 receipt 并续接。引用 M4 V-6 的故障测试，不在生产注入故障；九包可获取后提交/推送公开说明 | M6 真实发布风险门 |
-| V-15 | R-1、R-6：完全不使用 staging、Git 或 path 的真实安装、公开说明、升级/回滚配方 | 九包齐全且公开说明已推送后，全新 CARGO_HOME/独立目录按包 README 执行 `cargo install rustify-docs-cli --version 0.2.0 --locked --root <目录>`（仓内验证用 mbx 包装）；核对 build-info/listing、content/components/landing 主路径和 §8 回滚；查询九包精确版本，八个库的 docs.rs 精确版本页面/构建须成功，失败或排队保留未通过项；仅二进制 CLI 按用户确认核对公开 README、--help 和真实安装使用，保留其无库 target 的 docs.rs 记录；公开 README/模板链接须读到 0.2.0 说明 | M6 阶段收口；一次最终终验，与 V-14 的组间门及 staging 证据分开 |
+| V-15 | R-1、R-6：完全不使用 staging、Git 或 path 的真实安装、公开说明、升级/回滚配方 | 九包齐全且公开说明已推送后，全新 CARGO_HOME/独立目录按包 README 执行 `cargo install rustify-docs-cli --version 0.2.0 --locked --root <目录>`（仓内验证用 mbx 包装）；核对 build-info/listing、content/components/landing 主路径和 §8 回滚；查询九包精确版本，八个库的 docs.rs 精确版本页面/构建须成功，失败或排队保留未通过项；仅二进制 CLI 按用户确认核对公开 README、--help 和真实安装使用，保留其无库 target 的 docs.rs 记录；公开 README/模板链接可读取，生成的 README 须显示已解析的 0.2.0 安装说明，原始模板与 C 保持一致 | M6 阶段收口；一次最终终验，与 V-14 的组间门及 staging 证据分开 |
 | V-16 | R-4、R-5：角色模拟只凭发行候选文档完成站点与自供字体接入 | V-8 通过后，Agent 模拟会 Markdown/HTML、不会 Rust 的作者，仅可读 §6 的归档/模板 README、--help、C 树作者指南；已安装 staging CLI 与替换源由环境准备，角色从空目录创建 landing，复制生成的 theme.example.json、声明本地字体、构建预览并确认加载。卡点先修文档，再按 §5.3 重冻及 §9.2 重验 | M5 阶段收口，早于任何上传；不虚构真人成功率 |
 
 ### 9.2 证据边界
