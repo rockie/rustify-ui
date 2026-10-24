@@ -274,19 +274,40 @@ class PerPackageRevisionTests(unittest.TestCase):
              patch.object(release, 'locked_at', side_effect=lambda root, revision: before if revision == 'a' * 40 else after):
             self.assertTrue(release.library_inputs_changed(receipt, library, 'b' * 40))
 
-    def test_plan_reuses_unchanged_archives_and_requires_version_bumps(self):
+    def test_plan_reuses_unchanged_archives_and_packages_version_bumps(self):
         previous = {'library_rev':'a' * 40, 'cli_rev':None,
                     'packages':[{'name':'core','path':'crates/core','version':'0.2.0','source_rev':'a' * 40}]}
         with patch.object(release, 'library_inputs_changed', return_value=False):
             plan = release.library_packaging_plan(previous, [{'name':'core','version':'0.2.0','path':'crates/core'}], 'b' * 40)
             self.assertEqual([(item['action'], item['source_rev']) for item in plan], [('reuse', 'a' * 40)])
-            with self.assertRaises(release.ReleaseError):
-                release.library_packaging_plan(previous, [{'name':'core','version':'0.2.1','path':'crates/core'}], 'b' * 40)
+            plan = release.library_packaging_plan(previous, [{'name':'core','version':'0.2.1','path':'crates/core'}], 'b' * 40)
+            self.assertEqual(plan[0]['action'], 'package')
         with patch.object(release, 'library_inputs_changed', return_value=True):
             with self.assertRaises(release.ReleaseError):
                 release.library_packaging_plan(previous, [{'name':'core','version':'0.2.0','path':'crates/core'}], 'b' * 40)
-            plan = release.library_packaging_plan(previous, [{'name':'core','version':'0.2.1','path':'crates/core'}], 'b' * 40)
-            self.assertEqual(plan[0]['action'], 'package')
+
+    def test_the_framework_trio_moves_together(self):
+        def prior(name):
+            return {'name':name, 'path':f'crates/{name}', 'version':'0.2.1', 'source_rev':'a' * 40}
+        previous = {'library_rev':'a' * 40, 'cli_rev':None,
+                    'packages':[prior(name) for name in release.FRAMEWORKS]}
+        entries = [{'name':name, 'version':'0.2.1', 'path':f'crates/{name}'} for name in release.FRAMEWORKS]
+        moved = [dict(entry) for entry in entries]
+        for entry in moved:
+            if entry['name'] != 'rustify-dom':
+                entry['version'] = '0.2.2'
+
+        def changed(receipt, package, revision, root=None):
+            return package['name'] != 'rustify-dom'
+
+        with patch.object(release, 'library_inputs_changed', side_effect=changed):
+            with self.assertRaises(release.ReleaseError) as raised:
+                release.library_packaging_plan(previous, moved, 'b' * 40)
+            self.assertIn('rustify-dom', str(raised.exception))
+            bumped = [{'name':name, 'version':'0.2.2' if name != 'rustify-style-wasm' else '0.2.1', 'path':f'crates/{name}'}
+                      for name in release.FRAMEWORKS]
+            self.assertTrue(all(item['action'] == 'package'
+                                for item in release.library_packaging_plan(previous, bumped, 'b' * 40)))
 
     def test_archives_may_carry_different_source_revisions(self):
         first = self.library_archive('core', '0.2.0', 'a' * 40)

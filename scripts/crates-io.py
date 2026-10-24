@@ -598,14 +598,20 @@ def library_packaging_plan(previous, entries, revision, root=ROOT):
         prior = next((package for package in previous["packages"] if package["name"] == entry["name"]), None)
         if prior is None:
             raise ReleaseError(f"previous receipt has no {entry['name']} archive to reuse")
-        changed = library_inputs_changed(previous, prior, revision, root)
-        if changed and entry["version"] == prior["version"]:
+        inputs = library_inputs_changed(previous, prior, revision, root)
+        moved = entry["version"] != prior["version"]
+        if inputs and not moved:
             raise ReleaseError(f"{entry['name']} changed but its version did not; bump it before packaging")
-        if not changed and entry["version"] != prior["version"]:
-            raise ReleaseError(f"{entry['name']} changed version without changing its inputs")
         plan.append({"name":entry["name"], "version":entry["version"], "previous_version":prior["version"],
                      "source_rev":package_source_rev(previous, prior),
-                     "action":"package" if changed else "reuse"})
+                     "action":"package" if inputs or moved else "reuse"})
+    # The CLI's framework record carries one revision for the pinned trio, so the
+    # three versions move together even when only one of them changed.
+    trio = [item for item in plan if item["name"] in FRAMEWORKS]
+    if any(item["action"] == "package" for item in trio):
+        stale = [item["name"] for item in trio if item["action"] == "reuse"]
+        if stale:
+            raise ReleaseError("the framework trio moves together; also bump " + ", ".join(stale))
     return plan
 
 
