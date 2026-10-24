@@ -15,4 +15,6 @@
 
 | 55cecbb1-e2ed-4aba-843f-bd8e6c904f8f | implementation/plan | [V-12 已授权并启动](55cecbb1-e2ed-4aba-843f-bd8e6c904f8f.md) |
 
+| 6609abcd-4a46-49f7-b542-fc04f8d673a2 | implementation/plan | [九包 0.2.1 已发布](6609abcd-4a46-49f7-b542-fc04f8d673a2.md) |
+
 维护遵循[目录索引协议](../../../protocol.md#目录索引维护)。
