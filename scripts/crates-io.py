@@ -111,7 +111,7 @@ def validate_archives(directory, receipt):
             raise ReleaseError(f"archive checksum drift: {package['name']}")
         if actual["lock_sha256"] != package["lock_sha256"]:
             raise ReleaseError(f"archive lock digest drift: {package['name']}")
-        revision = receipt["cli_rev"] if package["name"] == CLI else receipt["library_rev"]
+        revision = package_source_rev(receipt, package)
         if actual["source_rev"] != revision:
             raise ReleaseError(f"archive VCS identity mismatch: {package['name']}")
 
@@ -419,6 +419,11 @@ def inspect(root=ROOT, metadata=None):
     return {"packages": result, "registry_dependencies": len(visited - allowed_ids)}
 
 
+def inspect_at(revision):
+    with checkout(revision) as root:
+        return inspect(root)["packages"]
+
+
 def run(command, cwd=ROOT, env=None, timeout=None):
     result = subprocess.run([str(arg) for arg in command], cwd=cwd, env=env, timeout=timeout,
                             text=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -530,6 +535,97 @@ def lock_inputs(root, output, packages):
     return copied
 
 
+def package_source_rev(receipt, package):
+    """The revision this package's archive was built from."""
+    # Receipts written before per-package revisions carry one library revision.
+    return package.get("source_rev") or (receipt["cli_rev"] if package["name"] == CLI else receipt["library_rev"])
+
+
+def framework_revision(receipt):
+    revisions = {package_source_rev(receipt, package) for package in receipt["packages"] if package["name"] in FRAMEWORKS}
+    if len(revisions) != 1:
+        raise ReleaseError(f"the framework trio spans revisions {sorted(revisions)}; they must move together")
+    return revisions.pop()
+
+
+def locked_closure(name, packages):
+    """What the root lock resolves for one package. Ambiguous names resolve to every version."""
+    by_name = {}
+    for package in packages:
+        by_name.setdefault(package["name"], []).append(package)
+    seen = set()
+    pending = [name]
+    while pending:
+        current = pending.pop()
+        for package in by_name.get(current, []):
+            key = (package["name"], package["version"])
+            if key in seen:
+                continue
+            seen.add(key)
+            pending.extend(dependency.split(" ")[0] for dependency in package.get("dependencies", []))
+    return sorted((package["name"], package["version"], package.get("checksum"), package.get("source"))
+                  for package in packages if (package["name"], package["version"]) in seen)
+
+
+def locked_at(root, revision):
+    if revision is None:
+        return tomllib.loads((Path(root) / "Cargo.lock").read_text())["package"]
+    return tomllib.loads(run(["git", "show", f"{revision}:Cargo.lock"], cwd=root))["package"]
+
+
+def library_inputs_changed(receipt, package, revision, root=ROOT):
+    """Own inputs or resolved graph moved since this package was last packaged.
+
+    The root lock is compared per package rather than as one file: a CLI version line
+    or a third-party bump only the CLI uses cannot change a library archive.
+    """
+    since = package_source_rev(receipt, package)
+    command = ["git", "diff", "--name-only", since]
+    if revision is not None:
+        command.append(revision)
+    paths = [package["path"], "Cargo.toml", "mise.toml", "release/crates-io.toml"]
+    if run([*command, "--", *paths], cwd=root).strip():
+        return True
+    return locked_closure(package["name"], locked_at(root, since)) != locked_closure(package["name"], locked_at(root, revision))
+
+
+def library_packaging_plan(previous, entries, revision, root=ROOT):
+    """Which libraries keep their published archive and which need a new one."""
+    plan = []
+    for entry in entries:
+        if entry["name"] == CLI:
+            continue
+        prior = next((package for package in previous["packages"] if package["name"] == entry["name"]), None)
+        if prior is None:
+            raise ReleaseError(f"previous receipt has no {entry['name']} archive to reuse")
+        changed = library_inputs_changed(previous, prior, revision, root)
+        if changed and entry["version"] == prior["version"]:
+            raise ReleaseError(f"{entry['name']} changed but its version did not; bump it before packaging")
+        if not changed and entry["version"] != prior["version"]:
+            raise ReleaseError(f"{entry['name']} changed version without changing its inputs")
+        plan.append({"name":entry["name"], "version":entry["version"], "previous_version":prior["version"],
+                     "source_rev":package_source_rev(previous, prior),
+                     "action":"package" if changed else "reuse"})
+    return plan
+
+
+def reuse_archives(previous_dir, previous, plan, output):
+    packages = []
+    for item in plan:
+        if item["action"] != "reuse":
+            continue
+        prior = next(package for package in previous["packages"] if package["name"] == item["name"])
+        target = output / "crates" / Path(prior["archive"]).name
+        target.parent.mkdir(exist_ok=True)
+        shutil.copyfile(previous_dir / prior["archive"], target)
+        actual = archive_info(target, prior["name"], prior["version"])
+        if actual["sha256"] != prior["sha256"] or actual["lock_sha256"] != prior["lock_sha256"]:
+            raise ReleaseError(f"reused archive does not match the previous receipt: {prior['name']}")
+        packages.append({**prior, "source_rev":item["source_rev"],
+                         "archive":target.relative_to(output).as_posix(), "state":"pending"})
+    return packages
+
+
 def collect_archives(root, entries, cargo, output, revision):
     flags = [flag for entry in entries for flag in ("-p", entry["name"])]
     cargo("package", "--locked", "--no-verify", *flags)
@@ -548,51 +644,73 @@ def collect_archives(root, entries, cargo, output, revision):
     return result
 
 
-def package_libraries(revision, output):
+def package_libraries(revision, output, reuse=None):
     output = release_directory(output)
     if output.exists():
         raise ReleaseError("library release output already exists; keep or explicitly choose another directory")
+    previous_dir = release_directory(reuse) if reuse else None
+    previous = read_receipt(previous_dir) if previous_dir else None
     output.mkdir(parents=True)
     with checkout(revision) as root:
         cargo = Cargo(root, output / "work/libraries")
         metadata = json.loads(cargo("metadata", "--locked", "--all-features", "--format-version", "1"))
         entries = inspect(root, metadata)["packages"]
         libraries = [entry for entry in entries if entry["name"] != CLI]
-        packages = collect_archives(root, libraries, cargo, output, revision)
+        plan = library_packaging_plan(previous, entries, revision, root) if previous else None
+        rebuild = [entry for entry in libraries
+                   if plan is None or next(item for item in plan if item["name"] == entry["name"])["action"] == "package"]
+        packages = collect_archives(root, rebuild, cargo, output, revision) if rebuild else []
+        generated_index = Path(cargo.env["CARGO_TARGET_DIR"]) / "package/tmp-registry/index"
+        if previous:
+            packages.extend(reuse_archives(previous_dir, previous, plan, output))
+            # A reused archive keeps the index entry Cargo wrote when it was packaged.
+            for item in plan:
+                if item["action"] != "reuse":
+                    continue
+                key = registry_key(item["name"])
+                source = previous_dir / "registry/index" / key
+                if not source.is_file():
+                    raise ReleaseError(f"previous release has no registry index entry for {item['name']}")
+                target = generated_index / key
+                target.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copyfile(source, target)
+        order = {entry["name"]: index for index, entry in enumerate(entries)}
+        packages.sort(key=lambda package: order[package["name"]])
         locks = lock_inputs(root, output, packages)
         stage_registry(locks, [output / p["archive"] for p in packages],
                        Path(cargo.env["CARGO_TARGET_DIR"]) / "package/tmp-registry/index", output / "registry")
         own = {p["name"] for p in packages}
         third_party = [p for p in locked_registry_packages(locks) if p["name"] not in own]
         receipt = {"schema":1, "cargo_version":cargo.version, "rust_toolchain":cargo.toolchain,
-                   "library_rev":revision, "cli_rev":None, "packages":packages,
+                   "library_rev":framework_revision({"cli_rev":None, "library_rev":revision, "packages":packages}),
+                   "cli_rev":None, "packages":packages,
                    "inventory":entries, "registry_packages":third_party,
                    "template_lock_sha256":None, "verifications":{}}
         save_receipt(output, receipt)
     return receipt
 
 
-def library_paths(receipt):
-    return [p["path"] for p in receipt["inventory"] if p["name"] != CLI] + ["Cargo.toml", "Cargo.lock", "mise.toml", "release/crates-io.toml"]
-
-
 def ensure_libraries_unchanged(receipt, revision=None, root=ROOT):
-    command = ["git", "diff", "--name-only", receipt["library_rev"]]
-    if revision is not None:
-        command.append(revision)
-    changed = run([*command, "--", *library_paths(receipt)], cwd=root).strip()
-    if changed:
-        raise ReleaseError(f"library inputs changed after R; refreeze the libraries before CLI: {changed}")
+    """Every library must still match the revision its archive was built from."""
+    for package in receipt["packages"]:
+        if package["name"] == CLI:
+            continue
+        if library_inputs_changed(receipt, package, revision, root):
+            raise ReleaseError(
+                f"library inputs changed after {package_source_rev(receipt, package)}: {package['name']}")
 
 
-def freeze_cli(libraries, revision):
+def freeze_cli(libraries, revision=None):
     libraries = release_directory(libraries)
     receipt = read_receipt(libraries)
     validate_archives(libraries, receipt)
-    if revision != receipt["library_rev"] or receipt["cli_rev"] is not None:
-        raise ReleaseError("freeze-cli needs the original, library-only R receipt")
+    frozen = framework_revision(receipt)
+    if revision is not None and revision != frozen:
+        raise ReleaseError(f"the frozen framework trio is at {frozen}, not {revision}")
+    if receipt["cli_rev"] is not None:
+        raise ReleaseError("freeze-cli needs the original, library-only receipt")
     ensure_libraries_unchanged(receipt)
-    record = {"schema":1, "registry":"crates-io", "library_rev":revision, "wasm_bindgen":"0.2.128",
+    record = {"schema":1, "registry":"crates-io", "library_rev":frozen, "wasm_bindgen":"0.2.128",
               "packages":{p["name"]:p["version"] for p in receipt["packages"] if p["name"] in FRAMEWORKS}}
     with tempfile.TemporaryDirectory(prefix="rustify-freeze-cli-") as scratch:
         site = Path(scratch) / "docs-site"
@@ -615,7 +733,7 @@ def freeze_cli(libraries, revision):
     assets = ROOT / "crates/rustify-docs-cli/assets"
     (assets / "components-Cargo.lock").write_bytes(lock)
     (assets / "framework-release.json").write_text(json.dumps(record, indent=2) + "\n")
-    return {"library_rev":revision, "template_lock_sha256":hashlib.sha256(lock).hexdigest()}
+    return {"library_rev":frozen, "template_lock_sha256":hashlib.sha256(lock).hexdigest()}
 
 
 def package_cli(revision, libraries, output):
@@ -637,8 +755,8 @@ def package_cli(revision, libraries, output):
         assets = root / "crates/rustify-docs-cli/assets"
         record = json.loads((assets / "framework-release.json").read_text())
         expected = {p["name"]:p["version"] for p in receipt["packages"] if p["name"] in FRAMEWORKS}
-        if record.get("library_rev") != receipt["library_rev"] or record.get("packages") != expected:
-            raise ReleaseError("CLI C does not contain the frozen R/version pair")
+        if record.get("library_rev") != framework_revision(receipt) or record.get("packages") != expected:
+            raise ReleaseError("CLI C does not contain the frozen framework/version pair")
         entry = next(p for p in receipt["inventory"] if p["name"] == CLI)
         packaged = collect_archives(root, [entry], cargo, output, revision)[0]
         actual = archive_info(output / packaged["archive"], entry["name"], entry["version"])
@@ -659,13 +777,16 @@ def package_cli(revision, libraries, output):
 def validate_release_sources(receipt):
     if not receipt.get("cli_rev") or len(receipt["packages"]) != len(receipt["inventory"]):
         raise ReleaseError("release is incomplete: freeze and package CLI C first")
-    with checkout(receipt["library_rev"]) as root:
-        actual = inspect(root)["packages"]
-        if receipt["inventory"] != actual:
-            raise ReleaseError("receipt inventory differs from frozen R")
-        for expected, package in zip(actual, receipt["packages"]):
-            if any(package.get(key) != value for key,value in expected.items()):
-                raise ReleaseError(f"receipt topology/package identity mismatch: {expected['name']}")
+    by_revision = {}
+    for package in receipt["packages"]:
+        by_revision.setdefault(package_source_rev(receipt, package), []).append(package)
+    for revision, packages in by_revision.items():
+        with checkout(revision) as root:
+            actual = {entry["name"]:entry for entry in inspect(root)["packages"]}
+            for package in packages:
+                expected = actual.get(package["name"])
+                if expected is None or any(package.get(key) != value for key,value in expected.items()):
+                    raise ReleaseError(f"receipt topology/package identity mismatch: {package['name']}")
     ensure_libraries_unchanged(receipt, receipt["cli_rev"])
 
 
@@ -694,17 +815,22 @@ def verify_index_stability(directory, receipt):
     work = directory / "work"
     alternate = Path(tempfile.mkdtemp(prefix="index-view-", dir=work)) / "registry"
     extra = alternate_registry(directory / "registry", alternate)
-    expected = {p["name"]:p for p in receipt["packages"] if p["name"] != CLI}
-    with checkout(receipt["library_rev"]) as root:
-        for index, registry in enumerate((directory / "registry", alternate)):
-            scratch = Path(tempfile.mkdtemp(prefix=f"repackage-{index}-", dir=work))
-            config = registry_config(registry, scratch / "config.toml")
-            cargo = Cargo(root, scratch / "target", config=config)
-            if cargo.version != receipt["cargo_version"]:
-                raise ReleaseError("index stability check must use the frozen Cargo version")
-            actual = collect_archives(root, list(expected.values()), cargo, scratch, receipt["library_rev"])
-            compare_archives(expected, {p["name"]:p for p in actual})
-    return {"result":"passed", "extra_visible_registry_package":extra, "packages":len(expected)}
+    by_revision = {}
+    for package in receipt["packages"]:
+        if package["name"] != CLI:
+            by_revision.setdefault(package_source_rev(receipt, package), []).append(package)
+    for revision, expected in by_revision.items():
+        with checkout(revision) as root:
+            for index, registry in enumerate((directory / "registry", alternate)):
+                scratch = Path(tempfile.mkdtemp(prefix=f"repackage-{index}-", dir=work))
+                config = registry_config(registry, scratch / "config.toml")
+                cargo = Cargo(root, scratch / "target", config=config)
+                if cargo.version != receipt["cargo_version"]:
+                    raise ReleaseError("index stability check must use the frozen Cargo version")
+                actual = collect_archives(root, expected, cargo, scratch, revision)
+                compare_archives({p["name"]:p for p in expected}, {p["name"]:p for p in actual})
+    return {"result":"passed", "extra_visible_registry_package":extra,
+            "packages":sum(len(packages) for packages in by_revision.values())}
 
 
 def verify(directory, public=False, public_docs=False):
@@ -766,7 +892,7 @@ def verify(directory, public=False, public_docs=False):
         raise ReleaseError("archive CLI omitted the frozen framework JSON")
     record = json.loads(records[0])
     versions = {p["name"]:p["version"] for p in receipt["packages"] if p["name"] in FRAMEWORKS}
-    if record.get("library_rev") != receipt["library_rev"] or record.get("packages") != versions:
+    if record.get("library_rev") != framework_revision(receipt) or record.get("packages") != versions:
         raise ReleaseError("installed CLI framework identity differs from receipt")
     if run([binary, "__panic-probe"], cwd=scratch, env=cargo.env).strip() != "recovered":
         raise ReleaseError("registry release installation cannot recover a panic")
@@ -833,7 +959,7 @@ def publish(directory, group, retry_at=None):
         raise ReleaseError("publish requires successful frozen archive verification")
 
     def upload(package):
-        revision = receipt["cli_rev"] if package["name"] == CLI else receipt["library_rev"]
+        revision = package_source_rev(receipt, package)
         with checkout(revision) as root:
             cargo = Cargo(root, directory / "work/publish" / package["name"])
             reject_staging_sources(root, cargo)
@@ -871,9 +997,13 @@ def main():
     libraries = commands.add_parser("package-libraries")
     libraries.add_argument("--rev", required=True)
     libraries.add_argument("--out", required=True, type=Path)
+    libraries.add_argument("--reuse", type=Path, help="previous release directory; unchanged packages keep their archive")
+    plan = commands.add_parser("plan-libraries")
+    plan.add_argument("--rev", required=True)
+    plan.add_argument("--reuse", required=True, type=Path)
     freeze = commands.add_parser("freeze-cli")
     freeze.add_argument("--libraries", required=True, type=Path)
-    freeze.add_argument("--library-rev", required=True)
+    freeze.add_argument("--library-rev", help="must equal the framework trio revision; defaults to it")
     cli = commands.add_parser("package-cli")
     cli.add_argument("--rev", required=True)
     cli.add_argument("--libraries", required=True, type=Path)
@@ -891,7 +1021,10 @@ def main():
     if args.command == "inspect":
         result = inspect()
     elif args.command == "package-libraries":
-        result = package_libraries(args.rev, args.out)
+        result = package_libraries(args.rev, args.out, args.reuse)
+    elif args.command == "plan-libraries":
+        previous = read_receipt(release_directory(args.reuse))
+        result = library_packaging_plan(previous, inspect_at(args.rev), args.rev)
     elif args.command == "freeze-cli":
         result = freeze_cli(args.libraries, args.library_rev)
     elif args.command == "package-cli":

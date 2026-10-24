@@ -5,12 +5,15 @@ It does not deploy Pages. Use Python 3.12 and the Rust/Cargo and mbx versions
 in [mise.toml](../mise.toml); every build runs through mbx. Publishing is a
 separate, explicitly authorized step. Ordinary CI has no registry credential.
 
-The two immutable inputs are library commit **R** and CLI commit **C**.
-The release directory **DIR** must persist outside this repository. Keep its
-`receipt.json`, `crates/`, `registry/` and verification references together.
-The receipt records Cargo, topology, versions, compressed sizes, archive and
-Cargo.lock SHA-256, registry checksums, R/C, template lock and upload state.
-Never put credentials in this directory, a command argument or a commit.
+The immutable inputs are one CLI commit **C** and a **source revision per
+package**: libraries move only when their own files or their resolved graph
+move, and the rest keep the archive they were published with. The release
+directory **DIR** must persist outside this repository. Keep its `receipt.json`,
+`crates/`, `registry/` and verification references together. The receipt
+records Cargo, topology, versions, compressed sizes, archive and Cargo.lock
+SHA-256, registry checksums, each package's source revision, the framework
+revision, template lock and upload state. Never put credentials in this
+directory, a command argument or a commit.
 
 ## Prepare and freeze
 
@@ -33,9 +36,15 @@ Never put credentials in this directory, a command argument or a commit.
    mbx fetch --locked --manifest-path makepad/Cargo.toml
    mbx fetch --locked --manifest-path makepad/platform/script/Cargo.toml
    python3.12 scripts/crates-io.py inspect
-   python3.12 scripts/crates-io.py package-libraries --rev "$R" --out "$DIR"
-   python3.12 scripts/crates-io.py freeze-cli --libraries "$DIR" --library-rev "$R"
+   python3.12 scripts/crates-io.py plan-libraries --reuse "$PREV" --rev "$R"
+   python3.12 scripts/crates-io.py package-libraries --rev "$R" --reuse "$PREV" --out "$DIR"
+   python3.12 scripts/crates-io.py freeze-cli --libraries "$DIR"
    ```
+
+   `PREV` is the previous release directory, or omitted for the first release.
+   `freeze-cli` writes the framework trio's revision into the record; pass
+   `--library-rev` only to assert it. For a first release every package is
+   rebuilt; later releases reuse what an earlier receipt already froze.
 
    Fetch all consumer locks: the author projects can pin versions absent from
    the workspace lock. The script takes real locked registry inputs and
@@ -44,8 +53,9 @@ Never put credentials in this directory, a command argument or a commit.
    documentation and installation; assembly alone is not a release pass.
 3. Review [framework-release.json](../crates/rustify-docs-cli/assets/framework-release.json)
    and [components-Cargo.lock](../crates/rustify-docs-cli/assets/components-Cargo.lock). The lock must contain the actual archive
-   checksums. Commit these CLI changes as C; library input bytes must equal R.
-   Run the CLI regression gates from C, then:
+   checksums. Commit these CLI changes as C; each library must still match the
+   source revision its archive was built from. Run the CLI regression gates
+   from C, then:
 
    ```sh
    python3.12 scripts/crates-io.py package-cli --rev "$C" --libraries "$DIR" --out "$DIR"
@@ -63,11 +73,24 @@ Never put credentials in this directory, a command argument or a commit.
    Record these local paths and results in the milestone record; screenshots
    stay outside package directories. Do not substitute a source-built CLI.
 
-A changed library manifest/source/README/resource or root lock means a new R,
-eight new library archives, a new template lock and C. A CLI-only change can
-keep R and its eight archives, with a new C and CLI archive. A byte mismatch
-with unchanged R is a failure to investigate; do not replace receipt hashes
-or silently regenerate the release to hide it.
+Which libraries need a new archive is decided per package, not for the whole
+set: a package is rebuilt when its directory, manifest inputs or resolved
+dependency closure moved since its own source revision, and it must then carry
+a new version. Everything else is copied from the previous release and keeps
+its published checksum, so `publish` skips it. `plan-libraries` prints that
+decision before anything is built:
+
+```sh
+python3.12 scripts/crates-io.py plan-libraries --reuse "$PREV" --rev "$R"
+python3.12 scripts/crates-io.py package-libraries --rev "$R" --reuse "$PREV" --out "$DIR"
+```
+
+A CLI-only change therefore keeps all eight library archives and needs only a
+new C and CLI archive. A change to rustify-style or the framework trio still
+rebuilds every package that resolves it, because their packaged locks and exact
+pins change. A byte mismatch against the previous receipt is a failure to
+investigate; do not replace receipt hashes or silently regenerate the release
+to hide it.
 
 ## Remote preflight
 

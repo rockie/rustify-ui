@@ -231,4 +231,79 @@ class CargoReproducibilityTests(unittest.TestCase):
             self.assertEqual(dependency_versions, {'1.0.0'})
 
 
+class PerPackageRevisionTests(unittest.TestCase):
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory(prefix='rustify-release-revisions-')
+        self.addCleanup(self.temp.cleanup)
+        self.root = Path(self.temp.name)
+
+    def library_archive(self, name, version, revision, dependency='dep'):
+        lock = (f'version = 4\n[[package]]\nname = "{name}"\nversion = "{version}"\n'
+                f'[[package]]\nname = "{dependency}"\nversion = "1.0.0"\nsource = "{release.CRATES_IO}"\nchecksum = "{"b" * 64}"\n')
+        path = self.root / f'{name}-{version}.crate'
+        with tarfile.open(path, 'w:gz') as bundle:
+            files = {'Cargo.lock':lock, 'Cargo.toml':f'[package]\nname="{name}"\nversion="{version}"\n',
+                     'LICENSE':'MIT', '.cargo_vcs_info.json':json.dumps({'git':{'sha1':revision}})}
+            for filename, content in files.items():
+                payload = content.encode()
+                entry = tarfile.TarInfo(f'{name}-{version}/{filename}')
+                entry.size = len(payload)
+                bundle.addfile(entry, io.BytesIO(payload))
+        info = release.archive_info(path, name, version)
+        return {'name':name, 'version':version, 'path':f'crates/{name}', 'group':'docs', 'dependencies':[],
+                'archive':path.name, 'sha256':info['sha256'], 'lock_sha256':info['lock_sha256'],
+                'bytes':info['bytes'], 'source_rev':revision, 'state':'pending'}
+
+    def test_a_cli_version_change_does_not_move_a_library_closure(self):
+        library = {'name':'core', 'path':'crates/core', 'version':'0.2.0', 'source_rev':'a' * 40}
+        receipt = {'library_rev':'a' * 40, 'cli_rev':None, 'packages':[library]}
+        before = [{'name':'core','version':'0.2.0','dependencies':['dep']}, {'name':'dep','version':'1.0.0'},
+                  {'name':'cli','version':'0.2.0','dependencies':['core']}]
+        after = [{'name':'core','version':'0.2.0','dependencies':['dep']}, {'name':'dep','version':'1.0.0'},
+                 {'name':'cli','version':'0.2.1','dependencies':['core']}]
+        with patch.object(release, 'run', return_value=''), \
+             patch.object(release, 'locked_at', side_effect=lambda root, revision: before if revision == 'a' * 40 else after):
+            self.assertFalse(release.library_inputs_changed(receipt, library, 'b' * 40))
+
+    def test_a_third_party_bump_under_a_library_closure_marks_it_changed(self):
+        library = {'name':'core', 'path':'crates/core', 'version':'0.2.0', 'source_rev':'a' * 40}
+        receipt = {'library_rev':'a' * 40, 'cli_rev':None, 'packages':[library]}
+        before = [{'name':'core','version':'0.2.0','dependencies':['dep']}, {'name':'dep','version':'1.0.0','checksum':'1' * 64}]
+        after = [{'name':'core','version':'0.2.0','dependencies':['dep']}, {'name':'dep','version':'1.0.1','checksum':'2' * 64}]
+        with patch.object(release, 'run', return_value=''), \
+             patch.object(release, 'locked_at', side_effect=lambda root, revision: before if revision == 'a' * 40 else after):
+            self.assertTrue(release.library_inputs_changed(receipt, library, 'b' * 40))
+
+    def test_plan_reuses_unchanged_archives_and_requires_version_bumps(self):
+        previous = {'library_rev':'a' * 40, 'cli_rev':None,
+                    'packages':[{'name':'core','path':'crates/core','version':'0.2.0','source_rev':'a' * 40}]}
+        with patch.object(release, 'library_inputs_changed', return_value=False):
+            plan = release.library_packaging_plan(previous, [{'name':'core','version':'0.2.0','path':'crates/core'}], 'b' * 40)
+            self.assertEqual([(item['action'], item['source_rev']) for item in plan], [('reuse', 'a' * 40)])
+            with self.assertRaises(release.ReleaseError):
+                release.library_packaging_plan(previous, [{'name':'core','version':'0.2.1','path':'crates/core'}], 'b' * 40)
+        with patch.object(release, 'library_inputs_changed', return_value=True):
+            with self.assertRaises(release.ReleaseError):
+                release.library_packaging_plan(previous, [{'name':'core','version':'0.2.0','path':'crates/core'}], 'b' * 40)
+            plan = release.library_packaging_plan(previous, [{'name':'core','version':'0.2.1','path':'crates/core'}], 'b' * 40)
+            self.assertEqual(plan[0]['action'], 'package')
+
+    def test_archives_may_carry_different_source_revisions(self):
+        first = self.library_archive('core', '0.2.0', 'a' * 40)
+        second = self.library_archive('other', '0.2.1', 'c' * 40)
+        receipt = {'library_rev':'c' * 40, 'cli_rev':'b' * 40, 'packages':[first, second]}
+        release.validate_archives(self.root, receipt)
+        receipt['packages'][0]['source_rev'] = 'c' * 40
+        with self.assertRaises(release.ReleaseError):
+            release.validate_archives(self.root, receipt)
+
+    def test_the_framework_trio_must_share_one_revision(self):
+        packages = [{'name':name, 'version':'0.2.1', 'source_rev':revision}
+                    for name, revision in zip(release.FRAMEWORKS, ['a' * 40, 'a' * 40, 'b' * 40])]
+        with self.assertRaises(release.ReleaseError):
+            release.framework_revision({'library_rev':None, 'cli_rev':None, 'packages':packages})
+        packages[2]['source_rev'] = 'a' * 40
+        self.assertEqual(release.framework_revision({'library_rev':None, 'cli_rev':None, 'packages':packages}), 'a' * 40)
+
+
 if __name__ == '__main__': unittest.main()
