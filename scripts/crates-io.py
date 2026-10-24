@@ -834,7 +834,7 @@ def publish(directory, group, retry_at=None):
             args = ["publish", "--registry", "crates-io", "--locked", "-p", package["name"]]
             try:
                 cargo(*args, "--dry-run", timeout=3600)
-                archive = Path(cargo.env["CARGO_TARGET_DIR"]) / "package" / Path(package["archive"]).name
+                archive = Path(cargo.env["CARGO_TARGET_DIR"]) / "package/tmp-registry" / Path(package["archive"]).name
                 actual = archive_info(archive, package["name"], package["version"])
                 compare_archives({package["name"]:package}, {package["name"]:actual})
             except ReleaseError as error:

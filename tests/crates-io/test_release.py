@@ -3,13 +3,14 @@ import hashlib
 import importlib.util
 import io
 import json
+from contextlib import nullcontext
 from pathlib import Path
 import shutil
 import subprocess
 import tarfile
 import tempfile
 import unittest
-from unittest.mock import Mock
+from unittest.mock import Mock, patch
 
 ROOT = Path(__file__).resolve().parents[2]
 SPEC = importlib.util.spec_from_file_location('crates_io', ROOT / 'scripts/crates-io.py')
@@ -121,6 +122,27 @@ class ReleaseTests(unittest.TestCase):
             self.archive_bytes(release.CRATES_IO, 'a' * 64, extra)
             with self.assertRaisesRegex(release.ReleaseError, 'manifest'):
                 release.archive_info(self.archive, 'core', '0.2.0')
+
+    def test_publish_checks_the_cargo_dry_run_archive_before_upload(self):
+        cargo = Mock()
+        cargo.version = 'cargo 1.99.0'
+        cargo.env = {'CARGO_TARGET_DIR':str(self.root / 'target'), 'CARGO_HOME':str(self.root)}
+        staged = self.root / 'target/package/tmp-registry' / self.archive.name
+        staged.parent.mkdir(parents=True)
+        shutil.copyfile(self.archive, staged)
+        self.receipt['cargo_version'] = cargo.version
+        self.receipt['verifications']['archive_install'] = {'result':'passed'}
+        release.save_receipt(self.root, self.receipt)
+        self.registry.lookup.side_effect = [None, self.package['sha256']]
+        with (patch.object(release, 'validate_release_sources'),
+              patch.object(release, 'checkout', return_value=nullcontext(self.root)),
+              patch.object(release, 'Cargo', return_value=cargo),
+              patch.object(release, 'Registry', return_value=self.registry),
+              patch.object(release.subprocess, 'run', return_value=subprocess.CompletedProcess([], 0)) as upload):
+            release.publish(self.root, 'docs')
+        cargo.assert_called_once_with('publish', '--registry', 'crates-io', '--locked', '-p', 'core', '--dry-run', timeout=3600)
+        upload.assert_called_once()
+        self.assertEqual(release.read_receipt(self.root)['packages'][0]['state'], 'published')
 
 
 class CargoReproducibilityTests(unittest.TestCase):
