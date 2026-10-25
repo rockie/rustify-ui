@@ -1,0 +1,33 @@
+schema_version = 1
+
+[site]
+name = "Rustify UI"
+description = "用 Rust 构建复杂 Web 界面，组合 Leptos DOM 与可选的 Makepad GPU 区域。"
+lang = "zh"
+base = "/"
+
+[content]
+dir = "content"
+include = ["index.md"]
+
+[assets]
+dir = "static"
+
+[build]
+out = "dist"
+
+[theme]
+document = "theme.json"
+logo = "static/logo.svg"
+
+[[theme.fonts]]
+family = "Sora"
+src = "fonts/sora.ttf"
+weight = "100 800"
+style = "normal"
+
+[[theme.fonts]]
+family = "Noto Sans SC"
+src = "fonts/noto-sans-sc.woff2"
+weight = "400 700"
+style = "normal"

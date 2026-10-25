@@ -1,0 +1,4 @@
+# The build's output and its private work area.
+/dist/
+.rustify-docs/
+/.impeccable/review/
