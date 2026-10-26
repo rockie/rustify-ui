@@ -56,7 +56,7 @@ U-03 需要澄清的原因是：同名注册在 document 级生效，后面的�
 
 | 关键主张/设计 | 核实依据 | 裁定 |
 | --- | --- | --- |
-| 当前是 Leptos DOM + Makepad 浏览器 SDK，静态托管与六个示例 | [README](../../README.md)、[Cargo.toml](../../Cargo.toml)、[CLAUDE.md](../../CLAUDE.md) | 现状成立；本仓不是 Portal App，不追加 onebox/授权/发布门 |
+| 当前是 Leptos DOM + Makepad 浏览器 SDK，静态托管与六个示例 | [README](../../README.md)、[Cargo.toml](../../Cargo.toml)、[AGENTS.md](../../AGENTS.md) | 现状成立；本仓不是 Portal App，不追加 onebox/授权/发布门 |
 | CLI 固定 Tailwind 4.1.13 | [mise.toml](../../mise.toml)、[tailwind.rs](../../xtask/src/tailwind.rs) | 固定版本 oracle 有依据，不能用 latest 预期替代 |
 | utility spacing 与旧布局 gap 分离 | [sdk.css:75](../../crates/rustify-components/css/sdk.css#L75)、[theme-v4.css:27](../../crates/rustify-components/css/theme-v4.css#L27) | 延续 inline/reference 与 `--rustify-unit` 的设计合理 |
 | strict CSP 不允许 JS eval 或 inline stylesheet | [serve.rs:33](../../xtask/src/serve.rs#L33) | 规则事实成立；动态 CSSOM 能否使用仍须 U-02 实测 |
