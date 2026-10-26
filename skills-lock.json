@@ -367,6 +367,12 @@
       "skillPath": "skills/use-prompt-dsl/SKILL.md",
       "computedHash": "84a1f748d29384df6ac157d7ffce4a8f91fa3b058a3de214f1d3eb0fc0282df2"
     },
+    "use-rustify-docs": {
+      "source": "XGENT-ai/skills",
+      "sourceType": "github",
+      "skillPath": "skills/use-rustify-docs/SKILL.md",
+      "computedHash": "ab613c4cc90ed23cc31690a6cce6dd76155912e174b3f63c3aab130e84a23057"
+    },
     "use-task-gateway": {
       "source": "XGENT-ai/skills",
       "sourceType": "github",

@@ -8,7 +8,7 @@ base = "/"
 
 [content]
 dir = "content"
-include = ["index.md"]
+include = ["index.md", "cta.md", "thanks.md"]
 
 [assets]
 dir = "static"
@@ -31,3 +31,11 @@ family = "Noto Sans SC"
 src = "fonts/noto-sans-sc.woff2"
 weight = "400 700"
 style = "normal"
+
+[landing.profiles.cta-test]
+
+[[landing.profiles.cta-test.scripts]]
+src = "landing/cta-form.js"
+
+[landing.profiles.cta-test.sources]
+form = ["http://127.0.0.1:4211"]

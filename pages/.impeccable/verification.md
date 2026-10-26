@@ -21,6 +21,27 @@
 [interaction-check.json](review/interaction-check.json)，视觉复判见
 [finish-review.md](review/finish-review.md)。当前桌面、手机首屏与全页截图均在 `review/`，已实际打开检查。
 
+## 本地 CTA 表单增量验证
+
+- 产物：build `be39d29b2f168484`，3 页与 404；沿用上述 preview 入口。
+- 采用静态 DOM 与渐进增强脚本，复用仓库现有 `landing-third-party.mjs` 测试接收器，未增加生产服务。
+
+| 检查 | 实际结果 |
+| --- | --- |
+| 构建与脚本 | `check` / `build`、脚本语法检查通过；仍仅有 `missing-site-url` 提醒。 |
+| 首页入口 | 手机浏览器实际点击底部“测试 CTA 表单”，进入 `/cta/`。 |
+| 校验与反馈 | 空值、错误邮箱显示字段提示并聚焦错误项；有效提交禁用按钮，显示“正在提交…”。 |
+| 原生提交 | 示例数据实际 POST 到本机接收器，收到 303 并进入 `/thanks/`；内存接收记录与输入一致。 |
+| 无脚本 | 禁用 JavaScript 后仍成功原生提交并返回完成页。 |
+| 布局与可访问性 | 1440、390、320px 无页面级横向溢出；输入与提交按钮均为 56px；桌面和手机 axe 所检 WCAG 2 A/AA、2.1 AA 规则未发现违规。 |
+| 按页权限 | 仅测试表单允许向 `http://127.0.0.1:4211` 提交；首页仍为 `form-action 'none'`。 |
+| 视觉复查 | 实际查看桌面、手机、手机错误态及完成页截图；延续现有字体、蓝色主行动与薄荷绿反馈，标签、错误提示和焦点均可见，未发现需要继续修补的排版问题。 |
+| 运行错误 | 所测视口无 console error 或失败请求。 |
+
+原始结果与上述四张截图在 [CTA 验证目录](review/cta/)，其中
+[browser-check.json](review/cta/browser-check.json) 记录实际提交与接收结果。
+该流程仅用于本机测试，记录保存在接收器内存中，不发送邮件；正式接入尚未配置。
+
 ## 验证边界
 
 - phoenix-ui 的固定版本本地引擎缺失；按 skill 允许的回退流程使用原文、设计规则和真实浏览器。未声称 Phoenix context/profile/detector 或引擎校验通过。
