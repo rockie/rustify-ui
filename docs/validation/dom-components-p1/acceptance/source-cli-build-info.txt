@@ -1,6 +1,6 @@
 rustify-docs 0.2.1
 panic: unwind
 grammars: syntect-5.3.0+two-face-0.5.2+bat-0.26.1+fancy
-source: 09d9e7bda371c6b42c18db95437c207a91163016
+source: e745a4cfbb51a54e1d7838beadf6b1cd3881aec4
 distribution: source
 framework: {"schema":1,"registry":"crates-io","library_rev":"b32844a489943649a49d9fbe46ee837e32017885","wasm_bindgen":"0.2.128","packages":{"rustify-dom":"0.2.1","rustify-components":"0.2.1","rustify-docs":"0.2.1"},"development_checkout":"eb336738941ea2c46ea87329592104e96623bd6d64a9c055d41d0df4992fde81"}

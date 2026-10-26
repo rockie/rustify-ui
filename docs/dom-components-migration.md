@@ -273,10 +273,11 @@ root/child-path assets and strict CSP. The integration also supplies a DOM-only
 consumer with default SDK features; running these entry points and recording
 the source pair are separate acceptance steps, not implied by this guide.
 
-The [source integration record](plan/DOM-COMPONENTS-P1.records/M6.md) records
-the actual checkout, source CLI `--build-info` and independent author evidence.
-Its validation baseline distinguishes working-tree evidence from a committed
-source pair. A version string alone does not identify that pair.
+The [final source integration record](plan/DOM-COMPONENTS-P1.records/M7.md#最终源码配对)
+pins SDK, CSS and source CLI to
+`e745a4cfbb51a54e1d7838beadf6b1cd3881aec4`, with actual `--build-info`,
+canonical author dependencies and browser evidence. Its SDK/runtime/CLI trees
+match the UI fix `d712990c`. A version string alone does not identify that pair.
 
 ## Storage upgrade, backup and rollback
 

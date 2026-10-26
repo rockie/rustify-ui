@@ -2,8 +2,8 @@
   "site": "/private/tmp/rustify-p1-m6-docs-theme-v2",
   "negative": "/private/tmp/rustify-p1-m6-docs-theme-v2-old-cli",
   "expected": "/private/tmp/rustify-p1-m6-docs-theme-v2/.rustify-docs/theme-v2-expected.json",
-  "source": "09d9e7bda371c6b42c18db95437c207a91163016",
-  "cli_build_info": "rustify-docs 0.2.1\npanic: unwind\ngrammars: syntect-5.3.0+two-face-0.5.2+bat-0.26.1+fancy\nsource: 09d9e7bda371c6b42c18db95437c207a91163016\ndistribution: source\nframework: {\"schema\":1,\"registry\":\"crates-io\",\"library_rev\":\"b32844a489943649a49d9fbe46ee837e32017885\",\"wasm_bindgen\":\"0.2.128\",\"packages\":{\"rustify-dom\":\"0.2.1\",\"rustify-components\":\"0.2.1\",\"rustify-docs\":\"0.2.1\"},\"development_checkout\":\"eb336738941ea2c46ea87329592104e96623bd6d64a9c055d41d0df4992fde81\"}\n",
+  "source": "e745a4cfbb51a54e1d7838beadf6b1cd3881aec4",
+  "cli_build_info": "rustify-docs 0.2.1\npanic: unwind\ngrammars: syntect-5.3.0+two-face-0.5.2+bat-0.26.1+fancy\nsource: e745a4cfbb51a54e1d7838beadf6b1cd3881aec4\ndistribution: source\nframework: {\"schema\":1,\"registry\":\"crates-io\",\"library_rev\":\"b32844a489943649a49d9fbe46ee837e32017885\",\"wasm_bindgen\":\"0.2.128\",\"packages\":{\"rustify-dom\":\"0.2.1\",\"rustify-components\":\"0.2.1\",\"rustify-docs\":\"0.2.1\"},\"development_checkout\":\"eb336738941ea2c46ea87329592104e96623bd6d64a9c055d41d0df4992fde81\"}\n",
   "framework": {
     "schema": 1,
     "registry": "crates-io",
@@ -23,6 +23,125 @@
     "/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-components/Cargo.toml"
   ],
   "dist": "/tmp/rustify-p1-m7-docs-theme-v2-dist",
-  "sdk_cli_sources_match_pinned_commit": false,
-  "worktree_scope": "Historical 09d9 pair passed; Slider CSS and ThemeBoundary cache changed afterward. Rebuild and repin required before final acceptance."
+  "sdk_cli_sources_match_pinned_commit": true,
+  "worktree_scope": "SDK/runtime/CLI crate trees match the pinned e745 source and d712 UI-fix source; document and acceptance evidence changes are outside this source-tree assertion.",
+  "distribution": "source",
+  "build_id": "3c5e52278ad85266",
+  "file_count": 21,
+  "manifest_file_count": 20,
+  "dist_bytes": 3002217,
+  "sdk_cli_tree_equivalence": {
+    "reference_source": "d712990cac7d71c7e0b2a224c035370cf21cb84c",
+    "pinned_source": "e745a4cfbb51a54e1d7838beadf6b1cd3881aec4",
+    "identical": true,
+    "git_tree_ids": {
+      "crates/rustify-docs": "fe0320b4d0893cd4d78155142f88cd7d9c1bcece",
+      "crates/rustify-dom": "982520709fd8a70569d963e9f9491998672b1fd0",
+      "crates/rustify-components": "93c8c879d4ef605adfaac58643a9f37b9f6aa9b0",
+      "crates/rustify-docs-cli": "8c742a402e81a9fd390599f9d8d55d9ca8f606f6",
+      "crates/rustify-ui": "275ac4da2dfb9d808c8413322e0b6783f28363fd"
+    }
+  },
+  "commands": {
+    "cli_build_exit": 0,
+    "check_exit": 0,
+    "build_exit": 0,
+    "cli_build": [
+      "mbx",
+      "build",
+      "--locked",
+      "-p",
+      "rustify-docs-cli",
+      "--profile",
+      "docs-cli"
+    ],
+    "check": [
+      "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-cli/rustify-docs",
+      "check",
+      "--config",
+      "/private/tmp/rustify-p1-m6-docs-theme-v2/rustify-docs.toml"
+    ],
+    "build": [
+      "/Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-cli/rustify-docs",
+      "build",
+      "--config",
+      "/private/tmp/rustify-p1-m6-docs-theme-v2/rustify-docs.toml",
+      "--out",
+      "/tmp/rustify-p1-m7-docs-theme-v2-dist"
+    ]
+  },
+  "environment": {
+    "rust": "1.99.0",
+    "source_environment": "scripts/docs-pages-prepare.py:source_environment(root)",
+    "RUSTIFY_DOCS_CARGO": "mbx",
+    "CARGO_NET_OFFLINE": "true",
+    "CARGO_TARGET_DIR": "/Users/rockie/Documents/gh-rockie/rustify-ui/target",
+    "MBX_TARGET_VIEWS": "0"
+  },
+  "historical_pairs": [
+    {
+      "source_pair": {
+        "site": "/private/tmp/rustify-p1-m6-docs-theme-v2",
+        "negative": "/private/tmp/rustify-p1-m6-docs-theme-v2-old-cli",
+        "expected": "/private/tmp/rustify-p1-m6-docs-theme-v2/.rustify-docs/theme-v2-expected.json",
+        "source": "09d9e7bda371c6b42c18db95437c207a91163016",
+        "cli_build_info": "rustify-docs 0.2.1\npanic: unwind\ngrammars: syntect-5.3.0+two-face-0.5.2+bat-0.26.1+fancy\nsource: 09d9e7bda371c6b42c18db95437c207a91163016\ndistribution: source\nframework: {\"schema\":1,\"registry\":\"crates-io\",\"library_rev\":\"b32844a489943649a49d9fbe46ee837e32017885\",\"wasm_bindgen\":\"0.2.128\",\"packages\":{\"rustify-dom\":\"0.2.1\",\"rustify-components\":\"0.2.1\",\"rustify-docs\":\"0.2.1\"},\"development_checkout\":\"eb336738941ea2c46ea87329592104e96623bd6d64a9c055d41d0df4992fde81\"}\n",
+        "framework": {
+          "schema": 1,
+          "registry": "crates-io",
+          "library_rev": "b32844a489943649a49d9fbe46ee837e32017885",
+          "wasm_bindgen": "0.2.128",
+          "packages": {
+            "rustify-dom": "0.2.1",
+            "rustify-components": "0.2.1",
+            "rustify-docs": "0.2.1"
+          },
+          "development_checkout": "eb336738941ea2c46ea87329592104e96623bd6d64a9c055d41d0df4992fde81"
+        },
+        "lock_sha256": "70cb0ef1ca0c1ac81229974d761e925ca265cbe7aac11beebe4b16dfe76074f7",
+        "direct_manifests": [
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-docs/Cargo.toml",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-dom/Cargo.toml",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-components/Cargo.toml"
+        ],
+        "dist": "/tmp/rustify-p1-m7-docs-theme-v2-dist",
+        "sdk_cli_sources_match_pinned_commit": false,
+        "worktree_scope": "Historical 09d9 pair passed; Slider CSS and ThemeBoundary cache changed afterward. Rebuild and repin required before final acceptance."
+      },
+      "author_provenance": {
+        "site": "/private/tmp/rustify-p1-m6-docs-theme-v2",
+        "negative": "/private/tmp/rustify-p1-m6-docs-theme-v2-old-cli",
+        "expected": "/private/tmp/rustify-p1-m6-docs-theme-v2/.rustify-docs/theme-v2-expected.json",
+        "source": "09d9e7bda371c6b42c18db95437c207a91163016",
+        "cli_build_info": "rustify-docs 0.2.1\npanic: unwind\ngrammars: syntect-5.3.0+two-face-0.5.2+bat-0.26.1+fancy\nsource: 09d9e7bda371c6b42c18db95437c207a91163016\ndistribution: source\nframework: {\"schema\":1,\"registry\":\"crates-io\",\"library_rev\":\"b32844a489943649a49d9fbe46ee837e32017885\",\"wasm_bindgen\":\"0.2.128\",\"packages\":{\"rustify-dom\":\"0.2.1\",\"rustify-components\":\"0.2.1\",\"rustify-docs\":\"0.2.1\"},\"development_checkout\":\"eb336738941ea2c46ea87329592104e96623bd6d64a9c055d41d0df4992fde81\"}\n",
+        "framework": {
+          "schema": 1,
+          "registry": "crates-io",
+          "library_rev": "b32844a489943649a49d9fbe46ee837e32017885",
+          "wasm_bindgen": "0.2.128",
+          "packages": {
+            "rustify-dom": "0.2.1",
+            "rustify-components": "0.2.1",
+            "rustify-docs": "0.2.1"
+          },
+          "development_checkout": "eb336738941ea2c46ea87329592104e96623bd6d64a9c055d41d0df4992fde81"
+        },
+        "lock_sha256": "70cb0ef1ca0c1ac81229974d761e925ca265cbe7aac11beebe4b16dfe76074f7",
+        "direct_manifests": [
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-docs/Cargo.toml",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-dom/Cargo.toml",
+          "/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-components/Cargo.toml"
+        ],
+        "dist": "/tmp/rustify-p1-m7-docs-theme-v2-dist",
+        "sdk_cli_sources_match_pinned_commit": true,
+        "worktree_scope": "M7 tests/evidence and preexisting input documents remain dirty; framework and CLI code match the pinned commit"
+      },
+      "cli_build_info_text": "rustify-docs 0.2.1\npanic: unwind\ngrammars: syntect-5.3.0+two-face-0.5.2+bat-0.26.1+fancy\nsource: 09d9e7bda371c6b42c18db95437c207a91163016\ndistribution: source\nframework: {\"schema\":1,\"registry\":\"crates-io\",\"library_rev\":\"b32844a489943649a49d9fbe46ee837e32017885\",\"wasm_bindgen\":\"0.2.128\",\"packages\":{\"rustify-dom\":\"0.2.1\",\"rustify-components\":\"0.2.1\",\"rustify-docs\":\"0.2.1\"},\"development_checkout\":\"eb336738941ea2c46ea87329592104e96623bd6d64a9c055d41d0df4992fde81\"}\n",
+      "previous_dist_summary": {
+        "build_id": "933e5e81fe76076a",
+        "manifest_file_count": 20,
+        "file_count": 21
+      }
+    }
+  ]
 }
