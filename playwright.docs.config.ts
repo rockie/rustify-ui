@@ -55,10 +55,11 @@ const searchProjects = [
     ["docs-search-perf", "subpath", 4210, "search-perf.spec.ts"],
 ] as const;
 
-type Server = "dom-only" | "dom-hydrate" | Docs | Components | Official | typeof i18nProjects[number][0] | typeof searchProjects[number][0];
+type Server = "dom-only" | "dom-hydrate" | "colors-static" | Docs | Components | Official | typeof i18nProjects[number][0] | typeof searchProjects[number][0];
 const docsIgnore = ["docs-ssg/dev*.spec.ts", "docs-ssg/islands.spec.ts", "docs-ssg/custom.spec.ts", "docs-ssg/official.spec.ts", "docs-ssg/i18n*.spec.ts", "docs-ssg/search*.spec.ts"];
 
 const serversOf: Record<string, Server[]> = {
+    "colors-static": ["colors-static"],
     "dom-only": ["dom-only"],
     "dom-hydrate": ["dom-hydrate"],
     "docs-root": ["docs-root"],
@@ -119,6 +120,11 @@ export default defineConfig({
         launchOptions: { executablePath: process.env.RUSTIFY_CHROMIUM || undefined },
     },
     projects: [
+        {
+            name: "colors-static",
+            testMatch: ["colors-static/colors.spec.ts"],
+            use: { baseURL: "http://127.0.0.1:4211/" },
+        },
         {
             name: "dom-only",
             testMatch: ["dom-only/**/*.spec.ts"],
@@ -181,6 +187,7 @@ export default defineConfig({
     ],
     webServer: (
         [
+            ["colors-static", `sh tests/colors-static/build.sh && ${xtask} serve --dir tests/colors-static/target/site --port 4211`, "http://127.0.0.1:4211/"],
             ["dom-only", `${xtask} serve --dir ${domOnlyDir} --port ${domOnlyPort}`, `http://127.0.0.1:${domOnlyPort}/`],
             ["dom-hydrate", `${xtask} serve --dir target/dom/hydration --port 4194`, "http://127.0.0.1:4194/"],
             ...docsProjects.map(

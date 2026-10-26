@@ -33,7 +33,7 @@ fn Fixture(new: bool) -> impl IntoView {
     let document = Signal::derive(move || {
         let mut document = ThemeDocument::from_legacy(Theme::light(), Theme::dark());
         document
-            .styles
+            .overrides
             .light
             .0
             .insert("radius".into(), radius.get());

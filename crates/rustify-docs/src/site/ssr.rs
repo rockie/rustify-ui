@@ -555,12 +555,12 @@ mod tests {
     fn themed(mode: ThemeMode) -> SiteEnvironment {
         let mut document = ThemeDocument::from_legacy(Theme::light(), Theme::dark());
         document
-            .styles
+            .base
             .light
             .0
             .insert("font-sans".into(), "Noto Sans".into());
         document
-            .styles
+            .base
             .dark
             .0
             .insert("font-sans".into(), "Rustify WenKai".into());
@@ -735,7 +735,7 @@ mod tests {
             .as_mut()
             .unwrap()
             .document
-            .styles
+            .overrides
             .dark
             .0
             .insert("primary".into(), "invalid color".into());

@@ -5,6 +5,10 @@ description: Create, resolve, import and export versioned theme documents and ap
 
 The versioned theme model preserves author values and resolves one snapshot for DOM and GPU consumers. The legacy `Theme`, `ThemePatch`, `ThemedScope` and `ThemeOverride` APIs keep their existing contracts. Conversion is one way: a complete document cannot be reduced to the legacy opaque palette without losing information.
 
+The current source implements schema v2. Published SDK/CLI **0.2.1** supports
+schema v1 only; it cannot consume a full v2 document. Source consumers must use
+the matching SDK and source CLI checkout; this change does not publish a release.
+
 Use [Theme Studio](../examples/theme-studio/README.md) to edit and export a document, or start with the Rust API below. For the application's build setup, see the [quick start](quickstart.md#using-tailwind-v4-in-your-app).
 
 ## Create and resolve a document
@@ -15,7 +19,7 @@ use rustify_ui::{resolve, ResolveContext, Theme, ThemeDocument, ThemeMode};
 fn main() -> Result<(), rustify_ui::ThemeError> {
     let mut document = ThemeDocument::from_legacy(Theme::light(), Theme::dark());
     document.name = "My theme".into();
-    document.styles.light.0.insert("primary".into(), "oklch(0.6 0.2 260 / 80%)".into());
+    document.overrides.light.0.insert("primary".into(), "oklch(0.6 0.2 260 / 80%)".into());
     let context = ResolveContext { rem_px: 20.0, ..Default::default() };
     let snapshot = resolve(&document, ThemeMode::Light, &context)?;
     assert_eq!(snapshot.spacing_px, 5.0);
@@ -31,9 +35,36 @@ The public types and validation live in [document.rs](../crates/rustify-dom/src/
 
 ## JSON structure
 
-[theme-document.schema.json](theme-document.schema.json) describes the exchange structure. A document has exactly `schema_version`, `id`, `name` and `styles`; both `styles.light` and `styles.dark` are required. Version 1 uses string values for every token, including `reduce-motion` (`"true"` or `"false"`). IDs and names contain 1–80 characters, include a non-whitespace character and exclude control characters.
+[theme-document.schema.json](theme-document.schema.json) describes canonical v2.
+Its full form contains `schema_version: 2`, `id`, `name`, two complete `base`
+tables, `config`, and two sparse `overrides` maps. Configuration selects
+appearance, brand family, neutral family/auto, panel background, radius and
+90/95/100/105/110 scaling. `null` selects Custom for the four optional shortcuts;
+it does not mean boundary inheritance. The brand family is separate from the
+existing semantic `accent` token.
 
-Each mode requires 49 tokens. Unknown string-valued tokens remain in the document and generate a preview diagnostic. Non-string values fail deserialization. The schema checks the structure; `resolve` checks author syntax and numeric limits using the provided context. Validate both modes before accepting an imported document.
+`ThemeDocument::standard(id, name)` creates indigo/auto/translucent/medium/100
+with no overrides. `from_legacy` and `custom(id, name, base)` preserve the two
+authored tables, choose Custom, and retain the 24 shortcut-generated semantic
+keys as explicit overrides. Configuration changes never erase these overrides.
+Read the base with `base_values(mode)` and composed, unscaled author strings
+with `effective_values(mode)` or `ResolvedTheme::values`. Edit `overrides` to
+take priority; remove an override key to reveal configuration/base again.
+
+The equivalent compact Custom wire form contains `schema_version: 2`, `id`,
+`name` and `styles.light/dark`. It cannot be mixed with full-form fields. The
+serializer uses it only when all configuration and overrides have that exact
+meaning. Strict v1 input has the same `styles` shape and upgrades without
+growing its canonical byte length. Full intent and unknown author strings
+remain in v2 JSON; JSON is serialized as compact UTF-8. IDs and names contain
+1–80 characters, include a non-whitespace character and exclude control characters.
+
+Each base mode requires 49 string tokens, including `reduce-motion` (`"true"`
+or `"false"`). Unknown string keys are preserved in base and diagnosed, but
+are not allowed in overrides. Duplicate token keys, unknown structural fields,
+mixed forms, unsupported versions and non-string token values are rejected.
+`resolve` checks author syntax and numeric limits, including masked base values.
+Validate both modes and `check_document_size` before accepting an edited candidate.
 
 | Group | Tokens |
 | --- | --- |
@@ -55,7 +86,14 @@ Preview colors are unpremultiplied, gamma encoded sRGB RGBA. OKLCH conversion cl
 
 Lengths accept `px`, `rem` and unitless zero. Every resolved author length is limited to ±4096 CSS pixels; radius and blur cannot be negative, while spacing and font size must be positive. `layout-gap` is independent of the Tailwind utility unit `spacing`. Letter spacing accepts `em`, plus reference preset values in `px`, `rem` or `normal`; the resolved value is in −0.5…0.5em. NaN and infinity are rejected. The default Packaged resolver parses family lists and rejects declaration delimiters, functions, URLs and backslash escapes. The Css policy preserves named families and quoted generic names, supports escaped quotes/backslashes inside quoted family names, and adds an unquoted generic fallback for each slot.
 
-For radius `r`, the resolved sm/md/lg/xl corners are `max(0, r−4)`, `max(0, r−2)`, `r` and `r+4`. At `r=6px`, these are 2/4/6/10px. This does not change the legacy 4/6/8px sm/md/lg scale. Shadow sizes resolve to one or two structured layers; color alpha is multiplied by shadow opacity. A legacy conversion starts with zero shadow opacity.
+The Custom path keeps sm/md/lg/xl corners `max(0, r−4)`, `max(0, r−2)`, `r`
+and `r+4`; at `r=6px`, these are 2/4/6/10px. Configured themes derive six finite
+radius levels from 3/4/6/8/12/16px and the selected factor. Full/thumb geometry
+is separate, so necessary checkbox/radio/switch shapes remain independent.
+Scaling applies once after geometry and every shadow layer are derived; it
+does not change stored author strings, colors, em letter spacing or 9999px
+full sentinels. Shadow color alpha is multiplied by shadow opacity. A legacy
+conversion starts with zero shadow opacity.
 
 ## Static documentation themes
 

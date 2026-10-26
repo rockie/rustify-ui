@@ -72,7 +72,7 @@ fn document(alternate: bool) -> ThemeDocument {
         .collect();
     for mode in [ThemeMode::Light, ThemeMode::Dark] {
         let dark = mode == ThemeMode::Dark;
-        let values = &mut document.values_mut(mode).0;
+        let values = &mut document.overrides.values_mut(mode).0;
         for (token, value) in [
             (
                 "primary",

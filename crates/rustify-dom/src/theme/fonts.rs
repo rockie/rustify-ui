@@ -190,7 +190,7 @@ mod tests {
         let mut document = ThemeDocument::from_legacy(Theme::light(), Theme::dark());
         for font in THEME_FONTS {
             document
-                .styles
+                .base
                 .light
                 .0
                 .insert("font-sans".into(), font.face().family.into());
@@ -209,7 +209,7 @@ mod tests {
         let mut document = ThemeDocument::from_legacy(Theme::light(), Theme::dark());
         for token in ["font-sans", "font-serif", "font-mono"] {
             document
-                .styles
+                .base
                 .light
                 .0
                 .insert(token.into(), "Unknown Author Face, serif".into());
@@ -217,7 +217,7 @@ mod tests {
         let theme = resolve(&document, ThemeMode::Light, &font_context(20., false)).unwrap();
         for (index, token) in ["font-sans", "font-serif", "font-mono"].iter().enumerate() {
             assert_eq!(
-                document.styles.light.get(token).unwrap(),
+                document.base.light.get(token).unwrap(),
                 "Unknown Author Face, serif"
             );
             assert_eq!(theme.fonts[index].requested[0], "Unknown Author Face");
@@ -234,7 +234,7 @@ mod tests {
     fn css_resolution_keeps_named_families_without_packaged_resources() {
         let mut document = ThemeDocument::from_legacy(Theme::light(), Theme::dark());
         document
-            .styles
+            .base
             .light
             .0
             .insert("font-sans".into(), "\"Brand, Sans\", system-ui".into());
@@ -256,7 +256,7 @@ mod tests {
         let mut document = ThemeDocument::from_legacy(Theme::light(), Theme::dark());
         for token in ["font-sans", "font-serif", "font-mono"] {
             document
-                .styles
+                .base
                 .light
                 .0
                 .insert(token.into(), "\"sans-serif\"".into());

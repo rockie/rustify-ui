@@ -1,6 +1,7 @@
 [workspace]
 resolver = "2"
 members = [
+    "crates/rustify-colors",
     "crates/rustify-style",
     "crates/rustify-style-wasm",
     "crates/rustify-components",

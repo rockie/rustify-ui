@@ -27,6 +27,7 @@ external-host = []
 utility = ["dep:rustify-style", "dep:futures-channel"]
 
 [dependencies]
+rustify-colors = { path = "../rustify-colors", version = "=0.2.1" }
 serde = { version = "1.0.229", features = ["derive"] }
 serde_json = { version = "1.0.151", features = ["raw_value"] }
 leptos.workspace = true

@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Rustify Colors static consumer</title>
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="./fixture.css">
+    <link rel="stylesheet" href="./colors/indigo-light.css">
+    <link rel="stylesheet" href="./colors/indigo-dark.css">
+    <link rel="stylesheet" href="./colors/indigo-light-alpha.css">
+    <link rel="stylesheet" href="./colors/indigo-dark-alpha.css">
+    <link rel="stylesheet" href="./colors/mint-light.css">
+    <link rel="stylesheet" href="./colors/mint-dark.css">
+    <link rel="stylesheet" href="./colors/mint-light-alpha.css">
+    <link rel="stylesheet" href="./colors/mint-dark-alpha.css">
+    <link rel="stylesheet" href="./colors/black-alpha.css">
+    <link rel="stylesheet" href="./colors/white-alpha.css">
+  </head>
+  <body>
+    <main>
+      <h1>Colors without a runtime</h1>
+      <p>Indigo and mint, with two explicit appearances on the same page.</p>
+      <div class="palettes">
+        <section data-rustify-colors="indigo mint black white" data-rustify-colors-mode="light">
+          <h2>Light palette</h2>
+          <p class="solid">Indigo · step 9</p>
+          <p class="mint">Mint · step 9</p>
+          <p class="alpha">Indigo · alpha 9</p>
+          <section class="nested" data-rustify-colors="indigo mint" data-rustify-colors-mode="dark">
+            <h3>Nested dark palette</h3>
+            <p class="solid">Independent appearance</p>
+          </section>
+        </section>
+        <section data-rustify-colors="indigo mint black white" data-rustify-colors-mode="dark">
+          <h2>Dark palette</h2>
+          <p class="solid">Indigo · step 9</p>
+          <p class="mint">Mint · step 9</p>
+          <p class="alpha">Indigo · alpha 9</p>
+        </section>
+      </div>
+      <p id="host-sentinel">Host content stays outside the palette scopes.</p>
+    </main>
+  </body>
+</html>

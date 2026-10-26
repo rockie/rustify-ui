@@ -20,11 +20,10 @@ pub fn built_in() -> Result<Vec<ThemeDocument>, String> {
     dark.name = "Rustify Dark".into();
     let mut themes = vec![light, dark];
     for preset in raw {
-        let mut theme = default.clone();
-        theme.id = preset.id;
-        theme.name = preset.name;
-        theme.styles.light.0.extend(preset.styles.light.0);
-        theme.styles.dark.0.extend(preset.styles.dark.0);
+        let mut base = default.base.clone();
+        base.light.0.extend(preset.styles.light.0);
+        base.dark.0.extend(preset.styles.dark.0);
+        let theme = ThemeDocument::custom(preset.id, preset.name, base);
         for mode in [ThemeMode::Light, ThemeMode::Dark] {
             resolve(&theme, mode, &ResolveContext::default())
                 .map_err(|error| format!("{}: {error}", theme.id))?;
@@ -81,7 +80,7 @@ mod tests {
                 };
                 for (token, value) in &expected.0 {
                     assert_eq!(
-                        actual.values(mode).get(token).unwrap(),
+                        actual.base_values(mode).get(token).unwrap(),
                         value,
                         "{}/{mode:?}/{token}",
                         actual.id
@@ -96,20 +95,17 @@ mod tests {
         let themes = built_in().unwrap();
         let graphite = themes.iter().find(|theme| theme.id == "graphite").unwrap();
         assert_ne!(
-            graphite.styles.light.get("font-sans").unwrap(),
-            graphite.styles.dark.get("font-sans").unwrap()
+            graphite.base.light.get("font-sans").unwrap(),
+            graphite.base.dark.get("font-sans").unwrap()
         );
         let soft_pop = themes.iter().find(|theme| theme.id == "soft-pop").unwrap();
-        assert_eq!(
-            soft_pop.styles.dark.get("letter-spacing").unwrap(),
-            "normal"
-        );
+        assert_eq!(soft_pop.base.dark.get("letter-spacing").unwrap(), "normal");
     }
 
     #[test]
     fn rustify_presets_keep_the_legacy_starting_mode_palettes() {
         let themes = built_in().unwrap();
-        assert_eq!(themes[0].styles.light.get("primary").unwrap(), "#1570ef");
-        assert_eq!(themes[1].styles.dark.get("primary").unwrap(), "#53b1fd");
+        assert_eq!(themes[0].base.light.get("primary").unwrap(), "#1570ef");
+        assert_eq!(themes[1].base.dark.get("primary").unwrap(), "#53b1fd");
     }
 }

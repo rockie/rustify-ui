@@ -1622,7 +1622,7 @@
       "upstream_inventory": "tests/utility/scanner/inventory.json",
       "files": {
         "crates/rustify-style/upstream/LICENSE-TAILWIND": "60e0b68c0f35c078eef3a5d29419d0b03ff84ec1df9c3f9d6e39a519a5ae7985",
-        "crates/rustify-style/upstream/classification-macros/Cargo.toml": "736875106c72cd9e924c32c63bc3c71f4645c81b80812c91ce4f62698d21f112",
+        "crates/rustify-style/upstream/classification-macros/Cargo.toml": "935fd03c6b7705891688fe5d6f244b7919edb5111aba929d7cd9e82adcecd54a",
         "crates/rustify-style/upstream/classification-macros/src/lib.rs": "70ef9013d13442a904d30acac7d0b7923b71899fde58cc5c0a3d2b2cb761447c",
         "crates/rustify-style/upstream/oxide/cursor.rs": "a98f18a4ea42281e9025161e2275df0a74b9b281d30b8223101588053b90032e",
         "crates/rustify-style/upstream/oxide/extractor/arbitrary_property_machine.rs": "16e5c07df62d242ea66480d3e3f2975798f77b909304678b6fcfff842a5dfe8b",
@@ -1664,7 +1664,7 @@
       "imported_files": {
         "crates/rustify-style/upstream/classification-macros/Cargo.toml": "9684262395ea0373579eb0f97d2ee27a6c324837080d62b043f5efa484f2b552"
       },
-      "changes": "Host macro manifest renamed to rustify-classification-macros 0.2.0 for crates.io; preserved classification_macros library identity, added package metadata, content allowlist and docs.rs target. Copied upstream MIT notice into the package. Rust sources remain unchanged; imported_files preserves the previous manifest fingerprint."
+      "changes": "Host macro manifest renamed to rustify-classification-macros 0.2.1 for crates.io; preserved classification_macros library identity, added package metadata, content allowlist and docs.rs target. Copied upstream MIT notice into the package. Rust sources remain unchanged; imported_files preserves the previous manifest fingerprint. Version and documentation URL moved from 0.2.0 to 0.2.1 in b32844a489943649a49d9fbe46ee837e32017885; the package-manifest fingerprint now reflects that existing change."
     },
     {
       "name": "cn-reference-data",
@@ -1858,6 +1858,206 @@
         "tests/docs-ssg/fixtures/components/fonts/README.md": "dcc1249c9991453f93b6b40a06f2bac1ae6c76c10cd4363b69906a83caf1c2e1",
         "tests/docs-ssg/fixtures/components/fonts/author-sans.woff2": "6b8e7c7abd64feec0a67599a135402b769ec1f2c7656f6504cc300f60c8be986",
         "tests/docs-ssg/fixtures/components/fonts/author-text.ttf": "8c358c56c56f76a28cecb8ca10734c1c9cafa01a752dc8364b9ef7de412437dc"
+      }
+    },
+    {
+      "name": "radix-colors",
+      "version": "3.0.0",
+      "origin": "ref/colors-main",
+      "upstream_commit": null,
+      "modifications": "Verbatim source files; no upstream commit metadata available.",
+      "reference_snapshot": {
+        "algorithm": "sha256(sorted(relative_path UTF-8 + NUL + sha256(file) binary)); excludes .git and .DS_Store",
+        "sha256": "bd6ef30b319b5bed241415bea949c0a988b75230e12653cae3cc95ad5d335485"
+      },
+      "xtask_import_list": {
+        "algorithm": "sha256(sorted(relative_path + SPACE + sha256(file) hex + LF))",
+        "sha256": "2edca0c1e0d36e23f0becac1b8d2fc19cc7bd6d34def2f74799a3d52d384da08"
+      },
+      "source_files": {
+        "LICENSE": "d981bc30e0d78b9ffc8f279fcaa274ea0444ff51d983548a609397d5c8a42dc2",
+        "src/blackA.ts": "930205059fbb077241db60753dc338d2354c85fe7ce86ccbccc734836e3371fb",
+        "src/dark.ts": "d8599fe69a4454340b2bc82e003a210caa6b79082be9a1b7f13429ff03826c68",
+        "src/light.ts": "1a9725486609d36b469caa3b84b8de4348b7f2f05d45905127637b988329acbd",
+        "src/whiteA.ts": "2b8ed559a91709560e51c847e5a20cd14473334acbf26e34fb253f0ab61c9868"
+      },
+      "files": {
+        "crates/rustify-colors/vendor/colors/LICENSE": "d981bc30e0d78b9ffc8f279fcaa274ea0444ff51d983548a609397d5c8a42dc2",
+        "crates/rustify-colors/vendor/colors/src/blackA.ts": "930205059fbb077241db60753dc338d2354c85fe7ce86ccbccc734836e3371fb",
+        "crates/rustify-colors/vendor/colors/src/dark.ts": "d8599fe69a4454340b2bc82e003a210caa6b79082be9a1b7f13429ff03826c68",
+        "crates/rustify-colors/vendor/colors/src/light.ts": "1a9725486609d36b469caa3b84b8de4348b7f2f05d45905127637b988329acbd",
+        "crates/rustify-colors/vendor/colors/src/whiteA.ts": "2b8ed559a91709560e51c847e5a20cd14473334acbf26e34fb253f0ab61c9868"
+      },
+      "generator": {
+        "entry": "xtask/src/colors.rs",
+        "inputs": [
+          "LICENSE",
+          "src/blackA.ts",
+          "src/dark.ts",
+          "src/light.ts",
+          "src/whiteA.ts"
+        ],
+        "outputs": [
+          "crates/rustify-colors/src/{families,srgb,p3}.rs",
+          "crates/rustify-colors/css/*.css"
+        ]
+      },
+      "source_file_paths": {
+        "LICENSE": "LICENSE",
+        "src/blackA.ts": "src/blackA.ts",
+        "src/dark.ts": "src/dark.ts",
+        "src/light.ts": "src/light.ts",
+        "src/whiteA.ts": "src/whiteA.ts"
+      },
+      "import_root": "crates/rustify-colors/vendor/colors"
+    },
+    {
+      "name": "radix-themes-tokens",
+      "version": "3.3.0",
+      "origin": "ref/themes-main",
+      "upstream_commit": null,
+      "modifications": "Verbatim source files; no upstream commit metadata available.",
+      "reference_snapshot": {
+        "algorithm": "sha256(sorted(relative_path UTF-8 + NUL + sha256(file) binary)); excludes .git and .DS_Store",
+        "sha256": "00a510b8e9b3127046f52ca624aeaa9b15af2e384c42d7fe88cfaae2001a2de9"
+      },
+      "xtask_import_list": {
+        "algorithm": "sha256(sorted(relative_path + SPACE + sha256(file) hex + LF))",
+        "sha256": "6866b8cd730171f53964dd9512faab84ff2665c8d44e48349f3f196bd0a62927"
+      },
+      "source_files": {
+        "LICENSE": "89e4ae7d91c640c6e8a3ca90ba578d799eb2491b766ed65e0725ba36499d56ba",
+        "src/helpers/get-matching-gray-color.ts": "3504ee18c7e9171ebc098d243016743c68c53c917193f901cb7de818a39fcc5e",
+        "src/styles/breakpoints.css": "f27f6181f4df9c270d9205589757752ebf8e660ba6472644ce279514dd362890",
+        "src/styles/tokens/color.css": "118592a4752ac2bd77171df6b1e4d8f14f3f779a425c01433d7b8611c472eb3e",
+        "src/styles/tokens/colors/amber.css": "fe639f6588f04c3e49a6b43fe3800458f85d927e52237ff6c62a61371211c84d",
+        "src/styles/tokens/colors/blue.css": "f6ed75038a09c114a3d2fe51d2e57a8ea42e5f5095506ab6006c33daee869f76",
+        "src/styles/tokens/colors/bronze.css": "c962adffe8ae83fa4cda95f4c4c91551168207eb5351f8584742557328e17b2a",
+        "src/styles/tokens/colors/brown.css": "fe8fe1806fbe3b4147b280ac70d47274fa92d50170726b4445eed7c7e076934e",
+        "src/styles/tokens/colors/crimson.css": "e95a25e9d3aa851bb064934d12f68b287cc73b62a6ac18acaef4a31d115f7939",
+        "src/styles/tokens/colors/cyan.css": "0491f4e446ef7200c9cc62f4c92e2a4fd9cfcf7076a749cbe57a02414d01e2f5",
+        "src/styles/tokens/colors/gold.css": "68c6c049171a06103b3c1b38c6ada87185e2b369554a56e36b37d7c34f536987",
+        "src/styles/tokens/colors/grass.css": "ed5b9fe0a4b658ec88d018e4f2a69c5e4a6b37585b3dca5edd2cc81363f93013",
+        "src/styles/tokens/colors/gray.css": "8fb950ebcf5a52f3c545e9cde7195728911aee180cdd3d89e683c43ae2868822",
+        "src/styles/tokens/colors/green.css": "8a8b48e6a14145c30c384bc04676dd2e26ac77e8d19534378fb88b8f3e36ee52",
+        "src/styles/tokens/colors/indigo.css": "c7343875e046f87b6b30a4c803117027e93a1769de0adfe49623e58bc0f65805",
+        "src/styles/tokens/colors/iris.css": "31bc8d05027482f314710a6c75c07ece7c6e0099e432490cb8affb77f4954398",
+        "src/styles/tokens/colors/jade.css": "b9493ffc5b21c017eed4cc73abcdd37fe974246f1d560ba5907f3f63712dd818",
+        "src/styles/tokens/colors/lime.css": "c8e76a9dc095c06eb159f9cc40e59a5d397953a3cf4898ae10923440c34b6c14",
+        "src/styles/tokens/colors/mauve.css": "4b5ae87eb0606a01276f92e36dfc2301df81b4850b425e9e44a2789f7ce48c93",
+        "src/styles/tokens/colors/mint.css": "30ac4047eb224588a440b880765ad83d794442855fddb4587c159864b99ad111",
+        "src/styles/tokens/colors/olive.css": "dcc507accb6678644c1e5fcfe586848df9b42c3b10e849ddcc280f4ffbf61128",
+        "src/styles/tokens/colors/orange.css": "8a377861c0402ca77763b7e8bcf6346c15672b65e1da30f196fe8280a9fbd4e6",
+        "src/styles/tokens/colors/pink.css": "2afddc6f757ccc4251ee90688a4b7c89643fc30a65c37412685d0ee94636e283",
+        "src/styles/tokens/colors/plum.css": "3d8e7cc0557dd0b7f67976e6d73a0e6f9e7e002b75e8f8107dad6a06559ec8f4",
+        "src/styles/tokens/colors/purple.css": "38a303c40fa273aba57251ee9f8a5b8981b392e0c08ca2d03d850debbacc587c",
+        "src/styles/tokens/colors/red.css": "9f030323809b23fc5d6ab3cd0dbbf7583d9b94fa98a87536a2d6572121f52471",
+        "src/styles/tokens/colors/ruby.css": "be4cc697e33a21225fa187d169d1a4afc99361ea1a2bf69d669499f3b7156bab",
+        "src/styles/tokens/colors/sage.css": "b936cb69adc6b7ff86a9a478c3c4c324256e10d612b9885c0278acd4a6eaed29",
+        "src/styles/tokens/colors/sand.css": "3da827fd460ad42767f3aa08161f041e8405f180b4a14c2bce348848da328b23",
+        "src/styles/tokens/colors/sky.css": "bac44830bf25561dd1e7ece974c54d5b41f8ca4d4723b4abda6a57a67f30cdfb",
+        "src/styles/tokens/colors/slate.css": "8202306f13e9ba74b2660778b49bb97a1825353ba93e6b6e0989ad127e4ddbe7",
+        "src/styles/tokens/colors/teal.css": "3cd29205424455606de91db21d7bfa6eaf5032c373a4b3008152256f82bb74f4",
+        "src/styles/tokens/colors/tomato.css": "ffca11b9e59809b1d43d34c0d8e9c867cffa45778dfdc1032654225b3eceaf36",
+        "src/styles/tokens/colors/violet.css": "f90c6448eb85bea892d17c318bfcc449056f0b3ea468bc1065d4d07abb423f42",
+        "src/styles/tokens/colors/yellow.css": "e4b18b526aeb26ed6812c02caab10296670a870766b108d2fc4e9c6db917b1fe",
+        "src/styles/tokens/radius.css": "14ae4e5ce53ab722f6e4b1d3e4b74a4d977c18da7483ded86173ca4df284c5da",
+        "src/styles/tokens/scaling.css": "3b7b444a35760dec723804b6809cd262a2772e75edd9d1cd95e99693234f2867",
+        "src/styles/tokens/space.css": "e7ef02a71575ecc896c0d330ad88d3548bdf68b58bce5a828fa37a497452cc2a",
+        "src/styles/tokens/typography.css": "6e3eceb987598abf72bdd8a338e7270d91000ab326bfc3d2852368e5436f04cd"
+      },
+      "files": {
+        "crates/rustify-dom/src/theme/vendor/themes/LICENSE": "89e4ae7d91c640c6e8a3ca90ba578d799eb2491b766ed65e0725ba36499d56ba",
+        "crates/rustify-dom/src/theme/vendor/themes/src/helpers/get-matching-gray-color.ts": "3504ee18c7e9171ebc098d243016743c68c53c917193f901cb7de818a39fcc5e",
+        "crates/rustify-dom/src/theme/vendor/themes/src/styles/breakpoints.css": "f27f6181f4df9c270d9205589757752ebf8e660ba6472644ce279514dd362890",
+        "crates/rustify-dom/src/theme/vendor/themes/src/styles/tokens/colors/amber.css": "fe639f6588f04c3e49a6b43fe3800458f85d927e52237ff6c62a61371211c84d",
+        "crates/rustify-dom/src/theme/vendor/themes/src/styles/tokens/colors/blue.css": "f6ed75038a09c114a3d2fe51d2e57a8ea42e5f5095506ab6006c33daee869f76",
+        "crates/rustify-dom/src/theme/vendor/themes/src/styles/tokens/colors/bronze.css": "c962adffe8ae83fa4cda95f4c4c91551168207eb5351f8584742557328e17b2a",
+        "crates/rustify-dom/src/theme/vendor/themes/src/styles/tokens/colors/brown.css": "fe8fe1806fbe3b4147b280ac70d47274fa92d50170726b4445eed7c7e076934e",
+        "crates/rustify-dom/src/theme/vendor/themes/src/styles/tokens/colors/crimson.css": "e95a25e9d3aa851bb064934d12f68b287cc73b62a6ac18acaef4a31d115f7939",
+        "crates/rustify-dom/src/theme/vendor/themes/src/styles/tokens/colors/cyan.css": "0491f4e446ef7200c9cc62f4c92e2a4fd9cfcf7076a749cbe57a02414d01e2f5",
+        "crates/rustify-dom/src/theme/vendor/themes/src/styles/tokens/colors/gold.css": "68c6c049171a06103b3c1b38c6ada87185e2b369554a56e36b37d7c34f536987",
+        "crates/rustify-dom/src/theme/vendor/themes/src/styles/tokens/colors/grass.css": "ed5b9fe0a4b658ec88d018e4f2a69c5e4a6b37585b3dca5edd2cc81363f93013",
+        "crates/rustify-dom/src/theme/vendor/themes/src/styles/tokens/colors/gray.css": "8fb950ebcf5a52f3c545e9cde7195728911aee180cdd3d89e683c43ae2868822",
+        "crates/rustify-dom/src/theme/vendor/themes/src/styles/tokens/colors/green.css": "8a8b48e6a14145c30c384bc04676dd2e26ac77e8d19534378fb88b8f3e36ee52",
+        "crates/rustify-dom/src/theme/vendor/themes/src/styles/tokens/colors/indigo.css": "c7343875e046f87b6b30a4c803117027e93a1769de0adfe49623e58bc0f65805",
+        "crates/rustify-dom/src/theme/vendor/themes/src/styles/tokens/colors/iris.css": "31bc8d05027482f314710a6c75c07ece7c6e0099e432490cb8affb77f4954398",
+        "crates/rustify-dom/src/theme/vendor/themes/src/styles/tokens/colors/jade.css": "b9493ffc5b21c017eed4cc73abcdd37fe974246f1d560ba5907f3f63712dd818",
+        "crates/rustify-dom/src/theme/vendor/themes/src/styles/tokens/colors/lime.css": "c8e76a9dc095c06eb159f9cc40e59a5d397953a3cf4898ae10923440c34b6c14",
+        "crates/rustify-dom/src/theme/vendor/themes/src/styles/tokens/colors/mauve.css": "4b5ae87eb0606a01276f92e36dfc2301df81b4850b425e9e44a2789f7ce48c93",
+        "crates/rustify-dom/src/theme/vendor/themes/src/styles/tokens/colors/mint.css": "30ac4047eb224588a440b880765ad83d794442855fddb4587c159864b99ad111",
+        "crates/rustify-dom/src/theme/vendor/themes/src/styles/tokens/colors/olive.css": "dcc507accb6678644c1e5fcfe586848df9b42c3b10e849ddcc280f4ffbf61128",
+        "crates/rustify-dom/src/theme/vendor/themes/src/styles/tokens/colors/orange.css": "8a377861c0402ca77763b7e8bcf6346c15672b65e1da30f196fe8280a9fbd4e6",
+        "crates/rustify-dom/src/theme/vendor/themes/src/styles/tokens/colors/pink.css": "2afddc6f757ccc4251ee90688a4b7c89643fc30a65c37412685d0ee94636e283",
+        "crates/rustify-dom/src/theme/vendor/themes/src/styles/tokens/colors/plum.css": "3d8e7cc0557dd0b7f67976e6d73a0e6f9e7e002b75e8f8107dad6a06559ec8f4",
+        "crates/rustify-dom/src/theme/vendor/themes/src/styles/tokens/colors/purple.css": "38a303c40fa273aba57251ee9f8a5b8981b392e0c08ca2d03d850debbacc587c",
+        "crates/rustify-dom/src/theme/vendor/themes/src/styles/tokens/colors/red.css": "9f030323809b23fc5d6ab3cd0dbbf7583d9b94fa98a87536a2d6572121f52471",
+        "crates/rustify-dom/src/theme/vendor/themes/src/styles/tokens/colors/ruby.css": "be4cc697e33a21225fa187d169d1a4afc99361ea1a2bf69d669499f3b7156bab",
+        "crates/rustify-dom/src/theme/vendor/themes/src/styles/tokens/colors/sage.css": "b936cb69adc6b7ff86a9a478c3c4c324256e10d612b9885c0278acd4a6eaed29",
+        "crates/rustify-dom/src/theme/vendor/themes/src/styles/tokens/colors/sand.css": "3da827fd460ad42767f3aa08161f041e8405f180b4a14c2bce348848da328b23",
+        "crates/rustify-dom/src/theme/vendor/themes/src/styles/tokens/colors/sky.css": "bac44830bf25561dd1e7ece974c54d5b41f8ca4d4723b4abda6a57a67f30cdfb",
+        "crates/rustify-dom/src/theme/vendor/themes/src/styles/tokens/colors/slate.css": "8202306f13e9ba74b2660778b49bb97a1825353ba93e6b6e0989ad127e4ddbe7",
+        "crates/rustify-dom/src/theme/vendor/themes/src/styles/tokens/colors/teal.css": "3cd29205424455606de91db21d7bfa6eaf5032c373a4b3008152256f82bb74f4",
+        "crates/rustify-dom/src/theme/vendor/themes/src/styles/tokens/colors/tomato.css": "ffca11b9e59809b1d43d34c0d8e9c867cffa45778dfdc1032654225b3eceaf36",
+        "crates/rustify-dom/src/theme/vendor/themes/src/styles/tokens/colors/violet.css": "f90c6448eb85bea892d17c318bfcc449056f0b3ea468bc1065d4d07abb423f42",
+        "crates/rustify-dom/src/theme/vendor/themes/src/styles/tokens/colors/yellow.css": "e4b18b526aeb26ed6812c02caab10296670a870766b108d2fc4e9c6db917b1fe",
+        "crates/rustify-dom/src/theme/vendor/themes/src/styles/tokens/radius.css": "14ae4e5ce53ab722f6e4b1d3e4b74a4d977c18da7483ded86173ca4df284c5da",
+        "crates/rustify-dom/src/theme/vendor/themes/src/styles/tokens/scaling.css": "3b7b444a35760dec723804b6809cd262a2772e75edd9d1cd95e99693234f2867",
+        "crates/rustify-dom/src/theme/vendor/themes/src/styles/tokens/space.css": "e7ef02a71575ecc896c0d330ad88d3548bdf68b58bce5a828fa37a497452cc2a",
+        "crates/rustify-dom/src/theme/vendor/themes/src/styles/tokens/typography.css": "6e3eceb987598abf72bdd8a338e7270d91000ab326bfc3d2852368e5436f04cd",
+        "crates/rustify-dom/src/theme/vendor/themes/src/styles/tokens/color.css": "118592a4752ac2bd77171df6b1e4d8f14f3f779a425c01433d7b8611c472eb3e"
+      },
+      "source_file_paths": {
+        "LICENSE": "LICENSE",
+        "src/helpers/get-matching-gray-color.ts": "packages/radix-ui-themes/src/helpers/get-matching-gray-color.ts",
+        "src/styles/breakpoints.css": "packages/radix-ui-themes/src/styles/breakpoints.css",
+        "src/styles/tokens/colors/amber.css": "packages/radix-ui-themes/src/styles/tokens/colors/amber.css",
+        "src/styles/tokens/colors/blue.css": "packages/radix-ui-themes/src/styles/tokens/colors/blue.css",
+        "src/styles/tokens/colors/bronze.css": "packages/radix-ui-themes/src/styles/tokens/colors/bronze.css",
+        "src/styles/tokens/colors/brown.css": "packages/radix-ui-themes/src/styles/tokens/colors/brown.css",
+        "src/styles/tokens/colors/crimson.css": "packages/radix-ui-themes/src/styles/tokens/colors/crimson.css",
+        "src/styles/tokens/colors/cyan.css": "packages/radix-ui-themes/src/styles/tokens/colors/cyan.css",
+        "src/styles/tokens/colors/gold.css": "packages/radix-ui-themes/src/styles/tokens/colors/gold.css",
+        "src/styles/tokens/colors/grass.css": "packages/radix-ui-themes/src/styles/tokens/colors/grass.css",
+        "src/styles/tokens/colors/gray.css": "packages/radix-ui-themes/src/styles/tokens/colors/gray.css",
+        "src/styles/tokens/colors/green.css": "packages/radix-ui-themes/src/styles/tokens/colors/green.css",
+        "src/styles/tokens/colors/indigo.css": "packages/radix-ui-themes/src/styles/tokens/colors/indigo.css",
+        "src/styles/tokens/colors/iris.css": "packages/radix-ui-themes/src/styles/tokens/colors/iris.css",
+        "src/styles/tokens/colors/jade.css": "packages/radix-ui-themes/src/styles/tokens/colors/jade.css",
+        "src/styles/tokens/colors/lime.css": "packages/radix-ui-themes/src/styles/tokens/colors/lime.css",
+        "src/styles/tokens/colors/mauve.css": "packages/radix-ui-themes/src/styles/tokens/colors/mauve.css",
+        "src/styles/tokens/colors/mint.css": "packages/radix-ui-themes/src/styles/tokens/colors/mint.css",
+        "src/styles/tokens/colors/olive.css": "packages/radix-ui-themes/src/styles/tokens/colors/olive.css",
+        "src/styles/tokens/colors/orange.css": "packages/radix-ui-themes/src/styles/tokens/colors/orange.css",
+        "src/styles/tokens/colors/pink.css": "packages/radix-ui-themes/src/styles/tokens/colors/pink.css",
+        "src/styles/tokens/colors/plum.css": "packages/radix-ui-themes/src/styles/tokens/colors/plum.css",
+        "src/styles/tokens/colors/purple.css": "packages/radix-ui-themes/src/styles/tokens/colors/purple.css",
+        "src/styles/tokens/colors/red.css": "packages/radix-ui-themes/src/styles/tokens/colors/red.css",
+        "src/styles/tokens/colors/ruby.css": "packages/radix-ui-themes/src/styles/tokens/colors/ruby.css",
+        "src/styles/tokens/colors/sage.css": "packages/radix-ui-themes/src/styles/tokens/colors/sage.css",
+        "src/styles/tokens/colors/sand.css": "packages/radix-ui-themes/src/styles/tokens/colors/sand.css",
+        "src/styles/tokens/colors/sky.css": "packages/radix-ui-themes/src/styles/tokens/colors/sky.css",
+        "src/styles/tokens/colors/slate.css": "packages/radix-ui-themes/src/styles/tokens/colors/slate.css",
+        "src/styles/tokens/colors/teal.css": "packages/radix-ui-themes/src/styles/tokens/colors/teal.css",
+        "src/styles/tokens/colors/tomato.css": "packages/radix-ui-themes/src/styles/tokens/colors/tomato.css",
+        "src/styles/tokens/colors/violet.css": "packages/radix-ui-themes/src/styles/tokens/colors/violet.css",
+        "src/styles/tokens/colors/yellow.css": "packages/radix-ui-themes/src/styles/tokens/colors/yellow.css",
+        "src/styles/tokens/radius.css": "packages/radix-ui-themes/src/styles/tokens/radius.css",
+        "src/styles/tokens/scaling.css": "packages/radix-ui-themes/src/styles/tokens/scaling.css",
+        "src/styles/tokens/space.css": "packages/radix-ui-themes/src/styles/tokens/space.css",
+        "src/styles/tokens/typography.css": "packages/radix-ui-themes/src/styles/tokens/typography.css",
+        "src/styles/tokens/color.css": "packages/radix-ui-themes/src/styles/tokens/color.css"
+      },
+      "import_root": "crates/rustify-dom/src/theme/vendor/themes",
+      "generator": {
+        "entry": "xtask/src/colors.rs::theme_roles",
+        "inputs": [
+          "src/styles/tokens/colors/*.css",
+          "src/styles/tokens/color.css"
+        ],
+        "outputs": [
+          "crates/rustify-dom/src/theme/palette_roles.rs"
+        ]
       }
     }
   ],

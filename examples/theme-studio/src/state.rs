@@ -43,6 +43,7 @@ struct ContextKey {
     reduce_motion: bool,
     fonts: Vec<FontFace>,
     fallback_fonts: [String; 3],
+    font_resolution: rustify_ui::FontResolution,
 }
 
 impl ContextKey {
@@ -53,6 +54,7 @@ impl ContextKey {
             reduce_motion: context.reduce_motion,
             fonts: context.fonts.to_vec(),
             fallback_fonts: context.fallback_fonts.map(str::to_owned),
+            font_resolution: context.font_resolution,
         }
     }
 
@@ -61,6 +63,7 @@ impl ContextKey {
             && self.rem_bits == context.rem_px.to_bits()
             && self.reduce_motion == context.reduce_motion
             && self.fonts == context.fonts
+            && self.font_resolution == context.font_resolution
             && self
                 .fallback_fonts
                 .iter()
@@ -206,8 +209,9 @@ impl EditorState {
                 if scope == TokenScope::Current && mode != self.mode {
                     continue;
                 }
+                let values = origin.effective_values(mode)?;
                 for &token in COLOR_TOKENS {
-                    let color = parse_color(origin.values(mode).get(token)?)
+                    let color = parse_color(values.get(token)?)
                         .map_err(|message| error(token, &message))?
                         .rgba;
                     let mut hsl = rgba_to_hsla(color);
@@ -223,6 +227,7 @@ impl EditorState {
                         continue;
                     }
                     candidate
+                        .overrides
                         .values_mut(mode)
                         .0
                         .insert(token.into(), format_color(adjusted, ColorFormat::Rgb));
@@ -339,6 +344,19 @@ impl EditorState {
         self.resolution_count
     }
 
+    pub fn values(&self, mode: ThemeMode) -> Result<rustify_ui::ThemeValues, ThemeError> {
+        if let Some(cache) = self
+            .cache
+            .as_ref()
+            .filter(|cache| cache.key.revision == self.revision)
+        {
+            return Ok(cache.pair[usize::from(mode == ThemeMode::Dark)]
+                .values
+                .clone());
+        }
+        self.document.effective_values(mode)
+    }
+
     pub fn resolved_pair(
         &mut self,
         context: &ResolveContext<'_>,
@@ -387,7 +405,11 @@ impl EditorState {
         let mut candidate = self.document.clone();
         for mode in [ThemeMode::Light, ThemeMode::Dark] {
             if scope == TokenScope::Both || COMMON_TOKENS.contains(&token) || mode == self.mode {
+                if candidate.effective_values(mode)?.get(token)? == value {
+                    continue;
+                }
                 candidate
+                    .overrides
                     .values_mut(mode)
                     .0
                     .insert(token.into(), value.into());
@@ -426,10 +448,12 @@ fn resolve_pair(
     context: &ResolveContext<'_>,
     count: &mut u64,
 ) -> Result<[Arc<ResolvedTheme>; 2], ThemeError> {
+    rustify_ui::theme::check_document_size(document)?;
+    let source = rustify_ui::ThemeSource::new(Arc::new(document.clone()));
     *count += 1;
-    let light = Arc::new(rustify_ui::resolve(document, ThemeMode::Light, context)?);
+    let light = Arc::new(source.resolve(ThemeMode::Light, context)?);
     *count += 1;
-    let dark = Arc::new(rustify_ui::resolve(document, ThemeMode::Dark, context)?);
+    let dark = Arc::new(source.resolve(ThemeMode::Dark, context)?);
     Ok([light, dark])
 }
 
@@ -461,7 +485,7 @@ mod tests {
         let checkpoint = state().document;
         let mut draft = checkpoint.clone();
         draft
-            .styles
+            .overrides
             .light
             .0
             .insert("primary".into(), "#882244".into());
@@ -490,7 +514,7 @@ mod tests {
     }
 
     fn value(state: &EditorState, mode: ThemeMode, token: &str) -> String {
-        state.document.values(mode).get(token).unwrap().to_owned()
+        state.values(mode).unwrap().get(token).unwrap().to_owned()
     }
 
     fn assert_valid_state_unchanged(state: &EditorState, before: &EditorState) {
@@ -505,12 +529,12 @@ mod tests {
         let context = font_context(16., false);
         let mut document = state().document;
         document
-            .styles
+            .overrides
             .light
             .0
             .insert("radius".into(), "8px".into());
         document
-            .styles
+            .overrides
             .dark
             .0
             .insert("radius".into(), "12px".into());
@@ -555,7 +579,7 @@ mod tests {
         }
         let mut candidate = state.document.clone();
         candidate
-            .styles
+            .overrides
             .dark
             .0
             .insert("primary".into(), "rgb(".into());
@@ -612,14 +636,16 @@ mod tests {
         state.resolved_pair(&context).unwrap();
         assert_eq!(state.resolutions(), 6);
         let mut changed = font_context(20., false);
-        for expected in [8, 10, 12, 14] {
+        for expected in [8, 10, 12, 14, 16] {
             match expected {
                 10 => changed.reduce_motion = true,
                 12 => changed.fonts = &[],
                 14 => changed.fallback_fonts = ["Noto Sans", "serif", "monospace"],
+                16 => changed.font_resolution = rustify_ui::FontResolution::Css,
                 _ => (),
             }
             let pair = state.resolved_pair(&changed).unwrap();
+            assert_eq!(pair[0].fonts[0].font_resolution, changed.font_resolution);
             assert_eq!(state.resolutions(), expected);
             let repeated = state.resolved_pair(&changed).unwrap();
             assert_eq!(state.resolutions(), expected);
@@ -627,7 +653,7 @@ mod tests {
         }
         assert!(state.redo());
         state.resolved_pair(&changed).unwrap();
-        assert_eq!(state.resolutions(), 16);
+        assert_eq!(state.resolutions(), 18);
     }
 
     #[test]
@@ -638,7 +664,11 @@ mod tests {
         assert!(state.edit("primary", "#", &context).is_err());
         assert_eq!(state.resolutions(), 3);
         let mut candidate = state.document.clone();
-        candidate.styles.dark.0.insert("primary".into(), "#".into());
+        candidate
+            .overrides
+            .dark
+            .0
+            .insert("primary".into(), "#".into());
         assert!(state.apply_document(candidate, &context).is_err());
         assert_eq!(state.resolutions(), 5);
         assert!(state.resolved_pair(&font_context(f64::NAN, false)).is_err());
@@ -897,7 +927,8 @@ mod tests {
         state
             .edit_scoped("primary", "#8888", TokenScope::Both, &context)
             .unwrap();
-        let dark = state.document.styles.dark.clone();
+        let dark = state.values(ThemeMode::Dark).unwrap();
+        let dark_base = state.document.base.dark.clone();
         state.begin_gesture();
         state
             .update_hsl(
@@ -910,7 +941,7 @@ mod tests {
                 &context,
             )
             .unwrap();
-        assert_eq!(state.document.styles.dark, dark);
+        assert_eq!(state.values(ThemeMode::Dark).unwrap(), dark);
         let rgba = parse_color(&value(&state, ThemeMode::Light, "primary"))
             .unwrap()
             .rgba;
@@ -930,7 +961,8 @@ mod tests {
                 &context,
             )
             .unwrap();
-        assert_ne!(state.document.styles.dark, dark);
+        assert_ne!(state.values(ThemeMode::Dark).unwrap(), dark);
+        assert_eq!(state.document.base.dark, dark_base);
     }
 
     #[test]
@@ -981,7 +1013,7 @@ mod tests {
         preset.id = "external-preset".into();
         let mut draft = preset.clone();
         draft
-            .styles
+            .overrides
             .light
             .0
             .insert("primary".into(), "#00a88a".into());
@@ -996,7 +1028,11 @@ mod tests {
         assert!(editor.undo());
         assert_eq!(editor.document, original);
         let mut invalid = preset.clone();
-        invalid.styles.dark.0.insert("primary".into(), "bad".into());
+        invalid
+            .overrides
+            .dark
+            .0
+            .insert("primary".into(), "bad".into());
         assert!(editor.set_checkpoint(invalid, &context).is_err());
         assert_eq!(editor.checkpoint_document(), &preset);
     }

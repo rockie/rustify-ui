@@ -1,13 +1,9 @@
 //! Data-only theme exchange. Importing returns a candidate and never applies CSS.
 
 use super::{
-    format_color, parse_color, parse_font_stack, parse_length, resolve, ColorFormat, LengthRule,
+    format_color, parse_color, parse_font_stack, parse_length, ColorFormat, LengthRule,
     ResolveContext, ResolvedTheme, ThemeDiagnostic, ThemeDocument, ThemeError, ThemeMode,
-    ThemeStyles, ThemeValues, COLOR_TOKENS, VALUE_TOKENS,
-};
-use serde::{
-    de::{MapAccess, Visitor},
-    Deserialize, Deserializer,
+    ThemeStyles, COLOR_TOKENS, VALUE_TOKENS,
 };
 use std::collections::BTreeMap;
 
@@ -26,44 +22,6 @@ pub enum CssProfile {
     RustifyScoped,
 }
 
-#[derive(Deserialize)]
-#[serde(deny_unknown_fields)]
-struct JsonDocument {
-    schema_version: u32,
-    id: String,
-    name: String,
-    styles: JsonStyles,
-}
-
-#[derive(Deserialize)]
-#[serde(deny_unknown_fields)]
-struct JsonStyles {
-    #[serde(deserialize_with = "unique_values")]
-    light: ThemeValues,
-    #[serde(deserialize_with = "unique_values")]
-    dark: ThemeValues,
-}
-
-fn unique_values<'de, D: Deserializer<'de>>(deserializer: D) -> Result<ThemeValues, D::Error> {
-    struct Values;
-    impl<'de> Visitor<'de> for Values {
-        type Value = ThemeValues;
-        fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-            formatter.write_str("an object of unique token names and string values")
-        }
-        fn visit_map<M: MapAccess<'de>>(self, mut map: M) -> Result<Self::Value, M::Error> {
-            let mut values = BTreeMap::new();
-            while let Some((key, value)) = map.next_entry::<String, String>()? {
-                if values.insert(key.clone(), value).is_some() {
-                    return Err(serde::de::Error::custom(format!("duplicate token {key}")));
-                }
-            }
-            Ok(ThemeValues(values))
-        }
-    }
-    deserializer.deserialize_map(Values)
-}
-
 fn check_size(input: &str) -> Result<(), ThemeError> {
     if input.len() > THEME_INPUT_LIMIT {
         return Err(ThemeError::new("input", "theme input exceeds 256 KiB"));
@@ -75,9 +33,10 @@ fn validate(
     document: &ThemeDocument,
     context: &ResolveContext<'_>,
 ) -> Result<([ResolvedTheme; 2], Vec<ThemeDiagnostic>), ThemeError> {
+    let source = super::ThemeSource::new(std::sync::Arc::new(document.clone()));
     let resolved = [
-        resolve(document, ThemeMode::Light, context)?,
-        resolve(document, ThemeMode::Dark, context)?,
+        source.resolve(ThemeMode::Light, context)?,
+        source.resolve(ThemeMode::Dark, context)?,
     ];
     let mut diagnostics = Vec::new();
     for theme in &resolved {
@@ -94,18 +53,16 @@ fn validate(
 /// remain in the document, but the resolver never projects them to CSS/GPU.
 pub fn import_json(input: &str, context: &ResolveContext<'_>) -> Result<ThemeImport, ThemeError> {
     check_size(input)?;
-    let json: JsonDocument =
-        serde_json::from_str(input).map_err(|error| ThemeError::new("json", error.to_string()))?;
-    let document = ThemeDocument {
-        schema_version: json.schema_version,
-        id: json.id,
-        name: json.name,
-        styles: ThemeStyles {
-            light: json.styles.light,
-            dark: json.styles.dark,
-        },
-    };
+    let document: ThemeDocument = serde_json::from_str(input).map_err(|error| {
+        let message = error.to_string();
+        let field = ["config", "base", "overrides", "styles", "schema_version"]
+            .into_iter()
+            .find(|field| message.starts_with(&format!("{field}:")))
+            .unwrap_or("json");
+        ThemeError::new(field, message)
+    })?;
     let (_, diagnostics) = validate(&document, context)?;
+    check_document_size(&document)?;
     Ok(ThemeImport {
         document,
         diagnostics,
@@ -144,7 +101,11 @@ pub fn import_css(
             "no supported theme declarations were found",
         ));
     }
-    let mut document = base.clone();
+    let (base_pair, _) = validate(base, context)?;
+    let mut styles = ThemeStyles {
+        light: base_pair[0].values.clone(),
+        dark: base_pair[1].values.clone(),
+    };
     for mode in [ThemeMode::Light, ThemeMode::Dark] {
         let imported = if mode == ThemeMode::Light {
             &parser.light
@@ -169,13 +130,18 @@ pub fn import_css(
                 ),
             });
         }
-        let values = document.values_mut(mode);
+        let values = match mode {
+            ThemeMode::Light => &mut styles.light,
+            ThemeMode::Dark => &mut styles.dark,
+        };
         if mode == ThemeMode::Dark {
             values.0.extend(parser.light.clone());
         }
         values.0.extend(imported.clone());
     }
+    let document = ThemeDocument::custom(&base.id, &base.name, styles);
     let (_, diagnostics) = validate(&document, context)?;
+    check_document_size(&document)?;
     parser.diagnostics.extend(diagnostics);
     Ok(ThemeImport {
         document,
@@ -183,12 +149,19 @@ pub fn import_css(
     })
 }
 
+/// Checks the canonical complete exchange representation without resolving again.
+pub fn check_document_size(document: &ThemeDocument) -> Result<(), ThemeError> {
+    let canonical = serde_json::to_string(document)
+        .map_err(|error| ThemeError::new("json", error.to_string()))?;
+    check_size(&canonical)
+}
+
 pub fn export_json(
     document: &ThemeDocument,
     context: &ResolveContext<'_>,
 ) -> Result<String, ThemeError> {
     validate(document, context)?;
-    let output = serde_json::to_string_pretty(document)
+    let output = serde_json::to_string(document)
         .map_err(|error| ThemeError::new("json", error.to_string()))?;
     check_size(&output)?;
     Ok(output)
@@ -768,10 +741,12 @@ fn selector_mode(selector: &str) -> Option<(ThemeMode, bool)> {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::theme::{Theme, ThemeMode};
+    use crate::theme::{resolve, Theme, ThemeMode};
 
     fn base() -> ThemeDocument {
-        ThemeDocument::from_legacy(Theme::light(), Theme::dark())
+        let mut document = ThemeDocument::from_legacy(Theme::light(), Theme::dark());
+        document.overrides = Default::default();
+        document
     }
 
     #[test]
@@ -825,7 +800,7 @@ mod tests {
     #[test]
     fn css_exports_keep_shadow_color_utilities_live_in_every_profile_and_notation() {
         let mut document = base();
-        for values in [&mut document.styles.light, &mut document.styles.dark] {
+        for values in [&mut document.base.light, &mut document.base.dark] {
             for (token, value) in [
                 ("shadow-color", "rgb(30 10 20 / .6)"),
                 ("shadow-opacity", ".4"),
@@ -870,25 +845,17 @@ mod tests {
     fn css_merges_layered_blocks_with_last_declaration_diagnostics() {
         let source = "/* root */ @layer base { :root { --primary:#abc; --font-sans: 'A, B', sans-serif; } .dark { --primary:rgb(1 2 3 / .5); } } :root { --primary:#def; --shadow-x:2px; }";
         let imported = import_css(source, &base(), &ResolveContext::default()).unwrap();
+        assert_eq!(imported.document.base.light.get("primary").unwrap(), "#def");
         assert_eq!(
-            imported.document.styles.light.get("primary").unwrap(),
-            "#def"
-        );
-        assert_eq!(
-            imported.document.styles.dark.get("primary").unwrap(),
+            imported.document.base.dark.get("primary").unwrap(),
             "rgb(1 2 3 / .5)"
         );
         assert_eq!(
-            imported.document.styles.light.get("font-sans").unwrap(),
+            imported.document.base.light.get("font-sans").unwrap(),
             "'A, B', sans-serif"
         );
         assert_eq!(
-            imported
-                .document
-                .styles
-                .light
-                .get("shadow-offset-x")
-                .unwrap(),
+            imported.document.base.light.get("shadow-offset-x").unwrap(),
             "2px"
         );
         assert!(imported
@@ -901,12 +868,12 @@ mod tests {
     fn json_round_trip_keeps_author_values_and_unknown_tokens() {
         let mut document = base();
         document
-            .styles
+            .base
             .dark
             .0
             .insert("primary".into(), "oklch(.7 .3 20)".into());
         document
-            .styles
+            .base
             .light
             .0
             .insert("future-color".into(), "var(--anything)".into());
@@ -923,12 +890,12 @@ mod tests {
     fn css_profiles_round_trip_known_author_metrics_and_resolved_colors() {
         let mut document = base();
         document
-            .styles
+            .base
             .light
             .0
             .insert("radius".into(), ".75rem".into());
         document
-            .styles
+            .base
             .dark
             .0
             .insert("font-serif".into(), "Georgia, serif".into());
@@ -942,11 +909,11 @@ mod tests {
             .unwrap();
             let imported = import_css(&css, &document, &ResolveContext::default()).unwrap();
             assert_eq!(
-                imported.document.styles.light.get("radius").unwrap(),
+                imported.document.base.light.get("radius").unwrap(),
                 ".75rem"
             );
             assert_eq!(
-                imported.document.styles.dark.get("font-serif").unwrap(),
+                imported.document.base.dark.get("font-serif").unwrap(),
                 "Georgia, serif"
             );
             assert!(crate::theme::resolve(
@@ -1000,12 +967,12 @@ mod tests {
         let css = "@import url('https://example.test/a.css'); @theme inline { --color-primary:var(--primary); } .unrelated { --primary: url('https://example.test/a'); } :root { --primary-extra:url('https://example.test'); --primary:#abc; box-shadow:0 1px 2px black; }";
         let candidate = import_css(css, &base(), &ResolveContext::default()).unwrap();
         assert_eq!(
-            candidate.document.styles.light.get("primary").unwrap(),
+            candidate.document.base.light.get("primary").unwrap(),
             "#abc"
         );
         assert!(!candidate
             .document
-            .styles
+            .base
             .light
             .0
             .contains_key("primary-extra"));
@@ -1032,17 +999,17 @@ mod tests {
             .message
             .contains("duplicate token primary"));
         let mut value: serde_json::Value = serde_json::from_str(&json).unwrap();
-        value["styles"].as_object_mut().unwrap().remove("dark");
+        value["base"].as_object_mut().unwrap().remove("dark");
         assert!(import_json(&value.to_string(), &ResolveContext::default()).is_err());
         let mut document = base();
-        document.schema_version = 2;
+        document.schema_version = 3;
         assert!(import_json(
             &serde_json::to_string(&document).unwrap(),
             &ResolveContext::default()
         )
         .is_err());
         let mut value: serde_json::Value = serde_json::from_str(&json).unwrap();
-        value["styles"]["light"]["primary"] = 123.into();
+        value["base"]["light"]["primary"] = 123.into();
         assert!(import_json(&value.to_string(), &ResolveContext::default()).is_err());
     }
 
@@ -1066,7 +1033,7 @@ mod tests {
     #[test]
     fn exports_skip_unknown_json_values_and_include_packaged_font_notices() {
         let mut document = base();
-        document.styles.light.0.insert(
+        document.base.light.0.insert(
             "future-token".into(),
             "}; body { background: url(evil) }".into(),
         );
@@ -1115,7 +1082,7 @@ mod tests {
     fn every_css_color_notation_preserves_resolved_channels_and_alpha() {
         let mut document = base();
         document
-            .styles
+            .base
             .light
             .0
             .insert("primary".into(), "oklch(.7 .3 20 / .4)".into());

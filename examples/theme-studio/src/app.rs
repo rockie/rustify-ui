@@ -29,7 +29,7 @@ use std::{cell::RefCell, collections::BTreeMap};
 fn neutral_patch() -> ThemeValuePatch {
     ThemeValuePatch(
         ThemeDocument::from_legacy(Theme::light(), Theme::dark())
-            .styles
+            .base
             .light
             .0,
     )
@@ -190,11 +190,13 @@ fn Editor(state: StudioState) -> impl IntoView {
     };
     let common_differences = Signal::derive(move || {
         state.editor.with(|e| {
+            let (Ok(light), Ok(dark)) = (e.values(ThemeMode::Light), e.values(ThemeMode::Dark))
+            else {
+                return Vec::new();
+            };
             COMMON_TOKENS
                 .iter()
-                .filter(|token| {
-                    e.document.styles.light.0.get(**token) != e.document.styles.dark.0.get(**token)
-                })
+                .filter(|token| light.0.get(**token) != dark.0.get(**token))
                 .map(|token| (*token).to_owned())
                 .collect::<Vec<_>>()
         })

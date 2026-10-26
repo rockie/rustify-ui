@@ -419,6 +419,29 @@ fn multiply(matrix: [[f64; 3]; 3], vector: [f64; 3]) -> [f64; 3] {
     matrix.map(|row| row[0] * vector[0] + row[1] * vector[1] + row[2] * vector[2])
 }
 
+/// Interpolates the pinned palette's opaque track roles in OKLab.
+pub(super) fn mix_oklab(left: Rgba, right: Rgba, right_weight: f64) -> Rgba {
+    let lab = |color| {
+        let [l, c, h] = srgb_to_oklch(color);
+        [l, c * h.to_radians().cos(), c * h.to_radians().sin()]
+    };
+    let a = lab(left);
+    let b = lab(right);
+    let mixed: [f64; 3] = std::array::from_fn(|i| a[i] * (1. - right_weight) + b[i] * right_weight);
+    let [r, g, b] = oklch_to_srgb(
+        mixed[0],
+        mixed[1].hypot(mixed[2]),
+        mixed[2].atan2(mixed[1]).to_degrees(),
+    )
+    .map(|v| v.clamp(0., 1.));
+    Rgba {
+        r,
+        g,
+        b,
+        a: left.a * (1. - right_weight) + right.a * right_weight,
+    }
+}
+
 // CSS Color 4, https://www.w3.org/TR/css-color-4/#color-conversion-code
 fn oklch_to_srgb(lightness: f64, chroma: f64, hue: f64) -> [f64; 3] {
     let angle = hue.to_radians();

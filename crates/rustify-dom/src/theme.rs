@@ -8,9 +8,20 @@
 
 mod codec;
 mod color;
-pub use codec::{
-    export_css, export_json, import_css, import_json, CssProfile, ThemeImport, THEME_INPUT_LIMIT,
+mod config;
+pub use config::{
+    AccentColor, Appearance, ConfigChange, EffectiveThemeConfig, GrayColor, PanelBackground,
+    ResolvedPalette, ThemeBoundaryPatch, ThemeConfig, ThemeConfigGroup, ThemeConfigPatch,
+    ThemeRadius, ThemeScaling,
 };
+mod palette_roles;
+pub use codec::{
+    check_document_size, export_css, export_json, import_css, import_json, CssProfile, ThemeImport,
+    THEME_INPUT_LIMIT,
+};
+pub use rustify_colors::ColorFamily;
+#[cfg(test)]
+mod author_tests;
 mod document;
 mod fonts;
 mod metrics;
@@ -25,8 +36,8 @@ pub use color::{
     ColorFormat, Hsla, ParsedColor, Rgba,
 };
 pub use document::{
-    ThemeDocument, ThemeError, ThemeMode, ThemeStyles, ThemeValuePatch, ThemeValues, COLOR_TOKENS,
-    COMMON_TOKENS, VALUE_TOKENS,
+    ThemeDocument, ThemeError, ThemeMode, ThemeOverrides, ThemeStyles, ThemeValuePatch,
+    ThemeValues, COLOR_TOKENS, COMMON_TOKENS, VALUE_TOKENS,
 };
 pub use metrics::{
     css_px_to_points, parse_css_font_stack, parse_font_stack, parse_length, LengthRule,
@@ -36,7 +47,7 @@ pub use provider::{provide_static_theme, use_resolved_theme};
 pub use provider::{ThemeBoundary, ThemeScope};
 pub use resolve::{
     resolution_count, resolve, FontFace, FontResolution, ResolveContext, ResolvedFont,
-    ResolvedTheme, ShadowLayer, ThemeDiagnostic,
+    ResolvedTheme, ShadowLayer, ThemeDiagnostic, ThemeGeometry, ThemeSource, ThemeValueOrigin,
 };
 
 /// sRGB, `0xRRGGBB`.

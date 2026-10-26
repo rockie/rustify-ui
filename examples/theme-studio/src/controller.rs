@@ -85,7 +85,7 @@ impl StudioState {
             preferences: Preferences::default(),
         };
         let (envelope, corrupt, status) = match persistence::load_storage(&context) {
-            Ok(LoadResult::Valid(value)) => (value, None, "Restored local draft".to_owned()),
+            Ok(LoadResult::Valid(value)) => (*value, None, "Restored local draft".to_owned()),
             Ok(LoadResult::Invalid { raw, error }) => (
                 empty,
                 Some(raw),
@@ -165,12 +165,17 @@ impl StudioState {
         Signal::derive(move || self.frame.with(|f| f.main.clone()))
     }
     pub fn values(self) -> Signal<rustify_ui::ThemeValues> {
-        Signal::derive(move || self.editor.with(|e| e.document.values(e.mode).clone()))
+        Signal::derive(move || {
+            self.editor
+                .with(|e| e.values(e.mode))
+                .unwrap_or_else(|_| self.frame.with(|frame| frame.main.values.clone()))
+        })
     }
     pub fn baseline(self) -> Signal<rustify_ui::ThemeValues> {
         Signal::derive(move || {
             self.editor
-                .with(|e| e.checkpoint_document().values(e.mode).clone())
+                .with(|e| e.checkpoint_document().effective_values(e.mode))
+                .unwrap_or_else(|_| self.frame.with(|frame| frame.main.values.clone()))
         })
     }
     pub fn tr(self, en: &'static str, zh: &'static str) -> &'static str {
@@ -486,7 +491,7 @@ impl StudioState {
                         e.set_checkpoint(checkpoint, &context)
                             .expect("validated external checkpoint");
                     });
-                    self.envelope.set(envelope);
+                    self.envelope.set(*envelope);
                     self.external.set(None);
                     self.corrupt.set(None);
                     self.changed();

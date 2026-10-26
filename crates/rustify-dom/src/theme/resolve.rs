@@ -1,10 +1,12 @@
 use super::{
     metrics::{letter_spacing, number},
-    parse_color, parse_css_font_stack, parse_font_stack, parse_length, ColorFormat, LengthRule,
-    Rgba, ThemeDocument, ThemeError, ThemeMode, ThemeValues, COLOR_TOKENS, COMMON_TOKENS,
+    parse_color, parse_css_font_stack, parse_font_stack, parse_length, ColorFormat, ConfigChange,
+    EffectiveThemeConfig, LengthRule, ResolvedPalette, Rgba, ThemeBoundaryPatch, ThemeConfigGroup,
+    ThemeDocument, ThemeError, ThemeMode, ThemeRadius, ThemeValues, COLOR_TOKENS, COMMON_TOKENS,
     VALUE_TOKENS,
 };
 use std::collections::BTreeMap;
+use std::sync::Arc;
 
 thread_local! {
     static RESOLUTION_COUNT: std::cell::Cell<u64> = const { std::cell::Cell::new(0) };
@@ -78,6 +80,203 @@ pub struct ShadowLayer {
     pub spread: f64,
 }
 
+/// Where an effective, unscaled semantic author value came from.
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum ThemeValueOrigin {
+    Base,
+    Configuration(ThemeConfigGroup),
+    DocumentOverride,
+    BoundaryConfiguration {
+        depth: usize,
+        group: ThemeConfigGroup,
+    },
+    BoundaryOverride {
+        depth: usize,
+    },
+}
+
+impl ThemeValueOrigin {
+    fn field(self, mode: ThemeMode, token: &str) -> String {
+        match self {
+            Self::Base => format!("base.{}.{token}", mode.as_str()),
+            Self::DocumentOverride => format!("overrides.{}.{token}", mode.as_str()),
+            Self::Configuration(group) => format!("config.{}", group.field()),
+            Self::BoundaryConfiguration { depth, group } => {
+                format!("boundary[{depth}].config.{}", group.field())
+            }
+            Self::BoundaryOverride { depth } => {
+                format!("boundary[{depth}].{}.{}", mode.as_str(), token)
+            }
+        }
+    }
+}
+
+/// Immutable two-mode author data and the runtime boundaries applied to it.
+#[derive(Clone, Debug, PartialEq)]
+pub struct ThemeSource {
+    document: Arc<ThemeDocument>,
+    boundaries: Vec<ThemeBoundaryPatch>,
+}
+
+struct AuthorValues {
+    values: ThemeValues,
+    config: EffectiveThemeConfig,
+    origins: BTreeMap<&'static str, ThemeValueOrigin>,
+}
+
+impl ThemeSource {
+    pub fn new(document: Arc<ThemeDocument>) -> Self {
+        Self {
+            document,
+            boundaries: Vec::new(),
+        }
+    }
+    pub fn document(&self) -> &ThemeDocument {
+        &self.document
+    }
+    pub fn boundaries(&self) -> &[ThemeBoundaryPatch] {
+        &self.boundaries
+    }
+
+    fn compose(
+        document: &ThemeDocument,
+        boundaries: &[ThemeBoundaryPatch],
+        mode: ThemeMode,
+    ) -> Result<AuthorValues, ThemeError> {
+        let mut values = document.base_values(mode).clone();
+        let mut origins = BTreeMap::new();
+        for &token in COLOR_TOKENS.iter().chain(VALUE_TOKENS) {
+            values.get(token).map_err(|e| {
+                ThemeError::new(format!("base.{}.{token}", mode.as_str()), e.message)
+            })?;
+            origins.insert(token, ThemeValueOrigin::Base);
+        }
+        let mut config = EffectiveThemeConfig::root(document.config);
+        let mut depths = [None; 4];
+        for (depth, patch) in boundaries.iter().enumerate() {
+            for (slot, changed) in [
+                !matches!(patch.config.accent_color, ConfigChange::Keep),
+                !matches!(patch.config.gray_color, ConfigChange::Keep),
+                !matches!(patch.config.panel_background, ConfigChange::Keep),
+                !matches!(patch.config.radius, ConfigChange::Keep),
+            ]
+            .into_iter()
+            .enumerate()
+            {
+                if changed {
+                    depths[slot] = Some(depth);
+                }
+            }
+            config = config.patched(patch.config);
+        }
+        let generated = super::config::generated_values(config, mode)?;
+        for (i, &group) in ThemeConfigGroup::ALL.iter().enumerate() {
+            for &token in group.tokens() {
+                if let Some(value) = generated.0.get(token) {
+                    values.0.insert(token.to_owned(), value.clone());
+                    origins.insert(
+                        token,
+                        match depths[i] {
+                            Some(depth) => ThemeValueOrigin::BoundaryConfiguration { depth, group },
+                            None => ThemeValueOrigin::Configuration(group),
+                        },
+                    );
+                }
+            }
+        }
+        let mut apply =
+            |patch: &super::ThemeValuePatch, origin: ThemeValueOrigin| -> Result<(), ThemeError> {
+                values = values
+                    .patched(patch)
+                    .map_err(|e| ThemeError::new(origin.field(mode, &e.field), e.message))?;
+                for (&token, current) in &mut origins {
+                    if patch.0.contains_key(token) {
+                        *current = origin;
+                    }
+                }
+                Ok(())
+            };
+        apply(
+            document.overrides.values(mode),
+            ThemeValueOrigin::DocumentOverride,
+        )?;
+        for (depth, patch) in boundaries.iter().enumerate() {
+            apply(
+                patch.values(mode),
+                ThemeValueOrigin::BoundaryOverride { depth },
+            )?;
+        }
+        Ok(AuthorValues {
+            values,
+            config,
+            origins,
+        })
+    }
+
+    fn author_values(&self, mode: ThemeMode) -> Result<AuthorValues, ThemeError> {
+        Self::compose(&self.document, &self.boundaries, mode)
+    }
+
+    pub(super) fn document_values(
+        document: &ThemeDocument,
+        mode: ThemeMode,
+    ) -> Result<ThemeValues, ThemeError> {
+        Self::compose(document, &[], mode).map(|author| author.values)
+    }
+
+    /// Explicit mode resolution, independent of document appearance (for exports/validation).
+    pub fn resolve(
+        &self,
+        mode: ThemeMode,
+        context: &ResolveContext<'_>,
+    ) -> Result<ResolvedTheme, ThemeError> {
+        resolve_source(Arc::new(self.clone()), mode, context)
+    }
+}
+
+/// All finite component scales are derived once, in CSS px, from unscaled values.
+#[derive(Clone, Debug, PartialEq)]
+pub struct ThemeGeometry {
+    pub spaces_px: [f64; 10],
+    pub font_sizes_px: [f64; 9],
+    pub line_heights_px: [f64; 9],
+    pub heading_line_heights_px: [f64; 9],
+    pub radii_px: [f64; 6],
+    pub radius_full_px: f64,
+    pub radius_thumb_px: f64,
+    pub control_heights_px: [f64; 4],
+}
+
+impl ThemeGeometry {
+    fn new(radius: f64, spacing: f64, font_size: f64, config: EffectiveThemeConfig) -> Self {
+        let scale = config.selected.scaling.factor();
+        let space = spacing / 4. * scale;
+        let font = font_size / super::Theme::light().font_size * scale;
+        Self {
+            spaces_px: [0., 4., 8., 12., 16., 24., 32., 40., 48., 64.].map(|v| v * space),
+            font_sizes_px: [12., 14., 16., 18., 20., 24., 28., 35., 60.].map(|v| v * font),
+            line_heights_px: [16., 20., 24., 26., 28., 30., 36., 40., 60.].map(|v| v * font),
+            heading_line_heights_px: [16., 18., 22., 24., 26., 30., 36., 40., 60.]
+                .map(|v| v * font),
+            radii_px: [3., 4., 6., 8., 12., 16.].map(|v| v * radius / 6. * scale),
+            radius_full_px: if config.selected.radius == Some(ThemeRadius::Full) {
+                9999.
+            } else {
+                0.
+            },
+            radius_thumb_px: if matches!(
+                config.selected.radius,
+                Some(ThemeRadius::None | ThemeRadius::Small)
+            ) {
+                0.5 * scale
+            } else {
+                9999.
+            },
+            control_heights_px: [24., 32., 40., 48.].map(|v| v * space),
+        }
+    }
+}
+
 // The legacy Tailwind 4.1.13 layers remain the fallback when a scope does not
 // publish the new layer variables. Keep geometry in a single var() so Tailwind
 // leaves the color expression at the utility element instead of rewriting it.
@@ -135,6 +334,14 @@ pub struct ResolvedTheme {
     pub document_id: String,
     pub name: String,
     pub values: ThemeValues,
+    pub source: Arc<ThemeSource>,
+    pub config: EffectiveThemeConfig,
+    pub origins: BTreeMap<&'static str, ThemeValueOrigin>,
+    pub brand: Arc<ResolvedPalette>,
+    pub gray: Arc<ResolvedPalette>,
+    pub panel: Rgba,
+    pub surface: Rgba,
+    pub geometry: ThemeGeometry,
     pub colors: BTreeMap<&'static str, Rgba>,
     pub radius_px: f64,
     /// Small, medium, large and extra-large, in that order.
@@ -179,6 +386,63 @@ impl ResolvedTheme {
         }
         for (size, radius) in ["sm", "md", "lg", "xl"].into_iter().zip(self.radii_px) {
             props.push((format!("--rustify-radius-{size}"), format!("{radius}px")));
+        }
+        for (prefix, values) in [
+            ("space", self.geometry.spaces_px.as_slice()),
+            ("font-size", self.geometry.font_sizes_px.as_slice()),
+            ("line-height", self.geometry.line_heights_px.as_slice()),
+            (
+                "heading-line-height",
+                self.geometry.heading_line_heights_px.as_slice(),
+            ),
+            ("radius", self.geometry.radii_px.as_slice()),
+            (
+                "control-height",
+                self.geometry.control_heights_px.as_slice(),
+            ),
+        ] {
+            let start = usize::from(prefix != "space");
+            for (i, value) in values.iter().enumerate() {
+                props.push((
+                    format!("--rustify-{prefix}-{}", i + start),
+                    format!("{value}px"),
+                ));
+            }
+        }
+        for (name, value) in [
+            ("full", self.geometry.radius_full_px),
+            ("thumb", self.geometry.radius_thumb_px),
+        ] {
+            props.push((format!("--rustify-radius-{name}"), format!("{value}px")));
+        }
+        for (name, palette) in [("brand", &self.brand), ("gray", &self.gray)] {
+            for (i, (solid, alpha)) in palette.solid.iter().zip(palette.alpha).enumerate() {
+                props.push((
+                    format!("--rustify-{name}-{}", i + 1),
+                    super::format_color(*solid, ColorFormat::Rgb),
+                ));
+                props.push((
+                    format!("--rustify-{name}-a{}", i + 1),
+                    super::format_color(alpha, ColorFormat::Rgb),
+                ));
+            }
+            for (role, color) in [
+                ("contrast", palette.contrast),
+                ("surface", palette.surface),
+                ("indicator", palette.indicator),
+                ("track", palette.track),
+            ] {
+                props.push((
+                    format!("--rustify-{name}-{role}"),
+                    super::format_color(color, ColorFormat::Rgb),
+                ));
+            }
+        }
+        for (role, color) in [("panel", self.panel), ("surface", self.surface)] {
+            props.push((
+                format!("--rustify-{role}"),
+                super::format_color(color, ColorFormat::Rgb),
+            ));
         }
         props.push((
             "--rustify-letter-spacing".into(),
@@ -248,19 +512,32 @@ impl ResolvedTheme {
 
     /// Re-resolve a local patch using the enclosing snapshot's context.
     pub fn patched(&self, patch: &super::ThemeValuePatch) -> Result<Self, ThemeError> {
-        let values = self.values.patched(patch)?;
-        let document = ThemeDocument {
-            schema_version: 1,
-            id: self.document_id.clone(),
-            name: self.name.clone(),
-            styles: super::ThemeStyles {
-                light: values.clone(),
-                dark: values,
+        let patch = match self.mode {
+            ThemeMode::Light => ThemeBoundaryPatch {
+                light: patch.clone(),
+                ..Default::default()
+            },
+            ThemeMode::Dark => ThemeBoundaryPatch {
+                dark: patch.clone(),
+                ..Default::default()
             },
         };
-        resolve(
-            &document,
-            self.mode,
+        self.with_boundary(&patch)
+    }
+
+    pub fn with_boundary(&self, patch: &ThemeBoundaryPatch) -> Result<Self, ThemeError> {
+        if patch.is_empty() {
+            return Ok(self.clone());
+        }
+        let mut source = (*self.source).clone();
+        source.boundaries.push(patch.clone());
+        let mode = match patch.config.appearance {
+            ConfigChange::Keep => self.mode,
+            ConfigChange::Set(appearance) => appearance.mode(self.mode),
+        };
+        resolve_source(
+            Arc::new(source),
+            mode,
             &ResolveContext {
                 rem_px: self.rem_px,
                 reduce_motion: self.host_reduce_motion,
@@ -278,11 +555,126 @@ pub fn resolve(
     mode: ThemeMode,
     context: &ResolveContext<'_>,
 ) -> Result<ResolvedTheme, ThemeError> {
+    resolve_source(
+        Arc::new(ThemeSource::new(Arc::new(document.clone()))),
+        mode,
+        context,
+    )
+}
+
+fn validate_masked_values(
+    source: &ThemeSource,
+    mode: ThemeMode,
+    effective: &ThemeValues,
+    context: &ResolveContext<'_>,
+) -> Result<(), ThemeError> {
+    // The ordinary resolver validates effective values. Validate overwritten
+    // inputs too, so configuration/boundaries cannot hide an invalid author base.
+    let base = source.document().base_values(mode);
+    let parse_font_size = |value: &str, origin: ThemeValueOrigin| {
+        parse_length(value, context.rem_px, LengthRule::Positive)
+            .map_err(|e| ThemeError::new(origin.field(mode, "font-size"), e.message))
+    };
+    let mut font = parse_font_size(base.get("font-size")?, ThemeValueOrigin::Base)?;
+    let validate =
+        |token: &str, value: &str, origin: ThemeValueOrigin, font: f64| -> Result<(), ThemeError> {
+            if effective
+                .0
+                .get(token)
+                .is_some_and(|final_value| final_value == value)
+                && token != "letter-spacing"
+            {
+                return Ok(());
+            }
+            let field = origin.field(mode, token);
+            let error = |message: String| ThemeError::new(&field, message);
+            if COLOR_TOKENS.contains(&token) {
+                return parse_color(value).map(|_| ()).map_err(error);
+            }
+            let length = match token {
+                "spacing" | "font-size" => Some(LengthRule::Positive),
+                "radius" | "layout-gap" | "shadow-blur" => Some(LengthRule::NonNegative),
+                "shadow-spread" | "shadow-offset-x" | "shadow-offset-y" => Some(LengthRule::Signed),
+                _ => None,
+            };
+            if let Some(rule) = length {
+                return parse_length(value, context.rem_px, rule)
+                    .map(|_| ())
+                    .map_err(|e| error(e.message));
+            }
+            match token {
+                "font-sans" | "font-serif" | "font-mono" => {
+                    if context.font_resolution == FontResolution::Css {
+                        parse_css_font_stack(value)
+                            .map(|_| ())
+                            .map_err(|e| error(e.message))
+                    } else {
+                        parse_font_stack(value)
+                            .map(|_| ())
+                            .map_err(|e| error(e.message))
+                    }
+                }
+                "letter-spacing" => letter_spacing(value, font, context.rem_px)
+                    .map(|_| ())
+                    .map_err(|e| error(e.message)),
+                "shadow-opacity" => number(value, 0., 1.)
+                    .map(|_| ())
+                    .map_err(|e| error(e.message)),
+                "reduce-motion" if matches!(value, "true" | "false") => Ok(()),
+                "reduce-motion" => Err(error("use true or false".into())),
+                _ => Ok(()),
+            }
+        };
+    for &token in COLOR_TOKENS.iter().chain(VALUE_TOKENS) {
+        validate(token, base.get(token)?, ThemeValueOrigin::Base, font)?;
+    }
+    let overrides = source.document().overrides.values(mode);
+    if let Some(value) = overrides.0.get("font-size") {
+        font = parse_font_size(value, ThemeValueOrigin::DocumentOverride)?;
+    }
+    for (token, value) in &overrides.0 {
+        validate(token, value, ThemeValueOrigin::DocumentOverride, font)?;
+    }
+    for (depth, patch) in source.boundaries.iter().enumerate() {
+        let patch = patch.values(mode);
+        if let Some(value) = patch.0.get("font-size") {
+            font = parse_font_size(value, ThemeValueOrigin::BoundaryOverride { depth })?;
+        }
+        for (token, value) in &patch.0 {
+            validate(
+                token,
+                value,
+                ThemeValueOrigin::BoundaryOverride { depth },
+                font,
+            )?;
+        }
+    }
+    Ok(())
+}
+
+fn resolve_source(
+    source: Arc<ThemeSource>,
+    mode: ThemeMode,
+    context: &ResolveContext<'_>,
+) -> Result<ResolvedTheme, ThemeError> {
     RESOLUTION_COUNT.with(|count| count.set(count.get() + 1));
+    let document = source.document();
     document.validate_identity()?;
-    let values = document.values(mode);
+    let AuthorValues {
+        values,
+        config,
+        origins,
+    } = source.author_values(mode)?;
+    validate_masked_values(&source, mode, &values, context)?;
     let field_error = |token: &str, error: ThemeError| {
-        ThemeError::new(format!("styles.{}.{token}", mode.as_str()), error.message)
+        ThemeError::new(
+            origins
+                .get(token)
+                .copied()
+                .unwrap_or(ThemeValueOrigin::Base)
+                .field(mode, token),
+            error.message,
+        )
     };
     let value = |token: &str| values.get(token).map_err(|error| field_error(token, error));
     let mut diagnostics = Vec::new();
@@ -293,7 +685,7 @@ pub fn resolve(
         colors.insert(token, parsed.rgba);
         if parsed.out_of_gamut {
             diagnostics.push(ThemeDiagnostic {
-                field: format!("styles.{}.{token}", mode.as_str()),
+                field: origins[token].field(mode, token),
                 message: "Preview clipped this color to sRGB; the author value is preserved".into(),
             });
         }
@@ -301,13 +693,15 @@ pub fn resolve(
     for token in values.0.keys() {
         if !COLOR_TOKENS.contains(&token.as_str()) && !VALUE_TOKENS.contains(&token.as_str()) {
             diagnostics.push(ThemeDiagnostic {
-                field: format!("styles.{}.{token}", mode.as_str()),
+                field: format!("base.{}.{token}", mode.as_str()),
                 message: "Unknown token is preserved but not used by the preview".into(),
             });
         }
     }
     for &token in COMMON_TOKENS {
-        if document.styles.light.get(token)? != document.styles.dark.get(token)? {
+        if document.base.light.get(token)? != document.base.dark.get(token)?
+            || document.overrides.light.0.get(token) != document.overrides.dark.0.get(token)
+        {
             diagnostics.push(ThemeDiagnostic {
                 field: token.into(),
                 message: "Light and dark have different author values; editing this common field applies to both".into(),
@@ -363,6 +757,13 @@ pub fn resolve(
                     ..base_shadow
                 });
             }
+        }
+        let scale = config.selected.scaling.factor();
+        for layer in &mut layers {
+            layer.offset_x *= scale;
+            layer.offset_y *= scale;
+            layer.blur *= scale;
+            layer.spread *= scale;
         }
         shadows.insert(name, layers);
     }
@@ -423,7 +824,7 @@ pub fn resolve(
         let fallback = face.is_none() || !family.eq_ignore_ascii_case(&requested[0]);
         if fallback {
             diagnostics.push(ThemeDiagnostic {
-                field: format!("styles.{}.{token}", mode.as_str()),
+                field: origins[token].field(mode, token),
                 message: format!(
                     "Requested {}; preview uses {family}{}",
                     requested[0],
@@ -449,22 +850,55 @@ pub fn resolve(
         font("font-serif", 1)?,
         font("font-mono", 2)?,
     ];
-    Ok(ResolvedTheme {
-        mode,
-        document_id: document.id.clone(),
-        name: document.name.clone(),
-        values: values.clone(),
-        colors,
-        radius_px,
-        radii_px: [
+    let geometry = ThemeGeometry::new(radius_px, spacing_px, font_size_px, config);
+    let radii_px = if config.selected.radius.is_some() {
+        std::array::from_fn(|i| geometry.radii_px[i])
+    } else {
+        [
             (radius_px - 4.).max(0.),
             (radius_px - 2.).max(0.),
             radius_px,
             radius_px + 4.,
-        ],
-        spacing_px,
-        layout_gap_px,
-        font_size_px,
+        ]
+        .map(|v| v * config.selected.scaling.factor())
+    };
+    let scale = config.selected.scaling.factor();
+    let brand = super::config::palette(config.accent.family(), mode)?;
+    let gray = super::config::palette(config.gray, mode)?;
+    let panel = match (mode, config.selected.panel_background) {
+        (_, None) => colors["card"],
+        (ThemeMode::Light, Some(super::PanelBackground::Solid)) => Rgba {
+            r: 1.,
+            g: 1.,
+            b: 1.,
+            a: 1.,
+        },
+        (ThemeMode::Light, Some(super::PanelBackground::Translucent)) => {
+            super::palette_roles::LIGHT_PANEL
+        }
+        (ThemeMode::Dark, Some(super::PanelBackground::Solid)) => gray.solid[1],
+        (ThemeMode::Dark, Some(super::PanelBackground::Translucent)) => gray.alpha[1],
+    };
+    let surface = super::palette_roles::SURFACES[usize::from(mode == ThemeMode::Dark)];
+    Ok(ResolvedTheme {
+        mode,
+        document_id: document.id.clone(),
+        name: document.name.clone(),
+        values,
+        source: source.clone(),
+        config,
+        origins,
+        brand,
+        gray,
+        panel,
+        surface,
+        geometry,
+        colors,
+        radius_px: radius_px * scale,
+        radii_px,
+        spacing_px: spacing_px * scale,
+        layout_gap_px: layout_gap_px * scale,
+        font_size_px: font_size_px * scale,
         letter_spacing_em,
         fonts,
         shadows,
@@ -491,12 +925,12 @@ mod tests {
     fn legacy_resolves_without_losing_alpha_or_coupling_sizes() {
         let mut document = document();
         document
-            .styles
+            .overrides
             .light
             .0
             .insert("primary".into(), "#12345680".into());
         document
-            .styles
+            .overrides
             .light
             .0
             .insert("radius".into(), "0.3rem".into());
@@ -517,7 +951,11 @@ mod tests {
     #[test]
     fn radius_zero_is_valid_and_never_derives_negative_corners() {
         let mut document = document();
-        document.styles.light.0.insert("radius".into(), "0".into());
+        document
+            .overrides
+            .light
+            .0
+            .insert("radius".into(), "0".into());
         assert_eq!(
             resolve(&document, ThemeMode::Light, &ResolveContext::default())
                 .unwrap()
@@ -538,13 +976,13 @@ mod tests {
             ("reduce-motion", "maybe"),
         ] {
             let mut document = document();
-            document.styles.dark.0.insert(token.into(), invalid.into());
+            document.base.dark.0.insert(token.into(), invalid.into());
             let before = document.clone();
             assert_eq!(
                 resolve(&document, ThemeMode::Dark, &ResolveContext::default())
                     .unwrap_err()
                     .field,
-                format!("styles.dark.{token}")
+                format!("base.dark.{token}")
             );
             assert_eq!(document, before);
         }
@@ -553,20 +991,20 @@ mod tests {
     #[test]
     fn missing_tokens_fail_and_unknown_tokens_generate_diagnostics() {
         let mut document = document();
-        document.styles.light.0.remove("chart-5");
+        document.base.light.0.remove("chart-5");
         assert_eq!(
             resolve(&document, ThemeMode::Light, &ResolveContext::default())
                 .unwrap_err()
                 .field,
-            "styles.light.chart-5"
+            "base.light.chart-5"
         );
         document
-            .styles
+            .base
             .light
             .0
             .insert("chart-5".into(), "#123456".into());
         document
-            .styles
+            .base
             .light
             .0
             .insert("custom".into(), "ignored".into());
@@ -575,7 +1013,7 @@ mod tests {
                 .unwrap()
                 .diagnostics
                 .iter()
-                .any(|d| d.field == "styles.light.custom")
+                .any(|d| d.field == "base.light.custom")
         );
     }
 
@@ -583,19 +1021,23 @@ mod tests {
     fn gamut_and_common_field_differences_are_visible_and_author_values_survive() {
         let mut document = document();
         document
-            .styles
+            .overrides
             .light
             .0
             .insert("primary".into(), "oklch(0.7 0.4 40)".into());
-        document.styles.dark.0.insert("radius".into(), "2px".into());
+        document
+            .overrides
+            .dark
+            .0
+            .insert("radius".into(), "2px".into());
         let resolved = resolve(&document, ThemeMode::Light, &ResolveContext::default()).unwrap();
         assert!(resolved
             .diagnostics
             .iter()
-            .any(|d| d.field == "styles.light.primary"));
+            .any(|d| d.field == "overrides.light.primary"));
         assert!(resolved.diagnostics.iter().any(|d| d.field == "radius"));
         assert_eq!(
-            document.styles.light.get("primary").unwrap(),
+            document.overrides.light.0.get("primary").unwrap(),
             "oklch(0.7 0.4 40)"
         );
     }
@@ -604,7 +1046,7 @@ mod tests {
     fn fonts_pick_packaged_families_and_report_the_requested_fallback() {
         let mut document = document();
         document
-            .styles
+            .base
             .light
             .0
             .insert("font-sans".into(), "Unknown, Noto Sans, sans-serif".into());
@@ -638,7 +1080,7 @@ mod tests {
             ("shadow-offset-y", "5px"),
             ("shadow-spread", "-1px"),
         ] {
-            document.styles.light.0.insert(token.into(), value.into());
+            document.base.light.0.insert(token.into(), value.into());
         }
         let resolved = resolve(&document, ThemeMode::Light, &ResolveContext::default()).unwrap();
         assert_eq!(resolved.shadows["shadow-lg"].len(), 2);

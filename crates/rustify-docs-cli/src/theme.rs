@@ -372,7 +372,7 @@ mod tests {
 
     fn document() -> ThemeDocument {
         let mut document = ThemeDocument::from_legacy(Theme::light(), Theme::dark());
-        for values in [&mut document.styles.light, &mut document.styles.dark] {
+        for values in [&mut document.base.light, &mut document.base.dark] {
             for (token, family) in [
                 ("font-sans", "sans-serif"),
                 ("font-serif", "serif"),
@@ -424,7 +424,7 @@ mod tests {
         };
         let imported = import_json(input, &context).unwrap();
         let mut expected = ThemeDocument::from_legacy(Theme::light(), Theme::dark());
-        for values in [&mut expected.styles.light, &mut expected.styles.dark] {
+        for values in [&mut expected.base.light, &mut expected.base.dark] {
             for (token, generic) in [
                 ("font-sans", "sans-serif"),
                 ("font-serif", "serif"),
@@ -433,7 +433,7 @@ mod tests {
                 values.0.insert(token.into(), generic.into());
             }
         }
-        assert_eq!(imported.document.styles, expected.styles);
+        assert_eq!(imported.document.base, expected.base);
         for mode in [ThemeMode::Light, ThemeMode::Dark] {
             let resolved = resolve(&imported.document, mode, &context).unwrap();
             assert!(resolved
@@ -497,16 +497,16 @@ mod tests {
         let fixture = Fixture::new();
         let mut document = document();
         document
-            .styles
+            .overrides
             .light
             .0
             .insert("primary".into(), "#102030".into());
         document
-            .styles
+            .overrides
             .dark
             .0
             .insert("primary".into(), "#fedcba".into());
-        for values in [&mut document.styles.light, &mut document.styles.dark] {
+        for values in [&mut document.overrides.light, &mut document.overrides.dark] {
             for (token, value) in [
                 ("radius", "10px"),
                 ("spacing", "0.375rem"),
@@ -562,12 +562,12 @@ mod tests {
     fn unknown_tokens_and_font_fallbacks_keep_the_resolvers_diagnostics() {
         let fixture = Fixture::new();
         let mut document = document();
-        document.styles.light.0.insert(
+        document.base.light.0.insert(
             "unknown-token".into(),
             "url(https://untrusted.invalid/injected)".into(),
         );
         document
-            .styles
+            .base
             .light
             .0
             .insert("font-sans".into(), "Unknown Family".into());
@@ -583,7 +583,7 @@ mod tests {
             warning.message.contains("Unknown Family") && warning.rule == "theme-font-system"
         }));
         assert_eq!(
-            prepared.document.as_ref().unwrap().styles.light.0["unknown-token"],
+            prepared.document.as_ref().unwrap().base.light.0["unknown-token"],
             "url(https://untrusted.invalid/injected)"
         );
         assert!(!prepared.css.contains("untrusted"));
@@ -593,7 +593,7 @@ mod tests {
     #[test]
     fn generic_unpackaged_fonts_preserve_the_sdk_stack_and_emit_no_fonts() {
         let mut document = document();
-        for values in [&mut document.styles.light, &mut document.styles.dark] {
+        for values in [&mut document.base.light, &mut document.base.dark] {
             for (token, family) in [
                 ("font-sans", "sans-serif"),
                 ("font-serif", "serif"),
@@ -618,14 +618,14 @@ mod tests {
         let fixture = Fixture::new();
         let mut invalid = document();
         invalid
-            .styles
+            .overrides
             .light
             .0
             .insert("primary".into(), "red; background: url(evil)".into());
         let (prepared, diagnostics) = prepare(&write_document(&fixture, &invalid));
         assert!(prepared.is_none());
         assert!(diagnostics.iter().any(|error| {
-            error.severity == Severity::Error && error.message.contains("styles.light.primary")
+            error.severity == Severity::Error && error.message.contains("overrides.light.primary")
         }));
         let input = serde_json::to_string(&document()).unwrap();
         fixture.write(
@@ -691,7 +691,7 @@ mod tests {
     fn incomplete_theme_documents_preserve_the_import_errors() {
         let fixture = Fixture::new();
         let mut document = document();
-        document.styles.dark = ThemeValues(BTreeMap::new());
+        document.base.dark = ThemeValues(BTreeMap::new());
         let expected = import_json(
             &serde_json::to_string(&document).unwrap(),
             &font_context(16., false),

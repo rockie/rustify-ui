@@ -70,18 +70,44 @@ fn changes(before: &ThemeDocument, after: &ThemeDocument) -> Vec<Change> {
             });
         }
     }
+    for ((field, before), (_, after)) in before
+        .config
+        .fields()
+        .into_iter()
+        .zip(after.config.fields())
+    {
+        if before != after {
+            changes.push(Change {
+                mode: None,
+                token: format!("config.{field}"),
+                before: Some(before),
+                after: Some(after),
+            });
+        }
+    }
     for mode in [ThemeMode::Light, ThemeMode::Dark] {
-        let before = &before.values(mode).0;
-        let after = &after.values(mode).0;
-        let keys: BTreeSet<_> = before.keys().chain(after.keys()).collect();
-        for token in keys {
-            if before.get(token) != after.get(token) {
-                changes.push(Change {
-                    mode: Some(mode),
-                    token: token.clone(),
-                    before: before.get(token).cloned(),
-                    after: after.get(token).cloned(),
-                });
+        for (layer, before, after) in [
+            (
+                "base",
+                &before.base_values(mode).0,
+                &after.base_values(mode).0,
+            ),
+            (
+                "overrides",
+                &before.overrides.values(mode).0,
+                &after.overrides.values(mode).0,
+            ),
+        ] {
+            let keys: BTreeSet<_> = before.keys().chain(after.keys()).collect();
+            for token in keys {
+                if before.get(token) != after.get(token) {
+                    changes.push(Change {
+                        mode: Some(mode),
+                        token: format!("{layer}.{token}"),
+                        before: before.get(token).cloned(),
+                        after: after.get(token).cloned(),
+                    });
+                }
             }
         }
     }
@@ -815,19 +841,19 @@ mod tests {
         let context = font_context(16., false);
         let mut original = base();
         original
-            .styles
+            .base
             .light
             .0
             .insert("removed".into(), "author value".into());
         let mut candidate = base();
         candidate.id = "imported".into();
         candidate
-            .styles
+            .base
             .dark
             .0
             .insert("future-token".into(), "url(https://example.test)".into());
         candidate
-            .styles
+            .overrides
             .light
             .0
             .insert("primary".into(), "#abc".into());
@@ -844,11 +870,12 @@ mod tests {
         assert!(preview
             .changes
             .iter()
-            .any(|change| change.token == "removed" && change.after.is_none()));
+            .any(|change| change.token == "base.removed" && change.after.is_none()));
         assert!(preview
             .changes
             .iter()
-            .any(|change| change.mode == Some(ThemeMode::Dark) && change.token == "future-token"));
+            .any(|change| change.mode == Some(ThemeMode::Dark)
+                && change.token == "base.future-token"));
         assert_eq!(
             apply_import(&preview, &original, &context).unwrap(),
             ToolCommand::Import(candidate)
@@ -882,7 +909,7 @@ mod tests {
             .diagnostics
             .iter()
             .any(|diagnostic| diagnostic.message.contains("future-token")));
-        assert!(!preview.document.styles.light.0.contains_key("future-token"));
+        assert!(!preview.document.base.light.0.contains_key("future-token"));
     }
 
     #[test]

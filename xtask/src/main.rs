@@ -1,6 +1,7 @@
 mod bridge;
 mod build;
 mod catalog;
+mod colors;
 mod css;
 mod docs;
 mod docs_corpus;
@@ -28,6 +29,7 @@ mbx xtask <command> [options]
   css         [--check]
               (RUSTIFY_TAILWIND=<path> runs that tailwindcss instead of the one on PATH)
   catalog     --write <path> [--check]
+  colors      [--check]
   report-size --example <name> [--release] [--compressed]
   sources     verify
   utility-baseline [--group worker|css|extractor|compiler|cn|all] [--build-only]
@@ -54,6 +56,7 @@ fn main() {
         Some("serve") => serve_example(&args[1..]),
         Some("css") => css::run(&args[1..]),
         Some("catalog") => catalog::run(&args[1..]),
+        Some("colors") => colors::run(&args[1..]),
         Some("report-size") => report_size(&args[1..]),
         Some("sources") => sources::run(&args[1..]),
         Some("utility-baseline") => utility::baseline(&args[1..]),

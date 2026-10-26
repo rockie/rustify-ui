@@ -1,13 +1,14 @@
 import {test,expect,waitForReady,waitForQuiet} from './support';
 import {EVIDENCE,GPU_ONLY} from '../tier';
 import {mkdir,writeFile} from 'node:fs/promises';
+import {dirname} from 'node:path';
 
 const snapshot=(page:any)=>page.evaluate(()=>window.__theme_studio.snapshot());
 const percentile=(values:number[],p:number)=>[...values].sort((a,b)=>a-b)[Math.ceil(values.length*p)-1];
 
 test.describe('theme update measurements',{tag:EVIDENCE},()=>{
  test.skip(({headless})=>headless,GPU_ONLY);
- test('page timestamps measure DOM commits, GPU acknowledgements, frame merging and idle',async({page},info)=>{
+ test('page timestamps measure DOM commits, GPU acknowledgements, frame merging and idle',async({page,browser},info)=>{
   await page.setViewportSize({width:1440,height:900});await waitForReady(page);
   await page.getByTestId('renderer-compare').click();await page.getByTestId('theme-gpu').scrollIntoViewIfNeeded();
   await expect.poll(async()=>{const s=await snapshot(page);return s.gpu_state==='Ready'&&s.drawn_revision===s.revision;}).toBe(true);
@@ -79,8 +80,9 @@ test.describe('theme update measurements',{tag:EVIDENCE},()=>{
    observer.disconnect();delete (window as any).__themeLongTasks;
    return {count:entries.length,total_ms:entries.reduce((sum:number,entry:any)=>sum+entry.duration_ms,0),max_ms:Math.max(0,...entries.map((entry:any)=>entry.duration_ms)),entries};
   });
-  const report={project:info.project.name,viewport:page.viewportSize(),environment,long_tasks:longTasks,samples:40,dom_css_commit:{p50:percentile(css,.5),p95:percentile(css,.95)},dom_color_settled:{p50:percentile(settled,.5),p95:percentile(settled,.95)},gpu_draw_ack:{p50:percentile(gpu,.5),p95:percentile(gpu,.95)},resolves:{editor:measurements.after.resolve_count-measurements.start.resolve_count,sdk_total:measurements.after.sdk_resolve_count-measurements.start.sdk_resolve_count},gesture:{inputs:gesture.inputs,published:gesture.after.publish_count-gesture.before.publish_count,duration_ms:gesture.duration_ms,editor_resolves:gesture.after.resolve_count-gesture.before.resolve_count,sdk_total_resolves:gesture.after.sdk_resolve_count-gesture.before.sdk_resolve_count,final_revision:gesture.after.revision,drawn_revision:gesture.after.drawn_revision},idle:{before,after,task_cpu_percent:(cpuAfter-cpuBefore)*1000/5000*100},raw:measurements.rows};
-  await mkdir('docs/validation/theme-studio/M6',{recursive:true});await writeFile('docs/validation/theme-studio/M6/performance.json',JSON.stringify(report,null,2));
+  const report={project:info.project.name,viewport:page.viewportSize(),environment:{...environment,browser_version:browser.version(),executable_path:process.env.RUSTIFY_CHROMIUM||null},long_tasks:longTasks,samples:40,dom_css_commit:{p50:percentile(css,.5),p95:percentile(css,.95)},dom_color_settled:{p50:percentile(settled,.5),p95:percentile(settled,.95)},gpu_draw_ack:{p50:percentile(gpu,.5),p95:percentile(gpu,.95)},resolves:{editor:measurements.after.resolve_count-measurements.start.resolve_count,sdk_total:measurements.after.sdk_resolve_count-measurements.start.sdk_resolve_count},gesture:{inputs:gesture.inputs,published:gesture.after.publish_count-gesture.before.publish_count,duration_ms:gesture.duration_ms,editor_resolves:gesture.after.resolve_count-gesture.before.resolve_count,sdk_total_resolves:gesture.after.sdk_resolve_count-gesture.before.sdk_resolve_count,final_revision:gesture.after.revision,drawn_revision:gesture.after.drawn_revision},idle:{before,after,task_cpu_percent:(cpuAfter-cpuBefore)*1000/5000*100},raw:measurements.rows};
+  const output=process.env.RUSTIFY_THEME_PERF_OUT||'docs/validation/theme-studio/M6/performance.json';
+  await mkdir(dirname(output),{recursive:true});await writeFile(output,JSON.stringify(report,null,2));
   console.log(JSON.stringify({...report,raw:undefined}));
  });
 });

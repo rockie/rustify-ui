@@ -43,7 +43,7 @@ impl Default for Preferences {
 #[derive(Clone, Debug, PartialEq)]
 pub enum LoadResult {
     Missing,
-    Valid(Envelope),
+    Valid(Box<Envelope>),
     Invalid { raw: String, error: ThemeError },
 }
 
@@ -124,8 +124,11 @@ pub fn validate(envelope: &Envelope, context: &ResolveContext<'_>) -> Result<(),
             .enumerate()
             .map(|(index, document)| (format!("saved_themes[{index}]"), document)),
     ) {
+        rustify_ui::theme::check_document_size(document)
+            .map_err(|value| error(&format!("{prefix}.{}", value.field), value.message))?;
+        let source = rustify_ui::ThemeSource::new(std::sync::Arc::new(document.clone()));
         for mode in [ThemeMode::Light, ThemeMode::Dark] {
-            rustify_ui::resolve(document, mode, context).map_err(|value| {
+            source.resolve(mode, context).map_err(|value| {
                 error(
                     &format!("{prefix}.{}.{}", mode.as_str(), value.field),
                     value.message,
@@ -162,7 +165,7 @@ pub fn load(raw: Option<&str>, context: &ResolveContext<'_>) -> LoadResult {
             validate(&envelope, context)?;
             Ok(envelope)
         }) {
-        Ok(envelope) => LoadResult::Valid(envelope),
+        Ok(envelope) => LoadResult::Valid(Box::new(envelope)),
         Err(error) => LoadResult::Invalid {
             raw: raw.into(),
             error,
@@ -188,6 +191,7 @@ struct SavedValidation {
     reduce_motion: bool,
     fonts: Vec<rustify_ui::theme::FontFace>,
     fallback_fonts: [String; 3],
+    font_resolution: rustify_ui::FontResolution,
 }
 
 impl Autosave {
@@ -208,7 +212,7 @@ impl Autosave {
         let pair = editor.resolved_pair(context)?;
         for (mode, theme) in [ThemeMode::Light, ThemeMode::Dark].into_iter().zip(pair) {
             if theme.mode != mode
-                || theme.values != *envelope.draft.values(mode)
+                || theme.source.document() != &envelope.draft
                 || theme.document_id != envelope.draft.id
                 || theme.name != envelope.draft.name
             {
@@ -220,6 +224,7 @@ impl Autosave {
                 && saved.rem_px == context.rem_px
                 && saved.reduce_motion == context.reduce_motion
                 && saved.fonts == context.fonts
+                && saved.font_resolution == context.font_resolution
                 && saved
                     .fallback_fonts
                     .iter()
@@ -228,8 +233,15 @@ impl Autosave {
         });
         if !cached {
             for (index, document) in envelope.saved_themes.iter().enumerate() {
+                rustify_ui::theme::check_document_size(document).map_err(|value| {
+                    error(
+                        &format!("saved_themes[{index}].{}", value.field),
+                        value.message,
+                    )
+                })?;
+                let source = rustify_ui::ThemeSource::new(std::sync::Arc::new(document.clone()));
                 for mode in [ThemeMode::Light, ThemeMode::Dark] {
-                    rustify_ui::resolve(document, mode, context).map_err(|value| {
+                    source.resolve(mode, context).map_err(|value| {
                         error(
                             &format!("saved_themes[{index}].{}.{}", mode.as_str(), value.field),
                             value.message,
@@ -243,6 +255,7 @@ impl Autosave {
                 reduce_motion: context.reduce_motion,
                 fonts: context.fonts.to_vec(),
                 fallback_fonts: context.fallback_fonts.map(str::to_owned),
+                font_resolution: context.font_resolution,
             });
         }
         serde_json::to_string(envelope).map_err(|value| error("envelope", value.to_string()))
@@ -421,7 +434,10 @@ mod tests {
             .serialize(&envelope, &mut editor, &context)
             .unwrap();
         assert_eq!(rustify_ui::theme::resolution_count() - before, 0);
-        assert_eq!(load(Some(&raw), &context), LoadResult::Valid(envelope));
+        assert_eq!(
+            load(Some(&raw), &context),
+            LoadResult::Valid(Box::new(envelope))
+        );
     }
 
     #[test]
@@ -439,7 +455,7 @@ mod tests {
             .unwrap();
         let original = envelope.clone();
         envelope.saved_themes[0]
-            .styles
+            .overrides
             .dark
             .0
             .insert("radius".into(), "-1px".into());
@@ -459,7 +475,7 @@ mod tests {
         envelope = original.clone();
         envelope
             .draft
-            .styles
+            .overrides
             .light
             .0
             .insert("primary".into(), "#123456".into());
@@ -481,7 +497,11 @@ mod tests {
         let context = font_context(16., false);
         let mut envelope = base();
         let mut saved = envelope.draft.clone();
-        saved.styles.dark.0.insert("radius".into(), "200rem".into());
+        saved
+            .overrides
+            .dark
+            .0
+            .insert("radius".into(), "200rem".into());
         envelope.saved_themes.push(saved);
         let mut editor =
             crate::state::EditorState::new(envelope.draft.clone(), ThemeMode::Light, &context)
@@ -503,13 +523,13 @@ mod tests {
         let mut envelope = base();
         envelope
             .draft
-            .styles
+            .overrides
             .light
             .0
             .insert("primary".into(), "oklch(.7 .3 20)".into());
         envelope
             .draft
-            .styles
+            .base
             .dark
             .0
             .insert("future-value".into(), "url(https://example.test)".into());
@@ -517,7 +537,10 @@ mod tests {
         envelope.preferences.favorites = vec!["builtin-preset".into()];
         envelope.preferences.mode = ThemeMode::Dark;
         let raw = serialize(&envelope, &context).unwrap();
-        assert_eq!(load(Some(&raw), &context), LoadResult::Valid(envelope));
+        assert_eq!(
+            load(Some(&raw), &context),
+            LoadResult::Valid(Box::new(envelope))
+        );
         assert_eq!(load(None, &context), LoadResult::Missing);
     }
 
@@ -527,7 +550,7 @@ mod tests {
         let mut invalid_dark = base();
         invalid_dark
             .draft
-            .styles
+            .overrides
             .dark
             .0
             .insert("primary".into(), "var(--x)".into());
@@ -561,7 +584,7 @@ mod tests {
             .copy_theme("local-a", "local-b", "Beta", &context)
             .unwrap();
         assert_eq!(copied.saved_themes[0], saved.saved_themes[0]);
-        assert_eq!(copied.saved_themes[1].styles, saved.saved_themes[0].styles);
+        assert_eq!(copied.saved_themes[1].base, saved.saved_themes[0].base);
         let renamed = copied.rename_theme("local-b", "Gamma", &context).unwrap();
         assert_eq!(renamed.saved_themes[1].id, "local-b");
         assert_eq!(renamed.saved_themes[1].name, "Gamma");
@@ -582,7 +605,7 @@ mod tests {
         let before = envelope.clone();
         let mut invalid = envelope.draft.clone();
         invalid
-            .styles
+            .overrides
             .dark
             .0
             .insert("radius".into(), "calc(1rem + 2px)".into());
@@ -637,7 +660,7 @@ mod tests {
             .is_err());
         let mut changed = full.draft.clone();
         changed
-            .styles
+            .overrides
             .light
             .0
             .insert("primary".into(), "#abc".into());
@@ -645,8 +668,8 @@ mod tests {
             .save_named(&changed, "local-0", "Theme 0", Some("local-0"), &context)
             .unwrap();
         assert_eq!(overwritten.saved_themes.len(), SAVED_THEME_LIMIT);
-        assert_eq!(overwritten.saved_themes[0].styles, changed.styles);
-        assert_eq!(full.saved_themes[0].styles, full.draft.styles);
+        assert_eq!(overwritten.saved_themes[0].base, changed.base);
+        assert_eq!(full.saved_themes[0].base, full.draft.base);
         let mut duplicate = full.clone();
         duplicate.saved_themes[1].id = duplicate.saved_themes[0].id.clone();
         assert!(validate(&duplicate, &context).is_err());
@@ -727,6 +750,9 @@ mod tests {
             }
         }
         let raw = serialize(&envelope, &context).unwrap();
-        assert_eq!(load(Some(&raw), &context), LoadResult::Valid(envelope));
+        assert_eq!(
+            load(Some(&raw), &context),
+            LoadResult::Valid(Box::new(envelope))
+        );
     }
 }

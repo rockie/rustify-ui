@@ -24,6 +24,18 @@ pub struct VendorSection {
     pub name: String,
     pub version: String,
     pub files: BTreeMap<String, String>,
+    #[serde(default)]
+    pub source_files: BTreeMap<String, String>,
+    #[serde(default)]
+    pub import_root: Option<String>,
+    #[serde(default)]
+    pub xtask_import_list: Option<ImportList>,
+}
+
+#[derive(Deserialize)]
+pub struct ImportList {
+    algorithm: String,
+    sha256: String,
 }
 
 /// The Rust/UI subset, imported file by file.
@@ -162,6 +174,30 @@ fn verify() -> Result<(), String> {
     }
     let mut wrong = Vec::new();
     for vendored in &lock.vendor {
+        if let Some(list) = &vendored.xtask_import_list {
+            if list.algorithm != "sha256(sorted(relative_path + SPACE + sha256(file) hex + LF))"
+                || list_fingerprint(&vendored.source_files) != list.sha256
+            {
+                return Err(format!(
+                    "{}: invalid xtask import-list fingerprint",
+                    vendored.name
+                ));
+            }
+            let import_root = vendored
+                .import_root
+                .as_deref()
+                .ok_or_else(|| format!("{}: import-list has no import_root", vendored.name))?;
+            if vendored.source_files.len() != vendored.files.len()
+                || vendored.source_files.iter().any(|(path, digest)| {
+                    vendored.files.get(&format!("{import_root}/{path}")) != Some(digest)
+                })
+            {
+                return Err(format!(
+                    "{}: source files differ from imported files",
+                    vendored.name
+                ));
+            }
+        }
         let mut current = BTreeMap::new();
         for path in vendored.files.keys() {
             let bytes = std::fs::read(root.join(path))

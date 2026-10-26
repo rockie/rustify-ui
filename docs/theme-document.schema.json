@@ -1,17 +1,17 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "Rustify ThemeDocument v1",
+  "title": "Rustify ThemeDocument v2",
+  "$comment": "Canonical v2 exchange: full author intent or the equivalent compact Custom form. The Rust decoder separately accepts strict legacy v1 and upgrades it.",
   "type": "object",
   "additionalProperties": false,
   "required": [
     "schema_version",
     "id",
-    "name",
-    "styles"
+    "name"
   ],
   "properties": {
     "schema_version": {
-      "const": 1
+      "const": 2
     },
     "id": {
       "$ref": "#/$defs/identity"
@@ -34,8 +34,81 @@
           "$ref": "#/$defs/values"
         }
       }
+    },
+    "base": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "light",
+        "dark"
+      ],
+      "properties": {
+        "light": {
+          "$ref": "#/$defs/values"
+        },
+        "dark": {
+          "$ref": "#/$defs/values"
+        }
+      }
+    },
+    "config": {
+      "$ref": "#/$defs/config"
+    },
+    "overrides": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "light",
+        "dark"
+      ],
+      "properties": {
+        "light": {
+          "$ref": "#/$defs/patch"
+        },
+        "dark": {
+          "$ref": "#/$defs/patch"
+        }
+      }
     }
   },
+  "oneOf": [
+    {
+      "required": [
+        "styles"
+      ],
+      "not": {
+        "anyOf": [
+          {
+            "required": [
+              "base"
+            ]
+          },
+          {
+            "required": [
+              "config"
+            ]
+          },
+          {
+            "required": [
+              "overrides"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "required": [
+        "base",
+        "config",
+        "overrides"
+      ],
+      "not": {
+        "required": [
+          "styles"
+        ]
+      }
+    }
+  ],
   "$defs": {
     "identity": {
       "type": "string",
@@ -249,6 +322,267 @@
         "type": "string"
       },
       "description": "Author strings. resolve validates color grammar, fonts and numeric limits with the supplied rem/font context; unknown string tokens are preserved with diagnostics."
+    },
+    "config": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "appearance",
+        "accent_color",
+        "gray_color",
+        "panel_background",
+        "radius",
+        "scaling"
+      ],
+      "properties": {
+        "appearance": {
+          "type": "string",
+          "enum": [
+            "inherit",
+            "light",
+            "dark"
+          ]
+        },
+        "accent_color": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            null,
+            "gray",
+            "gold",
+            "bronze",
+            "brown",
+            "yellow",
+            "amber",
+            "orange",
+            "tomato",
+            "red",
+            "ruby",
+            "crimson",
+            "pink",
+            "plum",
+            "purple",
+            "violet",
+            "iris",
+            "indigo",
+            "blue",
+            "cyan",
+            "teal",
+            "jade",
+            "green",
+            "grass",
+            "lime",
+            "mint",
+            "sky"
+          ]
+        },
+        "gray_color": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            null,
+            "auto",
+            "gray",
+            "mauve",
+            "slate",
+            "sage",
+            "olive",
+            "sand"
+          ]
+        },
+        "panel_background": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            null,
+            "solid",
+            "translucent"
+          ]
+        },
+        "radius": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            null,
+            "none",
+            "small",
+            "medium",
+            "large",
+            "full"
+          ]
+        },
+        "scaling": {
+          "type": "integer",
+          "enum": [
+            90,
+            95,
+            100,
+            105,
+            110
+          ]
+        }
+      }
+    },
+    "patch": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "background": {
+          "type": "string"
+        },
+        "foreground": {
+          "type": "string"
+        },
+        "card": {
+          "type": "string"
+        },
+        "card-foreground": {
+          "type": "string"
+        },
+        "popover": {
+          "type": "string"
+        },
+        "popover-foreground": {
+          "type": "string"
+        },
+        "primary": {
+          "type": "string"
+        },
+        "primary-foreground": {
+          "type": "string"
+        },
+        "secondary": {
+          "type": "string"
+        },
+        "secondary-foreground": {
+          "type": "string"
+        },
+        "muted": {
+          "type": "string"
+        },
+        "muted-foreground": {
+          "type": "string"
+        },
+        "accent": {
+          "type": "string"
+        },
+        "accent-foreground": {
+          "type": "string"
+        },
+        "destructive": {
+          "type": "string"
+        },
+        "destructive-foreground": {
+          "type": "string"
+        },
+        "border": {
+          "type": "string"
+        },
+        "input": {
+          "type": "string"
+        },
+        "ring": {
+          "type": "string"
+        },
+        "chart-1": {
+          "type": "string"
+        },
+        "chart-2": {
+          "type": "string"
+        },
+        "chart-3": {
+          "type": "string"
+        },
+        "chart-4": {
+          "type": "string"
+        },
+        "chart-5": {
+          "type": "string"
+        },
+        "sidebar": {
+          "type": "string"
+        },
+        "sidebar-foreground": {
+          "type": "string"
+        },
+        "sidebar-primary": {
+          "type": "string"
+        },
+        "sidebar-primary-foreground": {
+          "type": "string"
+        },
+        "sidebar-accent": {
+          "type": "string"
+        },
+        "sidebar-accent-foreground": {
+          "type": "string"
+        },
+        "sidebar-border": {
+          "type": "string"
+        },
+        "sidebar-ring": {
+          "type": "string"
+        },
+        "success": {
+          "type": "string"
+        },
+        "warning": {
+          "type": "string"
+        },
+        "shadow-color": {
+          "type": "string"
+        },
+        "font-sans": {
+          "type": "string"
+        },
+        "font-serif": {
+          "type": "string"
+        },
+        "font-mono": {
+          "type": "string"
+        },
+        "letter-spacing": {
+          "type": "string"
+        },
+        "font-size": {
+          "type": "string"
+        },
+        "radius": {
+          "type": "string"
+        },
+        "spacing": {
+          "type": "string"
+        },
+        "layout-gap": {
+          "type": "string"
+        },
+        "shadow-opacity": {
+          "type": "string"
+        },
+        "shadow-blur": {
+          "type": "string"
+        },
+        "shadow-spread": {
+          "type": "string"
+        },
+        "shadow-offset-x": {
+          "type": "string"
+        },
+        "shadow-offset-y": {
+          "type": "string"
+        },
+        "reduce-motion": {
+          "type": "string"
+        }
+      }
     }
   }
 }

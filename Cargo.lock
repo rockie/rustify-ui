@@ -2411,6 +2411,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "rustify-colors"
+version = "0.2.1"
+
+[[package]]
 name = "rustify-components"
 version = "0.2.1"
 dependencies = [
@@ -2504,6 +2508,7 @@ dependencies = [
  "futures-channel",
  "js-sys",
  "leptos",
+ "rustify-colors",
  "rustify-style",
  "send_wrapper",
  "serde",
