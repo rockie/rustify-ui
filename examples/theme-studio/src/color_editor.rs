@@ -611,7 +611,7 @@ mod ui {
                         aria-label=move || tr(locale.get(),"Search color tokens","搜索颜色 token")
                         placeholder=move || tr(locale.get(),"Search colors…","搜索颜色…")
                         prop:value=move || query.get() on:input=move |event|query.set(event_target_value(&event)) />
-                    <Button variant=ButtonVariant::Ghost size=ButtonSize::Sm test_id="color-search-clear"
+                    <Button variant=ButtonVariant::Ghost size=ButtonSize::One test_id="color-search-clear"
                         disabled=Signal::derive(move || query.get().is_empty()) on_click=move ||query.set(String::new())>
                         {move || tr(locale.get(),"Clear","清除")}
                     </Button>

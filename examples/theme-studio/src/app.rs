@@ -139,17 +139,17 @@ fn PresetChooser(state: StudioState) -> impl IntoView {
             <input type="search" class="studio-search" aria-label=move || state.tr("Search presets", "搜索预设") placeholder=move || state.tr("Search presets…", "搜索预设…") data-testid="preset-search" prop:value=move || query.get() on:input=move |ev| query.set(event_target_value(&ev)) />
             <div class="studio-filter-row">
                 <Select value=source options=sources open=source_open on_open_change=move |v| source_open.set(v) on_change=move |v| source.set(v) aria_label="Preset source" test_id="preset-source" />
-                <Button size=ButtonSize::Sm variant=ButtonVariant::Outline attr:aria-pressed=move || favorites.get().to_string() on_click=move || favorites.update(|v| *v = !*v) test_id="preset-favorites">{move || state.tr("Favorites", "收藏")}</Button>
+                <Button size=ButtonSize::One variant=ButtonVariant::Outline attr:aria-pressed=move || favorites.get().to_string() on_click=move || favorites.update(|v| *v = !*v) test_id="preset-favorites">{move || state.tr("Favorites", "收藏")}</Button>
             </div>
             <Select value=selected options=options disabled=Signal::derive(move || options.get().is_empty()) open=open on_open_change=move |v| open.set(v) on_change=move |id| {
                 if let Some((theme, _)) = all.get_untracked().into_iter().find(|(theme, _)| theme.id == id) { state.apply(theme, true); }
             } aria_label="Preset" test_id="preset-select" />
             <div class="studio-filter-row"><span class="studio-current-name">{move || state.editor.with(|e| e.document.name.clone())}</span>
-                <Button size=ButtonSize::Sm variant=ButtonVariant::Ghost attr:aria-pressed=move || favorite.get().to_string() on_click=move || state.favorite(selected.get_untracked()) test_id="preset-favorite">{move || if favorite.get() { state.tr("Unfavorite", "取消收藏") } else { state.tr("Favorite", "收藏") }}</Button>
+                <Button size=ButtonSize::One variant=ButtonVariant::Ghost attr:aria-pressed=move || favorite.get().to_string() on_click=move || state.favorite(selected.get_untracked()) test_id="preset-favorite">{move || if favorite.get() { state.tr("Unfavorite", "取消收藏") } else { state.tr("Favorite", "收藏") }}</Button>
             </div>
             <Show when=move || options.get().is_empty()><p data-testid="preset-search-empty">{move || state.tr("No matching presets.", "没有匹配的预设。")}</p></Show>
             <Show when=move || !query.get().is_empty() || source.get() != "all" || favorites.get()>
-                <Button size=ButtonSize::Sm variant=ButtonVariant::Ghost test_id="preset-search-clear" on_click=move || { query.set(String::new()); source.set("all".into()); favorites.set(false); }>{move || state.tr("Clear filters", "清除筛选")}</Button>
+                <Button size=ButtonSize::One variant=ButtonVariant::Ghost test_id="preset-search-clear" on_click=move || { query.set(String::new()); source.set("all".into()); favorites.set(false); }>{move || state.tr("Clear filters", "清除筛选")}</Button>
             </Show>
         </section>
     }
@@ -247,20 +247,20 @@ fn Editor(state: StudioState) -> impl IntoView {
         </nav>
         <div class="studio-editor studio-editor-content" data-testid="editor-shell">
             <header><div class="studio-section-title"><h1>"Rustify Theme Studio"</h1><div class="studio-locale">
-                <Button size=ButtonSize::Sm variant=ButtonVariant::Ghost attr:aria-pressed=move || (state.locale().get() == rustify_ui::Locale::English).to_string() on_click=move || state.preference(|p| p.locale = "en".into()) test_id="locale-en">"EN"</Button>
-                <Button size=ButtonSize::Sm variant=ButtonVariant::Ghost attr:aria-pressed=move || (state.locale().get() == rustify_ui::Locale::Chinese).to_string() on_click=move || state.preference(|p| p.locale = "zh".into()) test_id="locale-zh">"中文"</Button>
+                <Button size=ButtonSize::One variant=ButtonVariant::Ghost attr:aria-pressed=move || (state.locale().get() == rustify_ui::Locale::English).to_string() on_click=move || state.preference(|p| p.locale = "en".into()) test_id="locale-en">"EN"</Button>
+                <Button size=ButtonSize::One variant=ButtonVariant::Ghost attr:aria-pressed=move || (state.locale().get() == rustify_ui::Locale::Chinese).to_string() on_click=move || state.preference(|p| p.locale = "zh".into()) test_id="locale-zh">"中文"</Button>
             </div></div><p>{move || state.tr("Shape a theme. See both renderers.", "编辑主题，同步查看两种渲染器。")}</p></header>
             <div class="studio-history">
-                <Button size=ButtonSize::Sm variant=ButtonVariant::Outline disabled=Signal::derive(move || state.editor.with(|e| e.undo_len() == 0 || e.gesture_active())) on_click=move || state.history(false) test_id="theme-undo">{move || state.tr("Undo", "撤销")}</Button>
-                <Button size=ButtonSize::Sm variant=ButtonVariant::Outline disabled=Signal::derive(move || state.editor.with(|e| e.redo_len() == 0 || e.gesture_active())) on_click=move || state.history(true) test_id="theme-redo">{move || state.tr("Redo", "重做")}</Button>
-                <Button size=ButtonSize::Sm variant=ButtonVariant::Ghost disabled=Signal::derive(move || state.editor.with(|e| e.gesture_active() || (!e.is_modified() && state.patch.get().0.is_empty() && state.controls.get() == PreviewControls::default()))) on_click=move || state.reset() test_id="theme-reset">{move || state.tr("Reset", "重置")}</Button>
+                <Button size=ButtonSize::One variant=ButtonVariant::Outline disabled=Signal::derive(move || state.editor.with(|e| e.undo_len() == 0 || e.gesture_active())) on_click=move || state.history(false) test_id="theme-undo">{move || state.tr("Undo", "撤销")}</Button>
+                <Button size=ButtonSize::One variant=ButtonVariant::Outline disabled=Signal::derive(move || state.editor.with(|e| e.redo_len() == 0 || e.gesture_active())) on_click=move || state.history(true) test_id="theme-redo">{move || state.tr("Redo", "重做")}</Button>
+                <Button size=ButtonSize::One variant=ButtonVariant::Ghost disabled=Signal::derive(move || state.editor.with(|e| e.gesture_active() || (!e.is_modified() && state.patch.get().0.is_empty() && state.controls.get() == PreviewControls::default()))) on_click=move || state.reset() test_id="theme-reset">{move || state.tr("Reset", "重置")}</Button>
             </div>
             <p class="studio-modified" data-testid="theme-modified">{move || if state.editor.with(|e| e.is_modified()) { state.tr("Modified", "已修改") } else { state.tr("Matches preset", "与预设一致") }}</p>
             <DataTools document=state.document() envelope=state.envelope locale=state.locale() context=Signal::derive(move || font_context(state.rem.get(), state.reduce_motion.get())) corrupt=state.corrupt conflict=Signal::derive(move || state.external.get().is_some()) status=status on_command=move |command| tool_command(state, command) />
             <PresetChooser state=state />
             <div class="editor-mode">
-                <Button size=ButtonSize::Sm variant=ButtonVariant::Outline attr:aria-pressed=move || (state.mode().get() == ThemeMode::Light).to_string() on_click=move || state.set_mode(ThemeMode::Light) test_id="mode-light">{move || state.tr("Light", "浅色")}</Button>
-                <Button size=ButtonSize::Sm variant=ButtonVariant::Outline attr:aria-pressed=move || (state.mode().get() == ThemeMode::Dark).to_string() on_click=move || state.set_mode(ThemeMode::Dark) test_id="mode-dark">{move || state.tr("Dark", "深色")}</Button>
+                <Button size=ButtonSize::One variant=ButtonVariant::Outline attr:aria-pressed=move || (state.mode().get() == ThemeMode::Light).to_string() on_click=move || state.set_mode(ThemeMode::Light) test_id="mode-light">{move || state.tr("Light", "浅色")}</Button>
+                <Button size=ButtonSize::One variant=ButtonVariant::Outline attr:aria-pressed=move || (state.mode().get() == ThemeMode::Dark).to_string() on_click=move || state.set_mode(ThemeMode::Dark) test_id="mode-dark">{move || state.tr("Dark", "深色")}</Button>
             </div>
             <div class="studio-editor-tabs" role="tablist" aria-orientation="horizontal" aria-label=move || state.tr("Theme fields", "主题字段") on:keydown=tab_key>
                 <button type="button" role="tab" node_ref=colors_tab id="studio-editor-tab-colors" aria-controls="studio-editor-panel-colors" tabindex=move || if state.editor_tab.get() == "colors" {"0"} else {"-1"} aria-selected=move || (state.editor_tab.get() == "colors").to_string() on:click=move |_| state.editor_tab.set("colors".into()) data-testid="editor-colors">{move || state.tr("Colors", "颜色")}</button>
@@ -277,8 +277,8 @@ fn Editor(state: StudioState) -> impl IntoView {
             <p class="editor-error" role="status" data-testid="field-error">{move || state.error.get()}</p>
             <details class="studio-diagnostics"><summary>{move || state.tr("Diagnostics", "诊断")}</summary><ThemeDiagnostics resolved=state.resolved() locale=state.locale() /></details>
             <details class="studio-isolation"><summary>{move || state.tr("Scope isolation checks", "作用域隔离验证")}</summary>
-                <Button size=ButtonSize::Sm variant=ButtonVariant::Outline on_click=move || state.patch.set(ThemeValuePatch(BTreeMap::from([("radius".into(), "0px".into()), ("shadow-opacity".into(), "0.4".into()), ("popover".into(), "#fff4dd".into())]))) test_id="apply-patch">{move || state.tr("Apply local patch", "应用局部覆盖")}</Button>
-                <Button size=ButtonSize::Sm variant=ButtonVariant::Ghost disabled=Signal::derive(move || state.patch.get().0.is_empty()) on_click=move || state.patch.set(ThemeValuePatch::default()) test_id="clear-patch">{move || state.tr("Clear patch", "清除覆盖")}</Button>
+                <Button size=ButtonSize::One variant=ButtonVariant::Outline on_click=move || state.patch.set(ThemeValuePatch(BTreeMap::from([("radius".into(), "0px".into()), ("shadow-opacity".into(), "0.4".into()), ("popover".into(), "#fff4dd".into())]))) test_id="apply-patch">{move || state.tr("Apply local patch", "应用局部覆盖")}</Button>
+                <Button size=ButtonSize::One variant=ButtonVariant::Ghost disabled=Signal::derive(move || state.patch.get().0.is_empty()) on_click=move || state.patch.set(ThemeValuePatch::default()) test_id="clear-patch">{move || state.tr("Clear patch", "清除覆盖")}</Button>
             </details>
             <p class="editor-note">{move || state.tr("Your theme stays inside the preview.", "主题仅作用于预览区域。")}</p>
         </div>
@@ -325,11 +325,11 @@ fn PreviewToolbar(state: StudioState, fullscreen: RwSignal<bool>) -> impl IntoVi
                 <Select value=scene options=options open=scene_open on_open_change=move |v| scene_open.set(v) on_change=move |v| state.preference(|p| p.scene = v) aria_label="Preview scene" test_id="preview-scene" />
                 <Select value=width options=widths open=width_open on_open_change=move |v| width_open.set(v) on_change=move |v| state.preference(|p| p.preview_width = v) aria_label="Preview width" test_id="preview-width" />
                 <div class="studio-renderer-buttons">{[("dom", "DOM"), ("gpu", "GPU"), ("compare", "DOM + GPU")].into_iter().map(move |(id, label)| view! {
-                    <Button size=ButtonSize::Sm variant=ButtonVariant::Outline attr:aria-pressed=move || (state.envelope.with(|e| e.preferences.renderer == id)).to_string() on_click=move || state.preference(|p| p.renderer = id.into()) test_id=format!("renderer-{id}")>{label}</Button>
+                    <Button size=ButtonSize::One variant=ButtonVariant::Outline attr:aria-pressed=move || (state.envelope.with(|e| e.preferences.renderer == id)).to_string() on_click=move || state.preference(|p| p.renderer = id.into()) test_id=format!("renderer-{id}")>{label}</Button>
                 }).collect_view()}</div>
-                <Button size=ButtonSize::Sm variant=ButtonVariant::Outline attr:aria-pressed=move || state.inspector.get().to_string() on_click=move || state.inspector.update(|v| *v = !*v) test_id="inspector-toggle">{move || state.tr("Inspect", "拾取")}</Button>
-                <Button size=ButtonSize::Sm variant=ButtonVariant::Ghost attr:aria-pressed=move || fullscreen.get().to_string() on_click=move || fullscreen.update(|v| *v = !*v) test_id="preview-focus">{move || if fullscreen.get() { state.tr("Exit focus", "退出专注") } else { state.tr("Focus preview", "专注预览") }}</Button>
-                <Button size=ButtonSize::Sm variant=ButtonVariant::Ghost class="studio-back-edit" on_click=move || { fullscreen.set(false); state.mobile_tab.set("edit".into()); } test_id="preview-back-edit">{move || state.tr("Back to edit", "返回编辑")}</Button>
+                <Button size=ButtonSize::One variant=ButtonVariant::Outline attr:aria-pressed=move || state.inspector.get().to_string() on_click=move || state.inspector.update(|v| *v = !*v) test_id="inspector-toggle">{move || state.tr("Inspect", "拾取")}</Button>
+                <Button size=ButtonSize::One variant=ButtonVariant::Ghost attr:aria-pressed=move || fullscreen.get().to_string() on_click=move || fullscreen.update(|v| *v = !*v) test_id="preview-focus">{move || if fullscreen.get() { state.tr("Exit focus", "退出专注") } else { state.tr("Focus preview", "专注预览") }}</Button>
+                <Button size=ButtonSize::One variant=ButtonVariant::Ghost class="studio-back-edit" on_click=move || { fullscreen.set(false); state.mobile_tab.set("edit".into()); } test_id="preview-back-edit">{move || state.tr("Back to edit", "返回编辑")}</Button>
             </div>
         </header>
     }
@@ -349,10 +349,10 @@ fn Preview(state: StudioState, compare: bool) -> impl IntoView {
     let scene = Signal::derive(move || state.envelope.with(|e| e.preferences.scene.clone()));
     if compare {
         return view! {
-            <ThemeScope resolved=resolved />
-            <ThemeBoundary patch=Signal::derive(neutral_patch)><div class="studio-compare-toolbar" data-inspector-ui="true">
-                <Button size=ButtonSize::Sm variant=ButtonVariant::Outline attr:aria-pressed=move || (state.compare_mode.get() == ThemeMode::Light).to_string() on_click=move || state.set_compare_mode(ThemeMode::Light) test_id="compare-light">{move || state.tr("Light", "浅色")}</Button>
-                <Button size=ButtonSize::Sm variant=ButtonVariant::Outline attr:aria-pressed=move || (state.compare_mode.get() == ThemeMode::Dark).to_string() on_click=move || state.set_compare_mode(ThemeMode::Dark) test_id="compare-dark">{move || state.tr("Dark", "深色")}</Button>
+            <ThemeScope resolved=resolved preview_mode=Signal::derive(move || resolved.get().mode) />
+            <ThemeBoundary patch=Signal::derive(|| neutral_patch().into())><div class="studio-compare-toolbar" data-inspector-ui="true">
+                <Button size=ButtonSize::One variant=ButtonVariant::Outline attr:aria-pressed=move || (state.compare_mode.get() == ThemeMode::Light).to_string() on_click=move || state.set_compare_mode(ThemeMode::Light) test_id="compare-light">{move || state.tr("Light", "浅色")}</Button>
+                <Button size=ButtonSize::One variant=ButtonVariant::Outline attr:aria-pressed=move || (state.compare_mode.get() == ThemeMode::Dark).to_string() on_click=move || state.set_compare_mode(ThemeMode::Dark) test_id="compare-dark">{move || state.tr("Dark", "深色")}</Button>
             </div></ThemeBoundary>
             <ScenePreview scene=scene locale=state.locale() />
             <details class="studio-provider-fixture"><summary>{move || state.tr("Provider & overlay checks", "主题作用域与浮层验证")}</summary><ProviderFixture patch=Signal::derive(ThemeValuePatch::default) /></details>
@@ -468,9 +468,9 @@ fn Preview(state: StudioState, compare: bool) -> impl IntoView {
         dropdown.set(false);
     });
     view! {
-        <ThemeScope resolved=resolved />
+        <ThemeScope resolved=resolved preview_mode=Signal::derive(move || resolved.get().mode) />
         <div class="studio-preview-root" node_ref=root tabindex="-1" data-testid="preview-workbench" data-width=move || state.envelope.with(|e| e.preferences.preview_width.clone()) data-inspecting=move || state.inspector.get().to_string()>
-            <ThemeBoundary patch=Signal::derive(neutral_patch)>
+            <ThemeBoundary patch=Signal::derive(|| neutral_patch().into())>
                 <PreviewToolbar state=state fullscreen=fullscreen />
                 <Inspector state=state root=root canvas=canvas fullscreen=fullscreen />
             </ThemeBoundary>

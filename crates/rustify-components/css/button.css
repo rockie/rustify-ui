@@ -1,0 +1,221 @@
+/* Local palettes stop at each component boundary. Utilities remain above
+   this layer, including when responsive geometry rules update in CSSOM. */
+@layer components {
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-color) {
+    --rustify-component-color-1: initial;
+    --rustify-component-color-2: initial;
+    --rustify-component-color-3: initial;
+    --rustify-component-color-4: initial;
+    --rustify-component-color-5: initial;
+    --rustify-component-color-6: initial;
+    --rustify-component-color-7: initial;
+    --rustify-component-color-8: initial;
+    --rustify-component-color-9: initial;
+    --rustify-component-color-10: initial;
+    --rustify-component-color-11: initial;
+    --rustify-component-color-12: initial;
+    --rustify-component-color-a1: initial;
+    --rustify-component-color-a2: initial;
+    --rustify-component-color-a3: initial;
+    --rustify-component-color-a4: initial;
+    --rustify-component-color-a5: initial;
+    --rustify-component-color-a6: initial;
+    --rustify-component-color-a7: initial;
+    --rustify-component-color-a8: initial;
+    --rustify-component-color-a9: initial;
+    --rustify-component-color-a10: initial;
+    --rustify-component-color-a11: initial;
+    --rustify-component-color-a12: initial;
+    --rustify-component-color-contrast: initial;
+    --rustify-component-color-surface: initial;
+    --rustify-component-color-indicator: initial;
+    --rustify-component-color-track: initial;
+  }
+
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-button) {
+    --rustify-button-height: var(--rustify-control-height-2, 32px);
+    --rustify-button-font-size: var(--rustify-font-size-2, 14px);
+    --rustify-button-line-height: var(--rustify-line-height-2, 20px);
+    --rustify-button-padding-x: var(--rustify-space-3, 12px);
+    --rustify-button-gap: var(--rustify-space-2, 8px);
+    --rustify-button-ghost-gap: var(--rustify-space-1, 4px);
+    --rustify-button-ghost-x: var(--rustify-space-2, 8px);
+    --rustify-button-ghost-y: var(--rustify-space-1, 4px);
+    --rustify-button-icon-ghost: calc(var(--rustify-space-1, 4px) * 1.5);
+    --rustify-button-radius-1: initial;
+    --rustify-button-radius-2: initial;
+    --rustify-button-radius-3: initial;
+    --rustify-button-radius-4: initial;
+    --rustify-button-radius-full: initial;
+    --rustify-button-radius: max(var(--rustify-button-radius-2, var(--rustify-radius-2, var(--radius, 6px))), var(--rustify-button-radius-full, var(--rustify-radius-full, 0px)));
+    --rustify-button-role: var(--primary);
+    --rustify-button-role-foreground: var(--primary-foreground);
+    --rustify-button-solid: var(--rustify-component-color-9, var(--rustify-button-role));
+    --rustify-button-contrast: var(--rustify-component-color-contrast, var(--rustify-button-role-foreground));
+    --rustify-button-text: var(--rustify-component-color-a11, var(--rustify-button-role));
+    --rustify-button-hover: var(--rustify-component-color-10, color-mix(in srgb, var(--rustify-button-role) 90%, transparent));
+    --rustify-button-soft: var(--rustify-component-color-a3, color-mix(in srgb, var(--rustify-button-role) 12%, transparent));
+    --rustify-button-soft-hover: var(--rustify-component-color-a4, color-mix(in srgb, var(--rustify-button-role) 18%, transparent));
+    --rustify-button-soft-active: var(--rustify-component-color-a5, color-mix(in srgb, var(--rustify-button-role) 24%, transparent));
+    --rustify-button-border: var(--rustify-component-color-a8, color-mix(in srgb, var(--rustify-button-role) 50%, transparent));
+    --rustify-button-hover-background: var(--rustify-button-soft-hover);
+    --rustify-button-active-background: var(--rustify-button-soft-active);
+    box-sizing: border-box;
+    display: inline-flex;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    gap: var(--rustify-button-gap);
+    width: fit-content;
+    height: var(--rustify-button-height);
+    margin: 0;
+    padding: 0 var(--rustify-button-padding-x);
+    border: 0 solid transparent;
+    border-radius: var(--rustify-button-radius);
+    background: transparent;
+    color: var(--rustify-button-text);
+    font-family: var(--rustify-font-sans, inherit);
+    font-size: var(--rustify-button-font-size);
+    line-height: var(--rustify-button-line-height);
+    font-weight: 500;
+    font-style: normal;
+    letter-spacing: var(--rustify-letter-spacing, normal);
+    text-align: center;
+    text-decoration: none;
+    white-space: nowrap;
+    vertical-align: top;
+    user-select: none;
+    cursor: pointer;
+    outline: none;
+    transition-property: background-color, color, box-shadow, opacity;
+    transition-duration: var(--motion-duration, 150ms);
+  }
+
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-button[data-color-role="accent"]) {
+    --rustify-button-role: var(--accent);
+    --rustify-button-role-foreground: var(--accent-foreground);
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-button[data-color-role="destructive"]) {
+    --rustify-button-role: var(--destructive);
+    --rustify-button-role-foreground: var(--destructive-foreground);
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-button[data-high-contrast]) {
+    --rustify-button-text: var(--rustify-component-color-12, var(--foreground));
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-button[data-variant="solid"], .rustify-button[data-variant="classic"]) {
+    --rustify-button-hover-background: var(--rustify-button-hover);
+    --rustify-button-active-background: var(--rustify-button-hover);
+    background-color: var(--rustify-button-solid);
+    color: var(--rustify-button-contrast);
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-button[data-variant="classic"]) {
+    background-image: linear-gradient(to bottom, color-mix(in srgb, var(--rustify-button-contrast) 12%, transparent), transparent);
+    box-shadow: inset 0 1px 0 color-mix(in srgb, var(--rustify-button-contrast) 30%, transparent), 0 1px 2px color-mix(in srgb, var(--rustify-button-solid) 25%, transparent);
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-button[data-variant="soft"]) {
+    background-color: var(--rustify-button-soft);
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-button[data-variant="surface"]) {
+    --rustify-button-hover-background: var(--rustify-component-color-surface, var(--rustify-surface, var(--card)));
+    --rustify-button-active-background: var(--rustify-button-soft);
+    background-color: var(--rustify-button-hover-background);
+    box-shadow: inset 0 0 0 1px var(--rustify-component-color-a7, var(--rustify-button-border));
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-button[data-variant="outline"]) {
+    --rustify-button-hover-background: var(--rustify-component-color-a2, color-mix(in srgb, var(--rustify-button-role) 8%, transparent));
+    --rustify-button-active-background: var(--rustify-button-soft);
+    box-shadow: inset 0 0 0 1px var(--rustify-button-border);
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-button[data-variant="ghost"], .rustify-button[data-variant="ghost-offset"]) {
+    --rustify-button-hover-background: var(--rustify-button-soft);
+    --rustify-button-active-background: var(--rustify-button-soft-hover);
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-button[data-variant="ghost"]) {
+    box-sizing: content-box;
+    height: fit-content;
+    gap: var(--rustify-button-ghost-gap);
+    margin: calc(-1 * var(--rustify-button-ghost-y)) calc(-1 * var(--rustify-button-ghost-x));
+    padding: var(--rustify-button-ghost-y) var(--rustify-button-ghost-x);
+    font-weight: inherit;
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-icon-button) {
+    width: var(--rustify-button-height);
+    padding: 0;
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-icon-button[data-variant="ghost"]) {
+    width: fit-content;
+    margin: calc(-1 * var(--rustify-button-icon-ghost));
+    padding: var(--rustify-button-icon-ghost);
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-button[data-high-contrast][data-variant="solid"], .rustify-button[data-high-contrast][data-variant="classic"]) {
+    --rustify-button-solid: var(--rustify-component-color-12, var(--foreground));
+    --rustify-button-contrast: var(--rustify-gray-1, var(--background));
+    --rustify-button-hover: var(--rustify-button-solid);
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-button:focus-visible) {
+    outline: 3px solid color-mix(in srgb, var(--ring) 50%, transparent);
+    outline-offset: 2px;
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-button[aria-invalid="true"]) {
+    border-color: var(--destructive);
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-button:active:not(:disabled):not([aria-disabled])) {
+    background-color: var(--rustify-button-active-background);
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-button[data-variant="surface"]:active:not(:disabled):not([aria-disabled])) {
+    box-shadow: inset 0 0 0 1px var(--rustify-button-border);
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-button[data-variant="solid"]:active:not(:disabled):not([aria-disabled]), .rustify-button[data-variant="classic"]:active:not(:disabled):not([aria-disabled])) {
+    filter: brightness(0.95);
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-button[data-variant="classic"]:active:not(:disabled):not([aria-disabled])) {
+    box-shadow: inset 0 1px 2px color-mix(in srgb, var(--rustify-button-solid) 40%, transparent);
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-button:disabled, .rustify-button[aria-disabled="true"]) {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-button:disabled) {
+    pointer-events: none;
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-button-content) {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: inherit;
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-button[aria-busy="true"] > .rustify-button-content) {
+    opacity: 0;
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-button-spinner) {
+    display: flex;
+    position: absolute;
+    inset: 0;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-button-spinner > svg) {
+    width: var(--rustify-button-line-height);
+    height: var(--rustify-button-line-height);
+    animation: rustify-button-spin calc(var(--motion-duration, 150ms) * 8) linear infinite;
+  }
+
+  @media (hover: hover) {
+    :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-button:hover:not(:active):not(:disabled):not([aria-disabled])) {
+      background-color: var(--rustify-button-hover-background);
+    }
+    :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-button[data-variant="surface"]:hover:not(:active):not(:disabled):not([aria-disabled])) {
+      box-shadow: inset 0 0 0 1px var(--rustify-button-border);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-button-spinner > svg) {
+      animation: none;
+    }
+  }
+  @keyframes rustify-button-spin {
+    to { transform: rotate(360deg); }
+  }
+}

@@ -292,7 +292,7 @@ mod app {
             let samples = move || view! { <div id=frame_id.clone() class="preview-content"><div id=sample_id.clone() class="sample" tabindex="0" role="button">"Live utility sample"</div><div id=text_id.clone() class="sample-text">"Utility text"</div><div id=swatch_id.clone() class="sample-swatch"></div><div id=nested_id.clone() class="nested-slot"></div></div> };
             if let Some((live, target)) = gpu.zip(gpu_mount) {
                 let theme_scope = view! { <ThemeScope resolved=live.theme /> };
-                view! { {theme_scope}<ThemeBoundary patch=live.patch test_id="utility-theme-boundary">
+                view! { {theme_scope}<ThemeBoundary patch=Signal::derive(move || live.patch.get().into()) test_id="utility-theme-boundary">
                     {samples}<GpuPreview live=live target=target />
                 </ThemeBoundary> }.into_any()
             } else {

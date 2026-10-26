@@ -1,0 +1,237 @@
+@layer components {
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-text, .rustify-heading, .rustify-blockquote, .rustify-code, .rustify-kbd, .rustify-em, .rustify-quote, .rustify-strong) {
+    box-sizing: border-box;
+    overflow-wrap: break-word;
+  }
+
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-text, .rustify-heading, .rustify-blockquote) {
+    margin: 0;
+    line-height: var(--rustify-text-line-height, 1.5);
+  }
+
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-text, .rustify-heading) {
+    --rustify-trim-before-content: none;
+    --rustify-trim-after-content: none;
+    letter-spacing: inherit;
+  }
+
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-text, .rustify-heading)::before {
+    content: var(--rustify-trim-before-content);
+    display: table;
+    margin-bottom: calc(0.42em - var(--rustify-text-line-height, 1.5em) / 2);
+  }
+
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-text, .rustify-heading)::after {
+    content: var(--rustify-trim-after-content);
+    display: table;
+    margin-top: calc(0.36em - var(--rustify-text-line-height, 1.5em) / 2);
+  }
+
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-heading) {
+    font-family: var(--rustify-font-sans, sans-serif);
+    font-style: normal;
+    font-weight: 700;
+  }
+
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-text[data-color], .rustify-heading[data-color], .rustify-blockquote[data-color]) {
+    color: var(--rustify-component-color-a11, var(--primary));
+  }
+
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-text[data-high-contrast], .rustify-heading[data-high-contrast], .rustify-blockquote[data-high-contrast]) {
+    color: var(--rustify-component-color-12, var(--foreground));
+  }
+
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-blockquote) {
+    border-left: max(var(--rustify-space-1), 0.25em) solid var(--rustify-component-color-a6, color-mix(in srgb, var(--primary) 30%, transparent));
+    padding-left: min(var(--rustify-space-5), max(var(--rustify-space-3), 0.5em));
+  }
+
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-code) {
+    --rustify-code-size-adjust: 0.9025;
+    font-family: var(--rustify-font-mono, monospace);
+    font-size: calc(1em * var(--rustify-code-size-adjust));
+    font-style: normal;
+    font-weight: inherit;
+    line-height: 1.25;
+    letter-spacing: calc(var(--rustify-letter-spacing, 0em) + var(--rustify-text-tracking, 0em) - 0.007em);
+    border-radius: min(var(--rustify-radius-2, var(--radius)), calc(0.5px + 0.2em));
+    padding: 0.1em 0.25em;
+    height: fit-content;
+  }
+
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-code .rustify-code) {
+    font-size: inherit;
+  }
+
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-code[data-variant="ghost"]) {
+    --rustify-code-size-adjust: 0.95;
+    padding: 0;
+    color: inherit;
+  }
+
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-code[data-variant="ghost"][data-color]) {
+    color: var(--rustify-component-color-a11, var(--primary));
+  }
+
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-code[data-variant="solid"]) {
+    background-color: var(--rustify-component-color-a9, var(--primary));
+    color: var(--rustify-component-color-contrast, var(--primary-foreground));
+  }
+
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-code[data-variant="soft"]) {
+    background-color: var(--rustify-component-color-a3, color-mix(in srgb, var(--primary) 12%, transparent));
+    color: var(--rustify-component-color-a11, var(--primary));
+  }
+
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-code[data-variant="outline"]) {
+    box-shadow: inset 0 0 0 max(1px, 0.033em) var(--rustify-component-color-a8, color-mix(in srgb, var(--primary) 55%, transparent));
+    color: var(--rustify-component-color-a11, var(--primary));
+  }
+
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-code[data-high-contrast]) {
+    color: var(--rustify-component-color-12, var(--foreground));
+  }
+
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-code[data-variant="outline"][data-high-contrast]) {
+    box-shadow:
+      inset 0 0 0 max(1px, 0.033em) var(--rustify-component-color-a7, color-mix(in srgb, var(--primary) 45%, transparent)),
+      inset 0 0 0 max(1px, 0.033em) var(--rustify-gray-a11, var(--foreground));
+  }
+
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-code[data-variant="solid"][data-high-contrast]) {
+    background-color: var(--rustify-component-color-12, var(--foreground));
+    color: var(--rustify-component-color-1, var(--background));
+  }
+
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-code[data-variant="solid"])::selection {
+    background-color: var(--rustify-component-color-7, color-mix(in srgb, var(--primary) 40%, var(--background)));
+    color: var(--rustify-component-color-12, var(--foreground));
+  }
+
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-code[data-variant="solid"][data-high-contrast])::selection {
+    background-color: var(--rustify-component-color-a11, var(--primary));
+    color: var(--rustify-component-color-1, var(--background));
+  }
+
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-kbd) {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-family: var(--rustify-font-sans, sans-serif);
+    font-weight: 400;
+    vertical-align: text-top;
+    white-space: nowrap;
+    user-select: none;
+    position: relative;
+    top: -0.03em;
+    font-size: 0.75em;
+    min-width: 1.75em;
+    line-height: 1.7em;
+    padding: 0 0.5em 0.05em;
+    word-spacing: -0.1em;
+    border-radius: min(var(--rustify-radius-2, var(--radius)), 0.35em);
+    letter-spacing: inherit;
+    height: fit-content;
+    color: var(--rustify-gray-12, var(--foreground));
+  }
+
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-kbd[data-variant="classic"]) {
+    background-color: var(--rustify-gray-1, var(--background));
+    box-shadow:
+      inset 0 -0.05em 0.5em var(--rustify-gray-a2, rgb(0 0 0 / 0.03)),
+      inset 0 0.05em rgb(255 255 255 / 0.8),
+      inset 0 0.25em 0.5em var(--rustify-gray-a2, rgb(0 0 0 / 0.03)),
+      inset 0 -0.05em var(--rustify-gray-a6, rgb(0 0 0 / 0.15)),
+      0 0 0 0.05em var(--rustify-gray-a5, rgb(0 0 0 / 0.12)),
+      0 0.08em 0.17em var(--rustify-gray-a7, rgb(0 0 0 / 0.2));
+  }
+
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-kbd[data-variant="classic"][data-appearance="dark"]) {
+    box-shadow:
+      inset 0 -0.05em 0.5em var(--rustify-gray-a3),
+      inset 0 0.05em var(--rustify-gray-a11),
+      inset 0 0.25em 0.5em var(--rustify-gray-a2),
+      inset 0 -0.1em rgb(0 0 0 / 0.9),
+      0 0 0 0.075em var(--rustify-gray-a7),
+      0 0.08em 0.17em #000;
+  }
+
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-kbd[data-variant="soft"]) {
+    background-color: var(--rustify-gray-a3, var(--muted));
+  }
+
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-em) {
+    font-style: italic;
+  }
+
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-strong) {
+    font-weight: 700;
+  }
+
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-link) {
+    color: var(--rustify-component-color-9, var(--primary));
+    border-radius: min(var(--rustify-radius-1, var(--radius)), 0.07em);
+    text-decoration-line: none;
+    text-decoration-style: solid;
+    text-decoration-thickness: min(2px, max(1px, 0.05em));
+    text-underline-offset: calc(0.025em + 2px);
+    text-decoration-color: var(--rustify-component-color-a5, color-mix(in srgb, currentColor 35%, transparent));
+  }
+
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-link[data-color]) {
+    color: var(--rustify-component-color-a11, var(--primary));
+  }
+
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-link[data-high-contrast]) {
+    color: var(--rustify-component-color-12, var(--foreground));
+  }
+
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-link:any-link) {
+    cursor: pointer;
+  }
+
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-link[aria-disabled="true"]) {
+    cursor: not-allowed;
+    pointer-events: none;
+    opacity: 0.5;
+  }
+
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-link:any-link[data-underline="always"], .rustify-link:any-link[data-underline="auto"][data-high-contrast]) {
+    text-decoration-line: underline;
+  }
+
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-link:focus-visible) {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+    text-decoration-line: none;
+  }
+
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-link:has(.rustify-code:not([data-variant="ghost"]):only-child)) {
+    text-decoration-color: transparent;
+  }
+
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) .rustify-truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  @media (hover: hover) {
+    :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-link:any-link[data-underline="auto"]:hover:not(:focus-visible), .rustify-link:any-link[data-underline="hover"]:hover:not(:focus-visible)) {
+      text-decoration-line: underline;
+    }
+
+    :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-link .rustify-code[data-variant="solid"]:hover:not([data-high-contrast])) {
+      background-color: var(--rustify-component-color-10, color-mix(in srgb, var(--primary) 90%, var(--foreground)));
+    }
+
+    :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-link .rustify-code[data-variant="soft"]:hover) {
+      background-color: var(--rustify-component-color-a4, color-mix(in srgb, var(--primary) 18%, transparent));
+    }
+
+    :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-link .rustify-code[data-variant="outline"]:hover) {
+      background-color: var(--rustify-component-color-a2, color-mix(in srgb, var(--primary) 7%, transparent));
+    }
+  }
+}

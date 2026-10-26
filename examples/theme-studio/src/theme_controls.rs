@@ -214,7 +214,7 @@ mod ui {
         callbacks: StoredValue<Callbacks>,
     ) -> impl IntoView {
         view! {
-            <Button size=ButtonSize::Sm variant=ButtonVariant::Ghost
+            <Button size=ButtonSize::One variant=ButtonVariant::Ghost
                 disabled=Signal::derive(move || values.get().get(token).ok()==baseline.get().get(token).ok())
                 on_click=move || {if let Ok(value)=baseline.get_untracked().get(token) {callbacks.with_value(|callbacks|(callbacks.edit)(token.into(),value.to_owned()));}}
                 test_id=format!("reset-{token}")>{move || tr(locale.get(), "Reset", "重置")}<span class="sr-only">{format!(" {token}")}</span></Button>
@@ -609,7 +609,7 @@ mod ui {
                 </label>
                 {[Axis::Hue,Axis::Saturation,Axis::Lightness].into_iter().map(move |axis| view! {<HslAxis axis=axis batch=batch locale=locale />}).collect_view()}
                 <details><summary class="cursor-pointer text-sm">{move || tr(locale.get(), "Adjustment presets", "快捷调整")}</summary><div class="flex flex-wrap gap-1 mt-2">
-                    {PRESETS.into_iter().enumerate().map(move |(index,(en,zh,shift))|view! {<Button size=ButtonSize::Sm variant=ButtonVariant::Outline on_click=move ||batch.update(shift) test_id=format!("hsl-preset-{index}")>{move ||tr(locale.get(),en,zh)}</Button>}).collect_view()}
+                    {PRESETS.into_iter().enumerate().map(move |(index,(en,zh,shift))|view! {<Button size=ButtonSize::One variant=ButtonVariant::Outline on_click=move ||batch.update(shift) test_id=format!("hsl-preset-{index}")>{move ||tr(locale.get(),en,zh)}</Button>}).collect_view()}
                 </div></details>
                 <div class="flex flex-wrap gap-2">
                     <Button on_click=move ||batch.finish(true) disabled=Signal::derive(move ||!batch.started.get()) test_id="hsl-apply">{move ||tr(locale.get(),"Apply","应用")}</Button>

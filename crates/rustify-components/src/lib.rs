@@ -13,6 +13,7 @@ pub mod checkbox;
 #[cfg(all(test, rustify_repo_tests))]
 mod class_migration;
 pub mod color_field;
+mod component_color;
 pub mod data_table;
 mod dom;
 pub mod drop_zone;
@@ -20,15 +21,18 @@ pub mod file_picker;
 pub mod form;
 pub mod geometry;
 pub mod icon;
+pub mod icon_button;
 pub mod id;
 pub mod input;
 pub mod label;
+pub mod layout;
 pub mod link;
 pub mod macros;
 pub mod menu;
 pub mod number_field;
 pub mod progress;
 pub mod radio;
+pub mod responsive;
 pub mod roving;
 pub mod scroll_area;
 pub mod slider;
@@ -36,9 +40,12 @@ pub mod spinner;
 pub mod switch;
 pub mod tabs;
 pub mod textarea;
+pub mod theme;
+pub mod theme_panel;
 pub mod toast;
 pub mod toggle_group;
 pub mod tree;
+pub mod typography;
 pub mod workspace;
 
 /// The stylesheets this package ships, read by Docs and the CLI through
@@ -51,7 +58,7 @@ pub mod dialog;
 pub mod select;
 pub mod tooltip;
 
-pub use button::{Button, ButtonSize, ButtonVariant};
+pub use button::{Button, ButtonColorRole, ButtonSize, ButtonType, ButtonVariant};
 pub use catalog::{Capability, Category, Entry, Presentation, Support, CATALOG};
 pub use checkbox::Checkbox;
 pub use color_field::ColorField;
@@ -61,23 +68,31 @@ pub use file_picker::FilePicker;
 pub use form::{provide_form, use_form, Field, FieldBinding, Form, FormStatus, SubmitButton};
 pub use geometry::{provide_geometry_styles, GeometryStyles};
 pub use icon::{Glyph, Icon};
+pub use icon_button::IconButton;
 pub use input::{TextField, TextKind};
 pub use label::Label;
-pub use link::{Link, LinkMatch};
+pub use layout::*;
+pub use link::{Link, LinkMatch, LinkUnderline};
 pub use menu::{MenuItem, MenuItemKind};
 pub use number_field::NumberField;
 pub use progress::Progress;
 pub use radio::{RadioGroup, RadioOption};
+pub use responsive::Responsive;
 pub use scroll_area::{Boundary, ScrollArea};
 pub use slider::Slider;
 pub use spinner::Spinner;
 pub use switch::Switch;
 pub use tabs::{Orientation, Tab, TabPanel, Tabs};
 pub use textarea::TextArea;
+pub use theme_panel::{ThemeOverrideCounts, ThemePanel};
 pub use toast::{Toast, Toaster};
 pub use toggle_group::{ToggleGroup, ToggleItem};
 pub use tree::Tree;
 pub use tree::TreeNode;
+pub use typography::{
+    Blockquote, Code, CodeVariant, Em, Heading, HeadingLevel, Kbd, KbdVariant, Quote, Strong, Text,
+    TextAlign, TextElement, TextSize, TextTrim, TextWeight, TextWrap,
+};
 pub use workspace::{Command, CommandPalette};
 pub use workspace::{PanelTab, PanelTabs, Splitter};
 
@@ -292,8 +307,9 @@ mod stylesheet {
     fn dark_is_this_scope_in_dark_and_not_any_dark_ancestor() {
         // A host page using the shadcn `.dark` convention must not change what
         // a component in our scope looks like.
-        assert!(SDK
-            .contains(r#"@custom-variant dark (&:is([data-rustify-scope][data-theme="dark"] *))"#));
+        assert!(SDK.contains("@container style(--rustify-appearance: dark)"));
+        assert!(SDK.contains("[data-rustify-theme-boundary]"));
+        assert!(!SDK.contains(".dark *"));
     }
 }
 

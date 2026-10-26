@@ -90,7 +90,12 @@ test.describe("resolved DOM themes",()=> {
     const before=preview.getByTestId("preview-primary");
     await page.getByTestId("color-value").focus();
     await before.focus();await page.keyboard.press("Tab");await page.keyboard.press("Shift+Tab");
-    expect((await computed(before)).shadow).not.toBe("none");
+    await expect(before).toBeFocused();
+    const indicator=await before.evaluate(element=>{
+      const css=getComputedStyle(element);
+      return css.boxShadow!=="none" || (css.outlineStyle!=="none" && parseFloat(css.outlineWidth)>0);
+    });
+    expect(indicator).toBe(true);
   });
 });
 

@@ -147,8 +147,14 @@ an `Arc<ResolvedTheme>` alongside its application state.
 
 [`ThemeScope`](../crates/rustify-dom/src/theme/provider.rs#L89) claims the mount
 root, projects the snapshot through CSSOM and restores prior values on cleanup.
-[`ThemeBoundary`](../crates/rustify-dom/src/theme/provider.rs#L128) re-resolves
-local patches without changing mode; clearing a patch restores inheritance.
+[`ThemeBoundary`](../crates/rustify-dom/src/theme/provider.rs) re-resolves
+two-mode patches and local configuration from the original `ThemeSource`,
+including an explicit opposite appearance; clearing a patch restores inheritance.
+The root provider honors document appearance unless an explicit preview mode
+overrides it. CSS dark utilities follow the nearest effective theme through
+an inherited mode property and style queries, including projected portal roots.
+The root's JS release restores claimed properties and attributes on normal
+cleanup and on instance abort, without calling back into failed wasm.
 An overlay captures the effective theme signal at its creation point and
 updates its layer from that signal
 ([`overlay.rs`](../crates/rustify-dom/src/overlay.rs#L721)).

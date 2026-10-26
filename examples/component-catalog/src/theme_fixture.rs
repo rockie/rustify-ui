@@ -53,7 +53,7 @@ fn Fixture(new: bool) -> impl IntoView {
             <Button on_click=move || patch.set(ThemeValuePatch(BTreeMap::from([("radius".into(),"0px".into()),("shadow-opacity".into(),"0.3".into())]))) test_id="fixture-patch">"Patch"</Button>
             <Button on_click=move || patch.set(ThemeValuePatch::default()) test_id="fixture-unpatch">"Unpatch"</Button>
         </div>
-        {if new {view!{<ThemeBoundary patch=patch test_id="fixture-boundary"><Samples /></ThemeBoundary>}.into_any()} else {view!{<Samples />}.into_any()}}
+        {if new {view!{<ThemeBoundary patch=Signal::derive(move || patch.get().into()) test_id="fixture-boundary"><Samples /></ThemeBoundary>}.into_any()} else {view!{<Samples />}.into_any()}}
     }
 }
 
@@ -85,4 +85,109 @@ pub fn catalog_theme_fixtures(legacy: &str, new: &str) -> Result<(), JsValue> {
 #[wasm_bindgen]
 pub fn catalog_theme_fixtures_dispose() {
     FIXTURES.with(|fixtures| fixtures.borrow_mut().clear())
+}
+
+#[component]
+fn ConfigurationSample(test_id: &'static str) -> impl IntoView {
+    let theme = rustify_ui::use_resolved_theme().expect("configuration fixture theme");
+    let open = RwSignal::new(false);
+    view! {
+        <div data-testid=test_id class="p-4 bg-background text-foreground border border-solid border-border dark:border-4"
+            data-mode=move || theme.get().mode.as_str()
+            data-gray=move || theme.get().gray.family.name()
+            data-brand=move || theme.get().brand.family.name()
+            data-scaling=move || theme.get().config.selected.scaling.percent()>
+            <p>{test_id}</p>
+            <Button on_click=move || open.set(true) test_id=format!("{test_id}-open")>"Open local layer"</Button>
+            <Dialog open=open on_open_change=move |value| open.set(value) title=Signal::derive(move || test_id.to_owned()) modal=false test_id=format!("{test_id}-dialog")>
+                <div class="p-4 bg-background text-foreground border border-solid border-border dark:border-4" data-testid=format!("{test_id}-layer")>
+                    "The local mode and geometry follow their source."
+                </div>
+            </Dialog>
+        </div>
+    }
+}
+
+fn light_boundary() -> rustify_ui::ThemeBoundaryPatch {
+    use rustify_ui::{
+        AccentColor, Appearance, ConfigChange::Set, ThemeBoundaryPatch, ThemeConfigPatch,
+        ThemeScaling,
+    };
+    ThemeBoundaryPatch {
+        config: ThemeConfigPatch {
+            appearance: Set(Appearance::Light),
+            accent_color: Set(Some(AccentColor::Red)),
+            scaling: Set(ThemeScaling::P95),
+            ..Default::default()
+        },
+        ..Default::default()
+    }
+}
+
+#[component]
+fn ConfigurationFixture(preview: bool) -> impl IntoView {
+    use rustify_ui::{
+        AccentColor, Appearance, ConfigChange::Set, GrayColor, ThemeBoundaryPatch,
+        ThemeConfigPatch, ThemeScaling,
+    };
+    let mut initial = ThemeDocument::standard("configuration", "Configuration fixture");
+    initial.config.appearance = Appearance::Dark;
+    let document = RwSignal::new(initial);
+    let resolved = Memo::new(move |_| {
+        Arc::new(
+            rustify_ui::resolve(
+                &document.get(),
+                ThemeMode::Light,
+                &rustify_ui::theme::font_context(16., false),
+            )
+            .expect("fixture values"),
+        )
+    });
+    let patch = RwSignal::new(ThemeBoundaryPatch::default());
+    let visible = RwSignal::new(true);
+    view! {
+        {if preview {view! {<ThemeScope resolved=resolved preview_mode=Signal::derive(|| ThemeMode::Light) />}.into_any()} else {view! {<ThemeScope resolved=resolved />}.into_any()}}
+        <div class="flex gap-2 p-4">
+            <Button test_id="config-parent" on_click=move || document.update(|doc| {doc.config.accent_color=Some(AccentColor::Amber);doc.config.scaling=ThemeScaling::P110;})>"Change parent"</Button>
+            <Button test_id="config-light" on_click=move || patch.set(light_boundary())>"Force light"</Button>
+            <Button test_id="config-auto" on_click=move || patch.update(|patch| patch.config.gray_color=Set(Some(GrayColor::Auto)))>"Local auto gray"</Button>
+            <Button test_id="config-clear" on_click=move || patch.set(ThemeBoundaryPatch::default())>"Inherit parent"</Button>
+            <Button test_id="config-invalid" on_click=move || patch.update(|patch| {patch.light.0.insert("radius".into(),"-1px".into());patch.dark.0.insert("radius".into(),"-1px".into());})>"Invalid candidate"</Button>
+            <Button test_id="config-remove" on_click=move || visible.set(false)>"Remove boundary"</Button>
+        </div>
+        <ConfigurationSample test_id="config-root" />
+        <Show when=move || visible.get()>
+            <ThemeBoundary patch=patch test_id="config-boundary">
+                <ConfigurationSample test_id="config-child" />
+                <ThemeBoundary patch=Signal::derive(|| ThemeBoundaryPatch {config:ThemeConfigPatch {appearance:Set(Appearance::Dark), gray_color:Set(Some(GrayColor::Auto)), ..Default::default()}, ..Default::default()}) test_id="config-nested">
+                    <ConfigurationSample test_id="config-grandchild" />
+                </ThemeBoundary>
+            </ThemeBoundary>
+        </Show>
+    }
+}
+
+#[wasm_bindgen]
+pub fn catalog_theme_configuration_fixtures(first: &str, second: &str) -> Result<(), JsValue> {
+    catalog_theme_fixtures_dispose();
+    let mut handles = Vec::new();
+    for (id, preview) in [(first, false), (second, true)] {
+        let element = document()
+            .get_element_by_id(id)
+            .ok_or_else(|| JsValue::from_str("missing configuration fixture root"))?
+            .dyn_into::<leptos::web_sys::HtmlElement>()?;
+        handles.push(
+            mount(
+                element,
+                MountConfig {
+                    scope: format!("catalog-configuration-{preview}"),
+                    ..Default::default()
+                },
+                move || view! {<ConfigurationFixture preview=preview />},
+            )
+            .map_err(|error| JsValue::from_str(&error.to_string()))?,
+        );
+    }
+    FIXTURES.with(|fixtures| *fixtures.borrow_mut() = handles);
+    Ok(())
 }

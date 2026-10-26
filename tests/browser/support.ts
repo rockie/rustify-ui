@@ -353,7 +353,12 @@ declare global {
         };
         __component_catalog: {
             mount_theme_fixtures(): void;
+            mount_theme_configuration_fixtures(): void;
             dispose_theme_fixtures(): void;
+            mount_button_fixtures(): void;
+            dispose_button_fixtures(): void;
+            mount_layout_fixtures(): void;
+            dispose_layout_fixtures(): void;
             reset(): Promise<void>;
             mount(): number;
             dispose(): boolean;

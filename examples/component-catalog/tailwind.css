@@ -7,6 +7,8 @@
    to what they look like without our stylesheets. `source(none)` keeps the
    scan to the sources named here and in `sdk.css`. */
 
+@layer theme, base, components, utilities;
+
 @import "tailwindcss/theme.css" layer(theme);
 @import "tailwindcss/utilities.css" layer(utilities) source(none);
 

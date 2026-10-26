@@ -358,6 +358,17 @@ pub struct ThemeBoundaryPatch {
     pub dark: ThemeValuePatch,
 }
 
+impl From<ThemeValuePatch> for ThemeBoundaryPatch {
+    /// Apply a mode-independent legacy patch without replacing either author table.
+    fn from(patch: ThemeValuePatch) -> Self {
+        Self {
+            light: patch.clone(),
+            dark: patch,
+            ..Default::default()
+        }
+    }
+}
+
 impl ThemeBoundaryPatch {
     pub fn is_empty(&self) -> bool {
         self.config.is_empty() && self.light.0.is_empty() && self.dark.0.is_empty()
@@ -474,6 +485,13 @@ pub struct ResolvedPalette {
     pub surface: Rgba,
     pub indicator: Rgba,
     pub track: Rgba,
+}
+
+impl ResolvedPalette {
+    /// A cached, pinned palette for an explicit component color in one mode.
+    pub fn for_family(family: ColorFamily, mode: ThemeMode) -> Result<Arc<Self>, ThemeError> {
+        palette(family, mode)
+    }
 }
 
 pub(super) struct PaletteRoles {

@@ -12,6 +12,8 @@
    class-shaped word in a document or a test would otherwise become a rule.
    Every class this build compiles comes from a source `sdk.css` names. */
 
+@layer theme, base, components, utilities;
+
 @import "tailwindcss/theme.css" layer(theme);
 @import "tailwindcss/utilities.css" layer(utilities) source(none);
 

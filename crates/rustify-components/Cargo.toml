@@ -21,6 +21,7 @@ utility = ["rustify-ui/utility"]
 
 [dependencies]
 leptos.workspace = true
+cssparser = "0.37.0"
 # Without its defaults, so that this crate's own csr or ssr is the only one.
 # The core, under the name the components have always imported: they draw no
 # GPU regions, so they take no SDK facade and no Makepad with it. An

@@ -652,11 +652,11 @@ mod tests {
         assert!(css.contains("height:31.5px;"), "{css}");
         assert!(css.contains("height:126px;width:411.75px;"), "{css}");
         assert!(
-            css.contains("-row-3{transform:translateY(94.5px);"),
+            css.contains("-row-3){transform:translateY(94.5px);"),
             "{css}"
         );
         assert!(
-            css.contains("-row-3-cell-2{transform:translateX(274.5px);"),
+            css.contains("-row-3-cell-2){transform:translateX(274.5px);"),
             "{css}"
         );
     }

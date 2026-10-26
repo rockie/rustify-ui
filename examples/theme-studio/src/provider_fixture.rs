@@ -31,11 +31,11 @@ pub fn ProviderFixture(#[prop(into)] patch: Signal<ThemeValuePatch>) -> impl Int
                 <div class="rounded-lg border border-border bg-card text-card-foreground p-4 shadow-lg" data-testid="radius-lg">"Large · shadow-lg"</div>
                 <div class="rounded-xl border border-border bg-card text-card-foreground p-4" data-testid="radius-xl">"Extra large"</div>
             </div>
-            <ThemeBoundary patch=patch class="local-preview mt-6" test_id="local-boundary">
+            <ThemeBoundary patch=Signal::derive(move || patch.get().into()) class="local-preview mt-6" test_id="local-boundary">
                 <div class="rounded-lg bg-card text-card-foreground border border-border p-4 shadow-lg" data-testid="local-card">
                     <p class="text-sm mb-4">"A local theme boundary"</p>
                     <div class="flex gap-2" node_ref=menu_anchor>
-                        <Button on_click=move || dialog.set(true) variant=ButtonVariant::Secondary test_id="open-preview-dialog">"Open dialog"</Button>
+                        <Button on_click=move || dialog.set(true) variant=ButtonVariant::Soft color=Some(rustify_ui::AccentColor::Gray) test_id="open-preview-dialog">"Open dialog"</Button>
                         <Button on_click=move || menu.set(true) variant=ButtonVariant::Outline test_id="open-preview-menu">"Actions"</Button>
                     </div>
                     <p class="text-sm text-muted-foreground" role="status">{move || action.get()}</p>

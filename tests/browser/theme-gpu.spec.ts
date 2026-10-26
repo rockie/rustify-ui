@@ -3,7 +3,7 @@ import {PNG} from "pngjs";
 import type {Page} from "@playwright/test";
 import {mkdir,writeFile} from "node:fs/promises";
 
-const evidence="docs/validation/theme-studio/M3";
+const evidence=process.env.RUSTIFY_THEME_GPU_OUT || "docs/validation/dom-components-p1/M3-gpu";
 async function record(page:Page,name:string,state:any) {
   await mkdir(evidence,{recursive:true});
   await page.getByTestId("theme-gpu").screenshot({path:`${evidence}/${name}.png`});
@@ -63,7 +63,7 @@ test.describe("GPU consumes the resolved snapshot",()=> {
     expect(sample(await drawn(page),"font.sans.latin").layout_size_px[0]).toBeLessThan(beforeSpacing);
     await page.evaluate(()=>window.__theme_studio.edit("font-sans","Unknown External Font, sans-serif"));
     const fallback=sample(await drawn(page),"font.sans.latin");expect(fallback.font).toBe("IBM Plex Sans");
-    expect((await snapshot(page)).document.styles.light["font-sans"]).toBe("Unknown External Font, sans-serif");
+    expect((await snapshot(page)).document.overrides.light["font-sans"]).toBe("Unknown External Font, sans-serif");
     await page.evaluate(()=>document.documentElement.style.removeProperty("font-size"));
   });
   test("soft shadows extend visual bounds without extending hit bounds",async({page})=> {

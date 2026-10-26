@@ -115,7 +115,7 @@ fn CardsScene(locale: Signal<Locale>) -> impl IntoView {
                 </label>
                 <p class="text-sm text-muted-foreground" data-testid="cards-notification-status">{move || if notifications.get() {tr(locale.get(), "Notifications enabled in this preview.", "此预览已开启通知。")} else {tr(locale.get(), "Notifications paused in this preview.", "此预览已暂停通知。")}}</p>
                 <div node_ref=anchor_node data-theme-tokens="secondary,secondary-foreground,popover,popover-foreground">
-                    <Button on_click=move || menu.set(true) variant=ButtonVariant::Secondary test_id="cards-actions">{move || tr(locale.get(), "Profile actions", "资料操作")}</Button>
+                    <Button on_click=move || menu.set(true) variant=ButtonVariant::Soft color=Some(rustify_ui::AccentColor::Gray) test_id="cards-actions">{move || tr(locale.get(), "Profile actions", "资料操作")}</Button>
                 </div>
                 <Menu open=menu on_open_change=move |value| menu.set(value) anchor=anchor
                     items=Signal::derive(move || {
@@ -243,7 +243,7 @@ fn MarketingScene(locale: Signal<Locale>) -> impl IntoView {
                         <h3 class="text-xl font-semibold">{name}</h3>
                         <p class="text-3xl tabular-nums" data-testid=format!("marketing-price-{}",name.to_lowercase())>{move || format!("${}",if billing.get()=="yearly" {yearly} else {monthly})}<span class="text-sm text-muted-foreground">{move || tr(locale.get(), "/ month", "/ 月")}</span></p>
                         <ul class="text-sm space-y-2"><li>{move || tr(locale.get(), "Local workspace examples", "本地工作区示例")}</li><li>{move || tr(locale.get(), "Reusable theme samples", "可复用主题样本")}</li><li>{move || tr(locale.get(), "No purchase takes place", "不会产生实际购买")}</li></ul>
-                        <Button on_click=move || selected.set(Some((name,billing.get_untracked()))) variant=if name=="Pro" {ButtonVariant::Default} else {ButtonVariant::Outline} test_id=format!("marketing-choose-{}",name.to_lowercase())>{move || tr(locale.get(), "Select demo plan", "选择演示方案")}</Button>
+                        <Button on_click=move || selected.set(Some((name,billing.get_untracked()))) variant=if name=="Pro" {ButtonVariant::Solid} else {ButtonVariant::Outline} test_id=format!("marketing-choose-{}",name.to_lowercase())>{move || tr(locale.get(), "Select demo plan", "选择演示方案")}</Button>
                     </article>
                 }).collect_view()}
             </div>
@@ -316,7 +316,7 @@ fn MailScene(locale: Signal<Locale>) -> impl IntoView {
                 <article class="rounded-lg bg-card text-card-foreground border border-border p-6 min-w-0" data-testid="mail-message" data-theme-tokens="card,card-foreground,border">
                     {move || if let Some(mail)=MAILS.into_iter().find(|mail|Some(mail.id)==selected.get() && !archived.get().contains(&mail.id)) {
                         view! {<div class="space-y-4"><h3 class="text-xl font-semibold">{move || localized(locale.get(),mail.subject)}</h3><p class="text-sm text-muted-foreground">{mail.sender}</p><p>{move || localized(locale.get(),mail.body)}</p>
-                            <Button on_click=move || {archived.update(|ids|ids.push(mail.id));selected.set(None);status.set(true);} variant=ButtonVariant::Secondary test_id="mail-archive">{move || tr(locale.get(), "Archive locally", "本地归档")}</Button>
+                            <Button on_click=move || {archived.update(|ids|ids.push(mail.id));selected.set(None);status.set(true);} variant=ButtonVariant::Soft color=Some(rustify_ui::AccentColor::Gray) test_id="mail-archive">{move || tr(locale.get(), "Archive locally", "本地归档")}</Button>
                         </div>}.into_any()
                     } else {view! {<p class="text-muted-foreground">{move || tr(locale.get(), "Select a message to read it.", "选择一封邮件阅读。")}</p>}.into_any()}}
                     <p role="status" class="mt-4 text-sm" data-testid="mail-status">{move || if status.get() {tr(locale.get(), "Message archived in this preview.", "邮件已在此预览中归档。")} else {""}}</p>

@@ -15,16 +15,38 @@
    imports it. */
 @source "../src";
 
-/* Dark is *this* SDK's scope in dark, not any `.dark` ancestor. A host page
-   that uses the shadcn convention has a `.dark` on its own root; without this
-   the default variant would make our components follow it. */
-@custom-variant dark (&:is([data-rustify-scope][data-theme="dark"] *));
+/* The nearest explicit theme decides, including a portal's projected theme.
+   A light boundary stops its dark ancestor and a nested dark boundary starts
+   its own scope. Host classes never select an SDK mode. */
+@custom-variant dark {
+  &:where(:is([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer)[data-theme="dark"]) {
+      @slot;
+  }
+  @container style(--rustify-appearance: dark) {
+    &:where(:not(:is([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer)[data-theme])) {
+      @slot;
+    }
+  }
+}
+
+/* Style queries read the immediate parent's inherited mode. Explicit theme
+   roots use the first branch above because a container cannot query itself. */
+:where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer)[data-theme="light"] {
+  --rustify-appearance: light;
+}
+
+:where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer)[data-theme="dark"] {
+  --rustify-appearance: dark;
+}
 
 /* The rules no utility expresses. Both are scoped to this SDK's own root; the
    slider's came from Rust/UI, where it selected the host page's range controls
    through a bare element selector. */
 @import "./slider.css";
 @import "./controls.css";
+@import "./button.css";
+@import "./layout.css";
+@import "./typography.css";
 
 /* The utilities reference these names, and the SDK writes their values onto
    the scope root at mount (`crates/rustify-ui/src/theme.rs`). `inline` means a

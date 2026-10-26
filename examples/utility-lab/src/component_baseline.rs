@@ -66,12 +66,12 @@ pub fn utility_lab_component_mount(id: &str, base: &str, disjoint: bool) -> Resu
             request_timeout_ms: 5000,
         }, cn);
         let caller = RwSignal::new("p-4".to_string());
-        let size = RwSignal::new(ButtonSize::Default);
+        let size = RwSignal::new(ButtonSize::Two);
         if let Ok(scope) = &scope { provide_context(scope.cn_context()); }
         *runtime.borrow_mut() = Some((scope, caller, size));
         view! {
             <CnCard class="p-4" test_id=format!("{id_owned}-card")>"Scoped raw classes"</CnCard>
-            <Button on_click=|| {} size=size class=caller test_id=format!("{id_owned}-button")>"Scoped button"</Button>
+            <Button on_click=|| {} size=Signal::derive(move || rustify_components::Responsive::from(size.get())) class=caller test_id=format!("{id_owned}-button")>"Scoped button"</Button>
         }
     }).map_err(|error| JsValue::from_str(&error.to_string()))?;
     let (scope, caller, size) = constructed
@@ -175,9 +175,9 @@ pub fn utility_lab_component_update(id: &str, caller: &str, small: bool) {
         if let Some(live) = live.borrow().get(id) {
             live.caller.set(caller.into());
             live.size.set(if small {
-                ButtonSize::Sm
+                ButtonSize::One
             } else {
-                ButtonSize::Default
+                ButtonSize::Two
             });
         }
     });

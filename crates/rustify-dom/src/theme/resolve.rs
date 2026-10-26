@@ -535,8 +535,21 @@ impl ResolvedTheme {
             ConfigChange::Keep => self.mode,
             ConfigChange::Set(appearance) => appearance.mode(self.mode),
         };
+        self.resolve_source(Arc::new(source), mode)
+    }
+
+    /// Resolve the same author source in an explicit mode, retaining its context.
+    pub fn in_mode(&self, mode: ThemeMode) -> Result<Self, ThemeError> {
+        self.resolve_source(self.source.clone(), mode)
+    }
+
+    fn resolve_source(
+        &self,
+        source: Arc<ThemeSource>,
+        mode: ThemeMode,
+    ) -> Result<Self, ThemeError> {
         resolve_source(
-            Arc::new(source),
+            source,
             mode,
             &ResolveContext {
                 rem_px: self.rem_px,

@@ -1,5 +1,9 @@
 #[cfg(target_arch = "wasm32")]
+mod button_fixture;
+#[cfg(target_arch = "wasm32")]
 mod catalog_region;
+#[cfg(target_arch = "wasm32")]
+mod layout_fixture;
 #[cfg(target_arch = "wasm32")]
 mod sample_column;
 #[cfg(target_arch = "wasm32")]
@@ -911,7 +915,7 @@ mod app {
                         </Button>
                         <Button
                             test_id=id("toast-quick")
-                            variant=ButtonVariant::Secondary
+                            variant=ButtonVariant::Soft color=Some(rustify_ui::AccentColor::Gray)
                             on_click=move || show(1200)
                         >
                             "show one that goes quickly"
@@ -1683,7 +1687,7 @@ mod app {
                         <Button
                             test_id="toggle-locale"
                             aria_label="switch language"
-                            variant=ButtonVariant::Secondary
+                            variant=ButtonVariant::Soft color=Some(rustify_ui::AccentColor::Gray)
                             on_click=move || {
                                 locale
                                     .set(match locale.get_untracked() {

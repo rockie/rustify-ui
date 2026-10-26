@@ -33,6 +33,14 @@
 /* The native form defaults otherwise select their own font instead of the
    resolved font shared by the scope's DOM and GPU content. */
 @layer utilities {
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer)[data-theme="light"] {
+    color-scheme: light;
+  }
+
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer)[data-theme="dark"] {
+    color-scheme: dark;
+  }
+
   :where([data-rustify-theme-runtime="v4"]) {
     font-family: var(--rustify-font-sans);
     font-size: var(--font-size);

@@ -12,5 +12,11 @@ pub const SDK: &str = include_str!("../css/sdk.css");
 pub const SLIDER: &str = include_str!("../css/slider.css");
 /// Control states: hover, focus, active and disabled.
 pub const CONTROLS: &str = include_str!("../css/controls.css");
+/// Native action controls and component-local color role defaults.
+pub const BUTTON: &str = include_str!("../css/button.css");
+/// Layout primitives and their theme spacing defaults.
+pub const LAYOUT: &str = include_str!("../css/layout.css");
+/// Native text semantics and theme typography defaults.
+pub const TYPOGRAPHY: &str = include_str!("../css/typography.css");
 /// The fourth-generation theme surface.
 pub const THEME_V4: &str = include_str!("../css/theme-v4.css");

@@ -16,6 +16,9 @@ let live = null;
 /// trapped, so they have to go with it. Removing the nodes is a JS-only path:
 /// calling the application's dispose would re-enter that module.
 const runtime_fatal = (error) => {
+    for (const id of ["catalog-theme-legacy", "catalog-theme-v4", "catalog-component-fixture", "catalog-layout-fixture"]) {
+        release_container(document.getElementById(id));
+    }
     if (handle !== null) {
         release_container(document.getElementById(container));
     }
@@ -130,8 +133,23 @@ function publish(started) {
         mount_theme_fixtures() {
             app.catalog_theme_fixtures("catalog-theme-legacy", "catalog-theme-v4");
         },
+        mount_theme_configuration_fixtures() {
+            app.catalog_theme_configuration_fixtures("catalog-theme-legacy", "catalog-theme-v4");
+        },
         dispose_theme_fixtures() {
             app.catalog_theme_fixtures_dispose();
+        },
+        mount_button_fixtures() {
+            app.catalog_button_fixtures("catalog-component-fixture");
+        },
+        dispose_button_fixtures() {
+            app.catalog_button_fixtures_dispose();
+        },
+        mount_layout_fixtures() {
+            app.catalog_layout_fixtures("catalog-layout-fixture");
+        },
+        dispose_layout_fixtures() {
+            app.catalog_layout_fixtures_dispose();
         },
         stats() {
             return hooks.runtime.stats();
@@ -147,6 +165,8 @@ function publish(started) {
         // is disposed, and a main scope it disposed is mounted again.
         async reset() {
             catalog.dispose_theme_fixtures();
+            catalog.dispose_button_fixtures();
+            catalog.dispose_layout_fixtures();
             catalog.dispose_second();
             if (handle === null) {
                 catalog.mount();

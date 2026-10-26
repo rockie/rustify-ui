@@ -1,0 +1,118 @@
+/* DOM layout primitives. No preflight; utilities keep their layer precedence. */
+@layer components {
+  :where([data-rustify-scope], .rustify-layer) :where(.rustify-layout) {
+    box-sizing: border-box;
+    --rustify-inset-top: 0px;
+    --rustify-inset-right: 0px;
+    --rustify-inset-bottom: 0px;
+    --rustify-inset-left: 0px;
+    --rustify-inset-radius: 0px;
+    --rustify-inset-border-width: 0px;
+  }
+  :where([data-rustify-scope], .rustify-layer) :where(.rustify-box) { display: block; }
+  :where([data-rustify-scope], .rustify-layer) :where(.rustify-flex) {
+    display: flex;
+    justify-content: flex-start;
+  }
+  :where([data-rustify-scope], .rustify-layer) :where(.rustify-grid) {
+    display: grid;
+    align-items: stretch;
+    justify-content: flex-start;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: none;
+  }
+  :where([data-rustify-scope], .rustify-layer) :where(.rustify-container) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+    flex-grow: 1;
+  }
+  :where([data-rustify-scope], .rustify-layer) :where(.rustify-container-inner) {
+    box-sizing: border-box;
+    width: 100%;
+    --rustify-container-width: 1136px;
+    max-width: var(--rustify-container-width);
+  }
+  :where([data-rustify-scope], .rustify-layer) :where(.rustify-section) {
+    display: block;
+    flex-shrink: 0;
+    --rustify-section-padding: var(--rustify-space-9);
+    padding-top: var(--rustify-section-padding);
+    padding-bottom: var(--rustify-section-padding);
+    --rustify-inset-top: var(--rustify-section-padding);
+    --rustify-inset-bottom: var(--rustify-section-padding);
+  }
+  :where([data-rustify-scope], .rustify-layer) :where(.rustify-inset) {
+    box-sizing: border-box;
+    overflow: hidden;
+    padding: 0;
+  }
+  /* An inset consumes this nearest padding once; a nested inset cannot reach
+     through the element and cancel an outer container again. */
+  :where([data-rustify-scope], .rustify-layer) :where(.rustify-inset) > * {
+    --rustify-inset-top: 0px;
+    --rustify-inset-right: 0px;
+    --rustify-inset-bottom: 0px;
+    --rustify-inset-left: 0px;
+    --rustify-inset-radius: 0px;
+    --rustify-inset-border-width: 0px;
+  }
+
+  :where([data-rustify-scope], .rustify-layer) :where(.rustify-reset:is(body, blockquote, dl, dd, figure, p, h1, h2, h3, h4, h5, h6)) { margin: 0; }
+  :where([data-rustify-scope], .rustify-layer) :where(.rustify-reset:is(address, b, cite, code, dfn, em, i, kbd, q, samp, small, strong, var, h1, h2, h3, h4, h5, h6, pre, sub, sup)) { font: unset; }
+  :where([data-rustify-scope], .rustify-layer) :where(a.rustify-reset) { all: unset; -webkit-tap-highlight-color: transparent; cursor: var(--cursor-link, pointer); }
+  :where([data-rustify-scope], .rustify-layer) :where(.rustify-reset:is(button, select, input[type='button'], input[type='image'], input[type='reset'], input[type='submit'], input[type='checkbox'], input[type='color'], input[type='radio'], input[type='range'])) {
+    all: unset;
+    display: inline-block;
+    font-weight: normal;
+    font-style: normal;
+    text-indent: initial;
+    -webkit-tap-highlight-color: transparent;
+  }
+  :where([data-rustify-scope], .rustify-layer) :where(.rustify-reset:is(textarea, input:not([type='button'], [type='image'], [type='reset'], [type='submit'], [type='checkbox'], [type='color'], [type='radio'], [type='range']))) {
+    all: unset;
+    display: block;
+    width: stretch;
+    font-weight: normal;
+    font-style: normal;
+    text-align: start;
+    text-indent: initial;
+    cursor: text;
+    white-space: pre-wrap;
+    -webkit-tap-highlight-color: transparent;
+  }
+  :where([data-rustify-scope], .rustify-layer) :where(label.rustify-reset) { -webkit-tap-highlight-color: transparent; }
+  :where([data-rustify-scope], .rustify-layer) :where(select.rustify-reset) { text-align: start; }
+  :where([data-rustify-scope], .rustify-layer) :where(.rustify-reset:focus-visible) { outline: 2px solid var(--ring); outline-offset: 2px; }
+  :where([data-rustify-scope], .rustify-layer) :where(.rustify-reset)::placeholder { color: unset; opacity: unset; user-select: none; }
+  :where([data-rustify-scope], .rustify-layer) :where(table.rustify-reset) { all: unset; display: table; text-indent: initial; }
+  :where([data-rustify-scope], .rustify-layer) :where(.rustify-reset:is(caption, th)) { text-align: inherit; }
+  :where([data-rustify-scope], .rustify-layer) :where(.rustify-reset:is(td, th)) { padding: 0; }
+  :where([data-rustify-scope], .rustify-layer) :where(th.rustify-reset) { font-weight: unset; }
+  :where([data-rustify-scope], .rustify-layer) :where(.rustify-reset:is(abbr, acronym, ins, u)) { text-decoration: none; }
+  :where([data-rustify-scope], .rustify-layer) :where(.rustify-reset:is(canvas, object, picture, summary)) { display: block; }
+  :where([data-rustify-scope], .rustify-layer) :where(.rustify-reset:is(del, s)) { text-decoration: unset; }
+  :where([data-rustify-scope], .rustify-layer) :where(.rustify-reset:is(fieldset, hr)) { all: unset; display: block; }
+  :where([data-rustify-scope], .rustify-layer) :where(legend.rustify-reset) { padding: 0; border: none; cursor: default; }
+  :where([data-rustify-scope], .rustify-layer) :where(li.rustify-reset) { display: block; text-align: unset; }
+  :where([data-rustify-scope], .rustify-layer) :where(.rustify-reset:is(ol, ul)) { list-style: none; margin: 0; padding: 0; }
+  :where([data-rustify-scope], .rustify-layer) :where(iframe.rustify-reset) { display: block; border: none; width: stretch; }
+  :where([data-rustify-scope], .rustify-layer) :where(.rustify-reset:is(img, svg)) { display: block; max-width: 100%; }
+  :where([data-rustify-scope], .rustify-layer) :where(svg.rustify-reset) { flex-shrink: 0; }
+  :where([data-rustify-scope], .rustify-layer) :where(mark.rustify-reset) { all: unset; }
+  :where([data-rustify-scope], .rustify-layer) :where(pre.rustify-reset) { margin: unset; }
+  :where([data-rustify-scope], .rustify-layer) :where(q.rustify-reset)::before,
+  :where([data-rustify-scope], .rustify-layer) :where(q.rustify-reset)::after { content: ''; }
+  :where([data-rustify-scope], .rustify-layer) :where(.rustify-reset:is(sub, sup)) { vertical-align: unset; }
+  :where([data-rustify-scope], .rustify-layer) :where(details.rustify-reset) ::marker,
+  :where([data-rustify-scope], .rustify-layer) :where(summary.rustify-reset)::marker { content: none; }
+  :where([data-rustify-scope], .rustify-layer) :where(video.rustify-reset) { display: block; width: stretch; }
+  :where([data-rustify-scope], .rustify-layer) :where(button.rustify-reset) { cursor: var(--cursor-button, pointer); }
+  :where([data-rustify-scope], .rustify-layer) :where(input.rustify-reset[type='checkbox']) { cursor: var(--cursor-checkbox, pointer); }
+  :where([data-rustify-scope], .rustify-layer) :where(input.rustify-reset[type='radio']) { cursor: var(--cursor-radio, pointer); }
+  :where([data-rustify-scope], .rustify-layer) :where(.rustify-reset:is(:disabled, [data-disabled])) { cursor: var(--cursor-disabled, not-allowed); }
+  :where([data-rustify-scope], .rustify-layer) :where(.rustify-reset),
+  :where([data-rustify-scope], .rustify-layer) :where(.rustify-reset)::before,
+  :where([data-rustify-scope], .rustify-layer) :where(.rustify-reset)::after { box-sizing: border-box; }
+}

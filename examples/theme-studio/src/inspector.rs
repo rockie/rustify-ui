@@ -406,7 +406,7 @@ mod ui {
                 <h3>{move ||state.tr("Inspect preview tokens","检查预览 token")}</h3>
                 <p>{move ||state.tr("Point at a declared DOM or GPU sample, then choose a token. Esc exits.","指向已声明的 DOM 或 GPU 样本，再选择 token。按 Esc 退出。")}</p>
                 <div class="inspector-tokens" role="group" aria-label="Sample tokens">
-                    {move || picked.get().into_iter().map(|token|{let label=token.clone();view!{<Button variant=ButtonVariant::Outline size=ButtonSize::Sm on_click=move ||state.inspect(token.clone())>{label}</Button>}}).collect_view()}
+                    {move || picked.get().into_iter().map(|token|{let label=token.clone();view!{<Button variant=ButtonVariant::Outline size=ButtonSize::One on_click=move ||state.inspect(token.clone())>{label}</Button>}}).collect_view()}
                 </div>
                 <details><summary>{move ||state.tr("All drawn tokens · keyboard selection","全部绘制 token · 键盘选择")}</summary>
                     <div class="inspector-tokens">

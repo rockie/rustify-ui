@@ -33,6 +33,46 @@ For the bundled catalogue, use `rustify_ui::theme::font_context(rem_px, reduce_m
 
 The public types and validation live in [document.rs](../crates/rustify-dom/src/theme/document.rs), [metrics.rs](../crates/rustify-dom/src/theme/metrics.rs) and [resolve.rs](../crates/rustify-dom/src/theme/resolve.rs). `ThemeValuePatch` contains sparse author values; `ThemeValues::patched` rejects unknown keys, and the resulting values must be resolved before use.
 
+## Root and local providers
+
+`ThemeScope` claims one mount root. Its `resolved` signal retains the complete
+two-mode `ThemeSource` and resolution context. Document `appearance` selects
+the root mode; an optional `preview_mode` signal explicitly overrides it.
+Studio uses this preview input without changing the author document. A nested
+boundary's explicit appearance still wins within that boundary.
+
+```rust,ignore
+use rustify_ui::{Appearance, ConfigChange, ThemeBoundary, ThemeBoundaryPatch,
+    ThemeConfigPatch, ThemeScope};
+
+view! {
+    <ThemeScope resolved=resolved />
+    <ThemeBoundary patch=Signal::derive(|| ThemeBoundaryPatch {
+        config: ThemeConfigPatch {
+            appearance: ConfigChange::Set(Appearance::Dark),
+            ..Default::default()
+        },
+        ..Default::default()
+    })>
+        <ApplicationArea />
+    </ThemeBoundary>
+}
+```
+
+Boundary configuration distinguishes `Keep` (inherit) from `Set(None)`
+(Custom). Its `light` and `dark` maps are independent author overrides. A
+mode-independent `ThemeValuePatch` converts with `.into()`; this conversion
+copies the patch to both modes, while retaining the original two base tables.
+An empty boundary reuses the parent's snapshot and removes its CSS projection;
+an invalid patch falls back to the parent and records a diagnostic. Overlays
+subscribe to the effective snapshot at their creation point, including local
+mode, fonts and geometry. Scope disposal restores the properties and attributes
+it replaced; the JS abort release also performs this cleanup after a fatal.
+
+`provide_static_theme` binds a snapshot whose matching external CSS was already
+generated. It retains the same source for opposite-mode local resolution;
+it does not rewrite the static page or select a different root mode.
+
 ## JSON structure
 
 [theme-document.schema.json](theme-document.schema.json) describes canonical v2.
