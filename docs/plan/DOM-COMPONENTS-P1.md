@@ -180,7 +180,7 @@
 - 最近完成：M7 · 当前源码配对、真实角色/恢复与性能终验
 - 下一步：用户以 `review-code docs/plan/DOM-COMPONENTS-P1.md` 发起代码评审
 - 当前阻塞：无；未做人工VoiceOver/OS IME与真人研究的边界、旧颜色负载延迟回退如M7实录，不扩展为公开发布或后续期次完成
-- 代码基线：e745a4cf（配套source CLI/SDK；runtime树与UI修复d712990c相同），M5–M6累计620d25b1，M7最终记录afa813e2
+- 代码基线：e745a4cf（配套source CLI/SDK；runtime树与UI修复d712990c相同），M5–M6累计620d25b1，M7最终记录afa813e2、浏览器截图1e4d379b
 
 ### 完成记录
 
@@ -192,7 +192,7 @@
 | M4 | 已完成 | 2026-10-26T17:44:26+08:00 | 基础操作/布局/排版、ThemePanel、响应式与外部SSR样式及真实浏览器通过，旧调用已迁移。 | [M4 记录](DOM-COMPONENTS-P1.records/M4.md) | 219b8481；UI修复 d712990c |
 | M5 | 已完成 | 2026-10-26T22:01:09+08:00 | 配置/来源、升级许可、单写者与完整数据风险门通过；新配置/存储及旧编辑/保存/交换均已真实浏览器验证。 | [M5 记录](DOM-COMPONENTS-P1.records/M5.md) | 620d25b1；UI修复 d712990c |
 | M6 | 已完成 | 2026-10-26T22:28:39+08:00 | 完整导出与有损提示、默认DOM/GPU根与子路径、source Docs及既有island、能力/迁移资料通过。 | [M6 记录](DOM-COMPONENTS-P1.records/M6.md) | 620d25b1 |
-| M7 | 已完成 | 2026-10-27T00:50:00+08:00 | V1–V10收口；Slider/投影/Inspector、角色/回滚/故障、根子路径消费者、最终source Docs均验；真实性能成本和人工未验边界保留。 | [M7 记录](DOM-COMPONENTS-P1.records/M7.md) | UI修复 d712990c；afa813e2 |
+| M7 | 已完成 | 2026-10-27T00:50:00+08:00 | V1–V10收口；Slider/投影/Inspector、角色/回滚/故障、根子路径消费者、最终source Docs均验；真实性能成本和人工未验边界保留。 | [M7 记录](DOM-COMPONENTS-P1.records/M7.md) | UI修复 d712990c；afa813e2；1e4d379b |
 
 
 ## 0. 需求、范围与决策
