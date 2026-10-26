@@ -1,6 +1,7 @@
 //! One ordered writer. Operations capture editor facts, never an editor owner.
 
 use crate::persistence::{self, Autosave, Envelope, Preferences};
+use crate::state::ContextKey;
 use rustify_ui::{ResolveContext, ResolvedTheme, ThemeDocument, ThemeError};
 use serde::Serialize;
 use std::{
@@ -15,6 +16,7 @@ pub struct Snapshot {
     pub draft: ThemeDocument,
     pub preferences: Preferences,
     pub proof: [Arc<ResolvedTheme>; 2],
+    pub context: ContextKey,
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -153,6 +155,8 @@ pub struct Writer {
 
 impl Writer {
     pub fn new(confirmed: Envelope, baseline: Option<String>, permission: Permission) -> Self {
+        let acknowledged = (baseline.is_some() && permission == Permission::Ready)
+            .then(|| (0, confirmed.draft.clone(), confirmed.preferences.clone()));
         Self {
             confirmed,
             baseline,
@@ -160,7 +164,7 @@ impl Writer {
             paused: false,
             generation: 0,
             latest_named: 0,
-            acknowledged: None,
+            acknowledged,
             outcomes: Vec::new(),
             next_id: 0,
             queue: VecDeque::new(),
@@ -388,7 +392,12 @@ impl Writer {
         }
         let write = if kind == "write" {
             Some(
-                if matches!(operation.intent, Intent::Autosave | Intent::Keep { .. }) {
+                if matches!(operation.intent, Intent::Autosave | Intent::Keep { .. })
+                    && operation
+                        .snapshot
+                        .context
+                        .matches(operation.snapshot.revision, context)
+                {
                     autosave.serialize_snapshot(&candidate, &operation.snapshot.proof, context)?
                 } else {
                     persistence::serialize(&candidate, context)?
@@ -556,6 +565,7 @@ mod tests {
             draft: document.clone(),
             preferences: Preferences::default(),
             proof: editor.resolved_pair(&context).unwrap(),
+            context: ContextKey::new(editor.revision, &context),
         };
         (
             Writer::new(
@@ -573,6 +583,151 @@ mod tests {
             snapshot,
         )
     }
+    #[test]
+    fn queued_autosave_revalidates_a_changed_context_and_retains_the_failed_request() {
+        let (mut writer, mut snapshot) = setup();
+        let context = font_context(16., false);
+        let mut autosave = Autosave::default();
+        writer.enqueue(snapshot.clone(), Intent::Autosave).unwrap();
+        let first = writer.take().unwrap();
+        let first = writer.prepare(first, &mut autosave, &context).unwrap();
+
+        let mut editor =
+            crate::state::EditorState::new(snapshot.draft.clone(), ThemeMode::Light, &context)
+                .unwrap();
+        editor.edit("radius", "200rem", &context).unwrap();
+        snapshot.epoch += 1;
+        snapshot.revision = editor.revision;
+        snapshot.draft = editor.document.clone();
+        snapshot.proof = editor.resolved_pair(&context).unwrap();
+        snapshot.context = ContextKey::new(editor.revision, &context);
+        let id = writer.enqueue(snapshot.clone(), Intent::Autosave).unwrap();
+        writer.acknowledge(&first);
+        let baseline = writer.baseline.clone();
+
+        let operation = writer.take().unwrap();
+        let error = writer
+            .prepare(operation, &mut autosave, &font_context(32., false))
+            .expect_err("a stale proof must not authorize an invalid draft");
+        assert!(error.field.contains("radius"), "{error}");
+        writer.fail(id);
+        assert_eq!(writer.baseline, baseline);
+        assert_eq!(writer.first().unwrap().snapshot.draft, snapshot.draft);
+        assert!(writer.take().is_none());
+
+        writer.paused = false;
+        let operation = writer.take().unwrap();
+        let prepared = writer.prepare(operation, &mut autosave, &context).unwrap();
+        assert!(writer.acknowledge(&prepared));
+        assert!(writer.is_current(&snapshot));
+        assert_eq!(
+            persistence::load(writer.baseline.as_deref(), &context),
+            persistence::LoadResult::Valid(Box::new(writer.confirmed.clone()))
+        );
+    }
+
+    #[test]
+    fn queued_autosave_revalidates_every_resolve_context_input() {
+        let fonts = [rustify_ui::theme::FontFace {
+            family: "Additional font",
+            resource_path: "fonts/additional.ttf",
+        }];
+        let original = font_context(16., false);
+        for context in [
+            ResolveContext {
+                rem_px: 20.,
+                ..original.clone()
+            },
+            ResolveContext {
+                reduce_motion: true,
+                ..original.clone()
+            },
+            ResolveContext {
+                fonts: &fonts,
+                ..original.clone()
+            },
+            ResolveContext {
+                fallback_fonts: ["Other sans", "serif", "monospace"],
+                ..original.clone()
+            },
+            ResolveContext {
+                font_resolution: rustify_ui::FontResolution::Css,
+                ..original.clone()
+            },
+        ] {
+            let (mut writer, snapshot) = setup();
+            writer.enqueue(snapshot, Intent::Autosave).unwrap();
+            let operation = writer.take().unwrap();
+            let before = rustify_ui::theme::resolution_count();
+            let prepared = writer
+                .prepare(operation, &mut Autosave::default(), &context)
+                .unwrap();
+            assert!(
+                rustify_ui::theme::resolution_count() - before >= 2,
+                "{context:?}"
+            );
+            assert!(matches!(
+                persistence::load(prepared.wire.write.as_deref(), &context),
+                persistence::LoadResult::Valid(_)
+            ));
+        }
+    }
+
+    #[test]
+    fn queued_autosave_reuses_the_proof_and_warm_library_when_context_is_unchanged() {
+        let (mut writer, snapshot) = setup();
+        let context = font_context(16., false);
+        for index in 0..persistence::SAVED_THEME_LIMIT {
+            writer.confirmed.saved_themes.push(ThemeDocument::standard(
+                format!("saved-{index}"),
+                format!("Saved {index}"),
+            ));
+        }
+        let mut autosave = Autosave::default();
+        writer.enqueue(snapshot.clone(), Intent::Autosave).unwrap();
+        let first = writer.take().unwrap();
+        let first = writer.prepare(first, &mut autosave, &context).unwrap();
+        writer.acknowledge(&first);
+        writer.enqueue(snapshot, Intent::Autosave).unwrap();
+        let second = writer.take().unwrap();
+        let before = rustify_ui::theme::resolution_count();
+        let second = writer.prepare(second, &mut autosave, &context).unwrap();
+        assert_eq!(rustify_ui::theme::resolution_count() - before, 0);
+        assert_eq!(
+            second.envelope.unwrap().saved_themes.len(),
+            persistence::SAVED_THEME_LIMIT
+        );
+    }
+
+    #[test]
+    fn restored_ready_v2_acknowledges_only_the_initial_draft_and_preferences() {
+        let (writer, mut snapshot) = setup();
+        snapshot.epoch = 0;
+        let confirmed = writer.confirmed;
+        let baseline = persistence::serialize(&confirmed, &font_context(16., false)).unwrap();
+        let mut restored =
+            Writer::new(confirmed.clone(), Some(baseline.clone()), Permission::Ready);
+        assert!(restored.is_current(&snapshot));
+        restored
+            .enqueue(snapshot.clone(), Intent::Autosave)
+            .unwrap();
+        assert!(!restored.is_current(&snapshot));
+        for permission in [
+            Permission::Protected,
+            Permission::UpgradePending,
+            Permission::UpgradeCancelled,
+        ] {
+            assert!(
+                Writer::new(confirmed.clone(), Some(baseline.clone()), permission)
+                    .acknowledged
+                    .is_none()
+            );
+        }
+        assert!(Writer::new(confirmed, None, Permission::Ready)
+            .acknowledged
+            .is_none());
+    }
+
     #[test]
     fn only_adjacent_unissued_autosaves_coalesce_and_library_intents_keep_order() {
         let (mut writer, mut snapshot) = setup();

@@ -182,6 +182,30 @@ test("theme scaling applies once while absolute values and utility overrides sta
     }
 });
 
+test("Inset selects each side and restores other margins across responsive changes", async ({ page }, info) => {
+    const cases: [string, boolean[]][] = [
+        ["all", [true, true, true, true]], ["x", [false, true, false, true]],
+        ["y", [true, false, true, false]], ["top", [true, false, false, false]],
+        ["bottom", [false, false, true, false]], ["left", [false, false, false, true]],
+        ["right", [false, true, false, false]],
+    ];
+    for (const [side, edges] of cases) {
+        for (const [edge, property] of ["margin-top", "margin-right", "margin-bottom", "margin-left"].entries()) {
+            await expect(sample(page, `layout-inset-${side}`)).toHaveCSS(property, edges[edge] ? "-13px" : "3px");
+        }
+    }
+    for (const width of [390, 519, 520, 767, 768, 1023, 1024, 1280]) {
+        await page.setViewportSize({width, height:900});
+        const selected = width >= 1024 ? 3 : width >= 768 ? 2 : width >= 520 ? 1 : 0;
+        for (const [edge, property] of ["margin-top", "margin-right", "margin-bottom", "margin-left"].entries()) {
+            await expect(sample(page, "layout-inset-responsive")).toHaveCSS(property, edge === selected ? "-13px" : "3px");
+        }
+    }
+    await sample(page, "layout-inset-sides").screenshot({path:info.outputPath("inset-sides-desktop.png")});
+    await page.setViewportSize({width:390, height:900});
+    await sample(page, "layout-inset-sides").screenshot({path:info.outputPath("inset-sides-mobile.png")});
+});
+
 test("invalid CSS remains local, reports its prop and accepts a valid replacement", async ({ page }) => {
     const node = sample(page, "layout-invalid-prop");
     await expect(node).toHaveCSS("width", "37px");

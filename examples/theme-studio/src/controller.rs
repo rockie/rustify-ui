@@ -565,6 +565,7 @@ impl StudioState {
                     draft: editor.document.clone(),
                     preferences,
                     proof: editor.resolved_pair(&context)?,
+                    context: crate::state::ContextKey::new(editor.revision, &context),
                 })
             });
         match snapshot {

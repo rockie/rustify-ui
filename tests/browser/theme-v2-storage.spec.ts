@@ -91,6 +91,76 @@ async function cacheTools(page:Page) {
   if (!(await page.getByTestId("storage-clear-review").isVisible())) await summary.click();
 }
 
+test("queued autosave revalidates a changed rem after a real lock wait and remains retryable", async ({page}, info) => {
+  await waitForReady(page);
+  await page.getByTestId("renderer-dom").click(); await idle(page);
+  const errors:string[] = [];
+  page.on("pageerror", error => errors.push(error.message));
+  page.on("console", message => {if (message.type() === "error") errors.push(message.text());});
+  page.on("requestfailed", request => errors.push(`${request.url()}: ${request.failure()?.errorText}`));
+  const locker = await second(page); await hold(locker);
+  await edit(page, "#223344");
+  expect(await page.evaluate(() => window.__theme_studio.edit("radius", "200rem"))).toBe(true);
+  const waiting = await snapshot(page);
+  expect(waiting.storage.pending).toBe(2);
+  await page.evaluate(() => {
+    document.documentElement.style.fontSize = "32px";
+    window.__theme_studio.environment();
+  });
+  await release(locker);
+  await expect.poll(async () => (await snapshot(page)).storage.paused).toBe(true);
+  const retained = await snapshot(page), validRaw = (await raw(page))!;
+  expect(retained.document).toEqual(waiting.document);
+  expect(retained.storage.pending).toBe(1);
+  expect(retained.storage.outcomes.at(-1).state).toBe("failed");
+  expect(JSON.parse(validRaw).draft.overrides.light.primary).toBe("#223344");
+  expect(validRaw).not.toContain("200rem");
+  await expect(page.getByTestId("storage-status")).not.toHaveText("Saved on this device");
+  await page.getByTestId("storage-retry").click();
+  expect((await snapshot(page)).storage.paused).toBe(true);
+  expect(await raw(page)).toBe(validRaw);
+  const reopened = await second(page);
+  await reopened.evaluate(() => {
+    window.__theme_studio.dispose();
+    document.documentElement.style.fontSize = "32px";
+    window.__theme_studio.mount();
+  });
+  expect((await snapshot(reopened)).storage.permission).toBe("Ready");
+  expect((await snapshot(reopened)).values.light.primary).toBe("#223344");
+  await reopened.close();
+  await page.evaluate(() => {
+    document.documentElement.style.removeProperty("font-size");
+    window.__theme_studio.environment();
+  });
+  await page.getByTestId("storage-retry").click(); await idle(page);
+  expect((await snapshot(page)).document).toEqual(waiting.document);
+  const stored = await raw(page);
+  expect(stored).toContain("200rem");
+  await locker.close(); await page.reload(); await ready(page);
+  expect((await snapshot(page)).document).toEqual(waiting.document);
+  await expect(page.getByTestId("storage-status")).toHaveText("Saved on this device");
+  await page.getByTestId("storage-status").screenshot({path:info.outputPath("retry-restored-status.png")});
+  expect(errors).toEqual([]);
+});
+
+test("valid v2 reload reports the restored draft as saved while a new library stays unconfirmed", async ({page}, info) => {
+  await waitForReady(page);
+  expect((await snapshot(page)).storage.acknowledged).toBeNull();
+  expect(await raw(page)).toBeNull();
+  await expect(page.getByTestId("storage-status")).toContainText("no current save has been confirmed");
+  await page.getByTestId("renderer-dom").click();
+  await save(page, "Restored saved draft"); await idle(page);
+  const saved = await snapshot(page), stored = await raw(page);
+  await page.reload(); await ready(page);
+  const restored = await snapshot(page);
+  expect(restored.document).toEqual(saved.document);
+  expect(restored.storage.pending).toBe(0);
+  expect(restored.storage.acknowledged).toEqual({epoch:0, document:restored.document, preferences:restored.preferences});
+  expect(await raw(page)).toBe(stored);
+  await expect(page.getByTestId("storage-status")).toHaveText("Saved on this device");
+  await page.getByTestId("storage-status").screenshot({path:info.outputPath("restored-status.png")});
+});
+
 test("one writer preserves named action order behind a real lock and eventually saves the newest draft and preferences", async ({page}) => {
   await waitForReady(page);
   await page.getByTestId("renderer-dom").click();
@@ -161,6 +231,8 @@ test("an older named acknowledgement during a live gesture cannot replace identi
 
 test("cancelled legacy upgrade stays write-protected through edits, history, mode, preferences and reopening", async ({page}) => {
   const original = await seedLegacy(page);
+  expect((await snapshot(page)).storage.acknowledged).toBeNull();
+  await expect(page.getByTestId("storage-status")).not.toHaveText("Saved on this device");
   await expect(page.getByTestId("preset-count")).toHaveText("46");
   expect((await snapshot(page)).document.id).toBe("legacy-draft");
   expect(await raw(page)).toBeNull(); expect(await backups(page)).toEqual({});
@@ -174,6 +246,7 @@ test("cancelled legacy upgrade stays write-protected through edits, history, mod
   await save(page, "Memory only");
   await page.getByTestId("locale-zh").click();
   expect((await snapshot(page)).storage.permission).toBe("UpgradeCancelled");
+  expect((await snapshot(page)).storage.acknowledged).toBeNull();
   expect(await raw(page)).toBeNull(); expect(await backups(page)).toEqual({});
   expect(await raw(page, legacyKey)).toBe(original);
   await page.getByTestId("theme-export").click(); expect(await page.getByTestId("export-source").inputValue()).toContain("#234567");
@@ -182,6 +255,7 @@ test("cancelled legacy upgrade stays write-protected through edits, history, mod
   await page.reload(); await ready(page);
   expect((await snapshot(page)).values.light.primary).not.toBe("#234567");
   expect((await snapshot(page)).storage.permission).toBe("UpgradePending");
+  expect((await snapshot(page)).storage.acknowledged).toBeNull();
   expect(await raw(page, legacyKey)).toBe(original); expect(await raw(page)).toBeNull();
 });
 
@@ -275,6 +349,8 @@ test("invalid v2 protects its exact bytes without falling back to a valid legacy
   await page.reload(); await ready(page);
   await expect(page.getByTestId("corrupt-cache")).toBeVisible();
   await expect(page.getByTestId("upgrade-notice")).toHaveCount(0);
+  expect((await snapshot(page)).storage.acknowledged).toBeNull();
+  await expect(page.getByTestId("storage-status")).not.toHaveText("Saved on this device");
   expect((await snapshot(page)).document.id).not.toBe("legacy-draft");
   await edit(page, "#123456"); await page.getByTestId("mode-dark").click();
   expect(await raw(page)).toBe(broken); expect(await raw(page, legacyKey)).toBe(original);

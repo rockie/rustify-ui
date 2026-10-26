@@ -146,6 +146,29 @@ fn LayoutSamples(invalid: RwSignal<bool>, clicks: RwSignal<u32>) -> impl IntoVie
                     </Inset>
                 </Box>
             </Box>
+            <div data-testid="layout-inset-sides">
+                {[
+                    ("all", Responsive::from(InsetSide::All)),
+                    ("x", Responsive::from(InsetSide::X)),
+                    ("y", Responsive::from(InsetSide::Y)),
+                    ("top", Responsive::from(InsetSide::Top)),
+                    ("bottom", Responsive::from(InsetSide::Bottom)),
+                    ("left", Responsive::from(InsetSide::Left)),
+                    ("right", Responsive::from(InsetSide::Right)),
+                    ("responsive", Responsive {
+                        initial: Some(InsetSide::Top), xs: Some(InsetSide::Right),
+                        sm: Some(InsetSide::Bottom), md: Some(InsetSide::Left),
+                        ..Responsive::default()
+                    }),
+                ].into_iter().map(|(label, side)| view! {
+                    <Box layout=Layout { padding: Padding { p: space(4), ..Padding::default() }, ..Layout::default() }>
+                        <Inset test_id=format!("layout-inset-{label}") side=side
+                            margin=Margin { m: Spacing::Css("3px".into()).into(), ..Margin::default() }>
+                            {label}
+                        </Inset>
+                    </Box>
+                }).collect_view()}
+            </div>
             <Box test_id="layout-scaled-space" layout=Layout { padding: Padding { p: space(4), ..Padding::default() }, ..Layout::default() }>"Theme space scales once."</Box>
             <Box test_id="layout-absolute" layout=Layout { width: css("37px"), height: css("19px"), padding: Padding { p: Spacing::Css("3px".into()).into(), ..Padding::default() }, ..Layout::default() }>"px"</Box>
             <Box test_id="layout-invalid-prop" layout=Signal::derive(move || Layout { width: css(if invalid.get() { "12px;display:none" } else { "37px" }), ..Layout::default() })>"A bad prop keeps this view alive."</Box>

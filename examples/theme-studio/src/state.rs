@@ -37,7 +37,7 @@ struct Gesture {
 }
 
 #[derive(Clone, Debug, PartialEq)]
-struct ContextKey {
+pub(crate) struct ContextKey {
     revision: u64,
     rem_bits: u64,
     reduce_motion: bool,
@@ -47,7 +47,7 @@ struct ContextKey {
 }
 
 impl ContextKey {
-    fn new(revision: u64, context: &ResolveContext<'_>) -> Self {
+    pub(crate) fn new(revision: u64, context: &ResolveContext<'_>) -> Self {
         Self {
             revision,
             rem_bits: context.rem_px.to_bits(),
@@ -58,7 +58,7 @@ impl ContextKey {
         }
     }
 
-    fn matches(&self, revision: u64, context: &ResolveContext<'_>) -> bool {
+    pub(crate) fn matches(&self, revision: u64, context: &ResolveContext<'_>) -> bool {
         self.revision == revision
             && self.rem_bits == context.rem_px.to_bits()
             && self.reduce_motion == context.reduce_motion

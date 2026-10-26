@@ -678,10 +678,10 @@ impl InsetSide {
             Self::All => [true; 4],
             Self::X => [false, true, false, true],
             Self::Y => [true, false, true, false],
-            Self::Top => [true, true, false, true],
-            Self::Bottom => [false, true, true, true],
-            Self::Left => [true, false, true, true],
-            Self::Right => [true, true, true, false],
+            Self::Top => [true, false, false, false],
+            Self::Bottom => [false, false, true, false],
+            Self::Left => [false, false, false, true],
+            Self::Right => [false, true, false, false],
         }
     }
 }
@@ -1135,6 +1135,65 @@ mod tests {
         assert!(html.contains("aria-label=\"Save\""), "{html}");
         assert!(html.contains("original rustify-reset"), "{html}");
         assert!(!html.contains("<div"));
+    }
+
+    #[cfg(all(feature = "ssr", not(target_arch = "wasm32")))]
+    #[test]
+    fn inset_sides_preserve_unselected_margins_and_select_only_joined_corners() {
+        for (side, edges) in [
+            (InsetSide::All, [true, true, true, true]),
+            (InsetSide::X, [false, true, false, true]),
+            (InsetSide::Y, [true, false, true, false]),
+            (InsetSide::Top, [true, false, false, false]),
+            (InsetSide::Bottom, [false, false, true, false]),
+            (InsetSide::Left, [false, false, false, true]),
+            (InsetSide::Right, [false, true, false, false]),
+        ] {
+            for clip in [InsetClip::BorderBox, InsetClip::PaddingBox] {
+                let (_, css) = render(|| {
+                    view! {
+                    <Inset side=Responsive::from(side) clip=Responsive::from(clip)
+                        margin=Margin { m: Spacing::Css("3px".into()).into(), ..Margin::default() }>
+                        "inset"
+                    </Inset>
+                }.into_any()
+                });
+                for edge in 0..4 {
+                    let value = if edges[edge] {
+                        let border = if clip == InsetClip::PaddingBox {
+                            " + var(--rustify-inset-border-width, 0px)"
+                        } else {
+                            ""
+                        };
+                        format!("calc(3px - (var({}, 0px){border}))", INSET_PROPERTIES[edge])
+                    } else {
+                        "3px".into()
+                    };
+                    assert!(
+                        css.contains(&format!("{}:{value};", MARGIN_PROPERTIES[edge])),
+                        "{side:?}/{clip:?}: {css}"
+                    );
+                }
+                for (corner, selected) in [
+                    ("top-left", edges[0] && edges[3]),
+                    ("top-right", edges[0] && edges[1]),
+                    ("bottom-right", edges[2] && edges[1]),
+                    ("bottom-left", edges[2] && edges[3]),
+                ] {
+                    let radius = if !selected {
+                        "0px"
+                    } else if clip == InsetClip::PaddingBox {
+                        "var(--rustify-inset-radius, 0px)"
+                    } else {
+                        "max(0px, calc(var(--rustify-inset-radius, 0px) - var(--rustify-inset-border-width, 0px)))"
+                    };
+                    assert!(
+                        css.contains(&format!("border-{corner}-radius:{radius};")),
+                        "{side:?}/{clip:?}: {css}"
+                    );
+                }
+            }
+        }
     }
 
     #[cfg(all(feature = "ssr", not(target_arch = "wasm32")))]
