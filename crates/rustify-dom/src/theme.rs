@@ -16,8 +16,8 @@ pub use config::{
 };
 mod palette_roles;
 pub use codec::{
-    check_document_size, export_css, export_json, import_css, import_json, CssProfile, ThemeImport,
-    THEME_INPUT_LIMIT,
+    check_document_size, export_css, export_json, export_json_v1_lossy, import_css, import_json,
+    CssProfile, LegacyExportLoss, LegacyJsonExport, ThemeImport, THEME_INPUT_LIMIT,
 };
 pub use rustify_colors::ColorFamily;
 #[cfg(test)]

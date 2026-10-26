@@ -1,7 +1,7 @@
 use rustify_ui::theme::{
-    export_css, export_json, font_context, import_css, import_json, resolve, ColorFormat,
-    CssProfile, FontSlot, Theme, ThemeDocument, ThemeMode, FONT_FACES, FONT_GLYPH_FALLBACKS,
-    THEME_FONTS,
+    export_css, export_json, font_context, import_css, import_json, resolve, AccentColor,
+    Appearance, ColorFormat, CssProfile, FontSlot, PanelBackground, ThemeDocument, ThemeMode,
+    ThemeRadius, ThemeScaling, FONT_FACES, FONT_GLYPH_FALLBACKS, THEME_FONTS,
 };
 use serde_json::json;
 use std::{
@@ -50,14 +50,45 @@ fn write(path: &Path, content: impl AsRef<[u8]>) -> Result<(), Box<dyn Error>> {
 }
 
 fn document(alternate: bool) -> ThemeDocument {
-    let mut document = ThemeDocument::from_legacy(Theme::light(), Theme::dark());
-    document.id = if alternate { "fixture-b" } else { "fixture-a" }.into();
-    document.name = if alternate {
-        "Export fixture B"
+    let mut document = ThemeDocument::standard(
+        if alternate { "fixture-b" } else { "fixture-a" },
+        if alternate {
+            "Export fixture B"
+        } else {
+            "Export fixture A"
+        },
+    );
+    document.config.appearance = if alternate {
+        Appearance::Inherit
     } else {
-        "Export fixture A"
+        Appearance::Dark
+    };
+    document.config.accent_color = Some(if alternate {
+        AccentColor::Jade
+    } else {
+        AccentColor::Pink
+    });
+    document.config.panel_background = Some(if alternate {
+        PanelBackground::Solid
+    } else {
+        PanelBackground::Translucent
+    });
+    document.config.radius = Some(if alternate {
+        ThemeRadius::Full
+    } else {
+        ThemeRadius::Large
+    });
+    document.config.scaling = if alternate {
+        ThemeScaling::P90
+    } else {
+        ThemeScaling::P110
+    };
+    for mode in [ThemeMode::Light, ThemeMode::Dark] {
+        document.base_values_mut(mode).0.insert(
+            "consumer-note".into(),
+            "保留原始作者字符串 / not projected".into(),
+        );
     }
-    .into();
     let sans: Vec<_> = THEME_FONTS
         .iter()
         .filter(|font| font.slot() == FontSlot::Sans)
@@ -142,6 +173,9 @@ fn document(alternate: bool) -> ThemeDocument {
             ("shadow-offset-x", "2px"),
             ("shadow-offset-y", "4px"),
         ] {
+            if alternate && token == "radius" {
+                continue;
+            }
             values.insert(token.into(), value.into());
         }
         let varied = dark != alternate;
@@ -175,7 +209,7 @@ fn expectation(
     let theme = resolve(document, mode, &font_context(16., false))?;
     let primary = theme.colors["primary"];
     Ok(json!({
-        "document_id":document.id, "mode":mode.as_str(),
+        "document_id":document.id, "mode":mode.as_str(), "config":document.config,
         "radii_px":theme.radii_px, "spacing_px":theme.spacing_px, "layout_gap_px":theme.layout_gap_px,
         "font_size_px":theme.font_size_px, "letter_spacing_px":theme.letter_spacing_em*theme.font_size_px,
         "primary_rgba":[primary.r,primary.g,primary.b,primary.a],
@@ -308,7 +342,7 @@ fn generate(site: &Path) -> Result<(), Box<dyn Error>> {
             .join("crates/rustify-components/css/theme-v4.css")
             .to_string_lossy(),
     )?;
-    let tailwind = format!("@import \"tailwindcss/theme\";\n@import \"tailwindcss/utilities\" source(none);\n@import {sdk};\n");
+    let tailwind = format!("@layer theme, base, components, utilities;\n@import \"tailwindcss/theme\";\n@import \"tailwindcss/utilities\" source(none);\n@import {sdk};\n");
     let source = format!("\n@source inline(\"{CLASSES}\");\n");
     let mut links = Vec::new();
     for (profile_name, profile) in [
@@ -372,7 +406,7 @@ fn generate(site: &Path) -> Result<(), Box<dyn Error>> {
         &inputs.join("runtime-theme.css"),
         format!("{tailwind}@import {v4};\n{source}"),
     )?;
-    write(&site.join("fixture.css"),"html{font-size:16px}body{margin:1rem;font-family:system-ui,sans-serif}h1{font-size:1.25rem}h2{font-size:1rem}.samples{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem}.sample{padding:1rem;border:1px solid #888}.sample>*{margin-block:.5rem}#runtime-light,#runtime-dark{min-height:12rem}a{color:inherit}\n")?;
+    write(&site.join("fixture.css"),"body{margin:1rem;font-family:system-ui,sans-serif}h1{font-size:1.25rem}h2{font-size:1rem}.samples{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem}.sample{padding:1rem;border:1px solid #888}.sample>*{margin-block:.5rem}#runtime-light,#runtime-dark{min-height:12rem}a{color:inherit}\n")?;
     write(
         &site.join("rust.html"),
         page(
@@ -385,6 +419,7 @@ fn generate(site: &Path) -> Result<(), Box<dyn Error>> {
     links.push(
         "<li><a href=\"./rust.html\">Compiled Rust snippet and JSON / ThemeScope</a></li>".into(),
     );
+    links.push("<li><a href=\"./dom.html\">Default DOM SDK / original Rust and JSON, appearance and explicit preview</a></li>".into());
     write(&site.join("index.html"),page("Theme export consumers","fixture.css",&format!("<ul>{}</ul><p><a href=\"./expected.json\">SDK-resolved expectations</a> · <a href=\"./theme.json\">JSON</a> · <a href=\"./theme.rs\">Rust snippet</a></p>",links.join("")),false))?;
     println!("Generated SDK JSON, eight CSS profile/notation pages, exact Studio Rust snippet and {} font files at {}",font_resources.len(),site.display());
     Ok(())
@@ -407,6 +442,30 @@ fn copy_tree(source: &Path, destination: &Path) -> Result<(), Box<dyn Error>> {
 fn package(site: &Path, wasm_app: &Path, base: &str) -> Result<(), Box<dyn Error>> {
     let root = repo_root()?;
     copy_tree(wasm_app, site)?;
+    // cargo-makepad ships platform glue; local wasm-bindgen modules are a
+    // separate part of the consumer product, just as in xtask build-web.
+    let snippet_root = wasm_app
+        .ancestors()
+        .nth(3)
+        .ok_or("missing consumer target directory")?
+        .join("wasm32-unknown-unknown/release/snippets");
+    let glue = fs::read_to_string(site.join("bindgen.js"))?;
+    let mut snippets = BTreeSet::new();
+    for quote in ['\'', '"'] {
+        for tail in glue.split(&format!("{quote}./snippets/")).skip(1) {
+            let package = tail.split('/').next().ok_or("empty snippet package")?;
+            if package.is_empty() || package == "." || package == ".." || package.contains('\\') {
+                return Err("invalid snippet package".into());
+            }
+            snippets.insert(package);
+        }
+    }
+    for package in snippets {
+        copy_tree(
+            &snippet_root.join(package),
+            &site.join("snippets").join(package),
+        )?;
+    }
     let wasm = fs::read(site.join("theme_export_consumer.wasm"))?;
     let source = bridge::extract_bridge(&wasm)?;
     write(

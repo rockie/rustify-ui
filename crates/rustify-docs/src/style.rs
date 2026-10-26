@@ -33,7 +33,16 @@ const DOCS_LAYER: &str = include_str!("../assets/docs.css");
 /// The SDK layer's dark variant follows a scope's own `data-theme`. A
 /// document's root is the scope here, and in `system` mode it follows the
 /// reader's preference without a script.
-const SDK_DARK: &str = "@custom-variant dark (&:is([data-rustify-scope][data-theme=\"dark\"] *));";
+const SDK_DARK: &str = r#"@custom-variant dark {
+  &:where(:is([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer)[data-theme="dark"]) {
+      @slot;
+  }
+  @container style(--rustify-appearance: dark) {
+    &:where(:not(:is([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer)[data-theme])) {
+      @slot;
+    }
+  }
+}"#;
 const DOCS_DARK: &str = "@custom-variant dark {\n  &:where([data-theme=\"dark\"], [data-theme=\"dark\"] *) {\n    @slot;\n  }\n  @media (prefers-color-scheme: dark) {\n    &:where([data-theme=\"system\"], [data-theme=\"system\"] *) {\n      @slot;\n    }\n  }\n}";
 /// The SDK points Tailwind's scanner at its component sources; a site
 /// supplies its candidates itself.
@@ -439,6 +448,40 @@ mod tests {
         assert!(!sdk.contains("@source"));
         assert!(sdk.contains("[data-theme=\"system\"]"));
         assert!(!sdk.contains(SDK_DARK));
+        assert!(!sdk.contains("@container style(--rustify-appearance: dark)"));
+        assert_eq!(sdk.matches("@custom-variant dark").count(), 1);
+    }
+
+    #[test]
+    fn prose_styles_leave_island_ui_to_its_author_and_keep_markdown_opt_ins() {
+        let fragment = |suffix| {
+            format!("<h2 id='heading-{suffix}'>Title</h2><a id='link-{suffix}'>Link</a><p><code id='code-{suffix}'>Code</code></p><blockquote id='quote-{suffix}'>Quote</blockquote>")
+        };
+        let document = dom_query::Document::from(format!(
+            "<article class='rd-prose'>{}<section data-rustify-island='demo'>{}<span data-rustify-children>{}</span><div class='rd-prose'>{}</div></section></article>",
+            fragment("markdown"), fragment("ui"), fragment("children"), fragment("opt-in"),
+        ));
+        for (prefix, id) in [
+            (".rd-prose h2", "heading"),
+            (".rd-prose a", "link"),
+            (".rd-prose :not(pre) > code", "code"),
+            (".rd-prose blockquote", "quote"),
+        ] {
+            let selector = DOCS_LAYER
+                .lines()
+                .find(|line| line.starts_with(prefix))
+                .unwrap()
+                .trim_end_matches(" {");
+            let selected = document.select(selector);
+            assert_eq!(selected.length(), 3, "{selector}");
+            for suffix in ["markdown", "children", "opt-in"] {
+                assert_eq!(
+                    selected.filter(&format!("#{id}-{suffix}")).length(),
+                    1,
+                    "{selector}: {suffix}"
+                );
+            }
+        }
     }
 
     #[test]
@@ -497,7 +540,9 @@ mod tests {
                     .unwrap();
                 &css[open..=close]
             })
-            .filter(|block| block.contains("data-rustify-scope"))
+            // Components may add their own motion blocks. This assertion is
+            // about the document's blanket transition override.
+            .filter(|block| block.contains("transition-duration:0s!important"))
             .collect();
         assert_eq!(blocks.len(), 1, "{css}");
         let block = blocks[0];

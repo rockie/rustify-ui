@@ -246,7 +246,8 @@ mod ui {
         fn finish(self, control: Option<&str>, cancel: bool) {
             let Some(gesture) = self
                 .gesture
-                .get_value()
+                .try_get_value()
+                .flatten()
                 .filter(|gesture| control.is_none_or(|control| gesture.control == control))
             else {
                 return;
@@ -550,8 +551,8 @@ mod ui {
             if let Some(node) = plane.get_untracked() {
                 let bounds = node.get_bounding_client_rect();
                 if let Some((s, l)) = plane_channels(
-                    event.client_x() as f64 - bounds.left(),
-                    event.client_y() as f64 - bounds.top(),
+                    event.client_x() - bounds.left(),
+                    event.client_y() - bounds.top(),
                     bounds.width(),
                     bounds.height(),
                 ) {
@@ -652,7 +653,7 @@ mod ui {
                             on:compositionstart=move |_|composing.set_value(true)
                             on:compositionend=move |event|{composing.set_value(false);draft.update(|draft|{draft.value=event_target_value(&event);draft.dirty=true});}
                             on:blur=move |_|{
-                                let held=draft.get_untracked();
+                                let Some(held)=draft.try_get_untracked() else {return};
                                 submit();focused.set_value(false);
                                 if !held.dirty && parse_color(&held.value).is_ok() {
                                     let token=chosen.get_untracked();

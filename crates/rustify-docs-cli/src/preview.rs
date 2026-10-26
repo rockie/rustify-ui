@@ -339,7 +339,13 @@ mod tests {
     }
 
     fn site() -> (Site, PathBuf) {
-        let dir = std::env::temp_dir().join(format!("rustify-docs-preview-{}", std::process::id()));
+        use std::sync::atomic::{AtomicU64, Ordering};
+        static NEXT: AtomicU64 = AtomicU64::new(0);
+        let dir = std::env::temp_dir().join(format!(
+            "rustify-docs-preview-{}-{}",
+            std::process::id(),
+            NEXT.fetch_add(1, Ordering::Relaxed)
+        ));
         let _ = std::fs::remove_dir_all(&dir);
         std::fs::create_dir_all(dir.join("guide")).unwrap();
         std::fs::write(dir.join("index.html"), "home").unwrap();

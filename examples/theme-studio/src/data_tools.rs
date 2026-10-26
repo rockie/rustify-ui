@@ -2,8 +2,9 @@ use crate::persistence::{Envelope, SAVED_THEME_LIMIT};
 #[cfg(any(target_arch = "wasm32", test))]
 use rustify_ui::theme::THEME_INPUT_LIMIT;
 use rustify_ui::theme::{
-    export_css, export_json, import_css, import_json, ColorFormat, CssProfile, ResolveContext,
-    ThemeDiagnostic, ThemeDocument, ThemeError, ThemeMode,
+    export_css, export_json, export_json_v1_lossy, import_css, import_json, ColorFormat,
+    CssProfile, LegacyExportLoss, ResolveContext, ThemeDiagnostic, ThemeDocument, ThemeError,
+    ThemeMode,
 };
 use std::collections::BTreeSet;
 
@@ -25,6 +26,9 @@ pub enum ToolCommand {
     },
     Delete(String),
     ClearCache,
+    ReviewClearCache,
+    ReviewExternal,
+    ReviewConflict,
     LoadExternal,
     KeepCurrent,
     SaveConflictCopy {
@@ -42,6 +46,7 @@ struct Change {
 
 #[derive(Clone, Debug, PartialEq)]
 struct ImportPreview {
+    source_version: Option<u32>,
     base: ThemeDocument,
     document: ThemeDocument,
     changes: Vec<Change>,
@@ -126,6 +131,14 @@ fn review_import(
         _ => return Err(error("format", "choose JSON or CSS")),
     };
     Ok(ImportPreview {
+        source_version: if kind == "json" {
+            serde_json::from_str::<serde_json::Value>(input)
+                .ok()
+                .and_then(|value| value["schema_version"].as_u64())
+                .map(|value| value as u32)
+        } else {
+            None
+        },
         base: base.clone(),
         changes: changes(base, &imported.document),
         document: imported.document,
@@ -238,6 +251,7 @@ struct ExportArtifact {
     text: String,
     name: &'static str,
     mime: &'static str,
+    losses: Vec<LegacyExportLoss>,
 }
 
 fn export_artifact(
@@ -252,13 +266,24 @@ fn export_artifact(
             text: export_json(document, context)?,
             name: "theme.json",
             mime: "application/json",
+            losses: Vec::new(),
         }),
+        "json-v1" => {
+            let legacy = export_json_v1_lossy(document, context)?;
+            Ok(ExportArtifact {
+                text: legacy.json,
+                name: "theme-v1.json",
+                mime: "application/json",
+                losses: legacy.losses,
+            })
+        }
         "rust" => {
             export_json(document, context)?;
             Ok(ExportArtifact {
                 text: rust_snippet().into(),
                 name: "theme.rs",
                 mime: "text/plain",
+                losses: Vec::new(),
             })
         }
         "css" => {
@@ -278,6 +303,7 @@ fn export_artifact(
                 text: export_css(document, profile, context, format)?,
                 name: "theme.css",
                 mime: "text/css",
+                losses: Vec::new(),
             })
         }
         _ => Err(error("format", "choose JSON, CSS or Rust")),
@@ -287,20 +313,29 @@ fn export_artifact(
 fn rust_snippet() -> &'static str {
     r#"use leptos::prelude::*;
 use rustify_ui::{mount, AppHandle, MountConfig, ResolvedTheme, ThemeScope};
-use rustify_ui::theme::{font_context, import_json, resolve, ThemeError, ThemeMode};
+use rustify_ui::theme::{font_context, import_json, resolve, ResolveContext, ThemeError, ThemeMode};
 use std::sync::Arc;
 
 // Put the downloaded theme.json beside this source file.
 // Include sdk.css and then theme-v4.css in one Tailwind v4 build.
-// Copy the listed same-origin font files; CSS does not embed font bytes.
+// Copy the listed same-origin font files and their licenses; fonts are external.
+// Use the matching source SDK/CSS. The published 0.2.1 SDK and CLI reject v2.
 pub fn load_exported_theme(mode: ThemeMode) -> Result<Arc<ResolvedTheme>, ThemeError> {
-    let context = font_context(16., false);
-    let document = import_json(include_str!("theme.json"), &context)?.document;
-    Ok(Arc::new(resolve(&document, mode, &context)?))
+    load_exported_theme_with_context(mode, &font_context(16., false))
+}
+
+// Use your host's root rem size, motion preference and font context.
+pub fn load_exported_theme_with_context(
+    mode: ThemeMode,
+    context: &ResolveContext<'_>,
+) -> Result<Arc<ResolvedTheme>, ThemeError> {
+    let document = import_json(include_str!("theme.json"), context)?.document;
+    Ok(Arc::new(resolve(&document, mode, context)?))
 }
 
 // A GPU region receives this same Arc<ResolvedTheme> through its typed props.
-// Retain the returned AppHandle for as long as the preview is mounted.
+// Retain the returned AppHandle for as long as the application is mounted.
+// This ordinary provider honors the document's authored appearance.
 pub fn mount_exported_theme(
     container: leptos::web_sys::HtmlElement,
 ) -> Result<AppHandle, String> {
@@ -313,6 +348,28 @@ pub fn mount_exported_theme(
             <ThemeScope resolved=theme />
             <main class="bg-background text-foreground font-sans p-4 rounded-lg">
                 "Your themed application"
+            </main>
+        }
+    }).map_err(|error| error.to_string())
+}
+
+// To match Studio's explicit preview, pass its selected mode here. This does
+// not change the document's appearance or either mode's author values.
+// Set MountConfig.base to the deployment base, including any subpath.
+pub fn mount_exported_preview(
+    container: leptos::web_sys::HtmlElement,
+    config: MountConfig,
+    mode: ThemeMode,
+    context: &ResolveContext<'_>,
+) -> Result<AppHandle, String> {
+    let initial = load_exported_theme_with_context(mode, context)
+        .map_err(|error| error.to_string())?;
+    mount(container, config, move || {
+        let theme = RwSignal::new(initial);
+        view! {
+            <ThemeScope resolved=theme preview_mode=Signal::derive(move || mode) />
+            <main class="bg-background text-foreground font-sans p-4 rounded-lg">
+                "Your themed preview"
             </main>
         }
     }).map_err(|error| error.to_string())
@@ -364,6 +421,28 @@ mod browser {
         }
     }
 
+    fn legacy_loss_text(
+        loss: &LegacyExportLoss,
+        locale: Locale,
+        config: rustify_ui::ThemeConfig,
+    ) -> String {
+        if locale == Locale::English {
+            return loss.message.clone();
+        }
+        match loss.field {
+            "config.accent_color" => format!("品牌色族 {} 将被最终旧颜色替代，无法恢复色族身份。", config.accent_color.map(|color| color.as_str()).unwrap_or("Custom")),
+            "config.gray_color" => format!("中性色族 {} 将被压平，无法恢复 auto 配灰关系或色族选择。", config.gray_color.map(|color| color.as_str()).unwrap_or("Custom")),
+            "config.panel_background" => format!("面板选择 {} 将被压平；v1 没有独立的面板与表面角色。", config.panel_background.map(|panel| panel.as_str()).unwrap_or("Custom")),
+            "config.appearance" => format!("外观选择 {} 将丢失；v1 仅有两张模式表，没有模式选择意图。", config.appearance.as_str()),
+            "config.radius" => format!("圆角选择 {} 将变成一个有限旧半径；full、thumb 和组件圆角角色无法恢复。", config.radius.map(|radius| radius.as_str()).unwrap_or("Custom")),
+            "config.scaling" => format!("{}% 缩放将固化为旧度量，缩放意图与后续缩放行为丢失。", config.scaling.percent()),
+            "sources" => "已知作者值将变成最终值；base/config/overrides 来源、原始写法及请求的字体回退意图无法恢复。".into(),
+            "derived_roles" => "旧 49 token 表无法表示品牌/中性色阶及 alpha 阶、补充颜色角色、面板与表面、有限/full/thumb 圆角或组件间距、排版和控件尺度。重新导入 v1 无法还原完整 v2 组件外观。".into(),
+            "shadows" => "v1 的单组阴影参数无法表示缩放后的固定次级阴影层；其偏移、模糊和扩展量无法完全恢复。".into(),
+            _ => loss.message.clone(),
+        }
+    }
+
     fn download(artifact: &ExportArtifact, feedback: RwSignal<Feedback>, issue: RwSignal<String>) {
         match files::export(artifact.name, artifact.text.as_bytes(), artifact.mime) {
             Ok(()) => {
@@ -386,6 +465,8 @@ mod browser {
         #[prop(into)] corrupt: Signal<Option<String>>,
         #[prop(into)] conflict: Signal<bool>,
         #[prop(into)] status: Signal<String>,
+        #[prop(optional, into)] editor_epoch: Signal<u64>,
+        #[prop(optional, into)] preview_mode: Signal<ThemeMode>,
         on_command: impl Fn(ToolCommand) + Clone + Send + Sync + 'static,
     ) -> impl IntoView {
         let command = StoredValue::new(on_command);
@@ -394,6 +475,7 @@ mod browser {
         let import_kind = RwSignal::new("json".to_owned());
         let import_kind_open = RwSignal::new(false);
         let preview = RwSignal::new(None::<ImportPreview>);
+        let review_epoch = RwSignal::new(0u64);
         let issue = RwSignal::new(String::new());
         let reading = RwSignal::new(false);
         let read_generation = RwSignal::new(0u64);
@@ -432,6 +514,7 @@ mod browser {
         let review = move || {
             preview.set(None);
             issue.set(String::new());
+            review_epoch.set(editor_epoch.get_untracked());
             match review_import(
                 &source.get_untracked(),
                 &import_kind.get_untracked(),
@@ -510,6 +593,17 @@ mod browser {
             );
         };
         let apply = move || {
+            if review_epoch.get_untracked() != editor_epoch.get_untracked() {
+                issue.set(
+                    tr(
+                        locale.get(),
+                        "The editor changed after review. Review this import again.",
+                        "检查后编辑器已变化，请重新检查本次导入。",
+                    )
+                    .into(),
+                );
+                return;
+            }
             if let Some(candidate) = preview.get_untracked() {
                 match apply_import(
                     &candidate,
@@ -583,9 +677,9 @@ mod browser {
                         <p>{move || tr(locale.get(), "Stored data could not be restored. It is preserved; download it before clearing this site's cache.", "无法恢复缓存。原数据已保留；清除本站缓存前可以先下载。")}</p>
                         <div class="tools-actions">
                             <Button variant=ButtonVariant::Outline on_click=move || {
-                                if let Some(raw) = corrupt.get_untracked() { download(&ExportArtifact { text: raw, name: "theme-studio-cache.txt", mime: "text/plain" }, feedback, issue); }
+                                if let Some(raw) = corrupt.get_untracked() { download(&ExportArtifact { text: raw, name: "theme-studio-cache.txt", mime: "text/plain", losses: Vec::new() }, feedback, issue); }
                             } test_id="cache-download">{move || tr(locale.get(), "Download original data", "下载原数据")}</Button>
-                            <Button variant=ButtonVariant::Ghost on_click=move || { issue.set(String::new()); confirmation.set(Some(Confirmation::Clear)); } test_id="cache-clear">
+                            <Button variant=ButtonVariant::Ghost on_click=move || { issue.set(String::new()); command.with_value(|callback| callback(ToolCommand::ReviewClearCache)); confirmation.set(Some(Confirmation::Clear)); } test_id="cache-clear">
                                 {move || tr(locale.get(), "Clear this site's cache", "清除本站缓存")}
                             </Button>
                         </div>
@@ -595,13 +689,13 @@ mod browser {
                     <div class="tools-notice" data-testid="storage-conflict">
                         <p>{move || tr(locale.get(), "Another tab saved a different version. Your current draft is unchanged.", "另一个标签页保存了不同版本。当前草稿保持不变。")}</p>
                         <div class="tools-actions">
-                            <Button variant=ButtonVariant::Outline on_click=move || { issue.set(String::new()); confirmation.set(Some(Confirmation::LoadExternal)); } test_id="conflict-load">
+                            <Button variant=ButtonVariant::Outline on_click=move || { issue.set(String::new()); command.with_value(|callback| callback(ToolCommand::ReviewExternal)); confirmation.set(Some(Confirmation::LoadExternal)); } test_id="conflict-load">
                                 {move || tr(locale.get(), "Load other version", "载入另一版本")}
                             </Button>
-                            <Button variant=ButtonVariant::Ghost on_click=move || command.with_value(|callback| callback(ToolCommand::KeepCurrent)) test_id="conflict-keep">
+                            <Button variant=ButtonVariant::Ghost on_click=move || command.with_value(|callback| {callback(ToolCommand::ReviewConflict); callback(ToolCommand::KeepCurrent);}) test_id="conflict-keep">
                                 {move || tr(locale.get(), "Keep current draft", "保留当前草稿")}
                             </Button>
-                            <Button variant=ButtonVariant::Outline on_click=move || open_name(NameAction::ConflictCopy, String::new()) test_id="conflict-copy">
+                            <Button variant=ButtonVariant::Outline on_click=move || {command.with_value(|callback| callback(ToolCommand::ReviewConflict)); open_name(NameAction::ConflictCopy, String::new());} test_id="conflict-copy">
                                 {move || tr(locale.get(), "Save current as a copy", "将当前草稿另存为副本")}
                             </Button>
                         </div>
@@ -654,7 +748,9 @@ mod browser {
                             let has_diagnostics = !candidate.diagnostics.is_empty();
                             view! {
                             <div class="tools-stack" data-testid="import-preview">
+                                <p data-testid="import-version">{candidate.source_version.map(|version| format!("JSON v{version} → v2")).unwrap_or_else(|| "CSS → Custom v2".into())}</p>
                                 <p>{format!("{} · {} {}", candidate.document.name, candidate.changes.len(), tr(locale.get(), "changes", "项变更"))}</p>
+                                <p data-testid="import-config">{candidate.document.config.fields().map(|(key,value)| format!("{key}={value}")).join(" · ")}</p>
                                 <Show when=move || no_changes fallback=|| ()>
                                     <p>{move || tr(locale.get(), "No author values differ from the current theme.", "作者值与当前主题相同。")}</p>
                                 </Show>
@@ -690,10 +786,18 @@ mod browser {
                     <div class="tools-stack">
                         <div class="tools-form-row">
                             <label for="tools-export-kind">{move || tr(locale.get(), "Output", "导出格式")}</label>
-                            <Select id="tools-export-kind" value=export_kind options=Signal::derive(move || vec![SelectOption::new("json","Theme JSON"),SelectOption::new("css","Tailwind v4 CSS"),SelectOption::new("rust",tr(locale.get(),"Rust integration","Rust 接入片段"))])
+                            <Select id="tools-export-kind" value=export_kind options=Signal::derive(move || vec![SelectOption::new("json","Theme JSON v2"),SelectOption::new("json-v1",tr(locale.get(),"Compatible JSON v1 · lossy","兼容 JSON v1 · 有损")),SelectOption::new("css","Tailwind v4 CSS"),SelectOption::new("rust",tr(locale.get(),"Rust integration","Rust 接入片段"))])
                                 open=export_kind_open on_open_change=move |open| export_kind_open.set(open)
                                 on_change=move |kind| { export_kind.set(kind); feedback.set(Feedback::None); issue.set(String::new()); } test_id="export-kind" />
                         </div>
+                        <Show when=move || export_kind.get()=="json-v1" fallback=|| ()>
+                            <div class="tools-notice" data-testid="export-v1-losses" role="note">
+                                <p>{move || tr(locale.get(), "Review these losses before copying or downloading v1. It cannot restore the complete configured component appearance.", "复制或下载 v1 前请核对以下损失。v1 无法恢复配置后组件的完整外观。")}</p>
+                                <ul>{move || output.get().ok().map(|artifact| artifact.losses.into_iter().map(|loss| view! {
+                                    <li data-loss=loss.field>{legacy_loss_text(&loss,locale.get(),document.with(|document|document.config))}</li>
+                                }).collect_view())}</ul>
+                            </div>
+                        </Show>
                         <Show when=move || export_kind.get()=="css" fallback=|| ()>
                             <div class="tools-form-row">
                                 <label for="tools-export-profile">{move || tr(locale.get(), "CSS profile", "CSS 用途")}</label>
@@ -703,10 +807,11 @@ mod browser {
                                 <Select id="tools-export-color" value=color_format options=Signal::derive(|| vec![SelectOption::new("hex","HEX"),SelectOption::new("rgb","RGB"),SelectOption::new("hsl","HSL"),SelectOption::new("oklch","OKLCH")])
                                     open=color_format_open on_open_change=move |open| color_format_open.set(open) on_change=move |value| color_format.set(value) test_id="export-color-format" />
                             </div>
-                            <p class="tools-status">{move || tr(locale.get(), "CSS colors are mapped to sRGB. JSON retains author values. Fonts need the listed files; they are not embedded.", "CSS 颜色已映射到 sRGB。JSON 保留作者原值。字体需要列出的资源文件，未嵌入 CSS。")}</p>
+                            <p class="tools-status">{move || tr(locale.get(), "CSS contains both resolved modes in sRGB. Scoped CSS uses data-theme=dark; standard CSS uses .dark. Author configuration stays in JSON. Copy the external font files and their licenses.", "CSS 包含 sRGB 下两种模式的解析结果。局部 CSS 用 data-theme=dark 选深色；标准 CSS 用 .dark。作者配置保留在 JSON 中。请复制外部字体文件及其许可。")}</p>
                         </Show>
                         <Show when=move || export_kind.get()=="rust" fallback=|| ()>
-                            <p class="tools-status">{move || tr(locale.get(), "Download the matching theme.json beside theme.rs. Keep AppHandle alive and pass the same resolved snapshot to your GPU region.", "将配套 theme.json 放在 theme.rs 旁。保留 AppHandle，并把同一解析快照传给 GPU region。")}</p>
+                            <p class="tools-status">{move || tr(locale.get(), "Download the matching theme.json beside theme.rs. Use the matching source SDK and CSS; the published 0.2.1 SDK/CLI reject v2. Keep AppHandle alive. Fonts remain external.", "将配套 theme.json 放在 theme.rs 旁，使用匹配的源码 SDK 和 CSS；已发布的 0.2.1 SDK/CLI 不支持 v2。保留 AppHandle；字体仍使用外部资源。")}</p>
+                            <p class="tools-status" data-testid="export-preview-mode">{move || format!("{} ThemeMode::{:?}, font_context({}, {})",tr(locale.get(),"To match this preview, call mount_exported_preview with","匹配当前预览时，调用 mount_exported_preview 并传入"),preview_mode.get(),context.get().rem_px,context.get().reduce_motion)}</p>
                             <Button variant=ButtonVariant::Outline on_click=move || match export_artifact(&document.get_untracked(),&context.get_untracked(),"json","scoped","rgb") {
                                 Ok(artifact) => download(&artifact,feedback,issue), Err(error) => issue.set(error.to_string())
                             } test_id="export-matching-json">{move || tr(locale.get(), "Download matching JSON", "下载配套 JSON")}</Button>
@@ -806,8 +911,8 @@ mod browser {
                 <p>{move || match confirmation.get() {
                     Some(Confirmation::Overwrite{name,..}) => format!("{}: {name}. {}",tr(locale.get(),"Replace","替换"),tr(locale.get(),"Its id is kept; its author values will be replaced by the current theme.","保留原 id，作者值将被当前主题替换。")),
                     Some(Confirmation::Delete{name,..}) => format!("{}: {name}. {}",tr(locale.get(),"Delete","删除"),tr(locale.get(),"The current draft stays available.","当前草稿仍可继续使用。")),
-                    Some(Confirmation::LoadExternal) => tr(locale.get(),"This replaces your current draft with the stored version. Export your draft first if you need a backup.","此操作用缓存版本替换当前草稿。如需备份，请先导出草稿。").into(),
-                    _ => tr(locale.get(),"Only this site's Theme Studio storage key is removed. Download the original data first if you need it.","仅删除本站 Theme Studio 的存储键。如需原数据，请先下载。").into(),
+                    Some(Confirmation::LoadExternal) => tr(locale.get(),"Load the reviewed stored version and cancel all pending writes. Export the current draft first if you need a backup. A later external change requires a new decision.","载入已检查的缓存版本，并取消全部待写操作。如需备份当前草稿，请先导出；外部版本再次变化时须重新决策。").into(),
+                    _ => tr(locale.get(),"Remove only the reviewed v2 library and cancel all preceding pending writes. Keep the current draft, v1 source and original backups. Saving resumes only by explicit request.","只删除已检查的 v2 库，并取消此前全部待写操作。保留当前草稿、v1 原文与原始备份；之后须明确请求才恢复保存。").into(),
                 }}</p>
                 <div class="tools-actions">
                     <Button on_click=confirm test_id="theme-confirm">{move || tr(locale.get(),"Confirm","确认")}</Button>
@@ -829,7 +934,9 @@ mod tests {
     }
     fn envelope() -> Envelope {
         Envelope {
-            envelope_version: 1,
+            envelope_version: 2,
+            revision: 0,
+            migrated_from_v1: None,
             draft: base(),
             saved_themes: Vec::new(),
             preferences: Preferences::default(),
@@ -865,6 +972,7 @@ mod tests {
         )
         .unwrap();
         assert_eq!(preview.document, candidate);
+        assert_eq!(preview.source_version, Some(2));
         assert_eq!(preview.base, original);
         assert_eq!(preview.changes.len(), 4);
         assert!(preview
@@ -1007,7 +1115,48 @@ mod tests {
         let rust = export_artifact(&original, &context, "rust", "scoped", "rgb").unwrap();
         assert!(rust.text.contains("include_str!(\"theme.json\")"));
         assert!(rust.text.contains("<ThemeScope resolved=theme />"));
+        assert!(rust.text.contains("pub fn mount_exported_preview("));
+        assert!(rust
+            .text
+            .contains("preview_mode=Signal::derive(move || mode)"));
         assert!(!rust.text.contains("Theme {"));
         assert!(export_artifact(&original, &context, "css", "unknown", "rgb").is_err());
+    }
+
+    #[test]
+    fn compatible_v1_is_explicit_and_carries_the_reviewed_losses_with_its_bytes() {
+        let context = font_context(16., false);
+        let mut original = ThemeDocument::standard("configured", "Configured");
+        original.config.scaling = rustify_ui::ThemeScaling::P110;
+        original.config.appearance = rustify_ui::Appearance::Dark;
+        let full = export_artifact(&original, &context, "json", "scoped", "rgb").unwrap();
+        assert!(full.losses.is_empty());
+        assert_eq!(
+            import_json(&full.text, &context).unwrap().document,
+            original
+        );
+        let legacy = export_artifact(&original, &context, "json-v1", "scoped", "rgb").unwrap();
+        assert_eq!(legacy.name, "theme-v1.json");
+        let wire: serde_json::Value = serde_json::from_str(&legacy.text).unwrap();
+        assert_eq!(wire["schema_version"], 1);
+        assert!(wire.get("config").is_none());
+        for field in [
+            "config.accent_color",
+            "config.gray_color",
+            "config.appearance",
+            "config.radius",
+            "config.scaling",
+            "sources",
+            "derived_roles",
+        ] {
+            assert!(
+                legacy.losses.iter().any(|loss| loss.field == field),
+                "{field}"
+            );
+        }
+        let preview = review_import(&legacy.text, "json", &original, &context).unwrap();
+        assert_eq!(preview.source_version, Some(1));
+        assert_eq!(preview.document.config, rustify_ui::ThemeConfig::custom());
+        assert_eq!(original.config.scaling, rustify_ui::ThemeScaling::P110);
     }
 }

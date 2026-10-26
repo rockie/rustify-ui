@@ -1,12 +1,14 @@
 //! `mbx xtask catalog --write <path> [--check]`: the capability document,
 //! printed from the table the components are declared in.
 //!
-//! Two copies of eighteen rows drift, and the one that drifts is always the
-//! document, because nothing fails when it does. This is what fails.
+//! Keeps the reference inventory, public entries and compatibility categories
+//! in the same generated document without depending on local reference trees.
 
 use std::path::PathBuf;
 
-use rustify_components::catalog::{markdown, MARKER};
+use rustify_components::catalog::{
+    catalogue_markdown, CATALOG, COMPONENTS, MARKER, STABLE_REFERENCES,
+};
 
 pub fn run(args: &[String]) -> Result<(), String> {
     let root = crate::build::repo_root();
@@ -28,13 +30,13 @@ pub fn run(args: &[String]) -> Result<(), String> {
             target.display()
         )
     })?;
-    let table = markdown();
+    let table = catalogue_markdown();
     let (head, tail) = fences(&document, &target)?;
     let next = format!("{head}{MARKER}\n{table}{MARKER}{tail}");
 
     if check {
         return if document == next {
-            println!("catalog: no drift ({} rows)", table.lines().count() - 2);
+            println!("catalog: no drift ({} public entries, {} stable reference names, {} legacy categories)", COMPONENTS.len(), STABLE_REFERENCES.len(), CATALOG.len());
             Ok(())
         } else {
             Err(format!(
@@ -67,4 +69,27 @@ fn fences<'a>(document: &'a str, target: &std::path::Path) -> Result<(&'a str, &
         )
     })?;
     Ok((head, tail))
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn fences_preserve_authored_prose_around_the_complete_generated_catalogue() {
+        let document = format!("intro\n{MARKER}\nold table\n{MARKER}\ntail");
+        let (head, tail) = fences(&document, std::path::Path::new("guide.md")).unwrap();
+        let next = format!("{head}{MARKER}\n{}{MARKER}{tail}", catalogue_markdown());
+        assert!(next.starts_with("intro\n"));
+        assert!(next.ends_with("\ntail"));
+        assert!(next.contains("## Stable reference inventory"));
+        assert!(next.contains("## Legacy application categories"));
+        assert!(!next.contains("old table"));
+    }
+
+    #[test]
+    fn a_document_requires_both_generator_markers() {
+        assert!(fences("no marker", std::path::Path::new("guide.md")).is_err());
+        assert!(fences(MARKER, std::path::Path::new("guide.md")).is_err());
+    }
 }

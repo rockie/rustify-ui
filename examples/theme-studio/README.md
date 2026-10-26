@@ -39,7 +39,12 @@ allowing independent light/dark previews on the same page.
 ## Edit and exchange
 
 Choose or search a preset, change light/dark mode, and edit Colors, Typography
-or Other. Common fields such as fonts, radius and shadow geometry edit both
+or Other. Base configuration offers appearance, brand and neutral families,
+panel background, radius and scaling. Explicit overrides remain in place when
+configuration changes. The source display can remove one token's override;
+group reset removes only its responsibility keys in both modes. Preview mode
+selects the displayed mode without changing the document's author appearance.
+Common fields such as fonts, radius and shadow geometry edit both
 modes; mode differences from imported or reference themes are preserved until
 an explicit edit. DOM, GPU and compare views use the same resolved snapshot.
 The scenes are Cards, Dashboard, Application, Marketing, Mail, Typography and
@@ -55,20 +60,26 @@ to their editable tokens.
 
 Import accepts pasted text or UTF-8 files with .json/.css extensions up to
 256 KiB. Review the candidate's differences and diagnostics, then choose Apply
-or Cancel. A failed or canceled import leaves the existing theme intact. JSON requires both
+or Cancel. Changing the editor after review requires a new review before Apply.
+A failed or canceled import leaves the existing theme intact. JSON requires both
 complete modes and preserves author strings. CSS extracts supported theme
 declarations, fills missing fields from the current document and reports
 ignored rules; it is never executed or inserted into the page.
 
-Export JSON for a dynamic Rustify application. CSS offers standard
+Export complete JSON v2 to preserve configuration and override intent. The
+explicit **Compatible JSON v1 · lossy** choice lists the information that the
+older format loses before copying or downloading. CSS offers standard
 `:root`/`.dark` and Rustify scoped profiles, with HEX/RGB/HSL/OKLCH notation for
 resolved sRGB colors. The Rust snippet loads the matching JSON file, theme.json,
-resolves it with `font_context` and mounts ThemeScope. Copy reports the actual clipboard
+resolves it with `font_context` and mounts ThemeScope. An ordinary provider
+honors authored appearance; `mount_exported_preview` explicitly selects the
+mode shown in Studio. Copy reports the actual clipboard
 result; if access is refused, select the text or download it. A download reports
 that it started, rather than claiming the file was saved by the user.
 
 See the [SDK theme guide](../../docs/themes.md),
-[v1 document schema](../../docs/theme-document.schema.json) and
+[source API and storage migration guide](../../docs/dom-components-migration.md),
+[legacy v1 document schema](../../docs/theme-document.schema.json) and
 [independent export consumer](../../tests/theme-export/README.md). CSS exports
 reference font files; copy those resources and their
 [license notices](../../makepad/widgets/resources/FONT-LICENSES.md) with the
@@ -78,8 +89,9 @@ retained while preview diagnostics identify the bundled fallback.
 
 ## Local data and failures
 
-The only storage key is `rustify-ui.theme-studio.v1`. Its envelope contains
-`envelope_version: 1`, the complete `draft`, `saved_themes` and `preferences`.
+New writes use `rustify-ui.theme-studio.v2`. Its envelope contains
+`envelope_version: 2`, a monotonic `revision`, nullable `migrated_from_v1`,
+the complete `draft`, `saved_themes` and `preferences`.
 Preferences include `locale` (`en`/`zh`), favorites, scene, renderer
 (`dom`/`gpu`/`compare`), preview width
 (`responsive`/`desktop`/`tablet`/`mobile`) and mode (`light`/`dark`). The library
@@ -88,19 +100,40 @@ local actions and cannot duplicate another saved name. Overwrite and delete
 require explicit DOM confirmation; rename preserves the id, and copy creates
 a new id.
 
-Saving validates and serializes a full candidate before one `setItem`. Named
-library changes commit only after that write succeeds. Quota or denied-storage
-errors keep the old cache and current draft available for export. Draft edits
-remain in memory when persistence fails. No write occurs during an active
-gesture.
+Saving requires a secure context and Web Locks. One ordered writer validates
+each candidate, compares the last acknowledged storage bytes inside the lock,
+then writes and checks the result. Only adjacent, unissued draft autosaves
+merge; named actions keep their order. Waiting for a lock leaves editing,
+history and export available. An old acknowledgement confirms its captured
+snapshot and keeps newer edits, mode and preferences. Failure pauses the queue;
+retained actions are visible and require an explicit retry or cancellation.
+Without locks or storage access, editing and downloads remain available in
+memory. Gesture updates do not enqueue autosaves of intermediate values;
+commit or cancellation schedules the current committed draft.
+
+When v2 is absent, a valid `rustify-ui.theme-studio.v1` library is restored in
+memory. Review the complete candidate and explicitly confirm its upgrade.
+Cancelling keeps later edits, mode changes and preferences write-protected;
+reopening restores the original v1 data. Before committing v2, migration stores
+the exact original bytes under `rustify-ui.theme-studio.v1.backup.<sha256>` and
+reads them back. The v1 key remains unchanged. Original backups can be
+downloaded after reopening; an older window changing v1 produces a separate
+notice rather than replacing v2. Unknown versions or one invalid saved theme
+reject the complete library, and a bad v2 never falls back to v1 automatically.
 
 A malformed cache retains its original bytes for download and blocks automatic
-replacement. Explicit Clear local cache removes only this key and keeps the
-open draft. A real change from another same-origin tab prompts Load, Keep or
+replacement. Explicit Clear local cache compares the reviewed v2 bytes,
+cancels pending writes and keeps the open draft, v1 source and original
+backups. While removal waits, edits stay in memory and library actions are
+explicitly rejected. After removal, saving requires an explicit resume.
+Backup deletion is a separate confirmation that compares the reviewed key
+set. A real change from another same-origin tab prompts Load, Keep or
 Save copy; it does not replace the draft or silently merge changes. Load adopts
 the validated external envelope. Keep explicitly writes the current draft;
 Save copy preserves it under a new name in the external library. A failed write
-keeps the conflict unresolved.
+keeps the conflict unresolved. Another write after a decision requires a new
+decision. Keep and Save copy do not silently replay retained named actions;
+retry or cancel those actions separately.
 
 Runtime parsing errors include the field and message. Warnings explain font
 fallback, gamut clipping or mode differences. A GPU failure leaves the DOM

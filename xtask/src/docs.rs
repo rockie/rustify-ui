@@ -769,12 +769,13 @@ fn check_docs_graphs(root: &Path) -> Result<(), String> {
     Ok(())
 }
 
+// cssparser is a general syntax parser shared by component runtime prop
+// validation, so it no longer identifies a private content pipeline.
 const SITE_PIPELINE_PACKAGES: &[&str] = &[
     "pulldown-cmark",
     "syntect",
     "two-face",
     "lightningcss",
-    "cssparser",
     "html5gum",
     "html5ever",
     "dom_query",

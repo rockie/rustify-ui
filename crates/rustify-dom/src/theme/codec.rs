@@ -1,11 +1,14 @@
 //! Data-only theme exchange. Importing returns a candidate and never applies CSS.
 
 use super::{
-    format_color, parse_color, parse_font_stack, parse_length, ColorFormat, LengthRule,
-    ResolveContext, ResolvedTheme, ThemeDiagnostic, ThemeDocument, ThemeError, ThemeMode,
-    ThemeStyles, COLOR_TOKENS, VALUE_TOKENS,
+    parse_color, parse_font_stack, parse_length, ColorFormat, LengthRule, ResolveContext,
+    ResolvedTheme, ThemeDiagnostic, ThemeDocument, ThemeError, ThemeMode, ThemeStyles,
+    COLOR_TOKENS, VALUE_TOKENS,
 };
 use std::collections::BTreeMap;
+
+mod export;
+pub use export::{export_json_v1_lossy, LegacyExportLoss, LegacyJsonExport};
 
 pub const THEME_INPUT_LIMIT: usize = 256 * 1024;
 
@@ -176,6 +179,7 @@ pub fn export_css(
     context: &ResolveContext<'_>,
     color_format: ColorFormat,
 ) -> Result<String, ThemeError> {
+    check_document_size(document)?;
     let (themes, _) = validate(document, context)?;
     let scoped = profile == CssProfile::RustifyScoped;
     let light = if scoped {
@@ -191,11 +195,14 @@ pub fn export_css(
     } else {
         ".dark".into()
     };
-    let mut output = String::from("/* Resolved sRGB CSS. Original values and unknown tokens are preserved by Theme JSON.\n   Font files are referenced below; this stylesheet does not include their bytes. */\n");
+    let mut output = String::from("/* Resolved sRGB CSS: the first selector selects light mode; the second selects dark mode.\n   Original author intent and unknown strings are preserved only by Theme JSON.\n   Font files are external references, never embedded. Distribute their original licenses;\n   SDK font notices: makepad/widgets/resources/FONT-LICENSES.md. */\n");
     if scoped {
-        output.push_str("/* Import after SDK sdk.css in one Tailwind v4 input. Mark the static target with\n   data-rustify-theme-css equal to the JSON id. For ThemeScope use JSON instead. */\n");
+        output.push_str("/* Import after SDK sdk.css in one Tailwind v4 input. Mark the static target with\n   data-rustify-theme-css equal to the JSON id. data-theme=\"dark\" selects dark;\n   omit it for light. For ThemeScope and authored appearance use JSON instead. */\n");
     } else {
         output.push_str("@import \"tailwindcss\";\n");
+        output.push_str(
+            "/* :root selects light; .dark selects dark. Authored appearance is kept in JSON. */\n",
+        );
     }
     output.push_str(&format!("@custom-variant dark (&:is({dark} *));\n\n"));
     let mut font_faces = Vec::new();
@@ -212,6 +219,14 @@ pub fn export_css(
                 "/* Requested font: {requested}; resolved: {family}; resource: {resource}. */\n"
             ));
             if let Some(path) = &font.resource_path {
+                let scheme = path.trim_start().to_ascii_lowercase();
+                if path.chars().any(char::is_control)
+                    || ["data:", "javascript:", "vbscript:"]
+                        .iter()
+                        .any(|prefix| scheme.starts_with(prefix))
+                {
+                    return Err(ThemeError::new("fonts", "export only external font resource URLs, without control characters, embedded data or script schemes"));
+                }
                 let declaration = format!(
                     "@font-face {{ font-family: {}; src: url({}); font-display: swap; }}\n",
                     css_string(&font.family),
@@ -243,34 +258,8 @@ pub fn export_css(
     }
     for (theme, selector) in themes.iter().zip([&light, &dark]) {
         output.push_str(&format!("\n{selector} {{\n"));
-        for &token in COLOR_TOKENS {
-            output.push_str(&format!(
-                "  --{token}: {};\n",
-                format_color(theme.colors[token], color_format)
-            ));
-        }
-        for &token in VALUE_TOKENS {
-            output.push_str(&format!(
-                "  --{}: {};\n",
-                css_token(token, scoped),
-                theme.values.get(token)?
-            ));
-        }
-        for (property, value) in theme.properties() {
-            if property.starts_with("--rustify-shadow") {
-                continue;
-            }
-            if property.starts_with("--rustify-") && property != "--rustify-unit"
-                || property == "--motion-duration"
-            {
-                output.push_str(&format!("  {property}: {value};\n"));
-            }
-        }
-        for (property, value) in theme.shadow_properties(color_format) {
+        for (property, value) in export::css_properties(theme, scoped, context, color_format)? {
             output.push_str(&format!("  {property}: {value};\n"));
-        }
-        if scoped {
-            output.push_str(&format!("  --spacing: {}px;\n", theme.layout_gap_px));
         }
         output.push_str("}\n");
     }
@@ -741,7 +730,7 @@ fn selector_mode(selector: &str) -> Option<(ThemeMode, bool)> {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::theme::{resolve, Theme, ThemeMode};
+    use crate::theme::{format_color, resolve, Theme, ThemeMode};
 
     fn base() -> ThemeDocument {
         let mut document = ThemeDocument::from_legacy(Theme::light(), Theme::dark());
@@ -887,7 +876,7 @@ mod tests {
     }
 
     #[test]
-    fn css_profiles_round_trip_known_author_metrics_and_resolved_colors() {
+    fn css_profiles_round_trip_effective_metrics_fonts_and_colors() {
         let mut document = base();
         document
             .base
@@ -908,20 +897,23 @@ mod tests {
             )
             .unwrap();
             let imported = import_css(&css, &document, &ResolveContext::default()).unwrap();
-            assert_eq!(
-                imported.document.base.light.get("radius").unwrap(),
-                ".75rem"
-            );
-            assert_eq!(
-                imported.document.base.dark.get("font-serif").unwrap(),
-                "Georgia, serif"
-            );
-            assert!(crate::theme::resolve(
-                &imported.document,
-                ThemeMode::Dark,
-                &ResolveContext::default()
-            )
-            .is_ok());
+            for mode in [ThemeMode::Light, ThemeMode::Dark] {
+                let expected = resolve(&document, mode, &ResolveContext::default()).unwrap();
+                let actual = resolve(&imported.document, mode, &ResolveContext::default()).unwrap();
+                assert_eq!(actual.radius_px, expected.radius_px);
+                assert_eq!(actual.font_size_px, expected.font_size_px);
+                assert_eq!(actual.spacing_px, expected.spacing_px);
+                assert_eq!(actual.layout_gap_px, expected.layout_gap_px);
+                for (actual, expected) in actual.fonts.iter().zip(&expected.fonts) {
+                    assert_eq!(actual.family, expected.family);
+                }
+                for token in COLOR_TOKENS {
+                    assert_eq!(
+                        format_color(actual.colors[token], ColorFormat::Rgb),
+                        format_color(expected.colors[token], ColorFormat::Rgb)
+                    );
+                }
+            }
         }
     }
 
@@ -1118,5 +1110,41 @@ mod tests {
                 );
             }
         }
+    }
+
+    #[test]
+    fn v2_css_uses_scaled_resolved_metrics_and_formats_local_roles() {
+        let mut document = ThemeDocument::standard("export-v2", "Export v2");
+        document.config.scaling = super::super::ThemeScaling::P110;
+        document.config.radius = Some(super::super::ThemeRadius::Full);
+        let context = ResolveContext::default();
+        let theme = resolve(&document, ThemeMode::Light, &context).unwrap();
+        let css = export_css(
+            &document,
+            CssProfile::RustifyScoped,
+            &context,
+            ColorFormat::Hex,
+        )
+        .unwrap();
+        assert!(
+            css.contains(&format!("  --radius: {}px;", theme.radius_px)),
+            "{css}"
+        );
+        assert!(
+            css.contains(&format!("  --rustify-font-size: {}px;", theme.font_size_px)),
+            "{css}"
+        );
+        assert!(
+            css.contains(&format!("  --rustify-unit: {}px;", theme.spacing_px)),
+            "{css}"
+        );
+        assert!(
+            css.contains(&format!(
+                "  --rustify-brand-9: {};",
+                format_color(theme.brand.solid[8], ColorFormat::Hex)
+            )),
+            "{css}"
+        );
+        assert!(css.contains("--rustify-radius-full: 9999px;"), "{css}");
     }
 }

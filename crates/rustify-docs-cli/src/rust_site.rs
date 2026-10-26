@@ -1986,14 +1986,22 @@ impl InputLayout {
         files: &mut BTreeMap<PathBuf, Arc<[u8]>>,
         bindings: &mut BTreeMap<PathBuf, PathBuf>,
     ) -> Result<(), String> {
-        let canonical = fs::canonicalize(path)
-            .map_err(|error| format!("Rust build input is unreadable: {error}"))?;
+        let canonical = fs::canonicalize(path).map_err(|error| {
+            format!(
+                "Rust build input is unreadable at {}: {error}",
+                code_span(&path.to_string_lossy())
+            )
+        })?;
         bindings.insert(path.to_path_buf(), canonical.clone());
         if files.contains_key(&canonical) {
             return Ok(());
         }
-        let bytes = fs::read(&canonical)
-            .map_err(|error| format!("Rust build input is unreadable: {error}"))?;
+        let bytes = fs::read(&canonical).map_err(|error| {
+            format!(
+                "Rust build input is unreadable at {}: {error}",
+                code_span(&canonical.to_string_lossy())
+            )
+        })?;
         files.insert(canonical, Arc::from(bytes));
         Ok(())
     }
@@ -2931,7 +2939,8 @@ web = { path = "../web" }
             fs::write(&path, format!("changed {version}")).unwrap();
             assert_ne!(layout.compiled(&layout.capture().unwrap()).digest, before);
             fs::remove_file(&path).unwrap();
-            assert!(layout.capture().is_err());
+            let error = layout.capture().err().unwrap();
+            assert!(error.contains(path.to_str().unwrap()), "{error}");
             assert!(
                 layout.watch_plan().files.contains(&path),
                 "recovery watch was lost"

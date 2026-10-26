@@ -10,6 +10,7 @@ use crate::{
     },
     provider_fixture::ProviderFixture,
     scenes::{ScenePreview, SCENE_NAMES},
+    storage_controls::{StorageControls, TokenSource},
     theme_controls::{ThemeControls, ThemeDiagnostics},
 };
 use leptos::{
@@ -17,7 +18,10 @@ use leptos::{
     prelude::*,
     wasm_bindgen::{prelude::*, JsCast},
 };
-use rustify_components::{Button, ButtonSize, ButtonVariant, Menu, MenuItem, Select, SelectOption};
+use rustify_components::{
+    Button, ButtonSize, ButtonVariant, Menu, MenuItem, Select, SelectOption, ThemeOverrideCounts,
+    ThemePanel,
+};
 use rustify_ui::{
     mount,
     theme::{font_context, COMMON_TOKENS},
@@ -46,6 +50,9 @@ fn tool_command(state: StudioState, command: ToolCommand) {
         ToolCommand::Rename { id, name } => state.rename_named(id, name),
         ToolCommand::Delete(id) => state.delete_named(id),
         ToolCommand::ClearCache => state.clear_cache(),
+        ToolCommand::ReviewClearCache => state.review_clear_cache(),
+        ToolCommand::ReviewExternal => state.review_external(),
+        ToolCommand::ReviewConflict => state.review_conflict(),
         ToolCommand::LoadExternal => state.load_external(),
         ToolCommand::KeepCurrent => state.keep_current(),
         ToolCommand::SaveConflictCopy { name } => state.conflict_copy(name),
@@ -256,8 +263,14 @@ fn Editor(state: StudioState) -> impl IntoView {
                 <Button size=ButtonSize::One variant=ButtonVariant::Ghost disabled=Signal::derive(move || state.editor.with(|e| e.gesture_active() || (!e.is_modified() && state.patch.get().0.is_empty() && state.controls.get() == PreviewControls::default()))) on_click=move || state.reset() test_id="theme-reset">{move || state.tr("Reset", "重置")}</Button>
             </div>
             <p class="studio-modified" data-testid="theme-modified">{move || if state.editor.with(|e| e.is_modified()) { state.tr("Modified", "已修改") } else { state.tr("Matches preset", "与预设一致") }}</p>
-            <DataTools document=state.document() envelope=state.envelope locale=state.locale() context=Signal::derive(move || font_context(state.rem.get(), state.reduce_motion.get())) corrupt=state.corrupt conflict=Signal::derive(move || state.external.get().is_some()) status=status on_command=move |command| tool_command(state, command) />
+            <DataTools document=state.document() envelope=state.envelope locale=state.locale() context=Signal::derive(move || font_context(state.rem.get(), state.reduce_motion.get())) corrupt=state.corrupt conflict=Signal::derive(move || state.external.get().is_some()) status=status editor_epoch=state.editor_epoch preview_mode=state.mode() on_command=move |command| tool_command(state, command) />
+            <StorageControls state=state/>
             <PresetChooser state=state />
+            <ThemePanel config=Signal::derive(move || state.resolved().get().config)
+                overrides=Signal::derive(move || state.editor.with(|editor| ThemeOverrideCounts::from(&editor.document.overrides)))
+                on_change=move |patch| state.configure(patch) on_reset=move |group| state.clear_group(group)
+                locale=state.locale() class="studio-basic-config" test_id="studio-config"/>
+            <p class="tools-status" data-testid="preview-mode-label">{move || state.tr("Preview mode · separate from authored appearance", "预览模式 · 与作者外观配置分开")}</p>
             <div class="editor-mode">
                 <Button size=ButtonSize::One variant=ButtonVariant::Outline attr:aria-pressed=move || (state.mode().get() == ThemeMode::Light).to_string() on_click=move || state.set_mode(ThemeMode::Light) test_id="mode-light">{move || state.tr("Light", "浅色")}</Button>
                 <Button size=ButtonSize::One variant=ButtonVariant::Outline attr:aria-pressed=move || (state.mode().get() == ThemeMode::Dark).to_string() on_click=move || state.set_mode(ThemeMode::Dark) test_id="mode-dark">{move || state.tr("Dark", "深色")}</Button>
@@ -266,12 +279,14 @@ fn Editor(state: StudioState) -> impl IntoView {
                 <button type="button" role="tab" node_ref=colors_tab id="studio-editor-tab-colors" aria-controls="studio-editor-panel-colors" tabindex=move || if state.editor_tab.get() == "colors" {"0"} else {"-1"} aria-selected=move || (state.editor_tab.get() == "colors").to_string() on:click=move |_| state.editor_tab.set("colors".into()) data-testid="editor-colors">{move || state.tr("Colors", "颜色")}</button>
                 <button type="button" role="tab" node_ref=controls_tab id="studio-editor-tab-controls" aria-controls="studio-editor-panel-controls" tabindex=move || if state.editor_tab.get() == "controls" {"0"} else {"-1"} aria-selected=move || (state.editor_tab.get() == "controls").to_string() on:click=move |_| state.editor_tab.set("controls".into()) data-testid="editor-controls">{move || state.tr("Type & other", "字体与其他")}</button>
             </div>
+            <TokenSource state=state/>
             <div hidden=move || state.editor_tab.get() != "colors" role="tabpanel" id="studio-editor-panel-colors" aria-labelledby="studio-editor-tab-colors">
                 <For each=move || vec![state.reset_epoch.get()] key=|epoch| *epoch children=move |_| view! {
                 <ColorEditor values=state.values() baseline=state.baseline() locale=state.locale() selected=state.selected_token on_edit=move |token, value| { state.edit(&token, value); } on_begin=move || state.begin() on_update=move |token, value| state.update(token, value) on_commit=move || state.commit() on_cancel=move || state.cancel() />
                 } />
             </div>
-            <div hidden=move || state.editor_tab.get() != "controls" role="tabpanel" id="studio-editor-panel-controls" aria-labelledby="studio-editor-tab-controls">
+            <div hidden=move || state.editor_tab.get() != "controls" role="tabpanel" id="studio-editor-panel-controls" aria-labelledby="studio-editor-tab-controls"
+                on:focusin=move |event| {if let Some(element) = event.target().and_then(|target| target.dyn_into::<leptos::web_sys::Element>().ok()) {if let Some(id) = element.get_attribute("data-testid") {if let Some(token) = id.strip_prefix("edit-") {if rustify_ui::theme::VALUE_TOKENS.contains(&token) {state.selected_token.set(token.into());}}}}}>
                 <ThemeControls values=state.values() baseline=state.baseline() locale=state.locale() resolved=state.resolved() common_differences=common_differences active=Signal::derive(move || state.editor_tab.get() == "controls") on_edit=move |token, value| { state.edit(&token, value); } on_begin=move || state.begin() on_hsl=move |shift, scope| state.update_hsl(shift, scope) on_commit=move || state.commit() on_cancel=move || state.cancel() />
             </div>
             <p class="editor-error" role="status" data-testid="field-error">{move || state.error.get()}</p>
@@ -283,8 +298,8 @@ fn Editor(state: StudioState) -> impl IntoView {
             <p class="editor-note">{move || state.tr("Your theme stays inside the preview.", "主题仅作用于预览区域。")}</p>
         </div>
         <div class="studio-separator" role="separator" tabindex="0" aria-orientation="vertical" aria-label=move || state.tr("Resize editor", "调整编辑栏宽度") aria-valuemin="260" aria-valuemax="520" aria-valuenow=move || width.get() data-testid="editor-separator"
-            on:pointerdown=move |ev: PointerEvent| { if ev.button() != 0 { return; } ev.prevent_default(); drag.set_value(Some((ev.pointer_id(), ev.client_x() as f64, width.get_untracked()))); if let Some(target) = ev.current_target().and_then(|v| v.dyn_into::<leptos::web_sys::Element>().ok()) { let _ = target.set_pointer_capture(ev.pointer_id()); } }
-            on:pointermove=move |ev: PointerEvent| { if let Some((pointer, start, previous)) = drag.get_value() { if pointer == ev.pointer_id() { width.set((previous + ev.client_x() as f64 - start).clamp(260., 520.)); } } }
+            on:pointerdown=move |ev: PointerEvent| { if ev.button() != 0 { return; } ev.prevent_default(); drag.set_value(Some((ev.pointer_id(), ev.client_x(), width.get_untracked()))); if let Some(target) = ev.current_target().and_then(|v| v.dyn_into::<leptos::web_sys::Element>().ok()) { let _ = target.set_pointer_capture(ev.pointer_id()); } }
+            on:pointermove=move |ev: PointerEvent| { if let Some((pointer, start, previous)) = drag.get_value() { if pointer == ev.pointer_id() { width.set((previous + ev.client_x() - start).clamp(260., 520.)); } } }
             on:pointerup=move |_| drag.set_value(None) on:pointercancel=move |_| drag.set_value(None)
             on:keydown=move |ev| { let next = match ev.key().as_str() { "ArrowLeft" => width.get_untracked() - 10., "ArrowRight" => width.get_untracked() + 10., "Home" => 260., "End" => 520., _ => return }; ev.prevent_default(); width.set(next.clamp(260., 520.)); }
         ></div>
@@ -599,7 +614,10 @@ pub fn theme_studio_environment(id: u32, rem: f64, reduce_motion: bool) {
 pub fn theme_studio_snapshot(id: u32) -> String {
     STUDIOS.with(|studios| studios.borrow().get(&id).map(|studio| {
         let state = studio.state; let editor = state.editor.get_untracked(); let controls = state.controls.get_untracked();
-        serde_json::json!({ "document": editor.document, "mode": editor.mode, "document_revision": editor.revision,
+        let canonical = |document: &ThemeDocument| serde_json::json!({"schema_version":2,"id":document.id,"name":document.name,"base":document.base,"config":document.config,"overrides":document.overrides});
+        let storage = state.writer.with_value(|writer| serde_json::json!({"permission":format!("{:?}",writer.permission),"pending":writer.pending(),"active":writer.active(),"paused":writer.paused,"generation":writer.generation,"revision":writer.confirmed.revision,"outcomes":writer.outcomes,"acknowledged":writer.acknowledged.as_ref().map(|(epoch,document,preferences)|serde_json::json!({"epoch":epoch,"document":canonical(document),"preferences":preferences}))}));
+        serde_json::json!({ "document": canonical(&editor.document), "values":{"light":editor.values(ThemeMode::Light).map(|values|values.0).unwrap_or_default(),"dark":editor.values(ThemeMode::Dark).map(|values|values.0).unwrap_or_default()}, "mode": editor.mode, "document_revision": editor.revision,
+            "editor_epoch":state.editor_epoch.get_untracked(), "storage":storage,"checkpoint":canonical(editor.checkpoint_document()),
             "history": {"undo": editor.undo_len(), "redo": editor.redo_len(), "gesture": editor.gesture_active()}, "modified": editor.is_modified(), "resolve_count": editor.resolutions(),
             "sdk_resolve_count": rustify_ui::theme::resolution_count(), "publish_count": state.publish_count.get_untracked(), "error": state.error.get_untracked(), "storage_status": state.storage_status.get_untracked(), "preferences": state.envelope.get_untracked().preferences,
             "region_count": rustify_makepad::live_region_count(), "revision": state.frame.get_untracked().revision, "drawn_revision": state.drawn.get_untracked(), "samples": state.samples.get_untracked(), "timings": state.timings.get_untracked(), "gpu_state": format!("{:?}", state.gpu_state.get_untracked()),

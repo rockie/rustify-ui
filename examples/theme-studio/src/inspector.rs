@@ -187,11 +187,9 @@ mod ui {
                     if bounds[2] <= 0. || bounds[3] <= 0. {
                         return false;
                     }
-                    let x = (event.client_x() as f64 - bounds[0])
-                        * canvas_element.client_width() as f64
+                    let x = (event.client_x() - bounds[0]) * canvas_element.client_width() as f64
                         / bounds[2];
-                    let y = (event.client_y() as f64 - bounds[1])
-                        * canvas_element.client_height() as f64
+                    let y = (event.client_y() - bounds[1]) * canvas_element.client_height() as f64
                         / bounds[3];
                     let sample = state.samples.with_untracked(|samples| {
                         samples

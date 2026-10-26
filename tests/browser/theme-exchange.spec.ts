@@ -1,6 +1,6 @@
 import {test,expect,waitForReady} from "./support";
 import type {Page} from "@playwright/test";
-import {readFile,mkdir,writeFile} from "node:fs/promises";
+import {readFile} from "node:fs/promises";
 
 test.use({fresh:true});
 const state=(page:Page)=>page.evaluate(()=>window.__theme_studio.snapshot());
@@ -14,8 +14,10 @@ async function importSource(page:Page,source:string,kind="Theme JSON") {
 
 test("JSON review is atomic and cancel, invalid input and rejected code preserve the draft",async({page})=> {
   await waitForReady(page);const before=await state(page),candidate=structuredClone(before.document);
-  candidate.name="Imported 中文";candidate.styles.light.primary="oklch(0.72 0.25 35 / 0.7)";candidate.styles.dark.primary="#223344";candidate.styles.light["future-token"]="keep author text";
+  candidate.name="Imported 中文";candidate.config.accent_color="tomato";candidate.config.scaling=105;candidate.base.dark["future-base"]="keep base text";candidate.overrides.light.primary="oklch(0.72 0.25 35 / 0.7)";candidate.overrides.dark.primary="#223344";candidate.base.light["future-token"]="keep author text";
   await importSource(page,JSON.stringify(candidate));await expect(page.getByTestId("import-preview")).toContainText("future-token");
+  await expect(page.getByTestId("import-version")).toContainText("2");
+  await expect(page.getByTestId("import-config")).toContainText("accent_color");
   expect((await state(page)).document).toEqual(before.document);
   await page.getByTestId("import-cancel").click();expect((await state(page)).history).toEqual(before.history);
   await importSource(page,JSON.stringify(candidate));await page.getByTestId("import-apply").click();
@@ -32,12 +34,12 @@ test("JSON review is atomic and cancel, invalid input and rejected code preserve
   expect(requests).toEqual([]);
   await importSource(page,':root{--primary:rgb(12 34 56 / .5);--radius:0px;} .dark{--primary:#334455;}',"CSS");
   await expect(page.getByTestId("import-preview")).toContainText("radius");await page.getByTestId("import-apply").click();
-  expect((await state(page)).document.styles.light.primary).toBe("rgb(12 34 56 / .5)");expect((await state(page)).document.styles.dark.primary).toBe("#334455");
-  await mkdir("docs/validation/theme-studio/M5",{recursive:true});await writeFile("docs/validation/theme-studio/M5/import.json",JSON.stringify({before:before.document,json:candidate,afterCss:(await state(page)).document,maliciousRequests:requests},null,2));
+  expect((await state(page)).values.light.primary).toBe("rgb(12 34 56 / .5)");expect((await state(page)).values.dark.primary).toBe("#334455");
+  await test.info().attach("atomic-import", {body:JSON.stringify({before:before.document,json:candidate,afterCss:(await state(page)).document,maliciousRequests:requests},null,2),contentType:"application/json"});
 });
 
 test("file import validates before apply and wrong type or size cannot change the theme",async({page})=> {
-  await waitForReady(page);const before=(await state(page)).document,candidate=structuredClone(before);candidate.name="From file";candidate.styles.light.primary="#56789a";
+  await waitForReady(page);const before=(await state(page)).document,candidate=structuredClone(before);candidate.name="From file";candidate.overrides.light.primary="#56789a";
   await page.getByTestId("theme-import").click();
   async function file(name:string,buffer:Buffer) {
     const chooser=page.waitForEvent("filechooser");await page.getByTestId("import-file").click();await (await chooser).setFiles({name,mimeType:"application/json",buffer});
@@ -48,13 +50,34 @@ test("file import validates before apply and wrong type or size cannot change th
   await page.getByTestId("import-apply").click();expect((await state(page)).document).toEqual(candidate);
 });
 
+test("a reviewed import cannot apply after another controller change until explicitly reviewed again",async({page})=> {
+  await waitForReady(page);
+  const initial=await state(page),candidate=structuredClone(initial.document);
+  candidate.name="Reviewed candidate";candidate.overrides.dark.primary="#789abc";
+  await importSource(page,JSON.stringify(candidate));
+  // The modal excludes background clicks. This existing bridge injects a
+  // controller change while the user is reviewing, without applying imports
+  // through a private test shortcut.
+  await page.evaluate(()=>window.__theme_studio.edit("primary","#654321"));
+  const changed=await state(page);
+  await page.getByTestId("import-apply").click();
+  await expect(page.getByTestId("import-error")).toContainText("editor changed after review");
+  expect((await state(page)).document).toEqual(changed.document);
+  expect((await state(page)).history).toEqual(changed.history);
+  await page.getByTestId("import-review").click();
+  await page.getByTestId("import-apply").click();
+  expect((await state(page)).document).toEqual(candidate);
+  await page.getByTestId("theme-undo").click();
+  expect((await state(page)).document).toEqual(changed.document);
+});
+
 test("all CSS profiles and notations export without editing; JSON and Rust downloads match their previews",async({page})=> {
   await waitForReady(page);const before=await state(page);await page.getByTestId("theme-export").click();
-  const source=page.getByTestId("export-source");expect(JSON.parse(await source.inputValue())).toEqual(before.document);
+  const source=page.getByTestId("export-source");expect(JSON.parse(await source.inputValue())).toMatchObject({schema_version:2,id:before.document.id,name:before.document.name});
   async function downloadText() {
     const pending=page.waitForEvent("download",{timeout:5000});await page.getByTestId("export-download").click();const download=await pending;return {name:download.suggestedFilename(),text:await readFile((await download.path())!,"utf8")};
   }
-  const json=await downloadText();expect(JSON.parse(json.text)).toEqual(before.document);expect(json.name).toMatch(/\.json$/);
+  const json=await downloadText();expect(json.text).toBe(await source.inputValue());expect(json.name).toMatch(/\.json$/);
   await select(page,"export-kind","Tailwind v4 CSS");const outputs=[];
   for(const profile of ["Standard Tailwind v4","Rustify scoped"]) {
     await select(page,"export-profile",profile);
@@ -70,7 +93,7 @@ test("all CSS profiles and notations export without editing; JSON and Rust downl
 
 
   const after=await state(page);expect(after.document).toEqual(before.document);expect(after.history).toEqual(before.history);
-  await mkdir("docs/validation/theme-studio/M5",{recursive:true});await writeFile("docs/validation/theme-studio/M5/export.json",JSON.stringify(outputs,null,2));
+  await test.info().attach("exports", {body:JSON.stringify(outputs,null,2),contentType:"application/json"});
 });
 
 test("clipboard refusal offers selection and download without a false success message",async({page})=> {

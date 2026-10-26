@@ -84,8 +84,8 @@ test.describe("theme editing through the workbench", () => {
         const authored = "rgb(200 40 80 / .5)";
         await color(page, "primary", authored);
         const light = await drawn(page);
-        expect(light.document.styles.light.primary).toBe(authored);
-        expect(light.document.styles.dark.primary).toBe(initial.document.styles.dark.primary);
+        expect(light.values.light.primary).toBe(authored);
+        expect(light.values.dark.primary).toBe(initial.values.dark.primary);
         expect(light.document_revision).toBe(initial.document_revision + 1);
         expect(light.history.undo).toBe(initial.history.undo + 1);
         expect(light.resolve_count).toBe(initial.resolve_count + 2);
@@ -109,8 +109,8 @@ test.describe("theme editing through the workbench", () => {
         expect(sample(restored, "color.primary").rgba).toEqual(sample(light, "color.primary").rgba);
         await page.getByTestId("color-reset-primary").click();
         const reset = await drawn(page);
-        expect(reset.document.styles.light.primary).toBe(initial.document.styles.light.primary);
-        expect(reset.document.styles.dark.primary).toBe(initial.document.styles.dark.primary);
+        expect(reset.values.light.primary).toBe(initial.values.light.primary);
+        expect(reset.values.dark.primary).toBe(initial.values.dark.primary);
         await expect(page.getByTestId("color-reset-primary")).toBeDisabled();
         await page.getByTestId("theme-undo").click();
         expect((await drawn(page)).document).toEqual(light.document);
@@ -142,7 +142,7 @@ test.describe("theme editing through the workbench", () => {
         await expect(page.getByTestId("color-search-empty")).toBeVisible();
         await page.getByTestId("color-search-clear").click();
         await expect(page.getByTestId("color-token-primary")).toBeVisible();
-        expect((await snapshot(page)).document.styles.light.primary).toBe(authored);
+        expect((await snapshot(page)).values.light.primary).toBe(authored);
     });
 
     test("all fourteen common fields synchronize both modes and field reset restores the author value", async ({ page }) => {
@@ -163,10 +163,10 @@ test.describe("theme editing through the workbench", () => {
         await page.getByTestId("edit-reduce-motion").click();
         const state = await drawn(page);
         for (const token of ["font-sans", "font-serif", "font-mono", "reduce-motion", ...Object.keys(values)]) {
-            expect(state.document.styles.light[token], token).toBe(state.document.styles.dark[token]);
+            expect(state.values.light[token], token).toBe(state.values.dark[token]);
         }
-        expect(state.document.styles.light["font-sans"]).toBe('"Noto Serif", sans-serif');
-        expect(state.document.styles.light["reduce-motion"]).toBe("true");
+        expect(state.values.light["font-sans"]).toBe('"Noto Serif", sans-serif');
+        expect(state.values.light["reduce-motion"]).toBe("true");
         expect(sample(state, "font.sans.latin").font).toBe("Noto Serif");
         expect(sample(state, "font.sans.latin").letter_spacing_em).toBe(.08);
         expect(sample(state, "radius.lg").radius_px).toBe(10);
@@ -174,8 +174,8 @@ test.describe("theme editing through the workbench", () => {
         await expect.poll(async () => preview(page).getByTestId("preview-surface").evaluate(node => getComputedStyle(node).letterSpacing)).toBe("1.44px");
         await page.getByTestId("reset-radius").click();
         const reset = await drawn(page);
-        expect(reset.document.styles.light.radius).toBe(initial.document.styles.light.radius);
-        expect(reset.document.styles.dark.radius).toBe(initial.document.styles.light.radius);
+        expect(reset.values.light.radius).toBe(initial.values.light.radius);
+        expect(reset.values.dark.radius).toBe(initial.values.light.radius);
         await expect(page.getByTestId("reset-radius")).toBeDisabled();
         await sameRegion(page, mounted);
     });
@@ -213,8 +213,8 @@ test.describe("theme editing through the workbench", () => {
         const graphite = await drawn(page);
         expect(graphite.mode).toBe("dark");
         expect(graphite.document.id).toBe("graphite");
-        expect(graphite.document.styles.light["font-sans"]).toBe("Montserrat, sans-serif");
-        expect(graphite.document.styles.dark["font-sans"]).toBe("Inter, sans-serif");
+        expect(graphite.values.light["font-sans"]).toBe("Montserrat, sans-serif");
+        expect(graphite.values.dark["font-sans"]).toBe("Inter, sans-serif");
         await expect(page.getByTestId("theme-modified")).toHaveText("Matches preset");
         await page.getByTestId("preset-favorite").click();
         await expect(page.getByTestId("preset-favorite")).toHaveAttribute("aria-pressed", "true");
@@ -232,12 +232,12 @@ test.describe("theme editing through the workbench", () => {
         await expect(page.getByTestId("common-differences")).toContainText("font-sans");
         await field(page, "radius", "9px");
         let state = await drawn(page);
-        expect(state.document.styles.light["font-sans"]).toBe(graphite.document.styles.light["font-sans"]);
-        expect(state.document.styles.dark["font-sans"]).toBe(graphite.document.styles.dark["font-sans"]);
+        expect(state.values.light["font-sans"]).toBe(graphite.values.light["font-sans"]);
+        expect(state.values.dark["font-sans"]).toBe(graphite.values.dark["font-sans"]);
         await select(page, page.getByTestId("choose-font-sans"), "choose-font-sans", "Noto Sans");
         state = await drawn(page);
-        expect(state.document.styles.light["font-sans"]).toBe('"Noto Sans", sans-serif');
-        expect(state.document.styles.dark["font-sans"]).toBe(state.document.styles.light["font-sans"]);
+        expect(state.values.light["font-sans"]).toBe('"Noto Sans", sans-serif');
+        expect(state.values.dark["font-sans"]).toBe(state.values.light["font-sans"]);
         await expect(page.getByTestId("common-differences")).toHaveCount(0);
         await page.getByTestId("theme-reset").click();
         state = await drawn(page);
@@ -301,7 +301,7 @@ test.describe("theme editing through the workbench", () => {
         const dragged = await drawn(page);
         expect(dragged.history.gesture).toBe(false);
         expect(dragged.history.undo).toBe(initial.history.undo + 1);
-        expect(dragged.document.styles.dark.primary).toBe(initial.document.styles.dark.primary);
+        expect(dragged.values.dark.primary).toBe(initial.values.dark.primary);
         await page.getByTestId("theme-undo").click();
         expect((await drawn(page)).document).toEqual(initial.document);
         await plane.focus();
@@ -334,8 +334,8 @@ test.describe("theme editing through the workbench", () => {
         const shifted = await snapshot(page);
         expect(shifted.history.gesture).toBe(true);
         expect(shifted.history.undo).toBe(origin.history.undo);
-        expect(shifted.document.styles.light).not.toEqual(origin.document.styles.light);
-        expect(shifted.document.styles.dark).not.toEqual(origin.document.styles.dark);
+        expect(shifted.values.light).not.toEqual(origin.values.light);
+        expect(shifted.values.dark).not.toEqual(origin.values.dark);
         await page.getByTestId("hsl-hue").fill("90");
         await page.getByTestId("hsl-hue").fill("45");
         expect((await snapshot(page)).document).toEqual(shifted.document);
@@ -384,8 +384,8 @@ test.describe("theme editing through the workbench", () => {
         await page.getByTestId("hsl-lightness").fill("0.2");
         await page.getByTestId("hsl-apply").click();
         const adjusted = await drawn(page);
-        expect(adjusted.document.styles.light).toEqual(origin.document.styles.light);
-        expect(adjusted.document.styles.dark).not.toEqual(origin.document.styles.dark);
+        expect(adjusted.values.light).toEqual(origin.values.light);
+        expect(adjusted.values.dark).not.toEqual(origin.values.dark);
         for (const entry of adjusted.samples.filter((entry: any) => entry.id.startsWith("color."))) {
             expect(entry.rgba.every((channel: number) => Number.isFinite(channel))).toBe(true);
         }
@@ -425,9 +425,9 @@ test.describe("theme editing through the workbench", () => {
         const stack = '"Unbundled Local Font", sans-serif';
         await field(page, "font-sans", stack);
         const state = await drawn(page);
-        expect(state.document.styles.light.primary).toBe("oklch(0.7 0.4 30)");
-        expect(state.document.styles.light["font-sans"]).toBe(stack);
-        expect(state.document.styles.dark["font-sans"]).toBe(stack);
+        expect(state.values.light.primary).toBe("oklch(0.7 0.4 30)");
+        expect(state.values.light["font-sans"]).toBe(stack);
+        expect(state.values.dark["font-sans"]).toBe(stack);
         expect(sample(state, "font.sans.latin").font).toBe("IBM Plex Sans");
         await page.locator(".studio-diagnostics > summary").click();
         await expect(page.getByTestId("gamut-diagnostics")).toContainText("primary");

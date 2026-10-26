@@ -201,6 +201,25 @@ The default system pairs cool neutral surfaces with a clear blue action color an
 
 **The Scope Rule.** Keep editing chrome neutral; apply authored colors only inside the intended preview scope and its owned overlays.
 
+Configured source themes use the separate `ThemeDocument::standard` defaults:
+indigo brand, auto neutral pairing, translucent panel background, medium radius
+and 100% scaling. Legacy `Theme::light/dark` values and the frontmatter remain
+the compatibility palette; converting them with `from_legacy` selects Custom
+configuration. Brand families do not rename the existing semantic green
+`accent`. Explicit author overrides remain above generated configuration.
+Component-local color choices affect that component's roles and stop at its
+boundary. An omitted component color consumes the effective semantic pair.
+
+The root `ThemeScope` and nested `ThemeBoundary` retain a complete two-mode
+author source. Explicit local appearance can differ from the root; owned
+floating layers use the creating boundary's effective snapshot. Keep theme
+projection on the scope/boundary node and restore it on cleanup.
+
+Evidence: [configuration defaults and responsibility](crates/rustify-dom/src/theme/config.rs),
+[resolved geometry and roles](crates/rustify-dom/src/theme/resolve.rs),
+[provider ownership](crates/rustify-dom/src/theme/provider.rs),
+[local palette boundary](crates/rustify-components/css/button.css).
+
 Sources: [legacy defaults](crates/rustify-dom/src/theme.rs), [SDK fallback CSS](crates/rustify-components/css/sdk.css), [shell CSS](examples/theme-studio/app.css), [picker CSS](examples/theme-studio/color-editor.css). The sidecar's synthetic tonal ramps are panel visualization aids, not additional shipped color tokens.
 
 ## Typography
@@ -210,6 +229,17 @@ The shell uses IBM Plex Sans with a sans-serif fallback. Its hierarchy is delibe
 The legacy SDK's body size is separate from the shell body. The v4 legacy adapter supplies IBM Plex Sans for sans, `ui-serif, serif` for serif, and Liberation Mono for mono. Color strings use the monospace color-code role; import/export areas use the export-code role. User-authored font stacks and letter spacing govern the preview.
 
 [Bundled font declarations](web/theme-fonts.css) provide IBM Plex Sans, Noto Sans, Rustify WenKai, Noto Serif, Liberation Mono and Noto Color Emoji at normal 400, plus JetBrains Mono at 100–800; all use `font-display: swap`. Do not infer separately bundled semibold or italic files from CSS weights. [Theme document defaults](crates/rustify-dom/src/theme/document.rs) and resolved font diagnostics define the preview contract.
+
+The source DOM typography API keeps semantic elements separate from visual
+size: Text selects span/div/label/p; Heading selects h1–h6 with visual size 6
+by default. Text without size inherits. Blockquote, Code, Kbd, Em, Quote and
+Strong retain their native roles; use responsive size/weight/alignment/trim/wrap
+only on components that expose those fields. Truncation preserves the full
+text node and is an explicit, nonresponsive choice. Caller utilities can
+override the component layer without changing the underlying semantic element.
+
+Evidence: [typography props and native tags](crates/rustify-components/src/typography.rs),
+[typography rules](crates/rustify-components/css/typography.css).
 
 ## Layout
 
@@ -226,6 +256,33 @@ Editor padding is 24px 20px 48px with a 16px stack gap; preview padding is 24px 
 
 The preview width selector deliberately sets renderer widths to 1024px, 768px or 390px; these are simulated content widths, not responsive breakpoints. Automatic width follows the available space. Export/import dialogs use viewport-minus-2rem width and height limits, a 64rem maximum width and internal vertical scrolling ([data-tools.css](examples/theme-studio/data-tools.css)).
 
+### Reusable DOM layout
+
+Box/Flex/Grid retain div/span semantics independently of display. Container has
+an outer alignment layer and an inner content layer; size and width/height
+constraints belong to the content. Section remains a section with theme spacing.
+Inset consumes only the nearest container's declared padding. Reset decorates
+one typed native element and does not add a wrapper or reset the host page.
+
+`Responsive<T>` uses minimum widths 0/520/768/1024/1280/1640 CSS px. Sparse values
+inherit the nearest smaller choice; a missing initial value retains the
+component default. These are component breakpoints, independent of the Studio
+shell thresholds and Tailwind's same-named breakpoints.
+
+Theme space steps consume the already resolved `--rustify-space-N` snapshot;
+font sizes, line heights, finite radii and control metrics likewise scale once.
+Explicit CSS sizes and breakpoints retain their declared units and are not
+multiplied by theme scaling. Keep utilities above component defaults by declaring
+`@layer theme, base, components, utilities` before the Tailwind imports.
+Responsive geometry uses external SSR rules or the existing constructed
+stylesheet's CSSOM, with low-weight scoped selectors. Invalid values expose
+a prop diagnostic and leave component defaults usable.
+
+Evidence: [layout props](crates/rustify-components/src/layout.rs),
+[layout defaults](crates/rustify-components/css/layout.css),
+[responsive model](crates/rustify-components/src/responsive.rs),
+[style collector](crates/rustify-components/src/geometry.rs).
+
 ## Elevation & Depth
 
 The shell is flat, with white editing surfaces, a quiet workspace and dividers. It does not use decorative shadows to establish its columns. The inspector outlines content with a blue border and a white 1px outer stroke. SDK dialogs and Select popovers use the legacy `shadow-lg` geometry; the exact inherited geometry is recorded in the sidecar from [theme-v4.css](crates/rustify-components/css/theme-v4.css).
@@ -236,7 +293,13 @@ Scope transitions use 150ms by default and 0ms when reduced motion is requested 
 
 ## Shapes
 
-The frontmatter distinguishes legacy radii from the opt-in v4 scale. Legacy small/medium/large use `r−2`, `r`, `r+2`. The v4 resolver uses `max(0,r−4)`, `max(0,r−2)`, `r`, `r+4`; its default values are captured separately. Reusing a Tailwind radius class across these runtimes can therefore produce a different radius intentionally.
+The frontmatter distinguishes legacy radii from the Custom document scale.
+Legacy small/medium/large use `r−2`, `r`, `r+2`; Custom documents retain
+`max(0,r−4)`, `max(0,r−2)`, `r`, `r+4`. Configured source themes derive finite
+levels from 3/4/6/8/12/16px, the chosen radius factor and scaling. Full/thumb
+geometry remains separate; necessary radio, checkbox and switch shapes do not
+become ordinary rounded rectangles. Reusing a Tailwind radius class across
+these runtimes can produce a different radius intentionally.
 
 Shell search and color fields use gently curved corners; inspector panels are slightly softer. Color token/reset pairs join into one split control with rounded outer edges. Sliders and swatches retain their circular or compact geometry. Do not turn switch capsules or radio circles into ordinary rounded rectangles when changing theme radius.
 
@@ -246,9 +309,21 @@ Sources: [SDK radius utilities](crates/rustify-components/css/sdk.css), [v4 proj
 
 ### Buttons
 
-Compact and explicit. [Button](crates/rustify-components/src/button.rs) exposes primary/default, secondary, outline, ghost, accent, destructive and link variants. Frontmatter component samples describe default-sized legacy controls. Small controls use 2rem height, 0.75rem horizontal padding and 0.75rem text; the default uses 0.875rem text. Theme Studio uses small outline and ghost actions extensively.
+Compact and explicit. Source [Button](crates/rustify-components/src/button.rs)
+provides Classic/Solid/Soft/Surface/Outline/GhostOffset/Ghost, with Solid and
+size 2 as defaults. Its four reference control heights are 24/32/40/48px before
+theme scaling; Ghost keeps its own offset geometry. Frontmatter samples retain
+the previous legacy controls and do not define the new visual size scale.
+`IconButton` reuses the native button behavior and requires an accessible name.
 
-Filled hover states lower background alpha to 90% for primary/destructive and 80% for secondary/accent. Outline and ghost hover use muted fill; link hover adds an underline. Keyboard focus uses a 3px ring at half the scope ring color's opacity. Disabled controls use 50% opacity; native disabled controls cannot receive pointer actions, while `aria-disabled` controls retain their explanatory interaction contract. Invalid controls use the destructive border. The shell's pressed-state override adds its pale-blue selected fill and border.
+Variants select local palette or effective semantic role pairs; hover/active
+surfaces are defined in [button.css](crates/rustify-components/css/button.css).
+Keyboard focus keeps a 3px ring at half the scope ring color's opacity with a
+2px offset. Native disabled or loading controls refuse activation and native
+form defaults. Loading preserves the original label/width and adds a decorative
+spinner. `unavailable` keeps its explanatory, focusable request contract rather
+than becoming native disabled. Navigation remains a native Link, with matching,
+underline and typography choices rather than a button variant.
 
 ### Inputs / Fields
 

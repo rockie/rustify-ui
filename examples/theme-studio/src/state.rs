@@ -159,6 +159,47 @@ impl EditorState {
         self.apply(document, context, true)
     }
 
+    pub fn configure(
+        &mut self,
+        patch: rustify_ui::ThemeConfigPatch,
+        context: &ResolveContext<'_>,
+    ) -> Result<bool, ThemeError> {
+        self.require_idle()?;
+        let mut candidate = self.document.clone();
+        patch.apply(&mut candidate.config);
+        self.apply(candidate, context, true)
+    }
+
+    pub fn clear_group(
+        &mut self,
+        group: rustify_ui::ThemeConfigGroup,
+        context: &ResolveContext<'_>,
+    ) -> Result<bool, ThemeError> {
+        self.require_idle()?;
+        let mut candidate = self.document.clone();
+        for mode in [ThemeMode::Light, ThemeMode::Dark] {
+            for token in group.tokens() {
+                candidate.overrides.values_mut(mode).0.remove(*token);
+            }
+        }
+        self.apply(candidate, context, true)
+    }
+
+    pub fn clear_override(
+        &mut self,
+        token: &str,
+        context: &ResolveContext<'_>,
+    ) -> Result<bool, ThemeError> {
+        self.require_idle()?;
+        let mut candidate = self.document.clone();
+        for mode in [ThemeMode::Light, ThemeMode::Dark] {
+            if mode == self.mode || COMMON_TOKENS.contains(&token) {
+                candidate.overrides.values_mut(mode).0.remove(token);
+            }
+        }
+        self.apply(candidate, context, true)
+    }
+
     pub fn begin_gesture(&mut self) -> bool {
         if self.gesture.is_some() {
             return false;
@@ -405,7 +446,13 @@ impl EditorState {
         let mut candidate = self.document.clone();
         for mode in [ThemeMode::Light, ThemeMode::Dark] {
             if scope == TokenScope::Both || COMMON_TOKENS.contains(&token) || mode == self.mode {
-                if candidate.effective_values(mode)?.get(token)? == value {
+                if candidate
+                    .overrides
+                    .values(mode)
+                    .0
+                    .get(token)
+                    .is_some_and(|held| held == value)
+                {
                     continue;
                 }
                 candidate
@@ -478,6 +525,91 @@ mod tests {
         theme::{font_context, parse_color},
         Theme,
     };
+
+    #[test]
+    fn active_gesture_rejects_configuration_and_override_release_without_mutating_the_candidate() {
+        let context = font_context(16., false);
+        let mut editor = state();
+        editor.begin_gesture();
+        let before = editor.clone();
+        assert!(editor
+            .configure(
+                rustify_ui::ThemeConfigPatch {
+                    scaling: rustify_ui::ConfigChange::Set(rustify_ui::ThemeScaling::P110),
+                    ..Default::default()
+                },
+                &context
+            )
+            .is_err());
+        assert!(editor
+            .clear_group(rustify_ui::ThemeConfigGroup::Accent, &context)
+            .is_err());
+        assert!(editor.clear_override("primary", &context).is_err());
+        assert_eq!(editor, before);
+    }
+
+    #[test]
+    fn configuration_and_group_release_are_atomic_history_commands() {
+        let context = font_context(16., false);
+        let mut editor = state();
+        let original = editor.document.clone();
+        let patch = rustify_ui::ThemeConfigPatch {
+            accent_color: rustify_ui::ConfigChange::Set(Some(rustify_ui::AccentColor::Red)),
+            ..Default::default()
+        };
+        assert!(editor.configure(patch, &context).unwrap());
+        assert_eq!(editor.document.overrides, original.overrides);
+        assert!(!editor.configure(patch, &context).unwrap());
+        assert_eq!(editor.undo_len(), 1);
+        assert!(editor
+            .clear_group(rustify_ui::ThemeConfigGroup::Accent, &context)
+            .unwrap());
+        for mode in [ThemeMode::Light, ThemeMode::Dark] {
+            assert!(!editor
+                .document
+                .overrides
+                .values(mode)
+                .0
+                .contains_key("primary"));
+            assert!(editor
+                .document
+                .overrides
+                .values(mode)
+                .0
+                .contains_key("foreground"));
+        }
+        assert!(editor.undo());
+        assert_eq!(editor.document.overrides, original.overrides);
+        assert!(editor.undo());
+        assert_eq!(editor.document, original);
+    }
+
+    #[test]
+    fn explicitly_pinning_a_generated_value_changes_source_even_when_color_is_equal() {
+        let context = font_context(16., false);
+        let mut editor = EditorState::new(
+            ThemeDocument::standard("pin", "Pin"),
+            ThemeMode::Light,
+            &context,
+        )
+        .unwrap();
+        let primary = editor
+            .values(ThemeMode::Light)
+            .unwrap()
+            .get("primary")
+            .unwrap()
+            .to_owned();
+        assert!(editor.edit("primary", &primary, &context).unwrap());
+        assert_eq!(
+            editor.document.overrides.light.0.get("primary"),
+            Some(&primary)
+        );
+        assert!(!editor.edit("primary", &primary, &context).unwrap());
+        assert!(editor
+            .clear_group(rustify_ui::ThemeConfigGroup::Accent, &context)
+            .unwrap());
+        assert!(editor.edit("primary", &primary, &context).unwrap());
+    }
 
     #[test]
     fn restored_modified_draft_resets_to_the_selected_checkpoint_without_startup_history() {

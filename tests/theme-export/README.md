@@ -2,7 +2,9 @@
 
 This acceptance fixture consumes exports outside Theme Studio. Run its commands
 from the repository root with the existing `mbx`, Rust/WASM and Tailwind 4.1.13
-toolchain. It uses its own Cargo workspace, lockfile and target directory. Fetch
+toolchain. It uses its own Cargo workspace and lockfile. The GPU build uses its
+workspace target directory; the DOM build uses the repository's `build-dom`
+target directory. Fetch
 the locked dependencies once before the offline build; a cold cache also needs
 the repository's Makepad packaging tool dependencies:
 
@@ -17,16 +19,38 @@ The root build writes `tests/theme-export/target/site-root`, deployed at `/`.
 The child-path build writes `tests/theme-export/target/site-subpath`, deployed at
 `/tools/theme-export/`. `--css-only` generates the JSON, Rust snippet and compiled
 CSS fixtures without building or packaging the WASM consumer. It does not make
-`rust.html` runnable in a fresh output directory. All build commands inside the
-script are offline and locked.
+`rust.html` or `dom.html` runnable in a fresh output directory. `--dom-only`
+builds the CSS and default DOM consumer without the GPU consumer. All build
+commands inside the script are offline and locked.
 
 The generator calls the actual SDK `export_json`, `export_css`, `import_json`,
 `import_css` and `resolve`. It includes the current Studio [data_tools.rs](../../examples/theme-studio/src/data_tools.rs) source
 to obtain its `rust_snippet()` string, then writes that exact string and the JSON
-to `generated/theme.rs` and `generated/theme.json`. The minimal WASM binary
+to `generated/theme.rs` and `generated/theme.json`. The GPU WASM binary
 compiles those files, calls the snippet's `mount_exported_theme` for its light
-region, and calls its `load_exported_theme` with a second `ThemeScope` for dark.
+input, and calls its `load_exported_theme` with a second `ThemeScope` for dark.
 Both application handles stay alive until `theme_export_dispose()` is called.
+The first input deliberately has `appearance=dark`: ordinary providers honor
+that instruction even when the initial resolution requested light.
+
+The separate `dom` package depends on the SDK's default features, with no `gpu`.
+It compiles the same original snippet and JSON using ordinary Cargo/wasm-bindgen
+through `mbx xtask build-dom`. On `dom.html`, the original snippet and a separate
+JSON import both use ordinary providers; two further scopes explicitly preview
+light and dark. They compare the full projected property set, including the
+configured palette, scaled component geometry and authored overrides. The DOM
+script derives the deployment base from its own URL.
+
+Inspect its normal/build dependency graph independently of the GPU member:
+
+```sh
+mbx tree --locked --offline --manifest-path tests/theme-export/dom/Cargo.toml \
+  -p theme-export-dom --edges normal,build --target all
+```
+
+The DOM browser check also asserts no WebGL context, canvas, Makepad bridge or
+GPU wasm request. External font paths retain the existing SDK resource namespace;
+that path does not imply a Makepad runtime dependency.
 
 The consumer uses the repository's actual `cargo_makepad` packaging, loader,
 embedded Makepad bridge and bridge extractor. It has no alternate provider or
@@ -39,7 +63,9 @@ selected families, `@font-face` declarations and bundled font paths. It copies
 the actual resources and their existing license notices. The generated files do
 not embed font bytes or invent a separate face catalogue. Inputs deliberately
 vary font size, tracking, unit spacing, radius, translucent primary and shadow
-parameters between modes and documents.
+parameters between modes and documents. Both documents use v2 configuration:
+Pink/auto at 110% with dark appearance and explicit overrides, and Jade/auto at
+90% with full component radii. Unknown author strings remain in JSON only.
 
 ## Strict CSP preview
 
@@ -94,6 +120,7 @@ Open `index.html` for links, or use these paths beneath the chosen base:
 | `standard-{hex,rgb,hsl,oklch}.html` | Tailwind v4 `:root` plus `.dark` consumers |
 | `scoped-{hex,rgb,hsl,oklch}.html` | Two distinct documents, each with light and dark scope roots |
 | `rust.html` | Compiled Studio Rust snippet plus exported JSON, mounted with ThemeScope |
+| `dom.html` | Default DOM SDK, original Rust and JSON, ordinary appearance plus explicit light/dark previews |
 | `expected.json` | Actual SDK-resolved properties, metrics, color channels, shadow layers and font resources |
 
 CSS fixture roots have `data-testid="fixture-a-light"` and
@@ -119,7 +146,15 @@ state is `data-status="failed"` and reports the loader error. `runtime-light`
 contains the original snippet's `main`. The dark targets are
 `runtime-dark-main`, `runtime-sans`, `runtime-serif`, `runtime-mono` and
 `runtime-ring`. Both scope containers should have
-`data-rustify-theme-runtime="v4"` and their respective `data-theme` values.
+`data-rustify-theme-runtime="v4"`. Both ordinary providers select dark from the
+document's appearance; the explicit DOM previews select their requested modes.
+
+On `dom.html`, wait for `dom-status[data-status="ready"]`. The roots are
+`dom-snippet`, `dom-json`, `dom-preview-light` and `dom-preview-dark`.
+`__theme_export_dom.app.dom_export_dispose()` releases all four mounts. Browser
+evidence goes to `docs/validation/dom-components-p1/export`; set
+`RUSTIFY_THEME_EXPORT_OUT` to use another directory without overwriting older
+Theme Studio evidence.
 
 ## Local checks
 

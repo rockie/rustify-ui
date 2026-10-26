@@ -304,7 +304,7 @@ mod ui {
                     on:input:target=move |event| {if !composing.get_value() {draft.set(event.target().value());dirty.set(true);rejected.set(false);}}
                     on:compositionstart=move |_| composing.set_value(true)
                     on:compositionend:target=move |event| {composing.set_value(false);draft.set(event.target().value());dirty.set(true);rejected.set(false);}
-                    on:blur=move |_| {submit();focused.set_value(false);}
+                    on:blur=move |_| {if draft.try_get_untracked().is_none() {return;}submit();focused.set_value(false);}
                     on:keydown=move |event| {if event.is_composing() || composing.get_value() {return;} match event.key().as_str() {"Enter"=>{event.prevent_default();submit();},"Escape"=>{event.prevent_default();event.stop_propagation();restore();},_=>()}} />
                 <p id=hint_id class="text-xs text-muted-foreground">{move || hint(token,locale.get())}</p>
                 <p id=error_id class="text-xs text-destructive" role="status" data-testid=format!("error-{token}")>{move || if invalid.get() {tr(locale.get(), "Complete a valid value. The effective theme is unchanged.", "请填写完整的有效值。当前主题未改变。")} else {""}}</p>
@@ -599,7 +599,7 @@ mod ui {
         view! {
             <section node_ref=node class="space-y-4 border-t border-border pt-4" data-testid="batch-hsl" data-theme-group="other"
                 on:keydown=move |event| {if event.key()=="Escape" && !event.is_composing() {event.prevent_default();event.stop_propagation();batch.finish(false);}}
-                on:focusout=move |event| {if scope_open.get_untracked() {return;}let inside=event.related_target().and_then(|target|target.dyn_into::<leptos::web_sys::Node>().ok()).is_some_and(|target|node.get_untracked().is_some_and(|node|node.contains(Some(&target))));if !inside {batch.finish(true);}}>
+                on:focusout=move |event| {if scope_open.try_get_untracked().unwrap_or(true) {return;}let inside=event.related_target().and_then(|target|target.dyn_into::<leptos::web_sys::Node>().ok()).is_some_and(|target|node.get_untracked().is_some_and(|node|node.contains(Some(&target))));if !inside {batch.finish(true);}}>
                 <h2 class="font-semibold">{move || tr(locale.get(), "Batch HSL adjustment", "批量 HSL 调整")}</h2>
                 <p class="text-xs text-muted-foreground">{move || tr(locale.get(), "Preview updates are live. Apply, or leave this panel, to record one undo step. Escape or Cancel restores the starting theme.", "调整会实时预览。应用或离开此面板后记录一个撤销步骤。Esc 或取消可恢复起点主题。")}</p>
                 <label class="block space-y-2"><span>{move || tr(locale.get(), "Apply to", "作用范围")}</span>
@@ -667,7 +667,7 @@ mod ui {
                         on:compositionstart=move |_|composing.set_value(true)
                         on:compositionend:target=move |event| {composing.set_value(false);preview(event.target().value());}
                         on:input:target=move |event| {if !composing.get_value() {preview(event.target().value());}}
-                        on:blur=move |_| {focused.set_value(false);dirty.set_value(false);draft.set(value.get_untracked().to_string());}
+                        on:blur=move |_| {if draft.try_get_untracked().is_none() {return;}focused.set_value(false);dirty.set_value(false);draft.set(value.get_untracked().to_string());}
                         on:keydown=move |event| {if event.is_composing() ||composing.get_value() {return;}let multiplier=match event.key().as_str() {"ArrowUp"=>1.,"ArrowDown"=>-1.,"PageUp"=>10.,"PageDown"=>-10.,"Enter"=>{event.prevent_default();if let Some(value)=parse(&draft.get_untracked()) {batch.axis(axis,value);}return;},_=>return};event.prevent_default();let from=parse(&draft.get_untracked()).unwrap_or_else(||value.get_untracked());let next=rustify_components::number_field::stepped(from,step*multiplier).clamp(min,max);preview(next.to_string());} />
                 </div>
                 <label class="block" for=slider_id.clone()><span class="sr-only">{move ||axis.label(locale.get())}</span><Slider id=slider_id.clone() value=value min=min max=max step=step on_change=move |value|batch.axis(axis,value) test_id=format!("hsl-{}-slider",axis.name()) /></label>

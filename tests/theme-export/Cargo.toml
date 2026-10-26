@@ -1,6 +1,6 @@
 [workspace]
 resolver = "2"
-members = ["generator", "runtime"]
+members = ["generator", "runtime", "dom"]
 default-members = ["generator"]
 
 [profile.release]

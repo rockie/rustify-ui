@@ -4,16 +4,73 @@ use rustify_ui::theme::{ResolveContext, ThemeDocument, ThemeError, ThemeMode};
 use serde::{Deserialize, Serialize};
 use std::collections::BTreeSet;
 
-pub const STORAGE_KEY: &str = "rustify-ui.theme-studio.v1";
+pub const STORAGE_KEY: &str = "rustify-ui.theme-studio.v2";
+pub const LEGACY_KEY: &str = "rustify-ui.theme-studio.v1";
+pub const BACKUP_PREFIX: &str = "rustify-ui.theme-studio.v1.backup.";
+pub const LOCK_NAME: &str = "rustify-ui.theme-studio.storage";
 pub const SAVED_THEME_LIMIT: usize = 100;
 
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct Envelope {
     pub envelope_version: u32,
+    pub revision: u64,
+    pub migrated_from_v1: Option<MigrationSource>,
     pub draft: ThemeDocument,
     pub saved_themes: Vec<ThemeDocument>,
     pub preferences: Preferences,
+}
+
+#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct MigrationSource {
+    pub sha256: String,
+    pub backup_key: String,
+}
+
+pub fn digest(raw: &str) -> String {
+    use sha2::{Digest, Sha256};
+    format!("{:x}", Sha256::digest(raw.as_bytes()))
+}
+
+impl MigrationSource {
+    pub fn new(raw: &str) -> Self {
+        let sha256 = digest(raw);
+        Self {
+            backup_key: format!("{BACKUP_PREFIX}{sha256}"),
+            sha256,
+        }
+    }
+}
+
+#[derive(Deserialize)]
+#[serde(deny_unknown_fields)]
+struct LegacyEnvelope {
+    envelope_version: u32,
+    draft: ThemeDocument,
+    saved_themes: Vec<ThemeDocument>,
+    preferences: Preferences,
+}
+
+pub fn migrate_legacy(raw: &str, context: &ResolveContext<'_>) -> Result<Envelope, ThemeError> {
+    let old: LegacyEnvelope =
+        serde_json::from_str(raw).map_err(|error| self::error("legacy", error.to_string()))?;
+    if old.envelope_version != 1 {
+        return Err(error(
+            "envelope_version",
+            "unsupported legacy local data version",
+        ));
+    }
+    let candidate = Envelope {
+        envelope_version: 2,
+        revision: 0,
+        migrated_from_v1: Some(MigrationSource::new(raw)),
+        draft: old.draft,
+        saved_themes: old.saved_themes,
+        preferences: old.preferences,
+    };
+    validate(&candidate, context)?;
+    Ok(candidate)
 }
 
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
@@ -55,8 +112,19 @@ fn error(field: &str, message: impl Into<String>) -> ThemeError {
 }
 
 fn validate_metadata(envelope: &Envelope) -> Result<(), ThemeError> {
-    if envelope.envelope_version != 1 {
+    if envelope.envelope_version != 2 {
         return Err(error("envelope_version", "unsupported local data version"));
+    }
+    if let Some(source) = &envelope.migrated_from_v1 {
+        if source.sha256.len() != 64
+            || !source
+                .sha256
+                .bytes()
+                .all(|value| value.is_ascii_hexdigit() && !value.is_ascii_uppercase())
+            || source.backup_key != format!("{BACKUP_PREFIX}{}", source.sha256)
+        {
+            return Err(error("migrated_from_v1", "invalid backup identity"));
+        }
     }
     if envelope.saved_themes.len() > SAVED_THEME_LIMIT {
         return Err(error("saved_themes", "save at most 100 named themes"));
@@ -195,14 +263,13 @@ struct SavedValidation {
 }
 
 impl Autosave {
+    #[cfg(test)]
     pub fn serialize(
         &mut self,
         envelope: &Envelope,
         editor: &mut crate::state::EditorState,
         context: &ResolveContext<'_>,
     ) -> Result<String, ThemeError> {
-        validate_metadata(envelope)?;
-        envelope.draft.validate_identity()?;
         if envelope.draft != editor.document {
             return Err(error(
                 "draft",
@@ -210,6 +277,17 @@ impl Autosave {
             ));
         }
         let pair = editor.resolved_pair(context)?;
+        self.serialize_snapshot(envelope, &pair, context)
+    }
+
+    pub fn serialize_snapshot(
+        &mut self,
+        envelope: &Envelope,
+        pair: &[std::sync::Arc<rustify_ui::ResolvedTheme>; 2],
+        context: &ResolveContext<'_>,
+    ) -> Result<String, ThemeError> {
+        validate_metadata(envelope)?;
+        envelope.draft.validate_identity()?;
         for (mode, theme) in [ThemeMode::Light, ThemeMode::Dark].into_iter().zip(pair) {
             if theme.mode != mode
                 || theme.source.document() != &envelope.draft
@@ -260,19 +338,6 @@ impl Autosave {
         }
         serde_json::to_string(envelope).map_err(|value| error("envelope", value.to_string()))
     }
-
-    #[cfg(target_arch = "wasm32")]
-    pub fn save(
-        &mut self,
-        envelope: &Envelope,
-        editor: &mut crate::state::EditorState,
-        context: &ResolveContext<'_>,
-    ) -> Result<(), ThemeError> {
-        let raw = self.serialize(envelope, editor, context)?;
-        storage()?
-            .set_item(STORAGE_KEY, &raw)
-            .map_err(|value| storage_error("write", value))
-    }
 }
 
 impl Envelope {
@@ -307,20 +372,6 @@ impl Envelope {
         validate(&candidate, context)?;
         Ok(candidate)
     }
-    pub fn copy_theme(
-        &self,
-        source_id: &str,
-        new_id: &str,
-        new_name: &str,
-        context: &ResolveContext<'_>,
-    ) -> Result<Self, ThemeError> {
-        let source = self
-            .saved_themes
-            .iter()
-            .find(|theme| theme.id == source_id)
-            .ok_or_else(|| error("saved_themes.id", "saved theme does not exist"))?;
-        self.save_named(source, new_id, new_name, None, context)
-    }
     pub fn rename_theme(
         &self,
         id: &str,
@@ -354,48 +405,6 @@ impl Envelope {
     }
 }
 
-#[cfg(target_arch = "wasm32")]
-fn storage() -> Result<web_sys::Storage, ThemeError> {
-    web_sys::window()
-        .ok_or_else(|| error("storage", "browser window is unavailable"))?
-        .local_storage()
-        .map_err(|value| storage_error("access", value))?
-        .ok_or_else(|| error("storage", "localStorage is unavailable"))
-}
-
-#[cfg(target_arch = "wasm32")]
-fn storage_error(operation: &str, value: wasm_bindgen::JsValue) -> ThemeError {
-    error(
-        "storage",
-        format!("localStorage {operation} failed: {value:?}"),
-    )
-}
-
-#[cfg(target_arch = "wasm32")]
-pub fn load_storage(context: &ResolveContext<'_>) -> Result<LoadResult, ThemeError> {
-    let raw = storage()?
-        .get_item(STORAGE_KEY)
-        .map_err(|value| storage_error("read", value))?;
-    Ok(load(raw.as_deref(), context))
-}
-
-/// Writes once after complete validation. The caller commits its candidate only on success.
-#[cfg(target_arch = "wasm32")]
-pub fn save_storage(envelope: &Envelope, context: &ResolveContext<'_>) -> Result<(), ThemeError> {
-    let raw = serialize(envelope, context)?;
-    storage()?
-        .set_item(STORAGE_KEY, &raw)
-        .map_err(|value| storage_error("write", value))
-}
-
-/// Only an explicit user reset calls this; invalid cache loading never removes data.
-#[cfg(target_arch = "wasm32")]
-pub fn remove_storage() -> Result<(), ThemeError> {
-    storage()?
-        .remove_item(STORAGE_KEY)
-        .map_err(|value| storage_error("remove", value))
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -403,10 +412,118 @@ mod tests {
 
     fn base() -> Envelope {
         Envelope {
-            envelope_version: 1,
+            envelope_version: 2,
+            revision: 0,
+            migrated_from_v1: None,
             draft: ThemeDocument::from_legacy(Theme::light(), Theme::dark()),
             saved_themes: Vec::new(),
             preferences: Preferences::default(),
+        }
+    }
+
+    fn legacy_raw() -> String {
+        let document = base().draft;
+        let theme = serde_json::json!({
+            "schema_version": 1, "id": "old-draft", "name": "旧草稿",
+            "styles": {"light": document.effective_values(ThemeMode::Light).unwrap(), "dark": document.effective_values(ThemeMode::Dark).unwrap()}
+        });
+        let mut saved = theme.clone();
+        saved["id"] = serde_json::json!("old-saved");
+        saved["name"] = serde_json::json!("旧命名主题");
+        saved["styles"]["dark"]["future-token"] = serde_json::json!("untouched author text");
+        serde_json::to_string_pretty(&serde_json::json!({
+            "envelope_version": 1, "draft": theme, "saved_themes": [saved], "preferences": Preferences::default()
+        })).unwrap()
+    }
+
+    #[test]
+    fn legacy_conversion_restores_the_entire_library_and_binds_exact_original_bytes() {
+        let context = font_context(16., false);
+        let raw = legacy_raw();
+        let converted = migrate_legacy(&raw, &context).unwrap();
+        assert_eq!(converted.envelope_version, 2);
+        assert_eq!(converted.revision, 0);
+        assert_eq!(converted.saved_themes.len(), 1);
+        assert_eq!(converted.draft.id, "old-draft");
+        assert_eq!(converted.saved_themes[0].id, "old-saved");
+        assert_eq!(
+            converted.saved_themes[0]
+                .effective_values(ThemeMode::Dark)
+                .unwrap()
+                .get("future-token")
+                .unwrap(),
+            "untouched author text"
+        );
+        let source = converted.migrated_from_v1.unwrap();
+        assert_eq!(source.sha256.len(), 64);
+        assert_eq!(
+            source.backup_key,
+            format!("{BACKUP_PREFIX}{}", source.sha256)
+        );
+        assert_ne!(MigrationSource::new(&format!("{raw}\n")), source);
+        assert_eq!(
+            digest("abc"),
+            "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad"
+        );
+        assert!(matches!(
+            load(Some(&raw), &context),
+            LoadResult::Invalid { .. }
+        ));
+    }
+
+    #[test]
+    fn legacy_migration_rejects_one_bad_saved_theme_or_unknown_version_as_one_candidate() {
+        let context = font_context(16., false);
+        let valid: serde_json::Value = serde_json::from_str(&legacy_raw()).unwrap();
+        for (path, bad) in [
+            (vec!["envelope_version"], serde_json::json!(99)),
+            (
+                vec!["saved_themes", "0", "schema_version"],
+                serde_json::json!(99),
+            ),
+            (
+                vec!["saved_themes", "0", "styles", "dark", "primary"],
+                serde_json::json!("var(--unsafe)"),
+            ),
+        ] {
+            let mut value = valid.clone();
+            let mut target = &mut value;
+            for part in path {
+                target = if part == "0" {
+                    &mut target[0]
+                } else {
+                    &mut target[part]
+                };
+            }
+            *target = bad;
+            assert!(migrate_legacy(&serde_json::to_string(&value).unwrap(), &context).is_err());
+        }
+        assert!(migrate_legacy(&legacy_raw(), &context).is_ok());
+    }
+
+    #[test]
+    fn migration_metadata_rejects_unbound_or_noncanonical_backup_identity() {
+        let context = font_context(16., false);
+        let mut candidate = base();
+        let source = MigrationSource::new("original");
+        candidate.migrated_from_v1 = Some(source.clone());
+        assert!(serialize(&candidate, &context).is_ok());
+        for changed in [
+            MigrationSource {
+                sha256: source.sha256.to_ascii_uppercase(),
+                ..source.clone()
+            },
+            MigrationSource {
+                backup_key: "another-app".into(),
+                ..source.clone()
+            },
+            MigrationSource {
+                sha256: "a".repeat(63),
+                ..source
+            },
+        ] {
+            candidate.migrated_from_v1 = Some(changed);
+            assert!(serialize(&candidate, &context).is_err());
         }
     }
 
@@ -555,7 +672,7 @@ mod tests {
             .0
             .insert("primary".into(), "var(--x)".into());
         let mut wrong_version = base();
-        wrong_version.envelope_version = 2;
+        wrong_version.envelope_version = 99;
         for raw in [
             "{ broken json ".into(),
             "{}".into(),
@@ -581,7 +698,7 @@ mod tests {
         assert_eq!(saved.saved_themes[0].id, "local-a");
         assert_eq!(saved.saved_themes[0].name, "Alpha");
         let copied = saved
-            .copy_theme("local-a", "local-b", "Beta", &context)
+            .save_named(&saved.saved_themes[0], "local-b", "Beta", None, &context)
             .unwrap();
         assert_eq!(copied.saved_themes[0], saved.saved_themes[0]);
         assert_eq!(copied.saved_themes[1].base, saved.saved_themes[0].base);
@@ -628,7 +745,7 @@ mod tests {
             );
         }
         assert!(envelope
-            .copy_theme("local-a", "local-a", "Beta", &context)
+            .save_named(&envelope.saved_themes[0], "local-a", "Beta", None, &context)
             .is_err());
         assert!(envelope.rename_theme("missing", "Beta", &context).is_err());
         assert!(envelope.delete_theme("missing", &context).is_err());
@@ -711,7 +828,12 @@ mod tests {
             matches!(load(Some(&raw), &context), LoadResult::Invalid {raw: retained, ..} if retained == raw)
         );
         let mut value = serde_json::to_value(&original).unwrap();
-        value["draft"]["styles"]
+        let layer = if value["draft"].get("base").is_some() {
+            "base"
+        } else {
+            "styles"
+        };
+        value["draft"][layer]
             .as_object_mut()
             .unwrap()
             .remove("dark");

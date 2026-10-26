@@ -19,6 +19,12 @@ button,input,textarea {font:inherit;}
 .studio-modified {font-size:12px;color:#475467;}
 .studio-presets {display:flex;flex-direction:column;gap:10px;padding-top:16px;border-top:1px solid #eaecf0;}
 .studio-presets>p {font-size:12px;color:#475467;}
+.studio-basic-config,.studio-token-source,.studio-storage {padding-top:16px;border-top:1px solid #eaecf0;}
+.studio-token-source,.studio-storage {font-size:12px;overflow-wrap:anywhere;}
+.studio-storage summary {cursor:pointer;color:#475467;}
+.studio-storage summary:focus-visible {outline:3px solid #1570ef80;outline-offset:2px;}
+.studio-storage details,.studio-storage li {margin-top:8px;}
+.studio-storage textarea {width:100%;box-sizing:border-box;min-height:160px;}
 .studio-search {width:100%;box-sizing:border-box;border:1px solid #98a2b3;border-radius:6px;padding:8px 10px;background:#fff;color:#1d2939;font-size:13px;}
 .studio-search:focus-visible {outline:3px solid #1570ef80;outline-offset:2px;}
 .studio-layout button[aria-pressed="true"],.studio-editor-tabs button[aria-selected="true"] {background:#eff8ff;border-color:#84caff;color:#175cd3;}

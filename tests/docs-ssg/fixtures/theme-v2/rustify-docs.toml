@@ -1,0 +1,15 @@
+schema_version = 1
+
+[site]
+name = "Source v2 theme consumer"
+description = "Complete source-paired theme data consumed by static pages and one hydrated DOM example."
+lang = "en"
+url = "https://example.com/theme-v2/"
+base = "/theme-v2/"
+
+[rust]
+manifest = "Cargo.toml"
+registry = "src/lib.rs"
+
+[theme]
+document = "theme.json"

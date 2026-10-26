@@ -4,7 +4,16 @@ Rustify UI is an experimental Rust SDK for Leptos CSR applications in the browse
 
 Each task implements only the rendering path it needs. Work on both paths requires an explicit requirement or a concrete need for cooperation across DOM and GPU regions. Shared state and theme tokens do not require matching component sets or CSS support. A specific application use case has not yet been selected.
 
-This repository contains the SDK, DOM components, a Makepad fork and six runnable examples. The workspace is version `0.2.1`. Nine Docs/DOM/style packages are published on crates.io; the GPU SDK, Makepad bridge and examples remain Git-only. Use the [repository quick start](#quick-start) to build an example; use the [SDK quick start](docs/quickstart.md) to write a region or integrate the components into an application.
+This repository contains the SDK, DOM components, a Makepad fork and runnable examples. The workspace is version `0.2.1`. Nine Docs/DOM/style packages are published on crates.io; the GPU SDK, Makepad bridge and examples remain Git-only. Use the [repository quick start](#quick-start) to build an example; use the [SDK quick start](docs/quickstart.md) to write a region or integrate the components into an application.
+
+The current source checkout also includes script-free `rustify-colors`, configured
+two-mode theme documents (schema v2), native DOM layout/typography components and
+a controlled ThemePanel. These source changes are not part of the published
+0.2.1 API; the registry SDK and CLI still use schema v1. Use a matching source
+SDK, CSS and source CLI for v2. The [component catalogue](docs/components.md)
+separates supported fields from full reference coverage and the existing 24
+navigation categories; the [DOM migration guide](docs/dom-components-migration.md)
+records the API and CSS changes.
 
 ## Quick start
 
@@ -262,7 +271,9 @@ This preview uses single-threaded wasm and WebGL2. It provides no WebGPU backend
 | Path | Contents |
 | --- | --- |
 | [crates/rustify-ui](crates/rustify-ui/) | Public SDK: mounting, the runtime host and DOM loader, themes, routing, overlays, text, files, tasks, selection, and GPU regions with the `gpu` feature |
-| [crates/rustify-components](crates/rustify-components/) | DOM components, forms, workspace controls and Tailwind styles |
+| [crates/rustify-dom](crates/rustify-dom/) | DOM runtime and shared author-theme, state and action types |
+| [crates/rustify-components](crates/rustify-components/) | DOM components, typed layout/typography, forms, workspace controls and Tailwind styles |
+| [crates/rustify-colors](crates/rustify-colors/) | Source-only color tables and scoped sRGB/P3 assets without a UI runtime |
 | [crates/rustify-makepad](crates/rustify-makepad/) | Private Makepad integration and browser host |
 | [makepad](makepad/) | Checked-in Makepad fork and wasm build tooling |
 | [web](web/) | Instance loader and runtime styles of a GPU build (a DOM build's are in `crates/rustify-dom/web/`) |

@@ -1136,11 +1136,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "rustify-colors"
+version = "0.2.1"
+
+[[package]]
 name = "rustify-dom"
 version = "0.2.1"
 dependencies = [
  "js-sys",
  "leptos",
+ "rustify-colors",
  "send_wrapper",
  "serde",
  "serde_json",

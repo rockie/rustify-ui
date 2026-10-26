@@ -114,6 +114,10 @@ pub struct HelperRequest {
 
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(tag = "type", rename_all = "snake_case", deny_unknown_fields)]
+#[expect(
+    clippy::large_enum_variant,
+    reason = "One helper request carries one render batch; keep its public construction API without a separate allocation for the v2 theme environment"
+)]
 pub enum HelperOperation {
     Describe,
     Render {

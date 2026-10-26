@@ -1,31 +1,15 @@
-//! What each component category actually supports, in one table.
+//! Capability facts for the current source checkout.
 //!
-//! R18 asks a catalogue for eighteen categories with no blank support cell.
-//! All eighteen have a DOM component; what differs between them is what a GPU
-//! region can draw of one, and every row says which and why.
-//!
-//! Two more categories were added for the large loads. They are not R18's, and
-//! the count is no longer R18's count: a table of a hundred thousand rows and
-//! a tree over them are components in this crate, so they answer the same six
-//! questions as the rest rather than being described only in a plan.
-//!
-//! Four more came out of the editor example, once a second caller for each
-//! was in sight: a status message that goes away on its own, a number field
-//! and a colour field that keep a draft while they have focus, and a group of
-//! toggle buttons that can be a toolbar.
-//!
-//! Every entry answers the same six questions (properties, actions, theme,
-//! input, accessibility, environment), so a reader never has to guess whether
-//! a silence means "yes" or "nobody looked".
-//!
-//! The table lives here, in the crate that has the components, and the
-//! capability document is printed from it. Two copies would drift.
+//! [`CATALOG`] preserves the category table used by existing applications.
+//! [`COMPONENTS`], [`STABLE_REFERENCES`] and [`SUB_CAPABILITIES`] distinguish
+//! public Rust entries, complete upstream inventories and their remaining
+//! limits. Verification entries point to repeatable checks, not permanent
+//! browser or accessibility certification.
 
 use std::fmt::Write as _;
 
-/// The eighteen categories R18 names, the two the large loads added and the
-/// four the editor example gave up. The catalogue covers all of them; it does
-/// not implement all of them.
+/// The legacy navigation categories. Their count is not a component or
+/// public-symbol count; current entries are listed separately in [`COMPONENTS`].
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum Category {
     Button,
@@ -55,7 +39,7 @@ pub enum Category {
 }
 
 impl Category {
-    /// The name the catalogue prints, and the one the plan uses.
+    /// The stable name existing catalogue applications print.
     pub fn name(self) -> &'static str {
         match self {
             Self::Button => "button",
@@ -92,11 +76,11 @@ impl Category {
 /// the catalogue, not a state a component can be in.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum Support {
-    /// Implemented and covered by a test in this release.
+    /// Available under the listed contract, with a verification entry.
     Yes,
     /// Implemented, with a stated limit.
     Partial,
-    /// Not in this release.
+    /// No public implementation of the listed capability.
     No,
 }
 
@@ -150,7 +134,8 @@ pub struct Entry {
     pub input: Capability,
     /// Name, role, value, state and a keyboard path to the same result.
     pub accessibility: Capability,
-    /// Where it has been run: browser, strict CSP, and what it needs.
+    /// Runtime requirements and limits. Repeatable checks are listed on the
+    /// corresponding [`ComponentEntry`], rather than implying certification.
     pub environment: Capability,
 }
 
@@ -169,15 +154,14 @@ impl Entry {
 
     /// Whether a GPU region can draw this category at all.
     ///
-    /// The interesting split now that all eighteen have a DOM component: six
-    /// are drawn by a region as well, four partly, and the rest are DOM layers
-    /// anchored to a region rather than something drawn inside one.
+    /// This legacy category answer does not promise that a DOM component's
+    /// newer visual properties have matching region implementations.
     pub fn drawn_by_region(&self) -> bool {
         self.presentation.gpu != Support::No
     }
 }
 
-/// The catalogue. Twenty-four categories, every cell answered.
+/// The legacy category catalogue, retained for existing application navigation.
 pub const CATALOG: [Entry; 24] = [
     Entry {
         category: Category::Button,
@@ -186,12 +170,12 @@ pub const CATALOG: [Entry; 24] = [
             gpu: Support::Yes,
             across_regions: Support::Yes,
         },
-        properties: cap(Support::Yes, "label as children, variant, size, disabled; a disabled button leaves the tab order and calls nothing"),
+        properties: cap(Support::Yes, "DOM label, seven variants, responsive four-size scale, local color, loading and disabled; region buttons retain their own smaller property set"),
         actions: cap(Support::Yes, "click; the DOM and the region button call the same application action"),
-        theme: cap(Support::Yes, "seven variants and four sizes, all drawn from the scope's tokens"),
+        theme: cap(Support::Yes, "DOM visual choices consume scoped roles and geometry; this category does not promise matching region variants or size scales"),
         input: cap(Support::Yes, "pointer and Enter/Space, from either half"),
         accessibility: cap(Support::Yes, "a native button; the region's has a DOM control with the same name and action"),
-        environment: cap(Support::Yes, "macOS Chrome, strict CSP, WebGL2 region; no inline script or style"),
+        environment: cap(Support::Yes, "DOM native input and optional WebGL2 region; verification entries define browser coverage, with external rules or controlled CSSOM updates"),
     },
     Entry {
         category: Category::Label,
@@ -205,7 +189,7 @@ pub const CATALOG: [Entry; 24] = [
         theme: cap(Support::Yes, "foreground, at the size the scope's text token sets"),
         input: cap(Support::Yes, "selectable text in the DOM"),
         accessibility: cap(Support::Yes, "names the control it points at; a region's label is decoration and stays out of the tree"),
-        environment: cap(Support::Yes, "macOS Chrome, strict CSP; a region's text needs that region's font"),
+        environment: cap(Support::Yes, "browser entry with strict CSP; a region's text needs that region's font"),
     },
     Entry {
         category: Category::Link,
@@ -219,7 +203,7 @@ pub const CATALOG: [Entry; 24] = [
         theme: cap(Support::Yes, "primary and the focus ring"),
         input: cap(Support::Yes, "pointer and Enter, plus everything the browser gives a link"),
         accessibility: cap(Support::Yes, "a native anchor; the current one says so rather than only looking different"),
-        environment: cap(Support::Partial, "the current path comes from the application until the SDK router arrives in M4; a region reports a click and the application navigates, because a region never touches history (C-5)"),
+        environment: cap(Support::Partial, "CurrentPath is supplied by the application or router; the native DOM anchor navigates, while a region reports an action without touching browser history"),
     },
     Entry {
         category: Category::Icon,
@@ -275,7 +259,7 @@ pub const CATALOG: [Entry; 24] = [
         theme: cap(Support::Yes, "the box, its border and the mark, with the focus ring on the box"),
         input: cap(Support::Yes, "pointer and Space, from either half"),
         accessibility: cap(Support::Yes, "the browser's own checkbox under a drawn box, so the state and the keyboard stay the platform's"),
-        environment: cap(Support::Yes, "macOS Chrome, strict CSP, WebGL2 region"),
+        environment: cap(Support::Yes, "browser entry with strict CSP, WebGL2 region"),
     },
     Entry {
         category: Category::Radio,
@@ -289,7 +273,7 @@ pub const CATALOG: [Entry; 24] = [
         theme: cap(Support::Yes, "the disc, its ring and the dot"),
         input: cap(Support::Yes, "one tab stop for the group and the arrows within it, which is the browser's own behaviour"),
         accessibility: cap(Support::Yes, "role=radiogroup over native radios, each option named by its own label"),
-        environment: cap(Support::Yes, "macOS Chrome, strict CSP, WebGL2 region"),
+        environment: cap(Support::Yes, "browser entry with strict CSP, WebGL2 region"),
     },
     Entry {
         category: Category::Switch,
@@ -303,7 +287,7 @@ pub const CATALOG: [Entry; 24] = [
         theme: cap(Support::Yes, "the track in two colours and the knob"),
         input: cap(Support::Yes, "pointer and Enter/Space"),
         accessibility: cap(Support::Yes, "role=switch with aria-checked; the region's has a DOM control with the same name and state"),
-        environment: cap(Support::Yes, "macOS Chrome, strict CSP, WebGL2 region"),
+        environment: cap(Support::Yes, "browser entry with strict CSP, WebGL2 region"),
     },
     Entry {
         category: Category::Select,
@@ -331,7 +315,7 @@ pub const CATALOG: [Entry; 24] = [
         theme: cap(Support::Yes, "the track, the filled part and the knob"),
         input: cap(Support::Yes, "pointer drag and arrow keys, from either half"),
         accessibility: cap(Support::Yes, "a native range control; the region's has a DOM control with the same name and value"),
-        environment: cap(Support::Yes, "macOS Chrome, strict CSP, WebGL2 region"),
+        environment: cap(Support::Yes, "browser entry with strict CSP, WebGL2 region"),
     },
     Entry {
         category: Category::Progress,
@@ -373,7 +357,7 @@ pub const CATALOG: [Entry; 24] = [
         theme: cap(Support::Yes, "the layer surface and its text"),
         input: cap(Support::Yes, "hover and focus both open it; Escape closes the top layer only"),
         accessibility: cap(Support::Yes, "role=tooltip, attached to the control it describes rather than to a wrapper no reader announces"),
-        environment: cap(Support::Partial, "a region's tooltip is a DOM layer anchored to a rectangle inside it; a popup drawn in the canvas cannot leave it (F16)"),
+        environment: cap(Support::Partial, "a region's tooltip is a DOM layer anchored to a rectangle inside it; a popup drawn in the canvas cannot leave it"),
     },
     Entry {
         category: Category::Menu,
@@ -429,7 +413,7 @@ pub const CATALOG: [Entry; 24] = [
         theme: cap(Support::Yes, "the scrollbar takes the scope's border colour rather than the browser's"),
         input: cap(Support::Yes, "wheel, drag and the keyboard - it takes a tab stop, because a box only a mouse can scroll is unreachable without one"),
         accessibility: cap(Support::Yes, "role=group with a name, so a reader knows which box the keyboard landed in"),
-        environment: cap(Support::Partial, "a region's is makepad's own ScrollBars on a View; the boundary a wheel is handed back at is P2 M6"),
+        environment: cap(Support::Partial, "a region uses Makepad ScrollBars; DOM Boundary selects browser overscroll behavior, while a region answers wheel handling from its previous drawing report"),
     },
     Entry {
         category: Category::DataTable,
@@ -443,7 +427,7 @@ pub const CATALOG: [Entry; 24] = [
         theme: cap(Support::Yes, "border, muted header and the accent a selected row is drawn in"),
         input: cap(Support::Yes, "pointer, the arrows, PageUp/PageDown, Home/End and Ctrl+Home/End, Space to select and Enter or F2 to open"),
         accessibility: cap(Support::Yes, "role=grid with aria-rowcount over every row, not only the drawn ones; each row carries its real aria-rowindex and its business id, and one cell at a time takes the tab stop"),
-        environment: cap(Support::Partial, "macOS Chrome, strict CSP; no region draws a table - the GPU half of this load is the selection strip beside it - and the row elements are a pool, so a reader meets the rows on screen plus the overscan and reaches the rest by scrolling"),
+        environment: cap(Support::Partial, "browser entry with strict CSP; no region draws a table - the GPU half of this load is the selection strip beside it - and the row elements are a pool, so a reader meets the rows on screen plus the overscan and reaches the rest by scrolling"),
     },
     Entry {
         category: Category::Tree,
@@ -457,7 +441,7 @@ pub const CATALOG: [Entry; 24] = [
         theme: cap(Support::Yes, "accent for the chosen group and the scope's focus ring"),
         input: cap(Support::Yes, "pointer; the arrows walk what is showing, right opens a group and steps into it, left closes one and steps out of a child"),
         accessibility: cap(Support::Yes, "role=tree and role=treeitem with aria-expanded, aria-level and aria-selected; one tab stop for the whole tree"),
-        environment: cap(Support::Partial, "macOS Chrome, strict CSP, no inline script or style; no region draws a tree - a region takes the group a person chose as a projection, like any other value"),
+        environment: cap(Support::Partial, "browser entry with strict CSP, external rules or controlled CSSOM; no region draws a tree - a region takes the group a person chose as a projection, like any other value"),
     },
     Entry {
         category: Category::Toast,
@@ -471,7 +455,7 @@ pub const CATALOG: [Entry; 24] = [
         theme: cap(Support::Yes, "the popover surface, its border, and a coloured edge per tone; the tone changes how it looks and nothing else"),
         input: cap(Support::Yes, "the dismiss button, by pointer or keyboard; the message takes no focus and answers no Escape"),
         accessibility: cap(Support::Yes, "role=status with aria-live=polite, present while empty so a reader knows it before it speaks; the dismiss button is named in the scope's language"),
-        environment: cap(Support::Partial, "macOS Chrome, strict CSP; drawn in the scope's overlay plane but not a layer, so a modal does not make it inert; it shows over a region and no region draws one"),
+        environment: cap(Support::Partial, "browser entry with strict CSP; drawn in the scope's overlay plane but not a layer, so a modal does not make it inert; it shows over a region and no region draws one"),
     },
     Entry {
         category: Category::NumberField,
@@ -485,7 +469,7 @@ pub const CATALOG: [Entry; 24] = [
         theme: cap(Support::Yes, "the text field's tokens, with the destructive border while the draft is not a number"),
         input: cap(Support::Yes, "typing keeps a draft while the field has focus; Enter or leaving commits, Escape reverts, Up/Down ask for one step and Page Up/Page Down for ten"),
         accessibility: cap(Support::Yes, "role=spinbutton with aria-valuenow, aria-valuemin and aria-valuemax; aria-invalid while the draft does not parse"),
-        environment: cap(Support::Partial, "macOS Chrome, strict CSP; the draft is the one exception to controlled values and lives only inside the focused field; no region draws one - a region takes the number as a projection"),
+        environment: cap(Support::Partial, "browser entry with strict CSP; the draft is the one exception to controlled values and lives only inside the focused field; no region draws one - a region takes the number as a projection"),
     },
     Entry {
         category: Category::ColorField,
@@ -499,7 +483,7 @@ pub const CATALOG: [Entry; 24] = [
         theme: cap(Support::Yes, "the text field's tokens, and a swatch of the application's colour painted through the CSS object model"),
         input: cap(Support::Yes, "typing keeps a draft while the field has focus; Enter or leaving commits, Escape reverts"),
         accessibility: cap(Support::Yes, "a named text field with aria-invalid while the draft is not a colour; the swatch is decoration and stays out of the tree"),
-        environment: cap(Support::Partial, "macOS Chrome, strict CSP, no style attribute; no region draws one - a region takes the colour as a projection, like any other value"),
+        environment: cap(Support::Partial, "browser entry with strict CSP and controlled CSSOM color updates; no region draws one - a region takes the colour as a projection, like any other value"),
     },
     Entry {
         category: Category::ToggleGroup,
@@ -513,7 +497,7 @@ pub const CATALOG: [Entry; 24] = [
         theme: cap(Support::Yes, "the pressed face in the primary colour, the toolbar's bar and the focus ring"),
         input: cap(Support::Yes, "one tab stop for the group, the arrows and Home/End within it, wrapping and stepping over the unreachable; Enter and Space press"),
         accessibility: cap(Support::Yes, "role=group or role=toolbar with a name, each button aria-pressed"),
-        environment: cap(Support::Partial, "macOS Chrome, strict CSP; no region draws one - a region takes what is pressed as a projection, like any other value"),
+        environment: cap(Support::Partial, "browser entry with strict CSP; no region draws one - a region takes what is pressed as a projection, like any other value"),
     },
 ];
 
@@ -589,8 +573,6 @@ mod tests {
 
     #[test]
     fn every_category_appears_exactly_once() {
-        // R18's eighteen, the table and the tree the large loads added, and
-        // the four from the editor example.
         assert_eq!(CATALOG.len(), 24);
         assert_eq!(ALL.len(), CATALOG.len());
         for category in ALL {
@@ -622,8 +604,7 @@ mod tests {
     #[test]
     fn every_category_has_a_dom_component_and_a_way_to_reach_it() {
         // The DOM is where a control is named, focused and read, including the
-        // ones a region draws: R18 asks for eighteen, and eighteen that a
-        // keyboard cannot reach would not be eighteen.
+        // ones a region draws: the category still needs an accessible DOM path.
         for entry in &CATALOG {
             assert_ne!(
                 entry.presentation.dom,
@@ -740,5 +721,1118 @@ mod tests {
     fn a_category_can_be_looked_up() {
         assert_eq!(entry(Category::Slider).category, Category::Slider);
         assert_eq!(entry(Category::Tabs).presentation.gpu, Support::Partial);
+    }
+}
+
+/// A local reference snapshot. Versions identify the provided snapshots only.
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum ReferenceLibrary {
+    Themes,
+    Primitives,
+}
+impl ReferenceLibrary {
+    pub const ALL: [Self; 2] = [Self::Themes, Self::Primitives];
+    pub fn name(self) -> &'static str {
+        match self {
+            Self::Themes => "Themes 3.3.0",
+            Self::Primitives => "Primitives 1.8.1",
+        }
+    }
+    pub fn source(self) -> &'static str {
+        match self {
+            Self::Themes => "ref/themes-main/packages/radix-ui-themes/src/components/index.tsx",
+            Self::Primitives => "ref/primitives-main/packages/react/radix-ui/src/index.ts",
+        }
+    }
+}
+
+/// One stable runtime export in the fixed reference inventory.
+///
+/// Mapping a name to an entry does not imply complete upstream compatibility.
+/// Missing composition and behavior are recorded in [`SUB_CAPABILITIES`].
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub struct ReferenceEntry {
+    pub library: ReferenceLibrary,
+    pub name: &'static str,
+    pub component: Option<&'static str>,
+    pub support: Support,
+    pub limitation: &'static str,
+}
+
+/// A component, subcomponent, data surface or helper in the public Rust API.
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum ComponentKind {
+    Component,
+    Subcomponent,
+    Helper,
+    Data,
+}
+impl ComponentKind {
+    pub fn name(self) -> &'static str {
+        match self {
+            Self::Component => "component",
+            Self::Subcomponent => "subcomponent",
+            Self::Helper => "helper",
+            Self::Data => "data",
+        }
+    }
+}
+
+/// A source-backed public entry, with its supported field subset and checks.
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub struct ComponentEntry {
+    pub name: &'static str,
+    pub kind: ComponentKind,
+    pub public_path: &'static str,
+    pub source: &'static str,
+    pub support: Support,
+    pub presentation: Presentation,
+    pub fields: &'static [&'static str],
+    pub property_groups: &'static [&'static str],
+    pub limitation: &'static str,
+    pub verification: &'static [&'static str],
+}
+
+/// Fields shared only by components that explicitly opt into this group.
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub struct PropertyGroup {
+    pub name: &'static str,
+    pub fields: &'static [&'static str],
+    pub contract: &'static str,
+    pub verification: &'static [&'static str],
+}
+
+/// A separately tracked behavior or composition boundary.
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub struct SubCapability {
+    pub name: &'static str,
+    pub component: &'static str,
+    pub support: Support,
+    pub public_path: Option<&'static str>,
+    pub limitation: &'static str,
+    pub verification: &'static [&'static str],
+}
+
+/// A non-stable reference export, excluded from stable and implementation counts.
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub struct Candidate {
+    pub library: ReferenceLibrary,
+    pub name: &'static str,
+    pub source: &'static str,
+    pub limitation: &'static str,
+}
+
+const DOM_ONLY: Presentation = Presentation {
+    dom: Support::Yes,
+    gpu: Support::No,
+    across_regions: Support::No,
+};
+const PROJECTED: Presentation = Presentation {
+    dom: Support::Yes,
+    gpu: Support::No,
+    across_regions: Support::Partial,
+};
+const BUTTON_CHECKS: &[&str] = &[
+    "crates/rustify-components/src/button.rs",
+    "crates/rustify-components/src/icon_button.rs",
+    "tests/browser/dom-buttons.spec.ts",
+];
+const LAYOUT_CHECKS: &[&str] = &[
+    "crates/rustify-components/src/layout.rs",
+    "crates/rustify-components/src/responsive.rs",
+    "tests/browser/dom-layout.spec.ts",
+];
+const TYPE_CHECKS: &[&str] = &[
+    "crates/rustify-components/src/typography.rs",
+    "tests/browser/dom-layout.spec.ts",
+];
+const LEGACY_CHECKS: &[&str] = &[
+    "examples/component-catalog/src/main.rs",
+    "tests/browser/m6-components.spec.ts",
+    "tests/browser/catalog-inputs.spec.ts",
+];
+const THEME_CHECKS: &[&str] = &[
+    "crates/rustify-dom/src/theme/author_tests.rs",
+    "examples/component-catalog/src/theme_fixture.rs",
+    "tests/browser/theme-compat.spec.ts",
+];
+
+/// Complete field groups used by the listed source APIs.
+pub const PROPERTY_GROUPS: &[PropertyGroup] = &[
+    PropertyGroup { name: "Element", fields: &["class", "test_id", "children"], contract: "Native attributes use Leptos passthrough; caller utilities retain precedence.", verification: LAYOUT_CHECKS },
+    PropertyGroup { name: "Margin", fields: &["m", "mx", "my", "mt", "mr", "mb", "ml"], contract: "Responsive theme steps -9..9 or validated CSS lengths; axes and edges take precedence.", verification: LAYOUT_CHECKS },
+    PropertyGroup { name: "Padding", fields: &["p", "px", "py", "pt", "pr", "pb", "pl"], contract: "Responsive theme steps 0..9 or validated nonnegative CSS lengths; records nearest inset padding.", verification: LAYOUT_CHECKS },
+    PropertyGroup { name: "Gap", fields: &["gap", "gap_x", "gap_y"], contract: "Responsive theme steps 0..9 or validated CSS gap values; axis values take precedence.", verification: LAYOUT_CHECKS },
+    PropertyGroup { name: "Layout", fields: &["padding", "width", "min_width", "max_width", "height", "min_height", "max_height", "position", "inset", "top", "right", "bottom", "left", "overflow", "overflow_x", "overflow_y", "flex_basis", "flex_grow", "flex_shrink", "grid_area", "grid_column", "grid_column_start", "grid_column_end", "grid_row", "grid_row_start", "grid_row_end", "align_self", "justify_self"], contract: "Sparse responsive fields; padding uses Padding. CSS is validated identically for SSR/CSR; explicit CSS sizes are not theme-scaled.", verification: LAYOUT_CHECKS },
+    PropertyGroup { name: "InsetPadding", fields: &["p", "px", "py", "pt", "pr", "pb", "pl"], contract: "Responsive Current or Zero only; this group does not accept arbitrary negative margins or Layout.", verification: LAYOUT_CHECKS },
+    PropertyGroup { name: "ButtonVisual", fields: &["variant", "size", "color", "color_role", "radius", "high_contrast"], contract: "Seven variants, responsive sizes 1..4, optional local brand color/radius; unselected color consumes semantic roles.", verification: BUTTON_CHECKS },
+    PropertyGroup { name: "ButtonNative", fields: &["on_click", "aria_label", "loading", "disabled", "unavailable", "r#type", "controls", "expanded"], contract: "Native button/submit/reset; loading blocks activation and native defaults. Unavailable retains focus and delivers requests.", verification: BUTTON_CHECKS },
+    PropertyGroup { name: "TextVisual", fields: &["size", "weight", "align", "trim", "wrap", "truncate", "color", "high_contrast"], contract: "Size 1..9, weight/align/trim/wrap responsive; truncate is a nonresponsive boolean. Omitted Text size inherits.", verification: TYPE_CHECKS },
+    PropertyGroup { name: "QuoteVisual", fields: &["size", "weight", "wrap", "truncate", "color", "high_contrast"], contract: "Blockquote/Code omit align and trim; the native semantic element remains intact.", verification: TYPE_CHECKS },
+    PropertyGroup { name: "InlineText", fields: &["wrap", "truncate"], contract: "Em/Quote/Strong inherit typography and expose no independent size, color or layout group.", verification: TYPE_CHECKS },
+];
+
+macro_rules! component {
+    ($name:literal, $kind:ident, $path:literal, $source:literal, $support:ident, $presentation:expr, [$($field:literal),*], [$($group:literal),*], $limit:literal, $checks:expr) => {
+        ComponentEntry { name: $name, kind: ComponentKind::$kind, public_path: $path, source: $source, support: Support::$support, presentation: $presentation,
+            fields: &[$($field),*], property_groups: &[$($group),*], limitation: $limit, verification: $checks }
+    };
+}
+
+/// Public source entries. Count ComponentKind values separately from helpers and data.
+pub const COMPONENTS: &[ComponentEntry] = &[
+    component!("Button", Component, "rustify_components::Button", "crates/rustify-components/src/button.rs", Yes, Presentation { dom: Support::Yes, gpu: Support::Partial, across_regions: Support::Partial }, ["on_click", "variant", "size", "color", "color_role", "radius", "high_contrast", "loading", "disabled", "unavailable", "r#type", "aria_label", "controls", "expanded", "class", "test_id", "children"], ["ButtonVisual", "ButtonNative", "Element"], "DOM visual API only. Existing region buttons share actions and theme projections, with a smaller visual property set.", BUTTON_CHECKS),
+    component!("IconButton", Component, "rustify_components::IconButton", "crates/rustify-components/src/icon_button.rs", Yes, DOM_ONLY, ["on_click", "aria_label", "variant", "size", "color", "color_role", "radius", "high_contrast", "loading", "disabled", "unavailable", "r#type", "controls", "expanded", "class", "test_id", "children"], ["ButtonVisual", "ButtonNative", "Element"], "Required nonempty accessible name; decorative children. Reuses Button behavior; no separate GPU icon button.", BUTTON_CHECKS),
+    component!("Link", Component, "rustify_components::Link", "crates/rustify-components/src/link.rs", Yes, DOM_ONLY, ["href", "match_", "disabled", "size", "weight", "trim", "wrap", "underline", "color", "high_contrast", "truncate", "class", "test_id", "children"], ["Element"], "Native anchor, CurrentPath matching and Leptos target/rel attributes; no unrelated Layout group or GPU navigation.", &["crates/rustify-components/src/link.rs", "tests/browser/dom-layout.spec.ts"]),
+    component!("Box", Component, "rustify_components::Box", "crates/rustify-components/src/layout.rs", Yes, DOM_ONLY, ["as_", "display", "layout", "margin", "class", "test_id", "children"], ["Layout", "Margin", "Element"], "Native div/span; component display defaults survive missing responsive initial values. Caller utilities retain precedence.", LAYOUT_CHECKS),
+    component!("Flex", Component, "rustify_components::Flex", "crates/rustify-components/src/layout.rs", Yes, DOM_ONLY, ["as_", "display", "direction", "align", "justify", "wrap", "gap", "layout", "margin", "class", "test_id", "children"], ["Layout", "Margin", "Gap", "Element"], "Native div/span; component display defaults survive missing responsive initial values. Caller utilities retain precedence.", LAYOUT_CHECKS),
+    component!("Grid", Component, "rustify_components::Grid", "crates/rustify-components/src/layout.rs", Yes, DOM_ONLY, ["as_", "display", "areas", "columns", "rows", "flow", "align", "justify", "align_content", "justify_items", "gap", "layout", "margin", "class", "test_id", "children"], ["Layout", "Margin", "Gap", "Element"], "Native div/span; component display defaults survive missing responsive initial values. Caller utilities retain precedence.", LAYOUT_CHECKS),
+    component!("Container", Component, "rustify_components::Container", "crates/rustify-components/src/layout.rs", Yes, DOM_ONLY, ["size", "align", "display", "layout", "margin", "class", "test_id", "children"], ["Layout", "Margin", "Element"], "Two layers: width/min/max and height/min/max target the inner content; size selects its maximum width.", LAYOUT_CHECKS),
+    component!("Section", Component, "rustify_components::Section", "crates/rustify-components/src/layout.rs", Yes, DOM_ONLY, ["size", "display", "layout", "margin", "class", "test_id", "children"], ["Layout", "Margin", "Element"], "Native section; size consumes resolved theme spacing. Explicit padding takes precedence.", LAYOUT_CHECKS),
+    component!("Inset", Component, "rustify_components::Inset", "crates/rustify-components/src/layout.rs", Yes, DOM_ONLY, ["side", "clip", "padding", "margin", "class", "test_id", "children"], ["Margin", "InsetPadding", "Element"], "Consumes only nearest container padding. Restricted padding Current/Zero; does not expose Layout.", LAYOUT_CHECKS),
+    component!("Reset", Component, "rustify_components::Reset", "crates/rustify-components/src/layout.rs", Yes, DOM_ONLY, ["element"], [], "Typed single-native-element decorator; no wrapper, no Children/Slot API; preserves existing attributes and events.", LAYOUT_CHECKS),
+    component!("Text", Component, "rustify_components::Text", "crates/rustify-components/src/typography.rs", Yes, DOM_ONLY, ["as_", "size", "weight", "align", "trim", "wrap", "truncate", "color", "high_contrast", "margin", "class", "test_id", "children"], ["TextVisual", "Margin", "Element"], "Native span/div/label/p; omitted size inherits.", TYPE_CHECKS),
+    component!("Heading", Component, "rustify_components::Heading", "crates/rustify-components/src/typography.rs", Yes, DOM_ONLY, ["as_", "size", "weight", "align", "trim", "wrap", "truncate", "color", "high_contrast", "margin", "class", "test_id", "children"], ["TextVisual", "Margin", "Element"], "Native h1..h6 independent of visual size; default h1 with visual size 6.", TYPE_CHECKS),
+    component!("Blockquote", Component, "rustify_components::Blockquote", "crates/rustify-components/src/typography.rs", Yes, DOM_ONLY, ["size", "weight", "wrap", "truncate", "color", "high_contrast", "margin", "class", "test_id", "children"], ["QuoteVisual", "Margin", "Element"], "Native blockquote; no independent align/trim properties.", TYPE_CHECKS),
+    component!("Code", Component, "rustify_components::Code", "crates/rustify-components/src/typography.rs", Yes, DOM_ONLY, ["variant", "size", "weight", "wrap", "truncate", "color", "high_contrast", "margin", "class", "test_id", "children"], ["QuoteVisual", "Margin", "Element"], "Native code, four variants and theme mono sizing; no align/trim properties.", TYPE_CHECKS),
+    component!("Kbd", Component, "rustify_components::Kbd", "crates/rustify-components/src/typography.rs", Yes, DOM_ONLY, ["variant", "size", "margin", "class", "test_id", "children"], ["Margin", "Element"], "Native kbd; classic/soft, optional size; no color/weight/trim properties.", TYPE_CHECKS),
+    component!("Em", Component, "rustify_components::Em", "crates/rustify-components/src/typography.rs", Yes, DOM_ONLY, ["wrap", "truncate", "class", "test_id", "children"], ["InlineText", "Element"], "Native em; inherited size, no Margin/Layout/color group.", TYPE_CHECKS),
+    component!("Quote", Component, "rustify_components::Quote", "crates/rustify-components/src/typography.rs", Yes, DOM_ONLY, ["wrap", "truncate", "class", "test_id", "children"], ["InlineText", "Element"], "Native q keeps browser quotation marks; no Margin/Layout/color group.", TYPE_CHECKS),
+    component!("Strong", Component, "rustify_components::Strong", "crates/rustify-components/src/typography.rs", Yes, DOM_ONLY, ["wrap", "truncate", "class", "test_id", "children"], ["InlineText", "Element"], "Native strong; inherited size, no Margin/Layout/color group.", TYPE_CHECKS),
+    component!("Label", Component, "rustify_components::Label", "crates/rustify-components/src/label.rs", Yes, Presentation { dom: Support::Yes, gpu: Support::Partial, across_regions: Support::Yes }, ["control", "class", "test_id", "children"], [], "Existing native controlled component contract; no complete upstream visual or primitive part API is implied.", LEGACY_CHECKS),
+    component!("Icon", Component, "rustify_components::Icon", "crates/rustify-components/src/icon.rs", Yes, Presentation { dom: Support::Yes, gpu: Support::Partial, across_regions: Support::Yes }, ["glyph", "label", "class", "test_id", "children"], [], "Six Glyph shapes or caller SVG children; named image/decorative mode. No cloned Radix Icons product.", LEGACY_CHECKS),
+    component!("TextField", Component, "rustify_components::TextField", "crates/rustify-components/src/input.rs", Yes, Presentation { dom: Support::Yes, gpu: Support::Partial, across_regions: Support::Partial }, ["value", "on_change", "kind", "id", "aria_label", "placeholder", "disabled", "read_only", "invalid", "described_by", "class", "test_id"], [], "Existing native controlled component contract; no complete upstream visual or primitive part API is implied.", LEGACY_CHECKS),
+    component!("TextArea", Component, "rustify_components::TextArea", "crates/rustify-components/src/textarea.rs", Yes, Presentation { dom: Support::Yes, gpu: Support::Partial, across_regions: Support::Partial }, ["value", "on_change", "rows", "id", "aria_label", "placeholder", "disabled", "read_only", "invalid", "described_by", "class", "test_id"], [], "Existing native controlled component contract; no complete upstream visual or primitive part API is implied.", LEGACY_CHECKS),
+    component!("Checkbox", Component, "rustify_components::Checkbox", "crates/rustify-components/src/checkbox.rs", Yes, Presentation { dom: Support::Yes, gpu: Support::Partial, across_regions: Support::Yes }, ["checked", "on_change", "id", "aria_label", "disabled", "read_only", "invalid", "described_by", "class", "test_id"], [], "Controlled two-state bool only; no indeterminate state or public primitive parts.", LEGACY_CHECKS),
+    component!("RadioGroup", Component, "rustify_components::RadioGroup", "crates/rustify-components/src/radio.rs", Yes, Presentation { dom: Support::Yes, gpu: Support::Partial, across_regions: Support::Yes }, ["value", "options", "on_change", "name", "aria_label", "disabled", "read_only", "class", "test_id"], [], "Controlled options data and native radios; no standalone Radio component or public primitive parts.", LEGACY_CHECKS),
+    component!("Switch", Component, "rustify_components::Switch", "crates/rustify-components/src/switch.rs", Yes, Presentation { dom: Support::Yes, gpu: Support::Partial, across_regions: Support::Yes }, ["checked", "on_change", "id", "aria_label", "disabled", "read_only", "described_by", "class", "test_id"], [], "Controlled boolean switch; no public Track/Thumb primitive parts.", LEGACY_CHECKS),
+    component!("Select", Component, "rustify_components::Select", "crates/rustify-components/src/select.rs", Yes, Presentation { dom: Support::Yes, gpu: Support::Partial, across_regions: Support::Partial }, ["value", "options", "on_change", "open", "on_open_change", "placeholder", "id", "aria_label", "disabled", "read_only", "invalid", "described_by", "class", "test_id"], [], "Controlled flat options and open state; no public Trigger/Viewport/Group parts or long-list virtualization.", LEGACY_CHECKS),
+    component!("Slider", Component, "rustify_components::Slider", "crates/rustify-components/src/slider.rs", Yes, Presentation { dom: Support::Yes, gpu: Support::Partial, across_regions: Support::Yes }, ["value", "on_change", "min", "max", "step", "id", "aria_label", "disabled", "read_only", "described_by", "class", "test_id"], [], "One native range value; no multiple thumbs or public Track/Range/Thumb parts.", LEGACY_CHECKS),
+    component!("Progress", Component, "rustify_components::Progress", "crates/rustify-components/src/progress.rs", Yes, Presentation { dom: Support::Yes, gpu: Support::Partial, across_regions: Support::Partial }, ["value", "max", "indeterminate", "aria_label", "class", "test_id"], [], "Value/max or indeterminate DOM progress; region rendering covers a known fraction only.", LEGACY_CHECKS),
+    component!("Spinner", Component, "rustify_components::Spinner", "crates/rustify-components/src/spinner.rs", Yes, Presentation { dom: Support::Yes, gpu: Support::Partial, across_regions: Support::Yes }, ["label", "class", "test_id"], [], "Named status spinner; not a Skeleton component.", LEGACY_CHECKS),
+    component!("Tooltip", Component, "rustify_components::Tooltip", "crates/rustify-components/src/tooltip.rs", Yes, PROJECTED, ["open", "on_open_change", "label", "class", "test_id", "children"], [], "Controlled scoped DOM layer with pointer/focus behavior; no HoverCard or Popover API.", LEGACY_CHECKS),
+    component!("Menu", Component, "rustify_components::Menu", "crates/rustify-components/src/menu.rs", Yes, PROJECTED, ["open", "on_open_change", "anchor", "items", "on_activate", "aria_label", "class", "test_id"], [], "Command Menu with data items and scoped anchoring; not separate DropdownMenu, ContextMenu, Menubar or NavigationMenu APIs.", LEGACY_CHECKS),
+    component!("Dialog", Component, "rustify_components::Dialog", "crates/rustify-components/src/dialog.rs", Yes, PROJECTED, ["open", "on_open_change", "title", "description", "modal", "close_on_backdrop", "close_label", "class", "test_id", "children"], [], "Controlled scoped dialog and modal focus behavior; no AlertDialog or public Root/Trigger/Content parts.", LEGACY_CHECKS),
+    component!("Tabs", Component, "rustify_components::Tabs", "crates/rustify-components/src/tabs.rs", Yes, Presentation { dom: Support::Yes, gpu: Support::Partial, across_regions: Support::Partial }, ["active", "tabs", "on_activate", "orientation", "aria_label", "class", "test_id", "children"], [], "Controlled tabs data, roving focus and retained panels; no SegmentedControl or TabNav API.", LEGACY_CHECKS),
+    component!("TabPanel", Subcomponent, "rustify_components::TabPanel", "crates/rustify-components/src/tabs.rs", Yes, DOM_ONLY, ["value", "class", "children"], [], "Existing native controlled component contract; no complete upstream visual or primitive part API is implied.", LEGACY_CHECKS),
+    component!("ScrollArea", Component, "rustify_components::ScrollArea", "crates/rustify-components/src/scroll_area.rs", Yes, Presentation { dom: Support::Yes, gpu: Support::Partial, across_regions: Support::Yes }, ["boundary", "aria_label", "class", "test_id", "children"], [], "Native browser scrolling and Boundary overscroll behavior; no custom scrollbar part API.", LEGACY_CHECKS),
+    component!("DataTable", Component, "rustify_components::DataTable", "crates/rustify-components/src/data_table/view.rs", Yes, PROJECTED, ["rows", "columns", "cell", "row_id", "selected", "goto", "version", "focus", "on_select", "on_activate", "sorted", "on_sort", "row_height", "column_width", "initial_viewport", "aria_label", "class", "test_id"], [], "Virtualized interactive DOM grid; distinct from an ordinary semantic Table component. No GPU-drawn data table.", LEGACY_CHECKS),
+    component!("Tree", Component, "rustify_components::Tree", "crates/rustify-components/src/tree.rs", Partial, PROJECTED, ["nodes", "expanded", "selected", "on_select", "aria_label", "class", "test_id"], [], "Two group levels without tree virtualization or arbitrary depth.", LEGACY_CHECKS),
+    component!("Toast", Component, "rustify_components::Toast", "crates/rustify-components/src/toast.rs", Yes, DOM_ONLY, ["toast", "class", "test_id"], [], "One replaceable status message in the scope overlay plane; not a complete Toast primitive parts API.", LEGACY_CHECKS),
+    component!("Toaster", Component, "rustify_components::Toaster", "crates/rustify-components/src/toast.rs", Yes, DOM_ONLY, ["class", "test_id"], [], "Renders the SDK toast owner; no second queue or application business-state owner.", LEGACY_CHECKS),
+    component!("NumberField", Component, "rustify_components::NumberField", "crates/rustify-components/src/number_field.rs", Yes, PROJECTED, ["value", "on_change", "on_preview", "on_cancel", "min", "max", "step", "id", "aria_label", "disabled", "read_only", "invalid", "described_by", "class", "test_id"], [], "Draft while focused; numeric preview/commit/cancel and bounds. Application owns accepted value.", LEGACY_CHECKS),
+    component!("ColorField", Component, "rustify_components::ColorField", "crates/rustify-components/src/color_field.rs", Yes, PROJECTED, ["value", "on_change", "on_preview", "on_cancel", "alpha", "id", "aria_label", "disabled", "read_only", "invalid", "described_by", "class", "test_id"], [], "Draft while focused; hex preview/commit/cancel. No palette editor or arbitrary CSS color input.", LEGACY_CHECKS),
+    component!("ToggleGroup", Component, "rustify_components::ToggleGroup", "crates/rustify-components/src/toggle_group.rs", Yes, PROJECTED, ["value", "on_change", "items", "multiple", "toolbar", "orientation", "disabled", "aria_label", "class", "test_id"], [], "Controlled toolbar/group buttons; no standalone Toggle primitive or complete Toolbar API.", LEGACY_CHECKS),
+    component!("FilePicker", Component, "rustify_components::FilePicker", "crates/rustify-components/src/file_picker.rs", Yes, DOM_ONLY, ["on_files", "accept", "id", "aria_label", "disabled", "described_by", "class", "test_id"], [], "Rustify extension with its existing controlled contract; no reference counterpart is required.", &["examples/property-workbench/src/main.rs", "tests/browser/p2-workspace.spec.ts", "tests/browser/p2-form.spec.ts", "tests/browser/p2-clipboard-files.spec.ts"]),
+    component!("DropZone", Component, "rustify_components::DropZone", "crates/rustify-components/src/drop_zone.rs", Yes, DOM_ONLY, ["on_files", "label", "disabled", "described_by", "class", "test_id"], [], "Rustify extension with its existing controlled contract; no reference counterpart is required.", &["examples/property-workbench/src/main.rs", "tests/browser/p2-workspace.spec.ts", "tests/browser/p2-form.spec.ts", "tests/browser/p2-clipboard-files.spec.ts"]),
+    component!("Splitter", Component, "rustify_components::Splitter", "crates/rustify-components/src/workspace/splitter.rs", Yes, DOM_ONLY, ["sizes", "mins", "on_resize", "step", "divider_label", "test_id"], [], "Rustify extension with its existing controlled contract; no reference counterpart is required.", &["examples/property-workbench/src/main.rs", "tests/browser/p2-workspace.spec.ts", "tests/browser/p2-form.spec.ts", "tests/browser/p2-clipboard-files.spec.ts"]),
+    component!("PanelTabs", Component, "rustify_components::PanelTabs", "crates/rustify-components/src/workspace/panel_tabs.rs", Yes, DOM_ONLY, ["tabs", "active", "on_activate", "on_close", "aria_label", "close_label", "class", "test_id"], [], "Rustify extension with its existing controlled contract; no reference counterpart is required.", &["examples/property-workbench/src/main.rs", "tests/browser/p2-workspace.spec.ts", "tests/browser/p2-form.spec.ts", "tests/browser/p2-clipboard-files.spec.ts"]),
+    component!("CommandPalette", Component, "rustify_components::CommandPalette", "crates/rustify-components/src/workspace/command_palette.rs", Yes, DOM_ONLY, ["open", "on_open_change", "commands", "on_run", "placeholder", "aria_label", "test_id"], [], "Rustify extension with its existing controlled contract; no reference counterpart is required.", &["examples/property-workbench/src/main.rs", "tests/browser/p2-workspace.spec.ts", "tests/browser/p2-form.spec.ts", "tests/browser/p2-clipboard-files.spec.ts"]),
+    component!("Field", Component, "rustify_components::Field", "crates/rustify-components/src/form/field.rs", Yes, DOM_ONLY, ["form", "field", "label", "control", "class"], [], "Rustify extension with its existing controlled contract; no reference counterpart is required.", &["examples/property-workbench/src/main.rs", "tests/browser/p2-workspace.spec.ts", "tests/browser/p2-form.spec.ts", "tests/browser/p2-clipboard-files.spec.ts"]),
+    component!("SubmitButton", Component, "rustify_components::SubmitButton", "crates/rustify-components/src/form/submit.rs", Yes, DOM_ONLY, ["form", "rules", "on_asked", "class", "test_id", "children"], [], "Rustify extension with its existing controlled contract; no reference counterpart is required.", &["examples/property-workbench/src/main.rs", "tests/browser/p2-workspace.spec.ts", "tests/browser/p2-form.spec.ts", "tests/browser/p2-clipboard-files.spec.ts"]),
+    component!("FormStatus", Component, "rustify_components::FormStatus", "crates/rustify-components/src/form/submit.rs", Yes, DOM_ONLY, ["form", "saving", "class", "test_id"], [], "Rustify extension with its existing controlled contract; no reference counterpart is required.", &["examples/property-workbench/src/main.rs", "tests/browser/p2-workspace.spec.ts", "tests/browser/p2-form.spec.ts", "tests/browser/p2-clipboard-files.spec.ts"]),
+    component!("Theme", Component, "rustify_components::theme::Theme", "crates/rustify-components/src/theme.rs", Yes, DOM_ONLY, ["resolved", "preview_mode"], [], "Browser-only alias of the existing ThemeScope; claims one mount root and retains complete two-mode source. SSR uses provide_static_theme.", THEME_CHECKS),
+    component!("ThemeBoundary", Component, "rustify_components::theme::ThemeBoundary", "crates/rustify-components/src/theme.rs", Yes, DOM_ONLY, ["patch", "class", "test_id", "children"], [], "Browser-only scoped boundary with configuration and light/dark patches; an empty patch resumes parent inheritance.", THEME_CHECKS),
+    component!("ThemePanel", Component, "rustify_components::ThemePanel", "crates/rustify-components/src/theme_panel.rs", Yes, DOM_ONLY, ["config", "overrides", "on_change", "on_reset", "locale", "class", "test_id"], [], "Controlled configuration/override-count panel and reset requests; not a full theme editor or a second document/history owner.", &["crates/rustify-components/src/theme_panel.rs", "examples/component-catalog/src/button_fixture.rs", "tests/browser/dom-buttons.spec.ts"]),
+    component!("Form", Helper, "rustify_components::Form", "crates/rustify-components/src/form/provider.rs", Yes, DOM_ONLY, ["fields", "save"], [], "Form/Field business validation handle, with explicit provide_form/use_form. Not the reference Form DOM-part API.", &["examples/property-workbench/src/main.rs", "tests/browser/p2-form.spec.ts"]),
+    component!("ThemeContext", Helper, "rustify_components::theme::use_resolved_theme", "crates/rustify-components/src/theme.rs", Yes, DOM_ONLY, [], [], "Effective resolved snapshot signal; not the React ThemeContext object or a second provider.", THEME_CHECKS),
+    component!("Responsive", Helper, "rustify_components::Responsive", "crates/rustify-components/src/responsive.rs", Yes, DOM_ONLY, ["initial", "xs", "sm", "md", "lg", "xl"], [], "Sparse initial/xs/sm/md/lg/xl at 0/520/768/1024/1280/1640 CSS px. Not Tailwind breakpoints.", LAYOUT_CHECKS),
+    component!("GeometryStyles", Helper, "rustify_components::GeometryStyles", "crates/rustify-components/src/geometry.rs", Yes, DOM_ONLY, ["css", "diagnostics"], [], "External SSR rules and field diagnostics; shared CSSOM owner/fatal lifecycle. Does not set arbitrary string style attributes.", &["crates/rustify-components/src/geometry.rs", "tests/browser/dom-layout.spec.ts"]),
+    component!("Class helpers", Helper, "rustify_components::cn", "crates/rustify-components/src/macros/mod.rs", Yes, DOM_ONLY, ["cn", "clx!", "variants!", "CSS", "CANDIDATES_JSON", "styles"], [], "Existing class merging and generation helpers; application class overrides remain separate from static theme author values.", &["crates/rustify-components/src/macros/mod.rs", "tests/browser/utility-baseline.spec.ts"]),
+    component!("Colors", Data, "rustify_colors::ColorFamily", "crates/rustify-colors/src/lib.rs", Yes, Presentation { dom: Support::No, gpu: Support::No, across_regions: Support::No }, ["ALL", "scale", "css", "ColorMode", "ColorGamut", "black_alpha", "white_alpha", "black_alpha_css", "white_alpha_css"], [], "Separate script-free palette data/assets. Rust P3 lookup requires p3; static P3 assets include sRGB fallback. Source-only until separately published.", &["crates/rustify-colors/src/lib.rs", "xtask/src/colors.rs", "tests/colors-static/colors.spec.ts"]),
+];
+
+/// Complete stable runtime names from the fixed Themes and Primitives public barrels.
+pub const STABLE_REFERENCES: &[ReferenceEntry] = &[
+    ReferenceEntry { library: ReferenceLibrary::Themes, name: "AccessibleIcon", component: Some("Icon"), support: Support::Partial, limitation: "Mapped Rust entry supports its listed fields; generic asChild/Slot and exact React export/Props compatibility are not provided." },
+    ReferenceEntry { library: ReferenceLibrary::Themes, name: "AlertDialog", component: None, support: Support::No, limitation: "No standalone public Rust counterpart; scope internals, examples and similarly named extensions do not implement this reference API." },
+    ReferenceEntry { library: ReferenceLibrary::Themes, name: "AspectRatio", component: None, support: Support::No, limitation: "No standalone public Rust counterpart; scope internals, examples and similarly named extensions do not implement this reference API." },
+    ReferenceEntry { library: ReferenceLibrary::Themes, name: "Avatar", component: None, support: Support::No, limitation: "No standalone public Rust counterpart; scope internals, examples and similarly named extensions do not implement this reference API." },
+    ReferenceEntry { library: ReferenceLibrary::Themes, name: "Badge", component: None, support: Support::No, limitation: "No standalone public Rust counterpart; scope internals, examples and similarly named extensions do not implement this reference API." },
+    ReferenceEntry { library: ReferenceLibrary::Themes, name: "Blockquote", component: Some("Blockquote"), support: Support::Partial, limitation: "Mapped Rust entry supports its listed fields; generic asChild/Slot and exact React export/Props compatibility are not provided." },
+    ReferenceEntry { library: ReferenceLibrary::Themes, name: "Box", component: Some("Box"), support: Support::Partial, limitation: "Mapped Rust entry supports its listed fields; generic asChild/Slot and exact React export/Props compatibility are not provided." },
+    ReferenceEntry { library: ReferenceLibrary::Themes, name: "Button", component: Some("Button"), support: Support::Partial, limitation: "Mapped Rust entry supports its listed fields; generic asChild/Slot and exact React export/Props compatibility are not provided." },
+    ReferenceEntry { library: ReferenceLibrary::Themes, name: "Callout", component: None, support: Support::No, limitation: "No standalone public Rust counterpart; scope internals, examples and similarly named extensions do not implement this reference API." },
+    ReferenceEntry { library: ReferenceLibrary::Themes, name: "Card", component: None, support: Support::No, limitation: "No standalone public Rust counterpart; scope internals, examples and similarly named extensions do not implement this reference API." },
+    ReferenceEntry { library: ReferenceLibrary::Themes, name: "CheckboxCards", component: None, support: Support::No, limitation: "No standalone public Rust counterpart; scope internals, examples and similarly named extensions do not implement this reference API." },
+    ReferenceEntry { library: ReferenceLibrary::Themes, name: "CheckboxGroup", component: None, support: Support::No, limitation: "No standalone public Rust counterpart; scope internals, examples and similarly named extensions do not implement this reference API." },
+    ReferenceEntry { library: ReferenceLibrary::Themes, name: "Checkbox", component: Some("Checkbox"), support: Support::Partial, limitation: "Mapped Rust entry supports its listed fields; generic asChild/Slot and exact React export/Props compatibility are not provided." },
+    ReferenceEntry { library: ReferenceLibrary::Themes, name: "Code", component: Some("Code"), support: Support::Partial, limitation: "Mapped Rust entry supports its listed fields; generic asChild/Slot and exact React export/Props compatibility are not provided." },
+    ReferenceEntry { library: ReferenceLibrary::Themes, name: "Container", component: Some("Container"), support: Support::Partial, limitation: "Mapped Rust entry supports its listed fields; generic asChild/Slot and exact React export/Props compatibility are not provided." },
+    ReferenceEntry { library: ReferenceLibrary::Themes, name: "ContextMenu", component: Some("Menu"), support: Support::Partial, limitation: "Mapped Rust entry supports its listed fields; generic asChild/Slot and exact React export/Props compatibility are not provided." },
+    ReferenceEntry { library: ReferenceLibrary::Themes, name: "DataList", component: None, support: Support::No, limitation: "No standalone public Rust counterpart; scope internals, examples and similarly named extensions do not implement this reference API." },
+    ReferenceEntry { library: ReferenceLibrary::Themes, name: "Dialog", component: Some("Dialog"), support: Support::Partial, limitation: "Mapped Rust entry supports its listed fields; generic asChild/Slot and exact React export/Props compatibility are not provided." },
+    ReferenceEntry { library: ReferenceLibrary::Themes, name: "DropdownMenu", component: Some("Menu"), support: Support::Partial, limitation: "Mapped Rust entry supports its listed fields; generic asChild/Slot and exact React export/Props compatibility are not provided." },
+    ReferenceEntry { library: ReferenceLibrary::Themes, name: "Em", component: Some("Em"), support: Support::Partial, limitation: "Mapped Rust entry supports its listed fields; generic asChild/Slot and exact React export/Props compatibility are not provided." },
+    ReferenceEntry { library: ReferenceLibrary::Themes, name: "Flex", component: Some("Flex"), support: Support::Partial, limitation: "Mapped Rust entry supports its listed fields; generic asChild/Slot and exact React export/Props compatibility are not provided." },
+    ReferenceEntry { library: ReferenceLibrary::Themes, name: "Grid", component: Some("Grid"), support: Support::Partial, limitation: "Mapped Rust entry supports its listed fields; generic asChild/Slot and exact React export/Props compatibility are not provided." },
+    ReferenceEntry { library: ReferenceLibrary::Themes, name: "Heading", component: Some("Heading"), support: Support::Partial, limitation: "Mapped Rust entry supports its listed fields; generic asChild/Slot and exact React export/Props compatibility are not provided." },
+    ReferenceEntry { library: ReferenceLibrary::Themes, name: "HoverCard", component: None, support: Support::No, limitation: "No standalone public Rust counterpart; scope internals, examples and similarly named extensions do not implement this reference API." },
+    ReferenceEntry { library: ReferenceLibrary::Themes, name: "IconButton", component: Some("IconButton"), support: Support::Partial, limitation: "Mapped Rust entry supports its listed fields; generic asChild/Slot and exact React export/Props compatibility are not provided." },
+    ReferenceEntry { library: ReferenceLibrary::Themes, name: "ChevronDownIcon", component: Some("Icon"), support: Support::Partial, limitation: "Mapped Rust entry supports its listed fields; generic asChild/Slot and exact React export/Props compatibility are not provided." },
+    ReferenceEntry { library: ReferenceLibrary::Themes, name: "ThickCheckIcon", component: Some("Icon"), support: Support::Partial, limitation: "Mapped Rust entry supports its listed fields; generic asChild/Slot and exact React export/Props compatibility are not provided." },
+    ReferenceEntry { library: ReferenceLibrary::Themes, name: "ThickChevronRightIcon", component: Some("Icon"), support: Support::Partial, limitation: "Mapped Rust entry supports its listed fields; generic asChild/Slot and exact React export/Props compatibility are not provided." },
+    ReferenceEntry { library: ReferenceLibrary::Themes, name: "ThickDividerHorizontalIcon", component: None, support: Support::No, limitation: "No standalone public Rust counterpart; scope internals, examples and similarly named extensions do not implement this reference API." },
+    ReferenceEntry { library: ReferenceLibrary::Themes, name: "Inset", component: Some("Inset"), support: Support::Partial, limitation: "Mapped Rust entry supports its listed fields; generic asChild/Slot and exact React export/Props compatibility are not provided." },
+    ReferenceEntry { library: ReferenceLibrary::Themes, name: "Kbd", component: Some("Kbd"), support: Support::Partial, limitation: "Mapped Rust entry supports its listed fields; generic asChild/Slot and exact React export/Props compatibility are not provided." },
+    ReferenceEntry { library: ReferenceLibrary::Themes, name: "Link", component: Some("Link"), support: Support::Partial, limitation: "Mapped Rust entry supports its listed fields; generic asChild/Slot and exact React export/Props compatibility are not provided." },
+    ReferenceEntry { library: ReferenceLibrary::Themes, name: "Popover", component: None, support: Support::No, limitation: "No standalone public Rust counterpart; scope internals, examples and similarly named extensions do not implement this reference API." },
+    ReferenceEntry { library: ReferenceLibrary::Themes, name: "Portal", component: None, support: Support::No, limitation: "No standalone public Rust counterpart; scope internals, examples and similarly named extensions do not implement this reference API." },
+    ReferenceEntry { library: ReferenceLibrary::Themes, name: "Progress", component: Some("Progress"), support: Support::Partial, limitation: "Mapped Rust entry supports its listed fields; generic asChild/Slot and exact React export/Props compatibility are not provided." },
+    ReferenceEntry { library: ReferenceLibrary::Themes, name: "Quote", component: Some("Quote"), support: Support::Partial, limitation: "Mapped Rust entry supports its listed fields; generic asChild/Slot and exact React export/Props compatibility are not provided." },
+    ReferenceEntry { library: ReferenceLibrary::Themes, name: "RadioCards", component: None, support: Support::No, limitation: "No standalone public Rust counterpart; scope internals, examples and similarly named extensions do not implement this reference API." },
+    ReferenceEntry { library: ReferenceLibrary::Themes, name: "RadioGroup", component: Some("RadioGroup"), support: Support::Partial, limitation: "Mapped Rust entry supports its listed fields; generic asChild/Slot and exact React export/Props compatibility are not provided." },
+    ReferenceEntry { library: ReferenceLibrary::Themes, name: "Radio", component: None, support: Support::No, limitation: "No standalone public Rust counterpart; scope internals, examples and similarly named extensions do not implement this reference API." },
+    ReferenceEntry { library: ReferenceLibrary::Themes, name: "Reset", component: Some("Reset"), support: Support::Partial, limitation: "Mapped Rust entry supports its listed fields; generic asChild/Slot and exact React export/Props compatibility are not provided." },
+    ReferenceEntry { library: ReferenceLibrary::Themes, name: "ScrollArea", component: Some("ScrollArea"), support: Support::Partial, limitation: "Mapped Rust entry supports its listed fields; generic asChild/Slot and exact React export/Props compatibility are not provided." },
+    ReferenceEntry { library: ReferenceLibrary::Themes, name: "SegmentedControl", component: None, support: Support::No, limitation: "No standalone public Rust counterpart; scope internals, examples and similarly named extensions do not implement this reference API." },
+    ReferenceEntry { library: ReferenceLibrary::Themes, name: "Section", component: Some("Section"), support: Support::Partial, limitation: "Mapped Rust entry supports its listed fields; generic asChild/Slot and exact React export/Props compatibility are not provided." },
+    ReferenceEntry { library: ReferenceLibrary::Themes, name: "Select", component: Some("Select"), support: Support::Partial, limitation: "Mapped Rust entry supports its listed fields; generic asChild/Slot and exact React export/Props compatibility are not provided." },
+    ReferenceEntry { library: ReferenceLibrary::Themes, name: "Separator", component: None, support: Support::No, limitation: "No standalone public Rust counterpart; scope internals, examples and similarly named extensions do not implement this reference API." },
+    ReferenceEntry { library: ReferenceLibrary::Themes, name: "Skeleton", component: None, support: Support::No, limitation: "No standalone public Rust counterpart; scope internals, examples and similarly named extensions do not implement this reference API." },
+    ReferenceEntry { library: ReferenceLibrary::Themes, name: "Slider", component: Some("Slider"), support: Support::Partial, limitation: "Mapped Rust entry supports its listed fields; generic asChild/Slot and exact React export/Props compatibility are not provided." },
+    ReferenceEntry { library: ReferenceLibrary::Themes, name: "Slot", component: None, support: Support::No, limitation: "No standalone public Rust counterpart; scope internals, examples and similarly named extensions do not implement this reference API." },
+    ReferenceEntry { library: ReferenceLibrary::Themes, name: "Slottable", component: None, support: Support::No, limitation: "No standalone public Rust counterpart; scope internals, examples and similarly named extensions do not implement this reference API." },
+    ReferenceEntry { library: ReferenceLibrary::Themes, name: "Spinner", component: Some("Spinner"), support: Support::Partial, limitation: "Mapped Rust entry supports its listed fields; generic asChild/Slot and exact React export/Props compatibility are not provided." },
+    ReferenceEntry { library: ReferenceLibrary::Themes, name: "Strong", component: Some("Strong"), support: Support::Partial, limitation: "Mapped Rust entry supports its listed fields; generic asChild/Slot and exact React export/Props compatibility are not provided." },
+    ReferenceEntry { library: ReferenceLibrary::Themes, name: "Switch", component: Some("Switch"), support: Support::Partial, limitation: "Mapped Rust entry supports its listed fields; generic asChild/Slot and exact React export/Props compatibility are not provided." },
+    ReferenceEntry { library: ReferenceLibrary::Themes, name: "TabNav", component: None, support: Support::No, limitation: "No standalone public Rust counterpart; scope internals, examples and similarly named extensions do not implement this reference API." },
+    ReferenceEntry { library: ReferenceLibrary::Themes, name: "Table", component: None, support: Support::No, limitation: "No standalone public Rust counterpart; scope internals, examples and similarly named extensions do not implement this reference API." },
+    ReferenceEntry { library: ReferenceLibrary::Themes, name: "Tabs", component: Some("Tabs"), support: Support::Partial, limitation: "Mapped Rust entry supports its listed fields; generic asChild/Slot and exact React export/Props compatibility are not provided." },
+    ReferenceEntry { library: ReferenceLibrary::Themes, name: "TextArea", component: Some("TextArea"), support: Support::Partial, limitation: "Mapped Rust entry supports its listed fields; generic asChild/Slot and exact React export/Props compatibility are not provided." },
+    ReferenceEntry { library: ReferenceLibrary::Themes, name: "TextField", component: Some("TextField"), support: Support::Partial, limitation: "Mapped Rust entry supports its listed fields; generic asChild/Slot and exact React export/Props compatibility are not provided." },
+    ReferenceEntry { library: ReferenceLibrary::Themes, name: "Text", component: Some("Text"), support: Support::Partial, limitation: "Mapped Rust entry supports its listed fields; generic asChild/Slot and exact React export/Props compatibility are not provided." },
+    ReferenceEntry { library: ReferenceLibrary::Themes, name: "ThemePanel", component: Some("ThemePanel"), support: Support::Partial, limitation: "Mapped Rust entry supports its listed fields; generic asChild/Slot and exact React export/Props compatibility are not provided." },
+    ReferenceEntry { library: ReferenceLibrary::Themes, name: "Theme", component: Some("Theme"), support: Support::Partial, limitation: "Mapped Rust entry supports its listed fields; generic asChild/Slot and exact React export/Props compatibility are not provided." },
+    ReferenceEntry { library: ReferenceLibrary::Themes, name: "ThemeContext", component: Some("ThemeContext"), support: Support::Partial, limitation: "Mapped Rust entry supports its listed fields; generic asChild/Slot and exact React export/Props compatibility are not provided." },
+    ReferenceEntry { library: ReferenceLibrary::Themes, name: "useThemeContext", component: Some("ThemeContext"), support: Support::Partial, limitation: "Mapped Rust entry supports its listed fields; generic asChild/Slot and exact React export/Props compatibility are not provided." },
+    ReferenceEntry { library: ReferenceLibrary::Themes, name: "Tooltip", component: Some("Tooltip"), support: Support::Partial, limitation: "Mapped Rust entry supports its listed fields; generic asChild/Slot and exact React export/Props compatibility are not provided." },
+    ReferenceEntry { library: ReferenceLibrary::Themes, name: "VisuallyHidden", component: None, support: Support::No, limitation: "No standalone public Rust counterpart; scope internals, examples and similarly named extensions do not implement this reference API." },
+    ReferenceEntry { library: ReferenceLibrary::Primitives, name: "AccessibleIcon", component: Some("Icon"), support: Support::Partial, limitation: "Existing styled Rustify behavior is only a partial correspondence; no complete unstyled primitive or public parts contract." },
+    ReferenceEntry { library: ReferenceLibrary::Primitives, name: "Accordion", component: None, support: Support::No, limitation: "No standalone public Rust counterpart; scope internals, examples and similarly named extensions do not implement this reference API." },
+    ReferenceEntry { library: ReferenceLibrary::Primitives, name: "AlertDialog", component: None, support: Support::No, limitation: "No standalone public Rust counterpart; scope internals, examples and similarly named extensions do not implement this reference API." },
+    ReferenceEntry { library: ReferenceLibrary::Primitives, name: "AspectRatio", component: None, support: Support::No, limitation: "No standalone public Rust counterpart; scope internals, examples and similarly named extensions do not implement this reference API." },
+    ReferenceEntry { library: ReferenceLibrary::Primitives, name: "Avatar", component: None, support: Support::No, limitation: "No standalone public Rust counterpart; scope internals, examples and similarly named extensions do not implement this reference API." },
+    ReferenceEntry { library: ReferenceLibrary::Primitives, name: "Checkbox", component: Some("Checkbox"), support: Support::Partial, limitation: "Existing styled Rustify behavior is only a partial correspondence; no complete unstyled primitive or public parts contract." },
+    ReferenceEntry { library: ReferenceLibrary::Primitives, name: "Collapsible", component: None, support: Support::No, limitation: "No standalone public Rust counterpart; scope internals, examples and similarly named extensions do not implement this reference API." },
+    ReferenceEntry { library: ReferenceLibrary::Primitives, name: "ContextMenu", component: Some("Menu"), support: Support::Partial, limitation: "Existing styled Rustify behavior is only a partial correspondence; no complete unstyled primitive or public parts contract." },
+    ReferenceEntry { library: ReferenceLibrary::Primitives, name: "Dialog", component: Some("Dialog"), support: Support::Partial, limitation: "Existing styled Rustify behavior is only a partial correspondence; no complete unstyled primitive or public parts contract." },
+    ReferenceEntry { library: ReferenceLibrary::Primitives, name: "Direction", component: None, support: Support::No, limitation: "No standalone public Rust counterpart; scope internals, examples and similarly named extensions do not implement this reference API." },
+    ReferenceEntry { library: ReferenceLibrary::Primitives, name: "DropdownMenu", component: Some("Menu"), support: Support::Partial, limitation: "Existing styled Rustify behavior is only a partial correspondence; no complete unstyled primitive or public parts contract." },
+    ReferenceEntry { library: ReferenceLibrary::Primitives, name: "Form", component: Some("Form"), support: Support::Partial, limitation: "Existing styled Rustify behavior is only a partial correspondence; no complete unstyled primitive or public parts contract." },
+    ReferenceEntry { library: ReferenceLibrary::Primitives, name: "HoverCard", component: None, support: Support::No, limitation: "No standalone public Rust counterpart; scope internals, examples and similarly named extensions do not implement this reference API." },
+    ReferenceEntry { library: ReferenceLibrary::Primitives, name: "Label", component: Some("Label"), support: Support::Partial, limitation: "Existing styled Rustify behavior is only a partial correspondence; no complete unstyled primitive or public parts contract." },
+    ReferenceEntry { library: ReferenceLibrary::Primitives, name: "Menubar", component: None, support: Support::No, limitation: "No standalone public Rust counterpart; scope internals, examples and similarly named extensions do not implement this reference API." },
+    ReferenceEntry { library: ReferenceLibrary::Primitives, name: "NavigationMenu", component: None, support: Support::No, limitation: "No standalone public Rust counterpart; scope internals, examples and similarly named extensions do not implement this reference API." },
+    ReferenceEntry { library: ReferenceLibrary::Primitives, name: "Popover", component: None, support: Support::No, limitation: "No standalone public Rust counterpart; scope internals, examples and similarly named extensions do not implement this reference API." },
+    ReferenceEntry { library: ReferenceLibrary::Primitives, name: "Portal", component: None, support: Support::No, limitation: "No standalone public Rust counterpart; scope internals, examples and similarly named extensions do not implement this reference API." },
+    ReferenceEntry { library: ReferenceLibrary::Primitives, name: "Progress", component: Some("Progress"), support: Support::Partial, limitation: "Existing styled Rustify behavior is only a partial correspondence; no complete unstyled primitive or public parts contract." },
+    ReferenceEntry { library: ReferenceLibrary::Primitives, name: "RadioGroup", component: Some("RadioGroup"), support: Support::Partial, limitation: "Existing styled Rustify behavior is only a partial correspondence; no complete unstyled primitive or public parts contract." },
+    ReferenceEntry { library: ReferenceLibrary::Primitives, name: "ScrollArea", component: Some("ScrollArea"), support: Support::Partial, limitation: "Existing styled Rustify behavior is only a partial correspondence; no complete unstyled primitive or public parts contract." },
+    ReferenceEntry { library: ReferenceLibrary::Primitives, name: "Select", component: Some("Select"), support: Support::Partial, limitation: "Existing styled Rustify behavior is only a partial correspondence; no complete unstyled primitive or public parts contract." },
+    ReferenceEntry { library: ReferenceLibrary::Primitives, name: "Separator", component: None, support: Support::No, limitation: "No standalone public Rust counterpart; scope internals, examples and similarly named extensions do not implement this reference API." },
+    ReferenceEntry { library: ReferenceLibrary::Primitives, name: "Slider", component: Some("Slider"), support: Support::Partial, limitation: "Existing styled Rustify behavior is only a partial correspondence; no complete unstyled primitive or public parts contract." },
+    ReferenceEntry { library: ReferenceLibrary::Primitives, name: "Slot", component: None, support: Support::No, limitation: "No standalone public Rust counterpart; scope internals, examples and similarly named extensions do not implement this reference API." },
+    ReferenceEntry { library: ReferenceLibrary::Primitives, name: "Switch", component: Some("Switch"), support: Support::Partial, limitation: "Existing styled Rustify behavior is only a partial correspondence; no complete unstyled primitive or public parts contract." },
+    ReferenceEntry { library: ReferenceLibrary::Primitives, name: "Tabs", component: Some("Tabs"), support: Support::Partial, limitation: "Existing styled Rustify behavior is only a partial correspondence; no complete unstyled primitive or public parts contract." },
+    ReferenceEntry { library: ReferenceLibrary::Primitives, name: "Toast", component: Some("Toast"), support: Support::Partial, limitation: "Existing styled Rustify behavior is only a partial correspondence; no complete unstyled primitive or public parts contract." },
+    ReferenceEntry { library: ReferenceLibrary::Primitives, name: "Toggle", component: None, support: Support::No, limitation: "No standalone public Rust counterpart; scope internals, examples and similarly named extensions do not implement this reference API." },
+    ReferenceEntry { library: ReferenceLibrary::Primitives, name: "ToggleGroup", component: Some("ToggleGroup"), support: Support::Partial, limitation: "Existing styled Rustify behavior is only a partial correspondence; no complete unstyled primitive or public parts contract." },
+    ReferenceEntry { library: ReferenceLibrary::Primitives, name: "Toolbar", component: None, support: Support::No, limitation: "No standalone public Rust counterpart; scope internals, examples and similarly named extensions do not implement this reference API." },
+    ReferenceEntry { library: ReferenceLibrary::Primitives, name: "Tooltip", component: Some("Tooltip"), support: Support::Partial, limitation: "Existing styled Rustify behavior is only a partial correspondence; no complete unstyled primitive or public parts contract." },
+    ReferenceEntry { library: ReferenceLibrary::Primitives, name: "VisuallyHidden", component: None, support: Support::No, limitation: "No standalone public Rust counterpart; scope internals, examples and similarly named extensions do not implement this reference API." },
+];
+
+/// Explicit stable Props/type exports at the Themes barrel, excluding namespace-owned types.
+/// Rust equivalents use component-specific Leptos props and public field/enumeration types.
+pub const STABLE_THEME_PROP_TYPES: &[&str] = &[
+    "AccessibleIconProps",
+    "AspectRatioProps",
+    "AvatarProps",
+    "BadgeProps",
+    "BlockquoteProps",
+    "BoxProps",
+    "ButtonProps",
+    "CardProps",
+    "CheckboxProps",
+    "CodeProps",
+    "ContainerProps",
+    "EmProps",
+    "FlexProps",
+    "GridProps",
+    "HeadingProps",
+    "IconButtonProps",
+    "IconProps",
+    "InsetProps",
+    "KbdProps",
+    "LinkProps",
+    "PortalProps",
+    "ProgressProps",
+    "QuoteProps",
+    "RadioProps",
+    "ResetProps",
+    "ScrollAreaProps",
+    "SectionProps",
+    "SeparatorProps",
+    "SkeletonProps",
+    "SliderProps",
+    "SpinnerProps",
+    "StrongProps",
+    "SwitchProps",
+    "TextAreaProps",
+    "TextProps",
+    "ThemePanelProps",
+    "ThemeProps",
+    "TooltipProps",
+    "VisuallyHiddenProps",
+];
+
+/// Non-stable public and internal candidates; no item is an implementation claim.
+pub const CANDIDATES: &[Candidate] = &[
+    Candidate {
+        library: ReferenceLibrary::Primitives,
+        name: "unstable_OneTimePasswordField",
+        source: "ref/primitives-main/packages/react/radix-ui/src/index.ts",
+        limitation: "Candidate only; no stable Rust API or implementation commitment.",
+    },
+    Candidate {
+        library: ReferenceLibrary::Primitives,
+        name: "unstable_PasswordToggleField",
+        source: "ref/primitives-main/packages/react/radix-ui/src/index.ts",
+        limitation: "Candidate only; no stable Rust API or implementation commitment.",
+    },
+    Candidate {
+        library: ReferenceLibrary::Themes,
+        name: "unstable_ThemePanelContent",
+        source: "ref/themes-main/packages/radix-ui-themes/src/components/index.tsx",
+        limitation: "Candidate only; no stable Rust API or implementation commitment.",
+    },
+    Candidate {
+        library: ReferenceLibrary::Themes,
+        name: "unstable_ThemePanelContentProps",
+        source: "ref/themes-main/packages/radix-ui-themes/src/components/index.tsx",
+        limitation: "Candidate only; no stable Rust API or implementation commitment.",
+    },
+    Candidate {
+        library: ReferenceLibrary::Primitives,
+        name: "checkbox.unstable_CheckboxProvider",
+        source: "ref/primitives-main/packages/react/checkbox/src/index.ts",
+        limitation: "Candidate only; no stable Rust API or implementation commitment.",
+    },
+    Candidate {
+        library: ReferenceLibrary::Primitives,
+        name: "checkbox.unstable_CheckboxTrigger",
+        source: "ref/primitives-main/packages/react/checkbox/src/index.ts",
+        limitation: "Candidate only; no stable Rust API or implementation commitment.",
+    },
+    Candidate {
+        library: ReferenceLibrary::Primitives,
+        name: "checkbox.unstable_CheckboxBubbleInput",
+        source: "ref/primitives-main/packages/react/checkbox/src/index.ts",
+        limitation: "Candidate only; no stable Rust API or implementation commitment.",
+    },
+    Candidate {
+        library: ReferenceLibrary::Primitives,
+        name: "checkbox.unstable_Provider",
+        source: "ref/primitives-main/packages/react/checkbox/src/index.ts",
+        limitation: "Candidate only; no stable Rust API or implementation commitment.",
+    },
+    Candidate {
+        library: ReferenceLibrary::Primitives,
+        name: "checkbox.unstable_Trigger",
+        source: "ref/primitives-main/packages/react/checkbox/src/index.ts",
+        limitation: "Candidate only; no stable Rust API or implementation commitment.",
+    },
+    Candidate {
+        library: ReferenceLibrary::Primitives,
+        name: "checkbox.unstable_BubbleInput",
+        source: "ref/primitives-main/packages/react/checkbox/src/index.ts",
+        limitation: "Candidate only; no stable Rust API or implementation commitment.",
+    },
+    Candidate {
+        library: ReferenceLibrary::Primitives,
+        name: "checkbox.unstable_CheckboxProviderProps",
+        source: "ref/primitives-main/packages/react/checkbox/src/index.ts",
+        limitation: "Candidate only; no stable Rust API or implementation commitment.",
+    },
+    Candidate {
+        library: ReferenceLibrary::Primitives,
+        name: "checkbox.unstable_CheckboxTriggerProps",
+        source: "ref/primitives-main/packages/react/checkbox/src/index.ts",
+        limitation: "Candidate only; no stable Rust API or implementation commitment.",
+    },
+    Candidate {
+        library: ReferenceLibrary::Primitives,
+        name: "checkbox.unstable_CheckboxBubbleInputProps",
+        source: "ref/primitives-main/packages/react/checkbox/src/index.ts",
+        limitation: "Candidate only; no stable Rust API or implementation commitment.",
+    },
+    Candidate {
+        library: ReferenceLibrary::Primitives,
+        name: "radio-group.unstable_RadioGroupItemProvider",
+        source: "ref/primitives-main/packages/react/radio-group/src/index.ts",
+        limitation: "Candidate only; no stable Rust API or implementation commitment.",
+    },
+    Candidate {
+        library: ReferenceLibrary::Primitives,
+        name: "radio-group.unstable_RadioGroupItemTrigger",
+        source: "ref/primitives-main/packages/react/radio-group/src/index.ts",
+        limitation: "Candidate only; no stable Rust API or implementation commitment.",
+    },
+    Candidate {
+        library: ReferenceLibrary::Primitives,
+        name: "radio-group.unstable_RadioGroupItemBubbleInput",
+        source: "ref/primitives-main/packages/react/radio-group/src/index.ts",
+        limitation: "Candidate only; no stable Rust API or implementation commitment.",
+    },
+    Candidate {
+        library: ReferenceLibrary::Primitives,
+        name: "radio-group.unstable_ItemProvider",
+        source: "ref/primitives-main/packages/react/radio-group/src/index.ts",
+        limitation: "Candidate only; no stable Rust API or implementation commitment.",
+    },
+    Candidate {
+        library: ReferenceLibrary::Primitives,
+        name: "radio-group.unstable_ItemTrigger",
+        source: "ref/primitives-main/packages/react/radio-group/src/index.ts",
+        limitation: "Candidate only; no stable Rust API or implementation commitment.",
+    },
+    Candidate {
+        library: ReferenceLibrary::Primitives,
+        name: "radio-group.unstable_ItemBubbleInput",
+        source: "ref/primitives-main/packages/react/radio-group/src/index.ts",
+        limitation: "Candidate only; no stable Rust API or implementation commitment.",
+    },
+    Candidate {
+        library: ReferenceLibrary::Primitives,
+        name: "radio-group.unstable_RadioGroupItemProviderProps",
+        source: "ref/primitives-main/packages/react/radio-group/src/index.ts",
+        limitation: "Candidate only; no stable Rust API or implementation commitment.",
+    },
+    Candidate {
+        library: ReferenceLibrary::Primitives,
+        name: "radio-group.unstable_RadioGroupItemTriggerProps",
+        source: "ref/primitives-main/packages/react/radio-group/src/index.ts",
+        limitation: "Candidate only; no stable Rust API or implementation commitment.",
+    },
+    Candidate {
+        library: ReferenceLibrary::Primitives,
+        name: "radio-group.unstable_RadioGroupItemBubbleInputProps",
+        source: "ref/primitives-main/packages/react/radio-group/src/index.ts",
+        limitation: "Candidate only; no stable Rust API or implementation commitment.",
+    },
+    Candidate {
+        library: ReferenceLibrary::Primitives,
+        name: "switch.unstable_SwitchProvider",
+        source: "ref/primitives-main/packages/react/switch/src/index.ts",
+        limitation: "Candidate only; no stable Rust API or implementation commitment.",
+    },
+    Candidate {
+        library: ReferenceLibrary::Primitives,
+        name: "switch.unstable_SwitchTrigger",
+        source: "ref/primitives-main/packages/react/switch/src/index.ts",
+        limitation: "Candidate only; no stable Rust API or implementation commitment.",
+    },
+    Candidate {
+        library: ReferenceLibrary::Primitives,
+        name: "switch.unstable_SwitchBubbleInput",
+        source: "ref/primitives-main/packages/react/switch/src/index.ts",
+        limitation: "Candidate only; no stable Rust API or implementation commitment.",
+    },
+    Candidate {
+        library: ReferenceLibrary::Primitives,
+        name: "switch.unstable_Provider",
+        source: "ref/primitives-main/packages/react/switch/src/index.ts",
+        limitation: "Candidate only; no stable Rust API or implementation commitment.",
+    },
+    Candidate {
+        library: ReferenceLibrary::Primitives,
+        name: "switch.unstable_Trigger",
+        source: "ref/primitives-main/packages/react/switch/src/index.ts",
+        limitation: "Candidate only; no stable Rust API or implementation commitment.",
+    },
+    Candidate {
+        library: ReferenceLibrary::Primitives,
+        name: "switch.unstable_BubbleInput",
+        source: "ref/primitives-main/packages/react/switch/src/index.ts",
+        limitation: "Candidate only; no stable Rust API or implementation commitment.",
+    },
+    Candidate {
+        library: ReferenceLibrary::Primitives,
+        name: "switch.unstable_SwitchProviderProps",
+        source: "ref/primitives-main/packages/react/switch/src/index.ts",
+        limitation: "Candidate only; no stable Rust API or implementation commitment.",
+    },
+    Candidate {
+        library: ReferenceLibrary::Primitives,
+        name: "switch.unstable_SwitchTriggerProps",
+        source: "ref/primitives-main/packages/react/switch/src/index.ts",
+        limitation: "Candidate only; no stable Rust API or implementation commitment.",
+    },
+    Candidate {
+        library: ReferenceLibrary::Primitives,
+        name: "switch.unstable_SwitchBubbleInputProps",
+        source: "ref/primitives-main/packages/react/switch/src/index.ts",
+        limitation: "Candidate only; no stable Rust API or implementation commitment.",
+    },
+    Candidate {
+        library: ReferenceLibrary::Primitives,
+        name: "select.unstable_SelectProvider",
+        source: "ref/primitives-main/packages/react/select/src/index.ts",
+        limitation: "Candidate only; no stable Rust API or implementation commitment.",
+    },
+    Candidate {
+        library: ReferenceLibrary::Primitives,
+        name: "select.unstable_SelectBubbleInput",
+        source: "ref/primitives-main/packages/react/select/src/index.ts",
+        limitation: "Candidate only; no stable Rust API or implementation commitment.",
+    },
+    Candidate {
+        library: ReferenceLibrary::Primitives,
+        name: "select.unstable_Provider",
+        source: "ref/primitives-main/packages/react/select/src/index.ts",
+        limitation: "Candidate only; no stable Rust API or implementation commitment.",
+    },
+    Candidate {
+        library: ReferenceLibrary::Primitives,
+        name: "select.unstable_BubbleInput",
+        source: "ref/primitives-main/packages/react/select/src/index.ts",
+        limitation: "Candidate only; no stable Rust API or implementation commitment.",
+    },
+    Candidate {
+        library: ReferenceLibrary::Primitives,
+        name: "select.unstable_SelectProviderProps",
+        source: "ref/primitives-main/packages/react/select/src/index.ts",
+        limitation: "Candidate only; no stable Rust API or implementation commitment.",
+    },
+    Candidate {
+        library: ReferenceLibrary::Primitives,
+        name: "select.unstable_SelectBubbleInputProps",
+        source: "ref/primitives-main/packages/react/select/src/index.ts",
+        limitation: "Candidate only; no stable Rust API or implementation commitment.",
+    },
+    Candidate {
+        library: ReferenceLibrary::Primitives,
+        name: "slider.unstable_SliderThumbProvider",
+        source: "ref/primitives-main/packages/react/slider/src/index.ts",
+        limitation: "Candidate only; no stable Rust API or implementation commitment.",
+    },
+    Candidate {
+        library: ReferenceLibrary::Primitives,
+        name: "slider.unstable_SliderThumbTrigger",
+        source: "ref/primitives-main/packages/react/slider/src/index.ts",
+        limitation: "Candidate only; no stable Rust API or implementation commitment.",
+    },
+    Candidate {
+        library: ReferenceLibrary::Primitives,
+        name: "slider.unstable_SliderBubbleInput",
+        source: "ref/primitives-main/packages/react/slider/src/index.ts",
+        limitation: "Candidate only; no stable Rust API or implementation commitment.",
+    },
+    Candidate {
+        library: ReferenceLibrary::Primitives,
+        name: "slider.unstable_ThumbProvider",
+        source: "ref/primitives-main/packages/react/slider/src/index.ts",
+        limitation: "Candidate only; no stable Rust API or implementation commitment.",
+    },
+    Candidate {
+        library: ReferenceLibrary::Primitives,
+        name: "slider.unstable_ThumbTrigger",
+        source: "ref/primitives-main/packages/react/slider/src/index.ts",
+        limitation: "Candidate only; no stable Rust API or implementation commitment.",
+    },
+    Candidate {
+        library: ReferenceLibrary::Primitives,
+        name: "slider.unstable_BubbleInput",
+        source: "ref/primitives-main/packages/react/slider/src/index.ts",
+        limitation: "Candidate only; no stable Rust API or implementation commitment.",
+    },
+    Candidate {
+        library: ReferenceLibrary::Primitives,
+        name: "slider.unstable_SliderThumbProviderProps",
+        source: "ref/primitives-main/packages/react/slider/src/index.ts",
+        limitation: "Candidate only; no stable Rust API or implementation commitment.",
+    },
+    Candidate {
+        library: ReferenceLibrary::Primitives,
+        name: "slider.unstable_SliderThumbTriggerProps",
+        source: "ref/primitives-main/packages/react/slider/src/index.ts",
+        limitation: "Candidate only; no stable Rust API or implementation commitment.",
+    },
+    Candidate {
+        library: ReferenceLibrary::Primitives,
+        name: "slider.unstable_SliderBubbleInputProps",
+        source: "ref/primitives-main/packages/react/slider/src/index.ts",
+        limitation: "Candidate only; no stable Rust API or implementation commitment.",
+    },
+    Candidate {
+        library: ReferenceLibrary::Primitives,
+        name: "collection.unstable_createCollection",
+        source: "ref/primitives-main/packages/react/collection/src/index.ts",
+        limitation: "Candidate only; no stable Rust API or implementation commitment.",
+    },
+    Candidate {
+        library: ReferenceLibrary::Primitives,
+        name: "collection.unstable_CollectionSlotProps",
+        source: "ref/primitives-main/packages/react/collection/src/index.ts",
+        limitation: "Candidate only; no stable Rust API or implementation commitment.",
+    },
+    Candidate {
+        library: ReferenceLibrary::Primitives,
+        name: "collection.unstable_CollectionDict",
+        source: "ref/primitives-main/packages/react/collection/src/index.ts",
+        limitation: "Candidate only; no stable Rust API or implementation commitment.",
+    },
+];
+
+/// Behavioral and composition boundaries, separate from component name matching.
+pub const SUB_CAPABILITIES: &[SubCapability] = &[
+    SubCapability { name: "Responsive visual fields", component: "Responsive", support: Support::Yes, public_path: Some("rustify_components::Responsive"), limitation: "Only fields explicitly declared responsive by their component. Fixed Themes breakpoints; an omitted initial value retains component defaults.", verification: LAYOUT_CHECKS },
+    SubCapability { name: "Geometry validation and diagnostics", component: "GeometryStyles", support: Support::Yes, public_path: Some("rustify_components::GeometryStyles"), limitation: "SSR/CSR share validation; invalid candidates fall back to defaults and report a field. Declarations, rules, URL and import injection are rejected.", verification: &["crates/rustify-components/src/geometry.rs", "tests/browser/dom-layout.spec.ts"] },
+    SubCapability { name: "Single native-element reset", component: "Reset", support: Support::Yes, public_path: Some("rustify_components::Reset"), limitation: "One typed HtmlElement; fragments, tuples and arbitrary component views are rejected. This is not generic Slot/asChild composition.", verification: LAYOUT_CHECKS },
+    SubCapability { name: "Component-local visual palette", component: "Button / IconButton / Link / Text / Heading / Blockquote / Code", support: Support::Yes, public_path: Some("rustify_components::theme::AccentColor"), limitation: "Optional named palette roles stay local; unset color consumes semantic roles, including explicit author overrides. No automatic arbitrary-HEX palette generator.", verification: BUTTON_CHECKS },
+    SubCapability { name: "Root and nested source-backed theme", component: "Theme / ThemeBoundary", support: Support::Yes, public_path: Some("rustify_components::theme"), limitation: "Browser root owns one mount scope; boundaries retain two-mode source and controlled local patches. Static consumers use provide_static_theme and external CSS.", verification: THEME_CHECKS },
+    SubCapability { name: "Controlled configuration panel", component: "ThemePanel", support: Support::Yes, public_path: Some("rustify_components::ThemePanel"), limitation: "Six configuration controls and two-mode group-reset requests; application owns the document and accepts or refuses requests.", verification: &["crates/rustify-components/src/theme_panel.rs", "tests/browser/dom-buttons.spec.ts"] },
+    SubCapability { name: "Generic asChild / Slot / Slottable", component: "All components", support: Support::No, public_path: None, limitation: "No public Slot/Slottable or generic child cloning. Native Leptos attributes and Reset do not imply this contract.", verification: &[] },
+    SubCapability { name: "Complete unstyled Primitives", component: "All reference primitives", support: Support::No, public_path: None, limitation: "Existing styled controls reuse interaction semantics; there is no separate full unstyled Root/Trigger/Content part family.", verification: &[] },
+    SubCapability { name: "Three-state checkbox", component: "Checkbox", support: Support::No, public_path: None, limitation: "Current checked input is bool; indeterminate and native reset/submit semantics for that state are not a public contract.", verification: &[] },
+    SubCapability { name: "Selection groups and cards", component: "CheckboxGroup / CheckboxCards / RadioCards / Radio", support: Support::No, public_path: None, limitation: "No standalone themed Radio or cards/group components; existing RadioGroup is a distinct controlled API.", verification: &[] },
+    SubCapability { name: "Multiple slider thumbs", component: "Slider", support: Support::No, public_path: None, limitation: "Current Slider accepts one numeric value. Public track/range/thumb parts, multiple values and their commit contract are absent.", verification: &[] },
+    SubCapability { name: "Select / Dialog / menu parts", component: "Select / Dialog / Menu", support: Support::No, public_path: None, limitation: "Existing controlled components remain available, but no public Trigger/Content/Viewport/Group part surface or complete reference composition.", verification: &[] },
+    SubCapability { name: "Form validation and field binding", component: "Form / Field / SubmitButton", support: Support::Partial, public_path: Some("rustify_components::form"), limitation: "Existing business validation, generation and submission handle; no reference Form root/control/message part family.", verification: &["examples/property-workbench/src/main.rs", "tests/browser/p2-form.spec.ts"] },
+    SubCapability { name: "Command menus and toolbar groups", component: "Menu / ToggleGroup", support: Support::Partial, public_path: Some("rustify_components::Menu"), limitation: "Controlled command/menu data and toggle-toolbar behavior; no ContextMenu, Menubar, NavigationMenu or complete Toolbar API.", verification: LEGACY_CHECKS },
+    SubCapability { name: "Accessible icon wrapper", component: "Icon", support: Support::Partial, public_path: Some("rustify_components::Icon"), limitation: "SVG named image or decoration; no arbitrary-child AccessibleIcon wrapper or complete imported icon pack.", verification: LEGACY_CHECKS },
+    SubCapability { name: "GPU visual parity", component: "DOM visual additions", support: Support::No, public_path: None, limitation: "New layouts, typography, component-local palettes and visual option scales have no matching region component catalogue; shared theme snapshots do not require parity.", verification: &[] },
+];
+
+/// Looks up a current Rust entry without assuming that a category names one.
+pub fn component(name: &str) -> Option<&'static ComponentEntry> {
+    COMPONENTS.iter().find(|entry| entry.name == name)
+}
+
+fn cell(value: &str) -> String {
+    value.replace('|', "\\|").replace(['\n', '\r'], " ")
+}
+
+fn codes(values: &[&str]) -> String {
+    if values.is_empty() {
+        return "—".into();
+    }
+    values
+        .iter()
+        .map(|value| format!("`{}`", cell(value)))
+        .collect::<Vec<_>>()
+        .join(", ")
+}
+
+/// Complete generated documentation; the legacy [`markdown`] table remains available.
+pub fn catalogue_markdown() -> String {
+    let mut out = String::new();
+    let components = COMPONENTS
+        .iter()
+        .filter(|entry| entry.kind == ComponentKind::Component)
+        .count();
+    let subcomponents = COMPONENTS
+        .iter()
+        .filter(|entry| entry.kind == ComponentKind::Subcomponent)
+        .count();
+    let helpers = COMPONENTS
+        .iter()
+        .filter(|entry| entry.kind == ComponentKind::Helper)
+        .count();
+    let data = COMPONENTS
+        .iter()
+        .filter(|entry| entry.kind == ComponentKind::Data)
+        .count();
+    let _ = writeln!(out, "## Public source entries\n\n{} entries: {components} components, {subcomponents} subcomponent, {helpers} helper groups and {data} data surface. These are source APIs, not a count of all exported Rust symbols. The legacy application navigation has {} categories.\n", COMPONENTS.len(), CATALOG.len());
+    out.push_str("`yes` describes the listed Rust fields and limits; `partial` describes an available subset. Verification paths name checks and consumers to rerun, not a permanent browser/accessibility certification. GPU columns describe existing presentation subsets, not DOM/GPU API parity.\n\n");
+    out.push_str("| entry | kind / support | public path | DOM / GPU / across | fields | groups | limits | source / verification |\n| --- | --- | --- | --- | --- | --- | --- | --- |\n");
+    for entry in COMPONENTS {
+        let _ = writeln!(
+            out,
+            "| {} | {} / {} | `{}` | {} / {} / {} | {} | {} | {} | `{}`; {} |",
+            cell(entry.name),
+            entry.kind.name(),
+            entry.support.name(),
+            entry.public_path,
+            entry.presentation.dom.name(),
+            entry.presentation.gpu.name(),
+            entry.presentation.across_regions.name(),
+            codes(entry.fields),
+            codes(entry.property_groups),
+            cell(entry.limitation),
+            entry.source,
+            codes(entry.verification)
+        );
+    }
+    out.push_str("\n## Shared property groups\n\nOnly entries that name a group expose it. `Layout.padding` uses the separately enumerated Padding fields. Component-specific enums and defaults are documented in the [parameter matrix](validation/dom-components-p1/field-matrix.md).\n\n| group | fields | contract | verification |\n| --- | --- | --- | --- |\n");
+    for group in PROPERTY_GROUPS {
+        let _ = writeln!(
+            out,
+            "| {} | {} | {} | {} |",
+            group.name,
+            codes(group.fields),
+            cell(group.contract),
+            codes(group.verification)
+        );
+    }
+    out.push_str("\n## Stable reference inventory\n\nThese are the fixed local snapshot exports. A partial correspondence is not full upstream compatibility; composition and behavior gaps are listed separately below. Reference files identify provenance and are not build inputs.\n\n");
+    for library in ReferenceLibrary::ALL {
+        let count = STABLE_REFERENCES
+            .iter()
+            .filter(|entry| entry.library == library)
+            .count();
+        let _ = writeln!(
+            out,
+            "- {}: {count} stable runtime export names from `{}`.",
+            library.name(),
+            library.source()
+        );
+    }
+    out.push_str("\n| reference | runtime name | mapped Rust entry | correspondence | limits |\n| --- | --- | --- | --- | --- |\n");
+    for entry in STABLE_REFERENCES {
+        let mapped = entry
+            .component
+            .and_then(component)
+            .map(|entry| entry.public_path)
+            .unwrap_or("—");
+        let _ = writeln!(
+            out,
+            "| {} | `{}` | `{mapped}` | {} | {} |",
+            entry.library.name(),
+            entry.name,
+            entry.support.name(),
+            cell(entry.limitation)
+        );
+    }
+    let _ = writeln!(out, "\n### Direct Themes Props/type exports\n\nThe public barrel also directly exports {} stable type names (namespace-owned part types are outside this direct-export count):\n\n{}\n\nRust counterparts use component-specific Leptos props and Rust enums/structures. This list records reference names; it does not promise identical React types, refs or generated `Props` names. In particular Reset is a typed element decorator, and root Theme aliases the existing browser ThemeScope.\n", STABLE_THEME_PROP_TYPES.len(), codes(STABLE_THEME_PROP_TYPES));
+    out.push_str("## Sub-capability limits\n\n| capability | applicable entries | support | public path | limits | verification |\n| --- | --- | --- | --- | --- | --- |\n");
+    for entry in SUB_CAPABILITIES {
+        let _ = writeln!(
+            out,
+            "| {} | {} | {} | `{}` | {} | {} |",
+            cell(entry.name),
+            cell(entry.component),
+            entry.support.name(),
+            entry.public_path.unwrap_or("—"),
+            cell(entry.limitation),
+            codes(entry.verification)
+        );
+    }
+    let _ = writeln!(out, "\n## Unstable candidates\n\n{} qualified public/internal names below are candidates only. They are excluded from stable-reference and implementation counts; no candidate has a public Rust implementation commitment. Internal aliases are qualified by their package.\n\n| reference | candidate | source | limit |\n| --- | --- | --- | --- |", CANDIDATES.len());
+    for entry in CANDIDATES {
+        let _ = writeln!(
+            out,
+            "| {} | `{}` | `{}` | {} |",
+            entry.library.name(),
+            entry.name,
+            entry.source,
+            entry.limitation
+        );
+    }
+    out.push_str("\n## Legacy application categories\n\n`CATALOG` retains its existing 24-category navigation and six capability dimensions. It does not enumerate all current components, public symbols or reference APIs.\n\n");
+    out.push_str(&markdown());
+    out
+}
+
+#[cfg(test)]
+mod inventory_tests {
+    use super::*;
+    use std::collections::BTreeSet;
+
+    #[test]
+    fn frozen_reference_inventories_are_complete_unique_and_separate_from_candidates() {
+        let keys = STABLE_REFERENCES
+            .iter()
+            .map(|entry| (entry.library.name(), entry.name))
+            .collect::<BTreeSet<_>>();
+        assert_eq!(keys.len(), STABLE_REFERENCES.len());
+        assert_eq!(
+            STABLE_REFERENCES
+                .iter()
+                .filter(|entry| entry.library == ReferenceLibrary::Themes)
+                .count(),
+            64
+        );
+        assert_eq!(
+            STABLE_REFERENCES
+                .iter()
+                .filter(|entry| entry.library == ReferenceLibrary::Primitives)
+                .count(),
+            33
+        );
+        assert_eq!(STABLE_THEME_PROP_TYPES.len(), 39);
+        assert_eq!(
+            STABLE_THEME_PROP_TYPES
+                .iter()
+                .collect::<BTreeSet<_>>()
+                .len(),
+            STABLE_THEME_PROP_TYPES.len()
+        );
+        for entry in STABLE_REFERENCES {
+            assert!(!entry.name.starts_with("unstable_"));
+            if let Some(name) = entry.component {
+                assert!(
+                    component(name).is_some(),
+                    "{} maps to missing {name}",
+                    entry.name
+                );
+            } else {
+                assert_eq!(entry.support, Support::No);
+            }
+            assert!(!entry.limitation.is_empty());
+        }
+        let candidates = CANDIDATES
+            .iter()
+            .map(|entry| (entry.library.name(), entry.name))
+            .collect::<BTreeSet<_>>();
+        assert_eq!(candidates.len(), CANDIDATES.len());
+        assert!(keys.is_disjoint(&candidates));
+        assert!(CANDIDATES
+            .iter()
+            .all(|entry| entry.name.contains("unstable_") && !entry.source.is_empty()));
+    }
+
+    #[test]
+    fn public_entries_and_property_groups_have_no_dangling_or_unsupported_claims() {
+        assert_eq!(
+            COMPONENTS
+                .iter()
+                .map(|entry| entry.name)
+                .collect::<BTreeSet<_>>()
+                .len(),
+            COMPONENTS.len()
+        );
+        for entry in COMPONENTS {
+            assert!(
+                !entry.public_path.is_empty()
+                    && !entry.source.is_empty()
+                    && !entry.limitation.is_empty(),
+                "{}",
+                entry.name
+            );
+            assert_ne!(
+                entry.support,
+                Support::No,
+                "{} should be a reference gap, not a public entry",
+                entry.name
+            );
+            assert!(
+                !entry.verification.is_empty(),
+                "{} lacks a consumer/check",
+                entry.name
+            );
+            for group in entry.property_groups {
+                assert!(
+                    PROPERTY_GROUPS
+                        .iter()
+                        .any(|candidate| candidate.name == *group),
+                    "{} names unknown group {group}",
+                    entry.name
+                );
+            }
+        }
+        for entry in SUB_CAPABILITIES {
+            assert!(!entry.limitation.is_empty());
+            if entry.support == Support::No {
+                assert!(
+                    entry.public_path.is_none(),
+                    "{} claims an unimplemented path",
+                    entry.name
+                );
+            } else {
+                assert!(
+                    entry.public_path.is_some() && !entry.verification.is_empty(),
+                    "{} lacks a public path/check",
+                    entry.name
+                );
+            }
+        }
+    }
+
+    #[test]
+    fn layout_field_inventory_compiles_against_the_complete_public_structures() {
+        use crate::layout::*;
+        let Layout {
+            padding: _,
+            width: _,
+            min_width: _,
+            max_width: _,
+            height: _,
+            min_height: _,
+            max_height: _,
+            position: _,
+            inset: _,
+            top: _,
+            right: _,
+            bottom: _,
+            left: _,
+            overflow: _,
+            overflow_x: _,
+            overflow_y: _,
+            flex_basis: _,
+            flex_grow: _,
+            flex_shrink: _,
+            grid_area: _,
+            grid_column: _,
+            grid_column_start: _,
+            grid_column_end: _,
+            grid_row: _,
+            grid_row_start: _,
+            grid_row_end: _,
+            align_self: _,
+            justify_self: _,
+        } = Layout::default();
+        let Margin {
+            m: _,
+            mx: _,
+            my: _,
+            mt: _,
+            mr: _,
+            mb: _,
+            ml: _,
+        } = Margin::default();
+        let Padding {
+            p: _,
+            px: _,
+            py: _,
+            pt: _,
+            pr: _,
+            pb: _,
+            pl: _,
+        } = Padding::default();
+        let Gap {
+            gap: _,
+            gap_x: _,
+            gap_y: _,
+        } = Gap::default();
+        let InsetPadding {
+            p: _,
+            px: _,
+            py: _,
+            pt: _,
+            pr: _,
+            pb: _,
+            pl: _,
+        } = InsetPadding::default();
+        assert_eq!(
+            PROPERTY_GROUPS
+                .iter()
+                .find(|group| group.name == "Layout")
+                .unwrap()
+                .fields
+                .len(),
+            28
+        );
+        for name in ["Margin", "Padding", "InsetPadding"] {
+            assert_eq!(
+                PROPERTY_GROUPS
+                    .iter()
+                    .find(|group| group.name == name)
+                    .unwrap()
+                    .fields
+                    .len(),
+                7
+            );
+        }
+        assert_eq!(
+            PROPERTY_GROUPS
+                .iter()
+                .find(|group| group.name == "Gap")
+                .unwrap()
+                .fields,
+            ["gap", "gap_x", "gap_y"]
+        );
+        assert_eq!(
+            component("Em").unwrap().property_groups,
+            ["InlineText", "Element"]
+        );
+        assert!(!component("Link")
+            .unwrap()
+            .property_groups
+            .contains(&"Layout"));
+    }
+
+    #[test]
+    fn generator_keeps_reference_and_runtime_counts_distinct_and_includes_legacy_table() {
+        let document = catalogue_markdown();
+        assert!(document.contains("64 stable runtime export names"));
+        assert!(document.contains("33 stable runtime export names"));
+        assert!(document.contains("39 stable type names"));
+        assert!(document.contains(&markdown()));
+        for name in [
+            "asChild",
+            "Multiple slider thumbs",
+            "Skeleton",
+            "DataTable",
+            "ThemePanel",
+            "unstable_OneTimePasswordField",
+        ] {
+            assert!(document.contains(name), "missing {name}");
+        }
+    }
+
+    #[test]
+    #[cfg(rustify_repo_tests)]
+    fn committed_source_and_verification_paths_exist_without_reading_reference_trees() {
+        let root = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("../..");
+        for entry in COMPONENTS {
+            for path in std::iter::once(entry.source).chain(entry.verification.iter().copied()) {
+                assert!(!path.starts_with("ref/"));
+                assert!(
+                    root.join(path).is_file(),
+                    "{} has a missing path {path}",
+                    entry.name
+                );
+            }
+        }
+        let document = std::fs::read_to_string(root.join("docs/components.md")).unwrap();
+        assert!(
+            document.contains(&catalogue_markdown()),
+            "regenerate the capability document"
+        );
+    }
+
+    #[test]
+    #[cfg(all(feature = "ssr", not(target_arch = "wasm32")))]
+    fn newly_listed_component_paths_are_consumable_with_their_public_props() {
+        use crate::*;
+        use leptos::prelude::*;
+        let owner = Owner::new();
+        let config = rustify_ui::resolve(
+            &crate::theme::ThemeDocument::standard("catalog-consumer", "Catalog consumer"),
+            crate::theme::ThemeMode::Light,
+            &rustify_ui::ResolveContext::default(),
+        )
+        .unwrap()
+        .config;
+        let html = owner.with(|| {
+            view! {
+                <Button on_click=|| {}>"action"</Button>
+                <IconButton on_click=|| {} aria_label="Close"><Icon glyph=Glyph::Close/></IconButton>
+                <Link href="#target">"native link"</Link>
+                <Box><Flex><Grid><Container><Section><Inset>"layout"</Inset></Section></Container></Grid></Flex></Box>
+                <Text>"text"</Text><Heading>"heading"</Heading><Blockquote>"quote"</Blockquote><Code>"code"</Code>
+                <Kbd>"key"</Kbd><Em>"em"</Em><Quote>"q"</Quote><Strong>"strong"</Strong>
+                {Reset(leptos::html::button().child("reset"))}
+                <ThemePanel config=config overrides=ThemeOverrideCounts::default() on_change=|_| {} on_reset=|_| {}/>
+            }.to_html()
+        });
+        for tag in [
+            "button",
+            "a",
+            "div",
+            "section",
+            "span",
+            "h1",
+            "blockquote",
+            "code",
+            "kbd",
+            "em",
+            "q",
+            "strong",
+        ] {
+            assert!(html.contains(&format!("<{tag}")), "missing native {tag}");
+        }
     }
 }

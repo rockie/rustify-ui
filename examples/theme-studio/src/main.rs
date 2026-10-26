@@ -22,7 +22,13 @@ mod provider_fixture;
 mod scenes;
 #[cfg_attr(not(target_arch = "wasm32"), allow(dead_code))]
 mod state;
+#[cfg(target_arch = "wasm32")]
+mod storage_browser;
+#[cfg(target_arch = "wasm32")]
+mod storage_controls;
 #[cfg_attr(not(target_arch = "wasm32"), allow(dead_code))]
 mod theme_controls;
+#[cfg_attr(not(target_arch = "wasm32"), allow(dead_code))]
+mod write_queue;
 
 fn main() {}

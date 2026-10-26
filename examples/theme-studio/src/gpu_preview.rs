@@ -18,7 +18,7 @@ pub fn GpuPreview(
             en
         }
     };
-    let canvas = node_ref.unwrap_or_else(NodeRef::new);
+    let canvas = node_ref.unwrap_or_default();
     let root = NodeRef::<leptos::html::Div>::new();
     let width = RwSignal::new(760.0f64);
     let content = NodeRef::<leptos::html::Div>::new();

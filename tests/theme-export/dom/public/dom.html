@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Independent DOM theme exports</title>
+  <link rel="stylesheet" href="./fixture.css">
+  <link rel="stylesheet" href="./runtime-theme.css">
+  <link rel="stylesheet" href="./fonts.css">
+  <link rel="stylesheet" href="./rustify-runtime.css">
+</head>
+<body>
+  <h1>Independent DOM theme exports</h1>
+  <p id="dom-status" role="status" data-status="starting">Starting DOM consumer…</p>
+  <p id="dom-host">Outside all theme scopes</p>
+  <div class="samples">
+    <section id="dom-snippet" data-testid="dom-snippet"></section>
+    <section id="dom-json" data-testid="dom-json"></section>
+    <section id="dom-preview-light" data-testid="dom-preview-light"></section>
+    <section id="dom-preview-dark" data-testid="dom-preview-dark"></section>
+  </div>
+  <script type="module" src="./dom.js"></script>
+</body>
+</html>

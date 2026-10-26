@@ -16,7 +16,9 @@ declare global {
     }
 }
 
-const theme = JSON.parse(readFileSync("tests/docs-ssg/fixtures/components/theme.json", "utf8"));
+const authoredTheme = JSON.parse(readFileSync("tests/docs-ssg/fixtures/components/theme.json", "utf8"));
+// The complete legacy input reaches the island as equivalent Custom v2.
+const theme = { ...authoredTheme, schema_version: 2 };
 const route = (value: string) => new URL(value, String(test.info().project.use.baseURL)).href;
 const base = () => new URL(route("./")).pathname;
 const islands = (page: Page) => page.locator("[data-rustify-island]");

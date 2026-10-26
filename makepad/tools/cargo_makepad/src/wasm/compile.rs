@@ -157,13 +157,16 @@ fn cp_minified(source_path: &Path, dest_path: &Path) -> Result<(), String> {
 /// wasm-bindgen runs in-process so the glue generator is locked to the exact
 /// crate version in the lockfile; a schema mismatch fails here instead of at
 /// runtime.
-fn run_wasm_bindgen(wasm_path: &Path, out_dir: &Path) -> Result<(), String> {
+fn run_wasm_bindgen(wasm_path: &Path, out_dir: &Path, release: bool) -> Result<(), String> {
     let mut bindgen = wasm_bindgen_cli_support::Bindgen::new();
     bindgen
         .input_path(wasm_path)
         .web(true)
         .map_err(|e| format!("wasm-bindgen: {e}"))?
         .typescript(false)
+        // Demangled generic function names can dwarf the executable module.
+        // Keep them for debugging, without shipping them in release products.
+        .remove_name_section(release)
         .out_name("bindgen")
         .generate(out_dir)
         .map_err(|e| format!("wasm-bindgen failed on {}: {e:#}", wasm_path.display()))
@@ -256,7 +259,7 @@ pub fn build(config: WasmConfig, args: &[String]) -> Result<PathBuf, String> {
         }
     }
 
-    run_wasm_bindgen(&build_dir.join(format!("{build_crate}.wasm")), &build_dir)?;
+    run_wasm_bindgen(&build_dir.join(format!("{build_crate}.wasm")), &build_dir, profile == "release")?;
     let jsfile = build_dir.join("bindgen.js");
     let glue = fs::read_to_string(&jsfile)
         .map_err(|e| format!("Unable to find wasm-bindgen generated file {e:?}"))?;
