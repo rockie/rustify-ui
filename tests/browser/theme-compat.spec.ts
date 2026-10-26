@@ -72,7 +72,7 @@ test("two source-backed scopes isolate appearance, palettes, geometry and local 
   const layer=first.getByTestId('config-child-layer');
   await expect(layer).toHaveCSS('background-color',color);
   await expect(layer).toHaveCSS('border-top-width','1px');
-  const screenshot='docs/validation/dom-components-p1/source-boundaries.png';
+  const screenshot=process.env.RUSTIFY_THEME_BOUNDARY_OUT || 'docs/validation/dom-components-p1/source-boundaries.png';
   await first.screenshot({path:screenshot});
   await info.attach('source boundaries',{path:screenshot,contentType:'image/png'});
   await first.getByTestId('config-parent').click();

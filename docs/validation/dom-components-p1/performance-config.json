@@ -1,0 +1,476 @@
+{
+  "project": "theme-studio",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "environment": {
+    "collected_at": "2026-10-26T16:31:27.879Z",
+    "dpr": 1,
+    "root_font": "16px",
+    "gpu_renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M5 Pro, Unspecified Version)",
+    "build_id": "e26d1534a1255858",
+    "wasm_bytes": 9306843,
+    "browser_version": "156.0.8078.48",
+    "executable_path": "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+  },
+  "samples": 40,
+  "dom_css_commit": {
+    "p50": 17.09999990463257,
+    "p95": 21.200000047683716
+  },
+  "gpu_draw_ack": {
+    "p50": 18.299999952316284,
+    "p95": 22.5
+  },
+  "resolves": {
+    "editor": 80,
+    "sdk_total": 160
+  },
+  "published": 40,
+  "final_revision": 44,
+  "drawn_revision": 44,
+  "final_config": {
+    "appearance": "inherit",
+    "accent_color": "blue",
+    "gray_color": "slate",
+    "panel_background": "solid",
+    "radius": "small",
+    "scaling": 90
+  },
+  "regions": [
+    1
+  ],
+  "long_tasks": {
+    "count": 0,
+    "total_ms": 0,
+    "max_ms": 0,
+    "entries": []
+  },
+  "idle": {
+    "before": {
+      "regions": 1,
+      "timers": 0,
+      "animation_frames": 0,
+      "tasks": 0,
+      "errors": 0,
+      "gpu_bytes": 16985496,
+      "memory": 100925440,
+      "pumps": 156,
+      "frames": 57
+    },
+    "after": {
+      "regions": 1,
+      "timers": 0,
+      "animation_frames": 0,
+      "tasks": 0,
+      "errors": 0,
+      "gpu_bytes": 16985496,
+      "memory": 100925440,
+      "pumps": 156,
+      "frames": 57
+    }
+  },
+  "raw": [
+    {
+      "field": "accent_color",
+      "value": "pink",
+      "revision": 5,
+      "input_ms": 2390.2999999523163,
+      "css_commit_ms": 2408.5,
+      "gpu_ms": 2410,
+      "css_commit_latency_ms": 18.200000047683716,
+      "gpu_latency_ms": 19.700000047683716
+    },
+    {
+      "field": "gray_color",
+      "value": "mauve",
+      "revision": 6,
+      "input_ms": 2428.2999999523163,
+      "css_commit_ms": 2445.5,
+      "gpu_ms": 2446.899999856949,
+      "css_commit_latency_ms": 17.200000047683716,
+      "gpu_latency_ms": 18.59999990463257
+    },
+    {
+      "field": "panel_background",
+      "value": "translucent",
+      "revision": 7,
+      "input_ms": 2466.5999999046326,
+      "css_commit_ms": 2484.2000000476837,
+      "gpu_ms": 2485.5,
+      "css_commit_latency_ms": 17.600000143051147,
+      "gpu_latency_ms": 18.90000009536743
+    },
+    {
+      "field": "radius",
+      "value": "full",
+      "revision": 8,
+      "input_ms": 2504.7000000476837,
+      "css_commit_ms": 2531.5,
+      "gpu_ms": 2533,
+      "css_commit_latency_ms": 26.799999952316284,
+      "gpu_latency_ms": 28.299999952316284
+    },
+    {
+      "field": "scaling",
+      "value": "110",
+      "revision": 9,
+      "input_ms": 2540.7000000476837,
+      "css_commit_ms": 2558.5999999046326,
+      "gpu_ms": 2560.5999999046326,
+      "css_commit_latency_ms": 17.899999856948853,
+      "gpu_latency_ms": 19.899999856948853
+    },
+    {
+      "field": "accent_color",
+      "value": "blue",
+      "revision": 10,
+      "input_ms": 2589.899999856949,
+      "css_commit_ms": 2608.0999999046326,
+      "gpu_ms": 2609.399999856949,
+      "css_commit_latency_ms": 18.200000047683716,
+      "gpu_latency_ms": 19.5
+    },
+    {
+      "field": "gray_color",
+      "value": "slate",
+      "revision": 11,
+      "input_ms": 2627.2000000476837,
+      "css_commit_ms": 2644.399999856949,
+      "gpu_ms": 2645.5999999046326,
+      "css_commit_latency_ms": 17.199999809265137,
+      "gpu_latency_ms": 18.399999856948853
+    },
+    {
+      "field": "panel_background",
+      "value": "solid",
+      "revision": 12,
+      "input_ms": 2665.5999999046326,
+      "css_commit_ms": 2682.899999856949,
+      "gpu_ms": 2684.0999999046326,
+      "css_commit_latency_ms": 17.299999952316284,
+      "gpu_latency_ms": 18.5
+    },
+    {
+      "field": "radius",
+      "value": "small",
+      "revision": 13,
+      "input_ms": 2701.7999999523163,
+      "css_commit_ms": 2717.899999856949,
+      "gpu_ms": 2720,
+      "css_commit_latency_ms": 16.09999990463257,
+      "gpu_latency_ms": 18.200000047683716
+    },
+    {
+      "field": "scaling",
+      "value": "90",
+      "revision": 14,
+      "input_ms": 2738,
+      "css_commit_ms": 2765.5999999046326,
+      "gpu_ms": 2767,
+      "css_commit_latency_ms": 27.59999990463257,
+      "gpu_latency_ms": 29
+    },
+    {
+      "field": "accent_color",
+      "value": "pink",
+      "revision": 15,
+      "input_ms": 2781.0999999046326,
+      "css_commit_ms": 2799.0999999046326,
+      "gpu_ms": 2800.2999999523163,
+      "css_commit_latency_ms": 18,
+      "gpu_latency_ms": 19.200000047683716
+    },
+    {
+      "field": "gray_color",
+      "value": "mauve",
+      "revision": 16,
+      "input_ms": 2818.5,
+      "css_commit_ms": 2835.0999999046326,
+      "gpu_ms": 2836.2999999523163,
+      "css_commit_latency_ms": 16.59999990463257,
+      "gpu_latency_ms": 17.799999952316284
+    },
+    {
+      "field": "panel_background",
+      "value": "translucent",
+      "revision": 17,
+      "input_ms": 2854.399999856949,
+      "css_commit_ms": 2871.2999999523163,
+      "gpu_ms": 2872.7000000476837,
+      "css_commit_latency_ms": 16.90000009536743,
+      "gpu_latency_ms": 18.300000190734863
+    },
+    {
+      "field": "radius",
+      "value": "full",
+      "revision": 18,
+      "input_ms": 2891.2000000476837,
+      "css_commit_ms": 2907.7999999523163,
+      "gpu_ms": 2909.2000000476837,
+      "css_commit_latency_ms": 16.59999990463257,
+      "gpu_latency_ms": 18
+    },
+    {
+      "field": "scaling",
+      "value": "110",
+      "revision": 19,
+      "input_ms": 2927.2999999523163,
+      "css_commit_ms": 2944,
+      "gpu_ms": 2945.2000000476837,
+      "css_commit_latency_ms": 16.700000047683716,
+      "gpu_latency_ms": 17.90000009536743
+    },
+    {
+      "field": "accent_color",
+      "value": "blue",
+      "revision": 20,
+      "input_ms": 2968.899999856949,
+      "css_commit_ms": 2985.899999856949,
+      "gpu_ms": 2987.0999999046326,
+      "css_commit_latency_ms": 17,
+      "gpu_latency_ms": 18.200000047683716
+    },
+    {
+      "field": "gray_color",
+      "value": "slate",
+      "revision": 21,
+      "input_ms": 3005.2999999523163,
+      "css_commit_ms": 3023.399999856949,
+      "gpu_ms": 3024.7000000476837,
+      "css_commit_latency_ms": 18.09999990463257,
+      "gpu_latency_ms": 19.40000009536743
+    },
+    {
+      "field": "panel_background",
+      "value": "solid",
+      "revision": 22,
+      "input_ms": 3043.2000000476837,
+      "css_commit_ms": 3059.899999856949,
+      "gpu_ms": 3061,
+      "css_commit_latency_ms": 16.699999809265137,
+      "gpu_latency_ms": 17.799999952316284
+    },
+    {
+      "field": "radius",
+      "value": "small",
+      "revision": 23,
+      "input_ms": 3079.2999999523163,
+      "css_commit_ms": 3095.0999999046326,
+      "gpu_ms": 3096.399999856949,
+      "css_commit_latency_ms": 15.799999952316284,
+      "gpu_latency_ms": 17.09999990463257
+    },
+    {
+      "field": "scaling",
+      "value": "90",
+      "revision": 24,
+      "input_ms": 3116.2000000476837,
+      "css_commit_ms": 3133.2999999523163,
+      "gpu_ms": 3134.5,
+      "css_commit_latency_ms": 17.09999990463257,
+      "gpu_latency_ms": 18.299999952316284
+    },
+    {
+      "field": "accent_color",
+      "value": "pink",
+      "revision": 25,
+      "input_ms": 3157.5,
+      "css_commit_ms": 3174.7999999523163,
+      "gpu_ms": 3176,
+      "css_commit_latency_ms": 17.299999952316284,
+      "gpu_latency_ms": 18.5
+    },
+    {
+      "field": "gray_color",
+      "value": "mauve",
+      "revision": 26,
+      "input_ms": 3194.5999999046326,
+      "css_commit_ms": 3210.5,
+      "gpu_ms": 3211.5,
+      "css_commit_latency_ms": 15.900000095367432,
+      "gpu_latency_ms": 16.90000009536743
+    },
+    {
+      "field": "panel_background",
+      "value": "translucent",
+      "revision": 27,
+      "input_ms": 3229.0999999046326,
+      "css_commit_ms": 3245.2999999523163,
+      "gpu_ms": 3246.5,
+      "css_commit_latency_ms": 16.200000047683716,
+      "gpu_latency_ms": 17.40000009536743
+    },
+    {
+      "field": "radius",
+      "value": "full",
+      "revision": 28,
+      "input_ms": 3265.7000000476837,
+      "css_commit_ms": 3281.899999856949,
+      "gpu_ms": 3283.0999999046326,
+      "css_commit_latency_ms": 16.199999809265137,
+      "gpu_latency_ms": 17.399999856948853
+    },
+    {
+      "field": "scaling",
+      "value": "110",
+      "revision": 29,
+      "input_ms": 3300.7000000476837,
+      "css_commit_ms": 3317.899999856949,
+      "gpu_ms": 3319,
+      "css_commit_latency_ms": 17.199999809265137,
+      "gpu_latency_ms": 18.299999952316284
+    },
+    {
+      "field": "accent_color",
+      "value": "blue",
+      "revision": 30,
+      "input_ms": 3343.2000000476837,
+      "css_commit_ms": 3360.2999999523163,
+      "gpu_ms": 3361.399999856949,
+      "css_commit_latency_ms": 17.09999990463257,
+      "gpu_latency_ms": 18.199999809265137
+    },
+    {
+      "field": "gray_color",
+      "value": "slate",
+      "revision": 31,
+      "input_ms": 3380.2000000476837,
+      "css_commit_ms": 3397.899999856949,
+      "gpu_ms": 3399.2000000476837,
+      "css_commit_latency_ms": 17.699999809265137,
+      "gpu_latency_ms": 19
+    },
+    {
+      "field": "panel_background",
+      "value": "solid",
+      "revision": 32,
+      "input_ms": 3418.7000000476837,
+      "css_commit_ms": 3435.399999856949,
+      "gpu_ms": 3436.5999999046326,
+      "css_commit_latency_ms": 16.699999809265137,
+      "gpu_latency_ms": 17.899999856948853
+    },
+    {
+      "field": "radius",
+      "value": "small",
+      "revision": 33,
+      "input_ms": 3454.7000000476837,
+      "css_commit_ms": 3470.899999856949,
+      "gpu_ms": 3472.0999999046326,
+      "css_commit_latency_ms": 16.199999809265137,
+      "gpu_latency_ms": 17.399999856948853
+    },
+    {
+      "field": "scaling",
+      "value": "90",
+      "revision": 34,
+      "input_ms": 3490.7000000476837,
+      "css_commit_ms": 3508.7000000476837,
+      "gpu_ms": 3509.7999999523163,
+      "css_commit_latency_ms": 18,
+      "gpu_latency_ms": 19.09999990463257
+    },
+    {
+      "field": "accent_color",
+      "value": "pink",
+      "revision": 35,
+      "input_ms": 3534.2999999523163,
+      "css_commit_ms": 3551.5,
+      "gpu_ms": 3552.5999999046326,
+      "css_commit_latency_ms": 17.200000047683716,
+      "gpu_latency_ms": 18.299999952316284
+    },
+    {
+      "field": "gray_color",
+      "value": "mauve",
+      "revision": 36,
+      "input_ms": 3570.399999856949,
+      "css_commit_ms": 3587.7000000476837,
+      "gpu_ms": 3588.899999856949,
+      "css_commit_latency_ms": 17.300000190734863,
+      "gpu_latency_ms": 18.5
+    },
+    {
+      "field": "panel_background",
+      "value": "translucent",
+      "revision": 37,
+      "input_ms": 3608.2999999523163,
+      "css_commit_ms": 3625.399999856949,
+      "gpu_ms": 3626.399999856949,
+      "css_commit_latency_ms": 17.09999990463257,
+      "gpu_latency_ms": 18.09999990463257
+    },
+    {
+      "field": "radius",
+      "value": "full",
+      "revision": 38,
+      "input_ms": 3644.7000000476837,
+      "css_commit_ms": 3661.5,
+      "gpu_ms": 3662.5999999046326,
+      "css_commit_latency_ms": 16.799999952316284,
+      "gpu_latency_ms": 17.899999856948853
+    },
+    {
+      "field": "scaling",
+      "value": "110",
+      "revision": 39,
+      "input_ms": 3682.7999999523163,
+      "css_commit_ms": 3700.5,
+      "gpu_ms": 3701.899999856949,
+      "css_commit_latency_ms": 17.700000047683716,
+      "gpu_latency_ms": 19.09999990463257
+    },
+    {
+      "field": "accent_color",
+      "value": "blue",
+      "revision": 40,
+      "input_ms": 3727,
+      "css_commit_ms": 3744.7999999523163,
+      "gpu_ms": 3746.0999999046326,
+      "css_commit_latency_ms": 17.799999952316284,
+      "gpu_latency_ms": 19.09999990463257
+    },
+    {
+      "field": "gray_color",
+      "value": "slate",
+      "revision": 41,
+      "input_ms": 3767,
+      "css_commit_ms": 3783.5,
+      "gpu_ms": 3784.5,
+      "css_commit_latency_ms": 16.5,
+      "gpu_latency_ms": 17.5
+    },
+    {
+      "field": "panel_background",
+      "value": "solid",
+      "revision": 42,
+      "input_ms": 3803,
+      "css_commit_ms": 3820.0999999046326,
+      "gpu_ms": 3821.2999999523163,
+      "css_commit_latency_ms": 17.09999990463257,
+      "gpu_latency_ms": 18.299999952316284
+    },
+    {
+      "field": "radius",
+      "value": "small",
+      "revision": 43,
+      "input_ms": 3840.2999999523163,
+      "css_commit_ms": 3861.5,
+      "gpu_ms": 3862.7999999523163,
+      "css_commit_latency_ms": 21.200000047683716,
+      "gpu_latency_ms": 22.5
+    },
+    {
+      "field": "scaling",
+      "value": "90",
+      "revision": 44,
+      "input_ms": 3886.2999999523163,
+      "css_commit_ms": 3903.2999999523163,
+      "gpu_ms": 3904.2999999523163,
+      "css_commit_latency_ms": 17,
+      "gpu_latency_ms": 18
+    }
+  ]
+}

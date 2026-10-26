@@ -978,6 +978,7 @@
   appearance: none;
   height: var(--thumb-height);
   width: var(--thumb-height);
+  margin-top: calc(0px - var(--clip-top));
   background-color: var(--thumb-bg);
   box-shadow: var(--box-fill), inset 0 0 0 var(--border-width) var(--thumb-border);
   border-radius: var(--thumb-height);

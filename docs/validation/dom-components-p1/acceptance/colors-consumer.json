@@ -1,0 +1,30 @@
+{
+  "role": "Agent-simulated consumer using only the public README and copied public CSS/license",
+  "steps": [
+    "copy selected Indigo/Mint sRGB/P3/alpha files and MIT license",
+    "author static HTML with explicit light/dark markers",
+    "no page JavaScript",
+    "observe sRGB fallback",
+    "emulate P3 media gate without claiming physical display calibration",
+    "check host sentinel and 1280/390 widths"
+  ],
+  "requests": [
+    "http://127.0.0.1:4211/",
+    "http://127.0.0.1:4211/colors/indigo-light-p3.css",
+    "http://127.0.0.1:4211/colors/indigo-dark-p3.css",
+    "http://127.0.0.1:4211/colors/mint-light-p3.css",
+    "http://127.0.0.1:4211/colors/mint-dark-p3.css",
+    "http://127.0.0.1:4211/colors/indigo-light-alpha-p3.css",
+    "http://127.0.0.1:4211/colors/indigo-dark-alpha-p3.css",
+    "http://127.0.0.1:4211/style.css",
+    "http://127.0.0.1:4211/colors/indigo-dark.css",
+    "http://127.0.0.1:4211/colors/indigo-light.css",
+    "http://127.0.0.1:4211/colors/mint-light.css",
+    "http://127.0.0.1:4211/colors/indigo-light-alpha.css",
+    "http://127.0.0.1:4211/colors/mint-dark.css",
+    "http://127.0.0.1:4211/colors/indigo-dark-alpha.css"
+  ],
+  "failures": [],
+  "errors": [],
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36"
+}

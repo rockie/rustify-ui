@@ -79,7 +79,7 @@ that it started, rather than claiming the file was saved by the user.
 
 See the [SDK theme guide](../../docs/themes.md),
 [source API and storage migration guide](../../docs/dom-components-migration.md),
-[legacy v1 document schema](../../docs/theme-document.schema.json) and
+[v2 document schema](../../docs/theme-document.schema.json) and
 [independent export consumer](../../tests/theme-export/README.md). CSS exports
 reference font files; copy those resources and their
 [license notices](../../makepad/widgets/resources/FONT-LICENSES.md) with the

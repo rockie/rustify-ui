@@ -1,0 +1,157 @@
+{
+  "source_baseline": "dirty@09d9e7bda371c6b42c18db95437c207a91163016",
+  "studio_phases": [
+    {
+      "phase": "clippy",
+      "command": [
+        "mbx",
+        "clippy",
+        "--locked",
+        "-p",
+        "theme-studio",
+        "--bin",
+        "theme-studio",
+        "--target",
+        "wasm32-unknown-unknown",
+        "--no-deps",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "workdir": "/Users/rockie/Documents/gh-rockie/rustify-ui",
+      "target": "/Users/rockie/Documents/gh-rockie/rustify-ui/target",
+      "rustc": "rustc 1.99.0 (b940084d7 2026-09-28)",
+      "RUSTC": "/Users/rockie/.rustup/toolchains/1.99.0-aarch64-apple-darwin/bin/rustc",
+      "RUSTDOC": "/Users/rockie/.rustup/toolchains/1.99.0-aarch64-apple-darwin/bin/rustdoc",
+      "RUSTUP_TOOLCHAIN": "1.99.0",
+      "RUSTFLAGS": "--cfg=web_sys_unstable_apis",
+      "MBX_TARGET_VIEWS": "0",
+      "CARGO_NET_OFFLINE": "true",
+      "log": "/tmp/rustify-p1-m7-projection-clippy.log",
+      "exit_code": 0
+    },
+    {
+      "phase": "build-root",
+      "command": [
+        "mbx",
+        "xtask",
+        "build-web",
+        "--example",
+        "theme-studio",
+        "--release"
+      ],
+      "workdir": "/Users/rockie/Documents/gh-rockie/rustify-ui",
+      "target": "/Users/rockie/Documents/gh-rockie/rustify-ui/target",
+      "rustc": "rustc 1.99.0 (b940084d7 2026-09-28)",
+      "RUSTC": "/Users/rockie/.rustup/toolchains/1.99.0-aarch64-apple-darwin/bin/rustc",
+      "RUSTDOC": "/Users/rockie/.rustup/toolchains/1.99.0-aarch64-apple-darwin/bin/rustdoc",
+      "RUSTUP_TOOLCHAIN": "1.99.0",
+      "RUSTFLAGS": null,
+      "MBX_TARGET_VIEWS": "0",
+      "CARGO_NET_OFFLINE": "true",
+      "log": "/tmp/rustify-p1-m7-projection-build-root.log",
+      "exit_code": 0,
+      "product": {
+        "site": "/Users/rockie/Documents/gh-rockie/rustify-ui/target/makepad-wasm-app/release/theme-studio",
+        "base": "/",
+        "build_id": "e26d1534a1255858",
+        "schema_hash": "2906431550179788552",
+        "toolchain": "rustc 1.99.0 (b940084d7 2026-09-28)",
+        "wasm_bytes": 9306843,
+        "wasm_sha256": "e26d1534a1255858e0261cb749a697a8b6b9722393cee456a791ea8bc7f47dc7",
+        "manifest_copy": "/tmp/rustify-p1-m7-projection-build-root-manifest.json",
+        "manifest_sha256": "9732e22d41b68b3e4589d3ff3ab7dad475b2343efd7578ada0ff98cd7727cd4f"
+      }
+    },
+    {
+      "phase": "build-deep",
+      "command": [
+        "mbx",
+        "xtask",
+        "build-web",
+        "--example",
+        "theme-studio",
+        "--release",
+        "--base",
+        "/tools/demo/"
+      ],
+      "workdir": "/Users/rockie/Documents/gh-rockie/rustify-ui",
+      "target": "/Users/rockie/Documents/gh-rockie/rustify-ui/target",
+      "rustc": "rustc 1.99.0 (b940084d7 2026-09-28)",
+      "RUSTC": "/Users/rockie/.rustup/toolchains/1.99.0-aarch64-apple-darwin/bin/rustc",
+      "RUSTDOC": "/Users/rockie/.rustup/toolchains/1.99.0-aarch64-apple-darwin/bin/rustdoc",
+      "RUSTUP_TOOLCHAIN": "1.99.0",
+      "RUSTFLAGS": null,
+      "MBX_TARGET_VIEWS": "0",
+      "CARGO_NET_OFFLINE": "true",
+      "log": "/tmp/rustify-p1-m7-projection-build-deep.log",
+      "exit_code": 0,
+      "product": {
+        "site": "/Users/rockie/Documents/gh-rockie/rustify-ui/target/makepad-wasm-app/release/theme-studio@tools-demo",
+        "base": "/tools/demo/",
+        "build_id": "e26d1534a1255858",
+        "schema_hash": "2906431550179788552",
+        "toolchain": "rustc 1.99.0 (b940084d7 2026-09-28)",
+        "wasm_bytes": 9306843,
+        "wasm_sha256": "e26d1534a1255858e0261cb749a697a8b6b9722393cee456a791ea8bc7f47dc7",
+        "manifest_copy": "/tmp/rustify-p1-m7-projection-build-deep-manifest.json",
+        "manifest_sha256": "1b29d8d0f296b695a27c8e88ad3f935a8ea060c66da05d2970eb7edeb73c7699"
+      }
+    }
+  ],
+  "catalog": {
+    "command": [
+      "mbx",
+      "xtask",
+      "build-web",
+      "--example",
+      "component-catalog",
+      "--release"
+    ],
+    "workdir": "/Users/rockie/Documents/gh-rockie/rustify-ui",
+    "target": "/Users/rockie/Documents/gh-rockie/rustify-ui/target",
+    "rustc": "rustc 1.99.0 (b940084d7 2026-09-28)",
+    "RUSTC": "/Users/rockie/.rustup/toolchains/1.99.0-aarch64-apple-darwin/bin/rustc",
+    "RUSTDOC": "/Users/rockie/.rustup/toolchains/1.99.0-aarch64-apple-darwin/bin/rustdoc",
+    "RUSTUP_TOOLCHAIN": "1.99.0",
+    "MBX_TARGET_VIEWS": "0",
+    "CARGO_NET_OFFLINE": "true",
+    "log": "/tmp/rustify-p1-m7-projection-build-catalog.log",
+    "exit_code": 0,
+    "product": {
+      "site": "/Users/rockie/Documents/gh-rockie/rustify-ui/target/makepad-wasm-app/release/component-catalog",
+      "base": "/",
+      "build_id": "f44aae1deec6a49e",
+      "schema_hash": "2906431550179788552",
+      "toolchain": "rustc 1.99.0 (b940084d7 2026-09-28)",
+      "wasm_bytes": 8076343,
+      "wasm_sha256": "f44aae1deec6a49e8a8db504fc7d99095bc144749133e8f240c0e76b692824a4",
+      "manifest_copy": "/tmp/rustify-p1-m7-projection-build-catalog-manifest.json",
+      "manifest_sha256": "2ee3e71550fd90b9a6be43c0dd0b3a1e6e6a64a60fbdefa0acaafb0a92adf9c1"
+    }
+  },
+  "default_dom": [
+    {
+      "site": "tests/theme-export/target/site-root",
+      "wasm_bytes": 1222828,
+      "wasm_sha256": "41f27336a90ff0a7a5cfdf050b39887134584ea6a7caf641c3cf3a1b72f06545"
+    },
+    {
+      "site": "tests/theme-export/target/site-subpath",
+      "wasm_bytes": 1222828,
+      "wasm_sha256": "41f27336a90ff0a7a5cfdf050b39887134584ea6a7caf641c3cf3a1b72f06545"
+    }
+  ],
+  "release_custom_sections": [
+    "producers",
+    "__wasm_split_unstable",
+    "target_features"
+  ],
+  "size_report": [
+    "/Users/rockie/Documents/gh-rockie/rustify-ui/target/makepad-wasm-app/release/theme-studio",
+    "size report (bytes): wasm 9306843 | js 233698 | css 89995 | fonts 51732356 | images 20701 | data 299932 | total 61683525",
+    "compressed with gzip -9, which is what a compressing host sends:",
+    "size report (bytes): wasm 2923512 | js 53281 | css 15621 | fonts 35215164 | images 10110 | data 44608 | total 38262296",
+    "57 files"
+  ]
+}

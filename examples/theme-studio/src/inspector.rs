@@ -344,6 +344,7 @@ mod ui {
             state.samples.get();
             state.envelope.with(|envelope| envelope.preferences.clone());
             state.inspector.get();
+            state.mobile_tab.get();
             picked.get();
             outline.get();
             if let Some(frame) = pending_layout.get_value() {

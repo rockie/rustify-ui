@@ -221,7 +221,7 @@ test.describe("local preview scenes", () => {
         const before = await localState(page);
         const palette = await scene(page, "Color palette", "palette");
         await expect(palette.locator("article[data-theme-tokens]")).toHaveCount(35);
-        const authors = before.state.document.styles.light;
+        const authors = before.state.values.light;
         for (const token of Object.keys(authors).filter(token => paletteTokens.has(token))) {
             await expect(palette.getByTestId(`palette-${token}`)).toHaveAttribute("data-theme-tokens", token);
             await expect(palette.getByTestId(`palette-value-${token}`)).not.toBeEmpty();

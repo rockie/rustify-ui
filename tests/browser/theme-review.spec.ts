@@ -78,7 +78,16 @@ for (const width of [1440, 390]) {
             expect(w).toBeGreaterThan(0); expect(h).toBeGreaterThan(0);
             const box = (await canvas.boundingBox())!;
             await page.locator(".studio-previews").evaluate((node, targetY) => { node.scrollTop += targetY - 450; }, box.y + y + h / 2);
-            await canvas.click({ position: { x: x + w * fraction, y: y + h / 2 } });
+            const point = await canvas.evaluate((node, local) => {
+                const box = node.getBoundingClientRect();
+                const x = box.left + local.x, y = box.top + local.y;
+                const hit = document.elementFromPoint(x, y);
+                return { x, y, hitsCanvas: hit === node, hit: hit?.tagName, canvas: { x: box.x, y: box.y, width: box.width, height: box.height } };
+            }, { x: x + w * fraction, y: y + h / 2 });
+            expect(point.hitsCanvas, JSON.stringify(point)).toBe(true);
+            // The target is already visible. Locator auto-scrolling a 4096px
+            // canvas can move this point again; use the verified native point.
+            await page.mouse.click(point.x, point.y);
         };
         await click("control.dropdown");
         await expect(page.getByTestId("gpu-dropdown-menu")).toBeVisible();

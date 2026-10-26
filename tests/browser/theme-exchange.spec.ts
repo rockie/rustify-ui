@@ -118,16 +118,20 @@ for(const kind of ["Tailwind v4 CSS","Rust integration"]) test(`fresh download c
 });
 
 test('export dialogs recenter as contents and viewport change, with reachable actions',async({page})=>{
-  await waitForReady(page);await page.getByTestId('theme-export').click();
-  await select(page,'export-kind','Tailwind v4 CSS');
+  await waitForReady(page);
+  for(const [field,value] of [['appearance','Dark'],['accent_color','pink'],['gray_color','Auto'],['panel_background','Translucent'],['radius','Full'],['scaling','110%']]) await select(page,`studio-config-${field}`,value);
+  await page.getByTestId('theme-export').click();
   const panel=page.getByTestId('data-tools-dialog').locator('[data-name="Dialog"]');
-  for(const viewport of [{width:1280,height:720},{width:768,height:1024},{width:390,height:844}]){
-    await page.setViewportSize(viewport);
-    await expect.poll(async()=>{
-      const box=await panel.boundingBox();return !!box&&box.x>=8&&box.y>=8&&box.x+box.width<=viewport.width-8&&box.y+box.height<=viewport.height-8;
-    }).toBe(true);
-    await page.getByTestId('export-download').scrollIntoViewIfNeeded();
-    const button=await page.getByTestId('export-download').boundingBox();
-    expect(button!.y).toBeGreaterThanOrEqual(0);expect(button!.y+button!.height).toBeLessThanOrEqual(viewport.height);
+  for(const kind of ['Tailwind v4 CSS','Compatible JSON v1 · lossy']){
+    await select(page,'export-kind',kind);
+    for(const viewport of [{width:1280,height:720},{width:768,height:1024},{width:390,height:844}]){
+      await page.setViewportSize(viewport);
+      await expect.poll(async()=>{
+        const box=await panel.boundingBox();return !!box&&box.x>=8&&box.y>=8&&box.x+box.width<=viewport.width-8&&box.y+box.height<=viewport.height-8;
+      }).toBe(true);
+      await page.getByTestId('export-download').scrollIntoViewIfNeeded();
+      const button=await page.getByTestId('export-download').boundingBox();
+      expect(button!.y).toBeGreaterThanOrEqual(0);expect(button!.y+button!.height).toBeLessThanOrEqual(viewport.height);
+    }
   }
 });

@@ -13,6 +13,9 @@ use std::sync::Arc;
 #[derive(Clone, Copy)]
 struct EffectiveTheme(Signal<Arc<ResolvedTheme>>);
 
+#[cfg(target_arch = "wasm32")]
+type ThemeProjection = (ThemeMode, Vec<(String, String)>);
+
 /// The immutable snapshot in force at this position, including local patches.
 pub fn use_resolved_theme() -> Option<Signal<Arc<ResolvedTheme>>> {
     use_context::<EffectiveTheme>().map(|theme| theme.0)
@@ -115,10 +118,13 @@ pub fn ThemeScope(
         .map(|(name, _)| name);
     if claim_root(roots.as_ref(), names, "v4") {
         provide_context(EffectiveTheme(resolved));
+        let projected = StoredValue::new(None::<ThemeProjection>);
         Effect::new(move || {
             let snapshot = resolved.get();
             if let Some(roots) = &roots {
-                write_snapshot(&roots.container(), &snapshot, true);
+                projected.update_value(|previous| {
+                    project_theme(&roots.container(), &snapshot, previous);
+                });
             }
         });
     }
@@ -138,6 +144,38 @@ pub(crate) fn write_snapshot(
     if mode {
         let _ = element.set_attribute("data-theme", snapshot.mode.as_str());
     }
+}
+
+#[cfg(target_arch = "wasm32")]
+fn project_theme(
+    element: &leptos::web_sys::HtmlElement,
+    snapshot: &ResolvedTheme,
+    projected: &mut Option<ThemeProjection>,
+) {
+    let properties = snapshot.properties();
+    if projected
+        .as_ref()
+        .is_some_and(|(mode, values)| *mode == snapshot.mode && values == &properties)
+    {
+        return;
+    }
+    let mut previous: std::collections::HashMap<_, _> = projected
+        .as_ref()
+        .into_iter()
+        .flat_map(|(_, properties)| properties.iter().map(|(name, value)| (name, value)))
+        .collect();
+    let style = element.style();
+    for (name, value) in &properties {
+        if previous.remove(name) != Some(value) {
+            let _ = style.set_property(name, value);
+        }
+    }
+    for name in previous.keys() {
+        let _ = style.remove_property(name);
+    }
+    let _ = element.set_attribute("data-rustify-theme-runtime", "v4");
+    let _ = element.set_attribute("data-theme", snapshot.mode.as_str());
+    *projected = Some((snapshot.mode, properties));
 }
 
 /// Applies sparse two-mode tokens and configuration using the original author source.
@@ -167,7 +205,7 @@ pub fn ThemeBoundary(
     let effective = Signal::derive(move || candidate.get().unwrap_or_else(|_| outer.get()));
     provide_context(EffectiveTheme(effective));
     let node = NodeRef::<leptos::html::Div>::new();
-    let projected = StoredValue::new(Vec::<String>::new());
+    let projected = StoredValue::new(None::<ThemeProjection>);
     Effect::new(move || {
         let patch = patch.get();
         let result = candidate.get();
@@ -175,19 +213,16 @@ pub fn ThemeBoundary(
         let element: leptos::web_sys::HtmlElement = node.into();
         match result {
             Ok(snapshot) if !patch.is_empty() => {
-                let names: Vec<_> = snapshot.properties().into_iter().map(|(name, _)| name).collect();
-                projected.with_value(|previous| {
-                    for name in previous.iter().filter(|name| !names.contains(name)) {
-                        let _ = element.style().remove_property(name);
-                    }
+                projected.update_value(|previous| {
+                    project_theme(&element, &snapshot, previous);
                 });
-                write_snapshot(&element, &snapshot, true);
-                projected.set_value(names);
             }
             result => {
                 projected.update_value(|previous| {
-                    for name in previous.drain(..) {
-                        let _ = element.style().remove_property(&name);
+                    if let Some((_, properties)) = previous.take() {
+                        for (name, _) in properties {
+                            let _ = element.style().remove_property(&name);
+                        }
                     }
                 });
                 let _ = element.remove_attribute("data-theme");
