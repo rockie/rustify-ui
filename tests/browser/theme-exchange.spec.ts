@@ -17,7 +17,7 @@ test("JSON review is atomic and cancel, invalid input and rejected code preserve
   candidate.name="Imported 中文";candidate.config.accent_color="tomato";candidate.config.scaling=105;candidate.base.dark["future-base"]="keep base text";candidate.overrides.light.primary="oklch(0.72 0.25 35 / 0.7)";candidate.overrides.dark.primary="#223344";candidate.base.light["future-token"]="keep author text";
   await importSource(page,JSON.stringify(candidate));await expect(page.getByTestId("import-preview")).toContainText("future-token");
   await expect(page.getByTestId("import-version")).toContainText("2");
-  await expect(page.getByTestId("import-config")).toContainText("Brand colorTomato");
+  await expect(page.getByTestId("import-config").locator("div").filter({has:page.getByText("Brand color",{exact:true})})).toContainText("Custom → Tomato");
   expect((await state(page)).document).toEqual(before.document);
   await page.getByTestId("import-cancel").click();expect((await state(page)).history).toEqual(before.history);
   await importSource(page,JSON.stringify(candidate));await page.getByTestId("import-apply").click();

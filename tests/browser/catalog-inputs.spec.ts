@@ -1,4 +1,5 @@
 import { expect, Locator, Page } from "@playwright/test";
+import { PNG } from "pngjs";
 
 import { test } from "./support";
 
@@ -59,6 +60,39 @@ const TOKENS = {
     light: { primary: "#1570ef", popover: "#ffffff", input: "#ffffff", border: "#858f9e" },
     dark: { primary: "#53b1fd", popover: "#1d2939", input: "#101828", border: "#717c8e" },
 };
+
+test("slider paint stays inside its aligned bounds at both endpoints", async ({ page }) => {
+    await open(page, "slider");
+    const slider = example(page).getByRole("slider");
+    for (const theme of ["light", "dark"] as const) {
+        if (theme === "dark") await toDark(page);
+        const primary = rgb(TOKENS[theme].primary).match(/\d+/g)!.map(Number);
+        for (const key of ["Home", "ArrowRight", "End"]) {
+            await slider.press(key);
+            await page.getByTestId("category-name").click();
+            const box = (await slider.boundingBox())!;
+            // A shadow can paint outside the box without causing layout overflow.
+            const pixels = PNG.sync.read(await page.screenshot({
+                scale: "css",
+                clip: { x: box.x - 8, y: box.y, width: 6, height: box.height },
+            }));
+            let escaped = 0;
+            for (let i = 0; i < pixels.data.length; i += 4) {
+                if (primary.every((channel, offset) => pixels.data[i + offset] === channel)) escaped++;
+            }
+            expect(escaped, `${theme} ${key}: filled track outside the slider`).toBe(0);
+            const parent = await slider.evaluate(node => node.parentElement!.getBoundingClientRect().toJSON());
+            expect(box.x).toBeCloseTo(parent.x, 1);
+            expect(box.x + box.width).toBeCloseTo(parent.right, 1);
+        }
+        await slider.press("Home");
+        await expect(slider).toHaveValue("0");
+        await slider.press("End");
+        await expect(slider).toHaveValue("100");
+        await expect(slider).toBeFocused();
+        expect(await computed(slider, "outline-style")).toBe("solid");
+    }
+});
 
 test.describe("number field", () => {
     const field = (page: Page) =>

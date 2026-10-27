@@ -1,0 +1,17 @@
+{
+  "argv": [
+    "npx",
+    "playwright",
+    "test",
+    "--project=theme-studio",
+    "--workers=1",
+    "--headed",
+    "theme-ui-review.spec.ts",
+    "theme-editor.spec.ts",
+    "theme-performance.spec.ts",
+    "-g",
+    "theme-ui-review|Inspector suppresses|page timestamps",
+    "--output=test-results/r2-inspector-final"
+  ],
+  "exit_code": 1
+}

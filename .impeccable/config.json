@@ -23,6 +23,51 @@
         "value": "plex sans",
         "createdAt": "2026-10-27T07:34:30.163Z",
         "reason": "DESIGN.md Typography and shell-body explicitly declare IBM Plex Sans; detector matches a partial family name."
+      },
+      {
+        "rule": "design-system-font",
+        "value": "noto sans",
+        "files": [
+          "web/theme-fonts.css"
+        ],
+        "createdAt": "2026-10-27T12:20:04.285Z",
+        "reason": "Codex: DESIGN.md Typography documents this existing authored-preview font; the shell remains IBM Plex Sans."
+      },
+      {
+        "rule": "design-system-font",
+        "value": "rustify wenkai",
+        "files": [
+          "web/theme-fonts.css"
+        ],
+        "createdAt": "2026-10-27T12:20:04.356Z",
+        "reason": "Codex: DESIGN.md Typography documents this existing authored-preview font; the shell remains IBM Plex Sans."
+      },
+      {
+        "rule": "design-system-font",
+        "value": "noto serif",
+        "files": [
+          "web/theme-fonts.css"
+        ],
+        "createdAt": "2026-10-27T12:20:04.401Z",
+        "reason": "Codex: DESIGN.md Typography documents this existing authored-preview font; the shell remains IBM Plex Sans."
+      },
+      {
+        "rule": "design-system-font",
+        "value": "jetbrains mono",
+        "files": [
+          "web/theme-fonts.css"
+        ],
+        "createdAt": "2026-10-27T12:20:04.444Z",
+        "reason": "Codex: DESIGN.md Typography documents this existing authored-preview font; the shell remains IBM Plex Sans."
+      },
+      {
+        "rule": "design-system-font",
+        "value": "noto color emoji",
+        "files": [
+          "web/theme-fonts.css"
+        ],
+        "createdAt": "2026-10-27T12:20:04.492Z",
+        "reason": "Codex: DESIGN.md Typography documents this existing authored-preview font; the shell remains IBM Plex Sans."
       }
     ]
   }

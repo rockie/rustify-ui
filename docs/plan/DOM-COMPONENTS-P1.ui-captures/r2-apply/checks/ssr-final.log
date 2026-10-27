@@ -1,0 +1,218 @@
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on build directory
+   Compiling rustify-components v0.2.1 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-components)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 7.82s
+     Running unittests src/lib.rs (target/debug/deps/rustify_components-fd20b7592afcfbeb)
+
+running 169 tests
+test button::tests::an_enabled_request_runs_once_without_cancelling_native_behavior ... ok
+test button::tests::disabled_and_loading_block_requests_and_native_default_actions ... ok
+test catalog::tests::a_category_can_be_looked_up ... ok
+test catalog::inventory_tests::layout_field_inventory_compiles_against_the_complete_public_structures ... ok
+test catalog::tests::a_partial_answer_is_never_a_bare_one ... ok
+test catalog::tests::a_category_no_region_draws_says_where_it_is_drawn_instead ... ok
+test catalog::tests::every_category_appears_exactly_once ... ok
+test catalog::tests::every_category_has_a_dom_component_and_a_way_to_reach_it ... ok
+test catalog::inventory_tests::public_entries_and_property_groups_have_no_dangling_or_unsupported_claims ... ok
+test catalog::tests::no_cell_is_blank_and_every_answer_carries_its_reason ... ok
+test catalog::tests::every_row_is_printed_with_ten_filled_cells ... ok
+test color_field::tests::an_opacity_is_a_colour_only_where_alpha_is_allowed ... ok
+test catalog::tests::the_categories_a_region_draws_are_the_declared_subset ... ok
+test catalog::inventory_tests::frozen_reference_inventories_are_complete_unique_and_separate_from_candidates ... ok
+test color_field::tests::text_on_its_way_to_a_colour_is_not_one_yet ... ok
+test color_field::tests::six_digits_are_a_colour_with_or_without_the_hash ... ok
+test color_field::tests::three_digits_are_shorthand_for_six ... ok
+test data_table::keys::tests::a_key_the_grid_does_not_claim_is_left_to_the_page ... ok
+test data_table::keys::tests::a_page_is_a_screenful_and_stops_at_the_ends ... ok
+test data_table::keys::tests::an_empty_table_claims_nothing ... ok
+test data_table::keys::tests::home_and_end_are_about_the_row_until_a_modifier_makes_them_about_the_table ... ok
+test data_table::keys::tests::space_selects_and_enter_opens ... ok
+test data_table::keys::tests::the_arrows_move_one_cell ... ok
+test data_table::keys::tests::the_arrows_stop_at_the_edges_rather_than_walking_off ... ok
+test data_table::window::tests::a_page_is_a_screenful_of_whole_rows ... ok
+test data_table::window::tests::a_row_past_the_end_is_the_last_row ... ok
+test data_table::window::tests::a_table_shorter_than_its_viewport_is_all_of_it ... ok
+test catalog::inventory_tests::generator_keeps_reference_and_runtime_counts_distinct_and_includes_legacy_table ... ok
+test data_table::window::tests::a_viewport_with_no_height_shows_nothing ... ok
+test data_table::window::tests::a_viewport_with_no_height_of_its_own_still_asks_for_a_window ... ok
+test data_table::window::tests::jumping_centres_the_row_and_stops_at_the_ends ... ok
+test data_table::window::tests::jumping_to_a_row_already_on_screen_does_not_move_the_table ... ok
+test data_table::window::tests::scrolled_past_the_end_shows_the_last_rows_rather_than_none ... ok
+test data_table::window::tests::scrolling_moves_the_window_by_whole_rows ... ok
+test data_table::window::tests::the_end_of_the_table_is_the_end_of_the_window ... ok
+test data_table::window::tests::columns_window_the_same_way_with_a_smaller_margin ... ok
+test data_table::window::tests::the_top_of_the_table_has_no_margin_above_it ... ok
+test button::tests::ssr::local_radius_applies_scaling_once_and_keeps_full_unscaled ... ok
+test button::tests::ssr::loading_keeps_the_name_and_forces_native_disabled ... ok
+test button::tests::ssr::semantic_role_choices_leave_authored_tokens_for_css_to_consume ... ok
+test color_field::tests::host_color_field_renders_the_controlled_value_and_external_swatch ... ok
+test button::tests::ssr::disabled_takes_precedence_over_the_loading_presentation ... ok
+test data_table::window::tests::the_window_is_the_same_length_wherever_it_is ... ok
+test file_picker::tests::host_rendering_preserves_a_disabled_file_input ... ok
+test button::tests::ssr::defaults_and_native_attributes_keep_their_own_semantics ... ok
+test button::tests::ssr::unavailable_stays_enabled_and_retains_aria_wiring ... ok
+test geometry::value_tests::declarations_and_escaped_external_resources_are_rejected_at_the_prop ... ok
+test geometry::tests::invalid_component_css_keeps_the_view_and_exposes_a_prop_diagnostic ... ok
+test geometry::value_tests::sparse_media_rules_are_deterministic_and_below_utilities ... ok
+test layout::tests::empty_groups_do_not_override_defaults_and_css_lengths_are_not_scaled ... ok
+test button::tests::ssr::responsive_sizes_and_local_radius_are_collected_as_external_css ... ok
+test geometry::tests::host_geometry_remains_available_after_the_render_owner_drops ... ok
+test geometry::value_tests::a_valid_replacement_clears_only_its_own_diagnostic ... ok
+test geometry::value_tests::malformed_grid_areas_are_rejected_before_reaching_cssom ... ok
+test layout::tests::every_margin_and_padding_field_has_the_documented_edge_mapping ... ok
+test id::tests::two_ids_are_never_the_same_and_say_what_they_are_for ... ok
+test geometry::value_tests::numerical_and_property_grammars_reject_invalid_values ... ok
+test geometry::value_tests::legal_geometry_values_are_shared_by_host_and_browser ... ok
+test icon_button::tests::the_button_owns_the_name_and_the_icon_is_decoration ... ok
+test icon_button::tests::an_empty_icon_button_name_reports_the_public_prop ... ok
+test layout::tests::every_shared_layout_field_emits_its_corresponding_property ... ok
+test link::tests::disabled_link_removes_href_but_preserves_its_name ... ok
+test layout::tests::responsive_shorthands_preserve_more_specific_edges ... ok
+test link::tests::link_preserves_native_attributes_current_path_and_underline ... ok
+test link::tests::exact_matching_does_not_mark_a_descendant_page_current ... ok
+test layout::tests::negative_spacing_is_confined_to_margin_and_position_edges ... ok
+test layout::tests::reset_accepts_one_native_element_without_wrapping_or_dropping_its_attributes ... ok
+test macros::expansion::a_variant_carries_its_own_classes_and_the_callers ... ok
+test link::tests::link_defaults_preserve_inherited_size_and_support_each_underline ... ok
+test macros::tests::a_later_class_replaces_an_earlier_one_of_the_same_kind ... ok
+test link::tests::generated_links_use_text_steps_but_authored_primary_remains_authoritative ... ok
+test macros::tests::a_callers_class_in_a_state_replaces_the_components_in_that_state ... ok
+test macros::tests::a_callers_padding_replaces_the_components ... ok
+test link::tests::link_responsive_typography_collects_external_rules ... ok
+test macros::tests::a_variant_makes_two_classes_different ... ok
+test menu::tests::a_heading_names_the_commands_up_to_the_next_heading_or_separator ... ok
+test menu::tests::a_menu_of_plain_commands_is_one_unnamed_group ... ok
+test number_field::tests::a_step_lands_on_the_decimals_its_two_parts_have ... ok
+test macros::tests::classes_of_different_kinds_are_both_kept ... ok
+test menu::tests::a_shortcut_is_shown_the_way_aria_keyshortcuts_names_it ... ok
+test menu::tests::the_keyboard_reaches_only_commands_that_can_run ... ok
+test macros::tests::reactive_classes_restore_raw_base_after_caller_override_is_removed ... ok
+test number_field::tests::a_number_is_what_rust_reads_as_a_finite_one ... ok
+test macros::tests::reactive_classes_merge_once_for_each_source_change ... ok
+test layout::tests::rendering_with_the_same_seed_produces_identical_responsive_css ... ok
+test number_field::tests::text_on_its_way_to_a_number_is_not_one_yet ... ok
+test number_field::tests::a_value_is_written_the_shortest_way_that_reads_back ... ok
+test catalog::inventory_tests::newly_listed_component_paths_are_consumable_with_their_public_props ... ok
+test responsive::tests::a_single_value_and_mapping_keep_the_sparse_shape ... ok
+test responsive::tests::each_breakpoint_changes_at_its_exact_css_pixel_boundary ... ok
+test roving::tests::the_edges_skip_the_unreachable_too ... ok
+test layout::tests::ssr_preserves_tags_and_projects_container_dimensions_to_inner_layer ... ok
+test responsive::tests::sparse_values_inherit_only_the_nearest_smaller_breakpoint ... ok
+test roving::tests::a_list_with_nothing_reachable_goes_nowhere ... ok
+test roving::tests::an_arrow_steps_over_what_nobody_can_choose ... ok
+test roving::tests::the_ends_of_the_list_are_joined ... ok
+test number_field::tests::host_number_field_renders_the_controlled_value_and_native_flags ... ok
+test roving::tests::with_nothing_current_the_arrows_are_a_way_in ... ok
+test progress::tests::host_unknown_progress_has_a_full_fill_without_an_announced_value ... ok
+test progress::tests::host_progress_keeps_geometry_out_of_style_attributes ... ok
+test tabs::tests::an_arrow_moves_by_value_and_skips_what_cannot_be_chosen ... ok
+test stylesheet::the_utilities_are_the_unprefixed_ones_an_application_writes ... ok
+test stylesheet::the_scope_defaults_are_the_light_theme ... ok
+test data_table::view::tests::host_table_has_cells_and_fractional_geometry_before_measurement ... ok
+test stylesheet::dark_is_this_scope_in_dark_and_not_any_dark_ancestor ... ok
+test stylesheet::the_input_compiles_only_the_sources_it_names ... ok
+test stylesheet::a_utility_never_reads_the_scopes_spacing ... ok
+test stylesheet::the_sdk_layer_leaves_tailwinds_layers_to_the_build_that_imports_it ... ok
+test stylesheet::the_stylesheet_resets_nothing_and_selects_no_bare_element ... ok
+test stylesheet::the_tokens_are_written_only_to_a_scope_root ... ok
+test select::tests::host_rendering_preserves_a_disabled_select_trigger ... ok
+test tabs::tests::arrows_still_work_when_the_tab_showing_is_not_in_the_strip ... ok
+test tests::a_link_is_not_current_for_a_path_that_merely_starts_the_same ... ok
+test tests::a_link_with_no_target_is_never_current ... ok
+test tabs::tests::home_and_end_reach_the_first_and_last_tab_anyone_can_choose ... ok
+test theme_panel::tests::custom_requests_are_explicit_nulls_instead_of_keep ... ok
+test toggle_group::tests::one_at_a_time_a_press_asks_for_that_one_or_for_none ... ok
+test theme_panel::tests::each_select_option_requests_exactly_one_set_and_all_other_fields_keep ... ok
+test toggle_group::tests::the_tab_stop_is_where_the_keyboard_was_then_what_is_pressed_then_the_first ... ok
+test tree::tests::an_open_group_shows_its_children_below_it ... ok
+test tree::tests::left_closes_an_open_group_and_steps_out_of_a_child ... ok
+test tree::tests::host_tree_renders_open_children_with_external_indentation ... ok
+test tree::tests::space_and_enter_choose_the_group_the_keyboard_is_on ... ok
+test tree::tests::the_arrows_walk_what_is_showing_and_join_the_ends ... ok
+test tests::a_link_is_current_for_its_own_page_and_the_pages_under_it ... ok
+test theme_panel::tests::gray_help_uses_the_effective_inherited_palette_and_its_original_auto_source ... ok
+test theme_panel::tests::counts_follow_group_responsibility_without_capturing_independent_tokens ... ok
+test toggle_group::tests::several_at_once_a_press_toggles_one_and_keeps_the_buttons_order ... ok
+test tree::tests::a_closed_group_does_not_put_its_children_in_the_document ... ok
+test tree::tests::right_opens_a_closed_group_and_then_steps_into_it ... ok
+test tree::tests::a_key_the_tree_does_not_claim_is_left_to_the_page ... ok
+test typography::tests::every_wrapping_mode_resets_the_previous_mode ... ok
+test typography::tests::heading_sparse_size_starts_at_six_without_mutating_the_input ... ok
+test typography::tests::heading_visual_size_does_not_change_its_level ... ok
+test typography::tests::text_defaults_preserve_the_inherited_size_and_native_span ... ok
+test typography::tests::code_and_kbd_variants_preserve_their_declared_defaults ... ok
+test typography::tests::responsive_text_properties_keep_the_reference_breakpoints ... ok
+test workspace::command_palette::tests::a_search_that_matches_nothing_matches_nothing ... ok
+test workspace::command_palette::tests::a_command_that_cannot_run_is_still_found ... ok
+test workspace::command_palette::tests::a_search_is_not_case_sensitive_and_ignores_surrounding_space ... ok
+test workspace::command_palette::tests::every_word_has_to_appear_somewhere ... ok
+test typography::tests::all_weight_alignment_and_trim_values_write_their_own_behavior ... ok
+test workspace::command_palette::tests::an_empty_search_shows_everything_in_the_order_it_was_declared ... ok
+test workspace::command_palette::tests::keywords_are_searched_as_well_as_the_label ... ok
+test workspace::command_palette::tests::the_arrows_reach_the_unavailable_ones_too ... ok
+test workspace::panel_tabs::tests::closing_the_last_panel_moves_left_because_there_is_no_right ... ok
+test workspace::panel_tabs::tests::closing_the_only_panel_leaves_nowhere_to_be ... ok
+test data_table::view::tests::host_large_table_uses_the_declared_initial_window ... ok
+test typography::tests::default_code_uses_the_generated_palette_and_preserves_authored_primary ... ok
+test typography::tests::code_kbd_and_inline_emphasis_keep_native_elements ... ok
+test layout::tests::inset_sides_preserve_unselected_margins_and_select_only_joined_corners ... ok
+test workspace::panel_tabs::tests::closing_a_panel_that_is_not_there_answers_nothing_rather_than_guessing ... ok
+test workspace::panel_tabs::tests::closing_one_that_is_not_showing_leaves_the_selection_alone ... ok
+test workspace::panel_tabs::tests::closing_the_panel_showing_moves_to_its_right_hand_neighbour ... ok
+test workspace::splitter::tests::a_divider_at_a_minimum_does_nothing_at_all ... ok
+test workspace::splitter::tests::a_divider_stops_at_a_minimum_rather_than_pushing_through_it ... ok
+test workspace::panel_tabs::tests::the_arrows_walk_the_strip_and_join_its_ends ... ok
+test workspace::splitter::tests::a_hundred_drags_never_take_a_panel_below_its_minimum ... ok
+test typography::tests::all_native_text_elements_and_heading_levels_are_available ... ok
+test workspace::splitter::tests::a_drag_takes_from_one_panel_and_gives_to_its_neighbour ... ok
+test typography::tests::supported_margin_and_local_color_props_reach_each_component ... ok
+test workspace::splitter::tests::a_row_shares_out_what_is_left_after_every_minimum ... ok
+test workspace::splitter::tests::the_last_panel_has_no_divider_to_its_right ... ok
+test theme_panel::tests::ssr_translates_custom_values_and_auto_gray_origin_without_recomputing_it ... ok
+test workspace::splitter::tests::host_dividers_keep_geometry_out_of_style_attributes ... ok
+test theme_panel::tests::ssr_exposes_six_labeled_controls_and_both_mode_override_actions ... ok
+test typography::tests::every_size_consumes_resolved_theme_metrics_without_rescaling ... ok
+test button::tests::ssr::all_brand_colors_use_the_current_mode_without_mutating_the_scope ... ok
+test button::tests::ssr::each_visual_and_native_type_is_a_public_parameter ... ok
+
+test result: ok. 169 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+
+     Running tests/ssr_controls.rs (target/debug/deps/ssr_controls-1f592a565c23e3c6)
+
+running 13 tests
+test radio_options_emit_selection_and_each_options_native_availability ... ok
+test a_disabled_radio_group_emits_disabled_for_every_option ... ok
+test text_area_serializes_escaped_multiline_contents_instead_of_a_value_attribute ... ok
+test text_area_preserves_a_leading_line_feed_through_document_parsing ... ok
+test sliders_emit_the_snapped_value_and_native_availability ... ok
+test unchecked_enabled_checkboxes_omit_false_native_state ... ok
+test text_area_serializes_disabled_and_read_only_flags ... ok
+test disabled_switches_emit_native_availability ... ok
+test checked_disabled_checkboxes_emit_the_native_state ... ok
+test text_field_serializes_its_initial_value_and_native_flags ... ok
+test writable_enabled_text_fields_omit_false_native_flags ... ok
+test unavailable_tabs_emit_native_disabled_state ... ok
+test toggle_groups_combine_group_and_item_availability_in_native_buttons ... ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/theme_layout.rs (target/debug/deps/theme_layout-ee1971ce14d44e1d)
+
+running 2 tests
+test external_theme_projection_preserves_scope_cascade_priority ... ok
+test static_theme_layout_is_deterministic_and_uses_only_external_styles ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.05s
+
+   Doc-tests rustify_components
+
+running 4 tests
+test crates/rustify-components/src/macros/clx.rs - macros::clx::clx (line 9) ... ignored
+test crates/rustify-components/src/macros/variants.rs - macros::variants::variants (line 8) ... ignored
+test crates/rustify-components/src/layout.rs - layout::Reset (line 815) - compile fail ... ok
+test crates/rustify-components/src/layout.rs - layout::Reset (line 810) ... ok
+
+test result: ok. 2 passed; 0 failed; 2 ignored; 0 measured; 0 filtered out; finished in 0.74s
+
+mbx[cache]: 0 hits, 0 misses, 4 not looked up, 4 incremental, 1 bypassed; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: escorted 4.0 TiB logical of ownerless outputs off the premises.

@@ -1,0 +1,9 @@
+{
+  "style": {
+    "color": "rgb(217, 45, 32)",
+    "font": "14px",
+    "text": "Box · invalid prop `width`: expected one valid CSS value, received \"12px;display:none\". Rejected value: 12px;display:none. Fallback: width=auto. Component remains usable."
+  },
+  "violations": [],
+  "incomplete": []
+}

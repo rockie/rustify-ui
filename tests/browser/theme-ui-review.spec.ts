@@ -29,6 +29,7 @@ test("picking a declared action follows its own bounds and exposes its editor so
     }).toBeLessThan(2);
     await expect(page.getByTestId("source-token")).toHaveText("primary");
     await expect(page.getByTestId("token-source")).toBeInViewport();
+    await expect(page.getByTestId("token-source").getByRole("heading")).toBeInViewport({ ratio: 1 });
     await expect(page.getByTestId("inspector-source")).toContainText("primary");
 });
 
@@ -132,4 +133,70 @@ test.describe("editor disposal", () => {
         });
         expect(errors).toEqual([]);
     });
+});
+
+test("external font faces provide real light, medium, semibold and bold weights", async ({ page }) => {
+    await waitForReady(page);
+    const weights = await page.evaluate(async () => {
+        await Promise.all([300, 400, 500, 600, 700].map(weight => document.fonts.load(`${weight} 16px "IBM Plex Sans"`)));
+        return Array.from(document.fonts).filter(face => face.family.includes("IBM Plex Sans") && face.status === "loaded").map(face => face.weight).sort();
+    });
+    expect(weights).toEqual(["300", "400", "500", "600", "700"]);
+});
+
+test("the command bar keeps actions visible at 200 percent text size", async ({ page }) => {
+    await waitForReady(page);
+    await page.evaluate(() => document.documentElement.style.fontSize = "200%");
+    const bar = page.locator(".studio-editor-top");
+    for (const viewport of [{ width: 720, height: 900 }, { width: 1280, height: 720 }]) {
+        await page.setViewportSize(viewport);
+        await expect.poll(() => bar.evaluate(node => node.getBoundingClientRect().height)).toBeLessThan(viewport.height * .4);
+        for (const id of ["mode-dark", "theme-undo", "theme-save", "theme-export"]) {
+            const button = page.getByTestId(id);
+            const [bounds, toolbar] = await Promise.all([button.boundingBox(), bar.boundingBox()]);
+            expect(bounds!.y).toBeGreaterThanOrEqual(toolbar!.y);
+            expect(bounds!.y + bounds!.height).toBeLessThanOrEqual(toolbar!.y + toolbar!.height + 1);
+        }
+        expect(await bar.evaluate(node => node.scrollHeight - node.clientHeight)).toBeLessThan(2);
+    }
+    await page.evaluate(() => document.documentElement.style.fontSize = "");
+});
+
+test("the command bar stays available on the mobile preview panel", async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await waitForReady(page);
+    await page.getByTestId("mobile-preview").click();
+    for (const id of ["mode-dark", "theme-save", "theme-export"]) await expect(page.getByTestId(id)).toBeInViewport();
+    await page.getByTestId("theme-export").click();
+    await expect(page.getByTestId("export-source")).toBeVisible();
+    await page.keyboard.press("Escape");
+});
+
+test("shell buttons share the same height across action and ghost variants", async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await waitForReady(page);
+    const heights = await Promise.all(["locale-en", "locale-zh", "mode-light", "theme-export", "preview-focus", "inspector-toggle", "renderer-dom"].map(async id => (await page.getByTestId(id).boundingBox())!.height));
+    expect(Math.max(...heights) - Math.min(...heights)).toBeLessThan(1);
+});
+
+test("a selection row keeps its token, source and color controls together", async ({ page }) => {
+    await waitForReady(page);
+    await page.getByTestId("editor-colors").click();
+    await page.getByTestId("color-token-primary").click();
+    await expect.poll(() => page.getByTestId("color-selection").evaluate(node => !!node.closest(".ce-row")?.querySelector('[data-testid="color-token-primary"]'))).toBe(true);
+    await expect(page.getByTestId("source-token")).toHaveText("primary");
+    await page.getByTestId("color-value").fill("#9420aa");
+    await page.getByTestId("color-value").press("Enter");
+    await expect(page.getByTestId("source-effective")).toHaveText("#9420aa");
+});
+
+test("anchored export selectors stay in place when output content changes", async ({ page }) => {
+    await waitForReady(page);
+    await page.getByTestId("theme-export").click();
+    const selector = page.getByTestId("export-kind");
+    const before = await selector.boundingBox();
+    await selector.click();
+    await page.getByTestId("export-kind-list").getByRole("option", { name: "Compatible JSON v1 · lossy", exact: true }).click();
+    await expect.poll(async () => Math.abs((await selector.boundingBox())!.y - before!.y)).toBeLessThan(1);
+    await page.keyboard.press("Escape");
 });

@@ -147,7 +147,7 @@
     border-radius: inherit;
     background-clip: content-box;
     background-color: inherit;
-    background-image: linear-gradient(rgb(0 0 0 / 0.01), transparent, rgb(255 255 255 / 0.03));
+    background-image: linear-gradient(rgb(0 0 0 / 0.03), transparent, rgb(255 255 255 / 0.09));
     box-shadow: inset 0 2px 3px -1px rgb(255 255 255 / 0.08);
     pointer-events: none;
   }

@@ -1,0 +1,38 @@
+Listing tests:
+  [theme-studio] › theme-editor.spec.ts:81:9 › theme editing through the workbench › an authored alpha color reaches DOM and a completed GPU draw, while no-op edits reuse the core snapshot
+  [theme-studio] › theme-editor.spec.ts:120:9 › theme editing through the workbench › notation and search preserve authors, and an incomplete color never replaces the effective theme
+  [theme-studio] › theme-editor.spec.ts:148:9 › theme editing through the workbench › all fourteen common fields synchronize both modes and field reset restores the author value
+  [theme-studio] › theme-editor.spec.ts:288:9 › theme editing through the workbench › a captured color drag and repeated keyboard updates each create one undo step, and Escape cancels
+  [theme-studio] › theme-editor.spec.ts:326:9 › theme editing through the workbench › batch HSL always uses its origin, commits once, and cancellation preserves the redo branch
+  [theme-studio] › theme-editor.spec.ts:441:9 › theme editing through the workbench › Inspector suppresses sample actions and chooses actual DOM, GPU and keyboard tokens
+  [theme-studio] › theme-ui-review.spec.ts:75:5 › repeating the selected token value does not resolve its source again
+  [theme-studio] › theme-ui-review.spec.ts:99:9 › editor disposal › queued editor layout work ends with its owner
+  [theme-studio] › theme-ui-review.spec.ts:146:5 › the command bar keeps actions visible at 200 percent text size
+  [theme-studio] › theme-ui-review.spec.ts:164:5 › the command bar stays available on the mobile preview panel
+  [theme-studio] › theme-v2-storage.spec.ts:94:5 › queued autosave revalidates a changed rem after a real lock wait and remains retryable
+  [theme-studio] › theme-v2-storage.spec.ts:310:7 › migration backup-write failure never claims a v2 save and explicit retry is idempotent
+  [theme-studio] › theme-v2-storage.spec.ts:310:7 › migration backup-readback failure never claims a v2 save and explicit retry is idempotent
+  [theme-studio] › theme-v2-storage.spec.ts:310:7 › migration v2-write failure never claims a v2 save and explicit retry is idempotent
+  [theme-studio] › theme-v2-storage.spec.ts:342:5 › an immutable backup collision is preserved instead of overwritten during migration
+  [theme-studio] › theme-v2-storage.spec.ts:351:5 › invalid v2 protects its exact bytes without falling back to a valid legacy library
+  [theme-studio] › theme-v2-storage.spec.ts:429:5 › a third write after clear review requires another decision instead of clearing unreviewed bytes
+  [theme-studio] › theme-v2-storage.spec.ts:445:7 › load rechecks reviewed bytes under the lock and a third write requires another explicit decision
+  [theme-studio] › theme-v2-storage.spec.ts:445:7 › keep rechecks reviewed bytes under the lock and a third write requires another explicit decision
+  [theme-studio] › theme-v2-storage.spec.ts:445:7 › copy rechecks reviewed bytes under the lock and a third write requires another explicit decision
+  [theme-studio] › theme-v2-storage.spec.ts:498:5 › Keep approves only its displayed draft while retained named intents require a separate retry or cancellation
+  [theme-studio] › theme-v2-storage.spec.ts:519:5 › backup deletion compares its reviewed full key set inside the same lock and ordinary clear leaves every original
+  [theme-studio] › theme-v2-storage.spec.ts:536:5 › owner disposal aborts a real pending lock request and cannot write or call destroyed signals after grant
+  [theme-studio] › theme-v2-storage.spec.ts:551:5 › the host fatal boundary aborts a real pending write and restart restores only the confirmed draft
+  [theme-studio] › theme-v2-storage.spec.ts:587:7 › owner disposal ignores late parameter blur while a real storage lock is pending
+  [theme-studio] › theme-v2-storage.spec.ts:587:7 › owner disposal ignores late hsl blur while a real storage lock is pending
+  [theme-studio] › theme-v2-storage.spec.ts:604:5 › without Web Locks the editor, undo and downloads work while library actions never claim a save
+  [theme-studio] › theme-v2-storage.spec.ts:620:5 › reopening retrieves the SHA-bound original even after an older window changes v1, and a damaged backup is never substituted
+  [theme-studio] › theme-v2-storage.spec.ts:638:5 › delayed Save and Delete intents keep their order across undo/redo and finish with the latest committed draft
+  [theme-studio] › theme-v2-storage.spec.ts:662:5 › a failed clear reports a retained removal instead of success, and cancellation restores the previous write gate
+  [theme-studio] › theme-v2-storage.spec.ts:687:5 › the native guard also prevents writes when disposal occurs just after a real lock is granted
+  [theme-studio] › theme-v2-storage.spec.ts:703:5 › denied lock requests pause without an unlocked fallback and preserve export until explicit retry
+  [theme-studio] › theme-v2-storage.spec.ts:720:5 › re-entering upgrade review aborts its old lock wait and commits only the newly confirmed candidate
+  [theme-studio] › theme-v2-storage.spec.ts:736:5 › an empty external v2 is invalid raw, stays downloadable byte-for-byte and requires explicit reviewed clearing
+  [theme-studio] › theme-v2-storage.spec.ts:754:5 › a removed external v2 is shown as absent and Keep explicitly creates a fresh library
+  [theme-studio] › theme-v2-storage.spec.ts:767:5 › removing v1 remains a changed-source notice after reopening while the original backup stays retrievable
+Total: 36 tests in 3 files

@@ -1,0 +1,45 @@
+
+Running 1 test using 1 worker
+
+(node:15920) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 [theme-studio] › tests/browser/theme-ui-review.spec.ts:18:5 › picking a declared action follows its own bounds and exposes its editor source (23.0s)
+
+
+  1) [theme-studio] › tests/browser/theme-ui-review.spec.ts:18:5 › picking a declared action follows its own bounds and exposes its editor source 
+
+    Error: expect(locator).toBeInViewport() failed
+
+    Locator:  getByTestId('token-source').getByRole('heading')
+    Expected: in viewport
+    Received: viewport ratio 0
+    Timeout:  15000ms
+
+    Call log:
+      - Expect "toBeInViewport" getByTestId('token-source').getByRole('heading') with timeout 15000ms
+      - waiting for getByTestId('token-source').getByRole('heading')
+        34 × locator resolved to <h3>Fine adjustment source</h3>
+           - unexpected value "viewport ratio 0"
+
+
+      30 |     await expect(page.getByTestId("source-token")).toHaveText("primary");
+      31 |     await expect(page.getByTestId("token-source")).toBeInViewport();
+    > 32 |     await expect(page.getByTestId("token-source").getByRole("heading")).toBeInViewport({ ratio: 1 });
+         |                                                                         ^
+      33 |     await expect(page.getByTestId("inspector-source")).toContainText("primary");
+      34 | });
+      35 |
+        at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser/theme-ui-review.spec.ts:32:73
+
+    Error Context: test-results/r2-source-heading-before/theme-ui-review-picking-a--80871-d-exposes-its-editor-source-theme-studio/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/r2-source-heading-before/theme-ui-review-picking-a--80871-d-exposes-its-editor-source-theme-studio/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/r2-source-heading-before/theme-ui-review-picking-a--80871-d-exposes-its-editor-source-theme-studio/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [theme-studio] › tests/browser/theme-ui-review.spec.ts:18:5 › picking a declared action follows its own bounds and exposes its editor source 

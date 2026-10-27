@@ -168,7 +168,7 @@ impl StudioState {
                 }
         });
         if !storage::writable() {
-            status = "Secure Web Locks unavailable; memory editing and downloads only".into();
+            status = "Local saving is unavailable in this browser. You can edit in memory and download or export your theme.".into();
         }
         let writer = Writer::new(envelope.clone(), baseline, permission);
         let checkpoint = checkpoint_for(&envelope);
@@ -589,8 +589,8 @@ impl StudioState {
         self.storage_epoch.update(|epoch| *epoch += 1);
         let status = if !storage::writable() {
             self.tr(
-                "Secure Web Locks unavailable; memory editing and downloads only",
-                "安全 Web Locks 不可用；仅内存编辑，可下载导出",
+                "Local saving is unavailable in this browser. You can edit in memory and download or export your theme.",
+                "此浏览器无法保存到本机。可以在内存中编辑，并下载或导出主题。",
             )
             .to_owned()
         } else {
@@ -1305,6 +1305,7 @@ impl StudioState {
                 format!("edit-{token}")
             };
             if let Ok(Some(element)) = document().query_selector(&format!("[data-testid='{id}']")) {
+                let source = color.then(|| element.clone());
                 element.scroll_into_view_with_bool(false);
                 let focus = if color {
                     document()
@@ -1319,6 +1320,9 @@ impl StudioState {
                     .and_then(|element| element.dyn_ref::<leptos::web_sys::HtmlElement>())
                 {
                     let _ = el.focus();
+                }
+                if let Some(source) = source {
+                    source.scroll_into_view();
                 }
             }
         });

@@ -1,0 +1,200 @@
+   Compiling rustify-dom v0.2.1 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-dom)
+   Compiling rustify-components v0.2.1 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-components)
+mbx[progress]: 15s elapsed; 0 hits, 1 misses, 0 bypassed, 4 not looked up; ~0s compiler work saved
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 17.14s
+     Running unittests src/lib.rs (target/debug/deps/rustify_components-fd20b7592afcfbeb)
+
+running 169 tests
+test button::tests::an_enabled_request_runs_once_without_cancelling_native_behavior ... ok
+test button::tests::disabled_and_loading_block_requests_and_native_default_actions ... ok
+test catalog::inventory_tests::layout_field_inventory_compiles_against_the_complete_public_structures ... ok
+test catalog::tests::a_category_can_be_looked_up ... ok
+test catalog::tests::a_category_no_region_draws_says_where_it_is_drawn_instead ... ok
+test catalog::inventory_tests::public_entries_and_property_groups_have_no_dangling_or_unsupported_claims ... ok
+test catalog::inventory_tests::frozen_reference_inventories_are_complete_unique_and_separate_from_candidates ... ok
+test catalog::tests::a_partial_answer_is_never_a_bare_one ... ok
+test catalog::tests::every_category_appears_exactly_once ... ok
+test catalog::tests::every_category_has_a_dom_component_and_a_way_to_reach_it ... ok
+test catalog::tests::no_cell_is_blank_and_every_answer_carries_its_reason ... ok
+test catalog::tests::the_categories_a_region_draws_are_the_declared_subset ... ok
+test catalog::tests::every_row_is_printed_with_ten_filled_cells ... ok
+test color_field::tests::an_opacity_is_a_colour_only_where_alpha_is_allowed ... ok
+test color_field::tests::six_digits_are_a_colour_with_or_without_the_hash ... ok
+test color_field::tests::text_on_its_way_to_a_colour_is_not_one_yet ... ok
+test catalog::inventory_tests::generator_keeps_reference_and_runtime_counts_distinct_and_includes_legacy_table ... ok
+test data_table::keys::tests::a_key_the_grid_does_not_claim_is_left_to_the_page ... ok
+test color_field::tests::three_digits_are_shorthand_for_six ... ok
+test data_table::keys::tests::a_page_is_a_screenful_and_stops_at_the_ends ... ok
+test data_table::keys::tests::an_empty_table_claims_nothing ... ok
+test data_table::keys::tests::home_and_end_are_about_the_row_until_a_modifier_makes_them_about_the_table ... ok
+test data_table::keys::tests::space_selects_and_enter_opens ... ok
+test data_table::keys::tests::the_arrows_move_one_cell ... ok
+test data_table::keys::tests::the_arrows_stop_at_the_edges_rather_than_walking_off ... ok
+test button::tests::ssr::defaults_and_native_attributes_keep_their_own_semantics ... ok
+test color_field::tests::host_color_field_renders_the_controlled_value_and_external_swatch ... ok
+test button::tests::ssr::disabled_takes_precedence_over_the_loading_presentation ... ok
+test button::tests::ssr::responsive_sizes_and_local_radius_are_collected_as_external_css ... ok
+test button::tests::ssr::unavailable_stays_enabled_and_retains_aria_wiring ... ok
+test data_table::window::tests::a_page_is_a_screenful_of_whole_rows ... ok
+test data_table::window::tests::a_row_past_the_end_is_the_last_row ... ok
+test data_table::window::tests::a_table_shorter_than_its_viewport_is_all_of_it ... ok
+test button::tests::ssr::loading_keeps_the_name_and_forces_native_disabled ... ok
+test data_table::window::tests::a_viewport_with_no_height_of_its_own_still_asks_for_a_window ... ok
+test data_table::window::tests::a_viewport_with_no_height_shows_nothing ... ok
+test data_table::window::tests::columns_window_the_same_way_with_a_smaller_margin ... ok
+test data_table::window::tests::jumping_to_a_row_already_on_screen_does_not_move_the_table ... ok
+test data_table::window::tests::jumping_centres_the_row_and_stops_at_the_ends ... ok
+test data_table::window::tests::scrolled_past_the_end_shows_the_last_rows_rather_than_none ... ok
+test data_table::window::tests::scrolling_moves_the_window_by_whole_rows ... ok
+test data_table::window::tests::the_end_of_the_table_is_the_end_of_the_window ... ok
+test data_table::window::tests::the_window_is_the_same_length_wherever_it_is ... ok
+test data_table::window::tests::the_top_of_the_table_has_no_margin_above_it ... ok
+test button::tests::ssr::semantic_role_choices_leave_authored_tokens_for_css_to_consume ... ok
+test geometry::value_tests::a_valid_replacement_clears_only_its_own_diagnostic ... ok
+test geometry::value_tests::declarations_and_escaped_external_resources_are_rejected_at_the_prop ... ok
+test geometry::tests::invalid_component_css_keeps_the_view_and_exposes_a_prop_diagnostic ... ok
+test file_picker::tests::host_rendering_preserves_a_disabled_file_input ... ok
+test geometry::value_tests::malformed_grid_areas_are_rejected_before_reaching_cssom ... ok
+test geometry::value_tests::numerical_and_property_grammars_reject_invalid_values ... ok
+test geometry::value_tests::legal_geometry_values_are_shared_by_host_and_browser ... ok
+test geometry::tests::host_geometry_remains_available_after_the_render_owner_drops ... ok
+test geometry::value_tests::sparse_media_rules_are_deterministic_and_below_utilities ... ok
+test id::tests::two_ids_are_never_the_same_and_say_what_they_are_for ... ok
+test button::tests::ssr::local_radius_applies_scaling_once_and_keeps_full_unscaled ... ok
+test layout::tests::empty_groups_do_not_override_defaults_and_css_lengths_are_not_scaled ... ok
+test icon_button::tests::an_empty_icon_button_name_reports_the_public_prop ... ok
+test layout::tests::every_shared_layout_field_emits_its_corresponding_property ... ok
+test layout::tests::every_margin_and_padding_field_has_the_documented_edge_mapping ... ok
+test layout::tests::negative_spacing_is_confined_to_margin_and_position_edges ... ok
+test layout::tests::reset_accepts_one_native_element_without_wrapping_or_dropping_its_attributes ... ok
+test layout::tests::responsive_shorthands_preserve_more_specific_edges ... ok
+test icon_button::tests::the_button_owns_the_name_and_the_icon_is_decoration ... ok
+test link::tests::disabled_link_removes_href_but_preserves_its_name ... ok
+test macros::expansion::a_variant_carries_its_own_classes_and_the_callers ... ok
+test data_table::view::tests::host_table_has_cells_and_fractional_geometry_before_measurement ... ok
+test layout::tests::ssr_preserves_tags_and_projects_container_dimensions_to_inner_layer ... ok
+test macros::tests::a_callers_class_in_a_state_replaces_the_components_in_that_state ... ok
+test macros::tests::a_callers_padding_replaces_the_components ... ok
+test link::tests::link_preserves_native_attributes_current_path_and_underline ... ok
+test link::tests::exact_matching_does_not_mark_a_descendant_page_current ... ok
+test link::tests::link_defaults_preserve_inherited_size_and_support_each_underline ... ok
+test macros::tests::a_later_class_replaces_an_earlier_one_of_the_same_kind ... ok
+test macros::tests::a_variant_makes_two_classes_different ... ok
+test macros::tests::classes_of_different_kinds_are_both_kept ... ok
+test menu::tests::a_heading_names_the_commands_up_to_the_next_heading_or_separator ... ok
+test macros::tests::reactive_classes_restore_raw_base_after_caller_override_is_removed ... ok
+test link::tests::link_responsive_typography_collects_external_rules ... ok
+test menu::tests::a_menu_of_plain_commands_is_one_unnamed_group ... ok
+test macros::tests::reactive_classes_merge_once_for_each_source_change ... ok
+test menu::tests::a_shortcut_is_shown_the_way_aria_keyshortcuts_names_it ... ok
+test menu::tests::the_keyboard_reaches_only_commands_that_can_run ... ok
+test number_field::tests::a_number_is_what_rust_reads_as_a_finite_one ... ok
+test number_field::tests::a_step_lands_on_the_decimals_its_two_parts_have ... ok
+test number_field::tests::a_value_is_written_the_shortest_way_that_reads_back ... ok
+test link::tests::generated_links_use_text_steps_but_authored_primary_remains_authoritative ... ok
+test number_field::tests::text_on_its_way_to_a_number_is_not_one_yet ... ok
+test number_field::tests::host_number_field_renders_the_controlled_value_and_native_flags ... ok
+test responsive::tests::a_single_value_and_mapping_keep_the_sparse_shape ... ok
+test responsive::tests::each_breakpoint_changes_at_its_exact_css_pixel_boundary ... ok
+test roving::tests::a_list_with_nothing_reachable_goes_nowhere ... ok
+test responsive::tests::sparse_values_inherit_only_the_nearest_smaller_breakpoint ... ok
+test layout::tests::rendering_with_the_same_seed_produces_identical_responsive_css ... ok
+test progress::tests::host_unknown_progress_has_a_full_fill_without_an_announced_value ... ok
+test roving::tests::an_arrow_steps_over_what_nobody_can_choose ... ok
+test progress::tests::host_progress_keeps_geometry_out_of_style_attributes ... ok
+test roving::tests::the_edges_skip_the_unreachable_too ... ok
+test roving::tests::the_ends_of_the_list_are_joined ... ok
+test roving::tests::with_nothing_current_the_arrows_are_a_way_in ... ok
+test stylesheet::dark_is_this_scope_in_dark_and_not_any_dark_ancestor ... ok
+test stylesheet::the_input_compiles_only_the_sources_it_names ... ok
+test stylesheet::the_sdk_layer_leaves_tailwinds_layers_to_the_build_that_imports_it ... ok
+test stylesheet::a_utility_never_reads_the_scopes_spacing ... ok
+test stylesheet::the_scope_defaults_are_the_light_theme ... ok
+test tabs::tests::an_arrow_moves_by_value_and_skips_what_cannot_be_chosen ... ok
+test stylesheet::the_tokens_are_written_only_to_a_scope_root ... ok
+test stylesheet::the_utilities_are_the_unprefixed_ones_an_application_writes ... ok
+test stylesheet::the_stylesheet_resets_nothing_and_selects_no_bare_element ... ok
+test select::tests::host_rendering_preserves_a_disabled_select_trigger ... ok
+test tabs::tests::arrows_still_work_when_the_tab_showing_is_not_in_the_strip ... ok
+test tabs::tests::home_and_end_reach_the_first_and_last_tab_anyone_can_choose ... ok
+test tests::a_link_is_current_for_its_own_page_and_the_pages_under_it ... ok
+test tests::a_link_is_not_current_for_a_path_that_merely_starts_the_same ... ok
+test tests::a_link_with_no_target_is_never_current ... ok
+test theme_panel::tests::custom_requests_are_explicit_nulls_instead_of_keep ... ok
+test theme_panel::tests::counts_follow_group_responsibility_without_capturing_independent_tokens ... ok
+test theme_panel::tests::gray_help_uses_the_effective_inherited_palette_and_its_original_auto_source ... ok
+test theme_panel::tests::each_select_option_requests_exactly_one_set_and_all_other_fields_keep ... ok
+test toggle_group::tests::one_at_a_time_a_press_asks_for_that_one_or_for_none ... ok
+test toggle_group::tests::several_at_once_a_press_toggles_one_and_keeps_the_buttons_order ... ok
+test toggle_group::tests::the_tab_stop_is_where_the_keyboard_was_then_what_is_pressed_then_the_first ... ok
+test tree::tests::a_closed_group_does_not_put_its_children_in_the_document ... ok
+test tree::tests::a_key_the_tree_does_not_claim_is_left_to_the_page ... ok
+test tree::tests::an_open_group_shows_its_children_below_it ... ok
+test tree::tests::left_closes_an_open_group_and_steps_out_of_a_child ... ok
+test data_table::view::tests::host_large_table_uses_the_declared_initial_window ... ok
+test tree::tests::host_tree_renders_open_children_with_external_indentation ... ok
+test tree::tests::right_opens_a_closed_group_and_then_steps_into_it ... ok
+test tree::tests::the_arrows_walk_what_is_showing_and_join_the_ends ... ok
+test typography::tests::code_kbd_and_inline_emphasis_keep_native_elements ... ok
+test tree::tests::space_and_enter_choose_the_group_the_keyboard_is_on ... ok
+test layout::tests::inset_sides_preserve_unselected_margins_and_select_only_joined_corners ... ok
+test catalog::inventory_tests::newly_listed_component_paths_are_consumable_with_their_public_props ... ok
+test typography::tests::heading_visual_size_does_not_change_its_level ... ok
+test typography::tests::text_defaults_preserve_the_inherited_size_and_native_span ... ok
+test typography::tests::every_wrapping_mode_resets_the_previous_mode ... ok
+test theme_panel::tests::ssr_translates_custom_values_and_auto_gray_origin_without_recomputing_it ... FAILED
+test typography::tests::code_and_kbd_variants_preserve_their_declared_defaults ... ok
+test typography::tests::responsive_text_properties_keep_the_reference_breakpoints ... ok
+test typography::tests::heading_sparse_size_starts_at_six_without_mutating_the_input ... ok
+test workspace::command_palette::tests::a_command_that_cannot_run_is_still_found ... ok
+test workspace::command_palette::tests::a_search_that_matches_nothing_matches_nothing ... ok
+test workspace::command_palette::tests::a_search_is_not_case_sensitive_and_ignores_surrounding_space ... ok
+test workspace::command_palette::tests::an_empty_search_shows_everything_in_the_order_it_was_declared ... ok
+test workspace::command_palette::tests::every_word_has_to_appear_somewhere ... ok
+test workspace::command_palette::tests::keywords_are_searched_as_well_as_the_label ... ok
+test workspace::panel_tabs::tests::closing_a_panel_that_is_not_there_answers_nothing_rather_than_guessing ... ok
+test workspace::command_palette::tests::the_arrows_reach_the_unavailable_ones_too ... ok
+test workspace::panel_tabs::tests::closing_one_that_is_not_showing_leaves_the_selection_alone ... ok
+test typography::tests::default_code_uses_the_generated_palette_and_preserves_authored_primary ... ok
+test workspace::panel_tabs::tests::closing_the_last_panel_moves_left_because_there_is_no_right ... ok
+test workspace::panel_tabs::tests::closing_the_only_panel_leaves_nowhere_to_be ... ok
+test workspace::panel_tabs::tests::closing_the_panel_showing_moves_to_its_right_hand_neighbour ... ok
+test workspace::panel_tabs::tests::the_arrows_walk_the_strip_and_join_its_ends ... ok
+test workspace::splitter::tests::a_divider_at_a_minimum_does_nothing_at_all ... ok
+test workspace::splitter::tests::a_divider_stops_at_a_minimum_rather_than_pushing_through_it ... ok
+test workspace::splitter::tests::a_drag_takes_from_one_panel_and_gives_to_its_neighbour ... ok
+test workspace::splitter::tests::a_row_shares_out_what_is_left_after_every_minimum ... ok
+test workspace::splitter::tests::a_hundred_drags_never_take_a_panel_below_its_minimum ... ok
+test theme_panel::tests::ssr_exposes_six_labeled_controls_and_both_mode_override_actions ... FAILED
+test workspace::splitter::tests::the_last_panel_has_no_divider_to_its_right ... ok
+test typography::tests::all_weight_alignment_and_trim_values_write_their_own_behavior ... ok
+test workspace::splitter::tests::host_dividers_keep_geometry_out_of_style_attributes ... ok
+test typography::tests::all_native_text_elements_and_heading_levels_are_available ... ok
+test typography::tests::supported_margin_and_local_color_props_reach_each_component ... ok
+test typography::tests::every_size_consumes_resolved_theme_metrics_without_rescaling ... ok
+test button::tests::ssr::each_visual_and_native_type_is_a_public_parameter ... ok
+test button::tests::ssr::all_brand_colors_use_the_current_mode_without_mutating_the_scope ... ok
+
+failures:
+
+---- theme_panel::tests::ssr_translates_custom_values_and_auto_gray_origin_without_recomputing_it stdout ----
+
+thread 'theme_panel::tests::ssr_translates_custom_values_and_auto_gray_origin_without_recomputing_it' (137348352) panicked at crates/rustify-components/src/theme_panel.rs:673:9:
+<section data-name="ThemePanel" data-testid="" lang="zh-CN" aria-labelledby="rui-theme-panel-1-title" class="rustify-theme-panel space-y-5 text-sm"><div class="space-y-2"><h2 id="rui-theme-panel-1-title" class="font-semibold text-foreground">主题基础配置</h2><p class="text-xs leading-relaxed text-muted-foreground">基础配置生成主题值。修改配置会保留已有覆盖。</p><p id="rui-theme-panel-1-reset-help" class="text-xs leading-relaxed text-muted-foreground">分组重置只清除该组在浅色与深色两模式的覆盖；其他组和独立精调保持不变。</p></div><div data-theme-config="appearance" class="space-y-2"><div class="flex flex-wrap items-center gap-2"><label for="rui-theme-config-2" class="block text-[.8125rem] font-semibold text-foreground">外观</label><!><!--<() />--></div><button type="button" id="rui-theme-config-2" data-name="Select" data-testid="theme-panel-appearance" role="combobox" aria-haspopup="listbox" aria-controls="rui-select-3-listbox" aria-expanded="false" aria-describedby="rui-theme-config-2-help" class="flex h-9 w-full items-center justify-between gap-2 rounded-md border border-border bg-input px-3 py-1 text-sm text-foreground transition-colors cursor-pointer outline-none focus-visible:ring-ring/50 focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive"><span data-name="SelectValue" class="truncate">继承</span><svg data-name="Icon" data-testid="" data-glyph="chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" class="inline-block shrink-0 size-4 text-muted-foreground"><path d="m6 9 6 6 6-6"></path><!></svg></button><!><!--<() />--><p id="rui-theme-config-2-help" data-name="ThemeConfigHelp" class="text-xs leading-relaxed text-muted-foreground">继承会跟随外层主题。此处修改作者配置，与预览模式分开。</p><!></div><div data-theme-config="accent_color" class="space-y-2"><div class="flex flex-wrap items-center gap-2"><label for="rui-theme-config-5" class="block text-[.8125rem] font-semibold text-foreground">品牌色族</label><span data-state="custom" class="rustify-config-badge">自定义</span></div><button type="button" id="rui-theme-config-5" data-name="Select" data-testid="theme-panel-accent_color" role="combobox" aria-haspopup="listbox" aria-controls="rui-select-6-listbox" aria-expanded="false" aria-describedby="rui-theme-config-5-help rui-theme-config-5-overrides" class="flex h-9 w-full items-center justify-between gap-2 rounded-md border border-border bg-input px-3 py-1 text-sm text-foreground transition-colors cursor-pointer outline-none focus-visible:ring-ring/50 focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive"><span data-name="SelectValue" class="truncate">自定义</span><svg data-name="Icon" data-testid="" data-glyph="chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" class="inline-block shrink-0 size-4 text-muted-foreground"><path d="m6 9 6 6 6-6"></path><!></svg></button><!><!--<() />--><p id="rui-theme-config-5-help" data-name="ThemeConfigHelp" class="text-xs leading-relaxed text-muted-foreground">自定义保留作者基础值；显式覆盖仍优先生效。</p><div class="space-y-2"><p id="rui-theme-config-5-overrides" role="status" data-name="ThemeOverrideCount" aria-label="无覆盖 · 浅色 0 · 深色 0" data-overridden="false" class="rustify-config-status"><span data-state="none" class="rustify-config-badge">无覆盖</span><span>浅色 0 · 深色 0</span></p><button type="button" data-name="Button" data-testid="theme-panel-accent_color-reset" data-variant="outline" data-color-role="primary" data-appearance="light" disabled aria-describedby="rui-theme-panel-1-reset-help" class="rustify-color rustify-button rui-geometry-8 h-auto min-h-8 whitespace-normal py-1.5 text-left text-xs"><span class="rustify-button-content">使用基础值 · 两模式</span><!><!--<() />--></button></div></div><div data-theme-config="gray_color" class="space-y-2"><div class="flex flex-wrap items-center gap-2"><label for="rui-theme-config-9" class="block text-[.8125rem] font-semibold text-foreground">中性色族</label><!><!--<() />--></div><button type="button" id="rui-theme-config-9" data-name="Select" data-testid="theme-panel-gray_color" role="combobox" aria-haspopup="listbox" aria-controls="rui-select-10-listbox" aria-expanded="false" aria-describedby="rui-theme-config-9-help rui-theme-config-9-overrides" class="flex h-9 w-full items-center justify-between gap-2 rounded-md border border-border bg-input px-3 py-1 text-sm text-foreground transition-colors cursor-pointer outline-none focus-visible:ring-ring/50 focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive"><span data-name="SelectValue" class="truncate">自动</span><svg data-name="Icon" data-testid="" data-glyph="chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" class="inline-block shrink-0 size-4 text-muted-foreground"><path d="m6 9 6 6 6-6"></path><!></svg></button><!><!--<() />--><p id="rui-theme-config-9-help" data-name="ThemeConfigHelp" class="text-xs leading-relaxed text-muted-foreground">已解析中性色：蓝灰色。 自动匹配来源：靛蓝色（来源品牌为自定义时的默认值）。</p><div class="space-y-2"><p id="rui-theme-config-9-overrides" role="status" data-name="ThemeOverrideCount" aria-label="无覆盖 · 浅色 0 · 深色 0" data-overridden="false" class="rustify-config-status"><span data-state="none" class="rustify-config-badge">无覆盖</span><span>浅色 0 · 深色 0</span></p><button type="button" data-name="Button" data-testid="theme-panel-gray_color-reset" data-variant="outline" data-color-role="primary" data-appearance="light" disabled aria-describedby="rui-theme-panel-1-reset-help" class="rustify-color rustify-button rui-geometry-12 h-auto min-h-8 whitespace-normal py-1.5 text-left text-xs"><span class="rustify-button-content">使用配置值 · 两模式</span><!><!--<() />--></button></div></div><div data-theme-config="panel_background" class="space-y-2"><div class="flex flex-wrap items-center gap-2"><label for="rui-theme-config-13" class="block text-[.8125rem] font-semibold text-foreground">面板背景</label><span data-state="custom" class="rustify-config-badge">自定义</span></div><button type="button" id="rui-theme-config-13" data-name="Select" data-testid="theme-panel-panel_background" role="combobox" aria-haspopup="listbox" aria-controls="rui-select-14-listbox" aria-expanded="false" aria-describedby="rui-theme-config-13-help rui-theme-config-13-overrides" class="flex h-9 w-full items-center justify-between gap-2 rounded-md border border-border bg-input px-3 py-1 text-sm text-foreground transition-colors cursor-pointer outline-none focus-visible:ring-ring/50 focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive"><span data-name="SelectValue" class="truncate">自定义</span><svg data-name="Icon" data-testid="" data-glyph="chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" class="inline-block shrink-0 size-4 text-muted-foreground"><path d="m6 9 6 6 6-6"></path><!></svg></button><!><!--<() />--><p id="rui-theme-config-13-help" data-name="ThemeConfigHelp" class="text-xs leading-relaxed text-muted-foreground">自定义保留作者基础值；显式覆盖仍优先生效。</p><div class="space-y-2"><p id="rui-theme-config-13-overrides" role="status" data-name="ThemeOverrideCount" aria-label="无覆盖 · 浅色 0 · 深色 0" data-overridden="false" class="rustify-config-status"><span data-state="none" class="rustify-config-badge">无覆盖</span><span>浅色 0 · 深色 0</span></p><button type="button" data-name="Button" data-testid="theme-panel-panel_background-reset" data-variant="outline" data-color-role="primary" data-appearance="light" disabled aria-describedby="rui-theme-panel-1-reset-help" class="rustify-color rustify-button rui-geometry-16 h-auto min-h-8 whitespace-normal py-1.5 text-left text-xs"><span class="rustify-button-content">使用基础值 · 两模式</span><!><!--<() />--></button></div></div><div data-theme-config="radius" class="space-y-2"><div class="flex flex-wrap items-center gap-2"><label for="rui-theme-config-17" class="block text-[.8125rem] font-semibold text-foreground">圆角</label><span data-state="custom" class="rustify-config-badge">自定义</span></div><button type="button" id="rui-theme-config-17" data-name="Select" data-testid="theme-panel-radius" role="combobox" aria-haspopup="listbox" aria-controls="rui-select-18-listbox" aria-expanded="false" aria-describedby="rui-theme-config-17-help rui-theme-config-17-overrides" class="flex h-9 w-full items-center justify-between gap-2 rounded-md border border-border bg-input px-3 py-1 text-sm text-foreground transition-colors cursor-pointer outline-none focus-visible:ring-ring/50 focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive"><span data-name="SelectValue" class="truncate">自定义</span><svg data-name="Icon" data-testid="" data-glyph="chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" class="inline-block shrink-0 size-4 text-muted-foreground"><path d="m6 9 6 6 6-6"></path><!></svg></button><!><!--<() />--><p id="rui-theme-config-17-help" data-name="ThemeConfigHelp" class="text-xs leading-relaxed text-muted-foreground">自定义保留作者基础值；显式覆盖仍优先生效。</p><div class="space-y-2"><p id="rui-theme-config-17-overrides" role="status" data-name="ThemeOverrideCount" aria-label="无覆盖 · 浅色 0 · 深色 0" data-overridden="false" class="rustify-config-status"><span data-state="none" class="rustify-config-badge">无覆盖</span><span>浅色 0 · 深色 0</span></p><button type="button" data-name="Button" data-testid="theme-panel-radius-reset" data-variant="outline" data-color-role="primary" data-appearance="light" disabled aria-describedby="rui-theme-panel-1-reset-help" class="rustify-color rustify-button rui-geometry-20 h-auto min-h-8 whitespace-normal py-1.5 text-left text-xs"><span class="rustify-button-content">使用基础值 · 两模式</span><!><!--<() />--></button></div></div><div data-theme-config="scaling" class="space-y-2"><div class="flex flex-wrap items-center gap-2"><label for="rui-theme-config-21" class="block text-[.8125rem] font-semibold text-foreground">缩放</label><!><!--<() />--></div><button type="button" id="rui-theme-config-21" data-name="Select" data-testid="theme-panel-scaling" role="combobox" aria-haspopup="listbox" aria-controls="rui-select-22-listbox" aria-expanded="false" aria-describedby="rui-theme-config-21-help" class="flex h-9 w-full items-center justify-between gap-2 rounded-md border border-border bg-input px-3 py-1 text-sm text-foreground transition-colors cursor-pointer outline-none focus-visible:ring-ring/50 focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive"><span data-name="SelectValue" class="truncate">100%</span><svg data-name="Icon" data-testid="" data-glyph="chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" class="inline-block shrink-0 size-4 text-muted-foreground"><path d="m6 9 6 6 6-6"></path><!></svg></button><!><!--<() />--><p id="rui-theme-config-21-help" data-name="ThemeConfigHelp" class="text-xs leading-relaxed text-muted-foreground">主题尺寸只缩放一次；显式 CSS 长度与响应式断点不变。</p><!></div><!></section>
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- theme_panel::tests::ssr_exposes_six_labeled_controls_and_both_mode_override_actions stdout ----
+
+thread 'theme_panel::tests::ssr_exposes_six_labeled_controls_and_both_mode_override_actions' (137348351) panicked at crates/rustify-components/src/theme_panel.rs:642:9:
+<section data-name="ThemePanel" data-testid="panel" lang="en" aria-labelledby="rui-theme-panel-1-title" class="rustify-theme-panel space-y-5 text-sm"><div class="space-y-2"><h2 id="rui-theme-panel-1-title" class="font-semibold text-foreground">Theme configuration</h2><p class="text-xs leading-relaxed text-muted-foreground">Base choices generate theme values. Overrides remain in place when configuration changes.</p><p id="rui-theme-panel-1-reset-help" class="text-xs leading-relaxed text-muted-foreground">A group reset clears only that group's overrides in both modes. Other groups and independent adjustments stay unchanged.</p></div><div data-theme-config="appearance" class="space-y-2"><div class="flex flex-wrap items-center gap-2"><label for="rui-theme-config-2" class="block text-[.8125rem] font-semibold text-foreground">Appearance</label><!><!--<() />--></div><button type="button" id="rui-theme-config-2" data-name="Select" data-testid="panel-appearance" role="combobox" aria-haspopup="listbox" aria-controls="rui-select-3-listbox" aria-expanded="false" aria-describedby="rui-theme-config-2-help" class="flex h-9 w-full items-center justify-between gap-2 rounded-md border border-border bg-input px-3 py-1 text-sm text-foreground transition-colors cursor-pointer outline-none focus-visible:ring-ring/50 focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive"><span data-name="SelectValue" class="truncate">Inherit</span><svg data-name="Icon" data-testid="" data-glyph="chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" class="inline-block shrink-0 size-4 text-muted-foreground"><path d="m6 9 6 6 6-6"></path><!></svg></button><!><!--<() />--><p id="rui-theme-config-2-help" data-name="ThemeConfigHelp" class="text-xs leading-relaxed text-muted-foreground">Inherit follows the containing theme. This authored choice is separate from preview mode.</p><!></div><div data-theme-config="accent_color" class="space-y-2"><div class="flex flex-wrap items-center gap-2"><label for="rui-theme-config-5" class="block text-[.8125rem] font-semibold text-foreground">Brand color</label><!><!--<() />--></div><button type="button" id="rui-theme-config-5" data-name="Select" data-testid="panel-accent_color" role="combobox" aria-haspopup="listbox" aria-controls="rui-select-6-listbox" aria-expanded="false" aria-describedby="rui-theme-config-5-help rui-theme-config-5-overrides" class="flex h-9 w-full items-center justify-between gap-2 rounded-md border border-border bg-input px-3 py-1 text-sm text-foreground transition-colors cursor-pointer outline-none focus-visible:ring-ring/50 focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive"><span data-name="SelectValue" class="truncate">Indigo</span><svg data-name="Icon" data-testid="" data-glyph="chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" class="inline-block shrink-0 size-4 text-muted-foreground"><path d="m6 9 6 6 6-6"></path><!></svg></button><!><!--<() />--><p id="rui-theme-config-5-help" data-name="ThemeConfigHelp" class="text-xs leading-relaxed text-muted-foreground">Generates this group's theme values. Explicit overrides still take precedence.</p><div class="space-y-2"><p id="rui-theme-config-5-overrides" role="status" data-name="ThemeOverrideCount" aria-label="Overridden · Light 2 · Dark 1" data-overridden="true" class="rustify-config-status"><span data-state="overridden" class="rustify-config-badge">Overridden</span><span>Light 2 · Dark 1</span></p><button type="button" data-name="Button" data-testid="panel-accent_color-reset" data-variant="outline" data-color-role="primary" data-appearance="light" aria-describedby="rui-theme-panel-1-reset-help" class="rustify-color rustify-button rui-geometry-8 h-auto min-h-8 whitespace-normal py-1.5 text-left text-xs"><span class="rustify-button-content">Use configuration values · both modes</span><!><!--<() />--></button></div></div><div data-theme-config="gray_color" class="space-y-2"><div class="flex flex-wrap items-center gap-2"><label for="rui-theme-config-9" class="block text-[.8125rem] font-semibold text-foreground">Neutral color</label><!><!--<() />--></div><button type="button" id="rui-theme-config-9" data-name="Select" data-testid="panel-gray_color" role="combobox" aria-haspopup="listbox" aria-controls="rui-select-10-listbox" aria-expanded="false" aria-describedby="rui-theme-config-9-help rui-theme-config-9-overrides" class="flex h-9 w-full items-center justify-between gap-2 rounded-md border border-border bg-input px-3 py-1 text-sm text-foreground transition-colors cursor-pointer outline-none focus-visible:ring-ring/50 focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive"><span data-name="SelectValue" class="truncate">Auto</span><svg data-name="Icon" data-testid="" data-glyph="chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" class="inline-block shrink-0 size-4 text-muted-foreground"><path d="m6 9 6 6 6-6"></path><!></svg></button><!><!--<() />--><p id="rui-theme-config-9-help" data-name="ThemeConfigHelp" class="text-xs leading-relaxed text-muted-foreground">Resolved neutral: Slate.</p><div class="space-y-2"><p id="rui-theme-config-9-overrides" role="status" data-name="ThemeOverrideCount" aria-label="Overridden · Light 1 · Dark 0" data-overridden="true" class="rustify-config-status"><span data-state="overridden" class="rustify-config-badge">Overridden</span><span>Light 1 · Dark 0</span></p><button type="button" data-name="Button" data-testid="panel-gray_color-reset" data-variant="outline" data-color-role="primary" data-appearance="light" aria-describedby="rui-theme-panel-1-reset-help" class="rustify-color rustify-button rui-geometry-12 h-auto min-h-8 whitespace-normal py-1.5 text-left text-xs"><span class="rustify-button-content">Use configuration values · both modes</span><!><!--<() />--></button></div></div><div data-theme-config="panel_background" class="space-y-2"><div class="flex flex-wrap items-center gap-2"><label for="rui-theme-config-13" class="block text-[.8125rem] font-semibold text-foreground">Panel background</label><!><!--<() />--></div><button type="button" id="rui-theme-config-13" data-name="Select" data-testid="panel-panel_background" role="combobox" aria-haspopup="listbox" aria-controls="rui-select-14-listbox" aria-expanded="false" aria-describedby="rui-theme-config-13-help rui-theme-config-13-overrides" class="flex h-9 w-full items-center justify-between gap-2 rounded-md border border-border bg-input px-3 py-1 text-sm text-foreground transition-colors cursor-pointer outline-none focus-visible:ring-ring/50 focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive"><span data-name="SelectValue" class="truncate">Translucent</span><svg data-name="Icon" data-testid="" data-glyph="chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" class="inline-block shrink-0 size-4 text-muted-foreground"><path d="m6 9 6 6 6-6"></path><!></svg></button><!><!--<() />--><p id="rui-theme-config-13-help" data-name="ThemeConfigHelp" class="text-xs leading-relaxed text-muted-foreground">Generates this group's theme values. Explicit overrides still take precedence.</p><div class="space-y-2"><p id="rui-theme-config-13-overrides" role="status" data-name="ThemeOverrideCount" aria-label="Overridden · Light 0 · Dark 1" data-overridden="true" class="rustify-config-status"><span data-state="overridden" class="rustify-config-badge">Overridden</span><span>Light 0 · Dark 1</span></p><button type="button" data-name="Button" data-testid="panel-panel_background-reset" data-variant="outline" data-color-role="primary" data-appearance="light" aria-describedby="rui-theme-panel-1-reset-help" class="rustify-color rustify-button rui-geometry-16 h-auto min-h-8 whitespace-normal py-1.5 text-left text-xs"><span class="rustify-button-content">Use configuration values · both modes</span><!><!--<() />--></button></div></div><div data-theme-config="radius" class="space-y-2"><div class="flex flex-wrap items-center gap-2"><label for="rui-theme-config-17" class="block text-[.8125rem] font-semibold text-foreground">Radius</label><!><!--<() />--></div><button type="button" id="rui-theme-config-17" data-name="Select" data-testid="panel-radius" role="combobox" aria-haspopup="listbox" aria-controls="rui-select-18-listbox" aria-expanded="false" aria-describedby="rui-theme-config-17-help rui-theme-config-17-overrides" class="flex h-9 w-full items-center justify-between gap-2 rounded-md border border-border bg-input px-3 py-1 text-sm text-foreground transition-colors cursor-pointer outline-none focus-visible:ring-ring/50 focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive"><span data-name="SelectValue" class="truncate">Medium</span><svg data-name="Icon" data-testid="" data-glyph="chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" class="inline-block shrink-0 size-4 text-muted-foreground"><path d="m6 9 6 6 6-6"></path><!></svg></button><!><!--<() />--><p id="rui-theme-config-17-help" data-name="ThemeConfigHelp" class="text-xs leading-relaxed text-muted-foreground">Generates this group's theme values. Explicit overrides still take precedence.</p><div class="space-y-2"><p id="rui-theme-config-17-overrides" role="status" data-name="ThemeOverrideCount" aria-label="No overrides · Light 0 · Dark 0" data-overridden="false" class="rustify-config-status"><span data-state="none" class="rustify-config-badge">No overrides</span><span>Light 0 · Dark 0</span></p><button type="button" data-name="Button" data-testid="panel-radius-reset" data-variant="outline" data-color-role="primary" data-appearance="light" disabled aria-describedby="rui-theme-panel-1-reset-help" class="rustify-color rustify-button rui-geometry-20 h-auto min-h-8 whitespace-normal py-1.5 text-left text-xs"><span class="rustify-button-content">Use configuration values · both modes</span><!><!--<() />--></button></div></div><div data-theme-config="scaling" class="space-y-2"><div class="flex flex-wrap items-center gap-2"><label for="rui-theme-config-21" class="block text-[.8125rem] font-semibold text-foreground">Scaling</label><!><!--<() />--></div><button type="button" id="rui-theme-config-21" data-name="Select" data-testid="panel-scaling" role="combobox" aria-haspopup="listbox" aria-controls="rui-select-22-listbox" aria-expanded="false" aria-describedby="rui-theme-config-21-help" class="flex h-9 w-full items-center justify-between gap-2 rounded-md border border-border bg-input px-3 py-1 text-sm text-foreground transition-colors cursor-pointer outline-none focus-visible:ring-ring/50 focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive"><span data-name="SelectValue" class="truncate">100%</span><svg data-name="Icon" data-testid="" data-glyph="chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" class="inline-block shrink-0 size-4 text-muted-foreground"><path d="m6 9 6 6 6-6"></path><!></svg></button><!><!--<() />--><p id="rui-theme-config-21-help" data-name="ThemeConfigHelp" class="text-xs leading-relaxed text-muted-foreground">Scales theme sizes once. Explicit CSS lengths and breakpoints stay unchanged.</p><!></div><!></section>
+
+
+failures:
+    theme_panel::tests::ssr_exposes_six_labeled_controls_and_both_mode_override_actions
+    theme_panel::tests::ssr_translates_custom_values_and_auto_gray_origin_without_recomputing_it
+
+test result: FAILED. 167 passed; 2 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+
+error: test failed, to rerun pass `-p rustify-components --lib`
+mbx[cache]: 0 hits, 1 misses, 4 not looked up, 5 incremental; 0 B downloaded, 0 B uploaded, 0 B stored locally
+mbx[savings]: 399702 compilations served. the monocle stays on.

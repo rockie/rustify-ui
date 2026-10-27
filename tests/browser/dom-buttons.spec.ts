@@ -271,9 +271,9 @@ test("ThemePanel requests stay controlled, preserve overrides and reset only the
     await expect(brand).toHaveText("Indigo");
     await expect(panel).toContainText("Overrides remain in place when configuration changes.");
     await buttons.getByTestId("button-panel-seed").click();
-    await expect(brandStatus).toHaveText("Overridden · Light 2 · Dark 1");
-    await expect(panelStatus).toHaveText("Overridden · Light 1 · Dark 1");
-    await expect(radiusStatus).toHaveText("Overridden · Light 1 · Dark 1");
+    await expect(brandStatus).toHaveAttribute("aria-label", "Overridden · Light 2 · Dark 1");
+    await expect(panelStatus).toHaveAttribute("aria-label", "Overridden · Light 1 · Dark 1");
+    await expect(radiusStatus).toHaveAttribute("aria-label", "Overridden · Light 1 · Dark 1");
     const before = await counts.evaluate(element => [
         element.getAttribute("data-override-light"), element.getAttribute("data-override-dark"),
         element.getAttribute("data-independent-light"), element.getAttribute("data-independent-dark"),
@@ -293,7 +293,7 @@ test("ThemePanel requests stay controlled, preserve overrides and reset only the
     await expect(brand).toHaveText("Tomato");
     await expect(counts).toHaveAttribute("data-panel-request", "2");
     await expect(counts).toHaveAttribute("data-panel-patch-fields", "1");
-    await expect(brandStatus).toHaveText("Overridden · Light 2 · Dark 1");
+    await expect(brandStatus).toHaveAttribute("aria-label", "Overridden · Light 2 · Dark 1");
     await expect(buttons.getByTestId("button-default")).toHaveCSS("background-color", "rgb(17, 34, 51)");
     expect(await counts.evaluate(element => [
         element.getAttribute("data-override-light"), element.getAttribute("data-override-dark"),
@@ -326,10 +326,10 @@ test("ThemePanel requests stay controlled, preserve overrides and reset only the
     await expect(counts).toHaveAttribute("data-panel-reset", "1");
     await expect(counts).toHaveAttribute("data-panel-last-reset", "accent_color");
     await expect(counts).toHaveAttribute("data-panel-request", "3");
-    await expect(brandStatus).toHaveText("无覆盖 · 浅色 0 · 深色 0");
+    await expect(brandStatus).toHaveAttribute("aria-label", "无覆盖 · 浅色 0 · 深色 0");
     await expect(reset).toBeDisabled();
-    await expect(panelStatus).toHaveText("已覆盖 · 浅色 1 · 深色 1");
-    await expect(radiusStatus).toHaveText("已覆盖 · 浅色 1 · 深色 1");
+    await expect(panelStatus).toHaveAttribute("aria-label", "已覆盖 · 浅色 1 · 深色 1");
+    await expect(radiusStatus).toHaveAttribute("aria-label", "已覆盖 · 浅色 1 · 深色 1");
     await expect(counts).toHaveAttribute("data-override-light", "accent,card,radius");
     await expect(counts).toHaveAttribute("data-override-dark", "accent,popover,radius");
     await expect(counts).toHaveAttribute("data-independent-light", before[2]!);

@@ -195,7 +195,7 @@ pub fn export_css(
     } else {
         ".dark".into()
     };
-    let mut output = String::from("/* Resolved sRGB CSS: the first selector selects light mode; the second selects dark mode.\n   Original author intent and unknown strings are preserved only by Theme JSON.\n   Font resource URLs below are relative to this deployed CSS file, never embedded.\n   Copy the font files and distribute their original licenses. The license document\n   is relative to the SDK source checkout: makepad/widgets/resources/FONT-LICENSES.md. */\n");
+    let mut output = String::from("/* Resolved sRGB CSS: the first selector selects light mode; the second selects dark mode.\n   Original author intent and unknown strings are preserved only by Theme JSON.\n   Font resource URLs below are relative to this deployed CSS file, never embedded.\n   Copy the font files and distribute their original licenses. The license document\n   is in the SDK source checkout (not a deployed URL):\n   makepad/widgets/resources/FONT-LICENSES.md. */\n");
     if scoped {
         output.push_str("/* Import after SDK sdk.css in one Tailwind v4 input. Mark the static target with\n   data-rustify-theme-css equal to the JSON id. data-theme=\"dark\" selects dark;\n   omit it for light. For ThemeScope and authored appearance use JSON instead. */\n");
     } else {

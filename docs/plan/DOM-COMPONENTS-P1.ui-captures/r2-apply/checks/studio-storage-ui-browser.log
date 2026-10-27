@@ -1,0 +1,345 @@
+
+Running 55 tests using 1 worker
+
+(node:31568) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 [theme-studio] › tests/browser/theme-editor.spec.ts:441:9 › theme editing through the workbench › Inspector suppresses sample actions and chooses actual DOM, GPU and keyboard tokens (9.9s)
+  ✓   2 [theme-studio] › tests/browser/theme-exchange.spec.ts:120:5 › export dialogs recenter as contents and viewport change, with reachable actions (11.3s)
+  ✓   3 [theme-studio] › tests/browser/theme-storage.spec.ts:65:5 › bad cache is preserved and downloadable; explicit clear touches only the studio key (16.7s)
+  ✓   4 [theme-studio] › tests/browser/theme-storage.spec.ts:79:5 › quota failure preserves the previous bytes, in-memory draft and unsaved named library (9.3s)
+  ✓   5 [theme-studio] › tests/browser/theme-storage.spec.ts:89:5 › denied localStorage leaves the editor and export available (8.7s)
+  ✓   6 [theme-studio] › tests/browser/theme-storage.spec.ts:96:5 › a real other-tab save freezes the draft until explicit load, keep or save-copy (20.3s)
+  ✓   7 [theme-studio] › tests/browser/theme-storage.spec.ts:119:5 › failed keep and duplicate conflict-copy retain the unresolved conflict and library (18.2s)
+  ✓   8 [theme-studio] › tests/browser/theme-ui-review.spec.ts:3:5 › picking an unannotated control explains the missing mapping without activating it (974ms)
+  ✓   9 [theme-studio] › tests/browser/theme-ui-review.spec.ts:18:5 › picking a declared action follows its own bounds and exposes its editor source (1.0s)
+  ✓  10 [theme-studio] › tests/browser/theme-ui-review.spec.ts:35:5 › a local opposite appearance and its dialog preserve the root theme (1.3s)
+  ✓  11 [theme-studio] › tests/browser/theme-ui-review.spec.ts:60:5 › invalid numeric text stays visible while the valid theme remains unchanged (896ms)
+  ✓  12 [theme-studio] › tests/browser/theme-ui-review.spec.ts:75:5 › repeating the selected token value does not resolve its source again (1.0s)
+  ✓  13 [theme-studio] › tests/browser/theme-ui-review.spec.ts:99:9 › editor disposal › queued editor layout work ends with its owner (8.9s)
+  ✓  14 [theme-studio] › tests/browser/theme-ui-review.spec.ts:137:5 › external font faces provide real light, medium, semibold and bold weights (767ms)
+  ✓  15 [theme-studio] › tests/browser/theme-ui-review.spec.ts:146:5 › the command bar keeps actions visible at 200 percent text size (1.4s)
+  ✓  16 [theme-studio] › tests/browser/theme-ui-review.spec.ts:162:5 › the command bar stays available on the mobile preview panel (1.0s)
+  ✓  17 [theme-studio] › tests/browser/theme-ui-review.spec.ts:172:5 › a selection row keeps its token, source and color controls together (899ms)
+  ✓  18 [theme-studio] › tests/browser/theme-ui-review.spec.ts:183:5 › anchored export selectors stay in place when output content changes (907ms)
+  ✘  19 [theme-studio] › tests/browser/theme-v2-storage.spec.ts:94:5 › queued autosave revalidates a changed rem after a real lock wait and remains retryable (3.0m)
+(node:44282) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  20 [theme-studio] › tests/browser/theme-v2-storage.spec.ts:146:5 › valid v2 reload reports the restored draft as saved while a new library stays unconfirmed (10.0s)
+  ✓  21 [theme-studio] › tests/browser/theme-v2-storage.spec.ts:164:5 › one writer preserves named action order behind a real lock and eventually saves the newest draft and preferences (11.4s)
+  ✓  22 [theme-studio] › tests/browser/theme-v2-storage.spec.ts:200:5 › an older named acknowledgement during a live gesture cannot replace identity, history, checkpoint or unsaved status (10.4s)
+  ✓  23 [theme-studio] › tests/browser/theme-v2-storage.spec.ts:232:5 › cancelled legacy upgrade stays write-protected through edits, history, mode, preferences and reopening (11.7s)
+  ✓  24 [theme-studio] › tests/browser/theme-v2-storage.spec.ts:262:5 › upgrade review is bound to editor epoch and commits only after refreshed explicit confirmation (9.7s)
+  ✓  25 [theme-studio] › tests/browser/theme-v2-storage.spec.ts:290:5 › a legacy writer changing reviewed bytes while the upgrade waits for a real lock forces a new review (10.0s)
+  ✘  26 [theme-studio] › tests/browser/theme-v2-storage.spec.ts:310:7 › migration backup-write failure never claims a v2 save and explicit retry is idempotent (25.0s)
+(node:47885) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  27 [theme-studio] › tests/browser/theme-v2-storage.spec.ts:310:7 › migration backup-readback failure never claims a v2 save and explicit retry is idempotent (24.6s)
+(node:48218) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  28 [theme-studio] › tests/browser/theme-v2-storage.spec.ts:310:7 › migration v2-write failure never claims a v2 save and explicit retry is idempotent (24.8s)
+(node:48585) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  29 [theme-studio] › tests/browser/theme-v2-storage.spec.ts:342:5 › an immutable backup collision is preserved instead of overwritten during migration (23.5s)
+(node:48912) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  30 [theme-studio] › tests/browser/theme-v2-storage.spec.ts:351:5 › invalid v2 protects its exact bytes without falling back to a valid legacy library (30.4s)
+(node:49317) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  31 [theme-studio] › tests/browser/theme-v2-storage.spec.ts:366:7 › legacy unknown-envelope rejects the complete migration and retains downloadable original bytes (16.6s)
+  ✓  32 [theme-studio] › tests/browser/theme-v2-storage.spec.ts:366:7 › legacy bad-saved-item rejects the complete migration and retains downloadable original bytes (19.5s)
+  ✓  33 [theme-studio] › tests/browser/theme-v2-storage.spec.ts:366:7 › legacy unknown-document rejects the complete migration and retains downloadable original bytes (18.1s)
+  ✓  34 [theme-studio] › tests/browser/theme-v2-storage.spec.ts:383:5 › a quota failure retains named requests and later edits until an explicit retry saves their snapshots in order (10.4s)
+  ✓  35 [theme-studio] › tests/browser/theme-v2-storage.spec.ts:407:5 › clear uses the reviewed v2 baseline, cancels delayed writes and keeps memory, legacy bytes and backups (11.7s)
+[WebServer] request failed: Broken pipe (os error 32)
+[WebServer] request failed: Broken pipe (os error 32)
+  ✘  36 [theme-studio] › tests/browser/theme-v2-storage.spec.ts:429:5 › a third write after clear review requires another decision instead of clearing unreviewed bytes (13.4s)
+
+
+  1) [theme-studio] › tests/browser/theme-v2-storage.spec.ts:94:5 › queued autosave revalidates a changed rem after a real lock wait and remains retryable 
+
+    Test timeout of 180000ms exceeded.
+
+    Error: locator.click: Test timeout of 180000ms exceeded.
+    Call log:
+      - waiting for getByTestId('storage-retry')
+        - locator resolved to <button type="button" data-name="Button" data-variant="outline" data-appearance="light" data-color-role="primary" data-testid="storage-retry" class="rustify-color rustify-button rui-geometry-14">…</button>
+      - attempting click action
+        2 × waiting for element to be visible, enabled and stable
+          - element is visible, enabled and stable
+          - scrolling into view if needed
+          - done scrolling
+          - <div class="studio-editor-top">…</div> intercepts pointer events
+        - retrying click action
+        - waiting 20ms
+        - waiting for element to be visible, enabled and stable
+        - element is visible, enabled and stable
+        - scrolling into view if needed
+        - done scrolling
+        - <div class="studio-editor-top">…</div> intercepts pointer events
+      2 × retrying click action
+          - waiting 100ms
+          - waiting for element to be visible, enabled and stable
+          - element is visible, enabled and stable
+          - scrolling into view if needed
+          - done scrolling
+          - <span role="status" class="studio-save-state" data-testid="toolbar-storage-status">Saving…</span> from <div class="studio-editor-top">…</div> subtree intercepts pointer events
+      82 × retrying click action
+           - waiting 500ms
+           - waiting for element to be visible, enabled and stable
+           - element is visible, enabled and stable
+           - scrolling into view if needed
+           - done scrolling
+           - <div class="studio-editor-top">…</div> intercepts pointer events
+         - retrying click action
+           - waiting 500ms
+           - waiting for element to be visible, enabled and stable
+           - element is visible, enabled and stable
+           - scrolling into view if needed
+           - done scrolling
+           - <div class="studio-editor-top">…</div> intercepts pointer events
+         - retrying click action
+           - waiting 500ms
+           - waiting for element to be visible, enabled and stable
+           - element is visible, enabled and stable
+           - scrolling into view if needed
+           - done scrolling
+           - <span role="status" class="studio-save-state" data-testid="toolbar-storage-status">Saving…</span> from <div class="studio-editor-top">…</div> subtree intercepts pointer events
+         - retrying click action
+           - waiting 500ms
+           - waiting for element to be visible, enabled and stable
+           - element is visible, enabled and stable
+           - scrolling into view if needed
+           - done scrolling
+           - <span role="status" class="studio-save-state" data-testid="toolbar-storage-status">Saving…</span> from <div class="studio-editor-top">…</div> subtree intercepts pointer events
+      2 × retrying click action
+          - waiting 500ms
+          - waiting for element to be visible, enabled and stable
+          - element is visible, enabled and stable
+          - scrolling into view if needed
+          - done scrolling
+          - <div class="studio-editor-top">…</div> intercepts pointer events
+      - retrying click action
+        - waiting 500ms
+
+
+      117 |   expect(validRaw).not.toContain("200rem");
+      118 |   await expect(page.getByTestId("storage-status")).not.toHaveText("Saved on this device");
+    > 119 |   await page.getByTestId("storage-retry").click();
+          |                                           ^
+      120 |   expect((await snapshot(page)).storage.paused).toBe(true);
+      121 |   expect(await raw(page)).toBe(validRaw);
+      122 |   const reopened = await second(page);
+        at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser/theme-v2-storage.spec.ts:119:43
+
+    Error Context: test-results/r2-storage-ui/theme-v2-storage-queued-au-110de--wait-and-remains-retryable-theme-studio/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/r2-storage-ui/theme-v2-storage-queued-au-110de--wait-and-remains-retryable-theme-studio/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/r2-storage-ui/theme-v2-storage-queued-au-110de--wait-and-remains-retryable-theme-studio/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [theme-studio] › tests/browser/theme-v2-storage.spec.ts:310:7 › migration backup-write failure never claims a v2 save and explicit retry is idempotent 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByTestId('storage-issue')
+    Expected: visible
+    Timeout: 15000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByTestId('storage-issue') with timeout 15000ms
+      - waiting for getByTestId('storage-issue')
+
+
+      323 |     }, {failure, key, prefix});
+      324 |     await confirmUpgrade(page);
+    > 325 |     await expect(page.getByTestId("storage-issue")).toBeVisible();
+          |                                                     ^
+      326 |     expect(await raw(page)).toBeNull(); expect(await raw(page, legacyKey)).toBe(original);
+      327 |     await expect(page.getByTestId("storage-status")).not.toHaveText("Saved on this device");
+      328 |     await page.evaluate(() => {
+        at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser/theme-v2-storage.spec.ts:325:53
+
+    Error Context: test-results/r2-storage-ui/theme-v2-storage-migration-e3034-xplicit-retry-is-idempotent-theme-studio/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/r2-storage-ui/theme-v2-storage-migration-e3034-xplicit-retry-is-idempotent-theme-studio/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/r2-storage-ui/theme-v2-storage-migration-e3034-xplicit-retry-is-idempotent-theme-studio/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [theme-studio] › tests/browser/theme-v2-storage.spec.ts:310:7 › migration backup-readback failure never claims a v2 save and explicit retry is idempotent 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByTestId('storage-issue')
+    Expected: visible
+    Timeout: 15000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByTestId('storage-issue') with timeout 15000ms
+      - waiting for getByTestId('storage-issue')
+
+
+      323 |     }, {failure, key, prefix});
+      324 |     await confirmUpgrade(page);
+    > 325 |     await expect(page.getByTestId("storage-issue")).toBeVisible();
+          |                                                     ^
+      326 |     expect(await raw(page)).toBeNull(); expect(await raw(page, legacyKey)).toBe(original);
+      327 |     await expect(page.getByTestId("storage-status")).not.toHaveText("Saved on this device");
+      328 |     await page.evaluate(() => {
+        at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser/theme-v2-storage.spec.ts:325:53
+
+    Error Context: test-results/r2-storage-ui/theme-v2-storage-migration-756d3-xplicit-retry-is-idempotent-theme-studio/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/r2-storage-ui/theme-v2-storage-migration-756d3-xplicit-retry-is-idempotent-theme-studio/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/r2-storage-ui/theme-v2-storage-migration-756d3-xplicit-retry-is-idempotent-theme-studio/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [theme-studio] › tests/browser/theme-v2-storage.spec.ts:310:7 › migration v2-write failure never claims a v2 save and explicit retry is idempotent 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByTestId('storage-issue')
+    Expected: visible
+    Timeout: 15000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByTestId('storage-issue') with timeout 15000ms
+      - waiting for getByTestId('storage-issue')
+
+
+      323 |     }, {failure, key, prefix});
+      324 |     await confirmUpgrade(page);
+    > 325 |     await expect(page.getByTestId("storage-issue")).toBeVisible();
+          |                                                     ^
+      326 |     expect(await raw(page)).toBeNull(); expect(await raw(page, legacyKey)).toBe(original);
+      327 |     await expect(page.getByTestId("storage-status")).not.toHaveText("Saved on this device");
+      328 |     await page.evaluate(() => {
+        at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser/theme-v2-storage.spec.ts:325:53
+
+    Error Context: test-results/r2-storage-ui/theme-v2-storage-migration-2eea8-xplicit-retry-is-idempotent-theme-studio/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/r2-storage-ui/theme-v2-storage-migration-2eea8-xplicit-retry-is-idempotent-theme-studio/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/r2-storage-ui/theme-v2-storage-migration-2eea8-xplicit-retry-is-idempotent-theme-studio/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  5) [theme-studio] › tests/browser/theme-v2-storage.spec.ts:342:5 › an immutable backup collision is preserved instead of overwritten during migration 
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: getByTestId('storage-issue')
+    Expected substring: "different bytes"
+    Timeout: 15000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toContainText" getByTestId('storage-issue') with timeout 15000ms
+      - waiting for getByTestId('storage-issue')
+
+
+      344 |   const name = backupKey(original), conflicting = "pre-existing different bytes";
+      345 |   await page.evaluate(({name, conflicting}) => localStorage.setItem(name, conflicting), {name, conflicting});
+    > 346 |   await confirmUpgrade(page); await expect(page.getByTestId("storage-issue")).toContainText("different bytes");
+          |                                                                               ^
+      347 |   expect(await raw(page)).toBeNull(); expect(await raw(page, name)).toBe(conflicting);
+      348 |   expect(await raw(page, legacyKey)).toBe(original);
+      349 | });
+        at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser/theme-v2-storage.spec.ts:346:79
+
+    Error Context: test-results/r2-storage-ui/theme-v2-storage-an-immuta-5fd0d-verwritten-during-migration-theme-studio/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/r2-storage-ui/theme-v2-storage-an-immuta-5fd0d-verwritten-during-migration-theme-studio/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/r2-storage-ui/theme-v2-storage-an-immuta-5fd0d-verwritten-during-migration-theme-studio/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  6) [theme-studio] › tests/browser/theme-v2-storage.spec.ts:351:5 › invalid v2 protects its exact bytes without falling back to a valid legacy library 
+
+    Error: expect(locator).not.toHaveText(expected) failed
+
+    Locator: getByTestId('storage-status')
+    Expected: not "Saved on this device"
+    Timeout: 15000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "not toHaveText" getByTestId('storage-status') with timeout 15000ms
+      - waiting for getByTestId('storage-status')
+
+
+      356 |   await expect(page.getByTestId("upgrade-notice")).toHaveCount(0);
+      357 |   expect((await snapshot(page)).storage.acknowledged).toBeNull();
+    > 358 |   await expect(page.getByTestId("storage-status")).not.toHaveText("Saved on this device");
+          |                                                        ^
+      359 |   expect((await snapshot(page)).document.id).not.toBe("legacy-draft");
+      360 |   await edit(page, "#123456"); await page.getByTestId("mode-dark").click();
+      361 |   expect(await raw(page)).toBe(broken); expect(await raw(page, legacyKey)).toBe(original);
+        at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser/theme-v2-storage.spec.ts:358:56
+
+    Error Context: test-results/r2-storage-ui/theme-v2-storage-invalid-v-dbe38-k-to-a-valid-legacy-library-theme-studio/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/r2-storage-ui/theme-v2-storage-invalid-v-dbe38-k-to-a-valid-legacy-library-theme-studio/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/r2-storage-ui/theme-v2-storage-invalid-v-dbe38-k-to-a-valid-legacy-library-theme-studio/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  7) [theme-studio] › tests/browser/theme-v2-storage.spec.ts:429:5 › a third write after clear review requires another decision instead of clearing unreviewed bytes 
+
+    Test was interrupted.
+
+    Error: page.evaluate: Target page, context or browser has been closed
+
+      42 | }
+      43 | async function hold(other:Page) {
+    > 44 |   await other.evaluate(name => {
+         |               ^
+      45 |     const owner = window as any;
+      46 |     owner.__storageHeld = false;
+      47 |     owner.__storageLockDone = navigator.locks.request(name, async () => {
+        at hold (/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser/theme-v2-storage.spec.ts:44:15)
+        at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser/theme-v2-storage.spec.ts:431:43
+
+    Error Context: test-results/r2-storage-ui/theme-v2-storage-a-third-w-35a9d-f-clearing-unreviewed-bytes-theme-studio/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/r2-storage-ui/theme-v2-storage-a-third-w-35a9d-f-clearing-unreviewed-bytes-theme-studio/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/r2-storage-ui/theme-v2-storage-a-third-w-35a9d-f-clearing-unreviewed-bytes-theme-studio/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  6 failed
+    [theme-studio] › tests/browser/theme-v2-storage.spec.ts:94:5 › queued autosave revalidates a changed rem after a real lock wait and remains retryable 
+    [theme-studio] › tests/browser/theme-v2-storage.spec.ts:310:7 › migration backup-write failure never claims a v2 save and explicit retry is idempotent 
+    [theme-studio] › tests/browser/theme-v2-storage.spec.ts:310:7 › migration backup-readback failure never claims a v2 save and explicit retry is idempotent 
+    [theme-studio] › tests/browser/theme-v2-storage.spec.ts:310:7 › migration v2-write failure never claims a v2 save and explicit retry is idempotent 
+    [theme-studio] › tests/browser/theme-v2-storage.spec.ts:342:5 › an immutable backup collision is preserved instead of overwritten during migration 
+    [theme-studio] › tests/browser/theme-v2-storage.spec.ts:351:5 › invalid v2 protects its exact bytes without falling back to a valid legacy library 
+  1 interrupted
+    [theme-studio] › tests/browser/theme-v2-storage.spec.ts:429:5 › a third write after clear review requires another decision instead of clearing unreviewed bytes 
+  19 did not run
+  29 passed (9.8m)

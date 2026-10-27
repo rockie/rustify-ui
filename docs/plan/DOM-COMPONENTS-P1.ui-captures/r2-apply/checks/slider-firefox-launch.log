@@ -1,0 +1,38 @@
+browserType.launch: Failed to launch the browser process.
+Browser logs:
+
+<launching> /Users/rockie/Library/Caches/ms-playwright/firefox-1543/firefox/Nightly.app/Contents/MacOS/firefox -no-remote -headless -profile /var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/playwright_firefoxdev_profile-CEU1Tq -juggler-pipe -silent
+<launched> pid=61593
+[pid=61593][err] *** You are running in headless mode.
+[pid=61593][err] Could not find profile folder.
+[pid=61593] <process did exit: exitCode=1, signal=null>
+[pid=61593] starting temporary directories cleanup
+Call log:
+[2m  - <launching> /Users/rockie/Library/Caches/ms-playwright/firefox-1543/firefox/Nightly.app/Contents/MacOS/firefox -no-remote -headless -profile /var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/playwright_firefoxdev_profile-CEU1Tq -juggler-pipe -silent[22m
+[2m  - <launched> pid=61593[22m
+[2m  - [pid=61593][err] *** You are running in headless mode.[22m
+[2m  - [pid=61593][err] Could not find profile folder.[22m
+[2m  - [pid=61593] <process did exit: exitCode=1, signal=null>[22m
+[2m  - [pid=61593] starting temporary directories cleanup[22m
+[2m  - [pid=61593] <gracefully close start>[22m
+[2m  - [pid=61593] <kill>[22m
+[2m  - [pid=61593] <skipped force kill spawnedProcess.killed=false processClosed=true>[22m
+[2m  - [pid=61593] finished temporary directories cleanup[22m
+[2m  - [pid=61593] <gracefully close end>[22m
+
+    at /Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r2-apply/slider-check.cjs:6:30 {
+  log: [
+    '  - <launching> /Users/rockie/Library/Caches/ms-playwright/firefox-1543/firefox/Nightly.app/Contents/MacOS/firefox -no-remote -headless -profile /var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/playwright_firefoxdev_profile-CEU1Tq -juggler-pipe -silent',
+    '  - <launched> pid=61593',
+    '  - [pid=61593][err] *** You are running in headless mode.',
+    '  - [pid=61593][err] Could not find profile folder.',
+    '  - [pid=61593] <process did exit: exitCode=1, signal=null>',
+    '  - [pid=61593] starting temporary directories cleanup',
+    '  - [pid=61593] <gracefully close start>',
+    '  - [pid=61593] <kill>',
+    '  - [pid=61593] <skipped force kill spawnedProcess.killed=false processClosed=true>',
+    '  - [pid=61593] finished temporary directories cleanup',
+    '  - [pid=61593] <gracefully close end>'
+  ],
+  name: 'Error'
+}

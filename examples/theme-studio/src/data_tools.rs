@@ -511,11 +511,18 @@ mod browser {
     }
 
     #[component]
-    fn ConfigSummary(config: rustify_ui::ThemeConfig, locale: Locale) -> impl IntoView {
+    fn ConfigSummary(
+        config: rustify_ui::ThemeConfig,
+        before: rustify_ui::ThemeConfig,
+        locale: Locale,
+    ) -> impl IntoView {
         view! {
             <dl class="tools-config" data-testid="import-config">
                 {config.fields().into_iter().map(|(field, value)| view! {
-                    <div><dt>{config_label(field, locale)}</dt><dd>{config_value(field, &value, locale)}</dd></div>
+                    {let previous=before.fields().into_iter().find(|(key,_)|*key==field).map(|(_,value)|value).unwrap_or_default();
+                    view!{<div><dt>{config_label(field, locale)}</dt><dd><span>{config_value(field,&previous,locale)}</span>" → "<span>{config_value(field,&value,locale)}</span>
+                        {(previous!=value).then(||view!{<span class="tools-change-label">{tr(locale,"Changed","修改")}</span>})}</dd></div>}}
+
                 }).collect_view()}
             </dl>
         }
@@ -557,9 +564,9 @@ mod browser {
         let left_label = before_label.clone();
         let right_label = after_label.clone();
         view! {
-            <div class="tools-scroll">
+            <div class="tools-diff-content">
                 <table class="tools-diff"><thead><tr>
-                    <th>{tr(locale, "Mode / token", "模式 / token")}</th>
+                    <th>{tr(locale, "Field / token", "字段 / token")}</th>
                     <th>{tr(locale, "Change", "变更")}</th>
                     <th>{before_label}</th><th>{after_label}</th>
                 </tr></thead>
@@ -577,8 +584,8 @@ mod browser {
                                 view! {<tr class="tools-diff-row">
                                     <th scope="row"><code>{change.token.split_inclusive('.').map(|part| view!{<span>{part.to_owned()}<wbr/></span>}).collect_view()}</code></th>
                                     <td class="tools-diff-kind"><span class="tools-change-label">{change_label}</span></td>
-                                    <td data-label=left_label.clone()><code>{change.before.clone().unwrap_or_else(|| "—".into())}</code></td>
-                                    <td data-label=right_label.clone()><code>{change.after.clone().unwrap_or_else(|| "—".into())}</code></td>
+                                    <td data-label=left_label.clone()>{if change.token=="name" {view!{<span>{change.before.clone().unwrap_or_else(||"—".into())}</span>}.into_any()}else{view!{<code>{change.before.clone().unwrap_or_else(||"—".into())}</code>}.into_any()}}</td>
+                                    <td data-label=right_label.clone()>{if change.token=="name" {view!{<span>{change.after.clone().unwrap_or_else(||"—".into())}</span>}.into_any()}else{view!{<code>{change.after.clone().unwrap_or_else(||"—".into())}</code>}.into_any()}}</td>
                                 </tr>}
                             }).collect_view()}
                         </tbody>
@@ -619,12 +626,12 @@ mod browser {
     ) -> String {
         let selected = |field, value: &str| config_value(field, value, locale);
         match loss.field {
-            "config.accent_color" => format!("{} “{}”. {}", tr(locale, "Brand palette", "品牌色族"), selected("accent_color", config.accent_color.map(|color|color.as_str()).unwrap_or("null")), tr(locale, "v1 keeps final colors, without palette selection.", "v1 只保留最终颜色，不保留色族选择。")),
-            "config.gray_color" => format!("{} “{}”. {}", tr(locale, "Neutral palette", "中性色族"), selected("gray_color", config.gray_color.map(|color|color.as_str()).unwrap_or("null")), tr(locale, "v1 cannot retain Auto pairing or the selected neutral family.", "v1 无法保留自动配灰关系或中性色族选择。")),
+            "config.accent_color" => format!("{} “{}”. {}", tr(locale, "Brand color", "品牌色族"), selected("accent_color", config.accent_color.map(|color|color.as_str()).unwrap_or("null")), tr(locale, "v1 keeps final colors, without palette selection.", "v1 只保留最终颜色，不保留色族选择。")),
+            "config.gray_color" => format!("{} “{}”. {}", tr(locale, "Neutral color", "中性色族"), {let chosen=selected("gray_color",config.gray_color.map(|color|color.as_str()).unwrap_or("null"));if config.gray_color==Some(rustify_ui::GrayColor::Auto){let neutral=rustify_ui::GrayColor::Auto.family(config.accent_color.unwrap_or(rustify_ui::AccentColor::Indigo));format!("{chosen} ({})",config_value("gray_color",neutral.name(),locale))}else{chosen}}, tr(locale, "v1 cannot retain Auto pairing or the selected neutral family.", "v1 无法保留自动配灰关系或中性色族选择。")),
             "config.panel_background" => format!("{} “{}”. {}", tr(locale, "Panel background", "面板背景"), selected("panel_background",config.panel_background.map(|panel|panel.as_str()).unwrap_or("null")), tr(locale, "Independent panel and surface roles are flattened.", "独立面板与表面角色将被压平。")),
             "config.appearance" => format!("{} “{}”. {}", tr(locale, "Appearance intent", "外观意图"), selected("appearance",config.appearance.as_str()), tr(locale, "v1 stores two mode tables, without a mode-selection instruction.", "v1 仅保留两张模式表，不保留模式选择意图。")),
             "config.radius" => format!("{} “{}”. {}", tr(locale, "Radius", "圆角"), selected("radius", config.radius.map(|radius|radius.as_str()).unwrap_or("null")), tr(locale, "Full, thumb and component radius roles cannot be recovered.", "全圆角、thumb 与组件圆角角色无法恢复。")),
-            "config.scaling" => format!("{} {}%. {}", tr(locale, "Scaling intent", "缩放意图"), config.scaling.percent(), tr(locale, "The scale is baked into resolved metrics; future scaling intent is not stored.", "缩放固化为最终度量，不再保留后续缩放意图。")),
+            "config.scaling" => format!("{} “{}%”. {}", tr(locale, "Scaling intent", "缩放意图"), config.scaling.percent(), tr(locale, "The scale is baked into resolved metrics; future scaling intent is not stored.", "缩放固化为最终度量，不再保留后续缩放意图。")),
             "sources" => tr(locale, "Override sources: final values replace base/configuration/override origins, original notation and requested font fallback intent.", "覆盖来源：最终值取代 base/config/overrides 来源、原始写法及请求的字体回退意图。").into(),
             "derived_roles" => tr(locale, "Derived roles: the legacy 49-token table cannot retain palette/alpha steps, panel roles, component scales or the complete v2 appearance.", "派生角色：旧 49-token 表无法保留色阶与透明阶、面板角色、组件尺度或完整 v2 外观。").into(),
             "shadows" => tr(locale, "Secondary shadow layers cannot be fully represented by v1's single set of shadow parameters.", "v1 的单组阴影参数无法完整表示次级阴影层。").into(),
@@ -648,6 +655,7 @@ mod browser {
     #[component]
     pub fn DataTools(
         toolbar: NodeRef<leptos::html::Div>,
+        library_toolbar: NodeRef<leptos::html::Div>,
         #[prop(into)] document: Signal<ThemeDocument>,
         #[prop(into)] envelope: Signal<Envelope>,
         #[prop(into)] locale: Signal<Locale>,
@@ -775,8 +783,8 @@ mod browser {
                         files::Import::Refused { why, .. } => issue.set(match why {
                             files::Refusal::TooLarge { .. } => tr(
                                 locale.get_untracked(),
-                                "The file exceeds 256 KiB. Choose a smaller file.",
-                                "文件超过 256 KiB。请选择较小的文件。",
+                                "The file exceeds 256 KiB. Choose a smaller file.",
+                                "文件超过 256 KiB。请选择较小的文件。",
                             )
                             .into(),
                             files::Refusal::WrongKind { .. } => tr(
@@ -863,7 +871,7 @@ mod browser {
         let actions = move || {
             view! {
                     <div class="tools-actions">
-                        <Button on_click=move || open_name(NameAction::Save, document.get_untracked().name) test_id="theme-save">
+                        <Button variant=Signal::derive(move ||if crate::storage_browser::writable(){ButtonVariant::Solid}else{ButtonVariant::Outline}) on_click=move || open_name(NameAction::Save, document.get_untracked().name) test_id="theme-save">
                             {move || tr(locale.get(), "Save locally", "保存到本机")}
                         </Button>
                         <Button variant=ButtonVariant::Outline on_click=move || open_panel(Panel::Import) test_id="theme-import">
@@ -871,9 +879,6 @@ mod browser {
                         </Button>
                         <Button variant=ButtonVariant::Outline on_click=move || open_panel(Panel::Export) test_id="theme-export">
                             {move || tr(locale.get(), "Export", "导出")}
-                        </Button>
-                        <Button variant=ButtonVariant::Ghost on_click=move || open_panel(Panel::Library) test_id="theme-library">
-                            {move || format!("{} ({})", tr(locale.get(), "Local themes", "本地主题"), envelope.get().saved_themes.len())}
                         </Button>
                     </div>
             }
@@ -890,9 +895,14 @@ mod browser {
                     let target: leptos::web_sys::Element = target.into();
                     view! {<Portal mount=target>{actions()}</Portal>}
                 })}
+                {move || library_toolbar.get().map(move |target| {let target:leptos::web_sys::Element=target.into();view!{<Portal mount=target>
+                        <Button variant=ButtonVariant::Ghost on_click=move || open_panel(Panel::Library) test_id="theme-library">
+                            {move || format!("{} ({})", tr(locale.get(), "Local themes", "本地主题"), envelope.get().saved_themes.len())}
+                        </Button>
+                </Portal>}})}
                 <Show when=move || corrupt.get().is_some() fallback=|| ()>
                     <div class="tools-notice" data-testid="corrupt-cache">
-                        <p>{move || tr(locale.get(), "Stored data could not be restored. It is preserved; download it before clearing this site's cache.", "无法恢复缓存。原数据已保留；清除本站缓存前可以先下载。")}</p>
+                        <p role="status" data-testid="storage-status">{move || tr(locale.get(), "Stored data could not be restored. It is preserved; download it before clearing this site's cache.", "无法恢复缓存。原数据已保留；清除本站缓存前可以先下载。")}</p>
                         <div class="tools-actions">
                             <Button variant=ButtonVariant::Outline on_click=move || {
                                 if let Some(raw) = corrupt.get_untracked() { download(&ExportArtifact { text: raw, name: "theme-studio-cache.txt", mime: "text/plain", losses: Vec::new() }, feedback, issue); }
@@ -906,30 +916,31 @@ mod browser {
                 <Show when=move || conflict.get() fallback=|| ()>
                     <div class="tools-notice tools-state-warning" data-testid="storage-conflict">
                         <h3>{move || tr(locale.get(), "Choose which version to keep", "选择要保留的版本")}</h3>
-                        <p>{move || tr(locale.get(), "Another tab saved a different version. Your current draft is unchanged.", "另一个标签页保存了不同版本。当前草稿保持不变。")}</p>
+                        <p data-testid="storage-status">{move || tr(locale.get(), "Another tab saved a different version. Your current draft is unchanged.", "另一个标签页保存了不同版本。当前草稿保持不变。")}</p>
                         <div data-testid="storage-external">
                             <dl class="tools-summary" data-testid="storage-external-summary"
                                 data-external-kind=move || if external_envelope.get().is_some(){"library"} else if external.get()==Some(None){"removed"} else {"invalid"}
                                 data-external-revision=move || external_envelope.get().map(|value|value.revision.to_string())>
                                 <dt>{move || tr(locale.get(), "This tab", "此标签页")}</dt>
-                                <dd>{move || format!("{} · {}", envelope.get().revision, document.get().name)}</dd>
+                                <dd>{move || format!("{} {} · {}",tr(locale.get(),"Revision","修订"),envelope.get().revision, document.get().name)}</dd>
                                 <dt>{move || tr(locale.get(), "Other tab", "另一标签页")}</dt>
-                                <dd>{move || external_envelope.get().map(|value|format!("{} · {}",value.revision,value.draft.name)).unwrap_or_else(||if external.get()==Some(None){tr(locale.get(),"Another tab removed the v2 library. Keeping this draft creates a new library.","另一标签页移除了 v2 主题库。保留当前草稿会创建新库。").into()}else{tr(locale.get(),"Invalid external v2 library. Download the original data before deciding.","外部 v2 主题库无效，请先下载原始数据再决定。").into()})}</dd>
-                                <dt>{move || tr(locale.get(), "Saved themes", "命名主题")}</dt>
+                                <dd>{move || external_envelope.get().map(|value|format!("{} {} · {}",tr(locale.get(),"Revision","修订"),value.revision,value.draft.name)).unwrap_or_else(||if external.get()==Some(None){tr(locale.get(),"Another tab removed the v2 library. Keeping this draft creates a new library.","另一标签页移除了 v2 主题库。保留当前草稿会创建新库。").into()}else{tr(locale.get(),"Invalid external v2 library. Download the original data before deciding.","外部 v2 主题库无效，请先下载原始数据再决定。").into()})}</dd>
+                                <dt>{move || tr(locale.get(), "Saved theme count", "命名主题数量")}</dt>
                                 <dd>{move || format!("{} → {}", envelope.get().saved_themes.len(), external_envelope.get().map_or(0,|value|value.saved_themes.len()))}</dd>
                             </dl>
                             {move || external_envelope.get().map(|other|view! {
-                                <details data-testid="storage-conflict-diff" open><summary>{tr(locale.get(),"Draft differences","草稿差异")}</summary>
+                                <details data-testid="storage-conflict-diff"><summary>{tr(locale.get(),"Draft differences","草稿差异")}</summary>
                                     <DocumentDiff before=document.get() after=other.draft locale=locale.get() before_label=tr(locale.get(),"This tab","此标签页") after_label=tr(locale.get(),"Other tab","另一标签页") />
                                 </details>
                             })}
                         </div>
                         <p class="tools-status">{move || if pending.get()==0 {tr(locale.get(),"No pending actions. Your draft stays in memory until you choose.","没有待处理操作。选择前草稿保留在内存中。").into()} else {format!("{} {}",pending.get(),tr(locale.get(),"pending actions retained. Loading the other version discards them.","项待处理操作已保留。载入另一版本将放弃这些操作。"))}}</p>
+                        <p class="tools-status">{move ||tr(locale.get(),"Load replaces your draft and pending saves. Keep saves this tab over the other version. Save a copy retains both themes.","载入会替换当前草稿并放弃待写操作；保留会用当前草稿覆盖另一版本；另存副本会保留两个主题。")}</p>
                         <div class="tools-actions">
                             <Button variant=ButtonVariant::Outline on_click=move || { issue.set(String::new()); command.with_value(|callback| callback(ToolCommand::ReviewExternal)); confirmation.set(Some(Confirmation::LoadExternal)); } test_id="conflict-load">
                                 {move || tr(locale.get(), "Load other version", "载入另一版本")}
                             </Button>
-                            <Button variant=ButtonVariant::Outline on_click=move || command.with_value(|callback| {callback(ToolCommand::ReviewConflict); callback(ToolCommand::KeepCurrent);}) test_id="conflict-keep">
+                            <Button on_click=move || command.with_value(|callback| {callback(ToolCommand::ReviewConflict); callback(ToolCommand::KeepCurrent);}) test_id="conflict-keep">
                                 {move || tr(locale.get(), "Keep current draft", "保留当前草稿")}
                             </Button>
                             <Button variant=ButtonVariant::Outline on_click=move || {command.with_value(|callback| callback(ToolCommand::ReviewConflict)); open_name(NameAction::ConflictCopy, String::new());} test_id="conflict-copy">
@@ -945,7 +956,7 @@ mod browser {
                             </details>
                             <Button variant=ButtonVariant::Outline test_id="storage-external-download" on_click=move || {
                                 if let Some(raw)=external.get_untracked().flatten(){download(&ExportArtifact{text:raw,name:"theme-studio-other-version.json",mime:"application/json",losses:Vec::new()},feedback,issue);}
-                            }>{move || tr(locale.get(),"Download displayed original","下载当前展示原文")}</Button>
+                            }>{move || tr(locale.get(),"Download other version","下载另一版本原文")}</Button>
                         </Show>
                     </div>
                 </Show>
@@ -970,7 +981,7 @@ mod browser {
             }.to_owned()) class="tools-dialog" test_id="data-tools-dialog">
                 <Show when=move || panel.get()==Some(Panel::Import) fallback=|| ()>
                     <div class="tools-stack">
-                        <p>{move || tr(locale.get(), "Paste or choose one CSS / JSON file, up to 256 KiB. Review changes before applying.", "粘贴或选择一个 CSS / JSON 文件，上限 256 KiB。应用前请核对变更。")}</p>
+                        <p>{move || tr(locale.get(), "Paste or choose one CSS / JSON file, up to 256 KiB. Review changes before applying.", "粘贴或选择一个 CSS / JSON 文件，上限 256 KiB。应用前请核对变更。")}</p>
                         <div class="tools-form-row">
                             <label for="tools-import-format">{move || tr(locale.get(), "Input format", "输入格式")}</label>
                             <Select id="tools-import-format" value=import_kind options=Signal::derive(|| vec![SelectOption::new("json","Theme JSON"), SelectOption::new("css","CSS")])
@@ -985,7 +996,7 @@ mod browser {
                                 invalid=Signal::derive(move || !issue.get().is_empty()) described_by=Signal::derive(move || if issue.get().is_empty(){String::new()}else{"tools-import-error".into()})
                                 rows=10 class="tools-code" test_id="import-source" />
                         </label>
-                        <p class="tools-status">{move || format!("{:.2} / 256 KiB", source.get().len() as f64 / 1024.)}</p>
+                        <p class="tools-status">{move || format!("{} / 262144 {}", source.get().len(),tr(locale.get(),"bytes","字节"))}</p>
                         <Show when=move || !issue.get().is_empty() fallback=|| ()>
                             <p class="tools-error" role="alert" id="tools-import-error" data-testid="import-error">{move || import_issue.get().as_ref().map(|error|import_error_text(error,locale.get())).unwrap_or_else(||issue.get())}</p>
                             <details class="tools-status"><summary>{move || tr(locale.get(),"Technical details","技术详情")}</summary><code>{move || issue.get()}</code></details>
@@ -1003,7 +1014,7 @@ mod browser {
                                     <dt>{tr(locale.get(),"Version","版本")}</dt><dd data-testid="import-version">{candidate.source_version.map(|version| format!("JSON v{version} → v2")).unwrap_or_else(|| "CSS → Custom v2".into())}</dd>
                                     <dt>{tr(locale.get(),"Name","名称")}</dt><dd>{candidate.document.name.clone()}</dd>
                                 </dl>
-                                <ConfigSummary config=candidate.document.config locale=locale.get()/>
+                                <ConfigSummary config=candidate.document.config before=candidate.base.config locale=locale.get()/>
                                 <Show when=move || no_changes fallback=|| ()>
                                     <p>{move || tr(locale.get(), "No author values differ from the current theme.", "作者值与当前主题相同。")}</p>
                                 </Show>
@@ -1012,7 +1023,7 @@ mod browser {
                                 <Show when=move || has_diagnostics fallback=|| ()>
                                     <div class="tools-notice" data-testid="import-diagnostics">
                                         <h3>{move || tr(locale.get(), "Import notes", "导入提示")}</h3>
-                                        <ul>{candidate.diagnostics.iter().map(|note| view! { <li>{format!("{}: {}", note.field, note.message)}</li> }).collect_view()}</ul>
+                                        <ul>{candidate.diagnostics.iter().map(|note| view! { <li><code>{note.field.clone()}</code>{format!(": {}",note.message)}</li> }).collect_view()}</ul>
                                     </div>
                                 </Show>
                                 <div class="tools-actions">
@@ -1055,13 +1066,13 @@ mod browser {
                                 <Select id="tools-export-color" value=color_format options=Signal::derive(|| vec![SelectOption::new("hex","HEX"),SelectOption::new("rgb","RGB"),SelectOption::new("hsl","HSL"),SelectOption::new("oklch","OKLCH")])
                                     open=color_format_open on_open_change=move |open| color_format_open.set(open) on_change=move |value| color_format.set(value) test_id="export-color-format" />
                             </div>
-                            <p class="tools-status">{move || tr(locale.get(), "CSS contains both resolved modes in sRGB. Scoped CSS uses data-theme=dark; standard CSS uses .dark. Author configuration stays in JSON. Copy the external font files and their licenses.", "CSS 包含 sRGB 下两种模式的解析结果。局部 CSS 用 data-theme=dark 选深色；标准 CSS 用 .dark。作者配置保留在 JSON 中。请复制外部字体文件及其许可。")}</p>
+                            <p class="tools-status">{move ||tr(locale.get(),"CSS contains both resolved sRGB modes. Scoped dark selector:","CSS 包含 sRGB 下两种模式的解析结果。局部深色选择器：")}" "<code>"data-theme=dark"</code>"; "{move ||tr(locale.get(),"standard selector:","标准选择器：")}" "<code>".dark"</code>". "{move ||tr(locale.get(),"Author configuration remains in JSON. Copy the external font files and their licenses.","作者配置保留在 JSON 中。请复制外部字体文件及其许可。")}</p>
                         </Show>
                         <Show when=move || export_kind.get()=="rust" fallback=|| ()>
                             <dl class="tools-summary"><dt>{move || tr(locale.get(),"Required source revision","所需源码修订")}</dt><dd><code>{env!("RUSTIFY_STUDIO_SOURCE_REVISION")}</code></dd></dl>
-                            <p class="tools-status">{move || tr(locale.get(), "Download the matching theme.json beside theme.rs. Use the matching source SDK and CSS; the published 0.2.1 SDK/CLI reject v2. Keep AppHandle alive. Fonts remain external.", "将配套 theme.json 放在 theme.rs 旁，使用匹配的源码 SDK 和 CSS；已发布的 0.2.1 SDK/CLI 不支持 v2。保留 AppHandle；字体仍使用外部资源。")}</p>
+                            <p class="tools-status">{move ||tr(locale.get(),"Place the matching JSON beside the Rust source:","将配套 JSON 放在 Rust 源码旁：")}" "<code>"theme.json"</code>" · "<code>"theme.rs"</code>". "{move ||tr(locale.get(),"Use the matching source SDK and CSS; the published 0.2.1 SDK/CLI reject v2. Keep","使用匹配的源码 SDK 和 CSS；已发布的 0.2.1 SDK/CLI 不支持 v2。保留")}" "<code>"AppHandle"</code>". "{move ||tr(locale.get(),"Fonts remain external.","字体仍使用外部资源。")}</p>
                             <p class="tools-status">{move || tr(locale.get(),"Build the CLI from that revision:","从同一修订构建 CLI：")}" "<code>"mbx build --locked -p rustify-docs-cli --profile docs-cli"</code></p>
-                            <p class="tools-status" data-testid="export-preview-mode">{move || tr(locale.get(),"To match this preview, call","匹配当前预览时调用")}" "<code>"mount_exported_preview"</code>{move || format!("(ThemeMode::{:?}, &font_context({:?}, {}))",preview_mode.get(),context.get().rem_px,context.get().reduce_motion)}</p>
+                            <p class="tools-status" data-testid="export-preview-mode">{move || tr(locale.get(),"To match this preview, call","匹配当前预览时调用")}" "<code>{move ||format!("mount_exported_preview(ThemeMode::{:?}, &font_context({}, {}))",preview_mode.get(),if context.get().rem_px.fract()==0. {format!("{}.",context.get().rem_px)}else{context.get().rem_px.to_string()},context.get().reduce_motion)}</code></p>
                             <Button variant=ButtonVariant::Outline on_click=move || match export_artifact(&document.get_untracked(),&context.get_untracked(),"json","scoped","rgb") {
                                 Ok(artifact) => download(&artifact,feedback,issue), Err(error) => issue.set(error.to_string())
                             } test_id="export-matching-json">{move || tr(locale.get(), "Download matching JSON", "下载配套 JSON")}</Button>

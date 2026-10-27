@@ -1,0 +1,97 @@
+{
+  "before": {
+    "x": 20,
+    "y": 714.84375,
+    "width": 279,
+    "height": 32.1875
+  },
+  "after": {
+    "x": 20,
+    "y": 714.84375,
+    "width": 279,
+    "height": 32.1875
+  },
+  "expanded": "true",
+  "events": [
+    {
+      "event": "pointerdown",
+      "target": "choose-font-sans",
+      "rect": {
+        "x": 20,
+        "y": 714.84375,
+        "width": 279,
+        "height": 32.1875,
+        "top": 714.84375,
+        "right": 299,
+        "bottom": 747.03125,
+        "left": 20
+      },
+      "expanded": "false",
+      "sources": 1
+    },
+    {
+      "event": "focusin",
+      "target": "choose-font-sans",
+      "rect": {
+        "x": 20,
+        "y": 714.84375,
+        "width": 279,
+        "height": 32.1875,
+        "top": 714.84375,
+        "right": 299,
+        "bottom": 747.03125,
+        "left": 20
+      },
+      "expanded": "false",
+      "sources": 1
+    },
+    {
+      "event": "pointerup",
+      "target": "choose-font-sans",
+      "rect": {
+        "x": 20,
+        "y": 714.84375,
+        "width": 279,
+        "height": 32.1875,
+        "top": 714.84375,
+        "right": 299,
+        "bottom": 747.03125,
+        "left": 20
+      },
+      "expanded": "false",
+      "sources": 2
+    },
+    {
+      "event": "click",
+      "target": "choose-font-sans",
+      "rect": {
+        "x": 20,
+        "y": 714.84375,
+        "width": 279,
+        "height": 32.1875,
+        "top": 714.84375,
+        "right": 299,
+        "bottom": 747.03125,
+        "left": 20
+      },
+      "expanded": "false",
+      "sources": 2
+    },
+    {
+      "event": "focusin",
+      "target": "choose-font-sans-list",
+      "rect": {
+        "x": 20,
+        "y": 714.84375,
+        "width": 279,
+        "height": 32.1875,
+        "top": 714.84375,
+        "right": 299,
+        "bottom": 747.03125,
+        "left": 20
+      },
+      "expanded": "true",
+      "sources": 2
+    }
+  ]
+}

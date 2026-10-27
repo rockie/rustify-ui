@@ -35,6 +35,7 @@ mod ui {
     use super::{plane_channels, plane_key};
     use leptos::{
         ev::{KeyboardEvent, PointerEvent},
+        portal::Portal,
         prelude::*,
         wasm_bindgen::JsCast,
     };
@@ -43,7 +44,7 @@ mod ui {
         format_color, hsla_to_rgba, parse_color, rgba_to_hsla, ColorFormat, Hsla, Rgba,
         COLOR_TOKENS,
     };
-    use rustify_ui::{Locale, ThemeValues};
+    use rustify_ui::{Locale, ThemeMode, ThemeValues};
     use std::sync::Arc;
 
     #[derive(Clone, Copy)]
@@ -358,11 +359,12 @@ mod ui {
         overridden: Signal<Vec<String>>,
         locale: Signal<Locale>,
         selected: RwSignal<String>,
+        preview_mode: Signal<ThemeMode>,
         token: &'static str,
         callbacks: StoredValue<Callbacks>,
     ) -> impl IntoView {
         view! {
-            <div class="ce-token-choice">
+            <div class="ce-token-choice" data-selected=move || (selected.get()==token).to_string()>
                 <button type="button" class="ce-token" data-testid=format!("color-token-{token}")
                     aria-pressed=move || (selected.get()==token).to_string() title=move || values.with(|values|author(values,token))
                     on:click=move |_| {
@@ -374,11 +376,11 @@ mod ui {
                     <ColorSwatch values=values token=token />
                     <span class="ce-token-copy"><span class="ce-token-name">{token}</span>
                         <span class="ce-token-value">{move || values.with(|values|author(values,token))}</span>
-                        <Show when=move || overridden.with(|tokens|tokens.iter().any(|value|value==token))><span class="ce-override-badge">{move ||tr(locale.get(),"Override","已覆盖")}</span></Show>
+                        <Show when=move || overridden.with(|tokens|tokens.iter().any(|value|value==token))><span class="ce-override-badge">{move ||format!("{} · {}",tr(locale.get(),"Overridden","已覆盖"),if preview_mode.get()==ThemeMode::Light {tr(locale.get(),"Light","浅色")} else {tr(locale.get(),"Dark","深色")})}</span></Show>
                     </span>
                 </button>
                 <button type="button" class="ce-token-reset" data-testid=format!("color-reset-{token}")
-                    aria-label=move || format!("{} {token}",if overridden.with(|tokens|tokens.iter().any(|value|value==token)) {tr(locale.get(),"Clear override for","解除覆盖：")} else {tr(locale.get(),"No override for","没有覆盖：")})
+                    aria-label=move || format!("{} {token} · {}",if overridden.with(|tokens|tokens.iter().any(|value|value==token)) {tr(locale.get(),"Clear override for","解除覆盖：")} else {tr(locale.get(),"No override for","没有覆盖：")}, if locale.get()==Locale::Chinese {"当前预览模式"}else{"current preview mode"})
                     title=move || if overridden.with(|tokens|tokens.iter().any(|value|value==token)) {tr(locale.get(),"Clear override in this preview mode","解除当前预览模式的覆盖")} else {tr(locale.get(),"No override to clear","没有可解除的覆盖")}
                     aria-disabled=move || (!overridden.with(|tokens|tokens.iter().any(|value|value==token))).to_string()
                     disabled=move || !overridden.with(|tokens|tokens.iter().any(|value|value==token))
@@ -428,13 +430,14 @@ mod ui {
         overridden: Signal<Vec<String>>,
         locale: Signal<Locale>,
         selected: RwSignal<String>,
+        preview_mode: Signal<ThemeMode>,
         on_edit: impl Fn(String, String) + Clone + Send + Sync + 'static,
         on_reset: impl Fn(String) + Clone + Send + Sync + 'static,
         on_begin: impl Fn() + Clone + Send + Sync + 'static,
         on_update: impl Fn(String, String) + Clone + Send + Sync + 'static,
         on_commit: impl Fn() + Clone + Send + Sync + 'static,
         on_cancel: impl Fn() + Clone + Send + Sync + 'static,
-        children: Children,
+        children: ChildrenFn,
     ) -> impl IntoView {
         let values: Signal<ThemeValues> = Memo::new(move |_| values.get()).into();
         let overridden: Signal<Vec<String>> = Memo::new(move |_| overridden.get()).into();
@@ -624,6 +627,130 @@ mod ui {
             }));
         };
 
+        // Keep one mounted editor when its selected row changes: replacing the
+        // Portal would discard the input that Inspector has just focused.
+        let selection_mount = StoredValue::new_local(
+            document()
+                .create_element("div")
+                .expect("HTML element creation to work"),
+        );
+        let selection_frame = StoredValue::new_local(None::<rustify_ui::FrameHandle>);
+        Effect::new(move || {
+            let token = chosen.get();
+            query.get();
+            overrides_only.get();
+            if let Some(frame) = selection_frame.get_value() {
+                frame.cancel();
+            }
+            selection_frame.set_value(Some(rustify_ui::next_frame(move || {
+                selection_frame.update_value(|frame| {
+                    frame.take();
+                });
+                let target = document()
+                    .query_selector(&format!("[data-testid='color-token-{token}']"))
+                    .ok()
+                    .flatten()
+                    .and_then(|node| node.closest(".ce-row").ok().flatten())
+                    .or_else(|| {
+                        document()
+                            .query_selector(".ce-selection-fallback")
+                            .ok()
+                            .flatten()
+                    });
+                let mount = selection_mount.get_value();
+                if let Some(target) =
+                    target.filter(|target| mount.parent_element().as_ref() != Some(target))
+                {
+                    let focused = document()
+                        .active_element()
+                        .filter(|node| mount.contains(Some(node)));
+                    let _ = target.append_child(&mount);
+                    if let Some(node) = focused
+                        .and_then(|node| node.dyn_into::<leptos::web_sys::HtmlElement>().ok())
+                    {
+                        let _ = node.focus();
+                        if let Ok(Some(source)) =
+                            mount.query_selector("[data-testid='token-source']")
+                        {
+                            source.scroll_into_view();
+                        }
+                    }
+                }
+            })));
+        });
+        on_cleanup(move || {
+            if let Some(frame) = selection_frame.get_value() {
+                frame.cancel();
+            }
+        });
+        let children = StoredValue::new(children);
+        let selection = StoredValue::new(ViewFn::from(move || {
+            view! {
+                    <div class="ce-selection" data-testid="color-selection">
+                        {children.with_value(|children|children())}
+                    <div class="ce-picker" node_ref=picker_node>
+                        <h3 class="ce-picked-token">{move ||tr(locale.get(),"Color controls","颜色编辑")}</h3>
+                        <div class="ce-plane" node_ref=plane role="slider" tabindex="0" data-testid="color-plane"
+                            aria-label=move || tr(locale.get(),"Saturation and lightness","饱和度与亮度")
+                            aria-valuemin="0" aria-valuemax="100" aria-valuenow=move || (hsl.get().s*100.0).round()
+                            aria-valuetext=move || {let hsl=hsl.get();format!("{} {:.0}%, {} {:.0}%",tr(locale.get(),"Saturation","饱和度"),hsl.s*100.0,tr(locale.get(),"Lightness","亮度"),hsl.l*100.0)}
+                            aria-describedby="color-plane-help"
+                            on:pointerdown=move |event:PointerEvent| {
+                                if event.is_primary() && event.button()==0 {event.prevent_default();if let Some(node)=plane.get_untracked(){let _=node.focus();}picker.begin("plane",Source::Pointer(event.pointer_id()));capture(&event);plane_update(&event)}
+                            }
+                            on:pointermove=move |event:PointerEvent| {if picker.has_pointer("plane",event.pointer_id()){plane_update(&event)}}
+                            on:pointerup=move |event:PointerEvent| {if picker.has_pointer("plane",event.pointer_id()){plane_update(&event);picker.finish(Some("plane"),false)}}
+                            on:pointercancel=move |event:PointerEvent| {if picker.has_pointer("plane",event.pointer_id()){picker.finish(Some("plane"),true)}}
+                            on:keydown=move |event:KeyboardEvent| {
+                                if event.is_composing(){return}
+                                if event.key()=="Escape"{event.prevent_default();picker.finish(Some("plane"),true);return}
+                                let held=hsl.get_untracked();
+                                if let Some((s,l))=plane_key(held.s,held.l,&event.key(),event.shift_key()) {event.prevent_default();picker.begin("plane",Source::Keyboard);picker.update(Hsla {s,l,..held});}
+                            }
+                            on:keyup=move |event:KeyboardEvent| {if !event.is_composing() && range_key(&event.key()){picker.finish(Some("plane"),false)}}
+                            on:blur=move |_|picker.finish(Some("plane"),false)>
+                            <span class="ce-plane-marker" aria-hidden="true" />
+                        </div>
+                        <p id="color-plane-help" class="ce-help">{move || tr(locale.get(),"← → saturation · ↑ ↓ lightness · Shift: 10% · Esc: cancel","← → 饱和度 · ↑ ↓ 亮度 · Shift：10% · Esc：取消")}</p>
+                        <div class="ce-text-row">
+                            <Select value=displayed_format options=options open=format_open on_open_change=move |open|format_open.set(open)
+                                on_change=format_change aria_label="HEX / RGB / HSL / OKLCH" test_id="color-format" />
+                            <input node_ref=field type="text" class="ce-field ce-color-text" data-testid="color-value"
+                                aria-label=move || format!("{} {}",tr(locale.get(),"Color value","颜色值"),draft.get().token)
+                                aria-invalid=move || if invalid() {"true"} else {"false"} aria-describedby="color-value-help" spellcheck="false"
+                                prop:value=move || draft.get().value
+                                on:focus=move |_|focused.set_value(true)
+                                on:input=move |event| {if !composing.get_value(){draft.update(|draft|{draft.value=event_target_value(&event);draft.dirty=true})}}
+                                on:compositionstart=move |_|composing.set_value(true)
+                                on:compositionend=move |event|{composing.set_value(false);draft.update(|draft|{draft.value=event_target_value(&event);draft.dirty=true});}
+                                on:blur=move |_|{
+                                    let Some(held)=draft.try_get_untracked() else {return};
+                                    submit();focused.set_value(false);
+                                    if !held.dirty && parse_color(&held.value).is_ok() {
+                                        let token=chosen.get_untracked();
+                                        draft.set(Draft {value:display(&author(&values.get_untracked(),&token),format.get_untracked()),token,dirty:false});
+                                    }
+                                }
+                                on:keydown=move |event:KeyboardEvent| {
+                                    if composing.get_value() || event.is_composing(){return}
+                                    if event.key()=="Enter"{event.prevent_default();submit()}
+                                    else if event.key()=="Escape"{event.prevent_default();let token=draft.get_untracked().token;draft.set(Draft {value:display(&author(&values.get_untracked(),&token),format.get_untracked()),token,dirty:false});}
+                                } />
+                        </div>
+                        <p id="color-value-help" class="ce-help" role="status">{move || if invalid(){tr(locale.get(),"Invalid color. Use HEX, RGB, HSL or OKLCH; preview keeps the last valid theme.","颜色无效。支持 HEX、RGB、HSL、OKLCH；预览保留上次有效主题。")}else{tr(locale.get(),"Format changes the display only. Enter or leave the field to apply.","格式只改变显示。按 Enter 或离开输入框后应用。")}}</p>
+                        <div class="ce-channels">
+                            <Channel picker=picker locale=locale channel="r" label_en="Red" label_zh="红" max=255.0 step=1.0 />
+                            <Channel picker=picker locale=locale channel="g" label_en="Green" label_zh="绿" max=255.0 step=1.0 />
+                            <Channel picker=picker locale=locale channel="b" label_en="Blue" label_zh="蓝" max=255.0 step=1.0 />
+                            <Channel picker=picker locale=locale channel="h" label_en="Hue" label_zh="色相" max=360.0 step=1.0 />
+                            <Channel picker=picker locale=locale channel="s" label_en="Saturation" label_zh="饱和度" max=100.0 step=1.0 />
+                            <Channel picker=picker locale=locale channel="l" label_en="Lightness" label_zh="亮度" max=100.0 step=1.0 />
+                            <Channel picker=picker locale=locale channel="a" label_en="Alpha" label_zh="透明度" max=1.0 step=0.01 />
+                        </div>
+                    </div>
+                    </div>
+            }
+        }));
         view! {
             <section class="ce-editor" data-testid="color-editor">
                 <div class="ce-search">
@@ -645,77 +772,16 @@ mod ui {
                         <div class="ce-group">
                             <h3>{move ||tr(locale.get(),group.en,group.zh)}</h3>
                             <For each={move ||group.rows.iter().copied().filter(|row|visible_row(group,*row)).collect::<Vec<_>>()} key=|row|row.0 children=move |(background,foreground)|view!{
-                                <div class="ce-pair">
-                                    <Show when=move || !overrides_only.get() || overridden.with(|tokens|tokens.iter().any(|token|token==background))><TokenChoice values=values overridden=overridden locale=locale selected=selected token=background callbacks=callbacks /></Show>
-                                    {foreground.map(|token|view!{<Show when=move || !overrides_only.get() || overridden.with(|tokens|tokens.iter().any(|value|value==token))><TokenChoice values=values overridden=overridden locale=locale selected=selected token=token callbacks=callbacks /></Show>})}
-                                </div>
+                                <div class="ce-row"><div class="ce-pair">
+                                    <Show when=move || !overrides_only.get() || overridden.with(|tokens|tokens.iter().any(|token|token==background))><TokenChoice values=values overridden=overridden locale=locale selected=selected preview_mode=preview_mode token=background callbacks=callbacks /></Show>
+                                    {foreground.map(|token|view!{<Show when=move || !overrides_only.get() || overridden.with(|tokens|tokens.iter().any(|value|value==token))><TokenChoice values=values overridden=overridden locale=locale selected=selected preview_mode=preview_mode token=token callbacks=callbacks /></Show>})}
+                                </div></div>
                             } />
                         </div>
                     </Show>
                 }).collect_view()}
-                <div class="ce-selection" data-testid="color-selection">
-                    {children()}
-                <div class="ce-picker" node_ref=picker_node>
-                    <h3 class="ce-picked-token">{move || chosen.get()}</h3>
-                    <div class="ce-plane" node_ref=plane role="slider" tabindex="0" data-testid="color-plane"
-                        aria-label=move || tr(locale.get(),"Saturation and lightness","饱和度与亮度")
-                        aria-valuemin="0" aria-valuemax="100" aria-valuenow=move || (hsl.get().s*100.0).round()
-                        aria-valuetext=move || {let hsl=hsl.get();format!("{} {:.0}%, {} {:.0}%",tr(locale.get(),"Saturation","饱和度"),hsl.s*100.0,tr(locale.get(),"Lightness","亮度"),hsl.l*100.0)}
-                        aria-describedby="color-plane-help"
-                        on:pointerdown=move |event:PointerEvent| {
-                            if event.is_primary() && event.button()==0 {event.prevent_default();if let Some(node)=plane.get_untracked(){let _=node.focus();}picker.begin("plane",Source::Pointer(event.pointer_id()));capture(&event);plane_update(&event)}
-                        }
-                        on:pointermove=move |event:PointerEvent| {if picker.has_pointer("plane",event.pointer_id()){plane_update(&event)}}
-                        on:pointerup=move |event:PointerEvent| {if picker.has_pointer("plane",event.pointer_id()){plane_update(&event);picker.finish(Some("plane"),false)}}
-                        on:pointercancel=move |event:PointerEvent| {if picker.has_pointer("plane",event.pointer_id()){picker.finish(Some("plane"),true)}}
-                        on:keydown=move |event:KeyboardEvent| {
-                            if event.is_composing(){return}
-                            if event.key()=="Escape"{event.prevent_default();picker.finish(Some("plane"),true);return}
-                            let held=hsl.get_untracked();
-                            if let Some((s,l))=plane_key(held.s,held.l,&event.key(),event.shift_key()) {event.prevent_default();picker.begin("plane",Source::Keyboard);picker.update(Hsla {s,l,..held});}
-                        }
-                        on:keyup=move |event:KeyboardEvent| {if !event.is_composing() && range_key(&event.key()){picker.finish(Some("plane"),false)}}
-                        on:blur=move |_|picker.finish(Some("plane"),false)>
-                        <span class="ce-plane-marker" aria-hidden="true" />
-                    </div>
-                    <p id="color-plane-help" class="ce-help">{move || tr(locale.get(),"← → saturation · ↑ ↓ lightness · Shift: 10% · Esc: cancel","← → 饱和度 · ↑ ↓ 亮度 · Shift：10% · Esc：取消")}</p>
-                    <div class="ce-text-row">
-                        <Select value=displayed_format options=options open=format_open on_open_change=move |open|format_open.set(open)
-                            on_change=format_change aria_label="HEX / RGB / HSL / OKLCH" test_id="color-format" />
-                        <input node_ref=field type="text" class="ce-field ce-color-text" data-testid="color-value"
-                            aria-label=move || format!("{} {}",tr(locale.get(),"Color value","颜色值"),draft.get().token)
-                            aria-invalid=move || if invalid() {"true"} else {"false"} aria-describedby="color-value-help" spellcheck="false"
-                            prop:value=move || draft.get().value
-                            on:focus=move |_|focused.set_value(true)
-                            on:input=move |event| {if !composing.get_value(){draft.update(|draft|{draft.value=event_target_value(&event);draft.dirty=true})}}
-                            on:compositionstart=move |_|composing.set_value(true)
-                            on:compositionend=move |event|{composing.set_value(false);draft.update(|draft|{draft.value=event_target_value(&event);draft.dirty=true});}
-                            on:blur=move |_|{
-                                let Some(held)=draft.try_get_untracked() else {return};
-                                submit();focused.set_value(false);
-                                if !held.dirty && parse_color(&held.value).is_ok() {
-                                    let token=chosen.get_untracked();
-                                    draft.set(Draft {value:display(&author(&values.get_untracked(),&token),format.get_untracked()),token,dirty:false});
-                                }
-                            }
-                            on:keydown=move |event:KeyboardEvent| {
-                                if composing.get_value() || event.is_composing(){return}
-                                if event.key()=="Enter"{event.prevent_default();submit()}
-                                else if event.key()=="Escape"{event.prevent_default();let token=draft.get_untracked().token;draft.set(Draft {value:display(&author(&values.get_untracked(),&token),format.get_untracked()),token,dirty:false});}
-                            } />
-                    </div>
-                    <p id="color-value-help" class="ce-help" role="status">{move || if invalid(){tr(locale.get(),"Invalid color. Use HEX, RGB, HSL or OKLCH; preview keeps the last valid theme.","颜色无效。支持 HEX、RGB、HSL、OKLCH；预览保留上次有效主题。")}else{tr(locale.get(),"Format changes the display only. Enter or leave the field to apply.","格式只改变显示。按 Enter 或离开输入框后应用。")}}</p>
-                    <div class="ce-channels">
-                        <Channel picker=picker locale=locale channel="r" label_en="Red" label_zh="红" max=255.0 step=1.0 />
-                        <Channel picker=picker locale=locale channel="g" label_en="Green" label_zh="绿" max=255.0 step=1.0 />
-                        <Channel picker=picker locale=locale channel="b" label_en="Blue" label_zh="蓝" max=255.0 step=1.0 />
-                        <Channel picker=picker locale=locale channel="h" label_en="Hue" label_zh="色相" max=360.0 step=1.0 />
-                        <Channel picker=picker locale=locale channel="s" label_en="Saturation" label_zh="饱和度" max=100.0 step=1.0 />
-                        <Channel picker=picker locale=locale channel="l" label_en="Lightness" label_zh="亮度" max=100.0 step=1.0 />
-                        <Channel picker=picker locale=locale channel="a" label_en="Alpha" label_zh="透明度" max=1.0 step=0.01 />
-                    </div>
-                </div>
-                </div>
+                <div class="ce-selection-fallback"></div>
+                <Portal mount=selection_mount.get_value()>{selection.get_value().run()}</Portal>
             </section>
         }
     }

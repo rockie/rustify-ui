@@ -228,7 +228,7 @@ The shell uses IBM Plex Sans with a sans-serif fallback. Its hierarchy is delibe
 
 The legacy SDK's body size is separate from the shell body. The v4 legacy adapter supplies IBM Plex Sans for sans, `ui-serif, serif` for serif, and Liberation Mono for mono. Color strings use the monospace color-code role; import/export areas use the export-code role. User-authored font stacks and letter spacing govern the preview.
 
-[Bundled font declarations](web/theme-fonts.css) provide IBM Plex Sans, Noto Sans, Rustify WenKai, Noto Serif, Liberation Mono and Noto Color Emoji at normal 400, plus JetBrains Mono at 100–800; all use `font-display: swap`. Do not infer separately bundled semibold or italic files from CSS weights. [Theme document defaults](crates/rustify-dom/src/theme/document.rs) and resolved font diagnostics define the preview contract.
+[Bundled font declarations](web/theme-fonts.css) provide IBM Plex Sans as external static woff2 faces at normal 300/400/500/600/700 in `public/fonts/ibm-plex-sans`, with [source and license provenance](public/fonts/ibm-plex-sans/provenance.json). Noto Sans, Rustify WenKai, Noto Serif, Liberation Mono and Noto Color Emoji remain normal 400; JetBrains Mono covers 100–800. All use `font-display: swap`; no separate italic faces are bundled. [Theme document defaults](crates/rustify-dom/src/theme/document.rs) and resolved font diagnostics define the preview contract.
 
 The source DOM typography API keeps semantic elements separate from visual
 size: Text selects span/div/label/p; Heading selects h1–h6 with visual size 6

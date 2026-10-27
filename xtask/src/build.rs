@@ -133,6 +133,7 @@ pub fn build(request: &BuildRequest) -> Result<PathBuf, String> {
         &root.join("web/theme-fonts.css"),
         &app.join("theme-fonts.css"),
     )?;
+    copy_tree(&root.join("public"), &app.join("public"))?;
     for name in ["app.js", "app.css"] {
         copy(&example_dir.join(name), &app.join(name))?;
     }

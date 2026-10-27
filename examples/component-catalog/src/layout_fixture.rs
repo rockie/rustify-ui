@@ -162,11 +162,15 @@ fn TypographySamples() -> impl IntoView {
 }
 
 #[component]
-fn LayoutSamples(
-    invalid: RwSignal<bool>,
-    clicks: RwSignal<u32>,
-    styles: GeometryStyles,
-) -> impl IntoView {
+fn LayoutSamples(invalid: RwSignal<bool>, clicks: RwSignal<u32>) -> impl IntoView {
+    let checked_layout = Memo::new(move |_| Layout {
+        width: css(if invalid.get() {
+            "12px;display:none"
+        } else {
+            "240px"
+        }),
+        ..Layout::default()
+    });
     let shared = Layout {
         padding: Padding {
             p: space(4),
@@ -216,23 +220,30 @@ fn LayoutSamples(
     view! {
         <div class="space-y-4" data-testid="layout-primitives">
             <Heading as_=HeadingLevel::H2>"Layout primitives"</Heading>
+            <p class="fixture-prop">"Box · as=span · display=block (default)"</p>
             <Box as_=LayoutElement::Span test_id="layout-box-default">"A semantic span starts as a block."</Box>
+            <p class="fixture-prop">"Box · width=10 / xs=20 / sm=30 / md=40 / lg=50 / xl=60px · height=8px"</p>
             <Box test_id="layout-responsive-width" layout=Layout {
                 width: Responsive { initial: Some("10px".into()), xs: Some("20px".into()), sm: Some("30px".into()), md: Some("40px".into()), lg: Some("50px".into()), xl: Some("60px".into()) },
                 height: css("8px"), ..Layout::default()
             } class="bg-primary">{ "" }</Box>
+            <p class="fixture-prop">"Box · display=block / md=none / lg=block (sparse)"</p>
             <Box as_=LayoutElement::Span test_id="layout-sparse-display" display=Responsive { md: Some(BoxDisplay::None), lg: Some(BoxDisplay::Block), ..Responsive::default() }>"Sparse display keeps the component default before md."</Box>
             // Keep the margin sample below the parent's space-y utility target.
             <div class="flow-root">
-                <Box test_id="layout-shared" layout=shared margin=Margin { m: space(2), mx: space(3), my: space(4), mt: space(5), mr: space(6), mb: space(7), ml: space(8) } class="bg-muted">"Shared fields"</Box>
+                <p class="fixture-prop">"Box · 160 × 90px · padding=4 / px=3 / pt=2 · relative, scroll, flex and grid fields"</p>
+            <Box test_id="layout-shared" layout=shared margin=Margin { m: space(2), mx: space(3), my: space(4), mt: space(5), mr: space(6), mb: space(7), ml: space(8) } class="bg-muted">"Shared fields"</Box>
             </div>
+            <p class="fixture-prop">"Box · width=37px / padding=4; caller class=w-20 p-0"</p>
             <Box test_id="layout-class-override" layout=Layout { width: css("37px"), padding: Padding { p: space(4), ..Padding::default() }, ..Layout::default() } class="w-20 p-0">"Utilities"</Box>
+            <p class="fixture-prop">"Flex · direction=row / sm=column / lg=row-reverse · align=center · justify=between · wrap · gap=3 / x=2 / y=4"</p>
             <Flex test_id="layout-flex" as_=LayoutElement::Span
                 direction=Responsive { initial: Some(FlexDirection::Row), sm: Some(FlexDirection::Column), lg: Some(FlexDirection::RowReverse), ..Responsive::default() }
                 align=Responsive::from(Align::Center) justify=Responsive::from(Justify::Between) wrap=Responsive::from(FlexWrap::Wrap)
                 gap=Gap { gap: space(3), gap_x: space(2), gap_y: space(4) }>
                 <span>"First"</span><span>"Second"</span><span>"Third"</span>
             </Flex>
+            <p class="fixture-prop">"Grid · columns=3 · rows=auto 1fr · row-dense · align=stretch · justify=between · gap=2 / x=3 / y=4"</p>
             <Grid test_id="layout-grid" columns=Responsive::from(GridTracks::Count(3)) rows=Responsive::from(GridTracks::Css("auto 1fr".into()))
                 areas=css("\"a a b\" \"c d b\"") flow=Responsive::from(GridFlow::RowDense)
                 align=Responsive::from(Align::Stretch) justify=Responsive::from(Justify::Between)
@@ -247,7 +258,7 @@ fn LayoutSamples(
             <Container test_id="layout-container-projection" layout=Layout { width: css("240px"), min_width: css("120px"), max_width: css("280px"), height: css("72px"), min_height: css("40px"), max_height: css("90px"), ..Layout::default() }>
                 <div class="fixture-projection">"width=240px · height=72px · content layer"</div>
             </Container>
-            <Section test_id="layout-section" size=Responsive { initial: Some(SectionSize::One), xs: Some(SectionSize::Two), md: Some(SectionSize::Three), xl: Some(SectionSize::Four), ..Responsive::default() } class="bg-muted">"Semantic section spacing"</Section>
+            <Section test_id="layout-section" size=Responsive { initial: Some(SectionSize::One), xs: Some(SectionSize::Two), md: Some(SectionSize::Three), xl: Some(SectionSize::Four), ..Responsive::default() } class="bg-muted">"Section · size=1 / xs=2 / md=3 / xl=4 (24 / 40 / 64 / 80px)"</Section>
             <p class="fixture-prop">"Outer padding=32px; dashed nearest container padding=8px; nested Inset consumes it once."</p>
             <Box test_id="layout-inset-outer" layout=Layout { width: css("300px"), padding: Padding { p: space(6), ..Padding::default() }, ..Layout::default() } class="bg-muted">
                 <Box test_id="layout-inset-nearest" layout=Layout { padding: Padding { p: space(2), ..Padding::default() }, ..Layout::default() } class="bg-card fixture-inset-nearest">
@@ -280,12 +291,15 @@ fn LayoutSamples(
                     </Box></div>
                 }).collect_view()}
             </div>
+            <p class="fixture-prop">"Box · padding=4 (theme spacing, scales once)"</p>
             <Box test_id="layout-scaled-space" layout=Layout { padding: Padding { p: space(4), ..Padding::default() }, ..Layout::default() }>"Theme space scales once."</Box>
-            <Box test_id="layout-absolute" layout=Layout { width: css("37px"), height: css("19px"), padding: Padding { p: Spacing::Css("3px".into()).into(), ..Padding::default() }, ..Layout::default() }>"px"</Box>
-            <Box test_id="layout-invalid-prop" layout=Signal::derive(move || Layout { width: css(if invalid.get() { "12px;display:none" } else { "37px" }), ..Layout::default() })>"A bad prop keeps this view alive."</Box>
+            <p class="fixture-prop">"Box · width=37px · height=19px · padding=3px (explicit CSS)"</p>
+            <Box test_id="layout-absolute" layout=Layout { width: css("37px"), height: css("19px"), padding: Padding { p: Spacing::Css("3px".into()).into(), ..Padding::default() }, ..Layout::default() }><span class="sr-only">"37px × 19px; padding=3px"</span></Box>
+            <p class="fixture-prop">"Box · width=240px; Invalid prop submits width=12px;display:none"</p>
+            <Box test_id="layout-invalid-prop" layout=Signal::derive(move ||checked_layout.get())>"A bad prop keeps this view alive."</Box>
             <p role="status" data-testid="layout-prop-diagnostics" class="fixture-prop-diagnostic">{move || {
-                invalid.track();
-                styles.diagnostics().into_iter().map(|error| format!("Box · {error}. Component defaults remain active.")).collect::<Vec<_>>().join(" ")
+                let mut styles=rustify_components::geometry::StyleSet::default();
+                checked_layout.get().write(&mut styles).err().map(|error|format!("Box · {error}. Rejected value: 12px;display:none. Fallback: width=auto. Component remains usable.")).unwrap_or_default()
             }}</p>
             <section class="fixture-section" data-testid="layout-reset-comparison">
                 <Heading as_=HeadingLevel::H2>"Reset"</Heading>
@@ -296,6 +310,42 @@ fn LayoutSamples(
                 <div class="fixture-reset-row"><span class="fixture-prop">"h2 · Reset"</span>{Reset(leptos::html::h2().class("fixture-reset-outline").child("Reset heading"))}</div>
                 <div class="fixture-reset-row"><span class="fixture-prop">"ul · native"</span><ul><li>"Native list item"</li></ul></div>
                 <div class="fixture-reset-row"><span class="fixture-prop">"ul · Reset"</span>{Reset(leptos::html::ul().class("fixture-reset-outline").child(leptos::html::li().child("Reset list item")))}</div>
+                <div class="fixture-reset-row"><span class="fixture-prop">"a · native"</span>{leptos::html::a().href("#layout-reset-comparison").child("Native link")}</div>
+                <div class="fixture-reset-row"><span class="fixture-prop">"a · Reset"</span>{Reset(leptos::html::a().href("#layout-reset-comparison").child("Native link").class("fixture-reset-outline"))}</div>
+                <div class="fixture-reset-row"><span class="fixture-prop">"strong · native"</span>{leptos::html::strong().child("Strong importance")}</div>
+                <div class="fixture-reset-row"><span class="fixture-prop">"strong · Reset"</span>{Reset(leptos::html::strong().child("Strong importance").class("fixture-reset-outline"))}</div>
+                <div class="fixture-reset-row"><span class="fixture-prop">"em · native"</span>{leptos::html::em().child("Emphasis")}</div>
+                <div class="fixture-reset-row"><span class="fixture-prop">"em · Reset"</span>{Reset(leptos::html::em().child("Emphasis").class("fixture-reset-outline"))}</div>
+                <div class="fixture-reset-row"><span class="fixture-prop">"code · native"</span>{leptos::html::code().child("let answer = 42;")}</div>
+                <div class="fixture-reset-row"><span class="fixture-prop">"code · Reset"</span>{Reset(leptos::html::code().child("let answer = 42;").class("fixture-reset-outline"))}</div>
+                <div class="fixture-reset-row"><span class="fixture-prop">"kbd · native"</span>{leptos::html::kbd().child("Ctrl + K")}</div>
+                <div class="fixture-reset-row"><span class="fixture-prop">"kbd · Reset"</span>{Reset(leptos::html::kbd().child("Ctrl + K").class("fixture-reset-outline"))}</div>
+                <div class="fixture-reset-row"><span class="fixture-prop">"mark · native"</span>{leptos::html::mark().child("Marked text")}</div>
+                <div class="fixture-reset-row"><span class="fixture-prop">"mark · Reset"</span>{Reset(leptos::html::mark().child("Marked text").class("fixture-reset-outline"))}</div>
+                <div class="fixture-reset-row"><span class="fixture-prop">"sub · native"</span>{leptos::html::sub().child("Subscript")}</div>
+                <div class="fixture-reset-row"><span class="fixture-prop">"sub · Reset"</span>{Reset(leptos::html::sub().child("Subscript").class("fixture-reset-outline"))}</div>
+                <div class="fixture-reset-row"><span class="fixture-prop">"sup · native"</span>{leptos::html::sup().child("Superscript")}</div>
+                <div class="fixture-reset-row"><span class="fixture-prop">"sup · Reset"</span>{Reset(leptos::html::sup().child("Superscript").class("fixture-reset-outline"))}</div>
+                <div class="fixture-reset-row"><span class="fixture-prop">"input · native"</span>{leptos::html::input().attr("aria-label","Sample input").attr("placeholder","Native input")}</div>
+                <div class="fixture-reset-row"><span class="fixture-prop">"input · Reset"</span>{Reset(leptos::html::input().attr("aria-label","Sample input").attr("placeholder","Native input").class("fixture-reset-outline"))}</div>
+                <div class="fixture-reset-row"><span class="fixture-prop">"select · native"</span>{leptos::html::select().attr("aria-label","Sample select").child(leptos::html::option().child("One option"))}</div>
+                <div class="fixture-reset-row"><span class="fixture-prop">"select · Reset"</span>{Reset(leptos::html::select().attr("aria-label","Sample select").child(leptos::html::option().child("One option")).class("fixture-reset-outline"))}</div>
+                <div class="fixture-reset-row"><span class="fixture-prop">"textarea · native"</span>{leptos::html::textarea().attr("aria-label","Sample textarea").attr("rows","2").child("A native textarea")}</div>
+                <div class="fixture-reset-row"><span class="fixture-prop">"textarea · Reset"</span>{Reset(leptos::html::textarea().attr("aria-label","Sample textarea").attr("rows","2").child("A native textarea").class("fixture-reset-outline"))}</div>
+                <div class="fixture-reset-row"><span class="fixture-prop">"fieldset · native"</span>{leptos::html::fieldset().child(leptos::html::legend().child("Fieldset legend"))}</div>
+                <div class="fixture-reset-row"><span class="fixture-prop">"fieldset · Reset"</span>{Reset(leptos::html::fieldset().child(leptos::html::legend().child("Fieldset legend")).class("fixture-reset-outline"))}</div>
+                <div class="fixture-reset-row"><span class="fixture-prop">"ol · native"</span>{leptos::html::ol().child(leptos::html::li().child("Ordered item"))}</div>
+                <div class="fixture-reset-row"><span class="fixture-prop">"ol · Reset"</span>{Reset(leptos::html::ol().child(leptos::html::li().child("Ordered item")).class("fixture-reset-outline"))}</div>
+                <div class="fixture-reset-row"><span class="fixture-prop">"dl · native"</span>{leptos::html::dl().child((leptos::html::dt().child("Term"),leptos::html::dd().child("Definition")))}</div>
+                <div class="fixture-reset-row"><span class="fixture-prop">"dl · Reset"</span>{Reset(leptos::html::dl().child((leptos::html::dt().child("Term"),leptos::html::dd().child("Definition"))).class("fixture-reset-outline"))}</div>
+                <div class="fixture-reset-row"><span class="fixture-prop">"table · native"</span>{leptos::html::table().child(leptos::html::tbody().child(leptos::html::tr().child(leptos::html::td().child("Table cell"))))}</div>
+                <div class="fixture-reset-row"><span class="fixture-prop">"table · Reset"</span>{Reset(leptos::html::table().child(leptos::html::tbody().child(leptos::html::tr().child(leptos::html::td().child("Table cell")))).class("fixture-reset-outline"))}</div>
+                <div class="fixture-reset-row"><span class="fixture-prop">"pre · native"</span>{leptos::html::pre().child("Preformatted text")}</div>
+                <div class="fixture-reset-row"><span class="fixture-prop">"pre · Reset"</span>{Reset(leptos::html::pre().child("Preformatted text").class("fixture-reset-outline"))}</div>
+                <div class="fixture-reset-row"><span class="fixture-prop">"blockquote · native"</span>{leptos::html::blockquote().child("Native block quotation")}</div>
+                <div class="fixture-reset-row"><span class="fixture-prop">"blockquote · Reset"</span>{Reset(leptos::html::blockquote().child("Native block quotation").class("fixture-reset-outline"))}</div>
+                <div class="fixture-reset-row"><span class="fixture-prop">"img · native"</span>{leptos::html::img().attr("src","./public/reset-sample.svg").attr("alt","Three color swatches").attr("width","96").attr("height","32")}</div>
+                <div class="fixture-reset-row"><span class="fixture-prop">"img · Reset"</span>{Reset(leptos::html::img().attr("src","./public/reset-sample.svg").attr("alt","Three color swatches").attr("width","96").attr("height","32").class("fixture-reset-outline"))}</div>
             </section>
             <LayoutDemonstrations/>
         </div>
@@ -322,11 +372,11 @@ fn LayoutDemonstrations() -> impl IntoView {
         <section class="fixture-section" data-testid="layout-inset-demonstration">
             <Heading as_=HeadingLevel::H2>"Inset"</Heading>
             <div class="fixture-inset-demo-grid">
-                {[("top", InsetSide::Top), ("bottom", InsetSide::Bottom)].into_iter().map(|(name, side)| view! {
+                {[("top", InsetSide::Top), ("bottom", InsetSide::Bottom), ("left",InsetSide::Left), ("right",InsetSide::Right)].into_iter().map(|(name, side)| view! {
                     <Box class="fixture-inset-card" layout=Layout { padding: Padding { p: space(5), ..Padding::default() }, ..Layout::default() }>
-                        <Show when=move || side == InsetSide::Bottom><p>"Content keeps the card's declared padding."</p></Show>
+                        <Show when=move || matches!(side,InsetSide::Bottom|InsetSide::Right)><p>"Content keeps the card's declared padding."</p></Show>
                         <Inset side=Responsive::from(side)><div class="fixture-inset-hero">{format!("side={name} · flush to card edges")}</div></Inset>
-                        <Show when=move || side == InsetSide::Top><p>"Content keeps the card's declared padding."</p></Show>
+                        <Show when=move || matches!(side,InsetSide::Top|InsetSide::Left)><p>"Content keeps the card's declared padding."</p></Show>
                     </Box>
                 }).collect_view()}
             </div>
@@ -336,8 +386,7 @@ fn LayoutDemonstrations() -> impl IntoView {
 
 #[component]
 fn Fixture() -> impl IntoView {
-    let styles = GeometryStyles::default();
-    rustify_components::provide_geometry_styles(styles.clone());
+    rustify_components::provide_geometry_styles(GeometryStyles::default());
     let document = RwSignal::new(ThemeDocument::standard(
         "layout-fixture",
         "DOM layout and type",
@@ -364,7 +413,7 @@ fn Fixture() -> impl IntoView {
                 <Button test_id="layout-invalid" on_click=move || invalid.set(true)>"Invalid prop"</Button>
                 <Button test_id="layout-valid" on_click=move || invalid.set(false)>"Restore prop"</Button>
             </div>
-            <LayoutSamples invalid=invalid clicks=clicks styles=styles/>
+            <LayoutSamples invalid=invalid clicks=clicks/>
             <TypographySamples/>
         </div>
     }

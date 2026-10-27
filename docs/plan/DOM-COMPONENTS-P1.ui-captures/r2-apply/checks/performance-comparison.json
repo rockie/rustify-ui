@@ -1,0 +1,135 @@
+{
+  "before_source": "performance-before.json (printed summary)",
+  "after_source": "performance-reference-final.json (40 raw rows; last measured run before Slider-only CSS correction)",
+  "intermediate_after_sources": [
+    "performance-after.json",
+    "performance-final.json",
+    "performance-inspector-final.json",
+    "performance-checkpoint-final.json"
+  ],
+  "before_build": "f83c6ff130d88c2d",
+  "after_build": "1d0f7fb07ed99240",
+  "samples_each": 40,
+  "browser": "156.0.8078.48",
+  "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M5 Pro, Unspecified Version)",
+  "metrics": {
+    "dom_css_commit": {
+      "before": {
+        "p50": 24,
+        "p95": 25.59999990463257
+      },
+      "after": {
+        "p50": 23.100000143051147,
+        "p95": 25
+      }
+    },
+    "dom_color_settled": {
+      "before": {
+        "p50": 66.90000009536743,
+        "p95": 74.20000004768372
+      },
+      "after": {
+        "p50": 66.69999980926514,
+        "p95": 67.79999995231628
+      }
+    },
+    "gpu_draw_ack": {
+      "before": {
+        "p50": 25.200000047683716,
+        "p95": 26.700000047683716
+      },
+      "after": {
+        "p50": 24.200000047683716,
+        "p95": 26
+      }
+    },
+    "stages": {
+      "before": {
+        "sync_edit_ms": {
+          "p50": 0.5,
+          "p95": 0.6000001430511475
+        },
+        "initial_snapshot_ms": {
+          "p50": 0.9000000953674316,
+          "p95": 1.2000000476837158
+        },
+        "publish_latency_ms": {
+          "p50": 17.700000047683716,
+          "p95": 19
+        },
+        "css_projection_ms": {
+          "p50": 6.200000047683716,
+          "p95": 7.5
+        }
+      },
+      "after": {
+        "sync_edit_ms": {
+          "p50": 0.5,
+          "p95": 0.6000001430511475
+        },
+        "initial_snapshot_ms": {
+          "p50": 0.9000000953674316,
+          "p95": 1.1000001430511475
+        },
+        "publish_latency_ms": {
+          "p50": 17.5,
+          "p95": 19
+        },
+        "css_projection_ms": {
+          "p50": 5.700000047683716,
+          "p95": 6.3999998569488525
+        }
+      }
+    },
+    "resolves": {
+      "before": {
+        "editor": 80,
+        "sdk_total": 160
+      },
+      "after": {
+        "editor": 80,
+        "sdk_total": 160
+      }
+    },
+    "gesture": {
+      "before": {
+        "inputs": 240,
+        "published": 30,
+        "duration_ms": 701.5,
+        "editor_resolves": 240,
+        "sdk_total_resolves": 300,
+        "final_revision": 70,
+        "drawn_revision": 70
+      },
+      "after": {
+        "inputs": 240,
+        "published": 30,
+        "duration_ms": 596.7999999523163,
+        "editor_resolves": 240,
+        "sdk_total_resolves": 300,
+        "final_revision": 70,
+        "drawn_revision": 70
+      }
+    },
+    "long_tasks": {
+      "before": {
+        "count": 0,
+        "total_ms": 0,
+        "max_ms": 0,
+        "entries": []
+      },
+      "after": {
+        "count": 0,
+        "total_ms": 0,
+        "max_ms": 0,
+        "entries": []
+      }
+    }
+  },
+  "wasm_bytes": {
+    "before": 9735795,
+    "after": 9802741,
+    "delta": 66946
+  },
+  "limitation": "One pre-repair run; all later samples are retained, and the last run is reported. Before raw rows were not retained; its summary is printed in browser-before.log. This does not establish causality or a multi-round performance verdict."
+}

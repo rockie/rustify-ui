@@ -1,0 +1,8 @@
+
+Running 1 test using 1 worker
+
+(node:60494) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 [component-catalog] › tests/browser/catalog-inputs.spec.ts:64:5 › slider paint stays inside its aligned bounds at both endpoints (12.7s)
+
+  1 passed (13.5s)

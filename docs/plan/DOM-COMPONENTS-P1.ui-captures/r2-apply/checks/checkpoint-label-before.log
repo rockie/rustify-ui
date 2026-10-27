@@ -1,0 +1,45 @@
+
+Running 1 test using 1 worker
+
+(node:19034) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 [theme-studio] › tests/browser/theme-storage.spec.ts:33:5 › named save, refresh, copy, rename, overwrite and delete retain real checkpoints (24.3s)
+
+
+  1) [theme-studio] › tests/browser/theme-storage.spec.ts:33:5 › named save, refresh, copy, rename, overwrite and delete retain real checkpoints 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  getByTestId('theme-modified')
+    Expected: "Matches “Ocean 中文”"
+    Received: "Matches preset"
+    Timeout:  15000ms
+
+    Call log:
+      - Expect "toHaveText" getByTestId('theme-modified') with timeout 15000ms
+      - waiting for getByTestId('theme-modified')
+        34 × locator resolved to <span class="studio-modified" data-testid="theme-modified">Matches preset</span>
+           - unexpected value "Matches preset"
+
+
+      37 |   await expect(page.getByTestId("storage-status")).toContainText("Saved on this device");
+      38 |   expect((await state(page)).modified).toBe(false);
+    > 39 |   await expect(page.getByTestId("theme-modified")).toHaveText("Matches “Ocean 中文”");
+         |                                                    ^
+      40 |   const saved=JSON.parse((await raw(page))!);
+      41 |   expect(saved.saved_themes).toHaveLength(1);expect(saved.draft.name).toBe("Ocean 中文");
+      42 |   await edit(page,"#224488");
+        at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser/theme-storage.spec.ts:39:52
+
+    Error Context: test-results/r2-checkpoint-before/theme-storage-named-save-r-f859d-ete-retain-real-checkpoints-theme-studio/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/r2-checkpoint-before/theme-storage-named-save-r-f859d-ete-retain-real-checkpoints-theme-studio/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/r2-checkpoint-before/theme-storage-named-save-r-f859d-ete-retain-real-checkpoints-theme-studio/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [theme-studio] › tests/browser/theme-storage.spec.ts:33:5 › named save, refresh, copy, rename, overwrite and delete retain real checkpoints 

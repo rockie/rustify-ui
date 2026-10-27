@@ -140,7 +140,7 @@ mod ui {
     fn hint(token: &str, locale: Locale) -> &'static str {
         let (en, zh) = match token {
             "font-sans" | "font-serif" | "font-mono" => ("Comma-separated families. Unknown names are preserved with a visible preview fallback.", "用逗号分隔字体名。未知字体名会保留，预览回退会明确提示。"),
-            "letter-spacing" => ("em, px, rem or normal; resolved range −0.5…0.5em.", "支持 em、px、rem 或 normal；解析后范围为 −0.5…0.5em。"),
+            "letter-spacing" => ("em, px, rem or normal; resolved range −0.5em to 0.5em.", "支持 em、px、rem 或 normal；解析后范围为 −0.5…0.5em。"),
             "shadow-opacity" => ("A number from 0 to 1.", "0 到 1 之间的数值。"),
             "shadow-spread" | "shadow-offset-x" | "shadow-offset-y" => ("Signed px or rem; unitless zero is allowed.", "支持正负 px 或 rem，也可填写无单位的 0。"),
             "spacing" | "font-size" => ("Positive px or rem.", "大于 0 的 px 或 rem。"),
@@ -305,7 +305,7 @@ mod ui {
                     on:compositionend:target=move |event| {composing.set_value(false);draft.set(event.target().value());dirty.set(true);rejected.set(false);}
                     on:blur=move |_| {if draft.try_get_untracked().is_none() {return;}submit();focused.set_value(false);if rejected.get_untracked() {restore();}}
                     on:keydown=move |event| {if event.is_composing() || composing.get_value() {return;} match event.key().as_str() {"Enter"=>{event.prevent_default();submit();},"Escape"=>{event.prevent_default();event.stop_propagation();restore();},_=>()}} />
-                <p id=hint_id class="text-xs text-muted-foreground">{move || hint(token,locale.get())}</p>
+                <p id=hint_id class="text-xs text-muted-foreground" hidden=move ||invalid.get()>{move || hint(token,locale.get())}</p>
                 <p id=error_id class="studio-field-error" role="status" data-testid=format!("error-{token}")>{move || if invalid.get() {
                     let current=values.get().get(token).unwrap_or_default().to_owned();
                     if locale.get()==Locale::Chinese {format!("“{}”不是有效值。{} 预览保留 {current}；Esc 或离开字段可恢复。",draft.get(),hint(token,locale.get()))}
@@ -713,7 +713,6 @@ mod ui {
         });
         view! {
             <section class="theme-diagnostics space-y-4 text-sm" data-testid="theme-diagnostics">
-                <h2 class="font-semibold">{move ||tr(locale.get(),"Preview diagnostics","预览诊断")}</h2>
                 <div role="status" data-testid="gamut-diagnostics"><Show when=move ||!gamut.get().is_empty() fallback=move ||view! {<p class="text-muted-foreground">{move ||tr(locale.get(),"Authored colors fit the sRGB preview.","作者颜色未超出 sRGB 预览色域。")}</p>}>
                     <p class="text-destructive">{move ||format!("{} {}",tr(locale.get(),"Preview clipped to sRGB; author values are preserved:","预览已裁剪至 sRGB，作者值保留："),gamut.get().join(", "))}</p>
                 </Show></div>
@@ -737,7 +736,7 @@ mod ui {
                                 <code class="text-xs break-words">{format!("{foreground} / {background}")}</code>
                                 <p>{move ||match ratio {
                                     None=>tr(locale.get(),"Unknown · actual backing required","无法判定 · 需要实际底色").to_owned(),
-                                    Some(ratio)=>format!("{ratio:.3}:1 · {}",if ratio>=4.5 {tr(locale.get(),"Meets body-text threshold","达到普通文字阈值")} else if ratio>=3. {tr(locale.get(),"Fails body text · large text only","普通文字未通过 · 仅达到大文字阈值")} else {tr(locale.get(),"Fails text thresholds","未通过文字阈值")}),
+                                    Some(ratio)=>format!("{ratio:.2}:1 · {}",if ratio>=4.5 {tr(locale.get(),"Meets body-text threshold","达到普通文字阈值")} else if ratio>=3. {tr(locale.get(),"Fails body text · large text only","普通文字未通过 · 仅达到大文字阈值")} else {tr(locale.get(),"Fails text thresholds","未通过文字阈值")}),
                                 }}</p>
                             </li>
                         }).collect_view()}

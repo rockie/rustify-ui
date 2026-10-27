@@ -36,9 +36,13 @@ test("named save, refresh, copy, rename, overwrite and delete retain real checkp
   await save(page,"Ocean 中文");
   await expect(page.getByTestId("storage-status")).toContainText("Saved on this device");
   expect((await state(page)).modified).toBe(false);
+  await expect(page.getByTestId("theme-modified")).toHaveText("Matches “Ocean 中文”");
   const saved=JSON.parse((await raw(page))!);
   expect(saved.saved_themes).toHaveLength(1);expect(saved.draft.name).toBe("Ocean 中文");
-  await edit(page,"#224488");await page.reload();
+  await edit(page,"#224488");
+  await expect(page.getByTestId("theme-modified")).toHaveText("Modified from “Ocean 中文”");
+  await expect(page.getByTestId("toolbar-storage-status")).toHaveText("Saved on this device");
+  await page.reload();
   await expect(page.getByTestId("status")).toHaveAttribute("data-status","ready");
   expect((await state(page)).values.light.primary).toBe("#224488");
   expect((await state(page)).modified).toBe(true);

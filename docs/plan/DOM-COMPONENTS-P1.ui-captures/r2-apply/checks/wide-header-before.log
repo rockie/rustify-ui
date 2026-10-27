@@ -1,0 +1,39 @@
+
+Running 1 test using 1 worker
+
+(node:66303) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 [theme-studio] › tests/browser/theme-ui-review.spec.ts:146:5 › the command bar keeps actions visible at 200 percent text size (23.2s)
+
+
+  1) [theme-studio] › tests/browser/theme-ui-review.spec.ts:146:5 › the command bar keeps actions visible at 200 percent text size 
+
+    Error: expect(received).toBeLessThan(expected)
+
+    Expected: < 288
+    Received:   722.96875
+
+    Call Log:
+    - Timeout 15000ms exceeded while waiting on the predicate
+
+      150 |     for (const viewport of [{ width: 720, height: 900 }, { width: 1280, height: 720 }]) {
+      151 |         await page.setViewportSize(viewport);
+    > 152 |         await expect.poll(() => bar.evaluate(node => node.getBoundingClientRect().height)).toBeLessThan(viewport.height * .4);
+          |                                                                                            ^
+      153 |         for (const id of ["mode-dark", "theme-undo", "theme-save", "theme-export"]) {
+      154 |             const button = page.getByTestId(id);
+      155 |             const [bounds, toolbar] = await Promise.all([button.boundingBox(), bar.boundingBox()]);
+        at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser/theme-ui-review.spec.ts:152:92
+
+    Error Context: test-results/r2-wide-header-before/theme-ui-review-the-comman-41228-le-at-200-percent-text-size-theme-studio/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/r2-wide-header-before/theme-ui-review-the-comman-41228-le-at-200-percent-text-size-theme-studio/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/r2-wide-header-before/theme-ui-review-the-comman-41228-le-at-200-percent-text-size-theme-studio/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [theme-studio] › tests/browser/theme-ui-review.spec.ts:146:5 › the command bar keeps actions visible at 200 percent text size 

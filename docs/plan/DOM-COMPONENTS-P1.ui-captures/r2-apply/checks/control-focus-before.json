@@ -1,0 +1,80 @@
+{
+  "before": {
+    "x": 20,
+    "y": 714.84375,
+    "width": 279,
+    "height": 32.1875
+  },
+  "after": {
+    "x": 20,
+    "y": 984.53125,
+    "width": 279,
+    "height": 32.1875
+  },
+  "expanded": "false",
+  "events": [
+    {
+      "event": "pointerdown",
+      "target": "choose-font-sans",
+      "rect": {
+        "x": 20,
+        "y": 714.84375,
+        "width": 279,
+        "height": 32.1875,
+        "top": 714.84375,
+        "right": 299,
+        "bottom": 747.03125,
+        "left": 20
+      },
+      "expanded": "false",
+      "sources": 1
+    },
+    {
+      "event": "focusin",
+      "target": "choose-font-sans",
+      "rect": {
+        "x": 20,
+        "y": 714.84375,
+        "width": 279,
+        "height": 32.1875,
+        "top": 714.84375,
+        "right": 299,
+        "bottom": 747.03125,
+        "left": 20
+      },
+      "expanded": "false",
+      "sources": 1
+    },
+    {
+      "event": "pointerup",
+      "rect": {
+        "x": 20,
+        "y": 984.53125,
+        "width": 279,
+        "height": 32.1875,
+        "top": 984.53125,
+        "right": 299,
+        "bottom": 1016.71875,
+        "left": 20
+      },
+      "expanded": "false",
+      "sources": 2
+    },
+    {
+      "event": "click",
+      "rect": {
+        "x": 20,
+        "y": 984.53125,
+        "width": 279,
+        "height": 32.1875,
+        "top": 984.53125,
+        "right": 299,
+        "bottom": 1016.71875,
+        "left": 20
+      },
+      "expanded": "false",
+      "sources": 2
+    }
+  ],
+  "keyboardOpened": true
+}

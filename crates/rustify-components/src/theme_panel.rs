@@ -280,13 +280,13 @@ impl ConfigField {
             ).into(),
             Self::Gray => {
                 let mut text = match locale {
-                    Locale::English => format!("Resolved neutral: {}.", config.gray.name()),
-                    Locale::Chinese => format!("已解析中性色：{}。", config.gray.name()),
+                    Locale::English => format!("Resolved neutral: {}.", color_label(config.gray.name(), locale)),
+                    Locale::Chinese => format!("已解析中性色：{}。", color_label(config.gray.name(), locale)),
                 };
                 if let Some(accent) = config.gray_fallback_accent {
                     text.push_str(&match locale {
-                        Locale::English => format!(" Auto source: {} (originating Custom brand fallback).", accent.as_str()),
-                        Locale::Chinese => format!(" 自动匹配来源：{}（来源品牌为自定义时的默认值）。", accent.as_str()),
+                        Locale::English => format!(" Auto source: {} (originating Custom brand fallback).", color_label(accent.as_str(), locale)),
+                        Locale::Chinese => format!(" 自动匹配来源：{}（来源品牌为自定义时的默认值）。", color_label(accent.as_str(), locale)),
                     });
                 }
                 if self.value(config) == "custom" {
@@ -469,7 +469,7 @@ fn ThemeConfigControl(
                         data-overridden=move || (overrides.get().total(group) > 0).to_string()>
                         <span class="rustify-config-badge" data-state=move || { if overrides.get().total(group) > 0 { "overridden" } else { "none" } }>
                             {move || if overrides.get().total(group) > 0 { tr(locale.get(), "Overridden", "已覆盖") } else { tr(locale.get(), "No overrides", "无覆盖") }}
-                        </span>" · "
+                        </span>
                         <span>{move || format!("{} {} · {} {}", tr(locale.get(), "Light", "浅色"), overrides.get().count(group, ThemeMode::Light), tr(locale.get(), "Dark", "深色"), overrides.get().count(group, ThemeMode::Dark))}</span>
                     </p>
                     <Button size=ButtonSize::One variant=ButtonVariant::Outline
@@ -607,8 +607,8 @@ mod tests {
             ..effective()
         };
         let help = ConfigField::Gray.help(config, Locale::English);
-        assert!(help.contains("Resolved neutral: slate."), "{help}");
-        assert!(help.contains("Auto source: indigo"), "{help}");
+        assert!(help.contains("Resolved neutral: Slate."), "{help}");
+        assert!(help.contains("Auto source: Indigo"), "{help}");
         assert!(!help.contains("mauve"), "{help}");
     }
 
@@ -637,9 +637,11 @@ mod tests {
             4,
             "{html}"
         );
-        assert!(html.contains("Overridden · Light 2 · Dark 1"), "{html}");
-        assert!(html.contains("No overrides · Light 0 · Dark 0"), "{html}");
-        assert!(html.contains("Resolved neutral: slate."), "{html}");
+        assert!(html.contains("Overridden"), "{html}");
+        assert!(html.contains("Light 2 · Dark 1"), "{html}");
+        assert!(html.contains("No overrides"), "{html}");
+        assert!(html.contains("Light 0 · Dark 0"), "{html}");
+        assert!(html.contains("Resolved neutral: Slate."), "{html}");
         assert!(
             html.contains("data-testid=\"panel-accent_color-reset\""),
             "{html}"
@@ -670,9 +672,9 @@ mod tests {
         drop(owner);
         assert!(html.contains("lang=\"zh-CN\""), "{html}");
         assert!(html.contains("主题基础配置"), "{html}");
-        assert!(html.contains("已解析中性色：slate。"), "{html}");
+        assert!(html.contains("已解析中性色：蓝灰色。"), "{html}");
         assert!(
-            html.contains("自动匹配来源：indigo（来源品牌为自定义时的默认值）。"),
+            html.contains("自动匹配来源：靛蓝色（来源品牌为自定义时的默认值）。"),
             "{html}"
         );
         assert!(html.contains("使用基础值 · 两模式"), "{html}");

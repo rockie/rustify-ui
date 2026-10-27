@@ -1,0 +1,158 @@
+[
+  {
+    "name": "chromium",
+    "version": "153.0.8010.12",
+    "width": 1440,
+    "theme": "light",
+    "file": "slider-chromium-1440-light.png",
+    "geometry": {
+      "input": {
+        "x": 277,
+        "y": 535.640625,
+        "width": 730,
+        "height": 16,
+        "top": 535.640625,
+        "right": 1007,
+        "bottom": 551.640625,
+        "left": 277
+      },
+      "parent": {
+        "x": 277,
+        "y": 527.640625,
+        "width": 730,
+        "height": 32,
+        "top": 527.640625,
+        "right": 1007,
+        "bottom": 559.640625,
+        "left": 277
+      },
+      "margin": "0px",
+      "overflow": "hidden",
+      "mozThumb": {
+        "height": "",
+        "width": "",
+        "border": "",
+        "boxSizing": ""
+      },
+      "value": "5"
+    },
+    "errors": []
+  },
+  {
+    "name": "chromium",
+    "version": "153.0.8010.12",
+    "width": 1440,
+    "theme": "dark",
+    "file": "slider-chromium-1440-dark.png",
+    "geometry": {
+      "input": {
+        "x": 277,
+        "y": 535.640625,
+        "width": 730,
+        "height": 16,
+        "top": 535.640625,
+        "right": 1007,
+        "bottom": 551.640625,
+        "left": 277
+      },
+      "parent": {
+        "x": 277,
+        "y": 527.640625,
+        "width": 730,
+        "height": 32,
+        "top": 527.640625,
+        "right": 1007,
+        "bottom": 559.640625,
+        "left": 277
+      },
+      "margin": "0px",
+      "overflow": "hidden",
+      "mozThumb": {
+        "height": "",
+        "width": "",
+        "border": "",
+        "boxSizing": ""
+      },
+      "value": "5"
+    },
+    "errors": []
+  },
+  {
+    "name": "chromium",
+    "version": "153.0.8010.12",
+    "width": 390,
+    "theme": "light",
+    "file": "slider-chromium-390-light.png",
+    "geometry": {
+      "input": {
+        "x": 29,
+        "y": 442.140625,
+        "width": 332,
+        "height": 16,
+        "top": 442.140625,
+        "right": 361,
+        "bottom": 458.140625,
+        "left": 29
+      },
+      "parent": {
+        "x": 29,
+        "y": 434.140625,
+        "width": 332,
+        "height": 32,
+        "top": 434.140625,
+        "right": 361,
+        "bottom": 466.140625,
+        "left": 29
+      },
+      "margin": "0px",
+      "overflow": "hidden",
+      "mozThumb": {
+        "height": "",
+        "width": "",
+        "border": "",
+        "boxSizing": ""
+      },
+      "value": "5"
+    },
+    "errors": []
+  },
+  {
+    "name": "chromium",
+    "version": "153.0.8010.12",
+    "width": 390,
+    "theme": "dark",
+    "file": "slider-chromium-390-dark.png",
+    "geometry": {
+      "input": {
+        "x": 29,
+        "y": 442.140625,
+        "width": 332,
+        "height": 16,
+        "top": 442.140625,
+        "right": 361,
+        "bottom": 458.140625,
+        "left": 29
+      },
+      "parent": {
+        "x": 29,
+        "y": 434.140625,
+        "width": 332,
+        "height": 32,
+        "top": 434.140625,
+        "right": 361,
+        "bottom": 466.140625,
+        "left": 29
+      },
+      "margin": "0px",
+      "overflow": "hidden",
+      "mozThumb": {
+        "height": "",
+        "width": "",
+        "border": "",
+        "boxSizing": ""
+      },
+      "value": "5"
+    },
+    "errors": []
+  }
+]

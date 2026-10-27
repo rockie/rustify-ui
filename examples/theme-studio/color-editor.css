@@ -46,3 +46,11 @@
 .ce-selection {margin-top:1.5rem;padding-top:1rem;border-top:1px solid #eaecf0;scroll-margin-top:1rem;}
 .ce-selection .ce-picker {margin-top:1rem;padding-bottom:0;border-bottom:0;}
 .ce-override-filter {margin-bottom:.25rem;}
+
+.ce-row {min-width:0;}
+.ce-token-choice[data-selected="true"] .ce-token-reset {border-color:#84caff;background:#eff8ff;color:#175cd3;}
+.ce-override-badge {border-color:#d0d5dd;background:#f9fafb;color:#475467;}
+.ce-search input {border-color:#98a2b3;}
+.ce-selection {margin-block:.75rem 1rem;}
+
+.studio-editor .ce-picker :is(button,input,[data-name="Select"]):focus-visible {outline-color:#2563eb66;}

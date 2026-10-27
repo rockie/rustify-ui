@@ -1,0 +1,18 @@
+{
+  "rust": {
+    "exit_code": 0,
+    "output": "rustc 1.99.0 (b940084d7 2026-09-28)"
+  },
+  "mbx": {
+    "exit_code": 0,
+    "output": "mbx 1.26.0"
+  },
+  "node": {
+    "exit_code": 0,
+    "output": "v26.12.1"
+  },
+  "playwright": {
+    "exit_code": 0,
+    "output": "Version 1.63.0"
+  }
+}

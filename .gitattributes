@@ -1,3 +1,6 @@
 # Preserve upstream notice bytes, including CRLF and trailing spaces.
 tests/docs-ssg/fixtures/fonts/LICENSE-IBM-PLEX-WOFF2.txt -text -whitespace
 tests/docs-ssg/fixtures/components/fonts/LICENSE-IBM-PLEX-WOFF2.txt -text -whitespace
+public/fonts/ibm-plex-sans/LICENSE.txt -text -whitespace
+# Preserve raw UI self-check output, including the test runner's trailing spaces.
+docs/plan/DOM-COMPONENTS-P1.ui-captures/r2-apply/**/*.log -text -whitespace

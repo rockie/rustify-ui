@@ -1,0 +1,19 @@
+{
+  "argv": [
+    "npx",
+    "playwright",
+    "test",
+    "--project=theme-studio",
+    "--workers=1",
+    "--headed",
+    "theme-ui-review.spec.ts",
+    "theme-editor.spec.ts",
+    "theme-storage.spec.ts",
+    "theme-v2-storage.spec.ts",
+    "theme-performance.spec.ts",
+    "-g",
+    "theme-ui-review|Inspector suppresses|named save, refresh|upgrade review is bound|page timestamps",
+    "--output=test-results/r2-reference-final"
+  ],
+  "exit_code": 0
+}

@@ -22,8 +22,10 @@
   --clip-edges: 0.125em;
   appearance: none;
   background: transparent;
+  margin: 0;
   height: var(--thumb-height);
   width: 100%;
+  overflow: hidden;
   cursor: grab;
 }
 

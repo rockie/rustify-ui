@@ -1,0 +1,58 @@
+[
+  {
+    "name": "ssr-final",
+    "argv": [
+      "mbx",
+      "test",
+      "--locked",
+      "-p",
+      "rustify-components",
+      "--no-default-features",
+      "--features",
+      "ssr"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "host-final",
+    "argv": [
+      "mbx",
+      "test",
+      "--locked",
+      "-p",
+      "rustify-dom",
+      "-p",
+      "rustify-components",
+      "-p",
+      "theme-studio",
+      "-p",
+      "component-catalog",
+      "--lib",
+      "--bins"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "clippy-final",
+    "argv": [
+      "mbx",
+      "clippy",
+      "--locked",
+      "-p",
+      "rustify-dom",
+      "-p",
+      "rustify-components",
+      "-p",
+      "theme-studio",
+      "-p",
+      "component-catalog",
+      "-p",
+      "xtask",
+      "--all-targets",
+      "--",
+      "-D",
+      "warnings"
+    ],
+    "exit_code": 0
+  }
+]

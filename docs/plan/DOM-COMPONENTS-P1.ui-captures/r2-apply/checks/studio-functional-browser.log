@@ -1,0 +1,87 @@
+
+Running 10 tests using 1 worker
+
+(node:20565) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 [theme-studio] › tests/browser/theme-editor.spec.ts:148:9 › theme editing through the workbench › all fourteen common fields synchronize both modes and field reset restores the author value (13.5s)
+  ✘   2 [theme-studio] › tests/browser/theme-editor.spec.ts:441:9 › theme editing through the workbench › Inspector suppresses sample actions and chooses actual DOM, GPU and keyboard tokens (17.4s)
+(node:22168) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   3 [theme-studio] › tests/browser/theme-exchange.spec.ts:15:5 › JSON review is atomic and cancel, invalid input and rejected code preserve the draft (11.6s)
+  ✓   4 [theme-studio] › tests/browser/theme-export-ui.spec.ts:18:5 › v2 export preserves intent and explicitly reviewed v1 loses configuration, with actual clipboard/download bytes (9.6s)
+  ✓   5 [theme-studio] › tests/browser/theme-ui-review.spec.ts:99:9 › editor disposal › queued editor layout work ends with its owner (9.5s)
+  ✓   6 [theme-studio] › tests/browser/theme-ui-review.spec.ts:137:5 › external font faces provide real light, medium, semibold and bold weights (9.3s)
+  ✓   7 [theme-studio] › tests/browser/theme-ui-review.spec.ts:146:5 › the command bar keeps actions visible at 200 percent text size (1.9s)
+  ✓   8 [theme-studio] › tests/browser/theme-ui-review.spec.ts:162:5 › the command bar stays available on the mobile preview panel (1.3s)
+  ✓   9 [theme-studio] › tests/browser/theme-ui-review.spec.ts:172:5 › a selection row keeps its token, source and color controls together (993ms)
+  ✘  10 [theme-studio] › tests/browser/theme-ui-review.spec.ts:183:5 › anchored export selectors stay in place when output content changes (15.6s)
+
+
+  1) [theme-studio] › tests/browser/theme-editor.spec.ts:441:9 › theme editing through the workbench › Inspector suppresses sample actions and chooses actual DOM, GPU and keyboard tokens 
+
+    Error: expect(locator).toBeFocused() failed
+
+    Locator:  getByTestId('color-value')
+    Expected: focused
+    Received: inactive
+    Timeout:  15000ms
+
+    Call log:
+      - Expect "toBeFocused" getByTestId('color-value') with timeout 15000ms
+      - waiting for getByTestId('color-value')
+        34 × locator resolved to <input type="text" spellcheck="false" aria-invalid="false" data-testid="color-value" class="ce-field ce-color-text" aria-label="Color value chart-3" aria-describedby="color-value-help"/>
+           - unexpected value "inactive"
+
+
+      481 |         await page.getByTestId("theme-gpu").click({ position: { x: (x + width / 2) * scale.width, y: (y + height / 2) * scale.height } });
+      482 |         await expect(page.getByTestId("color-token-chart-3")).toHaveAttribute("aria-pressed", "true");
+    > 483 |         await expect(page.getByTestId("color-value")).toBeFocused();
+          |                                                       ^
+      484 |         await expect(page.getByTestId("inspector-outline")).toContainText("chart-3");
+      485 |         await page.getByTestId("inspector-panel").locator("details > summary").click();
+      486 |         await page.getByTestId("inspect-token-font-sans").focus();
+        at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser/theme-editor.spec.ts:483:55
+
+    Error Context: test-results/r2-functional/theme-editor-theme-editing-a4322-DOM-GPU-and-keyboard-tokens-theme-studio/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/r2-functional/theme-editor-theme-editing-a4322-DOM-GPU-and-keyboard-tokens-theme-studio/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/r2-functional/theme-editor-theme-editing-a4322-DOM-GPU-and-keyboard-tokens-theme-studio/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [theme-studio] › tests/browser/theme-ui-review.spec.ts:183:5 › anchored export selectors stay in place when output content changes 
+
+    Error: expect(received).toBeLessThan(expected)
+
+    Expected: < 1
+    Received:   77
+
+    Call Log:
+    - Timeout 15000ms exceeded while waiting on the predicate
+
+      188 |     await selector.click();
+      189 |     await page.getByTestId("export-kind-list").getByRole("option", { name: "Compatible JSON v1 · lossy", exact: true }).click();
+    > 190 |     await expect.poll(async () => Math.abs((await selector.boundingBox())!.y - before!.y)).toBeLessThan(1);
+          |                                                                                            ^
+      191 |     await page.keyboard.press("Escape");
+      192 | });
+      193 |
+        at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser/theme-ui-review.spec.ts:190:92
+
+    Error Context: test-results/r2-functional/theme-ui-review-anchored-e-2aff8-when-output-content-changes-theme-studio/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/r2-functional/theme-ui-review-anchored-e-2aff8-when-output-content-changes-theme-studio/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/r2-functional/theme-ui-review-anchored-e-2aff8-when-output-content-changes-theme-studio/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [theme-studio] › tests/browser/theme-editor.spec.ts:441:9 › theme editing through the workbench › Inspector suppresses sample actions and chooses actual DOM, GPU and keyboard tokens 
+    [theme-studio] › tests/browser/theme-ui-review.spec.ts:183:5 › anchored export selectors stay in place when output content changes 
+  8 passed (1.6m)

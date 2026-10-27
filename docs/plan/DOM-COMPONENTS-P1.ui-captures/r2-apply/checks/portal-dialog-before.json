@@ -1,0 +1,520 @@
+{
+  "dialog": [
+    {
+      "label": "before",
+      "selector": {
+        "x": 405,
+        "y": 245,
+        "width": 802,
+        "height": 36,
+        "top": 245,
+        "right": 1207,
+        "bottom": 281,
+        "left": 405
+      },
+      "active": "data-tools-dialog-close",
+      "ancestors": [
+        {
+          "tag": "DIV",
+          "cls": "rustify-layer rui-dialog-layer",
+          "rect": {
+            "x": 208,
+            "y": 167,
+            "width": 1024,
+            "height": 566.34375,
+            "top": 167,
+            "right": 1232,
+            "bottom": 733.34375,
+            "left": 208
+          },
+          "display": "block",
+          "alignItems": "flex-start",
+          "justifyContent": "normal",
+          "position": "fixed",
+          "scrollTop": 0,
+          "overflowY": "visible"
+        },
+        {
+          "tag": "DIV",
+          "cls": "",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 1440,
+            "height": 0,
+            "top": 0,
+            "right": 1440,
+            "bottom": 0,
+            "left": 0
+          },
+          "display": "block",
+          "alignItems": "normal",
+          "justifyContent": "normal",
+          "position": "static",
+          "scrollTop": 0,
+          "overflowY": "visible"
+        },
+        {
+          "tag": "DIV",
+          "cls": "",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 1440,
+            "height": 900,
+            "top": 0,
+            "right": 1440,
+            "bottom": 900,
+            "left": 0
+          },
+          "display": "block",
+          "alignItems": "normal",
+          "justifyContent": "normal",
+          "position": "fixed",
+          "scrollTop": 0,
+          "overflowY": "visible"
+        },
+        {
+          "tag": "ASIDE",
+          "cls": "",
+          "rect": {
+            "x": 0,
+            "y": 57.1875,
+            "width": 320,
+            "height": 842.8125,
+            "top": 57.1875,
+            "right": 320,
+            "bottom": 900,
+            "left": 0
+          },
+          "display": "block",
+          "alignItems": "normal",
+          "justifyContent": "normal",
+          "position": "relative",
+          "scrollTop": 0,
+          "overflowY": "auto"
+        },
+        {
+          "tag": "MAIN",
+          "cls": "studio-layout",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 1440,
+            "height": 900,
+            "top": 0,
+            "right": 1440,
+            "bottom": 900,
+            "left": 0
+          },
+          "display": "grid",
+          "alignItems": "normal",
+          "justifyContent": "normal",
+          "position": "static",
+          "scrollTop": 0,
+          "overflowY": "hidden"
+        },
+        {
+          "tag": "BODY",
+          "cls": "",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 1440,
+            "height": 900,
+            "top": 0,
+            "right": 1440,
+            "bottom": 900,
+            "left": 0
+          },
+          "display": "block",
+          "alignItems": "normal",
+          "justifyContent": "normal",
+          "position": "static",
+          "scrollTop": 0,
+          "overflowY": "visible"
+        },
+        {
+          "tag": "HTML",
+          "cls": "",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 1440,
+            "height": 900,
+            "top": 0,
+            "right": 1440,
+            "bottom": 900,
+            "left": 0
+          },
+          "display": "block",
+          "alignItems": "normal",
+          "justifyContent": "normal",
+          "position": "static",
+          "scrollTop": 0,
+          "overflowY": "visible"
+        }
+      ]
+    },
+    {
+      "label": "opened",
+      "selector": {
+        "x": 405,
+        "y": 245,
+        "width": 802,
+        "height": 36,
+        "top": 245,
+        "right": 1207,
+        "bottom": 281,
+        "left": 405
+      },
+      "active": "export-kind-list",
+      "ancestors": [
+        {
+          "tag": "DIV",
+          "cls": "rustify-layer rui-dialog-layer",
+          "rect": {
+            "x": 208,
+            "y": 167,
+            "width": 1024,
+            "height": 566.34375,
+            "top": 167,
+            "right": 1232,
+            "bottom": 733.34375,
+            "left": 208
+          },
+          "display": "block",
+          "alignItems": "flex-start",
+          "justifyContent": "normal",
+          "position": "fixed",
+          "scrollTop": 0,
+          "overflowY": "visible"
+        },
+        {
+          "tag": "DIV",
+          "cls": "",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 1440,
+            "height": 0,
+            "top": 0,
+            "right": 1440,
+            "bottom": 0,
+            "left": 0
+          },
+          "display": "block",
+          "alignItems": "normal",
+          "justifyContent": "normal",
+          "position": "static",
+          "scrollTop": 0,
+          "overflowY": "visible"
+        },
+        {
+          "tag": "DIV",
+          "cls": "",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 1440,
+            "height": 900,
+            "top": 0,
+            "right": 1440,
+            "bottom": 900,
+            "left": 0
+          },
+          "display": "block",
+          "alignItems": "normal",
+          "justifyContent": "normal",
+          "position": "fixed",
+          "scrollTop": 0,
+          "overflowY": "visible"
+        },
+        {
+          "tag": "ASIDE",
+          "cls": "",
+          "rect": {
+            "x": 0,
+            "y": 57.1875,
+            "width": 320,
+            "height": 842.8125,
+            "top": 57.1875,
+            "right": 320,
+            "bottom": 900,
+            "left": 0
+          },
+          "display": "block",
+          "alignItems": "normal",
+          "justifyContent": "normal",
+          "position": "relative",
+          "scrollTop": 0,
+          "overflowY": "auto"
+        },
+        {
+          "tag": "MAIN",
+          "cls": "studio-layout",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 1440,
+            "height": 900,
+            "top": 0,
+            "right": 1440,
+            "bottom": 900,
+            "left": 0
+          },
+          "display": "grid",
+          "alignItems": "normal",
+          "justifyContent": "normal",
+          "position": "static",
+          "scrollTop": 0,
+          "overflowY": "hidden"
+        },
+        {
+          "tag": "BODY",
+          "cls": "",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 1440,
+            "height": 900,
+            "top": 0,
+            "right": 1440,
+            "bottom": 900,
+            "left": 0
+          },
+          "display": "block",
+          "alignItems": "normal",
+          "justifyContent": "normal",
+          "position": "static",
+          "scrollTop": 0,
+          "overflowY": "visible"
+        },
+        {
+          "tag": "HTML",
+          "cls": "",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 1440,
+            "height": 900,
+            "top": 0,
+            "right": 1440,
+            "bottom": 900,
+            "left": 0
+          },
+          "display": "block",
+          "alignItems": "normal",
+          "justifyContent": "normal",
+          "position": "static",
+          "scrollTop": 0,
+          "overflowY": "visible"
+        }
+      ]
+    },
+    {
+      "label": "after",
+      "selector": {
+        "x": 405,
+        "y": 142,
+        "width": 802,
+        "height": 36,
+        "top": 142,
+        "right": 1207,
+        "bottom": 178,
+        "left": 405
+      },
+      "active": "export-kind",
+      "ancestors": [
+        {
+          "tag": "DIV",
+          "cls": "rustify-layer rui-dialog-layer",
+          "rect": {
+            "x": 208,
+            "y": 64,
+            "width": 1024,
+            "height": 772.34375,
+            "top": 64,
+            "right": 1232,
+            "bottom": 836.34375,
+            "left": 208
+          },
+          "display": "block",
+          "alignItems": "flex-start",
+          "justifyContent": "normal",
+          "position": "fixed",
+          "scrollTop": 0,
+          "overflowY": "visible"
+        },
+        {
+          "tag": "DIV",
+          "cls": "",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 1440,
+            "height": 0,
+            "top": 0,
+            "right": 1440,
+            "bottom": 0,
+            "left": 0
+          },
+          "display": "block",
+          "alignItems": "normal",
+          "justifyContent": "normal",
+          "position": "static",
+          "scrollTop": 0,
+          "overflowY": "visible"
+        },
+        {
+          "tag": "DIV",
+          "cls": "",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 1440,
+            "height": 900,
+            "top": 0,
+            "right": 1440,
+            "bottom": 900,
+            "left": 0
+          },
+          "display": "block",
+          "alignItems": "normal",
+          "justifyContent": "normal",
+          "position": "fixed",
+          "scrollTop": 0,
+          "overflowY": "visible"
+        },
+        {
+          "tag": "ASIDE",
+          "cls": "",
+          "rect": {
+            "x": 0,
+            "y": 57.1875,
+            "width": 320,
+            "height": 842.8125,
+            "top": 57.1875,
+            "right": 320,
+            "bottom": 900,
+            "left": 0
+          },
+          "display": "block",
+          "alignItems": "normal",
+          "justifyContent": "normal",
+          "position": "relative",
+          "scrollTop": 0,
+          "overflowY": "auto"
+        },
+        {
+          "tag": "MAIN",
+          "cls": "studio-layout",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 1440,
+            "height": 900,
+            "top": 0,
+            "right": 1440,
+            "bottom": 900,
+            "left": 0
+          },
+          "display": "grid",
+          "alignItems": "normal",
+          "justifyContent": "normal",
+          "position": "static",
+          "scrollTop": 0,
+          "overflowY": "hidden"
+        },
+        {
+          "tag": "BODY",
+          "cls": "",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 1440,
+            "height": 900,
+            "top": 0,
+            "right": 1440,
+            "bottom": 900,
+            "left": 0
+          },
+          "display": "block",
+          "alignItems": "normal",
+          "justifyContent": "normal",
+          "position": "static",
+          "scrollTop": 0,
+          "overflowY": "visible"
+        },
+        {
+          "tag": "HTML",
+          "cls": "",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 1440,
+            "height": 900,
+            "top": 0,
+            "right": 1440,
+            "bottom": 900,
+            "left": 0
+          },
+          "display": "block",
+          "alignItems": "normal",
+          "justifyContent": "normal",
+          "position": "static",
+          "scrollTop": 0,
+          "overflowY": "visible"
+        }
+      ]
+    }
+  ],
+  "selection": {
+    "same": false,
+    "oldConnected": false,
+    "events": [
+      {
+        "event": "focusout",
+        "oldConnected": true,
+        "same": true
+      },
+      {
+        "event": "focusin",
+        "target": "inspect-token-chart-3",
+        "active": "inspect-token-chart-3",
+        "oldConnected": true,
+        "same": true
+      },
+      {
+        "event": "mutation",
+        "active": "inspect-token-chart-3",
+        "oldConnected": true,
+        "same": true
+      },
+      {
+        "event": "focusout",
+        "target": "inspect-token-chart-3",
+        "oldConnected": true,
+        "same": true
+      },
+      {
+        "event": "focusin",
+        "target": "color-value",
+        "active": "color-value",
+        "oldConnected": true,
+        "same": true
+      },
+      {
+        "event": "focusout",
+        "target": "color-value",
+        "oldConnected": true,
+        "same": true
+      },
+      {
+        "event": "mutation",
+        "oldConnected": false,
+        "same": false
+      }
+    ]
+  }
+}

@@ -1,0 +1,77 @@
+[
+  {
+    "name": "ssr",
+    "argv": [
+      "mbx",
+      "test",
+      "--locked",
+      "-p",
+      "rustify-components",
+      "--no-default-features",
+      "--features",
+      "ssr"
+    ],
+    "exit_code": 101
+  },
+  {
+    "name": "ssr-clippy",
+    "argv": [
+      "mbx",
+      "clippy",
+      "--locked",
+      "-p",
+      "rustify-components",
+      "--no-default-features",
+      "--features",
+      "ssr",
+      "--all-targets",
+      "--",
+      "-D",
+      "warnings"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "css-check",
+    "argv": [
+      "mbx",
+      "xtask",
+      "css",
+      "--check"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "catalog-check",
+    "argv": [
+      "mbx",
+      "xtask",
+      "catalog",
+      "--write",
+      "docs/components.md",
+      "--check"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "sources",
+    "argv": [
+      "mbx",
+      "xtask",
+      "sources",
+      "verify"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "fmt",
+    "argv": [
+      "cargo",
+      "fmt",
+      "--all",
+      "--",
+      "--check"
+    ],
+    "exit_code": 0
+  }
+]

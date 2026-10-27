@@ -14,10 +14,10 @@
     align-items: center;
     gap: 0.375rem;
     padding: 0.125rem 0.375rem;
-    border: 1px solid var(--rustify-brand-a7, #84caff);
+    border: 1px solid var(--rustify-gray-a6, #d0d5dd);
     border-radius: var(--rustify-radius-1, 4px);
-    background: var(--rustify-brand-a3, #eff8ff);
-    color: var(--rustify-brand-a11, #175cd3);
+    background: var(--rustify-gray-2, #f9fafb);
+    color: var(--rustify-gray-11, #475467);
     font-size: 0.75rem;
     font-weight: 600;
     line-height: 1.5;

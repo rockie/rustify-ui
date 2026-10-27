@@ -1,0 +1,714 @@
+[
+  {
+    "id": "UI-101",
+    "verification": "改前复现头区截断；仅保留共用命令条，移出产品介绍、语言与文档工具；200% 下无头区内滚动。",
+    "disposition": "已修改待评审",
+    "code": "examples/theme-studio/src/app.rs；app.css；app.js",
+    "capture": "U1-zoom200-720-light.png",
+    "evidence_dir": "confirm-final"
+  },
+  {
+    "id": "UI-88",
+    "verification": "改前字重计算值不同但缺对应字面；补齐真实 300/400/500/600/700 WOFF2，Text 四档及 Heading 使用各自字面。",
+    "disposition": "已修改待评审",
+    "code": "web/theme-fonts.css；public/fonts/ibm-plex-sans；xtask/src/build.rs",
+    "capture": "U7-type-text-matrix-1280-light.png",
+    "evidence_dir": "confirm"
+  },
+  {
+    "id": "UI-152",
+    "verification": "改前字重计算值不同但缺对应字面；补齐真实 300/400/500/600/700 WOFF2，Text 四档及 Heading 使用各自字面。",
+    "disposition": "已修改待评审",
+    "code": "web/theme-fonts.css；public/fonts/ibm-plex-sans；xtask/src/build.rs",
+    "capture": "U7-type-text-matrix-1280-light.png",
+    "evidence_dir": "confirm"
+  },
+  {
+    "id": "UI-89",
+    "verification": "改前 Strong 700 使用唯一 400 字面；补齐并加载 700 外部字面。",
+    "disposition": "已修改待评审",
+    "code": "web/theme-fonts.css；public/fonts/ibm-plex-sans；xtask/src/build.rs",
+    "capture": "U7-type-code-matrix-1280-light.png",
+    "evidence_dir": "confirm"
+  },
+  {
+    "id": "UI-17",
+    "verification": "改前来源位于整片网格后；将来源与拾色器插入所选行下方，复用稳定挂载点以保留焦点。",
+    "disposition": "已修改待评审",
+    "code": "examples/theme-studio/src/color_editor.rs；color-editor.css；src/app.rs",
+    "capture": "U2-source-overridden-390-light.png",
+    "evidence_dir": "confirm-final"
+  },
+  {
+    "id": "UI-91",
+    "verification": "改前非法属性诊断不可见；显示真实解析错误、原值及 width=auto 默认回退。Restore 恢复合法 240px 并清除诊断。",
+    "disposition": "已修改待评审",
+    "code": "examples/component-catalog/src/layout_fixture.rs；app.css",
+    "capture": "U7-invalid-detail-1280-light.png",
+    "evidence_dir": "confirm"
+  },
+  {
+    "id": "UI-125",
+    "verification": "改前差异表与对话框双重纵滚；移除表格限高与 overflow，随对话框本体滚动。",
+    "disposition": "已修改待评审",
+    "code": "examples/theme-studio/src/data_tools.rs；data-tools.css",
+    "capture": "U3-import-review-bottom-390-light.png",
+    "evidence_dir": "confirm-final"
+  },
+  {
+    "id": "UI-139",
+    "verification": "改前状态与决策重复；升级、取消、冲突各一张常驻反馈，冲突差异默认折叠，决策与下载保持紧凑。",
+    "disposition": "已修改待评审",
+    "code": "examples/theme-studio/src/storage_controls.rs；data-tools.css；src/data_tools.rs",
+    "capture": "U4-conflict-1440-light.png",
+    "evidence_dir": "confirm-final"
+  },
+  {
+    "id": "UI-140",
+    "verification": "改前命名反馈裸红字；固定在决策后、操作列表前，区分写失败与流程阻止，增加 Dismiss 与可用时 Save now。",
+    "disposition": "已修改待评审",
+    "code": "examples/theme-studio/src/storage_controls.rs；data-tools.css",
+    "capture": "U4-upgrade-cancelled-1440-light.png",
+    "evidence_dir": "confirm-final"
+  },
+  {
+    "id": "UI-50",
+    "verification": "改前标题弱于正文；统一 callout 标题与分节标题层级、13px 正文，配合真实半粗字面。",
+    "disposition": "已修改待评审",
+    "code": "examples/theme-studio/src/storage_controls.rs；data-tools.css；web/theme-fonts.css；public/fonts/ibm-plex-sans；xtask/src/build.rs",
+    "capture": "U4-upgrade-review-1440-light.png",
+    "evidence_dir": "confirm-final"
+  },
+  {
+    "id": "UI-147",
+    "verification": "改前拾取信息挤占文档流；改为固定底角信息层，预览不再被向下推。",
+    "disposition": "已修改待评审",
+    "code": "examples/theme-studio/src/app.rs；app.css；app.js",
+    "capture": "U5-inspector-card-1440-light.png",
+    "evidence_dir": "confirm-final"
+  },
+  {
+    "id": "UI-26",
+    "verification": "改前英文表单 label 与表头没有半粗效果；统一 600 样式并提供真实 600 字面。",
+    "disposition": "已修改待评审",
+    "code": "examples/theme-studio/src/data_tools.rs；data-tools.css；web/theme-fonts.css；public/fonts/ibm-plex-sans；xtask/src/build.rs",
+    "capture": "U3-export-rust-1440-light.png",
+    "evidence_dir": "confirm-final"
+  },
+  {
+    "id": "UI-51",
+    "verification": "改前推荐与放弃同权；每张决策卡保留一个实心动作，其他用中性描边或文字按钮。",
+    "disposition": "已修改待评审",
+    "code": "examples/theme-studio/src/storage_controls.rs；data-tools.css；src/data_tools.rs；app.css",
+    "capture": "U4-upgrade-pending-1440-light.png",
+    "evidence_dir": "confirm-final"
+  },
+  {
+    "id": "UI-102",
+    "verification": "改前手机两层吸顶漏内容；命令条移到公共顶部，Edit/Preview 与主体在统一不透明布局内。",
+    "disposition": "已修改待评审",
+    "code": "examples/theme-studio/src/app.rs；app.css；app.js",
+    "capture": "U1-configured-390-light.png",
+    "evidence_dir": "confirm-final"
+  },
+  {
+    "id": "UI-153",
+    "verification": "改前默认宽度使文本塌列且有孤立 px；默认改为合法 240px，另标注 37×19px 组合夹具，补全单位。",
+    "disposition": "已修改待评审",
+    "code": "examples/component-catalog/src/layout_fixture.rs；app.css",
+    "capture": "U7-fixture-1280-light.png",
+    "evidence_dir": "confirm"
+  },
+  {
+    "id": "UI-02",
+    "verification": "改前分段蓝内框、双线及按钮高度混用；统一中性边框、2rem 控件高度、按下态与禁用态。",
+    "disposition": "已修改待评审",
+    "code": "examples/theme-studio/src/app.rs；app.css；app.js",
+    "capture": "U1-default-1440-light.png",
+    "evidence_dir": "confirm-final"
+  },
+  {
+    "id": "UI-92",
+    "verification": "改前 Reset 只有三类元素；补齐原生/Reset 的文本、表单、列表、表格与外部图片对照。",
+    "disposition": "已修改待评审",
+    "code": "examples/component-catalog/src/layout_fixture.rs；app.css；public/reset-sample.svg",
+    "capture": "U7-layout-reset-comparison-390-light.png",
+    "evidence_dir": "confirm"
+  },
+  {
+    "id": "UI-141",
+    "verification": "改前三个冲突动作后果不明；在动作前说明加载丢弃当前草稿、保留当前、保存副本的结果。",
+    "disposition": "已修改待评审",
+    "code": "examples/theme-studio/src/data_tools.rs；data-tools.css",
+    "capture": "U4-conflict-1440-light.png",
+    "evidence_dir": "confirm-final"
+  },
+  {
+    "id": "UI-104",
+    "verification": "改前分段蓝内框、双线及按钮高度混用；统一中性边框、2rem 控件高度、按下态与禁用态。",
+    "disposition": "已修改待评审",
+    "code": "examples/theme-studio/src/app.rs；app.css；app.js",
+    "capture": "U1-default-1440-light.png",
+    "evidence_dir": "confirm-final"
+  },
+  {
+    "id": "UI-115",
+    "verification": "改前 reset 只有图标；Overridden 标签带 Light/Dark 范围，重置 aria-label 明确 token 与模式。",
+    "disposition": "已修改待评审",
+    "code": "examples/theme-studio/src/color_editor.rs；color-editor.css",
+    "capture": "U2-source-overridden-1440-light.png",
+    "evidence_dir": "confirm-final"
+  },
+  {
+    "id": "UI-126",
+    "verification": "改前 Output 随居中层高度改变跳动；工具对话框顶部固定 1rem，实测格式切换选择器保持原位。",
+    "disposition": "已修改待评审",
+    "code": "examples/theme-studio/src/data_tools.rs；data-tools.css",
+    "capture": "U3-export-v1-1440-light.png",
+    "evidence_dir": "confirm-final"
+  },
+  {
+    "id": "UI-127",
+    "verification": "改前手机分组行只有首列宽；改为全宽分组行。",
+    "disposition": "已修改待评审",
+    "code": "examples/theme-studio/src/data_tools.rs；data-tools.css",
+    "capture": "U3-import-review-end-390-light.png",
+    "evidence_dir": "confirm-final"
+  },
+  {
+    "id": "UI-128",
+    "verification": "改前只呈现导入配置；每字段显示当前→导入，变化项有 Changed 标签，沿用实际配置差异计数。",
+    "disposition": "已修改待评审",
+    "code": "examples/theme-studio/src/data_tools.rs；data-tools.css",
+    "capture": "U3-import-v2-config-review-1440-light.png",
+    "evidence_dir": "confirm-final"
+  },
+  {
+    "id": "UI-103",
+    "verification": "改前复现头区截断；仅保留共用命令条，移出产品介绍、语言与文档工具；200% 下无头区内滚动。",
+    "disposition": "已修改待评审",
+    "code": "examples/theme-studio/src/app.rs；app.css；app.js",
+    "capture": "U1-zoom200-720-light.png",
+    "evidence_dir": "confirm-final"
+  },
+  {
+    "id": "UI-148",
+    "verification": "改前蓝部件上的轮廓难辨；使用蓝外轮廓与白内光环。",
+    "disposition": "已修改待评审",
+    "code": "examples/theme-studio/src/app.rs；app.css；app.js",
+    "capture": "U5-inspector-picked-1440-light.png",
+    "evidence_dir": "confirm-final"
+  },
+  {
+    "id": "UI-156",
+    "verification": "用户已裁定「把接受范围扩到 U5、U7」；不改参考选阶或旧 token 对，按目标包 U5/U7 比较口径交下轮判不再适用。",
+    "disposition": "不采纳",
+    "code": "—（沿用已确认目标包）",
+    "capture": "U7-type-code-matrix-1280-light.png",
+    "evidence_dir": "confirm"
+  },
+  {
+    "id": "UI-09",
+    "verification": "改前英文标题与标签无 600 字面；外部字体补齐后按原定字号呈现半粗。",
+    "disposition": "已修改待评审",
+    "code": "web/theme-fonts.css；public/fonts/ibm-plex-sans；xtask/src/build.rs",
+    "capture": "U1-configured-1440-light.png",
+    "evidence_dir": "confirm-final"
+  },
+  {
+    "id": "UI-70",
+    "verification": "改前聚焦会把来源标题带出视野；最终滚动放在聚焦与面板移动之后，DOM/GPU 拾取均保持标题完整可见、输入聚焦。",
+    "disposition": "已修改待评审",
+    "code": "examples/theme-studio/src/app.rs；app.css；app.js；examples/theme-studio/src/color_editor.rs；color-editor.css",
+    "capture": "U5-inspector-picked-1440-light.png",
+    "evidence_dir": "confirm-final-inspector"
+  },
+  {
+    "id": "UI-12",
+    "verification": "改前 Auto 的 Slate/Mauve 使用原始 id；复用本地化色名函数，英文首字母大写、中文翻译。",
+    "disposition": "已修改待评审",
+    "code": "crates/rustify-components/src/theme_panel.rs",
+    "capture": "U6-panel-zh-1280-light.png",
+    "evidence_dir": "confirm"
+  },
+  {
+    "id": "UI-18",
+    "verification": "改前小节与字段层级平；小节眉题 12px/600，字段 label 13px/600。",
+    "disposition": "已修改待评审",
+    "code": "examples/theme-studio/src/theme_controls.rs；app.css",
+    "capture": "U2-controls-1440-light.png",
+    "evidence_dir": "confirm-final"
+  },
+  {
+    "id": "UI-22",
+    "verification": "改前诊断标题、正文与 token 字号混用；统一两级 summary、12px 正文与等宽 token、条目间隔。",
+    "disposition": "已修改待评审",
+    "code": "examples/theme-studio/src/app.rs；app.css；app.js",
+    "capture": "U2-low-contrast-1440-light.png",
+    "evidence_dir": "confirm-final"
+  },
+  {
+    "id": "UI-40",
+    "verification": "改前 Rust/CSS 说明仅部分等宽且调用字面不一致；标识符使用 code，调用与代码统一为 font_context(16., false)。",
+    "disposition": "已修改待评审",
+    "code": "examples/theme-studio/src/data_tools.rs；data-tools.css",
+    "capture": "U3-export-rust-1440-light.png",
+    "evidence_dir": "confirm-final"
+  },
+  {
+    "id": "UI-81",
+    "verification": "改前 classic 亮度差过弱；仅将现有渐变层明暗幅度增加至三倍。",
+    "disposition": "已修改待评审",
+    "code": "crates/rustify-components/css/button.css；rustify.css",
+    "capture": "U6-fixture-1280-dark.png",
+    "evidence_dir": "confirm"
+  },
+  {
+    "id": "UI-95",
+    "verification": "改前若干布局样例无 prop；按真实参数补齐 Section、Flex、Grid、Box 等标注。",
+    "disposition": "已修改待评审",
+    "code": "examples/component-catalog/src/layout_fixture.rs；app.css",
+    "capture": "U7-fixture-1280-light.png",
+    "evidence_dir": "confirm"
+  },
+  {
+    "id": "UI-105",
+    "verification": "改前分段蓝内框、双线及按钮高度混用；统一中性边框、2rem 控件高度、按下态与禁用态。",
+    "disposition": "已修改待评审",
+    "code": "examples/theme-studio/src/app.rs；app.css；app.js",
+    "capture": "U1-default-1440-light.png",
+    "evidence_dir": "confirm-final"
+  },
+  {
+    "id": "UI-106",
+    "verification": "改前编辑区顶部与组内间隔不足；恢复 24px 顶部留白并让状态与 reset 保持 8px 间隔。",
+    "disposition": "已修改待评审",
+    "code": "examples/theme-studio/src/app.rs；app.css；app.js；crates/rustify-components/css/theme-panel.css",
+    "capture": "U1-configured-lower-1440-light.png",
+    "evidence_dir": "confirm-final"
+  },
+  {
+    "id": "UI-142",
+    "verification": "改前升级 Review 列未对齐、无表头；统一 10rem 标签列，增加主题表头并清理重复分节边线。",
+    "disposition": "已修改待评审",
+    "code": "examples/theme-studio/src/storage_controls.rs；data-tools.css",
+    "capture": "U4-upgrade-review-1440-light.png",
+    "evidence_dir": "confirm-final"
+  },
+  {
+    "id": "UI-143",
+    "verification": "改前无锁提示行话、Save 仍实心；改为明确不可本地保存及内存/导出说明，Save 用次要样式。",
+    "disposition": "已修改待评审",
+    "code": "examples/theme-studio/src/storage_controls.rs；data-tools.css；src/controller.rs；src/data_tools.rs",
+    "capture": "U4-no-locks-initial-1440-light.png",
+    "evidence_dir": "confirm-final"
+  },
+  {
+    "id": "UI-144",
+    "verification": "改前修订号、下载及确认提示含混；补 revision 标签，统一 Download original data 与确认后升级文案。",
+    "disposition": "已修改待评审",
+    "code": "examples/theme-studio/src/storage_controls.rs；data-tools.css；src/data_tools.rs",
+    "capture": "U4-conflict-1440-light.png",
+    "evidence_dir": "confirm-final"
+  },
+  {
+    "id": "UI-149",
+    "verification": "改前拾取标签截断或落在视口外；移至矩形上沿，按可用宽度换行。",
+    "disposition": "已修改待评审",
+    "code": "examples/theme-studio/src/app.rs；app.css；app.js",
+    "capture": "U5-inspector-card-1440-light.png",
+    "evidence_dir": "confirm-final"
+  },
+  {
+    "id": "UI-03",
+    "verification": "改前手机预览页缺模式与保存导出；Edit/Preview 共用顶部命令条。",
+    "disposition": "已修改待评审",
+    "code": "examples/theme-studio/src/app.rs；app.css；app.js",
+    "capture": "U1-preview-390-light.png",
+    "evidence_dir": "confirm-final"
+  },
+  {
+    "id": "UI-46",
+    "verification": "改前成功容器仍灰色；成功底与边框改绿色，警告标题统一。",
+    "disposition": "已修改待评审",
+    "code": "examples/theme-studio/src/storage_controls.rs；data-tools.css",
+    "capture": "U4-upgraded-1440-light.png",
+    "evidence_dir": "confirm-final"
+  },
+  {
+    "id": "UI-47",
+    "verification": "改前空闲或禁用存储按钮看似可点；统一浅灰底/边/文字，保留真实禁用条件及失败重试能力。",
+    "disposition": "已修改待评审",
+    "code": "examples/theme-studio/src/app.rs；app.css；app.js；examples/theme-studio/src/storage_controls.rs；data-tools.css",
+    "capture": "U4-no-locks-1440-light.png",
+    "evidence_dir": "confirm-final"
+  },
+  {
+    "id": "UI-55",
+    "verification": "改前取消态沿用待确认文案；单张取消提示说明当前仅内存、重开恢复原草稿及可重新检查。",
+    "disposition": "已修改待评审",
+    "code": "examples/theme-studio/src/storage_controls.rs；data-tools.css",
+    "capture": "U4-upgrade-cancelled-1440-light.png",
+    "evidence_dir": "confirm-final"
+  },
+  {
+    "id": "UI-56",
+    "verification": "改前单复数、edit 编号与结果同色；采用 operation/operations、draft revision、失败红与成功绿。",
+    "disposition": "已修改待评审",
+    "code": "examples/theme-studio/src/storage_controls.rs；data-tools.css",
+    "capture": "U4-quota-operations-1440-light.png",
+    "evidence_dir": "confirm-final"
+  },
+  {
+    "id": "UI-57",
+    "verification": "改前原始数据下载在成功卡外且异名；移入当前存储卡并统一 Download original data。",
+    "disposition": "已修改待评审",
+    "code": "examples/theme-studio/src/storage_controls.rs；data-tools.css",
+    "capture": "U4-upgraded-1440-light.png",
+    "evidence_dir": "confirm-final"
+  },
+  {
+    "id": "UI-62",
+    "verification": "改前空闲或禁用存储按钮看似可点；统一浅灰底/边/文字，保留真实禁用条件及失败重试能力。",
+    "disposition": "已修改待评审",
+    "code": "examples/theme-studio/src/app.rs；app.css；app.js；examples/theme-studio/src/storage_controls.rs；data-tools.css",
+    "capture": "U4-no-locks-1440-light.png",
+    "evidence_dir": "confirm-final"
+  },
+  {
+    "id": "UI-86",
+    "verification": "改前 Heading wrap 小字级仍单行；约束 wrap 样例宽度，显示多行行高。",
+    "disposition": "已修改待评审",
+    "code": "examples/component-catalog/src/layout_fixture.rs；app.css",
+    "capture": "U7-type-heading-matrix-1280-light.png",
+    "evidence_dir": "confirm"
+  },
+  {
+    "id": "UI-87",
+    "verification": "改前左右 Inset 都叠加 margin；新增干净四边展示，保留既有 margin 组合的契约夹具。",
+    "disposition": "已修改待评审",
+    "code": "examples/component-catalog/src/layout_fixture.rs；app.css",
+    "capture": "U7-layout-inset-demonstration-1280-light.png",
+    "evidence_dir": "confirm"
+  },
+  {
+    "id": "UI-97",
+    "verification": "用户已裁定「改采集方式」；不改产品，U7 整段改为向外取整并四周留 8px 的页面裁切，交下轮复核。",
+    "disposition": "不采纳",
+    "code": "—（沿用已确认目标包）",
+    "capture": "U7-fixture-1280-light.png",
+    "evidence_dir": "confirm"
+  },
+  {
+    "id": "UI-107",
+    "verification": "改前 helper/caption 与搜索框色值不统一；次级文字 #475467，搜索边框 #98A2B3。",
+    "disposition": "已修改待评审",
+    "code": "examples/theme-studio/src/app.rs；app.css；app.js；color-editor.css",
+    "capture": "U2-controls-1440-light.png",
+    "evidence_dir": "confirm-final"
+  },
+  {
+    "id": "UI-109",
+    "verification": "改前状态借选中蓝；Overridden/Custom 胶囊改中性灰，保留文字与标识。",
+    "disposition": "已修改待评审",
+    "code": "crates/rustify-components/css/theme-panel.css；examples/theme-studio/color-editor.css",
+    "capture": "U1-configured-1440-light.png",
+    "evidence_dir": "confirm-final"
+  },
+  {
+    "id": "UI-110",
+    "verification": "改前 1 text pairs；按数量输出 pair/pairs。",
+    "disposition": "已修改待评审",
+    "code": "examples/theme-studio/src/app.rs；app.css；app.js",
+    "capture": "U5-dom-1440-light.png",
+    "evidence_dir": "confirm-final"
+  },
+  {
+    "id": "UI-111",
+    "verification": "改前两个 18px 标题竞争；主题名放命令条，≤800 与主标题按同一缩小规则。",
+    "disposition": "已修改待评审",
+    "code": "examples/theme-studio/src/app.rs；app.css；app.js",
+    "capture": "U1-default-768-light.png",
+    "evidence_dir": "confirm-final"
+  },
+  {
+    "id": "UI-112",
+    "verification": "改前行尾分隔点与胶囊多点；预览元信息分项排布，胶囊后移除独立分隔点。",
+    "disposition": "已修改待评审",
+    "code": "examples/theme-studio/src/app.rs；app.css；app.js；crates/rustify-components/src/theme_panel.rs",
+    "capture": "U1-zoom200-720-light.png",
+    "evidence_dir": "confirm-final"
+  },
+  {
+    "id": "UI-114",
+    "verification": "改前 Modified 基准不明且无保存状态；工具条和冻结升级评审按真实 checkpoint 名称显示 Matches / Modified from，与 Saved on device 分开。命名保存 Ocean 后显示 Matches “Ocean”，再编辑显示 Modified from “Ocean”；旧评审在刷新前保留原快照。",
+    "disposition": "已修改待评审",
+    "code": "examples/theme-studio/src/app.rs；storage_controls.rs；app.css；tests/browser/theme-storage.spec.ts；theme-v2-storage.spec.ts",
+    "capture": "U4-upgraded-1440-light.png",
+    "evidence_dir": "confirm-final"
+  },
+  {
+    "id": "UI-116",
+    "verification": "改前 Locate 与色对错位；单行一对、文字和动作两列、行间分隔。",
+    "disposition": "已修改待评审",
+    "code": "examples/theme-studio/src/app.rs；app.css；app.js",
+    "capture": "U2-low-contrast-1440-light.png",
+    "evidence_dir": "confirm-final"
+  },
+  {
+    "id": "UI-117",
+    "verification": "改前诊断精度不同；编辑与预览统一两位小数。",
+    "disposition": "已修改待评审",
+    "code": "examples/theme-studio/src/theme_controls.rs；app.css",
+    "capture": "U2-low-contrast-1440-light.png",
+    "evidence_dir": "confirm-final"
+  },
+  {
+    "id": "UI-118",
+    "verification": "改前错误重复 helper；错误时隐藏常规 helper，仅错误描述保留完整指引。",
+    "disposition": "已修改待评审",
+    "code": "examples/theme-studio/src/theme_controls.rs；app.css",
+    "capture": "U2-field-error-1440-light.png",
+    "evidence_dir": "confirm-final"
+  },
+  {
+    "id": "UI-145",
+    "verification": "改前冲突差异松散并混用灰组头；差异默认折叠、收紧行距并让组头继承警告容器。",
+    "disposition": "已修改待评审",
+    "code": "examples/theme-studio/src/data_tools.rs；data-tools.css",
+    "capture": "U4-conflict-detail-1440-light.png",
+    "evidence_dir": "confirm-final"
+  },
+  {
+    "id": "UI-150",
+    "verification": "改前 Compare 下 DOM 卡片拥挤；scope 启用容器查询，可用宽度 ≤600px 改单列。",
+    "disposition": "已修改待评审",
+    "code": "examples/theme-studio/src/app.rs；app.css；app.js",
+    "capture": "U5-gpu-compare-1440-light.png",
+    "evidence_dir": "confirm-final"
+  },
+  {
+    "id": "UI-151",
+    "verification": "改前未标注仍蓝且留空列表；改中性灰状态，并隐藏空 token 行。",
+    "disposition": "已修改待评审",
+    "code": "examples/theme-studio/src/app.rs；app.css；app.js",
+    "capture": "U5-inspector-undeclared-1440-light.png",
+    "evidence_dir": "confirm-final"
+  },
+  {
+    "id": "UI-154",
+    "verification": "改前 pretty/wrap 同折行；将演示约束为 31ch，运行页面确认普通 wrap 留孤词、pretty 重新分配末行。",
+    "disposition": "已修改待评审",
+    "code": "examples/component-catalog/src/layout_fixture.rs；app.css",
+    "capture": "U7-type-wrap-matrix-390-light.png",
+    "evidence_dir": "confirm"
+  },
+  {
+    "id": "UI-05",
+    "verification": "改前对话框按钮固定 32px；改 rem 最小高度与 padding，200% 随字放大。",
+    "disposition": "已修改待评审",
+    "code": "examples/theme-studio/src/data_tools.rs；data-tools.css",
+    "capture": "U1-zoom200-export-end-720-light.png",
+    "evidence_dir": "confirm-final"
+  },
+  {
+    "id": "UI-25",
+    "verification": "改前身份与配置采用两种排法；统一双列表单，手机统一单列。",
+    "disposition": "已修改待评审",
+    "code": "examples/theme-studio/src/data_tools.rs；data-tools.css",
+    "capture": "U3-import-review-1440-light.png",
+    "evidence_dir": "confirm-final"
+  },
+  {
+    "id": "UI-42",
+    "verification": "改前字体 source 与部署路径未说明；导出注释明确 Source license 与 Deployed @font-face 路径。",
+    "disposition": "已修改待评审",
+    "code": "crates/rustify-dom/src/theme/codec.rs",
+    "capture": "U3-export-css-1440-light.png",
+    "evidence_dir": "confirm-final"
+  },
+  {
+    "id": "UI-44",
+    "verification": "改前 palette/color 与引号混用；统一 Brand color/Neutral color，意图值统一引号。",
+    "disposition": "已修改待评审",
+    "code": "examples/theme-studio/src/data_tools.rs；data-tools.css",
+    "capture": "U3-export-v1-1440-light.png",
+    "evidence_dir": "confirm-final"
+  },
+  {
+    "id": "UI-61",
+    "verification": "改前重试文案行话与句号缺失；改为按序保存、取消保留草稿与历史的直接说明。",
+    "disposition": "已修改待评审",
+    "code": "examples/theme-studio/src/storage_controls.rs；data-tools.css；src/controller.rs",
+    "capture": "U4-no-locks-1440-light.png",
+    "evidence_dir": "confirm-final"
+  },
+  {
+    "id": "UI-76",
+    "verification": "改前 DOM 首行比 GPU 多 8px 内缩差；DOM 预览首行顶部留白对齐。",
+    "disposition": "已修改待评审",
+    "code": "examples/theme-studio/src/app.rs；app.css；app.js",
+    "capture": "U5-gpu-compare-1440-light.png",
+    "evidence_dir": "confirm-final"
+  },
+  {
+    "id": "UI-108",
+    "verification": "改前头区下方双细线；移出整块粘性头并移除滚动内容首部分组重复上边线。",
+    "disposition": "已修改待评审",
+    "code": "examples/theme-studio/src/app.rs；app.css；app.js",
+    "capture": "U1-default-1440-light.png",
+    "evidence_dir": "confirm-final"
+  },
+  {
+    "id": "UI-113",
+    "verification": "改前焦点环有多种色与透明度；壳层共用 3px、40%、2px offset 的焦点 token。",
+    "disposition": "已修改待评审",
+    "code": "examples/theme-studio/src/app.rs；app.css；app.js；color-editor.css",
+    "capture": "U1-keyboard-02-1440-light.png",
+    "evidence_dir": "confirm-final"
+  },
+  {
+    "id": "UI-119",
+    "verification": "改前选中分体只高亮左段；让右段共享选中边框与底色。",
+    "disposition": "已修改待评审",
+    "code": "examples/theme-studio/src/color_editor.rs；color-editor.css",
+    "capture": "U2-source-overridden-1440-light.png",
+    "evidence_dir": "confirm-final"
+  },
+  {
+    "id": "UI-120",
+    "verification": "改前解除后色值为比例字体；以 code 包裹实际展开值。",
+    "disposition": "已修改待评审",
+    "code": "examples/theme-studio/src/storage_controls.rs；data-tools.css",
+    "capture": "U2-source-overridden-detail-1440-light.png",
+    "evidence_dir": "confirm-final"
+  },
+  {
+    "id": "UI-121",
+    "verification": "改前 Override/Overridden 混用；统一 Overridden。",
+    "disposition": "已修改待评审",
+    "code": "examples/theme-studio/src/color_editor.rs；color-editor.css",
+    "capture": "U2-source-overridden-1440-light.png",
+    "evidence_dir": "confirm-final"
+  },
+  {
+    "id": "UI-122",
+    "verification": "改前范围省略号似截断；英文明确 −0.5em to 0.5em。",
+    "disposition": "已修改待评审",
+    "code": "examples/theme-studio/src/theme_controls.rs；app.css",
+    "capture": "U2-field-error-1440-light.png",
+    "evidence_dir": "confirm-final"
+  },
+  {
+    "id": "UI-123",
+    "verification": "改前 token 标题重复；来源保留名称，拾色器标题改为 Color controls。",
+    "disposition": "已修改待评审",
+    "code": "examples/theme-studio/src/color_editor.rs；color-editor.css",
+    "capture": "U2-source-overridden-detail-1440-light.png",
+    "evidence_dir": "confirm-final"
+  },
+  {
+    "id": "UI-124",
+    "verification": "改前 Diagnostics/Preview diagnostics 重复；移除内层重复标题。",
+    "disposition": "已修改待评审",
+    "code": "examples/theme-studio/src/theme_controls.rs；app.css",
+    "capture": "U2-low-contrast-1440-light.png",
+    "evidence_dir": "confirm-final"
+  },
+  {
+    "id": "UI-129",
+    "verification": "改前 Import notes 内多横线；移除 notice 首个标题分隔。",
+    "disposition": "已修改待评审",
+    "code": "examples/theme-studio/src/data_tools.rs；data-tools.css",
+    "capture": "U3-import-review-end-1440-light.png",
+    "evidence_dir": "confirm-final"
+  },
+  {
+    "id": "UI-130",
+    "verification": "改前按钮下方为固定反馈空位；空反馈不占空间，动作行最小高度随内容。",
+    "disposition": "已修改待评审",
+    "code": "examples/theme-studio/src/data_tools.rs；data-tools.css",
+    "capture": "U3-export-json-390-light.png",
+    "evidence_dir": "confirm-final"
+  },
+  {
+    "id": "UI-131",
+    "verification": "改前 256 KiB 跨行；数字与单位用不换行空格连接。",
+    "disposition": "已修改待评审",
+    "code": "examples/theme-studio/src/data_tools.rs；data-tools.css",
+    "capture": "U3-import-review-390-light.png",
+    "evidence_dir": "confirm-final"
+  },
+  {
+    "id": "UI-132",
+    "verification": "改前 Auto 未显示结果；损失清单补实际解析中性色族。",
+    "disposition": "已修改待评审",
+    "code": "examples/theme-studio/src/data_tools.rs；data-tools.css",
+    "capture": "U3-export-v1-1440-light.png",
+    "evidence_dir": "confirm-final"
+  },
+  {
+    "id": "UI-133",
+    "verification": "改前备注与表格字体、作者名称不一致；token 路径用 code，主题名称用正文。",
+    "disposition": "已修改待评审",
+    "code": "examples/theme-studio/src/data_tools.rs；data-tools.css",
+    "capture": "U3-import-review-end-1440-light.png",
+    "evidence_dir": "confirm-final"
+  },
+  {
+    "id": "UI-134",
+    "verification": "改前表头 Mode / token 与身份字段不符；改 Field / token。",
+    "disposition": "已修改待评审",
+    "code": "examples/theme-studio/src/data_tools.rs；data-tools.css",
+    "capture": "U3-import-review-end-1440-light.png",
+    "evidence_dir": "confirm-final"
+  },
+  {
+    "id": "UI-135",
+    "verification": "改前吸顶表头无底边；增加 inset 底边。",
+    "disposition": "已修改待评审",
+    "code": "examples/theme-studio/src/data_tools.rs；data-tools.css",
+    "capture": "U3-import-review-bottom-1440-light.png",
+    "evidence_dir": "confirm-final"
+  },
+  {
+    "id": "UI-136",
+    "verification": "改前 Changed 像空 label；以中性描边标签显示改动类型。",
+    "disposition": "已修改待评审",
+    "code": "examples/theme-studio/src/data_tools.rs；data-tools.css",
+    "capture": "U3-import-review-end-390-light.png",
+    "evidence_dir": "confirm-final"
+  },
+  {
+    "id": "UI-146",
+    "verification": "改前原文 textarea 透明无边；增加边框、灰底和内边距，保留原文滚动与选择。",
+    "disposition": "已修改待评审",
+    "code": "examples/theme-studio/src/data_tools.rs；data-tools.css",
+    "capture": "U4-conflict-raw-1440-light.png",
+    "evidence_dir": "confirm-final"
+  },
+  {
+    "id": "UI-155",
+    "verification": "改前 Kbd 大字级换行后相贴；补足换行 gap。",
+    "disposition": "已修改待评审",
+    "code": "examples/component-catalog/src/layout_fixture.rs；app.css",
+    "capture": "U7-type-kbd-matrix-390-light.png",
+    "evidence_dir": "confirm"
+  },
+  {
+    "id": "UI-137",
+    "verification": "改前小文件显示近似 KiB；改精确 N / 262144 bytes。",
+    "disposition": "已修改待评审",
+    "code": "examples/theme-studio/src/data_tools.rs；data-tools.css",
+    "capture": "U3-import-error-1440-light.png",
+    "evidence_dir": "confirm-final"
+  },
+  {
+    "id": "UI-138",
+    "verification": "改前修订号行列错位；与 Output 共用 10rem 标签列和 .75rem 列间隔。",
+    "disposition": "已修改待评审",
+    "code": "examples/theme-studio/src/data_tools.rs；data-tools.css",
+    "capture": "U3-export-rust-1440-light.png",
+    "evidence_dir": "confirm-final"
+  }
+]

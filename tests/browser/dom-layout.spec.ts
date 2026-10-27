@@ -209,14 +209,17 @@ test("Inset selects each side and restores other margins across responsive chang
 
 test("invalid CSS remains local, reports its prop and accepts a valid replacement", async ({ page }) => {
     const node = sample(page, "layout-invalid-prop");
-    await expect(node).toHaveCSS("width", "37px");
+    await expect(node).toHaveCSS("width", "240px");
     await sample(page, "layout-invalid").click();
     await expect(node).toHaveText("A bad prop keeps this view alive.");
-    await expect.poll(() => number(node, "width")).toBeGreaterThan(37);
+    await expect.poll(() => number(node, "width")).toBeGreaterThan(240);
+    await expect(sample(page, "layout-prop-diagnostics")).toContainText("width");
+    await expect(sample(page, "layout-prop-diagnostics")).toContainText("12px;display:none");
     const diagnostics = await page.evaluate(() => window.__component_catalog.diagnostics());
     expect(diagnostics.entries.some((entry: any) => entry.kind === "InvalidContainer" && entry.field === "width")).toBe(true);
     await sample(page, "layout-valid").click();
-    await expect(node).toHaveCSS("width", "37px");
+    await expect(node).toHaveCSS("width", "240px");
+    await expect(sample(page, "layout-prop-diagnostics")).toBeEmpty();
     await expect(sample(page, "layout-reset")).toBeEnabled();
 });
 

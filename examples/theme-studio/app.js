@@ -5,13 +5,14 @@ const wasm_url = new URL("./theme-studio.wasm", import.meta.url);
 let live = null;
 let id = null;
 let observer = null;
+let toolbarObserver = null;
 let controller = null;
 const environment = () => ({
   rem: Number.parseFloat(getComputedStyle(document.documentElement).fontSize),
   reduce: matchMedia("(prefers-reduced-motion: reduce)").matches,
 });
 function fatal(error) {
-  observer?.disconnect(); controller?.abort();
+  observer?.disconnect(); toolbarObserver?.disconnect(); controller?.abort();
   containers.forEach((name) => release_container(document.getElementById(name)));
   id = null; delete window.__theme_studio;
   status.dataset.status = "fatal";
@@ -39,9 +40,14 @@ function publish(started) {
       matchMedia("(prefers-reduced-motion: reduce)").addEventListener("change",handle.environment,{signal:controller.signal});
       observer = new MutationObserver(handle.environment);
       observer.observe(document.documentElement,{attributes:true,attributeFilter:["style","class"]});
+      toolbarObserver = new ResizeObserver(([entry]) => {
+        const height = entry.target.getBoundingClientRect().height;
+        document.querySelector(".studio-layout").style.setProperty("--studio-toolbar-height",`${height}px`);
+      });
+      toolbarObserver.observe(document.querySelector(".studio-editor-top"));
       return id;
     },
-    dispose() { observer?.disconnect(); controller?.abort(); if (id===null) return false; const result=app.theme_studio_dispose(id);id=null;return result; },
+    dispose() { observer?.disconnect(); toolbarObserver?.disconnect(); controller?.abort(); if (id===null) return false; const result=app.theme_studio_dispose(id);id=null;return result; },
     async reset() {
       if(id===null) handle.mount(); else app.theme_studio_reset(id);
       await new Promise((resolve)=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));

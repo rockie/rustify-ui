@@ -471,16 +471,31 @@ test.describe("theme editing through the workbench", () => {
         await expect(page.getByTestId("inspector-outline")).toContainText("primary");
         await cards.getByTestId("cards-submit").click();
         await expect(cards.getByTestId("cards-error")).toBeEmpty();
-        await expect(page.getByTestId("color-token-primary")).toBeFocused();
+        await expect(page.getByTestId("color-value")).toBeFocused();
+        const colorField = await page.getByTestId("color-value").elementHandle();
+        await expect(page.getByTestId("token-source").getByRole("heading")).toBeInViewport({ ratio: 1 });
         await page.getByTestId("theme-gpu").scrollIntoViewIfNeeded();
         const state = await drawn(page);
         const picked = sample(state, "color.chart-3");
         expect(picked.visible_rect).toHaveLength(4);
         const [x, y, width, height] = picked.visible_rect;
-        const scale = await page.getByTestId("theme-gpu").evaluate(node => ({ width: node.getBoundingClientRect().width / node.clientWidth, height: node.getBoundingClientRect().height / node.clientHeight }));
-        await page.getByTestId("theme-gpu").click({ position: { x: (x + width / 2) * scale.width, y: (y + height / 2) * scale.height } });
+        const point = await page.getByTestId("theme-gpu").evaluate((node, local) => {
+            const scale = node.getBoundingClientRect().height / node.clientHeight;
+            for (let parent = node.parentElement; parent; parent = parent.parentElement) {
+                if (parent.scrollHeight > parent.clientHeight + 1 && /auto|scroll/.test(getComputedStyle(parent).overflowY)) {
+                    const port = parent.getBoundingClientRect();
+                    parent.scrollTop += node.getBoundingClientRect().top + local.y * scale - (port.top + port.height / 2);
+                }
+            }
+            const bounds = node.getBoundingClientRect();
+            return { x: bounds.left + local.x * bounds.width / node.clientWidth, y: bounds.top + local.y * scale };
+        }, { x: x + width / 2, y: y + height / 2 });
+        expect(await page.evaluate(point => document.elementFromPoint(point.x, point.y)?.getAttribute("data-testid"), point)).toBe("theme-gpu");
+        await page.mouse.click(point.x, point.y);
         await expect(page.getByTestId("color-token-chart-3")).toHaveAttribute("aria-pressed", "true");
-        await expect(page.getByTestId("color-token-chart-3")).toBeFocused();
+        await expect(page.getByTestId("color-value")).toBeFocused();
+        expect(await colorField!.evaluate(node => node === document.querySelector('[data-testid="color-value"]'))).toBe(true);
+        await expect(page.getByTestId("token-source").getByRole("heading")).toBeInViewport({ ratio: 1 });
         await expect(page.getByTestId("inspector-outline")).toContainText("chart-3");
         await page.getByTestId("inspector-panel").locator("details > summary").click();
         await page.getByTestId("inspect-token-font-sans").focus();

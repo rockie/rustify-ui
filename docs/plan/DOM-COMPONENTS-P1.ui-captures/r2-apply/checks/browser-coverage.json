@@ -1,0 +1,913 @@
+{
+  "unique_cases": 93,
+  "latest_pass": 93,
+  "latest_unresolved": [],
+  "cases": {
+    "all six base choices are controlled, and preview mode stays independent of author appearance": [
+      {
+        "log": "studio-browser.log",
+        "passed": true
+      }
+    ],
+    "brand reset releases exactly its responsibility keys in both modes and undo restores the whole candidate": [
+      {
+        "log": "studio-browser.log",
+        "passed": true
+      }
+    ],
+    "source removal and explicit same-value pin are meaningful, while untouched drafts and zero HSL are no-ops": [
+      {
+        "log": "studio-browser.log",
+        "passed": true
+      }
+    ],
+    "single-token release keeps the other mode, and common-token release clears both modes": [
+      {
+        "log": "studio-browser.log",
+        "passed": true
+      }
+    ],
+    "base configuration follows a committed color gesture as a separate history command": [
+      {
+        "log": "studio-browser.log",
+        "passed": true
+      }
+    ],
+    "native text undo changes only the uncommitted draft and does not consume theme history": [
+      {
+        "log": "studio-browser.log",
+        "passed": true
+      }
+    ],
+    "scopes stay independent and the host keeps its own styles": [
+      {
+        "log": "studio-browser.log",
+        "passed": true
+      }
+    ],
+    "utility unit and layout gap remain separate and caller classes override": [
+      {
+        "log": "studio-browser.log",
+        "passed": true
+      }
+    ],
+    "boundary projection and open overlay follow updates then restore inheritance": [
+      {
+        "log": "studio-browser.log",
+        "passed": true
+      }
+    ],
+    "host rem is resolved and owner disposal leaves no runtime variables": [
+      {
+        "log": "studio-browser.log",
+        "passed": true
+      }
+    ],
+    "invalid edit preserves last valid document and a no-shadow focus ring still renders": [
+      {
+        "log": "studio-browser.log",
+        "passed": true
+      }
+    ],
+    "new runtime shadows honor caller color while empty layers keep rings transparent": [
+      {
+        "log": "studio-browser.log",
+        "passed": true
+      }
+    ],
+    "an authored alpha color reaches DOM and a completed GPU draw, while no-op edits reuse the core snapshot": [
+      {
+        "log": "studio-browser.log",
+        "passed": true
+      },
+      {
+        "log": "studio-remaining-browser.log",
+        "passed": true
+      }
+    ],
+    "notation and search preserve authors, and an incomplete color never replaces the effective theme": [
+      {
+        "log": "studio-browser.log",
+        "passed": true
+      },
+      {
+        "log": "studio-remaining-browser.log",
+        "passed": true
+      }
+    ],
+    "all fourteen common fields synchronize both modes and field reset restores the author value": [
+      {
+        "log": "studio-browser.log",
+        "passed": false
+      },
+      {
+        "log": "studio-functional-browser.log",
+        "passed": true
+      },
+      {
+        "log": "studio-remaining-browser.log",
+        "passed": true
+      }
+    ],
+    "incomplete shared parameter drafts stay local, and keyboard tabs expose the correct panel": [
+      {
+        "log": "studio-browser.log",
+        "passed": true
+      }
+    ],
+    "preset search and favorites preserve mode, and shared author differences survive until an explicit edit": [
+      {
+        "log": "studio-browser.log",
+        "passed": true
+      }
+    ],
+    "undo and redo restore documents without switching mode, and a new edit clears the redo branch": [
+      {
+        "log": "studio-browser.log",
+        "passed": true
+      }
+    ],
+    "a captured color drag and repeated keyboard updates each create one undo step, and Escape cancels": [
+      {
+        "log": "studio-browser.log",
+        "passed": true
+      },
+      {
+        "log": "studio-remaining-browser.log",
+        "passed": true
+      }
+    ],
+    "batch HSL always uses its origin, commits once, and cancellation preserves the redo branch": [
+      {
+        "log": "studio-browser.log",
+        "passed": true
+      },
+      {
+        "log": "studio-remaining-browser.log",
+        "passed": true
+      },
+      {
+        "log": "studio-slider.log",
+        "passed": true
+      }
+    ],
+    "HSL invalid and identity drafts do not resolve, and current-mode adjustment keeps gray colors finite": [
+      {
+        "log": "studio-browser.log",
+        "passed": true
+      },
+      {
+        "log": "studio-slider.log",
+        "passed": true
+      }
+    ],
+    "leaving the batch panel commits once and a reset-to-identity gesture preserves author strings": [
+      {
+        "log": "studio-browser.log",
+        "passed": true
+      }
+    ],
+    "diagnostics preserve wide-gamut and unknown font authors and report unknown translucent backing": [
+      {
+        "log": "studio-browser.log",
+        "passed": true
+      }
+    ],
+    "Inspector suppresses sample actions and chooses actual DOM, GPU and keyboard tokens": [
+      {
+        "log": "studio-browser.log",
+        "passed": false
+      },
+      {
+        "log": "studio-functional-browser.log",
+        "passed": false
+      },
+      {
+        "log": "studio-storage-ui-browser.log",
+        "passed": true
+      },
+      {
+        "log": "studio-remaining-browser.log",
+        "passed": true
+      },
+      {
+        "log": "studio-inspector-browser.log",
+        "passed": false
+      },
+      {
+        "log": "studio-inspector-viewport.log",
+        "passed": true
+      },
+      {
+        "log": "studio-checkpoint-browser.log",
+        "passed": true
+      },
+      {
+        "log": "studio-reference-browser.log",
+        "passed": true
+      }
+    ],
+    "editor resizing works with keyboard bounds and pointer capture without rebuilding the GPU region": [
+      {
+        "log": "studio-browser.log",
+        "passed": true
+      }
+    ],
+    "JSON review is atomic and cancel, invalid input and rejected code preserve the draft": [
+      {
+        "log": "studio-browser.log",
+        "passed": false
+      },
+      {
+        "log": "studio-functional-browser.log",
+        "passed": true
+      }
+    ],
+    "file import validates before apply and wrong type or size cannot change the theme": [
+      {
+        "log": "studio-browser.log",
+        "passed": true
+      }
+    ],
+    "a reviewed import cannot apply after another controller change until explicitly reviewed again": [
+      {
+        "log": "studio-browser.log",
+        "passed": true
+      }
+    ],
+    "all CSS profiles and notations export without editing; JSON and Rust downloads match their previews": [
+      {
+        "log": "studio-browser.log",
+        "passed": true
+      }
+    ],
+    "clipboard refusal offers selection and download without a false success message": [
+      {
+        "log": "studio-browser.log",
+        "passed": true
+      }
+    ],
+    "granted clipboard contains the actual exported bytes": [
+      {
+        "log": "studio-browser.log",
+        "passed": true
+      }
+    ],
+    "fresh download contains exact CSS · resolved values source": [
+      {
+        "log": "studio-browser.log",
+        "passed": true
+      }
+    ],
+    "fresh download contains exact Rust integration source": [
+      {
+        "log": "studio-browser.log",
+        "passed": true
+      }
+    ],
+    "export dialogs recenter as contents and viewport change, with reachable actions": [
+      {
+        "log": "studio-browser.log",
+        "passed": true
+      },
+      {
+        "log": "studio-storage-ui-browser.log",
+        "passed": true
+      }
+    ],
+    "v2 export preserves intent and explicitly reviewed v1 loses configuration, with actual clipboard/download bytes": [
+      {
+        "log": "studio-browser.log",
+        "passed": false
+      },
+      {
+        "log": "studio-functional-browser.log",
+        "passed": true
+      }
+    ],
+    "copy success waits for the actual clipboard promise": [
+      {
+        "log": "studio-browser.log",
+        "passed": true
+      }
+    ],
+    "named save, refresh, copy, rename, overwrite and delete retain real checkpoints": [
+      {
+        "log": "studio-browser.log",
+        "passed": true
+      },
+      {
+        "log": "studio-checkpoint-browser.log",
+        "passed": true
+      },
+      {
+        "log": "studio-reference-browser.log",
+        "passed": true
+      }
+    ],
+    "bad cache is preserved and downloadable; explicit clear touches only the studio key": [
+      {
+        "log": "studio-browser.log",
+        "passed": false
+      },
+      {
+        "log": "studio-storage-ui-browser.log",
+        "passed": true
+      }
+    ],
+    "queued editor layout work ends with its owner": [
+      {
+        "log": "studio-functional-browser.log",
+        "passed": true
+      },
+      {
+        "log": "studio-storage-ui-browser.log",
+        "passed": true
+      },
+      {
+        "log": "studio-remaining-browser.log",
+        "passed": true
+      },
+      {
+        "log": "studio-shell-browser.log",
+        "passed": true
+      },
+      {
+        "log": "studio-inspector-browser.log",
+        "passed": true
+      },
+      {
+        "log": "studio-checkpoint-browser.log",
+        "passed": true
+      },
+      {
+        "log": "studio-reference-browser.log",
+        "passed": true
+      }
+    ],
+    "external font faces provide real light, medium, semibold and bold weights": [
+      {
+        "log": "studio-functional-browser.log",
+        "passed": true
+      },
+      {
+        "log": "studio-storage-ui-browser.log",
+        "passed": true
+      },
+      {
+        "log": "studio-shell-browser.log",
+        "passed": true
+      },
+      {
+        "log": "studio-inspector-browser.log",
+        "passed": true
+      },
+      {
+        "log": "studio-checkpoint-browser.log",
+        "passed": true
+      },
+      {
+        "log": "studio-reference-browser.log",
+        "passed": true
+      }
+    ],
+    "the command bar keeps actions visible at 200 percent text size": [
+      {
+        "log": "studio-functional-browser.log",
+        "passed": true
+      },
+      {
+        "log": "studio-storage-ui-browser.log",
+        "passed": true
+      },
+      {
+        "log": "studio-remaining-browser.log",
+        "passed": true
+      },
+      {
+        "log": "studio-shell-browser.log",
+        "passed": true
+      },
+      {
+        "log": "studio-inspector-browser.log",
+        "passed": true
+      },
+      {
+        "log": "studio-checkpoint-browser.log",
+        "passed": true
+      },
+      {
+        "log": "studio-reference-browser.log",
+        "passed": true
+      }
+    ],
+    "the command bar stays available on the mobile preview panel": [
+      {
+        "log": "studio-functional-browser.log",
+        "passed": true
+      },
+      {
+        "log": "studio-storage-ui-browser.log",
+        "passed": true
+      },
+      {
+        "log": "studio-remaining-browser.log",
+        "passed": true
+      },
+      {
+        "log": "studio-shell-browser.log",
+        "passed": true
+      },
+      {
+        "log": "studio-inspector-browser.log",
+        "passed": true
+      },
+      {
+        "log": "studio-checkpoint-browser.log",
+        "passed": true
+      },
+      {
+        "log": "studio-reference-browser.log",
+        "passed": true
+      }
+    ],
+    "a selection row keeps its token, source and color controls together": [
+      {
+        "log": "studio-functional-browser.log",
+        "passed": true
+      },
+      {
+        "log": "studio-storage-ui-browser.log",
+        "passed": true
+      },
+      {
+        "log": "studio-shell-browser.log",
+        "passed": true
+      },
+      {
+        "log": "studio-inspector-browser.log",
+        "passed": true
+      },
+      {
+        "log": "studio-checkpoint-browser.log",
+        "passed": true
+      },
+      {
+        "log": "studio-reference-browser.log",
+        "passed": true
+      }
+    ],
+    "anchored export selectors stay in place when output content changes": [
+      {
+        "log": "studio-functional-browser.log",
+        "passed": false
+      },
+      {
+        "log": "studio-storage-ui-browser.log",
+        "passed": true
+      },
+      {
+        "log": "studio-shell-browser.log",
+        "passed": true
+      },
+      {
+        "log": "studio-inspector-browser.log",
+        "passed": true
+      },
+      {
+        "log": "studio-checkpoint-browser.log",
+        "passed": true
+      },
+      {
+        "log": "studio-reference-browser.log",
+        "passed": true
+      }
+    ],
+    "quota failure preserves the previous bytes, in-memory draft and unsaved named library": [
+      {
+        "log": "studio-storage-ui-browser.log",
+        "passed": true
+      }
+    ],
+    "denied localStorage leaves the editor and export available": [
+      {
+        "log": "studio-storage-ui-browser.log",
+        "passed": true
+      }
+    ],
+    "a real other-tab save freezes the draft until explicit load, keep or save-copy": [
+      {
+        "log": "studio-storage-ui-browser.log",
+        "passed": true
+      }
+    ],
+    "failed keep and duplicate conflict-copy retain the unresolved conflict and library": [
+      {
+        "log": "studio-storage-ui-browser.log",
+        "passed": true
+      }
+    ],
+    "picking an unannotated control explains the missing mapping without activating it": [
+      {
+        "log": "studio-storage-ui-browser.log",
+        "passed": true
+      },
+      {
+        "log": "studio-shell-browser.log",
+        "passed": true
+      },
+      {
+        "log": "studio-inspector-browser.log",
+        "passed": true
+      },
+      {
+        "log": "studio-checkpoint-browser.log",
+        "passed": true
+      },
+      {
+        "log": "studio-reference-browser.log",
+        "passed": true
+      }
+    ],
+    "picking a declared action follows its own bounds and exposes its editor source": [
+      {
+        "log": "studio-storage-ui-browser.log",
+        "passed": true
+      },
+      {
+        "log": "studio-shell-browser.log",
+        "passed": true
+      },
+      {
+        "log": "studio-inspector-browser.log",
+        "passed": true
+      },
+      {
+        "log": "studio-checkpoint-browser.log",
+        "passed": true
+      },
+      {
+        "log": "studio-reference-browser.log",
+        "passed": true
+      }
+    ],
+    "a local opposite appearance and its dialog preserve the root theme": [
+      {
+        "log": "studio-storage-ui-browser.log",
+        "passed": true
+      },
+      {
+        "log": "studio-shell-browser.log",
+        "passed": true
+      },
+      {
+        "log": "studio-inspector-browser.log",
+        "passed": true
+      },
+      {
+        "log": "studio-checkpoint-browser.log",
+        "passed": true
+      },
+      {
+        "log": "studio-reference-browser.log",
+        "passed": true
+      }
+    ],
+    "invalid numeric text stays visible while the valid theme remains unchanged": [
+      {
+        "log": "studio-storage-ui-browser.log",
+        "passed": true
+      },
+      {
+        "log": "studio-shell-browser.log",
+        "passed": true
+      },
+      {
+        "log": "studio-inspector-browser.log",
+        "passed": true
+      },
+      {
+        "log": "studio-checkpoint-browser.log",
+        "passed": true
+      },
+      {
+        "log": "studio-reference-browser.log",
+        "passed": true
+      }
+    ],
+    "repeating the selected token value does not resolve its source again": [
+      {
+        "log": "studio-storage-ui-browser.log",
+        "passed": true
+      },
+      {
+        "log": "studio-remaining-browser.log",
+        "passed": true
+      },
+      {
+        "log": "studio-shell-browser.log",
+        "passed": true
+      },
+      {
+        "log": "studio-inspector-browser.log",
+        "passed": true
+      },
+      {
+        "log": "studio-checkpoint-browser.log",
+        "passed": true
+      },
+      {
+        "log": "studio-reference-browser.log",
+        "passed": true
+      }
+    ],
+    "queued autosave revalidates a changed rem after a real lock wait and remains retryable": [
+      {
+        "log": "studio-storage-ui-browser.log",
+        "passed": false
+      },
+      {
+        "log": "studio-remaining-browser.log",
+        "passed": true
+      },
+      {
+        "log": "studio-shell-browser.log",
+        "passed": true
+      }
+    ],
+    "valid v2 reload reports the restored draft as saved while a new library stays unconfirmed": [
+      {
+        "log": "studio-storage-ui-browser.log",
+        "passed": true
+      }
+    ],
+    "one writer preserves named action order behind a real lock and eventually saves the newest draft and preferences": [
+      {
+        "log": "studio-storage-ui-browser.log",
+        "passed": true
+      }
+    ],
+    "an older named acknowledgement during a live gesture cannot replace identity, history, checkpoint or unsaved status": [
+      {
+        "log": "studio-storage-ui-browser.log",
+        "passed": true
+      }
+    ],
+    "cancelled legacy upgrade stays write-protected through edits, history, mode, preferences and reopening": [
+      {
+        "log": "studio-storage-ui-browser.log",
+        "passed": true
+      }
+    ],
+    "upgrade review is bound to editor epoch and commits only after refreshed explicit confirmation": [
+      {
+        "log": "studio-storage-ui-browser.log",
+        "passed": true
+      },
+      {
+        "log": "studio-reference-browser.log",
+        "passed": true
+      }
+    ],
+    "a legacy writer changing reviewed bytes while the upgrade waits for a real lock forces a new review": [
+      {
+        "log": "studio-storage-ui-browser.log",
+        "passed": true
+      }
+    ],
+    "migration backup-write failure never claims a v2 save and explicit retry is idempotent": [
+      {
+        "log": "studio-storage-ui-browser.log",
+        "passed": false
+      },
+      {
+        "log": "studio-remaining-browser.log",
+        "passed": true
+      }
+    ],
+    "migration backup-readback failure never claims a v2 save and explicit retry is idempotent": [
+      {
+        "log": "studio-storage-ui-browser.log",
+        "passed": false
+      },
+      {
+        "log": "studio-remaining-browser.log",
+        "passed": true
+      }
+    ],
+    "migration v2-write failure never claims a v2 save and explicit retry is idempotent": [
+      {
+        "log": "studio-storage-ui-browser.log",
+        "passed": false
+      },
+      {
+        "log": "studio-remaining-browser.log",
+        "passed": true
+      }
+    ],
+    "an immutable backup collision is preserved instead of overwritten during migration": [
+      {
+        "log": "studio-storage-ui-browser.log",
+        "passed": false
+      },
+      {
+        "log": "studio-remaining-browser.log",
+        "passed": true
+      }
+    ],
+    "invalid v2 protects its exact bytes without falling back to a valid legacy library": [
+      {
+        "log": "studio-storage-ui-browser.log",
+        "passed": false
+      },
+      {
+        "log": "studio-remaining-browser.log",
+        "passed": true
+      }
+    ],
+    "legacy unknown-envelope rejects the complete migration and retains downloadable original bytes": [
+      {
+        "log": "studio-storage-ui-browser.log",
+        "passed": true
+      }
+    ],
+    "legacy bad-saved-item rejects the complete migration and retains downloadable original bytes": [
+      {
+        "log": "studio-storage-ui-browser.log",
+        "passed": true
+      }
+    ],
+    "legacy unknown-document rejects the complete migration and retains downloadable original bytes": [
+      {
+        "log": "studio-storage-ui-browser.log",
+        "passed": true
+      }
+    ],
+    "a quota failure retains named requests and later edits until an explicit retry saves their snapshots in order": [
+      {
+        "log": "studio-storage-ui-browser.log",
+        "passed": true
+      }
+    ],
+    "clear uses the reviewed v2 baseline, cancels delayed writes and keeps memory, legacy bytes and backups": [
+      {
+        "log": "studio-storage-ui-browser.log",
+        "passed": true
+      }
+    ],
+    "a third write after clear review requires another decision instead of clearing unreviewed bytes": [
+      {
+        "log": "studio-storage-ui-browser.log",
+        "passed": false
+      },
+      {
+        "log": "studio-remaining-browser.log",
+        "passed": true
+      }
+    ],
+    "load rechecks reviewed bytes under the lock and a third write requires another explicit decision": [
+      {
+        "log": "studio-remaining-browser.log",
+        "passed": true
+      }
+    ],
+    "keep rechecks reviewed bytes under the lock and a third write requires another explicit decision": [
+      {
+        "log": "studio-remaining-browser.log",
+        "passed": true
+      }
+    ],
+    "copy rechecks reviewed bytes under the lock and a third write requires another explicit decision": [
+      {
+        "log": "studio-remaining-browser.log",
+        "passed": true
+      }
+    ],
+    "Keep approves only its displayed draft while retained named intents require a separate retry or cancellation": [
+      {
+        "log": "studio-remaining-browser.log",
+        "passed": true
+      }
+    ],
+    "backup deletion compares its reviewed full key set inside the same lock and ordinary clear leaves every original": [
+      {
+        "log": "studio-remaining-browser.log",
+        "passed": true
+      }
+    ],
+    "owner disposal aborts a real pending lock request and cannot write or call destroyed signals after grant": [
+      {
+        "log": "studio-remaining-browser.log",
+        "passed": true
+      }
+    ],
+    "the host fatal boundary aborts a real pending write and restart restores only the confirmed draft": [
+      {
+        "log": "studio-remaining-browser.log",
+        "passed": true
+      }
+    ],
+    "owner disposal ignores late parameter blur while a real storage lock is pending": [
+      {
+        "log": "studio-remaining-browser.log",
+        "passed": true
+      }
+    ],
+    "owner disposal ignores late hsl blur while a real storage lock is pending": [
+      {
+        "log": "studio-remaining-browser.log",
+        "passed": true
+      }
+    ],
+    "without Web Locks the editor, undo and downloads work while library actions never claim a save": [
+      {
+        "log": "studio-remaining-browser.log",
+        "passed": true
+      }
+    ],
+    "reopening retrieves the SHA-bound original even after an older window changes v1, and a damaged backup is never substituted": [
+      {
+        "log": "studio-remaining-browser.log",
+        "passed": true
+      }
+    ],
+    "delayed Save and Delete intents keep their order across undo/redo and finish with the latest committed draft": [
+      {
+        "log": "studio-remaining-browser.log",
+        "passed": true
+      }
+    ],
+    "a failed clear reports a retained removal instead of success, and cancellation restores the previous write gate": [
+      {
+        "log": "studio-remaining-browser.log",
+        "passed": true
+      }
+    ],
+    "the native guard also prevents writes when disposal occurs just after a real lock is granted": [
+      {
+        "log": "studio-remaining-browser.log",
+        "passed": true
+      }
+    ],
+    "denied lock requests pause without an unlocked fallback and preserve export until explicit retry": [
+      {
+        "log": "studio-remaining-browser.log",
+        "passed": true
+      }
+    ],
+    "re-entering upgrade review aborts its old lock wait and commits only the newly confirmed candidate": [
+      {
+        "log": "studio-remaining-browser.log",
+        "passed": true
+      }
+    ],
+    "an empty external v2 is invalid raw, stays downloadable byte-for-byte and requires explicit reviewed clearing": [
+      {
+        "log": "studio-remaining-browser.log",
+        "passed": true
+      }
+    ],
+    "a removed external v2 is shown as absent and Keep explicitly creates a fresh library": [
+      {
+        "log": "studio-remaining-browser.log",
+        "passed": true
+      }
+    ],
+    "removing v1 remains a changed-source notice after reopening while the original backup stays retrievable": [
+      {
+        "log": "studio-remaining-browser.log",
+        "passed": true
+      }
+    ],
+    "shell buttons share the same height across action and ghost variants": [
+      {
+        "log": "studio-shell-browser.log",
+        "passed": true
+      },
+      {
+        "log": "studio-inspector-browser.log",
+        "passed": true
+      },
+      {
+        "log": "studio-checkpoint-browser.log",
+        "passed": true
+      },
+      {
+        "log": "studio-reference-browser.log",
+        "passed": true
+      }
+    ],
+    "slider fill and empty track share their center at 1280px and changing rem": [
+      {
+        "log": "studio-slider-center.log",
+        "passed": true
+      }
+    ],
+    "slider fill and empty track share their center at 390px and changing rem": [
+      {
+        "log": "studio-slider-center.log",
+        "passed": true
+      }
+    ]
+  }
+}
