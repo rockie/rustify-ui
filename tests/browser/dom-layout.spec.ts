@@ -248,13 +248,13 @@ test("eight typography components and Link retain native semantics and real text
         await expect(sample(page, id)).toHaveCSS("white-space", "nowrap");
         expect(await sample(page, id).evaluate(element => element.scrollWidth > element.clientWidth)).toBe(true);
     }
-    const desktop = "docs/validation/dom-components-p1/dom-layout-desktop.png";
+    const desktop = process.env.RUSTIFY_UI_EVIDENCE_OUT ? `${process.env.RUSTIFY_UI_EVIDENCE_OUT}/dom-layout-desktop.png` : "docs/validation/dom-components-p1/dom-layout-desktop.png";
     await sample(page, "layout-body").screenshot({ path: desktop });
     await info.attach("DOM layout and type at 1280px", { path: desktop, contentType: "image/png" });
     await page.setViewportSize({ width: 375, height: 900 });
     const paragraph = sample(page, "type-paragraph");
     expect(await paragraph.evaluate(element => element.scrollWidth <= element.clientWidth + 1)).toBe(true);
-    const mobile = "docs/validation/dom-components-p1/dom-layout-mobile.png";
+    const mobile = process.env.RUSTIFY_UI_EVIDENCE_OUT ? `${process.env.RUSTIFY_UI_EVIDENCE_OUT}/dom-layout-mobile.png` : "docs/validation/dom-components-p1/dom-layout-mobile.png";
     await sample(page, "layout-typography").screenshot({ path: mobile });
     await info.attach("DOM typography at 375px", { path: mobile, contentType: "image/png" });
 });

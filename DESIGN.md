@@ -318,8 +318,12 @@ the previous legacy controls and do not define the new visual size scale.
 
 Variants select local palette or effective semantic role pairs; hover/active
 surfaces are defined in [button.css](crates/rustify-components/css/button.css).
-Keyboard focus keeps a 3px ring at half the scope ring color's opacity with a
-2px offset. Native disabled or loading controls refuse activation and native
+Keyboard focus follows Radix Themes 3.3.0: a solid 2px step-8 outline, offset
+2px for Classic/Solid and −1px for Surface/Outline/Ghost/GhostOffset. Soft uses
+the component's step 8 with −1px offset; other variants use the scope ring,
+or the selected component color's step 8 except Gray. Link uses the same 2px
+outline with 2px offset, a `0.07em × radius-factor` radius and no focused
+underline. Native disabled or loading controls refuse activation and native
 form defaults. Loading preserves the original label/width and adds a decorative
 spinner. `unavailable` keeps its explanatory, focusable request contract rather
 than becoming native disabled. Navigation remains a native Link, with matching,

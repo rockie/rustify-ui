@@ -1,21 +1,11 @@
 use crate::{controller::StudioState, write_queue::Permission};
 use leptos::prelude::*;
-use rustify_components::{Button, ButtonSize, ButtonVariant};
-
-#[derive(Clone, Debug, PartialEq)]
-enum ExternalVersion {
-    Removed,
-    Library {
-        revision: u64,
-        name: String,
-        count: usize,
-    },
-    Invalid(String),
-}
+use rustify_components::{Button, ButtonSize, ButtonVariant, Dialog};
 
 #[component]
 pub fn StorageControls(state: StudioState) -> impl IntoView {
     let clear_open = RwSignal::new(false);
+    let download_status = RwSignal::new(String::new());
     let upgrade = move || {
         matches!(
             state.permission(),
@@ -23,52 +13,189 @@ pub fn StorageControls(state: StudioState) -> impl IntoView {
         )
     };
     let pending = Signal::derive(move || state.pending_count());
-    let external = Memo::new(move |_| {
-        state.external.with(|value| {
-            value.as_ref().map(|raw| match raw {
-                None => ExternalVersion::Removed,
-                Some(raw) => match crate::persistence::load(Some(raw), &state.context()) {
-                    crate::persistence::LoadResult::Valid(envelope) => ExternalVersion::Library {
-                        revision: envelope.revision,
-                        name: envelope.draft.name.clone(),
-                        count: envelope.saved_themes.len(),
-                    },
-                    crate::persistence::LoadResult::Invalid { error, .. } => {
-                        ExternalVersion::Invalid(error.to_string())
-                    }
-                    crate::persistence::LoadResult::Missing => unreachable!(),
-                },
+    let unsaved_draft = Signal::derive(move || {
+        state.storage_epoch.get();
+        let epoch = state.editor_epoch.get();
+        let mut preferences = state.envelope.with(|envelope| envelope.preferences.clone());
+        preferences.mode = state.mode().get();
+        state.editor.with(|editor| {
+            state.writer.with_value(|writer| {
+                writer.permission == Permission::Ready
+                    && writer.acknowledged.as_ref().is_none_or(
+                        |(saved, document, saved_preferences)| {
+                            *saved != epoch
+                                || document != &editor.document
+                                || saved_preferences != &preferences
+                        },
+                    )
             })
         })
     });
+    let outcomes = Memo::new(move |_| {
+        state.storage_epoch.get();
+        state.writer.with_value(|writer| writer.outcomes.clone())
+    });
+    let tone = Memo::new(move |_| {
+        state.storage_epoch.get();
+        if !state.storage_issue.get().is_empty() {
+            return "error";
+        }
+        if !crate::storage_browser::writable()
+            || state.permission() != Permission::Ready
+            || state.external.get().is_some()
+        {
+            return "warning";
+        }
+        let epoch = state.editor_epoch.get();
+        state.writer.with_value(|writer| {
+            if writer.paused {
+                "warning"
+            } else if writer.pending() > 0 {
+                "pending"
+            } else if writer
+                .acknowledged
+                .as_ref()
+                .is_some_and(|(saved, _, _)| *saved == epoch)
+            {
+                "success"
+            } else {
+                "memory"
+            }
+        })
+    });
+    let upgraded = move || {
+        outcomes.with(|items| {
+            items
+                .last()
+                .is_some_and(|item| item.kind == "upgrade" && item.state == "saved")
+        })
+    };
+    let download_current = move || {
+        let result = rustify_ui::theme::export_json(
+            &state
+                .editor
+                .with_untracked(|editor| editor.document.clone()),
+            &state.context(),
+        )
+        .map_err(|error| error.to_string())
+        .and_then(|json| {
+            rustify_ui::files::export("theme.json", json.as_bytes(), "application/json")
+                .map_err(|error| format!("{error:?}"))
+        });
+        download_status.set(match result {
+            Ok(()) => state
+                .tr(
+                    "Download started. Check your browser downloads.",
+                    "已发起下载，请查看浏览器下载记录。",
+                )
+                .into(),
+            Err(_) => state
+                .tr(
+                    "Download failed. Open Export to select and copy the theme JSON.",
+                    "下载失败，请打开导出，选择并复制主题 JSON。",
+                )
+                .into(),
+        });
+    };
     view! {
         <section class="studio-storage tools-stack" aria-label=move || state.tr("Local data safety", "本地数据保护")>
+            <div class=move || format!("tools-storage-state tools-state-{}",tone.get()) role="status">
+                <strong>{move || match tone.get(){
+                    "success" if upgraded()=>state.tr("Library upgraded to v2","主题库已升级至 v2"),
+                    "success"=>state.tr("Saved","已保存"),
+                    "pending"=>state.tr("Saving","正在保存"),
+                    "error"=>state.tr("Memory only · save failed","仅内存 · 保存失败"),
+                    "warning"=>state.tr("Memory only · saving paused","仅内存 · 保存已暂停"),
+                    _=>state.tr("Memory only · not saved yet","仅内存 · 尚未保存"),
+                }}</strong>
+                <p class="tools-status" data-testid="storage-status">{move || if !state.storage_issue.get().is_empty(){state.tr("Local save failed. Your draft and pending actions stay in memory. Download or export a copy before leaving.","本地保存失败。草稿与待处理操作保留在内存中，离开前请下载或导出副本。").into()}else{state.storage_status.get()}}</p>
+                <Show when=upgraded><p class="tools-status">{move || format!("{} {}",state.envelope.with(|envelope|envelope.saved_themes.len()),state.tr("saved themes retained; the original download remains available.","个命名主题已保留，仍可下载升级前原始数据。"))}</p></Show>
+                <Show when=move || matches!(tone.get(),"warning"|"error"|"memory")>
+                    <Button size=ButtonSize::One variant=ButtonVariant::Outline on_click=move || download_current() test_id="storage-export">{move || state.tr("Download current theme", "下载当前主题")}</Button>
+                </Show>
+                <Show when=move || !state.storage_issue.get().is_empty()><details data-testid="storage-issue"><summary>{move || state.tr("Technical details","技术详情")}</summary><code>{move || state.storage_issue.get()}</code></details></Show>
+                <p class="tools-status" role="status">{move ||download_status.get()}</p>
+            </div>
+            {move || outcomes.with(|items|items.iter().rev().find(|item|matches!(item.kind,"save"|"copy"|"rename"|"delete"|"conflict-copy")).cloned()).map(|outcome|{
+                let action=match outcome.kind{"save"=>state.tr("Save","保存"),"rename"=>state.tr("Rename","重命名"),"delete"=>state.tr("Delete","删除"),_=>state.tr("Copy","复制")};
+                let result=match outcome.state{
+                    "saved"=>state.tr("completed","已完成"),
+                    "failed"=>state.tr("failed; retained for retry. Export remains available","失败，已保留供重试，仍可导出"),
+                    "rejected" if matches!(state.permission(),Permission::UpgradePending|Permission::UpgradeCancelled|Permission::Upgrading)=>state.tr("not saved; review the library upgrade before saving this named theme","未保存，请先检查主题库升级，再保存此命名主题"),
+                    "rejected" if !crate::storage_browser::writable()=>state.tr("not saved earlier; local writing is unavailable. Download or export a copy","先前未保存，本地写入不可用，请下载或导出副本"),
+                    "rejected" if state.permission()==Permission::Ready && state.external.with(Option::is_none)=>state.tr("not saved earlier. Use Save locally to try again","先前未保存，请使用“保存到本机”重试"),
+                    "rejected"=>state.tr("not saved; review the storage warning first","未保存，请先处理存储提示"),
+                    "cancelled"=>state.tr("cancelled","已取消"),
+                    _=>state.tr("waiting to save","等待保存")
+                };
+                view!{<p class="tools-named-feedback" role="status" data-testid="named-storage-feedback" data-result=outcome.state>{format!("{action} “{}” · {result}.",outcome.detail)}</p>}
+            })}
             <Show when=upgrade>
-                <div class="tools-notice" data-testid="upgrade-notice" data-upgrade-state=move || format!("{:?}", state.permission())>
-                    <p>{move || state.tr("Your legacy draft and library were restored in memory. No old bytes, backup or v2 library are written until you review and confirm.", "旧草稿与主题库已恢复到内存。检查并确认前，不写入旧原文、备份或 v2 库。")}</p>
-                    <p>{move || if state.permission() == Permission::UpgradeCancelled {state.tr("Upgrade cancelled: edits remain in memory only. Reopening restores the original legacy draft.", "已取消升级：改动仅保留在内存。重新打开会恢复原旧草稿。")} else {state.tr("Waiting for confirmation; editing, undo/redo and export remain available.", "等待确认；仍可编辑、撤销/重做与导出。")}}</p>
+                <div class="tools-notice tools-state-warning" data-testid="upgrade-notice" data-upgrade-state=move || format!("{:?}", state.permission())>
+                    <h3>{move || if state.permission()==Permission::UpgradeCancelled{state.tr("Memory only · upgrade cancelled","仅内存 · 已取消升级")}else{state.tr("Review the library upgrade","检查主题库升级")}}</h3>
+                    <p>{move || state.tr("Your previous draft and saved themes are available for editing. Review the complete library before saving this browser's upgraded copy; the original data stays unchanged.", "可以继续编辑原草稿与命名主题。保存升级后的浏览器副本前，请先检查完整主题库；原始数据保持不变。")}</p>
+                    <p>{move || if state.permission() == Permission::UpgradeCancelled {state.tr("Reopening restores the original draft. Download your current theme to keep these memory-only edits.", "重新打开会恢复原草稿。请下载当前主题，以保留仅在内存中的改动。")} else {state.tr("Editing, undo/redo and export remain available while confirmation is pending.", "等待确认期间仍可编辑、撤销/重做与导出。")}}</p>
                     <div class="tools-actions">
-                        <Button size=ButtonSize::One variant=ButtonVariant::Outline on_click=move || state.review_upgrade() test_id="upgrade-review-open">{move || state.tr("Review / recheck upgrade", "检查 / 重新检查升级")}</Button>
-                        <Button size=ButtonSize::One variant=ButtonVariant::Ghost on_click=move || state.cancel_storage() test_id="upgrade-cancel">{move || state.tr("Cancel upgrade", "取消升级")}</Button>
+                        <Button variant=ButtonVariant::Outline on_click=move || state.review_upgrade() test_id="upgrade-review-open">{move || if state.permission()==Permission::UpgradeCancelled{state.tr("Review upgrade again","重新检查升级")}else{state.tr("Review upgrade", "检查升级")}}</Button>
+                        <Button variant=ButtonVariant::Outline on_click=move || state.download_legacy() test_id="legacy-download">{move || state.tr("Download original data", "下载原始数据")}</Button>
+                        <Show when=move ||state.permission()!=Permission::UpgradeCancelled && state.upgrade_review.with(Option::is_none)><Button variant=ButtonVariant::Outline on_click=move || state.cancel_storage() test_id="upgrade-cancel">{move || state.tr("Cancel upgrade", "取消升级")}</Button></Show>
                     </div>
                 </div>
             </Show>
-            <Show when=move || state.upgrade_review.with(Option::is_some)>
-                <div class="tools-stack tools-notice" data-testid="upgrade-review">
-                    <h2>{move || state.tr("Review the complete migration", "检查完整迁移")}</h2>
-                    <p>{move || format!("{} {}", state.tr("Saved themes retained:", "保留的命名主题："), state.upgrade_review.with(|review| review.as_ref().map_or(0, |review| review.candidate.saved_themes.len())))}</p>
-                    <p>{move || state.tr("This candidate contains every legacy saved theme plus the current draft and preferences. Confirmation does not reset history or preview mode.", "候选包含全部旧命名主题与当前草稿、偏好。确认不会重置历史或预览模式。")}</p>
-                    <textarea class="tools-code" rows="12" readonly aria-label=move || state.tr("Complete upgrade candidate", "完整升级候选") data-testid="upgrade-candidate"
-                        prop:value=move || state.upgrade_review.with(|review| review.as_ref().map(|review| serde_json::to_string_pretty(&review.candidate).unwrap_or_default()).unwrap_or_default())/>
-                    <p role="status" data-testid="upgrade-review-status" data-stale=move || state.upgrade_review.with(|review| review.as_ref().is_some_and(|review| review.snapshot.epoch != state.editor_epoch.get())).to_string()>
+            <Dialog open=Signal::derive(move || state.upgrade_review.with(Option::is_some))
+                on_open_change=move |open|if !open{state.upgrade_review.set(None);}
+                title=Signal::derive(move ||state.tr("Review the complete migration","检查完整迁移").to_owned())
+                class="tools-dialog tools-upgrade-dialog" test_id="upgrade-review">
+                <div class="tools-stack">
+                    <p>{move || state.tr("Review every saved theme, the current draft and preferences before upgrading. Confirmation preserves your editing history and preview mode.", "升级前请核对全部命名主题、当前草稿和偏好。确认会保留编辑历史与预览模式。")}</p>
+                    {move ||state.upgrade_review.get().map(|review|{
+                        let candidate=review.candidate;
+                        let preferences=candidate.preferences;
+                        let count=candidate.saved_themes.len();
+                        let modified=state.editor.with(|editor| &review.snapshot.draft!=editor.checkpoint_document());
+                        view!{
+                            <dl class="tools-summary">
+                                <dt>{state.tr("Library version","主题库版本")}</dt><dd>"v1 → v2"</dd>
+                                <dt>{state.tr("Original fingerprint","原始数据指纹")}</dt><dd><code>{crate::persistence::digest(&review.raw).chars().take(12).collect::<String>()}</code></dd>
+                            </dl>
+                            <h3>{format!("{} ({count})",state.tr("Saved themes retained","保留的命名主题"))}</h3>
+                            <ul class="tools-migration-themes">{candidate.saved_themes.into_iter().map(|theme|view!{
+                                <li><strong>{theme.name}</strong><code>{theme.id}</code><span>{state.tr("Retained as v2","保留为 v2")}</span></li>
+                            }).collect_view()}</ul>
+                            <h3>{state.tr("Current draft to save","将保存的当前草稿")}</h3>
+                            <dl class="tools-summary">
+                                <dt>{state.tr("Name","名称")}</dt><dd>{candidate.draft.name}</dd>
+                                <dt>{state.tr("Preview mode","预览模式")}</dt><dd>{if preferences.mode==rustify_ui::ThemeMode::Light{state.tr("Light","浅色")}else{state.tr("Dark","深色")}}</dd>
+                                <dt>{state.tr("Draft state","草稿状态")}</dt><dd>{if modified{state.tr("Modified","已修改")}else{state.tr("Matches saved document","与保存文档一致")}}</dd>
+                            </dl>
+                            <h3>{state.tr("Preferences to save","将保存的偏好")}</h3>
+                            <dl class="tools-summary">
+                                <dt>{state.tr("Language","语言")}</dt><dd>{if preferences.locale=="zh"{"中文"}else{"English"}}</dd>
+                                <dt>{state.tr("Scene","场景")}</dt><dd>{preferences.scene}</dd>
+                                <dt>{state.tr("Renderer","渲染器")}</dt><dd>{match preferences.renderer.as_str(){"compare"=>"DOM + GPU","gpu"=>"GPU",_=>"DOM"}}</dd>
+                                <dt>{state.tr("Preview width","预览宽度")}</dt><dd>{match preferences.preview_width.as_str(){"responsive"=>state.tr("Responsive","自适应"),"desktop"=>"1024px","tablet"=>"768px",_=>"390px"}}</dd>
+                                <dt>{state.tr("Favorites","收藏")}</dt><dd>{if preferences.favorites.is_empty(){state.tr("None","无").to_owned()}else{preferences.favorites.join(", ")}}</dd>
+                            </dl>
+                        }
+                    })}
+                    <details><summary>{move || state.tr("Complete migration JSON","完整迁移 JSON")}</summary>
+                        <textarea class="tools-code tools-raw" rows="12" readonly aria-label=move || state.tr("Complete upgrade candidate", "完整升级候选") data-testid="upgrade-candidate"
+                            prop:value=move || state.upgrade_review.with(|review| review.as_ref().map(|review| serde_json::to_string_pretty(&review.candidate).unwrap_or_default()).unwrap_or_default())/>
+                    </details>
+                    <p class="tools-status" role="status" data-testid="upgrade-review-status" data-stale=move || state.upgrade_review.with(|review| review.as_ref().is_some_and(|review| review.snapshot.epoch != state.editor_epoch.get())).to_string()>
                         {move || if state.upgrade_review.with(|review| review.as_ref().is_some_and(|review| review.snapshot.epoch != state.editor_epoch.get())) {state.tr("The draft changed after review. Confirm will refresh this candidate for another explicit review.", "检查后草稿已变化。确认会刷新候选，需再次明确检查。")} else {state.tr("Ready for explicit upgrade confirmation.", "可明确确认本次升级。")}}
                     </p>
-                    <Button on_click=move || state.confirm_upgrade()
-                        loading=Signal::derive(move || state.permission() == Permission::Upgrading)
-                        test_id="upgrade-confirm">{move || state.tr("Upgrade and save current draft", "升级并保存当前草稿")}</Button>
+                    <div class="tools-actions tools-dialog-footer">
+                        <Button on_click=move || {
+                            state.confirm_upgrade();
+                            if state.permission()==Permission::Upgrading{state.upgrade_review.set(None);}
+                        } loading=Signal::derive(move || state.permission() == Permission::Upgrading) test_id="upgrade-confirm">{move || state.tr("Upgrade and save current draft", "升级并保存当前草稿")}</Button>
+                        <Button variant=ButtonVariant::Outline on_click=move ||state.download_legacy() test_id="upgrade-download-original">{move ||state.tr("Download original data","下载原始数据")}</Button>
+                        <Button variant=ButtonVariant::Outline on_click=move ||state.cancel_storage() test_id="upgrade-cancel">{move ||state.tr("Cancel upgrade","取消升级")}</Button>
+                    </div>
                 </div>
-            </Show>
-            <Show when=move || state.legacy_raw.with(Option::is_some) || state.envelope.with(|envelope| envelope.migrated_from_v1.is_some())>
+            </Dialog>
+            <Show when=move || !upgrade() && (state.legacy_raw.with(Option::is_some) || state.envelope.with(|envelope| envelope.migrated_from_v1.is_some()))>
                 <Button size=ButtonSize::One variant=ButtonVariant::Outline on_click=move || state.download_legacy() test_id="legacy-download">{move || state.tr("Download original before upgrade", "下载升级前原始数据")}</Button>
             </Show>
             <Show when=move || state.legacy_changed.get()>
@@ -77,54 +204,24 @@ pub fn StorageControls(state: StudioState) -> impl IntoView {
                     <Button size=ButtonSize::One variant=ButtonVariant::Outline on_click=move || state.download_changed_legacy() test_id="legacy-changed-download">{move || state.tr("Download the changed v1 data", "下载变化后的 v1 原文")}</Button>
                 </div>
             </Show>
-            <Show when=move || !state.storage_issue.get().is_empty()>
-                <p class="tools-error" role="alert" data-testid="storage-issue">{move || format!("{} {}", state.tr("Local save failed; draft and pending actions remain in memory:", "本地保存失败；草稿与待处理操作保留在内存："), state.storage_issue.get())}</p>
-            </Show>
-            <Show when=move || state.external.with(Option::is_some)>
-                <div class="tools-notice tools-stack" data-testid="storage-external">
-                    <p data-testid="storage-external-summary"
-                        data-external-kind=move || match external.get() {Some(ExternalVersion::Library {..}) => "library", Some(ExternalVersion::Removed) => "removed", _ => "invalid"}
-                        data-external-revision=move || match external.get() {Some(ExternalVersion::Library {revision, ..}) => Some(revision.to_string()), _ => None}>
-                        {move || match external.get() {
-                            Some(ExternalVersion::Library {revision, name, count}) => format!("{} {revision} · {name} · {} {count}", state.tr("External revision", "外部版本"), state.tr("Saved themes:", "命名主题：")),
-                            Some(ExternalVersion::Removed) => state.tr("Another window removed the v2 library. Keeping your draft will create a new library.", "另一个窗口移除了 v2 库。保留当前草稿会创建新库。").into(),
-                            Some(ExternalVersion::Invalid(error)) => format!("{}: {error}", state.tr("Invalid external v2 library", "外部 v2 库无效")),
-                            None => String::new(),
-                        }}
-                    </p>
-                    <p class="tools-status">{move || state.tr("Decisions use the version displayed here. A later external write requires another decision; your current draft stays unchanged until you choose.", "决定绑定此处展示的版本。之后外部再次写入须重新决定；选择前保留当前草稿。")}</p>
-                    <Show when=move || state.external.with(|value| matches!(value, Some(Some(_))))>
-                        <details data-testid="storage-external-raw">
-                            <summary>{move || state.tr("View exact stored text", "查看存储原文")}</summary>
-                            <textarea class="tools-code" rows="8" readonly data-testid="storage-external-source" aria-label=move || state.tr("Displayed external stored text", "当前展示的外部存储原文") prop:value=move || state.external.get().flatten().unwrap_or_default()/>
-                        </details>
-                        <Button size=ButtonSize::One variant=ButtonVariant::Outline test_id="storage-external-download" on_click=move || {
-                            if let Some(Some(raw)) = state.external.get_untracked() {
-                                if let Err(error) = rustify_ui::files::export("theme-studio-other-version.json", raw.as_bytes(), "application/json") {
-                                    state.error.set(format!("{} {error:?}", state.tr("Download failed:", "下载失败：")));
-                                }
-                            }
-                        }>{move || state.tr("Download displayed original", "下载当前展示原文")}</Button>
-                    </Show>
-                </div>
-            </Show>
             <details data-testid="storage-operations">
-                <summary>{move || format!("{} {}", state.tr("Pending / recent operations:", "待处理 / 最近操作："), pending.get())}</summary>
+                <summary>{move || format!("{} {} · {} {}",pending.get(),state.tr("pending","项待处理"),outcomes.with(Vec::len),state.tr("recent operations","项最近操作"))}</summary>
                 <p class="tools-status">{move || state.tr("Retry explicitly approves retained actions in their original order. Cancel discards pending writes, preserving the open draft and history. Load other version discards all pending actions.", "重试会明确按原顺序执行已保留的操作。取消只丢弃待写操作，保留当前草稿与历史。载入另一版本会放弃全部待处理操作。")}</p>
-                <ol><For each=move || {state.storage_epoch.get(); state.writer.with_value(|writer| writer.outcomes.clone())}
+                <ol><For each=move || outcomes.get()
                     key=|outcome| (outcome.id, outcome.state) let:outcome>
                     <li data-op-id=outcome.id data-op-kind=outcome.kind data-op-state=outcome.state>
                         {move || {
                             let kind = match outcome.kind {"autosave" => state.tr("Draft", "草稿"), "save" => state.tr("Save", "保存"), "copy" | "conflict-copy" => state.tr("Copy", "副本"), "rename" => state.tr("Rename", "改名"), "delete" => state.tr("Delete", "删除"), "upgrade" => state.tr("Upgrade", "升级"), "clear" | "clear-backups" => state.tr("Clear", "清除"), "load" => state.tr("Load", "载入"), _ => state.tr("Keep", "保留")};
                             let status = match outcome.state {"saved" => state.tr("confirmed", "已确认"), "failed" => state.tr("failed; retained", "失败，已保留"), "superseded" => state.tr("merged into newer draft", "已合并到更新草稿"), "cancelled" => state.tr("cancelled", "已取消"), "rejected" => state.tr("not queued; storage protected", "未入队，存储受保护"), _ => state.tr("pending", "待处理")};
-                            format!("{kind} {} · {status}", outcome.detail)
+                            let name=if outcome.detail.is_empty(){String::new()}else{format!(" “{}”",outcome.detail)};
+                            format!("#{} · {kind}{name} · {status} · {} {}",outcome.id,state.tr("edit","编辑代次"),outcome.epoch)
                         }}
                     </li>
                 </For></ol>
             </details>
             <div class="tools-actions">
-                <Button size=ButtonSize::One variant=ButtonVariant::Outline on_click=move || state.retry_storage() test_id="storage-retry">{move || if state.permission() == Permission::Cleared {state.tr("Save current draft again", "重新保存当前草稿")} else {state.tr("Retry retained saves", "重试已保留的保存")}}</Button>
-                <Button size=ButtonSize::One variant=ButtonVariant::Ghost disabled=Signal::derive(move || pending.get() == 0) on_click=move || state.cancel_storage() test_id="storage-cancel">{move || state.tr("Cancel pending writes", "取消待写操作")}</Button>
+                <Button size=ButtonSize::One variant=ButtonVariant::Outline disabled=Signal::derive(move || !crate::storage_browser::writable() || state.external.with(Option::is_some) || pending.get()==0 && !unsaved_draft.get() && state.permission()!=Permission::Cleared) on_click=move || state.retry_storage() test_id="storage-retry">{move || if state.permission() == Permission::Cleared {state.tr("Save current draft again", "重新保存当前草稿")} else if pending.get()==0 && unsaved_draft.get() {state.tr("Save current draft", "保存当前草稿")} else {state.tr("Retry retained saves", "重试已保留的保存")}}</Button>
+                <Button size=ButtonSize::One variant=ButtonVariant::Outline disabled=Signal::derive(move || pending.get() == 0) on_click=move || state.cancel_storage() test_id="storage-cancel">{move || state.tr("Cancel pending writes", "取消待写操作")}</Button>
             </div>
             <details class="tools-stack">
                 <summary>{move || state.tr("Cache and original backups", "缓存与原始备份")}</summary>
@@ -178,19 +275,105 @@ pub fn TokenSource(state: StudioState) -> impl IntoView {
             }
         })
     });
+    let revealed_input = Memo::new(move |_| {
+        if !overridden.get() {
+            return None;
+        }
+        state.editor.with(|editor| {
+            let mut document = editor.document.clone();
+            let token = state.selected_token.get();
+            let modes = if rustify_ui::theme::COMMON_TOKENS.contains(&token.as_str()) {
+                vec![rustify_ui::ThemeMode::Light, rustify_ui::ThemeMode::Dark]
+            } else {
+                vec![editor.mode]
+            };
+            for mode in modes {
+                document.overrides.values_mut(mode).0.remove(&token);
+            }
+            Some((
+                document,
+                token,
+                editor.mode,
+                state.rem.get(),
+                state.reduce_motion.get(),
+                state.locale().get(),
+            ))
+        })
+    });
+    let revealed = Memo::new(move |_| {
+        let Some((document, token, mode, rem, reduce_motion, locale)) = revealed_input.get() else {
+            return String::new();
+        };
+        let context = rustify_ui::theme::font_context(rem, reduce_motion);
+        let modes = if rustify_ui::theme::COMMON_TOKENS.contains(&token.as_str()) {
+            vec![rustify_ui::ThemeMode::Light, rustify_ui::ThemeMode::Dark]
+        } else {
+            vec![mode]
+        };
+        modes
+            .into_iter()
+            .filter_map(|mode| {
+                rustify_ui::theme::resolve(&document, mode, &context)
+                    .ok()
+                    .and_then(|theme| theme.values.0.get(&token).cloned())
+                    .map(|value| {
+                        format!(
+                            "{}: {value}",
+                            match (mode, locale) {
+                                (rustify_ui::ThemeMode::Light, rustify_ui::Locale::English) =>
+                                    "Light",
+                                (rustify_ui::ThemeMode::Light, rustify_ui::Locale::Chinese) =>
+                                    "浅色",
+                                (rustify_ui::ThemeMode::Dark, rustify_ui::Locale::English) =>
+                                    "Dark",
+                                (rustify_ui::ThemeMode::Dark, rustify_ui::Locale::Chinese) =>
+                                    "深色",
+                            }
+                        )
+                    })
+            })
+            .collect::<Vec<_>>()
+            .join(" · ")
+    });
     view! {
         <section class="studio-token-source tools-stack" data-testid="token-source">
             <h3>{move || state.tr("Fine adjustment source", "精调来源")}</h3>
             <code data-testid="source-token">{move || state.selected_token.get()}</code>
+            <dl class="tools-summary"><dt>{move ||state.tr("Effective value","有效值")}</dt><dd><code data-testid="source-effective">{move ||state.values().get().0.get(&state.selected_token.get()).cloned().unwrap_or_default()}</code></dd></dl>
             <p data-testid="source-kind">{move || {
                 use rustify_ui::ThemeValueOrigin;
                 let token = state.selected_token.get();
                 let origin = state.resolved().get().origins.get(token.as_str()).copied();
                 match origin {Some(ThemeValueOrigin::DocumentOverride) => state.tr("Explicit document override", "文档显式覆盖"), Some(ThemeValueOrigin::Configuration(_)) => state.tr("Generated by base configuration", "基础配置生成"), Some(ThemeValueOrigin::BoundaryConfiguration {..}) => state.tr("Boundary configuration", "边界配置生成"), Some(ThemeValueOrigin::BoundaryOverride {..}) => state.tr("Boundary override", "边界覆盖"), _ => state.tr("Authored base value", "作者基础值")}
             }}</p>
-            <p class="tools-status">{move || state.tr("Removing this override reveals the nearest configured or authored base value. Other tokens stay unchanged.", "解除此覆盖会显示最近的配置值或作者基础值，其他 token 不变。")}</p>
+            <code class="tools-source-path" data-testid="source-path">{move ||{
+                use rustify_ui::{ThemeValueOrigin, ThemeConfigGroup, ThemeMode};
+                let token=state.selected_token.get();
+                let theme=state.resolved().get();
+                let mode=state.mode().get().as_str();
+                match theme.origins.get(token.as_str()).copied(){
+                    Some(ThemeValueOrigin::DocumentOverride)=>format!("overrides.{mode}.{token}"),
+                    Some(ThemeValueOrigin::Configuration(group))=>{
+                        let selected=match group{
+                            ThemeConfigGroup::Accent=>{
+                                let step=match token.as_str(){"ring"|"sidebar-ring"=>"8","primary-foreground"|"sidebar-primary-foreground"=>"contrast",_=>"9"};
+                                format!("{} · {step}",theme.brand.family.name())
+                            },
+                            ThemeConfigGroup::Gray=>{
+                                let step=match token.as_str(){"background"|"sidebar" if theme.mode==ThemeMode::Light=>"white","background"|"sidebar"=>"1","input"=>"2","secondary"|"muted"|"sidebar-accent"=>"3","border"|"sidebar-border"=>"7","muted-foreground"=>"11",_=>"12"};
+                                format!("{} · {step}",theme.gray.family.name())
+                            },
+                            ThemeConfigGroup::Panel=>theme.config.selected.panel_background.map(|value|value.as_str()).unwrap_or("Custom").into(),
+                            ThemeConfigGroup::Radius=>theme.config.selected.radius.map(|value|value.as_str()).unwrap_or("Custom").into(),
+                        };
+                        format!("config.{} · {selected} · {mode}",group.field())
+                    },
+                    _=>format!("base.{mode}.{token}"),
+                }
+            }}</code>
+            <p class="tools-status">{move ||if overridden.get(){format!("{} {}. {}",state.tr("Clearing this override reveals","解除此覆盖后显示"),revealed.get(),state.tr("Other tokens stay unchanged.","其他 token 保持不变。"))}else{state.tr("This value has no explicit override to clear. Change its base configuration or authored base value to adjust it.","此值没有可解除的显式覆盖，可通过基础配置或作者基础值调整。").into()}}</p>
             <Button size=ButtonSize::One variant=ButtonVariant::Outline disabled=Signal::derive(move || !overridden.get()) on_click=move || state.clear_override(&state.selected_token.get_untracked()) test_id="source-clear">
-                {move || if rustify_ui::theme::COMMON_TOKENS.contains(&state.selected_token.get().as_str()) {state.tr("Clear this token · both modes", "解除此 token · 两模式")} else {state.tr("Clear this token · current mode", "解除此 token · 当前模式")}}
+                {move || format!("{} {} · {}",state.tr("Clear","解除"),state.selected_token.get(),if rustify_ui::theme::COMMON_TOKENS.contains(&state.selected_token.get().as_str()){state.tr("both modes","两模式")}else if state.mode().get()==rustify_ui::ThemeMode::Light{state.tr("Light only","仅浅色")}else{state.tr("Dark only","仅深色")})}
             </Button>
         </section>
     }

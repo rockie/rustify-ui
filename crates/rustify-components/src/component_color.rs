@@ -5,6 +5,18 @@ use leptos::prelude::*;
 use rustify_ui::theme::{format_color, ColorFormat};
 use rustify_ui::{AccentColor, ResolvedPalette, ThemeMode};
 
+pub(crate) fn primary_is_generated(theme: &rustify_ui::ResolvedTheme) -> bool {
+    use rustify_ui::{ThemeConfigGroup, ThemeValueOrigin};
+    matches!(
+        theme.origins.get("primary"),
+        Some(ThemeValueOrigin::Configuration(ThemeConfigGroup::Accent))
+            | Some(ThemeValueOrigin::BoundaryConfiguration {
+                group: ThemeConfigGroup::Accent,
+                ..
+            })
+    )
+}
+
 /// Reads the current provider without creating another theme owner.
 pub(crate) fn use_mode() -> Signal<ThemeMode> {
     if let Some(theme) = rustify_ui::use_resolved_theme() {

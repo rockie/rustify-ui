@@ -167,6 +167,7 @@ mod ui {
     #[derive(Clone)]
     struct Callbacks {
         edit: Arc<dyn Fn(String, String) + Send + Sync>,
+        reset: Arc<dyn Fn(String) + Send + Sync>,
         begin: Arc<dyn Fn() + Send + Sync>,
         update: Arc<dyn Fn(String, String) + Send + Sync>,
         commit: Arc<dyn Fn() + Send + Sync>,
@@ -354,7 +355,7 @@ mod ui {
     #[component]
     fn TokenChoice(
         values: Signal<ThemeValues>,
-        baseline: Signal<ThemeValues>,
+        overridden: Signal<Vec<String>>,
         locale: Signal<Locale>,
         selected: RwSignal<String>,
         token: &'static str,
@@ -364,19 +365,24 @@ mod ui {
             <div class="ce-token-choice">
                 <button type="button" class="ce-token" data-testid=format!("color-token-{token}")
                     aria-pressed=move || (selected.get()==token).to_string() title=move || values.with(|values|author(values,token))
-                    on:click=move |_| selected.set(token.into())>
+                    on:click=move |_| {
+                        selected.set(token.into());
+                        rustify_ui::next_frame(move || {
+                            if let Ok(Some(editor))=document().query_selector(".ce-selection") {editor.scroll_into_view();}
+                        });
+                    }>
                     <ColorSwatch values=values token=token />
-                    <span class="ce-token-name">{token}</span>
+                    <span class="ce-token-copy"><span class="ce-token-name">{token}</span>
+                        <span class="ce-token-value">{move || values.with(|values|author(values,token))}</span>
+                        <Show when=move || overridden.with(|tokens|tokens.iter().any(|value|value==token))><span class="ce-override-badge">{move ||tr(locale.get(),"Override","已覆盖")}</span></Show>
+                    </span>
                 </button>
                 <button type="button" class="ce-token-reset" data-testid=format!("color-reset-{token}")
-                    aria-label=move || format!("{} {token}",tr(locale.get(),"Reset","重置"))
-                    title=move || tr(locale.get(),"Reset to baseline","恢复基准值")
-                    disabled=move || baseline.with(|baseline|values.with(|values|baseline.get(token)==values.get(token)))
-                    on:click=move |_| {
-                        if let Ok(value)=baseline.with_untracked(|values|values.get(token).map(str::to_owned)) {
-                            callbacks.with_value(|callbacks|(callbacks.edit)(token.into(),value));
-                        }
-                    }>"↺"</button>
+                    aria-label=move || format!("{} {token}",if overridden.with(|tokens|tokens.iter().any(|value|value==token)) {tr(locale.get(),"Clear override for","解除覆盖：")} else {tr(locale.get(),"No override for","没有覆盖：")})
+                    title=move || if overridden.with(|tokens|tokens.iter().any(|value|value==token)) {tr(locale.get(),"Clear override in this preview mode","解除当前预览模式的覆盖")} else {tr(locale.get(),"No override to clear","没有可解除的覆盖")}
+                    aria-disabled=move || (!overridden.with(|tokens|tokens.iter().any(|value|value==token))).to_string()
+                    disabled=move || !overridden.with(|tokens|tokens.iter().any(|value|value==token))
+                    on:click=move |_| callbacks.with_value(|callbacks|(callbacks.reset)(token.into()))>"↺"</button>
             </div>
         }
     }
@@ -419,23 +425,38 @@ mod ui {
     #[component]
     pub fn ColorEditor(
         values: Signal<ThemeValues>,
-        baseline: Signal<ThemeValues>,
+        overridden: Signal<Vec<String>>,
         locale: Signal<Locale>,
         selected: RwSignal<String>,
         on_edit: impl Fn(String, String) + Clone + Send + Sync + 'static,
+        on_reset: impl Fn(String) + Clone + Send + Sync + 'static,
         on_begin: impl Fn() + Clone + Send + Sync + 'static,
         on_update: impl Fn(String, String) + Clone + Send + Sync + 'static,
         on_commit: impl Fn() + Clone + Send + Sync + 'static,
         on_cancel: impl Fn() + Clone + Send + Sync + 'static,
+        children: Children,
     ) -> impl IntoView {
+        let values: Signal<ThemeValues> = Memo::new(move |_| values.get()).into();
+        let overridden: Signal<Vec<String>> = Memo::new(move |_| overridden.get()).into();
         let callbacks = StoredValue::new(Callbacks {
             edit: Arc::new(on_edit),
+            reset: Arc::new(on_reset),
             begin: Arc::new(on_begin),
             update: Arc::new(on_update),
             commit: Arc::new(on_commit),
             cancel: Arc::new(on_cancel),
         });
         let query = RwSignal::new(String::new());
+        let overrides_only = RwSignal::new(false);
+        let visible_row = move |group: ColorGroup, row: (&str, Option<&str>)| {
+            matches(group, row, &query.get(), locale.get())
+                && (!overrides_only.get()
+                    || overridden.with(|tokens| {
+                        tokens.iter().any(|token| {
+                            token == row.0 || row.1.is_some_and(|foreground| token == foreground)
+                        })
+                    }))
+        };
         let chosen = Memo::new(move |_| {
             let token = selected.get();
             if COLOR_TOKENS.contains(&token.as_str()) {
@@ -565,15 +586,13 @@ mod ui {
             }
         };
         let visible_count = Memo::new(move |_| {
-            let query = query.get();
-            let locale = locale.get();
             GROUPS
                 .iter()
                 .map(|group| {
                     group
                         .rows
                         .iter()
-                        .filter(|row| matches(*group, **row, &query, locale))
+                        .filter(|row| visible_row(*group, **row))
                         .count()
                 })
                 .sum::<usize>()
@@ -617,6 +636,25 @@ mod ui {
                         {move || tr(locale.get(),"Clear","清除")}
                     </Button>
                 </div>
+                <Button variant=ButtonVariant::Outline size=ButtonSize::One class="ce-override-filter" attr:aria-pressed=move || overrides_only.get().to_string() test_id="color-overridden-only" on_click=move ||overrides_only.update(|value|*value=!*value)>{move ||format!("{} ({})",tr(locale.get(),"Overridden only","仅显示覆盖"),overridden.get().len())}</Button>
+                <Show when=move || visible_count.get()==0>
+                    <p class="ce-empty" data-testid="color-search-empty" role="status">{move || tr(locale.get(),"No matching colors. Clear search to show every token.","没有匹配颜色。清除搜索以显示全部 token。")}</p>
+                </Show>
+                {GROUPS.into_iter().map(move |group|view!{
+                    <Show when=move ||group.rows.iter().any(|row|visible_row(group,*row))>
+                        <div class="ce-group">
+                            <h3>{move ||tr(locale.get(),group.en,group.zh)}</h3>
+                            <For each={move ||group.rows.iter().copied().filter(|row|visible_row(group,*row)).collect::<Vec<_>>()} key=|row|row.0 children=move |(background,foreground)|view!{
+                                <div class="ce-pair">
+                                    <Show when=move || !overrides_only.get() || overridden.with(|tokens|tokens.iter().any(|token|token==background))><TokenChoice values=values overridden=overridden locale=locale selected=selected token=background callbacks=callbacks /></Show>
+                                    {foreground.map(|token|view!{<Show when=move || !overrides_only.get() || overridden.with(|tokens|tokens.iter().any(|value|value==token))><TokenChoice values=values overridden=overridden locale=locale selected=selected token=token callbacks=callbacks /></Show>})}
+                                </div>
+                            } />
+                        </div>
+                    </Show>
+                }).collect_view()}
+                <div class="ce-selection" data-testid="color-selection">
+                    {children()}
                 <div class="ce-picker" node_ref=picker_node>
                     <h3 class="ce-picked-token">{move || chosen.get()}</h3>
                     <div class="ce-plane" node_ref=plane role="slider" tabindex="0" data-testid="color-plane"
@@ -677,22 +715,7 @@ mod ui {
                         <Channel picker=picker locale=locale channel="a" label_en="Alpha" label_zh="透明度" max=1.0 step=0.01 />
                     </div>
                 </div>
-                <Show when=move || visible_count.get()==0>
-                    <p class="ce-empty" data-testid="color-search-empty" role="status">{move || tr(locale.get(),"No matching colors. Clear search to show every token.","没有匹配颜色。清除搜索以显示全部 token。")}</p>
-                </Show>
-                {GROUPS.into_iter().map(move |group|view!{
-                    <Show when=move ||group.rows.iter().any(|row|matches(group,*row,&query.get(),locale.get()))>
-                        <div class="ce-group">
-                            <h3>{move ||tr(locale.get(),group.en,group.zh)}</h3>
-                            <For each={move ||group.rows.iter().copied().filter(|row|matches(group,*row,&query.get(),locale.get())).collect::<Vec<_>>()} key=|row|row.0 children=move |(background,foreground)|view!{
-                                <div class="ce-pair">
-                                    <TokenChoice values=values baseline=baseline locale=locale selected=selected token=background callbacks=callbacks />
-                                    {foreground.map(|token|view!{<TokenChoice values=values baseline=baseline locale=locale selected=selected token=token callbacks=callbacks />})}
-                                </div>
-                            } />
-                        </div>
-                    </Show>
-                }).collect_view()}
+                </div>
             </section>
         }
     }

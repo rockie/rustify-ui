@@ -263,7 +263,12 @@ test("upgrade review is bound to editor epoch and commits only after refreshed e
   const original = await seedLegacy(page);
   await page.getByTestId("upgrade-review-open").click();
   const before = await snapshot(page);
-  await edit(page, "#abcdef"); await page.getByTestId("mode-dark").click();
+  // The review is modal. Simulate a source update through the existing model
+  // hook to exercise the stale-snapshot guard while its background is inert.
+  await page.evaluate(() => {
+    window.__theme_studio.edit("primary", "#abcdef");
+    (document.querySelector('[data-testid="mode-dark"]') as HTMLButtonElement).click();
+  });
   await expect(page.getByTestId("upgrade-review-status")).toHaveAttribute("data-stale", "true");
   await page.getByTestId("upgrade-confirm").click();
   expect(await raw(page)).toBeNull(); expect(await backups(page)).toEqual({});
@@ -470,7 +475,8 @@ for (const decision of ["load", "keep", "copy"] as const) {
     await expect.poll(async () => (await snapshot(page)).storage.paused).toBe(true);
     await expect(page.getByTestId("storage-external-summary")).toHaveAttribute("data-external-revision", String(third.revision));
     await page.getByTestId("storage-external-raw").locator("summary").click();
-    expect(await page.getByTestId("storage-external-source").inputValue()).toBe(thirdRaw);
+    expect(JSON.parse(await page.getByTestId("storage-external-source").inputValue())).toEqual(third);
+    expect(await download(page, "storage-external-download")).toBe(thirdRaw);
     expect(await raw(page)).toBe(thirdRaw);
     expect((await snapshot(page)).document).toEqual(current.document);
     expect((await snapshot(page)).history).toEqual(current.history);

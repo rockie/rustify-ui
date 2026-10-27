@@ -17,7 +17,7 @@ test("JSON review is atomic and cancel, invalid input and rejected code preserve
   candidate.name="Imported 中文";candidate.config.accent_color="tomato";candidate.config.scaling=105;candidate.base.dark["future-base"]="keep base text";candidate.overrides.light.primary="oklch(0.72 0.25 35 / 0.7)";candidate.overrides.dark.primary="#223344";candidate.base.light["future-token"]="keep author text";
   await importSource(page,JSON.stringify(candidate));await expect(page.getByTestId("import-preview")).toContainText("future-token");
   await expect(page.getByTestId("import-version")).toContainText("2");
-  await expect(page.getByTestId("import-config")).toContainText("accent_color");
+  await expect(page.getByTestId("import-config")).toContainText("Brand colorTomato");
   expect((await state(page)).document).toEqual(before.document);
   await page.getByTestId("import-cancel").click();expect((await state(page)).history).toEqual(before.history);
   await importSource(page,JSON.stringify(candidate));await page.getByTestId("import-apply").click();
@@ -78,13 +78,13 @@ test("all CSS profiles and notations export without editing; JSON and Rust downl
     const pending=page.waitForEvent("download",{timeout:5000});await page.getByTestId("export-download").click();const download=await pending;return {name:download.suggestedFilename(),text:await readFile((await download.path())!,"utf8")};
   }
   const json=await downloadText();expect(json.text).toBe(await source.inputValue());expect(json.name).toMatch(/\.json$/);
-  await select(page,"export-kind","Tailwind v4 CSS");const outputs=[];
-  for(const profile of ["Standard Tailwind v4","Rustify scoped"]) {
+  await select(page,"export-kind","CSS · resolved values");const outputs=[];
+  for(const profile of ["Tailwind v4 · .dark","Rustify scoped · data-theme"]) {
     await select(page,"export-profile",profile);
     for(const format of ["HEX","RGB","HSL","OKLCH"]) {
       await select(page,"export-color-format",format);const css=await source.inputValue();
       expect(css).toContain("@theme inline");expect(css).toContain("--color-primary");expect(css).toContain("Rustify WenKai");
-      expect(css).toContain(profile==="Rustify scoped"?"data-rustify-theme":".dark");
+      expect(css).toContain(profile.startsWith("Rustify scoped")?"data-rustify-theme":".dark");
       outputs.push({profile,format,bytes:Buffer.byteLength(css)});
     }
   }
@@ -111,7 +111,7 @@ test("granted clipboard contains the actual exported bytes",async({page})=> {
   expect(await page.evaluate(()=>navigator.clipboard.readText())).toBe(await page.getByTestId("export-source").inputValue());
 });
 
-for(const kind of ["Tailwind v4 CSS","Rust integration"]) test(`fresh download contains exact ${kind} source`,async({page})=>{
+for(const kind of ["CSS · resolved values","Rust integration"]) test(`fresh download contains exact ${kind} source`,async({page})=>{
   await waitForReady(page);await page.getByTestId("theme-export").click();await select(page,"export-kind",kind);
   const expected=await page.getByTestId("export-source").inputValue();const pending=page.waitForEvent("download",{timeout:5000});
   await page.getByTestId("export-download").click();const download=await pending;expect(await readFile((await download.path())!,"utf8")).toBe(expected);
@@ -119,10 +119,10 @@ for(const kind of ["Tailwind v4 CSS","Rust integration"]) test(`fresh download c
 
 test('export dialogs recenter as contents and viewport change, with reachable actions',async({page})=>{
   await waitForReady(page);
-  for(const [field,value] of [['appearance','Dark'],['accent_color','pink'],['gray_color','Auto'],['panel_background','Translucent'],['radius','Full'],['scaling','110%']]) await select(page,`studio-config-${field}`,value);
+  for(const [field,value] of [['appearance','Dark'],['accent_color','Pink'],['gray_color','Auto'],['panel_background','Translucent'],['radius','Full'],['scaling','110%']]) await select(page,`studio-config-${field}`,value);
   await page.getByTestId('theme-export').click();
   const panel=page.getByTestId('data-tools-dialog').locator('[data-name="Dialog"]');
-  for(const kind of ['Tailwind v4 CSS','Compatible JSON v1 · lossy']){
+  for(const kind of ['CSS · resolved values','Compatible JSON v1 · lossy']){
     await select(page,'export-kind',kind);
     for(const viewport of [{width:1280,height:720},{width:768,height:1024},{width:390,height:844}]){
       await page.setViewportSize(viewport);

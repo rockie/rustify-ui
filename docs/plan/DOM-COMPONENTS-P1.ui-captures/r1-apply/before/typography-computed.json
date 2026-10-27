@@ -1,0 +1,79 @@
+{
+  "type-heading": {
+    "tag": "H3",
+    "weight": "700",
+    "family": "\"IBM Plex Sans\", \"Rustify WenKai\", \"Noto Color Emoji\"",
+    "synthesis": "weight style small-caps",
+    "style": "normal",
+    "fontSize": "60px",
+    "lineHeight": "60px",
+    "borderLeftWidth": "0px",
+    "padding": "0px"
+  },
+  "type-default-heading": {
+    "tag": "H1",
+    "weight": "700",
+    "family": "\"IBM Plex Sans\", \"Rustify WenKai\", \"Noto Color Emoji\"",
+    "synthesis": "weight style small-caps",
+    "style": "normal",
+    "fontSize": "24px",
+    "lineHeight": "30px",
+    "borderLeftWidth": "0px",
+    "padding": "0px"
+  },
+  "type-strong": {
+    "tag": "STRONG",
+    "weight": "700",
+    "family": "\"IBM Plex Sans\", \"Rustify WenKai\", \"Noto Color Emoji\"",
+    "synthesis": "weight style small-caps",
+    "style": "normal",
+    "fontSize": "15px",
+    "lineHeight": "22.5px",
+    "borderLeftWidth": "0px",
+    "padding": "0px"
+  },
+  "type-quote": {
+    "tag": "Q",
+    "weight": "400",
+    "family": "\"IBM Plex Sans\", \"Rustify WenKai\", \"Noto Color Emoji\"",
+    "synthesis": "weight style small-caps",
+    "style": "normal",
+    "fontSize": "15px",
+    "lineHeight": "22.5px",
+    "borderLeftWidth": "0px",
+    "padding": "0px"
+  },
+  "type-blockquote": {
+    "tag": "BLOCKQUOTE",
+    "weight": "500",
+    "family": "\"IBM Plex Sans\", \"Rustify WenKai\", \"Noto Color Emoji\"",
+    "synthesis": "weight style small-caps",
+    "style": "normal",
+    "fontSize": "18px",
+    "lineHeight": "26px",
+    "borderLeftWidth": "4px",
+    "padding": "0px 0px 0px 12px"
+  },
+  "type-code": {
+    "tag": "CODE",
+    "weight": "400",
+    "family": "\"Liberation Mono\", \"Rustify WenKai\", \"Noto Color Emoji\"",
+    "synthesis": "weight style small-caps",
+    "style": "normal",
+    "fontSize": "14.44px",
+    "lineHeight": "24px",
+    "borderLeftWidth": "0px",
+    "padding": "1.444px 3.61px"
+  },
+  "type-kbd": {
+    "tag": "KBD",
+    "weight": "400",
+    "family": "\"IBM Plex Sans\", \"Rustify WenKai\", \"Noto Color Emoji\"",
+    "synthesis": "weight style small-caps",
+    "style": "normal",
+    "fontSize": "11.2px",
+    "lineHeight": "19.04px",
+    "borderLeftWidth": "0px",
+    "padding": "0px 5.6px 0.56px"
+  }
+}

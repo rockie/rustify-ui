@@ -161,8 +161,13 @@
     background-color: var(--rustify-gray-a3, var(--muted));
   }
 
-  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-em) {
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-em, .rustify-quote) {
     font-style: italic;
+  }
+
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-quote) {
+    font-family: var(--rustify-font-serif, serif);
+    font-size: 1.1em;
   }
 
   :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-strong) {
@@ -170,8 +175,8 @@
   }
 
   :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-link) {
-    color: var(--rustify-component-color-9, var(--primary));
-    border-radius: min(var(--rustify-radius-1, var(--radius)), 0.07em);
+    color: var(--rustify-component-color-a11, var(--rustify-link-color, var(--primary)));
+    border-radius: calc(0.07em * var(--rustify-radius-factor, 1));
     text-decoration-line: none;
     text-decoration-style: solid;
     text-decoration-thickness: min(2px, max(1px, 0.05em));
@@ -184,7 +189,7 @@
   }
 
   :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-link[data-high-contrast]) {
-    color: var(--rustify-component-color-12, var(--foreground));
+    color: var(--rustify-component-color-12, var(--rustify-link-high-contrast, var(--foreground)));
   }
 
   :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-link:any-link) {
@@ -202,7 +207,7 @@
   }
 
   :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-link:focus-visible) {
-    outline: 2px solid var(--ring);
+    outline: 2px solid var(--rustify-link-focus, var(--ring));
     outline-offset: 2px;
     text-decoration-line: none;
   }

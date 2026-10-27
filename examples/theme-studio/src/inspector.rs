@@ -116,6 +116,7 @@ mod ui {
     ) -> impl IntoView {
         let target = StoredValue::new_local(None::<Target>);
         let picked = RwSignal::new(Vec::<String>::new());
+        let annotated = RwSignal::new(true);
         let visible = RwSignal::new(false);
         let outline = NodeRef::<leptos::html::Div>::new();
         let update = move || {
@@ -214,37 +215,54 @@ mod ui {
                                     .collect::<Vec<_>>()
                             })
                             .unwrap_or_default();
-                        if ids.is_empty() {
-                            return false;
-                        }
                         let Some(id) = sample["id"].as_str() else {
                             return false;
                         };
                         target.set_value(Some(Target::Gpu(id.into())));
+                        annotated.set(!ids.is_empty());
                         picked.set(ids);
                         update();
                         return true;
                     }
-                    return false;
+                    target.set_value(Some(Target::Dom(canvas_element)));
+                    annotated.set(false);
+                    picked.set(Vec::new());
+                    update();
+                    return true;
                 }
             }
-            let Some(sample) = element
+            let sample = element
                 .closest("[data-theme-tokens]")
                 .ok()
                 .flatten()
-                .filter(|sample| root_element.contains(Some(sample)))
-            else {
-                return false;
-            };
-            let ids = tokens(
-                &sample
-                    .get_attribute("data-theme-tokens")
-                    .unwrap_or_default(),
-            );
-            if ids.is_empty() {
+                .filter(|sample| root_element.contains(Some(sample)));
+            if element
+                .closest(".studio-renderers")
+                .ok()
+                .flatten()
+                .is_none()
+            {
                 return false;
             }
+            let ids = sample
+                .as_ref()
+                .map(|sample| {
+                    tokens(
+                        &sample
+                            .get_attribute("data-theme-tokens")
+                            .unwrap_or_default(),
+                    )
+                })
+                .unwrap_or_default();
+            let sample = sample.unwrap_or_else(|| {
+                element
+                    .closest("button, a, input, textarea, select, [role='button']")
+                    .ok()
+                    .flatten()
+                    .unwrap_or(element)
+            });
             target.set_value(Some(Target::Dom(sample)));
+            annotated.set(!ids.is_empty());
             picked.set(ids);
             update();
             true
@@ -294,6 +312,24 @@ mod ui {
                     }
                 },
             );
+            let pointer_listener = rustify_ui::listen(
+                &event_target,
+                "pointerdown",
+                ListenOptions {
+                    capture: true,
+                    passive: false,
+                },
+                move |event| {
+                    if state.inspector.get_untracked() {
+                        if let Some(mouse) = event.dyn_ref::<leptos::web_sys::MouseEvent>() {
+                            if choose(mouse) {
+                                event.prevent_default();
+                                event.stop_immediate_propagation();
+                            }
+                        }
+                    }
+                },
+            );
             let doc: leptos::web_sys::EventTarget = document().into();
             let scroll = rustify_ui::listen(
                 &doc,
@@ -333,6 +369,7 @@ mod ui {
             listeners.set_value(Some(vec![
                 move_listener,
                 click_listener,
+                pointer_listener,
                 scroll,
                 resize,
                 escape,
@@ -398,12 +435,27 @@ mod ui {
             ids.into_iter().collect::<Vec<_>>()
         });
         view! {
-            <div class="inspector-outline" node_ref=outline hidden=move || !state.inspector.get() || !visible.get() data-testid="inspector-outline" aria-hidden="true">
-                <span>{move || picked.get().join(", ")}</span>
+            <div class="inspector-outline" node_ref=outline hidden=move || !state.inspector.get() || !visible.get() data-annotated=move || annotated.get().to_string() data-testid="inspector-outline" aria-hidden="true">
+                <span>{move || if annotated.get() {picked.get().join(", ")} else {state.tr("Not annotated", "未标注").into()}}</span>
             </div>
             <aside class="inspector-panel" data-inspector-ui="true" hidden=move || !state.inspector.get() data-testid="inspector-panel">
                 <h3>{move ||state.tr("Inspect preview tokens","检查预览 token")}</h3>
-                <p>{move ||state.tr("Point at a declared DOM or GPU sample, then choose a token. Esc exits.","指向已声明的 DOM 或 GPU 样本，再选择 token。按 Esc 退出。")}</p>
+                <p>{move ||state.tr("Point at a DOM or GPU sample, then choose a token. Picking pauses preview actions. Esc exits.","指向 DOM 或 GPU 样本，再选择 token。拾取期间暂停预览动作。按 Esc 退出。")}</p>
+                <Show when=move || !annotated.get()><p role="status" data-testid="inspector-unannotated">{move || state.tr("Not annotated · this part has no declared token mapping.", "未标注 · 此部件没有声明 token 映射。")}</p></Show>
+                <Show when=move || annotated.get() && !picked.get().is_empty()>
+                    <p role="status" data-testid="inspector-source">{move || {
+                        let selected = state.selected_token.get();
+                        let token = picked.with(|tokens| if tokens.contains(&selected) {selected} else {tokens.first().cloned().unwrap_or_default()});
+                        let theme = state.resolved().get();
+                        let value = theme.values.get(&token).unwrap_or_default();
+                        let source = match theme.origins.get(token.as_str()) {
+                            Some(rustify_ui::ThemeValueOrigin::DocumentOverride) => state.tr("Override", "覆盖"),
+                            Some(rustify_ui::ThemeValueOrigin::Configuration(_)) => state.tr("Generated", "配置生成"),
+                            _ => state.tr("Authored base", "作者基础值"),
+                        };
+                        format!("{} {token} · {} · {value} · {source}", state.tr("Editor source:", "编辑器来源："), if theme.mode == rustify_ui::ThemeMode::Light {state.tr("Light", "浅色")} else {state.tr("Dark", "深色")})
+                    }}</p>
+                </Show>
                 <div class="inspector-tokens" role="group" aria-label="Sample tokens">
                     {move || picked.get().into_iter().map(|token|{let label=token.clone();view!{<Button variant=ButtonVariant::Outline size=ButtonSize::One on_click=move ||state.inspect(token.clone())>{label}</Button>}}).collect_view()}
                 </div>

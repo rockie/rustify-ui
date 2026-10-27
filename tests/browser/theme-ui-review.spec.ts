@@ -1,0 +1,135 @@
+import { test, expect, waitForReady } from "./support";
+
+test("picking an unannotated control explains the missing mapping without activating it", async ({ page }) => {
+    await waitForReady(page);
+    await page.getByTestId("renderer-dom").click();
+    const create = page.getByTestId("studio-preview").getByTestId("preview-primary");
+    const before = await create.textContent();
+    await page.getByTestId("inspector-toggle").click();
+    await create.click();
+    await expect(create).toHaveText(before!);
+    await expect(page.getByTestId("inspector-unannotated")).toBeVisible();
+    await expect(page.getByTestId("inspector-outline")).toHaveAttribute("data-annotated", "false");
+    await page.keyboard.press("Escape");
+    await create.click();
+    await expect(create).not.toHaveText(before!);
+});
+
+test("picking a declared action follows its own bounds and exposes its editor source", async ({ page }) => {
+    await waitForReady(page);
+    await page.getByTestId("renderer-dom").click();
+    await page.getByTestId("inspector-toggle").click();
+    const button = page.getByTestId("studio-preview").getByTestId("cards-submit");
+    await button.click();
+    const outline = page.getByTestId("inspector-outline");
+    await expect(outline).toContainText("primary-foreground");
+    await expect.poll(async () => {
+        const [control, selection] = await Promise.all([button.boundingBox(), outline.boundingBox()]);
+        return control && selection ? Math.abs(control.width - selection.width) : Infinity;
+    }).toBeLessThan(2);
+    await expect(page.getByTestId("source-token")).toHaveText("primary");
+    await expect(page.getByTestId("token-source")).toBeInViewport();
+    await expect(page.getByTestId("inspector-source")).toContainText("primary");
+});
+
+test("a local opposite appearance and its dialog preserve the root theme", async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await waitForReady(page);
+    await page.getByTestId("mobile-preview").click();
+    await page.getByTestId("renderer-dom").click();
+    const preview = page.getByTestId("studio-preview");
+    await preview.getByTestId("local-appearance").click();
+    await preview.getByTestId("local-appearance-list").getByRole("option", { name: "Opposite to root", exact: true }).click();
+    await expect(preview).toHaveAttribute("data-theme", "light");
+    const local = preview.getByTestId("local-boundary");
+    await expect(local).toHaveAttribute("data-theme", "dark");
+    await preview.getByTestId("open-preview-dialog").click();
+    const layer = preview.getByTestId("preview-dialog");
+    await expect(layer).toHaveAttribute("aria-modal", "true");
+    const box = await layer.locator('[data-name="Dialog"]').boundingBox();
+    expect(box!.x).toBeGreaterThanOrEqual(15);
+    expect(box!.x + box!.width).toBeLessThanOrEqual(375);
+    await page.keyboard.press("Escape");
+    await expect(preview.getByTestId("open-preview-dialog")).toBeFocused();
+    await page.getByTestId("mobile-edit").click();
+    await page.getByTestId("mode-dark").click();
+    await expect(preview).toHaveAttribute("data-theme", "dark");
+    await expect(local).toHaveAttribute("data-theme", "light");
+});
+
+test("invalid numeric text stays visible while the valid theme remains unchanged", async ({ page }) => {
+    await waitForReady(page);
+    await page.getByTestId("editor-controls").click();
+    const before = await page.evaluate(() => window.__theme_studio.snapshot().values.light.radius);
+    const radius = page.getByTestId("edit-radius");
+    await radius.fill("abc");
+    await radius.press("Enter");
+    await expect(radius).toHaveValue("abc");
+    await expect(radius).toHaveAttribute("aria-invalid", "true");
+    expect(await page.evaluate(() => window.__theme_studio.snapshot().values.light.radius)).toBe(before);
+    await radius.press("Escape");
+    await expect(radius).toHaveValue(before);
+    await expect(radius).toHaveAttribute("aria-invalid", "false");
+});
+
+test("repeating the selected token value does not resolve its source again", async ({ page }) => {
+    await waitForReady(page);
+    await page.getByTestId("renderer-dom").click();
+    await page.getByTestId("editor-colors").click();
+    await page.getByTestId("color-token-primary").click();
+    const counts = await page.evaluate(async () => {
+        const api = window.__theme_studio;
+        const frame = () => new Promise<void>(resolve => requestAnimationFrame(() => resolve()));
+        api.edit("primary", "rgb(119 40 160)");
+        for (let i = 0; i < 10; i++) await frame();
+        const before = api.snapshot();
+        for (let i = 0; i < 120; i++) api.edit("primary", "rgb(119 40 160)");
+        await frame();
+        await frame();
+        return { before, after: api.snapshot() };
+    });
+    expect(counts.after.sdk_resolve_count).toBe(counts.before.sdk_resolve_count);
+    expect(counts.after.resolve_count).toBe(counts.before.resolve_count);
+    expect(counts.after.publish_count).toBe(counts.before.publish_count);
+    expect(counts.after.history).toEqual(counts.before.history);
+});
+
+test.describe("editor disposal", () => {
+    test.use({ fresh: true });
+    test("queued editor layout work ends with its owner", async ({ page }) => {
+        await waitForReady(page);
+        await page.getByTestId("renderer-dom").click();
+        await page.evaluate(() => {
+            const request = window.requestAnimationFrame.bind(window);
+            const cancel = window.cancelAnimationFrame.bind(window);
+            const callbacks = new Map<number, FrameRequestCallback>();
+            let id = 1_000_000;
+            window.requestAnimationFrame = callback => {
+                callbacks.set(++id, callback);
+                return id;
+            };
+            window.cancelAnimationFrame = key => {
+                callbacks.delete(key);
+                cancel(key);
+            };
+            (window as any).__heldEditorFrames = { callbacks, request, cancel };
+            window.__theme_studio.edit("radius", "12px");
+        });
+        // Let reactive effects enqueue their work while the repaint stays held.
+        await page.waitForTimeout(50);
+        expect(await page.evaluate(() => (window as any).__heldEditorFrames.callbacks.size)).toBeGreaterThan(0);
+        expect(await page.evaluate(() => window.__theme_studio.dispose())).toBe(true);
+        const errors = await page.evaluate(() => {
+            const held = (window as any).__heldEditorFrames;
+            window.requestAnimationFrame = held.request;
+            window.cancelAnimationFrame = held.cancel;
+            const errors: string[] = [];
+            for (const callback of held.callbacks.values()) {
+                try { callback(performance.now()); }
+                catch (error) { errors.push(String(error)); }
+            }
+            return errors;
+        });
+        expect(errors).toEqual([]);
+    });
+});

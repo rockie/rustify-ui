@@ -1,0 +1,573 @@
+{
+  "note": "Successful coverage is distributed across builds, not a single full final-build run. Derived from the linked sequential Playwright logs.",
+  "unique_successful": 77,
+  "runs": [
+    {
+      "log": "studio-browser.log",
+      "build": "484d5dfe8ff2a79f",
+      "started": 22,
+      "failed": [
+        {
+          "spec": "tests/browser/theme-config.spec.ts",
+          "name": "single-token release keeps the other mode, and common-token release clears both modes"
+        },
+        {
+          "spec": "tests/browser/theme-exchange.spec.ts",
+          "name": "JSON review is atomic and cancel, invalid input and rejected code preserve the draft"
+        },
+        {
+          "spec": "tests/browser/theme-export-ui.spec.ts",
+          "name": "v2 export preserves intent and explicitly reviewed v1 loses configuration, with actual clipboard/download bytes"
+        }
+      ],
+      "passed": [
+        {
+          "spec": "tests/browser/theme-config.spec.ts",
+          "name": "all six base choices are controlled, and preview mode stays independent of author appearance"
+        },
+        {
+          "spec": "tests/browser/theme-config.spec.ts",
+          "name": "base configuration follows a committed color gesture as a separate history command"
+        },
+        {
+          "spec": "tests/browser/theme-config.spec.ts",
+          "name": "brand reset releases exactly its responsibility keys in both modes and undo restores the whole candidate"
+        },
+        {
+          "spec": "tests/browser/theme-config.spec.ts",
+          "name": "native text undo changes only the uncommitted draft and does not consume theme history"
+        },
+        {
+          "spec": "tests/browser/theme-config.spec.ts",
+          "name": "source removal and explicit same-value pin are meaningful, while untouched drafts and zero HSL are no-ops"
+        },
+        {
+          "spec": "tests/browser/theme-dom.spec.ts",
+          "name": "new runtime shadows honor caller color while empty layers keep rings transparent"
+        },
+        {
+          "spec": "tests/browser/theme-dom.spec.ts",
+          "name": "resolved DOM themes › boundary projection and open overlay follow updates then restore inheritance"
+        },
+        {
+          "spec": "tests/browser/theme-dom.spec.ts",
+          "name": "resolved DOM themes › host rem is resolved and owner disposal leaves no runtime variables"
+        },
+        {
+          "spec": "tests/browser/theme-dom.spec.ts",
+          "name": "resolved DOM themes › invalid edit preserves last valid document and a no-shadow focus ring still renders"
+        },
+        {
+          "spec": "tests/browser/theme-dom.spec.ts",
+          "name": "resolved DOM themes › scopes stay independent and the host keeps its own styles"
+        },
+        {
+          "spec": "tests/browser/theme-dom.spec.ts",
+          "name": "resolved DOM themes › utility unit and layout gap remain separate and caller classes override"
+        },
+        {
+          "spec": "tests/browser/theme-exchange.spec.ts",
+          "name": "a reviewed import cannot apply after another controller change until explicitly reviewed again"
+        },
+        {
+          "spec": "tests/browser/theme-exchange.spec.ts",
+          "name": "all CSS profiles and notations export without editing; JSON and Rust downloads match their previews"
+        },
+        {
+          "spec": "tests/browser/theme-exchange.spec.ts",
+          "name": "clipboard refusal offers selection and download without a false success message"
+        },
+        {
+          "spec": "tests/browser/theme-exchange.spec.ts",
+          "name": "export dialogs recenter as contents and viewport change, with reachable actions"
+        },
+        {
+          "spec": "tests/browser/theme-exchange.spec.ts",
+          "name": "file import validates before apply and wrong type or size cannot change the theme"
+        },
+        {
+          "spec": "tests/browser/theme-exchange.spec.ts",
+          "name": "fresh download contains exact CSS · resolved values source"
+        },
+        {
+          "spec": "tests/browser/theme-exchange.spec.ts",
+          "name": "fresh download contains exact Rust integration source"
+        },
+        {
+          "spec": "tests/browser/theme-exchange.spec.ts",
+          "name": "granted clipboard contains the actual exported bytes"
+        }
+      ]
+    },
+    {
+      "log": "studio-browser-final.log",
+      "build": "484d5dfe8ff2a79f",
+      "started": 48,
+      "failed": [
+        {
+          "spec": "tests/browser/theme-v2-storage.spec.ts",
+          "name": "copy rechecks reviewed bytes under the lock and a third write requires another explicit decision"
+        },
+        {
+          "spec": "tests/browser/theme-v2-storage.spec.ts",
+          "name": "keep rechecks reviewed bytes under the lock and a third write requires another explicit decision"
+        },
+        {
+          "spec": "tests/browser/theme-v2-storage.spec.ts",
+          "name": "load rechecks reviewed bytes under the lock and a third write requires another explicit decision"
+        }
+      ],
+      "passed": [
+        {
+          "spec": "tests/browser/theme-config.spec.ts",
+          "name": "all six base choices are controlled, and preview mode stays independent of author appearance"
+        },
+        {
+          "spec": "tests/browser/theme-config.spec.ts",
+          "name": "base configuration follows a committed color gesture as a separate history command"
+        },
+        {
+          "spec": "tests/browser/theme-config.spec.ts",
+          "name": "brand reset releases exactly its responsibility keys in both modes and undo restores the whole candidate"
+        },
+        {
+          "spec": "tests/browser/theme-config.spec.ts",
+          "name": "native text undo changes only the uncommitted draft and does not consume theme history"
+        },
+        {
+          "spec": "tests/browser/theme-config.spec.ts",
+          "name": "single-token release keeps the other mode, and common-token release clears both modes"
+        },
+        {
+          "spec": "tests/browser/theme-config.spec.ts",
+          "name": "source removal and explicit same-value pin are meaningful, while untouched drafts and zero HSL are no-ops"
+        },
+        {
+          "spec": "tests/browser/theme-exchange.spec.ts",
+          "name": "JSON review is atomic and cancel, invalid input and rejected code preserve the draft"
+        },
+        {
+          "spec": "tests/browser/theme-exchange.spec.ts",
+          "name": "a reviewed import cannot apply after another controller change until explicitly reviewed again"
+        },
+        {
+          "spec": "tests/browser/theme-exchange.spec.ts",
+          "name": "all CSS profiles and notations export without editing; JSON and Rust downloads match their previews"
+        },
+        {
+          "spec": "tests/browser/theme-exchange.spec.ts",
+          "name": "clipboard refusal offers selection and download without a false success message"
+        },
+        {
+          "spec": "tests/browser/theme-exchange.spec.ts",
+          "name": "export dialogs recenter as contents and viewport change, with reachable actions"
+        },
+        {
+          "spec": "tests/browser/theme-exchange.spec.ts",
+          "name": "file import validates before apply and wrong type or size cannot change the theme"
+        },
+        {
+          "spec": "tests/browser/theme-exchange.spec.ts",
+          "name": "fresh download contains exact CSS · resolved values source"
+        },
+        {
+          "spec": "tests/browser/theme-exchange.spec.ts",
+          "name": "fresh download contains exact Rust integration source"
+        },
+        {
+          "spec": "tests/browser/theme-exchange.spec.ts",
+          "name": "granted clipboard contains the actual exported bytes"
+        },
+        {
+          "spec": "tests/browser/theme-export-ui.spec.ts",
+          "name": "copy success waits for the actual clipboard promise"
+        },
+        {
+          "spec": "tests/browser/theme-export-ui.spec.ts",
+          "name": "v2 export preserves intent and explicitly reviewed v1 loses configuration, with actual clipboard/download bytes"
+        },
+        {
+          "spec": "tests/browser/theme-storage.spec.ts",
+          "name": "a real other-tab save freezes the draft until explicit load, keep or save-copy"
+        },
+        {
+          "spec": "tests/browser/theme-storage.spec.ts",
+          "name": "bad cache is preserved and downloadable; explicit clear touches only the studio key"
+        },
+        {
+          "spec": "tests/browser/theme-storage.spec.ts",
+          "name": "denied localStorage leaves the editor and export available"
+        },
+        {
+          "spec": "tests/browser/theme-storage.spec.ts",
+          "name": "failed keep and duplicate conflict-copy retain the unresolved conflict and library"
+        },
+        {
+          "spec": "tests/browser/theme-storage.spec.ts",
+          "name": "named save, refresh, copy, rename, overwrite and delete retain real checkpoints"
+        },
+        {
+          "spec": "tests/browser/theme-storage.spec.ts",
+          "name": "quota failure preserves the previous bytes, in-memory draft and unsaved named library"
+        },
+        {
+          "spec": "tests/browser/theme-ui-review.spec.ts",
+          "name": "a local opposite appearance and its dialog preserve the root theme"
+        },
+        {
+          "spec": "tests/browser/theme-ui-review.spec.ts",
+          "name": "invalid numeric text stays visible while the valid theme remains unchanged"
+        },
+        {
+          "spec": "tests/browser/theme-ui-review.spec.ts",
+          "name": "picking a declared action follows its own bounds and exposes its editor source"
+        },
+        {
+          "spec": "tests/browser/theme-ui-review.spec.ts",
+          "name": "picking an unannotated control explains the missing mapping without activating it"
+        },
+        {
+          "spec": "tests/browser/theme-v2-storage.spec.ts",
+          "name": "a legacy writer changing reviewed bytes while the upgrade waits for a real lock forces a new review"
+        },
+        {
+          "spec": "tests/browser/theme-v2-storage.spec.ts",
+          "name": "a quota failure retains named requests and later edits until an explicit retry saves their snapshots in order"
+        },
+        {
+          "spec": "tests/browser/theme-v2-storage.spec.ts",
+          "name": "a third write after clear review requires another decision instead of clearing unreviewed bytes"
+        },
+        {
+          "spec": "tests/browser/theme-v2-storage.spec.ts",
+          "name": "an immutable backup collision is preserved instead of overwritten during migration"
+        },
+        {
+          "spec": "tests/browser/theme-v2-storage.spec.ts",
+          "name": "an older named acknowledgement during a live gesture cannot replace identity, history, checkpoint or unsaved status"
+        },
+        {
+          "spec": "tests/browser/theme-v2-storage.spec.ts",
+          "name": "cancelled legacy upgrade stays write-protected through edits, history, mode, preferences and reopening"
+        },
+        {
+          "spec": "tests/browser/theme-v2-storage.spec.ts",
+          "name": "clear uses the reviewed v2 baseline, cancels delayed writes and keeps memory, legacy bytes and backups"
+        },
+        {
+          "spec": "tests/browser/theme-v2-storage.spec.ts",
+          "name": "invalid v2 protects its exact bytes without falling back to a valid legacy library"
+        },
+        {
+          "spec": "tests/browser/theme-v2-storage.spec.ts",
+          "name": "legacy bad-saved-item rejects the complete migration and retains downloadable original bytes"
+        },
+        {
+          "spec": "tests/browser/theme-v2-storage.spec.ts",
+          "name": "legacy unknown-document rejects the complete migration and retains downloadable original bytes"
+        },
+        {
+          "spec": "tests/browser/theme-v2-storage.spec.ts",
+          "name": "legacy unknown-envelope rejects the complete migration and retains downloadable original bytes"
+        },
+        {
+          "spec": "tests/browser/theme-v2-storage.spec.ts",
+          "name": "migration backup-readback failure never claims a v2 save and explicit retry is idempotent"
+        },
+        {
+          "spec": "tests/browser/theme-v2-storage.spec.ts",
+          "name": "migration backup-write failure never claims a v2 save and explicit retry is idempotent"
+        },
+        {
+          "spec": "tests/browser/theme-v2-storage.spec.ts",
+          "name": "migration v2-write failure never claims a v2 save and explicit retry is idempotent"
+        },
+        {
+          "spec": "tests/browser/theme-v2-storage.spec.ts",
+          "name": "one writer preserves named action order behind a real lock and eventually saves the newest draft and preferences"
+        },
+        {
+          "spec": "tests/browser/theme-v2-storage.spec.ts",
+          "name": "queued autosave revalidates a changed rem after a real lock wait and remains retryable"
+        },
+        {
+          "spec": "tests/browser/theme-v2-storage.spec.ts",
+          "name": "upgrade review is bound to editor epoch and commits only after refreshed explicit confirmation"
+        },
+        {
+          "spec": "tests/browser/theme-v2-storage.spec.ts",
+          "name": "valid v2 reload reports the restored draft as saved while a new library stays unconfirmed"
+        }
+      ]
+    },
+    {
+      "log": "storage-browser-final.log",
+      "build": "484d5dfe8ff2a79f",
+      "started": 19,
+      "failed": [
+        {
+          "spec": "tests/browser/theme-v2-storage.spec.ts",
+          "name": "a failed clear reports a retained removal instead of success, and cancellation restores the previous write gate"
+        },
+        {
+          "spec": "tests/browser/theme-v2-storage.spec.ts",
+          "name": "owner disposal ignores late parameter blur while a real storage lock is pending"
+        }
+      ],
+      "passed": [
+        {
+          "spec": "tests/browser/theme-v2-storage.spec.ts",
+          "name": "Keep approves only its displayed draft while retained named intents require a separate retry or cancellation"
+        },
+        {
+          "spec": "tests/browser/theme-v2-storage.spec.ts",
+          "name": "a removed external v2 is shown as absent and Keep explicitly creates a fresh library"
+        },
+        {
+          "spec": "tests/browser/theme-v2-storage.spec.ts",
+          "name": "an empty external v2 is invalid raw, stays downloadable byte-for-byte and requires explicit reviewed clearing"
+        },
+        {
+          "spec": "tests/browser/theme-v2-storage.spec.ts",
+          "name": "backup deletion compares its reviewed full key set inside the same lock and ordinary clear leaves every original"
+        },
+        {
+          "spec": "tests/browser/theme-v2-storage.spec.ts",
+          "name": "copy rechecks reviewed bytes under the lock and a third write requires another explicit decision"
+        },
+        {
+          "spec": "tests/browser/theme-v2-storage.spec.ts",
+          "name": "delayed Save and Delete intents keep their order across undo/redo and finish with the latest committed draft"
+        },
+        {
+          "spec": "tests/browser/theme-v2-storage.spec.ts",
+          "name": "denied lock requests pause without an unlocked fallback and preserve export until explicit retry"
+        },
+        {
+          "spec": "tests/browser/theme-v2-storage.spec.ts",
+          "name": "keep rechecks reviewed bytes under the lock and a third write requires another explicit decision"
+        },
+        {
+          "spec": "tests/browser/theme-v2-storage.spec.ts",
+          "name": "load rechecks reviewed bytes under the lock and a third write requires another explicit decision"
+        },
+        {
+          "spec": "tests/browser/theme-v2-storage.spec.ts",
+          "name": "owner disposal aborts a real pending lock request and cannot write or call destroyed signals after grant"
+        },
+        {
+          "spec": "tests/browser/theme-v2-storage.spec.ts",
+          "name": "owner disposal ignores late hsl blur while a real storage lock is pending"
+        },
+        {
+          "spec": "tests/browser/theme-v2-storage.spec.ts",
+          "name": "re-entering upgrade review aborts its old lock wait and commits only the newly confirmed candidate"
+        },
+        {
+          "spec": "tests/browser/theme-v2-storage.spec.ts",
+          "name": "removing v1 remains a changed-source notice after reopening while the original backup stays retrievable"
+        },
+        {
+          "spec": "tests/browser/theme-v2-storage.spec.ts",
+          "name": "reopening retrieves the SHA-bound original even after an older window changes v1, and a damaged backup is never substituted"
+        },
+        {
+          "spec": "tests/browser/theme-v2-storage.spec.ts",
+          "name": "the host fatal boundary aborts a real pending write and restart restores only the confirmed draft"
+        },
+        {
+          "spec": "tests/browser/theme-v2-storage.spec.ts",
+          "name": "the native guard also prevents writes when disposal occurs just after a real lock is granted"
+        },
+        {
+          "spec": "tests/browser/theme-v2-storage.spec.ts",
+          "name": "without Web Locks the editor, undo and downloads work while library actions never claim a save"
+        }
+      ]
+    },
+    {
+      "log": "lifecycle-browser.log",
+      "build": "40319fe42bb1118f",
+      "started": 11,
+      "failed": [],
+      "passed": [
+        {
+          "spec": "tests/browser/theme-ui-review.spec.ts",
+          "name": "a local opposite appearance and its dialog preserve the root theme"
+        },
+        {
+          "spec": "tests/browser/theme-ui-review.spec.ts",
+          "name": "editor disposal › queued editor layout work ends with its owner"
+        },
+        {
+          "spec": "tests/browser/theme-ui-review.spec.ts",
+          "name": "invalid numeric text stays visible while the valid theme remains unchanged"
+        },
+        {
+          "spec": "tests/browser/theme-ui-review.spec.ts",
+          "name": "picking a declared action follows its own bounds and exposes its editor source"
+        },
+        {
+          "spec": "tests/browser/theme-ui-review.spec.ts",
+          "name": "picking an unannotated control explains the missing mapping without activating it"
+        },
+        {
+          "spec": "tests/browser/theme-v2-storage.spec.ts",
+          "name": "a failed clear reports a retained removal instead of success, and cancellation restores the previous write gate"
+        },
+        {
+          "spec": "tests/browser/theme-v2-storage.spec.ts",
+          "name": "owner disposal aborts a real pending lock request and cannot write or call destroyed signals after grant"
+        },
+        {
+          "spec": "tests/browser/theme-v2-storage.spec.ts",
+          "name": "owner disposal ignores late hsl blur while a real storage lock is pending"
+        },
+        {
+          "spec": "tests/browser/theme-v2-storage.spec.ts",
+          "name": "owner disposal ignores late parameter blur while a real storage lock is pending"
+        },
+        {
+          "spec": "tests/browser/theme-v2-storage.spec.ts",
+          "name": "the host fatal boundary aborts a real pending write and restart restores only the confirmed draft"
+        },
+        {
+          "spec": "tests/browser/theme-v2-storage.spec.ts",
+          "name": "the native guard also prevents writes when disposal occurs just after a real lock is granted"
+        }
+      ]
+    },
+    {
+      "log": "cache-browser.log",
+      "build": "6b28136b5912eced",
+      "started": 12,
+      "failed": [],
+      "passed": [
+        {
+          "spec": "tests/browser/theme-config.spec.ts",
+          "name": "all six base choices are controlled, and preview mode stays independent of author appearance"
+        },
+        {
+          "spec": "tests/browser/theme-config.spec.ts",
+          "name": "base configuration follows a committed color gesture as a separate history command"
+        },
+        {
+          "spec": "tests/browser/theme-config.spec.ts",
+          "name": "brand reset releases exactly its responsibility keys in both modes and undo restores the whole candidate"
+        },
+        {
+          "spec": "tests/browser/theme-config.spec.ts",
+          "name": "native text undo changes only the uncommitted draft and does not consume theme history"
+        },
+        {
+          "spec": "tests/browser/theme-config.spec.ts",
+          "name": "single-token release keeps the other mode, and common-token release clears both modes"
+        },
+        {
+          "spec": "tests/browser/theme-config.spec.ts",
+          "name": "source removal and explicit same-value pin are meaningful, while untouched drafts and zero HSL are no-ops"
+        },
+        {
+          "spec": "tests/browser/theme-ui-review.spec.ts",
+          "name": "a local opposite appearance and its dialog preserve the root theme"
+        },
+        {
+          "spec": "tests/browser/theme-ui-review.spec.ts",
+          "name": "editor disposal › queued editor layout work ends with its owner"
+        },
+        {
+          "spec": "tests/browser/theme-ui-review.spec.ts",
+          "name": "invalid numeric text stays visible while the valid theme remains unchanged"
+        },
+        {
+          "spec": "tests/browser/theme-ui-review.spec.ts",
+          "name": "picking a declared action follows its own bounds and exposes its editor source"
+        },
+        {
+          "spec": "tests/browser/theme-ui-review.spec.ts",
+          "name": "picking an unannotated control explains the missing mapping without activating it"
+        },
+        {
+          "spec": "tests/browser/theme-ui-review.spec.ts",
+          "name": "repeating the selected token value does not resolve its source again"
+        }
+      ]
+    },
+    {
+      "log": "color-cache-browser.log",
+      "build": "2be2f32fbf78c5f3",
+      "started": 17,
+      "failed": [],
+      "passed": [
+        {
+          "spec": "tests/browser/theme-config.spec.ts",
+          "name": "all six base choices are controlled, and preview mode stays independent of author appearance"
+        },
+        {
+          "spec": "tests/browser/theme-config.spec.ts",
+          "name": "base configuration follows a committed color gesture as a separate history command"
+        },
+        {
+          "spec": "tests/browser/theme-config.spec.ts",
+          "name": "brand reset releases exactly its responsibility keys in both modes and undo restores the whole candidate"
+        },
+        {
+          "spec": "tests/browser/theme-config.spec.ts",
+          "name": "native text undo changes only the uncommitted draft and does not consume theme history"
+        },
+        {
+          "spec": "tests/browser/theme-config.spec.ts",
+          "name": "single-token release keeps the other mode, and common-token release clears both modes"
+        },
+        {
+          "spec": "tests/browser/theme-config.spec.ts",
+          "name": "source removal and explicit same-value pin are meaningful, while untouched drafts and zero HSL are no-ops"
+        },
+        {
+          "spec": "tests/browser/theme-editor.spec.ts",
+          "name": "theme editing through the workbench › HSL invalid and identity drafts do not resolve, and current-mode adjustment keeps gray colors finite"
+        },
+        {
+          "spec": "tests/browser/theme-editor.spec.ts",
+          "name": "theme editing through the workbench › a captured color drag and repeated keyboard updates each create one undo step, and Escape cancels"
+        },
+        {
+          "spec": "tests/browser/theme-editor.spec.ts",
+          "name": "theme editing through the workbench › an authored alpha color reaches DOM and a completed GPU draw, while no-op edits reuse the core snapshot"
+        },
+        {
+          "spec": "tests/browser/theme-editor.spec.ts",
+          "name": "theme editing through the workbench › batch HSL always uses its origin, commits once, and cancellation preserves the redo branch"
+        },
+        {
+          "spec": "tests/browser/theme-editor.spec.ts",
+          "name": "theme editing through the workbench › notation and search preserve authors, and an incomplete color never replaces the effective theme"
+        },
+        {
+          "spec": "tests/browser/theme-ui-review.spec.ts",
+          "name": "a local opposite appearance and its dialog preserve the root theme"
+        },
+        {
+          "spec": "tests/browser/theme-ui-review.spec.ts",
+          "name": "editor disposal › queued editor layout work ends with its owner"
+        },
+        {
+          "spec": "tests/browser/theme-ui-review.spec.ts",
+          "name": "invalid numeric text stays visible while the valid theme remains unchanged"
+        },
+        {
+          "spec": "tests/browser/theme-ui-review.spec.ts",
+          "name": "picking a declared action follows its own bounds and exposes its editor source"
+        },
+        {
+          "spec": "tests/browser/theme-ui-review.spec.ts",
+          "name": "picking an unannotated control explains the missing mapping without activating it"
+        },
+        {
+          "spec": "tests/browser/theme-ui-review.spec.ts",
+          "name": "repeating the selected token value does not resolve its source again"
+        }
+      ]
+    }
+  ]
+}

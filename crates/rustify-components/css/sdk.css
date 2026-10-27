@@ -47,6 +47,7 @@
 @import "./button.css";
 @import "./layout.css";
 @import "./typography.css";
+@import "./theme-panel.css";
 
 /* The utilities reference these names, and the SDK writes their values onto
    the scope root at mount (`crates/rustify-ui/src/theme.rs`). `inline` means a

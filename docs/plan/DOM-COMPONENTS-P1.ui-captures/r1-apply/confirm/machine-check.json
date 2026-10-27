@@ -1,0 +1,2436 @@
+{
+  "at": "2026-10-27T09:10:23.838Z",
+  "overflow": [
+    {
+      "label": "studio-1440",
+      "viewport": 1440,
+      "scrollWidth": 1440,
+      "pageOverflow": 0,
+      "containers": [
+        {
+          "sel": "#studio-editor",
+          "scrollWidth": 319,
+          "clientWidth": 319
+        },
+        {
+          "sel": ".studio-previews",
+          "scrollWidth": 1120,
+          "clientWidth": 1120
+        }
+      ],
+      "offenders": [],
+      "offenderCount": 0
+    },
+    {
+      "label": "studio-1440-export-dialog",
+      "dialog": {
+        "x": 208,
+        "y": 179,
+        "width": 1024,
+        "height": 542.34375
+      },
+      "viewport": {
+        "w": 1440,
+        "h": 900
+      }
+    },
+    {
+      "label": "studio-768",
+      "viewport": 768,
+      "scrollWidth": 768,
+      "pageOverflow": 0,
+      "containers": [
+        {
+          "sel": "#studio-editor",
+          "scrollWidth": 323,
+          "clientWidth": 319
+        },
+        {
+          "sel": ".studio-previews",
+          "scrollWidth": 448,
+          "clientWidth": 448
+        }
+      ],
+      "offenders": [],
+      "offenderCount": 0
+    },
+    {
+      "label": "studio-768-export-dialog",
+      "dialog": {
+        "x": 16,
+        "y": 241,
+        "width": 736,
+        "height": 542.34375
+      },
+      "viewport": {
+        "w": 768,
+        "h": 1024
+      }
+    },
+    {
+      "label": "studio-390-edit",
+      "viewport": 390,
+      "scrollWidth": 390,
+      "pageOverflow": 0,
+      "containers": [
+        {
+          "sel": "#studio-editor",
+          "scrollWidth": 390,
+          "clientWidth": 390
+        },
+        {
+          "sel": ".studio-previews",
+          "scrollWidth": 0,
+          "clientWidth": 0
+        }
+      ],
+      "offenders": [],
+      "offenderCount": 0
+    },
+    {
+      "label": "studio-390-preview",
+      "viewport": 390,
+      "scrollWidth": 390,
+      "pageOverflow": 0,
+      "containers": [
+        {
+          "sel": ".studio-previews",
+          "scrollWidth": 390,
+          "clientWidth": 390
+        }
+      ],
+      "offenders": [],
+      "offenderCount": 0
+    },
+    {
+      "label": "studio-390-edit-export-dialog",
+      "dialog": {
+        "x": 16,
+        "y": 130.5,
+        "width": 358,
+        "height": 582.53125
+      },
+      "viewport": {
+        "w": 390,
+        "h": 844
+      }
+    },
+    {
+      "label": "studio-720-root200",
+      "viewport": 720,
+      "scrollWidth": 720,
+      "pageOverflow": 0,
+      "containers": [
+        {
+          "sel": "#studio-editor",
+          "scrollWidth": 327,
+          "clientWidth": 319
+        },
+        {
+          "sel": ".studio-previews",
+          "scrollWidth": 400,
+          "clientWidth": 400
+        }
+      ],
+      "offenders": [],
+      "offenderCount": 0
+    },
+    {
+      "label": "catalog-buttons-1280",
+      "viewport": 1280,
+      "scrollWidth": 1280,
+      "pageOverflow": 0,
+      "containers": [
+        {
+          "sel": "[data-testid=button-fixture-body]",
+          "scrollWidth": 1232,
+          "clientWidth": 1232
+        }
+      ],
+      "offenders": [],
+      "offenderCount": 0
+    },
+    {
+      "label": "catalog-layout-1280",
+      "viewport": 1280,
+      "scrollWidth": 1280,
+      "pageOverflow": 0,
+      "containers": [
+        {
+          "sel": "[data-testid=catalog-layout-fixture]",
+          "scrollWidth": 1232,
+          "clientWidth": 1232
+        }
+      ],
+      "offenders": [],
+      "offenderCount": 0
+    },
+    {
+      "label": "catalog-buttons-390",
+      "viewport": 390,
+      "scrollWidth": 390,
+      "pageOverflow": 0,
+      "containers": [
+        {
+          "sel": "[data-testid=button-fixture-body]",
+          "scrollWidth": 366,
+          "clientWidth": 366
+        }
+      ],
+      "offenders": [],
+      "offenderCount": 0
+    },
+    {
+      "label": "catalog-layout-390",
+      "viewport": 390,
+      "scrollWidth": 390,
+      "pageOverflow": 0,
+      "containers": [
+        {
+          "sel": "[data-testid=catalog-layout-fixture]",
+          "scrollWidth": 366,
+          "clientWidth": 366
+        }
+      ],
+      "offenders": [],
+      "offenderCount": 0
+    }
+  ],
+  "axe": [
+    {
+      "label": "studio-1440",
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "count": 1,
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "targets": [
+            ".rui-geometry-145 ::   Element has insufficient color contrast of 3.89 (foreground color: #1570ef, background color: #e3eefd, font size: 9.5pt (12.635px), font weight: normal). Expe"
+          ]
+        }
+      ],
+      "incomplete": [
+        {
+          "id": "aria-prohibited-attr",
+          "count": 1
+        },
+        {
+          "id": "aria-valid-attr-value",
+          "count": 12
+        },
+        {
+          "id": "color-contrast",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "label": "studio-1440-export-dialog",
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "count": 1,
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "targets": [
+            ".rui-geometry-145 ::   Element has insufficient color contrast of 3.89 (foreground color: #1570ef, background color: #e3eefd, font size: 9.5pt (12.635px), font weight: normal). Expe"
+          ]
+        }
+      ],
+      "incomplete": [
+        {
+          "id": "aria-valid-attr-value",
+          "count": 4
+        },
+        {
+          "id": "color-contrast",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "label": "studio-768",
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "count": 1,
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "targets": [
+            ".rui-geometry-145 ::   Element has insufficient color contrast of 3.89 (foreground color: #1570ef, background color: #e3eefd, font size: 9.5pt (12.635px), font weight: normal). Expe"
+          ]
+        }
+      ],
+      "incomplete": [
+        {
+          "id": "aria-prohibited-attr",
+          "count": 1
+        },
+        {
+          "id": "aria-valid-attr-value",
+          "count": 12
+        },
+        {
+          "id": "color-contrast",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "label": "studio-768-export-dialog",
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "count": 1,
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "targets": [
+            ".rui-geometry-145 ::   Element has insufficient color contrast of 3.89 (foreground color: #1570ef, background color: #e3eefd, font size: 9.5pt (12.635px), font weight: normal). Expe"
+          ]
+        }
+      ],
+      "incomplete": [
+        {
+          "id": "aria-valid-attr-value",
+          "count": 4
+        },
+        {
+          "id": "color-contrast",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "label": "studio-390-edit",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "aria-prohibited-attr",
+          "count": 1
+        },
+        {
+          "id": "aria-valid-attr-value",
+          "count": 9
+        }
+      ]
+    },
+    {
+      "label": "studio-390-preview",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "aria-valid-attr-value",
+          "count": 3
+        }
+      ]
+    },
+    {
+      "label": "studio-390-edit-export-dialog",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "aria-valid-attr-value",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "label": "catalog-buttons-1280",
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "count": 19,
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "targets": [
+            ".bg-accent ::   Element has insufficient color contrast of 2.62 (foreground color: #ffffff, background color: #12b76a, font size: 11.3pt (15px), font weight: normal). Expecte",
+            ".rui-geometry-69 > .rustify-button-content ::   Element has insufficient color contrast of 2.62 (foreground color: #ffffff, background color: #12b76a, font size: 10.5pt (14px), font weight: normal). Expecte",
+            ".rui-geometry-71 > .rustify-button-content ::   Element has insufficient color contrast of 3.31 (foreground color: #ffffff, background color: #8d8d8d, font size: 10.5pt (14px), font weight: normal). Expecte",
+            ".rui-geometry-72 > .rustify-button-content ::   Element has insufficient color contrast of 3.65 (foreground color: #ffffff, background color: #978365, font size: 10.5pt (14px), font weight: normal). Expecte",
+            ".rui-geometry-73 > .rustify-button-content ::   Element has insufficient color contrast of 3.59 (foreground color: #ffffff, background color: #a18072, font size: 10.5pt (14px), font weight: normal). Expecte",
+            ".rui-geometry-74 > .rustify-button-content ::   Element has insufficient color contrast of 3.52 (foreground color: #ffffff, background color: #ad7f58, font size: 10.5pt (14px), font weight: normal). Expecte"
+          ]
+        }
+      ],
+      "incomplete": [
+        {
+          "id": "aria-valid-attr-value",
+          "count": 6
+        },
+        {
+          "id": "color-contrast",
+          "count": 4
+        }
+      ]
+    },
+    {
+      "label": "catalog-layout-1280",
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "count": 1,
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "targets": [
+            ".rui-geometry-255 ::   Element has insufficient color contrast of 3.31 (foreground color: #ffffff, background color: #8d8d8d, font size: 10.2pt (13.5375px), font weight: normal). Ex"
+          ]
+        }
+      ],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "count": 5
+        }
+      ]
+    },
+    {
+      "label": "catalog-buttons-390",
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "count": 19,
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "targets": [
+            ".bg-accent ::   Element has insufficient color contrast of 2.62 (foreground color: #ffffff, background color: #12b76a, font size: 11.3pt (15px), font weight: normal). Expecte",
+            ".rui-geometry-69 > .rustify-button-content ::   Element has insufficient color contrast of 2.62 (foreground color: #ffffff, background color: #12b76a, font size: 10.5pt (14px), font weight: normal). Expecte",
+            ".rui-geometry-71 > .rustify-button-content ::   Element has insufficient color contrast of 3.31 (foreground color: #ffffff, background color: #8d8d8d, font size: 10.5pt (14px), font weight: normal). Expecte",
+            ".rui-geometry-72 > .rustify-button-content ::   Element has insufficient color contrast of 3.65 (foreground color: #ffffff, background color: #978365, font size: 10.5pt (14px), font weight: normal). Expecte",
+            ".rui-geometry-73 > .rustify-button-content ::   Element has insufficient color contrast of 3.59 (foreground color: #ffffff, background color: #a18072, font size: 10.5pt (14px), font weight: normal). Expecte",
+            ".rui-geometry-74 > .rustify-button-content ::   Element has insufficient color contrast of 3.52 (foreground color: #ffffff, background color: #ad7f58, font size: 10.5pt (14px), font weight: normal). Expecte"
+          ]
+        }
+      ],
+      "incomplete": [
+        {
+          "id": "aria-valid-attr-value",
+          "count": 6
+        },
+        {
+          "id": "color-contrast",
+          "count": 4
+        }
+      ]
+    },
+    {
+      "label": "catalog-layout-390",
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "count": 1,
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "targets": [
+            ".rui-geometry-255 ::   Element has insufficient color contrast of 3.31 (foreground color: #ffffff, background color: #8d8d8d, font size: 10.2pt (13.5375px), font weight: normal). Ex"
+          ]
+        }
+      ],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "count": 5
+        }
+      ]
+    }
+  ],
+  "csp": [
+    {
+      "label": "studio-1440",
+      "events": []
+    },
+    {
+      "label": "studio-768",
+      "events": []
+    },
+    {
+      "label": "studio-390-edit",
+      "events": []
+    },
+    {
+      "label": "studio-720-root200",
+      "events": []
+    },
+    {
+      "label": "studio-keyboard",
+      "events": []
+    },
+    {
+      "label": "catalog-1280",
+      "events": []
+    },
+    {
+      "label": "catalog-390",
+      "events": []
+    }
+  ],
+  "keyboard": [
+    {
+      "label": "studio-tab-walk-70",
+      "walk": [
+        {
+          "step": 1,
+          "tag": "button",
+          "testid": "locale-en",
+          "name": "EN",
+          "indicator": true,
+          "outline": "solid 3px rgba(21, 112, 239, 0.4)",
+          "shadow": "rgb(23, 92, 211) 0px -2px 0px 0px inset",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 2,
+          "tag": "button",
+          "testid": "locale-zh",
+          "name": "中文",
+          "indicator": true,
+          "outline": "solid 3px rgba(21, 112, 239, 0.4)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 3,
+          "tag": "button",
+          "testid": "mode-light",
+          "name": "Light",
+          "indicator": true,
+          "outline": "solid 3px rgba(21, 112, 239, 0.4)",
+          "shadow": "rgb(23, 92, 211) 0px -2px 0px 0px inset",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 4,
+          "tag": "button",
+          "testid": "mode-dark",
+          "name": "Dark",
+          "indicator": true,
+          "outline": "solid 3px rgba(21, 112, 239, 0.4)",
+          "shadow": "color(srgb 0.0823529 0.439216 0.937255 / 0.5) 0px 0px 0px 1p",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 5,
+          "tag": "button",
+          "testid": "theme-save",
+          "name": "Save locally",
+          "indicator": true,
+          "outline": "solid 2px rgb(21, 112, 239)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 6,
+          "tag": "button",
+          "testid": "theme-import",
+          "name": "Import",
+          "indicator": true,
+          "outline": "solid 2px rgb(21, 112, 239)",
+          "shadow": "color(srgb 0.0823529 0.439216 0.937255 / 0.5) 0px 0px 0px 1p",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 7,
+          "tag": "button",
+          "testid": "theme-export",
+          "name": "Export",
+          "indicator": true,
+          "outline": "solid 2px rgb(21, 112, 239)",
+          "shadow": "color(srgb 0.0823529 0.439216 0.937255 / 0.5) 0px 0px 0px 1p",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 8,
+          "tag": "button",
+          "testid": "theme-library",
+          "name": "Local themes (0)",
+          "indicator": true,
+          "outline": "solid 2px rgb(21, 112, 239)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 9,
+          "tag": "button",
+          "testid": "storage-export",
+          "name": "Download current theme",
+          "indicator": true,
+          "outline": "solid 2px rgb(21, 112, 239)",
+          "shadow": "color(srgb 0.0823529 0.439216 0.937255 / 0.5) 0px 0px 0px 1p",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 10,
+          "tag": "summary",
+          "testid": "storage-operations",
+          "name": "0 pending · 0 recent operations",
+          "indicator": true,
+          "outline": "solid 3px rgba(21, 112, 239, 0.5)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 11,
+          "tag": "button",
+          "testid": "storage-retry",
+          "name": "Save current draft",
+          "indicator": true,
+          "outline": "solid 2px rgb(21, 112, 239)",
+          "shadow": "color(srgb 0.0823529 0.439216 0.937255 / 0.5) 0px 0px 0px 1p",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 12,
+          "tag": "summary",
+          "testid": "editor-shell",
+          "name": "Cache and original backups",
+          "indicator": true,
+          "outline": "solid 3px rgba(21, 112, 239, 0.5)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 13,
+          "tag": "input",
+          "testid": "preset-search",
+          "name": "Search presets",
+          "indicator": true,
+          "outline": "solid 3px rgba(21, 112, 239, 0.5)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 14,
+          "tag": "button",
+          "testid": "preset-source",
+          "name": "Preset source",
+          "indicator": true,
+          "outline": "solid 3px rgb(29, 41, 57)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 15,
+          "tag": "button",
+          "testid": "preset-favorites",
+          "name": "Favorites",
+          "indicator": true,
+          "outline": "solid 2px rgb(21, 112, 239)",
+          "shadow": "color(srgb 0.0823529 0.439216 0.937255 / 0.5) 0px 0px 0px 1p",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 16,
+          "tag": "button",
+          "testid": "preset-select",
+          "name": "Preset",
+          "indicator": true,
+          "outline": "solid 3px rgb(29, 41, 57)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 17,
+          "tag": "button",
+          "testid": "preset-favorite",
+          "name": "Favorite",
+          "indicator": true,
+          "outline": "solid 2px rgb(21, 112, 239)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 18,
+          "tag": "button",
+          "testid": "studio-config-appearance",
+          "name": "Inherit",
+          "indicator": true,
+          "outline": "solid 3px rgb(29, 41, 57)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 19,
+          "tag": "button",
+          "testid": "studio-config-accent_color",
+          "name": "Custom",
+          "indicator": true,
+          "outline": "solid 3px rgb(29, 41, 57)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 20,
+          "tag": "button",
+          "testid": "studio-config-accent_color-reset",
+          "name": "Use base values · both modes",
+          "indicator": true,
+          "outline": "solid 2px rgb(21, 112, 239)",
+          "shadow": "color(srgb 0.0823529 0.439216 0.937255 / 0.5) 0px 0px 0px 1p",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 21,
+          "tag": "button",
+          "testid": "studio-config-gray_color",
+          "name": "Custom",
+          "indicator": true,
+          "outline": "solid 3px rgb(29, 41, 57)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 22,
+          "tag": "button",
+          "testid": "studio-config-gray_color-reset",
+          "name": "Use base values · both modes",
+          "indicator": true,
+          "outline": "solid 2px rgb(21, 112, 239)",
+          "shadow": "color(srgb 0.0823529 0.439216 0.937255 / 0.5) 0px 0px 0px 1p",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 23,
+          "tag": "button",
+          "testid": "studio-config-panel_background",
+          "name": "Custom",
+          "indicator": true,
+          "outline": "solid 3px rgb(29, 41, 57)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 24,
+          "tag": "button",
+          "testid": "studio-config-panel_background-reset",
+          "name": "Use base values · both modes",
+          "indicator": true,
+          "outline": "solid 2px rgb(21, 112, 239)",
+          "shadow": "color(srgb 0.0823529 0.439216 0.937255 / 0.5) 0px 0px 0px 1p",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 25,
+          "tag": "button",
+          "testid": "studio-config-radius",
+          "name": "Custom",
+          "indicator": true,
+          "outline": "solid 3px rgb(29, 41, 57)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 26,
+          "tag": "button",
+          "testid": "studio-config-radius-reset",
+          "name": "Use base values · both modes",
+          "indicator": true,
+          "outline": "solid 2px rgb(21, 112, 239)",
+          "shadow": "color(srgb 0.0823529 0.439216 0.937255 / 0.5) 0px 0px 0px 1p",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 27,
+          "tag": "button",
+          "testid": "studio-config-scaling",
+          "name": "100%",
+          "indicator": true,
+          "outline": "solid 3px rgb(29, 41, 57)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 28,
+          "tag": "button",
+          "testid": "editor-colors",
+          "name": "Colors",
+          "indicator": true,
+          "outline": "solid 3px rgba(21, 112, 239, 0.5)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 29,
+          "tag": "input",
+          "testid": "color-search",
+          "name": "Search color tokens",
+          "indicator": true,
+          "outline": "solid 3px rgba(37, 99, 235, 0.4)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 30,
+          "tag": "button",
+          "testid": "color-overridden-only",
+          "name": "Overridden only (23)",
+          "indicator": true,
+          "outline": "solid 2px rgb(21, 112, 239)",
+          "shadow": "color(srgb 0.0823529 0.439216 0.937255 / 0.5) 0px 0px 0px 1p",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 31,
+          "tag": "button",
+          "testid": "color-token-background",
+          "name": "background#f9fafbOverride",
+          "indicator": true,
+          "outline": "solid 3px rgba(37, 99, 235, 0.4)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 32,
+          "tag": "button",
+          "testid": "color-reset-background",
+          "name": "Clear override for background",
+          "indicator": true,
+          "outline": "solid 3px rgba(37, 99, 235, 0.4)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 33,
+          "tag": "button",
+          "testid": "color-token-foreground",
+          "name": "foreground#1d2939Override",
+          "indicator": true,
+          "outline": "solid 3px rgba(37, 99, 235, 0.4)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 34,
+          "tag": "button",
+          "testid": "color-reset-foreground",
+          "name": "Clear override for foreground",
+          "indicator": true,
+          "outline": "solid 3px rgba(37, 99, 235, 0.4)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 35,
+          "tag": "button",
+          "testid": "color-token-card",
+          "name": "card#ffffffOverride",
+          "indicator": true,
+          "outline": "solid 3px rgba(37, 99, 235, 0.4)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 36,
+          "tag": "button",
+          "testid": "color-reset-card",
+          "name": "Clear override for card",
+          "indicator": true,
+          "outline": "solid 3px rgba(37, 99, 235, 0.4)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 37,
+          "tag": "button",
+          "testid": "color-token-card-foreground",
+          "name": "card-foreground#1d2939Override",
+          "indicator": true,
+          "outline": "solid 3px rgba(37, 99, 235, 0.4)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 38,
+          "tag": "button",
+          "testid": "color-reset-card-foreground",
+          "name": "Clear override for card-foreground",
+          "indicator": true,
+          "outline": "solid 3px rgba(37, 99, 235, 0.4)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 39,
+          "tag": "button",
+          "testid": "color-token-popover",
+          "name": "popover#ffffffOverride",
+          "indicator": true,
+          "outline": "solid 3px rgba(37, 99, 235, 0.4)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 40,
+          "tag": "button",
+          "testid": "color-reset-popover",
+          "name": "Clear override for popover",
+          "indicator": true,
+          "outline": "solid 3px rgba(37, 99, 235, 0.4)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 41,
+          "tag": "button",
+          "testid": "color-token-popover-foreground",
+          "name": "popover-foreground#1d2939Override",
+          "indicator": true,
+          "outline": "solid 3px rgba(37, 99, 235, 0.4)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 42,
+          "tag": "button",
+          "testid": "color-reset-popover-foreground",
+          "name": "Clear override for popover-foreground",
+          "indicator": true,
+          "outline": "solid 3px rgba(37, 99, 235, 0.4)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 43,
+          "tag": "button",
+          "testid": "color-token-primary",
+          "name": "primary#1570efOverride",
+          "indicator": true,
+          "outline": "solid 3px rgba(37, 99, 235, 0.4)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 44,
+          "tag": "button",
+          "testid": "color-reset-primary",
+          "name": "Clear override for primary",
+          "indicator": true,
+          "outline": "solid 3px rgba(37, 99, 235, 0.4)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 45,
+          "tag": "button",
+          "testid": "color-token-primary-foreground",
+          "name": "primary-foreground#ffffffOverride",
+          "indicator": true,
+          "outline": "solid 3px rgba(37, 99, 235, 0.4)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 46,
+          "tag": "button",
+          "testid": "color-reset-primary-foreground",
+          "name": "Clear override for primary-foreground",
+          "indicator": true,
+          "outline": "solid 3px rgba(37, 99, 235, 0.4)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 47,
+          "tag": "button",
+          "testid": "color-token-secondary",
+          "name": "secondary#eaecf0Override",
+          "indicator": true,
+          "outline": "solid 3px rgba(37, 99, 235, 0.4)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 48,
+          "tag": "button",
+          "testid": "color-reset-secondary",
+          "name": "Clear override for secondary",
+          "indicator": true,
+          "outline": "solid 3px rgba(37, 99, 235, 0.4)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 49,
+          "tag": "button",
+          "testid": "color-token-secondary-foreground",
+          "name": "secondary-foreground#1d2939Override",
+          "indicator": true,
+          "outline": "solid 3px rgba(37, 99, 235, 0.4)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 50,
+          "tag": "button",
+          "testid": "color-reset-secondary-foreground",
+          "name": "Clear override for secondary-foreground",
+          "indicator": true,
+          "outline": "solid 3px rgba(37, 99, 235, 0.4)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 51,
+          "tag": "button",
+          "testid": "color-token-muted",
+          "name": "muted#f2f4f7Override",
+          "indicator": true,
+          "outline": "solid 3px rgba(37, 99, 235, 0.4)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 52,
+          "tag": "button",
+          "testid": "color-reset-muted",
+          "name": "Clear override for muted",
+          "indicator": true,
+          "outline": "solid 3px rgba(37, 99, 235, 0.4)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 53,
+          "tag": "button",
+          "testid": "color-token-muted-foreground",
+          "name": "muted-foreground#667085Override",
+          "indicator": true,
+          "outline": "solid 3px rgba(37, 99, 235, 0.4)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 54,
+          "tag": "button",
+          "testid": "color-reset-muted-foreground",
+          "name": "Clear override for muted-foreground",
+          "indicator": true,
+          "outline": "solid 3px rgba(37, 99, 235, 0.4)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 55,
+          "tag": "button",
+          "testid": "color-token-accent",
+          "name": "accent#12b76a",
+          "indicator": true,
+          "outline": "solid 3px rgba(37, 99, 235, 0.4)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 56,
+          "tag": "button",
+          "testid": "color-token-accent-foreground",
+          "name": "accent-foreground#ffffff",
+          "indicator": true,
+          "outline": "solid 3px rgba(37, 99, 235, 0.4)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 57,
+          "tag": "button",
+          "testid": "color-token-destructive",
+          "name": "destructive#d92d20",
+          "indicator": true,
+          "outline": "solid 3px rgba(37, 99, 235, 0.4)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 58,
+          "tag": "button",
+          "testid": "color-token-destructive-foreground",
+          "name": "destructive-foreground#ffffff",
+          "indicator": true,
+          "outline": "solid 3px rgba(37, 99, 235, 0.4)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 59,
+          "tag": "button",
+          "testid": "color-token-border",
+          "name": "border#858f9eOverride",
+          "indicator": true,
+          "outline": "solid 3px rgba(37, 99, 235, 0.4)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 60,
+          "tag": "button",
+          "testid": "color-reset-border",
+          "name": "Clear override for border",
+          "indicator": true,
+          "outline": "solid 3px rgba(37, 99, 235, 0.4)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 61,
+          "tag": "button",
+          "testid": "color-token-input",
+          "name": "input#ffffffOverride",
+          "indicator": true,
+          "outline": "solid 3px rgba(37, 99, 235, 0.4)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 62,
+          "tag": "button",
+          "testid": "color-reset-input",
+          "name": "Clear override for input",
+          "indicator": true,
+          "outline": "solid 3px rgba(37, 99, 235, 0.4)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 63,
+          "tag": "button",
+          "testid": "color-token-ring",
+          "name": "ring#1570efOverride",
+          "indicator": true,
+          "outline": "solid 3px rgba(37, 99, 235, 0.4)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 64,
+          "tag": "button",
+          "testid": "color-reset-ring",
+          "name": "Clear override for ring",
+          "indicator": true,
+          "outline": "solid 3px rgba(37, 99, 235, 0.4)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 65,
+          "tag": "button",
+          "testid": "color-token-chart-1",
+          "name": "chart-1#1570ef",
+          "indicator": true,
+          "outline": "solid 3px rgba(37, 99, 235, 0.4)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 66,
+          "tag": "button",
+          "testid": "color-token-chart-2",
+          "name": "chart-2#12b76a",
+          "indicator": true,
+          "outline": "solid 3px rgba(37, 99, 235, 0.4)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 67,
+          "tag": "button",
+          "testid": "color-token-chart-3",
+          "name": "chart-3#f79009",
+          "indicator": true,
+          "outline": "solid 3px rgba(37, 99, 235, 0.4)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 68,
+          "tag": "button",
+          "testid": "color-token-chart-4",
+          "name": "chart-4#d92d20",
+          "indicator": true,
+          "outline": "solid 3px rgba(37, 99, 235, 0.4)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 69,
+          "tag": "button",
+          "testid": "color-token-chart-5",
+          "name": "chart-5#667085",
+          "indicator": true,
+          "outline": "solid 3px rgba(37, 99, 235, 0.4)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 70,
+          "tag": "button",
+          "testid": "color-token-sidebar",
+          "name": "sidebar#f9fafbOverride",
+          "indicator": true,
+          "outline": "solid 3px rgba(37, 99, 235, 0.4)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        }
+      ]
+    },
+    {
+      "label": "studio-export-dialog-trap",
+      "trap": [
+        {
+          "step": 1,
+          "tag": "button",
+          "testid": "export-kind",
+          "name": "Theme JSON v2",
+          "indicator": true,
+          "outline": "none 1px rgb(29, 41, 57)",
+          "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0",
+          "onScreen": true,
+          "inDialog": true
+        },
+        {
+          "step": 2,
+          "tag": "textarea",
+          "testid": "export-source",
+          "name": "",
+          "indicator": true,
+          "outline": "solid 3px rgba(21, 112, 239, 0.5)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": true
+        },
+        {
+          "step": 3,
+          "tag": "button",
+          "testid": "export-copy",
+          "name": "Copy code",
+          "indicator": true,
+          "outline": "solid 2px rgb(21, 112, 239)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": true
+        },
+        {
+          "step": 4,
+          "tag": "button",
+          "testid": "export-select",
+          "name": "Select text",
+          "indicator": true,
+          "outline": "solid 2px rgb(21, 112, 239)",
+          "shadow": "color(srgb 0.0823529 0.439216 0.937255 / 0.5) 0px 0px 0px 1p",
+          "onScreen": true,
+          "inDialog": true
+        },
+        {
+          "step": 5,
+          "tag": "button",
+          "testid": "export-download",
+          "name": "Download",
+          "indicator": true,
+          "outline": "solid 2px rgb(21, 112, 239)",
+          "shadow": "color(srgb 0.0823529 0.439216 0.937255 / 0.5) 0px 0px 0px 1p",
+          "onScreen": true,
+          "inDialog": true
+        },
+        {
+          "step": 6,
+          "tag": "button",
+          "testid": "data-tools-dialog-close",
+          "name": "close",
+          "indicator": true,
+          "outline": "none 1px rgb(0, 95, 204)",
+          "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0",
+          "onScreen": true,
+          "inDialog": true
+        },
+        {
+          "step": 7,
+          "tag": "button",
+          "testid": "export-kind",
+          "name": "Theme JSON v2",
+          "indicator": true,
+          "outline": "none 1px rgb(29, 41, 57)",
+          "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0",
+          "onScreen": true,
+          "inDialog": true
+        },
+        {
+          "step": 8,
+          "tag": "textarea",
+          "testid": "export-source",
+          "name": "",
+          "indicator": true,
+          "outline": "solid 3px rgba(21, 112, 239, 0.5)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": true
+        },
+        {
+          "step": 9,
+          "tag": "button",
+          "testid": "export-copy",
+          "name": "Copy code",
+          "indicator": true,
+          "outline": "solid 2px rgb(21, 112, 239)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": true
+        },
+        {
+          "step": 10,
+          "tag": "button",
+          "testid": "export-select",
+          "name": "Select text",
+          "indicator": true,
+          "outline": "solid 2px rgb(21, 112, 239)",
+          "shadow": "color(srgb 0.0823529 0.439216 0.937255 / 0.5) 0px 0px 0px 1p",
+          "onScreen": true,
+          "inDialog": true
+        },
+        {
+          "step": 11,
+          "tag": "button",
+          "testid": "export-download",
+          "name": "Download",
+          "indicator": true,
+          "outline": "solid 2px rgb(21, 112, 239)",
+          "shadow": "color(srgb 0.0823529 0.439216 0.937255 / 0.5) 0px 0px 0px 1p",
+          "onScreen": true,
+          "inDialog": true
+        },
+        {
+          "step": 12,
+          "tag": "button",
+          "testid": "data-tools-dialog-close",
+          "name": "close",
+          "indicator": true,
+          "outline": "none 1px rgb(0, 95, 204)",
+          "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0",
+          "onScreen": true,
+          "inDialog": true
+        },
+        {
+          "step": 13,
+          "tag": "button",
+          "testid": "export-kind",
+          "name": "Theme JSON v2",
+          "indicator": true,
+          "outline": "none 1px rgb(29, 41, 57)",
+          "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0",
+          "onScreen": true,
+          "inDialog": true
+        },
+        {
+          "step": 14,
+          "tag": "textarea",
+          "testid": "export-source",
+          "name": "",
+          "indicator": true,
+          "outline": "solid 3px rgba(21, 112, 239, 0.5)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": true
+        },
+        {
+          "step": 15,
+          "tag": "button",
+          "testid": "export-copy",
+          "name": "Copy code",
+          "indicator": true,
+          "outline": "solid 2px rgb(21, 112, 239)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": true
+        },
+        {
+          "step": 16,
+          "tag": "button",
+          "testid": "export-select",
+          "name": "Select text",
+          "indicator": true,
+          "outline": "solid 2px rgb(21, 112, 239)",
+          "shadow": "color(srgb 0.0823529 0.439216 0.937255 / 0.5) 0px 0px 0px 1p",
+          "onScreen": true,
+          "inDialog": true
+        },
+        {
+          "step": 17,
+          "tag": "button",
+          "testid": "export-download",
+          "name": "Download",
+          "indicator": true,
+          "outline": "solid 2px rgb(21, 112, 239)",
+          "shadow": "color(srgb 0.0823529 0.439216 0.937255 / 0.5) 0px 0px 0px 1p",
+          "onScreen": true,
+          "inDialog": true
+        },
+        {
+          "step": 18,
+          "tag": "button",
+          "testid": "data-tools-dialog-close",
+          "name": "close",
+          "indicator": true,
+          "outline": "none 1px rgb(0, 95, 204)",
+          "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0",
+          "onScreen": true,
+          "inDialog": true
+        },
+        {
+          "step": 19,
+          "tag": "button",
+          "testid": "export-kind",
+          "name": "Theme JSON v2",
+          "indicator": true,
+          "outline": "none 1px rgb(29, 41, 57)",
+          "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0",
+          "onScreen": true,
+          "inDialog": true
+        },
+        {
+          "step": 20,
+          "tag": "textarea",
+          "testid": "export-source",
+          "name": "",
+          "indicator": true,
+          "outline": "solid 3px rgba(21, 112, 239, 0.5)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": true
+        },
+        {
+          "step": 21,
+          "tag": "button",
+          "testid": "export-copy",
+          "name": "Copy code",
+          "indicator": true,
+          "outline": "solid 2px rgb(21, 112, 239)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": true
+        },
+        {
+          "step": 22,
+          "tag": "button",
+          "testid": "export-select",
+          "name": "Select text",
+          "indicator": true,
+          "outline": "solid 2px rgb(21, 112, 239)",
+          "shadow": "color(srgb 0.0823529 0.439216 0.937255 / 0.5) 0px 0px 0px 1p",
+          "onScreen": true,
+          "inDialog": true
+        },
+        {
+          "step": 23,
+          "tag": "button",
+          "testid": "export-download",
+          "name": "Download",
+          "indicator": true,
+          "outline": "solid 2px rgb(21, 112, 239)",
+          "shadow": "color(srgb 0.0823529 0.439216 0.937255 / 0.5) 0px 0px 0px 1p",
+          "onScreen": true,
+          "inDialog": true
+        },
+        {
+          "step": 24,
+          "tag": "button",
+          "testid": "data-tools-dialog-close",
+          "name": "close",
+          "indicator": true,
+          "outline": "none 1px rgb(0, 95, 204)",
+          "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0",
+          "onScreen": true,
+          "inDialog": true
+        },
+        {
+          "step": 25,
+          "tag": "button",
+          "testid": "export-kind",
+          "name": "Theme JSON v2",
+          "indicator": true,
+          "outline": "none 1px rgb(29, 41, 57)",
+          "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0",
+          "onScreen": true,
+          "inDialog": true
+        }
+      ],
+      "afterEscape": {
+        "tag": "button",
+        "testid": "theme-export",
+        "name": "Export",
+        "indicator": true,
+        "outline": "solid 2px rgb(21, 112, 239)",
+        "shadow": "color(srgb 0.0823529 0.439216 0.937255 / 0.5) 0px 0px 0px 1p",
+        "onScreen": true,
+        "inDialog": false
+      },
+      "dialogStillVisible": false
+    },
+    {
+      "label": "studio-import-dialog-trap",
+      "trap": [
+        {
+          "step": 1,
+          "tag": "button",
+          "testid": "import-format",
+          "name": "Theme JSON",
+          "indicator": true,
+          "outline": "none 1px rgb(29, 41, 57)",
+          "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0",
+          "onScreen": true,
+          "inDialog": true
+        },
+        {
+          "step": 2,
+          "tag": "button",
+          "testid": "import-file",
+          "name": "Choose file",
+          "indicator": true,
+          "outline": "solid 2px rgb(21, 112, 239)",
+          "shadow": "color(srgb 0.0823529 0.439216 0.937255 / 0.5) 0px 0px 0px 1p",
+          "onScreen": true,
+          "inDialog": true
+        },
+        {
+          "step": 3,
+          "tag": "textarea",
+          "testid": "import-source",
+          "name": "",
+          "indicator": true,
+          "outline": "solid 3px rgb(29, 41, 57)",
+          "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0",
+          "onScreen": true,
+          "inDialog": true
+        },
+        {
+          "step": 4,
+          "tag": "button",
+          "testid": "data-tools-dialog-close",
+          "name": "close",
+          "indicator": true,
+          "outline": "none 1px rgb(0, 95, 204)",
+          "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0",
+          "onScreen": true,
+          "inDialog": true
+        },
+        {
+          "step": 5,
+          "tag": "button",
+          "testid": "import-format",
+          "name": "Theme JSON",
+          "indicator": true,
+          "outline": "none 1px rgb(29, 41, 57)",
+          "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0",
+          "onScreen": true,
+          "inDialog": true
+        },
+        {
+          "step": 6,
+          "tag": "button",
+          "testid": "import-file",
+          "name": "Choose file",
+          "indicator": true,
+          "outline": "solid 2px rgb(21, 112, 239)",
+          "shadow": "color(srgb 0.0823529 0.439216 0.937255 / 0.5) 0px 0px 0px 1p",
+          "onScreen": true,
+          "inDialog": true
+        },
+        {
+          "step": 7,
+          "tag": "textarea",
+          "testid": "import-source",
+          "name": "",
+          "indicator": true,
+          "outline": "solid 3px rgb(29, 41, 57)",
+          "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0",
+          "onScreen": true,
+          "inDialog": true
+        },
+        {
+          "step": 8,
+          "tag": "button",
+          "testid": "data-tools-dialog-close",
+          "name": "close",
+          "indicator": true,
+          "outline": "none 1px rgb(0, 95, 204)",
+          "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0",
+          "onScreen": true,
+          "inDialog": true
+        },
+        {
+          "step": 9,
+          "tag": "button",
+          "testid": "import-format",
+          "name": "Theme JSON",
+          "indicator": true,
+          "outline": "none 1px rgb(29, 41, 57)",
+          "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0",
+          "onScreen": true,
+          "inDialog": true
+        },
+        {
+          "step": 10,
+          "tag": "button",
+          "testid": "import-file",
+          "name": "Choose file",
+          "indicator": true,
+          "outline": "solid 2px rgb(21, 112, 239)",
+          "shadow": "color(srgb 0.0823529 0.439216 0.937255 / 0.5) 0px 0px 0px 1p",
+          "onScreen": true,
+          "inDialog": true
+        },
+        {
+          "step": 11,
+          "tag": "textarea",
+          "testid": "import-source",
+          "name": "",
+          "indicator": true,
+          "outline": "solid 3px rgb(29, 41, 57)",
+          "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0",
+          "onScreen": true,
+          "inDialog": true
+        },
+        {
+          "step": 12,
+          "tag": "button",
+          "testid": "data-tools-dialog-close",
+          "name": "close",
+          "indicator": true,
+          "outline": "none 1px rgb(0, 95, 204)",
+          "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0",
+          "onScreen": true,
+          "inDialog": true
+        },
+        {
+          "step": 13,
+          "tag": "button",
+          "testid": "import-format",
+          "name": "Theme JSON",
+          "indicator": true,
+          "outline": "none 1px rgb(29, 41, 57)",
+          "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0",
+          "onScreen": true,
+          "inDialog": true
+        },
+        {
+          "step": 14,
+          "tag": "button",
+          "testid": "import-file",
+          "name": "Choose file",
+          "indicator": true,
+          "outline": "solid 2px rgb(21, 112, 239)",
+          "shadow": "color(srgb 0.0823529 0.439216 0.937255 / 0.5) 0px 0px 0px 1p",
+          "onScreen": true,
+          "inDialog": true
+        },
+        {
+          "step": 15,
+          "tag": "textarea",
+          "testid": "import-source",
+          "name": "",
+          "indicator": true,
+          "outline": "solid 3px rgb(29, 41, 57)",
+          "shadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0",
+          "onScreen": true,
+          "inDialog": true
+        }
+      ],
+      "afterEscape": {
+        "tag": "button",
+        "testid": "theme-import",
+        "name": "Import",
+        "indicator": true,
+        "outline": "solid 2px rgb(21, 112, 239)",
+        "shadow": "color(srgb 0.0823529 0.439216 0.937255 / 0.5) 0px 0px 0px 1p",
+        "onScreen": true,
+        "inDialog": false
+      }
+    },
+    {
+      "label": "studio-brand-select-keyboard",
+      "before": "Custom",
+      "after": "Gold",
+      "focus": {
+        "tag": "button",
+        "testid": "studio-config-accent_color",
+        "name": "Gold",
+        "indicator": true,
+        "outline": "solid 3px rgba(21, 112, 239, 0.4)",
+        "shadow": "none",
+        "onScreen": true,
+        "inDialog": false
+      }
+    },
+    {
+      "label": "catalog-buttons-tab-walk",
+      "walk": [
+        {
+          "tag": "button",
+          "testid": "button-classic-1",
+          "name": "classic 1",
+          "indicator": true,
+          "outline": "solid 2px rgb(141, 164, 239)",
+          "shadow": "rgba(0, 0, 45, 0.09) 0px 0px 0px 1px inset, rgba(0, 0, 51, 0",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 1,
+          "tag": "button",
+          "testid": "button-classic-2",
+          "name": "classic 2",
+          "indicator": true,
+          "outline": "solid 2px rgb(141, 164, 239)",
+          "shadow": "rgba(0, 0, 45, 0.09) 0px 0px 0px 1px inset, rgba(0, 0, 51, 0",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 2,
+          "tag": "button",
+          "testid": "button-classic-3",
+          "name": "classic 3",
+          "indicator": true,
+          "outline": "solid 2px rgb(141, 164, 239)",
+          "shadow": "rgba(0, 0, 45, 0.09) 0px 0px 0px 1px inset, rgba(0, 0, 51, 0",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 3,
+          "tag": "button",
+          "testid": "button-classic-4",
+          "name": "classic 4",
+          "indicator": true,
+          "outline": "solid 2px rgb(141, 164, 239)",
+          "shadow": "rgba(0, 0, 45, 0.09) 0px 0px 0px 1px inset, rgba(0, 0, 51, 0",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 4,
+          "tag": "button",
+          "testid": "button-solid-1",
+          "name": "solid 1",
+          "indicator": true,
+          "outline": "solid 2px rgb(141, 164, 239)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 5,
+          "tag": "button",
+          "testid": "button-solid-2",
+          "name": "solid 2",
+          "indicator": true,
+          "outline": "solid 2px rgb(141, 164, 239)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 6,
+          "tag": "button",
+          "testid": "button-solid-3",
+          "name": "solid 3",
+          "indicator": true,
+          "outline": "solid 2px rgb(141, 164, 239)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 7,
+          "tag": "button",
+          "testid": "button-solid-4",
+          "name": "solid 4",
+          "indicator": true,
+          "outline": "solid 2px rgb(141, 164, 239)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 8,
+          "tag": "button",
+          "testid": "button-soft-1",
+          "name": "soft 1",
+          "indicator": true,
+          "outline": "solid 2px rgb(141, 164, 239)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 9,
+          "tag": "button",
+          "testid": "button-soft-2",
+          "name": "soft 2",
+          "indicator": true,
+          "outline": "solid 2px rgb(141, 164, 239)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 10,
+          "tag": "button",
+          "testid": "button-soft-3",
+          "name": "soft 3",
+          "indicator": true,
+          "outline": "solid 2px rgb(141, 164, 239)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 11,
+          "tag": "button",
+          "testid": "button-soft-4",
+          "name": "soft 4",
+          "indicator": true,
+          "outline": "solid 2px rgb(141, 164, 239)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 12,
+          "tag": "button",
+          "testid": "button-surface-1",
+          "name": "surface 1",
+          "indicator": true,
+          "outline": "solid 2px rgb(141, 164, 239)",
+          "shadow": "rgba(0, 55, 237, 0.33) 0px 0px 0px 1px inset",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 13,
+          "tag": "button",
+          "testid": "button-surface-2",
+          "name": "surface 2",
+          "indicator": true,
+          "outline": "solid 2px rgb(141, 164, 239)",
+          "shadow": "rgba(0, 55, 237, 0.33) 0px 0px 0px 1px inset",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 14,
+          "tag": "button",
+          "testid": "button-surface-3",
+          "name": "surface 3",
+          "indicator": true,
+          "outline": "solid 2px rgb(141, 164, 239)",
+          "shadow": "rgba(0, 55, 237, 0.33) 0px 0px 0px 1px inset",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 15,
+          "tag": "button",
+          "testid": "button-surface-4",
+          "name": "surface 4",
+          "indicator": true,
+          "outline": "solid 2px rgb(141, 164, 239)",
+          "shadow": "rgba(0, 55, 237, 0.33) 0px 0px 0px 1px inset",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 16,
+          "tag": "button",
+          "testid": "button-outline-1",
+          "name": "outline 1",
+          "indicator": true,
+          "outline": "solid 2px rgb(141, 164, 239)",
+          "shadow": "rgba(0, 52, 220, 0.447) 0px 0px 0px 1px inset",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 17,
+          "tag": "button",
+          "testid": "button-outline-2",
+          "name": "outline 2",
+          "indicator": true,
+          "outline": "solid 2px rgb(141, 164, 239)",
+          "shadow": "rgba(0, 52, 220, 0.447) 0px 0px 0px 1px inset",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 18,
+          "tag": "button",
+          "testid": "button-outline-3",
+          "name": "outline 3",
+          "indicator": true,
+          "outline": "solid 2px rgb(141, 164, 239)",
+          "shadow": "rgba(0, 52, 220, 0.447) 0px 0px 0px 1px inset",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 19,
+          "tag": "button",
+          "testid": "button-outline-4",
+          "name": "outline 4",
+          "indicator": true,
+          "outline": "solid 2px rgb(141, 164, 239)",
+          "shadow": "rgba(0, 52, 220, 0.447) 0px 0px 0px 1px inset",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 20,
+          "tag": "button",
+          "testid": "button-ghost-offset-1",
+          "name": "ghost-offset 1",
+          "indicator": true,
+          "outline": "solid 2px rgb(141, 164, 239)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 21,
+          "tag": "button",
+          "testid": "button-ghost-offset-2",
+          "name": "ghost-offset 2",
+          "indicator": true,
+          "outline": "solid 2px rgb(141, 164, 239)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 22,
+          "tag": "button",
+          "testid": "button-ghost-offset-3",
+          "name": "ghost-offset 3",
+          "indicator": true,
+          "outline": "solid 2px rgb(141, 164, 239)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 23,
+          "tag": "button",
+          "testid": "button-ghost-offset-4",
+          "name": "ghost-offset 4",
+          "indicator": true,
+          "outline": "solid 2px rgb(141, 164, 239)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 24,
+          "tag": "button",
+          "testid": "button-ghost-1",
+          "name": "ghost 1",
+          "indicator": true,
+          "outline": "solid 2px rgb(141, 164, 239)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 25,
+          "tag": "button",
+          "testid": "button-ghost-2",
+          "name": "ghost 2",
+          "indicator": true,
+          "outline": "solid 2px rgb(141, 164, 239)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 26,
+          "tag": "button",
+          "testid": "button-ghost-3",
+          "name": "ghost 3",
+          "indicator": true,
+          "outline": "solid 2px rgb(141, 164, 239)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 27,
+          "tag": "button",
+          "testid": "button-ghost-4",
+          "name": "ghost 4",
+          "indicator": true,
+          "outline": "solid 2px rgb(141, 164, 239)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 28,
+          "tag": "button",
+          "testid": "button-default",
+          "name": "Default action",
+          "indicator": true,
+          "outline": "solid 2px rgb(141, 164, 239)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 29,
+          "tag": "button",
+          "testid": "button-semantic-accent",
+          "name": "Semantic accent",
+          "indicator": true,
+          "outline": "solid 2px rgb(141, 164, 239)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 30,
+          "tag": "button",
+          "testid": "button-semantic-destructive",
+          "name": "Semantic destructive",
+          "indicator": true,
+          "outline": "solid 2px rgb(141, 164, 239)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 31,
+          "tag": "button",
+          "testid": "button-color-gray",
+          "name": "gray",
+          "indicator": true,
+          "outline": "solid 2px rgb(141, 164, 239)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 32,
+          "tag": "button",
+          "testid": "button-color-gold",
+          "name": "gold",
+          "indicator": true,
+          "outline": "solid 2px rgb(185, 168, 141)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 33,
+          "tag": "button",
+          "testid": "button-color-bronze",
+          "name": "bronze",
+          "indicator": true,
+          "outline": "solid 2px rgb(194, 164, 153)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 34,
+          "tag": "button",
+          "testid": "button-color-brown",
+          "name": "brown",
+          "indicator": true,
+          "outline": "solid 2px rgb(206, 163, 126)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 35,
+          "tag": "button",
+          "testid": "button-color-yellow",
+          "name": "yellow",
+          "indicator": true,
+          "outline": "solid 2px rgb(213, 174, 57)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 36,
+          "tag": "button",
+          "testid": "button-color-amber",
+          "name": "amber",
+          "indicator": true,
+          "outline": "solid 2px rgb(226, 163, 54)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 37,
+          "tag": "button",
+          "testid": "button-color-orange",
+          "name": "orange",
+          "indicator": true,
+          "outline": "solid 2px rgb(236, 148, 85)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 38,
+          "tag": "button",
+          "testid": "button-color-tomato",
+          "name": "tomato",
+          "indicator": true,
+          "outline": "solid 2px rgb(236, 142, 123)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 39,
+          "tag": "button",
+          "testid": "button-color-red",
+          "name": "red",
+          "indicator": true,
+          "outline": "solid 2px rgb(235, 142, 144)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 40,
+          "tag": "button",
+          "testid": "button-color-ruby",
+          "name": "ruby",
+          "indicator": true,
+          "outline": "solid 2px rgb(229, 146, 163)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 41,
+          "tag": "button",
+          "testid": "button-color-crimson",
+          "name": "crimson",
+          "indicator": true,
+          "outline": "solid 2px rgb(224, 147, 178)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 42,
+          "tag": "button",
+          "testid": "button-color-pink",
+          "name": "pink",
+          "indicator": true,
+          "outline": "solid 2px rgb(221, 147, 194)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 43,
+          "tag": "button",
+          "testid": "button-color-plum",
+          "name": "plum",
+          "indicator": true,
+          "outline": "solid 2px rgb(207, 145, 216)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 44,
+          "tag": "button",
+          "testid": "button-color-purple",
+          "name": "purple",
+          "indicator": true,
+          "outline": "solid 2px rgb(190, 147, 228)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 45,
+          "tag": "button",
+          "testid": "button-color-violet",
+          "name": "violet",
+          "indicator": true,
+          "outline": "solid 2px rgb(170, 153, 236)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 46,
+          "tag": "button",
+          "testid": "button-color-iris",
+          "name": "iris",
+          "indicator": true,
+          "outline": "solid 2px rgb(155, 158, 240)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 47,
+          "tag": "button",
+          "testid": "button-color-indigo",
+          "name": "indigo",
+          "indicator": true,
+          "outline": "solid 2px rgb(141, 164, 239)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 48,
+          "tag": "button",
+          "testid": "button-color-blue",
+          "name": "blue",
+          "indicator": true,
+          "outline": "solid 2px rgb(94, 177, 239)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 49,
+          "tag": "button",
+          "testid": "button-color-cyan",
+          "name": "cyan",
+          "indicator": true,
+          "outline": "solid 2px rgb(61, 185, 207)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 50,
+          "tag": "button",
+          "testid": "button-color-teal",
+          "name": "teal",
+          "indicator": true,
+          "outline": "solid 2px rgb(83, 185, 171)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 51,
+          "tag": "button",
+          "testid": "button-color-jade",
+          "name": "jade",
+          "indicator": true,
+          "outline": "solid 2px rgb(86, 186, 159)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 52,
+          "tag": "button",
+          "testid": "button-color-green",
+          "name": "green",
+          "indicator": true,
+          "outline": "solid 2px rgb(91, 185, 139)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 53,
+          "tag": "button",
+          "testid": "button-color-grass",
+          "name": "grass",
+          "indicator": true,
+          "outline": "solid 2px rgb(101, 186, 116)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 54,
+          "tag": "button",
+          "testid": "button-color-lime",
+          "name": "lime",
+          "indicator": true,
+          "outline": "solid 2px rgb(141, 182, 84)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 55,
+          "tag": "button",
+          "testid": "button-color-mint",
+          "name": "mint",
+          "indicator": true,
+          "outline": "solid 2px rgb(76, 187, 165)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 56,
+          "tag": "button",
+          "testid": "button-color-sky",
+          "name": "sky",
+          "indicator": true,
+          "outline": "solid 2px rgb(96, 179, 215)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 57,
+          "tag": "button",
+          "testid": "button-high-contrast",
+          "name": "High contrast",
+          "indicator": true,
+          "outline": "solid 2px rgb(94, 177, 239)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 58,
+          "tag": "button",
+          "testid": "button-radius-none",
+          "name": "none",
+          "indicator": true,
+          "outline": "solid 2px rgb(141, 164, 239)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 59,
+          "tag": "button",
+          "testid": "button-radius-small",
+          "name": "small",
+          "indicator": true,
+          "outline": "solid 2px rgb(141, 164, 239)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        },
+        {
+          "step": 60,
+          "tag": "button",
+          "testid": "button-radius-medium",
+          "name": "medium",
+          "indicator": true,
+          "outline": "solid 2px rgb(141, 164, 239)",
+          "shadow": "none",
+          "onScreen": true,
+          "inDialog": false
+        }
+      ]
+    }
+  ],
+  "console": [
+    {
+      "label": "studio-1440",
+      "errors": []
+    },
+    {
+      "label": "studio-768",
+      "errors": []
+    },
+    {
+      "label": "studio-390-edit",
+      "errors": []
+    },
+    {
+      "label": "studio-720-root200",
+      "errors": []
+    },
+    {
+      "label": "studio-keyboard",
+      "errors": []
+    },
+    {
+      "label": "catalog-1280",
+      "errors": []
+    },
+    {
+      "label": "catalog-390",
+      "errors": []
+    }
+  ],
+  "chromium": "153.0.8010.12"
+}

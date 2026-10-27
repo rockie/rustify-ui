@@ -17,6 +17,12 @@
         "value": "sfmono-regular",
         "createdAt": "2026-10-10T12:39:45.380Z",
         "reason": "DESIGN.docs-ssg.md (documenter, from the shipped docs theme) sets the system mono stack for rustify-docs pages; DESIGN.md governs the SDK and Theme Studio"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "plex sans",
+        "createdAt": "2026-10-27T07:34:30.163Z",
+        "reason": "DESIGN.md Typography and shell-body explicitly declare IBM Plex Sans; detector matches a partial family name."
       }
     ]
   }

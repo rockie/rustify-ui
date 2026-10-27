@@ -1,0 +1,36 @@
+
+Running 1 test using 1 worker
+
+(node:60936) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 [theme-studio] › tests/browser/theme-performance.spec.ts:11:6 › theme update measurements › page timestamps measure DOM commits, GPU acknowledgements, frame merging and idle @evidence (9.8s)
+
+
+  1) [theme-studio] › tests/browser/theme-performance.spec.ts:11:6 › theme update measurements › page timestamps measure DOM commits, GPU acknowledgements, frame merging and idle @evidence
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 539
+    Received: 540
+
+      43 |    return {start,after,rows,regions,beforeNoop,afterNoop};
+      44 |   });
+    > 45 |   expect(measurements.afterNoop.sdk_resolve_count).toBe(measurements.beforeNoop.sdk_resolve_count);
+         |                                                    ^
+      46 |   expect(measurements.afterNoop.publish_count).toBe(measurements.beforeNoop.publish_count);
+      47 |   expect(measurements.afterNoop.history).toEqual(measurements.beforeNoop.history);
+      48 |   await page.getByTestId('editor-controls').click();await page.getByTestId('hsl-hue-slider').scrollIntoViewIfNeeded();
+        at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser/theme-performance.spec.ts:45:52
+
+    Error Context: test-results/theme-performance-theme-up-f2412-ents-frame-merging-and-idle-theme-studio/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/theme-performance-theme-up-f2412-ents-frame-merging-and-idle-theme-studio/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/theme-performance-theme-up-f2412-ents-frame-merging-and-idle-theme-studio/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [theme-studio] › tests/browser/theme-performance.spec.ts:11:6 › theme update measurements › page timestamps measure DOM commits, GPU acknowledgements, frame merging and idle @evidence

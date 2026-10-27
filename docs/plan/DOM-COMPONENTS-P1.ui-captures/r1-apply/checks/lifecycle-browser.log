@@ -1,0 +1,19 @@
+
+Running 11 tests using 1 worker
+
+(node:41111) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1/11] [theme-studio] › tests/browser/theme-ui-review.spec.ts:3:5 › picking an unannotated control explains the missing mapping without activating it
+[2/11] [theme-studio] › tests/browser/theme-ui-review.spec.ts:18:5 › picking a declared action follows its own bounds and exposes its editor source
+[3/11] [theme-studio] › tests/browser/theme-ui-review.spec.ts:35:5 › a local opposite appearance and its dialog preserve the root theme
+[4/11] [theme-studio] › tests/browser/theme-ui-review.spec.ts:60:5 › invalid numeric text stays visible while the valid theme remains unchanged
+[5/11] [theme-studio] › tests/browser/theme-ui-review.spec.ts:77:9 › editor disposal › queued editor layout work ends with its owner
+[6/11] [theme-studio] › tests/browser/theme-v2-storage.spec.ts:536:5 › owner disposal aborts a real pending lock request and cannot write or call destroyed signals after grant
+[7/11] [theme-studio] › tests/browser/theme-v2-storage.spec.ts:551:5 › the host fatal boundary aborts a real pending write and restart restores only the confirmed draft
+[8/11] [theme-studio] › tests/browser/theme-v2-storage.spec.ts:587:7 › owner disposal ignores late parameter blur while a real storage lock is pending
+[9/11] [theme-studio] › tests/browser/theme-v2-storage.spec.ts:587:7 › owner disposal ignores late hsl blur while a real storage lock is pending
+[10/11] [theme-studio] › tests/browser/theme-v2-storage.spec.ts:662:5 › a failed clear reports a retained removal instead of success, and cancellation restores the previous write gate
+[11/11] [theme-studio] › tests/browser/theme-v2-storage.spec.ts:687:5 › the native guard also prevents writes when disposal occurs just after a real lock is granted
+  11 passed (1.3m)

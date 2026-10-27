@@ -110,7 +110,8 @@ test("all button variants and sizes render with scoped focus, hover and icon sem
     await page.keyboard.press("Shift+Tab");
     await expect(action).toBeFocused();
     await expect(action).toHaveCSS("outline-style", "solid");
-    await expect(action).toHaveCSS("outline-width", "3px");
+    await expect(action).toHaveCSS("outline-width", "2px");
+    await expect(action).toHaveCSS("outline-offset", "2px");
     const beforeHover = await colors(action);
     await action.hover();
     await expect.poll(() => colors(action)).not.toEqual(beforeHover);
@@ -124,7 +125,7 @@ test("all button variants and sizes render with scoped focus, hover and icon sem
     await expect(disclosure).toHaveAttribute("aria-expanded", "true");
     await expect(buttons.locator("#button-details")).toBeVisible();
     await page.mouse.move(0, 0);
-    const screenshot = "docs/validation/dom-components-p1/buttons-desktop.png";
+    const screenshot = process.env.RUSTIFY_UI_EVIDENCE_OUT ? `${process.env.RUSTIFY_UI_EVIDENCE_OUT}/buttons-desktop.png` : "docs/validation/dom-components-p1/buttons-desktop.png";
     await buttons.screenshot({ path: screenshot, animations: "disabled" });
     await info.attach("DOM buttons desktop", { path: screenshot, contentType: "image/png" });
 });
@@ -184,7 +185,7 @@ test("button size changes only at the six Themes viewport breakpoints", async ({
     }
     await page.setViewportSize({ width: 390, height: 900 });
     await expect(action).toHaveCSS("height", "24px");
-    const screenshot = "docs/validation/dom-components-p1/buttons-mobile.png";
+    const screenshot = process.env.RUSTIFY_UI_EVIDENCE_OUT ? `${process.env.RUSTIFY_UI_EVIDENCE_OUT}/buttons-mobile.png` : "docs/validation/dom-components-p1/buttons-mobile.png";
     await buttons.screenshot({ path: screenshot, animations: "disabled" });
     await info.attach("DOM buttons mobile", { path: screenshot, contentType: "image/png" });
 });
@@ -267,7 +268,7 @@ test("ThemePanel requests stay controlled, preserve overrides and reset only the
     const radiusStatus = panel.locator('[data-theme-config="radius"] [data-name="ThemeOverrideCount"]');
     await expect(panel.getByRole("combobox")).toHaveCount(6);
     await expect(brand).toHaveAccessibleName("Brand color");
-    await expect(brand).toHaveText("indigo");
+    await expect(brand).toHaveText("Indigo");
     await expect(panel).toContainText("Overrides remain in place when configuration changes.");
     await buttons.getByTestId("button-panel-seed").click();
     await expect(brandStatus).toHaveText("Overridden · Light 2 · Dark 1");
@@ -280,16 +281,16 @@ test("ThemePanel requests stay controlled, preserve overrides and reset only the
     await buttons.getByTestId("button-panel-toggle-accept").click();
     await expect(counts).toHaveAttribute("data-panel-accepting", "false");
     await brand.click();
-    await page.getByTestId("button-theme-panel-accent_color-list").getByRole("option", { name: "tomato", exact: true }).click();
+    await page.getByTestId("button-theme-panel-accent_color-list").getByRole("option", { name: "Tomato", exact: true }).click();
     await expect(counts).toHaveAttribute("data-panel-request", "1");
     await expect(counts).toHaveAttribute("data-panel-patch-fields", "1");
     await expect(counts).toHaveAttribute("data-panel-last-patch", "accent_color");
-    await expect(brand).toHaveText("indigo");
+    await expect(brand).toHaveText("Indigo");
 
     await buttons.getByTestId("button-panel-toggle-accept").click();
     await brand.click();
-    await page.getByTestId("button-theme-panel-accent_color-list").getByRole("option", { name: "tomato", exact: true }).click();
-    await expect(brand).toHaveText("tomato");
+    await page.getByTestId("button-theme-panel-accent_color-list").getByRole("option", { name: "Tomato", exact: true }).click();
+    await expect(brand).toHaveText("Tomato");
     await expect(counts).toHaveAttribute("data-panel-request", "2");
     await expect(counts).toHaveAttribute("data-panel-patch-fields", "1");
     await expect(brandStatus).toHaveText("Overridden · Light 2 · Dark 1");
@@ -302,7 +303,7 @@ test("ThemePanel requests stay controlled, preserve overrides and reset only the
     await gray.click();
     await page.getByTestId("button-theme-panel-gray_color-list").getByRole("option", { name: "Custom", exact: true }).click();
     await expect(gray).toHaveText("Custom");
-    await expect(brand).toHaveText("tomato");
+    await expect(brand).toHaveText("Tomato");
     await expect(counts).toHaveAttribute("data-panel-request", "3");
     await expect(counts).toHaveAttribute("data-panel-patch-fields", "1");
     await expect(counts).toHaveAttribute("data-panel-last-patch", "gray_color");

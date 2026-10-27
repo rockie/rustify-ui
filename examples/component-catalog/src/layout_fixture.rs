@@ -6,7 +6,7 @@ use rustify_components::layout::*;
 use rustify_components::typography::*;
 use rustify_components::{Button, GeometryStyles, Link, LinkUnderline, Responsive};
 use rustify_ui::{
-    mount, AppHandle, MountConfig, ThemeDocument, ThemeMode, ThemeScaling, ThemeScope,
+    mount, AccentColor, AppHandle, MountConfig, ThemeDocument, ThemeMode, ThemeScaling, ThemeScope,
 };
 use std::{cell::RefCell, sync::Arc};
 
@@ -20,6 +20,110 @@ fn css(value: &str) -> Responsive<String> {
 
 fn space(value: i8) -> Responsive<Spacing> {
     Spacing::Scale(value).into()
+}
+
+const TEXT_SIZES: [TextSize; 9] = [
+    TextSize::One,
+    TextSize::Two,
+    TextSize::Three,
+    TextSize::Four,
+    TextSize::Five,
+    TextSize::Six,
+    TextSize::Seven,
+    TextSize::Eight,
+    TextSize::Nine,
+];
+
+#[component]
+fn TypographyMatrix() -> impl IntoView {
+    view! {
+        <section class="fixture-section" data-testid="type-heading-matrix">
+            <Heading as_=HeadingLevel::H2>"Heading"</Heading>
+            {TEXT_SIZES.into_iter().enumerate().rev().map(|(index, size)| view! {
+                <div class="fixture-type-row">
+                    <span class="fixture-prop">{format!("size={}", index + 1)}</span>
+                    <Heading as_=HeadingLevel::H3 size=Responsive::from(size)>{if index == 8 { "The quick brown fox jumped" } else { "The quick brown fox jumped over the lazy dog" }}</Heading>
+                </div>
+            }).collect_view()}
+            <div class="fixture-heading-wrap">
+                {TEXT_SIZES.into_iter().enumerate().rev().map(|(index, size)| view! {
+                    <div class="fixture-type-row">
+                        <span class="fixture-prop">{format!("size={} · wrap", index + 1)}</span>
+                        <Heading as_=HeadingLevel::H3 size=Responsive::from(size)>"Principles of the Typographic Craft"</Heading>
+                    </div>
+                }).collect_view()}
+            </div>
+        </section>
+        <section class="fixture-section" data-testid="type-text-matrix">
+            <Heading as_=HeadingLevel::H2>"Text"</Heading>
+            {TEXT_SIZES.into_iter().enumerate().rev().map(|(index, size)| view! {
+                <div class="fixture-type-row"><span class="fixture-prop">{format!("size={}", index + 1)}</span>
+                    <Text as_=TextElement::P size=Responsive::from(size)>"The quick brown fox jumped over the lazy dog"</Text>
+                </div>
+            }).collect_view()}
+            {[("light", TextWeight::Light), ("regular", TextWeight::Regular), ("medium", TextWeight::Medium), ("bold", TextWeight::Bold)].into_iter().map(|(name, weight)| view! {
+                <div class="fixture-type-row"><span class="fixture-prop">{format!("weight={name}")}</span>
+                    <Text weight=Responsive::from(weight)>"Type weight gives a sentence its emphasis."</Text>
+                </div>
+            }).collect_view()}
+        </section>
+        <section class="fixture-section" data-testid="type-code-matrix">
+            <Heading as_=HeadingLevel::H2>"Code"</Heading>
+            <div class="fixture-code-head fixture-prop"><span>"variant"</span><span>"color"</span><span>"high_contrast"</span><span>"gray"</span><span>"gray + high_contrast"</span></div>
+            {[("solid", CodeVariant::Solid), ("soft", CodeVariant::Soft), ("outline", CodeVariant::Outline), ("ghost", CodeVariant::Ghost)].into_iter().map(|(name, variant)| view! {
+                <div class="fixture-code-row"><span class="fixture-prop">{name}</span><div class="fixture-code-cells">
+                    <div><span class="fixture-prop fixture-code-cell-label">"color=indigo"</span><Code variant=variant color=AccentColor::Indigo>"console.log()"</Code></div>
+                    <div><span class="fixture-prop fixture-code-cell-label">"indigo · high_contrast"</span><Code variant=variant color=AccentColor::Indigo high_contrast=true>"console.log()"</Code></div>
+                    <div><span class="fixture-prop fixture-code-cell-label">"color=gray"</span><Code variant=variant color=AccentColor::Gray>"console.log()"</Code></div>
+                    <div><span class="fixture-prop fixture-code-cell-label">"gray · high_contrast"</span><Code variant=variant color=AccentColor::Gray high_contrast=true>"console.log()"</Code></div>
+                </div></div>
+            }).collect_view()}
+            <p>"Inline "<Code>"code"</Code>" sits alongside "<Strong>"strong importance"</Strong>
+                ", "<Em>"emphasis"</Em>" and "<Quote>"a native quotation"</Quote>". Press "<Kbd>"Enter"</Kbd>" to continue."</p>
+            {TEXT_SIZES.into_iter().enumerate().rev().map(|(index, size)| view! {
+                <div class="fixture-type-row"><span class="fixture-prop">{format!("ghost · size={}", index + 1)}</span>
+                    <Code variant=CodeVariant::Ghost size=Responsive::from(size)>"The quick brown fox jumped"</Code>
+                </div>
+            }).collect_view()}
+        </section>
+        <section class="fixture-section" data-testid="type-kbd-matrix">
+            <Heading as_=HeadingLevel::H2>"Kbd"</Heading>
+            <p><Kbd>"Enter"</Kbd>" "<Kbd>"Tab"</Kbd>" "<Kbd>"Shift + Tab"</Kbd></p>
+            <div class="fixture-kbd-row fixture-prop"><span>"size"</span><span>"classic (default)"</span><span>"soft"</span></div>
+            {TEXT_SIZES.into_iter().enumerate().rev().map(|(index, size)| view! {
+                <div class="fixture-kbd-row"><span class="fixture-prop">{format!("size={}", index + 1)}</span>
+                    <span><Kbd size=Responsive::from(size)>"/"</Kbd>" "<Kbd size=Responsive::from(size)>"X"</Kbd></span>
+                    <span><Kbd variant=KbdVariant::Soft size=Responsive::from(size)>"/"</Kbd>" "<Kbd variant=KbdVariant::Soft size=Responsive::from(size)>"X"</Kbd></span>
+                </div>
+            }).collect_view()}
+        </section>
+        <section class="fixture-section" data-testid="type-blockquote-matrix">
+            <Heading as_=HeadingLevel::H2>"Blockquote"</Heading>
+            {[("size=2", TextSize::Two), ("size=4", TextSize::Four), ("size=7", TextSize::Seven)].into_iter().map(|(name, size)| view! {
+                <div class="fixture-type-row"><span class="fixture-prop">{name}</span>
+                    <Blockquote size=Responsive::from(size)>"The native quotation remains a block quotation."</Blockquote>
+                </div>
+            }).collect_view()}
+        </section>
+        <section class="fixture-section" data-testid="type-wrap-matrix">
+            <Heading as_=HeadingLevel::H2>"Wrap and trim"</Heading>
+            <div class="fixture-wrap-grid">
+                {[("default", None, false), ("wrap", Some(TextWrap::Wrap), false), ("nowrap", Some(TextWrap::Nowrap), false), ("balance", Some(TextWrap::Balance), false), ("pretty", Some(TextWrap::Pretty), false), ("truncate", None, true)].into_iter().map(|(name, wrap, truncate)| view! {
+                    <div class="fixture-wrap-sample" tabindex=(name == "nowrap").then_some("0")
+                        role=(name == "nowrap").then_some("region") aria-label=(name == "nowrap").then_some("No-wrap text sample; scroll horizontally")><p class="fixture-prop">{format!("wrap={name}")}</p>
+                        <Text as_=TextElement::P wrap=Responsive { initial: wrap, ..Responsive::default() } truncate=truncate>"A thoughtful layout leaves room for words, meaning and a reader's changing viewport."</Text>
+                    </div>
+                }).collect_view()}
+            </div>
+            <div class="fixture-wrap-grid">
+                {[("normal", TextTrim::Normal), ("start", TextTrim::Start), ("end", TextTrim::End), ("both", TextTrim::Both)].into_iter().map(|(name, trim)| view! {
+                    <div class="fixture-trim-sample"><p class="fixture-prop">{format!("trim={name}")}</p>
+                        <Text as_=TextElement::P size=Responsive::from(TextSize::Six) trim=Responsive::from(trim)>"Leading space\nsets the rhythm."</Text>
+                    </div>
+                }).collect_view()}
+            </div>
+        </section>
+    }
 }
 
 #[component]
@@ -42,8 +146,8 @@ fn TypographySamples() -> impl IntoView {
                 wrap=Responsive { initial: Some(TextWrap::Wrap), xl: Some(TextWrap::Nowrap), ..Responsive::default() }
             >"Text follows the same six breakpoints."</Text>
             <Blockquote size=Responsive::from(TextSize::Four) weight=Responsive::from(TextWeight::Medium) wrap=Responsive::from(TextWrap::Balance) test_id="type-blockquote">"The native quotation remains a block quotation."</Blockquote>
-            <p><Code variant=CodeVariant::Outline size=Responsive::from(TextSize::Three) test_id="type-code">"let layout = Responsive::from(value);"</Code></p>
-            <p><Kbd variant=KbdVariant::Soft size=Responsive::from(TextSize::Two) test_id="type-kbd">"Ctrl + K"</Kbd></p>
+            <p><span class="fixture-prop">"Code · variant=soft (default) · size=3 "</span><Code size=Responsive::from(TextSize::Three) test_id="type-code">"let layout = Responsive::from(value);"</Code></p>
+            <p><span class="fixture-prop">"Kbd · variant=classic (default) · size=2 "</span><Kbd size=Responsive::from(TextSize::Two) test_id="type-kbd">"Ctrl + K"</Kbd></p>
             <p><Em test_id="type-em">"Emphasis"</Em>" · "<Quote test_id="type-quote">"Native quotation marks"</Quote>" · "<Strong test_id="type-strong">"Strong importance"</Strong></p>
             <Text as_=TextElement::Div size=Responsive::from(TextSize::Nine) class="text-sm" test_id="type-class-override">"A caller utility controls this size."</Text>
             <Text as_=TextElement::Div class="w-40" truncate=true test_id="type-truncate">"This long sentence is truncated deliberately without changing its accessible text."</Text>
@@ -52,12 +156,17 @@ fn TypographySamples() -> impl IntoView {
             <Link href="#layout-target" class="block w-40" truncate=true test_id="type-long-link">"https://example.test/a/long/path/whose/native/link/name/is/preserved"</Link>
             <Link href="#layout-target" disabled=true test_id="type-disabled-link">"Unavailable destination"</Link>
             <div id="layout-target" data-testid="layout-link-target">"Native link destination"</div>
+            <TypographyMatrix/>
         </div>
     }
 }
 
 #[component]
-fn LayoutSamples(invalid: RwSignal<bool>, clicks: RwSignal<u32>) -> impl IntoView {
+fn LayoutSamples(
+    invalid: RwSignal<bool>,
+    clicks: RwSignal<u32>,
+    styles: GeometryStyles,
+) -> impl IntoView {
     let shared = Layout {
         padding: Padding {
             p: space(4),
@@ -98,7 +207,7 @@ fn LayoutSamples(invalid: RwSignal<bool>, clicks: RwSignal<u32>) -> impl IntoVie
             .attr("type", "button")
             .attr("aria-label", "Native reset action")
             .attr("data-testid", "layout-reset")
-            .class("p-2 text-primary")
+            .class("fixture-reset-outline")
             .on(leptos::ev::click, move |_| {
                 clicks.update(|value| *value += 1)
             })
@@ -133,20 +242,21 @@ fn LayoutSamples(invalid: RwSignal<bool>, clicks: RwSignal<u32>) -> impl IntoVie
             </Grid>
             <Container test_id="layout-container" size=Responsive { initial: Some(ContainerSize::One), sm: Some(ContainerSize::Two), md: Some(ContainerSize::Three), lg: Some(ContainerSize::Four), ..Responsive::default() }
                 align=Responsive { initial: Some(ContainerAlign::Left), md: Some(ContainerAlign::Right), ..Responsive::default() }>
-                <div class="bg-muted p-2">"The inner content has a responsive maximum width."</div>
+                <div class="bg-muted p-2">"Responsive size=1/2/3/4 · align=left/right. Maximum width stays in CSS pixels."</div>
             </Container>
             <Container test_id="layout-container-projection" layout=Layout { width: css("240px"), min_width: css("120px"), max_width: css("280px"), height: css("72px"), min_height: css("40px"), max_height: css("90px"), ..Layout::default() }>
-                "Dimensions describe this content layer."
+                <div class="fixture-projection">"width=240px · height=72px · content layer"</div>
             </Container>
             <Section test_id="layout-section" size=Responsive { initial: Some(SectionSize::One), xs: Some(SectionSize::Two), md: Some(SectionSize::Three), xl: Some(SectionSize::Four), ..Responsive::default() } class="bg-muted">"Semantic section spacing"</Section>
+            <p class="fixture-prop">"Outer padding=32px; dashed nearest container padding=8px; nested Inset consumes it once."</p>
             <Box test_id="layout-inset-outer" layout=Layout { width: css("300px"), padding: Padding { p: space(6), ..Padding::default() }, ..Layout::default() } class="bg-muted">
-                <Box test_id="layout-inset-nearest" layout=Layout { padding: Padding { p: space(2), ..Padding::default() }, ..Layout::default() } class="bg-card">
+                <Box test_id="layout-inset-nearest" layout=Layout { padding: Padding { p: space(2), ..Padding::default() }, ..Layout::default() } class="bg-card fixture-inset-nearest">
                     <Inset test_id="layout-inset" padding=InsetPadding { p: InsetPaddingValue::Current.into(), px: InsetPaddingValue::Zero.into(), ..InsetPadding::default() }>
                         <div><Inset test_id="layout-inset-nested">"Nearest padding is consumed once."</Inset></div>
                     </Inset>
                 </Box>
             </Box>
-            <div data-testid="layout-inset-sides">
+            <div class="fixture-inset-sides" data-testid="layout-inset-sides">
                 {[
                     ("all", Responsive::from(InsetSide::All)),
                     ("x", Responsive::from(InsetSide::X)),
@@ -161,26 +271,73 @@ fn LayoutSamples(invalid: RwSignal<bool>, clicks: RwSignal<u32>) -> impl IntoVie
                         ..Responsive::default()
                     }),
                 ].into_iter().map(|(label, side)| view! {
-                    <Box layout=Layout { padding: Padding { p: space(4), ..Padding::default() }, ..Layout::default() }>
+                    <div><p class="fixture-prop">{format!("side={label} · padding=16px · margin=3px")}</p>
+                    <Box class="fixture-inset-side" layout=Layout { padding: Padding { p: space(4), ..Padding::default() }, ..Layout::default() }>
                         <Inset test_id=format!("layout-inset-{label}") side=side
                             margin=Margin { m: Spacing::Css("3px".into()).into(), ..Margin::default() }>
-                            {label}
+                            <div class="fixture-inset-fill">{label}</div>
                         </Inset>
-                    </Box>
+                    </Box></div>
                 }).collect_view()}
             </div>
             <Box test_id="layout-scaled-space" layout=Layout { padding: Padding { p: space(4), ..Padding::default() }, ..Layout::default() }>"Theme space scales once."</Box>
             <Box test_id="layout-absolute" layout=Layout { width: css("37px"), height: css("19px"), padding: Padding { p: Spacing::Css("3px".into()).into(), ..Padding::default() }, ..Layout::default() }>"px"</Box>
             <Box test_id="layout-invalid-prop" layout=Signal::derive(move || Layout { width: css(if invalid.get() { "12px;display:none" } else { "37px" }), ..Layout::default() })>"A bad prop keeps this view alive."</Box>
-            <div>{reset_button}<output data-testid="layout-reset-count">{move || clicks.get()}</output></div>
+            <p role="status" data-testid="layout-prop-diagnostics" class="fixture-prop-diagnostic">{move || {
+                invalid.track();
+                styles.diagnostics().into_iter().map(|error| format!("Box · {error}. Component defaults remain active.")).collect::<Vec<_>>().join(" ")
+            }}</p>
+            <section class="fixture-section" data-testid="layout-reset-comparison">
+                <Heading as_=HeadingLevel::H2>"Reset"</Heading>
+                <p class="fixture-prop">"Only the dashed native element receives Reset; siblings keep their browser defaults. No wrapper is added."</p>
+                <div class="fixture-reset-row"><span class="fixture-prop">"button · native"</span><button type="button">"Native action"</button></div>
+                <div class="fixture-reset-row"><span class="fixture-prop">"button · Reset"</span>{reset_button}<output data-testid="layout-reset-count">{move || clicks.get()}</output></div>
+                <div class="fixture-reset-row"><span class="fixture-prop">"h2 · native"</span><h2>"Native heading"</h2></div>
+                <div class="fixture-reset-row"><span class="fixture-prop">"h2 · Reset"</span>{Reset(leptos::html::h2().class("fixture-reset-outline").child("Reset heading"))}</div>
+                <div class="fixture-reset-row"><span class="fixture-prop">"ul · native"</span><ul><li>"Native list item"</li></ul></div>
+                <div class="fixture-reset-row"><span class="fixture-prop">"ul · Reset"</span>{Reset(leptos::html::ul().class("fixture-reset-outline").child(leptos::html::li().child("Reset list item")))}</div>
+            </section>
+            <LayoutDemonstrations/>
         </div>
+    }
+}
+
+#[component]
+fn LayoutDemonstrations() -> impl IntoView {
+    view! {
+        <section class="fixture-section" data-testid="layout-container-matrix">
+            <Heading as_=HeadingLevel::H2>"Container"</Heading>
+            {[(1, ContainerSize::One, 448), (2, ContainerSize::Two, 688), (3, ContainerSize::Three, 880), (4, ContainerSize::Four, 1136)].into_iter().map(|(index, size, width)| view! {
+                <div class="fixture-container-parent">
+                    <p class="fixture-prop">{format!("size={index} · align=center · max-width={width}px")}</p>
+                    <Container size=Responsive::from(size) class="fixture-container-demo"><div>"A centered content layer inside a full-width alignment layer."</div></Container>
+                </div>
+            }).collect_view()}
+            {[("left", ContainerAlign::Left), ("center", ContainerAlign::Center), ("right", ContainerAlign::Right)].into_iter().map(|(name, align)| view! {
+                <div class="fixture-container-parent"><p class="fixture-prop">{format!("size=1 · align={name}")}</p>
+                    <Container size=Responsive::from(ContainerSize::One) align=Responsive::from(align) class="fixture-container-demo"><div>{name}</div></Container>
+                </div>
+            }).collect_view()}
+        </section>
+        <section class="fixture-section" data-testid="layout-inset-demonstration">
+            <Heading as_=HeadingLevel::H2>"Inset"</Heading>
+            <div class="fixture-inset-demo-grid">
+                {[("top", InsetSide::Top), ("bottom", InsetSide::Bottom)].into_iter().map(|(name, side)| view! {
+                    <Box class="fixture-inset-card" layout=Layout { padding: Padding { p: space(5), ..Padding::default() }, ..Layout::default() }>
+                        <Show when=move || side == InsetSide::Bottom><p>"Content keeps the card's declared padding."</p></Show>
+                        <Inset side=Responsive::from(side)><div class="fixture-inset-hero">{format!("side={name} · flush to card edges")}</div></Inset>
+                        <Show when=move || side == InsetSide::Top><p>"Content keeps the card's declared padding."</p></Show>
+                    </Box>
+                }).collect_view()}
+            </div>
+        </section>
     }
 }
 
 #[component]
 fn Fixture() -> impl IntoView {
     let styles = GeometryStyles::default();
-    rustify_components::provide_geometry_styles(styles);
+    rustify_components::provide_geometry_styles(styles.clone());
     let document = RwSignal::new(ThemeDocument::standard(
         "layout-fixture",
         "DOM layout and type",
@@ -207,7 +364,7 @@ fn Fixture() -> impl IntoView {
                 <Button test_id="layout-invalid" on_click=move || invalid.set(true)>"Invalid prop"</Button>
                 <Button test_id="layout-valid" on_click=move || invalid.set(false)>"Restore prop"</Button>
             </div>
-            <LayoutSamples invalid=invalid clicks=clicks/>
+            <LayoutSamples invalid=invalid clicks=clicks styles=styles/>
             <TypographySamples/>
         </div>
     }

@@ -1,0 +1,72 @@
+{
+  "build": "40319fe42bb1118f",
+  "selected-primary": {
+    "beforeIdle": {
+      "sdk": 265,
+      "editor": 4,
+      "publish": 1,
+      "epoch": 1,
+      "revision": 1
+    },
+    "afterIdle": {
+      "sdk": 265,
+      "editor": 4,
+      "publish": 1,
+      "epoch": 1,
+      "revision": 1
+    },
+    "afterNoop": {
+      "sdk": 266,
+      "editor": 4,
+      "publish": 1,
+      "epoch": 1,
+      "revision": 1
+    }
+  },
+  "selected-background": {
+    "beforeIdle": {
+      "sdk": 267,
+      "editor": 4,
+      "publish": 1,
+      "epoch": 1,
+      "revision": 1
+    },
+    "afterIdle": {
+      "sdk": 267,
+      "editor": 4,
+      "publish": 1,
+      "epoch": 1,
+      "revision": 1
+    },
+    "afterNoop": {
+      "sdk": 268,
+      "editor": 4,
+      "publish": 1,
+      "epoch": 1,
+      "revision": 1
+    }
+  },
+  "selected-primary-again": {
+    "beforeIdle": {
+      "sdk": 269,
+      "editor": 4,
+      "publish": 1,
+      "epoch": 1,
+      "revision": 1
+    },
+    "afterIdle": {
+      "sdk": 269,
+      "editor": 4,
+      "publish": 1,
+      "epoch": 1,
+      "revision": 1
+    },
+    "afterNoop": {
+      "sdk": 270,
+      "editor": 4,
+      "publish": 1,
+      "epoch": 1,
+      "revision": 1
+    }
+  }
+}

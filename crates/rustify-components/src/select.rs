@@ -11,7 +11,7 @@ use leptos::prelude::*;
 use rustify_ui::{Anchor, Layer};
 
 const TRIGGER: &str = "flex h-9 w-full items-center justify-between gap-2 rounded-md border border-border bg-input px-3 py-1 text-sm text-foreground transition-colors cursor-pointer outline-none focus-visible:ring-ring/50 focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive";
-const PANEL: &str = "min-w-40 max-h-64 overflow-auto rounded-md border border-border bg-popover text-popover-foreground p-1 shadow-lg outline-none";
+const PANEL: &str = "box-border max-h-64 overflow-auto rounded-md border border-border bg-popover text-popover-foreground p-1 shadow-lg outline-none";
 const OPTION: &str = "flex w-full items-center gap-2 rounded-sm px-2 py-1.5 text-sm text-popover-foreground cursor-pointer aria-disabled:opacity-50 aria-disabled:cursor-not-allowed";
 
 /// One choice.
@@ -65,17 +65,32 @@ pub fn Select(
     });
     let list_id = StoredValue::new(format!("{group}-listbox"));
     let group = StoredValue::new(group);
-    let placeholder = StoredValue::new(if placeholder.is_empty() {
-        "choose".to_string()
-    } else {
-        placeholder
-    });
+    let locale = rustify_ui::use_locale();
+    let placeholder = StoredValue::new((!placeholder.is_empty()).then_some(placeholder));
     let panel_test_id = StoredValue::new(test_id.clone());
     let aria_label = (!aria_label.is_empty()).then_some(aria_label);
     let on_change = StoredValue::new(on_change);
     let on_open_change = StoredValue::new(on_open_change);
     let trigger = NodeRef::<leptos::html::Button>::new();
     let list = NodeRef::<leptos::html::Ul>::new();
+    let trigger_width = RwSignal::new(0.0_f64);
+    let panel_geometry = crate::geometry::geometry_class(move || {
+        let measured = trigger_width.get();
+        let width = if measured > 0.0 { measured } else { 160.0 };
+        format!("min-width:{width}px;max-width:calc(100vw - 2rem);")
+    });
+    let panel_class = StoredValue::new(format!("{PANEL} {panel_geometry}"));
+    #[cfg(target_arch = "wasm32")]
+    Effect::new(move || {
+        let Some(element) = trigger.get() else { return };
+        let measure = move || {
+            if let Some(element) = trigger.get_untracked() {
+                trigger_width.set(element.get_bounding_client_rect().width());
+            }
+        };
+        measure();
+        StoredValue::new_local(rustify_ui::observe_resize(element.as_ref(), measure));
+    });
 
     let option_id = move |value: &str| format!("{}-option-{value}", group.get_value());
     // Which option the keyboard is on while the list is open. It starts at the
@@ -203,7 +218,10 @@ pub fn Select(
                 }
                 data-name="SelectValue"
             >
-                {move || shown.get().unwrap_or_else(|| placeholder.get_value())}
+                {move || shown.get().unwrap_or_else(|| placeholder.get_value().unwrap_or_else(|| match locale.get() {
+                    rustify_ui::Locale::English => "Choose".into(),
+                    rustify_ui::Locale::Chinese => "请选择".into(),
+                }))}
             </span>
             <crate::icon::Icon glyph=crate::icon::Glyph::ChevronDown class="text-muted-foreground" />
         </button>
@@ -223,7 +241,7 @@ pub fn Select(
                 <ul
                     node_ref=list
                     id=move || list_id.get_value()
-                    class=PANEL
+                    class=move || panel_class.get_value()
                     data-name="SelectList"
                     data-testid=move || format!("{}-list", panel_test_id.get_value())
                     role="listbox"
@@ -247,6 +265,7 @@ pub fn Select(
                                         move || active.get() == mine
                                     })
                                     data-name="SelectOption"
+                                    data-active={let mine = option_value.clone(); move || (active.get() == mine).to_string()}
                                     data-testid=format!("option-{option_value}")
                                     role="option"
                                     aria-selected=move || chosen.get().to_string()

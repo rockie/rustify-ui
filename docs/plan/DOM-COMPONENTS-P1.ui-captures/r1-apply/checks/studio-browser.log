@@ -1,0 +1,153 @@
+
+Running 70 tests using 1 worker
+
+(node:23957) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1/70] [theme-studio] › tests/browser/theme-config.spec.ts:21:5 › all six base choices are controlled, and preview mode stays independent of author appearance
+[2/70] [theme-studio] › tests/browser/theme-config.spec.ts:50:5 › brand reset releases exactly its responsibility keys in both modes and undo restores the whole candidate
+[3/70] [theme-studio] › tests/browser/theme-config.spec.ts:83:5 › source removal and explicit same-value pin are meaningful, while untouched drafts and zero HSL are no-ops
+[4/70] [theme-studio] › tests/browser/theme-config.spec.ts:116:5 › single-token release keeps the other mode, and common-token release clears both modes
+  1) [theme-studio] › tests/browser/theme-config.spec.ts:116:5 › single-token release keeps the other mode, and common-token release clears both modes
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator: getByTestId('source-token')
+    Expected: "radius"
+    Error: strict mode violation: getByTestId('source-token') resolved to 2 elements:
+        1) <code data-testid="source-token">radius</code> aka getByTestId('color-selection').getByTestId('source-token')
+        2) <code data-testid="source-token">radius</code> aka getByRole('tabpanel', { name: 'Typography & other' }).getByTestId('source-token')
+
+    Call log:
+      - Expect "toHaveText" getByTestId('source-token') with timeout 15000ms
+      - waiting for getByTestId('source-token')
+
+
+      125 |   await page.getByTestId("edit-radius").fill("12px");
+      126 |   await page.getByTestId("edit-radius").press("Enter");
+    > 127 |   await expect(page.getByTestId("source-token")).toHaveText("radius");
+          |                                                  ^
+      128 |   await expect(page.getByTestId("source-clear")).toContainText("both modes");
+      129 |   await page.getByTestId("source-clear").click();
+      130 |   const common = await state(page);
+        at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser/theme-config.spec.ts:127:50
+
+    Error Context: test-results/theme-config-single-token--aad78-n-release-clears-both-modes-theme-studio/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/theme-config-single-token--aad78-n-release-clears-both-modes-theme-studio/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/theme-config-single-token--aad78-n-release-clears-both-modes-theme-studio/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+(node:24732) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[5/70] [theme-studio] › tests/browser/theme-config.spec.ts:135:5 › base configuration follows a committed color gesture as a separate history command
+[6/70] [theme-studio] › tests/browser/theme-config.spec.ts:159:5 › native text undo changes only the uncommitted draft and does not consume theme history
+[7/70] [theme-studio] › tests/browser/theme-dom.spec.ts:14:7 › resolved DOM themes › scopes stay independent and the host keeps its own styles
+[8/70] [theme-studio] › tests/browser/theme-dom.spec.ts:32:7 › resolved DOM themes › utility unit and layout gap remain separate and caller classes override
+[9/70] [theme-studio] › tests/browser/theme-dom.spec.ts:42:7 › resolved DOM themes › boundary projection and open overlay follow updates then restore inheritance
+[10/70] [theme-studio] › tests/browser/theme-dom.spec.ts:70:7 › resolved DOM themes › host rem is resolved and owner disposal leaves no runtime variables
+[11/70] [theme-studio] › tests/browser/theme-dom.spec.ts:84:7 › resolved DOM themes › invalid edit preserves last valid document and a no-shadow focus ring still renders
+[12/70] [theme-studio] › tests/browser/theme-dom.spec.ts:102:5 › new runtime shadows honor caller color while empty layers keep rings transparent
+[13/70] [theme-studio] › tests/browser/theme-exchange.spec.ts:15:5 › JSON review is atomic and cancel, invalid input and rejected code preserve the draft
+  2) [theme-studio] › tests/browser/theme-exchange.spec.ts:15:5 › JSON review is atomic and cancel, invalid input and rejected code preserve the draft
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: getByTestId('import-config')
+    Expected substring: "accent_color"
+    Received string:    "AppearanceInheritBrand colorTomatoNeutral colorCustomPanel backgroundCustomRadiusCustomScaling105%"
+    Timeout: 15000ms
+
+    Call log:
+      - Expect "toContainText" getByTestId('import-config') with timeout 15000ms
+      - waiting for getByTestId('import-config')
+        34 × locator resolved to <dl class="tools-config" data-testid="import-config">…</dl>
+           - unexpected value "AppearanceInheritBrand colorTomatoNeutral colorCustomPanel backgroundCustomRadiusCustomScaling105%"
+
+
+      18 |   await importSource(page,JSON.stringify(candidate));await expect(page.getByTestId("import-preview")).toContainText("future-token");
+      19 |   await expect(page.getByTestId("import-version")).toContainText("2");
+    > 20 |   await expect(page.getByTestId("import-config")).toContainText("accent_color");
+         |                                                   ^
+      21 |   expect((await state(page)).document).toEqual(before.document);
+      22 |   await page.getByTestId("import-cancel").click();expect((await state(page)).history).toEqual(before.history);
+      23 |   await importSource(page,JSON.stringify(candidate));await page.getByTestId("import-apply").click();
+        at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser/theme-exchange.spec.ts:20:51
+
+    Error Context: test-results/theme-exchange-JSON-review-a12e5-ted-code-preserve-the-draft-theme-studio/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/theme-exchange-JSON-review-a12e5-ted-code-preserve-the-draft-theme-studio/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/theme-exchange-JSON-review-a12e5-ted-code-preserve-the-draft-theme-studio/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+(node:25558) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[14/70] [theme-studio] › tests/browser/theme-exchange.spec.ts:41:5 › file import validates before apply and wrong type or size cannot change the theme
+[15/70] [theme-studio] › tests/browser/theme-exchange.spec.ts:53:5 › a reviewed import cannot apply after another controller change until explicitly reviewed again
+[16/70] [theme-studio] › tests/browser/theme-exchange.spec.ts:74:5 › all CSS profiles and notations export without editing; JSON and Rust downloads match their previews
+[17/70] [theme-studio] › tests/browser/theme-exchange.spec.ts:99:5 › clipboard refusal offers selection and download without a false success message
+[18/70] [theme-studio] › tests/browser/theme-exchange.spec.ts:108:5 › granted clipboard contains the actual exported bytes
+[19/70] [theme-studio] › tests/browser/theme-exchange.spec.ts:114:69 › fresh download contains exact CSS · resolved values source
+[20/70] [theme-studio] › tests/browser/theme-exchange.spec.ts:114:69 › fresh download contains exact Rust integration source
+[21/70] [theme-studio] › tests/browser/theme-exchange.spec.ts:120:5 › export dialogs recenter as contents and viewport change, with reachable actions
+[22/70] [theme-studio] › tests/browser/theme-export-ui.spec.ts:18:5 › v2 export preserves intent and explicitly reviewed v1 loses configuration, with actual clipboard/download bytes
+  3) [theme-studio] › tests/browser/theme-export-ui.spec.ts:18:5 › v2 export preserves intent and explicitly reviewed v1 loses configuration, with actual clipboard/download bytes
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: getByTestId('import-config')
+    Expected substring: "scaling=110"
+    Received string:    "AppearanceDarkBrand colorPinkNeutral colorAutoPanel backgroundTranslucentRadiusFullScaling110%"
+    Timeout: 15000ms
+
+    Call log:
+      - Expect "toContainText" getByTestId('import-config') with timeout 15000ms
+      - waiting for getByTestId('import-config')
+        34 × locator resolved to <dl class="tools-config" data-testid="import-config">…</dl>
+           - unexpected value "AppearanceDarkBrand colorPinkNeutral colorAutoPanel backgroundTranslucentRadiusFullScaling110%"
+
+
+      29 |   await page.getByTestId("import-review").click();
+      30 |   await expect(page.getByTestId("import-version")).toHaveText("JSON v2 → v2");
+    > 31 |   await expect(page.getByTestId("import-config")).toContainText("scaling=110");
+         |                                                   ^
+      32 |   expect((await snapshot(page)).document).toEqual(before.document);
+      33 |   await page.getByTestId("import-apply").click();
+      34 |   const applied=await snapshot(page);expect(applied.document).toEqual(candidate);
+        at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser/theme-export-ui.spec.ts:31:51
+
+    Error Context: test-results/theme-export-ui-v2-export--be0bd-al-clipboard-download-bytes-theme-studio/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/theme-export-ui-v2-export--be0bd-al-clipboard-download-bytes-theme-studio/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/theme-export-ui-v2-export--be0bd-al-clipboard-download-bytes-theme-studio/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+Testing stopped early after 3 maximum allowed failures.
+
+  3 failed
+    [theme-studio] › tests/browser/theme-config.spec.ts:116:5 › single-token release keeps the other mode, and common-token release clears both modes
+    [theme-studio] › tests/browser/theme-exchange.spec.ts:15:5 › JSON review is atomic and cancel, invalid input and rejected code preserve the draft
+    [theme-studio] › tests/browser/theme-export-ui.spec.ts:18:5 › v2 export preserves intent and explicitly reviewed v1 loses configuration, with actual clipboard/download bytes
+  48 did not run
+  19 passed (3.9m)
+  1 error was not a part of any test, see above for details

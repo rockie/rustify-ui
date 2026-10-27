@@ -63,6 +63,7 @@ pub fn Link(
     children: Children,
 ) -> impl IntoView {
     let mode = crate::component_color::use_mode();
+    let theme = rustify_ui::use_resolved_theme();
     let typography = TypographyStyle {
         size,
         weight,
@@ -80,6 +81,19 @@ pub fn Link(
             ThemeMode::Light
         };
         crate::component_color::set_color(&mut styles, selected, active_mode)?;
+        if selected.is_none()
+            && theme.is_some_and(|theme| crate::component_color::primary_is_generated(&theme.get()))
+        {
+            styles.insert(0, "--rustify-link-color", "var(--rustify-brand-a11)")?;
+            styles.insert(0, "--rustify-link-high-contrast", "var(--rustify-brand-12)")?;
+        }
+        if selected.is_some_and(|color| color != AccentColor::Gray) {
+            styles.insert(
+                0,
+                "--rustify-link-focus",
+                "var(--rustify-component-color-8)",
+            )?;
+        }
         Ok(styles)
     });
     let computed = crate::macros::reactive_merge_with(move || {
@@ -124,6 +138,41 @@ pub fn Link(
 #[cfg(all(test, feature = "ssr", not(target_arch = "wasm32")))]
 mod tests {
     use super::*;
+
+    #[test]
+    fn generated_links_use_text_steps_but_authored_primary_remains_authoritative() {
+        use rustify_ui::{ResolveContext, ThemeDocument};
+        use std::sync::Arc;
+
+        for authored in [false, true] {
+            let mut document = ThemeDocument::standard("links", "Links");
+            if authored {
+                document
+                    .overrides
+                    .light
+                    .0
+                    .insert("primary".into(), "#123456".into());
+            }
+            let resolved = Arc::new(
+                rustify_ui::resolve(&document, ThemeMode::Light, &ResolveContext::default())
+                    .unwrap(),
+            );
+            let owner = Owner::new();
+            let styles = crate::GeometryStyles::default();
+            owner.with(|| {
+                crate::provide_geometry_styles(styles.clone());
+                rustify_ui::provide_static_theme(resolved);
+                let _ = view! { <Link href="/">"Destination"</Link> }.to_html();
+            });
+            assert_eq!(
+                styles
+                    .css()
+                    .contains("--rustify-link-color:var(--rustify-brand-a11)"),
+                !authored
+            );
+            drop(owner);
+        }
+    }
 
     #[test]
     fn link_preserves_native_attributes_current_path_and_underline() {

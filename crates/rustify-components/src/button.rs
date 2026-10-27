@@ -282,6 +282,10 @@ pub(crate) fn native_button(
             data-color=move || color.get().map(AccentColor::as_str)
             data-color-role=move || color_role.get().as_str()
             data-radius=move || radius.get().map(ThemeRadius::as_str)
+            data-appearance=move || mode.get().as_str()
+            data-authored-primary=move || theme
+                .is_some_and(|theme| !crate::component_color::primary_is_generated(&theme.get()))
+                .then_some("true")
             data-high-contrast=move || high_contrast.get().then_some("true")
             aria-label=aria_label
             aria-controls=move || {
@@ -290,7 +294,7 @@ pub(crate) fn native_button(
             }
             aria-expanded=move || expanded.get().map(|open| open.to_string())
             aria-disabled=move || unavailable.get().then_some("true")
-            aria-busy=move || loading.get().then_some("true")
+            aria-busy=move || (loading.get() && !disabled.get()).then_some("true")
             disabled=move || disabled.get() || loading.get()
             prop:disabled=move || disabled.get() || loading.get()
             on:click=move |event| dispatch_action(
@@ -310,7 +314,7 @@ pub(crate) fn native_button(
             <span class="rustify-button-content" aria-hidden=icon_only.then_some("true")>
                 {children()}
             </span>
-            <Show when=move || loading.get()>
+            <Show when=move || loading.get() && !disabled.get()>
                 <span class="rustify-button-spinner" aria-hidden="true">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
                         stroke-width="2" stroke-linecap="round" focusable="false">
@@ -442,6 +446,20 @@ mod tests {
             assert!(html.contains("aria-controls=\"panel\""), "{html}");
             assert!(html.contains("aria-label=\"Save\""), "{html}");
             assert!(!html.contains(" disabled"), "{html}");
+        }
+
+        #[test]
+        fn disabled_takes_precedence_over_the_loading_presentation() {
+            let owner = Owner::new();
+            let html = owner.with(|| {
+                view! {
+                    <Button on_click=|| {} disabled=true loading=true>"Save"</Button>
+                }
+                .to_html()
+            });
+            assert!(html.contains(" disabled"), "{html}");
+            assert!(!html.contains("aria-busy="), "{html}");
+            assert!(!html.contains("rustify-button-spinner"), "{html}");
         }
 
         #[test]

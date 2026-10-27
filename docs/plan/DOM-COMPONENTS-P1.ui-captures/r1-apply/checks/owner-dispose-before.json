@@ -1,0 +1,45 @@
+[
+  {
+    "type": "console",
+    "messageType": "error",
+    "text": "makepad/platform/src/os/web/web.rs:1378:8 - panicked at /Users/rockie/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/reactive_graph-0.2.15/src/traits.rs:394:39:\nTried to access a reactive value that has already been disposed. ",
+    "args": [
+      {
+        "preview": "makepad/platform/src/os/web/web.rs:1378:8 - panicked at /Users/rockie/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/reactive_graph-0.2.15/src/traits.rs:394:39:\nTried to access a reactive value that has already been disposed.",
+        "value": "makepad/platform/src/os/web/web.rs:1378:8 - panicked at /Users/rockie/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/reactive_graph-0.2.15/src/traits.rs:394:39:\nTried to access a reactive value that has already been disposed."
+      },
+      {
+        "preview": "",
+        "value": ""
+      }
+    ],
+    "location": {
+      "url": "http://127.0.0.1:4181/makepad_wasm_bridge/wasm_bridge.js",
+      "lineNumber": 8,
+      "columnNumber": 43
+    },
+    "time": 81319.256,
+    "pageId": "page@7307290fb7e7eb82be5110a8ad3ad964"
+  },
+  {
+    "type": "event",
+    "time": 81321.64,
+    "class": "BrowserContext",
+    "method": "pageError",
+    "params": {
+      "error": {
+        "error": {
+          "message": "unreachable",
+          "stack": "RuntimeError: unreachable\n    at http://127.0.0.1:4181/theme-studio.wasm:wasm-function[22705]:0x790b0c\n    at http://127.0.0.1:4181/theme-studio.wasm:wasm-function[4965]:0x63f47d\n    at http://127.0.0.1:4181/theme-studio.wasm:wasm-function[8404]:0x6dca09\n    at http://127.0.0.1:4181/theme-studio.wasm:wasm-function[22254]:0x78fb93\n    at http://127.0.0.1:4181/theme-studio.wasm:wasm-function[15134]:0x764522\n    at http://127.0.0.1:4181/theme-studio.wasm:wasm-function[12872]:0x743d7c\n    at http://127.0.0.1:4181/theme-studio.wasm:wasm-function[4174]:0x60265f\n    at http://127.0.0.1:4181/theme-studio.wasm:wasm-function[3506]:0x5c03f3\n    at http://127.0.0.1:4181/theme-studio.wasm:wasm-function[16698]:0x7730d4\n    at wasm_bindgen_12dce77569a944a6___convert__closures_____invoke_______true_ (http://127.0.0.1:4181/bindgen.js:1264:6)",
+          "name": "RuntimeError"
+        }
+      },
+      "location": {
+        "url": "http://127.0.0.1:4181/theme-studio.wasm",
+        "line": 0,
+        "column": 7932684
+      }
+    },
+    "pageId": "page@7307290fb7e7eb82be5110a8ad3ad964"
+  }
+]

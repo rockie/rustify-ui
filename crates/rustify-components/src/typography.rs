@@ -275,11 +275,18 @@ fn styled_typography(
     color: Signal<Option<AccentColor>>,
 ) -> String {
     let mode = crate::component_color::use_mode();
+    let theme = rustify_ui::use_resolved_theme();
     crate::geometry::style_class(move || {
         let mut styles = StyleSet::default();
         typography.write(&mut styles, kind)?;
         margin.get().write(&mut styles)?;
-        let selected = color.get();
+        let selected = color.get().or_else(|| {
+            if !matches!(kind, TypeKind::Code) {
+                return None;
+            }
+            let theme = theme?.get();
+            crate::component_color::primary_is_generated(&theme).then_some(theme.config.accent)
+        });
         let active_mode = if selected.is_some() {
             mode.get()
         } else {
@@ -578,6 +585,33 @@ mod tests {
         assert!(html.ends_with(">Inherited</span>"), "{html}");
         assert!(!css.contains("font-size:"), "{css}");
         assert!(!css.contains("--rustify-component-color-"), "{css}");
+    }
+
+    #[test]
+    fn default_code_uses_the_generated_palette_and_preserves_authored_primary() {
+        use rustify_ui::{ResolveContext, ThemeDocument};
+        use std::sync::Arc;
+
+        for mode in [ThemeMode::Light, ThemeMode::Dark] {
+            for authored in [false, true] {
+                let mut document = ThemeDocument::standard("code", "Code");
+                if authored {
+                    document
+                        .overrides
+                        .values_mut(mode)
+                        .0
+                        .insert("primary".into(), "#123456".into());
+                }
+                let resolved = Arc::new(
+                    rustify_ui::resolve(&document, mode, &ResolveContext::default()).unwrap(),
+                );
+                let (_, css) = render(|| {
+                    rustify_ui::provide_static_theme(resolved);
+                    view! { <Code>"value"</Code> }.into_any()
+                });
+                assert_eq!(css.contains("--rustify-component-color-a11:"), !authored);
+            }
+        }
     }
 
     #[test]

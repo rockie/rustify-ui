@@ -118,7 +118,7 @@ test.describe("V6 complete theme journey", () => {
         await page.getByTestId("preset-search").fill("Graphite");
         await select(page, "preset-select", "Built-in · Graphite");
         const preset = await snapshot(page);
-        await select(page, "studio-config-accent_color", "pink");
+        await select(page, "studio-config-accent_color", "Pink");
         await select(page, "studio-config-gray_color", "Auto");
         await expect(page.locator('[data-theme-config="accent_color"] [data-name="ThemeOverrideCount"]')).toContainText("Overridden");
         expect((await snapshot(page)).values.light.primary).toBe(preset.values.light.primary);
@@ -191,7 +191,7 @@ test.describe("V6 complete theme journey", () => {
         const jsonDownload = page.waitForEvent("download"); await page.getByTestId("export-download").click();
         const json = await readFile((await (await jsonDownload).path())!, "utf8");
         expect(JSON.parse(json)).toEqual(saved);
-        await select(page, "export-kind", "Tailwind v4 CSS");
+        await select(page, "export-kind", "CSS · resolved values");
         const css = await page.getByTestId("export-source").inputValue();
         const cssDownload = page.waitForEvent("download"); await page.getByTestId("export-download").click();
         expect(await readFile((await (await cssDownload).path())!, "utf8")).toBe(css);

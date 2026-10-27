@@ -69,8 +69,6 @@ pub fn GpuPreview(
     });
     view! {
         <section class="gpu-preview-section">
-            <h2>{move || tr("GPU theme samples", "GPU 主题样本")}</h2>
-            <p class="gpu-state" data-testid="gpu-state">{move || match state.get(){RegionState::Starting=>tr("Starting GPU…","正在启动 GPU…"),RegionState::Ready=>tr("Ready","已就绪"),RegionState::Suspended=>tr("Preview hidden","预览已隐藏"),RegionState::Lost=>tr("Restoring GPU…","正在恢复 GPU…"),RegionState::Failed(_)=>tr("GPU unavailable. DOM preview remains available.","GPU 不可用，仍可使用 DOM 预览。"),RegionState::Disposed=>tr("GPU disposed","GPU 已释放")}}</p>
             <Show when=move || {rustify_ui::asset_failures() > 0} fallback=|| ()>
                 <p class="gpu-state" role="status" data-testid="gpu-asset-warning">{move || tr("A preview resource failed to load. Font samples may use fallback glyphs. Reload to retry; your saved draft stays on this device.","预览资源加载失败，字体样本可能使用回退字形。刷新页面可重试；已保存草稿仍保留在本机。")}</p>
             </Show>
@@ -80,6 +78,7 @@ pub fn GpuPreview(
                     <GpuRegion app={PhantomData::<PreviewRegion>} props=projected on_action=on_action state=state node_ref=canvas class="gpu-region" test_id="theme-gpu" />
                 </div></div>
             </div>
+            <p class="gpu-state" role="status" data-testid="gpu-state">{move || match state.get(){RegionState::Starting=>tr("Starting GPU…","正在启动 GPU…"),RegionState::Ready=>tr("Ready","已就绪"),RegionState::Suspended=>tr("Preview hidden","预览已隐藏"),RegionState::Lost=>tr("Restoring GPU…","正在恢复 GPU…"),RegionState::Failed(_)=>tr("GPU unavailable. DOM preview remains available.","GPU 不可用，仍可使用 DOM 预览。"),RegionState::Disposed=>tr("GPU disposed","GPU 已释放")}}</p>
         </section>
     }
 }

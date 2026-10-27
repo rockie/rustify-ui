@@ -1,7 +1,8 @@
 use leptos::prelude::*;
 use rustify_components::{
-    Button, ButtonVariant, Checkbox, Dialog, Menu, MenuItem, Select, SelectOption, Switch, Tab,
-    TabPanel, Tabs, TextArea, TextField, TextKind,
+    Button, ButtonSize, ButtonVariant, Checkbox, Code, Dialog, Glyph, Heading, HeadingLevel, Icon,
+    IconButton, Kbd, Link, Menu, MenuItem, Select, SelectOption, Switch, Tab, TabPanel, Tabs,
+    TextArea, TextField, TextKind, TextSize,
 };
 use rustify_ui::{
     theme::{format_color, ColorFormat, COLOR_TOKENS},
@@ -60,6 +61,7 @@ fn CardsScene(locale: Signal<Locale>) -> impl IntoView {
     let submitted = RwSignal::new(String::new());
     let menu = RwSignal::new(false);
     let menu_action = RwSignal::new(0u8);
+    let sample_clicks = RwSignal::new(0u32);
     let anchor_node = NodeRef::<leptos::html::Div>::new();
     let anchor = Signal::derive(move || {
         anchor_node
@@ -102,9 +104,7 @@ fn CardsScene(locale: Signal<Locale>) -> impl IntoView {
                     <p role="status" class="text-sm text-destructive" data-testid="cards-error" data-theme-tokens="destructive">
                         {move || match feedback.get() {1=>tr(locale.get(), "Enter a name.", "请输入姓名。"),2=>tr(locale.get(), "Enter a valid email address.", "请输入有效邮箱。"),3=>tr(locale.get(), "Confirm the local-demo notice.", "请确认本地演示提示。"),_=>""}}
                     </p>
-                    <div data-theme-tokens="primary,primary-foreground,ring">
-                        <Button on_click=submit test_id="cards-submit">{move || tr(locale.get(), "Create profile", "创建资料")}</Button>
-                    </div>
+                    <Button attr:data-theme-tokens="primary,primary-foreground,ring" on_click=submit test_id="cards-submit">{move || tr(locale.get(), "Create profile", "创建资料")}</Button>
                 </form>
                 <p role="status" class="text-sm" data-testid="cards-success">{move || if submitted.get().is_empty() { String::new() } else { format!("{} {}",tr(locale.get(), "Local profile created for", "已创建本地资料："),submitted.get()) }}</p>
             </article>
@@ -127,6 +127,18 @@ fn CardsScene(locale: Signal<Locale>) -> impl IntoView {
                 <p role="status" class="text-sm" data-testid="cards-action-status">{move || match menu_action.get() {1=>tr(locale.get(), "A local copy is ready to edit.", "本地副本已准备好，可编辑。"),2=>tr(locale.get(), "The form was cleared.", "表单已清空。"),_=>""}}</p>
                 <Button on_click=move || {name.set(String::new());email.set(String::new());terms.set(false);feedback.set(0);submitted.set(String::new());menu_action.set(2);}
                     disabled=Signal::derive(move || name.get().is_empty() && email.get().is_empty() && !terms.get()) variant=ButtonVariant::Outline test_id="cards-clear-draft">{move || tr(locale.get(), "Clear local draft", "清空本地草稿")}</Button>
+                <section class="space-y-3 pt-4 border-t border-border" data-testid="component-samples">
+                    <Heading as_=HeadingLevel::H3 size=rustify_components::Responsive::from(TextSize::Four)>{move || tr(locale.get(), "Component samples", "组件样本")}</Heading>
+                    <div class="flex items-center flex-wrap gap-2">
+                        <IconButton aria_label="Toggle notifications" attr:aria-label=move || tr(locale.get(), "Toggle notifications", "切换通知") size=ButtonSize::One variant=ButtonVariant::Soft
+                            attr:aria-pressed=move || notifications.get().to_string() on_click=move || notifications.update(|value| *value = !*value) test_id="cards-icon-notifications"><Icon glyph=Glyph::Check /></IconButton>
+                        <Button size=ButtonSize::One variant=ButtonVariant::Classic on_click=move || sample_clicks.update(|value| *value += 1) test_id="cards-small-action">{move || tr(locale.get(), "Compact", "紧凑")}</Button>
+                        <Button size=ButtonSize::Three variant=ButtonVariant::Outline on_click=move || sample_clicks.update(|value| *value += 1) test_id="cards-large-action">{move || tr(locale.get(), "Large action", "大号操作")}</Button>
+                        <Link href="#studio-editor" test_id="cards-editor-link">{move || tr(locale.get(), "Edit theme", "编辑主题")}</Link>
+                    </div>
+                    <p role="status" class="text-sm">{move || format!("{} {}", tr(locale.get(), "Sample actions:", "样本操作："), sample_clicks.get())}</p>
+                    <p class="text-sm"><Code>"ThemeDocument"</Code>" · "<Kbd>"Tab"</Kbd>" "{move || tr(locale.get(), "moves to the next control", "移至下一个控件")}</p>
+                </section>
             </article>
             <Dialog open=confirmation on_open_change=move |value| confirmation.set(value)
                 title=Signal::derive(move || tr(locale.get(), "Confirm local profile", "确认本地资料").to_owned())

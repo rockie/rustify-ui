@@ -387,6 +387,10 @@ impl ResolvedTheme {
         for (size, radius) in ["sm", "md", "lg", "xl"].into_iter().zip(self.radii_px) {
             props.push((format!("--rustify-radius-{size}"), format!("{radius}px")));
         }
+        props.push((
+            "--rustify-radius-factor".into(),
+            (self.radius_px / (6. * self.config.selected.scaling.factor())).to_string(),
+        ));
         for (prefix, values) in [
             ("space", self.geometry.spaces_px.as_slice()),
             ("font-size", self.geometry.font_sizes_px.as_slice()),
@@ -1135,6 +1139,31 @@ mod tests {
         assert_eq!(props["--rustify-font-sans"], "sans-serif");
         assert!(props.contains_key("--card-foreground"));
         assert!(props.contains_key("--sidebar-ring"));
+    }
+
+    #[test]
+    fn link_radius_factor_uses_effective_radius_without_scaling_it_twice() {
+        for scale in [
+            super::super::ThemeScaling::P95,
+            super::super::ThemeScaling::P110,
+        ] {
+            let mut document = ThemeDocument::standard("radius", "Radius");
+            document.config.scaling = scale;
+            document.config.radius = Some(ThemeRadius::Full);
+            let resolved =
+                resolve(&document, ThemeMode::Light, &ResolveContext::default()).unwrap();
+            let props: BTreeMap<_, _> = resolved.properties().into_iter().collect();
+            assert_eq!(props["--rustify-radius-factor"], "1.5");
+            document
+                .overrides
+                .light
+                .0
+                .insert("radius".into(), "3px".into());
+            let resolved =
+                resolve(&document, ThemeMode::Light, &ResolveContext::default()).unwrap();
+            let props: BTreeMap<_, _> = resolved.properties().into_iter().collect();
+            assert_eq!(props["--rustify-radius-factor"], "0.5");
+        }
     }
 
     #[test]

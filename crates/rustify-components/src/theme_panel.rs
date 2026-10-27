@@ -144,7 +144,7 @@ impl ConfigField {
             }
             Self::Accent => AccentColor::ALL
                 .iter()
-                .map(|value| SelectOption::new(value.as_str(), value.as_str()))
+                .map(|value| SelectOption::new(value.as_str(), color_label(value.as_str(), locale)))
                 .collect(),
             Self::Gray => GrayColor::ALL
                 .iter()
@@ -154,7 +154,7 @@ impl ConfigField {
                         if *value == GrayColor::Auto {
                             tr(locale, "Auto", "自动")
                         } else {
-                            value.as_str()
+                            color_label(value.as_str(), locale)
                         },
                     )
                 })
@@ -313,6 +313,44 @@ fn tr(locale: Locale, english: &'static str, chinese: &'static str) -> &'static 
     }
 }
 
+fn color_label(color: &str, locale: Locale) -> &'static str {
+    let (english, chinese) = match color {
+        "gray" => ("Gray", "灰色"),
+        "gold" => ("Gold", "金色"),
+        "bronze" => ("Bronze", "青铜色"),
+        "brown" => ("Brown", "棕色"),
+        "yellow" => ("Yellow", "黄色"),
+        "amber" => ("Amber", "琥珀色"),
+        "orange" => ("Orange", "橙色"),
+        "tomato" => ("Tomato", "番茄红"),
+        "red" => ("Red", "红色"),
+        "ruby" => ("Ruby", "宝石红"),
+        "crimson" => ("Crimson", "绯红色"),
+        "pink" => ("Pink", "粉色"),
+        "plum" => ("Plum", "梅紫色"),
+        "purple" => ("Purple", "紫色"),
+        "violet" => ("Violet", "紫罗兰色"),
+        "iris" => ("Iris", "鸢尾紫"),
+        "indigo" => ("Indigo", "靛蓝色"),
+        "blue" => ("Blue", "蓝色"),
+        "cyan" => ("Cyan", "青色"),
+        "teal" => ("Teal", "青绿色"),
+        "jade" => ("Jade", "翡翠绿"),
+        "green" => ("Green", "绿色"),
+        "grass" => ("Grass", "草绿色"),
+        "lime" => ("Lime", "青柠色"),
+        "mint" => ("Mint", "薄荷色"),
+        "sky" => ("Sky", "天蓝色"),
+        "mauve" => ("Mauve", "紫灰色"),
+        "slate" => ("Slate", "蓝灰色"),
+        "sage" => ("Sage", "灰绿色"),
+        "olive" => ("Olive", "橄榄灰"),
+        "sand" => ("Sand", "沙灰色"),
+        _ => return "",
+    };
+    tr(locale, english, chinese)
+}
+
 fn override_summary(
     counts: ThemeOverrideCounts,
     group: ThemeConfigGroup,
@@ -355,8 +393,9 @@ pub fn ThemePanel(
     let reset_help_id = format!("{panel_id}-reset-help");
     let fields_reset_help = reset_help_id.clone();
     let fields_test_id = test_id.clone();
-    let computed =
-        crate::macros::reactive_merge_with(move || vec!["space-y-5 text-sm".into(), class.get()]);
+    let computed = crate::macros::reactive_merge_with(move || {
+        vec!["rustify-theme-panel space-y-5 text-sm".into(), class.get()]
+    });
     view! {
         <section class=computed data-name="ThemePanel" data-testid=test_id lang=move || locale.get().tag() aria-labelledby=labelled_by>
             <div class="space-y-2">
@@ -367,7 +406,7 @@ pub fn ThemePanel(
                 )}</p>
                 <p id=reset_help_id class="text-xs leading-relaxed text-muted-foreground">{move || tr(locale.get(),
                     "A group reset clears only that group's overrides in both modes. Other groups and independent adjustments stay unchanged.",
-                    "使用基础或配置值会清除该组两模式覆盖；其他组和独立精调保持不变。",
+                    "分组重置只清除该组在浅色与深色两模式的覆盖；其他组和独立精调保持不变。",
                 )}</p>
             </div>
             {ConfigField::ALL.into_iter().map(move |field| view! {
@@ -412,7 +451,12 @@ fn ThemeConfigControl(
     let options = Memo::new(move |_| field.options(locale.get()));
     view! {
         <div class="space-y-2" data-theme-config=field.key()>
-            <label for=id.clone() class="block font-medium text-foreground">{move || field.label(locale.get())}</label>
+            <div class="flex flex-wrap items-center gap-2">
+                <label for=id.clone() class="block text-[.8125rem] font-semibold text-foreground">{move || field.label(locale.get())}</label>
+                <Show when=move || field.value(config.get()) == "custom">
+                    <span class="rustify-config-badge" data-state="custom">{move || tr(locale.get(), "Custom", "自定义")}</span>
+                </Show>
+            </div>
             <Select id=id value=Signal::derive(move || field.value(config.get())) options=Signal::derive(move || options.get())
                 open=open on_open_change=move |value| open.set(value)
                 on_change=move |value| {if let Some(patch) = field.request(&value) {on_change.run(patch);}}
@@ -420,9 +464,13 @@ fn ThemeConfigControl(
             <p id=help_id class="text-xs leading-relaxed text-muted-foreground" data-name="ThemeConfigHelp">{move || field.help(config.get(), locale.get())}</p>
             {field.group().map(move |group| view! {
                 <div class="space-y-2">
-                    <p id=status_id class="text-xs text-muted-foreground" role="status" data-name="ThemeOverrideCount"
+                    <p id=status_id class="rustify-config-status" role="status" data-name="ThemeOverrideCount"
+                        aria-label=move || override_summary(overrides.get(), group, locale.get())
                         data-overridden=move || (overrides.get().total(group) > 0).to_string()>
-                        {move || override_summary(overrides.get(), group, locale.get())}
+                        <span class="rustify-config-badge" data-state=move || { if overrides.get().total(group) > 0 { "overridden" } else { "none" } }>
+                            {move || if overrides.get().total(group) > 0 { tr(locale.get(), "Overridden", "已覆盖") } else { tr(locale.get(), "No overrides", "无覆盖") }}
+                        </span>" · "
+                        <span>{move || format!("{} {} · {} {}", tr(locale.get(), "Light", "浅色"), overrides.get().count(group, ThemeMode::Light), tr(locale.get(), "Dark", "深色"), overrides.get().count(group, ThemeMode::Dark))}</span>
                     </p>
                     <Button size=ButtonSize::One variant=ButtonVariant::Outline
                         disabled=Signal::derive(move || overrides.get().total(group) == 0)

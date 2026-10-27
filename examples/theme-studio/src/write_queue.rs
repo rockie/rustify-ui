@@ -102,7 +102,7 @@ pub struct Operation {
     pub intent: Intent,
 }
 
-#[derive(Clone, Debug, Serialize)]
+#[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct Outcome {
     pub id: u64,
     pub kind: &'static str,
@@ -533,7 +533,13 @@ impl Writer {
                     | Intent::Copy { name, .. }
                     | Intent::Rename { name, .. }
                     | Intent::ConflictCopy { name, .. } => name.clone(),
-                    Intent::Delete { id } => id.clone(),
+                    Intent::Delete { id } => self
+                        .confirmed
+                        .saved_themes
+                        .iter()
+                        .find(|theme| &theme.id == id)
+                        .map(|theme| theme.name.clone())
+                        .unwrap_or_else(|| id.clone()),
                     _ => String::new(),
                 },
             });

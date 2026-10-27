@@ -604,7 +604,10 @@ impl StudioState {
                     Permission::Cleared => return self.tr("Local v2 cache cleared. Current draft is in memory; explicitly save to resume.", "v2 缓存已清除。当前草稿仅在内存；显式保存后恢复持久化。").into(),
                     Permission::Ready => {}
                 }
-                if writer.paused { return self.tr("Saving paused. Pending actions are retained; resolve the conflict or explicitly retry/cancel them.", "保存已暂停。待处理操作已保留；请解决冲突或明确重试/取消。").into(); }
+                if writer.paused {
+                    return if writer.pending()==0 {self.tr("Saving paused while another tab's version awaits your decision. No pending writes.","保存已暂停，请决定如何处理另一标签页的版本。没有待写操作。").into()}
+                    else {format!("{} {}",writer.pending(),self.tr("pending actions retained. Resolve the conflict or retry/cancel these writes.","项待处理操作已保留，请解决冲突或重试/取消这些写入。"))};
+                }
                 if writer.pending() > 0 { return format!("{} {}", self.tr("Ordered saves waiting for storage:", "按顺序等待存储的操作："), writer.pending()); }
                 let mut preferences = self.envelope.with_untracked(|envelope| envelope.preferences.clone());
                 preferences.mode = self.editor.with_untracked(|editor| editor.mode);
@@ -666,13 +669,11 @@ impl StudioState {
                 true
             }
             Some(Err(error)) => {
-                self.error.set(format!(
-                    "{} {error}",
-                    self.tr(
-                        "Review the storage warning before this library action.",
-                        "执行库操作前请先处理存储提示。"
-                    )
-                ));
+                if error.field != "storage" {
+                    self.error.set(error.to_string());
+                } else {
+                    self.error.set(String::new());
+                }
                 self.refresh_storage();
                 false
             }
@@ -747,14 +748,8 @@ impl StudioState {
             Ok(answer) => answer,
             Err(error) => {
                 self.writer.update_value(|writer| writer.fail(id));
-                self.storage_issue.set(error.clone());
-                self.error.set(format!(
-                    "{} {error}",
-                    self.tr(
-                        "Local save failed; memory and pending actions are preserved.",
-                        "本地保存失败；内存和待处理操作已保留。"
-                    )
-                ));
+                self.storage_issue.set(error);
+                self.error.set(String::new());
                 self.refresh_storage();
                 return;
             }
@@ -1303,14 +1298,26 @@ impl StudioState {
         );
         self.mobile_tab.set("edit".into());
         rustify_ui::next_frame(move || {
-            let id = if rustify_ui::theme::COLOR_TOKENS.contains(&token.as_str()) {
-                format!("color-token-{token}")
+            let color = rustify_ui::theme::COLOR_TOKENS.contains(&token.as_str());
+            let id = if color {
+                "token-source".into()
             } else {
                 format!("edit-{token}")
             };
             if let Ok(Some(element)) = document().query_selector(&format!("[data-testid='{id}']")) {
-                element.scroll_into_view();
-                if let Some(el) = element.dyn_ref::<leptos::web_sys::HtmlElement>() {
+                element.scroll_into_view_with_bool(false);
+                let focus = if color {
+                    document()
+                        .query_selector("[data-testid='color-value']")
+                        .ok()
+                        .flatten()
+                } else {
+                    Some(element)
+                };
+                if let Some(el) = focus
+                    .as_ref()
+                    .and_then(|element| element.dyn_ref::<leptos::web_sys::HtmlElement>())
+                {
                     let _ = el.focus();
                 }
             }

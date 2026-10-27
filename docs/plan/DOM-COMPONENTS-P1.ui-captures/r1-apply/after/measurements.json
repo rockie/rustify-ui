@@ -1,0 +1,366 @@
+{
+  "at": "2026-10-27T08:04:58.442Z",
+  "chromium": "153.0.8010.12",
+  "typography": {
+    "defaults": {
+      "type-heading": {
+        "rect": {
+          "x": 40,
+          "y": 4776.546875,
+          "width": 1200,
+          "height": 60,
+          "top": 4776.546875,
+          "right": 1240,
+          "bottom": 4836.546875,
+          "left": 40
+        },
+        "color": "rgb(28, 32, 36)",
+        "background": "rgba(0, 0, 0, 0)",
+        "weight": "700",
+        "font": "\"IBM Plex Sans\", \"Rustify WenKai\", \"Noto Color Emoji\"",
+        "size": "60px",
+        "lineHeight": "60px",
+        "fontStyle": "normal",
+        "borderLeft": "0px",
+        "padding": "0px",
+        "outline": "rgb(28, 32, 36) none 3px",
+        "outlineOffset": "0px",
+        "opacity": "1"
+      },
+      "type-default-heading": {
+        "rect": {
+          "x": 40,
+          "y": 4852.546875,
+          "width": 1200,
+          "height": 30,
+          "top": 4852.546875,
+          "right": 1240,
+          "bottom": 4882.546875,
+          "left": 40
+        },
+        "color": "rgb(28, 32, 36)",
+        "background": "rgba(0, 0, 0, 0)",
+        "weight": "700",
+        "font": "\"IBM Plex Sans\", \"Rustify WenKai\", \"Noto Color Emoji\"",
+        "size": "24px",
+        "lineHeight": "30px",
+        "fontStyle": "normal",
+        "borderLeft": "0px",
+        "padding": "0px",
+        "outline": "rgb(28, 32, 36) none 3px",
+        "outlineOffset": "0px",
+        "opacity": "1"
+      },
+      "type-strong": {
+        "rect": {
+          "x": 331.359375,
+          "y": 5199.78125,
+          "width": 126,
+          "height": 19,
+          "top": 5199.78125,
+          "right": 457.359375,
+          "bottom": 5218.78125,
+          "left": 331.359375
+        },
+        "color": "rgb(28, 32, 36)",
+        "background": "rgba(0, 0, 0, 0)",
+        "weight": "700",
+        "font": "\"IBM Plex Sans\", \"Rustify WenKai\", \"Noto Color Emoji\"",
+        "size": "15px",
+        "lineHeight": "22.5px",
+        "fontStyle": "normal",
+        "borderLeft": "0px",
+        "padding": "0px",
+        "outline": "rgb(28, 32, 36) none 3px",
+        "outlineOffset": "0px",
+        "opacity": "1"
+      },
+      "type-quote": {
+        "rect": {
+          "x": 118.171875,
+          "y": 5196.78125,
+          "width": 201.03125,
+          "height": 23,
+          "top": 5196.78125,
+          "right": 319.203125,
+          "bottom": 5219.78125,
+          "left": 118.171875
+        },
+        "color": "rgb(28, 32, 36)",
+        "background": "rgba(0, 0, 0, 0)",
+        "weight": "400",
+        "font": "\"Noto Serif\", \"Rustify WenKai\", \"Noto Color Emoji\"",
+        "size": "16.5px",
+        "lineHeight": "24.75px",
+        "fontStyle": "italic",
+        "borderLeft": "0px",
+        "padding": "0px",
+        "outline": "rgb(28, 32, 36) none 3px",
+        "outlineOffset": "0px",
+        "opacity": "1"
+      },
+      "type-code": {
+        "rect": {
+          "x": 240.875,
+          "y": 5120.84375,
+          "width": 324.109375,
+          "height": 18.875,
+          "top": 5120.84375,
+          "right": 564.984375,
+          "bottom": 5139.71875,
+          "left": 240.875
+        },
+        "color": "rgb(62, 99, 221)",
+        "background": "color(srgb 0.243137 0.388235 0.866667 / 0.12)",
+        "weight": "400",
+        "font": "\"Liberation Mono\", \"Rustify WenKai\", \"Noto Color Emoji\"",
+        "size": "14.44px",
+        "lineHeight": "24px",
+        "fontStyle": "normal",
+        "borderLeft": "0px",
+        "padding": "1.444px 3.61px",
+        "outline": "rgb(62, 99, 221) none 3px",
+        "outlineOffset": "0px",
+        "opacity": "1"
+      },
+      "type-kbd": {
+        "rect": {
+          "x": 250.671875,
+          "y": 5158.953125,
+          "width": 46.53125,
+          "height": 19.59375,
+          "top": 5158.953125,
+          "right": 297.203125,
+          "bottom": 5178.546875,
+          "left": 250.671875
+        },
+        "color": "rgb(28, 32, 36)",
+        "background": "rgb(252, 252, 253)",
+        "weight": "400",
+        "font": "\"IBM Plex Sans\", \"Rustify WenKai\", \"Noto Color Emoji\"",
+        "size": "11.2px",
+        "lineHeight": "19.04px",
+        "fontStyle": "normal",
+        "borderLeft": "0px",
+        "padding": "0px 5.6px 0.56px",
+        "outline": "rgb(28, 32, 36) none 3px",
+        "outlineOffset": "0px",
+        "opacity": "1"
+      },
+      "type-blockquote": {
+        "rect": {
+          "x": 40,
+          "y": 5076.28125,
+          "width": 1200,
+          "height": 26,
+          "top": 5076.28125,
+          "right": 1240,
+          "bottom": 5102.28125,
+          "left": 40
+        },
+        "color": "rgb(28, 32, 36)",
+        "background": "rgba(0, 0, 0, 0)",
+        "weight": "500",
+        "font": "\"IBM Plex Sans\", \"Rustify WenKai\", \"Noto Color Emoji\"",
+        "size": "18px",
+        "lineHeight": "26px",
+        "fontStyle": "normal",
+        "borderLeft": "4px",
+        "padding": "0px 0px 0px 12px",
+        "outline": "rgb(28, 32, 36) none 3px",
+        "outlineOffset": "0px",
+        "opacity": "1"
+      }
+    },
+    "blockquoteSizes": [
+      {
+        "rect": {
+          "x": 152,
+          "y": 9135.40625,
+          "width": 1088,
+          "height": 20,
+          "top": 9135.40625,
+          "right": 1240,
+          "bottom": 9155.40625,
+          "left": 152
+        },
+        "color": "rgb(28, 32, 36)",
+        "background": "rgba(0, 0, 0, 0)",
+        "weight": "400",
+        "font": "\"IBM Plex Sans\", \"Rustify WenKai\", \"Noto Color Emoji\"",
+        "size": "14px",
+        "lineHeight": "20px",
+        "fontStyle": "normal",
+        "borderLeft": "4px",
+        "padding": "0px 0px 0px 12px",
+        "outline": "rgb(28, 32, 36) none 3px",
+        "outlineOffset": "0px",
+        "opacity": "1"
+      },
+      {
+        "rect": {
+          "x": 152,
+          "y": 9171.40625,
+          "width": 1088,
+          "height": 26,
+          "top": 9171.40625,
+          "right": 1240,
+          "bottom": 9197.40625,
+          "left": 152
+        },
+        "color": "rgb(28, 32, 36)",
+        "background": "rgba(0, 0, 0, 0)",
+        "weight": "400",
+        "font": "\"IBM Plex Sans\", \"Rustify WenKai\", \"Noto Color Emoji\"",
+        "size": "18px",
+        "lineHeight": "26px",
+        "fontStyle": "normal",
+        "borderLeft": "4px",
+        "padding": "0px 0px 0px 12px",
+        "outline": "rgb(28, 32, 36) none 3px",
+        "outlineOffset": "0px",
+        "opacity": "1"
+      },
+      {
+        "rect": {
+          "x": 152,
+          "y": 9213.40625,
+          "width": 1088,
+          "height": 36,
+          "top": 9213.40625,
+          "right": 1240,
+          "bottom": 9249.40625,
+          "left": 152
+        },
+        "color": "rgb(28, 32, 36)",
+        "background": "rgba(0, 0, 0, 0)",
+        "weight": "400",
+        "font": "\"IBM Plex Sans\", \"Rustify WenKai\", \"Noto Color Emoji\"",
+        "size": "28px",
+        "lineHeight": "36px",
+        "fontStyle": "normal",
+        "borderLeft": "7px",
+        "padding": "0px 0px 0px 14px",
+        "outline": "rgb(28, 32, 36) none 3px",
+        "outlineOffset": "0px",
+        "opacity": "1"
+      }
+    ],
+    "explicitSoftCode": {
+      "rect": {
+        "x": 152,
+        "y": 7596.625,
+        "width": 111.078125,
+        "height": 19.59375,
+        "top": 7596.625,
+        "right": 263.078125,
+        "bottom": 7616.21875,
+        "left": 152
+      },
+      "color": "rgba(0, 43, 183, 0.773)",
+      "background": "rgba(0, 71, 241, 0.07)",
+      "weight": "400",
+      "font": "\"Liberation Mono\", \"Rustify WenKai\", \"Noto Color Emoji\"",
+      "size": "13.5375px",
+      "lineHeight": "16.9219px",
+      "fontStyle": "normal",
+      "borderLeft": "0px",
+      "padding": "1.35375px 3.38438px",
+      "outline": "rgba(0, 43, 183, 0.773) none 3px",
+      "outlineOffset": "0px",
+      "opacity": "1"
+    }
+  },
+  "builds": {
+    "studio": "3c0dcf89869551e0"
+  },
+  "brandSelect": {
+    "trigger": {
+      "x": 20,
+      "y": 597.015625,
+      "width": 279,
+      "height": 36
+    },
+    "list": {
+      "x": 20,
+      "y": 633.015625,
+      "width": 160,
+      "height": 256
+    }
+  },
+  "preview": {
+    "authored": {
+      "rect": {
+        "x": 344,
+        "y": 263.890625,
+        "width": 526,
+        "height": 1233,
+        "top": 263.890625,
+        "right": 870,
+        "bottom": 1496.890625,
+        "left": 344
+      },
+      "color": "rgb(29, 41, 57)",
+      "background": "rgb(249, 250, 251)",
+      "weight": "400",
+      "font": "\"IBM Plex Sans\", \"Rustify WenKai\", \"Noto Color Emoji\"",
+      "size": "15px",
+      "lineHeight": "22.5px",
+      "fontStyle": "normal",
+      "borderLeft": "1px",
+      "padding": "24px",
+      "outline": "rgb(29, 41, 57) none 3px",
+      "outlineOffset": "0px",
+      "opacity": "1"
+    },
+    "gpu": {
+      "rect": {
+        "x": 890,
+        "y": 263.890625,
+        "width": 526,
+        "height": 2751,
+        "top": 263.890625,
+        "right": 1416,
+        "bottom": 3014.890625,
+        "left": 890
+      },
+      "color": "rgb(29, 41, 57)",
+      "background": "rgba(0, 0, 0, 0)",
+      "weight": "400",
+      "font": "\"IBM Plex Sans\", \"Rustify WenKai\", \"Noto Color Emoji\"",
+      "size": "15px",
+      "lineHeight": "22.5px",
+      "fontStyle": "normal",
+      "borderLeft": "1px",
+      "padding": "0px",
+      "outline": "rgb(29, 41, 57) none 3px",
+      "outlineOffset": "0px",
+      "opacity": "1"
+    },
+    "hostPosition": "static"
+  },
+  "darkPreview": {
+    "rect": {
+      "x": 344,
+      "y": 263.890625,
+      "width": 526,
+      "height": 1233,
+      "top": 263.890625,
+      "right": 870,
+      "bottom": 1496.890625,
+      "left": 344
+    },
+    "color": "rgb(249, 250, 251)",
+    "background": "rgb(12, 17, 29)",
+    "weight": "400",
+    "font": "\"IBM Plex Sans\", \"Rustify WenKai\", \"Noto Color Emoji\"",
+    "size": "15px",
+    "lineHeight": "22.5px",
+    "fontStyle": "normal",
+    "borderLeft": "1px",
+    "padding": "24px",
+    "outline": "rgb(249, 250, 251) none 3px",
+    "outlineOffset": "0px",
+    "opacity": "1"
+  }
+}

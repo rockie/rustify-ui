@@ -1,0 +1,113 @@
+
+Running 19 tests using 1 worker
+
+(node:68259) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1/19] [theme-studio] › tests/browser/theme-v2-storage.spec.ts:445:7 › load rechecks reviewed bytes under the lock and a third write requires another explicit decision
+[2/19] [theme-studio] › tests/browser/theme-v2-storage.spec.ts:445:7 › keep rechecks reviewed bytes under the lock and a third write requires another explicit decision
+[3/19] [theme-studio] › tests/browser/theme-v2-storage.spec.ts:445:7 › copy rechecks reviewed bytes under the lock and a third write requires another explicit decision
+[4/19] [theme-studio] › tests/browser/theme-v2-storage.spec.ts:498:5 › Keep approves only its displayed draft while retained named intents require a separate retry or cancellation
+[5/19] [theme-studio] › tests/browser/theme-v2-storage.spec.ts:519:5 › backup deletion compares its reviewed full key set inside the same lock and ordinary clear leaves every original
+[6/19] [theme-studio] › tests/browser/theme-v2-storage.spec.ts:536:5 › owner disposal aborts a real pending lock request and cannot write or call destroyed signals after grant
+[7/19] [theme-studio] › tests/browser/theme-v2-storage.spec.ts:551:5 › the host fatal boundary aborts a real pending write and restart restores only the confirmed draft
+[8/19] [theme-studio] › tests/browser/theme-v2-storage.spec.ts:587:7 › owner disposal ignores late parameter blur while a real storage lock is pending
+  1) [theme-studio] › tests/browser/theme-v2-storage.spec.ts:587:7 › owner disposal ignores late parameter blur while a real storage lock is pending
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 3
+
+    - Array []
+    + Array [
+    +   "unreachable",
+    + ]
+
+      597 |     await release(other);
+      598 |     await expect.poll(() => page.evaluate(async name => (await navigator.locks.query()).pending?.filter(entry => entry.name === name).length, lock)).toBe(0);
+    > 599 |     expect(await raw(page)).toBe(before); expect(errors).toEqual([]);
+          |                                                          ^
+      600 |     await other.close();
+      601 |   });
+      602 | }
+        at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser/theme-v2-storage.spec.ts:599:58
+
+    Error Context: test-results/theme-v2-storage-owner-dis-a3a8e-eal-storage-lock-is-pending-theme-studio/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/theme-v2-storage-owner-dis-a3a8e-eal-storage-lock-is-pending-theme-studio/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/theme-v2-storage-owner-dis-a3a8e-eal-storage-lock-is-pending-theme-studio/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+(node:75197) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[9/19] [theme-studio] › tests/browser/theme-v2-storage.spec.ts:587:7 › owner disposal ignores late hsl blur while a real storage lock is pending
+[10/19] [theme-studio] › tests/browser/theme-v2-storage.spec.ts:604:5 › without Web Locks the editor, undo and downloads work while library actions never claim a save
+[11/19] [theme-studio] › tests/browser/theme-v2-storage.spec.ts:620:5 › reopening retrieves the SHA-bound original even after an older window changes v1, and a damaged backup is never substituted
+[12/19] [theme-studio] › tests/browser/theme-v2-storage.spec.ts:638:5 › delayed Save and Delete intents keep their order across undo/redo and finish with the latest committed draft
+[13/19] [theme-studio] › tests/browser/theme-v2-storage.spec.ts:662:5 › a failed clear reports a retained removal instead of success, and cancellation restores the previous write gate
+  2) [theme-studio] › tests/browser/theme-v2-storage.spec.ts:662:5 › a failed clear reports a retained removal instead of success, and cancellation restores the previous write gate
+
+    Test timeout of 180000ms exceeded.
+
+    Error: locator.click: Test timeout of 180000ms exceeded.
+    Call log:
+      - waiting for getByTestId('storage-retry')
+        - locator resolved to <button disabled type="button" data-name="Button" data-variant="outline" data-appearance="light" data-color-role="primary" data-testid="storage-retry" class="rustify-color rustify-button rui-geometry-14">…</button>
+      - attempting click action
+        2 × waiting for element to be visible, enabled and stable
+          - element is not enabled
+        - retrying click action
+        - waiting 20ms
+        2 × waiting for element to be visible, enabled and stable
+          - element is not enabled
+        - retrying click action
+          - waiting 100ms
+        331 × waiting for element to be visible, enabled and stable
+            - element is not enabled
+          - retrying click action
+            - waiting 500ms
+
+
+      680 |   expect((await snapshot(page)).storage.permission).toBe("Ready");
+      681 |   await page.evaluate(() => {Storage.prototype.removeItem = (window as any).__originalRemove;});
+    > 682 |   await page.getByTestId("storage-retry").click(); await idle(page);
+          |                                           ^
+      683 |   expect(JSON.parse((await raw(page))!).draft.overrides.light.primary).toBe("#123456");
+      684 |   expect(await raw(page, legacyKey)).toBe(original);
+      685 | });
+        at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser/theme-v2-storage.spec.ts:682:43
+
+    Error Context: test-results/theme-v2-storage-a-failed--ff3ec-res-the-previous-write-gate-theme-studio/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/theme-v2-storage-a-failed--ff3ec-res-the-previous-write-gate-theme-studio/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/theme-v2-storage-a-failed--ff3ec-res-the-previous-write-gate-theme-studio/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+(node:32969) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[14/19] [theme-studio] › tests/browser/theme-v2-storage.spec.ts:687:5 › the native guard also prevents writes when disposal occurs just after a real lock is granted
+[15/19] [theme-studio] › tests/browser/theme-v2-storage.spec.ts:703:5 › denied lock requests pause without an unlocked fallback and preserve export until explicit retry
+[16/19] [theme-studio] › tests/browser/theme-v2-storage.spec.ts:720:5 › re-entering upgrade review aborts its old lock wait and commits only the newly confirmed candidate
+[17/19] [theme-studio] › tests/browser/theme-v2-storage.spec.ts:736:5 › an empty external v2 is invalid raw, stays downloadable byte-for-byte and requires explicit reviewed clearing
+[18/19] [theme-studio] › tests/browser/theme-v2-storage.spec.ts:754:5 › a removed external v2 is shown as absent and Keep explicitly creates a fresh library
+[19/19] [theme-studio] › tests/browser/theme-v2-storage.spec.ts:767:5 › removing v1 remains a changed-source notice after reopening while the original backup stays retrievable
+  2 failed
+    [theme-studio] › tests/browser/theme-v2-storage.spec.ts:587:7 › owner disposal ignores late parameter blur while a real storage lock is pending
+    [theme-studio] › tests/browser/theme-v2-storage.spec.ts:662:5 › a failed clear reports a retained removal instead of success, and cancellation restores the previous write gate
+  17 passed (6.0m)

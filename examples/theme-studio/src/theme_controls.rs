@@ -76,12 +76,22 @@ fn pair_contrast(theme: &ResolvedTheme, foreground: &str, background: &str) -> O
     )
 }
 
+pub fn contrast_failures(theme: &ResolvedTheme) -> Vec<(&'static str, &'static str, f64)> {
+    CONTRAST_PAIRS
+        .into_iter()
+        .filter_map(|(foreground, background)| {
+            let ratio = pair_contrast(theme, foreground, background)?;
+            (ratio < 4.5).then_some((foreground, background, ratio))
+        })
+        .collect()
+}
+
 #[cfg(target_arch = "wasm32")]
 pub use ui::{ThemeControls, ThemeDiagnostics};
 
 #[cfg(target_arch = "wasm32")]
 mod ui {
-    use super::{pair_contrast, valid_author_value, CONTRAST_PAIRS};
+    use super::{contrast_failures, pair_contrast, valid_author_value, CONTRAST_PAIRS};
     use crate::state::{HslShift, TokenScope};
     use leptos::prelude::*;
     use leptos::wasm_bindgen::JsCast;
@@ -96,7 +106,7 @@ mod ui {
     };
     use std::sync::Arc;
 
-    const FIELD: &str = "w-full min-w-0 rounded-md border border-border bg-input text-foreground px-3 py-2 text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring aria-invalid:border-destructive";
+    const FIELD: &str = "studio-author-field w-full min-w-0 rounded-md border border-border bg-input text-foreground px-3 py-2 text-sm";
 
     fn tr(locale: Locale, en: &'static str, zh: &'static str) -> &'static str {
         if locale == Locale::Chinese {
@@ -176,11 +186,7 @@ mod ui {
                 </Show>
                 <section class="space-y-4" data-theme-group="typography" data-testid="typography-controls">
                     <h2 class="font-semibold">{move || tr(locale.get(), "Typography", "排版")}</h2>
-                    {["font-sans","font-serif","font-mono"].into_iter().map(move |token| view! {
-                        <div class="space-y-2"><FontChoice token=token values=values locale=locale callbacks=callbacks />
-                            <AuthorField token=token values=values baseline=baseline resolved=resolved locale=locale callbacks=callbacks />
-                        </div>
-                    }).collect_view()}
+                    {["font-sans","font-serif","font-mono"].into_iter().map(move |token| view! {<AuthorField token=token values=values baseline=baseline resolved=resolved locale=locale callbacks=callbacks />}).collect_view()}
                     {["font-size","letter-spacing"].into_iter().map(move |token| view! {<AuthorField token=token values=values baseline=baseline resolved=resolved locale=locale callbacks=callbacks />}).collect_view()}
                 </section>
                 <section class="space-y-4" data-theme-group="other" data-testid="geometry-controls">
@@ -217,7 +223,7 @@ mod ui {
             <Button size=ButtonSize::One variant=ButtonVariant::Ghost
                 disabled=Signal::derive(move || values.get().get(token).ok()==baseline.get().get(token).ok())
                 on_click=move || {if let Ok(value)=baseline.get_untracked().get(token) {callbacks.with_value(|callbacks|(callbacks.edit)(token.into(),value.to_owned()));}}
-                test_id=format!("reset-{token}")>{move || tr(locale.get(), "Reset", "重置")}<span class="sr-only">{format!(" {token}")}</span></Button>
+                test_id=format!("reset-{token}")>{move || tr(locale.get(), "Reset · both modes", "重置 · 两模式")}<span class="sr-only">{format!(" {token}")}</span></Button>
         }
     }
 
@@ -285,29 +291,26 @@ mod ui {
                 );
             } else {
                 rejected.set(true);
-                dirty.set(false);
-                draft.set(
-                    values
-                        .get_untracked()
-                        .get(token)
-                        .unwrap_or_default()
-                        .to_owned(),
-                );
             }
         };
         view! {
             <div class="space-y-2" data-testid=format!("field-{token}")>
                 <div class="flex items-center justify-between gap-2"><label for=id.clone()>{move || label(token,locale.get())}</label><ResetField token=token values=values baseline=baseline locale=locale callbacks=callbacks /></div>
+                {matches!(token,"font-sans"|"font-serif"|"font-mono").then(|| view! {<FontChoice token=token values=values locale=locale callbacks=callbacks />})}
                 <input type="text" id=id class=FIELD spellcheck="false" autocomplete="off" data-testid=format!("edit-{token}")
                     aria-describedby=format!("{hint_id} {error_id}") aria-invalid=move || if invalid.get() {"true"} else {"false"} prop:value=move || draft.get()
                     on:focus=move |_| focused.set_value(true)
                     on:input:target=move |event| {if !composing.get_value() {draft.set(event.target().value());dirty.set(true);rejected.set(false);}}
                     on:compositionstart=move |_| composing.set_value(true)
                     on:compositionend:target=move |event| {composing.set_value(false);draft.set(event.target().value());dirty.set(true);rejected.set(false);}
-                    on:blur=move |_| {if draft.try_get_untracked().is_none() {return;}submit();focused.set_value(false);}
+                    on:blur=move |_| {if draft.try_get_untracked().is_none() {return;}submit();focused.set_value(false);if rejected.get_untracked() {restore();}}
                     on:keydown=move |event| {if event.is_composing() || composing.get_value() {return;} match event.key().as_str() {"Enter"=>{event.prevent_default();submit();},"Escape"=>{event.prevent_default();event.stop_propagation();restore();},_=>()}} />
                 <p id=hint_id class="text-xs text-muted-foreground">{move || hint(token,locale.get())}</p>
-                <p id=error_id class="text-xs text-destructive" role="status" data-testid=format!("error-{token}")>{move || if invalid.get() {tr(locale.get(), "Complete a valid value. The effective theme is unchanged.", "请填写完整的有效值。当前主题未改变。")} else {""}}</p>
+                <p id=error_id class="studio-field-error" role="status" data-testid=format!("error-{token}")>{move || if invalid.get() {
+                    let current=values.get().get(token).unwrap_or_default().to_owned();
+                    if locale.get()==Locale::Chinese {format!("“{}”不是有效值。{} 预览保留 {current}；Esc 或离开字段可恢复。",draft.get(),hint(token,locale.get()))}
+                    else {format!("“{}” is not valid. {} Preview keeps {current}; Escape or leave the field to restore it.",draft.get(),hint(token,locale.get()))}
+                } else {String::new()}}</p>
             </div>
         }
     }
@@ -696,6 +699,18 @@ mod ui {
                 })
                 .collect::<Vec<_>>()
         });
+        let pairs = Memo::new(move |_| {
+            let theme = resolved.get();
+            let mut pairs = CONTRAST_PAIRS.map(|(foreground, background)| {
+                (
+                    foreground,
+                    background,
+                    pair_contrast(&theme, foreground, background),
+                )
+            });
+            pairs.sort_by_key(|(_, _, ratio)| !ratio.is_some_and(|ratio| ratio < 4.5));
+            pairs
+        });
         view! {
             <section class="theme-diagnostics space-y-4 text-sm" data-testid="theme-diagnostics">
                 <h2 class="font-semibold">{move ||tr(locale.get(),"Preview diagnostics","预览诊断")}</h2>
@@ -714,15 +729,15 @@ mod ui {
                         </p>}
                     }).collect_view()}
                 </div>
-                <details open=true><summary class="cursor-pointer font-medium">{move ||tr(locale.get(),"Text contrast pairs","文字对比度")}</summary>
+                <details open=true><summary class="cursor-pointer font-medium">{move ||format!("{} · {} {}",tr(locale.get(),"Text contrast pairs","文字对比度"),contrast_failures(&resolved.get()).len(),tr(locale.get(),"below 4.5:1","组低于 4.5:1"))}</summary>
                     <p class="text-xs text-muted-foreground mt-2">{move ||tr(locale.get(),"Text alpha is composited over each surface. A translucent surface without its actual underlay is unknown. Body text needs 4.5:1; large text needs 3:1. Verdicts use the unrounded ratio.","文字透明度会与表面合成。半透明表面缺少实际底色时无法判定。普通文字要求 4.5:1，大文字要求 3:1；结论使用未四舍五入的比值。")}</p>
                     <ul class="space-y-2 mt-3">
-                        {CONTRAST_PAIRS.into_iter().map(move |(foreground,background)|view! {
-                            <li class="border-b border-border pb-2" data-testid=format!("contrast-{foreground}-on-{background}")>
+                        {move ||pairs.get().into_iter().map(move |(foreground,background,ratio)|view! {
+                            <li class="contrast-pair" data-failed=ratio.is_some_and(|ratio|ratio<4.5).to_string() data-testid=format!("contrast-{foreground}-on-{background}")>
                                 <code class="text-xs break-words">{format!("{foreground} / {background}")}</code>
-                                <p>{move ||match pair_contrast(&resolved.get(),foreground,background) {
+                                <p>{move ||match ratio {
                                     None=>tr(locale.get(),"Unknown · actual backing required","无法判定 · 需要实际底色").to_owned(),
-                                    Some(ratio)=>format!("{ratio:.3}:1 · {}",if ratio>=4.5 {tr(locale.get(),"Meets body-text threshold","达到普通文字阈值")} else if ratio>=3. {tr(locale.get(),"Large text only; body text below threshold","仅达到大文字阈值；普通文字不足")} else {tr(locale.get(),"Below text thresholds","低于文字阈值")}),
+                                    Some(ratio)=>format!("{ratio:.3}:1 · {}",if ratio>=4.5 {tr(locale.get(),"Meets body-text threshold","达到普通文字阈值")} else if ratio>=3. {tr(locale.get(),"Fails body text · large text only","普通文字未通过 · 仅达到大文字阈值")} else {tr(locale.get(),"Fails text thresholds","未通过文字阈值")}),
                                 }}</p>
                             </li>
                         }).collect_view()}

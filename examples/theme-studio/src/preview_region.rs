@@ -172,7 +172,7 @@ pub fn preview_height(theme: &ResolvedTheme, width: f64) -> f64 {
         + 28.0
         + 176.0
         + 28.0
-        + color_rows as f64 * 64.0
+        + color_rows as f64 * 96.0
         + 28.0
         + radius_rows * 88.0
         + 28.0
@@ -719,14 +719,14 @@ impl Widget for PreviewBoard {
         let cell_width = width / columns as f64;
         for (index, token) in COLOR_TOKENS.iter().enumerate() {
             let left = x + (index % columns) as f64 * cell_width;
-            let top = y + (index / columns) as f64 * 64.0;
+            let top = y + (index / columns) as f64 * 96.0;
             let bounds = rect(left, top, cell_width - 8.0, 36.0);
             self.draw_checker.draw_abs(cx, bounds);
             self.shape(cx, format!("color.{token}"), token, theme, bounds, 3.0);
-            let caption = token.replace("foreground", "fg").replace("sidebar", "side");
+            let caption = token.replace('-', "-\n");
             self.label(cx, left, top + 42.0, &caption);
         }
-        y += COLOR_TOKENS.len().div_ceil(columns) as f64 * 64.0;
+        y += COLOR_TOKENS.len().div_ceil(columns) as f64 * 96.0;
         self.heading(cx, x, &mut y, "Corner radius");
         let radius_columns = if width >= 440.0 { 4 } else { 2 };
         let cell_width = width / radius_columns as f64;

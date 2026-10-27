@@ -3,7 +3,7 @@ import type {Page} from "@playwright/test";
 import {mkdir,readFile,writeFile} from "node:fs/promises";
 
 test.use({fresh:true});
-const evidence="docs/validation/dom-components-p1/export";
+const evidence=process.env.RUSTIFY_UI_EVIDENCE_OUT ? `${process.env.RUSTIFY_UI_EVIDENCE_OUT}/export` : "docs/validation/dom-components-p1/export";
 const snapshot=(page:Page)=>page.evaluate(()=>window.__theme_studio.snapshot());
 async function outputKind(page:Page,name:string){
   await page.getByTestId("export-kind").click();
@@ -28,7 +28,7 @@ test("v2 export preserves intent and explicitly reviewed v1 loses configuration,
   await page.getByTestId("import-source").fill(JSON.stringify(candidate));
   await page.getByTestId("import-review").click();
   await expect(page.getByTestId("import-version")).toHaveText("JSON v2 → v2");
-  await expect(page.getByTestId("import-config")).toContainText("scaling=110");
+  await expect(page.getByTestId("import-config")).toContainText("Scaling110%");
   expect((await snapshot(page)).document).toEqual(before.document);
   await page.getByTestId("import-apply").click();
   const applied=await snapshot(page);expect(applied.document).toEqual(candidate);
