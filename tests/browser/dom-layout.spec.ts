@@ -185,9 +185,9 @@ test("theme scaling applies once while absolute values and utility overrides sta
 test("Inset selects each side and restores other margins across responsive changes", async ({ page }, info) => {
     const cases: [string, boolean[]][] = [
         ["all", [true, true, true, true]], ["x", [false, true, false, true]],
-        ["y", [true, false, true, false]], ["top", [true, false, false, false]],
-        ["bottom", [false, false, true, false]], ["left", [false, false, false, true]],
-        ["right", [false, true, false, false]],
+        ["y", [true, false, true, false]], ["top", [true, true, false, true]],
+        ["bottom", [false, true, true, true]], ["left", [true, false, true, true]],
+        ["right", [true, true, true, false]],
     ];
     for (const [side, edges] of cases) {
         for (const [edge, property] of ["margin-top", "margin-right", "margin-bottom", "margin-left"].entries()) {
@@ -196,9 +196,10 @@ test("Inset selects each side and restores other margins across responsive chang
     }
     for (const width of [390, 519, 520, 767, 768, 1023, 1024, 1280]) {
         await page.setViewportSize({width, height:900});
-        const selected = width >= 1024 ? 3 : width >= 768 ? 2 : width >= 520 ? 1 : 0;
+        const side = width >= 1024 ? "left" : width >= 768 ? "bottom" : width >= 520 ? "right" : "top";
+        const edges = cases.find(([name]) => name === side)![1];
         for (const [edge, property] of ["margin-top", "margin-right", "margin-bottom", "margin-left"].entries()) {
-            await expect(sample(page, "layout-inset-responsive")).toHaveCSS(property, edge === selected ? "-13px" : "3px");
+            await expect(sample(page, "layout-inset-responsive")).toHaveCSS(property, edges[edge] ? "-13px" : "3px");
         }
     }
     await sample(page, "layout-inset-sides").screenshot({path:info.outputPath("inset-sides-desktop.png")});

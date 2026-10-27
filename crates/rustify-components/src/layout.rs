@@ -662,6 +662,9 @@ pub fn Section(
 }
 
 /// Which edges of the nearest layout container the inset reaches.
+///
+/// A named side also reaches both adjacent edges, rounding only the two
+/// outer corners on that side.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum InsetSide {
     All,
@@ -678,10 +681,10 @@ impl InsetSide {
             Self::All => [true; 4],
             Self::X => [false, true, false, true],
             Self::Y => [true, false, true, false],
-            Self::Top => [true, false, false, false],
-            Self::Bottom => [false, false, true, false],
-            Self::Left => [false, false, false, true],
-            Self::Right => [false, true, false, false],
+            Self::Top => [true, true, false, true],
+            Self::Bottom => [false, true, true, true],
+            Self::Left => [true, false, true, true],
+            Self::Right => [true, true, true, false],
         }
     }
 }
@@ -1140,14 +1143,31 @@ mod tests {
     #[cfg(all(feature = "ssr", not(target_arch = "wasm32")))]
     #[test]
     fn inset_sides_preserve_unselected_margins_and_select_only_joined_corners() {
-        for (side, edges) in [
-            (InsetSide::All, [true, true, true, true]),
-            (InsetSide::X, [false, true, false, true]),
-            (InsetSide::Y, [true, false, true, false]),
-            (InsetSide::Top, [true, false, false, false]),
-            (InsetSide::Bottom, [false, false, true, false]),
-            (InsetSide::Left, [false, false, false, true]),
-            (InsetSide::Right, [false, true, false, false]),
+        // Themes inset.css defines edges clockwise from top, corners from top-left.
+        for (side, edges, corners) in [
+            (InsetSide::All, [true; 4], [true; 4]),
+            (InsetSide::X, [false, true, false, true], [false; 4]),
+            (InsetSide::Y, [true, false, true, false], [false; 4]),
+            (
+                InsetSide::Top,
+                [true, true, false, true],
+                [true, true, false, false],
+            ),
+            (
+                InsetSide::Bottom,
+                [false, true, true, true],
+                [false, false, true, true],
+            ),
+            (
+                InsetSide::Left,
+                [true, false, true, true],
+                [true, false, false, true],
+            ),
+            (
+                InsetSide::Right,
+                [true, true, true, false],
+                [false, true, true, false],
+            ),
         ] {
             for clip in [InsetClip::BorderBox, InsetClip::PaddingBox] {
                 let (_, css) = render(|| {
@@ -1175,10 +1195,10 @@ mod tests {
                     );
                 }
                 for (corner, selected) in [
-                    ("top-left", edges[0] && edges[3]),
-                    ("top-right", edges[0] && edges[1]),
-                    ("bottom-right", edges[2] && edges[1]),
-                    ("bottom-left", edges[2] && edges[3]),
+                    ("top-left", corners[0]),
+                    ("top-right", corners[1]),
+                    ("bottom-right", corners[2]),
+                    ("bottom-left", corners[3]),
                 ] {
                     let radius = if !selected {
                         "0px"
