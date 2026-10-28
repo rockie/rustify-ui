@@ -130,7 +130,7 @@
     line-height: 1.7em;
     padding: 0 0.5em 0.05em;
     word-spacing: -0.1em;
-    border-radius: min(var(--rustify-radius-2, var(--radius)), 0.35em);
+    border-radius: calc(var(--rustify-radius-factor, 1) * 0.35em);
     letter-spacing: inherit;
     height: fit-content;
     color: var(--rustify-gray-12, var(--foreground));

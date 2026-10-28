@@ -170,7 +170,7 @@ test("component colors, semantic overrides, radius and scaling remain local", as
     await buttons.getByTestId("button-mode-dark").click();
     await expect(buttons).toHaveAttribute("data-theme", "dark");
     await expect(highContrast).toHaveCSS("background-color", "rgb(194, 230, 255)");
-    expect(await buttons.getByTestId("button-classic-4").evaluate(node => getComputedStyle(node).boxShadow.startsWith("rgba(0, 0, 0, 0.3)"))).toBe(true);
+    await expect.poll(() => buttons.getByTestId("button-classic-4").evaluate(node => getComputedStyle(node).boxShadow.startsWith("rgba(0, 0, 0, 0.32)"))).toBe(true);
     expect(await colors(blue)).toEqual(localBefore);
     expect(await colors(primary)).toEqual(await colors(primaryToken));
     await buttons.getByTestId("button-mode-light").click();

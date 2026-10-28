@@ -1,0 +1,41 @@
+
+Running 1 test using 1 worker
+
+(node:20890) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1/1] [theme-studio] › tests/browser/theme-ui-review.spec.ts:6:13 › dialog selector keyboard focus › import and export selectors show keyboard focus at 1440px
+  1) [theme-studio] › tests/browser/theme-ui-review.spec.ts:6:13 › dialog selector keyboard focus › import and export selectors show keyboard focus at 1440px
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+    Call Log:
+    - Timeout 15000ms exceeded while waiting on the predicate
+
+      13 |                     const css = getComputedStyle(element);
+      14 |                     return element.matches(":focus-visible") && css.outlineStyle !== "none" && parseFloat(css.outlineWidth) >= 2;
+    > 15 |                 })).toBe(true);
+         |                     ^
+      16 |             };
+      17 |             for (let index = 0; index < 20; index++) {
+      18 |                 await page.keyboard.press("Tab");
+        at checkFocus (/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser/theme-ui-review.spec.ts:15:21)
+        at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser/theme-ui-review.spec.ts:24:13
+
+    Error Context: test-results/r5-focus-red/theme-ui-review-dialog-sel-5de74-ow-keyboard-focus-at-1440px-theme-studio/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/r5-focus-red/theme-ui-review-dialog-sel-5de74-ow-keyboard-focus-at-1440px-theme-studio/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/r5-focus-red/theme-ui-review-dialog-sel-5de74-ow-keyboard-focus-at-1440px-theme-studio/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  1 failed
+    [theme-studio] › tests/browser/theme-ui-review.spec.ts:6:13 › dialog selector keyboard focus › import and export selectors show keyboard focus at 1440px

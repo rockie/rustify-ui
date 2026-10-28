@@ -166,16 +166,13 @@ pub fn StorageControls(state: StudioState) -> impl IntoView {
                 <p data-testid="storage-status">{move || {
                     if !state.storage_issue.get().is_empty() {
                         if draft_saved(state) {
-                            let failed_name = outcomes.with(|items| items.iter().rev().find(|item| item.state == "failed" && matches!(item.kind, "save" | "copy" | "rename" | "delete" | "conflict-copy")).map(|item| item.detail.clone()));
-                            match failed_name {
-                                Some(name) if state.locale().get() == rustify_ui::Locale::Chinese => format!("当前草稿已保存到本机。保存“{name}”失败并已保留供重试。"),
-                                Some(name) => format!("The current draft is saved on this device. Saving “{name}” failed and is kept for retry."),
-                                None => state.tr("The current draft is saved on this device. A later library action failed and is kept for retry.","当前草稿已保存到本机。之后的主题库操作失败并已保留供重试。").to_owned(),
-                            }
-                        } else {state.tr("Local save failed. Your current draft and pending actions stay in memory. Download or export a copy before leaving.","本地保存失败。当前草稿与待处理操作保留在内存，离开前请下载或导出副本。").to_owned()}
+                            state.tr("The current draft is saved on this device.","当前草稿已保存到本机。").to_owned()
+                        } else {state.tr("Your current draft stays in memory. Download or export a copy before leaving.","当前草稿保留在内存，离开前请下载或导出副本。").to_owned()}
                     }else if upgraded() {
                         let count = state.envelope.with(|envelope| envelope.saved_themes.len());
                         if state.locale().get() == rustify_ui::Locale::Chinese {format!("{count} 个命名主题与当前草稿已保留。")} else {format!("{count} saved theme{} and your current draft were retained.",if count == 1 {""} else {"s"})}
+                    }else if !crate::storage_browser::writable() {
+                        state.tr("You can edit in memory and download or export your theme.","可以在内存中编辑，并下载或导出主题。").to_owned()
                     }else{state.storage_status.get()}
                 }}</p>
                 <Show when=upgraded><p class="tools-status">{move || state.tr("Original data keeps a copy of the library from before the upgrade.","原始数据保存着升级前的主题库副本。")}</p></Show>

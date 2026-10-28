@@ -1,5 +1,52 @@
 import { test, expect, waitForReady } from "./support";
 
+test.describe("dialog selector keyboard focus", () => {
+    test.use({ fresh: true });
+    for (const width of [1440, 390]) {
+        test(`import and export selectors show keyboard focus at ${width}px`, async ({ page }) => {
+            await page.setViewportSize({ width, height: 900 });
+            await waitForReady(page);
+            const checkFocus = async (id: string) => {
+                const trigger = page.getByTestId(id);
+                await expect(trigger).toBeFocused();
+                await expect.poll(() => trigger.evaluate(element => {
+                    const css = getComputedStyle(element);
+                    return element.matches(":focus-visible") && css.outlineStyle !== "none" && parseFloat(css.outlineWidth) >= 2;
+                })).toBe(true);
+            };
+            for (let index = 0; index < 20; index++) {
+                await page.keyboard.press("Tab");
+                if (await page.getByTestId("theme-export").evaluate(element => element === document.activeElement)) break;
+            }
+            await expect(page.getByTestId("theme-export")).toBeFocused();
+            await page.keyboard.press("Enter");
+            await page.keyboard.press("Tab");
+            await checkFocus("export-kind");
+            await page.keyboard.press("Enter");
+            await page.keyboard.press("ArrowDown");
+            await page.keyboard.press("ArrowDown");
+            await page.keyboard.press("Enter");
+            await page.keyboard.press("Tab");
+            await checkFocus("export-profile");
+            await page.keyboard.press("Tab");
+            await checkFocus("export-color-format");
+            for (let index = 0; index < 12; index++) {
+                await page.keyboard.press("Tab");
+                expect(await page.getByTestId("data-tools-dialog").evaluate(element => element.contains(document.activeElement))).toBe(true);
+            }
+            await page.keyboard.press("Escape");
+            await expect(page.getByTestId("theme-export")).toBeFocused();
+            await page.keyboard.press("Shift+Tab");
+            await expect(page.getByTestId("theme-import")).toBeFocused();
+            await page.keyboard.press("Enter");
+            await page.keyboard.press("Tab");
+            await checkFocus("import-format");
+            await page.keyboard.press("Escape");
+            await expect(page.getByTestId("theme-import")).toBeFocused();
+        });
+    }
+});
+
 test("picking an unannotated control explains the missing mapping without activating it", async ({ page }) => {
     await waitForReady(page);
     await page.getByTestId("renderer-dom").click();

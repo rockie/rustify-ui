@@ -1,0 +1,138 @@
+      ┌─────────┐  mr boxington
+     ╱ ═══════ ╱│
+    ╱─────────╱ │
+    │ •    (◉)│≡│
+    │  ◟▄▄▄◞  │ ╱
+    │   ◀◆▶   │╱
+    └─────────┘
+   Compiling serde v1.0.229
+   Compiling bumpalo v3.20.3
+   Compiling stable_deref_trait v1.2.1
+   Compiling indexmap v2.14.2
+   Compiling aho-corasick v1.1.5
+   Compiling theme-studio v0.2.1 (/Users/rockie/Documents/gh-rockie/rustify-ui/examples/theme-studio)
+   Compiling yoke v0.8.3
+   Compiling wasm-bindgen-macro-support v0.2.128
+   Compiling serde_json v1.0.151
+   Compiling leptos_hot_reload v0.8.7
+   Compiling regex-automata v0.4.18
+   Compiling zerovec v0.11.8
+   Compiling zerotrie v0.2.5
+   Compiling leptos_macro v0.8.19
+   Compiling wasm-bindgen-macro v0.2.128
+   Compiling regex v1.13.1
+   Compiling tinystr v0.8.4
+   Compiling potential_utf v0.1.6
+   Compiling icu_locale_core v2.3.0
+   Compiling icu_collections v2.3.0
+   Compiling icu_provider v2.3.1
+   Compiling icu_normalizer v2.3.0
+   Compiling icu_properties v2.3.0
+   Compiling idna_adapter v1.2.2
+   Compiling idna v1.1.0
+   Compiling url v2.5.8
+   Compiling wasm-bindgen v0.2.128
+   Compiling js-sys v0.3.105
+   Compiling wasm-bindgen-futures v0.4.78
+   Compiling web-sys v0.3.105
+   Compiling any_spawner v0.3.0
+   Compiling wasm-streams v0.5.0
+mbx[warning]: build-script cache bypassed: cached build-script prediction is unsupported
+   Compiling hydration_context v0.3.2
+   Compiling oco_ref v0.2.1
+   Compiling gloo-utils v0.2.0
+   Compiling serde_qs v0.15.0
+   Compiling codee v0.3.5
+   Compiling leptos_config v0.8.10
+   Compiling rustify-style v0.2.1 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-style)
+   Compiling reactive_graph v0.2.15
+   Compiling gloo-net v0.6.0
+   Compiling reactive_stores v0.4.4
+   Compiling tachys v0.2.19
+   Compiling leptos_dom v0.8.8
+   Compiling server_fn v0.8.13
+   Compiling leptos_server v0.8.8
+   Compiling leptos v0.8.22
+   Compiling rustify-dom v0.2.1 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-dom)
+   Compiling rustify-makepad v0.2.1 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-makepad)
+   Compiling rustify-components v0.2.1 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-components)
+   Compiling rustify-ui v0.2.1 (/Users/rockie/Documents/gh-rockie/rustify-ui/crates/rustify-ui)
+mbx[progress]: 15s elapsed; 48 hits, 4 misses, 1 bypassed, 0 not looked up; ~42.49s compiler work saved
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 15.38s
+     Running unittests src/main.rs (target/debug/deps/theme_studio-e970c8d2d68cdeaa)
+
+running 69 tests
+test color_editor::tests::captured_pointer_coordinates_clamp_at_edges ... ok
+test color_editor::tests::keyboard_preserves_the_other_axis_and_shift_step ... ok
+test color_editor::tests::plane_corners_and_center_match_saturation_lightness ... ok
+test color_editor::tests::home_end_do_not_change_lightness_and_unknown_keys_pass_through ... ok
+test color_editor::tests::zero_size_and_nonfinite_geometry_are_not_color_updates ... ok
+test data_tools::tests::unsupported_json_version_is_reported_before_missing_document_fields ... ok
+test data_tools::tests::invalid_and_oversize_imports_never_produce_an_apply_candidate ... ok
+test persistence::tests::migration_metadata_rejects_unbound_or_noncanonical_backup_identity ... ok
+test persistence::tests::bad_cache_keeps_exact_raw_and_rejects_shape_version_and_invalid_dark_mode ... ok
+test persistence::tests::legacy_conversion_restores_the_entire_library_and_binds_exact_original_bytes ... ok
+test data_tools::tests::import_review_lists_identity_added_removed_and_both_mode_changes_without_mutating ... ok
+test persistence::tests::autosave_revalidates_saved_dimensions_when_root_size_changes ... ok
+test data_tools::tests::save_requires_separate_overwrite_intent_and_copy_rename_conflicts_are_rejected ... ok
+test persistence::tests::autosave_rejects_changed_library_metadata_and_unresolved_drafts ... ok
+test persistence::tests::invalid_candidate_duplicate_names_ids_and_unknown_target_leave_envelope_unchanged ... ok
+test persistence::tests::valid_cache_round_trip_preserves_author_values_preferences_and_unknown_tokens ... ok
+test persistence::tests::preference_enums_duplicates_and_unknown_fields_are_rejected_without_losing_raw ... ok
+test state::tests::active_gesture_rejects_configuration_and_override_release_without_mutating_the_candidate ... ok
+test data_tools::tests::compatible_v1_is_explicit_and_carries_the_reviewed_losses_with_its_bytes ... ok
+test state::tests::adopting_an_external_draft_keeps_its_preset_reset_and_undo_history ... ok
+test persistence::tests::legacy_migration_rejects_one_bad_saved_theme_or_unknown_version_as_one_candidate ... ok
+test data_tools::tests::exports_route_profiles_color_formats_and_lossless_json_to_actual_sdk ... ok
+test persistence::tests::named_crud_preserves_identity_intent_and_never_changes_original ... ok
+test data_tools::tests::full_library_permits_rename_and_confirmed_overwrite_but_rejects_new_copy ... ok
+test state::tests::cancel_restores_document_and_redo_but_committed_branch_clears_redo ... ok
+test state::tests::color_scope_is_explicit_and_common_fields_are_always_shared ... ok
+test state::tests::common_edit_normalizes_both_modes_without_losing_initial_values ... ok
+test state::tests::commit_keeps_the_update_pair_and_cancel_refreshes_the_restored_document ... ok
+test state::tests::configuration_and_group_release_are_atomic_history_commands ... ok
+test state::tests::explicitly_pinning_a_generated_value_changes_source_even_when_color_is_equal ... ok
+test state::tests::hsl_default_scope_both_current_scope_and_grayscale_are_finite ... ok
+test state::tests::gesture_returning_to_its_origin_keeps_the_redo_branch ... ok
+test state::tests::invalid_update_and_no_op_gesture_do_not_change_state ... ok
+test state::tests::invalid_hsl_and_gesture_commands_preserve_state ... ok
+test state::tests::gesture_updates_make_one_history_entry_and_no_commit_revision ... ok
+test state::tests::no_op_skips_resolve_and_history ... ok
+test state::tests::next_hsl_gesture_starts_from_the_last_committed_result ... ok
+test state::tests::invalid_half_value_and_other_mode_validation_are_atomic ... ok
+test state::tests::rejected_validation_counts_work_without_replacing_the_valid_cache ... ok
+test state::tests::preset_mode_checkpoint_and_reset_are_independent_of_history ... ok
+test theme_controls::tests::author_parameters_preserve_supported_units_and_reject_incomplete_text ... ok
+test state::tests::resolved_pair_reuses_initial_and_accepted_edit_validation ... ok
+test theme_controls::tests::translucent_text_is_composited_and_unknown_surface_backing_is_not_a_pass ... ok
+test state::tests::hsl_updates_use_gesture_origin_and_identity_preserves_author_values ... ok
+test write_queue::tests::clear_generation_cancels_old_acks_and_cleared_gate_does_not_resurrect_the_cache ... ok
+test state::tests::restored_modified_draft_resets_to_the_selected_checkpoint_without_startup_history ... ok
+test write_queue::tests::cancelling_or_replacing_a_clear_restores_the_preexisting_write_gate ... ok
+test write_queue::tests::failure_retains_the_exact_request_for_explicit_retry_and_old_ack_does_not_save_current_epoch ... ok
+test write_queue::tests::empty_external_bytes_are_not_a_missing_library_and_only_explicit_clear_can_remove_them ... ok
+test write_queue::tests::invalid_named_candidate_and_revision_overflow_preserve_confirmed_library_and_baseline ... ok
+test write_queue::tests::named_identity_acknowledges_only_its_epoch_without_a_gesture_or_newer_name ... ok
+test write_queue::tests::protected_migrations_do_not_accumulate_autosaves_and_clear_invalidates_old_operations ... ok
+test write_queue::tests::only_adjacent_unissued_autosaves_coalesce_and_library_intents_keep_order ... ok
+test write_queue::tests::conflict_decisions_bind_reviewed_bytes_and_retain_named_intents_until_reauthorised ... ok
+test state::tests::undo_and_every_context_input_refresh_the_pair_once ... ok
+test presets::tests::reference_mode_differences_and_normal_letter_spacing_remain_intact ... ok
+test write_queue::tests::restored_ready_v2_acknowledges_only_the_initial_draft_and_preferences ... ok
+test write_queue::tests::queued_autosave_revalidates_a_changed_context_and_retains_the_failed_request ... ok
+test write_queue::tests::rejected_named_requests_are_visible_without_writing_and_block_an_older_identity_ack ... ok
+test presets::tests::normalization_preserves_every_reference_author_value ... ok
+test presets::tests::rustify_presets_keep_the_legacy_starting_mode_palettes ... ok
+test write_queue::tests::upgrade_wire_preserves_original_bytes_library_and_current_snapshot_with_no_early_ack ... ok
+test write_queue::tests::queued_autosave_revalidates_every_resolve_context_input ... ok
+test presets::tests::every_reference_preset_and_both_rustify_presets_resolve_in_both_modes ... ok
+test state::tests::history_is_bounded_to_one_hundred_documents ... ok
+test persistence::tests::every_supported_preference_value_and_eighty_unicode_character_name_round_trip ... ok
+test persistence::tests::hundred_theme_limit_allows_explicit_overwrite_and_rejects_extra_or_duplicate_saved_ids ... ok
+test write_queue::tests::queued_autosave_reuses_the_proof_and_warm_library_when_context_is_unchanged ... ok
+test persistence::tests::autosave_reuses_editor_resolution_and_unchanged_saved_library ... ok
+
+test result: ok. 69 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.16s
+
+mbx[cache]: 48 hits, 5 misses, 1 bypassed; 0 B downloaded, 0 B uploaded, 105.4 MiB stored locally
+mbx[savings]: disposed of 5.3 TiB logical without being asked. that is rather the point.

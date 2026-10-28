@@ -100,6 +100,25 @@ test("layout and typography switch at each Themes breakpoint, including both sid
     }
 });
 
+test("Kbd rounding follows its font size across all nine sizes and theme scaling", async ({ page }) => {
+    const matrix = sample(page, "type-kbd-matrix");
+    for (const scale of [100, 110, 95]) {
+        await sample(page, `layout-scale-${scale}`).click();
+        await expect.poll(() => number(matrix.locator(".fixture-kbd-row:not(.fixture-prop) kbd").first(), "border-radius"))
+            .toBeCloseTo(16.8 * scale / 100, 2);
+        const rows = await matrix.locator(".fixture-kbd-row:not(.fixture-prop)").evaluateAll(elements => elements.map(row =>
+            Array.from(row.querySelectorAll("kbd"), element => {
+                const css = getComputedStyle(element);
+                return { font: parseFloat(css.fontSize), radius: parseFloat(css.borderRadius) };
+            })));
+        expect(rows).toHaveLength(9);
+        for (const row of rows) {
+            expect(row).toHaveLength(4);
+            for (const key of row) expect(key.radius / key.font).toBeCloseTo(0.35, 3);
+        }
+    }
+});
+
 test("shared layout fields, Container projection and caller utilities keep their meanings", async ({ page }) => {
     const box = sample(page, "layout-shared");
     const expected: Record<string, string> = {

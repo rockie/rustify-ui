@@ -1,0 +1,48 @@
+{
+  "base_head": "941a8043903c244dc2b72e1e90c38b49e193c20c",
+  "branch": "main",
+  "tested_version": "dirty@941a8043903c244dc2b72e1e90c38b49e193c20c",
+  "created_at": "2026-10-28T23:48:37+08:00",
+  "source_sha256": {
+    "crates/rustify-components/css/button.css": "3dabc1c649e846d5a4073d89e2f5bd520683c841a28c4d819865bec5353bb3ac",
+    "crates/rustify-components/css/typography.css": "1bd9d51f0dc7a9d6290007e4f0294679643503a47a1680951eeef1bfd3e8bf18",
+    "crates/rustify-components/css/rustify.css": "742a3a1b6c7b4fc139329b9f2ae3f5cfc9e256639250c9de09588042959099ea",
+    "examples/theme-studio/app.css": "9d1a191fc1687bf065cad170f83ff41e6f4dc86e3e9a16e997726e02d675997e",
+    "examples/theme-studio/data-tools.css": "90e5cbbbdc4b96278a1609ec5856265041c718856454de0c19bb7836ee93697f",
+    "examples/theme-studio/src/storage_controls.rs": "1e3bba05ac7ef5f6ef6c58c7f44c7c2913d920dec35fa523f12bab4df998fbbb",
+    "tests/browser/dom-layout.spec.ts": "3bb4276105fe1c347edf8c4ba9daa3e3be497f8d812f358499a606e0f19ae335",
+    "tests/browser/theme-ui-review.spec.ts": "cffd15ab6f391ba679e316f78f68d276e5ae98cf00eb54b9eaa67bdf2bef861e",
+    "tests/browser/dom-buttons.spec.ts": "5d9b91376138ddf7569c47ea5249d6970fd61944cb260d5fed66eb4d833a24ce"
+  },
+  "builds": {
+    "theme-studio": {
+      "build_id": "eeec4e5d8bf09cf7",
+      "toolchain": "rustc 1.99.0 (b940084d7 2026-09-28)",
+      "css_sha256": {
+        "runtime.css": "c8555dfb9752120ee6ffe7abb9adea2919e0dea3d4ae6a7d4327ce39ecfb74da",
+        "app.css": "9d1a191fc1687bf065cad170f83ff41e6f4dc86e3e9a16e997726e02d675997e",
+        "tailwind.css": "50ea874c9ef3c5415ba308bf98f13062f94ae2b743923c66108ccaa2219dcf55",
+        "theme-fonts.css": "51186db86e79f4031cbee3b4cf72ccb8a0284f133fc385a7ea7fdc3e0efcd63f"
+      }
+    },
+    "component-catalog": {
+      "build_id": "32b52b66f04701ad",
+      "toolchain": "rustc 1.99.0 (b940084d7 2026-09-28)",
+      "css_sha256": {
+        "runtime.css": "c8555dfb9752120ee6ffe7abb9adea2919e0dea3d4ae6a7d4327ce39ecfb74da",
+        "app.css": "52d4b46da8897175f5791b3433fa3454305acce908309b6dd9bd006f0be65ea7",
+        "tailwind.css": "e4649617a1068b8f52c049f78c5a8e401e34f2ad2239e932a410c4b66af736cc",
+        "theme-fonts.css": "51186db86e79f4031cbee3b4cf72ccb8a0284f133fc385a7ea7fdc3e0efcd63f"
+      }
+    }
+  },
+  "input_sha256": {
+    "docs/plan/DOM-COMPONENTS-P1.ui-review.r5.md": "0147c9bd79db192fa47670c7589f2bdff446d32d146a1ee6f401ac605439cbff",
+    "docs/plan/DOM-COMPONENTS-P1.ui-target.md": "056e8000993784c074355f85dbea8c66e08f7f3845b8bb711f0102d8bf42d0db"
+  },
+  "capture_versions": {
+    "before": "941a8043 product code; 29 unique PNG, collector retries preserved in checks",
+    "after": "First inspection: final code except classic dark alpha 0.33; 31 PNG. Actual CSS values in after/measurements.json",
+    "confirm": "Final classic dark alpha 0.32; current source and CSS hashes above; screenshots and browser regressions from final release"
+  }
+}

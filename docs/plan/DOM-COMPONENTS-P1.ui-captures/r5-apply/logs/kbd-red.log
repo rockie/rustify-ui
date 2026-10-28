@@ -1,0 +1,41 @@
+
+Running 1 test using 1 worker
+
+(node:21485) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1/1] [component-catalog] › tests/browser/dom-layout.spec.ts:103:5 › Kbd rounding follows its font size across all nine sizes and theme scaling
+  1) [component-catalog] › tests/browser/dom-layout.spec.ts:103:5 › Kbd rounding follows its font size across all nine sizes and theme scaling
+
+    Error: expect(received).toBeCloseTo(expected, precision)
+
+    Expected: 0.35
+    Received: 0.08333333333333333
+
+    Expected precision:    3
+    Expected difference: < 0.0005
+    Received difference:   0.26666666666666666
+
+      113 |         for (const row of rows) {
+      114 |             expect(row).toHaveLength(4);
+    > 115 |             for (const key of row) expect(key.radius / key.font).toBeCloseTo(0.35, 3);
+          |                                                                  ^
+      116 |         }
+      117 |         expect(rows[0][0].radius).toBeCloseTo(16.8 * scale / 100, 2);
+      118 |     }
+        at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser/dom-layout.spec.ts:115:66
+
+    Error Context: test-results/r5-kbd-red/dom-layout-Kbd-rounding-fo-ac711-ine-sizes-and-theme-scaling-component-catalog/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/r5-kbd-red/dom-layout-Kbd-rounding-fo-ac711-ine-sizes-and-theme-scaling-component-catalog/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/r5-kbd-red/dom-layout-Kbd-rounding-fo-ac711-ine-sizes-and-theme-scaling-component-catalog/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  1 failed
+    [component-catalog] › tests/browser/dom-layout.spec.ts:103:5 › Kbd rounding follows its font size across all nine sizes and theme scaling

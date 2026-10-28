@@ -150,6 +150,12 @@
   color: var(--popover-foreground, var(--foreground));
 }
 
+/* Anchor to the scrollport above the dialog's 1.5rem top padding. */
+.tools-dialog .tools-diff thead th {
+  inset-block-start: -1.5rem;
+  z-index: 1;
+}
+
 .tools-library {
   display: flex;
   flex-direction: column;
@@ -478,6 +484,7 @@
 .tools-dialog [data-name="Button"][data-variant="solid"] {background:#1570ef;border-color:#1570ef;color:#fff;}
 .tools-dialog [data-name="Button"][data-variant="ghost"] {background:transparent;border-color:transparent;}
 .tools-dialog [data-name="Select"] {min-width:0;border:1px solid #d0d5dd;box-shadow:none;}
+.tools-dialog [data-name="Select"]:focus-visible {outline:3px solid #1570ef66;outline-offset:2px;}
 .tools-dialog .tools-summary {grid-template-columns:10rem minmax(0,1fr);}
 .tools-dialog :is(label,dt,th,h3) {font-weight:600;color:#1d2939;}
 .tools-notice h3 {font-weight:600;color:#1d2939;}
