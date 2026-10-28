@@ -1,0 +1,528 @@
+{
+  "runs": [
+    {
+      "log": "rustify-ui-r3-regression.log",
+      "cases": 81,
+      "passed": 77,
+      "failed": 4
+    },
+    {
+      "log": "rustify-ui-r3-confirm-tests.log",
+      "cases": 22,
+      "passed": 20,
+      "failed": 2
+    },
+    {
+      "log": "rustify-ui-r3-spacing-tests.log",
+      "cases": 3,
+      "passed": 2,
+      "failed": 1
+    },
+    {
+      "log": "rustify-ui-r3-catalog-tests.log",
+      "cases": 12,
+      "passed": 12,
+      "failed": 0
+    }
+  ],
+  "latest_result_per_distinct_test": [
+    {
+      "id": "theme-studio / tests/browser/theme-config.spec.ts › all six base choices are controlled, and preview mode stays independent of author appearance",
+      "result": "pass",
+      "run": "regression"
+    },
+    {
+      "id": "theme-studio / tests/browser/theme-config.spec.ts › brand reset releases exactly its responsibility keys in both modes and undo restores the whole candidate",
+      "result": "pass",
+      "run": "regression"
+    },
+    {
+      "id": "theme-studio / tests/browser/theme-config.spec.ts › source removal and explicit same-value pin are meaningful, while untouched drafts and zero HSL are no-ops",
+      "result": "pass",
+      "run": "regression"
+    },
+    {
+      "id": "theme-studio / tests/browser/theme-config.spec.ts › single-token release keeps the other mode, and common-token release clears both modes",
+      "result": "pass",
+      "run": "regression"
+    },
+    {
+      "id": "theme-studio / tests/browser/theme-config.spec.ts › base configuration follows a committed color gesture as a separate history command",
+      "result": "pass",
+      "run": "regression"
+    },
+    {
+      "id": "theme-studio / tests/browser/theme-config.spec.ts › native text undo changes only the uncommitted draft and does not consume theme history",
+      "result": "pass",
+      "run": "regression"
+    },
+    {
+      "id": "theme-studio / tests/browser/theme-exchange.spec.ts › JSON review is atomic and cancel, invalid input and rejected code preserve the draft",
+      "result": "pass",
+      "run": "regression"
+    },
+    {
+      "id": "theme-studio / tests/browser/theme-exchange.spec.ts › file import validates before apply and wrong type or size cannot change the theme",
+      "result": "pass",
+      "run": "regression"
+    },
+    {
+      "id": "theme-studio / tests/browser/theme-exchange.spec.ts › a reviewed import cannot apply after another controller change until explicitly reviewed again",
+      "result": "pass",
+      "run": "regression"
+    },
+    {
+      "id": "theme-studio / tests/browser/theme-exchange.spec.ts › all CSS profiles and notations export without editing; JSON and Rust downloads match their previews",
+      "result": "pass",
+      "run": "regression"
+    },
+    {
+      "id": "theme-studio / tests/browser/theme-exchange.spec.ts › clipboard refusal offers selection and download without a false success message",
+      "result": "pass",
+      "run": "regression"
+    },
+    {
+      "id": "theme-studio / tests/browser/theme-exchange.spec.ts › granted clipboard contains the actual exported bytes",
+      "result": "pass",
+      "run": "regression"
+    },
+    {
+      "id": "theme-studio / tests/browser/theme-exchange.spec.ts › fresh download contains exact CSS · resolved values source",
+      "result": "pass",
+      "run": "regression"
+    },
+    {
+      "id": "theme-studio / tests/browser/theme-exchange.spec.ts › fresh download contains exact Rust integration source",
+      "result": "pass",
+      "run": "regression"
+    },
+    {
+      "id": "theme-studio / tests/browser/theme-exchange.spec.ts › export dialogs recenter as contents and viewport change, with reachable actions",
+      "result": "pass",
+      "run": "regression"
+    },
+    {
+      "id": "theme-studio / tests/browser/theme-export-ui.spec.ts › v2 export preserves intent and explicitly reviewed v1 loses configuration, with actual clipboard/download bytes",
+      "result": "pass",
+      "run": "regression"
+    },
+    {
+      "id": "theme-studio / tests/browser/theme-export-ui.spec.ts › copy success waits for the actual clipboard promise",
+      "result": "pass",
+      "run": "regression"
+    },
+    {
+      "id": "theme-studio / tests/browser/theme-gpu.spec.ts › GPU consumes the resolved snapshot › actual solid pixels include all semantics and alpha blends on the checker",
+      "result": "pass",
+      "run": "regression"
+    },
+    {
+      "id": "theme-studio / tests/browser/theme-gpu.spec.ts › GPU consumes the resolved snapshot › host rem, actual font resources and letter spacing change measured layout",
+      "result": "pass",
+      "run": "regression"
+    },
+    {
+      "id": "theme-studio / tests/browser/theme-gpu.spec.ts › GPU consumes the resolved snapshot › soft shadows extend visual bounds without extending hit bounds",
+      "result": "pass",
+      "run": "regression"
+    },
+    {
+      "id": "theme-studio / tests/browser/theme-gpu.spec.ts › GPU consumes the resolved snapshot › controlled inputs update through actions and context restoration uses the latest revision",
+      "result": "pass",
+      "run": "regression"
+    },
+    {
+      "id": "theme-studio / tests/browser/theme-gpu.spec.ts › GPU consumes the resolved snapshot › all six packaged families paint actual Latin, CJK and emoji glyphs",
+      "result": "pass",
+      "run": "regression"
+    },
+    {
+      "id": "theme-studio / tests/browser/theme-startup.spec.ts › latest static product starts without a trap or CSP violation",
+      "result": "pass",
+      "run": "regression"
+    },
+    {
+      "id": "theme-studio / tests/browser/theme-storage.spec.ts › named save, refresh, copy, rename, overwrite and delete retain real checkpoints",
+      "result": "pass",
+      "run": "regression"
+    },
+    {
+      "id": "theme-studio / tests/browser/theme-storage.spec.ts › bad cache is preserved and downloadable; explicit clear touches only the studio key",
+      "result": "pass",
+      "run": "regression"
+    },
+    {
+      "id": "theme-studio / tests/browser/theme-storage.spec.ts › quota failure preserves the previous bytes, in-memory draft and unsaved named library",
+      "result": "pass",
+      "run": "regression"
+    },
+    {
+      "id": "theme-studio / tests/browser/theme-storage.spec.ts › a failed named save keeps the acknowledged draft status and retries its retained action",
+      "result": "pass",
+      "run": "regression"
+    },
+    {
+      "id": "theme-studio / tests/browser/theme-storage.spec.ts › denied localStorage leaves the editor and export available",
+      "result": "pass",
+      "run": "regression"
+    },
+    {
+      "id": "theme-studio / tests/browser/theme-storage.spec.ts › a real other-tab save freezes the draft until explicit load, keep or save-copy",
+      "result": "pass",
+      "run": "regression"
+    },
+    {
+      "id": "theme-studio / tests/browser/theme-storage.spec.ts › failed keep and duplicate conflict-copy retain the unresolved conflict and library",
+      "result": "pass",
+      "run": "regression"
+    },
+    {
+      "id": "theme-studio / tests/browser/theme-ui-review.spec.ts › picking an unannotated control explains the missing mapping without activating it",
+      "result": "pass",
+      "run": "confirm-tests"
+    },
+    {
+      "id": "theme-studio / tests/browser/theme-ui-review.spec.ts › picking a declared action follows its own bounds and exposes its editor source",
+      "result": "pass",
+      "run": "confirm-tests"
+    },
+    {
+      "id": "theme-studio / tests/browser/theme-ui-review.spec.ts › a local opposite appearance and its dialog preserve the root theme",
+      "result": "pass",
+      "run": "confirm-tests"
+    },
+    {
+      "id": "theme-studio / tests/browser/theme-ui-review.spec.ts › invalid numeric text stays visible while the valid theme remains unchanged",
+      "result": "pass",
+      "run": "confirm-tests"
+    },
+    {
+      "id": "theme-studio / tests/browser/theme-ui-review.spec.ts › repeating the selected token value does not resolve its source again",
+      "result": "pass",
+      "run": "confirm-tests"
+    },
+    {
+      "id": "theme-studio / tests/browser/theme-ui-review.spec.ts › editor disposal › queued editor layout work ends with its owner",
+      "result": "pass",
+      "run": "confirm-tests"
+    },
+    {
+      "id": "theme-studio / tests/browser/theme-ui-review.spec.ts › external font faces provide real light, medium, semibold and bold weights",
+      "result": "pass",
+      "run": "confirm-tests"
+    },
+    {
+      "id": "theme-studio / tests/browser/theme-ui-review.spec.ts › the command bar keeps actions visible at 200 percent text size",
+      "result": "pass",
+      "run": "confirm-tests"
+    },
+    {
+      "id": "theme-studio / tests/browser/theme-ui-review.spec.ts › fine adjustment and export retain their content at 200 percent text size",
+      "result": "pass",
+      "run": "confirm-tests"
+    },
+    {
+      "id": "theme-studio / tests/browser/theme-ui-review.spec.ts › the inspector reserves space beside the preview scroll area",
+      "result": "pass",
+      "run": "confirm-tests"
+    },
+    {
+      "id": "theme-studio / tests/browser/theme-ui-review.spec.ts › the command bar stays available on the mobile preview panel",
+      "result": "pass",
+      "run": "confirm-tests"
+    },
+    {
+      "id": "theme-studio / tests/browser/theme-ui-review.spec.ts › shell buttons share the same height across action and ghost variants",
+      "result": "pass",
+      "run": "confirm-tests"
+    },
+    {
+      "id": "theme-studio / tests/browser/theme-ui-review.spec.ts › a selection row keeps its token, source and color controls together",
+      "result": "pass",
+      "run": "confirm-tests"
+    },
+    {
+      "id": "theme-studio / tests/browser/theme-ui-review.spec.ts › anchored export selectors stay in place when output content changes",
+      "result": "pass",
+      "run": "confirm-tests"
+    },
+    {
+      "id": "theme-studio / tests/browser/theme-v2-storage.spec.ts › queued autosave revalidates a changed rem after a real lock wait and remains retryable",
+      "result": "pass",
+      "run": "regression"
+    },
+    {
+      "id": "theme-studio / tests/browser/theme-v2-storage.spec.ts › valid v2 reload reports the restored draft as saved while a new library stays unconfirmed",
+      "result": "pass",
+      "run": "regression"
+    },
+    {
+      "id": "theme-studio / tests/browser/theme-v2-storage.spec.ts › one writer preserves named action order behind a real lock and eventually saves the newest draft and preferences",
+      "result": "pass",
+      "run": "regression"
+    },
+    {
+      "id": "theme-studio / tests/browser/theme-v2-storage.spec.ts › an older named acknowledgement during a live gesture cannot replace identity, history, checkpoint or unsaved status",
+      "result": "pass",
+      "run": "regression"
+    },
+    {
+      "id": "theme-studio / tests/browser/theme-v2-storage.spec.ts › cancelled legacy upgrade stays write-protected through edits, history, mode, preferences and reopening",
+      "result": "pass",
+      "run": "regression"
+    },
+    {
+      "id": "theme-studio / tests/browser/theme-v2-storage.spec.ts › upgrade review is bound to editor epoch and commits only after refreshed explicit confirmation",
+      "result": "pass",
+      "run": "regression"
+    },
+    {
+      "id": "theme-studio / tests/browser/theme-v2-storage.spec.ts › a legacy writer changing reviewed bytes while the upgrade waits for a real lock forces a new review",
+      "result": "pass",
+      "run": "regression"
+    },
+    {
+      "id": "theme-studio / tests/browser/theme-v2-storage.spec.ts › migration backup-write failure never claims a v2 save and explicit retry is idempotent",
+      "result": "pass",
+      "run": "confirm-tests"
+    },
+    {
+      "id": "theme-studio / tests/browser/theme-v2-storage.spec.ts › migration backup-readback failure never claims a v2 save and explicit retry is idempotent",
+      "result": "pass",
+      "run": "confirm-tests"
+    },
+    {
+      "id": "theme-studio / tests/browser/theme-v2-storage.spec.ts › migration v2-write failure never claims a v2 save and explicit retry is idempotent",
+      "result": "pass",
+      "run": "confirm-tests"
+    },
+    {
+      "id": "theme-studio / tests/browser/theme-v2-storage.spec.ts › an immutable backup collision is preserved instead of overwritten during migration",
+      "result": "pass",
+      "run": "confirm-tests"
+    },
+    {
+      "id": "theme-studio / tests/browser/theme-v2-storage.spec.ts › invalid v2 protects its exact bytes without falling back to a valid legacy library",
+      "result": "pass",
+      "run": "regression"
+    },
+    {
+      "id": "theme-studio / tests/browser/theme-v2-storage.spec.ts › legacy unknown-envelope rejects the complete migration and retains downloadable original bytes",
+      "result": "pass",
+      "run": "regression"
+    },
+    {
+      "id": "theme-studio / tests/browser/theme-v2-storage.spec.ts › legacy bad-saved-item rejects the complete migration and retains downloadable original bytes",
+      "result": "pass",
+      "run": "regression"
+    },
+    {
+      "id": "theme-studio / tests/browser/theme-v2-storage.spec.ts › legacy unknown-document rejects the complete migration and retains downloadable original bytes",
+      "result": "pass",
+      "run": "regression"
+    },
+    {
+      "id": "theme-studio / tests/browser/theme-v2-storage.spec.ts › a quota failure retains named requests and later edits until an explicit retry saves their snapshots in order",
+      "result": "pass",
+      "run": "regression"
+    },
+    {
+      "id": "theme-studio / tests/browser/theme-v2-storage.spec.ts › clear uses the reviewed v2 baseline, cancels delayed writes and keeps memory, legacy bytes and backups",
+      "result": "pass",
+      "run": "regression"
+    },
+    {
+      "id": "theme-studio / tests/browser/theme-v2-storage.spec.ts › a third write after clear review requires another decision instead of clearing unreviewed bytes",
+      "result": "pass",
+      "run": "regression"
+    },
+    {
+      "id": "theme-studio / tests/browser/theme-v2-storage.spec.ts › load rechecks reviewed bytes under the lock and a third write requires another explicit decision",
+      "result": "pass",
+      "run": "regression"
+    },
+    {
+      "id": "theme-studio / tests/browser/theme-v2-storage.spec.ts › keep rechecks reviewed bytes under the lock and a third write requires another explicit decision",
+      "result": "pass",
+      "run": "regression"
+    },
+    {
+      "id": "theme-studio / tests/browser/theme-v2-storage.spec.ts › copy rechecks reviewed bytes under the lock and a third write requires another explicit decision",
+      "result": "pass",
+      "run": "regression"
+    },
+    {
+      "id": "theme-studio / tests/browser/theme-v2-storage.spec.ts › Keep approves only its displayed draft while retained named intents require a separate retry or cancellation",
+      "result": "pass",
+      "run": "regression"
+    },
+    {
+      "id": "theme-studio / tests/browser/theme-v2-storage.spec.ts › backup deletion compares its reviewed full key set inside the same lock and ordinary clear leaves every original",
+      "result": "pass",
+      "run": "regression"
+    },
+    {
+      "id": "theme-studio / tests/browser/theme-v2-storage.spec.ts › owner disposal aborts a real pending lock request and cannot write or call destroyed signals after grant",
+      "result": "pass",
+      "run": "regression"
+    },
+    {
+      "id": "theme-studio / tests/browser/theme-v2-storage.spec.ts › the host fatal boundary aborts a real pending write and restart restores only the confirmed draft",
+      "result": "pass",
+      "run": "regression"
+    },
+    {
+      "id": "theme-studio / tests/browser/theme-v2-storage.spec.ts › owner disposal ignores late parameter blur while a real storage lock is pending",
+      "result": "pass",
+      "run": "regression"
+    },
+    {
+      "id": "theme-studio / tests/browser/theme-v2-storage.spec.ts › owner disposal ignores late hsl blur while a real storage lock is pending",
+      "result": "pass",
+      "run": "regression"
+    },
+    {
+      "id": "theme-studio / tests/browser/theme-v2-storage.spec.ts › without Web Locks the editor, undo and downloads work while library actions never claim a save",
+      "result": "pass",
+      "run": "regression"
+    },
+    {
+      "id": "theme-studio / tests/browser/theme-v2-storage.spec.ts › reopening retrieves the SHA-bound original even after an older window changes v1, and a damaged backup is never substituted",
+      "result": "pass",
+      "run": "regression"
+    },
+    {
+      "id": "theme-studio / tests/browser/theme-v2-storage.spec.ts › delayed Save and Delete intents keep their order across undo/redo and finish with the latest committed draft",
+      "result": "pass",
+      "run": "regression"
+    },
+    {
+      "id": "theme-studio / tests/browser/theme-v2-storage.spec.ts › a failed clear reports a retained removal instead of success, and cancellation restores the previous write gate",
+      "result": "pass",
+      "run": "regression"
+    },
+    {
+      "id": "theme-studio / tests/browser/theme-v2-storage.spec.ts › the native guard also prevents writes when disposal occurs just after a real lock is granted",
+      "result": "pass",
+      "run": "regression"
+    },
+    {
+      "id": "theme-studio / tests/browser/theme-v2-storage.spec.ts › denied lock requests pause without an unlocked fallback and preserve export until explicit retry",
+      "result": "pass",
+      "run": "regression"
+    },
+    {
+      "id": "theme-studio / tests/browser/theme-v2-storage.spec.ts › re-entering upgrade review aborts its old lock wait and commits only the newly confirmed candidate",
+      "result": "pass",
+      "run": "regression"
+    },
+    {
+      "id": "theme-studio / tests/browser/theme-v2-storage.spec.ts › an empty external v2 is invalid raw, stays downloadable byte-for-byte and requires explicit reviewed clearing",
+      "result": "pass",
+      "run": "regression"
+    },
+    {
+      "id": "theme-studio / tests/browser/theme-v2-storage.spec.ts › a removed external v2 is shown as absent and Keep explicitly creates a fresh library",
+      "result": "pass",
+      "run": "regression"
+    },
+    {
+      "id": "theme-studio / tests/browser/theme-v2-storage.spec.ts › removing v1 remains a changed-source notice after reopening while the original backup stays retrievable",
+      "result": "pass",
+      "run": "regression"
+    },
+    {
+      "id": "theme-studio / tests/browser/theme-editor.spec.ts › theme editing through the workbench › Inspector suppresses sample actions and chooses actual DOM, GPU and keyboard tokens",
+      "result": "pass",
+      "run": "confirm-tests"
+    },
+    {
+      "id": "theme-studio / tests/browser/theme-review.spec.ts › tracking of optional ligatures matches same-font DOM widths",
+      "result": "fail",
+      "run": "spacing-tests"
+    },
+    {
+      "id": "theme-studio / tests/browser/theme-review.spec.ts › large spacing keeps GPU dropdown and tabs scrollable at 1440px",
+      "result": "pass",
+      "run": "spacing-tests"
+    },
+    {
+      "id": "theme-studio / tests/browser/theme-review.spec.ts › large spacing keeps GPU dropdown and tabs scrollable at 390px",
+      "result": "pass",
+      "run": "spacing-tests"
+    },
+    {
+      "id": "component-catalog / tests/browser/dom-buttons.spec.ts › all button variants and sizes render with scoped focus, hover and icon semantics",
+      "result": "pass",
+      "run": "catalog-tests"
+    },
+    {
+      "id": "component-catalog / tests/browser/dom-buttons.spec.ts › component colors, semantic overrides, radius and scaling remain local",
+      "result": "pass",
+      "run": "catalog-tests"
+    },
+    {
+      "id": "component-catalog / tests/browser/dom-buttons.spec.ts › button size changes only at the six Themes viewport breakpoints",
+      "result": "pass",
+      "run": "catalog-tests"
+    },
+    {
+      "id": "component-catalog / tests/browser/dom-buttons.spec.ts › loading blocks click and native submit or reset while unavailable still delivers requests",
+      "result": "pass",
+      "run": "catalog-tests"
+    },
+    {
+      "id": "component-catalog / tests/browser/dom-buttons.spec.ts › ThemePanel requests stay controlled, preserve overrides and reset only their two-mode group",
+      "result": "pass",
+      "run": "catalog-tests"
+    },
+    {
+      "id": "component-catalog / tests/browser/dom-layout.spec.ts › layout and typography switch at each Themes breakpoint, including both sides",
+      "result": "pass",
+      "run": "catalog-tests"
+    },
+    {
+      "id": "component-catalog / tests/browser/dom-layout.spec.ts › shared layout fields, Container projection and caller utilities keep their meanings",
+      "result": "pass",
+      "run": "catalog-tests"
+    },
+    {
+      "id": "component-catalog / tests/browser/dom-layout.spec.ts › Inset consumes only nearest padding and Reset preserves the native event",
+      "result": "pass",
+      "run": "catalog-tests"
+    },
+    {
+      "id": "component-catalog / tests/browser/dom-layout.spec.ts › theme scaling applies once while absolute values and utility overrides stay exact",
+      "result": "pass",
+      "run": "catalog-tests"
+    },
+    {
+      "id": "component-catalog / tests/browser/dom-layout.spec.ts › Inset selects each side and restores other margins across responsive changes",
+      "result": "pass",
+      "run": "catalog-tests"
+    },
+    {
+      "id": "component-catalog / tests/browser/dom-layout.spec.ts › invalid CSS remains local, reports its prop and accepts a valid replacement",
+      "result": "pass",
+      "run": "catalog-tests"
+    },
+    {
+      "id": "component-catalog / tests/browser/dom-layout.spec.ts › eight typography components and Link retain native semantics and real text",
+      "result": "pass",
+      "run": "catalog-tests"
+    }
+  ],
+  "summary": {
+    "theme-studio": {
+      "distinct": 85,
+      "passed": 84,
+      "failed": 1
+    },
+    "component-catalog": {
+      "distinct": 12,
+      "passed": 12,
+      "failed": 0
+    }
+  },
+  "note": "Counts reuse unchanged passing coverage from the broad run; final confirmation reran UI, migration failures, inspector and spacing paths. The pre-existing Plex Text TTF vs DOM Regular WOFF2 parity failure remains, with no tolerance change."
+}

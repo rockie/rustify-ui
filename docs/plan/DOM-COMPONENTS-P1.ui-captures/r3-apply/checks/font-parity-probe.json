@@ -1,0 +1,62 @@
+{
+  "browser": "153.0.8010.12",
+  "url": "http://127.0.0.1:4181/",
+  "sample": {
+    "id": "font.sans.latin",
+    "token_ids": [
+      "foreground"
+    ],
+    "rect": [
+      24,
+      1576,
+      106.0350112915039,
+      19.5
+    ],
+    "visible_rect": [
+      24.350000381469727,
+      1578.5849609375,
+      106.0100154876709,
+      16.790019035339355
+    ],
+    "hit_rect": null,
+    "visual_rect": null,
+    "rgba": [
+      0.11372549019607843,
+      0.1607843137254902,
+      0.2235294117647059,
+      1
+    ],
+    "radius_px": null,
+    "font": "IBM Plex Sans",
+    "font_size_px": 15,
+    "letter_spacing_em": 0,
+    "layout_size_px": [
+      106.0350112915039,
+      19.5
+    ],
+    "shadow_layers": []
+  },
+  "domWidths": {
+    "IBM Plex Sans": 104.421875,
+    "__R3PlexText": 106.046875
+  },
+  "baseline_resource_comparison": {
+    "web/theme-fonts.css": {
+      "sha256": "51186db86e79f4031cbee3b4cf72ccb8a0284f133fc385a7ea7fdc3e0efcd63f",
+      "unchanged_from": "d5775d8a"
+    },
+    "crates/rustify-dom/src/theme/fonts.rs": {
+      "sha256": "1712210c1b73b1ea68e8a4f25a60ec8c516972bc7d0f8e292962b3cb7f25bcbd",
+      "unchanged_from": "d5775d8a"
+    },
+    "public/fonts/ibm-plex-sans/IBMPlexSans-Regular.woff2": {
+      "sha256": "ba711a3085ff9f27440b6b9c4550cfc47c97bf36591d5da958b975bb3add8c1a",
+      "unchanged_from": "d5775d8a"
+    },
+    "makepad/widgets/resources/IBMPlexSans-Text.ttf": {
+      "sha256": "8c358c56c56f76a28cecb8ca10734c1c9cafa01a752dc8364b9ef7de412437dc",
+      "unchanged_from": "d5775d8a"
+    }
+  },
+  "conclusion": "GPU Plex Text and DOM Plex Regular are different pre-existing resources; browser width with the GPU Text TTF differs from the GPU measurement by about 0.012 px. Original parity test remains failing; no font-source or test-tolerance change was made."
+}

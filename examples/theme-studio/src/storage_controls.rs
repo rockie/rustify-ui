@@ -7,12 +7,46 @@ pub(super) fn reference_status(
     reference: &rustify_ui::ThemeDocument,
     locale: rustify_ui::Locale,
 ) -> String {
-    let name = &reference.name;
     match (document != reference, locale) {
-        (true, rustify_ui::Locale::Chinese) => format!("已偏离“{name}”"),
-        (false, rustify_ui::Locale::Chinese) => format!("与“{name}”一致"),
-        (true, _) => format!("Modified from “{name}”"),
-        (false, _) => format!("Matches “{name}”"),
+        (true, rustify_ui::Locale::Chinese) => "已偏离参考文档".into(),
+        (false, rustify_ui::Locale::Chinese) => "与参考文档一致".into(),
+        (true, _) => "Modified from reference document".into(),
+        (false, _) => "Matches reference document".into(),
+    }
+}
+
+pub(super) fn draft_saved(state: StudioState) -> bool {
+    state.storage_epoch.get();
+    let epoch = state.editor_epoch.get();
+    state.writer.with_value(|writer| {
+        writer
+            .acknowledged
+            .as_ref()
+            .is_some_and(|(saved, _, _)| *saved == epoch)
+    })
+}
+
+pub(super) fn storage_label(state: StudioState) -> &'static str {
+    if !crate::storage_browser::writable() || state.permission() == Permission::UpgradeCancelled {
+        return state.tr("Memory only", "仅内存");
+    }
+    if state.permission() != Permission::Ready || state.external.with(Option::is_some) {
+        return state.tr("Saving paused", "保存已暂停");
+    }
+    if !state.storage_issue.get().is_empty() {
+        return if draft_saved(state) {
+            state.tr("Draft saved · action failed", "草稿已保存 · 操作失败")
+        } else {
+            state.tr("Save failed", "保存失败")
+        };
+    }
+    if state.pending_count() > 0 {
+        return state.tr("Saving…", "正在保存…");
+    }
+    if draft_saved(state) {
+        state.tr("Saved on this device", "已保存到本机")
+    } else {
+        state.tr("Not saved yet", "尚未保存")
     }
 }
 
@@ -26,6 +60,9 @@ pub fn StorageControls(state: StudioState) -> impl IntoView {
             state.permission(),
             Permission::UpgradePending | Permission::UpgradeCancelled | Permission::Upgrading
         )
+    };
+    let normal_state = move || {
+        !upgrade() && state.external.with(Option::is_none) && state.corrupt.with(Option::is_none)
     };
     let pending = Signal::derive(move || state.pending_count());
     let unsaved_draft = Signal::derive(move || {
@@ -114,41 +151,52 @@ pub fn StorageControls(state: StudioState) -> impl IntoView {
     };
     view! {
         <section class="studio-storage tools-stack" aria-label=move || state.tr("Local data safety", "本地数据保护")>
-            <Show when=move || !upgrade() && state.external.with(Option::is_none) && state.corrupt.with(Option::is_none)>
+            <Show when=normal_state>
             <div class=move || format!("tools-storage-state tools-state-{}",tone.get()) role="status">
                 <strong>{move || match tone.get(){
                     "success" if upgraded()=>state.tr("Library upgraded to v2","主题库已升级至 v2"),
                     "success"=>state.tr("Saved","已保存"),
                     "pending"=>state.tr("Saving","正在保存"),
-                    "error"=>state.tr("Memory only · save failed","仅内存 · 保存失败"),
+                    "error" if state.storage_issue.get().contains("Quota")=>state.tr("Storage full · new saves stay in memory","存储已满 · 新保存暂留内存"),
+                    "error"=>state.tr("Local save failed · new saves stay in memory","本地保存失败 · 新保存暂留内存"),
                     "warning" if !crate::storage_browser::writable()=>state.tr("Memory only · local saving unavailable","仅内存 · 无法保存到本机"),
                     "warning"=>state.tr("Memory only · saving paused","仅内存 · 保存已暂停"),
                     _=>state.tr("Memory only · not saved yet","仅内存 · 尚未保存"),
                 }}</strong>
-                <p class="tools-status" data-testid="storage-status">{move || if !state.storage_issue.get().is_empty(){state.tr("Local save failed. Your draft and pending actions stay in memory. Download or export a copy before leaving.","本地保存失败。草稿与待处理操作保留在内存中，离开前请下载或导出副本。").into()}else{state.storage_status.get()}}</p>
-                <Show when=upgraded><p class="tools-status">{move || format!("{} {}",state.envelope.with(|envelope|envelope.saved_themes.len()),state.tr("saved themes retained. Use “Download original data” to back up the library before upgrade.","个命名主题已保留。请使用“下载原始数据”备份升级前的主题库。"))}</p></Show>
+                <p data-testid="storage-status">{move || {
+                    if !state.storage_issue.get().is_empty() {
+                        if draft_saved(state) {state.tr("The current draft is saved on this device. A later library action failed and is retained for retry; new saves stay in memory.","当前草稿已保存到本机。之后的主题库操作失败并已保留供重试，新保存暂留内存。")} else {state.tr("Local save failed. Your current draft and pending actions stay in memory. Download or export a copy before leaving.","本地保存失败。当前草稿与待处理操作保留在内存，离开前请下载或导出副本。")}.to_owned()
+                    }else if upgraded() {state.tr("All saved themes and your current draft were retained.","全部命名主题与当前草稿已保留。").to_owned()}else{state.storage_status.get()}
+                }}</p>
+                <Show when=upgraded><p class="tools-status">{move || format!("{} {}",state.envelope.with(|envelope|envelope.saved_themes.len()),state.tr("saved themes retained. Original data keeps a copy of the library from before the upgrade.","个命名主题已保留。原始数据保存着升级前的主题库副本。"))}</p></Show>
+                <Show when=move ||!state.storage_issue.get().is_empty()><Button size=ButtonSize::One on_click=move ||state.retry_storage() test_id="storage-callout-retry">{move ||state.tr("Retry save","重试保存")}</Button></Show>
                 <Show when=move || matches!(tone.get(),"warning"|"error"|"memory")>
-                    <Button size=ButtonSize::One variant=ButtonVariant::Outline on_click=move || download_current() test_id="storage-export">{move || state.tr("Download current theme", "下载当前主题")}</Button>
+                    <Button size=ButtonSize::One variant=Signal::derive(move ||if tone.get()=="error" {ButtonVariant::Outline}else{ButtonVariant::Solid}) on_click=move || download_current() test_id="storage-export">{move || state.tr("Download current theme", "下载当前主题")}</Button>
                 </Show>
                 <Show when=move ||state.legacy_raw.with(Option::is_some) || state.envelope.with(|envelope|envelope.migrated_from_v1.is_some())><Button size=ButtonSize::One variant=ButtonVariant::Outline on_click=move ||state.download_legacy() test_id="legacy-download">{move ||state.tr("Download original data","下载原始数据")}</Button></Show>
+                <Show when=move ||!state.storage_issue.get().is_empty()><details data-testid="storage-issue"><summary>{move ||state.tr("Technical details","技术详情")}</summary><code>{move ||state.storage_issue.get()}</code></details></Show>
                 <p class="tools-status" role="status">{move ||download_status.get()}</p>
             </div>
             </Show>
             <Show when=upgrade>
                 <div class="tools-notice tools-state-warning" data-testid="upgrade-notice" data-upgrade-state=move || format!("{:?}", state.permission())>
                     <h3>{move || if state.permission()==Permission::UpgradeCancelled{state.tr("Memory only · upgrade cancelled","仅内存 · 已取消升级")}else{state.tr("Review the library upgrade","检查主题库升级")}}</h3>
-                    <p data-testid="storage-status">{move ||state.storage_status.get()}</p>
-                    <p>{move || if state.permission() == Permission::UpgradeCancelled {state.tr("Reopening restores the original draft. Download your current theme to keep these memory-only edits.", "重新打开会恢复原草稿。请下载当前主题，以保留仅在内存中的改动。")} else {state.tr("Editing, undo/redo and export remain available while confirmation is pending.", "等待确认期间仍可编辑、撤销/重做与导出。")}}</p>
+                    <p data-testid="storage-status">{move || if state.permission()==Permission::UpgradeCancelled {state.tr("Reopening restores the original draft. Download your current theme to keep these memory-only edits.","重新打开会恢复原草稿。请下载当前主题，以保留仅在内存中的改动。").to_owned()}else{state.storage_status.get()}}</p>
+                    <Show when=move ||state.permission()!=Permission::UpgradeCancelled><p class="tools-status">{move ||state.tr("Editing, undo/redo and export remain available while confirmation is pending.","等待确认期间仍可编辑、撤销/重做与导出。")}</p></Show>
                     <div class="tools-actions">
                         <Button on_click=move || state.review_upgrade() test_id="upgrade-review-open">{move || if state.permission()==Permission::UpgradeCancelled{state.tr("Review upgrade again","重新检查升级")}else{state.tr("Review upgrade", "检查升级")}}</Button>
+                        <Show when=move ||state.permission()==Permission::UpgradeCancelled><Button variant=ButtonVariant::Outline on_click=move ||download_current() test_id="storage-export">{move ||state.tr("Download current theme","下载当前主题")}</Button></Show>
                         <Button variant=ButtonVariant::Outline on_click=move || state.download_legacy() test_id="legacy-download">{move || state.tr("Download original data", "下载原始数据")}</Button>
                         <Show when=move ||state.permission()!=Permission::UpgradeCancelled && state.upgrade_review.with(Option::is_none)><Button variant=ButtonVariant::Ghost on_click=move || state.cancel_storage() test_id="upgrade-cancel">{move || state.tr("Cancel upgrade", "取消升级")}</Button></Show>
                     </div>
                 </div>
             </Show>
+            <Show when=move || !normal_state() && !state.storage_issue.get().is_empty()>
+                <details class="tools-notice" data-testid="storage-issue"><summary>{move ||state.tr("Technical details","技术详情")}</summary><code>{move ||state.storage_issue.get()}</code></details>
+            </Show>
             <Dialog open=Signal::derive(move || state.upgrade_review.with(Option::is_some))
                 on_open_change=move |open|if !open{state.upgrade_review.set(None);}
-                title=Signal::derive(move ||state.tr("Review the complete migration","检查完整迁移").to_owned())
+                title=Signal::derive(move ||state.tr("Review the library upgrade","检查主题库升级").to_owned())
                 class="tools-dialog tools-upgrade-dialog" test_id="upgrade-review">
                 <div class="tools-stack">
                     <p>{move || state.tr("Review every saved theme, the current draft and preferences before upgrading. Confirmation preserves your editing history and preview mode.", "升级前请核对全部命名主题、当前草稿和偏好。确认会保留编辑历史与预览模式。")}</p>
@@ -183,7 +231,7 @@ pub fn StorageControls(state: StudioState) -> impl IntoView {
                             </dl>
                         }
                     })}
-                    <details><summary>{move || state.tr("Complete migration JSON","完整迁移 JSON")}</summary>
+                    <details><summary>{move || state.tr("Complete library upgrade JSON","完整主题库升级 JSON")}</summary>
                         <textarea class="tools-code tools-raw" rows="12" readonly aria-label=move || state.tr("Complete upgrade candidate", "完整升级候选") data-testid="upgrade-candidate"
                             prop:value=move || state.upgrade_review.with(|review| review.as_ref().map(|review| serde_json::to_string_pretty(&review.candidate).unwrap_or_default()).unwrap_or_default())/>
                     </details>
@@ -196,11 +244,10 @@ pub fn StorageControls(state: StudioState) -> impl IntoView {
                             if state.permission()==Permission::Upgrading{state.upgrade_review.set(None);}
                         } loading=Signal::derive(move || state.permission() == Permission::Upgrading) test_id="upgrade-confirm">{move || state.tr("Upgrade and save current draft", "升级并保存当前草稿")}</Button>
                         <Button variant=ButtonVariant::Outline on_click=move ||state.download_legacy() test_id="upgrade-download-original">{move ||state.tr("Download original data","下载原始数据")}</Button>
-                        <Button variant=ButtonVariant::Outline on_click=move ||state.cancel_storage() test_id="upgrade-cancel">{move ||state.tr("Cancel upgrade","取消升级")}</Button>
+                        <Button variant=ButtonVariant::Ghost on_click=move ||state.cancel_storage() test_id="upgrade-cancel">{move ||state.tr("Cancel upgrade","取消升级")}</Button>
                     </div>
                 </div>
             </Dialog>
-            <Show when=move || !state.storage_issue.get().is_empty()><details data-testid="storage-issue"><summary>{move || state.tr("Technical details","技术详情")}</summary><code>{move || state.storage_issue.get()}</code></details></Show>
             <Show when=move || state.legacy_changed.get()>
                 <div class="tools-notice" data-testid="legacy-changed">
                     <p>{move || state.tr("An older window changed the v1 library. It was not merged into v2. The original backup remains separate.", "旧版窗口修改了 v1 库，未合并到 v2；升级前备份仍独立保留。")}</p>
@@ -214,23 +261,26 @@ pub fn StorageControls(state: StudioState) -> impl IntoView {
                     "failed"=>state.tr("failed; retained for retry. Export remains available","失败，已保留供重试，仍可导出"),
                     "rejected" if matches!(state.permission(),Permission::UpgradePending|Permission::UpgradeCancelled|Permission::Upgrading)=>state.tr("not saved; review the library upgrade before saving this named theme","未保存，请先检查主题库升级，再保存此命名主题"),
                     "rejected" if !crate::storage_browser::writable()=>state.tr("not saved; local saving is unavailable. Download or export a copy","未保存，无法保存到本机，请下载或导出副本"),
-                    "rejected" if state.permission()==Permission::Ready && state.external.with(Option::is_none)=>state.tr("not saved earlier. Use Save locally to try again","先前未保存，请使用“保存到本机”重试"),
+                    "rejected" if state.permission()==Permission::Ready && state.external.with(Option::is_none)=>state.tr("not saved earlier","先前未保存"),
                     "rejected"=>state.tr("not saved; review the storage warning first","未保存，请先处理存储提示"),
                     "cancelled"=>state.tr("cancelled","已取消"),
                     _=>state.tr("waiting to save","等待保存")
                 };
                 let id=outcome.id;
                 let retry_name=outcome.detail.clone();
-                let can_retry=outcome.kind=="save" && outcome.state=="rejected" && state.permission()==Permission::Ready && crate::storage_browser::writable() && state.external.with(Option::is_none);
+                let can_retry=outcome.kind=="save" && matches!(outcome.state,"rejected"|"failed") && state.permission()==Permission::Ready && crate::storage_browser::writable() && state.external.with(Option::is_none);
+                let retry_failed=outcome.state=="failed";
+                let retry_label=if retry_failed {format!("{} · “{}”",state.tr("Retry retained saves","重试已保留的保存"),outcome.detail)}else if state.locale().get()==rustify_ui::Locale::Chinese {format!("立即保存“{}”",outcome.detail)}else{format!("Save “{}” now",outcome.detail)};
+                let retry_label=StoredValue::new(retry_label);
                 view!{<div class=if outcome.state=="failed" {"tools-notice tools-state-error"} else if outcome.state=="rejected" && !can_retry {"tools-notice tools-state-warning"} else {"tools-notice"} role="status" data-testid="named-storage-feedback" data-result=outcome.state>
                     <p>{format!("{action} “{}” · {result}.",outcome.detail)}</p>
-                    <div class="tools-actions"><Show when=move ||can_retry><Button size=ButtonSize::One on_click={let name=retry_name.clone();move ||state.save_named(name.clone(),None)}>{format!("{} “{}”",state.tr("Save now","立即保存"),outcome.detail)}</Button></Show>
+                    <div class="tools-actions"><Show when=move ||can_retry><Button size=ButtonSize::One on_click={let name=retry_name.clone();move ||if retry_failed {state.retry_storage()}else{state.save_named(name.clone(),None)}}>{retry_label.get_value()}</Button></Show>
                     <Button size=ButtonSize::One variant=ButtonVariant::Ghost on_click=move ||dismissed_outcome.set(Some(id))>{move ||state.tr("Dismiss","关闭提示")}</Button></div>
                 </div>}
             })}
             <details data-testid="storage-operations">
                 <summary>{move || format!("{} {} · {} {}",pending.get(),state.tr("pending","项待处理"),outcomes.with(Vec::len),if outcomes.with(Vec::len)==1 {state.tr("recent operation","项最近操作")}else{state.tr("recent operations","项最近操作")})}</summary>
-                <p class="tools-status">{move || state.tr("Retry saves the listed actions in order. Cancel removes pending saves and keeps your draft and undo history. Loading the other version removes all pending actions.", "重试会明确按原顺序执行已保留的操作。取消只丢弃待写操作，保留当前草稿与历史。载入另一版本会放弃全部待处理操作。")}</p>
+                <p class="tools-status">{move ||state.tr("Retry saves the listed actions in order. Cancel removes pending saves and keeps your draft and undo history.","重试会按原顺序保存已保留的操作。取消只丢弃待写操作，保留当前草稿与历史。")}{move ||state.external.with(Option::is_some).then(||state.tr(" Loading the other version removes all pending actions.","载入另一版本会放弃全部待处理操作。"))}</p>
                 <ol><For each=move || outcomes.get()
                     key=|outcome| (outcome.id, outcome.state) let:outcome>
                     <li data-op-id=outcome.id data-op-kind=outcome.kind data-op-state=outcome.state>
@@ -238,7 +288,7 @@ pub fn StorageControls(state: StudioState) -> impl IntoView {
                             let kind = match outcome.kind {"autosave" => state.tr("Draft", "草稿"), "save" => state.tr("Save", "保存"), "copy" | "conflict-copy" => state.tr("Copy", "副本"), "rename" => state.tr("Rename", "改名"), "delete" => state.tr("Delete", "删除"), "upgrade" => state.tr("Upgrade", "升级"), "clear" | "clear-backups" => state.tr("Clear", "清除"), "load" => state.tr("Load", "载入"), _ => state.tr("Keep", "保留")};
                             let status = match outcome.state {"saved" => state.tr("confirmed", "已确认"), "failed" => state.tr("failed; retained", "失败，已保留"), "superseded" => state.tr("merged into newer draft", "已合并到更新草稿"), "cancelled" => state.tr("cancelled", "已取消"), "rejected" => state.tr("not queued; storage protected", "未入队，存储受保护"), _ => state.tr("pending", "待处理")};
                             let name=if outcome.detail.is_empty(){String::new()}else{format!(" “{}”",outcome.detail)};
-                            format!("#{} · {kind}{name} · {status} ({} {})",outcome.id,state.tr("draft revision","草稿修订"),outcome.epoch)
+                            view!{<span>{format!("#{} · {kind}{name} · {status} ",outcome.id)}</span><span class="tools-op-revision">{format!("({} {})",state.tr("draft revision","草稿修订"),outcome.epoch)}</span>}
                         }}
                     </li>
                 </For></ol>
@@ -326,7 +376,7 @@ pub fn TokenSource(state: StudioState) -> impl IntoView {
     });
     let revealed = Memo::new(move |_| {
         let Some((document, token, mode, rem, reduce_motion, locale)) = revealed_input.get() else {
-            return String::new();
+            return Vec::new();
         };
         let context = rustify_ui::theme::font_context(rem, reduce_motion);
         let modes = if rustify_ui::theme::COMMON_TOKENS.contains(&token.as_str()) {
@@ -341,36 +391,40 @@ pub fn TokenSource(state: StudioState) -> impl IntoView {
                     .ok()
                     .and_then(|theme| theme.values.0.get(&token).cloned())
                     .map(|value| {
-                        format!(
-                            "{}: {value}",
+                        (
                             match (mode, locale) {
-                                (rustify_ui::ThemeMode::Light, rustify_ui::Locale::English) =>
-                                    "Light",
-                                (rustify_ui::ThemeMode::Light, rustify_ui::Locale::Chinese) =>
-                                    "浅色",
-                                (rustify_ui::ThemeMode::Dark, rustify_ui::Locale::English) =>
-                                    "Dark",
-                                (rustify_ui::ThemeMode::Dark, rustify_ui::Locale::Chinese) =>
-                                    "深色",
-                            }
+                                (rustify_ui::ThemeMode::Light, rustify_ui::Locale::English) => {
+                                    "Light"
+                                }
+                                (rustify_ui::ThemeMode::Light, rustify_ui::Locale::Chinese) => {
+                                    "浅色"
+                                }
+                                (rustify_ui::ThemeMode::Dark, rustify_ui::Locale::English) => {
+                                    "Dark"
+                                }
+                                (rustify_ui::ThemeMode::Dark, rustify_ui::Locale::Chinese) => {
+                                    "深色"
+                                }
+                            },
+                            value,
                         )
                     })
             })
             .collect::<Vec<_>>()
-            .join(" · ")
     });
     view! {
         <section class="studio-token-source tools-stack" data-testid="token-source">
             <h3>{move || state.tr("Fine adjustment source", "精调来源")}</h3>
-            <code data-testid="source-token">{move || state.selected_token.get()}</code>
-            <dl class="tools-summary tools-migration-summary"><dt>{move ||state.tr("Effective value","有效值")}</dt><dd><code data-testid="source-effective">{move ||state.values().get().0.get(&state.selected_token.get()).cloned().unwrap_or_default()}</code></dd></dl>
-            <p data-testid="source-kind">{move || {
+            <dl class="tools-summary tools-source-summary">
+            <dt>"Token"</dt><dd><code data-testid="source-token">{move || state.selected_token.get()}</code></dd>
+            <dt>{move ||state.tr("Effective value","有效值")}</dt><dd><code data-testid="source-effective">{move ||state.values().get().0.get(&state.selected_token.get()).cloned().unwrap_or_default()}</code></dd>
+            <dt>{move ||state.tr("Source","来源")}</dt><dd data-testid="source-kind">{move || {
                 use rustify_ui::ThemeValueOrigin;
                 let token = state.selected_token.get();
                 let origin = state.resolved().get().origins.get(token.as_str()).copied();
                 match origin {Some(ThemeValueOrigin::DocumentOverride) => state.tr("Explicit document override", "文档显式覆盖"), Some(ThemeValueOrigin::Configuration(_)) => state.tr("Generated by base configuration", "基础配置生成"), Some(ThemeValueOrigin::BoundaryConfiguration {..}) => state.tr("Boundary configuration", "边界配置生成"), Some(ThemeValueOrigin::BoundaryOverride {..}) => state.tr("Boundary override", "边界覆盖"), _ => state.tr("Authored base value", "作者基础值")}
-            }}</p>
-            <code class="tools-source-path" data-testid="source-path">{move ||{
+            }}</dd>
+            <dt>{move ||state.tr("Path","路径")}</dt><dd><code class="tools-source-path" data-testid="source-path">{move ||{
                 use rustify_ui::{ThemeValueOrigin, ThemeConfigGroup, ThemeMode};
                 let token=state.selected_token.get();
                 let theme=state.resolved().get();
@@ -394,10 +448,12 @@ pub fn TokenSource(state: StudioState) -> impl IntoView {
                     },
                     _=>format!("base.{mode}.{token}"),
                 }
-            }}</code>
-            <p class="tools-status"><Show when=move ||overridden.get() fallback=move ||state.tr("This value has no explicit override to clear. Change its base configuration or authored base value to adjust it.","此值没有可解除的显式覆盖，可通过基础配置或作者基础值调整。")>
-                {move ||state.tr("Clearing this override reveals","解除此覆盖后显示")}" "<code>{move ||revealed.get()}</code>". "{move ||state.tr("Other tokens stay unchanged.","其他 token 保持不变。")}
-            </Show></p>
+            }}</code></dd>
+            <dt>{move ||state.tr("If cleared","解除后")}</dt><dd><Show when=move ||overridden.get() fallback=move ||state.tr("This value has no explicit override to clear. Change its base configuration or authored base value to adjust it.","此值没有可解除的显式覆盖，可通过基础配置或作者基础值调整。")>
+                {move ||revealed.get().into_iter().map(|(mode,value)|view!{<span class="tools-revealed-value">{mode}": "<code>{value}</code></span>}).collect_view()}
+                <p class="tools-status">{move ||state.tr("Other tokens stay unchanged.","其他 token 保持不变。")}</p>
+            </Show></dd>
+            </dl>
             <Button size=ButtonSize::One variant=ButtonVariant::Outline disabled=Signal::derive(move || !overridden.get()) on_click=move || state.clear_override(&state.selected_token.get_untracked()) test_id="source-clear">
                 {move || format!("{} {} · {}",state.tr("Clear","解除"),state.selected_token.get(),if rustify_ui::theme::COMMON_TOKENS.contains(&state.selected_token.get().as_str()){state.tr("both modes","两模式")}else if state.mode().get()==rustify_ui::ThemeMode::Light{state.tr("Light only","仅浅色")}else{state.tr("Dark only","仅深色")})}
             </Button>

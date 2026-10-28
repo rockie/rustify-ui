@@ -370,22 +370,66 @@ mod ui {
                     on:click=move |_| {
                         selected.set(token.into());
                         rustify_ui::next_frame(move || {
-                            if let Ok(Some(editor))=document().query_selector(".ce-selection") {editor.scroll_into_view();}
+                            reveal_selection(token);
                         });
                     }>
                     <ColorSwatch values=values token=token />
                     <span class="ce-token-copy"><span class="ce-token-name">{token}</span>
                         <span class="ce-token-value">{move || values.with(|values|author(values,token))}</span>
-                        <Show when=move || overridden.with(|tokens|tokens.iter().any(|value|value==token))><span class="ce-override-badge">{move ||format!("{} · {}",tr(locale.get(),"Overridden","已覆盖"),if preview_mode.get()==ThemeMode::Light {tr(locale.get(),"Light","浅色")} else {tr(locale.get(),"Dark","深色")})}</span></Show>
                     </span>
+                    <Show when=move || overridden.with(|tokens|tokens.iter().any(|value|value==token))><span class="ce-token-status"><span class="ce-override-badge">{move ||tr(locale.get(),"Overridden","已覆盖")}</span><span class="ce-token-mode">{move ||if preview_mode.get()==ThemeMode::Light {tr(locale.get(),"Light","浅色")} else {tr(locale.get(),"Dark","深色")}}</span></span></Show>
                 </button>
                 <button type="button" class="ce-token-reset" data-testid=format!("color-reset-{token}")
-                    aria-label=move || format!("{} {token} · {}",if overridden.with(|tokens|tokens.iter().any(|value|value==token)) {tr(locale.get(),"Clear override for","解除覆盖：")} else {tr(locale.get(),"No override for","没有覆盖：")}, if locale.get()==Locale::Chinese {"当前预览模式"}else{"current preview mode"})
-                    title=move || if overridden.with(|tokens|tokens.iter().any(|value|value==token)) {tr(locale.get(),"Clear override in this preview mode","解除当前预览模式的覆盖")} else {tr(locale.get(),"No override to clear","没有可解除的覆盖")}
+                    aria-label=move || format!("{} {token} · {}",if overridden.with(|tokens|tokens.iter().any(|value|value==token)) {tr(locale.get(),"Clear","解除")} else {tr(locale.get(),"No override for","没有覆盖：")},if preview_mode.get()==ThemeMode::Light {tr(locale.get(),"Light only","仅浅色")} else {tr(locale.get(),"Dark only","仅深色")})
+                    title=move || format!("{} {token} · {}",if overridden.with(|tokens|tokens.iter().any(|value|value==token)) {tr(locale.get(),"Clear","解除")} else {tr(locale.get(),"No override for","没有覆盖：")},if preview_mode.get()==ThemeMode::Light {tr(locale.get(),"Light only","仅浅色")} else {tr(locale.get(),"Dark only","仅深色")})
                     aria-disabled=move || (!overridden.with(|tokens|tokens.iter().any(|value|value==token))).to_string()
                     disabled=move || !overridden.with(|tokens|tokens.iter().any(|value|value==token))
                     on:click=move |_| callbacks.with_value(|callbacks|(callbacks.reset)(token.into()))>"↺"</button>
             </div>
+        }
+    }
+
+    fn reveal_selection(token: &str) {
+        let Ok(Some(button)) =
+            document().query_selector(&format!("[data-testid='color-token-{token}']"))
+        else {
+            return;
+        };
+        let Ok(Some(clear)) = document().query_selector("[data-testid='source-clear']") else {
+            return;
+        };
+        let mut ancestor = button.parent_element();
+        while let Some(element) = ancestor {
+            if element.scroll_height() > element.client_height() {
+                if let Ok(Some(style)) = window().get_computed_style(&element) {
+                    if style
+                        .get_property_value("overflow-y")
+                        .is_ok_and(|value| matches!(value.as_str(), "auto" | "scroll"))
+                    {
+                        let bounds = element.get_bounding_client_rect();
+                        let padding = style
+                            .get_property_value("scroll-padding-top")
+                            .ok()
+                            .and_then(|value| value.trim_end_matches("px").parse::<f64>().ok())
+                            .unwrap_or(0.);
+                        let top = bounds.top() + padding;
+                        let bottom = bounds.bottom() - padding;
+                        let start = button.get_bounding_client_rect().top();
+                        let end = clear.get_bounding_client_rect().bottom();
+                        let delta = if start < top {
+                            start - top
+                        } else if end > bottom && end - start <= bottom - top {
+                            end - bottom
+                        } else {
+                            0.
+                        };
+                        element.set_scroll_top(element.scroll_top() + delta);
+                        element.set_scroll_left(0.);
+                        break;
+                    }
+                }
+            }
+            ancestor = element.parent_element();
         }
     }
 
@@ -675,6 +719,12 @@ mod ui {
                             source.scroll_into_view();
                         }
                     }
+                }
+                if document().active_element().is_some_and(|element| {
+                    element.get_attribute("data-testid").as_deref()
+                        == Some(&format!("color-token-{token}"))
+                }) {
+                    reveal_selection(&token);
                 }
             })));
         });

@@ -27,8 +27,8 @@ test("v2 export preserves intent and explicitly reviewed v1 loses configuration,
   await page.getByTestId("theme-import").click();
   await page.getByTestId("import-source").fill(JSON.stringify(candidate));
   await page.getByTestId("import-review").click();
-  await expect(page.getByTestId("import-version")).toHaveText("JSON v2 → v2");
-  await expect(page.getByTestId("import-config").locator("div").filter({has:page.getByText("Scaling",{exact:true})})).toContainText("100% → 110%");
+  await expect(page.getByTestId("import-version")).toHaveText("Theme JSON v2 · saved as v2");
+  await expect(page.getByTestId("import-config").locator("div").filter({has:page.getByText("Scaling",{exact:true})}).locator("dd")).toHaveText(["100%", "110%Changed"]);
   expect((await snapshot(page)).document).toEqual(before.document);
   await page.getByTestId("import-apply").click();
   const applied=await snapshot(page);expect(applied.document).toEqual(candidate);

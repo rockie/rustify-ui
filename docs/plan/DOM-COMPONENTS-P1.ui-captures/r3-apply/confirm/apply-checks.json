@@ -1,0 +1,234 @@
+{
+  "source-1440": {
+    "token": {
+      "x": 20,
+      "y": 341.5,
+      "w": 253,
+      "h": 77.890625,
+      "bottom": 419.390625
+    },
+    "source": {
+      "x": 20,
+      "y": 532.28125,
+      "w": 279,
+      "h": 351.265625,
+      "bottom": 883.546875
+    },
+    "clear": {
+      "x": 20,
+      "y": 851.359375,
+      "w": 167.34375,
+      "h": 32.1875,
+      "bottom": 883.546875
+    },
+    "editor": {
+      "x": 0,
+      "y": 57.1875,
+      "w": 320,
+      "h": 842.8125,
+      "bottom": 900
+    },
+    "scrollWidth": 319,
+    "clientWidth": 319
+  },
+  "groupGaps": [
+    {
+      "text": "OverriddenLight 6 · Dark 6",
+      "gap": 8,
+      "color": "rgb(71, 84, 103)"
+    },
+    {
+      "text": "OverriddenLight 15 · Dark 15",
+      "gap": 8,
+      "color": "rgb(71, 84, 103)"
+    },
+    {
+      "text": "OverriddenLight 2 · Dark 2",
+      "gap": 8,
+      "color": "rgb(71, 84, 103)"
+    },
+    {
+      "text": "OverriddenLight 1 · Dark 1",
+      "gap": 8,
+      "color": "rgb(71, 84, 103)"
+    }
+  ],
+  "reset": {
+    "label": "Clear primary · Light only",
+    "title": "Clear primary · Light only"
+  },
+  "toggleWidths": {
+    "before": [
+      {
+        "id": "preview-scene",
+        "w": 83.59375,
+        "x": 344
+      },
+      {
+        "id": "preview-width",
+        "w": 116.8125,
+        "x": 435.59375
+      },
+      {
+        "id": "renderer-dom",
+        "w": 50.828125,
+        "x": 560.40625
+      },
+      {
+        "id": "renderer-gpu",
+        "w": 48.5625,
+        "x": 610.234375
+      },
+      {
+        "id": "renderer-compare",
+        "w": 91.328125,
+        "x": 657.796875
+      },
+      {
+        "id": "inspector-toggle",
+        "w": 68.21875,
+        "x": 757.125
+      },
+      {
+        "id": "preview-focus",
+        "w": 108.515625,
+        "x": 833.34375
+      },
+      {
+        "id": "preview-back-edit",
+        "w": 0,
+        "x": 0
+      }
+    ],
+    "after": [
+      {
+        "id": "preview-scene",
+        "w": 83.59375,
+        "x": 344
+      },
+      {
+        "id": "preview-width",
+        "w": 116.8125,
+        "x": 435.59375
+      },
+      {
+        "id": "renderer-dom",
+        "w": 50.828125,
+        "x": 560.40625
+      },
+      {
+        "id": "renderer-gpu",
+        "w": 48.5625,
+        "x": 610.234375
+      },
+      {
+        "id": "renderer-compare",
+        "w": 91.328125,
+        "x": 657.796875
+      },
+      {
+        "id": "inspector-toggle",
+        "w": 68.21875,
+        "x": 757.125
+      },
+      {
+        "id": "preview-focus",
+        "w": 108.515625,
+        "x": 833.34375
+      },
+      {
+        "id": "preview-back-edit",
+        "w": 0,
+        "x": 0
+      }
+    ]
+  },
+  "source-768": {
+    "token": {
+      "x": 16,
+      "y": 465.6875,
+      "w": 261,
+      "h": 77.890625,
+      "bottom": 543.578125
+    },
+    "source": {
+      "x": 16,
+      "y": 656.46875,
+      "w": 287,
+      "h": 351.265625,
+      "bottom": 1007.734375
+    },
+    "clear": {
+      "x": 16,
+      "y": 975.546875,
+      "w": 167.34375,
+      "h": 32.1875,
+      "bottom": 1007.734375
+    },
+    "editor": {
+      "x": 0,
+      "y": 89.375,
+      "w": 320,
+      "h": 934.625,
+      "bottom": 1024
+    },
+    "scrollWidth": 319,
+    "clientWidth": 319
+  },
+  "source-390": {
+    "token": {
+      "x": 16,
+      "y": 285.609375,
+      "w": 332,
+      "h": 77.890625,
+      "bottom": 363.5
+    },
+    "source": {
+      "x": 16,
+      "y": 476.390625,
+      "w": 358,
+      "h": 351.265625,
+      "bottom": 827.65625
+    },
+    "clear": {
+      "x": 16,
+      "y": 795.46875,
+      "w": 167.34375,
+      "h": 32.1875,
+      "bottom": 827.65625
+    },
+    "editor": {
+      "x": 0,
+      "y": 127.984375,
+      "w": 390,
+      "h": 716.015625,
+      "bottom": 844
+    },
+    "scrollWidth": 390,
+    "clientWidth": 390
+  },
+  "zoom200": {
+    "editor": {
+      "scrollWidth": 319,
+      "clientWidth": 319,
+      "scrollLeft": 0
+    },
+    "preview": {
+      "scrollWidth": 400,
+      "clientWidth": 400
+    },
+    "toolbarHeight": 252.59375,
+    "toolbarRatio": 0.28065972222222224,
+    "effective": {
+      "text": "#1570ef",
+      "left": 32,
+      "right": 132.828125
+    },
+    "output": {
+      "text": "Theme JSON v2",
+      "width": 558,
+      "scrollWidth": 556,
+      "clientWidth": 556
+    }
+  }
+}

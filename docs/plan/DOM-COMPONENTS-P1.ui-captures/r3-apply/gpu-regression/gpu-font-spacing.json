@@ -1,0 +1,3122 @@
+{
+  "document": {
+    "schema_version": 2,
+    "id": "rustify-light",
+    "name": "Rustify Light",
+    "base": {
+      "light": {
+        "accent": "#12b76a",
+        "accent-foreground": "#ffffff",
+        "background": "#f9fafb",
+        "border": "#858f9e",
+        "card": "#ffffff",
+        "card-foreground": "#1d2939",
+        "chart-1": "#1570ef",
+        "chart-2": "#12b76a",
+        "chart-3": "#f79009",
+        "chart-4": "#d92d20",
+        "chart-5": "#667085",
+        "destructive": "#d92d20",
+        "destructive-foreground": "#ffffff",
+        "font-mono": "Liberation Mono, monospace",
+        "font-sans": "IBM Plex Sans, sans-serif",
+        "font-serif": "ui-serif, serif",
+        "font-size": "15px",
+        "foreground": "#1d2939",
+        "input": "#ffffff",
+        "layout-gap": "8px",
+        "letter-spacing": "0em",
+        "muted": "#f2f4f7",
+        "muted-foreground": "#667085",
+        "popover": "#ffffff",
+        "popover-foreground": "#1d2939",
+        "primary": "#1570ef",
+        "primary-foreground": "#ffffff",
+        "radius": "6px",
+        "reduce-motion": "false",
+        "ring": "#1570ef",
+        "secondary": "#eaecf0",
+        "secondary-foreground": "#1d2939",
+        "shadow-blur": "0px",
+        "shadow-color": "#000000",
+        "shadow-offset-x": "0px",
+        "shadow-offset-y": "0px",
+        "shadow-opacity": "0",
+        "shadow-spread": "0px",
+        "sidebar": "#f9fafb",
+        "sidebar-accent": "#eaecf0",
+        "sidebar-accent-foreground": "#1d2939",
+        "sidebar-border": "#858f9e",
+        "sidebar-foreground": "#1d2939",
+        "sidebar-primary": "#1570ef",
+        "sidebar-primary-foreground": "#ffffff",
+        "sidebar-ring": "#1570ef",
+        "spacing": "0.25rem",
+        "success": "#12b76a",
+        "warning": "#f79009"
+      },
+      "dark": {
+        "accent": "#32d583",
+        "accent-foreground": "#0c111d",
+        "background": "#0c111d",
+        "border": "#717c8e",
+        "card": "#101828",
+        "card-foreground": "#f9fafb",
+        "chart-1": "#53b1fd",
+        "chart-2": "#32d583",
+        "chart-3": "#fdb022",
+        "chart-4": "#f97066",
+        "chart-5": "#98a2b3",
+        "destructive": "#f97066",
+        "destructive-foreground": "#0c111d",
+        "font-mono": "Liberation Mono, monospace",
+        "font-sans": "IBM Plex Sans, sans-serif",
+        "font-serif": "ui-serif, serif",
+        "font-size": "15px",
+        "foreground": "#f9fafb",
+        "input": "#101828",
+        "layout-gap": "8px",
+        "letter-spacing": "0em",
+        "muted": "#161b26",
+        "muted-foreground": "#98a2b3",
+        "popover": "#1d2939",
+        "popover-foreground": "#f9fafb",
+        "primary": "#53b1fd",
+        "primary-foreground": "#0c111d",
+        "radius": "6px",
+        "reduce-motion": "false",
+        "ring": "#53b1fd",
+        "secondary": "#1d2939",
+        "secondary-foreground": "#f9fafb",
+        "shadow-blur": "0px",
+        "shadow-color": "#000000",
+        "shadow-offset-x": "0px",
+        "shadow-offset-y": "0px",
+        "shadow-opacity": "0",
+        "shadow-spread": "0px",
+        "sidebar": "#0c111d",
+        "sidebar-accent": "#1d2939",
+        "sidebar-accent-foreground": "#f9fafb",
+        "sidebar-border": "#717c8e",
+        "sidebar-foreground": "#f9fafb",
+        "sidebar-primary": "#53b1fd",
+        "sidebar-primary-foreground": "#0c111d",
+        "sidebar-ring": "#53b1fd",
+        "spacing": "0.25rem",
+        "success": "#32d583",
+        "warning": "#fdb022"
+      }
+    },
+    "config": {
+      "appearance": "inherit",
+      "accent_color": null,
+      "gray_color": null,
+      "panel_background": null,
+      "radius": null,
+      "scaling": 100
+    },
+    "overrides": {
+      "light": {
+        "background": "#f9fafb",
+        "border": "#858f9e",
+        "card": "#ffffff",
+        "card-foreground": "#1d2939",
+        "font-sans": "Noto Serif",
+        "foreground": "#1d2939",
+        "input": "#ffffff",
+        "letter-spacing": "0.1em",
+        "muted": "#f2f4f7",
+        "muted-foreground": "#667085",
+        "popover": "#ffffff",
+        "popover-foreground": "#1d2939",
+        "primary": "#1570ef",
+        "primary-foreground": "#ffffff",
+        "radius": ".5rem",
+        "ring": "#1570ef",
+        "secondary": "#eaecf0",
+        "secondary-foreground": "#1d2939",
+        "sidebar": "#f9fafb",
+        "sidebar-accent": "#eaecf0",
+        "sidebar-accent-foreground": "#1d2939",
+        "sidebar-border": "#858f9e",
+        "sidebar-foreground": "#1d2939",
+        "sidebar-primary": "#1570ef",
+        "sidebar-primary-foreground": "#ffffff",
+        "sidebar-ring": "#1570ef"
+      },
+      "dark": {
+        "background": "#0c111d",
+        "border": "#717c8e",
+        "card": "#101828",
+        "card-foreground": "#f9fafb",
+        "font-sans": "Noto Serif",
+        "foreground": "#f9fafb",
+        "input": "#101828",
+        "letter-spacing": "0.1em",
+        "muted": "#161b26",
+        "muted-foreground": "#98a2b3",
+        "popover": "#1d2939",
+        "popover-foreground": "#f9fafb",
+        "primary": "#53b1fd",
+        "primary-foreground": "#0c111d",
+        "radius": ".5rem",
+        "ring": "#53b1fd",
+        "secondary": "#1d2939",
+        "secondary-foreground": "#f9fafb",
+        "sidebar": "#0c111d",
+        "sidebar-accent": "#1d2939",
+        "sidebar-accent-foreground": "#f9fafb",
+        "sidebar-border": "#717c8e",
+        "sidebar-foreground": "#f9fafb",
+        "sidebar-primary": "#53b1fd",
+        "sidebar-primary-foreground": "#0c111d",
+        "sidebar-ring": "#53b1fd"
+      }
+    }
+  },
+  "values": {
+    "light": {
+      "accent": "#12b76a",
+      "accent-foreground": "#ffffff",
+      "background": "#f9fafb",
+      "border": "#858f9e",
+      "card": "#ffffff",
+      "card-foreground": "#1d2939",
+      "chart-1": "#1570ef",
+      "chart-2": "#12b76a",
+      "chart-3": "#f79009",
+      "chart-4": "#d92d20",
+      "chart-5": "#667085",
+      "destructive": "#d92d20",
+      "destructive-foreground": "#ffffff",
+      "font-mono": "Liberation Mono, monospace",
+      "font-sans": "Noto Serif",
+      "font-serif": "ui-serif, serif",
+      "font-size": "15px",
+      "foreground": "#1d2939",
+      "input": "#ffffff",
+      "layout-gap": "8px",
+      "letter-spacing": "0.1em",
+      "muted": "#f2f4f7",
+      "muted-foreground": "#667085",
+      "popover": "#ffffff",
+      "popover-foreground": "#1d2939",
+      "primary": "#1570ef",
+      "primary-foreground": "#ffffff",
+      "radius": ".5rem",
+      "reduce-motion": "false",
+      "ring": "#1570ef",
+      "secondary": "#eaecf0",
+      "secondary-foreground": "#1d2939",
+      "shadow-blur": "0px",
+      "shadow-color": "#000000",
+      "shadow-offset-x": "0px",
+      "shadow-offset-y": "0px",
+      "shadow-opacity": "0",
+      "shadow-spread": "0px",
+      "sidebar": "#f9fafb",
+      "sidebar-accent": "#eaecf0",
+      "sidebar-accent-foreground": "#1d2939",
+      "sidebar-border": "#858f9e",
+      "sidebar-foreground": "#1d2939",
+      "sidebar-primary": "#1570ef",
+      "sidebar-primary-foreground": "#ffffff",
+      "sidebar-ring": "#1570ef",
+      "spacing": "0.25rem",
+      "success": "#12b76a",
+      "warning": "#f79009"
+    },
+    "dark": {
+      "accent": "#32d583",
+      "accent-foreground": "#0c111d",
+      "background": "#0c111d",
+      "border": "#717c8e",
+      "card": "#101828",
+      "card-foreground": "#f9fafb",
+      "chart-1": "#53b1fd",
+      "chart-2": "#32d583",
+      "chart-3": "#fdb022",
+      "chart-4": "#f97066",
+      "chart-5": "#98a2b3",
+      "destructive": "#f97066",
+      "destructive-foreground": "#0c111d",
+      "font-mono": "Liberation Mono, monospace",
+      "font-sans": "Noto Serif",
+      "font-serif": "ui-serif, serif",
+      "font-size": "15px",
+      "foreground": "#f9fafb",
+      "input": "#101828",
+      "layout-gap": "8px",
+      "letter-spacing": "0.1em",
+      "muted": "#161b26",
+      "muted-foreground": "#98a2b3",
+      "popover": "#1d2939",
+      "popover-foreground": "#f9fafb",
+      "primary": "#53b1fd",
+      "primary-foreground": "#0c111d",
+      "radius": ".5rem",
+      "reduce-motion": "false",
+      "ring": "#53b1fd",
+      "secondary": "#1d2939",
+      "secondary-foreground": "#f9fafb",
+      "shadow-blur": "0px",
+      "shadow-color": "#000000",
+      "shadow-offset-x": "0px",
+      "shadow-offset-y": "0px",
+      "shadow-opacity": "0",
+      "shadow-spread": "0px",
+      "sidebar": "#0c111d",
+      "sidebar-accent": "#1d2939",
+      "sidebar-accent-foreground": "#f9fafb",
+      "sidebar-border": "#717c8e",
+      "sidebar-foreground": "#f9fafb",
+      "sidebar-primary": "#53b1fd",
+      "sidebar-primary-foreground": "#0c111d",
+      "sidebar-ring": "#53b1fd",
+      "spacing": "0.25rem",
+      "success": "#32d583",
+      "warning": "#fdb022"
+    }
+  },
+  "mode": "light",
+  "document_revision": 3,
+  "editor_epoch": 8,
+  "storage": {
+    "permission": "Ready",
+    "pending": 0,
+    "active": false,
+    "paused": false,
+    "generation": 1,
+    "revision": 4,
+    "outcomes": [
+      {
+        "id": 1,
+        "kind": "autosave",
+        "epoch": 1,
+        "revision": 1,
+        "state": "saved",
+        "detail": ""
+      },
+      {
+        "id": 2,
+        "kind": "autosave",
+        "epoch": 2,
+        "revision": 2,
+        "state": "superseded",
+        "detail": ""
+      },
+      {
+        "id": 3,
+        "kind": "autosave",
+        "epoch": 3,
+        "revision": 3,
+        "state": "saved",
+        "detail": ""
+      },
+      {
+        "id": 4,
+        "kind": "autosave",
+        "epoch": 6,
+        "revision": 1,
+        "state": "saved",
+        "detail": ""
+      },
+      {
+        "id": 5,
+        "kind": "autosave",
+        "epoch": 7,
+        "revision": 2,
+        "state": "superseded",
+        "detail": ""
+      },
+      {
+        "id": 6,
+        "kind": "autosave",
+        "epoch": 8,
+        "revision": 3,
+        "state": "saved",
+        "detail": ""
+      }
+    ],
+    "acknowledged": {
+      "epoch": 8,
+      "document": {
+        "schema_version": 2,
+        "id": "rustify-light",
+        "name": "Rustify Light",
+        "base": {
+          "light": {
+            "accent": "#12b76a",
+            "accent-foreground": "#ffffff",
+            "background": "#f9fafb",
+            "border": "#858f9e",
+            "card": "#ffffff",
+            "card-foreground": "#1d2939",
+            "chart-1": "#1570ef",
+            "chart-2": "#12b76a",
+            "chart-3": "#f79009",
+            "chart-4": "#d92d20",
+            "chart-5": "#667085",
+            "destructive": "#d92d20",
+            "destructive-foreground": "#ffffff",
+            "font-mono": "Liberation Mono, monospace",
+            "font-sans": "IBM Plex Sans, sans-serif",
+            "font-serif": "ui-serif, serif",
+            "font-size": "15px",
+            "foreground": "#1d2939",
+            "input": "#ffffff",
+            "layout-gap": "8px",
+            "letter-spacing": "0em",
+            "muted": "#f2f4f7",
+            "muted-foreground": "#667085",
+            "popover": "#ffffff",
+            "popover-foreground": "#1d2939",
+            "primary": "#1570ef",
+            "primary-foreground": "#ffffff",
+            "radius": "6px",
+            "reduce-motion": "false",
+            "ring": "#1570ef",
+            "secondary": "#eaecf0",
+            "secondary-foreground": "#1d2939",
+            "shadow-blur": "0px",
+            "shadow-color": "#000000",
+            "shadow-offset-x": "0px",
+            "shadow-offset-y": "0px",
+            "shadow-opacity": "0",
+            "shadow-spread": "0px",
+            "sidebar": "#f9fafb",
+            "sidebar-accent": "#eaecf0",
+            "sidebar-accent-foreground": "#1d2939",
+            "sidebar-border": "#858f9e",
+            "sidebar-foreground": "#1d2939",
+            "sidebar-primary": "#1570ef",
+            "sidebar-primary-foreground": "#ffffff",
+            "sidebar-ring": "#1570ef",
+            "spacing": "0.25rem",
+            "success": "#12b76a",
+            "warning": "#f79009"
+          },
+          "dark": {
+            "accent": "#32d583",
+            "accent-foreground": "#0c111d",
+            "background": "#0c111d",
+            "border": "#717c8e",
+            "card": "#101828",
+            "card-foreground": "#f9fafb",
+            "chart-1": "#53b1fd",
+            "chart-2": "#32d583",
+            "chart-3": "#fdb022",
+            "chart-4": "#f97066",
+            "chart-5": "#98a2b3",
+            "destructive": "#f97066",
+            "destructive-foreground": "#0c111d",
+            "font-mono": "Liberation Mono, monospace",
+            "font-sans": "IBM Plex Sans, sans-serif",
+            "font-serif": "ui-serif, serif",
+            "font-size": "15px",
+            "foreground": "#f9fafb",
+            "input": "#101828",
+            "layout-gap": "8px",
+            "letter-spacing": "0em",
+            "muted": "#161b26",
+            "muted-foreground": "#98a2b3",
+            "popover": "#1d2939",
+            "popover-foreground": "#f9fafb",
+            "primary": "#53b1fd",
+            "primary-foreground": "#0c111d",
+            "radius": "6px",
+            "reduce-motion": "false",
+            "ring": "#53b1fd",
+            "secondary": "#1d2939",
+            "secondary-foreground": "#f9fafb",
+            "shadow-blur": "0px",
+            "shadow-color": "#000000",
+            "shadow-offset-x": "0px",
+            "shadow-offset-y": "0px",
+            "shadow-opacity": "0",
+            "shadow-spread": "0px",
+            "sidebar": "#0c111d",
+            "sidebar-accent": "#1d2939",
+            "sidebar-accent-foreground": "#f9fafb",
+            "sidebar-border": "#717c8e",
+            "sidebar-foreground": "#f9fafb",
+            "sidebar-primary": "#53b1fd",
+            "sidebar-primary-foreground": "#0c111d",
+            "sidebar-ring": "#53b1fd",
+            "spacing": "0.25rem",
+            "success": "#32d583",
+            "warning": "#fdb022"
+          }
+        },
+        "config": {
+          "appearance": "inherit",
+          "accent_color": null,
+          "gray_color": null,
+          "panel_background": null,
+          "radius": null,
+          "scaling": 100
+        },
+        "overrides": {
+          "light": {
+            "background": "#f9fafb",
+            "border": "#858f9e",
+            "card": "#ffffff",
+            "card-foreground": "#1d2939",
+            "font-sans": "Noto Serif",
+            "foreground": "#1d2939",
+            "input": "#ffffff",
+            "letter-spacing": "0.1em",
+            "muted": "#f2f4f7",
+            "muted-foreground": "#667085",
+            "popover": "#ffffff",
+            "popover-foreground": "#1d2939",
+            "primary": "#1570ef",
+            "primary-foreground": "#ffffff",
+            "radius": ".5rem",
+            "ring": "#1570ef",
+            "secondary": "#eaecf0",
+            "secondary-foreground": "#1d2939",
+            "sidebar": "#f9fafb",
+            "sidebar-accent": "#eaecf0",
+            "sidebar-accent-foreground": "#1d2939",
+            "sidebar-border": "#858f9e",
+            "sidebar-foreground": "#1d2939",
+            "sidebar-primary": "#1570ef",
+            "sidebar-primary-foreground": "#ffffff",
+            "sidebar-ring": "#1570ef"
+          },
+          "dark": {
+            "background": "#0c111d",
+            "border": "#717c8e",
+            "card": "#101828",
+            "card-foreground": "#f9fafb",
+            "font-sans": "Noto Serif",
+            "foreground": "#f9fafb",
+            "input": "#101828",
+            "letter-spacing": "0.1em",
+            "muted": "#161b26",
+            "muted-foreground": "#98a2b3",
+            "popover": "#1d2939",
+            "popover-foreground": "#f9fafb",
+            "primary": "#53b1fd",
+            "primary-foreground": "#0c111d",
+            "radius": ".5rem",
+            "ring": "#53b1fd",
+            "secondary": "#1d2939",
+            "secondary-foreground": "#f9fafb",
+            "sidebar": "#0c111d",
+            "sidebar-accent": "#1d2939",
+            "sidebar-accent-foreground": "#f9fafb",
+            "sidebar-border": "#717c8e",
+            "sidebar-foreground": "#f9fafb",
+            "sidebar-primary": "#53b1fd",
+            "sidebar-primary-foreground": "#0c111d",
+            "sidebar-ring": "#53b1fd"
+          }
+        }
+      },
+      "preferences": {
+        "locale": "en",
+        "favorites": [],
+        "scene": "Cards",
+        "renderer": "compare",
+        "preview_width": "responsive",
+        "mode": "light"
+      }
+    }
+  },
+  "checkpoint": {
+    "schema_version": 2,
+    "id": "rustify-light",
+    "name": "Rustify Light",
+    "base": {
+      "light": {
+        "accent": "#12b76a",
+        "accent-foreground": "#ffffff",
+        "background": "#f9fafb",
+        "border": "#858f9e",
+        "card": "#ffffff",
+        "card-foreground": "#1d2939",
+        "chart-1": "#1570ef",
+        "chart-2": "#12b76a",
+        "chart-3": "#f79009",
+        "chart-4": "#d92d20",
+        "chart-5": "#667085",
+        "destructive": "#d92d20",
+        "destructive-foreground": "#ffffff",
+        "font-mono": "Liberation Mono, monospace",
+        "font-sans": "IBM Plex Sans, sans-serif",
+        "font-serif": "ui-serif, serif",
+        "font-size": "15px",
+        "foreground": "#1d2939",
+        "input": "#ffffff",
+        "layout-gap": "8px",
+        "letter-spacing": "0em",
+        "muted": "#f2f4f7",
+        "muted-foreground": "#667085",
+        "popover": "#ffffff",
+        "popover-foreground": "#1d2939",
+        "primary": "#1570ef",
+        "primary-foreground": "#ffffff",
+        "radius": "6px",
+        "reduce-motion": "false",
+        "ring": "#1570ef",
+        "secondary": "#eaecf0",
+        "secondary-foreground": "#1d2939",
+        "shadow-blur": "0px",
+        "shadow-color": "#000000",
+        "shadow-offset-x": "0px",
+        "shadow-offset-y": "0px",
+        "shadow-opacity": "0",
+        "shadow-spread": "0px",
+        "sidebar": "#f9fafb",
+        "sidebar-accent": "#eaecf0",
+        "sidebar-accent-foreground": "#1d2939",
+        "sidebar-border": "#858f9e",
+        "sidebar-foreground": "#1d2939",
+        "sidebar-primary": "#1570ef",
+        "sidebar-primary-foreground": "#ffffff",
+        "sidebar-ring": "#1570ef",
+        "spacing": "0.25rem",
+        "success": "#12b76a",
+        "warning": "#f79009"
+      },
+      "dark": {
+        "accent": "#32d583",
+        "accent-foreground": "#0c111d",
+        "background": "#0c111d",
+        "border": "#717c8e",
+        "card": "#101828",
+        "card-foreground": "#f9fafb",
+        "chart-1": "#53b1fd",
+        "chart-2": "#32d583",
+        "chart-3": "#fdb022",
+        "chart-4": "#f97066",
+        "chart-5": "#98a2b3",
+        "destructive": "#f97066",
+        "destructive-foreground": "#0c111d",
+        "font-mono": "Liberation Mono, monospace",
+        "font-sans": "IBM Plex Sans, sans-serif",
+        "font-serif": "ui-serif, serif",
+        "font-size": "15px",
+        "foreground": "#f9fafb",
+        "input": "#101828",
+        "layout-gap": "8px",
+        "letter-spacing": "0em",
+        "muted": "#161b26",
+        "muted-foreground": "#98a2b3",
+        "popover": "#1d2939",
+        "popover-foreground": "#f9fafb",
+        "primary": "#53b1fd",
+        "primary-foreground": "#0c111d",
+        "radius": "6px",
+        "reduce-motion": "false",
+        "ring": "#53b1fd",
+        "secondary": "#1d2939",
+        "secondary-foreground": "#f9fafb",
+        "shadow-blur": "0px",
+        "shadow-color": "#000000",
+        "shadow-offset-x": "0px",
+        "shadow-offset-y": "0px",
+        "shadow-opacity": "0",
+        "shadow-spread": "0px",
+        "sidebar": "#0c111d",
+        "sidebar-accent": "#1d2939",
+        "sidebar-accent-foreground": "#f9fafb",
+        "sidebar-border": "#717c8e",
+        "sidebar-foreground": "#f9fafb",
+        "sidebar-primary": "#53b1fd",
+        "sidebar-primary-foreground": "#0c111d",
+        "sidebar-ring": "#53b1fd",
+        "spacing": "0.25rem",
+        "success": "#32d583",
+        "warning": "#fdb022"
+      }
+    },
+    "config": {
+      "appearance": "inherit",
+      "accent_color": null,
+      "gray_color": null,
+      "panel_background": null,
+      "radius": null,
+      "scaling": 100
+    },
+    "overrides": {
+      "light": {
+        "background": "#f9fafb",
+        "border": "#858f9e",
+        "card": "#ffffff",
+        "card-foreground": "#1d2939",
+        "foreground": "#1d2939",
+        "input": "#ffffff",
+        "muted": "#f2f4f7",
+        "muted-foreground": "#667085",
+        "popover": "#ffffff",
+        "popover-foreground": "#1d2939",
+        "primary": "#1570ef",
+        "primary-foreground": "#ffffff",
+        "radius": "6px",
+        "ring": "#1570ef",
+        "secondary": "#eaecf0",
+        "secondary-foreground": "#1d2939",
+        "sidebar": "#f9fafb",
+        "sidebar-accent": "#eaecf0",
+        "sidebar-accent-foreground": "#1d2939",
+        "sidebar-border": "#858f9e",
+        "sidebar-foreground": "#1d2939",
+        "sidebar-primary": "#1570ef",
+        "sidebar-primary-foreground": "#ffffff",
+        "sidebar-ring": "#1570ef"
+      },
+      "dark": {
+        "background": "#0c111d",
+        "border": "#717c8e",
+        "card": "#101828",
+        "card-foreground": "#f9fafb",
+        "foreground": "#f9fafb",
+        "input": "#101828",
+        "muted": "#161b26",
+        "muted-foreground": "#98a2b3",
+        "popover": "#1d2939",
+        "popover-foreground": "#f9fafb",
+        "primary": "#53b1fd",
+        "primary-foreground": "#0c111d",
+        "radius": "6px",
+        "ring": "#53b1fd",
+        "secondary": "#1d2939",
+        "secondary-foreground": "#f9fafb",
+        "sidebar": "#0c111d",
+        "sidebar-accent": "#1d2939",
+        "sidebar-accent-foreground": "#f9fafb",
+        "sidebar-border": "#717c8e",
+        "sidebar-foreground": "#f9fafb",
+        "sidebar-primary": "#53b1fd",
+        "sidebar-primary-foreground": "#0c111d",
+        "sidebar-ring": "#53b1fd"
+      }
+    }
+  },
+  "history": {
+    "undo": 3,
+    "redo": 0,
+    "gesture": false
+  },
+  "modified": true,
+  "resolve_count": 8,
+  "sdk_resolve_count": 283,
+  "publish_count": 3,
+  "error": "",
+  "storage_status": "Saved on this device",
+  "preferences": {
+    "locale": "en",
+    "favorites": [],
+    "scene": "Cards",
+    "renderer": "compare",
+    "preview_width": "responsive",
+    "mode": "light"
+  },
+  "region_count": 1,
+  "revision": 3,
+  "drawn_revision": 3,
+  "samples": [
+    {
+      "id": "scene.sidebar",
+      "token_ids": [
+        "sidebar"
+      ],
+      "rect": [
+        24,
+        52,
+        130,
+        156
+      ],
+      "visible_rect": [
+        24,
+        52,
+        130,
+        156
+      ],
+      "hit_rect": null,
+      "visual_rect": null,
+      "rgba": [
+        0.9764705882352941,
+        0.9803921568627451,
+        0.984313725490196,
+        1
+      ],
+      "radius_px": 10,
+      "font": null,
+      "font_size_px": null,
+      "letter_spacing_em": null,
+      "layout_size_px": null,
+      "shadow_layers": []
+    },
+    {
+      "id": "scene.sidebar-primary",
+      "token_ids": [
+        "sidebar-primary"
+      ],
+      "rect": [
+        32,
+        92,
+        114,
+        32
+      ],
+      "visible_rect": [
+        32,
+        92,
+        114,
+        32
+      ],
+      "hit_rect": null,
+      "visual_rect": null,
+      "rgba": [
+        0.08235294117647059,
+        0.4392156862745098,
+        0.9372549019607843,
+        1
+      ],
+      "radius_px": 6,
+      "font": null,
+      "font_size_px": null,
+      "letter_spacing_em": null,
+      "layout_size_px": null,
+      "shadow_layers": []
+    },
+    {
+      "id": "scene.sidebar-accent",
+      "token_ids": [
+        "sidebar-accent"
+      ],
+      "rect": [
+        32,
+        136,
+        114,
+        32
+      ],
+      "visible_rect": [
+        32,
+        136,
+        114,
+        32
+      ],
+      "hit_rect": null,
+      "visual_rect": null,
+      "rgba": [
+        0.9176470588235294,
+        0.9254901960784314,
+        0.9411764705882353,
+        1
+      ],
+      "radius_px": 6,
+      "font": null,
+      "font_size_px": null,
+      "letter_spacing_em": null,
+      "layout_size_px": null,
+      "shadow_layers": []
+    },
+    {
+      "id": "scene.card",
+      "token_ids": [
+        "card"
+      ],
+      "rect": [
+        166,
+        52,
+        326,
+        156
+      ],
+      "visible_rect": [
+        166,
+        52,
+        326,
+        156
+      ],
+      "hit_rect": null,
+      "visual_rect": null,
+      "rgba": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "radius_px": 10,
+      "font": null,
+      "font_size_px": null,
+      "letter_spacing_em": null,
+      "layout_size_px": null,
+      "shadow_layers": []
+    },
+    {
+      "id": "scene.chart-1",
+      "token_ids": [
+        "chart-1"
+      ],
+      "rect": [
+        182,
+        146,
+        53.79999923706055,
+        46
+      ],
+      "visible_rect": [
+        182,
+        146,
+        53.79999923706055,
+        46
+      ],
+      "hit_rect": null,
+      "visual_rect": null,
+      "rgba": [
+        0.08235294117647059,
+        0.4392156862745098,
+        0.9372549019607843,
+        1
+      ],
+      "radius_px": 6,
+      "font": null,
+      "font_size_px": null,
+      "letter_spacing_em": null,
+      "layout_size_px": null,
+      "shadow_layers": []
+    },
+    {
+      "id": "scene.chart-2",
+      "token_ids": [
+        "chart-2"
+      ],
+      "rect": [
+        240.8000030517578,
+        122,
+        53.79999923706055,
+        70
+      ],
+      "visible_rect": [
+        240.8000030517578,
+        122,
+        53.79999923706055,
+        70
+      ],
+      "hit_rect": null,
+      "visual_rect": null,
+      "rgba": [
+        0.07058823529411765,
+        0.7176470588235294,
+        0.41568627450980394,
+        1
+      ],
+      "radius_px": 6,
+      "font": null,
+      "font_size_px": null,
+      "letter_spacing_em": null,
+      "layout_size_px": null,
+      "shadow_layers": []
+    },
+    {
+      "id": "scene.chart-3",
+      "token_ids": [
+        "chart-3"
+      ],
+      "rect": [
+        299.6000061035156,
+        140,
+        53.79999923706055,
+        52
+      ],
+      "visible_rect": [
+        299.6000061035156,
+        140,
+        53.79999923706055,
+        52
+      ],
+      "hit_rect": null,
+      "visual_rect": null,
+      "rgba": [
+        0.9686274509803922,
+        0.5647058823529412,
+        0.03529411764705882,
+        1
+      ],
+      "radius_px": 6,
+      "font": null,
+      "font_size_px": null,
+      "letter_spacing_em": null,
+      "layout_size_px": null,
+      "shadow_layers": []
+    },
+    {
+      "id": "scene.chart-4",
+      "token_ids": [
+        "chart-4"
+      ],
+      "rect": [
+        358.3999938964844,
+        98,
+        53.79999923706055,
+        94
+      ],
+      "visible_rect": [
+        358.3999938964844,
+        98,
+        53.79999923706055,
+        94
+      ],
+      "hit_rect": null,
+      "visual_rect": null,
+      "rgba": [
+        0.8509803921568627,
+        0.17647058823529413,
+        0.12549019607843137,
+        1
+      ],
+      "radius_px": 6,
+      "font": null,
+      "font_size_px": null,
+      "letter_spacing_em": null,
+      "layout_size_px": null,
+      "shadow_layers": []
+    },
+    {
+      "id": "scene.chart-5",
+      "token_ids": [
+        "chart-5"
+      ],
+      "rect": [
+        417.20001220703125,
+        114,
+        53.79999923706055,
+        78
+      ],
+      "visible_rect": [
+        417.20001220703125,
+        114,
+        53.79999923706055,
+        78
+      ],
+      "hit_rect": null,
+      "visual_rect": null,
+      "rgba": [
+        0.4,
+        0.4392156862745098,
+        0.5215686274509804,
+        1
+      ],
+      "radius_px": 6,
+      "font": null,
+      "font_size_px": null,
+      "letter_spacing_em": null,
+      "layout_size_px": null,
+      "shadow_layers": []
+    },
+    {
+      "id": "color.background",
+      "token_ids": [
+        "background"
+      ],
+      "rect": [
+        24,
+        256,
+        148,
+        36
+      ],
+      "visible_rect": [
+        24,
+        256,
+        148,
+        36
+      ],
+      "hit_rect": null,
+      "visual_rect": null,
+      "rgba": [
+        0.9764705882352941,
+        0.9803921568627451,
+        0.984313725490196,
+        1
+      ],
+      "radius_px": 3,
+      "font": null,
+      "font_size_px": null,
+      "letter_spacing_em": null,
+      "layout_size_px": null,
+      "shadow_layers": []
+    },
+    {
+      "id": "color.foreground",
+      "token_ids": [
+        "foreground"
+      ],
+      "rect": [
+        180,
+        256,
+        148,
+        36
+      ],
+      "visible_rect": [
+        180,
+        256,
+        148,
+        36
+      ],
+      "hit_rect": null,
+      "visual_rect": null,
+      "rgba": [
+        0.11372549019607843,
+        0.1607843137254902,
+        0.2235294117647059,
+        1
+      ],
+      "radius_px": 3,
+      "font": null,
+      "font_size_px": null,
+      "letter_spacing_em": null,
+      "layout_size_px": null,
+      "shadow_layers": []
+    },
+    {
+      "id": "color.card",
+      "token_ids": [
+        "card"
+      ],
+      "rect": [
+        336,
+        256,
+        148,
+        36
+      ],
+      "visible_rect": [
+        336,
+        256,
+        148,
+        36
+      ],
+      "hit_rect": null,
+      "visual_rect": null,
+      "rgba": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "radius_px": 3,
+      "font": null,
+      "font_size_px": null,
+      "letter_spacing_em": null,
+      "layout_size_px": null,
+      "shadow_layers": []
+    },
+    {
+      "id": "color.card-foreground",
+      "token_ids": [
+        "card-foreground"
+      ],
+      "rect": [
+        24,
+        352,
+        148,
+        36
+      ],
+      "visible_rect": [
+        24,
+        352,
+        148,
+        36
+      ],
+      "hit_rect": null,
+      "visual_rect": null,
+      "rgba": [
+        0.11372549019607843,
+        0.1607843137254902,
+        0.2235294117647059,
+        1
+      ],
+      "radius_px": 3,
+      "font": null,
+      "font_size_px": null,
+      "letter_spacing_em": null,
+      "layout_size_px": null,
+      "shadow_layers": []
+    },
+    {
+      "id": "color.popover",
+      "token_ids": [
+        "popover"
+      ],
+      "rect": [
+        180,
+        352,
+        148,
+        36
+      ],
+      "visible_rect": [
+        180,
+        352,
+        148,
+        36
+      ],
+      "hit_rect": null,
+      "visual_rect": null,
+      "rgba": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "radius_px": 3,
+      "font": null,
+      "font_size_px": null,
+      "letter_spacing_em": null,
+      "layout_size_px": null,
+      "shadow_layers": []
+    },
+    {
+      "id": "color.popover-foreground",
+      "token_ids": [
+        "popover-foreground"
+      ],
+      "rect": [
+        336,
+        352,
+        148,
+        36
+      ],
+      "visible_rect": [
+        336,
+        352,
+        148,
+        36
+      ],
+      "hit_rect": null,
+      "visual_rect": null,
+      "rgba": [
+        0.11372549019607843,
+        0.1607843137254902,
+        0.2235294117647059,
+        1
+      ],
+      "radius_px": 3,
+      "font": null,
+      "font_size_px": null,
+      "letter_spacing_em": null,
+      "layout_size_px": null,
+      "shadow_layers": []
+    },
+    {
+      "id": "color.primary",
+      "token_ids": [
+        "primary"
+      ],
+      "rect": [
+        24,
+        448,
+        148,
+        36
+      ],
+      "visible_rect": [
+        24,
+        448,
+        148,
+        36
+      ],
+      "hit_rect": null,
+      "visual_rect": null,
+      "rgba": [
+        0.08235294117647059,
+        0.4392156862745098,
+        0.9372549019607843,
+        1
+      ],
+      "radius_px": 3,
+      "font": null,
+      "font_size_px": null,
+      "letter_spacing_em": null,
+      "layout_size_px": null,
+      "shadow_layers": []
+    },
+    {
+      "id": "color.primary-foreground",
+      "token_ids": [
+        "primary-foreground"
+      ],
+      "rect": [
+        180,
+        448,
+        148,
+        36
+      ],
+      "visible_rect": [
+        180,
+        448,
+        148,
+        36
+      ],
+      "hit_rect": null,
+      "visual_rect": null,
+      "rgba": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "radius_px": 3,
+      "font": null,
+      "font_size_px": null,
+      "letter_spacing_em": null,
+      "layout_size_px": null,
+      "shadow_layers": []
+    },
+    {
+      "id": "color.secondary",
+      "token_ids": [
+        "secondary"
+      ],
+      "rect": [
+        336,
+        448,
+        148,
+        36
+      ],
+      "visible_rect": [
+        336,
+        448,
+        148,
+        36
+      ],
+      "hit_rect": null,
+      "visual_rect": null,
+      "rgba": [
+        0.9176470588235294,
+        0.9254901960784314,
+        0.9411764705882353,
+        1
+      ],
+      "radius_px": 3,
+      "font": null,
+      "font_size_px": null,
+      "letter_spacing_em": null,
+      "layout_size_px": null,
+      "shadow_layers": []
+    },
+    {
+      "id": "color.secondary-foreground",
+      "token_ids": [
+        "secondary-foreground"
+      ],
+      "rect": [
+        24,
+        544,
+        148,
+        36
+      ],
+      "visible_rect": [
+        24,
+        544,
+        148,
+        36
+      ],
+      "hit_rect": null,
+      "visual_rect": null,
+      "rgba": [
+        0.11372549019607843,
+        0.1607843137254902,
+        0.2235294117647059,
+        1
+      ],
+      "radius_px": 3,
+      "font": null,
+      "font_size_px": null,
+      "letter_spacing_em": null,
+      "layout_size_px": null,
+      "shadow_layers": []
+    },
+    {
+      "id": "color.muted",
+      "token_ids": [
+        "muted"
+      ],
+      "rect": [
+        180,
+        544,
+        148,
+        36
+      ],
+      "visible_rect": [
+        180,
+        544,
+        148,
+        36
+      ],
+      "hit_rect": null,
+      "visual_rect": null,
+      "rgba": [
+        0.9490196078431372,
+        0.9568627450980393,
+        0.9686274509803922,
+        1
+      ],
+      "radius_px": 3,
+      "font": null,
+      "font_size_px": null,
+      "letter_spacing_em": null,
+      "layout_size_px": null,
+      "shadow_layers": []
+    },
+    {
+      "id": "color.muted-foreground",
+      "token_ids": [
+        "muted-foreground"
+      ],
+      "rect": [
+        336,
+        544,
+        148,
+        36
+      ],
+      "visible_rect": [
+        336,
+        544,
+        148,
+        36
+      ],
+      "hit_rect": null,
+      "visual_rect": null,
+      "rgba": [
+        0.4,
+        0.4392156862745098,
+        0.5215686274509804,
+        1
+      ],
+      "radius_px": 3,
+      "font": null,
+      "font_size_px": null,
+      "letter_spacing_em": null,
+      "layout_size_px": null,
+      "shadow_layers": []
+    },
+    {
+      "id": "color.accent",
+      "token_ids": [
+        "accent"
+      ],
+      "rect": [
+        24,
+        640,
+        148,
+        36
+      ],
+      "visible_rect": [
+        24,
+        640,
+        148,
+        36
+      ],
+      "hit_rect": null,
+      "visual_rect": null,
+      "rgba": [
+        0.07058823529411765,
+        0.7176470588235294,
+        0.41568627450980394,
+        1
+      ],
+      "radius_px": 3,
+      "font": null,
+      "font_size_px": null,
+      "letter_spacing_em": null,
+      "layout_size_px": null,
+      "shadow_layers": []
+    },
+    {
+      "id": "color.accent-foreground",
+      "token_ids": [
+        "accent-foreground"
+      ],
+      "rect": [
+        180,
+        640,
+        148,
+        36
+      ],
+      "visible_rect": [
+        180,
+        640,
+        148,
+        36
+      ],
+      "hit_rect": null,
+      "visual_rect": null,
+      "rgba": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "radius_px": 3,
+      "font": null,
+      "font_size_px": null,
+      "letter_spacing_em": null,
+      "layout_size_px": null,
+      "shadow_layers": []
+    },
+    {
+      "id": "color.destructive",
+      "token_ids": [
+        "destructive"
+      ],
+      "rect": [
+        336,
+        640,
+        148,
+        36
+      ],
+      "visible_rect": [
+        336,
+        640,
+        148,
+        36
+      ],
+      "hit_rect": null,
+      "visual_rect": null,
+      "rgba": [
+        0.8509803921568627,
+        0.17647058823529413,
+        0.12549019607843137,
+        1
+      ],
+      "radius_px": 3,
+      "font": null,
+      "font_size_px": null,
+      "letter_spacing_em": null,
+      "layout_size_px": null,
+      "shadow_layers": []
+    },
+    {
+      "id": "color.destructive-foreground",
+      "token_ids": [
+        "destructive-foreground"
+      ],
+      "rect": [
+        24,
+        736,
+        148,
+        36
+      ],
+      "visible_rect": [
+        24,
+        736,
+        148,
+        36
+      ],
+      "hit_rect": null,
+      "visual_rect": null,
+      "rgba": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "radius_px": 3,
+      "font": null,
+      "font_size_px": null,
+      "letter_spacing_em": null,
+      "layout_size_px": null,
+      "shadow_layers": []
+    },
+    {
+      "id": "color.border",
+      "token_ids": [
+        "border"
+      ],
+      "rect": [
+        180,
+        736,
+        148,
+        36
+      ],
+      "visible_rect": [
+        180,
+        736,
+        148,
+        36
+      ],
+      "hit_rect": null,
+      "visual_rect": null,
+      "rgba": [
+        0.5215686274509804,
+        0.5607843137254902,
+        0.6196078431372549,
+        1
+      ],
+      "radius_px": 3,
+      "font": null,
+      "font_size_px": null,
+      "letter_spacing_em": null,
+      "layout_size_px": null,
+      "shadow_layers": []
+    },
+    {
+      "id": "color.input",
+      "token_ids": [
+        "input"
+      ],
+      "rect": [
+        336,
+        736,
+        148,
+        36
+      ],
+      "visible_rect": [
+        336,
+        736,
+        148,
+        36
+      ],
+      "hit_rect": null,
+      "visual_rect": null,
+      "rgba": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "radius_px": 3,
+      "font": null,
+      "font_size_px": null,
+      "letter_spacing_em": null,
+      "layout_size_px": null,
+      "shadow_layers": []
+    },
+    {
+      "id": "color.ring",
+      "token_ids": [
+        "ring"
+      ],
+      "rect": [
+        24,
+        832,
+        148,
+        36
+      ],
+      "visible_rect": [
+        24,
+        832,
+        148,
+        36
+      ],
+      "hit_rect": null,
+      "visual_rect": null,
+      "rgba": [
+        0.08235294117647059,
+        0.4392156862745098,
+        0.9372549019607843,
+        1
+      ],
+      "radius_px": 3,
+      "font": null,
+      "font_size_px": null,
+      "letter_spacing_em": null,
+      "layout_size_px": null,
+      "shadow_layers": []
+    },
+    {
+      "id": "color.chart-1",
+      "token_ids": [
+        "chart-1"
+      ],
+      "rect": [
+        180,
+        832,
+        148,
+        36
+      ],
+      "visible_rect": [
+        180,
+        832,
+        148,
+        36
+      ],
+      "hit_rect": null,
+      "visual_rect": null,
+      "rgba": [
+        0.08235294117647059,
+        0.4392156862745098,
+        0.9372549019607843,
+        1
+      ],
+      "radius_px": 3,
+      "font": null,
+      "font_size_px": null,
+      "letter_spacing_em": null,
+      "layout_size_px": null,
+      "shadow_layers": []
+    },
+    {
+      "id": "color.chart-2",
+      "token_ids": [
+        "chart-2"
+      ],
+      "rect": [
+        336,
+        832,
+        148,
+        36
+      ],
+      "visible_rect": [
+        336,
+        832,
+        148,
+        36
+      ],
+      "hit_rect": null,
+      "visual_rect": null,
+      "rgba": [
+        0.07058823529411765,
+        0.7176470588235294,
+        0.41568627450980394,
+        1
+      ],
+      "radius_px": 3,
+      "font": null,
+      "font_size_px": null,
+      "letter_spacing_em": null,
+      "layout_size_px": null,
+      "shadow_layers": []
+    },
+    {
+      "id": "color.chart-3",
+      "token_ids": [
+        "chart-3"
+      ],
+      "rect": [
+        24,
+        928,
+        148,
+        36
+      ],
+      "visible_rect": [
+        24,
+        928,
+        148,
+        36
+      ],
+      "hit_rect": null,
+      "visual_rect": null,
+      "rgba": [
+        0.9686274509803922,
+        0.5647058823529412,
+        0.03529411764705882,
+        1
+      ],
+      "radius_px": 3,
+      "font": null,
+      "font_size_px": null,
+      "letter_spacing_em": null,
+      "layout_size_px": null,
+      "shadow_layers": []
+    },
+    {
+      "id": "color.chart-4",
+      "token_ids": [
+        "chart-4"
+      ],
+      "rect": [
+        180,
+        928,
+        148,
+        36
+      ],
+      "visible_rect": [
+        180,
+        928,
+        148,
+        36
+      ],
+      "hit_rect": null,
+      "visual_rect": null,
+      "rgba": [
+        0.8509803921568627,
+        0.17647058823529413,
+        0.12549019607843137,
+        1
+      ],
+      "radius_px": 3,
+      "font": null,
+      "font_size_px": null,
+      "letter_spacing_em": null,
+      "layout_size_px": null,
+      "shadow_layers": []
+    },
+    {
+      "id": "color.chart-5",
+      "token_ids": [
+        "chart-5"
+      ],
+      "rect": [
+        336,
+        928,
+        148,
+        36
+      ],
+      "visible_rect": [
+        336,
+        928,
+        148,
+        36
+      ],
+      "hit_rect": null,
+      "visual_rect": null,
+      "rgba": [
+        0.4,
+        0.4392156862745098,
+        0.5215686274509804,
+        1
+      ],
+      "radius_px": 3,
+      "font": null,
+      "font_size_px": null,
+      "letter_spacing_em": null,
+      "layout_size_px": null,
+      "shadow_layers": []
+    },
+    {
+      "id": "color.sidebar",
+      "token_ids": [
+        "sidebar"
+      ],
+      "rect": [
+        24,
+        1024,
+        148,
+        36
+      ],
+      "visible_rect": [
+        24,
+        1024,
+        148,
+        36
+      ],
+      "hit_rect": null,
+      "visual_rect": null,
+      "rgba": [
+        0.9764705882352941,
+        0.9803921568627451,
+        0.984313725490196,
+        1
+      ],
+      "radius_px": 3,
+      "font": null,
+      "font_size_px": null,
+      "letter_spacing_em": null,
+      "layout_size_px": null,
+      "shadow_layers": []
+    },
+    {
+      "id": "color.sidebar-foreground",
+      "token_ids": [
+        "sidebar-foreground"
+      ],
+      "rect": [
+        180,
+        1024,
+        148,
+        36
+      ],
+      "visible_rect": [
+        180,
+        1024,
+        148,
+        36
+      ],
+      "hit_rect": null,
+      "visual_rect": null,
+      "rgba": [
+        0.11372549019607843,
+        0.1607843137254902,
+        0.2235294117647059,
+        1
+      ],
+      "radius_px": 3,
+      "font": null,
+      "font_size_px": null,
+      "letter_spacing_em": null,
+      "layout_size_px": null,
+      "shadow_layers": []
+    },
+    {
+      "id": "color.sidebar-primary",
+      "token_ids": [
+        "sidebar-primary"
+      ],
+      "rect": [
+        336,
+        1024,
+        148,
+        36
+      ],
+      "visible_rect": [
+        336,
+        1024,
+        148,
+        36
+      ],
+      "hit_rect": null,
+      "visual_rect": null,
+      "rgba": [
+        0.08235294117647059,
+        0.4392156862745098,
+        0.9372549019607843,
+        1
+      ],
+      "radius_px": 3,
+      "font": null,
+      "font_size_px": null,
+      "letter_spacing_em": null,
+      "layout_size_px": null,
+      "shadow_layers": []
+    },
+    {
+      "id": "color.sidebar-primary-foreground",
+      "token_ids": [
+        "sidebar-primary-foreground"
+      ],
+      "rect": [
+        24,
+        1120,
+        148,
+        36
+      ],
+      "visible_rect": [
+        24,
+        1120,
+        148,
+        36
+      ],
+      "hit_rect": null,
+      "visual_rect": null,
+      "rgba": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "radius_px": 3,
+      "font": null,
+      "font_size_px": null,
+      "letter_spacing_em": null,
+      "layout_size_px": null,
+      "shadow_layers": []
+    },
+    {
+      "id": "color.sidebar-accent",
+      "token_ids": [
+        "sidebar-accent"
+      ],
+      "rect": [
+        180,
+        1120,
+        148,
+        36
+      ],
+      "visible_rect": [
+        180,
+        1120,
+        148,
+        36
+      ],
+      "hit_rect": null,
+      "visual_rect": null,
+      "rgba": [
+        0.9176470588235294,
+        0.9254901960784314,
+        0.9411764705882353,
+        1
+      ],
+      "radius_px": 3,
+      "font": null,
+      "font_size_px": null,
+      "letter_spacing_em": null,
+      "layout_size_px": null,
+      "shadow_layers": []
+    },
+    {
+      "id": "color.sidebar-accent-foreground",
+      "token_ids": [
+        "sidebar-accent-foreground"
+      ],
+      "rect": [
+        336,
+        1120,
+        148,
+        36
+      ],
+      "visible_rect": [
+        336,
+        1120,
+        148,
+        36
+      ],
+      "hit_rect": null,
+      "visual_rect": null,
+      "rgba": [
+        0.11372549019607843,
+        0.1607843137254902,
+        0.2235294117647059,
+        1
+      ],
+      "radius_px": 3,
+      "font": null,
+      "font_size_px": null,
+      "letter_spacing_em": null,
+      "layout_size_px": null,
+      "shadow_layers": []
+    },
+    {
+      "id": "color.sidebar-border",
+      "token_ids": [
+        "sidebar-border"
+      ],
+      "rect": [
+        24,
+        1216,
+        148,
+        36
+      ],
+      "visible_rect": [
+        24,
+        1216,
+        148,
+        36
+      ],
+      "hit_rect": null,
+      "visual_rect": null,
+      "rgba": [
+        0.5215686274509804,
+        0.5607843137254902,
+        0.6196078431372549,
+        1
+      ],
+      "radius_px": 3,
+      "font": null,
+      "font_size_px": null,
+      "letter_spacing_em": null,
+      "layout_size_px": null,
+      "shadow_layers": []
+    },
+    {
+      "id": "color.sidebar-ring",
+      "token_ids": [
+        "sidebar-ring"
+      ],
+      "rect": [
+        180,
+        1216,
+        148,
+        36
+      ],
+      "visible_rect": [
+        180,
+        1216,
+        148,
+        36
+      ],
+      "hit_rect": null,
+      "visual_rect": null,
+      "rgba": [
+        0.08235294117647059,
+        0.4392156862745098,
+        0.9372549019607843,
+        1
+      ],
+      "radius_px": 3,
+      "font": null,
+      "font_size_px": null,
+      "letter_spacing_em": null,
+      "layout_size_px": null,
+      "shadow_layers": []
+    },
+    {
+      "id": "color.success",
+      "token_ids": [
+        "success"
+      ],
+      "rect": [
+        336,
+        1216,
+        148,
+        36
+      ],
+      "visible_rect": [
+        336,
+        1216,
+        148,
+        36
+      ],
+      "hit_rect": null,
+      "visual_rect": null,
+      "rgba": [
+        0.07058823529411765,
+        0.7176470588235294,
+        0.41568627450980394,
+        1
+      ],
+      "radius_px": 3,
+      "font": null,
+      "font_size_px": null,
+      "letter_spacing_em": null,
+      "layout_size_px": null,
+      "shadow_layers": []
+    },
+    {
+      "id": "color.warning",
+      "token_ids": [
+        "warning"
+      ],
+      "rect": [
+        24,
+        1312,
+        148,
+        36
+      ],
+      "visible_rect": [
+        24,
+        1312,
+        148,
+        36
+      ],
+      "hit_rect": null,
+      "visual_rect": null,
+      "rgba": [
+        0.9686274509803922,
+        0.5647058823529412,
+        0.03529411764705882,
+        1
+      ],
+      "radius_px": 3,
+      "font": null,
+      "font_size_px": null,
+      "letter_spacing_em": null,
+      "layout_size_px": null,
+      "shadow_layers": []
+    },
+    {
+      "id": "color.shadow-color",
+      "token_ids": [
+        "shadow-color"
+      ],
+      "rect": [
+        180,
+        1312,
+        148,
+        36
+      ],
+      "visible_rect": [
+        180,
+        1312,
+        148,
+        36
+      ],
+      "hit_rect": null,
+      "visual_rect": null,
+      "rgba": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "radius_px": 3,
+      "font": null,
+      "font_size_px": null,
+      "letter_spacing_em": null,
+      "layout_size_px": null,
+      "shadow_layers": []
+    },
+    {
+      "id": "radius.sm",
+      "token_ids": [
+        "primary"
+      ],
+      "rect": [
+        24,
+        1436,
+        109,
+        52
+      ],
+      "visible_rect": [
+        24,
+        1436,
+        109,
+        52
+      ],
+      "hit_rect": null,
+      "visual_rect": null,
+      "rgba": [
+        0.08235294117647059,
+        0.4392156862745098,
+        0.9372549019607843,
+        1
+      ],
+      "radius_px": 6,
+      "font": null,
+      "font_size_px": null,
+      "letter_spacing_em": null,
+      "layout_size_px": null,
+      "shadow_layers": []
+    },
+    {
+      "id": "radius.md",
+      "token_ids": [
+        "primary"
+      ],
+      "rect": [
+        141,
+        1436,
+        109,
+        52
+      ],
+      "visible_rect": [
+        141,
+        1436,
+        109,
+        52
+      ],
+      "hit_rect": null,
+      "visual_rect": null,
+      "rgba": [
+        0.08235294117647059,
+        0.4392156862745098,
+        0.9372549019607843,
+        1
+      ],
+      "radius_px": 8,
+      "font": null,
+      "font_size_px": null,
+      "letter_spacing_em": null,
+      "layout_size_px": null,
+      "shadow_layers": []
+    },
+    {
+      "id": "radius.lg",
+      "token_ids": [
+        "primary"
+      ],
+      "rect": [
+        258,
+        1436,
+        109,
+        52
+      ],
+      "visible_rect": [
+        258,
+        1436,
+        109,
+        52
+      ],
+      "hit_rect": null,
+      "visual_rect": null,
+      "rgba": [
+        0.08235294117647059,
+        0.4392156862745098,
+        0.9372549019607843,
+        1
+      ],
+      "radius_px": 10,
+      "font": null,
+      "font_size_px": null,
+      "letter_spacing_em": null,
+      "layout_size_px": null,
+      "shadow_layers": []
+    },
+    {
+      "id": "radius.xl",
+      "token_ids": [
+        "primary"
+      ],
+      "rect": [
+        375,
+        1436,
+        109,
+        52
+      ],
+      "visible_rect": [
+        375,
+        1436,
+        109,
+        52
+      ],
+      "hit_rect": null,
+      "visual_rect": null,
+      "rgba": [
+        0.08235294117647059,
+        0.4392156862745098,
+        0.9372549019607843,
+        1
+      ],
+      "radius_px": 14,
+      "font": null,
+      "font_size_px": null,
+      "letter_spacing_em": null,
+      "layout_size_px": null,
+      "shadow_layers": []
+    },
+    {
+      "id": "font.sans.latin",
+      "token_ids": [
+        "foreground"
+      ],
+      "rect": [
+        24,
+        1576,
+        141.45001220703125,
+        20.43000030517578
+      ],
+      "visible_rect": [
+        23.56999969482422,
+        1579.4849853515625,
+        140.6300163269043,
+        17.150010108947754
+      ],
+      "hit_rect": null,
+      "visual_rect": null,
+      "rgba": [
+        0.11372549019607843,
+        0.1607843137254902,
+        0.2235294117647059,
+        1
+      ],
+      "radius_px": null,
+      "font": "Noto Serif",
+      "font_size_px": 15,
+      "letter_spacing_em": 0.1,
+      "layout_size_px": [
+        141.45001220703125,
+        20.43000030517578
+      ],
+      "shadow_layers": []
+    },
+    {
+      "id": "font.sans.multilingual",
+      "token_ids": [
+        "foreground"
+      ],
+      "rect": [
+        24,
+        1598.5,
+        102.22676086425781,
+        20.43000030517578
+      ],
+      "visible_rect": [
+        25.010000228881836,
+        1599.433349609375,
+        101.15499877929688,
+        20.114999771118164
+      ],
+      "hit_rect": null,
+      "visual_rect": null,
+      "rgba": [
+        0.11372549019607843,
+        0.1607843137254902,
+        0.2235294117647059,
+        1
+      ],
+      "radius_px": null,
+      "font": "Noto Serif",
+      "font_size_px": 15,
+      "letter_spacing_em": 0.1,
+      "layout_size_px": [
+        102.22676086425781,
+        20.43000030517578
+      ],
+      "shadow_layers": []
+    },
+    {
+      "id": "font.serif.latin",
+      "token_ids": [
+        "foreground"
+      ],
+      "rect": [
+        24,
+        1651,
+        141.45001220703125,
+        20.43000030517578
+      ],
+      "visible_rect": [
+        23.56999969482422,
+        1654.4849853515625,
+        140.6300163269043,
+        17.150010108947754
+      ],
+      "hit_rect": null,
+      "visual_rect": null,
+      "rgba": [
+        0.11372549019607843,
+        0.1607843137254902,
+        0.2235294117647059,
+        1
+      ],
+      "radius_px": null,
+      "font": "Noto Serif",
+      "font_size_px": 15,
+      "letter_spacing_em": 0.1,
+      "layout_size_px": [
+        141.45001220703125,
+        20.43000030517578
+      ],
+      "shadow_layers": []
+    },
+    {
+      "id": "font.serif.multilingual",
+      "token_ids": [
+        "foreground"
+      ],
+      "rect": [
+        24,
+        1673.5,
+        102.22676086425781,
+        20.43000030517578
+      ],
+      "visible_rect": [
+        25.010000228881836,
+        1674.433349609375,
+        101.15499877929688,
+        20.114999771118164
+      ],
+      "hit_rect": null,
+      "visual_rect": null,
+      "rgba": [
+        0.11372549019607843,
+        0.1607843137254902,
+        0.2235294117647059,
+        1
+      ],
+      "radius_px": null,
+      "font": "Noto Serif",
+      "font_size_px": 15,
+      "letter_spacing_em": 0.1,
+      "layout_size_px": [
+        102.22676086425781,
+        20.43000030517578
+      ],
+      "shadow_layers": []
+    },
+    {
+      "id": "font.mono.latin",
+      "token_ids": [
+        "foreground"
+      ],
+      "rect": [
+        24,
+        1726,
+        210.029296875,
+        16.9921875
+      ],
+      "visible_rect": [
+        24.1865234375,
+        1726.61865234375,
+        208.35400390625,
+        15.98193359375
+      ],
+      "hit_rect": null,
+      "visual_rect": null,
+      "rgba": [
+        0.11372549019607843,
+        0.1607843137254902,
+        0.2235294117647059,
+        1
+      ],
+      "radius_px": null,
+      "font": "Liberation Mono",
+      "font_size_px": 15,
+      "letter_spacing_em": 0.1,
+      "layout_size_px": [
+        210.029296875,
+        16.9921875
+      ],
+      "shadow_layers": []
+    },
+    {
+      "id": "font.mono.multilingual",
+      "token_ids": [
+        "foreground"
+      ],
+      "rect": [
+        24,
+        1748.5,
+        117.68115234375,
+        16.9921875
+      ],
+      "visible_rect": [
+        25.010000228881836,
+        1745.8861083984375,
+        116.60939025878906,
+        20.114999771118164
+      ],
+      "hit_rect": null,
+      "visual_rect": null,
+      "rgba": [
+        0.11372549019607843,
+        0.1607843137254902,
+        0.2235294117647059,
+        1
+      ],
+      "radius_px": null,
+      "font": "Liberation Mono",
+      "font_size_px": 15,
+      "letter_spacing_em": 0.1,
+      "layout_size_px": [
+        117.68115234375,
+        16.9921875
+      ],
+      "shadow_layers": []
+    },
+    {
+      "id": "shadow.shadow-2xs",
+      "token_ids": [
+        "card",
+        "shadow-color"
+      ],
+      "rect": [
+        40,
+        1821,
+        194,
+        58
+      ],
+      "visible_rect": [
+        40,
+        1821,
+        194,
+        58
+      ],
+      "hit_rect": [
+        40,
+        1821,
+        194,
+        58
+      ],
+      "visual_rect": null,
+      "rgba": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "radius_px": 10,
+      "font": null,
+      "font_size_px": null,
+      "letter_spacing_em": null,
+      "layout_size_px": null,
+      "shadow_layers": []
+    },
+    {
+      "id": "shadow.shadow-xs",
+      "token_ids": [
+        "card",
+        "shadow-color"
+      ],
+      "rect": [
+        274,
+        1821,
+        194,
+        58
+      ],
+      "visible_rect": [
+        274,
+        1821,
+        194,
+        58
+      ],
+      "hit_rect": [
+        274,
+        1821,
+        194,
+        58
+      ],
+      "visual_rect": null,
+      "rgba": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "radius_px": 10,
+      "font": null,
+      "font_size_px": null,
+      "letter_spacing_em": null,
+      "layout_size_px": null,
+      "shadow_layers": []
+    },
+    {
+      "id": "shadow.shadow-sm",
+      "token_ids": [
+        "card",
+        "shadow-color"
+      ],
+      "rect": [
+        40,
+        1949,
+        194,
+        58
+      ],
+      "visible_rect": [
+        40,
+        1949,
+        194,
+        58
+      ],
+      "hit_rect": [
+        40,
+        1949,
+        194,
+        58
+      ],
+      "visual_rect": null,
+      "rgba": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "radius_px": 10,
+      "font": null,
+      "font_size_px": null,
+      "letter_spacing_em": null,
+      "layout_size_px": null,
+      "shadow_layers": []
+    },
+    {
+      "id": "shadow.shadow",
+      "token_ids": [
+        "card",
+        "shadow-color"
+      ],
+      "rect": [
+        274,
+        1949,
+        194,
+        58
+      ],
+      "visible_rect": [
+        274,
+        1949,
+        194,
+        58
+      ],
+      "hit_rect": [
+        274,
+        1949,
+        194,
+        58
+      ],
+      "visual_rect": null,
+      "rgba": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "radius_px": 10,
+      "font": null,
+      "font_size_px": null,
+      "letter_spacing_em": null,
+      "layout_size_px": null,
+      "shadow_layers": []
+    },
+    {
+      "id": "shadow.shadow-md",
+      "token_ids": [
+        "card",
+        "shadow-color"
+      ],
+      "rect": [
+        40,
+        2077,
+        194,
+        58
+      ],
+      "visible_rect": [
+        40,
+        2077,
+        194,
+        58
+      ],
+      "hit_rect": [
+        40,
+        2077,
+        194,
+        58
+      ],
+      "visual_rect": null,
+      "rgba": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "radius_px": 10,
+      "font": null,
+      "font_size_px": null,
+      "letter_spacing_em": null,
+      "layout_size_px": null,
+      "shadow_layers": []
+    },
+    {
+      "id": "shadow.shadow-lg",
+      "token_ids": [
+        "card",
+        "shadow-color"
+      ],
+      "rect": [
+        274,
+        2077,
+        194,
+        58
+      ],
+      "visible_rect": [
+        274,
+        2077,
+        194,
+        58
+      ],
+      "hit_rect": [
+        274,
+        2077,
+        194,
+        58
+      ],
+      "visual_rect": null,
+      "rgba": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "radius_px": 10,
+      "font": null,
+      "font_size_px": null,
+      "letter_spacing_em": null,
+      "layout_size_px": null,
+      "shadow_layers": []
+    },
+    {
+      "id": "shadow.shadow-xl",
+      "token_ids": [
+        "card",
+        "shadow-color"
+      ],
+      "rect": [
+        40,
+        2205,
+        194,
+        58
+      ],
+      "visible_rect": [
+        40,
+        2205,
+        194,
+        58
+      ],
+      "hit_rect": [
+        40,
+        2205,
+        194,
+        58
+      ],
+      "visual_rect": null,
+      "rgba": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "radius_px": 10,
+      "font": null,
+      "font_size_px": null,
+      "letter_spacing_em": null,
+      "layout_size_px": null,
+      "shadow_layers": []
+    },
+    {
+      "id": "shadow.shadow-2xl",
+      "token_ids": [
+        "card",
+        "shadow-color"
+      ],
+      "rect": [
+        274,
+        2205,
+        194,
+        58
+      ],
+      "visible_rect": [
+        274,
+        2205,
+        194,
+        58
+      ],
+      "hit_rect": [
+        274,
+        2205,
+        194,
+        58
+      ],
+      "visual_rect": null,
+      "rgba": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "radius_px": 10,
+      "font": null,
+      "font_size_px": null,
+      "letter_spacing_em": null,
+      "layout_size_px": null,
+      "shadow_layers": []
+    },
+    {
+      "id": "control.button",
+      "token_ids": [
+        "primary",
+        "primary-foreground"
+      ],
+      "rect": [
+        24,
+        2369,
+        222,
+        45
+      ],
+      "visible_rect": [
+        24,
+        2369,
+        222,
+        45
+      ],
+      "hit_rect": [
+        24,
+        2369,
+        222,
+        45
+      ],
+      "visual_rect": null,
+      "rgba": null,
+      "radius_px": 8,
+      "font": "Noto Serif",
+      "font_size_px": 15,
+      "letter_spacing_em": 0.1,
+      "layout_size_px": null,
+      "shadow_layers": []
+    },
+    {
+      "id": "control.checkbox",
+      "token_ids": [
+        "input",
+        "primary",
+        "primary-foreground"
+      ],
+      "rect": [
+        258,
+        2369,
+        20,
+        20
+      ],
+      "visible_rect": [
+        258,
+        2369,
+        20,
+        20
+      ],
+      "hit_rect": [
+        258,
+        2369,
+        20,
+        20
+      ],
+      "visual_rect": null,
+      "rgba": null,
+      "radius_px": 4,
+      "font": null,
+      "font_size_px": null,
+      "letter_spacing_em": null,
+      "layout_size_px": null,
+      "shadow_layers": []
+    },
+    {
+      "id": "control.radio",
+      "token_ids": [
+        "input",
+        "primary",
+        "border"
+      ],
+      "rect": [
+        24,
+        2444,
+        20,
+        20
+      ],
+      "visible_rect": [
+        24,
+        2444,
+        20,
+        20
+      ],
+      "hit_rect": [
+        24,
+        2444,
+        20,
+        20
+      ],
+      "visual_rect": null,
+      "rgba": null,
+      "radius_px": 10,
+      "font": null,
+      "font_size_px": null,
+      "letter_spacing_em": null,
+      "layout_size_px": null,
+      "shadow_layers": []
+    },
+    {
+      "id": "control.switch",
+      "token_ids": [
+        "border",
+        "primary",
+        "background"
+      ],
+      "rect": [
+        258,
+        2444,
+        55,
+        30
+      ],
+      "visible_rect": [
+        258,
+        2444,
+        55,
+        30
+      ],
+      "hit_rect": [
+        258,
+        2444,
+        55,
+        30
+      ],
+      "visual_rect": null,
+      "rgba": null,
+      "radius_px": 15,
+      "font": null,
+      "font_size_px": null,
+      "letter_spacing_em": null,
+      "layout_size_px": null,
+      "shadow_layers": []
+    },
+    {
+      "id": "control.slider",
+      "token_ids": [
+        "secondary",
+        "primary",
+        "background"
+      ],
+      "rect": [
+        24,
+        2519,
+        222,
+        30
+      ],
+      "visible_rect": [
+        24,
+        2519,
+        222,
+        30
+      ],
+      "hit_rect": [
+        24,
+        2519,
+        222,
+        30
+      ],
+      "visual_rect": null,
+      "rgba": null,
+      "radius_px": null,
+      "font": null,
+      "font_size_px": null,
+      "letter_spacing_em": null,
+      "layout_size_px": null,
+      "shadow_layers": []
+    },
+    {
+      "id": "control.progress",
+      "token_ids": [
+        "secondary",
+        "primary"
+      ],
+      "rect": [
+        258,
+        2519,
+        222,
+        10
+      ],
+      "visible_rect": [
+        258,
+        2519,
+        222,
+        10
+      ],
+      "hit_rect": null,
+      "visual_rect": null,
+      "rgba": null,
+      "radius_px": 5,
+      "font": null,
+      "font_size_px": null,
+      "letter_spacing_em": null,
+      "layout_size_px": null,
+      "shadow_layers": []
+    },
+    {
+      "id": "control.spinner",
+      "token_ids": [
+        "primary"
+      ],
+      "rect": [
+        24,
+        2594,
+        25,
+        25
+      ],
+      "visible_rect": [
+        24,
+        2594,
+        25,
+        25
+      ],
+      "hit_rect": null,
+      "visual_rect": null,
+      "rgba": null,
+      "radius_px": null,
+      "font": null,
+      "font_size_px": null,
+      "letter_spacing_em": null,
+      "layout_size_px": null,
+      "shadow_layers": []
+    },
+    {
+      "id": "control.icon",
+      "token_ids": [
+        "foreground"
+      ],
+      "rect": [
+        258,
+        2594,
+        25,
+        25
+      ],
+      "visible_rect": [
+        258,
+        2594,
+        25,
+        25
+      ],
+      "hit_rect": null,
+      "visual_rect": null,
+      "rgba": null,
+      "radius_px": null,
+      "font": null,
+      "font_size_px": null,
+      "letter_spacing_em": null,
+      "layout_size_px": null,
+      "shadow_layers": []
+    },
+    {
+      "id": "control.dropdown",
+      "token_ids": [
+        "input",
+        "foreground",
+        "border"
+      ],
+      "rect": [
+        24,
+        2669,
+        468,
+        45
+      ],
+      "visible_rect": [
+        24,
+        2669,
+        468,
+        45
+      ],
+      "hit_rect": [
+        24,
+        2669,
+        468,
+        45
+      ],
+      "visual_rect": null,
+      "rgba": null,
+      "radius_px": 8,
+      "font": "Noto Serif",
+      "font_size_px": 15,
+      "letter_spacing_em": 0.1,
+      "layout_size_px": null,
+      "shadow_layers": []
+    },
+    {
+      "id": "control.tabs",
+      "token_ids": [
+        "muted",
+        "background",
+        "foreground"
+      ],
+      "rect": [
+        24,
+        2744,
+        468,
+        45
+      ],
+      "visible_rect": [
+        24,
+        2744,
+        468,
+        45
+      ],
+      "hit_rect": [
+        24,
+        2744,
+        468,
+        45
+      ],
+      "visual_rect": null,
+      "rgba": null,
+      "radius_px": 10,
+      "font": "Noto Serif",
+      "font_size_px": 15,
+      "letter_spacing_em": 0.1,
+      "layout_size_px": null,
+      "shadow_layers": []
+    }
+  ],
+  "timings": [
+    [
+      1,
+      7903.700000047684,
+      7907.700000047684,
+      7920.5
+    ],
+    [
+      2,
+      8954.700000047684,
+      8980.900000095367,
+      8987.800000190735
+    ],
+    [
+      3,
+      10836.800000190735,
+      10850.600000143051,
+      10862.700000047684
+    ]
+  ],
+  "gpu_state": "Ready",
+  "controls": {
+    "checked": false,
+    "toggled": false,
+    "value": 50,
+    "index": 0,
+    "clicks": 0,
+    "disabled": false,
+    "read_only": false
+  }
+}

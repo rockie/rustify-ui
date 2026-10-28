@@ -262,7 +262,7 @@ test("cancelled legacy upgrade stays write-protected through edits, history, mod
 test("upgrade review is bound to editor epoch and commits only after refreshed explicit confirmation", async ({page}) => {
   const original = await seedLegacy(page);
   await page.getByTestId("upgrade-review-open").click();
-  await expect(page.getByTestId("upgrade-review").getByText("Matches “旧草稿”", {exact:true})).toBeVisible();
+  await expect(page.getByTestId("upgrade-review").getByText("Matches reference document", {exact:true})).toBeVisible();
   const before = await snapshot(page);
   // The review is modal. Simulate a source update through the existing model
   // hook to exercise the stale-snapshot guard while its background is inert.
@@ -271,11 +271,11 @@ test("upgrade review is bound to editor epoch and commits only after refreshed e
     (document.querySelector('[data-testid="mode-dark"]') as HTMLButtonElement).click();
   });
   await expect(page.getByTestId("upgrade-review-status")).toHaveAttribute("data-stale", "true");
-  await expect(page.getByTestId("upgrade-review").getByText("Matches “旧草稿”", {exact:true})).toBeVisible();
+  await expect(page.getByTestId("upgrade-review").getByText("Matches reference document", {exact:true})).toBeVisible();
   await page.getByTestId("upgrade-confirm").click();
   expect(await raw(page)).toBeNull(); expect(await backups(page)).toEqual({});
   await expect(page.getByTestId("field-error")).toContainText("confirm the new snapshot");
-  await expect(page.getByTestId("upgrade-review").getByText("Modified from “旧草稿”", {exact:true})).toBeVisible();
+  await expect(page.getByTestId("upgrade-review").getByText("Modified from reference document", {exact:true})).toBeVisible();
   const reviewed = await snapshot(page);
   await page.getByTestId("upgrade-confirm").click(); await idle(page);
   const stored = JSON.parse((await raw(page))!);

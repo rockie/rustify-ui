@@ -97,7 +97,7 @@ for (const width of [1440, 390]) {
         await expect.poll(() => page.evaluate(() => window.__theme_studio.snapshot().controls.index)).toBe(2);
         await page.getByTestId("inspector-toggle").click();
         await click("control.tabs");
-        await expect(page.getByTestId("inspector-outline")).toContainText("muted");
+        await expect(page.getByTestId("color-token-muted")).toHaveAttribute("aria-pressed", "true");
         if (width === 390) {
             await expect(page.getByTestId("mobile-edit")).toHaveAttribute("aria-pressed", "true");
             await page.getByTestId("mobile-preview").click();

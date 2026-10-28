@@ -317,11 +317,19 @@ body {
 }
 
 [data-testid="layout-body"] .fixture-reset-row {
-    display: flex;
+    display: grid;
+    grid-template-columns: 6rem minmax(0, 1fr);
     align-items: center;
-    flex-wrap: wrap;
     gap: 1rem;
 }
+
+[data-testid="layout-body"] .fixture-reset-row>:nth-child(2) {justify-self:start;min-width:0;}
+[data-testid="layout-body"] .fixture-reset-clicks {grid-column:2;}
+[data-testid="layout-body"] .fixture-explicit-box {background:var(--rustify-gray-a3);outline:1px solid var(--rustify-gray-a7);}
+[data-testid="layout-body"] .fixture-inset-card:is([data-side="left"],[data-side="right"]) {display:flex;gap:var(--rustify-space-3);align-items:stretch;}
+[data-testid="layout-body"] .fixture-inset-card:is([data-side="left"],[data-side="right"])>.rustify-inset {flex:0 0 40%;}
+[data-testid="layout-body"] .fixture-inset-card:is([data-side="left"],[data-side="right"]) .fixture-inset-hero {height:100%;box-sizing:border-box;min-width:0;overflow-wrap:anywhere;}
+[data-testid="layout-body"] .fixture-inset-card:is([data-side="left"],[data-side="right"])>p {flex:1;min-width:0;margin-block:0;}
 
 [data-testid="layout-body"] .fixture-reset-row > .fixture-prop {
     min-width: 6rem;

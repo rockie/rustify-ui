@@ -118,6 +118,8 @@ mod ui {
         let picked = RwSignal::new(Vec::<String>::new());
         let annotated = RwSignal::new(true);
         let visible = RwSignal::new(false);
+        let confirmed = RwSignal::new(false);
+        let label_fits = RwSignal::new(false);
         let outline = NodeRef::<leptos::html::Div>::new();
         let update = move || {
             if !state.inspector.get_untracked() {
@@ -148,6 +150,7 @@ mod ui {
             });
             visible.set(bounds.is_some());
             if let (Some(bounds), Some(node)) = (bounds, outline.get_untracked()) {
+                label_fits.set(bounds[2] >= 160. && bounds[3] >= 64.);
                 let element: leptos::web_sys::HtmlElement = node.into();
                 for (name, value) in [
                     ("--inspector-x", bounds[0]),
@@ -286,6 +289,7 @@ mod ui {
                 move |event| {
                     if state.inspector.get_untracked() {
                         if let Some(event) = event.dyn_ref::<leptos::web_sys::MouseEvent>() {
+                            confirmed.set(false);
                             choose(event);
                         }
                     }
@@ -302,6 +306,7 @@ mod ui {
                     if state.inspector.get_untracked() {
                         if let Some(mouse) = event.dyn_ref::<leptos::web_sys::MouseEvent>() {
                             if choose(mouse) {
+                                confirmed.set(true);
                                 event.prevent_default();
                                 event.stop_immediate_propagation();
                                 if let Some(token) = picked.get_untracked().first() {
@@ -436,7 +441,13 @@ mod ui {
         });
         view! {
             <div class="inspector-outline" node_ref=outline hidden=move || !state.inspector.get() || !visible.get() data-annotated=move || annotated.get().to_string() data-testid="inspector-outline" aria-hidden="true">
-                <span>{move || if annotated.get() {picked.get().join(", ")} else {state.tr("Not annotated", "未标注").into()}}</span>
+                <span hidden=move || confirmed.get() || !label_fits.get()>{move || if annotated.get() {
+                    picked.with(|tokens| match tokens.as_slice() {
+                        [] => String::new(),
+                        [first] => first.clone(),
+                        [first, rest @ ..] => format!("{first} +{}",rest.len()),
+                    })
+                } else {state.tr("Not annotated", "未标注").into()}}</span>
             </div>
             <aside class="inspector-panel" data-inspector-ui="true" hidden=move || !state.inspector.get() data-testid="inspector-panel">
                 <h3>{move ||state.tr("Inspect preview tokens","检查预览 token")}</h3>
@@ -459,7 +470,7 @@ mod ui {
                 <div class="inspector-tokens" role="group" aria-label="Sample tokens">
                     {move || picked.get().into_iter().map(|token|{let label=token.clone();view!{<Button variant=ButtonVariant::Outline size=ButtonSize::One on_click=move ||state.inspect(token.clone())>{label}</Button>}}).collect_view()}
                 </div>
-                <details><summary>{move ||state.tr("All drawn tokens · keyboard selection","全部绘制 token · 键盘选择")}</summary>
+                <details on:toggle=move |_|update()><summary>{move ||state.tr("All drawn tokens · keyboard selection","全部绘制 token · 键盘选择")}</summary>
                     <div class="inspector-tokens">
                         <For each=move ||available.get() key=|token|token.clone() children=move |token|{let label=token.clone();let id=format!("inspect-token-{token}");view!{<button type="button" data-testid=id on:click=move |_|state.inspect(token.clone())>{label}</button>}} />
                     </div>

@@ -36,11 +36,11 @@ test("named save, refresh, copy, rename, overwrite and delete retain real checkp
   await save(page,"Ocean 中文");
   await expect(page.getByTestId("storage-status")).toContainText("Saved on this device");
   expect((await state(page)).modified).toBe(false);
-  await expect(page.getByTestId("theme-modified")).toHaveText("Matches “Ocean 中文”");
+  await expect(page.getByTestId("theme-modified")).toHaveText("Matches reference document");
   const saved=JSON.parse((await raw(page))!);
   expect(saved.saved_themes).toHaveLength(1);expect(saved.draft.name).toBe("Ocean 中文");
   await edit(page,"#224488");
-  await expect(page.getByTestId("theme-modified")).toHaveText("Modified from “Ocean 中文”");
+  await expect(page.getByTestId("theme-modified")).toHaveText("Modified from reference document");
   await expect(page.getByTestId("toolbar-storage-status")).toHaveText("Saved on this device");
   await page.reload();
   await expect(page.getByTestId("status")).toHaveAttribute("data-status","ready");
@@ -88,6 +88,24 @@ test("quota failure preserves the previous bytes, in-memory draft and unsaved na
   await save(page,"Cannot save");expect(await raw(page)).toBe(previous);
   await page.getByTestId("theme-library").click();await expect(page.getByTestId("library-empty")).toBeVisible();
   expect((await state(page)).modified).toBe(true);
+});
+
+test("a failed named save keeps the acknowledged draft status and retries its retained action",async({page})=> {
+  await waitForReady(page);await edit(page,"#552288");
+  await expect(page.getByTestId("storage-status")).toHaveText("Saved on this device");
+  const previous=await raw(page);
+  await page.evaluate(()=> {
+    (window as any).__storageSetItem=Storage.prototype.setItem;
+    Storage.prototype.setItem=function(){throw new DOMException("Test capacity reached","QuotaExceededError");};
+  });
+  await save(page,"Retained name");
+  await expect(page.getByTestId("toolbar-storage-status")).toHaveText("Draft saved · action failed");
+  await expect(page.getByTestId("storage-status")).toContainText("The current draft is saved on this device");
+  expect(await raw(page)).toBe(previous);
+  await expect(page.getByTestId("storage-issue").locator("..")).toHaveClass(/tools-state-error/);
+  await page.evaluate(()=>Storage.prototype.setItem=(window as any).__storageSetItem);
+  await page.getByTestId("named-storage-feedback").getByRole("button",{name:'Retry retained saves · “Retained name”',exact:true}).click();
+  await expect.poll(async()=>JSON.parse((await raw(page))!).saved_themes.map((theme:any)=>theme.name)).toEqual(["Retained name"]);
 });
 
 test("denied localStorage leaves the editor and export available",async({page})=> {

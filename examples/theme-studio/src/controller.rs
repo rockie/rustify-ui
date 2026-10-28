@@ -612,7 +612,7 @@ impl StudioState {
                 let mut preferences = self.envelope.with_untracked(|envelope| envelope.preferences.clone());
                 preferences.mode = self.editor.with_untracked(|editor| editor.mode);
                 let current = writer.acknowledged.as_ref().is_some_and(|(epoch, draft, saved_preferences)| *epoch == self.editor_epoch.get_untracked() && self.editor.with_untracked(|editor| &editor.document == draft) && &preferences == saved_preferences);
-                if current { self.tr("Saved on this device", "已保存到此设备").into() }
+                if current { self.tr("Saved on this device", "已保存到本机").into() }
                 else if writer.acknowledged.is_some() { self.tr("A previous version was saved; current changes are pending.", "先前版本已保存，当前改动待保存。").into() }
                 else { self.tr("Draft remains in memory; no current save has been confirmed.", "草稿保留在内存，尚未确认当前保存。").into() }
             })

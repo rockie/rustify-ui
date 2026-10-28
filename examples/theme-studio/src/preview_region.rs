@@ -154,7 +154,7 @@ const SHADOWS: [&str; 8] = [
 const TABS: [&str; 3] = ["Overview", "Usage", "Settings"];
 const LATIN: &str = "Rustify · ffi fi · e\u{301}";
 const MULTILINGUAL: &str = "中文你好 · 👩‍💻";
-const PAD: f64 = 16.0;
+const PAD: f64 = 24.0;
 
 fn columns(width: f64) -> usize {
     ((width / 128.0) as usize).clamp(2, 7)

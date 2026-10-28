@@ -22,7 +22,7 @@ test("picking a declared action follows its own bounds and exposes its editor so
     const button = page.getByTestId("studio-preview").getByTestId("cards-submit");
     await button.click();
     const outline = page.getByTestId("inspector-outline");
-    await expect(outline).toContainText("primary-foreground");
+    await expect(page.getByTestId("inspector-panel").locator(".inspector-tokens").first().getByRole("button", { name: "primary-foreground", exact: true })).toBeVisible();
     await expect.poll(async () => {
         const [control, selection] = await Promise.all([button.boundingBox(), outline.boundingBox()]);
         return control && selection ? Math.abs(control.width - selection.width) : Infinity;
@@ -160,6 +160,44 @@ test("the command bar keeps actions visible at 200 percent text size", async ({ 
         expect(await bar.evaluate(node => node.scrollHeight - node.clientHeight)).toBeLessThan(2);
     }
     await page.evaluate(() => document.documentElement.style.fontSize = "");
+});
+
+test("fine adjustment and export retain their content at 200 percent text size", async ({ page }) => {
+    await waitForReady(page);
+    await page.setViewportSize({ width: 720, height: 900 });
+    await page.evaluate(() => document.documentElement.style.fontSize = "200%");
+    try {
+        await page.getByTestId("editor-colors").click();
+        await page.getByTestId("color-token-primary").click();
+        const editor = page.locator("#studio-editor");
+        await expect.poll(() => editor.evaluate(node => node.scrollWidth - node.clientWidth)).toBeLessThan(2);
+        const source = await page.getByTestId("source-effective").boundingBox();
+        const column = await editor.boundingBox();
+        expect(source!.x).toBeGreaterThanOrEqual(column!.x);
+        expect(source!.x + source!.width).toBeLessThanOrEqual(column!.x + column!.width);
+        const renderers = page.locator(".studio-renderer-buttons");
+        expect(await renderers.evaluate(node => node.scrollWidth - node.clientWidth)).toBeLessThan(2);
+        await page.getByTestId("theme-export").click();
+        const format = page.getByTestId("export-kind");
+        await expect(format).toContainText("Theme JSON v2");
+        expect(await format.locator("span").first().evaluate(node => node.scrollWidth - node.clientWidth)).toBeLessThan(2);
+        await page.keyboard.press("Escape");
+    } finally {
+        await page.evaluate(() => document.documentElement.style.fontSize = "");
+    }
+});
+
+test("the inspector reserves space beside the preview scroll area", async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await waitForReady(page);
+    await page.getByTestId("renderer-dom").click();
+    await page.getByTestId("inspector-toggle").click();
+    const create = page.getByTestId("studio-preview").getByTestId("preview-primary");
+    await create.click();
+    const [panel, control] = await Promise.all([page.getByTestId("inspector-panel").boundingBox(), create.boundingBox()]);
+    expect(control!.y + control!.height).toBeLessThanOrEqual(panel!.y);
+    await expect(page.getByTestId("inspector-outline").locator("span")).toBeHidden();
+    await page.keyboard.press("Escape");
 });
 
 test("the command bar stays available on the mobile preview panel", async ({ page }) => {

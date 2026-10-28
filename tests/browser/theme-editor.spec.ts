@@ -448,7 +448,7 @@ test.describe("theme editing through the workbench", () => {
         await card.scrollIntoViewIfNeeded();
         await card.hover({ position: { x: 8, y: 8 } });
         await expect(page.getByTestId("inspector-outline")).toBeVisible();
-        await expect(page.getByTestId("inspector-outline")).toContainText("card-foreground");
+        await expect(page.getByTestId("inspector-panel").locator(".inspector-tokens").first().getByRole("button", { name: "card-foreground", exact: true })).toBeVisible();
         await expect.poll(async () => {
             const cardBounds = await card.boundingBox(), outline = await page.getByTestId("inspector-outline").boundingBox();
             return !!cardBounds && !!outline && outline.y >= Math.max(0, cardBounds.y) - 2;
@@ -468,7 +468,7 @@ test.describe("theme editing through the workbench", () => {
         expect(outline.y + outline.height).toBeLessThanOrEqual(viewport.height + 2);
         await cards.getByTestId("cards-submit").hover();
         await expect(page.getByTestId("inspector-outline")).toBeVisible();
-        await expect(page.getByTestId("inspector-outline")).toContainText("primary");
+        await expect(page.getByTestId("inspector-panel").locator(".inspector-tokens").first().getByRole("button", { name: "primary", exact: true })).toBeVisible();
         await cards.getByTestId("cards-submit").click();
         await expect(cards.getByTestId("cards-error")).toBeEmpty();
         await expect(page.getByTestId("color-value")).toBeFocused();
@@ -496,7 +496,7 @@ test.describe("theme editing through the workbench", () => {
         await expect(page.getByTestId("color-value")).toBeFocused();
         expect(await colorField!.evaluate(node => node === document.querySelector('[data-testid="color-value"]'))).toBe(true);
         await expect(page.getByTestId("token-source").getByRole("heading")).toBeInViewport({ ratio: 1 });
-        await expect(page.getByTestId("inspector-outline")).toContainText("chart-3");
+        await expect(page.getByTestId("inspector-panel").locator(".inspector-tokens").first().getByRole("button", { name: "chart-3", exact: true })).toBeVisible();
         await page.getByTestId("inspector-panel").locator("details > summary").click();
         await page.getByTestId("inspect-token-font-sans").focus();
         await page.keyboard.press("Enter");

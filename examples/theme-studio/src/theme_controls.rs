@@ -91,7 +91,7 @@ pub use ui::{ThemeControls, ThemeDiagnostics};
 
 #[cfg(target_arch = "wasm32")]
 mod ui {
-    use super::{contrast_failures, pair_contrast, valid_author_value, CONTRAST_PAIRS};
+    use super::{pair_contrast, valid_author_value, CONTRAST_PAIRS};
     use crate::state::{HslShift, TokenScope};
     use leptos::prelude::*;
     use leptos::wasm_bindgen::JsCast;
@@ -712,11 +712,11 @@ mod ui {
             pairs
         });
         view! {
-            <section class="theme-diagnostics space-y-4 text-sm" data-testid="theme-diagnostics">
+            <section class="theme-diagnostics text-sm" data-testid="theme-diagnostics">
                 <div role="status" data-testid="gamut-diagnostics"><Show when=move ||!gamut.get().is_empty() fallback=move ||view! {<p class="text-muted-foreground">{move ||tr(locale.get(),"Authored colors fit the sRGB preview.","作者颜色未超出 sRGB 预览色域。")}</p>}>
                     <p class="text-destructive">{move ||format!("{} {}",tr(locale.get(),"Preview clipped to sRGB; author values are preserved:","预览已裁剪至 sRGB，作者值保留："),gamut.get().join(", "))}</p>
                 </Show></div>
-                <div class="space-y-2" data-testid="font-diagnostics">
+                <details open data-testid="font-diagnostics"><summary>{move ||tr(locale.get(),"Fonts · 3","字体 · 3")}</summary>
                     {move ||resolved.get().fonts.clone().into_iter().enumerate().map(|(index,font)| {
                         let slot=["font-sans","font-serif","font-mono"][index];
                         let requested=font.requested.join(", ");
@@ -727,8 +727,8 @@ mod ui {
                             <span class="text-muted-foreground">{move ||if !packaged {tr(locale.get()," · no packaged resource; preview cannot guarantee matching fonts"," · 没有已打包资源，预览无法保证字体一致")} else if fallback {tr(locale.get()," · bundled fallback"," · 已打包字体回退")} else {tr(locale.get()," · requested bundled font"," · 使用所选已打包字体")}}</span>
                         </p>}
                     }).collect_view()}
-                </div>
-                <details open=true><summary class="cursor-pointer font-medium">{move ||format!("{} · {} {}",tr(locale.get(),"Text contrast pairs","文字对比度"),contrast_failures(&resolved.get()).len(),tr(locale.get(),"below 4.5:1","组低于 4.5:1"))}</summary>
+                </details>
+                <details open=true><summary class="cursor-pointer font-medium">{move ||tr(locale.get(),"Text contrast pairs","文字对比度")}</summary>
                     <p class="text-xs text-muted-foreground mt-2">{move ||tr(locale.get(),"Text alpha is composited over each surface. A translucent surface without its actual underlay is unknown. Body text needs 4.5:1; large text needs 3:1. Verdicts use the unrounded ratio.","文字透明度会与表面合成。半透明表面缺少实际底色时无法判定。普通文字要求 4.5:1，大文字要求 3:1；结论使用未四舍五入的比值。")}</p>
                     <ul class="space-y-2 mt-3">
                         {move ||pairs.get().into_iter().map(move |(foreground,background,ratio)|view! {

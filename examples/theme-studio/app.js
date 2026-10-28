@@ -13,7 +13,7 @@ const environment = () => ({
 });
 function fatal(error) {
   observer?.disconnect(); toolbarObserver?.disconnect(); controller?.abort();
-  containers.forEach((name) => release_container(document.getElementById(name)));
+  [...containers,"studio-inspector"].forEach((name) => release_container(document.getElementById(name)));
   id = null; delete window.__theme_studio;
   status.dataset.status = "fatal";
   const died = live;

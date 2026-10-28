@@ -10,11 +10,12 @@ use crate::{
     },
     provider_fixture::ProviderFixture,
     scenes::{ScenePreview, SCENE_NAMES},
-    storage_controls::{reference_status, StorageControls, TokenSource},
+    storage_controls::{reference_status, storage_label, StorageControls, TokenSource},
     theme_controls::{contrast_failures, ThemeControls, ThemeDiagnostics},
 };
 use leptos::{
     ev::PointerEvent,
+    portal::Portal,
     prelude::*,
     wasm_bindgen::{prelude::*, JsCast},
 };
@@ -170,6 +171,7 @@ fn Editor(state: StudioState) -> impl IntoView {
     let controls_tab = NodeRef::<leptos::html::Button>::new();
     let tools_toolbar = NodeRef::<leptos::html::Div>::new();
     let library_toolbar = NodeRef::<leptos::html::Div>::new();
+    let group_tokens_open = RwSignal::new(false);
     let activate_tab = move |tab: &str| {
         let token = state.selected_token.get_untracked();
         if tab == "colors" && !rustify_ui::theme::COLOR_TOKENS.contains(&token.as_str()) {
@@ -267,18 +269,18 @@ fn Editor(state: StudioState) -> impl IntoView {
             <Button variant=ButtonVariant::Ghost attr:aria-pressed=move || (state.mobile_tab.get() == "edit").to_string() on_click=move || state.mobile_tab.set("edit".into()) test_id="mobile-edit">{move || state.tr("Edit", "编辑")}</Button>
             <Button variant=ButtonVariant::Ghost attr:aria-pressed=move || (state.mobile_tab.get() == "preview").to_string() on_click=move || state.mobile_tab.set("preview".into()) test_id="mobile-preview">{move || state.tr("Preview", "预览")}</Button>
         </nav>
-            <div class="studio-editor-top">
-            <div class="studio-document-line"><h2 class="studio-document-name" data-testid="current-theme-name">{move || state.editor.with(|editor|editor.document.name.clone())}</h2><span class="studio-modified" data-testid="theme-modified">{move || modification_label.get()}</span><span class="studio-save-state" role="status" data-testid="toolbar-storage-status">{move || if !state.storage_issue.get().is_empty() {state.tr("Save failed", "保存失败")} else if !crate::storage_browser::writable() {state.tr("Memory only", "仅内存")} else if state.permission()!=crate::write_queue::Permission::Ready || state.external.with(Option::is_some) {state.tr("Saving paused", "保存已暂停")} else if state.pending_count()>0 {state.tr("Saving…", "正在保存…")} else {state.storage_epoch.get();state.editor_epoch.get();state.writer.with_value(|writer|if writer.acknowledged.as_ref().is_some_and(|(epoch,_,_)|*epoch==state.editor_epoch.get()){state.tr("Saved on this device", "已保存到本机")}else{state.tr("Not saved yet", "尚未保存")})}}</span></div>
+            <div class="studio-editor-top" data-saving-paused=move ||(!crate::storage_browser::writable() || state.permission()!=crate::write_queue::Permission::Ready || state.external.with(Option::is_some)).to_string()><div class="studio-command-bar">
+            <div class="studio-document-line"><h2 class="studio-document-name" data-testid="current-theme-name">{move || state.editor.with(|editor|editor.document.name.clone())}</h2><span class="studio-modified" data-testid="theme-modified">{move || modification_label.get()}</span><span class="studio-save-state" role="status" data-testid="toolbar-storage-status">{move ||storage_label(state)}</span></div>
             <div class="studio-preview-mode"><span data-testid="preview-mode-label">{move || state.tr("Preview mode", "预览模式")}</span><div class="editor-mode" aria-label=move ||state.tr("Preview mode", "预览模式")>
                 <Button size=ButtonSize::One variant=ButtonVariant::Outline attr:aria-pressed=move || (state.mode().get() == ThemeMode::Light).to_string() on_click=move || state.set_mode(ThemeMode::Light) test_id="mode-light">{move || state.tr("Light", "浅色")}</Button>
                 <Button size=ButtonSize::One variant=ButtonVariant::Outline attr:aria-pressed=move || (state.mode().get() == ThemeMode::Dark).to_string() on_click=move || state.set_mode(ThemeMode::Dark) test_id="mode-dark">{move || state.tr("Dark", "深色")}</Button>
             </div></div>
-            <div class="studio-history">
+            <div class="studio-command-actions"><div class="studio-history">
                 <Button size=ButtonSize::One variant=ButtonVariant::Outline disabled=Signal::derive(move || state.editor.with(|e| e.undo_len() == 0 || e.gesture_active())) on_click=move || state.history(false) test_id="theme-undo">{move || state.tr("Undo", "撤销")}</Button>
                 <Button size=ButtonSize::One variant=ButtonVariant::Outline disabled=Signal::derive(move || state.editor.with(|e| e.redo_len() == 0 || e.gesture_active())) on_click=move || state.history(true) test_id="theme-redo">{move || state.tr("Redo", "重做")}</Button>
             </div>
             <div class="studio-tools-toolbar" node_ref=tools_toolbar></div>
-            </div>
+            </div></div></div>
         <div class="studio-editor studio-editor-content" data-testid="editor-shell">
             <header><div class="studio-section-title"><h1>"Rustify Theme Studio"</h1><div class="studio-locale">
                 <Button size=ButtonSize::One variant=ButtonVariant::Ghost attr:aria-pressed=move || (state.locale().get() == rustify_ui::Locale::English).to_string() on_click=move || state.preference(|p| p.locale = "en".into()) test_id="locale-en">"EN"</Button>
@@ -286,6 +288,7 @@ fn Editor(state: StudioState) -> impl IntoView {
             </div></div><p>{move || state.tr("Shape a theme. See both renderers.", "编辑主题，同步查看两种渲染器。")}</p></header>
             <div class="studio-document-tools"><div node_ref=library_toolbar></div>
                 <Button size=ButtonSize::One variant=ButtonVariant::Outline disabled=Signal::derive(move || state.editor.with(|e| e.gesture_active() || (!e.is_modified() && state.patch.get().0.is_empty() && state.controls.get() == PreviewControls::default()))) on_click=move || state.reset() test_id="theme-reset">{move ||format!("{} · {}",state.tr("Restore document", "恢复文档"),state.editor.with(|editor|editor.checkpoint_document().name.clone()))}</Button>
+                <p class="tools-status">{move ||state.tr("Restores the reference document's configuration and all values in both modes, discarding later adjustments.","恢复参考文档的配置与两模式全部值，放弃之后的调整。")}</p>
             </div>
             <DataTools toolbar=tools_toolbar library_toolbar=library_toolbar document=state.document() envelope=state.envelope locale=state.locale() context=Signal::derive(move || font_context(state.rem.get(), state.reduce_motion.get())) corrupt=state.corrupt conflict=Signal::derive(move || state.external.get().is_some()) external=state.external pending=Signal::derive(move || state.pending_count()) editor_epoch=state.editor_epoch preview_mode=state.mode() on_command=move |command| tool_command(state, command) />
             <StorageControls state=state/>
@@ -294,6 +297,18 @@ fn Editor(state: StudioState) -> impl IntoView {
                 overrides=Signal::derive(move || state.editor.with(|editor| ThemeOverrideCounts::from(&editor.document.overrides)))
                 on_change=move |patch| state.configure(patch) on_reset=move |group| state.clear_group(group)
                 locale=state.locale() class="studio-basic-config" test_id="studio-config"/>
+            <details class="studio-group-overrides" data-testid="group-override-tokens" on:toggle=move |event|group_tokens_open.set(event.target().and_then(|target|target.dyn_into::<leptos::web_sys::Element>().ok()).is_some_and(|element|element.has_attribute("open")))><summary>{move ||state.tr("Tokens affected by a group reset","分组解除影响的 token")}</summary>
+                <Show when=move ||group_tokens_open.get()>
+                {rustify_ui::ThemeConfigGroup::ALL.iter().copied().map(move |group|view! {
+                    <section><h3>{move ||format!("{} · {}",match group {rustify_ui::ThemeConfigGroup::Accent=>state.tr("Brand color","品牌色"),rustify_ui::ThemeConfigGroup::Gray=>state.tr("Neutral color","中性色"),rustify_ui::ThemeConfigGroup::Panel=>state.tr("Panel background","面板背景"),rustify_ui::ThemeConfigGroup::Radius=>state.tr("Radius","圆角")},state.tr("both modes","两模式"))}</h3>
+                        {move ||state.editor.with(|editor|[ThemeMode::Light,ThemeMode::Dark].into_iter().map(|mode| {
+                            let keys=group.tokens().iter().filter(|key|editor.document.overrides.values(mode).0.contains_key(**key)).copied().collect::<Vec<_>>();
+                            view!{<p><span>{if mode==ThemeMode::Light {state.tr("Light","浅色")}else{state.tr("Dark","深色")}}": "</span>{if keys.is_empty(){state.tr("No overrides","无覆盖").to_owned()}else{keys.join(", ")}}</p>}
+                        }).collect_view())}
+                    </section>
+                }).collect_view()}
+                </Show>
+            </details>
             <div class="studio-editor-tabs" role="tablist" aria-orientation="horizontal" aria-label=move || state.tr("Theme fields", "主题字段") on:keydown=tab_key>
                 <button type="button" role="tab" node_ref=colors_tab id="studio-editor-tab-colors" aria-controls="studio-editor-panel-colors" tabindex=move || if state.editor_tab.get() == "colors" {"0"} else {"-1"} aria-selected=move || (state.editor_tab.get() == "colors").to_string() on:click=move |_| activate_tab("colors") data-testid="editor-colors">{move || state.tr("Colors", "颜色")}</button>
                 <button type="button" role="tab" node_ref=controls_tab id="studio-editor-tab-controls" aria-controls="studio-editor-panel-controls" tabindex=move || if state.editor_tab.get() == "controls" {"0"} else {"-1"} aria-selected=move || (state.editor_tab.get() == "controls").to_string() on:click=move |_| activate_tab("controls") data-testid="editor-controls">{move || state.tr("Typography & other", "字体与其他")}</button>
@@ -309,7 +324,7 @@ fn Editor(state: StudioState) -> impl IntoView {
                 <Show when=move ||rustify_ui::theme::VALUE_TOKENS.contains(&state.selected_token.get().as_str())><TokenSource state=state/></Show>
             </div>
             <p class="editor-error" role="status" data-testid="field-error">{move || state.error.get()}</p>
-            <details class="studio-diagnostics"><summary>{move ||format!("{} · {} {}",state.tr("Diagnostics", "诊断"),contrast_failures(&state.resolved().get()).len(),state.tr("text pairs below 4.5:1", "组文字对比低于 4.5:1"))}</summary><ThemeDiagnostics resolved=state.resolved() locale=state.locale() /></details>
+            <details class="studio-diagnostics"><summary>{move ||state.tr("Diagnostics", "诊断")}</summary><ThemeDiagnostics resolved=state.resolved() locale=state.locale() /></details>
             <details class="studio-isolation"><summary>{move || state.tr("Scope isolation checks", "作用域隔离验证")}</summary>
                 <Button size=ButtonSize::One variant=ButtonVariant::Outline on_click=move || state.patch.set(ThemeValuePatch(BTreeMap::from([("radius".into(), "0px".into()), ("shadow-opacity".into(), "0.4".into()), ("popover".into(), "#fff4dd".into())]))) test_id="apply-patch">{move || state.tr("Apply local patch", "应用局部覆盖")}</Button>
                 <Button size=ButtonSize::One variant=ButtonVariant::Ghost disabled=Signal::derive(move || state.patch.get().0.is_empty()) on_click=move || state.patch.set(ThemeValuePatch::default()) test_id="clear-patch">{move || state.tr("Clear patch", "清除覆盖")}</Button>
@@ -354,7 +369,7 @@ fn PreviewToolbar(state: StudioState, fullscreen: RwSignal<bool>) -> impl IntoVi
     });
     view! {
         <header class="studio-preview-toolbar" data-inspector-ui="true" data-testid="preview-toolbar">
-            <div class="studio-section-title"><h2>{move || state.tr("Preview", "预览")}</h2><span class="studio-preview-identity"><span>{move ||state.editor.with(|editor|editor.document.name.clone())}</span><span>{move ||if state.mode().get()==ThemeMode::Light {state.tr("Light preview","浅色预览")} else {state.tr("Dark preview","深色预览")}}</span></span></div>
+            <div class="studio-section-title"><h2>{move || state.tr("Preview", "预览")}</h2><span class="studio-preview-identity"><span>{move ||state.editor.with(|editor|editor.document.name.clone())}</span><span>{move ||if state.mode().get()==ThemeMode::Light {state.tr("Preview: Light","预览：浅色")} else {state.tr("Preview: Dark","预览：深色")}}</span></span></div>
             <div class="studio-preview-options">
                 <Select value=scene options=options open=scene_open on_open_change=move |v| scene_open.set(v) on_change=move |v| state.preference(|p| p.scene = v) aria_label="Preview scene" test_id="preview-scene" />
                 <Select value=width options=widths open=width_open on_open_change=move |v| width_open.set(v) on_change=move |v| state.preference(|p| p.preview_width = v) aria_label="Preview width" test_id="preview-width" />
@@ -522,8 +537,12 @@ fn Preview(state: StudioState, compare: bool) -> impl IntoView {
             <ThemeBoundary patch=Signal::derive(|| neutral_patch().into())>
                 <PreviewToolbar state=state fullscreen=fullscreen />
                 <PreviewDiagnostics state=state />
-                <Inspector state=state root=root canvas=canvas fullscreen=fullscreen />
             </ThemeBoundary>
+            {document().get_element_by_id("studio-inspector").map(move |mount|view! {
+                <Portal mount=mount><ThemeBoundary patch=Signal::derive(||neutral_patch().into())>
+                    <Inspector state=state root=root canvas=canvas fullscreen=fullscreen />
+                </ThemeBoundary></Portal>
+            })}
             <div class="studio-renderers" data-renderer=move || state.envelope.with(|e| e.preferences.renderer.clone())>
                 <section class="studio-renderer-pane studio-dom-pane" hidden=move || state.envelope.with(|e| e.preferences.renderer == "gpu") data-testid="dom-preview">
                     <p class="studio-renderer-label">"DOM"</p><div class="studio-authored-preview"><ScenePreview scene=scene locale=state.locale() />

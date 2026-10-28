@@ -294,18 +294,18 @@ fn LayoutSamples(invalid: RwSignal<bool>, clicks: RwSignal<u32>) -> impl IntoVie
             <p class="fixture-prop">"Box · padding=4 (theme spacing, scales once)"</p>
             <Box test_id="layout-scaled-space" layout=Layout { padding: Padding { p: space(4), ..Padding::default() }, ..Layout::default() }>"Theme space scales once."</Box>
             <p class="fixture-prop">"Box · width=37px · height=19px · padding=3px (explicit CSS)"</p>
-            <Box test_id="layout-absolute" layout=Layout { width: css("37px"), height: css("19px"), padding: Padding { p: Spacing::Css("3px".into()).into(), ..Padding::default() }, ..Layout::default() }><span class="sr-only">"37px × 19px; padding=3px"</span></Box>
+            <Box test_id="layout-absolute" class="fixture-explicit-box" layout=Layout { width: css("37px"), height: css("19px"), padding: Padding { p: Spacing::Css("3px".into()).into(), ..Padding::default() }, ..Layout::default() }><span class="sr-only">"37px × 19px; padding=3px"</span></Box>
             <p class="fixture-prop">"Box · width=240px; Invalid prop submits width=12px;display:none"</p>
-            <Box test_id="layout-invalid-prop" layout=Signal::derive(move ||checked_layout.get())>"A bad prop keeps this view alive."</Box>
+            <Box test_id="layout-invalid-prop" class="fixture-explicit-box" layout=Signal::derive(move ||checked_layout.get())>"A bad prop keeps this view alive."</Box>
             <p role="status" data-testid="layout-prop-diagnostics" class="fixture-prop-diagnostic">{move || {
                 let mut styles=rustify_components::geometry::StyleSet::default();
-                checked_layout.get().write(&mut styles).err().map(|error|format!("Box · {error}. Rejected value: 12px;display:none. Fallback: width=auto. Component remains usable.")).unwrap_or_default()
+                checked_layout.get().write(&mut styles).err().map(|_|view! {<span>"Box · "<Code size=Responsive::from(TextSize::One)>"width"</Code>{": rejected \"12px;display:none\" (expected one CSS value) · fallback width=auto"}</span>})
             }}</p>
             <section class="fixture-section" data-testid="layout-reset-comparison">
                 <Heading as_=HeadingLevel::H2>"Reset"</Heading>
                 <p class="fixture-prop">"Only the dashed native element receives Reset; siblings keep their browser defaults. No wrapper is added."</p>
                 <div class="fixture-reset-row"><span class="fixture-prop">"button · native"</span><button type="button">"Native action"</button></div>
-                <div class="fixture-reset-row"><span class="fixture-prop">"button · Reset"</span>{reset_button}<output data-testid="layout-reset-count">{move || clicks.get()}</output></div>
+                <div class="fixture-reset-row"><span class="fixture-prop">"button · Reset"</span>{reset_button}<span class="fixture-prop fixture-reset-clicks">"clicks: "<output data-testid="layout-reset-count">{move || clicks.get()}</output></span></div>
                 <div class="fixture-reset-row"><span class="fixture-prop">"h2 · native"</span><h2>"Native heading"</h2></div>
                 <div class="fixture-reset-row"><span class="fixture-prop">"h2 · Reset"</span>{Reset(leptos::html::h2().class("fixture-reset-outline").child("Reset heading"))}</div>
                 <div class="fixture-reset-row"><span class="fixture-prop">"ul · native"</span><ul><li>"Native list item"</li></ul></div>
@@ -373,7 +373,7 @@ fn LayoutDemonstrations() -> impl IntoView {
             <Heading as_=HeadingLevel::H2>"Inset"</Heading>
             <div class="fixture-inset-demo-grid">
                 {[("top", InsetSide::Top), ("bottom", InsetSide::Bottom), ("left",InsetSide::Left), ("right",InsetSide::Right)].into_iter().map(|(name, side)| view! {
-                    <Box class="fixture-inset-card" layout=Layout { padding: Padding { p: space(5), ..Padding::default() }, ..Layout::default() }>
+                    <Box class="fixture-inset-card" attr:data-side=name layout=Layout { padding: Padding { p: space(5), ..Padding::default() }, ..Layout::default() }>
                         <Show when=move || matches!(side,InsetSide::Bottom|InsetSide::Right)><p>"Content keeps the card's declared padding."</p></Show>
                         <Inset side=Responsive::from(side)><div class="fixture-inset-hero">{format!("side={name} · flush to card edges")}</div></Inset>
                         <Show when=move || matches!(side,InsetSide::Top|InsetSide::Left)><p>"Content keeps the card's declared padding."</p></Show>
