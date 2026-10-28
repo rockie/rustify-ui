@@ -716,7 +716,7 @@ mod ui {
                 <div role="status" data-testid="gamut-diagnostics"><Show when=move ||!gamut.get().is_empty() fallback=move ||view! {<p class="text-muted-foreground">{move ||tr(locale.get(),"Authored colors fit the sRGB preview.","作者颜色未超出 sRGB 预览色域。")}</p>}>
                     <p class="text-destructive">{move ||format!("{} {}",tr(locale.get(),"Preview clipped to sRGB; author values are preserved:","预览已裁剪至 sRGB，作者值保留："),gamut.get().join(", "))}</p>
                 </Show></div>
-                <details open data-testid="font-diagnostics"><summary>{move ||tr(locale.get(),"Fonts · 3","字体 · 3")}</summary>
+                <details open data-testid="font-diagnostics"><summary>{move ||tr(locale.get(),"Fonts","字体")}</summary>
                     {move ||resolved.get().fonts.clone().into_iter().enumerate().map(|(index,font)| {
                         let slot=["font-sans","font-serif","font-mono"][index];
                         let requested=font.requested.join(", ");

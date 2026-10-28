@@ -50,10 +50,24 @@ test("a local opposite appearance and its dialog preserve the root theme", async
     const box = await layer.locator('[data-name="Dialog"]').boundingBox();
     expect(box!.x).toBeGreaterThanOrEqual(15);
     expect(box!.x + box!.width).toBeLessThanOrEqual(375);
+    const confirm = page.getByTestId("dialog-confirm");
+    await expect(confirm).toHaveCSS("background-color", "rgb(83, 177, 253)");
+    await expect(confirm).toHaveCSS("color", "rgb(12, 17, 29)");
+    expect((await confirm.boundingBox())!.height).toBe(32);
     await page.keyboard.press("Escape");
     await expect(preview.getByTestId("open-preview-dialog")).toBeFocused();
+    await preview.getByTestId("local-appearance").click();
+    await preview.getByTestId("local-appearance-list").getByRole("option", { name: "Inherit root", exact: true }).click();
+    await preview.getByTestId("open-preview-dialog").click();
+    await expect(confirm).toHaveCSS("background-color", "rgb(21, 112, 239)");
+    await expect(confirm).toHaveCSS("color", "rgb(255, 255, 255)");
+    expect((await confirm.boundingBox())!.height).toBe(32);
+    await page.keyboard.press("Escape");
+    await preview.getByTestId("local-appearance").click();
+    await preview.getByTestId("local-appearance-list").getByRole("option", { name: "Opposite to root", exact: true }).click();
     await page.getByTestId("mobile-edit").click();
     await page.getByTestId("mode-dark").click();
+    await page.getByTestId("mobile-preview").click();
     await expect(preview).toHaveAttribute("data-theme", "dark");
     await expect(local).toHaveAttribute("data-theme", "light");
 });
@@ -182,6 +196,18 @@ test("fine adjustment and export retain their content at 200 percent text size",
         await expect(format).toContainText("Theme JSON v2");
         expect(await format.locator("span").first().evaluate(node => node.scrollWidth - node.clientWidth)).toBeLessThan(2);
         await page.keyboard.press("Escape");
+        await page.getByTestId("renderer-dom").click();
+        const surface = page.getByTestId("dom-preview").getByTestId("preview-surface");
+        await surface.scrollIntoViewIfNeeded();
+        await expect.poll(() => surface.evaluate(node => node.scrollWidth - node.clientWidth)).toBeLessThan(2);
+        const panel = await surface.boundingBox();
+        for (const control of [surface.getByTestId("preview-primary"), surface.getByTestId("class-override"), surface.getByRole("button", { name: "Disabled", exact: true })]) {
+            const bounds = await control.boundingBox();
+            expect(bounds!.x).toBeGreaterThanOrEqual(panel!.x);
+            expect(bounds!.x + bounds!.width).toBeLessThanOrEqual(panel!.x + panel!.width + 1);
+        }
+        const cards = surface.getByTestId("metrics-row").locator(":scope > div");
+        expect(await cards.evaluateAll(nodes => nodes.every(node => node.scrollWidth <= node.clientWidth + 1))).toBe(true);
     } finally {
         await page.evaluate(() => document.documentElement.style.fontSize = "");
     }
@@ -215,17 +241,62 @@ test("shell buttons share the same height across action and ghost variants", asy
     await waitForReady(page);
     const heights = await Promise.all(["locale-en", "locale-zh", "mode-light", "theme-export", "preview-focus", "inspector-toggle", "renderer-dom"].map(async id => (await page.getByTestId(id).boundingBox())!.height));
     expect(Math.max(...heights) - Math.min(...heights)).toBeLessThan(1);
+    await expect(page.getByTestId("locale-zh")).toHaveCSS("margin-left", "-1px");
+    await page.setViewportSize({ width: 390, height: 844 });
+    await expect(page.getByTestId("mobile-preview")).toHaveCSS("margin-left", "-1px");
 });
 
 test("a selection row keeps its token, source and color controls together", async ({ page }) => {
     await waitForReady(page);
     await page.getByTestId("editor-colors").click();
     await page.getByTestId("color-token-primary").click();
-    await expect.poll(() => page.getByTestId("color-selection").evaluate(node => !!node.closest(".ce-row")?.querySelector('[data-testid="color-token-primary"]'))).toBe(true);
+    await expect.poll(() => page.getByTestId("color-selection").evaluate(node => !!node.parentElement?.parentElement?.previousElementSibling?.querySelector('[data-testid="color-token-primary"]'))).toBe(true);
+    await expect.poll(() => page.getByTestId("color-selection").evaluate(node => !!node.parentElement?.parentElement?.nextElementSibling?.querySelector('[data-testid="color-token-primary-foreground"]'))).toBe(true);
     await expect(page.getByTestId("source-token")).toHaveText("primary");
+    await expect(page.locator(".ce-token-mode").first()).toHaveCSS("font-weight", "400");
+    await expect(page.locator(".ce-group").filter({ has: page.getByTestId("color-token-primary") }).first().locator(":scope > h3")).toHaveCSS("text-transform", "uppercase");
     await page.getByTestId("color-value").fill("#9420aa");
     await page.getByTestId("color-value").press("Enter");
     await expect(page.getByTestId("source-effective")).toHaveText("#9420aa");
+});
+
+test("mobile selection keeps the group heading below a bordered workspace tab", async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await waitForReady(page);
+    await page.getByTestId("editor-colors").click();
+    await page.getByTestId("color-token-primary").click();
+    const group = page.locator(".ce-group").filter({ has: page.getByTestId("color-token-primary") }).first();
+    await expect(group.locator(":scope > h3")).toBeInViewport({ ratio: 1 });
+    await expect(page.locator(".studio-mobile-tabs")).toHaveCSS("border-bottom-color", "rgb(234, 236, 240)");
+    await expect(page.locator(".studio-mobile-tabs")).toHaveCSS("border-bottom-width", "1px");
+});
+
+test("diagnostic summaries share labels and the shell font in Chinese", async ({ page }) => {
+    await waitForReady(page);
+    await page.locator(".studio-diagnostics > summary").click();
+    await expect(page.getByTestId("font-diagnostics").locator("summary")).toHaveText("Fonts");
+    await expect(page.locator(".theme-diagnostics details").nth(1).locator("summary")).toHaveText("Text contrast pairs");
+    await page.getByTestId("locale-zh").click();
+    const summary = page.locator(".studio-preview-diagnostics > summary");
+    await expect(summary).toHaveCSS("font-weight", "600");
+    await expect(summary).toHaveCSS("font-synthesis", "weight");
+    expect(await summary.evaluate(node => getComputedStyle(node).fontFamily)).toContain("IBM Plex Sans");
+});
+
+test("inspector clips the actual rectangle instead of closing it at the scroll edge", async ({ page }) => {
+    await waitForReady(page);
+    await page.getByTestId("renderer-dom").click();
+    await page.getByTestId("inspector-toggle").click();
+    const card = page.getByTestId("dom-preview").getByTestId("scene-cards").getByTestId("cards-form");
+    await card.scrollIntoViewIfNeeded();
+    await card.hover({ position: { x: 8, y: 8 } });
+    const outline = page.getByTestId("inspector-outline");
+    await expect(outline).toBeVisible();
+    const clip = await outline.evaluate(node => getComputedStyle(node).clipPath);
+    expect(clip).toContain("inset(");
+    expect(clip).not.toBe("inset(0px)");
+    const [actual, selected] = await Promise.all([card.boundingBox(), outline.boundingBox()]);
+    expect(Math.abs(actual!.height - selected!.height)).toBeLessThan(2);
 });
 
 test("anchored export selectors stay in place when output content changes", async ({ page }) => {

@@ -1,0 +1,54 @@
+{
+  "group": {
+    "open": true,
+    "text": "Tokens affected by a group reset\nBrand color · both modes\n\nLight: primary, primary-foreground, ring, sidebar-primary, sidebar-primary-foreground, sidebar-ring\n\nDark: primary, primary-foreground, ring, sidebar-primary, sidebar-primary-foreground, sidebar-ring\n\nNeutral color · both modes\n\nLight: foreground, card-foreground, popover-foreground, sidebar-foreground, secondary, secondary-foreground, muted, muted-foreground, border, sidebar-border, input, sidebar-accent, sidebar-accent-foreground, background, sidebar\n\nDark: foreground, card-foreground, popover-foreground, sidebar-foreground, secondary, secondary-foreground, muted, muted-foreground, border, sidebar-border, input, sidebar-accent, sidebar-accent-foreground, background, sidebar\n\nPanel background · both modes\n\nLight: card, popover\n\nDark: card, popover\n\nRadius · both modes\n\nLight: radius\n\nDark: radius",
+    "rect": {
+      "x": 20,
+      "y": 477.6875,
+      "width": 279,
+      "height": 478,
+      "top": 477.6875,
+      "right": 299,
+      "bottom": 955.6875,
+      "left": 20
+    }
+  },
+  "search": {
+    "input": {
+      "x": 20,
+      "y": 470.28125,
+      "width": 220.53125,
+      "height": 32,
+      "top": 470.28125,
+      "right": 240.53125,
+      "bottom": 502.28125,
+      "left": 20
+    },
+    "clear": {
+      "x": 246.53125,
+      "y": 470.1875,
+      "width": 52.46875,
+      "height": 32.1875,
+      "top": 470.1875,
+      "right": 299,
+      "bottom": 502.375,
+      "left": 246.53125
+    }
+  },
+  "reset": {
+    "focused": true,
+    "ariaLabel": "Clear primary · Light only",
+    "title": "Clear primary · Light only",
+    "ariaDisabled": "false",
+    "disabled": false,
+    "outline": "3px solid rgba(21, 112, 239, 0.4)",
+    "visibleMode": "Light",
+    "sourceClear": "Clear primary · Light only"
+  },
+  "health": {
+    "pageErrors": [],
+    "consoleErrors": [],
+    "failed": [],
+    "csp": []
+  }
+}

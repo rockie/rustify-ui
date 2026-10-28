@@ -16,8 +16,10 @@ test("JSON review is atomic and cancel, invalid input and rejected code preserve
   await waitForReady(page);const before=await state(page),candidate=structuredClone(before.document);
   candidate.name="Imported 中文";candidate.config.accent_color="tomato";candidate.config.scaling=105;candidate.base.dark["future-base"]="keep base text";candidate.overrides.light.primary="oklch(0.72 0.25 35 / 0.7)";candidate.overrides.dark.primary="#223344";candidate.base.light["future-token"]="keep author text";
   await importSource(page,JSON.stringify(candidate));await expect(page.getByTestId("import-preview")).toContainText("future-token");
-  await expect(page.getByTestId("import-version")).toContainText("2");
-  await expect(page.getByTestId("import-config").locator("div").filter({has:page.getByText("Brand color",{exact:true})}).locator("dd")).toHaveText(["Custom", "TomatoChanged"]);
+  await expect(page.getByTestId("import-version")).toHaveText("Theme JSON v2");
+  const brand=page.getByTestId("import-config").locator("tr.tools-diff-row").filter({has:page.getByText("Brand color",{exact:true})});
+  await expect(brand.locator("td")).toHaveText(["Changed","Custom","Tomato"]);
+  await expect(page.getByTestId("import-preview").locator("table.tools-diff")).toHaveCount(1);
   expect((await state(page)).document).toEqual(before.document);
   await page.getByTestId("import-cancel").click();expect((await state(page)).history).toEqual(before.history);
   await importSource(page,JSON.stringify(candidate));await page.getByTestId("import-apply").click();
@@ -36,6 +38,27 @@ test("JSON review is atomic and cancel, invalid input and rejected code preserve
   await expect(page.getByTestId("import-preview")).toContainText("radius");await page.getByTestId("import-apply").click();
   expect((await state(page)).values.light.primary).toBe("rgb(12 34 56 / .5)");expect((await state(page)).values.dark.primary).toBe("#334455");
   await test.info().attach("atomic-import", {body:JSON.stringify({before:before.document,json:candidate,afterCss:(await state(page)).document,maliciousRequests:requests},null,2),contentType:"application/json"});
+});
+
+test("v1 review shares one four-column table for source, identity, configuration and token changes",async({page})=> {
+  await waitForReady(page);const before=await state(page);
+  const legacy={schema_version:1,id:"legacy-review",name:"Imported legacy",styles:before.values};
+  await importSource(page,JSON.stringify(legacy));
+  const preview=page.getByTestId("import-preview");
+  await expect(preview.locator("table.tools-diff")).toHaveCount(1);
+  const identity=page.getByTestId("import-config");
+  await expect(identity.locator("tr.tools-diff-row")).toHaveCount(9);
+  const source=identity.locator("tr.tools-diff-row").filter({has:page.getByText("Source",{exact:true})});
+  await expect(source.locator("td")).toHaveText(["Changed","Theme JSON v2","Theme JSON v1 · saved as v2"]);
+  await expect(page.getByTestId("import-version")).toHaveText("Theme JSON v1 · saved as v2");
+  const appearance=identity.locator("tr.tools-diff-row").filter({has:page.getByText("Appearance",{exact:true})});
+  await expect(appearance.locator(".tools-change-unchanged")).toHaveText("Unchanged");
+  await expect(appearance.locator(".tools-change-label")).toHaveCount(0);
+  const notes=page.getByTestId("import-diagnostics");
+  await expect(notes.locator("code.tools-inline-token").first()).toHaveText("font-serif");
+  await page.setViewportSize({width:390,height:844});
+  const [change,current]=await Promise.all([source.locator(".tools-diff-kind").boundingBox(),source.locator("td[data-label='Current']").boundingBox()]);
+  expect(change!.x).toBe(current!.x);
 });
 
 test("file import validates before apply and wrong type or size cannot change the theme",async({page})=> {

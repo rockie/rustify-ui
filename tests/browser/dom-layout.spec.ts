@@ -167,6 +167,8 @@ test("Inset consumes only nearest padding and Reset preserves the native event",
     await page.keyboard.press("Enter");
     await expect(sample(page, "layout-reset-count")).toHaveText("2");
     await expect(reset).toHaveCSS("box-sizing", "border-box");
+    await expect(page.locator("input.fixture-reset-outline")).toHaveCSS("outline-offset","-1px");
+    await expect(page.locator("textarea.fixture-reset-outline")).toHaveCSS("outline-offset","-1px");
     expect(await hostStyles(page)).toEqual(evidence.get(page)!.host);
 });
 
@@ -210,6 +212,9 @@ test("Inset selects each side and restores other margins across responsive chang
 test("invalid CSS remains local, reports its prop and accepts a valid replacement", async ({ page }) => {
     const node = sample(page, "layout-invalid-prop");
     await expect(node).toHaveCSS("width", "240px");
+    await expect(node).toHaveCSS("box-sizing","border-box");
+    await expect(node).toHaveCSS("padding","2px 8px");
+    await expect(node).toHaveCSS("margin-top","4px");
     await sample(page, "layout-invalid").click();
     await expect(node).toHaveText("A bad prop keeps this view alive.");
     await expect.poll(() => number(node, "width")).toBeGreaterThan(240);

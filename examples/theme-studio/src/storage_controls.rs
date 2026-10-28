@@ -157,21 +157,30 @@ pub fn StorageControls(state: StudioState) -> impl IntoView {
                     "success" if upgraded()=>state.tr("Library upgraded to v2","主题库已升级至 v2"),
                     "success"=>state.tr("Saved","已保存"),
                     "pending"=>state.tr("Saving","正在保存"),
-                    "error" if state.storage_issue.get().contains("Quota")=>state.tr("Storage full · new saves stay in memory","存储已满 · 新保存暂留内存"),
-                    "error"=>state.tr("Local save failed · new saves stay in memory","本地保存失败 · 新保存暂留内存"),
+                    "error" if state.storage_issue.get().contains("Quota")=>state.tr("Storage full · saving in memory","存储已满 · 暂存内存"),
+                    "error"=>state.tr("Local save failed · saving in memory","本地保存失败 · 暂存内存"),
                     "warning" if !crate::storage_browser::writable()=>state.tr("Memory only · local saving unavailable","仅内存 · 无法保存到本机"),
                     "warning"=>state.tr("Memory only · saving paused","仅内存 · 保存已暂停"),
                     _=>state.tr("Memory only · not saved yet","仅内存 · 尚未保存"),
                 }}</strong>
                 <p data-testid="storage-status">{move || {
                     if !state.storage_issue.get().is_empty() {
-                        if draft_saved(state) {state.tr("The current draft is saved on this device. A later library action failed and is retained for retry; new saves stay in memory.","当前草稿已保存到本机。之后的主题库操作失败并已保留供重试，新保存暂留内存。")} else {state.tr("Local save failed. Your current draft and pending actions stay in memory. Download or export a copy before leaving.","本地保存失败。当前草稿与待处理操作保留在内存，离开前请下载或导出副本。")}.to_owned()
-                    }else if upgraded() {state.tr("All saved themes and your current draft were retained.","全部命名主题与当前草稿已保留。").to_owned()}else{state.storage_status.get()}
+                        if draft_saved(state) {
+                            let failed_name = outcomes.with(|items| items.iter().rev().find(|item| item.state == "failed" && matches!(item.kind, "save" | "copy" | "rename" | "delete" | "conflict-copy")).map(|item| item.detail.clone()));
+                            match failed_name {
+                                Some(name) if state.locale().get() == rustify_ui::Locale::Chinese => format!("当前草稿已保存到本机。保存“{name}”失败并已保留供重试。"),
+                                Some(name) => format!("The current draft is saved on this device. Saving “{name}” failed and is kept for retry."),
+                                None => state.tr("The current draft is saved on this device. A later library action failed and is kept for retry.","当前草稿已保存到本机。之后的主题库操作失败并已保留供重试。").to_owned(),
+                            }
+                        } else {state.tr("Local save failed. Your current draft and pending actions stay in memory. Download or export a copy before leaving.","本地保存失败。当前草稿与待处理操作保留在内存，离开前请下载或导出副本。").to_owned()}
+                    }else if upgraded() {
+                        let count = state.envelope.with(|envelope| envelope.saved_themes.len());
+                        if state.locale().get() == rustify_ui::Locale::Chinese {format!("{count} 个命名主题与当前草稿已保留。")} else {format!("{count} saved theme{} and your current draft were retained.",if count == 1 {""} else {"s"})}
+                    }else{state.storage_status.get()}
                 }}</p>
-                <Show when=upgraded><p class="tools-status">{move || format!("{} {}",state.envelope.with(|envelope|envelope.saved_themes.len()),state.tr("saved themes retained. Original data keeps a copy of the library from before the upgrade.","个命名主题已保留。原始数据保存着升级前的主题库副本。"))}</p></Show>
-                <Show when=move ||!state.storage_issue.get().is_empty()><Button size=ButtonSize::One on_click=move ||state.retry_storage() test_id="storage-callout-retry">{move ||state.tr("Retry save","重试保存")}</Button></Show>
+                <Show when=upgraded><p class="tools-status">{move || state.tr("Original data keeps a copy of the library from before the upgrade.","原始数据保存着升级前的主题库副本。")}</p></Show>
                 <Show when=move || matches!(tone.get(),"warning"|"error"|"memory")>
-                    <Button size=ButtonSize::One variant=Signal::derive(move ||if tone.get()=="error" {ButtonVariant::Outline}else{ButtonVariant::Solid}) on_click=move || download_current() test_id="storage-export">{move || state.tr("Download current theme", "下载当前主题")}</Button>
+                    <Button size=ButtonSize::One on_click=move || download_current() test_id="storage-export">{move || state.tr("Download current theme", "下载当前主题")}</Button>
                 </Show>
                 <Show when=move ||state.legacy_raw.with(Option::is_some) || state.envelope.with(|envelope|envelope.migrated_from_v1.is_some())><Button size=ButtonSize::One variant=ButtonVariant::Outline on_click=move ||state.download_legacy() test_id="legacy-download">{move ||state.tr("Download original data","下载原始数据")}</Button></Show>
                 <Show when=move ||!state.storage_issue.get().is_empty()><details data-testid="storage-issue"><summary>{move ||state.tr("Technical details","技术详情")}</summary><code>{move ||state.storage_issue.get()}</code></details></Show>
@@ -260,8 +269,8 @@ pub fn StorageControls(state: StudioState) -> impl IntoView {
                     "saved"=>state.tr("completed","已完成"),
                     "failed"=>state.tr("failed; retained for retry. Export remains available","失败，已保留供重试，仍可导出"),
                     "rejected" if matches!(state.permission(),Permission::UpgradePending|Permission::UpgradeCancelled|Permission::Upgrading)=>state.tr("not saved; review the library upgrade before saving this named theme","未保存，请先检查主题库升级，再保存此命名主题"),
-                    "rejected" if !crate::storage_browser::writable()=>state.tr("not saved; local saving is unavailable. Download or export a copy","未保存，无法保存到本机，请下载或导出副本"),
-                    "rejected" if state.permission()==Permission::Ready && state.external.with(Option::is_none)=>state.tr("not saved earlier","先前未保存"),
+                    "rejected" if !crate::storage_browser::writable()=>state.tr("not saved; no local write was made","未保存，未写入本机"),
+                    "rejected" if state.permission()==Permission::Ready && state.external.with(Option::is_none)=>state.tr("wasn't saved before the upgrade","升级前未保存"),
                     "rejected"=>state.tr("not saved; review the storage warning first","未保存，请先处理存储提示"),
                     "cancelled"=>state.tr("cancelled","已取消"),
                     _=>state.tr("waiting to save","等待保存")
@@ -269,32 +278,38 @@ pub fn StorageControls(state: StudioState) -> impl IntoView {
                 let id=outcome.id;
                 let retry_name=outcome.detail.clone();
                 let can_retry=outcome.kind=="save" && matches!(outcome.state,"rejected"|"failed") && state.permission()==Permission::Ready && crate::storage_browser::writable() && state.external.with(Option::is_none);
+                let review_upgrade=outcome.state=="rejected" && matches!(state.permission(),Permission::UpgradePending|Permission::UpgradeCancelled|Permission::Upgrading);
+                let download_unavailable=outcome.state=="rejected" && !crate::storage_browser::writable();
                 let retry_failed=outcome.state=="failed";
-                let retry_label=if retry_failed {format!("{} · “{}”",state.tr("Retry retained saves","重试已保留的保存"),outcome.detail)}else if state.locale().get()==rustify_ui::Locale::Chinese {format!("立即保存“{}”",outcome.detail)}else{format!("Save “{}” now",outcome.detail)};
+                let retry_label=if retry_failed {if state.locale().get()==rustify_ui::Locale::Chinese {format!("重试“{}”",outcome.detail)} else {format!("Retry “{}”",outcome.detail)}}else if state.locale().get()==rustify_ui::Locale::Chinese {format!("立即保存“{}”",outcome.detail)}else{format!("Save “{}” now",outcome.detail)};
                 let retry_label=StoredValue::new(retry_label);
                 view!{<div class=if outcome.state=="failed" {"tools-notice tools-state-error"} else if outcome.state=="rejected" && !can_retry {"tools-notice tools-state-warning"} else {"tools-notice"} role="status" data-testid="named-storage-feedback" data-result=outcome.state>
                     <p>{format!("{action} “{}” · {result}.",outcome.detail)}</p>
                     <div class="tools-actions"><Show when=move ||can_retry><Button size=ButtonSize::One on_click={let name=retry_name.clone();move ||if retry_failed {state.retry_storage()}else{state.save_named(name.clone(),None)}}>{retry_label.get_value()}</Button></Show>
+                    <Show when=move ||review_upgrade><Button size=ButtonSize::One variant=ButtonVariant::Outline on_click=move ||state.review_upgrade() test_id="named-upgrade-review">{move ||state.tr("Review upgrade","检查升级")}</Button></Show>
+                    <Show when=move ||download_unavailable><Button size=ButtonSize::One variant=ButtonVariant::Outline on_click=move ||download_current() test_id="named-storage-download">{move ||state.tr("Download current theme","下载当前主题")}</Button></Show>
                     <Button size=ButtonSize::One variant=ButtonVariant::Ghost on_click=move ||dismissed_outcome.set(Some(id))>{move ||state.tr("Dismiss","关闭提示")}</Button></div>
                 </div>}
             })}
             <details data-testid="storage-operations">
                 <summary>{move || format!("{} {} · {} {}",pending.get(),state.tr("pending","项待处理"),outcomes.with(Vec::len),if outcomes.with(Vec::len)==1 {state.tr("recent operation","项最近操作")}else{state.tr("recent operations","项最近操作")})}</summary>
-                <p class="tools-status">{move ||state.tr("Retry saves the listed actions in order. Cancel removes pending saves and keeps your draft and undo history.","重试会按原顺序保存已保留的操作。取消只丢弃待写操作，保留当前草稿与历史。")}{move ||state.external.with(Option::is_some).then(||state.tr(" Loading the other version removes all pending actions.","载入另一版本会放弃全部待处理操作。"))}</p>
-                <ol><For each=move || outcomes.get()
-                    key=|outcome| (outcome.id, outcome.state) let:outcome>
-                    <li data-op-id=outcome.id data-op-kind=outcome.kind data-op-state=outcome.state>
-                        {move || {
-                            let kind = match outcome.kind {"autosave" => state.tr("Draft", "草稿"), "save" => state.tr("Save", "保存"), "copy" | "conflict-copy" => state.tr("Copy", "副本"), "rename" => state.tr("Rename", "改名"), "delete" => state.tr("Delete", "删除"), "upgrade" => state.tr("Upgrade", "升级"), "clear" | "clear-backups" => state.tr("Clear", "清除"), "load" => state.tr("Load", "载入"), _ => state.tr("Keep", "保留")};
-                            let status = match outcome.state {"saved" => state.tr("confirmed", "已确认"), "failed" => state.tr("failed; retained", "失败，已保留"), "superseded" => state.tr("merged into newer draft", "已合并到更新草稿"), "cancelled" => state.tr("cancelled", "已取消"), "rejected" => state.tr("not queued; storage protected", "未入队，存储受保护"), _ => state.tr("pending", "待处理")};
-                            let name=if outcome.detail.is_empty(){String::new()}else{format!(" “{}”",outcome.detail)};
-                            view!{<span>{format!("#{} · {kind}{name} · {status} ",outcome.id)}</span><span class="tools-op-revision">{format!("({} {})",state.tr("draft revision","草稿修订"),outcome.epoch)}</span>}
-                        }}
-                    </li>
-                </For></ol>
+                <div class="tools-operations-content">
+                    <p class="tools-status">{move ||state.tr("Retry saves the listed actions in order. Cancel removes pending saves and keeps your draft and undo history.","重试会按原顺序保存已保留的操作。取消只丢弃待写操作，保留当前草稿与历史。")}{move ||state.external.with(Option::is_some).then(||state.tr(" Loading the other version removes all pending actions.","载入另一版本会放弃全部待处理操作。"))}</p>
+                    <ol><For each=move || outcomes.get()
+                        key=|outcome| (outcome.id, outcome.state) let:outcome>
+                        <li data-op-id=outcome.id data-op-kind=outcome.kind data-op-state=outcome.state>
+                            {move || {
+                                let kind = match outcome.kind {"autosave" => state.tr("Draft", "草稿"), "save" => state.tr("Save", "保存"), "copy" | "conflict-copy" => state.tr("Copy", "副本"), "rename" => state.tr("Rename", "改名"), "delete" => state.tr("Delete", "删除"), "upgrade" => state.tr("Upgrade", "升级"), "clear" | "clear-backups" => state.tr("Clear", "清除"), "load" => state.tr("Load", "载入"), _ => state.tr("Keep", "保留")};
+                                let status = match outcome.state {"saved" => state.tr("confirmed", "已确认"), "failed" => state.tr("failed; retained", "失败，已保留"), "superseded" => state.tr("merged into newer draft", "已合并到更新草稿"), "cancelled" => state.tr("cancelled", "已取消"), "rejected" => state.tr("not queued; storage protected", "未入队，存储受保护"), _ => state.tr("pending", "待处理")};
+                                let name=if outcome.detail.is_empty(){String::new()}else{format!(" “{}”",outcome.detail)};
+                                view!{<span>{format!("#{} · {kind}{name} · {status} ",outcome.id)}</span><span class="tools-op-revision">{format!("({} {})",state.tr("draft revision","草稿修订"),outcome.epoch)}</span>}
+                            }}
+                        </li>
+                    </For></ol>
+                </div>
             </details>
             <div class="tools-actions">
-                <Button size=ButtonSize::One variant=ButtonVariant::Outline disabled=Signal::derive(move || !crate::storage_browser::writable() || state.external.with(Option::is_some) || pending.get()==0 && !unsaved_draft.get() && state.permission()!=Permission::Cleared) on_click=move || state.retry_storage() test_id="storage-retry">{move || if state.permission() == Permission::Cleared {state.tr("Save current draft again", "重新保存当前草稿")} else if pending.get()==0 && unsaved_draft.get() {state.tr("Save current draft", "保存当前草稿")} else {state.tr("Retry retained saves", "重试已保留的保存")}}</Button>
+                <Button size=ButtonSize::One variant=ButtonVariant::Outline disabled=Signal::derive(move || !crate::storage_browser::writable() || state.external.with(Option::is_some) || pending.get()==0 && !unsaved_draft.get() && state.permission()!=Permission::Cleared) on_click=move || state.retry_storage() test_id="storage-retry">{move || if state.permission() == Permission::Cleared {state.tr("Save current draft again", "重新保存当前草稿")} else if pending.get()==0 && unsaved_draft.get() {state.tr("Save current draft", "保存当前草稿")} else {state.tr("Retry all retained saves", "重试全部已保留的保存")}}</Button>
                 <Button size=ButtonSize::One variant=ButtonVariant::Outline disabled=Signal::derive(move || pending.get() == 0) on_click=move || state.cancel_storage() test_id="storage-cancel">{move || state.tr("Cancel pending writes", "取消待写操作")}</Button>
             </div>
             <details class="tools-stack">

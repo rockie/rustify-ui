@@ -83,7 +83,7 @@ pub fn ProviderFixture(
                         <span class="inline-flex" node_ref=menu_anchor><Button on_click=move || menu.set(true) variant=ButtonVariant::Outline test_id="open-preview-menu">{move || tr("Actions", "操作")}</Button></span>
                     </div>
                     <p class="text-sm text-muted-foreground" role="status">{move || action.get()}</p>
-                    <Dialog open=dialog on_open_change=move |open| dialog.set(open) title=Signal::derive(move || tr("Theme preview", "主题预览").to_owned()) class="tools-dialog" test_id="preview-dialog">
+                    <Dialog open=dialog on_open_change=move |open| dialog.set(open) title=Signal::derive(move || tr("Theme preview", "主题预览").to_owned()) class="studio-preview-dialog" test_id="preview-dialog">
                         <p>{move || tr("This layer follows the theme where it was opened.", "此浮层跟随创建它的局部主题。")}</p>
                         <Button on_click=move || {action.set(tr("Confirmed", "已确认").into());dialog.set(false);} test_id="dialog-confirm">{move || tr("Confirm", "确认")}</Button>
                     </Dialog>
@@ -92,12 +92,12 @@ pub fn ProviderFixture(
                         on_activate=move |id| action.set(id) test_id="preview-menu" />
                 </div>
             </ThemeBoundary>
-            <div class="mt-6 flex gap-2">
+            <div class="mt-6 flex flex-wrap gap-2">
                 <Button class="bg-warning text-black rounded-none" on_click=|| () test_id="class-override">{move || tr("Caller class override", "调用方样式覆盖")}</Button>
                 <Button on_click=|| () disabled=true>{move || tr("Disabled", "已禁用")}</Button>
             </div>
             <p class="mt-6 font-serif" data-testid="font-serif">"Serif · Shape a thoughtful interface 中文"</p>
-            <p class="font-mono text-sm" data-testid="font-mono">"let theme = resolve(document);"</p>
+            <p class="font-mono text-sm break-words" data-testid="font-mono">"let theme = resolve(document);"</p>
         </section>
     }
 }

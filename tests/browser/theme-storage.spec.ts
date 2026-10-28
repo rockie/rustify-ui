@@ -101,10 +101,15 @@ test("a failed named save keeps the acknowledged draft status and retries its re
   await save(page,"Retained name");
   await expect(page.getByTestId("toolbar-storage-status")).toHaveText("Draft saved · action failed");
   await expect(page.getByTestId("storage-status")).toContainText("The current draft is saved on this device");
+  await expect(page.getByTestId("storage-status")).toContainText("Saving “Retained name” failed and is kept for retry");
+  await expect(page.locator(".tools-storage-state > strong")).toHaveText("Storage full · saving in memory");
+  await expect(page.getByTestId("storage-callout-retry")).toHaveCount(0);
+  await expect(page.getByTestId("storage-retry")).toHaveText("Retry all retained saves");
+  await expect(page.getByTestId("theme-save")).toHaveCSS("background-color","rgb(255, 255, 255)");
   expect(await raw(page)).toBe(previous);
   await expect(page.getByTestId("storage-issue").locator("..")).toHaveClass(/tools-state-error/);
   await page.evaluate(()=>Storage.prototype.setItem=(window as any).__storageSetItem);
-  await page.getByTestId("named-storage-feedback").getByRole("button",{name:'Retry retained saves · “Retained name”',exact:true}).click();
+  await page.getByTestId("named-storage-feedback").getByRole("button",{name:'Retry “Retained name”',exact:true}).click();
   await expect.poll(async()=>JSON.parse((await raw(page))!).saved_themes.map((theme:any)=>theme.name)).toEqual(["Retained name"]);
 });
 

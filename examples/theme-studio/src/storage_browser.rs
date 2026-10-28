@@ -55,12 +55,21 @@ pub fn read(key: &str) -> Result<Option<String>, String> {
     storage.get_item(key).map_err(message)
 }
 pub fn message(value: JsValue) -> String {
-    value
+    let message = value
         .as_string()
         .or_else(|| {
             value
                 .dyn_ref::<js_sys::Error>()
                 .map(|error| error.message().into())
         })
-        .unwrap_or_else(|| format!("{value:?}"))
+        .unwrap_or_else(|| format!("{value:?}"));
+    let name = js_sys::Reflect::get(&value, &JsValue::from_str("name"))
+        .ok()
+        .and_then(|name| name.as_string())
+        .unwrap_or_default();
+    if name.is_empty() || message.contains(&name) {
+        message
+    } else {
+        format!("{name}: {message}")
+    }
 }

@@ -510,47 +510,6 @@ mod browser {
         }
     }
 
-    #[component]
-    fn ConfigSummary(
-        document: ThemeDocument,
-        before: ThemeDocument,
-        source_version: Option<u32>,
-        locale: Locale,
-    ) -> impl IntoView {
-        let before_fields = before.config.fields();
-        let fields = std::iter::once((
-            tr(locale, "Name", "名称").to_owned(),
-            before.name,
-            document.name,
-        ))
-        .chain(document.config.fields().into_iter().map(|(field, value)| {
-            let previous = before_fields
-                .iter()
-                .find(|(key, _)| *key == field)
-                .map(|(_, value)| value.as_str())
-                .unwrap_or_default();
-            (
-                config_label(field, locale).to_owned(),
-                config_value(field, previous, locale),
-                config_value(field, &value, locale),
-            )
-        }))
-        .collect::<Vec<_>>();
-        view! {
-            <div class="tools-candidate-head" aria-hidden="true"><span>{tr(locale,"Field","字段")}</span><span>{tr(locale,"Current","当前")}</span><span>{tr(locale,"Imported","导入值")}</span></div>
-            <dl class="tools-config" data-testid="import-config">
-                <div><dt>{tr(locale,"Source","来源")}</dt><dd class="tools-candidate-wide" data-testid="import-version">{source_version.map(|version|format!("Theme JSON v{version} · {} v2",tr(locale,"saved as","保存为"))).unwrap_or_else(||format!("CSS · {} Custom v2",tr(locale,"saved as","保存为")))}</dd></div>
-                {fields.into_iter().map(|(field,previous,value)|view! {
-                    <div><dt>{field}</dt>{if previous==value {
-                        view!{<dd class="tools-candidate-wide">{value}<span class="tools-change-label">{tr(locale,"Unchanged","未变更")}</span></dd>}.into_any()
-                    }else{
-                        view!{<dd data-label=tr(locale,"Current","当前")>{previous}</dd><dd data-label=tr(locale,"Imported","导入值")>{value}<span class="tools-change-label">{tr(locale,"Changed","修改")}</span></dd>}.into_any()
-                    }}</div>
-                }).collect_view()}
-            </dl>
-        }
-    }
-
     fn byte_count(value: usize) -> String {
         let digits = value.to_string();
         let mut formatted = String::new();
@@ -563,18 +522,70 @@ mod browser {
         formatted
     }
 
-    fn diagnostic_path(field: &str, locale: Locale) -> String {
-        let parts = field.splitn(3, '.').collect::<Vec<_>>();
+    #[component]
+    fn DiagnosticPath(field: String, locale: Locale) -> impl IntoView {
+        let parts = field.splitn(3, '.').map(str::to_owned).collect::<Vec<_>>();
         match parts.as_slice() {
-            [layer, mode, token] if matches!(*mode, "light" | "dark") => format!(
-                "{} · {layer} · {token}",
-                if *mode == "light" {
+            [layer, mode, token] if matches!(mode.as_str(), "light" | "dark") => {
+                let mode = if mode == "light" {
                     tr(locale, "Light", "浅色")
                 } else {
                     tr(locale, "Dark", "深色")
-                }
-            ),
-            _ => field.into(),
+                };
+                view! {<span>{mode}" · "{layer.clone()}" · "<code class="tools-inline-token">{token.clone()}</code></span>}.into_any()
+            }
+            _ => view! {<span>{field}</span>}.into_any(),
+        }
+    }
+
+    #[component]
+    fn DocumentDiffRow(
+        change: Change,
+        #[prop(into)] prefix: String,
+        identity: bool,
+        locale: Locale,
+        #[prop(into)] before_label: String,
+        #[prop(into)] after_label: String,
+    ) -> impl IntoView {
+        let unchanged = change.before == change.after;
+        let change_label = if unchanged {
+            tr(locale, "Unchanged", "未变更")
+        } else {
+            match (&change.before, &change.after) {
+                (None, _) => tr(locale, "Added", "新增"),
+                (_, None) => tr(locale, "Removed", "删除"),
+                _ => tr(locale, "Changed", "修改"),
+            }
+        };
+        let field = if identity {
+            match change.token.as_str() {
+                "source" => tr(locale, "Source", "来源").to_owned(),
+                "name" => tr(locale, "Name", "名称").to_owned(),
+                "id" => "id".into(),
+                _ => change
+                    .token
+                    .strip_prefix("config.")
+                    .map(|field| config_label(field, locale).to_owned())
+                    .unwrap_or_else(|| change.token.clone()),
+            }
+        } else {
+            change
+                .token
+                .strip_prefix(&prefix)
+                .unwrap_or(&change.token)
+                .to_owned()
+        };
+        let plain_value = identity && change.token != "id";
+        let source_cell = identity && change.token == "source";
+        let before = change.before.unwrap_or_else(|| "—".into());
+        let after = change.after.unwrap_or_else(|| "—".into());
+        view! {
+            <tr class="tools-diff-row">
+                <th scope="row">{if identity {view!{<span>{field}</span>}.into_any()}else{view!{<code>{field}</code>}.into_any()}}</th>
+                <td class="tools-diff-kind">{if unchanged {view!{<span class="tools-change-unchanged">{change_label}</span>}.into_any()}else{view!{<span class="tools-change-label">{change_label}</span>}.into_any()}}</td>
+                <td data-label=before_label>{if plain_value {view!{<span>{before}</span>}.into_any()}else{view!{<code>{before}</code>}.into_any()}}</td>
+                <td data-label=after_label data-testid=move || if source_cell { "import-version" } else { "" }>{if plain_value {view!{<span>{after}</span>}.into_any()}else{view!{<code>{after}</code>}.into_any()}}</td>
+            </tr>
         }
     }
 
@@ -585,8 +596,43 @@ mod browser {
         locale: Locale,
         #[prop(into)] before_label: String,
         #[prop(into)] after_label: String,
+        #[prop(optional)] import_source: Option<(String, String)>,
     ) -> impl IntoView {
         let difference = changes(&before, &after);
+        let import_identity = import_source.map(|(current, imported)| {
+            let mut rows = vec![Change {
+                mode: None,
+                token: "source".into(),
+                before: Some(current),
+                after: Some(imported),
+            }];
+            for (token, before, after) in [
+                ("id", &before.id, &after.id),
+                ("name", &before.name, &after.name),
+            ] {
+                rows.push(Change {
+                    mode: None,
+                    token: token.into(),
+                    before: Some(before.clone()),
+                    after: Some(after.clone()),
+                });
+            }
+            for ((field, before), (_, after)) in before
+                .config
+                .fields()
+                .into_iter()
+                .zip(after.config.fields())
+            {
+                rows.push(Change {
+                    mode: None,
+                    token: format!("config.{field}"),
+                    before: Some(config_value(field, &before, locale)),
+                    after: Some(config_value(field, &after, locale)),
+                });
+            }
+            rows
+        });
+        let has_import = import_identity.is_some();
         let groups = [
             (None, "", tr(locale, "Identity", "名称与标识")),
             (None, "config.", tr(locale, "Configuration", "基础配置")),
@@ -616,28 +662,22 @@ mod browser {
         view! {
             <div class="tools-diff-content">
                 <table class="tools-diff"><thead><tr>
-                    <th>{tr(locale, "Field / token", "字段 / token")}</th>
+                    <th>{if has_import {tr(locale, "Field", "字段")} else {tr(locale, "Field / token", "字段 / token")}}</th>
                     <th>{tr(locale, "Change", "变更")}</th>
                     <th>{before_label}</th><th>{after_label}</th>
                 </tr></thead>
+                {import_identity.map(|rows| view! {
+                    <tbody data-testid="import-config"><tr class="tools-diff-group"><th colspan="4">{format!("{} ({})",tr(locale,"Identity & configuration","标识与配置"),rows.len())}</th></tr>
+                        {rows.into_iter().map(|change| view! {<DocumentDiffRow change=change prefix="" identity=true locale=locale before_label=left_label.clone() after_label=right_label.clone()/>}).collect_view()}
+                    </tbody>
+                })}
                 {groups.into_iter().filter_map(|(mode, prefix, label)| {
+                    if has_import && mode.is_none() { return None; }
                     let rows = difference.iter().filter(|change| change.mode == mode && if prefix.is_empty() { !change.token.contains('.') } else { change.token.starts_with(prefix) }).collect::<Vec<_>>();
                     if rows.is_empty() { return None; }
                     Some(view! {
                         <tbody><tr class="tools-diff-group"><th colspan="4">{format!("{label} ({})", rows.len())}</th></tr>
-                            {rows.into_iter().map(|change| {
-                                let change_label = match (&change.before, &change.after) {
-                                    (None, _) => tr(locale, "Added", "新增"),
-                                    (_, None) => tr(locale, "Removed", "删除"),
-                                    _ => tr(locale, "Changed", "修改"),
-                                };
-                                view! {<tr class="tools-diff-row">
-                                    <th scope="row"><code>{change.token.strip_prefix(prefix).unwrap_or(&change.token).to_owned()}</code></th>
-                                    <td class="tools-diff-kind"><span class="tools-change-label">{change_label}</span></td>
-                                    <td data-label=left_label.clone()>{if change.token=="name" {view!{<span>{change.before.clone().unwrap_or_else(||"—".into())}</span>}.into_any()}else{view!{<code>{change.before.clone().unwrap_or_else(||"—".into())}</code>}.into_any()}}</td>
-                                    <td data-label=right_label.clone()>{if change.token=="name" {view!{<span>{change.after.clone().unwrap_or_else(||"—".into())}</span>}.into_any()}else{view!{<code>{change.after.clone().unwrap_or_else(||"—".into())}</code>}.into_any()}}</td>
-                                </tr>}
-                            }).collect_view()}
+                            {rows.into_iter().map(|change| view! {<DocumentDiffRow change=change.clone() prefix=prefix identity=false locale=locale before_label=left_label.clone() after_label=right_label.clone()/>}).collect_view()}
                         </tbody>
                     })
                 }).collect_view()}
@@ -966,7 +1006,7 @@ mod browser {
                 <Show when=move || conflict.get() fallback=|| ()>
                     <div class="tools-notice tools-state-warning" data-testid="storage-conflict">
                         <h3>{move || tr(locale.get(), "Choose which version to keep", "选择要保留的版本")}</h3>
-                        <p data-testid="storage-status">{move || tr(locale.get(), "Another tab saved a different version. Your current draft is unchanged.", "另一个标签页保存了不同版本。当前草稿保持不变。")}</p>
+                        <p data-testid="storage-status">{move || tr(locale.get(), "Another tab saved a different version; your draft is unchanged. Load replaces your draft and pending saves, Keep overwrites the other version, and Save a copy retains both.", "另一个标签页保存了不同版本；当前草稿保持不变。载入会替换当前草稿与待写操作，保留会覆盖另一版本，另存副本会保留两个主题。")}</p>
                         <div data-testid="storage-external">
                             <dl class="tools-summary" data-testid="storage-external-summary"
                                 data-external-kind=move || if external_envelope.get().is_some(){"library"} else if external.get()==Some(None){"removed"} else {"invalid"}
@@ -984,8 +1024,7 @@ mod browser {
                                 </details>
                             })}
                         </div>
-                        <p class="tools-status">{move || if pending.get()==0 {tr(locale.get(),"No pending actions. Your draft stays in memory until you choose.","没有待处理操作。选择前草稿保留在内存中。").into()} else {format!("{} {}",pending.get(),tr(locale.get(),"pending actions retained. Loading the other version discards them.","项待处理操作已保留。载入另一版本将放弃这些操作。"))}}</p>
-                        <p class="tools-status">{move ||tr(locale.get(),"Load replaces your draft and pending saves. Keep saves this tab over the other version. Save a copy retains both themes.","载入会替换当前草稿并放弃待写操作；保留会用当前草稿覆盖另一版本；另存副本会保留两个主题。")}</p>
+                        <Show when=move || pending.get() != 0><p class="tools-status">{move || format!("{} {}",pending.get(),tr(locale.get(),"pending actions retained. Loading the other version discards them.","项待处理操作已保留。载入另一版本将放弃这些操作。"))}</p></Show>
                         <div class="tools-actions">
                             <Button variant=ButtonVariant::Outline on_click=move || { issue.set(String::new()); command.with_value(|callback| callback(ToolCommand::ReviewExternal)); confirmation.set(Some(Confirmation::LoadExternal)); } test_id="conflict-load">
                                 {move || tr(locale.get(), "Load other version", "载入另一版本")}
@@ -1055,17 +1094,16 @@ mod browser {
                             {move || tr(locale.get(), "Review changes", "预览变更")}
                         </Button>
                         {move || preview.get().map(|candidate| {
-                        let no_changes = candidate.changes.is_empty();
+                            let no_changes = candidate.changes.is_empty();
                             let has_diagnostics = !candidate.diagnostics.is_empty();
+                            let imported_source = candidate.source_version.map(|version| if version == 2 { "Theme JSON v2".into() } else { format!("Theme JSON v{version} · {} v2",tr(locale.get(),"saved as","保存为")) }).unwrap_or_else(|| format!("CSS · {} Custom v2",tr(locale.get(),"saved as","保存为")));
                             view! {
                             <div class="tools-stack" data-testid="import-preview">
                                 <h3>{tr(locale.get(),"Import candidate","导入候选")}</h3>
-                                <ConfigSummary document=candidate.document.clone() before=candidate.base.clone() source_version=candidate.source_version locale=locale.get()/>
                                 <Show when=move || no_changes fallback=|| ()>
                                     <p>{move || tr(locale.get(), "No author values differ from the current theme.", "作者值与当前主题相同。")}</p>
                                 </Show>
-                                <h3>{format!("{} ({})",tr(locale.get(),"Changes","变更"),candidate.changes.len())}</h3>
-                                <DocumentDiff before=candidate.base.clone() after=candidate.document.clone() locale=locale.get() before_label=tr(locale.get(),"Current","当前") after_label=tr(locale.get(),"Imported","导入值")/>
+                                <DocumentDiff before=candidate.base.clone() after=candidate.document.clone() locale=locale.get() before_label=tr(locale.get(),"Current","当前") after_label=tr(locale.get(),"Imported","导入值") import_source=("Theme JSON v2".into(),imported_source)/>
                                 <Show when=move || has_diagnostics fallback=|| ()>
                                     <div class="tools-notice" data-testid="import-diagnostics">
                                         <h3>{move || tr(locale.get(), "Import notes", "导入提示")}</h3>
@@ -1073,7 +1111,7 @@ mod browser {
                                             let message=if let Some((requested,resolved))=note.message.strip_prefix("Requested ").and_then(|message|message.split_once("; preview uses ")) {
                                                 view!{<span>{tr(locale.get(),"Requested","请求值")}" "<code class="tools-font-value">{requested.to_owned()}</code>"; "{tr(locale.get(),"preview uses","预览使用")}" "<code class="tools-font-value">{resolved.to_owned()}</code></span>}.into_any()
                                             }else{note.message.clone().into_any()};
-                                            view! {<li><code>{diagnostic_path(&note.field,locale.get())}</code>": "{message}</li>}
+                                            view! {<li><DiagnosticPath field=note.field.clone() locale=locale.get()/>": "{message}</li>}
                                         }).collect_view()}</ul>
                                     </div>
                                 </Show>

@@ -414,7 +414,19 @@ mod ui {
                             .unwrap_or(0.);
                         let top = bounds.top() + padding;
                         let bottom = bounds.bottom() - padding;
-                        let start = button.get_bounding_client_rect().top();
+                        let start = button
+                            .closest(".ce-row")
+                            .ok()
+                            .flatten()
+                            .filter(|row| {
+                                row.previous_element_sibling().is_none_or(|previous| {
+                                    !previous.class_list().contains("ce-row")
+                                })
+                            })
+                            .and_then(|row| row.parent_element())
+                            .and_then(|group| group.query_selector("h3").ok().flatten())
+                            .map(|heading| heading.get_bounding_client_rect().top())
+                            .unwrap_or_else(|| button.get_bounding_client_rect().top());
                         let end = clear.get_bounding_client_rect().bottom();
                         let delta = if start < top {
                             start - top
@@ -694,7 +706,7 @@ mod ui {
                     .query_selector(&format!("[data-testid='color-token-{token}']"))
                     .ok()
                     .flatten()
-                    .and_then(|node| node.closest(".ce-row").ok().flatten())
+                    .and_then(|node| node.closest(".ce-token-choice").ok().flatten())
                     .or_else(|| {
                         document()
                             .query_selector(".ce-selection-fallback")
@@ -702,21 +714,37 @@ mod ui {
                             .flatten()
                     });
                 let mount = selection_mount.get_value();
-                if let Some(target) =
-                    target.filter(|target| mount.parent_element().as_ref() != Some(target))
-                {
-                    let focused = document()
-                        .active_element()
-                        .filter(|node| mount.contains(Some(node)));
-                    let _ = target.append_child(&mount);
-                    if let Some(node) = focused
-                        .and_then(|node| node.dyn_into::<leptos::web_sys::HtmlElement>().ok())
-                    {
-                        let _ = node.focus();
-                        if let Ok(Some(source)) =
-                            mount.query_selector("[data-testid='token-source']")
+                if let Some(target) = target {
+                    let after_token = target.class_list().contains("ce-token-choice");
+                    let positioned = if after_token {
+                        mount.parent_element() == target.parent_element()
+                            && mount.previous_element_sibling().as_ref() == Some(&target)
+                    } else {
+                        mount.parent_element().as_ref() == Some(&target)
+                    };
+                    if !positioned {
+                        let focused = document()
+                            .active_element()
+                            .filter(|node| mount.contains(Some(node)));
+                        if after_token {
+                            if let Some(parent) = target.parent_element() {
+                                let _ = parent.insert_before(
+                                    &mount,
+                                    target.next_element_sibling().as_ref().map(|node| &**node),
+                                );
+                            }
+                        } else {
+                            let _ = target.append_child(&mount);
+                        }
+                        if let Some(node) = focused
+                            .and_then(|node| node.dyn_into::<leptos::web_sys::HtmlElement>().ok())
                         {
-                            source.scroll_into_view();
+                            let _ = node.focus();
+                            if let Ok(Some(source)) =
+                                mount.query_selector("[data-testid='token-source']")
+                            {
+                                source.scroll_into_view();
+                            }
                         }
                     }
                 }
@@ -822,10 +850,10 @@ mod ui {
                         <div class="ce-group">
                             <h3>{move ||tr(locale.get(),group.en,group.zh)}</h3>
                             <For each={move ||group.rows.iter().copied().filter(|row|visible_row(group,*row)).collect::<Vec<_>>()} key=|row|row.0 children=move |(background,foreground)|view!{
-                                <div class="ce-row"><div class="ce-pair">
+                                <div class="ce-row">
                                     <Show when=move || !overrides_only.get() || overridden.with(|tokens|tokens.iter().any(|token|token==background))><TokenChoice values=values overridden=overridden locale=locale selected=selected preview_mode=preview_mode token=background callbacks=callbacks /></Show>
                                     {foreground.map(|token|view!{<Show when=move || !overrides_only.get() || overridden.with(|tokens|tokens.iter().any(|value|value==token))><TokenChoice values=values overridden=overridden locale=locale selected=selected preview_mode=preview_mode token=token callbacks=callbacks /></Show>})}
-                                </div></div>
+                                </div>
                             } />
                         </div>
                     </Show>

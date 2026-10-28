@@ -326,6 +326,7 @@ body {
 [data-testid="layout-body"] .fixture-reset-row>:nth-child(2) {justify-self:start;min-width:0;}
 [data-testid="layout-body"] .fixture-reset-clicks {grid-column:2;}
 [data-testid="layout-body"] .fixture-explicit-box {background:var(--rustify-gray-a3);outline:1px solid var(--rustify-gray-a7);}
+[data-testid="layout-body"] [data-testid="layout-invalid-prop"] {box-sizing:border-box;margin-block-start:4px;padding:2px 8px;}
 [data-testid="layout-body"] .fixture-inset-card:is([data-side="left"],[data-side="right"]) {display:flex;gap:var(--rustify-space-3);align-items:stretch;}
 [data-testid="layout-body"] .fixture-inset-card:is([data-side="left"],[data-side="right"])>.rustify-inset {flex:0 0 40%;}
 [data-testid="layout-body"] .fixture-inset-card:is([data-side="left"],[data-side="right"]) .fixture-inset-hero {height:100%;box-sizing:border-box;min-width:0;overflow-wrap:anywhere;}
@@ -338,6 +339,10 @@ body {
 [data-testid="layout-body"] .fixture-reset-outline {
     outline: 1px dashed var(--border);
     outline-offset: 4px;
+}
+
+[data-testid="layout-body"] .fixture-reset-row :is(input, textarea).fixture-reset-outline {
+    outline-offset: -1px;
 }
 
 [data-testid="layout-body"] .fixture-prop-diagnostic {

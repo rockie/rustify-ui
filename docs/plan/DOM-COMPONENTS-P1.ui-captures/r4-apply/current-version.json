@@ -1,0 +1,64 @@
+{
+  "scope": "Author application of UI review R4; no independent acceptance or score",
+  "recorded_at": "2026-10-28T17:02:23+08:00",
+  "baseline": {
+    "head": "5d122d6231c690a61080b91c680e9a514d2034b8",
+    "branch": "main",
+    "worktree": "dirty"
+  },
+  "fix_commit": "See plan completion rows, UI修复 R4 registration",
+  "input_sha256": {
+    "docs/plan/DOM-COMPONENTS-P1.ui-review.r4.md": "db37fb0b0ac66333f0e03c3aefecae5c441ddcc23fd28318eb9e16b135c07df6",
+    "docs/plan/DOM-COMPONENTS-P1.ui-target.md": "7b859bd616925d1bd1b6845471fd82d4a6dafa1a5b05f12c8c2b267d6efdeef9"
+  },
+  "normative_target_fingerprint": "567117725f56f04104860e0b77173cb2e37913b14014c530158f7d989b1dd5d8",
+  "source_patch_sha256": "cd854583cf2cba62e12ca5a5517de4568fb8e6f53195ea1fca1db9fa85d21bc1",
+  "builds": {
+    "theme-studio": {
+      "build_id": "dc2af2f348e959b3",
+      "base": "/",
+      "toolchain": "rustc 1.99.0 (b940084d7 2026-09-28)",
+      "wasm_bytes": 9905609,
+      "manifest_sha256": "39c72c173fee1e89cea7b6639251ff952409ce4ad695501869be8ea24ad271da",
+      "wasm_sha256": "dc2af2f348e959b3dad32d63de87e40b934b2148fd5b7590ad84f782b585516a"
+    },
+    "component-catalog": {
+      "build_id": "32b52b66f04701ad",
+      "base": "/",
+      "toolchain": "rustc 1.99.0 (b940084d7 2026-09-28)",
+      "wasm_bytes": 8203814,
+      "manifest_sha256": "ee408f21cb22b26785283398647c4004a8c7db218acb47793a84578555bc7662",
+      "wasm_sha256": "32b52b66f04701ad23912375bfafeab9cdfe981ab40ddf9acd30a8100192248b"
+    }
+  },
+  "captures": {
+    "before": {
+      "shots": 142,
+      "failures": [],
+      "capture_log_sha256": "49194a0be544731ed27a882a20700116009d37ce1c4fd93bd1ab4492102a3068"
+    },
+    "after": {
+      "initial_shots": 142,
+      "final_u5_shots": 14,
+      "final_extra_shots": 13,
+      "failures": [],
+      "capture_log_sha256": "9d562dff3d61518554b9696f703b20ffda2dbb233fc33f8d28d1043a8afcc6c6",
+      "health": {
+        "pages": 43,
+        "pageErrors": 0,
+        "consoleErrors": 0,
+        "failedRequests": 0,
+        "cspViolations": 0
+      }
+    }
+  },
+  "measurements": {
+    "dialog_followup_sha256": "dcd2b3ae0518ed76ab176fd0c4f7447c3b4dac9113bcd39523eaafb2643227e7",
+    "preview200_followup_sha256": "2004c4805d38bc0f34fffce3c309b284071248249be88ec71f2b1c59f9a8861f",
+    "scope_probe_sha256": "ff2cd758be5be7dcd6c585201cd35b2891055ef0297d60f24ca71ffd12a388dc",
+    "preview200_scroll_width": 300,
+    "preview200_client_width": 300,
+    "classic_dark_bottom_luma_ratio": 0.740
+  },
+  "validation": "376 host/SSR tests passed (2 ignored); scoped Clippy/fmt/CSS/catalog/sources passed. Studio 73 distinct browser cases covered: first run 64/9, then 7/9, 1/2 and 1/1 confirmation runs. Catalog browser 12 passed. Full V1-V10, real performance and human-assistive-technology checks were not rerun."
+}

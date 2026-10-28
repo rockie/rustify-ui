@@ -244,6 +244,7 @@ test("cancelled legacy upgrade stays write-protected through edits, history, mod
   await page.getByTestId("theme-undo").click(); await page.getByTestId("theme-redo").click();
   await page.getByTestId("mode-dark").click(); await page.getByTestId("preset-favorite").click();
   await save(page, "Memory only");
+  await expect(page.getByTestId("named-upgrade-review")).toBeVisible();
   await page.getByTestId("locale-zh").click();
   expect((await snapshot(page)).storage.permission).toBe("UpgradeCancelled");
   expect((await snapshot(page)).storage.acknowledged).toBeNull();
@@ -394,6 +395,9 @@ test("a quota failure retains named requests and later edits until an explicit r
   await edit(page, "#654321");
   await page.getByTestId("storage-operations").locator("summary").click();
   await expect(page.getByTestId("storage-operations")).toContainText("Retained name");
+  const operationX = await page.getByTestId("storage-operations").evaluate(node => [node.querySelector(".tools-operations-content > p")!.getBoundingClientRect().x, node.querySelector(".tools-operations-content > ol")!.getBoundingClientRect().x]);
+  expect(operationX[0]).toBe(operationX[1]);
+  await expect(page.getByTestId("storage-operations").locator(".tools-op-revision").first()).toHaveCSS("white-space", "nowrap");
   expect(await raw(page)).toBe(previous);
   const unsaved = await snapshot(page); expect(unsaved.storage.paused).toBe(true);
   await page.evaluate(() => { Storage.prototype.setItem = (window as any).__originalSet; });
@@ -453,6 +457,8 @@ for (const decision of ["load", "keep", "copy"] as const) {
     const displayed = JSON.parse((await raw(page))!);
     await expect(page.getByTestId("storage-external-summary")).toHaveAttribute("data-external-revision", String(displayed.revision));
     await expect(page.getByTestId("storage-external-summary")).toContainText(displayed.draft.name);
+    await page.getByTestId("storage-conflict").evaluate(node => node.scrollIntoView({ block: "start" }));
+    await expect(page.getByTestId("storage-external-download")).toBeInViewport();
     const current = await snapshot(page);
     await hold(other);
     async function decide() {
@@ -610,6 +616,7 @@ test("without Web Locks the editor, undo and downloads work while library action
   await expect(page.getByTestId("storage-status")).toContainText("edit in memory");
   await edit(page, "#789abc"); await save(page, "Not persisted");
   await expect(page.getByTestId("field-error")).toContainText("Local writing is unavailable");
+  expect(await download(page, "named-storage-download")).toContain("#789abc");
   await page.getByTestId("storage-operations").locator("summary").click();
   await expect(page.getByTestId("storage-operations").locator('li[data-op-state="rejected"]')).toContainText("Not persisted");
   expect(await raw(page)).toBeNull();

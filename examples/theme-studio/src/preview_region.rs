@@ -154,7 +154,8 @@ const SHADOWS: [&str; 8] = [
 const TABS: [&str; 3] = ["Overview", "Usage", "Settings"];
 const LATIN: &str = "Rustify · ffi fi · e\u{301}";
 const MULTILINGUAL: &str = "中文你好 · 👩‍💻";
-const PAD: f64 = 24.0;
+const PAD_X: f64 = 24.0;
+const PAD_Y: f64 = 16.0;
 
 fn columns(width: f64) -> usize {
     ((width / 128.0) as usize).clamp(2, 7)
@@ -162,13 +163,13 @@ fn columns(width: f64) -> usize {
 
 /// Logical sample height; the DOM viewport bounds the GPU surface separately.
 pub fn preview_height(theme: &ResolvedTheme, width: f64) -> f64 {
-    let width = (width - PAD * 2.0).max(1.0);
+    let width = (width - PAD_X * 2.0).max(1.0);
     let color_rows = COLOR_TOKENS.len().div_ceil(columns(width));
     let shadow_columns = if width >= 620.0 { 4 } else { 2 };
     let radius_rows = if width >= 440.0 { 1.0 } else { 2.0 };
     let font_height = theme.font_size_px * 3.0 + 30.0;
     let control_height = (theme.spacing_px * 9.0).max(32.0) + 30.0;
-    PAD * 2.0
+    PAD_Y * 2.0
         + 28.0
         + 176.0
         + 28.0
@@ -708,9 +709,9 @@ impl Widget for PreviewBoard {
         let theme = &props.theme;
         self.drawings.clear();
         self.shadow_hits.clear();
-        let x = pane.pos.x + PAD;
-        let width = (pane.size.x - PAD * 2.0).max(1.0);
-        let mut y = pane.pos.y + PAD - props.scroll_y;
+        let x = pane.pos.x + PAD_X;
+        let width = (pane.size.x - PAD_X * 2.0).max(1.0);
+        let mut y = pane.pos.y + PAD_Y - props.scroll_y;
         self.heading(cx, x, &mut y, &format!("GPU · {}", props.scene));
         self.draw_scene(cx, theme, x, y, width);
         y += 176.0;

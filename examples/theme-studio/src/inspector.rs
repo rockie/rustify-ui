@@ -33,6 +33,15 @@ fn intersect(a: [f64; 4], b: [f64; 4]) -> Option<[f64; 4]> {
     (right > left && bottom > top).then_some([left, top, right - left, bottom - top])
 }
 
+fn clip_insets(actual: [f64; 4], visible: [f64; 4]) -> [f64; 4] {
+    [
+        visible[1] - actual[1],
+        actual[0] + actual[2] - visible[0] - visible[2],
+        actual[1] + actual[3] - visible[1] - visible[3],
+        visible[0] - actual[0],
+    ]
+}
+
 #[cfg(target_arch = "wasm32")]
 pub use ui::Inspector;
 
@@ -79,9 +88,12 @@ mod ui {
         [rect.x(), rect.y(), rect.width(), rect.height()]
     }
 
-    fn clipped(mut bounds: [f64; 4], element: &leptos::web_sys::Element) -> Option<[f64; 4]> {
+    fn clipped(
+        bounds: [f64; 4],
+        element: &leptos::web_sys::Element,
+    ) -> Option<([f64; 4], [f64; 4])> {
         let win = window();
-        bounds = intersect(
+        let mut visible = intersect(
             bounds,
             [
                 0.,
@@ -99,12 +111,12 @@ mod ui {
                     .iter()
                     .any(|v| matches!(*v, "auto" | "scroll" | "hidden" | "clip"))
                 {
-                    bounds = intersect(bounds, element_rect(&parent))?;
+                    visible = intersect(visible, element_rect(&parent))?;
                 }
             }
             ancestor = parent.parent_element();
         }
-        Some(bounds)
+        Some((bounds, super::clip_insets(bounds, visible)))
     }
 
     #[component]
@@ -149,8 +161,10 @@ mod ui {
                 _ => None,
             });
             visible.set(bounds.is_some());
-            if let (Some(bounds), Some(node)) = (bounds, outline.get_untracked()) {
-                label_fits.set(bounds[2] >= 160. && bounds[3] >= 64.);
+            if let (Some((bounds, clip)), Some(node)) = (bounds, outline.get_untracked()) {
+                label_fits.set(
+                    bounds[2] - clip[1] - clip[3] >= 160. && bounds[3] - clip[0] - clip[2] >= 64.,
+                );
                 let element: leptos::web_sys::HtmlElement = node.into();
                 for (name, value) in [
                     ("--inspector-x", bounds[0]),
@@ -160,6 +174,10 @@ mod ui {
                 ] {
                     let _ = element.style().set_property(name, &format!("{value}px"));
                 }
+                let _ = element.style().set_property(
+                    "--inspector-clip",
+                    &format!("{}px {}px {}px {}px", clip[0], clip[1], clip[2], clip[3]),
+                );
             }
         };
         let choose = move |event: &leptos::web_sys::MouseEvent| -> bool {
@@ -498,6 +516,13 @@ mod tests {
             Some([10., 20., 50., 30.])
         );
         assert_eq!(intersect([10., 20., 10., 10.], [20., 30., 5., 5.]), None);
+    }
+    #[test]
+    fn clip_insets_preserve_the_actual_rectangle_edges() {
+        assert_eq!(
+            super::clip_insets([10., 20., 100., 80.], [10., 20., 50., 30.]),
+            [0., 50., 50., 0.]
+        );
     }
     #[test]
     fn hidden_canvas_geometry_is_not_an_inspection_target() {
