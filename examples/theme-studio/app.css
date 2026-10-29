@@ -179,7 +179,6 @@ button,input,textarea {font:inherit;}
 .studio-authored-preview [data-testid="scene-local-note"] {margin-inline-start:calc(1.5rem - var(--preview-padding-x));margin-block-start:calc(1rem - var(--preview-padding-y));}
 .studio-authored-preview .studio-provider-fixture>summary {color:var(--foreground);}
 .gpu-preview-board+.gpu-state {margin:.5rem 0 0;}
-.inspector-outline[data-annotated="false"] {border-style:dashed;border-color:#475467;}
 #studio-inspector {flex:none;min-height:0;}
 #studio-inspector:has(.inspector-panel:not([hidden])) {padding:0 1.5rem 1rem;}
 .inspector-panel {position:relative;z-index:71;max-height:30dvh;overflow:auto;box-sizing:border-box;margin:0;}

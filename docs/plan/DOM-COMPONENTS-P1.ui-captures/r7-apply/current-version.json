@@ -1,0 +1,26 @@
+{
+  "validation_base": "dirty@b218075a3a2107ab511da932f831f42adfa9390c",
+  "branch": "main",
+  "at": "2026-10-29T09:05:32.052074+00:00",
+  "source": {
+    "path": "examples/theme-studio/app.css",
+    "sha256": "6396f94bf7f5ad67935ae511fbe6bc83c156b7405400db0fa820f85e837fd976"
+  },
+  "built_app_css": {
+    "path": "target/makepad-wasm-app/release/theme-studio/app.css",
+    "bytes": 23897,
+    "sha256": "6396f94bf7f5ad67935ae511fbe6bc83c156b7405400db0fa820f85e837fd976"
+  },
+  "build_id": "6d1605ccec8b9f78",
+  "build_manifest_sha256": "37b7a044bbd2238cc106d6bfede4109420fea163ed583da6adcfd42b527ed32d",
+  "build_exit_code": 0,
+  "note": "CSS-only edit; build_id is unchanged. Source/built CSS bytes and actual computed styles distinguish the tested change. HTTP manifests from all three confirmation contexts equal the local manifest.",
+  "existing_inspector_tests": {
+    "startTime": "2026-10-29T09:03:56.938Z",
+    "duration": 13647.115,
+    "expected": 4,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

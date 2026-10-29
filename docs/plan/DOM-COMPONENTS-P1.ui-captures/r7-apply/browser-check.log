@@ -1,0 +1,246 @@
+ExpectError: expect(locator).toBeVisible() failed
+
+Locator:  getByTestId('inspector-outline')
+Expected: visible
+Received: hidden
+Timeout:  5000ms
+
+Call log:
+  - Expect "toBeVisible" getByTestId('inspector-outline') with timeout 5000ms
+  - waiting for getByTestId('inspector-outline')
+    14 × locator resolved to <div hidden="" aria-hidden="true" data-annotated="true" class="inspector-outline" data-testid="inspector-outline">…</div>
+       - unexpected value "hidden"
+
+    at captureRawStack (/Users/rockie/Documents/gh-rockie/rustify-ui/node_modules/playwright-core/lib/coreBundle.js:8588:17)
+    at callMatcherAsStep (/Users/rockie/Documents/gh-rockie/rustify-ui/node_modules/playwright/lib/matchers/expect.js:13310:57)
+    at Object.toBeVisible (/Users/rockie/Documents/gh-rockie/rustify-ui/node_modules/playwright/lib/matchers/expect.js:13302:23)
+    at /Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r7-apply/inspect-check.cjs:54:39 {
+  matcherResult: {
+    message: 'expect(locator).toBeVisible() failed\n' +
+      '\n' +
+      "Locator:  getByTestId('inspector-outline')\n" +
+      'Expected: visible\n' +
+      'Received: hidden\n' +
+      'Timeout:  5000ms\n' +
+      '\n' +
+      'Call log:\n' +
+      `  - Expect "toBeVisible" getByTestId('inspector-outline') with timeout 5000ms\n` +
+      "  - waiting for getByTestId('inspector-outline')\n" +
+      '    14 × locator resolved to <div hidden="" aria-hidden="true" data-annotated="true" class="inspector-outline" data-testid="inspector-outline">…</div>\n' +
+      '       - unexpected value "hidden"\n',
+    pass: false,
+    actual: 'hidden',
+    name: 'toBeVisible',
+    expected: 'visible',
+    log: [
+      `  - Expect "toBeVisible" getByTestId('inspector-outline') with timeout 5000ms`,
+      "  - waiting for getByTestId('inspector-outline')",
+      '    14 × locator resolved to <div hidden="" aria-hidden="true" data-annotated="true" class="inspector-outline" data-testid="inspector-outline">…</div>',
+      '       - unexpected value "hidden"'
+    ],
+    timeout: 5000,
+    ariaSnapshot: '- main:\n' +
+      '  - complementary:\n' +
+      '    - navigation "Workbench panels":\n' +
+      '      - button "Edit" [pressed]\n' +
+      '      - button "Preview"\n' +
+      '    - heading "Rustify Light" [level=2]\n' +
+      '    - text: Matches reference document\n' +
+      '    - status: Saved on this device\n' +
+      '    - text: Preview mode\n' +
+      '    - button "Light" [pressed]\n' +
+      '    - button "Dark"\n' +
+      '    - button "Undo" [disabled]\n' +
+      '    - button "Redo" [disabled]\n' +
+      '    - button "Save locally"\n' +
+      '    - button "Import"\n' +
+      '    - button "Export"\n' +
+      '    - heading "Rustify Theme Studio" [level=1]\n' +
+      '    - button "EN" [pressed]\n' +
+      '    - button "中文"\n' +
+      '    - paragraph: Shape a theme. See both renderers.\n' +
+      '    - button "Local themes (0)"\n' +
+      '    - button "Restore document · Rustify Light" [disabled]\n' +
+      "    - paragraph: Restores the reference document's configuration and all values in both modes, discarding later adjustments.\n" +
+      '    - region "Local data safety":\n' +
+      '      - status:\n' +
+      '        - strong: Saved\n' +
+      '        - paragraph: Saved on this device\n' +
+      '      - group: 0 pending · 1 recent operation\n' +
+      '      - button "Retry all retained saves" [disabled]\n' +
+      '      - button "Cancel pending writes" [disabled]\n' +
+      '      - group: Cache and original backups\n' +
+      '    - region "Presets":\n' +
+      '      - heading "Presets" [level=2]\n' +
+      '      - text: "44"\n' +
+      '      - searchbox "Search presets"\n' +
+      '      - combobox "Preset source": All sources\n' +
+      '      - button "Favorites"\n' +
+      '      - combobox "Preset": Built-in · Rustify Light\n' +
+      '      - text: Rustify Light\n' +
+      '      - button "Favorite"\n' +
+      '    - region "Theme configuration":\n' +
+      '      - heading "Theme configuration" [level=2]\n' +
+      '      - paragraph: Base choices generate theme values. Overrides remain in place when configuration changes.\n' +
+      "      - paragraph: A group reset clears only that group's overrides in both modes. Other groups and independent adjustments stay unchanged.\n" +
+      '      - text: Appearance\n' +
+      '      - combobox "Appearance": Inherit\n' +
+      '      - paragraph: Inherit follows the containing theme. This authored choice is separate from preview mode.\n' +
+      '      - text: Brand color Custom\n' +
+      '      - combobox "Brand color": Custom\n' +
+      '      - paragraph: Custom keeps authored base values. Explicit overrides still take precedence.\n' +
+      '      - status "Overridden · Light 6 · Dark 6": Overridden Light 6 · Dark 6\n' +
+      '      - button "Use base values · both modes"\n' +
+      '      - text: Neutral color Custom\n' +
+      '      - combobox "Neutral color": Custom\n' +
+      '      - paragraph: "Resolved neutral: Slate. Custom keeps authored base values."\n' +
+      '      - status "Overridden · Light 15 · Dark 15": Overridden Light 15 · Dark 15\n' +
+      '      - button "Use base values · both modes"\n' +
+      '      - text: Panel background Custom\n' +
+      '      - combobox "Panel background": Custom\n' +
+      '      - paragraph: Custom keeps authored base values. Explicit overrides still take precedence.\n' +
+      '      - status "Overridden · Light 2 · Dark 2": Overridden Light 2 · Dark 2\n' +
+      '      - button "Use base values · both modes"\n' +
+      '      - text: Radius Custom\n' +
+      '      - combobox "Radius": Custom\n' +
+      '      - paragraph: Custom keeps authored base values. Explicit overrides still take precedence.\n' +
+      '      - status "Overridden · Light 1 · Dark 1": Overridden Light 1 · Dark 1\n' +
+      '      - button "Use base values · both modes"\n' +
+      '      - text: Scaling\n' +
+      '      - combobox "Scaling": 100%\n' +
+      '      - paragraph: Scales theme sizes once. Explicit CSS lengths and breakpoints stay unchanged.\n' +
+      '    - group: Tokens affected by a group reset\n' +
+      '    - tablist "Theme fields":\n' +
+      '      - tab "Colors" [selected]\n' +
+      '      - tab "Typography & other"\n' +
+      '    - tabpanel "Colors":\n' +
+      '      - searchbox "Search color tokens"\n' +
+      '      - button "Clear" [disabled]\n' +
+      '      - button "Overridden only (23)"\n' +
+      '      - heading "Surfaces" [level=3]\n' +
+      `      - 'button "background #f9fafb Overridden Light"'\n` +
+      '      - button "Clear background · Light only": ↺\n' +
+      `      - 'button "foreground #1d2939 Overridden Light"'\n` +
+      '      - button "Clear foreground · Light only": ↺\n' +
+      `      - 'button "card #ffffff Overridden Light"'\n` +
+      '      - button "Clear card · Light only": ↺\n' +
+      `      - 'button "card-foreground #1d2939 Overridden Light"'\n` +
+      '      - button "Clear card-foreground · Light only": ↺\n' +
+      `      - 'button "popover #ffffff Overridden Light"'\n` +
+      '      - button "Clear popover · Light only": ↺\n' +
+      `      - 'button "popover-foreground #1d2939 Overridden Light"'\n` +
+      '      - button "Clear popover-foreground · Light only": ↺\n' +
+      '      - heading "Semantic colors" [level=3]\n' +
+      `      - 'button "primary #1570ef Overridden Light" [pressed]'\n` +
+      '      - button "Clear primary · Light only": ↺\n' +
+      '      - heading "Fine adjustment source" [level=3]\n' +
+      '      - term: Token\n' +
+      '      - definition:\n' +
+      '        - code: primary\n' +
+      '      - term: Effective value\n' +
+      '      - definition:\n' +
+      '        - code: "#1570ef"\n' +
+      '      - term: Source\n' +
+      '      - definition: Explicit document override\n' +
+      '      - term: Path\n' +
+      '      - definition:\n' +
+      '        - code: overrides.light.primary\n' +
+      '      - term: If cleared\n' +
+      '      - definition:\n' +
+      '        - text: "Light:"\n' +
+      '        - code: "#1570ef"\n' +
+      '        - paragraph: Other tokens stay unchanged.\n' +
+      '      - button "Clear primary · Light only"\n' +
+      '      - heading "Color controls" [level=3]\n' +
+      '      - slider "Saturation and lightness"\n' +
+      '      - paragraph: "← → saturation · ↑ ↓ lightness · Shift: 10% · Esc: cancel"\n' +
+      '      - combobox "HEX / RGB / HSL / OKLCH": HEX\n' +
+      '      - textbox "Color value primary": "#1570ef"\n' +
+      '      - status: Format changes the display only. Enter or leave the field to apply.\n' +
+      '      - text: Red\n' +
+      '      - slider "Red": "21"\n' +
+      '      - status: "21"\n' +
+      '      - text: Green\n' +
+      '      - slider "Green": "112"\n' +
+      '      - status: "112"\n' +
+      '      - text: Blue\n' +
+      '      - slider "Blue": "239"\n' +
+      '      - status: "239"\n' +
+      '      - text: Hue\n' +
+      '      - slider "Hue": "215"\n' +
+      '      - status: "215"\n' +
+      '      - text: Saturation\n' +
+      '      - slider "Saturation": "87"\n' +
+      '      - status: "87"\n' +
+      '      - text: Lightness\n' +
+      '      - slider "Lightness": "51"\n' +
+      '      - status: "51"\n' +
+      '      - text: Alpha\n' +
+      '      - slider "Alpha": "1"\n' +
+      '      - status: "1.00"\n' +
+      `      - 'button "primary-foreground #ffffff Overridden Light"'\n` +
+      '      - button "Clear primary-foreground · Light only": ↺\n' +
+      `      - 'button "secondary #eaecf0 Overridden Light"'\n` +
+      '      - button "Clear secondary · Light only": ↺\n' +
+      `      - 'button "secondary-foreground #1d2939 Overridden Light"'\n` +
+      '      - button "Clear secondary-foreground · Light only": ↺\n' +
+      `      - 'button "muted #f2f4f7 Overridden Light"'\n` +
+      '      - button "Clear muted · Light only": ↺\n' +
+      `      - 'button "muted-foreground #667085 Overridden Light"'\n` +
+      '      - button "Clear muted-foreground · Light only": ↺\n' +
+      `      - 'button "accent #12b76a"'\n` +
+      '      - button "No override for accent · Light only" [disabled]: ↺\n' +
+      `      - 'button "accent-foreground #ffffff"'\n` +
+      '      - button "No override for accent-foreground · Light only" [disabled]: ↺\n' +
+      `      - 'button "destructive #d92d20"'\n` +
+      '      - button "No override for destructive · Light only" [disabled]: ↺\n' +
+      `      - 'button "destructive-foreground #ffffff"'\n` +
+      '      - button "No override for destructive-foreground · Light only" [disabled]: ↺\n' +
+      '      - heading "Borders & focus" [level=3]\n' +
+      `      - 'button "border #858f9e Overridden Light"'\n` +
+      '      - button "Clear border · Light only": ↺\n' +
+      `      - 'button "input #ffffff Overridden Light"'\n` +
+      '      - button "Clear input · Light only": ↺\n' +
+      `      - 'button "ring #1570ef Overridden Light"'\n` +
+      '      - button "Clear ring · Light only": ↺\n' +
+      '      - heading "Charts" [level=3]\n' +
+      `      - 'button "chart-1 #1570ef"'\n` +
+      '      - button "No override for chart-1 · Light only" [disabled]: ↺\n' +
+      `      - 'button "chart-2 #12b76a"'\n` +
+      '      - button "No override for chart-2 · Light only" [disabled]: ↺\n' +
+      `      - 'button "chart-3 #f79009"'\n` +
+      '      - button "No override for chart-3 · Light only" [disabled]: ↺\n' +
+      `      - 'button "chart-4 #d92d20"'\n` +
+      '      - button "No override for chart-4 · Light only" [disabled]: ↺\n' +
+      `      - 'button "chart-5 #667085"'\n` +
+      '      - button "No override for chart-5 · Light only" [disabled]: ↺\n' +
+      '      - heading "Sidebar" [level=3]\n' +
+      `      - 'button "sidebar #f9fafb Overridden Light"'\n` +
+      '      - button "Clear sidebar · Light only": ↺\n' +
+      `      - 'button "sidebar-foreground #1d2939 Overridden Light"'\n` +
+      '      - button "Clear sidebar-foreground · Light only": ↺\n' +
+      `      - 'button "sidebar-primary #1570ef Overridden Light"'\n` +
+      '      - button "Clear sidebar-primary · Light only": ↺\n' +
+      `      - 'button "sidebar-primary-foreground #ffffff Overridden Light"'\n` +
+      '      - button "Clear sidebar-primary-foreground · Light only": ↺\n' +
+      `      - 'button "sidebar-accent #eaecf0 Overridden Light"'\n` +
+      '      - button "Clear sidebar-accent · Light only": ↺\n' +
+      `      - 'button "sidebar-accent-foreground #1d2939 Overridden Light"'\n` +
+      '      - button "Clear sidebar-accent-foreground · Light only": ↺\n' +
+      `      - 'button "sidebar-border #858f9e Overridden Light"'\n` +
+      '      - button "Clear sidebar-border · Light only": ↺\n' +
+      `      - 'button "sidebar-ring #1570ef Overridden Light"'\n` +
+      '      - button "Clear sidebar-ring · Light only": ↺\n' +
+      '      - heading "Feedback" [level=3]\n' +
+      `      - 'button "success #12b76a"'\n` +
+      '      - button "No override for success · Light only" [disabled]: ↺\n' +
+      `      - 'button "warning #f79009"'\n` +
+      '      - button "No override for warning · Light only" [disabled]: ↺\n' +
+      '      - heading "Shadow" [level=3]\n' +
+      `      - 'button "shadow-color #000000"'\n` +
+      '      - button "No override for shadow-color · Light only" [disabled]: ↺\n' +
+      '    - group: Diagnostics\n' +
+      '    - group: Scope isolation checks\n' +
+      '    - paragraph: Your theme stays inside the preview.'
+  }
+}

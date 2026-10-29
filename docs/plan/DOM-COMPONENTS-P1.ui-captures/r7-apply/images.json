@@ -1,0 +1,86 @@
+[
+  {
+    "file": "after/mapped-1440-dark.png",
+    "sha256": "e0f076d25c5a4a73d3a248e6345d366e875041e3c9cc7f62c707cca2b20a1e09",
+    "width": 1440,
+    "height": 900,
+    "bytes": 173471
+  },
+  {
+    "file": "after/mapped-1440-light.png",
+    "sha256": "0edb3b6a8007135bdd5d9748ee3fbed09de1e59881d324cfa14c5c50e4f5984d",
+    "width": 1440,
+    "height": 900,
+    "bytes": 175178
+  },
+  {
+    "file": "after/unmapped-1440-dark.png",
+    "sha256": "222e26865957595f50547ca73189ab11cef598717075b3844aeda553ac14c2d1",
+    "width": 1440,
+    "height": 900,
+    "bytes": 172292
+  },
+  {
+    "file": "after/unmapped-1440-light.png",
+    "sha256": "e4a86c7beda1b85c3704656639dddbf896cc7a1ff6b8d0c99955bfe45b86dd16",
+    "width": 1440,
+    "height": 900,
+    "bytes": 171392
+  },
+  {
+    "file": "after-confirmation/mapped-1440-dark.png",
+    "sha256": "e0f076d25c5a4a73d3a248e6345d366e875041e3c9cc7f62c707cca2b20a1e09",
+    "width": 1440,
+    "height": 900,
+    "bytes": 173471
+  },
+  {
+    "file": "after-confirmation/mapped-1440-light.png",
+    "sha256": "0edb3b6a8007135bdd5d9748ee3fbed09de1e59881d324cfa14c5c50e4f5984d",
+    "width": 1440,
+    "height": 900,
+    "bytes": 175178
+  },
+  {
+    "file": "after-confirmation/mapped-390-light.png",
+    "sha256": "d09c405d90158f9821aef785f32d5e47be93c1d632bea3a22e1f2decf451d9a6",
+    "width": 390,
+    "height": 844,
+    "bytes": 55542
+  },
+  {
+    "file": "after-confirmation/unmapped-1440-dark.png",
+    "sha256": "222e26865957595f50547ca73189ab11cef598717075b3844aeda553ac14c2d1",
+    "width": 1440,
+    "height": 900,
+    "bytes": 172292
+  },
+  {
+    "file": "after-confirmation/unmapped-1440-light.png",
+    "sha256": "e4a86c7beda1b85c3704656639dddbf896cc7a1ff6b8d0c99955bfe45b86dd16",
+    "width": 1440,
+    "height": 900,
+    "bytes": 171392
+  },
+  {
+    "file": "after-confirmation/unmapped-390-light.png",
+    "sha256": "5e045a9feae06d4295dbd8c0383de12931e123f7d8dabd7d0369797cc0cf5460",
+    "width": 390,
+    "height": 844,
+    "bytes": 57698
+  },
+  {
+    "file": "before/mapped-1440-light.png",
+    "sha256": "0edb3b6a8007135bdd5d9748ee3fbed09de1e59881d324cfa14c5c50e4f5984d",
+    "width": 1440,
+    "height": 900,
+    "bytes": 175178
+  },
+  {
+    "file": "before/unmapped-1440-light.png",
+    "sha256": "d2e5fb3110960d49cdefb2b96f895cc1a02eecb4e07d3cb91793c7d47dbd9a19",
+    "width": 1440,
+    "height": 900,
+    "bytes": 171791
+  }
+]
