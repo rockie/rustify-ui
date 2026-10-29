@@ -1,0 +1,55 @@
+{
+  "baseline": "dirty@dc9df3547c4c164af7cf3433bef883332659b6f6",
+  "report": "docs/plan/DOM-COMPONENTS-P1-gaps.code-review.md",
+  "report_sha256": "0aa7af2c1f798b68c64821c347ff83c974324ad34c4c8a06d12459153193fdd3",
+  "source_sha256": "609c8d02fd7386969d437929c8185bbcc9d28bb83b05d2a4fd09ccd11853cc6e",
+  "test_sha256": "b8ea2e5ea00ad7c9a7290cc9d9b1c0221d4b6264020257ffc23c1be12abe5e46",
+  "build_id": "7dabd60834cb1030",
+  "red_stats": {
+    "startTime": "2026-10-29T15:57:16.396Z",
+    "duration": 21365.478,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 2,
+    "flaky": 0
+  },
+  "red_reason": "setup notes must include a complete static root example; received undefined",
+  "green_stats": {
+    "startTime": "2026-10-29T16:03:11.649Z",
+    "duration": 26503.68,
+    "expected": 5,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "consumers": [
+    {
+      "id": "static-theme",
+      "root": "<section data-rustify-scope=\"theme-preview\" data-rustify-theme-css=\"static-theme\">...</section>",
+      "projections": [
+        {
+          "mode": "light",
+          "primary": "rgb(21 112 239)"
+        },
+        {
+          "mode": "dark",
+          "primary": "rgb(83 177 253)"
+        }
+      ]
+    },
+    {
+      "id": "brand\"&copy;<dark>",
+      "root": "<section data-rustify-scope=\"theme-preview\" data-rustify-theme-css=\"brand&quot;&amp;copy;&lt;dark&gt;\">...</section>",
+      "projections": [
+        {
+          "mode": "light",
+          "primary": "rgb(21 112 239)"
+        },
+        {
+          "mode": "dark",
+          "primary": "rgb(83 177 253)"
+        }
+      ]
+    }
+  ]
+}

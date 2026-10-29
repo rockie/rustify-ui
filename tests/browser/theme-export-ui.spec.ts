@@ -158,3 +158,36 @@ test("default export supplies portable setup notes for every format and follows 
   await page.keyboard.press("Escape");await expect(page.getByTestId("theme-export")).toBeFocused();
   expect(errors).toEqual([]);expect(failed).toEqual([]);expect(await page.evaluate(()=>(window as any).__setupCsp)).toEqual([]);
 });
+
+for(const [label,id] of [["plain","static-theme"],["quoted","brand\"&copy;<dark>"]]){
+  test(`setup notes supply a working static CSS root for a ${label} theme ID`,async({page})=>{
+    await waitForReady(page);
+    const candidate=(await snapshot(page)).document;candidate.id=id;
+    await page.getByTestId("theme-import").click();
+    await page.getByTestId("import-source").fill(JSON.stringify(candidate));
+    await page.getByTestId("import-review").click();await page.getByTestId("import-apply").click();
+    const before=await snapshot(page);
+    await page.getByTestId("theme-export").click();
+    const notes=(await download(page,"export-setup-download")).text;
+    const root=notes.match(/<section\b[^>]*>[\s\S]*?<\/section>/)?.[0];
+    expect(root,"setup notes must include a complete static root example").toBeDefined();
+    await outputKind(page,"CSS · resolved values");
+    const css=(await download(page)).text;
+    const consumer=await page.context().newPage();
+    try{
+      await consumer.setContent(root!);await consumer.addStyleTag({content:css});
+      const target=consumer.locator("section");
+      await expect(target).toHaveAttribute("data-rustify-theme-css",id);
+      await expect(target).toHaveAttribute("data-rustify-scope",/\S+/);
+      const projections=[];
+      for(const [mode,color] of [["light","rgb(21 112 239)"],["dark","rgb(83 177 253)"]]){
+        await target.evaluate((node,mode)=>mode==="dark"?node.setAttribute("data-theme",mode):node.removeAttribute("data-theme"),mode);
+        const primary=(await target.evaluate(node=>getComputedStyle(node).getPropertyValue("--primary"))).trim();
+        projections.push({mode,primary});expect(primary).toBe(color);
+      }
+      await test.info().attach("static-theme-root",{body:JSON.stringify({id,root,projections}),contentType:"application/json"});
+    }finally{await consumer.close();}
+    expect((await snapshot(page)).document).toEqual(before.document);
+    expect((await snapshot(page)).history).toEqual(before.history);
+  });
+}

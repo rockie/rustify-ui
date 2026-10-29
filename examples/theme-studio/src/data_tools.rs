@@ -335,6 +335,12 @@ fn integration_notes(
     context: &ResolveContext<'_>,
     preview_mode: ThemeMode,
 ) -> Result<ExportArtifact, ThemeError> {
+    let static_id = document
+        .id
+        .replace('&', "&amp;")
+        .replace('"', "&quot;")
+        .replace('<', "&lt;")
+        .replace('>', "&gt;");
     let mut text = format!(
         "Rustify Theme setup / 主题接入说明\nSource revision / 源码修订: {}\n\n\
         JSON v2 / Rust: use the SDK and CSS from this source checkout. Published 0.2.1 SDK/CLI reject complete v2 documents.\n\
@@ -345,10 +351,13 @@ fn integration_notes(
         Docs 作者项目的上述三个依赖须使用同一 checkout 的规范路径。\n\n\
         CSS: both resolved modes; static CSS needs no wasm or CLI. Compile Tailwind v4 exports with Tailwind 4.1.13.\n\
         CSS：包含两模式解析结果；静态消费无需 wasm 或 CLI。Tailwind v4 输出使用 Tailwind 4.1.13 编译。\n\
-        Rustify scoped CSS: import sdk.css then theme-v4.css in one Tailwind input; mark the target with data-rustify-theme-css=\"{}\".\n\
-        Rustify 局部 CSS：在同一 Tailwind input 中依次导入 sdk.css、theme-v4.css，给目标添加上述标记。\n\
-        Scoped dark: data-theme=\"dark\"; Tailwind standard dark: .dark. CSS does not preserve author intent; keep JSON v2.\n\
-        局部深色使用 data-theme=\"dark\"，标准深色使用 .dark；CSS 不保留作者意图，请保留 JSON v2。\n\
+        Rustify scoped CSS: import sdk.css, then theme-v4.css and the exported theme.css in one Tailwind input.\n\
+        Rustify 局部 CSS：在同一 Tailwind input 中依次导入 sdk.css、theme-v4.css 和导出的 theme.css。\n\
+        Static root / 静态根：\n\
+        <section data-rustify-scope=\"theme-preview\" data-rustify-theme-css=\"{}\">...</section>\n\
+        Both attributes are required on the same element. / 两个属性必须放在同一元素上。\n\
+        Scoped dark: add data-theme=\"dark\" to that root; Tailwind standard dark: .dark. CSS does not preserve author intent; keep JSON v2.\n\
+        局部深色给该根元素添加 data-theme=\"dark\"，标准深色使用 .dark；CSS 不保留作者意图，请保留 JSON v2。\n\
         Compatible JSON v1 is lossy; review its losses before using it. / 兼容 JSON v1 有损，使用前请核对损失。\n\n\
         Preview / 当前预览: {preview_mode:?}; author appearance / 作者外观: {:?}\n\
         Put theme.json beside the downloaded theme.rs. / 将 theme.json 放在下载的 theme.rs 旁边。\n\
@@ -363,7 +372,7 @@ fn integration_notes(
         mount_exported_theme 遵守作者外观；mount_exported_preview 显式预览，不改 JSON 或历史。\n\n\
         Fonts / 外部字体（requested / 请求 → resolved / 有效；resource / 资源）:\n",
         env!("RUSTIFY_STUDIO_SOURCE_REVISION"),
-        document.id,
+        static_id,
         document.config.appearance,
         preview_call(context, preview_mode),
     );
