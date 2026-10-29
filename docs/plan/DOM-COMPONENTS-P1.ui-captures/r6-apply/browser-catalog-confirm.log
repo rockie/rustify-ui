@@ -1,9 +1,0 @@
-
-Running 2 tests using 1 worker
-
-(node:46552) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
-(Use `node --trace-warnings ...` to show where the warning was created)
-  ✓  1 [component-catalog] › tests/browser/dom-layout.spec.ts:59:9 › Code ghost keeps neutral foreground and explicit gray roles at 1280px (9.0s)
-  ✓  2 [component-catalog] › tests/browser/dom-layout.spec.ts:59:9 › Code ghost keeps neutral foreground and explicit gray roles at 390px (755ms)
-
-  2 passed (12.1s)

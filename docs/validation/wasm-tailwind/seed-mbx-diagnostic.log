@@ -1,5 +1,0 @@
-cache explanation: last recorded build
-  command: cargo clippy --locked -p rustify-style --no-default-features --features compiler --all-targets -- -D warnings
-  results: 2 compiler-query, 1 standard-input, 2 unconsulted
-
-no cache misses were recorded

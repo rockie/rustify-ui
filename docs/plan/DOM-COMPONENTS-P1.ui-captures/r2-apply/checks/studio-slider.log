@@ -1,9 +1,0 @@
-
-Running 2 tests using 1 worker
-
-(node:60736) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
-(Use `node --trace-warnings ...` to show where the warning was created)
-  ✓  1 [theme-studio] › tests/browser/theme-editor.spec.ts:326:9 › theme editing through the workbench › batch HSL always uses its origin, commits once, and cancellation preserves the redo branch (10.4s)
-  ✓  2 [theme-studio] › tests/browser/theme-editor.spec.ts:366:9 › theme editing through the workbench › HSL invalid and identity drafts do not resolve, and current-mode adjustment keeps gray colors finite (2.3s)
-
-  2 passed (13.3s)

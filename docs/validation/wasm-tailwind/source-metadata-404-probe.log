@@ -1,2 +1,0 @@
-npm notice run rustify-ui-browser-tests@0.1.0 npx
-npm notice run 'playwright' test --project=utility-lab-deep --workers=1 --grep inline and path sources --output=docs/validation/wasm-tailwind/source-metadata/404-probe-results --reporter=json

@@ -1,8 +1,0 @@
-locator.click: Timeout 30000ms exceeded.
-Call log:
-[2m  - waiting for locator('article a[href="#target"]')[22m
-
-    at /Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p1/code-review-r6/context-browser.cjs:67:94 {
-  log: [ `  - waiting for locator('article a[href="#target"]')` ],
-  name: 'TimeoutError'
-}

@@ -1,8 +1,0 @@
-file:///Users/rockie/Documents/gh-rockie/rustify-ui/[eval1]:9
-console.log(JSON.stringify({actualWasm:true,wasmBytes:bytes.length,expected:'reject @config before functional normalization',constructed:!!compiler,error,observedValue:input[0].nodes[0].value,red:!!compiler}))
-                                                                                                                                                                                          ^
-
-TypeError: Cannot read properties of undefined (reading 'value')
-    at file:///Users/rockie/Documents/gh-rockie/rustify-ui/[eval1]:9:187
-
-Node.js v26.1.0

@@ -1,8 +1,0 @@
-BEFORE screenshot true [] []
-AFTER screenshot true [{"stage":"screenshot","text":"Refused to apply a stylesheet because its hash, its nonce, or 'unsafe-inline' does not appear in the style-src directive of the Content Security Policy.","location":{"url":"http://127.0.0.1:4211/rustify-ui/counter/","line":0,"column":0,"lineNumber":0,"columnNumber":0}},{"stage":"screenshot","text":"Refused to apply a stylesheet because its hash, its nonce, or 'unsafe-inline' does not appear in the style-src directive of the Content Security Policy.","location":{"url":"http://127.0.0.1:4211/rustify-ui/counter/","line":0,"column":0,"lineNumber":0,"columnNumber":0}}] [{"directive":"style-src-elem","uri":"inline","source":"","line":5},{"directive":"style-src-elem","uri":"inline","source":"","line":5}]
-BEFORE screenshot false [] []
-AFTER screenshot false [{"stage":"screenshot","text":"Refused to apply a stylesheet because its hash, its nonce, or 'unsafe-inline' does not appear in the style-src directive of the Content Security Policy.","location":{"url":"http://127.0.0.1:4211/rustify-ui/counter/","line":0,"column":0,"lineNumber":0,"columnNumber":0}},{"stage":"screenshot","text":"Refused to apply a stylesheet because its hash, its nonce, or 'unsafe-inline' does not appear in the style-src directive of the Content Security Policy.","location":{"url":"http://127.0.0.1:4211/rustify-ui/counter/","line":0,"column":0,"lineNumber":0,"columnNumber":0}}] []
-clipboard-read grant
-clipboard-read SUPPORTED
-preview: http://127.0.0.1:4211/rustify-ui/
-serving /Users/rockie/Library/Caches/mbx/targets/v1/dfa8c34d728293b2e4ce8f42ca5aaa86b87100f69a462ec63716c8f59180b341/docs-ssg/http/components/subpath/dist (built by rustify-docs 0.1.24, build b44f747875313813) until stopped

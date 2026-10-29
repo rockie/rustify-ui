@@ -1,5 +1,0 @@
-npm notice run rustify-ui-browser-tests@0.1.0 npx
-npm notice run 'playwright' test -c playwright.docs.config.ts --project=components-subpath tests/docs-ssg/custom.spec.ts --grep live mode changes --list
-Listing tests:
-  [components-subpath] › docs-ssg/custom.spec.ts:302:1 › live mode changes reach the theme context and real floating controls, including Rust-only classes
-Total: 1 test in 1 file

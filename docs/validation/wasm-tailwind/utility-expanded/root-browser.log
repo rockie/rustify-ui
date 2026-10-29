@@ -1,2 +1,0 @@
-npm notice run rustify-ui-browser-tests@0.1.0 npx
-npm notice run 'playwright' test --project utility-lab --workers=1 utility-runtime.spec.ts utility-faults.spec.ts --reporter=json

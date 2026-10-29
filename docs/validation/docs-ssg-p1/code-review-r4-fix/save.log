@@ -1,8 +1,0 @@
-Result summary; full measurements: save.json
-rustify-docs 0.1.1
-panic: unwind
-grammars: syntect-5.3.0+two-face-0.5.2+bat-0.26.1+fancy
-{'check': 'body save visible in the browser (median of 5)', 'passed': True, 'detail': '157.3 ms (limit 1000 ms)'}
-{'check': 'config save visible in the browser (median of 5)', 'passed': True, 'detail': '152.5 ms (limit 1000 ms)'}
-{'check': 'static save visible in the browser (median of 5)', 'passed': True, 'detail': '186.1 ms (limit 1000 ms)'}
-{'check': 'short round: 20 saves one after another, each seen before the next', 'passed': True, 'detail': 'median 159.2 ms, max 187.5 ms'}

@@ -1,6 +1,0 @@
-public-api.mjs --check
-{"compileCases":59,"compileBuilds":313,"errorCases":1,"warningCases":1,"compileAstCases":9,"compileAstBuilds":61,"designSystemCases":3,"designSystemMethods":12,"implementationStatus":"pending"}
-design-system-completions.mjs --check
-{"definitions":214,"sha256":"babf07391382ff3192432cd18641b45b782fd00ef73c2756a8099449287083f3","sourceSha256":"1e8df70d3357ca477c6a2a4c4fe818627d444969f0790bf9f5538ad467078293"}
-utf16-functions.mjs --check
-{"cases":75}

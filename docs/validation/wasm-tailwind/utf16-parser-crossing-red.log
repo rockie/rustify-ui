@@ -1,8 +1,0 @@
-
-node:internal/modules/run_main:107
-    triggerUncaughtException(
-    ^
-{"kind":"compile","error":{"kind":"pending_feature","feature":"non-scalar UTF-16 compiler input"}}
-(Use `node --trace-uncaught ...` to show where the exception was thrown)
-
-Node.js v26.1.0

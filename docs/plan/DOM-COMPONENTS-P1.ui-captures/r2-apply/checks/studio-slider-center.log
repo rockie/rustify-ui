@@ -1,9 +1,0 @@
-
-Running 2 tests using 1 worker
-
-(node:70362) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
-(Use `node --trace-warnings ...` to show where the warning was created)
-  ✓  1 [theme-studio] › tests/browser/theme-slider.spec.ts:8:7 › slider fill and empty track share their center at 1280px and changing rem (8.5s)
-  ✓  2 [theme-studio] › tests/browser/theme-slider.spec.ts:8:7 › slider fill and empty track share their center at 390px and changing rem (1.7s)
-
-  2 passed (10.8s)

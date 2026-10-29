@@ -11,3 +11,31 @@ __pycache__/
 .rustify-docs/
 /site/dist
 .DS_Store
+
+# Generated review captures and test command logs stay local.
+# Keep reports, capture manifests, review state and reference assets tracked.
+/.impeccable/review/**/*.png
+/docs/plan/*.ui-captures/**/*.png
+/docs/plan/*.ui-captures/**/*.log
+/docs/plan/*.ui-captures/**/browser-raw.jsonl
+/docs/plan/DOCS-SSG-P2-gaps.records/**/*.png
+/docs/plan/DOCS-SSG-P2-gaps.records/**/*.log
+/docs/validation/**/*.png
+/docs/validation/**/*.log
+/tests/utility/cn/**/*.log
+
+# Validation fixtures, source snapshots and frozen baselines are inputs.
+!/docs/validation/**/assets/**/*.png
+!/docs/validation/**/assets/**/*.log
+!/docs/validation/**/fixtures/**/*.png
+!/docs/validation/**/fixtures/**/*.log
+!/docs/validation/**/candidate-fixtures/**/*.png
+!/docs/validation/**/candidate-fixtures/**/*.log
+!/docs/validation/**/source-snapshot/**/*.png
+!/docs/validation/**/source-snapshot/**/*.log
+!/docs/validation/**/baseline/**/*.png
+!/docs/validation/**/baseline/**/*.log
+!/docs/validation/**/baseline-dist/**/*.png
+!/docs/validation/**/baseline-dist/**/*.log
+!/docs/validation/**/native-project/**/*.png
+!/docs/validation/**/native-project/**/*.log

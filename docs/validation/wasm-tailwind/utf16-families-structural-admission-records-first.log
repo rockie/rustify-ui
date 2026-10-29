@@ -1,4 +1,0 @@
-Traceback (most recent call last):
-  File "/private/tmp/rustify-structural-admission-record-check.py", line 18, in <module>
-    assert '0 passed; 1 failed' in red and 'left:' in red and 'blue' in red and 'red' in red
-AssertionError

@@ -1,7 +1,0 @@
-reference site B: 500 pages, digest 49ead46fbead6d5feb3366125ae046bba7b982c4231d158559c1f462c5604c4d
-pass cold render and stylesheet of 500 pages: 195.5 ms (limit 20000 ms)
-pass configuration change, all pages re-rendered and committed (median of 5): 33.3 ms (limit < 1000 ms; 966.7 ms left for watch, SSE and the browser)
-pass largest content page: HTML + CSS + scripts, gzip -9: 22794 bytes (zh/g08/page-020/index.html = 107011 raw / 14642 gzip + 8152 shared; limit 100000)
-pass home page: HTML + CSS + scripts, gzip -9: 19454 bytes (89708 raw / 11302 gzip + 8152 shared; limit 100000)
-report: /Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/docs-ssg-p1/m2/performance.json
-site: /Users/rockie/Documents/gh-rockie/rustify-ui/target/docs-ssg/perf/site

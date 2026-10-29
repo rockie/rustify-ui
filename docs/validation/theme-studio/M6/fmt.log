@@ -1,5 +1,0 @@
-
-[theme-M6 validation]
-command: cargo fmt --all -- --check
-exit_code: 0
-observed: {}

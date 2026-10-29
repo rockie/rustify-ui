@@ -1,5 +1,0 @@
-cache explanation: last recorded build
-  command: cargo build --locked -p rustify-style-wasm --release --target wasm32-unknown-unknown --no-default-features --features compiler-api
-  results: 2 compiler-query, 2 standard-input, 1 unsupported-crate-type
-
-no cache misses were recorded

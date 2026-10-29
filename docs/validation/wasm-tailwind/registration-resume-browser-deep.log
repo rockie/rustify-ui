@@ -1,2 +1,0 @@
-npm notice run rustify-ui-browser-tests@0.1.0 npx
-npm notice run 'playwright' test --project=utility-lab-deep --workers=1 --output=/Users/rockie/Documents/gh-rockie/rustify-ui/docs/validation/wasm-tailwind/registration-resume-browser/deep-results --reporter=json

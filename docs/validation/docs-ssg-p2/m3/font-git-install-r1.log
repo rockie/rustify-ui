@@ -1,2 +1,0 @@
-Command: ['mbx', 'install', '--git', 'file:///var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-p2-m3-fonts-zfx6j7kn/repo', '--rev', 'a71b6b82b8f487bff8f74128aeb8fb48a7f3a984', '--locked', '--offline', '--profile', 'docs-cli', '--root', '/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-p2-m3-fonts-zfx6j7kn/installed', 'rustify-docs-cli']
-error: can't checkout from 'file:///var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-p2-m3-fonts-zfx6j7kn/repo': you are in the offline mode (--offline)

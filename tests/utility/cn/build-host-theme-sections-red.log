@@ -1,9 +1,0 @@
-{
-  "passed": 28,
-  "failures": [
-    {
-      "name": "CSS-helper-optional-extension-sections",
-      "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:\n+ actual - expected\n\n  {\n+   extension: {\n+     extend: {\n+       theme: {}\n+     },\n+     override: {\n+       theme: {}\n+     }\n+   },\n-   extension: {},\n    files: [\n      '/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-cn-host-kteFqU/css-helper/empty.css'\n    ]\n  }\n\n    at file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/cn/run-build-host.mjs:140:68\n    at check (file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/cn/run-build-host.mjs:26:41)\n    at file:///Users/rockie/Documents/gh-rockie/rustify-ui/tests/utility/cn/run-build-host.mjs:138:9"
-    }
-  ]
-}
