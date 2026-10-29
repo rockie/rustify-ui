@@ -1,0 +1,127 @@
+[
+  {
+    "name": "fmt",
+    "argv": [
+      "cargo",
+      "fmt",
+      "--all",
+      "--",
+      "--check"
+    ],
+    "exit": 0,
+    "seconds": 2.9
+  },
+  {
+    "name": "csr",
+    "argv": [
+      "mbx",
+      "test",
+      "--locked",
+      "-p",
+      "rustify-components",
+      "--lib"
+    ],
+    "exit": 0,
+    "seconds": 5.04
+  },
+  {
+    "name": "ssr",
+    "argv": [
+      "mbx",
+      "test",
+      "--locked",
+      "-p",
+      "rustify-components",
+      "--no-default-features",
+      "--features",
+      "ssr",
+      "--lib"
+    ],
+    "exit": 0,
+    "seconds": 15.17
+  },
+  {
+    "name": "clippy-csr",
+    "argv": [
+      "mbx",
+      "clippy",
+      "--locked",
+      "-p",
+      "rustify-components",
+      "--all-targets",
+      "--",
+      "-D",
+      "warnings"
+    ],
+    "exit": 0,
+    "seconds": 10.43
+  },
+  {
+    "name": "clippy-ssr",
+    "argv": [
+      "mbx",
+      "clippy",
+      "--locked",
+      "-p",
+      "rustify-components",
+      "--no-default-features",
+      "--features",
+      "ssr",
+      "--all-targets",
+      "--",
+      "-D",
+      "warnings"
+    ],
+    "exit": 0,
+    "seconds": 8.02
+  },
+  {
+    "name": "wasm-stable",
+    "argv": [
+      "mbx",
+      "check",
+      "--locked",
+      "-p",
+      "rustify-components",
+      "--target",
+      "wasm32-unknown-unknown"
+    ],
+    "exit": 0,
+    "seconds": 19.19
+  },
+  {
+    "name": "css-check",
+    "argv": [
+      "mbx",
+      "xtask",
+      "css",
+      "--check"
+    ],
+    "exit": 0,
+    "seconds": 2.14
+  },
+  {
+    "name": "catalog-check",
+    "argv": [
+      "mbx",
+      "xtask",
+      "catalog",
+      "--write",
+      "docs/components.md",
+      "--check"
+    ],
+    "exit": 0,
+    "seconds": 0.87
+  },
+  {
+    "name": "sources",
+    "argv": [
+      "mbx",
+      "xtask",
+      "sources",
+      "verify"
+    ],
+    "exit": 0,
+    "seconds": 19.73
+  }
+]

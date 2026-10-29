@@ -1,0 +1,40 @@
+
+Running 1 test using 1 worker
+
+(node:37293) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 [theme-studio] › tests/browser/theme-ui-review.spec.ts:6:13 › configured selector keyboard scrolling › brand activity stays visible at 768px in light (23.1s)
+
+
+  1) [theme-studio] › tests/browser/theme-ui-review.spec.ts:6:13 › configured selector keyboard scrolling › brand activity stays visible at 768px in light
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+    Call Log:
+    - Timeout 15000ms exceeded while waiting on the predicate
+
+      33 |                     const top = bounds.top + element.clientTop;
+      34 |                     return active.top >= top - 1 && active.bottom <= top + element.clientHeight + 1;
+    > 35 |                 })).toBe(true);
+         |                     ^
+      36 |                 expect(await editor.evaluate(element => element.scrollTop)).toBe(editorScroll);
+      37 |             };
+      38 |             await checkActivity();
+        at checkActivity (/Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser/theme-ui-review.spec.ts:35:21)
+        at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser/theme-ui-review.spec.ts:38:19
+
+    Error Context: test-results/r6-red-studio/theme-ui-review-configured-ad35b-s-visible-at-768px-in-light-theme-studio/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/r6-red-studio/theme-ui-review-configured-ad35b-s-visible-at-768px-in-light-theme-studio/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/r6-red-studio/theme-ui-review-configured-ad35b-s-visible-at-768px-in-light-theme-studio/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [theme-studio] › tests/browser/theme-ui-review.spec.ts:6:13 › configured selector keyboard scrolling › brand activity stays visible at 768px in light

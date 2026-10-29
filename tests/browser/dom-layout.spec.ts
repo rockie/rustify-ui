@@ -55,6 +55,37 @@ test.beforeEach(async ({ page }) => {
     await expect(sample(page, "layout-body")).toBeVisible();
 });
 
+for (const width of [1280, 390]) {
+    test(`Code ghost keeps neutral foreground and explicit gray roles at ${width}px`, async ({ page }) => {
+        await page.setViewportSize({ width, height: 900 });
+        const matrix = sample(page, "type-code-matrix");
+        const neutral = await root(page).evaluate(element => {
+            const style = document.createElement("span").style;
+            style.color = getComputedStyle(element).getPropertyValue("--foreground");
+            return style.color;
+        });
+        const color = (selector: string) => matrix.locator(selector).evaluate(element => getComputedStyle(element).color);
+        const ghost = '.rustify-code[data-variant="ghost"]';
+        expect(await color(`${ghost}[data-color="indigo"]:not([data-high-contrast])`)).toBe(neutral);
+        expect(await color(`${ghost}[data-color="indigo"][data-high-contrast]`)).toBe(neutral);
+        expect(await color(`${ghost}[data-color="gray"]:not([data-high-contrast])`)).toBe(
+            await color('.rustify-code[data-variant="soft"][data-color="gray"]:not([data-high-contrast])'));
+        expect(await color(`${ghost}[data-color="gray"][data-high-contrast]`)).toBe(
+            await color('.rustify-code[data-variant="outline"][data-color="gray"][data-high-contrast]'));
+        const plain = await matrix.locator(`${ghost}:not([data-color])`).evaluateAll(elements => elements.map(element => getComputedStyle(element).color));
+        expect(plain).toHaveLength(9);
+        expect(plain.every(color => color === neutral)).toBe(true);
+        const surfaces = await matrix.locator(ghost).evaluateAll(elements => elements.map(element => {
+            const css = getComputedStyle(element);
+            return [css.backgroundColor, css.boxShadow, css.borderStyle];
+        }));
+        expect(surfaces.every(([background, shadow, border]) => background === "rgba(0, 0, 0, 0)" && shadow === "none" && border === "none")).toBe(true);
+        for (const variant of ["solid", "soft", "outline"]) {
+            expect(await color(`.rustify-code[data-variant="${variant}"][data-color="indigo"]:not([data-high-contrast])`)).not.toBe(neutral);
+        }
+    });
+}
+
 test.afterEach(async ({ page }) => {
     const state = evidence.get(page);
     if (!state) return;

@@ -69,7 +69,7 @@
     color: inherit;
   }
 
-  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-code[data-variant="ghost"][data-color]) {
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-code[data-variant="ghost"][data-color="gray"]) {
     color: var(--rustify-component-color-a11, var(--primary));
   }
 
@@ -90,6 +90,10 @@
 
   :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-code[data-high-contrast]) {
     color: var(--rustify-component-color-12, var(--foreground));
+  }
+
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-code[data-variant="ghost"]:not([data-color="gray"])) {
+    color: var(--foreground);
   }
 
   :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-code[data-variant="outline"][data-high-contrast]) {

@@ -1,5 +1,70 @@
 import { test, expect, waitForReady } from "./support";
 
+test.describe("configured selector keyboard scrolling", () => {
+    test.use({ fresh: true });
+    for (const [width, height, mode] of [[768, 1024, "light"], [390, 844, "light"], [1440, 900, "dark"]] as const) {
+        test(`brand activity stays visible at ${width}px in ${mode}`, async ({ page }) => {
+            await page.setViewportSize({ width, height });
+            await waitForReady(page);
+            await page.getByTestId("preset-search").fill("Graphite");
+            await page.getByTestId("preset-select").click();
+            await page.getByRole("option", { name: "Built-in · Graphite", exact: true }).click();
+            for (const [field, name] of [["accent_color", "Pink"], ["gray_color", "Auto"]]) {
+                await page.getByTestId(`studio-config-${field}`).click();
+                await page.getByRole("option", { name, exact: true }).click();
+            }
+            if (mode === "dark") await page.getByTestId("mode-dark").click();
+            const trigger = page.getByTestId("studio-config-accent_color");
+            await trigger.focus();
+            await page.keyboard.press("Shift+Tab");
+            await page.keyboard.press("Tab");
+            await expect(trigger).toBeFocused();
+            await page.keyboard.press("Enter");
+            const list = page.getByTestId("studio-config-accent_color-list");
+            await expect(list).toBeFocused();
+            const editor = page.locator("#studio-editor");
+            const editorScroll = await editor.evaluate(element => element.scrollTop);
+            const checkActivity = async () => {
+                await expect.poll(() => list.evaluate(element => {
+                    const row = document.getElementById(element.getAttribute("aria-activedescendant")!);
+                    if (!row || row.dataset.active !== "true") return false;
+                    const bounds = element.getBoundingClientRect();
+                    const active = row.getBoundingClientRect();
+                    const top = bounds.top + element.clientTop;
+                    return active.top >= top - 1 && active.bottom <= top + element.clientHeight + 1;
+                })).toBe(true);
+                expect(await editor.evaluate(element => element.scrollTop)).toBe(editorScroll);
+            };
+            await checkActivity();
+            await expect(list.getByRole("option", { selected: true })).toHaveText("Pink");
+            await page.keyboard.press("ArrowDown");
+            await checkActivity();
+            await expect(list.locator('[data-active="true"]')).toHaveText("Plum");
+            await expect(list.getByRole("option", { selected: true })).toHaveText("Pink");
+            await page.keyboard.press("Enter");
+            await expect(trigger).toBeFocused();
+            await expect(trigger).toHaveText("Plum");
+            await page.keyboard.press("Enter");
+            await expect(list).toBeFocused();
+            await checkActivity();
+            for (const direction of ["ArrowDown", "ArrowUp"]) {
+                for (let step = 0; step < 28; step++) {
+                    await page.keyboard.press(direction);
+                    await checkActivity();
+                }
+            }
+            for (const key of ["Home", "ArrowUp", "End", "ArrowDown"]) {
+                await page.keyboard.press(key);
+                await checkActivity();
+            }
+            await page.keyboard.press("Escape");
+            await expect(list).not.toBeVisible();
+            await expect(trigger).toBeFocused();
+            await expect(trigger).toHaveText("Plum");
+        });
+    }
+});
+
 test.describe("dialog selector keyboard focus", () => {
     test.use({ fresh: true });
     for (const width of [1440, 390]) {

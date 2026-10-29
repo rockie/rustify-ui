@@ -1,0 +1,32 @@
+{
+  "observed_at": "2026-10-29T09:44:34+08:00",
+  "validation_baseline": "dirty@d7ff86ce2111991f0a4e0b0ea3e131cb4a6bea03",
+  "branch": "main",
+  "files_sha256": {
+    "crates/rustify-components/src/select.rs": "6328c0aa0fb87730d99e0affcc6f42b332efcc176e8bcefb1f2f423506062526",
+    "crates/rustify-components/css/typography.css": "f2612d51b3310f8556ad065bd6d7b33448fc1c988ef0a1296e77ec732b883d77",
+    "crates/rustify-components/css/rustify.css": "df940647446934b3af458c9e29800ffcc88ea070b7519931d297dbd64410a7b5",
+    "tests/browser/theme-ui-review.spec.ts": "5d6157b1b7ec9373289fe0f91a8c6810f51cd4fa44d0e2fb7312737e94f197dc",
+    "tests/browser/dom-layout.spec.ts": "e0c1c2598282b85aa371443360bba439bf349de6cfdd1621d13c7d11215cb699"
+  },
+  "report_sha256": "a1386f3083a7effd09eb0f5de35d7dfdf004214dc5f4a6b5ac98800642624524",
+  "target_sha256": "056e8000993784c074355f85dbea8c66e08f7f3845b8bb711f0102d8bf42d0db",
+  "release": {
+    "theme-studio": {
+      "build_id": "7b556624f53e8a55",
+      "manifest_sha256": "3d9886c905156f9fbd7164dbf5ab725e4e335ad601703d93fd8eef68ad2200f7",
+      "wasm_size": 9911200,
+      "css_size": 125630
+    },
+    "component-catalog": {
+      "build_id": "18ca82701d674efd",
+      "manifest_sha256": "aa50048e1e2855957bfaa2aff803ad52afa8a9cb49d91ceae1d9ed2a94a980a7",
+      "wasm_size": 8206335,
+      "css_size": 83823
+    }
+  },
+  "initial_worktree_check": {
+    "files": 1586,
+    "changed_before_sdlc_writeback": []
+  }
+}

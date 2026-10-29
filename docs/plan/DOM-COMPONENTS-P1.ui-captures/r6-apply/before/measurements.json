@@ -1,0 +1,753 @@
+{
+  "time": "2026-10-29T01:35:41.478Z",
+  "phase": "before",
+  "browser": "153.0.8010.12",
+  "sessions": [
+    {
+      "url": "http://127.0.0.1:4181/",
+      "width": 768,
+      "height": 1024,
+      "errors": [],
+      "consoleErrors": [],
+      "failedRequests": [],
+      "httpErrors": [],
+      "build": "dff085ce38bbff64",
+      "open": {
+        "active": "Pink",
+        "id": "rui-select-29-option-pink",
+        "activeFlag": "true",
+        "selected": "true",
+        "color": "rgb(239, 248, 255)",
+        "scrollTop": 0,
+        "scrollHeight": 872,
+        "clientHeight": 254,
+        "list": {
+          "x": 16,
+          "y": 574.5,
+          "width": 287,
+          "height": 256
+        },
+        "row": {
+          "top": 963.5,
+          "bottom": 995.5
+        },
+        "fullyVisible": false
+      },
+      "down": {
+        "active": "Plum",
+        "id": "rui-select-29-option-plum",
+        "activeFlag": "true",
+        "selected": "false",
+        "color": "rgba(0, 0, 0, 0)",
+        "scrollTop": 0,
+        "scrollHeight": 872,
+        "clientHeight": 254,
+        "list": {
+          "x": 16,
+          "y": 574.5,
+          "width": 287,
+          "height": 256
+        },
+        "row": {
+          "top": 995.5,
+          "bottom": 1027.5
+        },
+        "fullyVisible": false
+      },
+      "confirmed": "Pink",
+      "escapeFocus": true,
+      "afterEscape": "Pink",
+      "csp": []
+    },
+    {
+      "url": "http://127.0.0.1:4181/",
+      "width": 390,
+      "height": 844,
+      "errors": [],
+      "consoleErrors": [],
+      "failedRequests": [],
+      "httpErrors": [],
+      "build": "dff085ce38bbff64",
+      "open": {
+        "active": "Pink",
+        "id": "rui-select-29-option-pink",
+        "activeFlag": "true",
+        "selected": "true",
+        "color": "rgb(239, 248, 255)",
+        "scrollTop": 0,
+        "scrollHeight": 872,
+        "clientHeight": 254,
+        "list": {
+          "x": 16,
+          "y": 352.234375,
+          "width": 358,
+          "height": 256
+        },
+        "row": {
+          "top": 741.234375,
+          "bottom": 773.234375
+        },
+        "fullyVisible": false
+      },
+      "down": {
+        "active": "Plum",
+        "id": "rui-select-29-option-plum",
+        "activeFlag": "true",
+        "selected": "false",
+        "color": "rgba(0, 0, 0, 0)",
+        "scrollTop": 0,
+        "scrollHeight": 872,
+        "clientHeight": 254,
+        "list": {
+          "x": 16,
+          "y": 352.234375,
+          "width": 358,
+          "height": 256
+        },
+        "row": {
+          "top": 773.234375,
+          "bottom": 805.234375
+        },
+        "fullyVisible": false
+      },
+      "confirmed": "Pink",
+      "escapeFocus": true,
+      "afterEscape": "Plum",
+      "csp": []
+    },
+    {
+      "url": "http://127.0.0.1:4181/",
+      "width": 1440,
+      "height": 900,
+      "errors": [],
+      "consoleErrors": [],
+      "failedRequests": [],
+      "httpErrors": [],
+      "build": "dff085ce38bbff64",
+      "open": {
+        "active": "Pink",
+        "id": "rui-select-29-option-pink",
+        "activeFlag": "true",
+        "selected": "true",
+        "color": "rgb(239, 248, 255)",
+        "scrollTop": 0,
+        "scrollHeight": 872,
+        "clientHeight": 254,
+        "list": {
+          "x": 20,
+          "y": 497.3125,
+          "width": 279,
+          "height": 256
+        },
+        "row": {
+          "top": 886.3125,
+          "bottom": 918.3125
+        },
+        "fullyVisible": false
+      },
+      "down": {
+        "active": "Plum",
+        "id": "rui-select-29-option-plum",
+        "activeFlag": "true",
+        "selected": "false",
+        "color": "rgba(0, 0, 0, 0)",
+        "scrollTop": 0,
+        "scrollHeight": 872,
+        "clientHeight": 254,
+        "list": {
+          "x": 20,
+          "y": 497.3125,
+          "width": 279,
+          "height": 256
+        },
+        "row": {
+          "top": 918.3125,
+          "bottom": 950.3125
+        },
+        "fullyVisible": false
+      },
+      "confirmed": "Pink",
+      "escapeFocus": true,
+      "afterEscape": "Plum",
+      "csp": []
+    },
+    {
+      "url": "http://127.0.0.1:4176/",
+      "width": 1280,
+      "height": 900,
+      "errors": [],
+      "consoleErrors": [],
+      "failedRequests": [],
+      "httpErrors": [],
+      "build": "32b52b66f04701ad",
+      "code": [
+        {
+          "variant": "solid",
+          "color": "indigo",
+          "highContrast": false,
+          "text": "console.log()",
+          "foreground": "rgb(255, 255, 255)",
+          "background": "rgba(0, 49, 210, 0.757)",
+          "shadow": "none",
+          "border": "none",
+          "fontSize": "13.5375px"
+        },
+        {
+          "variant": "solid",
+          "color": "indigo",
+          "highContrast": true,
+          "text": "console.log()",
+          "foreground": "rgb(253, 253, 254)",
+          "background": "rgb(31, 45, 92)",
+          "shadow": "none",
+          "border": "none",
+          "fontSize": "13.5375px"
+        },
+        {
+          "variant": "solid",
+          "color": "gray",
+          "highContrast": false,
+          "text": "console.log()",
+          "foreground": "rgb(255, 255, 255)",
+          "background": "rgba(0, 0, 0, 0.447)",
+          "shadow": "none",
+          "border": "none",
+          "fontSize": "13.5375px"
+        },
+        {
+          "variant": "solid",
+          "color": "gray",
+          "highContrast": true,
+          "text": "console.log()",
+          "foreground": "rgb(252, 252, 252)",
+          "background": "rgb(32, 32, 32)",
+          "shadow": "none",
+          "border": "none",
+          "fontSize": "13.5375px"
+        },
+        {
+          "variant": "soft",
+          "color": "indigo",
+          "highContrast": false,
+          "text": "console.log()",
+          "foreground": "rgba(0, 43, 183, 0.773)",
+          "background": "rgba(0, 71, 241, 0.07)",
+          "shadow": "none",
+          "border": "none",
+          "fontSize": "13.5375px"
+        },
+        {
+          "variant": "soft",
+          "color": "indigo",
+          "highContrast": true,
+          "text": "console.log()",
+          "foreground": "rgb(31, 45, 92)",
+          "background": "rgba(0, 71, 241, 0.07)",
+          "shadow": "none",
+          "border": "none",
+          "fontSize": "13.5375px"
+        },
+        {
+          "variant": "soft",
+          "color": "gray",
+          "highContrast": false,
+          "text": "console.log()",
+          "foreground": "rgba(0, 0, 0, 0.608)",
+          "background": "rgba(0, 0, 0, 0.06)",
+          "shadow": "none",
+          "border": "none",
+          "fontSize": "13.5375px"
+        },
+        {
+          "variant": "soft",
+          "color": "gray",
+          "highContrast": true,
+          "text": "console.log()",
+          "foreground": "rgb(32, 32, 32)",
+          "background": "rgba(0, 0, 0, 0.06)",
+          "shadow": "none",
+          "border": "none",
+          "fontSize": "13.5375px"
+        },
+        {
+          "variant": "outline",
+          "color": "indigo",
+          "highContrast": false,
+          "text": "console.log()",
+          "foreground": "rgba(0, 43, 183, 0.773)",
+          "background": "rgba(0, 0, 0, 0)",
+          "shadow": "rgba(0, 52, 220, 0.447) 0px 0px 0px 1px inset",
+          "border": "none",
+          "fontSize": "13.5375px"
+        },
+        {
+          "variant": "outline",
+          "color": "indigo",
+          "highContrast": true,
+          "text": "console.log()",
+          "foreground": "rgb(31, 45, 92)",
+          "background": "rgba(0, 0, 0, 0)",
+          "shadow": "rgba(0, 55, 237, 0.33) 0px 0px 0px 1px inset, rgba(0, 7, 20, 0.624) 0px 0px 0px 1px inset",
+          "border": "none",
+          "fontSize": "13.5375px"
+        },
+        {
+          "variant": "outline",
+          "color": "gray",
+          "highContrast": false,
+          "text": "console.log()",
+          "foreground": "rgba(0, 0, 0, 0.608)",
+          "background": "rgba(0, 0, 0, 0)",
+          "shadow": "rgba(0, 0, 0, 0.267) 0px 0px 0px 1px inset",
+          "border": "none",
+          "fontSize": "13.5375px"
+        },
+        {
+          "variant": "outline",
+          "color": "gray",
+          "highContrast": true,
+          "text": "console.log()",
+          "foreground": "rgb(32, 32, 32)",
+          "background": "rgba(0, 0, 0, 0)",
+          "shadow": "rgba(0, 0, 0, 0.192) 0px 0px 0px 1px inset, rgba(0, 7, 20, 0.624) 0px 0px 0px 1px inset",
+          "border": "none",
+          "fontSize": "13.5375px"
+        },
+        {
+          "variant": "ghost",
+          "color": "indigo",
+          "highContrast": false,
+          "text": "console.log()",
+          "foreground": "rgba(0, 43, 183, 0.773)",
+          "background": "rgba(0, 0, 0, 0)",
+          "shadow": "none",
+          "border": "none",
+          "fontSize": "14.25px"
+        },
+        {
+          "variant": "ghost",
+          "color": "indigo",
+          "highContrast": true,
+          "text": "console.log()",
+          "foreground": "rgb(31, 45, 92)",
+          "background": "rgba(0, 0, 0, 0)",
+          "shadow": "none",
+          "border": "none",
+          "fontSize": "14.25px"
+        },
+        {
+          "variant": "ghost",
+          "color": "gray",
+          "highContrast": false,
+          "text": "console.log()",
+          "foreground": "rgba(0, 0, 0, 0.608)",
+          "background": "rgba(0, 0, 0, 0)",
+          "shadow": "none",
+          "border": "none",
+          "fontSize": "14.25px"
+        },
+        {
+          "variant": "ghost",
+          "color": "gray",
+          "highContrast": true,
+          "text": "console.log()",
+          "foreground": "rgb(32, 32, 32)",
+          "background": "rgba(0, 0, 0, 0)",
+          "shadow": "none",
+          "border": "none",
+          "fontSize": "14.25px"
+        },
+        {
+          "variant": "soft",
+          "highContrast": false,
+          "text": "code",
+          "foreground": "rgba(0, 43, 183, 0.773)",
+          "background": "rgba(0, 71, 241, 0.07)",
+          "shadow": "none",
+          "border": "none",
+          "fontSize": "13.5375px"
+        },
+        {
+          "variant": "ghost",
+          "highContrast": false,
+          "text": "The quick brown fox jumped",
+          "foreground": "rgb(28, 32, 36)",
+          "background": "rgba(0, 0, 0, 0)",
+          "shadow": "none",
+          "border": "none",
+          "fontSize": "57px"
+        },
+        {
+          "variant": "ghost",
+          "highContrast": false,
+          "text": "The quick brown fox jumped",
+          "foreground": "rgb(28, 32, 36)",
+          "background": "rgba(0, 0, 0, 0)",
+          "shadow": "none",
+          "border": "none",
+          "fontSize": "33.25px"
+        },
+        {
+          "variant": "ghost",
+          "highContrast": false,
+          "text": "The quick brown fox jumped",
+          "foreground": "rgb(28, 32, 36)",
+          "background": "rgba(0, 0, 0, 0)",
+          "shadow": "none",
+          "border": "none",
+          "fontSize": "26.6px"
+        },
+        {
+          "variant": "ghost",
+          "highContrast": false,
+          "text": "The quick brown fox jumped",
+          "foreground": "rgb(28, 32, 36)",
+          "background": "rgba(0, 0, 0, 0)",
+          "shadow": "none",
+          "border": "none",
+          "fontSize": "22.8px"
+        },
+        {
+          "variant": "ghost",
+          "highContrast": false,
+          "text": "The quick brown fox jumped",
+          "foreground": "rgb(28, 32, 36)",
+          "background": "rgba(0, 0, 0, 0)",
+          "shadow": "none",
+          "border": "none",
+          "fontSize": "19px"
+        },
+        {
+          "variant": "ghost",
+          "highContrast": false,
+          "text": "The quick brown fox jumped",
+          "foreground": "rgb(28, 32, 36)",
+          "background": "rgba(0, 0, 0, 0)",
+          "shadow": "none",
+          "border": "none",
+          "fontSize": "17.1px"
+        },
+        {
+          "variant": "ghost",
+          "highContrast": false,
+          "text": "The quick brown fox jumped",
+          "foreground": "rgb(28, 32, 36)",
+          "background": "rgba(0, 0, 0, 0)",
+          "shadow": "none",
+          "border": "none",
+          "fontSize": "15.2px"
+        },
+        {
+          "variant": "ghost",
+          "highContrast": false,
+          "text": "The quick brown fox jumped",
+          "foreground": "rgb(28, 32, 36)",
+          "background": "rgba(0, 0, 0, 0)",
+          "shadow": "none",
+          "border": "none",
+          "fontSize": "13.3px"
+        },
+        {
+          "variant": "ghost",
+          "highContrast": false,
+          "text": "The quick brown fox jumped",
+          "foreground": "rgb(28, 32, 36)",
+          "background": "rgba(0, 0, 0, 0)",
+          "shadow": "none",
+          "border": "none",
+          "fontSize": "11.4px"
+        }
+      ],
+      "csp": []
+    },
+    {
+      "url": "http://127.0.0.1:4176/",
+      "width": 390,
+      "height": 844,
+      "errors": [],
+      "consoleErrors": [],
+      "failedRequests": [],
+      "httpErrors": [],
+      "build": "32b52b66f04701ad",
+      "code": [
+        {
+          "variant": "solid",
+          "color": "indigo",
+          "highContrast": false,
+          "text": "console.log()",
+          "foreground": "rgb(255, 255, 255)",
+          "background": "rgba(0, 49, 210, 0.757)",
+          "shadow": "none",
+          "border": "none",
+          "fontSize": "13.5375px"
+        },
+        {
+          "variant": "solid",
+          "color": "indigo",
+          "highContrast": true,
+          "text": "console.log()",
+          "foreground": "rgb(253, 253, 254)",
+          "background": "rgb(31, 45, 92)",
+          "shadow": "none",
+          "border": "none",
+          "fontSize": "13.5375px"
+        },
+        {
+          "variant": "solid",
+          "color": "gray",
+          "highContrast": false,
+          "text": "console.log()",
+          "foreground": "rgb(255, 255, 255)",
+          "background": "rgba(0, 0, 0, 0.447)",
+          "shadow": "none",
+          "border": "none",
+          "fontSize": "13.5375px"
+        },
+        {
+          "variant": "solid",
+          "color": "gray",
+          "highContrast": true,
+          "text": "console.log()",
+          "foreground": "rgb(252, 252, 252)",
+          "background": "rgb(32, 32, 32)",
+          "shadow": "none",
+          "border": "none",
+          "fontSize": "13.5375px"
+        },
+        {
+          "variant": "soft",
+          "color": "indigo",
+          "highContrast": false,
+          "text": "console.log()",
+          "foreground": "rgba(0, 43, 183, 0.773)",
+          "background": "rgba(0, 71, 241, 0.07)",
+          "shadow": "none",
+          "border": "none",
+          "fontSize": "13.5375px"
+        },
+        {
+          "variant": "soft",
+          "color": "indigo",
+          "highContrast": true,
+          "text": "console.log()",
+          "foreground": "rgb(31, 45, 92)",
+          "background": "rgba(0, 71, 241, 0.07)",
+          "shadow": "none",
+          "border": "none",
+          "fontSize": "13.5375px"
+        },
+        {
+          "variant": "soft",
+          "color": "gray",
+          "highContrast": false,
+          "text": "console.log()",
+          "foreground": "rgba(0, 0, 0, 0.608)",
+          "background": "rgba(0, 0, 0, 0.06)",
+          "shadow": "none",
+          "border": "none",
+          "fontSize": "13.5375px"
+        },
+        {
+          "variant": "soft",
+          "color": "gray",
+          "highContrast": true,
+          "text": "console.log()",
+          "foreground": "rgb(32, 32, 32)",
+          "background": "rgba(0, 0, 0, 0.06)",
+          "shadow": "none",
+          "border": "none",
+          "fontSize": "13.5375px"
+        },
+        {
+          "variant": "outline",
+          "color": "indigo",
+          "highContrast": false,
+          "text": "console.log()",
+          "foreground": "rgba(0, 43, 183, 0.773)",
+          "background": "rgba(0, 0, 0, 0)",
+          "shadow": "rgba(0, 52, 220, 0.447) 0px 0px 0px 1px inset",
+          "border": "none",
+          "fontSize": "13.5375px"
+        },
+        {
+          "variant": "outline",
+          "color": "indigo",
+          "highContrast": true,
+          "text": "console.log()",
+          "foreground": "rgb(31, 45, 92)",
+          "background": "rgba(0, 0, 0, 0)",
+          "shadow": "rgba(0, 55, 237, 0.33) 0px 0px 0px 1px inset, rgba(0, 7, 20, 0.624) 0px 0px 0px 1px inset",
+          "border": "none",
+          "fontSize": "13.5375px"
+        },
+        {
+          "variant": "outline",
+          "color": "gray",
+          "highContrast": false,
+          "text": "console.log()",
+          "foreground": "rgba(0, 0, 0, 0.608)",
+          "background": "rgba(0, 0, 0, 0)",
+          "shadow": "rgba(0, 0, 0, 0.267) 0px 0px 0px 1px inset",
+          "border": "none",
+          "fontSize": "13.5375px"
+        },
+        {
+          "variant": "outline",
+          "color": "gray",
+          "highContrast": true,
+          "text": "console.log()",
+          "foreground": "rgb(32, 32, 32)",
+          "background": "rgba(0, 0, 0, 0)",
+          "shadow": "rgba(0, 0, 0, 0.192) 0px 0px 0px 1px inset, rgba(0, 7, 20, 0.624) 0px 0px 0px 1px inset",
+          "border": "none",
+          "fontSize": "13.5375px"
+        },
+        {
+          "variant": "ghost",
+          "color": "indigo",
+          "highContrast": false,
+          "text": "console.log()",
+          "foreground": "rgba(0, 43, 183, 0.773)",
+          "background": "rgba(0, 0, 0, 0)",
+          "shadow": "none",
+          "border": "none",
+          "fontSize": "14.25px"
+        },
+        {
+          "variant": "ghost",
+          "color": "indigo",
+          "highContrast": true,
+          "text": "console.log()",
+          "foreground": "rgb(31, 45, 92)",
+          "background": "rgba(0, 0, 0, 0)",
+          "shadow": "none",
+          "border": "none",
+          "fontSize": "14.25px"
+        },
+        {
+          "variant": "ghost",
+          "color": "gray",
+          "highContrast": false,
+          "text": "console.log()",
+          "foreground": "rgba(0, 0, 0, 0.608)",
+          "background": "rgba(0, 0, 0, 0)",
+          "shadow": "none",
+          "border": "none",
+          "fontSize": "14.25px"
+        },
+        {
+          "variant": "ghost",
+          "color": "gray",
+          "highContrast": true,
+          "text": "console.log()",
+          "foreground": "rgb(32, 32, 32)",
+          "background": "rgba(0, 0, 0, 0)",
+          "shadow": "none",
+          "border": "none",
+          "fontSize": "14.25px"
+        },
+        {
+          "variant": "soft",
+          "highContrast": false,
+          "text": "code",
+          "foreground": "rgba(0, 43, 183, 0.773)",
+          "background": "rgba(0, 71, 241, 0.07)",
+          "shadow": "none",
+          "border": "none",
+          "fontSize": "13.5375px"
+        },
+        {
+          "variant": "ghost",
+          "highContrast": false,
+          "text": "The quick brown fox jumped",
+          "foreground": "rgb(28, 32, 36)",
+          "background": "rgba(0, 0, 0, 0)",
+          "shadow": "none",
+          "border": "none",
+          "fontSize": "57px"
+        },
+        {
+          "variant": "ghost",
+          "highContrast": false,
+          "text": "The quick brown fox jumped",
+          "foreground": "rgb(28, 32, 36)",
+          "background": "rgba(0, 0, 0, 0)",
+          "shadow": "none",
+          "border": "none",
+          "fontSize": "33.25px"
+        },
+        {
+          "variant": "ghost",
+          "highContrast": false,
+          "text": "The quick brown fox jumped",
+          "foreground": "rgb(28, 32, 36)",
+          "background": "rgba(0, 0, 0, 0)",
+          "shadow": "none",
+          "border": "none",
+          "fontSize": "26.6px"
+        },
+        {
+          "variant": "ghost",
+          "highContrast": false,
+          "text": "The quick brown fox jumped",
+          "foreground": "rgb(28, 32, 36)",
+          "background": "rgba(0, 0, 0, 0)",
+          "shadow": "none",
+          "border": "none",
+          "fontSize": "22.8px"
+        },
+        {
+          "variant": "ghost",
+          "highContrast": false,
+          "text": "The quick brown fox jumped",
+          "foreground": "rgb(28, 32, 36)",
+          "background": "rgba(0, 0, 0, 0)",
+          "shadow": "none",
+          "border": "none",
+          "fontSize": "19px"
+        },
+        {
+          "variant": "ghost",
+          "highContrast": false,
+          "text": "The quick brown fox jumped",
+          "foreground": "rgb(28, 32, 36)",
+          "background": "rgba(0, 0, 0, 0)",
+          "shadow": "none",
+          "border": "none",
+          "fontSize": "17.1px"
+        },
+        {
+          "variant": "ghost",
+          "highContrast": false,
+          "text": "The quick brown fox jumped",
+          "foreground": "rgb(28, 32, 36)",
+          "background": "rgba(0, 0, 0, 0)",
+          "shadow": "none",
+          "border": "none",
+          "fontSize": "15.2px"
+        },
+        {
+          "variant": "ghost",
+          "highContrast": false,
+          "text": "The quick brown fox jumped",
+          "foreground": "rgb(28, 32, 36)",
+          "background": "rgba(0, 0, 0, 0)",
+          "shadow": "none",
+          "border": "none",
+          "fontSize": "13.3px"
+        },
+        {
+          "variant": "ghost",
+          "highContrast": false,
+          "text": "The quick brown fox jumped",
+          "foreground": "rgb(28, 32, 36)",
+          "background": "rgba(0, 0, 0, 0)",
+          "shadow": "none",
+          "border": "none",
+          "fontSize": "11.4px"
+        }
+      ],
+      "csp": []
+    }
+  ]
+}

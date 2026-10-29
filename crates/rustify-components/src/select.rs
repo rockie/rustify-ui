@@ -141,6 +141,31 @@ pub fn Select(
         }
     });
 
+    // Move only the list's scrollport, keeping the editor and anchor in place.
+    #[cfg(target_arch = "wasm32")]
+    Effect::new(move || {
+        let active = active.get();
+        if !open.get() {
+            return;
+        }
+        let Some(list) = list.get() else { return };
+        let Some(option) = list
+            .owner_document()
+            .and_then(|document| document.get_element_by_id(&option_id(&active)))
+        else {
+            return;
+        };
+        let row = option.get_bounding_client_rect();
+        let top = row.top() - list.get_bounding_client_rect().top() - f64::from(list.client_top());
+        let bottom = top + row.height();
+        let height = f64::from(list.client_height());
+        if top < 0.0 {
+            list.scroll_by_with_x_and_y(0.0, top);
+        } else if bottom > height {
+            list.scroll_by_with_x_and_y(0.0, bottom - height);
+        }
+    });
+
     let on_trigger_key = move |ev: KeyboardEvent| {
         if disabled.get_untracked() {
             return;

@@ -1,0 +1,36 @@
+
+Running 1 test using 1 worker
+
+(node:37924) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 [component-catalog] › tests/browser/dom-layout.spec.ts:59:9 › Code ghost keeps neutral foreground and explicit gray roles at 1280px (10.8s)
+
+
+  1) [component-catalog] › tests/browser/dom-layout.spec.ts:59:9 › Code ghost keeps neutral foreground and explicit gray roles at 1280px
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "rgb(29, 41, 57)"
+    Received: "rgba(0, 43, 183, 0.773)"
+
+      63 |         const color = (selector: string) => matrix.locator(selector).evaluate(element => getComputedStyle(element).color);
+      64 |         const ghost = '.rustify-code[data-variant="ghost"]';
+    > 65 |         expect(await color(`${ghost}[data-color="indigo"]:not([data-high-contrast])`)).toBe(neutral);
+         |                                                                                        ^
+      66 |         expect(await color(`${ghost}[data-color="indigo"][data-high-contrast]`)).toBe(neutral);
+      67 |         expect(await color(`${ghost}[data-color="gray"]:not([data-high-contrast])`)).toBe(
+      68 |             await color('.rustify-code[data-variant="soft"][data-color="gray"]:not([data-high-contrast])'));
+        at /Users/rockie/Documents/gh-rockie/rustify-ui/tests/browser/dom-layout.spec.ts:65:88
+
+    Error Context: test-results/r6-red-catalog/dom-layout-Code-ghost-keep-ff8e2-plicit-gray-roles-at-1280px-component-catalog/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/r6-red-catalog/dom-layout-Code-ghost-keep-ff8e2-plicit-gray-roles-at-1280px-component-catalog/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/r6-red-catalog/dom-layout-Code-ghost-keep-ff8e2-plicit-gray-roles-at-1280px-component-catalog/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [component-catalog] › tests/browser/dom-layout.spec.ts:59:9 › Code ghost keeps neutral foreground and explicit gray roles at 1280px
