@@ -552,3 +552,5 @@
 .data-tools .tools-diff-row {grid-template-columns:repeat(2,minmax(0,1fr));align-items:center;}
 .data-tools .tools-diff-row th:first-child {grid-column:1;}
 .data-tools .tools-diff-row .tools-diff-kind {grid-column:2;justify-self:start;}
+
+.tools-setup {white-space:pre-wrap;overflow-wrap:anywhere;font-family:inherit;}

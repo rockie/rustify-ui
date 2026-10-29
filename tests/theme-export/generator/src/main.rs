@@ -24,6 +24,13 @@ mod data_tools {
     pub fn current_rust_snippet() -> &'static str {
         rust_snippet()
     }
+    pub fn current_setup_notes(
+        document: &rustify_ui::theme::ThemeDocument,
+        context: &rustify_ui::theme::ResolveContext<'_>,
+        mode: rustify_ui::theme::ThemeMode,
+    ) -> Result<String, rustify_ui::theme::ThemeError> {
+        integration_notes(document, context, mode).map(|artifact| artifact.text)
+    }
     include!(concat!(
         env!("CARGO_MANIFEST_DIR"),
         "/../../../examples/theme-studio/src/data_tools.rs"
@@ -293,6 +300,10 @@ fn generate(site: &Path) -> Result<(), Box<dyn Error>> {
         data_tools::current_rust_snippet(),
     )?;
     write(&site.join("theme.rs"), data_tools::current_rust_snippet())?;
+    write(
+        &site.join("theme-setup.txt"),
+        data_tools::current_setup_notes(&documents[0], &context, ThemeMode::Light)?,
+    )?;
     let mut expectations = Vec::new();
     for document in &documents {
         for mode in [ThemeMode::Light, ThemeMode::Dark] {

@@ -225,7 +225,17 @@ Compile one Tailwind stylesheet for the application. Import the opt-in mapping a
 
 These paths are relative to a repository example's input. In another application, point them at its SDK source files and its own static class sources. Preflight remains an application choice. The mapping reads `--rustify-unit`, derived radius, font and shadow variables; it supplies no new theme values to the host page. Keep static complete class names such as `bg-card text-card-foreground p-4 rounded-lg shadow-lg` in the scanned sources.
 
-The following is the Rust snippet exported by the studio. Place the downloaded JSON file, theme.json, beside it. This exact snippet is compiled by the [independent consumer fixture](../tests/theme-export/README.md):
+The following is a simplified ordinary-provider example. Place the downloaded
+`theme.json` beside it. For the complete snippet, including
+`load_exported_theme_with_context` and `mount_exported_preview`, select **Rust
+integration** in Studio. The [independent consumer fixture](../tests/theme-export/README.md)
+compiles that complete exported snippet, rather than this simplified example.
+Download **setup notes** from any export format to retain the actual source
+revision, selected preview mode, host context, resolved font paths and licenses.
+JSON v2 requires the matching source SDK and CSS; only Docs consumers also need
+the source CLI from the same checkout. Published 0.2.1 cannot read complete v2.
+Static CSS consumption needs no wasm or CLI; compile Tailwind profiles through
+their Tailwind v4 build.
 
 ```rust
 use leptos::prelude::*;
@@ -262,11 +272,25 @@ pub fn mount_exported_theme(
 }
 ```
 
-The fixture deliberately uses a 16px root and no host motion preference. Replace those arguments with the current host environment in a dynamic application. Keep the returned `AppHandle` alive. Publish newly resolved `Arc<ResolvedTheme>` values through the signal when the mode or document changes; pass that same snapshot through typed GPU props.
+This simplified example uses a 16px root and no host motion preference. In a
+dynamic application, use the complete export's context-aware loader with the
+host environment. To match Studio's explicit preview, call
+`mount_exported_preview(container, config, ThemeMode::Light, &font_context(16., false))`,
+replacing Light, 16 and false with the mode and context in your setup notes.
+`container` is your application's `HtmlElement`; `config` is a `MountConfig`
+whose `base` is the actual deployment path (including any subpath). The ordinary
+`mount_exported_theme` honors authored appearance; explicit preview does not
+rewrite the document. Keep the returned `AppHandle` alive. Publish newly resolved `Arc<ResolvedTheme>` values through the signal when the mode or document changes; pass that same snapshot through typed GPU props.
 
 [ThemeScope](../crates/rustify-dom/src/theme/provider.rs#L89) claims the mounted scope root, writes its complete CSSOM projection and `data-theme`, and restores previous values on disposal. Use it inside an SDK `mount`; each independently mounted container can have its own mode. It does not write theme values to `documentElement` or `body`. A root may have one theme provider, including the legacy provider.
 
-[ThemeBoundary](../crates/rustify-dom/src/theme/provider.rs#L128) wraps children with a `Signal<ThemeValuePatch>`. It keeps the enclosing mode and re-resolves radius, typography and shadows from the outer snapshot plus the patch. An empty patch removes local values and restores inheritance. Validate a candidate with `ResolvedTheme::patched` before publishing it; an invalid boundary patch uses the enclosing theme and records a diagnostic. SDK overlay layers consume the effective theme where they were created, including boundary values; they do not need a separate theme provider.
+[ThemeBoundary](../crates/rustify-dom/src/theme/provider.rs) wraps children with a
+`Signal<ThemeBoundaryPatch>`. It supports independent light/dark value patches
+and local appearance, and re-resolves radius, typography and shadows from the
+outer theme sources plus the patch. An empty patch restores inheritance.
+Validate a candidate with `ResolvedTheme::with_boundary` before publishing it;
+an invalid patch uses the enclosing theme and records a diagnostic. For a
+mode-independent legacy `ThemeValuePatch`, explicitly adapt it with `.into()`. SDK overlay layers consume the effective theme where they were created, including boundary values; they do not need a separate theme provider.
 
 ## Fonts and GPU consumers
 

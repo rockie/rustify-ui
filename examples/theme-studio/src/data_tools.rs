@@ -289,7 +289,7 @@ fn export_artifact(
             export_json(document, context)?;
             Ok(ExportArtifact {
                 text: format!(
-                    "// Required source SDK, CSS and CLI revision: {}\n{}",
+                    "// Source SDK/CSS revision (source CLI only for Docs): {}\n{}",
                     env!("RUSTIFY_STUDIO_SOURCE_REVISION"),
                     rust_snippet()
                 ),
@@ -320,6 +320,86 @@ fn export_artifact(
         }
         _ => Err(error("format", "choose JSON, CSS or Rust")),
     }
+}
+
+fn preview_call(context: &ResolveContext<'_>, mode: ThemeMode) -> String {
+    format!(
+        "mount_exported_preview(container, config, ThemeMode::{mode:?}, &font_context({:?}, {}))",
+        context.rem_px, context.reduce_motion
+    )
+    .replace(".0,", ".,")
+}
+
+fn integration_notes(
+    document: &ThemeDocument,
+    context: &ResolveContext<'_>,
+    preview_mode: ThemeMode,
+) -> Result<ExportArtifact, ThemeError> {
+    let mut text = format!(
+        "Rustify Theme setup / 主题接入说明\nSource revision / 源码修订: {}\n\n\
+        JSON v2 / Rust: use the SDK and CSS from this source checkout. Published 0.2.1 SDK/CLI reject complete v2 documents.\n\
+        JSON v2 / Rust：使用此修订的源码 SDK 与 CSS，已发布的 0.2.1 SDK/CLI 不支持完整 v2。\n\
+        Only for Docs / 仅 Docs 路径需要：build the source CLI from the same checkout / 从同一 checkout 构建源码 CLI：\n\
+        mbx build --locked -p rustify-docs-cli --profile docs-cli\n\
+        Docs author dependencies rustify-docs, rustify-dom and rustify-components must use canonical paths in that checkout.\n\
+        Docs 作者项目的上述三个依赖须使用同一 checkout 的规范路径。\n\n\
+        CSS: both resolved modes; static CSS needs no wasm or CLI. Compile Tailwind v4 exports with Tailwind 4.1.13.\n\
+        CSS：包含两模式解析结果；静态消费无需 wasm 或 CLI。Tailwind v4 输出使用 Tailwind 4.1.13 编译。\n\
+        Rustify scoped CSS: import sdk.css then theme-v4.css in one Tailwind input; mark the target with data-rustify-theme-css=\"{}\".\n\
+        Rustify 局部 CSS：在同一 Tailwind input 中依次导入 sdk.css、theme-v4.css，给目标添加上述标记。\n\
+        Scoped dark: data-theme=\"dark\"; Tailwind standard dark: .dark. CSS does not preserve author intent; keep JSON v2.\n\
+        局部深色使用 data-theme=\"dark\"，标准深色使用 .dark；CSS 不保留作者意图，请保留 JSON v2。\n\
+        Compatible JSON v1 is lossy; review its losses before using it. / 兼容 JSON v1 有损，使用前请核对损失。\n\n\
+        Preview / 当前预览: {preview_mode:?}; author appearance / 作者外观: {:?}\n\
+        Put theme.json beside the downloaded theme.rs. / 将 theme.json 放在下载的 theme.rs 旁边。\n\
+        {}\n\
+        container: your application's HtmlElement; config: MountConfig with a unique scope, url_owner and deployment base.\n\
+        container 是应用挂载节点；config 是 MountConfig，设置独立 scope、url_owner 和部署 base。\n\
+        Set MountConfig.base to your deployment path (e.g. /tools/demo/). Retain AppHandle while mounted.\n\
+        MountConfig.base 使用实际部署路径（如 /tools/demo/），挂载期间保持 AppHandle 存活。\n\
+        font_context uses the host rem size and motion preference; use load_exported_theme_with_context for a custom font resolver.\n\
+        font_context 使用宿主 rem 大小与动效偏好；自定义字体解析使用 load_exported_theme_with_context。\n\
+        mount_exported_theme honors author appearance; mount_exported_preview selects a mode without changing JSON/history.\n\
+        mount_exported_theme 遵守作者外观；mount_exported_preview 显式预览，不改 JSON 或历史。\n\n\
+        Fonts / 外部字体（requested / 请求 → resolved / 有效；resource / 资源）:\n",
+        env!("RUSTIFY_STUDIO_SOURCE_REVISION"),
+        document.id,
+        document.config.appearance,
+        preview_call(context, preview_mode),
+    );
+    let mut resources = BTreeSet::new();
+    for mode in [ThemeMode::Light, ThemeMode::Dark] {
+        let theme = rustify_ui::theme::resolve(document, mode, context)?;
+        for (slot, font) in ["sans", "serif", "mono"].into_iter().zip(&theme.fonts) {
+            text.push_str(&format!(
+                "{mode:?} {slot}: {} → {}; {}\n",
+                font.requested.join(", "),
+                font.family,
+                font.resource_path
+                    .as_deref()
+                    .unwrap_or("system / non-packaged font · 系统/非打包字体"),
+            ));
+            if let Some(path) = &font.resource_path {
+                resources.insert(path.clone());
+            }
+        }
+    }
+    if !resources.is_empty() {
+        for face in rustify_ui::theme::FONT_GLYPH_FALLBACKS {
+            resources.insert(face.resource_path.into());
+        }
+    }
+    text.push_str("\nCopy resources / 复制资源（deduplicated / 已去重）:\n");
+    for path in resources {
+        text.push_str(&format!("{path}\n"));
+    }
+    text.push_str("Font files are external; this download contains instructions, not fonts. Copy the listed files and distribute their original licenses.\n字体文件外置，本下载仅含说明；请复制所列文件并分发原许可。\nLicense source / 许可源文件: makepad/widgets/resources/FONT-LICENSES.md (in the source checkout, not a deployed URL / 位于源码 checkout，非部署 URL).\nFont URLs are relative to the deployed CSS file; preserve the resource paths or adjust URLs for your base/CDN.\n字体 URL 相对于部署后的 CSS 文件；保留资源路径或按实际 base/CDN 调整 URL。\nGuides / 指南: docs/themes.md, docs/dom-components-migration.md; full compiled consumer / 完整编译消费者: tests/theme-export/README.md.\n");
+    Ok(ExportArtifact {
+        text,
+        name: "theme-setup.txt",
+        mime: "text/plain",
+        losses: Vec::new(),
+    })
 }
 
 fn rust_snippet() -> &'static str {
@@ -1133,6 +1213,20 @@ mod browser {
                                 open=export_kind_open on_open_change=move |open| export_kind_open.set(open)
                                 on_change=move |kind| { export_kind.set(kind); feedback.set(Feedback::None); issue.set(String::new()); } test_id="export-kind" />
                         </div>
+                        <dl class="tools-summary" data-testid="export-setup-summary">
+                            <dt>{move || tr(locale.get(),"Source revision","源码修订")}</dt><dd><code>{env!("RUSTIFY_STUDIO_SOURCE_REVISION")}</code></dd>
+                            <dt>{move || tr(locale.get(),"Integration","接入方式")}</dt><dd>{move || if export_kind.get()=="css" {
+                                tr(locale.get(),"Two resolved modes. Static CSS needs no wasm or CLI; compile Tailwind profiles with Tailwind 4.1.13. New SDK components/source Docs need matching source assets.","两模式解析值。静态 CSS 无需 wasm 或 CLI；Tailwind 输出使用 Tailwind 4.1.13 编译。新 SDK 组件/源码 Docs 使用同源资产。")
+                            } else {
+                                tr(locale.get(),"JSON v2 / Rust require matching source SDK and CSS. Published 0.2.1 SDK/CLI reject complete v2. Compatible v1 is lossy; retain v2. Only Docs needs the source CLI from this checkout.","JSON v2 / Rust 需要匹配修订的源码 SDK 和 CSS。已发布的 0.2.1 SDK/CLI 不支持完整 v2。兼容 v1 有损，请保留 v2。仅 Docs 路径需要同一 checkout 的源码 CLI。")
+                            }}</dd>
+                            <dt>{move || tr(locale.get(),"External fonts","外部字体")}</dt><dd>{move || tr(locale.get(),"Copy the resolved font files and original licenses listed in the setup notes. This download contains instructions, not font files.","请按接入说明复制实际解析的字体文件及原许可。本下载仅含说明，不含字体文件。")}</dd>
+                        </dl>
+                        <details data-testid="export-setup-details">
+                            <summary>{move || tr(locale.get(),"Font resources and setup steps","字体资源与接入步骤")}</summary>
+                            <pre class="tools-status tools-setup" data-testid="export-setup-notes">{move || integration_notes(&document.get(), &context.get(), preview_mode.get()).map(|artifact|artifact.text).unwrap_or_else(|error|error.to_string())}</pre>
+                        </details>
+                        <p class="tools-status" data-testid="export-preview-mode">{move || tr(locale.get(),"To match this preview, call","匹配当前预览时调用")}" "<code>{move || preview_call(&context.get(), preview_mode.get())}</code>". "{move || tr(locale.get(),"container is your mount node; config is MountConfig with your deployment base. Ordinary mount_exported_theme honors author appearance.","container 是挂载节点，config 是包含部署 base 的 MountConfig。普通 mount_exported_theme 遵守作者外观。")}</p>
                         <Show when=move || export_kind.get()=="json-v1" fallback=|| ()>
                             <div class="tools-notice" data-testid="export-v1-losses" role="note">
                                 <p>{move || tr(locale.get(), "Review these losses before copying or downloading v1. It cannot restore the complete configured component appearance.", "复制或下载 v1 前请核对以下损失。v1 无法恢复配置后组件的完整外观。")}</p>
@@ -1158,10 +1252,8 @@ mod browser {
                             <p class="tools-status">{move ||tr(locale.get(),"CSS contains both resolved sRGB modes. Scoped dark selector:","CSS 包含 sRGB 下两种模式的解析结果。局部深色选择器：")}" "<code>"[data-theme=\"dark\"]"</code>"; "{move ||tr(locale.get(),"standard selector:","标准选择器：")}" "<code>".dark"</code>". "{move ||tr(locale.get(),"Author configuration remains in JSON. Copy the external font files and their licenses.","作者配置保留在 JSON 中。请复制外部字体文件及其许可。")}</p>
                         </Show>
                         <Show when=move || export_kind.get()=="rust" fallback=|| ()>
-                            <dl class="tools-summary"><dt>{move || tr(locale.get(),"Required source revision","所需源码修订")}</dt><dd><code>{env!("RUSTIFY_STUDIO_SOURCE_REVISION")}</code></dd></dl>
                             <p class="tools-status">{move ||tr(locale.get(),"Put","将")}" "<code>"theme.json"</code>" "{move ||tr(locale.get(),"next to","放在")}" "<code>"theme.rs"</code>{move ||tr(locale.get(),". "," 旁边。")}{move ||tr(locale.get(),"Use the matching source SDK and CSS; the published 0.2.1 SDK/CLI reject v2. Keep the returned","使用匹配的源码 SDK 和 CSS；已发布的 0.2.1 SDK/CLI 不支持 v2。UI 挂载期间须保持返回的")}" "<code>"AppHandle"</code>" "{move ||tr(locale.get(),"alive while the UI is mounted. Fonts remain external.","存活。字体仍使用外部资源。")}</p>
-                            <p class="tools-status">{move || tr(locale.get(),"Build the CLI from that revision:","从同一修订构建 CLI：")}" "<code>"mbx build --locked -p rustify-docs-cli --profile docs-cli"</code></p>
-                            <p class="tools-status" data-testid="export-preview-mode">{move || tr(locale.get(),"To match this preview, call","匹配当前预览时调用")}" "<code>{move ||format!("mount_exported_preview(ThemeMode::{:?}, &font_context({}, {}))",preview_mode.get(),if context.get().rem_px.fract()==0. {format!("{}.",context.get().rem_px)}else{context.get().rem_px.to_string()},context.get().reduce_motion)}</code></p>
+                            <p class="tools-status">{move || tr(locale.get(),"For Docs only, build the CLI from that revision:","仅 Docs 路径：从同一修订构建 CLI：")}" "<code>"mbx build --locked -p rustify-docs-cli --profile docs-cli"</code></p>
                             <Button variant=ButtonVariant::Outline on_click=move || match export_artifact(&document.get_untracked(),&context.get_untracked(),"json","scoped","rgb") {
                                 Ok(artifact) => download(&artifact,feedback,issue), Err(error) => issue.set(error.to_string())
                             } test_id="export-matching-json">{move || tr(locale.get(), "Download matching JSON", "下载配套 JSON")}</Button>
@@ -1185,6 +1277,9 @@ mod browser {
                             <Button variant=ButtonVariant::Outline disabled=Signal::derive(move || output.get().is_err())
                                 on_click=move || if let Ok(artifact)=output.get_untracked(){download(&artifact,feedback,issue);}
                                 test_id="export-download">{move || tr(locale.get(), "Download", "下载")}</Button>
+                            <Button variant=ButtonVariant::Outline on_click=move || match integration_notes(&document.get_untracked(), &context.get_untracked(), preview_mode.get_untracked()) {
+                                Ok(artifact) => download(&artifact,feedback,issue), Err(error) => issue.set(error.to_string())
+                            } test_id="export-setup-download">{move || tr(locale.get(), "Download setup notes", "下载接入说明")}</Button>
                             <p class="tools-status tools-feedback" role="status" data-testid="export-feedback" data-feedback=move || match feedback.get(){Feedback::Copied|Feedback::DownloadStarted=>"success",Feedback::CopyFailed=>"error",_=>"idle"}>{move || match feedback.get() {
                                 Feedback::Copying => tr(locale.get(), "Copying…", "正在复制…"),
                                 Feedback::Copied => tr(locale.get(), "Copied to clipboard.", "已复制到剪贴板。"),
@@ -1290,6 +1385,53 @@ mod tests {
             saved_themes: Vec::new(),
             preferences: Preferences::default(),
         }
+    }
+
+    #[test]
+    fn setup_notes_preserve_json_and_explicit_preview_context() {
+        let context = font_context(20., true);
+        let mut document = base();
+        document.config.appearance = rustify_ui::Appearance::Dark;
+        let before = export_json(&document, &context).unwrap();
+        for mode in [ThemeMode::Light, ThemeMode::Dark] {
+            let notes = integration_notes(&document, &context, mode).unwrap();
+            assert_eq!(notes.name, "theme-setup.txt");
+            assert_eq!(notes.mime, "text/plain");
+            assert!(notes.text.contains(env!("RUSTIFY_STUDIO_SOURCE_REVISION")));
+            assert!(notes.text.contains(&format!("mount_exported_preview(container, config, ThemeMode::{mode:?}, &font_context(20., true))")));
+            assert!(notes.text.contains("0.2.1"));
+            assert!(notes.text.contains("MountConfig.base"));
+            assert!(notes.text.contains("FONT-LICENSES.md"));
+            for mode in [ThemeMode::Light, ThemeMode::Dark] {
+                let resolved = rustify_ui::theme::resolve(&document, mode, &context).unwrap();
+                for font in &resolved.fonts {
+                    assert!(notes.text.contains(&font.requested.join(", ")));
+                    assert!(notes.text.contains(&font.family));
+                    if let Some(path) = &font.resource_path {
+                        assert!(notes.text.contains(path));
+                    }
+                }
+            }
+            for face in rustify_ui::theme::FONT_GLYPH_FALLBACKS {
+                assert!(notes.text.contains(face.resource_path));
+            }
+        }
+        assert_eq!(export_json(&document, &context).unwrap(), before);
+        document.id.clear();
+        let invalid = document.clone();
+        assert!(integration_notes(&document, &context, ThemeMode::Light).is_err());
+        assert_eq!(document, invalid);
+    }
+
+    #[test]
+    fn setup_notes_do_not_invent_packaged_files_for_css_fonts() {
+        let context = ResolveContext {
+            font_resolution: rustify_ui::theme::FontResolution::Css,
+            ..font_context(16., false)
+        };
+        let notes = integration_notes(&base(), &context, ThemeMode::Light).unwrap();
+        assert!(notes.text.contains("system / non-packaged font"));
+        assert!(!notes.text.contains(".ttf"));
     }
 
     #[test]

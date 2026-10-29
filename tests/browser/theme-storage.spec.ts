@@ -83,7 +83,8 @@ test("bad cache is preserved and downloadable; explicit clear touches only the s
 test("quota failure preserves the previous bytes, in-memory draft and unsaved named library",async({page})=> {
   await waitForReady(page);await edit(page,"#552288");const previous=await raw(page);
   await page.evaluate(()=> {Storage.prototype.setItem=function(){throw new DOMException("Test capacity reached","QuotaExceededError");};});
-  await edit(page,"#882255");await expect(page.getByTestId("storage-status")).toContainText(/paused|failed|quota|Quota/);
+  await edit(page,"#882255");await expect(page.locator(".tools-storage-state > strong")).toHaveText("Storage full · saving in memory");
+  await expect(page.getByTestId("storage-status")).toContainText("Your current draft stays in memory");
   expect(await raw(page)).toBe(previous);expect((await state(page)).values.light.primary).toBe("#882255");
   await save(page,"Cannot save");expect(await raw(page)).toBe(previous);
   await page.getByTestId("theme-library").click();await expect(page.getByTestId("library-empty")).toBeVisible();
@@ -101,7 +102,9 @@ test("a failed named save keeps the acknowledged draft status and retries its re
   await save(page,"Retained name");
   await expect(page.getByTestId("toolbar-storage-status")).toHaveText("Draft saved · action failed");
   await expect(page.getByTestId("storage-status")).toContainText("The current draft is saved on this device");
-  await expect(page.getByTestId("storage-status")).toContainText("Saving “Retained name” failed and is kept for retry");
+  await expect(page.getByTestId("named-storage-feedback")).toHaveAttribute("data-result","failed");
+  await expect(page.getByTestId("named-storage-feedback")).toContainText("Retained name");
+  await expect(page.getByTestId("named-storage-feedback").getByRole("button",{name:'Retry “Retained name”',exact:true})).toBeVisible();
   await expect(page.locator(".tools-storage-state > strong")).toHaveText("Storage full · saving in memory");
   await expect(page.getByTestId("storage-callout-retry")).toHaveCount(0);
   await expect(page.getByTestId("storage-retry")).toHaveText("Retry all retained saves");
@@ -115,7 +118,7 @@ test("a failed named save keeps the acknowledged draft status and retries its re
 
 test("denied localStorage leaves the editor and export available",async({page})=> {
   await page.addInitScript(()=>Object.defineProperty(window,"localStorage",{get(){throw new DOMException("Test access refused","SecurityError");}}));
-  await waitForReady(page);await expect(page.getByTestId("storage-status")).toContainText(/unavailable|refused|Security|memory editing/);
+  await waitForReady(page);await expect(page.locator(".tools-storage-state > strong")).toHaveText("Memory only · local saving unavailable");
   await edit(page,"#552288");await page.getByTestId("theme-export").click();
   expect(primary(JSON.parse(await page.getByTestId("export-source").inputValue()))).toBe("#552288");
 });

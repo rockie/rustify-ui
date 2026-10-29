@@ -81,3 +81,80 @@ test("copy success waits for the actual clipboard promise",async({page})=>{
   await expect(page.getByTestId("export-feedback")).toContainText("Copied to clipboard");
   expect(await page.evaluate(()=>navigator.clipboard.readText())).toBe(expected);
 });
+
+test("default export supplies portable setup notes for every format and follows preview without changing author data",async({page})=>{
+  const errors:string[]=[],failed:string[]=[];
+  page.on("pageerror",error=>errors.push(error.message));
+  page.on("console",message=>{if(message.type()==="error")errors.push(message.text());});
+  page.on("requestfailed",request=>failed.push(request.url()));
+  page.on("response",response=>{if(response.status()>=400)failed.push(response.url());});
+  await page.addInitScript(()=>{(window as any).__setupCsp=[];document.addEventListener("securitypolicyviolation",event=>(window as any).__setupCsp.push(event.violatedDirective));});
+  await waitForReady(page);
+  await page.emulateMedia({reducedMotion:"reduce"});
+  await page.evaluate(()=>{document.documentElement.style.fontSize="20px";window.__theme_studio.environment();});
+  const before=await snapshot(page);
+  await page.getByTestId("theme-export").click();
+  const source=page.getByTestId("export-source"),summary=page.getByTestId("export-setup-summary");
+  const original=await source.inputValue();
+  await expect(summary).toContainText("0.2.1");
+  const revision=(await summary.locator("code").textContent())!;
+  expect(revision).toMatch(/^[a-f0-9]{40}$/);
+  const light=await download(page,"export-setup-download");
+  expect(light.name).toBe("theme-setup.txt");expect(light.text).toContain(revision);
+  expect(light.text).toContain("mount_exported_preview(container, config, ThemeMode::Light, &font_context(20., true))");
+  for(const kind of ["Compatible JSON v1 · lossy","CSS · resolved values","Rust integration"]){
+    await outputKind(page,kind);await expect(summary).toBeVisible();
+    await expect(page.getByTestId("export-setup-download")).toBeVisible();
+    if(kind.startsWith("CSS"))await expect(summary).toContainText("Static CSS needs no wasm or CLI");
+    expect((await download(page,"export-setup-download")).text).toBe(light.text);
+  }
+  await page.keyboard.press("Escape");await expect(page.getByTestId("theme-export")).toBeFocused();
+  await page.getByTestId("mode-dark").click();await page.getByTestId("theme-export").click();
+  await expect(page.getByTestId("export-preview-mode")).toContainText("mount_exported_preview(container, config, ThemeMode::Dark, &font_context(20., true))");
+  const dark=await download(page,"export-setup-download");
+  expect(dark.text).toContain("Preview / 当前预览: Dark");
+  await outputKind(page,"Theme JSON v2");expect(await source.inputValue()).toBe(original);
+  expect((await snapshot(page)).document).toEqual(before.document);
+  expect((await snapshot(page)).history).toEqual(before.history);
+  await page.getByTestId("export-setup-details").locator("summary").click();
+  await expect(page.getByTestId("export-setup-notes")).toHaveText(dark.text);
+  const paths=[...new Set([...dark.text.matchAll(/^makepad_widgets\/resources\/[^\n]+/gm)].map(match=>match[0]))];
+  expect(paths.length).toBeGreaterThan(0);
+  for(const path of paths)expect((await page.request.get(path)).ok(),path).toBe(true);
+  expect((await page.request.get("makepad_widgets/resources/FONT-LICENSES.md")).ok()).toBe(true);
+  await mkdir(evidence,{recursive:true});
+  await writeFile(`${evidence}/theme-setup-light.txt`,light.text);await writeFile(`${evidence}/theme-setup-dark.txt`,dark.text);
+  await writeFile(`${evidence}/theme.json`,original);
+  await outputKind(page,"Rust integration");
+  await writeFile(`${evidence}/theme.rs`,(await download(page)).text);
+  await outputKind(page,"Theme JSON v2");
+  await page.getByTestId("export-setup-details").locator("summary").click();
+  for(const width of [1440,768,390]){
+    await page.setViewportSize({width,height:900});
+    // The overlay repositions through ResizeObserver after the viewport changes.
+    // Wait for that geometry before scrolling inside its content.
+    await expect.poll(async()=>{
+      const box=await page.getByTestId("data-tools-dialog").locator('[data-name="Dialog"]').boundingBox();
+      return !!box&&box.x>=8&&box.y>=8&&box.x+box.width<=width-8&&box.y+box.height<=892;
+    }).toBe(true);
+    await expect(summary).toBeVisible();
+    await page.getByTestId("export-setup-download").scrollIntoViewIfNeeded();
+    await expect(page.getByTestId("export-setup-download")).toBeInViewport();
+    expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+    await page.screenshot({path:`${evidence}/setup-${width}-en.png`,fullPage:true});
+  }
+  await page.keyboard.press("Escape");await page.getByTestId("locale-zh").click();
+  await page.getByTestId("theme-export").click();
+  await expect(summary).toContainText("源码修订");await expect(page.getByTestId("export-setup-download")).toHaveText("下载接入说明");
+  await page.screenshot({path:`${evidence}/setup-390-zh.png`,fullPage:true});
+  await page.setViewportSize({width:640,height:450});
+  await page.evaluate(()=>{document.documentElement.style.fontSize="200%";window.__theme_studio.environment();});
+  await page.getByTestId("export-setup-download").scrollIntoViewIfNeeded();
+  await expect(page.getByTestId("export-setup-download")).toBeInViewport();
+  // Keyboard focus remains inside the existing dialog, including at doubled text size.
+  await page.getByTestId("export-setup-download").focus();await page.keyboard.press("Tab");
+  expect(await page.evaluate(()=>!!document.activeElement?.closest('[role="dialog"]'))).toBe(true);
+  await page.screenshot({path:`${evidence}/setup-200-percent-zh.png`,fullPage:true});
+  await page.keyboard.press("Escape");await expect(page.getByTestId("theme-export")).toBeFocused();
+  expect(errors).toEqual([]);expect(failed).toEqual([]);expect(await page.evaluate(()=>(window as any).__setupCsp)).toEqual([]);
+});

@@ -252,8 +252,18 @@ unchanged version string does not make the new source APIs or v2 schema
 available from crates.io; `rustify-colors` has not been published by this work.
 An old registry CLI cannot consume complete v2 author documents.
 
-Use one pinned checkout for the source SDK, stylesheet assets and source CLI.
-Build the latter with the existing unwind-capable profile:
+In Studio, **Export** defaults to complete JSON v2. **Download setup notes**
+(下载接入说明) saves `theme-setup.txt` alongside your theme, without adding
+metadata to JSON. It records the build's source revision, current explicit
+preview mode and context, and the actual light/dark requested and resolved fonts.
+Copy the listed external font files and distribute their original licenses from
+`makepad/widgets/resources/FONT-LICENSES.md` in that checkout. Font URLs are
+relative to deployed CSS; retain their paths or adjust them for your base/CDN.
+
+Use one pinned checkout for the source SDK and stylesheet assets. Only Docs
+consumers also need its source CLI. Static CSS consumers need no wasm or CLI;
+compile exported Tailwind profiles through the existing Tailwind v4 build.
+Build the Docs CLI with the existing unwind-capable profile:
 
 ```sh
 mbx build --locked -p rustify-docs-cli --profile docs-cli
@@ -266,6 +276,16 @@ in that checkout, following the existing development-source pairing check.
 Do not mix registry and source framework dependencies, replace them with Git
 dependencies to bypass the canonical-path check, or modify the frozen public
 release record to claim a new registry pair.
+
+The complete Rust export includes
+`mount_exported_preview(container, config, ThemeMode::Light, &font_context(16., false))`.
+Use the setup notes' actual mode/rem/motion values; `container` is the application's
+mount node and `config: MountConfig` supplies its unique scope and deployment
+`base`. Keep the returned `AppHandle` alive. Ordinary `mount_exported_theme`
+honors authored appearance; explicit preview leaves the author document intact.
+For local providers use `Signal<ThemeBoundaryPatch>`, independent light/dark
+patches and optional local appearance; validate with `ResolvedTheme::with_boundary`.
+Adapt a legacy mode-independent `ThemeValuePatch` explicitly with `.into()`.
 
 The [independent consumer recipe](../tests/theme-export/README.md) describes
 compiling the generated Studio Rust snippet and JSON outside the editor, with
