@@ -1,0 +1,235 @@
+{
+  "records": [
+    {
+      "file": "U1-matrix2-zh-top-1440-dark.png",
+      "unit": "U1",
+      "state": "matrix2-zh-top",
+      "viewport": "1440x900",
+      "dpr": 1,
+      "theme": "dark",
+      "url": "http://127.0.0.1:4181/",
+      "time": "2026-10-28T16:55:15.582Z",
+      "kind": "viewport",
+      "interventions": "none",
+      "focused": "locale-zh"
+    },
+    {
+      "file": "U1-matrix2-zh-configured-1440-dark.png",
+      "unit": "U1",
+      "state": "matrix2-zh-configured",
+      "viewport": "1440x900",
+      "dpr": 1,
+      "theme": "dark",
+      "url": "http://127.0.0.1:4181/",
+      "time": "2026-10-28T16:55:16.144Z",
+      "kind": "viewport",
+      "interventions": "none",
+      "focused": "locale-zh"
+    },
+    {
+      "file": "U1-matrix2-keyboard-01-1440-dark.png",
+      "unit": "U1",
+      "state": "matrix2-keyboard-01",
+      "viewport": "1440x900",
+      "dpr": 1,
+      "theme": "dark",
+      "url": "http://127.0.0.1:4181/",
+      "time": "2026-10-28T16:55:16.756Z",
+      "kind": "viewport",
+      "interventions": "none",
+      "focused": "preset-search"
+    },
+    {
+      "file": "U1-matrix2-keyboard-02-1440-dark.png",
+      "unit": "U1",
+      "state": "matrix2-keyboard-02",
+      "viewport": "1440x900",
+      "dpr": 1,
+      "theme": "dark",
+      "url": "http://127.0.0.1:4181/",
+      "time": "2026-10-28T16:55:17.306Z",
+      "kind": "viewport",
+      "interventions": "none",
+      "focused": "studio-config-accent_color"
+    },
+    {
+      "file": "U1-matrix2-keyboard-03-1440-dark.png",
+      "unit": "U1",
+      "state": "matrix2-keyboard-03",
+      "viewport": "1440x900",
+      "dpr": 1,
+      "theme": "dark",
+      "url": "http://127.0.0.1:4181/",
+      "time": "2026-10-28T16:55:17.857Z",
+      "kind": "viewport",
+      "interventions": "none",
+      "focused": "studio-config-accent_color-list"
+    },
+    {
+      "file": "U1-matrix2-keyboard-04-1440-dark.png",
+      "unit": "U1",
+      "state": "matrix2-keyboard-04",
+      "viewport": "1440x900",
+      "dpr": 1,
+      "theme": "dark",
+      "url": "http://127.0.0.1:4181/",
+      "time": "2026-10-28T16:55:18.408Z",
+      "kind": "viewport",
+      "interventions": "none",
+      "focused": "mode-dark"
+    },
+    {
+      "file": "U6-matrix2-links-hover-390-light.png",
+      "unit": "U6",
+      "state": "matrix2-links-hover",
+      "viewport": "390x844",
+      "dpr": 1,
+      "theme": "light",
+      "url": "http://127.0.0.1:4176/",
+      "time": "2026-10-28T16:55:29.202Z",
+      "kind": "viewport",
+      "interventions": "none",
+      "focused": null
+    },
+    {
+      "file": "U6-matrix2-links-focus-390-light.png",
+      "unit": "U6",
+      "state": "matrix2-links-focus",
+      "viewport": "390x844",
+      "dpr": 1,
+      "theme": "light",
+      "url": "http://127.0.0.1:4176/",
+      "time": "2026-10-28T16:55:29.751Z",
+      "kind": "viewport",
+      "interventions": "none",
+      "focused": "type-link"
+    },
+    {
+      "file": "U6-matrix2-link-studio-1280-dark.png",
+      "unit": "U6",
+      "state": "matrix2-link-studio",
+      "viewport": "1280x900",
+      "dpr": 1,
+      "theme": "dark",
+      "url": "http://127.0.0.1:4181/",
+      "time": "2026-10-28T16:55:37.818Z",
+      "kind": "viewport",
+      "interventions": "none",
+      "focused": "mode-dark"
+    },
+    {
+      "file": "U6-matrix2-link-studio-hover-1280-dark.png",
+      "unit": "U6",
+      "state": "matrix2-link-studio-hover",
+      "viewport": "1280x900",
+      "dpr": 1,
+      "theme": "dark",
+      "url": "http://127.0.0.1:4181/",
+      "time": "2026-10-28T16:55:38.419Z",
+      "kind": "viewport",
+      "interventions": "none",
+      "focused": "mode-dark"
+    },
+    {
+      "file": "U6-matrix2-link-studio-focus-1280-dark.png",
+      "unit": "U6",
+      "state": "matrix2-link-studio-focus",
+      "viewport": "1280x900",
+      "dpr": 1,
+      "theme": "dark",
+      "url": "http://127.0.0.1:4181/",
+      "time": "2026-10-28T16:55:38.987Z",
+      "kind": "viewport",
+      "interventions": "none",
+      "focused": "cards-editor-link"
+    },
+    {
+      "file": "U5-matrix2-gpu-compare-390-light.png",
+      "unit": "U5",
+      "state": "matrix2-gpu-compare",
+      "viewport": "390x844",
+      "dpr": 1,
+      "theme": "light",
+      "url": "http://127.0.0.1:4181/",
+      "time": "2026-10-28T16:55:47.637Z",
+      "kind": "viewport",
+      "interventions": "none",
+      "focused": "renderer-compare"
+    },
+    {
+      "file": "U5-matrix2-gpu-compare-end-390-light.png",
+      "unit": "U5",
+      "state": "matrix2-gpu-compare-end",
+      "viewport": "390x844",
+      "dpr": 1,
+      "theme": "light",
+      "url": "http://127.0.0.1:4181/",
+      "time": "2026-10-28T16:55:48.172Z",
+      "kind": "viewport",
+      "interventions": "none",
+      "focused": "renderer-compare"
+    }
+  ],
+  "health": [
+    {
+      "unit": "U1",
+      "url": "http://127.0.0.1:4181/",
+      "pageErrors": [],
+      "consoleErrors": [],
+      "failed": [],
+      "csp": []
+    },
+    {
+      "unit": "U6",
+      "url": "http://127.0.0.1:4176/",
+      "pageErrors": [],
+      "consoleErrors": [],
+      "failed": [],
+      "csp": []
+    },
+    {
+      "unit": "U6",
+      "url": "http://127.0.0.1:4181/",
+      "pageErrors": [],
+      "consoleErrors": [],
+      "failed": [],
+      "csp": []
+    },
+    {
+      "unit": "U5",
+      "url": "http://127.0.0.1:4181/",
+      "pageErrors": [],
+      "consoleErrors": [],
+      "failed": [],
+      "csp": []
+    }
+  ],
+  "actions": {
+    "U1": [
+      "2026-10-28T16:55:14.855Z preset search 'Graphite' → Built-in · Graphite → brand pink → gray Auto",
+      "2026-10-28T16:55:15.582Z screenshot U1-matrix2-zh-top-1440-dark.png",
+      "2026-10-28T16:55:16.144Z screenshot U1-matrix2-zh-configured-1440-dark.png",
+      "2026-10-28T16:55:16.757Z screenshot U1-matrix2-keyboard-01-1440-dark.png",
+      "2026-10-28T16:55:17.307Z screenshot U1-matrix2-keyboard-02-1440-dark.png",
+      "2026-10-28T16:55:17.857Z screenshot U1-matrix2-keyboard-03-1440-dark.png",
+      "2026-10-28T16:55:18.409Z screenshot U1-matrix2-keyboard-04-1440-dark.png",
+      "2026-10-28T16:55:18.409Z matrix2: English configuration first, then Chinese dark top/config and real-keyboard dark focus frames; repairs failed locale-dependent selector in first matrix attempt"
+    ],
+    "U6": [
+      "2026-10-28T16:55:29.202Z screenshot U6-matrix2-links-hover-390-light.png",
+      "2026-10-28T16:55:29.752Z screenshot U6-matrix2-links-focus-390-light.png",
+      "2026-10-28T16:55:29.752Z 390 catalog: Link hover and real keyboard focus",
+      "2026-10-28T16:55:37.818Z screenshot U6-matrix2-link-studio-1280-dark.png",
+      "2026-10-28T16:55:38.420Z screenshot U6-matrix2-link-studio-hover-1280-dark.png",
+      "2026-10-28T16:55:38.988Z screenshot U6-matrix2-link-studio-focus-1280-dark.png",
+      "2026-10-28T16:55:38.988Z 1280 dark SDK Link in real Studio DOM preview; no product DOM/style injection"
+    ],
+    "U5": [
+      "2026-10-28T16:55:46.766Z 390: inspect actual Create profile; product opens source in Edit tab",
+      "2026-10-28T16:55:46.805Z 390: return to Preview through actual tab after source selection",
+      "2026-10-28T16:55:47.637Z screenshot U5-matrix2-gpu-compare-390-light.png",
+      "2026-10-28T16:55:48.172Z screenshot U5-matrix2-gpu-compare-end-390-light.png"
+    ]
+  },
+  "failures": []
+}

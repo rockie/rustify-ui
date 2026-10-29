@@ -1,0 +1,49 @@
+{
+  "at": "2026-10-28T04:47:45.568Z",
+  "linkFocus": [
+    {
+      "id": "type-link",
+      "focused": "type-link",
+      "focusVisible": true,
+      "outline": "solid 2px rgb(141, 164, 239)",
+      "offset": "2px",
+      "radius": "1.26px",
+      "underline": "none"
+    },
+    {
+      "id": "type-long-link",
+      "focused": "type-long-link",
+      "focusVisible": true,
+      "outline": "solid 2px rgb(141, 164, 239)",
+      "offset": "2px",
+      "radius": "1.05px",
+      "underline": "none"
+    }
+  ],
+  "preview200": {
+    "before": {
+      "previewsScrollTop": 0,
+      "surfaceScrollLeft": 0
+    },
+    "after": {
+      "previewsScrollTop": 3700,
+      "surfaceScrollLeft": 0
+    },
+    "surface": {
+      "left": 401,
+      "right": 639,
+      "scrollWidth": 389,
+      "clientWidth": 236,
+      "overflowX": "auto"
+    },
+    "button": {
+      "text": "Create · 0",
+      "left": 677,
+      "right": 791,
+      "top": 402,
+      "bottom": 466
+    },
+    "visibleWidth": 0,
+    "screenshot": "MC-root200-preview-clip-720-light.png"
+  }
+}

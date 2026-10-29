@@ -1,0 +1,117 @@
+{
+  "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12",
+  "version": "941a8043903c244dc2b72e1e90c38b49e193c20c",
+  "origin": "real running release pages; current run; no network interceptions or UI mocks; root200 images set root font-size=200%; others no interventions",
+  "files": [
+    {
+      "file": "MC-export-color-format-keyboard-focus-1440-light.png",
+      "actual_url": "http://127.0.0.1:4181/",
+      "viewport": "1440x900",
+      "dpr": 1,
+      "theme": "light",
+      "recorded_utc": "2026-10-28T14:40:17.597715+00:00",
+      "pixels": "1440x900",
+      "sha256": "49f548437f766dcf67e7cae9816f2e0038cdfc64e16b3dd98141b3abcc872999"
+    },
+    {
+      "file": "MC-export-format-pure-keyboard-1440-light.png",
+      "actual_url": "http://127.0.0.1:4181/",
+      "viewport": "1440x900",
+      "dpr": 1,
+      "theme": "light",
+      "recorded_utc": "2026-10-28T14:40:15.238608+00:00",
+      "pixels": "1440x900",
+      "sha256": "dcac306234255ed415085b2fb0321f63eeff23a22e2980a000eaf280d0755f1a"
+    },
+    {
+      "file": "MC-export-kind-keyboard-focus-1440-light.png",
+      "actual_url": "http://127.0.0.1:4181/",
+      "viewport": "1440x900",
+      "dpr": 1,
+      "theme": "light",
+      "recorded_utc": "2026-10-28T14:38:14.579036+00:00",
+      "pixels": "1440x900",
+      "sha256": "dcac306234255ed415085b2fb0321f63eeff23a22e2980a000eaf280d0755f1a"
+    },
+    {
+      "file": "MC-export-next-control-keyboard-1440-light.png",
+      "actual_url": "http://127.0.0.1:4181/",
+      "viewport": "1440x900",
+      "dpr": 1,
+      "theme": "light",
+      "recorded_utc": "2026-10-28T14:40:16.001756+00:00",
+      "pixels": "1440x900",
+      "sha256": "1b5a67b94d908aaae4f8dae8643aa443319bc598eddcaeab477cc38c3749a781"
+    },
+    {
+      "file": "MC-export-profile-keyboard-focus-1440-light.png",
+      "actual_url": "http://127.0.0.1:4181/",
+      "viewport": "1440x900",
+      "dpr": 1,
+      "theme": "light",
+      "recorded_utc": "2026-10-28T14:40:16.846858+00:00",
+      "pixels": "1440x900",
+      "sha256": "49f548437f766dcf67e7cae9816f2e0038cdfc64e16b3dd98141b3abcc872999"
+    },
+    {
+      "file": "MC-import-format-pure-keyboard-1440-light.png",
+      "actual_url": "http://127.0.0.1:4181/",
+      "viewport": "1440x900",
+      "dpr": 1,
+      "theme": "light",
+      "recorded_utc": "2026-10-28T14:40:24.836777+00:00",
+      "pixels": "1440x900",
+      "sha256": "dfbf77c5bd3f85e5286b509ebb7b5812a901469b65afa17689eef1fbec0fd658"
+    },
+    {
+      "file": "MC-import-kind-keyboard-focus-1440-light.png",
+      "actual_url": "http://127.0.0.1:4181/",
+      "viewport": "1440x900",
+      "dpr": 1,
+      "theme": "light",
+      "recorded_utc": "2026-10-28T14:38:21.792328+00:00",
+      "pixels": "1440x900",
+      "sha256": "dfbf77c5bd3f85e5286b509ebb7b5812a901469b65afa17689eef1fbec0fd658"
+    },
+    {
+      "file": "MC-import-next-control-keyboard-1440-light.png",
+      "actual_url": "http://127.0.0.1:4181/",
+      "viewport": "1440x900",
+      "dpr": 1,
+      "theme": "light",
+      "recorded_utc": "2026-10-28T14:40:25.569743+00:00",
+      "pixels": "1440x900",
+      "sha256": "1a7be6c1376c6b156ba71b6d11c4d12bbb68ce32ccd996de47db0f99fc576101"
+    },
+    {
+      "file": "MC-root200-nested-surface-720-light.png",
+      "actual_url": "http://127.0.0.1:4181/",
+      "viewport": "720x900",
+      "dpr": 1,
+      "theme": "light",
+      "recorded_utc": "2026-10-28T14:38:44.605882+00:00",
+      "pixels": "720x900",
+      "sha256": "01bba35a0ba5981c1a9258534a15a7ea61551808f4b205d88234ef5f20bf75eb"
+    },
+    {
+      "file": "MC-root200-preview-clip-720-light.png",
+      "actual_url": "http://127.0.0.1:4181/",
+      "viewport": "720x900",
+      "dpr": 1,
+      "theme": "light",
+      "recorded_utc": "2026-10-28T14:35:23.128096+00:00",
+      "pixels": "720x900",
+      "sha256": "4dc7b7d0bcedc1a2a47963a57a2566a0234259883d06a4b1f5ec28241c11fb80"
+    },
+    {
+      "file": "MC-token-reset-keyboard-focus-1440-light.png",
+      "actual_url": "http://127.0.0.1:4181/",
+      "viewport": "1440x900",
+      "dpr": 1,
+      "theme": "light",
+      "recorded_utc": "2026-10-28T14:38:29.574246+00:00",
+      "pixels": "1440x900",
+      "sha256": "9f8445f5b27740c444320b2c133561aea1ac64c90fcfa30add0436bcc30ae0d8"
+    }
+  ]
+}

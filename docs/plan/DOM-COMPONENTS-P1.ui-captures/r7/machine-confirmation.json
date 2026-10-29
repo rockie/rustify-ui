@@ -1,0 +1,641 @@
+{
+  "at": "2026-10-29T03:03:58.402Z",
+  "menus": [
+    {
+      "viewport": "1440x900",
+      "theme": "dark",
+      "states": [
+        {
+          "step": "before",
+          "focus": "studio-config-accent_color",
+          "expanded": "false",
+          "lists": []
+        },
+        {
+          "step": "Enter",
+          "focus": "studio-config-accent_color-list",
+          "expanded": "true",
+          "lists": [
+            {
+              "visible": true,
+              "text": "CustomGrayGoldBronzeBrownYellowAmberOrangeTomatoRedRubyCrimsonPinkPlumPurpleVioletIrisIndigoBlueCyanTealJadeGreenGrassLimeMintSky",
+              "scrollTop": 166
+            }
+          ]
+        },
+        {
+          "step": "Escape then Space",
+          "focus": "studio-config-accent_color-list",
+          "expanded": "true",
+          "lists": [
+            {
+              "visible": true,
+              "text": "CustomGrayGoldBronzeBrownYellowAmberOrangeTomatoRedRubyCrimsonPinkPlumPurpleVioletIrisIndigoBlueCyanTealJadeGreenGrassLimeMintSky",
+              "scrollTop": 166
+            }
+          ]
+        },
+        {
+          "step": "Escape then Enter",
+          "focus": "studio-config-accent_color-list",
+          "expanded": "true",
+          "lists": [
+            {
+              "visible": true,
+              "text": "CustomGrayGoldBronzeBrownYellowAmberOrangeTomatoRedRubyCrimsonPinkPlumPurpleVioletIrisIndigoBlueCyanTealJadeGreenGrassLimeMintSky",
+              "scrollTop": 166
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "viewport": "768x1024",
+      "theme": "light",
+      "states": [
+        {
+          "step": "before",
+          "focus": "studio-config-accent_color",
+          "expanded": "false",
+          "lists": []
+        },
+        {
+          "step": "Enter",
+          "focus": "studio-config-accent_color-list",
+          "expanded": "true",
+          "lists": [
+            {
+              "visible": true,
+              "text": "CustomGrayGoldBronzeBrownYellowAmberOrangeTomatoRedRubyCrimsonPinkPlumPurpleVioletIrisIndigoBlueCyanTealJadeGreenGrassLimeMintSky",
+              "scrollTop": 166
+            }
+          ]
+        },
+        {
+          "step": "Escape then Space",
+          "focus": "studio-config-accent_color-list",
+          "expanded": "true",
+          "lists": [
+            {
+              "visible": true,
+              "text": "CustomGrayGoldBronzeBrownYellowAmberOrangeTomatoRedRubyCrimsonPinkPlumPurpleVioletIrisIndigoBlueCyanTealJadeGreenGrassLimeMintSky",
+              "scrollTop": 166
+            }
+          ]
+        },
+        {
+          "step": "Escape then Enter",
+          "focus": "studio-config-accent_color-list",
+          "expanded": "true",
+          "lists": [
+            {
+              "visible": true,
+              "text": "CustomGrayGoldBronzeBrownYellowAmberOrangeTomatoRedRubyCrimsonPinkPlumPurpleVioletIrisIndigoBlueCyanTealJadeGreenGrassLimeMintSky",
+              "scrollTop": 166
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "viewport": "390x844",
+      "theme": "light",
+      "states": [
+        {
+          "step": "before",
+          "focus": "studio-config-accent_color",
+          "expanded": "false",
+          "lists": []
+        },
+        {
+          "step": "Enter",
+          "focus": "studio-config-accent_color-list",
+          "expanded": "true",
+          "lists": [
+            {
+              "visible": true,
+              "text": "CustomGrayGoldBronzeBrownYellowAmberOrangeTomatoRedRubyCrimsonPinkPlumPurpleVioletIrisIndigoBlueCyanTealJadeGreenGrassLimeMintSky",
+              "scrollTop": 166
+            }
+          ]
+        },
+        {
+          "step": "Escape then Space",
+          "focus": "studio-config-accent_color-list",
+          "expanded": "true",
+          "lists": [
+            {
+              "visible": true,
+              "text": "CustomGrayGoldBronzeBrownYellowAmberOrangeTomatoRedRubyCrimsonPinkPlumPurpleVioletIrisIndigoBlueCyanTealJadeGreenGrassLimeMintSky",
+              "scrollTop": 166
+            }
+          ]
+        },
+        {
+          "step": "Escape then Enter",
+          "focus": "studio-config-accent_color-list",
+          "expanded": "true",
+          "lists": [
+            {
+              "visible": true,
+              "text": "CustomGrayGoldBronzeBrownYellowAmberOrangeTomatoRedRubyCrimsonPinkPlumPurpleVioletIrisIndigoBlueCyanTealJadeGreenGrassLimeMintSky",
+              "scrollTop": 166
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "contrast": [
+    {
+      "id": "color-contrast",
+      "target": [
+        ".bg-accent"
+      ],
+      "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.62 (foreground color: #ffffff, background color: #12b76a, font size: 11.3pt (15px), font weight: normal). Expected contrast ratio of 4.5:1",
+      "text": "Accent pair",
+      "testid": "button-accent-token",
+      "computedColor": "rgb(255, 255, 255)",
+      "computedBackground": "rgb(18, 183, 106)",
+      "a9": "rgb(255, 255, 255)",
+      "contrast": "rgb(255, 255, 255)",
+      "scopePrimary": "rgb(62 99 221)",
+      "scopeAccent": "rgb(18 183 106)"
+    },
+    {
+      "id": "color-contrast",
+      "target": [
+        ".rui-geometry-69 > .rustify-button-content"
+      ],
+      "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.62 (foreground color: #ffffff, background color: #12b76a, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1",
+      "text": "Semantic accent",
+      "testid": "button-semantic-accent",
+      "variant": "solid",
+      "computedColor": "rgb(255, 255, 255)",
+      "computedBackground": "rgb(18, 183, 106)",
+      "a9": "rgb(255, 255, 255)",
+      "contrast": "rgb(255, 255, 255)",
+      "scopePrimary": "rgb(62 99 221)",
+      "scopeAccent": "rgb(18 183 106)"
+    },
+    {
+      "id": "color-contrast",
+      "target": [
+        ".rui-geometry-71 > .rustify-button-content"
+      ],
+      "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.31 (foreground color: #ffffff, background color: #8d8d8d, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1",
+      "text": "gray",
+      "testid": "button-color-gray",
+      "color": "gray",
+      "variant": "solid",
+      "computedColor": "rgb(255, 255, 255)",
+      "computedBackground": "rgb(141, 141, 141)",
+      "a9": "rgba(0, 0, 0, 0.447)",
+      "contrast": "rgb(255, 255, 255)",
+      "scopePrimary": "rgb(62 99 221)",
+      "scopeAccent": "rgb(18 183 106)"
+    },
+    {
+      "id": "color-contrast",
+      "target": [
+        ".rui-geometry-72 > .rustify-button-content"
+      ],
+      "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.65 (foreground color: #ffffff, background color: #978365, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1",
+      "text": "gold",
+      "testid": "button-color-gold",
+      "color": "gold",
+      "variant": "solid",
+      "computedColor": "rgb(255, 255, 255)",
+      "computedBackground": "rgb(151, 131, 101)",
+      "a9": "rgba(83, 50, 0, 0.604)",
+      "contrast": "rgb(255, 255, 255)",
+      "scopePrimary": "rgb(62 99 221)",
+      "scopeAccent": "rgb(18 183 106)"
+    },
+    {
+      "id": "color-contrast",
+      "target": [
+        ".rui-geometry-73 > .rustify-button-content"
+      ],
+      "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.59 (foreground color: #ffffff, background color: #a18072, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1",
+      "text": "bronze",
+      "testid": "button-color-bronze",
+      "color": "bronze",
+      "variant": "solid",
+      "computedColor": "rgb(255, 255, 255)",
+      "computedBackground": "rgb(161, 128, 114)",
+      "a9": "rgba(85, 26, 0, 0.553)",
+      "contrast": "rgb(255, 255, 255)",
+      "scopePrimary": "rgb(62 99 221)",
+      "scopeAccent": "rgb(18 183 106)"
+    },
+    {
+      "id": "color-contrast",
+      "target": [
+        ".rui-geometry-74 > .rustify-button-content"
+      ],
+      "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.52 (foreground color: #ffffff, background color: #ad7f58, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1",
+      "text": "brown",
+      "testid": "button-color-brown",
+      "color": "brown",
+      "variant": "solid",
+      "computedColor": "rgb(255, 255, 255)",
+      "computedBackground": "rgb(173, 127, 88)",
+      "a9": "rgba(130, 60, 0, 0.655)",
+      "contrast": "rgb(255, 255, 255)",
+      "scopePrimary": "rgb(62 99 221)",
+      "scopeAccent": "rgb(18 183 106)"
+    },
+    {
+      "id": "color-contrast",
+      "target": [
+        ".rui-geometry-77 > .rustify-button-content"
+      ],
+      "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.97 (foreground color: #ffffff, background color: #f76b15, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1",
+      "text": "orange",
+      "testid": "button-color-orange",
+      "color": "orange",
+      "variant": "solid",
+      "computedColor": "rgb(255, 255, 255)",
+      "computedBackground": "rgb(247, 107, 21)",
+      "a9": "rgba(246, 94, 0, 0.918)",
+      "contrast": "rgb(255, 255, 255)",
+      "scopePrimary": "rgb(62 99 221)",
+      "scopeAccent": "rgb(18 183 106)"
+    },
+    {
+      "id": "color-contrast",
+      "target": [
+        ".rui-geometry-78 > .rustify-button-content"
+      ],
+      "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.86 (foreground color: #ffffff, background color: #e54d2e, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1",
+      "text": "tomato",
+      "testid": "button-color-tomato",
+      "color": "tomato",
+      "variant": "solid",
+      "computedColor": "rgb(255, 255, 255)",
+      "computedBackground": "rgb(229, 77, 46)",
+      "a9": "rgba(223, 38, 0, 0.82)",
+      "contrast": "rgb(255, 255, 255)",
+      "scopePrimary": "rgb(62 99 221)",
+      "scopeAccent": "rgb(18 183 106)"
+    },
+    {
+      "id": "color-contrast",
+      "target": [
+        ".rui-geometry-79 > .rustify-button-content"
+      ],
+      "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.91 (foreground color: #ffffff, background color: #e5484d, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1",
+      "text": "red",
+      "testid": "button-color-red",
+      "color": "red",
+      "variant": "solid",
+      "computedColor": "rgb(255, 255, 255)",
+      "computedBackground": "rgb(229, 72, 77)",
+      "a9": "rgba(219, 0, 7, 0.718)",
+      "contrast": "rgb(255, 255, 255)",
+      "scopePrimary": "rgb(62 99 221)",
+      "scopeAccent": "rgb(18 183 106)"
+    },
+    {
+      "id": "color-contrast",
+      "target": [
+        ".rui-geometry-80 > .rustify-button-content"
+      ],
+      "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.88 (foreground color: #ffffff, background color: #e54666, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1",
+      "text": "ruby",
+      "testid": "button-color-ruby",
+      "color": "ruby",
+      "variant": "solid",
+      "computedColor": "rgb(255, 255, 255)",
+      "computedBackground": "rgb(229, 70, 102)",
+      "a9": "rgba(219, 0, 44, 0.725)",
+      "contrast": "rgb(255, 255, 255)",
+      "scopePrimary": "rgb(62 99 221)",
+      "scopeAccent": "rgb(18 183 106)"
+    },
+    {
+      "id": "color-contrast",
+      "target": [
+        ".rui-geometry-81 > .rustify-button-content"
+      ],
+      "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.84 (foreground color: #ffffff, background color: #e93d82, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1",
+      "text": "crimson",
+      "testid": "button-color-crimson",
+      "color": "crimson",
+      "variant": "solid",
+      "computedColor": "rgb(255, 255, 255)",
+      "computedBackground": "rgb(233, 61, 130)",
+      "a9": "rgba(226, 0, 91, 0.76)",
+      "contrast": "rgb(255, 255, 255)",
+      "scopePrimary": "rgb(62 99 221)",
+      "scopeAccent": "rgb(18 183 106)"
+    },
+    {
+      "id": "color-contrast",
+      "target": [
+        ".rui-geometry-82 > .rustify-button-content"
+      ],
+      "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.12 (foreground color: #ffffff, background color: #d6409f, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1",
+      "text": "pink",
+      "testid": "button-color-pink",
+      "color": "pink",
+      "variant": "solid",
+      "computedColor": "rgb(255, 255, 255)",
+      "computedBackground": "rgb(214, 64, 159)",
+      "a9": "rgba(200, 0, 127, 0.75)",
+      "contrast": "rgb(255, 255, 255)",
+      "scopePrimary": "rgb(62 99 221)",
+      "scopeAccent": "rgb(18 183 106)"
+    },
+    {
+      "id": "color-contrast",
+      "target": [
+        ".rui-geometry-88 > .rustify-button-content"
+      ],
+      "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.26 (foreground color: #ffffff, background color: #0090ff, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1",
+      "text": "blue",
+      "testid": "button-color-blue",
+      "color": "blue",
+      "variant": "solid",
+      "computedColor": "rgb(255, 255, 255)",
+      "computedBackground": "rgb(0, 144, 255)",
+      "a9": "rgb(0, 144, 255)",
+      "contrast": "rgb(255, 255, 255)",
+      "scopePrimary": "rgb(62 99 221)",
+      "scopeAccent": "rgb(18 183 106)"
+    },
+    {
+      "id": "color-contrast",
+      "target": [
+        ".rui-geometry-89 > .rustify-button-content"
+      ],
+      "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3 (foreground color: #ffffff, background color: #00a2c7, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1",
+      "text": "cyan",
+      "testid": "button-color-cyan",
+      "color": "cyan",
+      "variant": "solid",
+      "computedColor": "rgb(255, 255, 255)",
+      "computedBackground": "rgb(0, 162, 199)",
+      "a9": "rgb(0, 162, 199)",
+      "contrast": "rgb(255, 255, 255)",
+      "scopePrimary": "rgb(62 99 221)",
+      "scopeAccent": "rgb(18 183 106)"
+    },
+    {
+      "id": "color-contrast",
+      "target": [
+        ".rui-geometry-90 > .rustify-button-content"
+      ],
+      "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.07 (foreground color: #ffffff, background color: #12a594, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1",
+      "text": "teal",
+      "testid": "button-color-teal",
+      "color": "teal",
+      "variant": "solid",
+      "computedColor": "rgb(255, 255, 255)",
+      "computedBackground": "rgb(18, 165, 148)",
+      "a9": "rgba(0, 158, 140, 0.93)",
+      "contrast": "rgb(255, 255, 255)",
+      "scopePrimary": "rgb(62 99 221)",
+      "scopeAccent": "rgb(18 183 106)"
+    },
+    {
+      "id": "color-contrast",
+      "target": [
+        ".rui-geometry-91 > .rustify-button-content"
+      ],
+      "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.15 (foreground color: #ffffff, background color: #29a383, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1",
+      "text": "jade",
+      "testid": "button-color-jade",
+      "color": "jade",
+      "variant": "solid",
+      "computedColor": "rgb(255, 255, 255)",
+      "computedBackground": "rgb(41, 163, 131)",
+      "a9": "rgba(0, 145, 107, 0.84)",
+      "contrast": "rgb(255, 255, 255)",
+      "scopePrimary": "rgb(62 99 221)",
+      "scopeAccent": "rgb(18 183 106)"
+    },
+    {
+      "id": "color-contrast",
+      "target": [
+        ".rui-geometry-92 > .rustify-button-content"
+      ],
+      "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.15 (foreground color: #ffffff, background color: #30a46c, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1",
+      "text": "green",
+      "testid": "button-color-green",
+      "color": "green",
+      "variant": "solid",
+      "computedColor": "rgb(255, 255, 255)",
+      "computedBackground": "rgb(48, 164, 108)",
+      "a9": "rgba(0, 143, 74, 0.81)",
+      "contrast": "rgb(255, 255, 255)",
+      "scopePrimary": "rgb(62 99 221)",
+      "scopeAccent": "rgb(18 183 106)"
+    },
+    {
+      "id": "color-contrast",
+      "target": [
+        ".rui-geometry-93 > .rustify-button-content"
+      ],
+      "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.03 (foreground color: #ffffff, background color: #46a758, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1",
+      "text": "grass",
+      "testid": "button-color-grass",
+      "color": "grass",
+      "variant": "solid",
+      "computedColor": "rgb(255, 255, 255)",
+      "computedBackground": "rgb(70, 167, 88)",
+      "a9": "rgba(0, 134, 25, 0.725)",
+      "contrast": "rgb(255, 255, 255)",
+      "scopePrimary": "rgb(62 99 221)",
+      "scopeAccent": "rgb(18 183 106)"
+    },
+    {
+      "id": "color-contrast",
+      "target": [
+        ".rui-geometry-104 > .rustify-button-content"
+      ],
+      "summary": "Fix any of the following:\n  Element has insufficient color contrast of 1.24 (foreground color: #c8080a, background color: #d92d20, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1",
+      "text": "Caller utilities",
+      "testid": "button-class-override",
+      "color": "red",
+      "variant": "outline",
+      "computedColor": "rgba(196, 0, 6, 0.827)",
+      "computedBackground": "rgb(217, 45, 32)",
+      "a9": "rgba(219, 0, 7, 0.718)",
+      "contrast": "rgb(255, 255, 255)",
+      "scopePrimary": "rgb(62 99 221)",
+      "scopeAccent": "rgb(18 183 106)"
+    }
+  ],
+  "chromium": "153.0.8010.12",
+  "records": [
+    {
+      "file": "MC-settled-enter-1440-dark.png",
+      "unit": "MC",
+      "state": "settled-enter",
+      "viewport": "1440x900",
+      "dpr": 1,
+      "theme": "dark",
+      "url": "http://127.0.0.1:4181/",
+      "time": "2026-10-29T03:04:10.023Z",
+      "kind": "viewport",
+      "interventions": "none",
+      "focused": "studio-config-accent_color-list"
+    },
+    {
+      "file": "MC-settled-space-1440-dark.png",
+      "unit": "MC",
+      "state": "settled-space",
+      "viewport": "1440x900",
+      "dpr": 1,
+      "theme": "dark",
+      "url": "http://127.0.0.1:4181/",
+      "time": "2026-10-29T03:04:11.621Z",
+      "kind": "viewport",
+      "interventions": "none",
+      "focused": "studio-config-accent_color-list"
+    },
+    {
+      "file": "MC-settled-enter-second-1440-dark.png",
+      "unit": "MC",
+      "state": "settled-enter-second",
+      "viewport": "1440x900",
+      "dpr": 1,
+      "theme": "dark",
+      "url": "http://127.0.0.1:4181/",
+      "time": "2026-10-29T03:04:13.203Z",
+      "kind": "viewport",
+      "interventions": "none",
+      "focused": "studio-config-accent_color-list"
+    },
+    {
+      "file": "MC-settled-enter-768-light.png",
+      "unit": "MC",
+      "state": "settled-enter",
+      "viewport": "768x1024",
+      "dpr": 1,
+      "theme": "light",
+      "url": "http://127.0.0.1:4181/",
+      "time": "2026-10-29T03:04:24.551Z",
+      "kind": "viewport",
+      "interventions": "none",
+      "focused": "studio-config-accent_color-list"
+    },
+    {
+      "file": "MC-settled-space-768-light.png",
+      "unit": "MC",
+      "state": "settled-space",
+      "viewport": "768x1024",
+      "dpr": 1,
+      "theme": "light",
+      "url": "http://127.0.0.1:4181/",
+      "time": "2026-10-29T03:04:26.135Z",
+      "kind": "viewport",
+      "interventions": "none",
+      "focused": "studio-config-accent_color-list"
+    },
+    {
+      "file": "MC-settled-enter-second-768-light.png",
+      "unit": "MC",
+      "state": "settled-enter-second",
+      "viewport": "768x1024",
+      "dpr": 1,
+      "theme": "light",
+      "url": "http://127.0.0.1:4181/",
+      "time": "2026-10-29T03:04:27.719Z",
+      "kind": "viewport",
+      "interventions": "none",
+      "focused": "studio-config-accent_color-list"
+    },
+    {
+      "file": "MC-settled-enter-390-light.png",
+      "unit": "MC",
+      "state": "settled-enter",
+      "viewport": "390x844",
+      "dpr": 1,
+      "theme": "light",
+      "url": "http://127.0.0.1:4181/",
+      "time": "2026-10-29T03:04:31.461Z",
+      "kind": "viewport",
+      "interventions": "none",
+      "focused": "studio-config-accent_color-list"
+    },
+    {
+      "file": "MC-settled-space-390-light.png",
+      "unit": "MC",
+      "state": "settled-space",
+      "viewport": "390x844",
+      "dpr": 1,
+      "theme": "light",
+      "url": "http://127.0.0.1:4181/",
+      "time": "2026-10-29T03:04:33.027Z",
+      "kind": "viewport",
+      "interventions": "none",
+      "focused": "studio-config-accent_color-list"
+    },
+    {
+      "file": "MC-settled-enter-second-390-light.png",
+      "unit": "MC",
+      "state": "settled-enter-second",
+      "viewport": "390x844",
+      "dpr": 1,
+      "theme": "light",
+      "url": "http://127.0.0.1:4181/",
+      "time": "2026-10-29T03:04:34.595Z",
+      "kind": "viewport",
+      "interventions": "none",
+      "focused": "studio-config-accent_color-list"
+    }
+  ],
+  "health": [
+    {
+      "unit": "MC",
+      "url": "http://127.0.0.1:4181/",
+      "pageErrors": [],
+      "consoleErrors": [],
+      "failed": [],
+      "csp": []
+    },
+    {
+      "unit": "MC",
+      "url": "http://127.0.0.1:4181/",
+      "pageErrors": [],
+      "consoleErrors": [],
+      "failed": [],
+      "csp": []
+    },
+    {
+      "unit": "MC",
+      "url": "http://127.0.0.1:4181/",
+      "pageErrors": [],
+      "consoleErrors": [],
+      "failed": [],
+      "csp": []
+    },
+    {
+      "unit": "MC",
+      "url": "http://127.0.0.1:4176/",
+      "pageErrors": [],
+      "consoleErrors": [],
+      "failed": [],
+      "csp": []
+    }
+  ],
+  "actions": {
+    "MC": [
+      "2026-10-29T03:04:07.369Z preset search 'Graphite' → Built-in · Graphite → brand pink → gray Auto",
+      "2026-10-29T03:04:10.024Z screenshot MC-settled-enter-1440-dark.png",
+      "2026-10-29T03:04:11.621Z screenshot MC-settled-space-1440-dark.png",
+      "2026-10-29T03:04:13.204Z screenshot MC-settled-enter-second-1440-dark.png",
+      "2026-10-29T03:04:22.455Z preset search 'Graphite' → Built-in · Graphite → brand pink → gray Auto",
+      "2026-10-29T03:04:24.552Z screenshot MC-settled-enter-768-light.png",
+      "2026-10-29T03:04:26.136Z screenshot MC-settled-space-768-light.png",
+      "2026-10-29T03:04:27.720Z screenshot MC-settled-enter-second-768-light.png",
+      "2026-10-29T03:04:29.375Z preset search 'Graphite' → Built-in · Graphite → brand pink → gray Auto",
+      "2026-10-29T03:04:31.461Z screenshot MC-settled-enter-390-light.png",
+      "2026-10-29T03:04:33.027Z screenshot MC-settled-space-390-light.png",
+      "2026-10-29T03:04:34.595Z screenshot MC-settled-enter-second-390-light.png"
+    ]
+  }
+}

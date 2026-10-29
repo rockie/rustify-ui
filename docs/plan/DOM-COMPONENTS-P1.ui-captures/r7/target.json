@@ -1,0 +1,15 @@
+{
+  "algorithm": "manual-sha256-normative-sections-v1",
+  "fingerprint": "6c8b16d50cf78224c314e9c6a8a6c3416ea54069319ba4425751bf4d50d159c4",
+  "target": "docs/plan/DOM-COMPONENTS-P1.ui-target.md",
+  "target_sha256": "056e8000993784c074355f85dbea8c66e08f7f3845b8bb711f0102d8bf42d0db",
+  "frozen_snapshot": "docs/plan/DOM-COMPONENTS-P1.ui-target.r6.md",
+  "mode": "manual",
+  "prior_round": 6,
+  "r7_snapshot": "docs/plan/DOM-COMPONENTS-P1.ui-target.r7.md",
+  "r7_snapshot_sha256": "5bf66db3bc6aea1391b2de92dcec7252392f053f6eeb29aeb18c163a6c9f4e29",
+  "current_target_sha256": "71f5f19d1f3f1d55669eea57efacfde77e43d4dddfbbff68b0169b412dad53ab",
+  "normative_same_as_r6": true,
+  "capture_only_changes": "R7 capture paragraph and change record; normative sections and attachments unchanged",
+  "initial_target_identical_to_r6": true
+}

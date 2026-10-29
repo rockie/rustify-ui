@@ -1,0 +1,95 @@
+{
+  "at": "2026-10-29T10:47:40.139885+00:00",
+  "head": "b9d5d356d00ebef4d387e0753cf14e2d8917ea9e",
+  "product_fingerprint_sha256": "e492abef49d9ff1bd4ebb891788621965bcce02dd86f99d53de37417e76c7ab2",
+  "product_files": 2754,
+  "product_diff_and_untracked_empty": true,
+  "immutable_files": {
+    "docs/plan/DOM-COMPONENTS-P1.md": true,
+    "PRODUCT.md": true,
+    "DESIGN.md": true,
+    "docs/plan/DOM-COMPONENTS-P1.ui-target.md": true,
+    "docs/plan/DOM-COMPONENTS-P1.ui-target.r7.md": true,
+    "docs/plan/DOM-COMPONENTS-P1.ui-target.r6.md": true,
+    "docs/plan/DOM-COMPONENTS-P1.ui-target.r5.md": true,
+    "docs/plan/DOM-COMPONENTS-P1.ui-review.r2.md": true,
+    "docs/plan/DOM-COMPONENTS-P1.ui-review.r6.md": true,
+    "docs/plan/DOM-COMPONENTS-P1.ui-review.r7.md": true,
+    "docs/plan/DOM-COMPONENTS-P1.ui-review.r3.md": true,
+    "docs/plan/DOM-COMPONENTS-P1.ui-review.md": true,
+    "docs/plan/DOM-COMPONENTS-P1.ui-review.r4.md": true,
+    "docs/plan/DOM-COMPONENTS-P1.ui-review.r5.md": true,
+    "docs/plan/DOM-COMPONENTS-P1.records/M4.md": true,
+    "docs/plan/DOM-COMPONENTS-P1.records/M1.md": true,
+    "docs/plan/DOM-COMPONENTS-P1.records/M5.md": true,
+    "docs/plan/DOM-COMPONENTS-P1.records/M2.md": true,
+    "docs/plan/DOM-COMPONENTS-P1.records/M6.md": true,
+    "docs/plan/DOM-COMPONENTS-P1.records/M7.md": true,
+    "docs/plan/DOM-COMPONENTS-P1.records/M3.md": true
+  },
+  "target_fingerprint_matches": true,
+  "packets": [
+    {
+      "packet": "packet-U5.json",
+      "files_verified": 44,
+      "hashes_match": true
+    },
+    {
+      "packet": "packet-U6.json",
+      "files_verified": 55,
+      "hashes_match": true
+    },
+    {
+      "packet": "packet-U2.json",
+      "files_verified": 29,
+      "hashes_match": true
+    },
+    {
+      "packet": "packet-U1.json",
+      "files_verified": 67,
+      "hashes_match": true
+    },
+    {
+      "packet": "packet-U3.json",
+      "files_verified": 43,
+      "hashes_match": true
+    },
+    {
+      "packet": "packet-U4.json",
+      "files_verified": 28,
+      "hashes_match": true
+    },
+    {
+      "packet": "packet-U7.json",
+      "files_verified": 47,
+      "hashes_match": true
+    },
+    {
+      "packet": "packet-U7-b.json",
+      "files_verified": 109,
+      "hashes_match": true
+    }
+  ],
+  "native_frames_verified": 340,
+  "by_unit": {
+    "U1": 62,
+    "U2": 24,
+    "U3": 38,
+    "U4": 23,
+    "U5": 39,
+    "U6": 50,
+    "U7": 104
+  },
+  "http_products": {
+    "theme-studio": {
+      "build_id": "105da89e37304db9",
+      "manifest_sha256": "738c383f5b61ebcf46dcfd9d22710890d542c333ca9c17ed82bf5ac5fce6a409"
+    },
+    "component-catalog": {
+      "build_id": "18ca82701d674efd",
+      "manifest_sha256": "aa50048e1e2855957bfaa2aff803ad52afa8a9cb49d91ceae1d9ed2a94a980a7"
+    }
+  },
+  "stable_product_file_hashes_match": true,
+  "required_missing": []
+}

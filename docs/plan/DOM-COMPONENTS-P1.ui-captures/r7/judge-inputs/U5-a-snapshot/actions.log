@@ -1,0 +1,68 @@
+2026-10-29T02:24:17.747Z renderer DOM
+2026-10-29T02:24:18.297Z screenshot U5-dom-1440-light.png
+2026-10-29T02:24:18.326Z mode Dark
+2026-10-29T02:24:18.882Z screenshot U5-dom-1440-dark.png
+2026-10-29T02:24:18.927Z mode Light
+2026-10-29T02:24:19.019Z local boundary appearance → Opposite to root
+2026-10-29T02:24:19.608Z screenshot U5-local-opposite-1440-light.png
+2026-10-29T02:24:19.673Z local boundary appearance → Inherit root
+2026-10-29T02:24:19.706Z open preview menu
+2026-10-29T02:24:20.258Z screenshot U5-menu-1440-light.png
+2026-10-29T02:24:20.292Z open preview dialog
+2026-10-29T02:24:20.843Z screenshot U5-dialog-1440-light.png
+2026-10-29T02:24:20.937Z open comparison scope, set its mode Dark
+2026-10-29T02:24:21.508Z screenshot U5-compare-nested-1440-light.png
+2026-10-29T02:24:21.549Z renderer DOM + GPU
+2026-10-29T02:24:22.329Z screenshot U5-gpu-compare-1440-light.png
+2026-10-29T02:24:30.907Z click Inspect
+2026-10-29T02:24:31.785Z wait 800 ms, hover card corner
+2026-10-29T02:24:32.335Z screenshot U5-inspector-card-1440-light.png
+2026-10-29T02:24:32.385Z hover Create profile button
+2026-10-29T02:24:32.934Z screenshot U5-inspector-1440-light.png
+2026-10-29T02:24:32.989Z click Create profile button while inspecting
+2026-10-29T02:24:33.556Z screenshot U5-inspector-picked-1440-light.png
+2026-10-29T02:24:41.855Z click Inspect
+2026-10-29T02:24:42.737Z wait 800 ms, hover preview primary (Create) button
+2026-10-29T02:24:43.297Z screenshot U5-inspector-undeclared-hover-1440-light.png
+2026-10-29T02:24:43.840Z click it while inspecting, wait 500 ms
+2026-10-29T02:24:44.393Z screenshot U5-inspector-undeclared-1440-light.png
+2026-10-29T02:24:45.782Z 390: click Preview tab
+2026-10-29T02:24:52.711Z screenshot U5-preview-390-light.png
+2026-10-29T02:24:52.745Z 390: open preview dialog
+2026-10-29T02:24:53.278Z screenshot U5-dialog-390-light.png
+2026-10-29T02:28:03.678Z EXTRA: renderer DOM, mode Dark, park pointer
+2026-10-29T02:28:03.713Z EXTRA: scroll preview to Caller class override
+2026-10-29T02:28:04.272Z screenshot U5-dom-caller-1440-dark.png
+2026-10-29T02:28:12.932Z EXTRA: local boundary appearance → Opposite to root
+2026-10-29T02:28:13.000Z EXTRA: open Actions menu inside the local boundary
+2026-10-29T02:28:13.560Z screenshot U5-local-opposite-menu-1440-light.png
+2026-10-29T02:28:13.566Z EXTRA: Escape
+2026-10-29T02:28:13.608Z EXTRA: Open dialog inside the local boundary
+2026-10-29T02:28:14.162Z screenshot U5-local-opposite-dialog-1440-light.png
+2026-10-29T02:28:24.071Z EXTRA: click Inspect
+2026-10-29T02:28:25.438Z EXTRA: wait 800 ms, click preview primary (Create) button while inspecting, wait 500 ms
+2026-10-29T02:28:25.444Z EXTRA: scroll the inspector panel into view
+2026-10-29T02:28:25.995Z screenshot U5-inspector-undeclared-panel-1440-light.png
+2026-10-29T02:31:13.383Z screenshot U5-matrix-dom-1440-dark.png
+2026-10-29T02:31:14.050Z screenshot U5-matrix-local-opposite-1440-dark.png
+2026-10-29T02:31:14.633Z screenshot U5-matrix-local-opposite-menu-1440-dark.png
+2026-10-29T02:31:15.217Z screenshot U5-matrix-local-opposite-dialog-1440-dark.png
+2026-10-29T02:31:15.868Z screenshot U5-matrix-menu-1440-dark.png
+2026-10-29T02:31:16.450Z screenshot U5-matrix-dialog-1440-dark.png
+2026-10-29T02:31:17.082Z screenshot U5-matrix-compare-nested-1440-dark.png
+2026-10-29T02:31:18.533Z screenshot U5-matrix-inspector-1440-dark.png
+2026-10-29T02:31:19.678Z screenshot U5-matrix-inspector-picked-1440-dark.png
+2026-10-29T02:31:20.455Z screenshot U5-matrix-gpu-compare-1440-dark.png
+2026-10-29T02:31:20.455Z matrix 1440/dark: DOM, opposite boundary and its menu/dialog; inherited menu/dialog; opposite comparison; inspect actual Create profile; DOM+GPU
+2026-10-29T02:31:29.379Z screenshot U5-matrix-dom-390-light.png
+2026-10-29T02:31:30.011Z screenshot U5-matrix-local-opposite-390-light.png
+2026-10-29T02:31:30.577Z screenshot U5-matrix-local-opposite-menu-390-light.png
+2026-10-29T02:31:31.144Z screenshot U5-matrix-local-opposite-dialog-390-light.png
+2026-10-29T02:31:31.778Z screenshot U5-matrix-menu-390-light.png
+2026-10-29T02:31:32.346Z screenshot U5-matrix-dialog-390-light.png
+2026-10-29T02:31:32.961Z screenshot U5-matrix-compare-nested-390-light.png
+2026-10-29T02:31:34.396Z screenshot U5-matrix-inspector-390-light.png
+2026-10-29T02:31:35.503Z screenshot U5-matrix-inspector-picked-390-light.png
+2026-10-29T02:31:36.562Z screenshot U5-matrix-gpu-compare-390-light.png
+2026-10-29T02:31:37.095Z screenshot U5-matrix-gpu-compare-end-390-light.png
+2026-10-29T02:31:37.095Z matrix 390/light: DOM, opposite boundary and its menu/dialog; inherited menu/dialog; opposite comparison; inspect actual Create profile; DOM+GPU

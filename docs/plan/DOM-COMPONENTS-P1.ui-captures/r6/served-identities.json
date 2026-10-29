@@ -1,0 +1,14 @@
+[
+  {
+    "url": "http://127.0.0.1:4181/build-manifest.json",
+    "build_id": "dff085ce38bbff64",
+    "matches_product": true,
+    "csp": "default-src 'none'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; media-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'"
+  },
+  {
+    "url": "http://127.0.0.1:4176/build-manifest.json",
+    "build_id": "32b52b66f04701ad",
+    "matches_product": true,
+    "csp": "default-src 'none'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; media-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'"
+  }
+]

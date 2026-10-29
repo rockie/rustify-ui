@@ -1,0 +1,42 @@
+2026-10-27T15:19:36.797Z seed only rustify-ui.theme-studio.v1 (legacy draft + two named themes), reload at 1440
+2026-10-27T15:19:37.359Z screenshot U4-upgrade-pending-1440-light.png
+2026-10-27T15:19:37.429Z click upgrade Review
+2026-10-27T15:19:37.978Z screenshot U4-upgrade-review-1440-light.png
+2026-10-27T15:19:37.989Z scroll to the upgrade confirm button
+2026-10-27T15:19:38.546Z screenshot U4-upgrade-review-end-1440-light.png
+2026-10-27T15:19:38.588Z click Cancel upgrade
+2026-10-27T15:19:38.677Z edit primary ← #234567
+2026-10-27T15:19:38.753Z Save locally, name 'Memory only', confirm
+2026-10-27T15:19:39.311Z screenshot U4-upgrade-cancelled-1440-light.png
+2026-10-27T15:19:39.373Z click upgrade Review again
+2026-10-27T15:19:39.460Z click upgrade confirm
+2026-10-27T15:19:41.526Z screenshot U4-upgraded-1440-light.png
+2026-10-27T15:19:43.975Z seed only rustify-ui.theme-studio.v1 (legacy draft + two named themes), reload at 390
+2026-10-27T15:19:44.520Z screenshot U4-upgrade-pending-390-light.png
+2026-10-27T15:19:53.907Z primary ← #123456, wait for idle save
+2026-10-27T15:19:53.908Z inject: Storage.prototype.setItem throws QuotaExceededError
+2026-10-27T15:19:54.017Z Save locally, name 'Retained name', confirm
+2026-10-27T15:19:54.593Z screenshot U4-quota-failure-1440-light.png
+2026-10-27T15:19:54.618Z open pending / recent operations
+2026-10-27T15:19:55.178Z screenshot U4-quota-operations-1440-light.png
+2026-10-27T15:20:05.430Z tab A: primary ← #123456, idle
+2026-10-27T15:20:07.198Z tab B (same origin): primary ← #654321, idle
+2026-10-27T15:20:07.758Z screenshot U4-conflict-1440-light.png
+2026-10-27T15:20:08.326Z screenshot U4-conflict-detail-1440-light.png
+2026-10-27T15:20:08.366Z expand View exact stored text
+2026-10-27T15:20:08.942Z screenshot U4-conflict-raw-1440-light.png
+2026-10-27T15:20:19.641Z init script removes navigator.locks; open, no action
+2026-10-27T15:20:20.219Z screenshot U4-no-locks-initial-1440-light.png
+2026-10-27T15:20:20.626Z primary ← #789abc; Save locally 'Not persisted'
+2026-10-27T15:20:21.208Z screenshot U4-no-locks-1440-light.png
+2026-10-27T15:24:35.180Z EXTRA: tab A #123456, tab B #654321
+2026-10-27T15:24:35.192Z EXTRA: scroll so the bottom edge of the conflict panel meets the viewport bottom
+2026-10-27T15:24:35.744Z screenshot U4-conflict-detail-end-1440-light.png
+2026-10-27T15:24:35.745Z EXTRA: scroll the conflict panel's scrolling ancestor 300px further (aside#studio-editor scrollTop 0→300)
+2026-10-27T15:24:36.292Z screenshot U4-conflict-after-1440-light.png
+2026-10-27T15:24:36.320Z EXTRA: open 'Draft differences' disclosure in the conflict panel
+2026-10-27T15:24:36.894Z screenshot U4-conflict-diff-1440-light.png
+2026-10-27T16:05:45.164Z SUP: seed only rustify-ui.theme-studio.v1 (legacy draft + two named themes), reload
+2026-10-27T16:05:45.237Z SUP: click upgrade Review
+2026-10-27T16:05:45.268Z SUP: expand Complete migration JSON
+2026-10-27T16:05:45.863Z screenshot U4-upgrade-review-json-1440-light.png

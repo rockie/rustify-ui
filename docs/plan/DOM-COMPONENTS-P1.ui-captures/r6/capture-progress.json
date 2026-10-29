@@ -1,0 +1,40 @@
+{
+  "records": [
+    {
+      "file": "MC-pink-menu-confirm-390-light.png",
+      "unit": "MC",
+      "state": "pink-menu-confirm",
+      "viewport": "390x844",
+      "dpr": 1,
+      "theme": "light",
+      "url": "http://127.0.0.1:4181/",
+      "time": "2026-10-28T17:08:30.672Z",
+      "kind": "viewport",
+      "interventions": "none",
+      "focused": "studio-config-accent_color-list"
+    },
+    {
+      "file": "MC-pink-menu-confirm-1440-dark.png",
+      "unit": "MC",
+      "state": "pink-menu-confirm",
+      "viewport": "1440x900",
+      "dpr": 1,
+      "theme": "dark",
+      "url": "http://127.0.0.1:4181/",
+      "time": "2026-10-28T17:08:42.753Z",
+      "kind": "viewport",
+      "interventions": "none",
+      "focused": "studio-config-accent_color-list"
+    }
+  ],
+  "actions": {
+    "UI-217": [
+      "2026-10-28T17:08:27.550Z preset search 'Graphite' → Built-in · Graphite → brand pink → gray Auto",
+      "2026-10-28T17:08:39.505Z preset search 'Graphite' → Built-in · Graphite → brand pink → gray Auto"
+    ],
+    "MC": [
+      "2026-10-28T17:08:30.674Z screenshot MC-pink-menu-confirm-390-light.png",
+      "2026-10-28T17:08:42.753Z screenshot MC-pink-menu-confirm-1440-dark.png"
+    ]
+  }
+}

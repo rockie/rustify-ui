@@ -1,0 +1,37 @@
+{
+  "report": "docs/plan/DOM-COMPONENTS-P1.ui-review.r6.md",
+  "report_sha256": "sha256:a1386f3083a7effd09eb0f5de35d7dfdf004214dc5f4a6b5ac98800642624524",
+  "verdict": "需要修改",
+  "scores": [
+    "9.5",
+    "10.0",
+    "10.0",
+    "10.0",
+    "10.0",
+    "10.0",
+    "9.7"
+  ],
+  "minimum": "9.5",
+  "minimum_unit": "U1",
+  "threshold": "8",
+  "p0": 0,
+  "p1": 1,
+  "p2": 1,
+  "open_gaps": [
+    "UI-217",
+    "UI-216"
+  ],
+  "review_images": 236,
+  "machine_images": 15,
+  "fresh_reviewers": 14,
+  "local_links_checked": 925,
+  "missing_links": [],
+  "event_sets_match_states": true,
+  "current_event_sources_hash_valid": true,
+  "original_events_unchanged": true,
+  "initial_154_images_unchanged": true,
+  "target_hashes_unchanged": true,
+  "head_unchanged": true,
+  "product_diff_empty": true,
+  "services_stopped": true
+}

@@ -1,0 +1,122 @@
+{
+  "scores": {
+    "U1": {
+      "dimensions": [
+        "3",
+        "3",
+        "3",
+        "1"
+      ],
+      "total": "10",
+      "source": "judge-U1-a.md"
+    },
+    "U2": {
+      "dimensions": [
+        "3",
+        "3",
+        "3",
+        "1"
+      ],
+      "total": "10",
+      "source": "judge-U2-a.md"
+    },
+    "U3": {
+      "dimensions": [
+        "3",
+        "3",
+        "3",
+        "1"
+      ],
+      "total": "10",
+      "source": "judge-U3-b.md"
+    },
+    "U4": {
+      "dimensions": [
+        "3",
+        "3",
+        "3",
+        "1"
+      ],
+      "total": "10",
+      "source": "judge-U4-b.md"
+    },
+    "U5": {
+      "dimensions": [
+        "3",
+        "2.8",
+        "3",
+        "1"
+      ],
+      "total": "9.8",
+      "source": "judge-U5-a.md"
+    },
+    "U6": {
+      "dimensions": [
+        "3",
+        "3",
+        "3",
+        "1"
+      ],
+      "total": "10",
+      "source": "judge-U6-a.md"
+    },
+    "U7": {
+      "dimensions": [
+        "3",
+        "3",
+        "3",
+        "1"
+      ],
+      "total": "10",
+      "source": "judge-U7-b.md"
+    }
+  },
+  "old_gap_reviews": {
+    "UI-216": {
+      "unit": "U7",
+      "status": "已解决",
+      "sources": [
+        "judge-U7-a.md",
+        "judge-U7-b.md"
+      ]
+    },
+    "UI-217": {
+      "unit": "U1",
+      "status": "已解决",
+      "sources": [
+        "judge-U1-a.md"
+      ]
+    }
+  },
+  "new_id_mappings": [
+    {
+      "unit": "U5",
+      "raw": "新-1",
+      "id": "UI-218",
+      "basis": "未标注部件拾取框为灰色虚线；此前未作为差距编号登记，本轮U5独立评审新识别。"
+    }
+  ],
+  "raw_sha256": {
+    "judge-U1-a.md": "243467dc0f749962f6e9db5978ccfe48b32f6edd27f401514b83b8a77b6abd01",
+    "judge-U2-a.md": "e06b377eafe43dcbfb31d7fd332ef58211431d371dc15d55165ca7dc42f53b2f",
+    "judge-U3-a.md": "0e98a05f32d080feb35f82572e42b25c403c509f33797ed770591ce6668b0b8e",
+    "judge-U3-b.md": "a6c598e3eb8187b169132e6b05273c5f4fc72c8b5e6a48d2e8a624ea682d2773",
+    "judge-U4-a.md": "33ff72803847be757765dfe83063ca7edb4ae63103c5ed4f82cf4ca825ce516a",
+    "judge-U4-b.md": "1cbf6cd3a184a9f891510763806dd9b1e7985d007accb9e0f3508f8ec19bc6ec",
+    "judge-U5-a.md": "164126e9b0120ef7d959b5b16ee8c9e4bc0fae96b4061fc64d2ef3e2eddeb2de",
+    "judge-U6-a.md": "09dfa8ae06b8e7945d1e27c14636ea493c2cb84c5446273e6180c1f21b47f983",
+    "judge-U7-a.md": "86845272e558027ac0b613b7b1b53ba346c1ba5b39d9ca8fbe9c2d889a7d5255",
+    "judge-U7-b.md": "741e253c42ae3f33034f3d80e2b6414af76068e14ea6372f49c1ec219afc0c8f"
+  },
+  "minimum_unit": "U5",
+  "minimum_score": "9.8",
+  "open_gaps": [
+    {
+      "id": "UI-218",
+      "unit": "U5",
+      "severity": "P2",
+      "recoverable": "0.2",
+      "raw": "judge-U5-a.md"
+    }
+  ]
+}

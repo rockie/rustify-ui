@@ -1,0 +1,53 @@
+2026-10-27T15:19:14.122Z open Import at 1440
+2026-10-27T15:19:14.219Z paste valid v1 JSON (primary changed), click Review
+2026-10-27T15:19:14.789Z screenshot U3-import-review-1440-light.png
+2026-10-27T15:19:14.802Z scroll dialog to Apply
+2026-10-27T15:19:15.358Z screenshot U3-import-review-end-1440-light.png
+2026-10-27T15:19:15.397Z replace with {schema_version:999}, click Review
+2026-10-27T15:19:15.961Z screenshot U3-import-error-1440-light.png
+2026-10-27T15:19:15.982Z Escape
+2026-10-27T15:19:16.563Z preset search 'Graphite' → Built-in · Graphite → brand pink → gray Auto
+2026-10-27T15:19:16.965Z open Export
+2026-10-27T15:19:17.538Z screenshot U3-export-json-1440-light.png
+2026-10-27T15:19:17.611Z export kind → Compatible JSON v1 · lossy
+2026-10-27T15:19:18.194Z screenshot U3-export-v1-1440-light.png
+2026-10-27T15:19:18.287Z export kind → CSS · resolved values
+2026-10-27T15:19:18.864Z screenshot U3-export-css-1440-light.png
+2026-10-27T15:19:18.893Z open CSS profile list
+2026-10-27T15:19:19.464Z screenshot U3-export-css-profile-open-1440-light.png
+2026-10-27T15:19:19.466Z Escape (close list)
+2026-10-27T15:19:19.493Z open color notation list
+2026-10-27T15:19:20.062Z screenshot U3-export-css-notation-open-1440-light.png
+2026-10-27T15:19:20.064Z Escape (close list)
+2026-10-27T15:19:20.137Z export kind → Rust integration
+2026-10-27T15:19:20.711Z screenshot U3-export-rust-1440-light.png
+2026-10-27T15:19:20.743Z click Copy (clipboard permission granted)
+2026-10-27T15:19:21.613Z screenshot U3-export-copied-1440-light.png
+2026-10-27T15:19:21.617Z scroll exported code to its end
+2026-10-27T15:19:22.176Z screenshot U3-export-rust-end-1440-light.png
+2026-10-27T15:19:23.603Z open Import at 390
+2026-10-27T15:19:23.690Z paste valid v1 JSON (primary changed), click Review
+2026-10-27T15:19:24.223Z screenshot U3-import-review-390-light.png
+2026-10-27T15:19:24.236Z scroll dialog to Apply
+2026-10-27T15:19:24.772Z screenshot U3-import-review-end-390-light.png
+2026-10-27T15:19:24.787Z Escape
+2026-10-27T15:19:25.035Z preset search 'Graphite' → Built-in · Graphite → brand pink → gray Auto
+2026-10-27T15:19:25.084Z open Export
+2026-10-27T15:19:25.625Z screenshot U3-export-json-390-light.png
+2026-10-27T15:24:20.740Z EXTRA 1440: Import, paste valid v1 (primary changed), Review
+2026-10-27T15:24:20.753Z scroll clipped scrollers inside data-tools-dialog to their end: div.relative.w-full overflow-y:auto scrollTop 0→626; textarea[import-source].flex.min-h-16 overflow-y:auto scrollTop 2048→2059
+2026-10-27T15:24:21.313Z screenshot U3-import-review-bottom-1440-light.png
+2026-10-27T15:24:22.831Z EXTRA 390: Import, paste valid v1 (primary changed), Review
+2026-10-27T15:24:22.842Z scroll clipped scrollers inside data-tools-dialog to their end: div.relative.w-full overflow-y:auto scrollTop 0→1429; textarea[import-source].flex.min-h-16 overflow-y:auto scrollTop 2505→2516; thead overflow-y:hidden scrollTop 0→71
+2026-10-27T15:24:23.380Z screenshot U3-import-review-bottom-390-light.png
+2026-10-27T16:05:27.809Z preset search 'Graphite' → Built-in · Graphite → brand pink → gray Auto
+2026-10-27T16:05:27.955Z SUP: open Export, kind → Rust integration
+2026-10-27T16:05:27.983Z SUP: scroll the exported code to the first font file (no .woff2 in exported text)
+2026-10-27T16:05:28.560Z screenshot U3-export-rust-mid-1440-light.png
+2026-10-27T16:05:30.146Z SUP 390: Import, paste valid v1 (primary changed), Review
+2026-10-27T16:05:30.164Z SUP 390: scroll the dialog so the Identity group is in the middle of the viewport
+2026-10-27T16:05:30.715Z screenshot U3-import-review-mid-390-light.png
+2026-10-27T16:06:45.986Z preset search 'Graphite' → Built-in · Graphite → brand pink → gray Auto
+2026-10-27T16:06:46.100Z SUP2: open Export, kind → Rust integration
+2026-10-27T16:06:46.115Z SUP2: scroll the exported code to its vertical middle (scrollTop 531 of 1061)
+2026-10-27T16:06:46.688Z screenshot U3-export-rust-mid-1440-light-a2.png

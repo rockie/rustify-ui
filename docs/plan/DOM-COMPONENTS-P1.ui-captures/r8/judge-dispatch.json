@@ -1,0 +1,90 @@
+{
+  "round": 8,
+  "mode": "manual",
+  "agents": [
+    {
+      "unit": "U5",
+      "task_name": "/root/ui_r8_u5",
+      "fork_turns": "none",
+      "model": "inherit; exact runtime model not returned by collaboration tool",
+      "effort": "inherit; exact runtime effort not returned by collaboration tool",
+      "dispatched_at": "2026-10-29T09:59:53.917773+00:00",
+      "packet_sha256": "03b4e9cdafbb8847a7756a666d39d6e634973c0e5d427917ece39ec875070c90",
+      "task_sha256": "16bb74a3e09d12e4947b3f9740818bd7306dcc042da3d146525c3175d5b8eb3f"
+    },
+    {
+      "unit": "U6",
+      "task_name": "/root/ui_r8_u6",
+      "fork_turns": "none",
+      "model": "inherit; exact runtime model not returned by collaboration tool",
+      "effort": "inherit; exact runtime effort not returned by collaboration tool",
+      "dispatched_at": "2026-10-29T10:01:08.129549+00:00",
+      "packet_sha256": "b7943cc4fc772ce17d9da13af30d216540334c2655736b998b89518b67467d38",
+      "task_sha256": "39b97e499e62fd5ad0d37e1c115d0d6df07e2a5fad9a29d7d811b7b5f03735e3"
+    },
+    {
+      "unit": "U2",
+      "task_name": "/root/ui_r8_u2",
+      "fork_turns": "none",
+      "model": "inherit; exact runtime model not returned by collaboration tool",
+      "effort": "inherit; exact runtime effort not returned by collaboration tool",
+      "dispatched_at": "2026-10-29T10:01:08.130219+00:00",
+      "packet_sha256": "fe06be559f81c08716a0d86148053c465f5b9147f9a439318d1ab32e55b6ad7a",
+      "task_sha256": "30c16232b028a4c9ef8ba16ea4b95eb55e675f91017699a002857c8fef0fa8a3"
+    },
+    {
+      "unit": "U1",
+      "task_name": "/root/ui_r8_u1",
+      "fork_turns": "none",
+      "model": "inherit; exact runtime model not returned by collaboration tool",
+      "effort": "inherit; exact runtime effort not returned by collaboration tool",
+      "dispatched_at": "recorded after completion; actual dispatch in conversation tool trace",
+      "packet_sha256": "9eda152349f31e6d6789418087fe9a2db7b2f9e90f622a489c3b77da13f5c568",
+      "task_sha256": "ddb1664ea693c0a1afba770c923f2668a9290dd588245120db1132ac20465b10"
+    },
+    {
+      "unit": "U3",
+      "task_name": "/root/ui_r8_u3",
+      "fork_turns": "none",
+      "model": "inherit; exact runtime model not returned by collaboration tool",
+      "effort": "inherit; exact runtime effort not returned by collaboration tool",
+      "dispatched_at": "2026-10-29T10:18:51.525321+00:00",
+      "packet_sha256": "ffd449b2a73a06459c9bdfe35c31134bd8c082d10a5c64dbb380c2c511d37f35",
+      "task_sha256": "7d59e6fb5aa8a4b2aa7722c56ba639c60005a8383e90403e80b67b818d174ab2"
+    },
+    {
+      "unit": "U4",
+      "task_name": "/root/ui_r8_u4",
+      "fork_turns": "none",
+      "model": "inherit; exact runtime model not returned by collaboration tool",
+      "effort": "inherit; exact runtime effort not returned by collaboration tool",
+      "dispatched_at": "2026-10-29T10:18:51.526068+00:00",
+      "packet_sha256": "7e7945db1e00afa72f1197330f6a1fad29ec8de661a1364ef973381c2bb49a81",
+      "task_sha256": "6b53abe411003ed737ccf26e0f396a2c91cd1a61973ad790922b5c89af5037b4"
+    },
+    {
+      "unit": "U7",
+      "task_name": "/root/ui_r8_u7",
+      "fork_turns": "none",
+      "model": "inherit; exact runtime model not returned by collaboration tool",
+      "effort": "inherit; exact runtime effort not returned by collaboration tool",
+      "dispatched_at": "2026-10-29T10:18:51.526446+00:00",
+      "packet_sha256": "1cf578562a91db0ecf577b090abde500d92d6a548b4a280e12c5b5d9df3aa880",
+      "task_sha256": "5604d627373a4e711eb4ea60300dedf5a8c8c10b1bb62921c7ca74cf23fae9ad"
+    },
+    {
+      "unit": "U7",
+      "batch": "b",
+      "task_name": "/root/ui_r8_u7b",
+      "fork_turns": "none",
+      "model": "inherit; exact runtime model not returned by collaboration tool",
+      "effort": "inherit; exact runtime effort not returned by collaboration tool",
+      "dispatched_at": "2026-10-29T10:30:38.859805+00:00",
+      "packet_file": "packet-U7-b.json",
+      "task_file": "task-U7-b.md",
+      "packet_sha256": "a7977c84480e024b0c58890d7ed86a45fc27e6aa94d182b362e8473013e5ca3f",
+      "task_sha256": "6703010d298c097b66f0cd7b24cee4d903797173de88eded27598647eec2c049",
+      "reason": "additional native segmentation of existing zoom states; new reviewer receives target, screenshots/operations and R7 independent conclusion only"
+    }
+  ]
+}

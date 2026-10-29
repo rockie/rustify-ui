@@ -1,0 +1,54 @@
+[
+  {
+    "unit": "U1",
+    "previous_raw": "docs/plan/DOM-COMPONENTS-P1.ui-captures/r7/judge-U1-a.md",
+    "packet_previous_raw": "docs/plan/DOM-COMPONENTS-P1.ui-captures/r8/judge-inputs/previous-judge-U1.md",
+    "sha256": "243467dc0f749962f6e9db5978ccfe48b32f6edd27f401514b83b8a77b6abd01",
+    "previous_pngs": 62
+  },
+  {
+    "unit": "U2",
+    "previous_raw": "docs/plan/DOM-COMPONENTS-P1.ui-captures/r7/judge-U2-a.md",
+    "packet_previous_raw": "docs/plan/DOM-COMPONENTS-P1.ui-captures/r8/judge-inputs/previous-judge-U2.md",
+    "sha256": "e06b377eafe43dcbfb31d7fd332ef58211431d371dc15d55165ca7dc42f53b2f",
+    "previous_pngs": 24
+  },
+  {
+    "unit": "U3",
+    "previous_raw": "docs/plan/DOM-COMPONENTS-P1.ui-captures/r7/judge-U3-b.md",
+    "packet_previous_raw": "docs/plan/DOM-COMPONENTS-P1.ui-captures/r8/judge-inputs/previous-judge-U3.md",
+    "sha256": "a6c598e3eb8187b169132e6b05273c5f4fc72c8b5e6a48d2e8a624ea682d2773",
+    "previous_pngs": 38
+  },
+  {
+    "unit": "U4",
+    "previous_raw": "docs/plan/DOM-COMPONENTS-P1.ui-captures/r7/judge-U4-b.md",
+    "packet_previous_raw": "docs/plan/DOM-COMPONENTS-P1.ui-captures/r8/judge-inputs/previous-judge-U4.md",
+    "sha256": "1cbf6cd3a184a9f891510763806dd9b1e7985d007accb9e0f3508f8ec19bc6ec",
+    "previous_pngs": 23
+  },
+  {
+    "unit": "U5",
+    "previous_raw": "docs/plan/DOM-COMPONENTS-P1.ui-captures/r7/judge-U5-a.md",
+    "packet_previous_raw": "docs/plan/DOM-COMPONENTS-P1.ui-captures/r8/judge-inputs/previous-judge-U5.md",
+    "sha256": "164126e9b0120ef7d959b5b16ee8c9e4bc0fae96b4061fc64d2ef3e2eddeb2de",
+    "previous_pngs": 39,
+    "id_mapping": {
+      "新-1": "UI-218"
+    }
+  },
+  {
+    "unit": "U6",
+    "previous_raw": "docs/plan/DOM-COMPONENTS-P1.ui-captures/r7/judge-U6-a.md",
+    "packet_previous_raw": "docs/plan/DOM-COMPONENTS-P1.ui-captures/r8/judge-inputs/previous-judge-U6.md",
+    "sha256": "09dfa8ae06b8e7945d1e27c14636ea493c2cb84c5446273e6180c1f21b47f983",
+    "previous_pngs": 50
+  },
+  {
+    "unit": "U7",
+    "previous_raw": "docs/plan/DOM-COMPONENTS-P1.ui-captures/r7/judge-U7-b.md",
+    "packet_previous_raw": "docs/plan/DOM-COMPONENTS-P1.ui-captures/r8/judge-inputs/previous-judge-U7.md",
+    "sha256": "741e253c42ae3f33034f3d80e2b6414af76068e14ea6372f49c1ec219afc0c8f",
+    "previous_pngs": 42
+  }
+]

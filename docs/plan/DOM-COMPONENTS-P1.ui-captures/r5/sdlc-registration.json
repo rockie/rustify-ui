@@ -1,0 +1,19 @@
+{
+  "review_id": "2cc80246-5d61-4370-bbd7-462827ecbce3",
+  "review_event": "0384a908-7156-4067-9664-f671a1ffacb2",
+  "disposition_event": "9ad570f5-cec3-411d-8d7d-c6664a8dcc4d",
+  "observed_at": "2026-10-28T22:52:39+08:00",
+  "state_page": ".xgent-ai/sdlc/status/review/2cc80246-5d61-4370-bbd7-462827ecbce3.md",
+  "event_directory": ".xgent-ai/sdlc/events/review/2cc80246-5d61-4370-bbd7-462827ecbce3",
+  "report_sha256": "ddaea0c134ab0a9f0f7c284c76fd29054a946da630b7fd448b320686c545aa12",
+  "report": "docs/plan/DOM-COMPONENTS-P1.ui-review.r5.md",
+  "touched_views": [
+    ".xgent-ai/sdlc/status/plan/37a2c7b4-7052-4f85-96e9-135b6f7667a1.md",
+    ".xgent-ai/sdlc/index.md"
+  ],
+  "post_review_decision_events": [
+    "3f22369e-5726-4996-9240-692430c6b950"
+  ],
+  "latest_report_sha256": "0147c9bd79db192fa47670c7589f2bdff446d32d146a1ee6f401ac605439cbff",
+  "original_report_snapshot": "docs/plan/DOM-COMPONENTS-P1.ui-captures/r5/user-decisions/r5-report-before-ui115.md"
+}

@@ -1,0 +1,126 @@
+{
+  "scores": {
+    "U1": {
+      "dimensions": [
+        "3.0",
+        "3.0",
+        "3.0",
+        "1.0"
+      ],
+      "total": "10.0",
+      "source": "judge-U1-a.md"
+    },
+    "U2": {
+      "dimensions": [
+        "3.00",
+        "3.00",
+        "2.95",
+        "1.00"
+      ],
+      "total": "9.95",
+      "source": "judge-U2-b.md"
+    },
+    "U3": {
+      "dimensions": [
+        "2.95",
+        "3.00",
+        "3.00",
+        "0.95"
+      ],
+      "total": "9.90",
+      "source": "judge-U3-a.md"
+    },
+    "U4": {
+      "dimensions": [
+        "3.00",
+        "3.00",
+        "3.00",
+        "0.95"
+      ],
+      "total": "9.95",
+      "source": "judge-U4-a.md"
+    },
+    "U5": {
+      "dimensions": [
+        "2.95",
+        "3.00",
+        "3.00",
+        "1.00"
+      ],
+      "total": "9.95",
+      "source": "judge-U5-a.md"
+    },
+    "U6": {
+      "dimensions": [
+        "3.0",
+        "2.99",
+        "3.0",
+        "1.0"
+      ],
+      "total": "9.99",
+      "source": "judge-U6-a.md"
+    },
+    "U7": {
+      "dimensions": [
+        "3.0",
+        "2.6",
+        "3.0",
+        "1.0"
+      ],
+      "total": "9.6",
+      "source": "judge-U7-a.md"
+    }
+  },
+  "previous_review_gaps": {
+    "UI-02": "已解决",
+    "UI-193": "已解决",
+    "UI-194": "已解决",
+    "UI-172": "已解决",
+    "UI-195": "已解决",
+    "UI-196": "已解决",
+    "UI-18": "已解决",
+    "UI-115": "仍存在",
+    "UI-197": "已解决",
+    "UI-160": "已解决",
+    "UI-128": "已解决",
+    "UI-198": "已解决",
+    "UI-176": "已解决",
+    "UI-199": "已解决",
+    "UI-200": "已解决",
+    "UI-25": "已解决",
+    "UI-201": "已解决",
+    "UI-203": "部分解决",
+    "UI-202": "已解决",
+    "UI-204": "已解决",
+    "UI-205": "已解决",
+    "UI-56": "已解决",
+    "UI-206": "已解决",
+    "UI-207": "已解决",
+    "UI-76": "回归",
+    "UI-208": "已解决",
+    "UI-209": "已解决",
+    "UI-210": "部分解决",
+    "UI-189": "已解决",
+    "UI-211": "已解决"
+  },
+  "new_id_mappings": {
+    "U3 新-1": {
+      "id": "UI-213",
+      "basis": "U3 reviewer new sticky-header residual-row gap; no prior allocated gap matches."
+    },
+    "U7 新-1": {
+      "id": "UI-214",
+      "basis": "U7 reviewer newly discovered Kbd large-size corner radius gap; not a regression."
+    }
+  },
+  "raw_sha256": {
+    "judge-U1-a.md": "bdc3879a912b95550374082e3d04725194d3df85c73b27df75b2d5ceb8e52ae8",
+    "judge-U2-a.md": "81098d892fef188c8f54daeded5c1ed422e29b31eaf62a868086c51ee8660256",
+    "judge-U2-b.md": "4aaf8b356341a5b142d7bd74cd7edff3f73e7b3f8b39e337dce00e99e1197fca",
+    "judge-U3-a.md": "e3f05faf7e67c5d945571022bf642db728fbdcf3f48b57564125de80026a11ef",
+    "judge-U4-a.md": "991a0a18b555d9937a26c3620f044d0ad229eca3d51aa0d24b62b9318e0d71ba",
+    "judge-U5-a.md": "496370db7fad7ff7a9c087cb8844196c982a41196a9bec8f98fee157df8d94c5",
+    "judge-U6-a.md": "bb756397aac2c6c7de5603a8446657ba6f87b9069ce9d51b8bb30635b55014e4",
+    "judge-U7-a.md": "ed11306c1cd630a2c0528880ac859bef12348126dd805af8be790eec052beb59"
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "review_id": "52acf57f-e15a-4bc4-b538-209c3e21aeab",
+  "review_event": "418fb984-7408-4447-9890-9483b60231d3",
+  "disposition_event": "46240be8-c8cc-4a17-9bca-a8ac9603425c",
+  "prior_disposition_event": "d7d87c26-d8a7-4811-9809-435732afa400",
+  "observed_at": "2026-10-29T18:50:46+08:00",
+  "baseline": {
+    "head": "b9d5d356d00ebef4d387e0753cf14e2d8917ea9e",
+    "branch": "main",
+    "worktree": "dirty"
+  },
+  "before": {
+    ".xgent-ai/sdlc/index.md": "28f8d64c2d778cc9681d8c0b16170dd2b698f95027d19145ca0f44cff7cfdf5d",
+    ".xgent-ai/sdlc/status/review/index.md": "749d30ce0c94a85486ba80d81d47f13f147f2b3ddd8c95ab7d36d8a06623e6cd",
+    ".xgent-ai/sdlc/events/review/index.md": "b6596fb1ae50ee3db50046c32be5461a5fa5b94e9846d34847bf2e737aeb760c",
+    ".xgent-ai/sdlc/events/review/8abc8d80-fa38-4e09-b066-929980601837/index.md": "534e1fa5c437901d3052741e4f360a2dc9988b77e3ac01feab1d6222fe4b515d",
+    ".xgent-ai/sdlc/status/review/8abc8d80-fa38-4e09-b066-929980601837.md": "84feba4dd1c47a0863e8f0a930d328ab61c373c94c9d6f0aa3c6f1666aec5e9d",
+    ".xgent-ai/sdlc/status/plan/37a2c7b4-7052-4f85-96e9-135b6f7667a1.md": "4c0c4b49c298c90aeaf75c588b72b813f158a01ac2bacdd49dca86b3de12c407"
+  },
+  "immutable_prior_events": {
+    ".xgent-ai/sdlc/events/review/8abc8d80-fa38-4e09-b066-929980601837/d967cf00-b1ee-4964-acbb-0cc230091813.md": "377d14ab94f40bd4f1f9043c9cb4c670c3a49208e97b6b6da2426cfd591387d3",
+    ".xgent-ai/sdlc/events/review/8abc8d80-fa38-4e09-b066-929980601837/ba7369ef-8eaa-49b1-bf13-ed1f5c5bafa1.md": "e7095dc3e714ef26a007d9e41d597085dafac966bd3d62804ee04809c252adce",
+    ".xgent-ai/sdlc/events/review/8abc8d80-fa38-4e09-b066-929980601837/95598bf2-e4d5-455e-b3d7-cec86deaeb6c.md": "e8e265795adeecbc645148608f6f2a906d724f5f523185bfa4bcc1160d9f92f8",
+    ".xgent-ai/sdlc/events/review/8abc8d80-fa38-4e09-b066-929980601837/3f83dfe4-5a51-4903-b80f-a41646f4c333.md": "8657caa219e2d7c0342b017fcb45ed536093951c01bd59b9227ab2d2f38c7b8d"
+  },
+  "report_sha256": "sha256:1fa87232330eba8ec858596d73e1ed1c5a4d21194bfb323db22b18dc37537eca",
+  "written_files": [
+    "docs/plan/DOM-COMPONENTS-P1.ui-review.r8.md",
+    ".xgent-ai/sdlc/status/review/52acf57f-e15a-4bc4-b538-209c3e21aeab.md",
+    ".xgent-ai/sdlc/events/review/52acf57f-e15a-4bc4-b538-209c3e21aeab/418fb984-7408-4447-9890-9483b60231d3.md",
+    ".xgent-ai/sdlc/events/review/52acf57f-e15a-4bc4-b538-209c3e21aeab/46240be8-c8cc-4a17-9bca-a8ac9603425c.md",
+    ".xgent-ai/sdlc/events/review/52acf57f-e15a-4bc4-b538-209c3e21aeab/index.md",
+    ".xgent-ai/sdlc/events/review/8abc8d80-fa38-4e09-b066-929980601837/d7d87c26-d8a7-4811-9809-435732afa400.md",
+    ".xgent-ai/sdlc/index.md",
+    ".xgent-ai/sdlc/status/review/index.md",
+    ".xgent-ai/sdlc/events/review/index.md",
+    ".xgent-ai/sdlc/events/review/8abc8d80-fa38-4e09-b066-929980601837/index.md",
+    ".xgent-ai/sdlc/status/review/8abc8d80-fa38-4e09-b066-929980601837.md",
+    ".xgent-ai/sdlc/status/plan/37a2c7b4-7052-4f85-96e9-135b6f7667a1.md"
+  ]
+}

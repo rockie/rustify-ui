@@ -1,0 +1,141 @@
+{
+  "runs": 13,
+  "pages": 82,
+  "completed_pages": 76,
+  "incomplete_failed_capture_pages": 6,
+  "completed_counts": {
+    "pageErrors": 0,
+    "consoleErrors": 0,
+    "failed": 0,
+    "csp": 0
+  },
+  "incomplete_counts": {
+    "pageErrors": 0,
+    "consoleErrors": 7,
+    "failed": 9,
+    "csp": 0
+  },
+  "completed_nonempty": [],
+  "incomplete": [
+    {
+      "unit": "U4",
+      "url": null,
+      "pageErrors": [],
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 404 (Not Found)",
+        "Failed to load resource: the server responded with a status of 404 (Not Found)"
+      ],
+      "failed": [
+        "404 http://127.0.0.1:4181/makepad_widgets/resources/LXGWWenKaiRegular.ttf",
+        "http://127.0.0.1:4181/makepad_widgets/resources/LXGWWenKaiRegular.ttf net::ERR_ABORTED",
+        "404 http://127.0.0.1:4181/makepad_widgets/resources/NotoColorEmoji.ttf",
+        "http://127.0.0.1:4181/makepad_widgets/resources/NotoColorEmoji.ttf net::ERR_ABORTED"
+      ],
+      "csp": []
+    },
+    {
+      "unit": "U4",
+      "url": null,
+      "pageErrors": [],
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 404 (Not Found)"
+      ],
+      "failed": [
+        "404 http://127.0.0.1:4181/"
+      ],
+      "csp": []
+    },
+    {
+      "unit": "U7",
+      "url": null,
+      "pageErrors": [],
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 404 (Not Found)"
+      ],
+      "failed": [
+        "404 http://127.0.0.1:4176/"
+      ],
+      "csp": []
+    },
+    {
+      "unit": "U7",
+      "url": null,
+      "pageErrors": [],
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 404 (Not Found)"
+      ],
+      "failed": [
+        "404 http://127.0.0.1:4176/"
+      ],
+      "csp": []
+    },
+    {
+      "unit": "U3",
+      "url": null,
+      "pageErrors": [],
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 404 (Not Found)"
+      ],
+      "failed": [
+        "404 http://127.0.0.1:4181/"
+      ],
+      "csp": []
+    },
+    {
+      "unit": "U3",
+      "url": null,
+      "pageErrors": [],
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 404 (Not Found)"
+      ],
+      "failed": [
+        "404 http://127.0.0.1:4181/"
+      ],
+      "csp": []
+    }
+  ],
+  "capture_failures": [
+    {
+      "units": [
+        "U4-supplement"
+      ],
+      "failures": [
+        {
+          "unit": "U4-supplement",
+          "error": "locator.waitFor: Timeout 90000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#status[data-status=ready], [data-testid=status][data-status=ready]').first()\u001b[22m\n\n    at ready (/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r8/capture-u4-supplement.cjs:76:103)\n    at async /Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r8/capture-u4-supplement.cjs:153:234"
+        }
+      ]
+    },
+    {
+      "units": [
+        "U7-supplement",
+        "U3-feedback-supplement"
+      ],
+      "failures": [
+        {
+          "unit": "U7-supplement",
+          "error": "locator.waitFor: Timeout 90000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#status[data-status=ready], [data-testid=status][data-status=ready]').first()\u001b[22m\n\n    at ready (/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r8/capture-detail-supplement.cjs:76:103)\n    at async /Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r8/capture-detail-supplement.cjs:152:128"
+        },
+        {
+          "unit": "U7-supplement",
+          "error": "locator.waitFor: Timeout 90000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#status[data-status=ready], [data-testid=status][data-status=ready]').first()\u001b[22m\n\n    at ready (/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r8/capture-detail-supplement.cjs:76:103)\n    at async /Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r8/capture-detail-supplement.cjs:152:128"
+        },
+        {
+          "unit": "U3-feedback-supplement",
+          "error": "locator.waitFor: Timeout 90000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#status[data-status=ready], [data-testid=status][data-status=ready]').first()\u001b[22m\n\n    at ready (/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r8/capture-detail-supplement.cjs:76:103)\n    at async /Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r8/capture-detail-supplement.cjs:153:186"
+        }
+      ]
+    },
+    {
+      "units": [
+        "U3-config-v1-supplement"
+      ],
+      "failures": [
+        {
+          "unit": "U3-config-v1-supplement",
+          "error": "locator.waitFor: Timeout 90000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#status[data-status=ready], [data-testid=status][data-status=ready]').first()\u001b[22m\n\n    at ready (/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r8/capture-u3-supplement.cjs:76:103)\n    at async /Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r8/capture-u3-supplement.cjs:151:153"
+        }
+      ]
+    }
+  ]
+}

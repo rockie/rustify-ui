@@ -1,0 +1,28 @@
+{
+  "acceptedId": "brand\"dark",
+  "notesLine": "Rustify scoped CSS: import sdk.css then theme-v4.css in one Tailwind input; mark the target with data-rustify-theme-css=\"brand\"dark\".",
+  "attribute": "data-rustify-theme-css=\"brand\"dark\"",
+  "parsed": {
+    "id": "brand",
+    "attributes": [
+      [
+        "data-rustify-scope",
+        "preview"
+      ],
+      [
+        "data-rustify-theme-css",
+        "brand"
+      ],
+      [
+        "dark\"",
+        ""
+      ]
+    ]
+  },
+  "selectors": [
+    "[data-rustify-scope][data-rustify-theme-css=\"brand\\\"dark\"] {",
+    "[data-rustify-scope][data-rustify-theme-css=\"brand\\\"dark\"][data-theme=\"dark\"] {"
+  ],
+  "beforeMatch": false,
+  "afterMatch": true
+}

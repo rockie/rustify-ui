@@ -1,0 +1,766 @@
+{
+  "error": null,
+  "errors": [],
+  "inspector": [
+    {
+      "viewport": "1440x900",
+      "mode": "light",
+      "file": "MC-inspector-unmapped-1440-light.png",
+      "target": {
+        "text": "Create \u00b7 0",
+        "outline": "rgb(255, 255, 255) none 3px",
+        "border": "0px solid rgba(0, 0, 0, 0)",
+        "rect": {
+          "x": 1276.59375,
+          "y": 407.265625,
+          "width": 89.40625,
+          "height": 32
+        }
+      },
+      "overlays": [
+        {
+          "tag": "DIV",
+          "testid": "inspector-outline",
+          "className": "inspector-outline",
+          "border": "2px solid rgb(21, 112, 239)",
+          "outline": "rgb(255, 255, 255) solid 2px",
+          "shadow": "rgb(21, 112, 239) 0px 0px 0px 4px",
+          "rect": {
+            "x": 1276.59375,
+            "y": 407.265625,
+            "width": 89.40625,
+            "height": 32
+          }
+        }
+      ],
+      "panelText": "Inspect preview tokensPoint at a DOM or GPU sample, then choose a token. Picking pauses preview actions. Esc exits.Not annotated \u00b7 this part has no declared token mapping.All drawn tokens \u00b7 keyboard selectionaccentaccent-foregroundbackgroundbordercardcard-foregroundchart-1chart-2chart-3chart-4chart-5destructivedestructive-foregroundfont-sansfont-sizeforegroundinputletter-spacingmutedmuted-foregroundpopoverpopover-foregroundprimaryprimary-foregroundradiusringsecondarysecondary-foregroundshadow-colorshadow-opacitysidebarsidebar-accentsidebar-accent-foregroundsidebar-bordersidebar-foregroundsidebar-primarysidebar-primary-foregroundsidebar-ringsuccesswarning",
+      "afterEscapePressed": "false"
+    },
+    {
+      "viewport": "1440x900",
+      "mode": "dark",
+      "file": "MC-inspector-unmapped-1440-dark.png",
+      "target": {
+        "text": "Create \u00b7 0",
+        "outline": "rgb(12, 17, 29) none 3px",
+        "border": "0px solid rgba(0, 0, 0, 0)",
+        "rect": {
+          "x": 1276.59375,
+          "y": 407.265625,
+          "width": 89.40625,
+          "height": 32
+        }
+      },
+      "overlays": [
+        {
+          "tag": "DIV",
+          "testid": "inspector-outline",
+          "className": "inspector-outline",
+          "border": "2px solid rgb(21, 112, 239)",
+          "outline": "rgb(255, 255, 255) solid 2px",
+          "shadow": "rgb(21, 112, 239) 0px 0px 0px 4px",
+          "rect": {
+            "x": 1276.59375,
+            "y": 407.265625,
+            "width": 89.40625,
+            "height": 32
+          }
+        }
+      ],
+      "panelText": "Inspect preview tokensPoint at a DOM or GPU sample, then choose a token. Picking pauses preview actions. Esc exits.Not annotated \u00b7 this part has no declared token mapping.All drawn tokens \u00b7 keyboard selectionaccentaccent-foregroundbackgroundbordercardcard-foregroundchart-1chart-2chart-3chart-4chart-5destructivedestructive-foregroundfont-sansfont-sizeforegroundinputletter-spacingmutedmuted-foregroundpopoverpopover-foregroundprimaryprimary-foregroundradiusringsecondarysecondary-foregroundshadow-colorshadow-opacitysidebarsidebar-accentsidebar-accent-foregroundsidebar-bordersidebar-foregroundsidebar-primarysidebar-primary-foregroundsidebar-ringsuccesswarning",
+      "afterEscapePressed": "false"
+    },
+    {
+      "viewport": "390x844",
+      "mode": "light",
+      "file": "MC-inspector-unmapped-390-light.png",
+      "target": {
+        "text": "Create \u00b7 0",
+        "outline": "rgb(255, 255, 255) none 3px",
+        "border": "0px solid rgba(0, 0, 0, 0)",
+        "rect": {
+          "x": 34,
+          "y": 429.625,
+          "width": 89.40625,
+          "height": 32
+        }
+      },
+      "overlays": [
+        {
+          "tag": "DIV",
+          "testid": "inspector-outline",
+          "className": "inspector-outline",
+          "border": "2px solid rgb(21, 112, 239)",
+          "outline": "rgb(255, 255, 255) solid 2px",
+          "shadow": "rgb(21, 112, 239) 0px 0px 0px 4px",
+          "rect": {
+            "x": 34,
+            "y": 429.625,
+            "width": 89.40625,
+            "height": 32
+          }
+        }
+      ],
+      "panelText": "Inspect preview tokensPoint at a DOM or GPU sample, then choose a token. Picking pauses preview actions. Esc exits.Not annotated \u00b7 this part has no declared token mapping.All drawn tokens \u00b7 keyboard selectionaccentaccent-foregroundbackgroundbordercardcard-foregroundchart-1chart-2chart-3chart-4chart-5destructivedestructive-foregroundfont-sansfont-sizeforegroundinputletter-spacingmutedmuted-foregroundpopoverpopover-foregroundprimaryprimary-foregroundradiusringsecondarysecondary-foregroundshadow-colorshadow-opacitysidebarsidebar-accentsidebar-accent-foregroundsidebar-bordersidebar-foregroundsidebar-primarysidebar-primary-foregroundsidebar-ringsuccesswarning",
+      "afterEscapePressed": "false"
+    }
+  ],
+  "heading_tags": {
+    "H2": 12,
+    "H3": 19,
+    "H1": 1
+  },
+  "native_typography_tags": {
+    "STRONG": 4,
+    "EM": 4,
+    "CODE": 29,
+    "KBD": 43,
+    "BLOCKQUOTE": 6,
+    "Q": 2
+  },
+  "reset_elements": [
+    {
+      "tag": "DIV",
+      "testid": null,
+      "classes": "fixture-reset-row",
+      "childTags": [
+        "SPAN",
+        "BUTTON"
+      ],
+      "text": "button \u00b7 nativeNative action"
+    },
+    {
+      "tag": "DIV",
+      "testid": null,
+      "classes": "fixture-reset-row",
+      "childTags": [
+        "SPAN",
+        "BUTTON",
+        "SPAN"
+      ],
+      "text": "button \u00b7 ResetNative reset actionclicks: 0"
+    },
+    {
+      "tag": "BUTTON",
+      "testid": "layout-reset",
+      "classes": "fixture-reset-outline rustify-reset",
+      "childTags": [],
+      "text": "Native reset action"
+    },
+    {
+      "tag": "SPAN",
+      "testid": null,
+      "classes": "fixture-prop fixture-reset-clicks",
+      "childTags": [
+        "OUTPUT"
+      ],
+      "text": "clicks: 0"
+    },
+    {
+      "tag": "DIV",
+      "testid": null,
+      "classes": "fixture-reset-row",
+      "childTags": [
+        "SPAN",
+        "H2"
+      ],
+      "text": "h2 \u00b7 nativeNative heading"
+    },
+    {
+      "tag": "DIV",
+      "testid": null,
+      "classes": "fixture-reset-row",
+      "childTags": [
+        "SPAN",
+        "H2"
+      ],
+      "text": "h2 \u00b7 ResetReset heading"
+    },
+    {
+      "tag": "H2",
+      "testid": null,
+      "classes": "fixture-reset-outline rustify-reset",
+      "childTags": [],
+      "text": "Reset heading"
+    },
+    {
+      "tag": "DIV",
+      "testid": null,
+      "classes": "fixture-reset-row",
+      "childTags": [
+        "SPAN",
+        "UL"
+      ],
+      "text": "ul \u00b7 nativeNative list item"
+    },
+    {
+      "tag": "DIV",
+      "testid": null,
+      "classes": "fixture-reset-row",
+      "childTags": [
+        "SPAN",
+        "UL"
+      ],
+      "text": "ul \u00b7 ResetReset list item"
+    },
+    {
+      "tag": "UL",
+      "testid": null,
+      "classes": "fixture-reset-outline rustify-reset",
+      "childTags": [
+        "LI"
+      ],
+      "text": "Reset list item"
+    },
+    {
+      "tag": "DIV",
+      "testid": null,
+      "classes": "fixture-reset-row",
+      "childTags": [
+        "SPAN",
+        "A"
+      ],
+      "text": "a \u00b7 nativeNative link"
+    },
+    {
+      "tag": "DIV",
+      "testid": null,
+      "classes": "fixture-reset-row",
+      "childTags": [
+        "SPAN",
+        "A"
+      ],
+      "text": "a \u00b7 ResetNative link"
+    },
+    {
+      "tag": "A",
+      "testid": null,
+      "classes": "fixture-reset-outline rustify-reset",
+      "childTags": [],
+      "text": "Native link"
+    },
+    {
+      "tag": "DIV",
+      "testid": null,
+      "classes": "fixture-reset-row",
+      "childTags": [
+        "SPAN",
+        "STRONG"
+      ],
+      "text": "strong \u00b7 nativeStrong importance"
+    },
+    {
+      "tag": "DIV",
+      "testid": null,
+      "classes": "fixture-reset-row",
+      "childTags": [
+        "SPAN",
+        "STRONG"
+      ],
+      "text": "strong \u00b7 ResetStrong importance"
+    },
+    {
+      "tag": "STRONG",
+      "testid": null,
+      "classes": "fixture-reset-outline rustify-reset",
+      "childTags": [],
+      "text": "Strong importance"
+    },
+    {
+      "tag": "DIV",
+      "testid": null,
+      "classes": "fixture-reset-row",
+      "childTags": [
+        "SPAN",
+        "EM"
+      ],
+      "text": "em \u00b7 nativeEmphasis"
+    },
+    {
+      "tag": "DIV",
+      "testid": null,
+      "classes": "fixture-reset-row",
+      "childTags": [
+        "SPAN",
+        "EM"
+      ],
+      "text": "em \u00b7 ResetEmphasis"
+    },
+    {
+      "tag": "EM",
+      "testid": null,
+      "classes": "fixture-reset-outline rustify-reset",
+      "childTags": [],
+      "text": "Emphasis"
+    },
+    {
+      "tag": "DIV",
+      "testid": null,
+      "classes": "fixture-reset-row",
+      "childTags": [
+        "SPAN",
+        "CODE"
+      ],
+      "text": "code \u00b7 nativelet answer = 42;"
+    },
+    {
+      "tag": "DIV",
+      "testid": null,
+      "classes": "fixture-reset-row",
+      "childTags": [
+        "SPAN",
+        "CODE"
+      ],
+      "text": "code \u00b7 Resetlet answer = 42;"
+    },
+    {
+      "tag": "CODE",
+      "testid": null,
+      "classes": "fixture-reset-outline rustify-reset",
+      "childTags": [],
+      "text": "let answer = 42;"
+    },
+    {
+      "tag": "DIV",
+      "testid": null,
+      "classes": "fixture-reset-row",
+      "childTags": [
+        "SPAN",
+        "KBD"
+      ],
+      "text": "kbd \u00b7 nativeCtrl + K"
+    },
+    {
+      "tag": "DIV",
+      "testid": null,
+      "classes": "fixture-reset-row",
+      "childTags": [
+        "SPAN",
+        "KBD"
+      ],
+      "text": "kbd \u00b7 ResetCtrl + K"
+    },
+    {
+      "tag": "KBD",
+      "testid": null,
+      "classes": "fixture-reset-outline rustify-reset",
+      "childTags": [],
+      "text": "Ctrl + K"
+    },
+    {
+      "tag": "DIV",
+      "testid": null,
+      "classes": "fixture-reset-row",
+      "childTags": [
+        "SPAN",
+        "MARK"
+      ],
+      "text": "mark \u00b7 nativeMarked text"
+    },
+    {
+      "tag": "DIV",
+      "testid": null,
+      "classes": "fixture-reset-row",
+      "childTags": [
+        "SPAN",
+        "MARK"
+      ],
+      "text": "mark \u00b7 ResetMarked text"
+    },
+    {
+      "tag": "MARK",
+      "testid": null,
+      "classes": "fixture-reset-outline rustify-reset",
+      "childTags": [],
+      "text": "Marked text"
+    },
+    {
+      "tag": "DIV",
+      "testid": null,
+      "classes": "fixture-reset-row",
+      "childTags": [
+        "SPAN",
+        "SUB"
+      ],
+      "text": "sub \u00b7 nativeSubscript"
+    },
+    {
+      "tag": "DIV",
+      "testid": null,
+      "classes": "fixture-reset-row",
+      "childTags": [
+        "SPAN",
+        "SUB"
+      ],
+      "text": "sub \u00b7 ResetSubscript"
+    },
+    {
+      "tag": "SUB",
+      "testid": null,
+      "classes": "fixture-reset-outline rustify-reset",
+      "childTags": [],
+      "text": "Subscript"
+    },
+    {
+      "tag": "DIV",
+      "testid": null,
+      "classes": "fixture-reset-row",
+      "childTags": [
+        "SPAN",
+        "SUP"
+      ],
+      "text": "sup \u00b7 nativeSuperscript"
+    },
+    {
+      "tag": "DIV",
+      "testid": null,
+      "classes": "fixture-reset-row",
+      "childTags": [
+        "SPAN",
+        "SUP"
+      ],
+      "text": "sup \u00b7 ResetSuperscript"
+    },
+    {
+      "tag": "SUP",
+      "testid": null,
+      "classes": "fixture-reset-outline rustify-reset",
+      "childTags": [],
+      "text": "Superscript"
+    },
+    {
+      "tag": "DIV",
+      "testid": null,
+      "classes": "fixture-reset-row",
+      "childTags": [
+        "SPAN",
+        "INPUT"
+      ],
+      "text": "input \u00b7 native"
+    },
+    {
+      "tag": "DIV",
+      "testid": null,
+      "classes": "fixture-reset-row",
+      "childTags": [
+        "SPAN",
+        "INPUT"
+      ],
+      "text": "input \u00b7 Reset"
+    },
+    {
+      "tag": "INPUT",
+      "testid": null,
+      "classes": "fixture-reset-outline rustify-reset",
+      "childTags": [],
+      "text": ""
+    },
+    {
+      "tag": "DIV",
+      "testid": null,
+      "classes": "fixture-reset-row",
+      "childTags": [
+        "SPAN",
+        "SELECT"
+      ],
+      "text": "select \u00b7 nativeOne option"
+    },
+    {
+      "tag": "DIV",
+      "testid": null,
+      "classes": "fixture-reset-row",
+      "childTags": [
+        "SPAN",
+        "SELECT"
+      ],
+      "text": "select \u00b7 ResetOne option"
+    },
+    {
+      "tag": "SELECT",
+      "testid": null,
+      "classes": "fixture-reset-outline rustify-reset",
+      "childTags": [
+        "OPTION"
+      ],
+      "text": "One option"
+    },
+    {
+      "tag": "DIV",
+      "testid": null,
+      "classes": "fixture-reset-row",
+      "childTags": [
+        "SPAN",
+        "TEXTAREA"
+      ],
+      "text": "textarea \u00b7 nativeA native textarea"
+    },
+    {
+      "tag": "DIV",
+      "testid": null,
+      "classes": "fixture-reset-row",
+      "childTags": [
+        "SPAN",
+        "TEXTAREA"
+      ],
+      "text": "textarea \u00b7 ResetA native textarea"
+    },
+    {
+      "tag": "TEXTAREA",
+      "testid": null,
+      "classes": "fixture-reset-outline rustify-reset",
+      "childTags": [],
+      "text": "A native textarea"
+    },
+    {
+      "tag": "DIV",
+      "testid": null,
+      "classes": "fixture-reset-row",
+      "childTags": [
+        "SPAN",
+        "FIELDSET"
+      ],
+      "text": "fieldset \u00b7 nativeFieldset legend"
+    },
+    {
+      "tag": "DIV",
+      "testid": null,
+      "classes": "fixture-reset-row",
+      "childTags": [
+        "SPAN",
+        "FIELDSET"
+      ],
+      "text": "fieldset \u00b7 ResetFieldset legend"
+    },
+    {
+      "tag": "FIELDSET",
+      "testid": null,
+      "classes": "fixture-reset-outline rustify-reset",
+      "childTags": [
+        "LEGEND"
+      ],
+      "text": "Fieldset legend"
+    },
+    {
+      "tag": "DIV",
+      "testid": null,
+      "classes": "fixture-reset-row",
+      "childTags": [
+        "SPAN",
+        "OL"
+      ],
+      "text": "ol \u00b7 nativeOrdered item"
+    },
+    {
+      "tag": "DIV",
+      "testid": null,
+      "classes": "fixture-reset-row",
+      "childTags": [
+        "SPAN",
+        "OL"
+      ],
+      "text": "ol \u00b7 ResetOrdered item"
+    },
+    {
+      "tag": "OL",
+      "testid": null,
+      "classes": "fixture-reset-outline rustify-reset",
+      "childTags": [
+        "LI"
+      ],
+      "text": "Ordered item"
+    },
+    {
+      "tag": "DIV",
+      "testid": null,
+      "classes": "fixture-reset-row",
+      "childTags": [
+        "SPAN",
+        "DL"
+      ],
+      "text": "dl \u00b7 nativeTermDefinition"
+    },
+    {
+      "tag": "DIV",
+      "testid": null,
+      "classes": "fixture-reset-row",
+      "childTags": [
+        "SPAN",
+        "DL"
+      ],
+      "text": "dl \u00b7 ResetTermDefinition"
+    },
+    {
+      "tag": "DL",
+      "testid": null,
+      "classes": "fixture-reset-outline rustify-reset",
+      "childTags": [
+        "DT",
+        "DD"
+      ],
+      "text": "TermDefinition"
+    },
+    {
+      "tag": "DIV",
+      "testid": null,
+      "classes": "fixture-reset-row",
+      "childTags": [
+        "SPAN",
+        "TABLE"
+      ],
+      "text": "table \u00b7 nativeTable cell"
+    },
+    {
+      "tag": "DIV",
+      "testid": null,
+      "classes": "fixture-reset-row",
+      "childTags": [
+        "SPAN",
+        "TABLE"
+      ],
+      "text": "table \u00b7 ResetTable cell"
+    },
+    {
+      "tag": "TABLE",
+      "testid": null,
+      "classes": "fixture-reset-outline rustify-reset",
+      "childTags": [
+        "TBODY"
+      ],
+      "text": "Table cell"
+    },
+    {
+      "tag": "DIV",
+      "testid": null,
+      "classes": "fixture-reset-row",
+      "childTags": [
+        "SPAN",
+        "PRE"
+      ],
+      "text": "pre \u00b7 nativePreformatted text"
+    },
+    {
+      "tag": "DIV",
+      "testid": null,
+      "classes": "fixture-reset-row",
+      "childTags": [
+        "SPAN",
+        "PRE"
+      ],
+      "text": "pre \u00b7 ResetPreformatted text"
+    },
+    {
+      "tag": "PRE",
+      "testid": null,
+      "classes": "fixture-reset-outline rustify-reset",
+      "childTags": [],
+      "text": "Preformatted text"
+    },
+    {
+      "tag": "DIV",
+      "testid": null,
+      "classes": "fixture-reset-row",
+      "childTags": [
+        "SPAN",
+        "BLOCKQUOTE"
+      ],
+      "text": "blockquote \u00b7 nativeNative block quotation"
+    },
+    {
+      "tag": "DIV",
+      "testid": null,
+      "classes": "fixture-reset-row",
+      "childTags": [
+        "SPAN",
+        "BLOCKQUOTE"
+      ],
+      "text": "blockquote \u00b7 ResetNative block quotation"
+    },
+    {
+      "tag": "BLOCKQUOTE",
+      "testid": null,
+      "classes": "fixture-reset-outline rustify-reset",
+      "childTags": [],
+      "text": "Native block quotation"
+    },
+    {
+      "tag": "DIV",
+      "testid": null,
+      "classes": "fixture-reset-row",
+      "childTags": [
+        "SPAN",
+        "IMG"
+      ],
+      "text": "img \u00b7 native"
+    },
+    {
+      "tag": "DIV",
+      "testid": null,
+      "classes": "fixture-reset-row",
+      "childTags": [
+        "SPAN",
+        "IMG"
+      ],
+      "text": "img \u00b7 Reset"
+    },
+    {
+      "tag": "IMG",
+      "testid": null,
+      "classes": "fixture-reset-outline rustify-reset",
+      "childTags": [],
+      "text": ""
+    }
+  ],
+  "ellipsis": [
+    {
+      "tag": "DIV",
+      "testid": "type-truncate",
+      "fullText": "This long sentence is truncated deliberately without changing its accessible text.",
+      "scrollWidth": 540,
+      "clientWidth": 160,
+      "textNodes": [
+        "This long sentence is truncated deliberately without changing its accessible text."
+      ]
+    },
+    {
+      "tag": "A",
+      "testid": "type-long-link",
+      "fullText": "https://example.test/a/long/path/whose/native/link/name/is/preserved",
+      "scrollWidth": 482,
+      "clientWidth": 160,
+      "textNodes": [
+        "https://example.test/a/long/path/whose/native/link/name/is/preserved"
+      ]
+    },
+    {
+      "tag": "P",
+      "testid": null,
+      "fullText": "A thoughtful layout leaves room for words, meaning and a reader's changing viewport.",
+      "scrollWidth": 576,
+      "clientWidth": 233,
+      "textNodes": [
+        "A thoughtful layout leaves room for words, meaning and a reader's changing viewport."
+      ]
+    }
+  ],
+  "host_body_equal": true,
+  "host_before": {
+    "fontFamily": "system-ui, sans-serif",
+    "fontSize": "15px",
+    "color": "rgb(29, 41, 57)",
+    "background": "rgb(249, 250, 251)",
+    "margin": "0px",
+    "padding": "24px"
+  },
+  "host_after": {
+    "fontFamily": "system-ui, sans-serif",
+    "fontSize": "15px",
+    "color": "rgb(29, 41, 57)",
+    "background": "rgb(249, 250, 251)",
+    "margin": "0px",
+    "padding": "24px"
+  },
+  "fonts": {
+    "loaded": "loading",
+    "shellFamily": "system-ui, sans-serif"
+  }
+}

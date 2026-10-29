@@ -1,0 +1,1094 @@
+{
+  "tool": "Playwright 1.63.0",
+  "chromium": "153.0.8010.12",
+  "steps": "Graphite -> Pink -> Auto; focus by Shift+Tab/Tab; Enter; ArrowDown; screenshot; Enter confirmation",
+  "probes": [
+    {
+      "viewport": "390x844",
+      "theme": "light",
+      "before": "Pink",
+      "list": {
+        "x": 16,
+        "y": 511.421875,
+        "width": 358,
+        "height": 256
+      },
+      "scrollTop": 0,
+      "scrollHeight": 872,
+      "clientHeight": 254,
+      "focus": {
+        "tag": "UL",
+        "testid": "studio-config-accent_color-list",
+        "activeDescendant": "rui-select-29-option-plum",
+        "outline": "rgb(0, 95, 204) none 1px"
+      },
+      "options": [
+        {
+          "id": "rui-select-29-option-custom",
+          "text": "Custom",
+          "attrs": {
+            "data-name": "SelectOption",
+            "data-active": "false",
+            "data-testid": "option-custom",
+            "aria-selected": "false"
+          },
+          "box": {
+            "x": 21,
+            "y": 516.421875,
+            "width": 348,
+            "height": 32
+          },
+          "background": "rgba(0, 0, 0, 0)",
+          "insideList": true
+        },
+        {
+          "id": "rui-select-29-option-gray",
+          "text": "Gray",
+          "attrs": {
+            "data-name": "SelectOption",
+            "data-active": "false",
+            "data-testid": "option-gray",
+            "aria-selected": "false"
+          },
+          "box": {
+            "x": 21,
+            "y": 548.421875,
+            "width": 348,
+            "height": 32
+          },
+          "background": "rgba(0, 0, 0, 0)",
+          "insideList": true
+        },
+        {
+          "id": "rui-select-29-option-gold",
+          "text": "Gold",
+          "attrs": {
+            "data-name": "SelectOption",
+            "data-active": "false",
+            "data-testid": "option-gold",
+            "aria-selected": "false"
+          },
+          "box": {
+            "x": 21,
+            "y": 580.421875,
+            "width": 348,
+            "height": 32
+          },
+          "background": "rgba(0, 0, 0, 0)",
+          "insideList": true
+        },
+        {
+          "id": "rui-select-29-option-bronze",
+          "text": "Bronze",
+          "attrs": {
+            "data-name": "SelectOption",
+            "data-active": "false",
+            "data-testid": "option-bronze",
+            "aria-selected": "false"
+          },
+          "box": {
+            "x": 21,
+            "y": 612.421875,
+            "width": 348,
+            "height": 32
+          },
+          "background": "rgba(0, 0, 0, 0)",
+          "insideList": true
+        },
+        {
+          "id": "rui-select-29-option-brown",
+          "text": "Brown",
+          "attrs": {
+            "data-name": "SelectOption",
+            "data-active": "false",
+            "data-testid": "option-brown",
+            "aria-selected": "false"
+          },
+          "box": {
+            "x": 21,
+            "y": 644.421875,
+            "width": 348,
+            "height": 32
+          },
+          "background": "rgba(0, 0, 0, 0)",
+          "insideList": true
+        },
+        {
+          "id": "rui-select-29-option-yellow",
+          "text": "Yellow",
+          "attrs": {
+            "data-name": "SelectOption",
+            "data-active": "false",
+            "data-testid": "option-yellow",
+            "aria-selected": "false"
+          },
+          "box": {
+            "x": 21,
+            "y": 676.421875,
+            "width": 348,
+            "height": 32
+          },
+          "background": "rgba(0, 0, 0, 0)",
+          "insideList": true
+        },
+        {
+          "id": "rui-select-29-option-amber",
+          "text": "Amber",
+          "attrs": {
+            "data-name": "SelectOption",
+            "data-active": "false",
+            "data-testid": "option-amber",
+            "aria-selected": "false"
+          },
+          "box": {
+            "x": 21,
+            "y": 708.421875,
+            "width": 348,
+            "height": 32
+          },
+          "background": "rgba(0, 0, 0, 0)",
+          "insideList": true
+        },
+        {
+          "id": "rui-select-29-option-orange",
+          "text": "Orange",
+          "attrs": {
+            "data-name": "SelectOption",
+            "data-active": "false",
+            "data-testid": "option-orange",
+            "aria-selected": "false"
+          },
+          "box": {
+            "x": 21,
+            "y": 740.421875,
+            "width": 348,
+            "height": 32
+          },
+          "background": "rgba(0, 0, 0, 0)",
+          "insideList": false
+        },
+        {
+          "id": "rui-select-29-option-tomato",
+          "text": "Tomato",
+          "attrs": {
+            "data-name": "SelectOption",
+            "data-active": "false",
+            "data-testid": "option-tomato",
+            "aria-selected": "false"
+          },
+          "box": {
+            "x": 21,
+            "y": 772.421875,
+            "width": 348,
+            "height": 32
+          },
+          "background": "rgba(0, 0, 0, 0)",
+          "insideList": false
+        },
+        {
+          "id": "rui-select-29-option-red",
+          "text": "Red",
+          "attrs": {
+            "data-name": "SelectOption",
+            "data-active": "false",
+            "data-testid": "option-red",
+            "aria-selected": "false"
+          },
+          "box": {
+            "x": 21,
+            "y": 804.421875,
+            "width": 348,
+            "height": 32
+          },
+          "background": "rgba(0, 0, 0, 0)",
+          "insideList": false
+        },
+        {
+          "id": "rui-select-29-option-ruby",
+          "text": "Ruby",
+          "attrs": {
+            "data-name": "SelectOption",
+            "data-active": "false",
+            "data-testid": "option-ruby",
+            "aria-selected": "false"
+          },
+          "box": {
+            "x": 21,
+            "y": 836.421875,
+            "width": 348,
+            "height": 32
+          },
+          "background": "rgba(0, 0, 0, 0)",
+          "insideList": false
+        },
+        {
+          "id": "rui-select-29-option-crimson",
+          "text": "Crimson",
+          "attrs": {
+            "data-name": "SelectOption",
+            "data-active": "false",
+            "data-testid": "option-crimson",
+            "aria-selected": "false"
+          },
+          "box": {
+            "x": 21,
+            "y": 868.421875,
+            "width": 348,
+            "height": 32
+          },
+          "background": "rgba(0, 0, 0, 0)",
+          "insideList": false
+        },
+        {
+          "id": "rui-select-29-option-pink",
+          "text": "Pink",
+          "attrs": {
+            "data-name": "SelectOption",
+            "data-active": "false",
+            "data-testid": "option-pink",
+            "aria-selected": "true"
+          },
+          "box": {
+            "x": 21,
+            "y": 900.421875,
+            "width": 348,
+            "height": 32
+          },
+          "background": "rgba(0, 0, 0, 0)",
+          "insideList": false
+        },
+        {
+          "id": "rui-select-29-option-plum",
+          "text": "Plum",
+          "attrs": {
+            "data-name": "SelectOption",
+            "data-active": "true",
+            "data-testid": "option-plum",
+            "aria-selected": "false"
+          },
+          "box": {
+            "x": 21,
+            "y": 932.421875,
+            "width": 348,
+            "height": 32
+          },
+          "background": "rgb(239, 248, 255)",
+          "insideList": false
+        },
+        {
+          "id": "rui-select-29-option-purple",
+          "text": "Purple",
+          "attrs": {
+            "data-name": "SelectOption",
+            "data-active": "false",
+            "data-testid": "option-purple",
+            "aria-selected": "false"
+          },
+          "box": {
+            "x": 21,
+            "y": 964.421875,
+            "width": 348,
+            "height": 32
+          },
+          "background": "rgba(0, 0, 0, 0)",
+          "insideList": false
+        },
+        {
+          "id": "rui-select-29-option-violet",
+          "text": "Violet",
+          "attrs": {
+            "data-name": "SelectOption",
+            "data-active": "false",
+            "data-testid": "option-violet",
+            "aria-selected": "false"
+          },
+          "box": {
+            "x": 21,
+            "y": 996.421875,
+            "width": 348,
+            "height": 32
+          },
+          "background": "rgba(0, 0, 0, 0)",
+          "insideList": false
+        },
+        {
+          "id": "rui-select-29-option-iris",
+          "text": "Iris",
+          "attrs": {
+            "data-name": "SelectOption",
+            "data-active": "false",
+            "data-testid": "option-iris",
+            "aria-selected": "false"
+          },
+          "box": {
+            "x": 21,
+            "y": 1028.421875,
+            "width": 348,
+            "height": 32
+          },
+          "background": "rgba(0, 0, 0, 0)",
+          "insideList": false
+        },
+        {
+          "id": "rui-select-29-option-indigo",
+          "text": "Indigo",
+          "attrs": {
+            "data-name": "SelectOption",
+            "data-active": "false",
+            "data-testid": "option-indigo",
+            "aria-selected": "false"
+          },
+          "box": {
+            "x": 21,
+            "y": 1060.421875,
+            "width": 348,
+            "height": 32
+          },
+          "background": "rgba(0, 0, 0, 0)",
+          "insideList": false
+        },
+        {
+          "id": "rui-select-29-option-blue",
+          "text": "Blue",
+          "attrs": {
+            "data-name": "SelectOption",
+            "data-active": "false",
+            "data-testid": "option-blue",
+            "aria-selected": "false"
+          },
+          "box": {
+            "x": 21,
+            "y": 1092.421875,
+            "width": 348,
+            "height": 32
+          },
+          "background": "rgba(0, 0, 0, 0)",
+          "insideList": false
+        },
+        {
+          "id": "rui-select-29-option-cyan",
+          "text": "Cyan",
+          "attrs": {
+            "data-name": "SelectOption",
+            "data-active": "false",
+            "data-testid": "option-cyan",
+            "aria-selected": "false"
+          },
+          "box": {
+            "x": 21,
+            "y": 1124.421875,
+            "width": 348,
+            "height": 32
+          },
+          "background": "rgba(0, 0, 0, 0)",
+          "insideList": false
+        },
+        {
+          "id": "rui-select-29-option-teal",
+          "text": "Teal",
+          "attrs": {
+            "data-name": "SelectOption",
+            "data-active": "false",
+            "data-testid": "option-teal",
+            "aria-selected": "false"
+          },
+          "box": {
+            "x": 21,
+            "y": 1156.421875,
+            "width": 348,
+            "height": 32
+          },
+          "background": "rgba(0, 0, 0, 0)",
+          "insideList": false
+        },
+        {
+          "id": "rui-select-29-option-jade",
+          "text": "Jade",
+          "attrs": {
+            "data-name": "SelectOption",
+            "data-active": "false",
+            "data-testid": "option-jade",
+            "aria-selected": "false"
+          },
+          "box": {
+            "x": 21,
+            "y": 1188.421875,
+            "width": 348,
+            "height": 32
+          },
+          "background": "rgba(0, 0, 0, 0)",
+          "insideList": false
+        },
+        {
+          "id": "rui-select-29-option-green",
+          "text": "Green",
+          "attrs": {
+            "data-name": "SelectOption",
+            "data-active": "false",
+            "data-testid": "option-green",
+            "aria-selected": "false"
+          },
+          "box": {
+            "x": 21,
+            "y": 1220.421875,
+            "width": 348,
+            "height": 32
+          },
+          "background": "rgba(0, 0, 0, 0)",
+          "insideList": false
+        },
+        {
+          "id": "rui-select-29-option-grass",
+          "text": "Grass",
+          "attrs": {
+            "data-name": "SelectOption",
+            "data-active": "false",
+            "data-testid": "option-grass",
+            "aria-selected": "false"
+          },
+          "box": {
+            "x": 21,
+            "y": 1252.421875,
+            "width": 348,
+            "height": 32
+          },
+          "background": "rgba(0, 0, 0, 0)",
+          "insideList": false
+        },
+        {
+          "id": "rui-select-29-option-lime",
+          "text": "Lime",
+          "attrs": {
+            "data-name": "SelectOption",
+            "data-active": "false",
+            "data-testid": "option-lime",
+            "aria-selected": "false"
+          },
+          "box": {
+            "x": 21,
+            "y": 1284.421875,
+            "width": 348,
+            "height": 32
+          },
+          "background": "rgba(0, 0, 0, 0)",
+          "insideList": false
+        },
+        {
+          "id": "rui-select-29-option-mint",
+          "text": "Mint",
+          "attrs": {
+            "data-name": "SelectOption",
+            "data-active": "false",
+            "data-testid": "option-mint",
+            "aria-selected": "false"
+          },
+          "box": {
+            "x": 21,
+            "y": 1316.421875,
+            "width": 348,
+            "height": 32
+          },
+          "background": "rgba(0, 0, 0, 0)",
+          "insideList": false
+        },
+        {
+          "id": "rui-select-29-option-sky",
+          "text": "Sky",
+          "attrs": {
+            "data-name": "SelectOption",
+            "data-active": "false",
+            "data-testid": "option-sky",
+            "aria-selected": "false"
+          },
+          "box": {
+            "x": 21,
+            "y": 1348.421875,
+            "width": 348,
+            "height": 32
+          },
+          "background": "rgba(0, 0, 0, 0)",
+          "insideList": false
+        }
+      ],
+      "activeDescendantBox": {
+        "x": 21,
+        "y": 932.421875,
+        "width": 348,
+        "height": 32
+      },
+      "afterEnter": "Plum"
+    },
+    {
+      "viewport": "1440x900",
+      "theme": "dark",
+      "before": "Pink",
+      "list": {
+        "x": 20,
+        "y": 411.3125,
+        "width": 279,
+        "height": 256
+      },
+      "scrollTop": 0,
+      "scrollHeight": 872,
+      "clientHeight": 254,
+      "focus": {
+        "tag": "UL",
+        "testid": "studio-config-accent_color-list",
+        "activeDescendant": "rui-select-29-option-plum",
+        "outline": "rgb(0, 95, 204) none 1px"
+      },
+      "options": [
+        {
+          "id": "rui-select-29-option-custom",
+          "text": "Custom",
+          "attrs": {
+            "data-name": "SelectOption",
+            "data-active": "false",
+            "data-testid": "option-custom",
+            "aria-selected": "false"
+          },
+          "box": {
+            "x": 25,
+            "y": 416.3125,
+            "width": 269,
+            "height": 32
+          },
+          "background": "rgba(0, 0, 0, 0)",
+          "insideList": true
+        },
+        {
+          "id": "rui-select-29-option-gray",
+          "text": "Gray",
+          "attrs": {
+            "data-name": "SelectOption",
+            "data-active": "false",
+            "data-testid": "option-gray",
+            "aria-selected": "false"
+          },
+          "box": {
+            "x": 25,
+            "y": 448.3125,
+            "width": 269,
+            "height": 32
+          },
+          "background": "rgba(0, 0, 0, 0)",
+          "insideList": true
+        },
+        {
+          "id": "rui-select-29-option-gold",
+          "text": "Gold",
+          "attrs": {
+            "data-name": "SelectOption",
+            "data-active": "false",
+            "data-testid": "option-gold",
+            "aria-selected": "false"
+          },
+          "box": {
+            "x": 25,
+            "y": 480.3125,
+            "width": 269,
+            "height": 32
+          },
+          "background": "rgba(0, 0, 0, 0)",
+          "insideList": true
+        },
+        {
+          "id": "rui-select-29-option-bronze",
+          "text": "Bronze",
+          "attrs": {
+            "data-name": "SelectOption",
+            "data-active": "false",
+            "data-testid": "option-bronze",
+            "aria-selected": "false"
+          },
+          "box": {
+            "x": 25,
+            "y": 512.3125,
+            "width": 269,
+            "height": 32
+          },
+          "background": "rgba(0, 0, 0, 0)",
+          "insideList": true
+        },
+        {
+          "id": "rui-select-29-option-brown",
+          "text": "Brown",
+          "attrs": {
+            "data-name": "SelectOption",
+            "data-active": "false",
+            "data-testid": "option-brown",
+            "aria-selected": "false"
+          },
+          "box": {
+            "x": 25,
+            "y": 544.3125,
+            "width": 269,
+            "height": 32
+          },
+          "background": "rgba(0, 0, 0, 0)",
+          "insideList": true
+        },
+        {
+          "id": "rui-select-29-option-yellow",
+          "text": "Yellow",
+          "attrs": {
+            "data-name": "SelectOption",
+            "data-active": "false",
+            "data-testid": "option-yellow",
+            "aria-selected": "false"
+          },
+          "box": {
+            "x": 25,
+            "y": 576.3125,
+            "width": 269,
+            "height": 32
+          },
+          "background": "rgba(0, 0, 0, 0)",
+          "insideList": true
+        },
+        {
+          "id": "rui-select-29-option-amber",
+          "text": "Amber",
+          "attrs": {
+            "data-name": "SelectOption",
+            "data-active": "false",
+            "data-testid": "option-amber",
+            "aria-selected": "false"
+          },
+          "box": {
+            "x": 25,
+            "y": 608.3125,
+            "width": 269,
+            "height": 32
+          },
+          "background": "rgba(0, 0, 0, 0)",
+          "insideList": true
+        },
+        {
+          "id": "rui-select-29-option-orange",
+          "text": "Orange",
+          "attrs": {
+            "data-name": "SelectOption",
+            "data-active": "false",
+            "data-testid": "option-orange",
+            "aria-selected": "false"
+          },
+          "box": {
+            "x": 25,
+            "y": 640.3125,
+            "width": 269,
+            "height": 32
+          },
+          "background": "rgba(0, 0, 0, 0)",
+          "insideList": false
+        },
+        {
+          "id": "rui-select-29-option-tomato",
+          "text": "Tomato",
+          "attrs": {
+            "data-name": "SelectOption",
+            "data-active": "false",
+            "data-testid": "option-tomato",
+            "aria-selected": "false"
+          },
+          "box": {
+            "x": 25,
+            "y": 672.3125,
+            "width": 269,
+            "height": 32
+          },
+          "background": "rgba(0, 0, 0, 0)",
+          "insideList": false
+        },
+        {
+          "id": "rui-select-29-option-red",
+          "text": "Red",
+          "attrs": {
+            "data-name": "SelectOption",
+            "data-active": "false",
+            "data-testid": "option-red",
+            "aria-selected": "false"
+          },
+          "box": {
+            "x": 25,
+            "y": 704.3125,
+            "width": 269,
+            "height": 32
+          },
+          "background": "rgba(0, 0, 0, 0)",
+          "insideList": false
+        },
+        {
+          "id": "rui-select-29-option-ruby",
+          "text": "Ruby",
+          "attrs": {
+            "data-name": "SelectOption",
+            "data-active": "false",
+            "data-testid": "option-ruby",
+            "aria-selected": "false"
+          },
+          "box": {
+            "x": 25,
+            "y": 736.3125,
+            "width": 269,
+            "height": 32
+          },
+          "background": "rgba(0, 0, 0, 0)",
+          "insideList": false
+        },
+        {
+          "id": "rui-select-29-option-crimson",
+          "text": "Crimson",
+          "attrs": {
+            "data-name": "SelectOption",
+            "data-active": "false",
+            "data-testid": "option-crimson",
+            "aria-selected": "false"
+          },
+          "box": {
+            "x": 25,
+            "y": 768.3125,
+            "width": 269,
+            "height": 32
+          },
+          "background": "rgba(0, 0, 0, 0)",
+          "insideList": false
+        },
+        {
+          "id": "rui-select-29-option-pink",
+          "text": "Pink",
+          "attrs": {
+            "data-name": "SelectOption",
+            "data-active": "false",
+            "data-testid": "option-pink",
+            "aria-selected": "true"
+          },
+          "box": {
+            "x": 25,
+            "y": 800.3125,
+            "width": 269,
+            "height": 32
+          },
+          "background": "rgba(0, 0, 0, 0)",
+          "insideList": false
+        },
+        {
+          "id": "rui-select-29-option-plum",
+          "text": "Plum",
+          "attrs": {
+            "data-name": "SelectOption",
+            "data-active": "true",
+            "data-testid": "option-plum",
+            "aria-selected": "false"
+          },
+          "box": {
+            "x": 25,
+            "y": 832.3125,
+            "width": 269,
+            "height": 32
+          },
+          "background": "rgb(239, 248, 255)",
+          "insideList": false
+        },
+        {
+          "id": "rui-select-29-option-purple",
+          "text": "Purple",
+          "attrs": {
+            "data-name": "SelectOption",
+            "data-active": "false",
+            "data-testid": "option-purple",
+            "aria-selected": "false"
+          },
+          "box": {
+            "x": 25,
+            "y": 864.3125,
+            "width": 269,
+            "height": 32
+          },
+          "background": "rgba(0, 0, 0, 0)",
+          "insideList": false
+        },
+        {
+          "id": "rui-select-29-option-violet",
+          "text": "Violet",
+          "attrs": {
+            "data-name": "SelectOption",
+            "data-active": "false",
+            "data-testid": "option-violet",
+            "aria-selected": "false"
+          },
+          "box": {
+            "x": 25,
+            "y": 896.3125,
+            "width": 269,
+            "height": 32
+          },
+          "background": "rgba(0, 0, 0, 0)",
+          "insideList": false
+        },
+        {
+          "id": "rui-select-29-option-iris",
+          "text": "Iris",
+          "attrs": {
+            "data-name": "SelectOption",
+            "data-active": "false",
+            "data-testid": "option-iris",
+            "aria-selected": "false"
+          },
+          "box": {
+            "x": 25,
+            "y": 928.3125,
+            "width": 269,
+            "height": 32
+          },
+          "background": "rgba(0, 0, 0, 0)",
+          "insideList": false
+        },
+        {
+          "id": "rui-select-29-option-indigo",
+          "text": "Indigo",
+          "attrs": {
+            "data-name": "SelectOption",
+            "data-active": "false",
+            "data-testid": "option-indigo",
+            "aria-selected": "false"
+          },
+          "box": {
+            "x": 25,
+            "y": 960.3125,
+            "width": 269,
+            "height": 32
+          },
+          "background": "rgba(0, 0, 0, 0)",
+          "insideList": false
+        },
+        {
+          "id": "rui-select-29-option-blue",
+          "text": "Blue",
+          "attrs": {
+            "data-name": "SelectOption",
+            "data-active": "false",
+            "data-testid": "option-blue",
+            "aria-selected": "false"
+          },
+          "box": {
+            "x": 25,
+            "y": 992.3125,
+            "width": 269,
+            "height": 32
+          },
+          "background": "rgba(0, 0, 0, 0)",
+          "insideList": false
+        },
+        {
+          "id": "rui-select-29-option-cyan",
+          "text": "Cyan",
+          "attrs": {
+            "data-name": "SelectOption",
+            "data-active": "false",
+            "data-testid": "option-cyan",
+            "aria-selected": "false"
+          },
+          "box": {
+            "x": 25,
+            "y": 1024.3125,
+            "width": 269,
+            "height": 32
+          },
+          "background": "rgba(0, 0, 0, 0)",
+          "insideList": false
+        },
+        {
+          "id": "rui-select-29-option-teal",
+          "text": "Teal",
+          "attrs": {
+            "data-name": "SelectOption",
+            "data-active": "false",
+            "data-testid": "option-teal",
+            "aria-selected": "false"
+          },
+          "box": {
+            "x": 25,
+            "y": 1056.3125,
+            "width": 269,
+            "height": 32
+          },
+          "background": "rgba(0, 0, 0, 0)",
+          "insideList": false
+        },
+        {
+          "id": "rui-select-29-option-jade",
+          "text": "Jade",
+          "attrs": {
+            "data-name": "SelectOption",
+            "data-active": "false",
+            "data-testid": "option-jade",
+            "aria-selected": "false"
+          },
+          "box": {
+            "x": 25,
+            "y": 1088.3125,
+            "width": 269,
+            "height": 32
+          },
+          "background": "rgba(0, 0, 0, 0)",
+          "insideList": false
+        },
+        {
+          "id": "rui-select-29-option-green",
+          "text": "Green",
+          "attrs": {
+            "data-name": "SelectOption",
+            "data-active": "false",
+            "data-testid": "option-green",
+            "aria-selected": "false"
+          },
+          "box": {
+            "x": 25,
+            "y": 1120.3125,
+            "width": 269,
+            "height": 32
+          },
+          "background": "rgba(0, 0, 0, 0)",
+          "insideList": false
+        },
+        {
+          "id": "rui-select-29-option-grass",
+          "text": "Grass",
+          "attrs": {
+            "data-name": "SelectOption",
+            "data-active": "false",
+            "data-testid": "option-grass",
+            "aria-selected": "false"
+          },
+          "box": {
+            "x": 25,
+            "y": 1152.3125,
+            "width": 269,
+            "height": 32
+          },
+          "background": "rgba(0, 0, 0, 0)",
+          "insideList": false
+        },
+        {
+          "id": "rui-select-29-option-lime",
+          "text": "Lime",
+          "attrs": {
+            "data-name": "SelectOption",
+            "data-active": "false",
+            "data-testid": "option-lime",
+            "aria-selected": "false"
+          },
+          "box": {
+            "x": 25,
+            "y": 1184.3125,
+            "width": 269,
+            "height": 32
+          },
+          "background": "rgba(0, 0, 0, 0)",
+          "insideList": false
+        },
+        {
+          "id": "rui-select-29-option-mint",
+          "text": "Mint",
+          "attrs": {
+            "data-name": "SelectOption",
+            "data-active": "false",
+            "data-testid": "option-mint",
+            "aria-selected": "false"
+          },
+          "box": {
+            "x": 25,
+            "y": 1216.3125,
+            "width": 269,
+            "height": 32
+          },
+          "background": "rgba(0, 0, 0, 0)",
+          "insideList": false
+        },
+        {
+          "id": "rui-select-29-option-sky",
+          "text": "Sky",
+          "attrs": {
+            "data-name": "SelectOption",
+            "data-active": "false",
+            "data-testid": "option-sky",
+            "aria-selected": "false"
+          },
+          "box": {
+            "x": 25,
+            "y": 1248.3125,
+            "width": 269,
+            "height": 32
+          },
+          "background": "rgba(0, 0, 0, 0)",
+          "insideList": false
+        }
+      ],
+      "activeDescendantBox": {
+        "x": 25,
+        "y": 832.3125,
+        "width": 269,
+        "height": 32
+      },
+      "afterEnter": "Plum"
+    }
+  ],
+  "records": [
+    {
+      "file": "MC-pink-menu-confirm-390-light.png",
+      "unit": "MC",
+      "state": "pink-menu-confirm",
+      "viewport": "390x844",
+      "dpr": 1,
+      "theme": "light",
+      "url": "http://127.0.0.1:4181/",
+      "time": "2026-10-28T17:08:30.672Z",
+      "kind": "viewport",
+      "interventions": "none",
+      "focused": "studio-config-accent_color-list"
+    },
+    {
+      "file": "MC-pink-menu-confirm-1440-dark.png",
+      "unit": "MC",
+      "state": "pink-menu-confirm",
+      "viewport": "1440x900",
+      "dpr": 1,
+      "theme": "dark",
+      "url": "http://127.0.0.1:4181/",
+      "time": "2026-10-28T17:08:42.753Z",
+      "kind": "viewport",
+      "interventions": "none",
+      "focused": "studio-config-accent_color-list"
+    }
+  ],
+  "health": [
+    {
+      "unit": "UI-217",
+      "url": "http://127.0.0.1:4181/",
+      "pageErrors": [],
+      "consoleErrors": [],
+      "failed": [],
+      "csp": []
+    },
+    {
+      "unit": "UI-217",
+      "url": "http://127.0.0.1:4181/",
+      "pageErrors": [],
+      "consoleErrors": [],
+      "failed": [],
+      "csp": []
+    }
+  ],
+  "actions": {
+    "UI-217": [
+      "2026-10-28T17:08:27.550Z preset search 'Graphite' → Built-in · Graphite → brand pink → gray Auto",
+      "2026-10-28T17:08:39.505Z preset search 'Graphite' → Built-in · Graphite → brand pink → gray Auto"
+    ],
+    "MC": [
+      "2026-10-28T17:08:30.674Z screenshot MC-pink-menu-confirm-390-light.png",
+      "2026-10-28T17:08:42.753Z screenshot MC-pink-menu-confirm-1440-dark.png"
+    ]
+  },
+  "failures": []
+}

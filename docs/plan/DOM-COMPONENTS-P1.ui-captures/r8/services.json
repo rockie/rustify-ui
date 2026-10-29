@@ -1,0 +1,70 @@
+{
+  "started_for": "UI review R8",
+  "created_at": "2026-10-29T09:47:52.823824+00:00",
+  "services": [
+    {
+      "example": "theme-studio",
+      "port": 4181,
+      "exec_session": 96509,
+      "listener_pids": [
+        "1836"
+      ],
+      "stop": "Send Ctrl-C to the recorded exec session; confirm these listener PIDs are absent",
+      "status": "stopped for recovery"
+    },
+    {
+      "example": "component-catalog",
+      "port": 4176,
+      "exec_session": 81537,
+      "listener_pids": [
+        "2239"
+      ],
+      "stop": "Send Ctrl-C to the recorded exec session; confirm these listener PIDs are absent",
+      "status": "stopped for recovery"
+    },
+    {
+      "example": "theme-studio",
+      "port": 4181,
+      "launcher_pid": 64082,
+      "process_group": 64082,
+      "command": [
+        "mbx",
+        "xtask",
+        "serve",
+        "--dir",
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-ui-review-r8-products-efyigeu6/theme-studio",
+        "--port",
+        "4181",
+        "--csp",
+        "strict"
+      ],
+      "status": "stopped after review; no port listener or process group remains",
+      "stop": "SIGINT this task-owned process group, then verify its recorded listener PID is absent",
+      "listener_pids": [
+        "64102"
+      ]
+    },
+    {
+      "example": "component-catalog",
+      "port": 4176,
+      "launcher_pid": 64320,
+      "process_group": 64320,
+      "command": [
+        "mbx",
+        "xtask",
+        "serve",
+        "--dir",
+        "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-ui-review-r8-products-efyigeu6/component-catalog",
+        "--port",
+        "4176",
+        "--csp",
+        "strict"
+      ],
+      "status": "stopped after review; no port listener or process group remains",
+      "stop": "SIGINT this task-owned process group, then verify its recorded listener PID is absent",
+      "listener_pids": [
+        "64339"
+      ]
+    }
+  ]
+}

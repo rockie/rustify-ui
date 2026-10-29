@@ -1,0 +1,181 @@
+{
+  "units": {
+    "U1": {
+      "dimensions": [
+        "3.0",
+        "3.0",
+        "3.0",
+        "1.0"
+      ],
+      "total": "10.0",
+      "selected_raw": "judge-U1-a.md",
+      "candidates": [
+        {
+          "raw": "judge-U1-a.md",
+          "scores": [
+            "3.0",
+            "3.0",
+            "3.0",
+            "1.0",
+            "10.0"
+          ],
+          "sha256": "248f3c353ad47b1bcbdff955bf2ddd7581b8c61a1e84c96f4c7d35add8aa5c62"
+        }
+      ]
+    },
+    "U2": {
+      "dimensions": [
+        "3.00",
+        "3.00",
+        "3.00",
+        "1.00"
+      ],
+      "total": "10.00",
+      "selected_raw": "judge-U2-a.md",
+      "candidates": [
+        {
+          "raw": "judge-U2-a.md",
+          "scores": [
+            "3.00",
+            "3.00",
+            "3.00",
+            "1.00",
+            "10.00"
+          ],
+          "sha256": "1f6dc032d345a317eec3e0ea711476f6b03886a75ce62e54634c091714b277aa"
+        }
+      ]
+    },
+    "U3": {
+      "dimensions": [
+        "3.00",
+        "3.00",
+        "3.00",
+        "1.00"
+      ],
+      "total": "10.00",
+      "selected_raw": "judge-U3-a.md",
+      "candidates": [
+        {
+          "raw": "judge-U3-a.md",
+          "scores": [
+            "3.00",
+            "3.00",
+            "3.00",
+            "1.00",
+            "10.00"
+          ],
+          "sha256": "2f5cc6bcb318a89be5f10f5675b724ed1dd033abbb93e8adec3e94511158599d"
+        }
+      ]
+    },
+    "U4": {
+      "dimensions": [
+        "3.00",
+        "3.00",
+        "3.00",
+        "1.00"
+      ],
+      "total": "10.00",
+      "selected_raw": "judge-U4-a.md",
+      "candidates": [
+        {
+          "raw": "judge-U4-a.md",
+          "scores": [
+            "3.00",
+            "3.00",
+            "3.00",
+            "1.00",
+            "10.00"
+          ],
+          "sha256": "1df96b589f5fa185690be65ed8ac227131fb082c7a9a2bef99a26ad51676d64a"
+        }
+      ]
+    },
+    "U5": {
+      "dimensions": [
+        "3.00",
+        "3.00",
+        "3.00",
+        "1.00"
+      ],
+      "total": "10.00",
+      "selected_raw": "judge-U5-a.md",
+      "candidates": [
+        {
+          "raw": "judge-U5-a.md",
+          "scores": [
+            "3.00",
+            "3.00",
+            "3.00",
+            "1.00",
+            "10.00"
+          ],
+          "sha256": "bda58b77e50974c814496442df58702af4779c5dd447869fe82c148788f4ca91"
+        }
+      ]
+    },
+    "U6": {
+      "dimensions": [
+        "3.0",
+        "3.0",
+        "3.0",
+        "1.0"
+      ],
+      "total": "10.0",
+      "selected_raw": "judge-U6-a.md",
+      "candidates": [
+        {
+          "raw": "judge-U6-a.md",
+          "scores": [
+            "3.0",
+            "3.0",
+            "3.0",
+            "1.0",
+            "10.0"
+          ],
+          "sha256": "131046ff9ad5444e3fdd0bbb4d7506192348f3df666e3e069ebdb3228c285214"
+        }
+      ]
+    },
+    "U7": {
+      "dimensions": [
+        "3.0",
+        "3.0",
+        "3.0",
+        "1.0"
+      ],
+      "total": "10.0",
+      "selected_raw": "judge-U7-b.md",
+      "candidates": [
+        {
+          "raw": "judge-U7-a.md",
+          "scores": [
+            "3.0",
+            "3.0",
+            "3.0",
+            "1.0",
+            "10.0"
+          ],
+          "sha256": "9d718e7f2039d6a4a6d8cefe19e202014d367a8961fbe0b78e2934e6219f9b2e"
+        },
+        {
+          "raw": "judge-U7-b.md",
+          "scores": [
+            "3.0",
+            "3.0",
+            "3.0",
+            "1.0",
+            "10.0"
+          ],
+          "sha256": "d08cad2e9c89b0845cc8f2543d4b5ac56ae5b52be0c8355ec15b98f1acce2982"
+        }
+      ]
+    }
+  },
+  "round_score": "10.0",
+  "unclosed_judge_gaps": [],
+  "reviewers": 8,
+  "confirmation_review_performed": false,
+  "U7_selection": "min whole vector; equal totals choose later packet covering all native segments"
+}

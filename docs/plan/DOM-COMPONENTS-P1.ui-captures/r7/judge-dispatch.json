@@ -1,0 +1,174 @@
+{
+  "mode": "manual",
+  "model": "inherited host model, no override",
+  "effort": "inherited, no override",
+  "entries": [
+    {
+      "unit": "U4",
+      "task": "/root/ui_r7_u4",
+      "fork_turns": "none",
+      "read_only": true,
+      "at": "2026-10-29T02:31:14.256007+00:00",
+      "task_sha256": "044bcd3cb90b29105a324f36413aa5aff0ea4d8409d17cd95184563a12ee9b5e",
+      "packet_sha256": "d24b938844a347d7be2c5451f98ded63808d952061c90b21530964af3c3a483b",
+      "raw": "judge-U4-a.md",
+      "packet_snapshot": "judge-inputs/U4-a-snapshot/",
+      "raw_sha256": "33ff72803847be757765dfe83063ca7edb4ae63103c5ed4f82cf4ca825ce516a",
+      "task_file": "judge-inputs/U4-a-snapshot/task.md",
+      "packet_file": "judge-inputs/U4-a-snapshot/packet.json",
+      "archive_mapping": {
+        "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r7/capture-U4.md": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r7/judge-inputs/U4-a-snapshot/capture.md",
+        "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r7/U4-actions.log": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r7/judge-inputs/U4-a-snapshot/actions.log"
+      }
+    },
+    {
+      "unit": "U5",
+      "task": "/root/ui_r7_u5",
+      "fork_turns": "none",
+      "read_only": true,
+      "at": "2026-10-29T02:35:25.168272+00:00",
+      "task_sha256": "fbc24b944d52fd716af52a5e3cbb0e19ce0b8db0686eff10df5b40c3872c0c39",
+      "packet_sha256": "720f3c2df8099af136c96f526e32c2656361c43481e973b021d18c9a4c6afcaa",
+      "raw": "judge-U5-a.md",
+      "raw_sha256": "164126e9b0120ef7d959b5b16ee8c9e4bc0fae96b4061fc64d2ef3e2eddeb2de",
+      "task_file": "judge-inputs/U5-a-snapshot/task.md",
+      "packet_file": "judge-inputs/U5-a-snapshot/packet.json",
+      "archive_mapping": {
+        "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r7/capture-U5.md": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r7/judge-inputs/U5-a-snapshot/capture.md",
+        "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r7/U5-actions.log": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r7/judge-inputs/U5-a-snapshot/actions.log"
+      }
+    },
+    {
+      "unit": "U7",
+      "task": "/root/ui_r7_u7",
+      "fork_turns": "none",
+      "read_only": true,
+      "at": "2026-10-29T02:35:25.169233+00:00",
+      "task_sha256": "ff3d382eabef4a6193636d12ceaef60bfdb0da11db300e21345f586847d1ff83",
+      "packet_sha256": "db5ae628a85d37093c8ad82d88e9832804dc17db844703080e1499ee022618fe",
+      "raw": "judge-U7-a.md",
+      "raw_sha256": "86845272e558027ac0b613b7b1b53ba346c1ba5b39d9ca8fbe9c2d889a7d5255",
+      "task_file": "judge-inputs/U7-a-snapshot/task.md",
+      "packet_file": "judge-inputs/U7-a-snapshot/packet.json",
+      "archive_mapping": {
+        "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r7/capture-U7.md": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r7/judge-inputs/U7-a-snapshot/capture.md",
+        "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r7/U7-actions.log": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r7/judge-inputs/U7-a-snapshot/actions.log"
+      }
+    },
+    {
+      "unit": "U1",
+      "task": "/root/ui_r7_u1",
+      "fork_turns": "none",
+      "read_only": true,
+      "at": "2026-10-29T02:37:21.809766+00:00",
+      "task_sha256": "1d00b812075a05c1e0652d92e580f95567ab8a1e168e0b5f8f152102a84cc8c1",
+      "packet_sha256": "6288f37cae8bc60a7f236ce9091c1ceb95393c50a05ab7843a5ad84e2648913a",
+      "raw": "judge-U1-a.md",
+      "raw_sha256": "243467dc0f749962f6e9db5978ccfe48b32f6edd27f401514b83b8a77b6abd01",
+      "task_file": "judge-inputs/U1-a-snapshot/task.md",
+      "packet_file": "judge-inputs/U1-a-snapshot/packet.json",
+      "archive_mapping": {
+        "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r7/capture-U1.md": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r7/judge-inputs/U1-a-snapshot/capture.md",
+        "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r7/U1-actions.log": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r7/judge-inputs/U1-a-snapshot/actions.log"
+      }
+    },
+    {
+      "unit": "U6",
+      "task": "/root/ui_r7_u6",
+      "fork_turns": "none",
+      "read_only": true,
+      "at_recorded": "2026-10-29T02:51:59.287925+00:00",
+      "task_file": "judge-inputs/U6-a-snapshot/task.md",
+      "task_sha256": "9e7e0162e9ab54dae2080cfdd1db5058119c08498dcde732319c2f5ed5f18871",
+      "packet_file": "judge-inputs/U6-a-snapshot/packet.json",
+      "packet_sha256": "cf83611c02e28a8f3c727e5f7c1211a3a560625963309ea5f26779e3892c6e0d",
+      "raw": "judge-U6-a.md",
+      "raw_sha256": "09dfa8ae06b8e7945d1e27c14636ea493c2cb84c5446273e6180c1f21b47f983",
+      "archive_mapping": {
+        "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r7/capture-U6.md": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r7/judge-inputs/U6-a-snapshot/capture.md",
+        "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r7/U6-actions.log": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r7/judge-inputs/U6-a-snapshot/actions.log"
+      }
+    },
+    {
+      "unit": "U3",
+      "task": "/root/ui_r7_u3",
+      "fork_turns": "none",
+      "read_only": true,
+      "at_recorded": "2026-10-29T02:51:59.288730+00:00",
+      "task_file": "judge-inputs/U3-a-snapshot/task.md",
+      "task_sha256": "a7c5a3a17180d33da1d430b8c0a4028d0895fdbd84aa8b8bc381de9448e4c244",
+      "packet_file": "judge-inputs/U3-a-snapshot/packet.json",
+      "packet_sha256": "5187a4d3bd90dec4a5da3b43960ef63eee252dad04600483d740d8e7f98fbbd8",
+      "raw": "judge-U3-a.md",
+      "raw_sha256": "0e98a05f32d080feb35f82572e42b25c403c509f33797ed770591ce6668b0b8e",
+      "archive_mapping": {
+        "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r7/capture-U3.md": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r7/judge-inputs/U3-a-snapshot/capture.md",
+        "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r7/U3-actions.log": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r7/judge-inputs/U3-a-snapshot/actions.log"
+      }
+    },
+    {
+      "unit": "U2",
+      "task": "/root/ui_r7_u2",
+      "fork_turns": "none",
+      "read_only": true,
+      "at_recorded": "2026-10-29T02:51:59.289126+00:00",
+      "task_file": "judge-inputs/U2-a-snapshot/task.md",
+      "task_sha256": "c913dfbf3b31d8273530cda2eef9042b81e15395fa87c9a5a9772440b7e53c4c",
+      "packet_file": "judge-inputs/U2-a-snapshot/packet.json",
+      "packet_sha256": "3d1c5737d70ceba20eed2c4390be2002c6cb03d98d8b5455d7db586191eaa2e2",
+      "raw": "judge-U2-a.md",
+      "raw_sha256": "e06b377eafe43dcbfb31d7fd332ef58211431d371dc15d55165ca7dc42f53b2f",
+      "archive_mapping": {
+        "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r7/capture-U2.md": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r7/judge-inputs/U2-a-snapshot/capture.md",
+        "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r7/U2-actions.log": "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r7/judge-inputs/U2-a-snapshot/actions.log"
+      }
+    },
+    {
+      "unit": "U4",
+      "task": "/root/ui_r7_u4_b",
+      "fork_turns": "none",
+      "read_only": true,
+      "at_recorded": "2026-10-29T02:51:59.289537+00:00",
+      "task_file": "judge-inputs/task-U4-b.md",
+      "task_sha256": "897a26d2ecccbcf8230d978482d020b735e673195845507b43d8fb436bd93751",
+      "packet_file": "judge-inputs/packet-U4-b.json",
+      "packet_sha256": "738cb91de2297d423e0e7158ea269478c5caebdccd9e5fbd87b700928fd7b3e0",
+      "raw": "judge-U4-b.md",
+      "raw_sha256": "1cbf6cd3a184a9f891510763806dd9b1e7985d007accb9e0f3508f8ec19bc6ec"
+    },
+    {
+      "unit": "U7",
+      "task": "/root/ui_r7_u7_b",
+      "fork_turns": "none",
+      "read_only": true,
+      "at_recorded": "2026-10-29T02:51:59.289914+00:00",
+      "task_file": "judge-inputs/task-U7-b.md",
+      "task_sha256": "b2ac11a6baf72f09ef85f4abfd3a36f6639064f04dac106bef726ce75cd72a56",
+      "packet_file": "judge-inputs/packet-U7-b.json",
+      "packet_sha256": "68bdc06ec4d069f45ffcf4383f1821f05386d0b82ebd4d8d09035f559625c51a",
+      "raw": "judge-U7-b.md",
+      "raw_sha256": "741e253c42ae3f33034f3d80e2b6414af76068e14ea6372f49c1ec219afc0c8f"
+    },
+    {
+      "unit": "U3",
+      "task": "/root/ui_r7_u3_b",
+      "fork_turns": "none",
+      "read_only": true,
+      "at_recorded": "2026-10-29T02:54:43.241357+00:00",
+      "task_file": "judge-inputs/task-U3-b.md",
+      "task_sha256": "92d9c531347e93d79d19d488d6fb9be5706aa53d5c718fbb053e18d6751fb959",
+      "packet_file": "judge-inputs/packet-U3-b.json",
+      "packet_sha256": "532db04c75598d913ede11927969bd5131780560ee501447a5be2be11a855984",
+      "raw": "judge-U3-b.md",
+      "raw_sha256": "a6c598e3eb8187b169132e6b05273c5f4fc72c8b5e6a48d2e8a624ea682d2773"
+    }
+  ],
+  "runtime_retries": [
+    {
+      "task": "/root/ui_r7_u3",
+      "reason": "Selected model is at capacity",
+      "action": "same-model same-context followup; no model or effort override",
+      "valid_judgment_returned": true
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "shots": 5,
+  "failures": [
+    {
+      "unit": "U4-supplement",
+      "error": "locator.waitFor: Timeout 90000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#status[data-status=ready], [data-testid=status][data-status=ready]').first()\u001b[22m\n\n    at ready (/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r8/capture-u4-supplement.cjs:76:103)\n    at async /Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r8/capture-u4-supplement.cjs:153:234"
+    }
+  ]
+}

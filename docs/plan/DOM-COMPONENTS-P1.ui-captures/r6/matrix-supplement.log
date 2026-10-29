@@ -1,0 +1,33 @@
+locator.click: Timeout 30000ms exceeded.
+Call log:
+[2m  - waiting for getByTestId('preset-select-list').getByRole('option', { name: 'Built-in · Graphite', exact: true })[22m
+
+    at select (/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r6/matrix-supplement.cjs:108:85)
+    at async graphitePink (/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r6/matrix-supplement.cjs:128:5)
+    at async /Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r6/matrix-supplement.cjs:897:378
+    at async cells.M1 (/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r6/matrix-supplement.cjs:897:299)
+    at async /Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r6/matrix-supplement.cjs:920:110
+{"completed":"M2","shots":23}
+locator.click: Timeout 30000ms exceeded.
+Call log:
+[2m  - waiting for getByTestId('inspector-toggle')[22m
+[2m    - locator resolved to <button type="button" data-name="Button" aria-pressed="true" data-variant="outline" data-appearance="light" data-color-role="primary" data-authored-primary="true" data-testid="inspector-toggle" class="rustify-color rustify-button rui-geometry-116">…</button>[22m
+[2m  - attempting click action[22m
+[2m    2 × waiting for element to be visible, enabled and stable[22m
+[2m      - element is not visible[22m
+[2m    - retrying click action[22m
+[2m    - waiting 20ms[22m
+[2m    2 × waiting for element to be visible, enabled and stable[22m
+[2m      - element is not visible[22m
+[2m    - retrying click action[22m
+[2m      - waiting 100ms[22m
+[2m    58 × waiting for element to be visible, enabled and stable[22m
+[2m       - element is not visible[22m
+[2m     - retrying click action[22m
+[2m       - waiting 500ms[22m
+
+    at cells.M5 (/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r6/matrix-supplement.cjs:906:435)
+    at async /Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r6/matrix-supplement.cjs:920:110
+{"completed":"M6","shots":59}
+{"completed":"M7","shots":67}
+{"shots":67,"failures":[{"unit":"M1","error":"locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByTestId('preset-select-list').getByRole('option', { name: 'Built-in · Graphite', exact: true })\u001b[22m\n\n    at select (/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r6/matrix-supplement.cjs:108:85)\n    at async graphitePink (/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r6/matrix-supplement.cjs:128:5)\n    at async /Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r6/matrix-supplement.cjs:897:378\n    at async cells.M1 (/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r6/matrix-supplement.cjs:897:299)\n    at async /Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r6/matrix-supplement.cjs:920:110"},{"unit":"M5","error":"locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByTestId('inspector-toggle')\u001b[22m\n\u001b[2m    - locator resolved to <button type=\"button\" data-name=\"Button\" aria-pressed=\"true\" data-variant=\"outline\" data-appearance=\"light\" data-color-role=\"primary\" data-authored-primary=\"true\" data-testid=\"inspector-toggle\" class=\"rustify-color rustify-button rui-geometry-116\">…</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    58 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is not visible\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\n    at cells.M5 (/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r6/matrix-supplement.cjs:906:435)\n    at async /Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r6/matrix-supplement.cjs:920:110"}]}

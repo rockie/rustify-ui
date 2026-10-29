@@ -5,6 +5,7 @@
 | 对象 ID | 标题 / 来源 | 状态页 | 活动 / 归档 |
 | --- | --- | --- | --- |
 | cc008e52-5073-46aa-aa2f-864f262e41b0 | [融合 Leptos CSR 与 Makepad 的框架 PRD](../../../../docs/PRD-WASM-UI.md) | [cc008e52](cc008e52-5073-46aa-aa2f-864f262e41b0.md) | 活动 |
+| ae02c772-f71f-4266-86e6-bbb073035368 | [DOM-COMPONENTS DOM 组件体系重构 PRD](../../../../docs/PRD-DOM-COMPONENTS.md) | [ae02c772](ae02c772-f71f-4266-86e6-bbb073035368.md) | 活动 |
 | 8917bbeb-7add-4826-95ee-5cdf6bdff735 | [DOCS-SSG 静态文档站框架与 CLI PRD](../../../../docs/PRD-DOCS-SSG.md) | [8917bbeb](8917bbeb-7add-4826-95ee-5cdf6bdff735.md) | 活动 |
 
 维护约定：改变本层内容者同步索引；按稳定 ID/路径保留历史，无变化不重写，索引不作为事件。详见[目录索引维护](../../protocol.md#目录索引维护)。

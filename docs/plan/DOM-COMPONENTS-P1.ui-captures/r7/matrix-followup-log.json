@@ -1,0 +1,195 @@
+{
+  "records": [
+    {
+      "file": "U1-matrix2-zh-top-1440-dark.png",
+      "unit": "U1",
+      "state": "matrix2-zh-top",
+      "viewport": "1440x900",
+      "dpr": 1,
+      "theme": "dark",
+      "url": "http://127.0.0.1:4181/",
+      "time": "2026-10-29T02:33:11.515Z",
+      "kind": "viewport",
+      "interventions": "none",
+      "focused": "locale-zh"
+    },
+    {
+      "file": "U1-matrix2-zh-configured-1440-dark.png",
+      "unit": "U1",
+      "state": "matrix2-zh-configured",
+      "viewport": "1440x900",
+      "dpr": 1,
+      "theme": "dark",
+      "url": "http://127.0.0.1:4181/",
+      "time": "2026-10-29T02:33:12.080Z",
+      "kind": "viewport",
+      "interventions": "none",
+      "focused": "locale-zh"
+    },
+    {
+      "file": "U1-matrix2-keyboard-01-1440-dark.png",
+      "unit": "U1",
+      "state": "matrix2-keyboard-01",
+      "viewport": "1440x900",
+      "dpr": 1,
+      "theme": "dark",
+      "url": "http://127.0.0.1:4181/",
+      "time": "2026-10-29T02:33:12.709Z",
+      "kind": "viewport",
+      "interventions": "none",
+      "focused": "preset-search"
+    },
+    {
+      "file": "U1-matrix2-keyboard-02-1440-dark.png",
+      "unit": "U1",
+      "state": "matrix2-keyboard-02",
+      "viewport": "1440x900",
+      "dpr": 1,
+      "theme": "dark",
+      "url": "http://127.0.0.1:4181/",
+      "time": "2026-10-29T02:33:13.277Z",
+      "kind": "viewport",
+      "interventions": "none",
+      "focused": "studio-config-accent_color"
+    },
+    {
+      "file": "U1-matrix2-keyboard-03-1440-dark.png",
+      "unit": "U1",
+      "state": "matrix2-keyboard-03",
+      "viewport": "1440x900",
+      "dpr": 1,
+      "theme": "dark",
+      "url": "http://127.0.0.1:4181/",
+      "time": "2026-10-29T02:33:13.842Z",
+      "kind": "viewport",
+      "interventions": "none",
+      "focused": "studio-config-accent_color-list"
+    },
+    {
+      "file": "U1-matrix2-keyboard-04-1440-dark.png",
+      "unit": "U1",
+      "state": "matrix2-keyboard-04",
+      "viewport": "1440x900",
+      "dpr": 1,
+      "theme": "dark",
+      "url": "http://127.0.0.1:4181/",
+      "time": "2026-10-29T02:33:14.413Z",
+      "kind": "viewport",
+      "interventions": "none",
+      "focused": "mode-dark"
+    },
+    {
+      "file": "U6-matrix2-links-hover-390-light.png",
+      "unit": "U6",
+      "state": "matrix2-links-hover",
+      "viewport": "390x844",
+      "dpr": 1,
+      "theme": "light",
+      "url": "http://127.0.0.1:4176/",
+      "time": "2026-10-29T02:33:26.967Z",
+      "kind": "viewport",
+      "interventions": "none",
+      "focused": null
+    },
+    {
+      "file": "U6-matrix2-links-focus-390-light.png",
+      "unit": "U6",
+      "state": "matrix2-links-focus",
+      "viewport": "390x844",
+      "dpr": 1,
+      "theme": "light",
+      "url": "http://127.0.0.1:4176/",
+      "time": "2026-10-29T02:33:27.517Z",
+      "kind": "viewport",
+      "interventions": "none",
+      "focused": "type-link"
+    },
+    {
+      "file": "U6-matrix2-link-studio-1280-dark.png",
+      "unit": "U6",
+      "state": "matrix2-link-studio",
+      "viewport": "1280x900",
+      "dpr": 1,
+      "theme": "dark",
+      "url": "http://127.0.0.1:4181/",
+      "time": "2026-10-29T02:33:36.798Z",
+      "kind": "viewport",
+      "interventions": "none",
+      "focused": "mode-dark"
+    },
+    {
+      "file": "U6-matrix2-link-studio-hover-1280-dark.png",
+      "unit": "U6",
+      "state": "matrix2-link-studio-hover",
+      "viewport": "1280x900",
+      "dpr": 1,
+      "theme": "dark",
+      "url": "http://127.0.0.1:4181/",
+      "time": "2026-10-29T02:33:37.394Z",
+      "kind": "viewport",
+      "interventions": "none",
+      "focused": "mode-dark"
+    },
+    {
+      "file": "U6-matrix2-link-studio-focus-1280-dark.png",
+      "unit": "U6",
+      "state": "matrix2-link-studio-focus",
+      "viewport": "1280x900",
+      "dpr": 1,
+      "theme": "dark",
+      "url": "http://127.0.0.1:4181/",
+      "time": "2026-10-29T02:33:37.959Z",
+      "kind": "viewport",
+      "interventions": "none",
+      "focused": "cards-editor-link"
+    }
+  ],
+  "health": [
+    {
+      "unit": "U1",
+      "url": "http://127.0.0.1:4181/",
+      "pageErrors": [],
+      "consoleErrors": [],
+      "failed": [],
+      "csp": []
+    },
+    {
+      "unit": "U6",
+      "url": "http://127.0.0.1:4176/",
+      "pageErrors": [],
+      "consoleErrors": [],
+      "failed": [],
+      "csp": []
+    },
+    {
+      "unit": "U6",
+      "url": "http://127.0.0.1:4181/",
+      "pageErrors": [],
+      "consoleErrors": [],
+      "failed": [],
+      "csp": []
+    }
+  ],
+  "actions": {
+    "U1": [
+      "2026-10-29T02:33:10.802Z preset search 'Graphite' → Built-in · Graphite → brand pink → gray Auto",
+      "2026-10-29T02:33:11.517Z screenshot U1-matrix2-zh-top-1440-dark.png",
+      "2026-10-29T02:33:12.081Z screenshot U1-matrix2-zh-configured-1440-dark.png",
+      "2026-10-29T02:33:12.709Z screenshot U1-matrix2-keyboard-01-1440-dark.png",
+      "2026-10-29T02:33:13.278Z screenshot U1-matrix2-keyboard-02-1440-dark.png",
+      "2026-10-29T02:33:13.842Z screenshot U1-matrix2-keyboard-03-1440-dark.png",
+      "2026-10-29T02:33:14.414Z screenshot U1-matrix2-keyboard-04-1440-dark.png",
+      "2026-10-29T02:33:14.414Z matrix2: English configuration first, then Chinese dark top/config and real-keyboard dark focus frames; repairs failed locale-dependent selector in first matrix attempt"
+    ],
+    "U6": [
+      "2026-10-29T02:33:26.968Z screenshot U6-matrix2-links-hover-390-light.png",
+      "2026-10-29T02:33:27.518Z screenshot U6-matrix2-links-focus-390-light.png",
+      "2026-10-29T02:33:27.518Z 390 catalog: Link hover and real keyboard focus",
+      "2026-10-29T02:33:36.799Z screenshot U6-matrix2-link-studio-1280-dark.png",
+      "2026-10-29T02:33:37.395Z screenshot U6-matrix2-link-studio-hover-1280-dark.png",
+      "2026-10-29T02:33:37.960Z screenshot U6-matrix2-link-studio-focus-1280-dark.png",
+      "2026-10-29T02:33:37.960Z 1280 dark SDK Link in real Studio DOM preview; no product DOM/style injection"
+    ]
+  },
+  "failures": []
+}

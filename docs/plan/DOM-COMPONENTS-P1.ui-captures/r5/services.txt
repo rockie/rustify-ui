@@ -1,0 +1,7 @@
+COMMAND   PID   USER   FD   TYPE             DEVICE SIZE/OFF NODE NAME
+xtask   34182 rockie    3u  IPv4 0xbaf635e745b2449c      0t0  TCP 127.0.0.1:4181 (LISTEN)
+xtask   35793 rockie    3u  IPv4 0x5113570bbb176ef2      0t0  TCP 127.0.0.1:4176 (LISTEN)
+
+Temporary servers started by this review. Stop after runtime verification: kill 34182 35793. Product copies recorded in products.json.
+
+Stopped 34182, 35793 at 2026-10-28T14:51:28.228593+00:00 via SIGTERM.

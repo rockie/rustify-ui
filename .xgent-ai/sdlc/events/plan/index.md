@@ -6,6 +6,7 @@
 | --- | --- | --- |
 | 0222c547-cbeb-412a-8c3e-3399b943670e | 子目录入口 | [0222c547-cbeb-412a-8c3e-3399b943670e](0222c547-cbeb-412a-8c3e-3399b943670e/index.md) |
 | 2b5473ac-f692-467b-8024-8fe191345859 | 子目录入口 | [2b5473ac-f692-467b-8024-8fe191345859](2b5473ac-f692-467b-8024-8fe191345859/index.md) |
+| 37a2c7b4-7052-4f85-96e9-135b6f7667a1 | DOM-COMPONENTS-P1 事件 | [入口](37a2c7b4-7052-4f85-96e9-135b6f7667a1/index.md) |
 | 41817647-c138-4651-a076-a022339fd6bc | 子目录入口 | [41817647-c138-4651-a076-a022339fd6bc](41817647-c138-4651-a076-a022339fd6bc/index.md) |
 | 526c88c7-a4b3-4ea9-9193-371420b66d1d | 子目录入口 | [526c88c7-a4b3-4ea9-9193-371420b66d1d](526c88c7-a4b3-4ea9-9193-371420b66d1d/index.md) |
 | 7493fc99-98cd-4d7e-aaa7-ac842d36d490 | 子目录入口 | [7493fc99-98cd-4d7e-aaa7-ac842d36d490](7493fc99-98cd-4d7e-aaa7-ac842d36d490/index.md) |
@@ -25,5 +26,6 @@
 | bf977834-399c-4b7d-b3e3-c7724c8d7cff | DOCS-SSG-P4-gaps 事件 | [入口](bf977834-399c-4b7d-b3e3-c7724c8d7cff/index.md) |
 | ca735c8c-bc5e-44af-bb23-f591a378bc94 | DOCS-LANDING 事件 | [入口](ca735c8c-bc5e-44af-bb23-f591a378bc94/index.md) |
 | cd0eba4a-928f-4fd8-95c3-47a609b7735b | CRATES-IO-P1 事件 | [入口](cd0eba4a-928f-4fd8-95c3-47a609b7735b/index.md) |
+| bba16439-b67d-4fa5-bbff-fddfc2e1317a | DOM-COMPONENTS-P1 gaps事件 | [入口](bba16439-b67d-4fa5-bbff-fddfc2e1317a/index.md) |
 
 维护约定：改变本层内容者同步索引；按稳定 ID/路径保留历史，无变化不重写，索引不作为事件。详见[目录索引维护](../../protocol.md#目录索引维护)。

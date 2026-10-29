@@ -1,0 +1,16 @@
+error[E0514]: found crate `wasm_bindgen_cli_support` compiled by an incompatible version of rustc
+   --> tools/cargo_makepad/src/wasm/compile.rs:161:23
+    |
+161 |     let mut bindgen = wasm_bindgen_cli_support::Bindgen::new();
+    |                       ^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: the following crate versions were found:
+            crate `wasm_bindgen_cli_support` compiled by rustc 1.99.1 (58cf8f9c3 2026-10-13): /Users/rockie/Library/Caches/mbx/targets/v1/539d03df4760ab857772145707057dd1fbcb2ce207fbf2ee68f1017fe3c9d67d/release/deps/libwasm_bindgen_cli_support-6035b690535868b5.rlib
+    = help: please recompile that crate using this compiler (rustc 1.99.0 (b940084d7 2026-09-28)) (consider running `cargo clean` first)
+
+For more information about this error, try `rustc --explain E0514`.
+error: could not compile `cargo-makepad` (bin "cargo-makepad") due to 1 previous error
+mbx[gc]: evicted 0 objects and 0 action results (70.8 KiB logical); 69.7 GiB logical remain
+mbx[savings]: 407073 compilations dispensed from stock. inventory immaculate.
+cargo-makepad wasm build failed
+mbx[savings]: 815.0 GiB of target/ is an elaborate illusion. the disk is in on it.

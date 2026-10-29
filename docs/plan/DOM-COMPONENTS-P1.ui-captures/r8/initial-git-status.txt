@@ -1,0 +1,65 @@
+ M .xgent-ai/experience/index.md
+ M .xgent-ai/sdlc/events/plan/index.md
+ M .xgent-ai/sdlc/events/prd/index.md
+ M .xgent-ai/sdlc/events/review/index.md
+ M .xgent-ai/sdlc/index.md
+ M .xgent-ai/sdlc/status/plan/index.md
+ M .xgent-ai/sdlc/status/prd/index.md
+ M .xgent-ai/sdlc/status/review/index.md
+ M docs/validation/dom-components-p1/dom-layout-desktop.png
+ M docs/validation/dom-components-p1/dom-layout-mobile.png
+?? .xgent-ai/experience/37a2c7b4-7052-4f85-96e9-135b6f7667a1.md
+?? .xgent-ai/sdlc/events/plan/37a2c7b4-7052-4f85-96e9-135b6f7667a1/
+?? .xgent-ai/sdlc/events/prd/ae02c772-f71f-4266-86e6-bbb073035368/
+?? .xgent-ai/sdlc/events/review/07fabee1-24c5-4ecf-a54a-87c0caddcb8a/
+?? .xgent-ai/sdlc/events/review/1e3e9f95-daed-40fa-af55-b0776ba2ab36/
+?? .xgent-ai/sdlc/events/review/2cc80246-5d61-4370-bbd7-462827ecbce3/
+?? .xgent-ai/sdlc/events/review/30cec73c-d952-4e79-87bc-5bd0e93a4766/
+?? .xgent-ai/sdlc/events/review/4096c476-5ee3-44a5-a195-09a5183542ca/
+?? .xgent-ai/sdlc/events/review/4e39ea53-4b09-4738-b7cb-65d085532fb9/
+?? .xgent-ai/sdlc/events/review/606191c6-42f8-4ac4-a654-42b29bfa9e71/
+?? .xgent-ai/sdlc/events/review/7069ce87-6aaf-426d-be2a-7a52e0d6c825/
+?? .xgent-ai/sdlc/events/review/7478fe65-dbd6-4f46-a30f-d207916b355e/
+?? .xgent-ai/sdlc/events/review/7bd99259-ba76-4775-b229-1e9865fbe848/
+?? .xgent-ai/sdlc/events/review/8abc8d80-fa38-4e09-b066-929980601837/
+?? .xgent-ai/sdlc/events/review/f803a087-f2c1-4b5e-83f8-58952f2ad545/
+?? .xgent-ai/sdlc/status/plan/37a2c7b4-7052-4f85-96e9-135b6f7667a1.md
+?? .xgent-ai/sdlc/status/prd/ae02c772-f71f-4266-86e6-bbb073035368.md
+?? .xgent-ai/sdlc/status/review/07fabee1-24c5-4ecf-a54a-87c0caddcb8a.md
+?? .xgent-ai/sdlc/status/review/1e3e9f95-daed-40fa-af55-b0776ba2ab36.md
+?? .xgent-ai/sdlc/status/review/2cc80246-5d61-4370-bbd7-462827ecbce3.md
+?? .xgent-ai/sdlc/status/review/30cec73c-d952-4e79-87bc-5bd0e93a4766.md
+?? .xgent-ai/sdlc/status/review/4096c476-5ee3-44a5-a195-09a5183542ca.md
+?? .xgent-ai/sdlc/status/review/4e39ea53-4b09-4738-b7cb-65d085532fb9.md
+?? .xgent-ai/sdlc/status/review/606191c6-42f8-4ac4-a654-42b29bfa9e71.md
+?? .xgent-ai/sdlc/status/review/7069ce87-6aaf-426d-be2a-7a52e0d6c825.md
+?? .xgent-ai/sdlc/status/review/7478fe65-dbd6-4f46-a30f-d207916b355e.md
+?? .xgent-ai/sdlc/status/review/7bd99259-ba76-4775-b229-1e9865fbe848.md
+?? .xgent-ai/sdlc/status/review/8abc8d80-fa38-4e09-b066-929980601837.md
+?? .xgent-ai/sdlc/status/review/f803a087-f2c1-4b5e-83f8-58952f2ad545.md
+?? docs/PRD-DOM-COMPONENTS.md
+?? docs/PRD-DOM-COMPONENTS.review.md
+?? docs/plan/DOM-COMPONENTS-P1.code-review.md
+?? docs/plan/DOM-COMPONENTS-P1.code-review.r2.md
+?? docs/plan/DOM-COMPONENTS-P1.code-review.r3.md
+?? docs/plan/DOM-COMPONENTS-P1.review.md
+?? docs/plan/DOM-COMPONENTS-P1.ui-captures/r1/
+?? docs/plan/DOM-COMPONENTS-P1.ui-captures/r2/
+?? docs/plan/DOM-COMPONENTS-P1.ui-captures/r3/
+?? docs/plan/DOM-COMPONENTS-P1.ui-captures/r4/
+?? docs/plan/DOM-COMPONENTS-P1.ui-captures/r5/
+?? docs/plan/DOM-COMPONENTS-P1.ui-captures/r6/
+?? docs/plan/DOM-COMPONENTS-P1.ui-captures/r7/
+?? docs/plan/DOM-COMPONENTS-P1.ui-captures/r8/
+?? docs/plan/DOM-COMPONENTS-P1.ui-review.md
+?? docs/plan/DOM-COMPONENTS-P1.ui-review.r2.md
+?? docs/plan/DOM-COMPONENTS-P1.ui-review.r3.md
+?? docs/plan/DOM-COMPONENTS-P1.ui-review.r4.md
+?? docs/plan/DOM-COMPONENTS-P1.ui-review.r5.md
+?? docs/plan/DOM-COMPONENTS-P1.ui-review.r6.md
+?? docs/plan/DOM-COMPONENTS-P1.ui-review.r7.md
+?? docs/plan/DOM-COMPONENTS-P1.ui-target.md
+?? docs/plan/DOM-COMPONENTS-P1.ui-target.r5.md
+?? docs/plan/DOM-COMPONENTS-P1.ui-target.r6.md
+?? docs/plan/DOM-COMPONENTS-P1.ui-target.r7.md
+?? docs/plan/DOM-COMPONENTS-P1.ui-target/

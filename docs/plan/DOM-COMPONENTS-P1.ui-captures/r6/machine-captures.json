@@ -1,0 +1,260 @@
+[
+  {
+    "file": "MC-confirm-button-1440-light.png",
+    "url": "http://127.0.0.1:4181/",
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "dpr": 1,
+    "theme": "light root, dark local dialog",
+    "captured_at": "2026-10-28T16:36:49.730Z",
+    "timestamp_basis": "recorded immediately after screenshot",
+    "width": 1440,
+    "height": 900,
+    "sha256": "5e84dadef0b2b28690fc5e856231ef271a6574b5a81a1572b7c894646de8044e",
+    "tool": "Playwright 1.63.0, real release product",
+    "independent_judge_input": false
+  },
+  {
+    "file": "MC-copy-denied-1440-light.png",
+    "url": "http://127.0.0.1:4181/",
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "dpr": 1,
+    "theme": "light",
+    "captured_at": "2026-10-28T16:35:22.260Z",
+    "timestamp_basis": "recorded immediately after screenshot",
+    "width": 1440,
+    "height": 900,
+    "sha256": "c88d464d135d67d6c76472da5cc6d409e7dce373d063c19e302309ea3a4958fa",
+    "tool": "Playwright 1.63.0, real release product",
+    "independent_judge_input": false
+  },
+  {
+    "file": "MC-export-color-format-keyboard-focus-1440-light.png",
+    "url": "http://127.0.0.1:4181/",
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "dpr": 1,
+    "theme": "light",
+    "captured_at": "2026-10-28T16:34:13.297639+00:00",
+    "timestamp_basis": "native screenshot file write time; provenance script and actual invocation retained",
+    "width": 1440,
+    "height": 900,
+    "sha256": "9c1e6f6dc68f66787444ac7f799ac556438e8697361c472158be1c5f97b66fa0",
+    "tool": "Playwright 1.63.0, real release product",
+    "independent_judge_input": false
+  },
+  {
+    "file": "MC-export-format-pure-keyboard-1440-light.png",
+    "url": "http://127.0.0.1:4181/",
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "dpr": 1,
+    "theme": "light",
+    "captured_at": "2026-10-28T16:34:10.908896+00:00",
+    "timestamp_basis": "native screenshot file write time; provenance script and actual invocation retained",
+    "width": 1440,
+    "height": 900,
+    "sha256": "02ae3291204419e5afff823dea04690febe0d0d0c997f480c711a0383b071462",
+    "tool": "Playwright 1.63.0, real release product",
+    "independent_judge_input": false
+  },
+  {
+    "file": "MC-export-next-control-keyboard-1440-light.png",
+    "url": "http://127.0.0.1:4181/",
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "dpr": 1,
+    "theme": "light",
+    "captured_at": "2026-10-28T16:34:11.668144+00:00",
+    "timestamp_basis": "native screenshot file write time; provenance script and actual invocation retained",
+    "width": 1440,
+    "height": 900,
+    "sha256": "5af66db84cca5a0d7f4ae1c1752e12fdf98e5a42e2378954f2f3d5d6da21eb3b",
+    "tool": "Playwright 1.63.0, real release product",
+    "independent_judge_input": false
+  },
+  {
+    "file": "MC-export-profile-keyboard-focus-1440-light.png",
+    "url": "http://127.0.0.1:4181/",
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "dpr": 1,
+    "theme": "light",
+    "captured_at": "2026-10-28T16:34:12.531562+00:00",
+    "timestamp_basis": "native screenshot file write time; provenance script and actual invocation retained",
+    "width": 1440,
+    "height": 900,
+    "sha256": "d48add7912319d4dc8b3161eb7b37a92aec832ef31446b6505c3197c0d31ddd7",
+    "tool": "Playwright 1.63.0, real release product",
+    "independent_judge_input": false
+  },
+  {
+    "file": "MC-import-format-pure-keyboard-1440-light.png",
+    "url": "http://127.0.0.1:4181/",
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "dpr": 1,
+    "theme": "light",
+    "captured_at": "2026-10-28T16:34:21.940116+00:00",
+    "timestamp_basis": "native screenshot file write time; provenance script and actual invocation retained",
+    "width": 1440,
+    "height": 900,
+    "sha256": "f66bf61768bf5089ca8f029f2b8fef5bcb9264baa778fa60f239f82bbe6de7f8",
+    "tool": "Playwright 1.63.0, real release product",
+    "independent_judge_input": false
+  },
+  {
+    "file": "MC-import-next-control-keyboard-1440-light.png",
+    "url": "http://127.0.0.1:4181/",
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "dpr": 1,
+    "theme": "light",
+    "captured_at": "2026-10-28T16:34:22.689227+00:00",
+    "timestamp_basis": "native screenshot file write time; provenance script and actual invocation retained",
+    "width": 1440,
+    "height": 900,
+    "sha256": "21e26996bb9d2332dbef3f73d5cfb3472676c728172aaa96878ea817da833e30",
+    "tool": "Playwright 1.63.0, real release product",
+    "independent_judge_input": false
+  },
+  {
+    "file": "MC-local-opposite-dialog-1440-light.png",
+    "url": "http://127.0.0.1:4181/",
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "dpr": 1,
+    "theme": "light",
+    "captured_at": "2026-10-28T16:35:31.704Z",
+    "timestamp_basis": "recorded immediately after screenshot",
+    "width": 1440,
+    "height": 900,
+    "sha256": "5e84dadef0b2b28690fc5e856231ef271a6574b5a81a1572b7c894646de8044e",
+    "tool": "Playwright 1.63.0, real release product",
+    "independent_judge_input": false
+  },
+  {
+    "file": "MC-root200-preview-720-light.png",
+    "url": "http://127.0.0.1:4181/",
+    "viewport": {
+      "width": 720,
+      "height": 900
+    },
+    "dpr": 1,
+    "theme": "light",
+    "captured_at": "2026-10-28T16:32:27.877145+00:00",
+    "timestamp_basis": "native screenshot file write time; provenance script and actual invocation retained",
+    "width": 720,
+    "height": 900,
+    "sha256": "d3162bc0581746a38fe65ac9e55372eedcccc7d7a96977efef2d64b6cd80aaa6",
+    "tool": "Playwright 1.63.0, real release product",
+    "independent_judge_input": false
+  },
+  {
+    "file": "MC-root200-preview-detail-720-light.png",
+    "url": "http://127.0.0.1:4181/",
+    "viewport": {
+      "width": 720,
+      "height": 900
+    },
+    "dpr": 1,
+    "theme": "light",
+    "captured_at": "2026-10-28T16:35:42.520Z",
+    "timestamp_basis": "recorded immediately after screenshot",
+    "width": 720,
+    "height": 900,
+    "sha256": "d083b2b73a765fe289a061fb0e758b200224a549cbf72cef094d460fe2d93a33",
+    "tool": "Playwright 1.63.0, real release product",
+    "independent_judge_input": false
+  },
+  {
+    "file": "MC-token-reset-keyboard-focus-1440-light.png",
+    "url": "http://127.0.0.1:4181/",
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "dpr": 1,
+    "theme": "light",
+    "captured_at": "2026-10-28T16:35:33.020Z",
+    "timestamp_basis": "recorded immediately after screenshot",
+    "width": 1440,
+    "height": 900,
+    "sha256": "c873c25246c6b9f7537d270bc01273ce491de03a29d7d5b0c2d506f90c0c3d8a",
+    "tool": "Playwright 1.63.0, real release product",
+    "independent_judge_input": false
+  },
+  {
+    "file": "MC-pink-menu-768-light.png",
+    "url": "http://127.0.0.1:4181/",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "dpr": 1,
+    "theme": "light",
+    "captured_at": "2026-10-28T17:06:16.483Z",
+    "timestamp_basis": "recorded immediately after screenshot",
+    "width": 768,
+    "height": 1024,
+    "sha256": "d883fd58262ca99310dcc7db583bbf3082ab2d64abaa709c29381289b1ceef49",
+    "tool": "Playwright 1.63.0, real release product",
+    "independent_judge_input": false,
+    "result_source": "machine-pink-menu.json"
+  },
+  {
+    "file": "MC-pink-menu-confirm-390-light.png",
+    "url": "http://127.0.0.1:4181/",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "dpr": 1,
+    "theme": "light",
+    "captured_at": "2026-10-28T17:08:30.672Z",
+    "timestamp_basis": "recorded immediately after screenshot",
+    "width": 390,
+    "height": 844,
+    "sha256": "8ab145617aaed9ce353c684173c51f4357bbca259278f883d29398fc4a47dac1",
+    "tool": "Playwright 1.63.0, real release product",
+    "independent_judge_input": false,
+    "result_source": "machine-pink-menu-confirm.json"
+  },
+  {
+    "file": "MC-pink-menu-confirm-1440-dark.png",
+    "url": "http://127.0.0.1:4181/",
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "dpr": 1,
+    "theme": "dark",
+    "captured_at": "2026-10-28T17:08:42.753Z",
+    "timestamp_basis": "recorded immediately after screenshot",
+    "width": 1440,
+    "height": 900,
+    "sha256": "40f196c5e6e23ba0ad56e5917f46616fb64f6841eae739652fe42c2c4f87c6ef",
+    "tool": "Playwright 1.63.0, real release product",
+    "independent_judge_input": false,
+    "result_source": "machine-pink-menu-confirm.json"
+  }
+]

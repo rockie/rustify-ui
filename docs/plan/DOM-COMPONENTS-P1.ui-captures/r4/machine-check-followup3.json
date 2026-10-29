@@ -1,0 +1,7 @@
+{
+  "at": "2026-10-28",
+  "purpose": "UI-172 核对说明：分组解除影响清单在 Studio 中的位置（只读页面实测，不改评审结论）",
+  "conditions": "Studio http://127.0.0.1:4181/ build 28ae38531384c902, 1440x900, reducedMotion reduce; preset search Graphite → Built-in · Graphite → brand Pink → neutral Auto",
+  "result": {"present": true, "summary": "Tokens affected by a group reset", "open": false, "topInEditorContent": 1963, "scalingBottomInEditorContent": 1900},
+  "note": "坐标为编辑列滚动内容坐标（px）。该 disclosure 默认关闭，位于整个基础配置区之后、Scaling 选择器下方 63px，不在各组计数旁。本轮 U2-group-reset-1440-light 与 U1-configured-lower-1440-light 的编辑列都没拍到这一位置。"
+}

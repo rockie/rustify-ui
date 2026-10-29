@@ -1,0 +1,35 @@
+2026-10-27T05:51:45.717Z open http://127.0.0.1:4181/ at 1440x900
+2026-10-27T05:51:46.274Z screenshot U1-default-1440-light.png
+2026-10-27T05:51:46.654Z preset search 'Graphite' → Built-in · Graphite → brand pink → gray Auto
+2026-10-27T05:51:47.295Z screenshot U1-configured-1440-light.png
+2026-10-27T05:51:47.324Z click mode Dark
+2026-10-27T05:51:47.875Z screenshot U1-configured-1440-dark.png
+2026-10-27T05:51:48.421Z screenshot U1-top-1440-dark.png
+2026-10-27T05:51:48.549Z click mode Light, click 中文
+2026-10-27T05:51:49.106Z screenshot U1-zh-top-1440-light.png
+2026-10-27T05:51:49.656Z screenshot U1-zh-configured-1440-light.png
+2026-10-27T05:51:56.502Z open http://127.0.0.1:4181/ at 768x1024
+2026-10-27T05:51:57.054Z screenshot U1-default-768-light.png
+2026-10-27T05:51:57.424Z preset search 'Graphite' → Built-in · Graphite → brand pink → gray Auto
+2026-10-27T05:51:58.036Z screenshot U1-configured-768-light.png
+2026-10-27T05:51:59.250Z open at 390x844
+2026-10-27T05:51:59.793Z screenshot U1-edit-390-light.png
+2026-10-27T05:52:00.007Z preset search 'Graphite' → Built-in · Graphite → brand pink → gray Auto
+2026-10-27T05:52:00.560Z screenshot U1-configured-390-light.png
+2026-10-27T05:52:00.593Z click Preview tab
+2026-10-27T05:52:08.642Z screenshot U1-preview-390-light.png
+2026-10-27T05:52:18.785Z open at 1440x900, then viewport 720x900 and root font-size 200% (WCAG reflow technique)
+2026-10-27T05:52:19.752Z screenshot U1-zoom200-720-light.png
+2026-10-27T05:52:19.768Z focus Colors tab, press End
+2026-10-27T05:52:19.790Z focus Export, press Enter
+2026-10-27T05:52:20.342Z screenshot U1-zoom200-export-720-light.png
+2026-10-27T05:52:29.449Z keyboard walk from document start at 1440x900
+2026-10-27T05:52:29.470Z Tab ×10 → preset search focused
+2026-10-27T05:52:30.031Z screenshot U1-keyboard-01-1440-light.png
+2026-10-27T05:52:30.043Z Tab ×6 → brand color select focused
+2026-10-27T05:52:30.602Z screenshot U1-keyboard-02-1440-light.png
+2026-10-27T05:52:30.610Z Enter, ArrowDown on brand select
+2026-10-27T05:52:31.164Z screenshot U1-keyboard-03-1440-light.png
+2026-10-27T05:52:31.168Z Escape
+2026-10-27T05:52:31.184Z Tab ×10 → mode Dark focused
+2026-10-27T05:52:31.750Z screenshot U1-keyboard-04-1440-light.png

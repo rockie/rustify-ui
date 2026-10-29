@@ -1,0 +1,72 @@
+[
+  {
+    "pid": 53745,
+    "name": "theme-studio",
+    "port": 4181,
+    "argv": [
+      "mbx",
+      "xtask",
+      "serve",
+      "--dir",
+      "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-ui-review-r6-ed_x117u/theme-studio",
+      "--port",
+      "4181"
+    ],
+    "started_at": "2026-10-28T16:08:35.506912+00:00",
+    "stop": "SIGTERM to task-owned process group",
+    "stopped_at": "2026-10-28T16:37:28.216743+00:00"
+  },
+  {
+    "pid": 53884,
+    "name": "component-catalog",
+    "port": 4176,
+    "argv": [
+      "mbx",
+      "xtask",
+      "serve",
+      "--dir",
+      "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-ui-review-r6-ed_x117u/component-catalog",
+      "--port",
+      "4176"
+    ],
+    "started_at": "2026-10-28T16:08:42.004832+00:00",
+    "stop": "SIGTERM to task-owned process group",
+    "stopped_at": "2026-10-28T16:37:28.216756+00:00"
+  },
+  {
+    "pid": 94992,
+    "name": "theme-studio",
+    "port": 4181,
+    "argv": [
+      "mbx",
+      "xtask",
+      "serve",
+      "--dir",
+      "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-ui-review-r6-ed_x117u/theme-studio",
+      "--port",
+      "4181"
+    ],
+    "started_at": "2026-10-28T16:48:15.864631+00:00",
+    "purpose": "required matrix supplement",
+    "stopped_at": "2026-10-28T17:11:43.660570+00:00",
+    "stop": "SIGTERM to verified task-owned process group"
+  },
+  {
+    "pid": 94993,
+    "name": "component-catalog",
+    "port": 4176,
+    "argv": [
+      "mbx",
+      "xtask",
+      "serve",
+      "--dir",
+      "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-ui-review-r6-ed_x117u/component-catalog",
+      "--port",
+      "4176"
+    ],
+    "started_at": "2026-10-28T16:48:15.866653+00:00",
+    "purpose": "required matrix supplement",
+    "stopped_at": "2026-10-28T17:11:43.664593+00:00",
+    "stop": "SIGTERM to verified task-owned process group"
+  }
+]

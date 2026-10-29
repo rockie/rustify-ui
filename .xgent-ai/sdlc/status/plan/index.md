@@ -9,6 +9,7 @@
 | 7c105838-be0d-4f3b-ae5c-9998b8f4cfdc | [DOCS-SSG-P1-gaps](../../../../docs/plan/DOCS-SSG-P1-gaps.md) | [对象](7c105838-be0d-4f3b-ae5c-9998b8f4cfdc.md) | 活动 |
 | 9d18c85f-ac5e-4c1d-9c21-c938474537eb | [P1 · WASM UI（封板）](../../../../docs/plan/P1-WASM-UI.md) | [9d18c85f](9d18c85f-ac5e-4c1d-9c21-c938474537eb.md) | 归档（原文 Closed） |
 | 2b5473ac-f692-467b-8024-8fe191345859 | [P2 · WASM UI（封板）](../../../../docs/plan/P2-WASM-UI.md) | [2b5473ac](2b5473ac-f692-467b-8024-8fe191345859.md) | 归档（原文 Closed） |
+| 37a2c7b4-7052-4f85-96e9-135b6f7667a1 | [DOM-COMPONENTS-P1](../../../../docs/plan/DOM-COMPONENTS-P1.md) | [对象](37a2c7b4-7052-4f85-96e9-135b6f7667a1.md) | 活动 |
 | 41817647-c138-4651-a076-a022339fd6bc | [P3 · WASM UI（封板）](../../../../docs/plan/P3-WASM-UI.md) | [41817647](41817647-c138-4651-a076-a022339fd6bc.md) | 归档（原文 Closed） |
 | 0222c547-cbeb-412a-8c3e-3399b943670e | [THEME-STUDIO](../../../../docs/plan/THEME-STUDIO.md) | [0222c547](0222c547-cbeb-412a-8c3e-3399b943670e.md) | 活动 |
 | c0c94e42-32f2-4636-ae52-f3df76d4a463 | [DOCS-SSG-P2](../../../../docs/plan/DOCS-SSG-P2.md) | [对象](c0c94e42-32f2-4636-ae52-f3df76d4a463.md) | 活动 |
@@ -25,5 +26,6 @@
 | bf977834-399c-4b7d-b3e3-c7724c8d7cff | [DOCS-SSG-P4-gaps](../../../../docs/plan/DOCS-SSG-P4-gaps.md) | [对象](bf977834-399c-4b7d-b3e3-c7724c8d7cff.md) | 活动 |
 | ca735c8c-bc5e-44af-bb23-f591a378bc94 | [DOCS-LANDING](../../../../docs/plan/DOCS-LANDING.md) | [对象](ca735c8c-bc5e-44af-bb23-f591a378bc94.md) | 活动 |
 | cd0eba4a-928f-4fd8-95c3-47a609b7735b | [CRATES-IO-P1](../../../../docs/plan/CRATES-IO-P1.md) | [对象](cd0eba4a-928f-4fd8-95c3-47a609b7735b.md) | 活动 |
+| bba16439-b67d-4fa5-bbff-fddfc2e1317a | [DOM-COMPONENTS-P1-gaps](../../../../docs/plan/DOM-COMPONENTS-P1-gaps.md) | [对象](bba16439-b67d-4fa5-bbff-fddfc2e1317a.md) | 活动 |
 
 维护约定：改变本层内容者同步索引；按稳定 ID/路径保留历史，无变化不重写，索引不作为事件。详见[目录索引维护](../../protocol.md#目录索引维护)。

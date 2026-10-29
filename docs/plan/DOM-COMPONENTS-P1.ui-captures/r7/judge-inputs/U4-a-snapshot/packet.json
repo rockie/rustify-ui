@@ -1,0 +1,28 @@
+{
+  "unit": "U4",
+  "mode": "manual-whitelist",
+  "files": {
+    "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-target.r6.md": "056e8000993784c074355f85dbea8c66e08f7f3845b8bb711f0102d8bf42d0db",
+    "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r7/capture-U4.md": "0b6f6b50b093b718750994ce1fc2831baa75eec42187bc73dceaab08bc5fb4b1",
+    "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r7/U4-actions.log": "4415529af45ae46419a2ee88439cba059549c6f7dd2a09c8e98f3e1ed90d3c6d",
+    "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r7/judge-inputs/r6-judge-U4.md": "cdc96261cf208ba93342e735927ad64f2402f8e01795304e45cd0ccb41976cd2",
+    "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r7/judge-inputs/r6-images-U4.txt": "528e812cd4209dd6207f77edee772655387e17f38f7f3efe2f63eb7c201cc4fb",
+    "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r7/U4-upgrade-pending-1440-light.png": "08da027986d078bc75e399302d9eaeb343ce086a65ded405ea97b2b8544b040e",
+    "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r7/U4-upgrade-review-1440-light.png": "3c9f7d6defa46f4ee0dd706f9c63d9db04f440e172b8717812aa076f90ec68ac",
+    "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r7/U4-upgrade-review-end-1440-light.png": "3c9f7d6defa46f4ee0dd706f9c63d9db04f440e172b8717812aa076f90ec68ac",
+    "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r7/U4-upgrade-cancelled-1440-light.png": "15bc1c90243ef8a4b18d9f91806e18648d1a2a39197a13693ef8558fe62117a5",
+    "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r7/U4-upgraded-1440-light.png": "aecf0aedd8474622a0685209ba0aa5b67a4e6d1004492526ba39460d5d49d475",
+    "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r7/U4-upgrade-pending-390-light.png": "63c30792041cd3311c96d0c7ccc47b09b73659f6626cd828de41fc1b1507eee7",
+    "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r7/U4-quota-failure-1440-light.png": "df43b0b3b3d21b754c0336771aff66bab39c111c51129e31bd6d67a3cbec50e4",
+    "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r7/U4-quota-operations-1440-light.png": "c61780567ccf1fca3ddd117de5d494051dfa76ccb0599290aef2cca57f560954",
+    "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r7/U4-conflict-1440-light.png": "a8fc4be3b041b8ba1e302ff60730182f183d6b50a7fb0b7a32ea3b2714afaa32",
+    "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r7/U4-conflict-detail-1440-light.png": "c35d472857a85c4fea0ca6c574d51a666571b31fe657882038262eb3c27a333b",
+    "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r7/U4-conflict-raw-1440-light.png": "e884eb8d6baceb4502420d2a82aa0963c29137c721d3ef39c78a5307bbfec157",
+    "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r7/U4-no-locks-initial-1440-light.png": "8e24850804aaac92f0e0c9adfb2bb98e19a6c2b03e446f7db89d6231a55ea292",
+    "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r7/U4-no-locks-1440-light.png": "095ace014624dcbdaf40062e7282f0de7df44996e2983c06a1b76050bcae294a",
+    "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r7/U4-conflict-detail-end-1440-light.png": "a8fc4be3b041b8ba1e302ff60730182f183d6b50a7fb0b7a32ea3b2714afaa32",
+    "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r7/U4-conflict-after-1440-light.png": "bf3e50775a5caaeb3b9bffb106861c1ce8a535226a49af2bac144474bb933d60",
+    "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r7/U4-conflict-diff-1440-light.png": "2151505fa323ecf4d6fcfed4f26601a2ff1bc916e7eb7e6dc17994338140c1b5",
+    "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r7/U4-upgrade-review-json-1440-light.png": "81646ff6cd091841c5fb0ddcaa03cb7921a896c14da52965ebf6c8e7bf1bd19f"
+  }
+}

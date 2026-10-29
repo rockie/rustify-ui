@@ -1,0 +1,353 @@
+{
+  "error": null,
+  "overflow": [
+    {
+      "label": "studio-1440",
+      "pageOverflow": 0,
+      "offenderCount": 0,
+      "dialog": null
+    },
+    {
+      "label": "studio-1440-export-dialog",
+      "pageOverflow": null,
+      "offenderCount": null,
+      "dialog": {
+        "x": 208,
+        "y": 16,
+        "width": 1024,
+        "height": 527.9375
+      }
+    },
+    {
+      "label": "studio-768",
+      "pageOverflow": 0,
+      "offenderCount": 0,
+      "dialog": null
+    },
+    {
+      "label": "studio-768-export-dialog",
+      "pageOverflow": null,
+      "offenderCount": null,
+      "dialog": {
+        "x": 16,
+        "y": 16,
+        "width": 736,
+        "height": 527.9375
+      }
+    },
+    {
+      "label": "studio-390-edit",
+      "pageOverflow": 0,
+      "offenderCount": 0,
+      "dialog": null
+    },
+    {
+      "label": "studio-390-preview",
+      "pageOverflow": 0,
+      "offenderCount": 0,
+      "dialog": null
+    },
+    {
+      "label": "studio-390-edit-export-dialog",
+      "pageOverflow": null,
+      "offenderCount": null,
+      "dialog": {
+        "x": 16,
+        "y": 16,
+        "width": 358,
+        "height": 558.125
+      }
+    },
+    {
+      "label": "studio-720-root200",
+      "pageOverflow": 0,
+      "offenderCount": 0,
+      "dialog": null
+    },
+    {
+      "label": "catalog-buttons-1280",
+      "pageOverflow": 0,
+      "offenderCount": 0,
+      "dialog": null
+    },
+    {
+      "label": "catalog-layout-1280",
+      "pageOverflow": 0,
+      "offenderCount": 0,
+      "dialog": null
+    },
+    {
+      "label": "catalog-buttons-390",
+      "pageOverflow": 0,
+      "offenderCount": 0,
+      "dialog": null
+    },
+    {
+      "label": "catalog-layout-390",
+      "pageOverflow": 0,
+      "offenderCount": 0,
+      "dialog": null
+    }
+  ],
+  "axe": [
+    {
+      "label": "studio-1440",
+      "violations": []
+    },
+    {
+      "label": "studio-1440-export-dialog",
+      "violations": []
+    },
+    {
+      "label": "studio-768",
+      "violations": []
+    },
+    {
+      "label": "studio-768-export-dialog",
+      "violations": []
+    },
+    {
+      "label": "studio-390-edit",
+      "violations": []
+    },
+    {
+      "label": "studio-390-preview",
+      "violations": []
+    },
+    {
+      "label": "studio-390-edit-export-dialog",
+      "violations": []
+    },
+    {
+      "label": "catalog-buttons-1280",
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "count": 19,
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "targets": [
+            ".bg-accent ::   Element has insufficient color contrast of 2.62 (foreground color: #ffffff, background color: #12b76a, font size: 11.3pt (15px), font weight: normal). Expecte",
+            ".rui-geometry-69 > .rustify-button-content ::   Element has insufficient color contrast of 2.62 (foreground color: #ffffff, background color: #12b76a, font size: 10.5pt (14px), font weight: normal). Expecte",
+            ".rui-geometry-71 > .rustify-button-content ::   Element has insufficient color contrast of 3.31 (foreground color: #ffffff, background color: #8d8d8d, font size: 10.5pt (14px), font weight: normal). Expecte",
+            ".rui-geometry-72 > .rustify-button-content ::   Element has insufficient color contrast of 3.65 (foreground color: #ffffff, background color: #978365, font size: 10.5pt (14px), font weight: normal). Expecte",
+            ".rui-geometry-73 > .rustify-button-content ::   Element has insufficient color contrast of 3.59 (foreground color: #ffffff, background color: #a18072, font size: 10.5pt (14px), font weight: normal). Expecte",
+            ".rui-geometry-74 > .rustify-button-content ::   Element has insufficient color contrast of 3.52 (foreground color: #ffffff, background color: #ad7f58, font size: 10.5pt (14px), font weight: normal). Expecte"
+          ]
+        }
+      ]
+    },
+    {
+      "label": "catalog-layout-1280",
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "count": 1,
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "targets": [
+            ".rui-geometry-259 ::   Element has insufficient color contrast of 3.31 (foreground color: #ffffff, background color: #8d8d8d, font size: 10.2pt (13.5375px), font weight: normal). Ex"
+          ]
+        }
+      ]
+    },
+    {
+      "label": "catalog-buttons-390",
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "count": 19,
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "targets": [
+            ".bg-accent ::   Element has insufficient color contrast of 2.62 (foreground color: #ffffff, background color: #12b76a, font size: 11.3pt (15px), font weight: normal). Expecte",
+            ".rui-geometry-69 > .rustify-button-content ::   Element has insufficient color contrast of 2.62 (foreground color: #ffffff, background color: #12b76a, font size: 10.5pt (14px), font weight: normal). Expecte",
+            ".rui-geometry-71 > .rustify-button-content ::   Element has insufficient color contrast of 3.31 (foreground color: #ffffff, background color: #8d8d8d, font size: 10.5pt (14px), font weight: normal). Expecte",
+            ".rui-geometry-72 > .rustify-button-content ::   Element has insufficient color contrast of 3.65 (foreground color: #ffffff, background color: #978365, font size: 10.5pt (14px), font weight: normal). Expecte",
+            ".rui-geometry-73 > .rustify-button-content ::   Element has insufficient color contrast of 3.59 (foreground color: #ffffff, background color: #a18072, font size: 10.5pt (14px), font weight: normal). Expecte",
+            ".rui-geometry-74 > .rustify-button-content ::   Element has insufficient color contrast of 3.52 (foreground color: #ffffff, background color: #ad7f58, font size: 10.5pt (14px), font weight: normal). Expecte"
+          ]
+        }
+      ]
+    },
+    {
+      "label": "catalog-layout-390",
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "count": 1,
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "targets": [
+            ".rui-geometry-259 ::   Element has insufficient color contrast of 3.31 (foreground color: #ffffff, background color: #8d8d8d, font size: 10.2pt (13.5375px), font weight: normal). Ex"
+          ]
+        }
+      ]
+    }
+  ],
+  "console": [
+    {
+      "label": "studio-1440",
+      "errors": []
+    },
+    {
+      "label": "studio-768",
+      "errors": []
+    },
+    {
+      "label": "studio-390-edit",
+      "errors": []
+    },
+    {
+      "label": "studio-720-root200",
+      "errors": []
+    },
+    {
+      "label": "studio-keyboard",
+      "errors": []
+    },
+    {
+      "label": "catalog-1280",
+      "errors": []
+    },
+    {
+      "label": "catalog-390",
+      "errors": []
+    }
+  ],
+  "csp": [
+    {
+      "label": "studio-1440",
+      "events": []
+    },
+    {
+      "label": "studio-768",
+      "events": []
+    },
+    {
+      "label": "studio-390-edit",
+      "events": []
+    },
+    {
+      "label": "studio-720-root200",
+      "events": []
+    },
+    {
+      "label": "studio-keyboard",
+      "events": []
+    },
+    {
+      "label": "catalog-1280",
+      "events": []
+    },
+    {
+      "label": "catalog-390",
+      "events": []
+    }
+  ],
+  "focusStyles": [
+    {
+      "id": "button-classic-2",
+      "focused": "button-classic-2",
+      "focusVisible": true,
+      "outline": "rgb(141, 164, 239) solid 2px",
+      "outlineOffset": "2px"
+    },
+    {
+      "id": "button-solid-2",
+      "focused": "button-solid-2",
+      "focusVisible": true,
+      "outline": "rgb(141, 164, 239) solid 2px",
+      "outlineOffset": "2px"
+    },
+    {
+      "id": "button-soft-2",
+      "focused": "button-soft-2",
+      "focusVisible": true,
+      "outline": "rgb(141, 164, 239) solid 2px",
+      "outlineOffset": "-1px"
+    },
+    {
+      "id": "button-surface-2",
+      "focused": "button-surface-2",
+      "focusVisible": true,
+      "outline": "rgb(141, 164, 239) solid 2px",
+      "outlineOffset": "-1px"
+    },
+    {
+      "id": "button-outline-2",
+      "focused": "button-outline-2",
+      "focusVisible": true,
+      "outline": "rgb(141, 164, 239) solid 2px",
+      "outlineOffset": "-1px"
+    },
+    {
+      "id": "button-ghost-offset-2",
+      "focused": "button-ghost-offset-2",
+      "focusVisible": true,
+      "outline": "rgb(141, 164, 239) solid 2px",
+      "outlineOffset": "-1px"
+    },
+    {
+      "id": "button-ghost-2",
+      "focused": "button-ghost-2",
+      "focusVisible": true,
+      "outline": "rgb(141, 164, 239) solid 2px",
+      "outlineOffset": "-1px"
+    }
+  ],
+  "keyboard": [
+    {
+      "label": "studio-tab-walk-70",
+      "walk_steps": 70,
+      "offscreen_steps": [],
+      "trap_steps": 0,
+      "outside_dialog_steps": []
+    },
+    {
+      "label": "theme-export-trap",
+      "afterEscape": {
+        "tag": "button",
+        "testid": "theme-export",
+        "name": "Export",
+        "indicator": true,
+        "outline": "solid 3px rgba(21, 112, 239, 0.4)",
+        "shadow": "none",
+        "onScreen": true,
+        "inDialog": false
+      },
+      "dialogStillVisible": false,
+      "walk_steps": 0,
+      "offscreen_steps": [],
+      "trap_steps": 25,
+      "outside_dialog_steps": []
+    },
+    {
+      "label": "theme-import-trap",
+      "afterEscape": {
+        "tag": "button",
+        "testid": "theme-import",
+        "name": "Import",
+        "indicator": true,
+        "outline": "solid 3px rgba(21, 112, 239, 0.4)",
+        "shadow": "none",
+        "onScreen": true,
+        "inDialog": false
+      },
+      "dialogStillVisible": false,
+      "walk_steps": 0,
+      "offscreen_steps": [],
+      "trap_steps": 15,
+      "outside_dialog_steps": []
+    },
+    {
+      "label": "brand-keyboard-commit",
+      "before": "Custom",
+      "after": "Gold",
+      "walk_steps": 0,
+      "offscreen_steps": [],
+      "trap_steps": 0,
+      "outside_dialog_steps": []
+    }
+  ]
+}

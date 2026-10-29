@@ -1,0 +1,21 @@
+{
+  "review_id": "8abc8d80-fa38-4e09-b066-929980601837",
+  "review_events": [
+    "ba7369ef-8eaa-49b1-bf13-ed1f5c5bafa1",
+    "95598bf2-e4d5-455e-b3d7-cec86deaeb6c"
+  ],
+  "r6_closure_event": "88561130-d2c5-4d0f-ae3a-cbc918f71ae6",
+  "observed_at": "2026-10-29T11:21:14.162281+08:00",
+  "baseline": {
+    "head": "b218075a3a2107ab511da932f831f42adfa9390c",
+    "branch": "main",
+    "worktree": "dirty"
+  },
+  "report_sha256": "sha256:f390c8ae959493b01c10a0170d126124f703a67c6cda0b2ca592d0a6b95953f4",
+  "review_state": "review-recorded",
+  "disposition_state": "review-not-required",
+  "r6_disposition": "review-applied",
+  "open_optional_gap": "UI-218/P2",
+  "plan_state_unchanged": true,
+  "original_plan_and_records_unchanged": true
+}

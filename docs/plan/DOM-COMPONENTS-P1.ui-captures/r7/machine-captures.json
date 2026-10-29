@@ -1,0 +1,273 @@
+{
+  "head": "b218075a3a2107ab511da932f831f42adfa9390c",
+  "scored": false,
+  "images": [
+    {
+      "file": "MC-root200-preview-720-light.png",
+      "url": "http://127.0.0.1:4181/",
+      "viewport": "720x900",
+      "dpr": 1,
+      "time_source": "filesystem mtime; base machine script did not record per-frame UTC",
+      "at": "2026-10-29T02:59:52.653433+00:00",
+      "steps": "Base machine check: root text 200%, DOM renderer; native viewport screenshot",
+      "theme": "light",
+      "sha256": "d3162bc0581746a38fe65ac9e55372eedcccc7d7a96977efef2d64b6cd80aaa6",
+      "pixel_dimensions": [
+        720,
+        900
+      ]
+    },
+    {
+      "file": "MC-brand-menu-1440-dark.png",
+      "url": "http://127.0.0.1:4181/",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "dpr": 1,
+      "at": "2026-10-29T03:00:51.748Z",
+      "steps": "Graphite/Pink/Auto; keyboard Enter; Down, Down, Up, End, Home",
+      "theme": "dark",
+      "time_source": "actual screenshot metadata",
+      "sha256": "24b53a30bfbf5bd9d16023e1ecb9b64a3e62edd806d6ce23afc54984dbd2c6ee",
+      "pixel_dimensions": [
+        1440,
+        900
+      ]
+    },
+    {
+      "file": "MC-brand-menu-768-light.png",
+      "url": "http://127.0.0.1:4181/",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "dpr": 1,
+      "at": "2026-10-29T03:01:02.892Z",
+      "steps": "Graphite/Pink/Auto; keyboard Enter; Down, Down, Up, End, Home",
+      "theme": "light",
+      "time_source": "actual screenshot metadata",
+      "sha256": "bf8701470732422f2bc9b077395199db8619a8fc5d6159ebc208b34ae5bedee6",
+      "pixel_dimensions": [
+        768,
+        1024
+      ]
+    },
+    {
+      "file": "MC-brand-menu-390-light.png",
+      "url": "http://127.0.0.1:4181/",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "dpr": 1,
+      "at": "2026-10-29T03:01:05.754Z",
+      "steps": "Graphite/Pink/Auto; keyboard Enter; Down, Down, Up, End, Home",
+      "theme": "light",
+      "time_source": "actual screenshot metadata",
+      "sha256": "bb2bcb437ca326ea3ffa61f5e27782d879d9b08297d289d4ecd80623fa51e32d",
+      "pixel_dimensions": [
+        390,
+        844
+      ]
+    },
+    {
+      "file": "MC-copy-denied-1440-light.png",
+      "url": "http://127.0.0.1:4181/",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "dpr": 1,
+      "at": "2026-10-29T03:01:15.530Z",
+      "steps": "Only clipboard permission environment changed: writeText rejects NotAllowedError.",
+      "theme": "light",
+      "time_source": "actual screenshot metadata",
+      "sha256": "c88d464d135d67d6c76472da5cc6d409e7dce373d063c19e302309ea3a4958fa",
+      "pixel_dimensions": [
+        1440,
+        900
+      ]
+    },
+    {
+      "file": "MC-settled-enter-1440-dark.png",
+      "unit": "MC",
+      "state": "settled-enter",
+      "viewport": "1440x900",
+      "dpr": 1,
+      "theme": "dark",
+      "url": "http://127.0.0.1:4181/",
+      "time": "2026-10-29T03:04:10.023Z",
+      "kind": "viewport",
+      "interventions": "none",
+      "focused": "studio-config-accent_color-list",
+      "at": "2026-10-29T03:04:10.023Z",
+      "time_source": "actual screenshot metadata",
+      "sha256": "148caf4dde360179c03076332f698f3959847e2031f1480e3b68a68e5c3fb8cd",
+      "pixel_dimensions": [
+        1440,
+        900
+      ]
+    },
+    {
+      "file": "MC-settled-space-1440-dark.png",
+      "unit": "MC",
+      "state": "settled-space",
+      "viewport": "1440x900",
+      "dpr": 1,
+      "theme": "dark",
+      "url": "http://127.0.0.1:4181/",
+      "time": "2026-10-29T03:04:11.621Z",
+      "kind": "viewport",
+      "interventions": "none",
+      "focused": "studio-config-accent_color-list",
+      "at": "2026-10-29T03:04:11.621Z",
+      "time_source": "actual screenshot metadata",
+      "sha256": "148caf4dde360179c03076332f698f3959847e2031f1480e3b68a68e5c3fb8cd",
+      "pixel_dimensions": [
+        1440,
+        900
+      ]
+    },
+    {
+      "file": "MC-settled-enter-second-1440-dark.png",
+      "unit": "MC",
+      "state": "settled-enter-second",
+      "viewport": "1440x900",
+      "dpr": 1,
+      "theme": "dark",
+      "url": "http://127.0.0.1:4181/",
+      "time": "2026-10-29T03:04:13.203Z",
+      "kind": "viewport",
+      "interventions": "none",
+      "focused": "studio-config-accent_color-list",
+      "at": "2026-10-29T03:04:13.203Z",
+      "time_source": "actual screenshot metadata",
+      "sha256": "148caf4dde360179c03076332f698f3959847e2031f1480e3b68a68e5c3fb8cd",
+      "pixel_dimensions": [
+        1440,
+        900
+      ]
+    },
+    {
+      "file": "MC-settled-enter-768-light.png",
+      "unit": "MC",
+      "state": "settled-enter",
+      "viewport": "768x1024",
+      "dpr": 1,
+      "theme": "light",
+      "url": "http://127.0.0.1:4181/",
+      "time": "2026-10-29T03:04:24.551Z",
+      "kind": "viewport",
+      "interventions": "none",
+      "focused": "studio-config-accent_color-list",
+      "at": "2026-10-29T03:04:24.551Z",
+      "time_source": "actual screenshot metadata",
+      "sha256": "880838d5f15027836271bf2abe1c728f0555722f08735533b91e7dae64265891",
+      "pixel_dimensions": [
+        768,
+        1024
+      ]
+    },
+    {
+      "file": "MC-settled-space-768-light.png",
+      "unit": "MC",
+      "state": "settled-space",
+      "viewport": "768x1024",
+      "dpr": 1,
+      "theme": "light",
+      "url": "http://127.0.0.1:4181/",
+      "time": "2026-10-29T03:04:26.135Z",
+      "kind": "viewport",
+      "interventions": "none",
+      "focused": "studio-config-accent_color-list",
+      "at": "2026-10-29T03:04:26.135Z",
+      "time_source": "actual screenshot metadata",
+      "sha256": "880838d5f15027836271bf2abe1c728f0555722f08735533b91e7dae64265891",
+      "pixel_dimensions": [
+        768,
+        1024
+      ]
+    },
+    {
+      "file": "MC-settled-enter-second-768-light.png",
+      "unit": "MC",
+      "state": "settled-enter-second",
+      "viewport": "768x1024",
+      "dpr": 1,
+      "theme": "light",
+      "url": "http://127.0.0.1:4181/",
+      "time": "2026-10-29T03:04:27.719Z",
+      "kind": "viewport",
+      "interventions": "none",
+      "focused": "studio-config-accent_color-list",
+      "at": "2026-10-29T03:04:27.719Z",
+      "time_source": "actual screenshot metadata",
+      "sha256": "880838d5f15027836271bf2abe1c728f0555722f08735533b91e7dae64265891",
+      "pixel_dimensions": [
+        768,
+        1024
+      ]
+    },
+    {
+      "file": "MC-settled-enter-390-light.png",
+      "unit": "MC",
+      "state": "settled-enter",
+      "viewport": "390x844",
+      "dpr": 1,
+      "theme": "light",
+      "url": "http://127.0.0.1:4181/",
+      "time": "2026-10-29T03:04:31.461Z",
+      "kind": "viewport",
+      "interventions": "none",
+      "focused": "studio-config-accent_color-list",
+      "at": "2026-10-29T03:04:31.461Z",
+      "time_source": "actual screenshot metadata",
+      "sha256": "9d3a0c0c264e5dfab234e8abc89f95798556ef98bfcbfa2e324fe7ccffb551c4",
+      "pixel_dimensions": [
+        390,
+        844
+      ]
+    },
+    {
+      "file": "MC-settled-space-390-light.png",
+      "unit": "MC",
+      "state": "settled-space",
+      "viewport": "390x844",
+      "dpr": 1,
+      "theme": "light",
+      "url": "http://127.0.0.1:4181/",
+      "time": "2026-10-29T03:04:33.027Z",
+      "kind": "viewport",
+      "interventions": "none",
+      "focused": "studio-config-accent_color-list",
+      "at": "2026-10-29T03:04:33.027Z",
+      "time_source": "actual screenshot metadata",
+      "sha256": "9d3a0c0c264e5dfab234e8abc89f95798556ef98bfcbfa2e324fe7ccffb551c4",
+      "pixel_dimensions": [
+        390,
+        844
+      ]
+    },
+    {
+      "file": "MC-settled-enter-second-390-light.png",
+      "unit": "MC",
+      "state": "settled-enter-second",
+      "viewport": "390x844",
+      "dpr": 1,
+      "theme": "light",
+      "url": "http://127.0.0.1:4181/",
+      "time": "2026-10-29T03:04:34.595Z",
+      "kind": "viewport",
+      "interventions": "none",
+      "focused": "studio-config-accent_color-list",
+      "at": "2026-10-29T03:04:34.595Z",
+      "time_source": "actual screenshot metadata",
+      "sha256": "9d3a0c0c264e5dfab234e8abc89f95798556ef98bfcbfa2e324fe7ccffb551c4",
+      "pixel_dimensions": [
+        390,
+        844
+      ]
+    }
+  ]
+}

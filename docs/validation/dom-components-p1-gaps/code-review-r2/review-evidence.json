@@ -1,0 +1,71 @@
+{
+  "review_id": "5307296b-348d-4666-bda3-55b208901877",
+  "updated_at": "2026-10-30T00:20:27+08:00",
+  "kind": "fix-effect-re-review",
+  "base": "0abf0f397b343b803cd6a375155a4d0550ab7fe2",
+  "target": "244f58fc9ba38144099950acf33eb8aa83190768",
+  "fix_commit": "17544a64cc70604f914b245b009cabd6554499bf",
+  "previous_report": "docs/plan/DOM-COMPONENTS-P1-gaps.code-review.md",
+  "previous_report_sha256": "0aa7af2c1f798b68c64821c347ff83c974324ad34c4c8a06d12459153193fdd3",
+  "plan_sha256": "052883342c8a0fd9fa60adc951cc63c821f80f3ccb64f002abc31985b3aecc7e",
+  "tracked_diff_sha256": "96203f9a59f3058882ff3ce498618579c6ce1c07c86c482c652c9f8819003adc",
+  "index_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "initial_files": 21737,
+  "initial_manifest_sha256": "8e16c1655ce6672c75c9b4a00c6137cf8b586cd69f149b35fae202f8cb663133",
+  "input_recheck": {
+    "changed": [],
+    "added": [],
+    "head_unchanged": true
+  },
+  "source_sha256": "609c8d02fd7386969d437929c8185bbcc9d28bb83b05d2a4fd09ccd11853cc6e",
+  "test_sha256": "b8ea2e5ea00ad7c9a7290cc9d9b1c0221d4b6264020257ffc23c1be12abe5e46",
+  "tmp_dir": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-gaps-review-r2-niafxlml",
+  "build_id": "2e09a56d5617614f",
+  "browser_stats": {
+    "startTime": "2026-10-29T16:18:39.373Z",
+    "duration": 26949.566,
+    "expected": 5,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "checks": {
+    "build_release": 0,
+    "host_data_tools": {
+      "exit_code": 0,
+      "passed": 9
+    },
+    "fmt": 0,
+    "clippy": 0,
+    "generator_check": 0,
+    "diff_check": 0,
+    "compiled_static_probe": {
+      "exit_code": 0,
+      "ids": 2,
+      "mode_projections": 4
+    }
+  },
+  "visual_check": {
+    "captures": [
+      "expanded-1440-en.png",
+      "expanded-390-zh.png"
+    ],
+    "inspected": true,
+    "browser": "local Chrome via Playwright",
+    "widths": [
+      1440,
+      390
+    ],
+    "locales": [
+      "en",
+      "zh"
+    ],
+    "overflow": false,
+    "escape_focus_restored": true
+  },
+  "prior_findings": {
+    "F-01": "已解决",
+    "F-02": "已解决"
+  },
+  "new_findings": []
+}

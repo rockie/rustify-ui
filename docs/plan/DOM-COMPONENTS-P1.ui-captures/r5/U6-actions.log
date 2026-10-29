@@ -1,0 +1,61 @@
+2026-10-28T14:08:18.318Z catalog 1280: mount_button_fixtures()
+2026-10-28T14:08:18.941Z screenshot U6-fixture-1280-light.png
+2026-10-28T14:08:19.001Z click fixture Dark, park pointer at (0,0)
+2026-10-28T14:08:19.620Z screenshot U6-fixture-1280-dark.png
+2026-10-28T14:08:19.661Z click fixture Light
+2026-10-28T14:08:19.702Z click Toggle loading, park pointer
+2026-10-28T14:08:20.286Z screenshot U6-loading-1280-light.png
+2026-10-28T14:08:20.334Z click Toggle loading (off), park pointer
+2026-10-28T14:08:20.338Z focus ghost 4, press Tab → Default action
+2026-10-28T14:08:20.901Z screenshot U6-focus-1280-light.png
+2026-10-28T14:08:20.905Z Tab ×4 more
+2026-10-28T14:08:21.450Z screenshot U6-focus-02-1280-light.png
+2026-10-28T14:08:21.456Z focus Ordinary action, Tab ×3 → Unavailable request
+2026-10-28T14:08:22.001Z screenshot U6-focus-unavailable-1280-light.png
+2026-10-28T14:08:22.050Z click Scale 110%, park pointer
+2026-10-28T14:08:22.643Z screenshot U6-scale110-1280-light.png
+2026-10-28T14:08:22.718Z Scale 100%, Theme full radius, park pointer
+2026-10-28T14:08:23.345Z screenshot U6-radius-full-1280-light.png
+2026-10-28T14:08:23.384Z ThemePanel 中文, park pointer
+2026-10-28T14:08:23.986Z screenshot U6-panel-zh-1280-light.png
+2026-10-28T14:08:33.749Z catalog 390: mount_button_fixtures()
+2026-10-28T14:08:34.359Z screenshot U6-fixture-390-light.png
+2026-10-28T14:08:44.036Z catalog 1280: mount_layout_fixtures() for Link
+2026-10-28T14:08:44.586Z screenshot U6-links-1280-light.png
+2026-10-28T14:08:44.637Z hover type-link
+2026-10-28T14:08:45.186Z screenshot U6-links-hover-1280-light.png
+2026-10-28T14:08:45.209Z park pointer; focus type-link, Shift+Tab, Tab (keyboard focus on type-link)
+2026-10-28T14:08:45.753Z screenshot U6-links-focus-1280-light.png
+2026-10-28T14:08:55.697Z catalog 390: mount_layout_fixtures() for Link
+2026-10-28T14:08:56.240Z screenshot U6-links-390-light.png
+2026-10-28T14:09:06.417Z DPR 2 context at 1280x900: mount_button_fixtures(), park pointer
+2026-10-28T14:09:06.446Z keyboard focus button-classic-2 (focus, Shift+Tab, Tab); clip ±24px
+2026-10-28T14:09:06.986Z screenshot U6-focus-classic-1280-light-dpr2.png
+2026-10-28T14:09:07.003Z keyboard focus button-solid-2 (focus, Shift+Tab, Tab); clip ±24px
+2026-10-28T14:09:07.553Z screenshot U6-focus-solid-1280-light-dpr2.png
+2026-10-28T14:09:07.571Z keyboard focus button-soft-2 (focus, Shift+Tab, Tab); clip ±24px
+2026-10-28T14:09:08.119Z screenshot U6-focus-soft-1280-light-dpr2.png
+2026-10-28T14:09:08.137Z keyboard focus button-surface-2 (focus, Shift+Tab, Tab); clip ±24px
+2026-10-28T14:09:08.686Z screenshot U6-focus-surface-1280-light-dpr2.png
+2026-10-28T14:09:08.705Z keyboard focus button-outline-2 (focus, Shift+Tab, Tab); clip ±24px
+2026-10-28T14:09:09.252Z screenshot U6-focus-outline-1280-light-dpr2.png
+2026-10-28T14:09:09.270Z keyboard focus button-ghost-offset-2 (focus, Shift+Tab, Tab); clip ±24px
+2026-10-28T14:09:09.818Z screenshot U6-focus-ghost-offset-1280-light-dpr2.png
+2026-10-28T14:09:09.836Z keyboard focus button-ghost-2 (focus, Shift+Tab, Tab); clip ±24px
+2026-10-28T14:09:10.386Z screenshot U6-focus-ghost-1280-light-dpr2.png
+2026-10-28T14:09:10.403Z keyboard focus button-color-red (focus, Shift+Tab, Tab); clip ±24px
+2026-10-28T14:09:10.954Z screenshot U6-focus-color-red-1280-light-dpr2.png
+2026-10-28T14:09:10.970Z keyboard focus button-high-contrast (focus, Shift+Tab, Tab); clip ±24px
+2026-10-28T14:09:11.519Z screenshot U6-focus-high-contrast-1280-light-dpr2.png
+2026-10-28T14:09:11.537Z keyboard focus button-icon (focus, Shift+Tab, Tab); clip ±24px
+2026-10-28T14:09:12.086Z screenshot U6-focus-icon-1280-light-dpr2.png
+2026-10-28T14:09:12.133Z click fixture Dark, park pointer
+2026-10-28T14:09:12.156Z keyboard focus button-solid-2 (focus, Shift+Tab, Tab); clip ±24px
+2026-10-28T14:09:12.701Z screenshot U6-focus-solid-1280-dark-dpr2.png
+2026-10-28T14:09:12.720Z keyboard focus button-soft-2 (focus, Shift+Tab, Tab); clip ±24px
+2026-10-28T14:09:13.268Z screenshot U6-focus-soft-1280-dark-dpr2.png
+2026-10-28T14:09:13.287Z keyboard focus button-outline-2 (focus, Shift+Tab, Tab); clip ±24px
+2026-10-28T14:09:13.836Z screenshot U6-focus-outline-1280-dark-dpr2.png
+2026-10-28T14:09:23.567Z DPR 2 context at 1280x900: mount_layout_fixtures(), park pointer
+2026-10-28T14:09:23.596Z keyboard focus type-link (focus, Shift+Tab, Tab); clip ±24px
+2026-10-28T14:09:24.135Z screenshot U6-focus-link-1280-light-dpr2.png

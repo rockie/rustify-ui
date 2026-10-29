@@ -1,0 +1,335 @@
+{
+  "menus": [
+    {
+      "viewport": "1440x900",
+      "theme": "dark",
+      "steps": [
+        {
+          "step": "Enter",
+          "expanded": "true",
+          "list_visible": true
+        },
+        {
+          "step": "Escape then Space",
+          "expanded": "true",
+          "list_visible": true
+        },
+        {
+          "step": "Escape then Enter",
+          "expanded": "true",
+          "list_visible": true
+        }
+      ]
+    },
+    {
+      "viewport": "768x1024",
+      "theme": "light",
+      "steps": [
+        {
+          "step": "Enter",
+          "expanded": "true",
+          "list_visible": true
+        },
+        {
+          "step": "Escape then Space",
+          "expanded": "true",
+          "list_visible": true
+        },
+        {
+          "step": "Escape then Enter",
+          "expanded": "true",
+          "list_visible": true
+        }
+      ]
+    },
+    {
+      "viewport": "390x844",
+      "theme": "light",
+      "steps": [
+        {
+          "step": "Enter",
+          "expanded": "true",
+          "list_visible": true
+        },
+        {
+          "step": "Escape then Space",
+          "expanded": "true",
+          "list_visible": true
+        },
+        {
+          "step": "Escape then Enter",
+          "expanded": "true",
+          "list_visible": true
+        }
+      ]
+    }
+  ],
+  "solid_color_pairs": [
+    {
+      "color": "gray",
+      "computed_background": [
+        141.0,
+        141.0,
+        141.0
+      ],
+      "a9_over_white": [
+        141,
+        141,
+        141
+      ],
+      "maximum_channel_delta": 0.0,
+      "foreground_matches_contrast": true
+    },
+    {
+      "color": "gold",
+      "computed_background": [
+        151.0,
+        131.0,
+        101.0
+      ],
+      "a9_over_white": [
+        151,
+        131,
+        101
+      ],
+      "maximum_channel_delta": 0.0,
+      "foreground_matches_contrast": true
+    },
+    {
+      "color": "bronze",
+      "computed_background": [
+        161.0,
+        128.0,
+        114.0
+      ],
+      "a9_over_white": [
+        161,
+        128,
+        114
+      ],
+      "maximum_channel_delta": 0.0,
+      "foreground_matches_contrast": true
+    },
+    {
+      "color": "brown",
+      "computed_background": [
+        173.0,
+        127.0,
+        88.0
+      ],
+      "a9_over_white": [
+        173,
+        127,
+        88
+      ],
+      "maximum_channel_delta": 0.0,
+      "foreground_matches_contrast": true
+    },
+    {
+      "color": "orange",
+      "computed_background": [
+        247.0,
+        107.0,
+        21.0
+      ],
+      "a9_over_white": [
+        247,
+        107,
+        21
+      ],
+      "maximum_channel_delta": 0.0,
+      "foreground_matches_contrast": true
+    },
+    {
+      "color": "tomato",
+      "computed_background": [
+        229.0,
+        77.0,
+        46.0
+      ],
+      "a9_over_white": [
+        229,
+        77,
+        46
+      ],
+      "maximum_channel_delta": 0.0,
+      "foreground_matches_contrast": true
+    },
+    {
+      "color": "red",
+      "computed_background": [
+        229.0,
+        72.0,
+        77.0
+      ],
+      "a9_over_white": [
+        229,
+        72,
+        77
+      ],
+      "maximum_channel_delta": 0.0,
+      "foreground_matches_contrast": true
+    },
+    {
+      "color": "ruby",
+      "computed_background": [
+        229.0,
+        70.0,
+        102.0
+      ],
+      "a9_over_white": [
+        229,
+        70,
+        102
+      ],
+      "maximum_channel_delta": 0.0,
+      "foreground_matches_contrast": true
+    },
+    {
+      "color": "crimson",
+      "computed_background": [
+        233.0,
+        61.0,
+        130.0
+      ],
+      "a9_over_white": [
+        233,
+        61,
+        130
+      ],
+      "maximum_channel_delta": 0.0,
+      "foreground_matches_contrast": true
+    },
+    {
+      "color": "pink",
+      "computed_background": [
+        214.0,
+        64.0,
+        159.0
+      ],
+      "a9_over_white": [
+        214,
+        64,
+        159
+      ],
+      "maximum_channel_delta": 0.0,
+      "foreground_matches_contrast": true
+    },
+    {
+      "color": "blue",
+      "computed_background": [
+        0.0,
+        144.0,
+        255.0
+      ],
+      "a9_over_white": [
+        0.0,
+        144.0,
+        255.0
+      ],
+      "maximum_channel_delta": 0.0,
+      "foreground_matches_contrast": true
+    },
+    {
+      "color": "cyan",
+      "computed_background": [
+        0.0,
+        162.0,
+        199.0
+      ],
+      "a9_over_white": [
+        0.0,
+        162.0,
+        199.0
+      ],
+      "maximum_channel_delta": 0.0,
+      "foreground_matches_contrast": true
+    },
+    {
+      "color": "teal",
+      "computed_background": [
+        18.0,
+        165.0,
+        148.0
+      ],
+      "a9_over_white": [
+        18,
+        165,
+        148
+      ],
+      "maximum_channel_delta": 0.0,
+      "foreground_matches_contrast": true
+    },
+    {
+      "color": "jade",
+      "computed_background": [
+        41.0,
+        163.0,
+        131.0
+      ],
+      "a9_over_white": [
+        41,
+        163,
+        131
+      ],
+      "maximum_channel_delta": 0.0,
+      "foreground_matches_contrast": true
+    },
+    {
+      "color": "green",
+      "computed_background": [
+        48.0,
+        164.0,
+        108.0
+      ],
+      "a9_over_white": [
+        48,
+        164,
+        108
+      ],
+      "maximum_channel_delta": 0.0,
+      "foreground_matches_contrast": true
+    },
+    {
+      "color": "grass",
+      "computed_background": [
+        70.0,
+        167.0,
+        88.0
+      ],
+      "a9_over_white": [
+        70,
+        167,
+        88
+      ],
+      "maximum_channel_delta": 0.0,
+      "foreground_matches_contrast": true
+    }
+  ],
+  "comparison_method": "Computed a9 alpha-composited over the white fixture; at most one RGB channel unit from rounded CSS alpha serialization. Foreground equals computed contrast variable. This checks current runtime pairs, not every palette value.",
+  "other_contrast_nodes": [
+    {
+      "testid": "button-accent-token",
+      "text": "Accent pair",
+      "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.62 (foreground color: #ffffff, background color: #12b76a, font size: 11.3pt (15px), font weight: normal). Expected contrast ratio of 4.5:1",
+      "computedColor": "rgb(255, 255, 255)",
+      "computedBackground": "rgb(18, 183, 106)"
+    },
+    {
+      "testid": "button-semantic-accent",
+      "text": "Semantic accent",
+      "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.62 (foreground color: #ffffff, background color: #12b76a, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1",
+      "computedColor": "rgb(255, 255, 255)",
+      "computedBackground": "rgb(18, 183, 106)"
+    },
+    {
+      "testid": "button-class-override",
+      "text": "Caller utilities",
+      "summary": "Fix any of the following:\n  Element has insufficient color contrast of 1.24 (foreground color: #c8080a, background color: #d92d20, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1",
+      "computedColor": "rgba(196, 0, 6, 0.827)",
+      "computedBackground": "rgb(217, 45, 32)"
+    }
+  ],
+  "health_pages": 4,
+  "health_errors": 0
+}

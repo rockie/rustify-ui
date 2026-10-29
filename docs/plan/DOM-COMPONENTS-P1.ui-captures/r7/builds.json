@@ -1,0 +1,18 @@
+{
+  "theme-studio": {
+    "command": "mbx xtask build-web --example theme-studio --release",
+    "exit_code": 0,
+    "build_id": "6d1605ccec8b9f78",
+    "archived_manifest": "build-studio-manifest.json",
+    "full_stdout_saved": false,
+    "stdout": "tool session 62995 (not duplicated as a filesystem log)"
+  },
+  "component-catalog": {
+    "command": "mbx xtask build-web --example component-catalog --release",
+    "exit_code": 0,
+    "build_id": "18ca82701d674efd",
+    "archived_manifest": "build-catalog-manifest.json",
+    "full_stdout_saved": true,
+    "stdout": "build-catalog.log"
+  }
+}

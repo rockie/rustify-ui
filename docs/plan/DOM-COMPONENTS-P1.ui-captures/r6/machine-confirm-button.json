@@ -1,0 +1,22 @@
+{
+  "at": "2026-10-28T16:36:41.036Z",
+  "note": "Followup localDialog field measured the X close button by test id; this probe identifies the actual Confirm button by its accessible name.",
+  "confirm": {
+    "text": "Confirm",
+    "background": "rgb(83, 177, 253)",
+    "color": "rgb(12, 17, 29)",
+    "width": 77.34375,
+    "height": 32
+  },
+  "capture": {
+    "file": "MC-confirm-button-1440-light.png",
+    "url": "http://127.0.0.1:4181/",
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "dpr": 1,
+    "at": "2026-10-28T16:36:49.730Z",
+    "theme": "light root, dark local dialog"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "ids": {
+    "review_correction": "6b6599bc-b144-4855-8c6d-b7d52953d4ac",
+    "disposition_correction": "1d4d92c5-1812-4071-8275-d0dc4802486b",
+    "r5_source_correction": "ca0201b1-f3cb-424c-8958-66e0eaa7048e"
+  },
+  "observed_at": "2026-10-29T01:16:00+08:00",
+  "report_sha256": "sha256:a1386f3083a7effd09eb0f5de35d7dfdf004214dc5f4a6b5ac98800642624524",
+  "initial_report_snapshot": {
+    "path": "docs/plan/DOM-COMPONENTS-P1.ui-captures/r6/revisions/report-before-matrix-supplement.md",
+    "sha256": "sha256:85585f488ef1ebfd4aae566ae1cab1794894e0891c3eca80c6d58345367655a1"
+  },
+  "immutable_original_events": {
+    ".xgent-ai/sdlc/events/review/4096c476-5ee3-44a5-a195-09a5183542ca/4fff6d8e-db53-488e-b0db-eb8717e1df16.md": "sha256:f6d5ca60204ce83d1e22e3b51c64ec308ac7998b47173845529c45527a48449d",
+    ".xgent-ai/sdlc/events/review/4096c476-5ee3-44a5-a195-09a5183542ca/eac1086e-aaec-4eea-b1ac-c6021ce9c4d5.md": "sha256:657c9ff76c6823b033a2d9c083df3266dce4f961455fda4da333159af5255cf5",
+    ".xgent-ai/sdlc/events/review/2cc80246-5d61-4370-bbd7-462827ecbce3/6b8201a4-fd97-46c4-9270-bb4bd92e7d25.md": "sha256:eb36783b263d86718fae754434aeabd9a10c78c7b611e7d5164d98dfa496fc11"
+  }
+}

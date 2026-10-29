@@ -1,0 +1,1764 @@
+{
+  "machine_error": null,
+  "overflow": [
+    {
+      "label": "studio-1440",
+      "viewport": 1440,
+      "scrollWidth": 1440,
+      "pageOverflow": 0,
+      "containers": [
+        {
+          "sel": "#studio-editor",
+          "scrollWidth": 319,
+          "clientWidth": 319
+        },
+        {
+          "sel": ".studio-previews",
+          "scrollWidth": 1120,
+          "clientWidth": 1120
+        }
+      ],
+      "offenders": [],
+      "offenderCount": 0
+    },
+    {
+      "label": "studio-1440-export-dialog",
+      "dialog": {
+        "x": 208,
+        "y": 16,
+        "width": 1024,
+        "height": 527.9375
+      },
+      "viewport": {
+        "w": 1440,
+        "h": 900
+      }
+    },
+    {
+      "label": "studio-768",
+      "viewport": 768,
+      "scrollWidth": 768,
+      "pageOverflow": 0,
+      "containers": [
+        {
+          "sel": "#studio-editor",
+          "scrollWidth": 319,
+          "clientWidth": 319
+        },
+        {
+          "sel": ".studio-previews",
+          "scrollWidth": 448,
+          "clientWidth": 448
+        }
+      ],
+      "offenders": [],
+      "offenderCount": 0
+    },
+    {
+      "label": "studio-768-export-dialog",
+      "dialog": {
+        "x": 16,
+        "y": 16,
+        "width": 736,
+        "height": 527.9375
+      },
+      "viewport": {
+        "w": 768,
+        "h": 1024
+      }
+    },
+    {
+      "label": "studio-390-edit",
+      "viewport": 390,
+      "scrollWidth": 390,
+      "pageOverflow": 0,
+      "containers": [
+        {
+          "sel": "#studio-editor",
+          "scrollWidth": 390,
+          "clientWidth": 390
+        },
+        {
+          "sel": ".studio-previews",
+          "scrollWidth": 0,
+          "clientWidth": 0
+        }
+      ],
+      "offenders": [],
+      "offenderCount": 0
+    },
+    {
+      "label": "studio-390-preview",
+      "viewport": 390,
+      "scrollWidth": 390,
+      "pageOverflow": 0,
+      "containers": [
+        {
+          "sel": ".studio-previews",
+          "scrollWidth": 390,
+          "clientWidth": 390
+        }
+      ],
+      "offenders": [],
+      "offenderCount": 0
+    },
+    {
+      "label": "studio-390-edit-export-dialog",
+      "dialog": {
+        "x": 16,
+        "y": 16,
+        "width": 358,
+        "height": 558.125
+      },
+      "viewport": {
+        "w": 390,
+        "h": 844
+      }
+    },
+    {
+      "label": "studio-720-root200",
+      "viewport": 720,
+      "scrollWidth": 720,
+      "pageOverflow": 0,
+      "containers": [
+        {
+          "sel": "#studio-editor",
+          "scrollWidth": 319,
+          "clientWidth": 319
+        },
+        {
+          "sel": ".studio-previews",
+          "scrollWidth": 400,
+          "clientWidth": 400
+        }
+      ],
+      "offenders": [],
+      "offenderCount": 0
+    },
+    {
+      "label": "catalog-buttons-1280",
+      "viewport": 1280,
+      "scrollWidth": 1280,
+      "pageOverflow": 0,
+      "containers": [
+        {
+          "sel": "[data-testid=button-fixture-body]",
+          "scrollWidth": 1232,
+          "clientWidth": 1232
+        }
+      ],
+      "offenders": [],
+      "offenderCount": 0
+    },
+    {
+      "label": "catalog-layout-1280",
+      "viewport": 1280,
+      "scrollWidth": 1280,
+      "pageOverflow": 0,
+      "containers": [
+        {
+          "sel": "[data-testid=catalog-layout-fixture]",
+          "scrollWidth": 1232,
+          "clientWidth": 1232
+        }
+      ],
+      "offenders": [],
+      "offenderCount": 0
+    },
+    {
+      "label": "catalog-buttons-390",
+      "viewport": 390,
+      "scrollWidth": 390,
+      "pageOverflow": 0,
+      "containers": [
+        {
+          "sel": "[data-testid=button-fixture-body]",
+          "scrollWidth": 366,
+          "clientWidth": 366
+        }
+      ],
+      "offenders": [],
+      "offenderCount": 0
+    },
+    {
+      "label": "catalog-layout-390",
+      "viewport": 390,
+      "scrollWidth": 390,
+      "pageOverflow": 0,
+      "containers": [
+        {
+          "sel": "[data-testid=catalog-layout-fixture]",
+          "scrollWidth": 366,
+          "clientWidth": 366
+        }
+      ],
+      "offenders": [],
+      "offenderCount": 0
+    }
+  ],
+  "axe": [
+    {
+      "label": "studio-1440",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "aria-prohibited-attr",
+          "count": 1
+        },
+        {
+          "id": "aria-valid-attr-value",
+          "count": 12
+        }
+      ]
+    },
+    {
+      "label": "studio-1440-export-dialog",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "aria-valid-attr-value",
+          "count": 4
+        }
+      ]
+    },
+    {
+      "label": "studio-768",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "aria-prohibited-attr",
+          "count": 1
+        },
+        {
+          "id": "aria-valid-attr-value",
+          "count": 12
+        }
+      ]
+    },
+    {
+      "label": "studio-768-export-dialog",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "aria-valid-attr-value",
+          "count": 4
+        }
+      ]
+    },
+    {
+      "label": "studio-390-edit",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "aria-prohibited-attr",
+          "count": 1
+        },
+        {
+          "id": "aria-valid-attr-value",
+          "count": 9
+        }
+      ]
+    },
+    {
+      "label": "studio-390-preview",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "aria-prohibited-attr",
+          "count": 1
+        },
+        {
+          "id": "aria-valid-attr-value",
+          "count": 3
+        }
+      ]
+    },
+    {
+      "label": "studio-390-edit-export-dialog",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "aria-valid-attr-value",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "label": "catalog-buttons-1280",
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "count": 19,
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "targets": [
+            ".bg-accent ::   Element has insufficient color contrast of 2.62 (foreground color: #ffffff, background color: #12b76a, font size: 11.3pt (15px), font weight: normal). Expecte",
+            ".rui-geometry-69 > .rustify-button-content ::   Element has insufficient color contrast of 2.62 (foreground color: #ffffff, background color: #12b76a, font size: 10.5pt (14px), font weight: normal). Expecte",
+            ".rui-geometry-71 > .rustify-button-content ::   Element has insufficient color contrast of 3.31 (foreground color: #ffffff, background color: #8d8d8d, font size: 10.5pt (14px), font weight: normal). Expecte",
+            ".rui-geometry-72 > .rustify-button-content ::   Element has insufficient color contrast of 3.65 (foreground color: #ffffff, background color: #978365, font size: 10.5pt (14px), font weight: normal). Expecte",
+            ".rui-geometry-73 > .rustify-button-content ::   Element has insufficient color contrast of 3.59 (foreground color: #ffffff, background color: #a18072, font size: 10.5pt (14px), font weight: normal). Expecte",
+            ".rui-geometry-74 > .rustify-button-content ::   Element has insufficient color contrast of 3.52 (foreground color: #ffffff, background color: #ad7f58, font size: 10.5pt (14px), font weight: normal). Expecte"
+          ]
+        }
+      ],
+      "incomplete": [
+        {
+          "id": "aria-valid-attr-value",
+          "count": 6
+        },
+        {
+          "id": "color-contrast",
+          "count": 4
+        }
+      ]
+    },
+    {
+      "label": "catalog-layout-1280",
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "count": 1,
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "targets": [
+            ".rui-geometry-259 ::   Element has insufficient color contrast of 3.31 (foreground color: #ffffff, background color: #8d8d8d, font size: 10.2pt (13.5375px), font weight: normal). Ex"
+          ]
+        }
+      ],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "count": 4
+        }
+      ]
+    },
+    {
+      "label": "catalog-buttons-390",
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "count": 19,
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "targets": [
+            ".bg-accent ::   Element has insufficient color contrast of 2.62 (foreground color: #ffffff, background color: #12b76a, font size: 11.3pt (15px), font weight: normal). Expecte",
+            ".rui-geometry-69 > .rustify-button-content ::   Element has insufficient color contrast of 2.62 (foreground color: #ffffff, background color: #12b76a, font size: 10.5pt (14px), font weight: normal). Expecte",
+            ".rui-geometry-71 > .rustify-button-content ::   Element has insufficient color contrast of 3.31 (foreground color: #ffffff, background color: #8d8d8d, font size: 10.5pt (14px), font weight: normal). Expecte",
+            ".rui-geometry-72 > .rustify-button-content ::   Element has insufficient color contrast of 3.65 (foreground color: #ffffff, background color: #978365, font size: 10.5pt (14px), font weight: normal). Expecte",
+            ".rui-geometry-73 > .rustify-button-content ::   Element has insufficient color contrast of 3.59 (foreground color: #ffffff, background color: #a18072, font size: 10.5pt (14px), font weight: normal). Expecte",
+            ".rui-geometry-74 > .rustify-button-content ::   Element has insufficient color contrast of 3.52 (foreground color: #ffffff, background color: #ad7f58, font size: 10.5pt (14px), font weight: normal). Expecte"
+          ]
+        }
+      ],
+      "incomplete": [
+        {
+          "id": "aria-valid-attr-value",
+          "count": 6
+        },
+        {
+          "id": "color-contrast",
+          "count": 4
+        }
+      ]
+    },
+    {
+      "label": "catalog-layout-390",
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "count": 1,
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "targets": [
+            ".rui-geometry-259 ::   Element has insufficient color contrast of 3.31 (foreground color: #ffffff, background color: #8d8d8d, font size: 10.2pt (13.5375px), font weight: normal). Ex"
+          ]
+        }
+      ],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "count": 4
+        }
+      ]
+    }
+  ],
+  "keyboard_summary": [
+    {
+      "label": "studio-tab-walk-70",
+      "walk_steps": 70,
+      "offscreen": []
+    },
+    {
+      "label": "theme-export-trap",
+      "afterEscape": {
+        "tag": "button",
+        "testid": "theme-export",
+        "name": "Export",
+        "indicator": true,
+        "outline": "solid 3px rgba(21, 112, 239, 0.4)",
+        "shadow": "none",
+        "onScreen": true,
+        "inDialog": false
+      },
+      "dialogStillVisible": false,
+      "trap_steps": 25,
+      "outside_dialog": []
+    },
+    {
+      "label": "theme-import-trap",
+      "afterEscape": {
+        "tag": "button",
+        "testid": "theme-import",
+        "name": "Import",
+        "indicator": true,
+        "outline": "solid 3px rgba(21, 112, 239, 0.4)",
+        "shadow": "none",
+        "onScreen": true,
+        "inDialog": false
+      },
+      "dialogStillVisible": false,
+      "trap_steps": 15,
+      "outside_dialog": []
+    },
+    {
+      "label": "brand-keyboard-commit",
+      "before": "Custom",
+      "after": "Gold"
+    }
+  ],
+  "focus_styles": [
+    {
+      "id": "button-classic-2",
+      "focused": "button-classic-2",
+      "focusVisible": true,
+      "outline": "rgb(141, 164, 239) solid 2px",
+      "outlineOffset": "2px"
+    },
+    {
+      "id": "button-solid-2",
+      "focused": "button-solid-2",
+      "focusVisible": true,
+      "outline": "rgb(141, 164, 239) solid 2px",
+      "outlineOffset": "2px"
+    },
+    {
+      "id": "button-soft-2",
+      "focused": "button-soft-2",
+      "focusVisible": true,
+      "outline": "rgb(141, 164, 239) solid 2px",
+      "outlineOffset": "-1px"
+    },
+    {
+      "id": "button-surface-2",
+      "focused": "button-surface-2",
+      "focusVisible": true,
+      "outline": "rgb(141, 164, 239) solid 2px",
+      "outlineOffset": "-1px"
+    },
+    {
+      "id": "button-outline-2",
+      "focused": "button-outline-2",
+      "focusVisible": true,
+      "outline": "rgb(141, 164, 239) solid 2px",
+      "outlineOffset": "-1px"
+    },
+    {
+      "id": "button-ghost-offset-2",
+      "focused": "button-ghost-offset-2",
+      "focusVisible": true,
+      "outline": "rgb(141, 164, 239) solid 2px",
+      "outlineOffset": "-1px"
+    },
+    {
+      "id": "button-ghost-2",
+      "focused": "button-ghost-2",
+      "focusVisible": true,
+      "outline": "rgb(141, 164, 239) solid 2px",
+      "outlineOffset": "-1px"
+    }
+  ],
+  "csp": [
+    {
+      "label": "studio-1440",
+      "events": []
+    },
+    {
+      "label": "studio-768",
+      "events": []
+    },
+    {
+      "label": "studio-390-edit",
+      "events": []
+    },
+    {
+      "label": "studio-720-root200",
+      "events": []
+    },
+    {
+      "label": "studio-keyboard",
+      "events": []
+    },
+    {
+      "label": "catalog-1280",
+      "events": []
+    },
+    {
+      "label": "catalog-390",
+      "events": []
+    }
+  ],
+  "console": [
+    {
+      "label": "studio-1440",
+      "errors": []
+    },
+    {
+      "label": "studio-768",
+      "errors": []
+    },
+    {
+      "label": "studio-390-edit",
+      "errors": []
+    },
+    {
+      "label": "studio-720-root200",
+      "errors": []
+    },
+    {
+      "label": "studio-keyboard",
+      "errors": []
+    },
+    {
+      "label": "catalog-1280",
+      "errors": []
+    },
+    {
+      "label": "catalog-390",
+      "errors": []
+    }
+  ],
+  "zoom200": [
+    {
+      "surfaces": [
+        {
+          "visible": true,
+          "scrollWidth": 300,
+          "clientWidth": 300,
+          "scrollLeft": 0,
+          "rect": {
+            "left": 369,
+            "right": 671,
+            "top": 3642.671875,
+            "bottom": 5428.171875,
+            "width": 302,
+            "height": 1785.5
+          }
+        },
+        {
+          "visible": false,
+          "scrollWidth": 243,
+          "clientWidth": 236,
+          "scrollLeft": 0,
+          "rect": {
+            "left": 401,
+            "right": 639,
+            "top": 7996.671875,
+            "bottom": 10113.671875,
+            "width": 238,
+            "height": 2117
+          }
+        }
+      ],
+      "create": [
+        {
+          "visible": true,
+          "text": "Create · 0",
+          "rect": {
+            "left": 386,
+            "right": 499.40625,
+            "top": 3995.671875,
+            "bottom": 4059.671875,
+            "width": 113.40625,
+            "height": 64
+          }
+        },
+        {
+          "visible": false,
+          "text": "Create · 0",
+          "rect": {
+            "left": 450,
+            "right": 563.40625,
+            "top": 8421.671875,
+            "bottom": 8485.671875,
+            "width": 113.40625,
+            "height": 64
+          }
+        }
+      ]
+    }
+  ],
+  "interactions_error": null,
+  "menus": [
+    {
+      "viewport": "1440x900",
+      "theme": "dark",
+      "opened": {
+        "focus": "studio-config-accent_color",
+        "activeDescendant": null,
+        "activeBox": null,
+        "listBox": null,
+        "scrollingAncestors": [],
+        "activeBackground": null,
+        "outline": "rgba(21, 112, 239, 0.4) solid 3px"
+      },
+      "moves": [
+        {
+          "key": "ArrowDown",
+          "focus": "studio-config-accent_color-list",
+          "activeDescendant": "rui-select-29-option-pink",
+          "text": "Pink",
+          "activeBox": {
+            "left": 25,
+            "top": 720.3125,
+            "right": 294,
+            "bottom": 752.3125,
+            "width": 269,
+            "height": 32
+          },
+          "listBox": {
+            "left": 20,
+            "top": 497.3125,
+            "right": 299,
+            "bottom": 753.3125,
+            "width": 279,
+            "height": 256
+          },
+          "scrollingAncestors": [
+            {
+              "tag": "UL",
+              "testid": "studio-config-accent_color-list",
+              "overflowY": "auto",
+              "scrollTop": 166,
+              "box": {
+                "left": 20,
+                "top": 497.3125,
+                "right": 299,
+                "bottom": 753.3125,
+                "width": 279,
+                "height": 256
+              }
+            },
+            {
+              "tag": "ASIDE",
+              "testid": "studio-editor",
+              "overflowY": "auto",
+              "scrollTop": 677,
+              "box": {
+                "left": 0,
+                "top": 57.1875,
+                "right": 320,
+                "bottom": 900,
+                "width": 320,
+                "height": 842.8125
+              }
+            },
+            {
+              "tag": "MAIN",
+              "overflowY": "hidden",
+              "scrollTop": 0,
+              "box": {
+                "left": 0,
+                "top": 0,
+                "right": 1440,
+                "bottom": 900,
+                "width": 1440,
+                "height": 900
+              }
+            }
+          ],
+          "activeBackground": "rgb(239, 248, 255)",
+          "outline": "rgb(0, 95, 204) none 1px"
+        },
+        {
+          "key": "ArrowDown",
+          "focus": "studio-config-accent_color-list",
+          "activeDescendant": "rui-select-29-option-plum",
+          "text": "Plum",
+          "activeBox": {
+            "left": 25,
+            "top": 720.3125,
+            "right": 294,
+            "bottom": 752.3125,
+            "width": 269,
+            "height": 32
+          },
+          "listBox": {
+            "left": 20,
+            "top": 497.3125,
+            "right": 299,
+            "bottom": 753.3125,
+            "width": 279,
+            "height": 256
+          },
+          "scrollingAncestors": [
+            {
+              "tag": "UL",
+              "testid": "studio-config-accent_color-list",
+              "overflowY": "auto",
+              "scrollTop": 198,
+              "box": {
+                "left": 20,
+                "top": 497.3125,
+                "right": 299,
+                "bottom": 753.3125,
+                "width": 279,
+                "height": 256
+              }
+            },
+            {
+              "tag": "ASIDE",
+              "testid": "studio-editor",
+              "overflowY": "auto",
+              "scrollTop": 677,
+              "box": {
+                "left": 0,
+                "top": 57.1875,
+                "right": 320,
+                "bottom": 900,
+                "width": 320,
+                "height": 842.8125
+              }
+            },
+            {
+              "tag": "MAIN",
+              "overflowY": "hidden",
+              "scrollTop": 0,
+              "box": {
+                "left": 0,
+                "top": 0,
+                "right": 1440,
+                "bottom": 900,
+                "width": 1440,
+                "height": 900
+              }
+            }
+          ],
+          "activeBackground": "rgba(239, 248, 255, 0.992)",
+          "outline": "rgb(0, 95, 204) none 1px"
+        },
+        {
+          "key": "ArrowUp",
+          "focus": "studio-config-accent_color-list",
+          "activeDescendant": "rui-select-29-option-pink",
+          "text": "Pink",
+          "activeBox": {
+            "left": 25,
+            "top": 688.3125,
+            "right": 294,
+            "bottom": 720.3125,
+            "width": 269,
+            "height": 32
+          },
+          "listBox": {
+            "left": 20,
+            "top": 497.3125,
+            "right": 299,
+            "bottom": 753.3125,
+            "width": 279,
+            "height": 256
+          },
+          "scrollingAncestors": [
+            {
+              "tag": "UL",
+              "testid": "studio-config-accent_color-list",
+              "overflowY": "auto",
+              "scrollTop": 198,
+              "box": {
+                "left": 20,
+                "top": 497.3125,
+                "right": 299,
+                "bottom": 753.3125,
+                "width": 279,
+                "height": 256
+              }
+            },
+            {
+              "tag": "ASIDE",
+              "testid": "studio-editor",
+              "overflowY": "auto",
+              "scrollTop": 677,
+              "box": {
+                "left": 0,
+                "top": 57.1875,
+                "right": 320,
+                "bottom": 900,
+                "width": 320,
+                "height": 842.8125
+              }
+            },
+            {
+              "tag": "MAIN",
+              "overflowY": "hidden",
+              "scrollTop": 0,
+              "box": {
+                "left": 0,
+                "top": 0,
+                "right": 1440,
+                "bottom": 900,
+                "width": 1440,
+                "height": 900
+              }
+            }
+          ],
+          "activeBackground": "rgb(239, 248, 255)",
+          "outline": "rgb(0, 95, 204) none 1px"
+        },
+        {
+          "key": "End",
+          "focus": "studio-config-accent_color-list",
+          "activeDescendant": "rui-select-29-option-sky",
+          "text": "Sky",
+          "activeBox": {
+            "left": 25,
+            "top": 720.3125,
+            "right": 294,
+            "bottom": 752.3125,
+            "width": 269,
+            "height": 32
+          },
+          "listBox": {
+            "left": 20,
+            "top": 497.3125,
+            "right": 299,
+            "bottom": 753.3125,
+            "width": 279,
+            "height": 256
+          },
+          "scrollingAncestors": [
+            {
+              "tag": "UL",
+              "testid": "studio-config-accent_color-list",
+              "overflowY": "auto",
+              "scrollTop": 614,
+              "box": {
+                "left": 20,
+                "top": 497.3125,
+                "right": 299,
+                "bottom": 753.3125,
+                "width": 279,
+                "height": 256
+              }
+            },
+            {
+              "tag": "ASIDE",
+              "testid": "studio-editor",
+              "overflowY": "auto",
+              "scrollTop": 677,
+              "box": {
+                "left": 0,
+                "top": 57.1875,
+                "right": 320,
+                "bottom": 900,
+                "width": 320,
+                "height": 842.8125
+              }
+            },
+            {
+              "tag": "MAIN",
+              "overflowY": "hidden",
+              "scrollTop": 0,
+              "box": {
+                "left": 0,
+                "top": 0,
+                "right": 1440,
+                "bottom": 900,
+                "width": 1440,
+                "height": 900
+              }
+            }
+          ],
+          "activeBackground": "rgba(239, 248, 255, 0.97)",
+          "outline": "rgb(0, 95, 204) none 1px"
+        },
+        {
+          "key": "Home",
+          "focus": "studio-config-accent_color-list",
+          "activeDescendant": "rui-select-29-option-custom",
+          "text": "Custom",
+          "activeBox": {
+            "left": 25,
+            "top": 498.3125,
+            "right": 294,
+            "bottom": 530.3125,
+            "width": 269,
+            "height": 32
+          },
+          "listBox": {
+            "left": 20,
+            "top": 497.3125,
+            "right": 299,
+            "bottom": 753.3125,
+            "width": 279,
+            "height": 256
+          },
+          "scrollingAncestors": [
+            {
+              "tag": "UL",
+              "testid": "studio-config-accent_color-list",
+              "overflowY": "auto",
+              "scrollTop": 4,
+              "box": {
+                "left": 20,
+                "top": 497.3125,
+                "right": 299,
+                "bottom": 753.3125,
+                "width": 279,
+                "height": 256
+              }
+            },
+            {
+              "tag": "ASIDE",
+              "testid": "studio-editor",
+              "overflowY": "auto",
+              "scrollTop": 677,
+              "box": {
+                "left": 0,
+                "top": 57.1875,
+                "right": 320,
+                "bottom": 900,
+                "width": 320,
+                "height": 842.8125
+              }
+            },
+            {
+              "tag": "MAIN",
+              "overflowY": "hidden",
+              "scrollTop": 0,
+              "box": {
+                "left": 0,
+                "top": 0,
+                "right": 1440,
+                "bottom": 900,
+                "width": 1440,
+                "height": 900
+              }
+            }
+          ],
+          "activeBackground": "rgba(239, 248, 255, 0.97)",
+          "outline": "rgb(0, 95, 204) none 1px"
+        }
+      ],
+      "afterEscape": {
+        "focus": "studio-config-accent_color",
+        "focusVisible": true
+      }
+    },
+    {
+      "viewport": "768x1024",
+      "theme": "light",
+      "opened": {
+        "focus": "studio-config-accent_color-list",
+        "activeDescendant": "rui-select-29-option-pink",
+        "text": "Pink",
+        "activeBox": {
+          "left": 21,
+          "top": 797.5,
+          "right": 298,
+          "bottom": 829.5,
+          "width": 277,
+          "height": 32
+        },
+        "listBox": {
+          "left": 16,
+          "top": 574.5,
+          "right": 303,
+          "bottom": 830.5,
+          "width": 287,
+          "height": 256
+        },
+        "scrollingAncestors": [
+          {
+            "tag": "UL",
+            "testid": "studio-config-accent_color-list",
+            "overflowY": "auto",
+            "scrollTop": 166,
+            "box": {
+              "left": 16,
+              "top": 574.5,
+              "right": 303,
+              "bottom": 830.5,
+              "width": 287,
+              "height": 256
+            }
+          },
+          {
+            "tag": "ASIDE",
+            "testid": "studio-editor",
+            "overflowY": "auto",
+            "scrollTop": 632,
+            "box": {
+              "left": 0,
+              "top": 89.375,
+              "right": 320,
+              "bottom": 1024,
+              "width": 320,
+              "height": 934.625
+            }
+          },
+          {
+            "tag": "MAIN",
+            "overflowY": "hidden",
+            "scrollTop": 0,
+            "box": {
+              "left": 0,
+              "top": 0,
+              "right": 768,
+              "bottom": 1024,
+              "width": 768,
+              "height": 1024
+            }
+          }
+        ],
+        "activeBackground": "rgb(239, 248, 255)",
+        "outline": "rgb(0, 95, 204) none 1px"
+      },
+      "moves": [
+        {
+          "key": "ArrowDown",
+          "focus": "studio-config-accent_color-list",
+          "activeDescendant": "rui-select-29-option-plum",
+          "text": "Plum",
+          "activeBox": {
+            "left": 21,
+            "top": 797.5,
+            "right": 298,
+            "bottom": 829.5,
+            "width": 277,
+            "height": 32
+          },
+          "listBox": {
+            "left": 16,
+            "top": 574.5,
+            "right": 303,
+            "bottom": 830.5,
+            "width": 287,
+            "height": 256
+          },
+          "scrollingAncestors": [
+            {
+              "tag": "UL",
+              "testid": "studio-config-accent_color-list",
+              "overflowY": "auto",
+              "scrollTop": 198,
+              "box": {
+                "left": 16,
+                "top": 574.5,
+                "right": 303,
+                "bottom": 830.5,
+                "width": 287,
+                "height": 256
+              }
+            },
+            {
+              "tag": "ASIDE",
+              "testid": "studio-editor",
+              "overflowY": "auto",
+              "scrollTop": 632,
+              "box": {
+                "left": 0,
+                "top": 89.375,
+                "right": 320,
+                "bottom": 1024,
+                "width": 320,
+                "height": 934.625
+              }
+            },
+            {
+              "tag": "MAIN",
+              "overflowY": "hidden",
+              "scrollTop": 0,
+              "box": {
+                "left": 0,
+                "top": 0,
+                "right": 768,
+                "bottom": 1024,
+                "width": 768,
+                "height": 1024
+              }
+            }
+          ],
+          "activeBackground": "rgb(239, 248, 255)",
+          "outline": "rgb(0, 95, 204) none 1px"
+        },
+        {
+          "key": "ArrowDown",
+          "focus": "studio-config-accent_color-list",
+          "activeDescendant": "rui-select-29-option-purple",
+          "text": "Purple",
+          "activeBox": {
+            "left": 21,
+            "top": 797.5,
+            "right": 298,
+            "bottom": 829.5,
+            "width": 277,
+            "height": 32
+          },
+          "listBox": {
+            "left": 16,
+            "top": 574.5,
+            "right": 303,
+            "bottom": 830.5,
+            "width": 287,
+            "height": 256
+          },
+          "scrollingAncestors": [
+            {
+              "tag": "UL",
+              "testid": "studio-config-accent_color-list",
+              "overflowY": "auto",
+              "scrollTop": 230,
+              "box": {
+                "left": 16,
+                "top": 574.5,
+                "right": 303,
+                "bottom": 830.5,
+                "width": 287,
+                "height": 256
+              }
+            },
+            {
+              "tag": "ASIDE",
+              "testid": "studio-editor",
+              "overflowY": "auto",
+              "scrollTop": 632,
+              "box": {
+                "left": 0,
+                "top": 89.375,
+                "right": 320,
+                "bottom": 1024,
+                "width": 320,
+                "height": 934.625
+              }
+            },
+            {
+              "tag": "MAIN",
+              "overflowY": "hidden",
+              "scrollTop": 0,
+              "box": {
+                "left": 0,
+                "top": 0,
+                "right": 768,
+                "bottom": 1024,
+                "width": 768,
+                "height": 1024
+              }
+            }
+          ],
+          "activeBackground": "rgba(239, 248, 255, 0.97)",
+          "outline": "rgb(0, 95, 204) none 1px"
+        },
+        {
+          "key": "ArrowUp",
+          "focus": "studio-config-accent_color-list",
+          "activeDescendant": "rui-select-29-option-plum",
+          "text": "Plum",
+          "activeBox": {
+            "left": 21,
+            "top": 765.5,
+            "right": 298,
+            "bottom": 797.5,
+            "width": 277,
+            "height": 32
+          },
+          "listBox": {
+            "left": 16,
+            "top": 574.5,
+            "right": 303,
+            "bottom": 830.5,
+            "width": 287,
+            "height": 256
+          },
+          "scrollingAncestors": [
+            {
+              "tag": "UL",
+              "testid": "studio-config-accent_color-list",
+              "overflowY": "auto",
+              "scrollTop": 230,
+              "box": {
+                "left": 16,
+                "top": 574.5,
+                "right": 303,
+                "bottom": 830.5,
+                "width": 287,
+                "height": 256
+              }
+            },
+            {
+              "tag": "ASIDE",
+              "testid": "studio-editor",
+              "overflowY": "auto",
+              "scrollTop": 632,
+              "box": {
+                "left": 0,
+                "top": 89.375,
+                "right": 320,
+                "bottom": 1024,
+                "width": 320,
+                "height": 934.625
+              }
+            },
+            {
+              "tag": "MAIN",
+              "overflowY": "hidden",
+              "scrollTop": 0,
+              "box": {
+                "left": 0,
+                "top": 0,
+                "right": 768,
+                "bottom": 1024,
+                "width": 768,
+                "height": 1024
+              }
+            }
+          ],
+          "activeBackground": "rgb(239, 248, 255)",
+          "outline": "rgb(0, 95, 204) none 1px"
+        },
+        {
+          "key": "End",
+          "focus": "studio-config-accent_color-list",
+          "activeDescendant": "rui-select-29-option-sky",
+          "text": "Sky",
+          "activeBox": {
+            "left": 21,
+            "top": 797.5,
+            "right": 298,
+            "bottom": 829.5,
+            "width": 277,
+            "height": 32
+          },
+          "listBox": {
+            "left": 16,
+            "top": 574.5,
+            "right": 303,
+            "bottom": 830.5,
+            "width": 287,
+            "height": 256
+          },
+          "scrollingAncestors": [
+            {
+              "tag": "UL",
+              "testid": "studio-config-accent_color-list",
+              "overflowY": "auto",
+              "scrollTop": 614,
+              "box": {
+                "left": 16,
+                "top": 574.5,
+                "right": 303,
+                "bottom": 830.5,
+                "width": 287,
+                "height": 256
+              }
+            },
+            {
+              "tag": "ASIDE",
+              "testid": "studio-editor",
+              "overflowY": "auto",
+              "scrollTop": 632,
+              "box": {
+                "left": 0,
+                "top": 89.375,
+                "right": 320,
+                "bottom": 1024,
+                "width": 320,
+                "height": 934.625
+              }
+            },
+            {
+              "tag": "MAIN",
+              "overflowY": "hidden",
+              "scrollTop": 0,
+              "box": {
+                "left": 0,
+                "top": 0,
+                "right": 768,
+                "bottom": 1024,
+                "width": 768,
+                "height": 1024
+              }
+            }
+          ],
+          "activeBackground": "rgba(239, 248, 255, 0.97)",
+          "outline": "rgb(0, 95, 204) none 1px"
+        },
+        {
+          "key": "Home",
+          "focus": "studio-config-accent_color-list",
+          "activeDescendant": "rui-select-29-option-custom",
+          "text": "Custom",
+          "activeBox": {
+            "left": 21,
+            "top": 575.5,
+            "right": 298,
+            "bottom": 607.5,
+            "width": 277,
+            "height": 32
+          },
+          "listBox": {
+            "left": 16,
+            "top": 574.5,
+            "right": 303,
+            "bottom": 830.5,
+            "width": 287,
+            "height": 256
+          },
+          "scrollingAncestors": [
+            {
+              "tag": "UL",
+              "testid": "studio-config-accent_color-list",
+              "overflowY": "auto",
+              "scrollTop": 4,
+              "box": {
+                "left": 16,
+                "top": 574.5,
+                "right": 303,
+                "bottom": 830.5,
+                "width": 287,
+                "height": 256
+              }
+            },
+            {
+              "tag": "ASIDE",
+              "testid": "studio-editor",
+              "overflowY": "auto",
+              "scrollTop": 632,
+              "box": {
+                "left": 0,
+                "top": 89.375,
+                "right": 320,
+                "bottom": 1024,
+                "width": 320,
+                "height": 934.625
+              }
+            },
+            {
+              "tag": "MAIN",
+              "overflowY": "hidden",
+              "scrollTop": 0,
+              "box": {
+                "left": 0,
+                "top": 0,
+                "right": 768,
+                "bottom": 1024,
+                "width": 768,
+                "height": 1024
+              }
+            }
+          ],
+          "activeBackground": "rgba(239, 248, 255, 0.97)",
+          "outline": "rgb(0, 95, 204) none 1px"
+        }
+      ],
+      "afterEscape": {
+        "focus": "studio-config-accent_color",
+        "focusVisible": true
+      }
+    },
+    {
+      "viewport": "390x844",
+      "theme": "light",
+      "opened": {
+        "focus": "studio-config-accent_color",
+        "activeDescendant": null,
+        "activeBox": null,
+        "listBox": null,
+        "scrollingAncestors": [],
+        "activeBackground": null,
+        "outline": "rgba(21, 112, 239, 0.4) solid 3px"
+      },
+      "moves": [
+        {
+          "key": "ArrowDown",
+          "focus": "studio-config-accent_color-list",
+          "activeDescendant": "rui-select-29-option-pink",
+          "text": "Pink",
+          "activeBox": {
+            "left": 21,
+            "top": 575.234375,
+            "right": 369,
+            "bottom": 607.234375,
+            "width": 348,
+            "height": 32
+          },
+          "listBox": {
+            "left": 16,
+            "top": 352.234375,
+            "right": 374,
+            "bottom": 608.234375,
+            "width": 358,
+            "height": 256
+          },
+          "scrollingAncestors": [
+            {
+              "tag": "UL",
+              "testid": "studio-config-accent_color-list",
+              "overflowY": "auto",
+              "scrollTop": 166,
+              "box": {
+                "left": 16,
+                "top": 352.234375,
+                "right": 374,
+                "bottom": 608.234375,
+                "width": 358,
+                "height": 256
+              }
+            },
+            {
+              "tag": "ASIDE",
+              "testid": "studio-editor",
+              "overflowY": "hidden",
+              "scrollTop": 0,
+              "box": {
+                "left": 0,
+                "top": 127.984375,
+                "right": 390,
+                "bottom": 844,
+                "width": 390,
+                "height": 716.015625
+              }
+            },
+            {
+              "tag": "MAIN",
+              "overflowY": "hidden",
+              "scrollTop": 0,
+              "box": {
+                "left": 0,
+                "top": 0,
+                "right": 390,
+                "bottom": 844,
+                "width": 390,
+                "height": 844
+              }
+            }
+          ],
+          "activeBackground": "rgb(239, 248, 255)",
+          "outline": "rgb(0, 95, 204) none 1px"
+        },
+        {
+          "key": "ArrowDown",
+          "focus": "studio-config-accent_color-list",
+          "activeDescendant": "rui-select-29-option-plum",
+          "text": "Plum",
+          "activeBox": {
+            "left": 21,
+            "top": 575.234375,
+            "right": 369,
+            "bottom": 607.234375,
+            "width": 348,
+            "height": 32
+          },
+          "listBox": {
+            "left": 16,
+            "top": 352.234375,
+            "right": 374,
+            "bottom": 608.234375,
+            "width": 358,
+            "height": 256
+          },
+          "scrollingAncestors": [
+            {
+              "tag": "UL",
+              "testid": "studio-config-accent_color-list",
+              "overflowY": "auto",
+              "scrollTop": 198,
+              "box": {
+                "left": 16,
+                "top": 352.234375,
+                "right": 374,
+                "bottom": 608.234375,
+                "width": 358,
+                "height": 256
+              }
+            },
+            {
+              "tag": "ASIDE",
+              "testid": "studio-editor",
+              "overflowY": "hidden",
+              "scrollTop": 0,
+              "box": {
+                "left": 0,
+                "top": 127.984375,
+                "right": 390,
+                "bottom": 844,
+                "width": 390,
+                "height": 716.015625
+              }
+            },
+            {
+              "tag": "MAIN",
+              "overflowY": "hidden",
+              "scrollTop": 0,
+              "box": {
+                "left": 0,
+                "top": 0,
+                "right": 390,
+                "bottom": 844,
+                "width": 390,
+                "height": 844
+              }
+            }
+          ],
+          "activeBackground": "rgba(239, 248, 255, 0.992)",
+          "outline": "rgb(0, 95, 204) none 1px"
+        },
+        {
+          "key": "ArrowUp",
+          "focus": "studio-config-accent_color-list",
+          "activeDescendant": "rui-select-29-option-pink",
+          "text": "Pink",
+          "activeBox": {
+            "left": 21,
+            "top": 543.234375,
+            "right": 369,
+            "bottom": 575.234375,
+            "width": 348,
+            "height": 32
+          },
+          "listBox": {
+            "left": 16,
+            "top": 352.234375,
+            "right": 374,
+            "bottom": 608.234375,
+            "width": 358,
+            "height": 256
+          },
+          "scrollingAncestors": [
+            {
+              "tag": "UL",
+              "testid": "studio-config-accent_color-list",
+              "overflowY": "auto",
+              "scrollTop": 198,
+              "box": {
+                "left": 16,
+                "top": 352.234375,
+                "right": 374,
+                "bottom": 608.234375,
+                "width": 358,
+                "height": 256
+              }
+            },
+            {
+              "tag": "ASIDE",
+              "testid": "studio-editor",
+              "overflowY": "hidden",
+              "scrollTop": 0,
+              "box": {
+                "left": 0,
+                "top": 127.984375,
+                "right": 390,
+                "bottom": 844,
+                "width": 390,
+                "height": 716.015625
+              }
+            },
+            {
+              "tag": "MAIN",
+              "overflowY": "hidden",
+              "scrollTop": 0,
+              "box": {
+                "left": 0,
+                "top": 0,
+                "right": 390,
+                "bottom": 844,
+                "width": 390,
+                "height": 844
+              }
+            }
+          ],
+          "activeBackground": "rgb(239, 248, 255)",
+          "outline": "rgb(0, 95, 204) none 1px"
+        },
+        {
+          "key": "End",
+          "focus": "studio-config-accent_color-list",
+          "activeDescendant": "rui-select-29-option-sky",
+          "text": "Sky",
+          "activeBox": {
+            "left": 21,
+            "top": 575.234375,
+            "right": 369,
+            "bottom": 607.234375,
+            "width": 348,
+            "height": 32
+          },
+          "listBox": {
+            "left": 16,
+            "top": 352.234375,
+            "right": 374,
+            "bottom": 608.234375,
+            "width": 358,
+            "height": 256
+          },
+          "scrollingAncestors": [
+            {
+              "tag": "UL",
+              "testid": "studio-config-accent_color-list",
+              "overflowY": "auto",
+              "scrollTop": 614,
+              "box": {
+                "left": 16,
+                "top": 352.234375,
+                "right": 374,
+                "bottom": 608.234375,
+                "width": 358,
+                "height": 256
+              }
+            },
+            {
+              "tag": "ASIDE",
+              "testid": "studio-editor",
+              "overflowY": "hidden",
+              "scrollTop": 0,
+              "box": {
+                "left": 0,
+                "top": 127.984375,
+                "right": 390,
+                "bottom": 844,
+                "width": 390,
+                "height": 716.015625
+              }
+            },
+            {
+              "tag": "MAIN",
+              "overflowY": "hidden",
+              "scrollTop": 0,
+              "box": {
+                "left": 0,
+                "top": 0,
+                "right": 390,
+                "bottom": 844,
+                "width": 390,
+                "height": 844
+              }
+            }
+          ],
+          "activeBackground": "rgb(239, 248, 255)",
+          "outline": "rgb(0, 95, 204) none 1px"
+        },
+        {
+          "key": "Home",
+          "focus": "studio-config-accent_color-list",
+          "activeDescendant": "rui-select-29-option-custom",
+          "text": "Custom",
+          "activeBox": {
+            "left": 21,
+            "top": 353.234375,
+            "right": 369,
+            "bottom": 385.234375,
+            "width": 348,
+            "height": 32
+          },
+          "listBox": {
+            "left": 16,
+            "top": 352.234375,
+            "right": 374,
+            "bottom": 608.234375,
+            "width": 358,
+            "height": 256
+          },
+          "scrollingAncestors": [
+            {
+              "tag": "UL",
+              "testid": "studio-config-accent_color-list",
+              "overflowY": "auto",
+              "scrollTop": 4,
+              "box": {
+                "left": 16,
+                "top": 352.234375,
+                "right": 374,
+                "bottom": 608.234375,
+                "width": 358,
+                "height": 256
+              }
+            },
+            {
+              "tag": "ASIDE",
+              "testid": "studio-editor",
+              "overflowY": "hidden",
+              "scrollTop": 0,
+              "box": {
+                "left": 0,
+                "top": 127.984375,
+                "right": 390,
+                "bottom": 844,
+                "width": 390,
+                "height": 716.015625
+              }
+            },
+            {
+              "tag": "MAIN",
+              "overflowY": "hidden",
+              "scrollTop": 0,
+              "box": {
+                "left": 0,
+                "top": 0,
+                "right": 390,
+                "bottom": 844,
+                "width": 390,
+                "height": 844
+              }
+            }
+          ],
+          "activeBackground": "rgba(239, 248, 255, 0.992)",
+          "outline": "rgb(0, 95, 204) none 1px"
+        }
+      ],
+      "afterEscape": {
+        "focus": "studio-config-accent_color",
+        "focusVisible": true
+      }
+    }
+  ],
+  "clipboard": [
+    {
+      "case": "success",
+      "matchesVisible": true,
+      "feedback": "Copied to clipboard."
+    },
+    {
+      "case": "denied",
+      "feedback": "Clipboard unavailable or refused. Select the text or download it.",
+      "sourceVisible": true,
+      "downloadEnabled": true
+    }
+  ],
+  "download": {
+    "filename": "theme.json",
+    "failure": null,
+    "sha256": "7c1c2afb8b970350b30676b961fa0f613969295bec99b3b9c3f661b3f1e12c43",
+    "matchesVisible": true,
+    "schemaVersion": 2
+  },
+  "health": [
+    {
+      "viewport": "1440x900",
+      "errors": [],
+      "failed": []
+    },
+    {
+      "viewport": "768x1024",
+      "errors": [],
+      "failed": []
+    },
+    {
+      "viewport": "390x844",
+      "errors": [],
+      "failed": []
+    },
+    {
+      "viewport": "1440x900",
+      "errors": [],
+      "failed": []
+    }
+  ]
+}

@@ -1,0 +1,193 @@
+{
+  "at": "2026-10-27T15:57:25.794Z",
+  "steps": [
+    "open 1440x900, then 720x900 and root font-size 200%",
+    "click Colors tab, clear search",
+    "scroll the editor column vertically so the first token cells sit below the header (scrollLeft untouched)",
+    "click token primary",
+    "scroll the editor column vertically to the source block (scrollLeft untouched)"
+  ],
+  "frames": [
+    {
+      "file": "MC-root200-colors-grid-720-light.png",
+      "time": "2026-10-27T15:57:35.762Z"
+    },
+    {
+      "file": "MC-root200-source-720-light.png",
+      "time": "2026-10-27T15:57:36.539Z"
+    }
+  ],
+  "grid": {
+    "editor": {
+      "left": 0,
+      "visibleRight": 319,
+      "scrollWidth": 398,
+      "clientWidth": 319,
+      "scrollLeft": 32,
+      "overflowX": "auto"
+    },
+    "cells": [
+      {
+        "testid": "color-token-background",
+        "cell": [
+          0,
+          96,
+          380,
+          653
+        ],
+        "parts": [
+          {
+            "text": "background",
+            "left": 34,
+            "right": 90,
+            "lines": 3,
+            "scrollW": 56,
+            "clientW": 56
+          },
+          {
+            "text": "#f9fafb",
+            "left": 34,
+            "right": 90,
+            "lines": 3,
+            "scrollW": 56,
+            "clientW": 56
+          },
+          {
+            "text": "Overridden · Light",
+            "left": 34,
+            "right": 156,
+            "lines": 2,
+            "scrollW": 120,
+            "clientW": 120
+          }
+        ]
+      },
+      {
+        "testid": "color-token-foreground",
+        "cell": [
+          134,
+          229,
+          380,
+          653
+        ],
+        "parts": [
+          {
+            "text": "foreground",
+            "left": 168,
+            "right": 223,
+            "lines": 3,
+            "scrollW": 56,
+            "clientW": 56
+          },
+          {
+            "text": "#1d2939",
+            "left": 168,
+            "right": 223,
+            "lines": 3,
+            "scrollW": 56,
+            "clientW": 56
+          },
+          {
+            "text": "Overridden · Light",
+            "left": 168,
+            "right": 289,
+            "lines": 2,
+            "scrollW": 120,
+            "clientW": 120
+          }
+        ]
+      },
+      {
+        "testid": "color-token-card",
+        "cell": [
+          0,
+          96,
+          661,
+          962
+        ],
+        "parts": [
+          {
+            "text": "card",
+            "left": 34,
+            "right": 79,
+            "lines": 1,
+            "scrollW": 45,
+            "clientW": 45
+          },
+          {
+            "text": "#ffffff",
+            "left": 34,
+            "right": 90,
+            "lines": 3,
+            "scrollW": 56,
+            "clientW": 56
+          },
+          {
+            "text": "Overridden · Light",
+            "left": 34,
+            "right": 156,
+            "lines": 2,
+            "scrollW": 120,
+            "clientW": 120
+          }
+        ]
+      },
+      {
+        "testid": "color-token-card-foreground",
+        "cell": [
+          134,
+          229,
+          661,
+          962
+        ],
+        "parts": [
+          {
+            "text": "card-foreground",
+            "left": 168,
+            "right": 223,
+            "lines": 4,
+            "scrollW": 56,
+            "clientW": 56
+          },
+          {
+            "text": "#1d2939",
+            "left": 168,
+            "right": 223,
+            "lines": 3,
+            "scrollW": 56,
+            "clientW": 56
+          },
+          {
+            "text": "Overridden · Light",
+            "left": 168,
+            "right": 289,
+            "lines": 2,
+            "scrollW": 120,
+            "clientW": 120
+          }
+        ]
+      }
+    ]
+  },
+  "source": {
+    "editorVisibleRight": 319,
+    "scrollLeft": 32,
+    "pairs": [
+      {
+        "dt": "Effective value",
+        "dtBox": [
+          0,
+          320,
+          609
+        ],
+        "dd": "#1570ef",
+        "ddBox": [
+          352,
+          352,
+          610
+        ]
+      }
+    ]
+  },
+  "scrollLeftAtEnd": 32
+}

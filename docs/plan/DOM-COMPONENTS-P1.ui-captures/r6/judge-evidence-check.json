@@ -1,0 +1,77 @@
+{
+  "attempts": {
+    "U1-a": {
+      "packet_current_images": 25,
+      "opened_current_images": 25,
+      "missing": []
+    },
+    "U1-b": {
+      "packet_current_images": 45,
+      "opened_current_images": 45,
+      "missing": []
+    },
+    "U1-c": {
+      "packet_current_images": 46,
+      "opened_current_images": 46,
+      "missing": []
+    },
+    "U2-a": {
+      "packet_current_images": 14,
+      "opened_current_images": 14,
+      "missing": []
+    },
+    "U2-b": {
+      "packet_current_images": 23,
+      "opened_current_images": 23,
+      "missing": []
+    },
+    "U2-c": {
+      "packet_current_images": 24,
+      "opened_current_images": 24,
+      "missing": []
+    },
+    "U3-a": {
+      "packet_current_images": 26,
+      "opened_current_images": 26,
+      "missing": []
+    },
+    "U4-a": {
+      "packet_current_images": 17,
+      "opened_current_images": 17,
+      "missing": []
+    },
+    "U5-a": {
+      "packet_current_images": 18,
+      "opened_current_images": 18,
+      "missing": []
+    },
+    "U5-b": {
+      "packet_current_images": 39,
+      "opened_current_images": 39,
+      "missing": []
+    },
+    "U6-a": {
+      "packet_current_images": 28,
+      "opened_current_images": 28,
+      "missing": []
+    },
+    "U6-b": {
+      "packet_current_images": 50,
+      "opened_current_images": 50,
+      "missing": []
+    },
+    "U7-a": {
+      "packet_current_images": 26,
+      "opened_current_images": 26,
+      "missing": []
+    },
+    "U7-b": {
+      "packet_current_images": 34,
+      "opened_current_images": 34,
+      "missing": []
+    }
+  },
+  "unique_current_images": 236,
+  "expected_current_images": 236,
+  "missing": []
+}

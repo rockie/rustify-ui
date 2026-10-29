@@ -1,0 +1,18 @@
+{
+  "theme-studio": {
+    "build_id": "105da89e37304db9",
+    "manifest_sha256": "738c383f5b61ebcf46dcfd9d22710890d542c333ca9c17ed82bf5ac5fce6a409",
+    "http_equals_local": true,
+    "url": "http://127.0.0.1:4181/",
+    "command": "mbx xtask build-web --example theme-studio --release",
+    "exit_code": 0
+  },
+  "component-catalog": {
+    "build_id": "18ca82701d674efd",
+    "manifest_sha256": "aa50048e1e2855957bfaa2aff803ad52afa8a9cb49d91ceae1d9ed2a94a980a7",
+    "http_equals_local": true,
+    "url": "http://127.0.0.1:4176/",
+    "command": "mbx xtask build-web --example component-catalog --release",
+    "exit_code": 0
+  }
+}

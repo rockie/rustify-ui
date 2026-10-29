@@ -1,0 +1,37 @@
+{
+  "copy": {
+    "matchesVisible": true,
+    "feedback": "Copied to clipboard."
+  },
+  "copyDenied": {
+    "feedback": "Clipboard unavailable or refused. Select the text or download it.",
+    "sourceStillSelectable": true,
+    "downloadEnabled": true
+  },
+  "download": {
+    "filename": "theme.json",
+    "failure": null,
+    "bytes": 2494,
+    "sha256": "7c1c2afb8b970350b30676b961fa0f613969295bec99b3b9c3f661b3f1e12c43",
+    "schemaVersion": 2,
+    "matchesVisible": true
+  },
+  "localDialog": {
+    "background": "rgba(0, 0, 0, 0)",
+    "color": "rgb(152, 162, 179)",
+    "width": 24,
+    "height": 30.5,
+    "afterEscape": {
+      "focus": "open-preview-dialog",
+      "dialogOpen": false
+    }
+  },
+  "reset": {
+    "focused": true,
+    "focusVisible": true,
+    "ariaLabel": "Clear primary · Light only",
+    "title": "Clear primary · Light only",
+    "outline": "rgba(21, 112, 239, 0.4) solid 3px",
+    "outlineOffset": "2px"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "workflow": "manual continuation R6",
+  "managed_index_present": false,
+  "prior_round": 5,
+  "reviewer_context": "fresh fork_turns=none; model and effort inherited without override; read-only; no child agents",
+  "scripts": {
+    "capture-runner-first.cjs": "238c25764f655986d77dfbcfeb047af05d93057e5053723db1b7bae15cf0c7ce",
+    "capture-runner.cjs": "deba8f7759f27f8bb7ec946a4f84a56670bcea9c450c53aff45e5577ca29b12f",
+    "write-capture.py": "2a3a7dfc7566bdca6538bf26076e6ef47539309b79c41da03c47f4a1d391bc3b",
+    "prepare-judge.py": "75d3743a6984532f6399c3ccfa033f52cc9b7f16d1d184c0bce58afb10d9621d",
+    "qa-contact.cjs": "3471d18894c3ac35c7b0610a059848117d061d8657347341db7e3ea0ab999751"
+  },
+  "target_algorithm": "manual-sha256-normative-sections-v1",
+  "script_basis": "r5/capture-runner.cjs; R6 adds required real-keyboard focus frames; R5 records and PNGs remain unchanged"
+}

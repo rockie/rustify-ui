@@ -1,0 +1,46 @@
+{
+  "date": "2026-10-29T13:02:41.592Z",
+  "browser": "156.0.8078.48",
+  "url": "http://127.0.0.1:4181/",
+  "build": "105da89e37304db9",
+  "checks": [
+    {
+      "id": "export-json",
+      "schema": 2,
+      "keys": [
+        "schema_version",
+        "id",
+        "name",
+        "styles"
+      ],
+      "visibleText": "Export theme\nOutput\nTheme JSON v2\nExported code\nCopy code\nSelect text\nDownload",
+      "hasVersionOrResourceGuidance": false
+    },
+    {
+      "id": "export-rust",
+      "hint": "To match this preview, call mount_exported_preview(ThemeMode::Light, &font_context(16., false))",
+      "signature": "pub fn mount_exported_preview(\n    container: leptos::web_sys::HtmlElement,\n    config: MountConfig,\n    mode: ThemeMode,\n    context: &ResolveContext<'_>,\n) ->",
+      "revisionHeader": "// Required source SDK, CSS and CLI revision: b9d5d356d00ebef4d387e0753cf14e2d8917ea9e"
+    },
+    {
+      "id": "quota",
+      "previousBytesUnchanged": true,
+      "memoryAndExportRetainLatest": true,
+      "heading": "Storage full · saving in memory",
+      "status": "Your current draft stays in memory. Download or export a copy before leaving."
+    },
+    {
+      "id": "named-failure-retry",
+      "previousBytesUnchangedOnFailure": true,
+      "feedback": "Save “Retained name” · failed; retained for retry. Export remains available.\n\nRetry “Retained name”\nDismiss",
+      "retrySaved": true
+    },
+    {
+      "id": "denied-storage",
+      "heading": "Memory only · local saving unavailable",
+      "status": "You can edit in memory and download or export your theme.",
+      "editAndExport": true
+    }
+  ],
+  "errors": []
+}

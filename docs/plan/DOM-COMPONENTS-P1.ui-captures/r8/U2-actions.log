@@ -1,0 +1,48 @@
+2026-10-29T09:49:01.447Z preset search 'Graphite' → Built-in · Graphite → brand pink → gray Auto
+2026-10-29T09:49:01.522Z Colors tab → token primary
+2026-10-29T09:49:02.118Z screenshot U2-source-overridden-1440-light.png
+2026-10-29T09:49:02.686Z screenshot U2-source-overridden-detail-1440-light.png
+2026-10-29T09:49:02.727Z click single-token release (source-clear) on primary
+2026-10-29T09:49:04.688Z screenshot U2-token-released-1440-light.png
+2026-10-29T09:49:04.725Z click brand group reset
+2026-10-29T09:49:05.496Z screenshot U2-group-reset-1440-light.png
+2026-10-29T09:49:05.537Z Colors tab → token ring
+2026-10-29T09:49:06.112Z screenshot U2-source-generated-1440-light.png
+2026-10-29T09:49:06.139Z click Fonts & other tab
+2026-10-29T09:49:06.712Z screenshot U2-controls-1440-light.png
+2026-10-29T09:49:06.734Z radius ← 'abc', Enter
+2026-10-29T09:49:07.295Z screenshot U2-field-error-1440-light.png
+2026-10-29T09:49:17.545Z background ← #ffffff, foreground ← #ffffff
+2026-10-29T09:49:17.782Z open diagnostics
+2026-10-29T09:49:18.380Z screenshot U2-low-contrast-1440-light.png
+2026-10-29T09:49:20.107Z preset search 'Graphite' → Built-in · Graphite → brand pink → gray Auto
+2026-10-29T09:49:20.169Z Colors tab → primary at 390
+2026-10-29T09:49:20.751Z screenshot U2-source-overridden-390-light.png
+2026-10-29T09:55:14.401Z preset search 'Graphite' → Built-in · Graphite → brand pink → gray Auto
+2026-10-29T09:55:14.491Z SUP: scroll the editor so the document restore entry (theme-reset) is in view, park pointer
+2026-10-29T09:55:15.346Z screenshot U2-restore-1440-light.png
+2026-10-29T09:55:59.977Z SUP4: click Colors; scroll the color search / Clear row into view; park pointer
+2026-10-29T09:56:00.540Z screenshot U2-search-row-1440-light.png
+2026-10-29T09:56:09.792Z preset search 'Graphite' → Built-in · Graphite → brand pink → gray Auto
+2026-10-29T09:56:09.835Z SUP5: click Tokens affected by a group reset disclosure
+2026-10-29T09:56:10.448Z screenshot U2-group-reset-tokens-1440-light.png
+2026-10-29T09:56:10.454Z SUP5: scroll the expanded affected-token disclosure so its end is in view
+2026-10-29T09:56:11.016Z screenshot U2-group-reset-tokens-end-1440-light.png
+2026-10-29T09:56:37.033Z preset search 'Graphite' → Built-in · Graphite → brand pink → gray Auto
+2026-10-29T09:56:37.857Z FOCUS6: focus primary token reset; Shift+Tab, Tab; scroll to center; wait 700ms
+2026-10-29T09:56:38.416Z screenshot U2-token-reset-keyboard-focus-1440-light.png
+2026-10-29T09:57:08.956Z preset search 'Graphite' → Built-in · Graphite → brand pink → gray Auto
+2026-10-29T09:57:10.083Z screenshot U2-matrix-source-overridden-390-light.png
+2026-10-29T09:57:10.124Z 390: clear selected primary
+2026-10-29T09:57:10.668Z screenshot U2-matrix-token-released-390-light.png
+2026-10-29T09:57:11.260Z screenshot U2-matrix-group-reset-tokens-390-light.png
+2026-10-29T09:57:11.811Z screenshot U2-matrix-group-reset-tokens-end-390-light.png
+2026-10-29T09:57:12.376Z screenshot U2-matrix-group-reset-390-light.png
+2026-10-29T09:57:13.466Z screenshot U2-matrix-source-generated-390-light.png
+2026-10-29T09:57:14.061Z screenshot U2-matrix-controls-390-light.png
+2026-10-29T09:57:14.625Z screenshot U2-matrix-field-error-390-light.png
+2026-10-29T09:57:14.625Z 390: group scope disclosure, group release, generated ring, Fonts/other, invalid radius abc
+2026-10-29T09:57:16.752Z screenshot U2-matrix-low-contrast-390-light.png
+2026-10-29T09:57:16.752Z 390: both author background/foreground white; open diagnostics
+2026-10-29T09:59:30.139Z 390 low contrast: author background and foreground white; switch to Preview
+2026-10-29T09:59:36.905Z screenshot U2-matrix3-low-contrast-preview-390-light.png

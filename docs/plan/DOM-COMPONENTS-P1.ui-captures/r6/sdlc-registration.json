@@ -1,0 +1,12 @@
+{
+  "review_id": "4096c476-5ee3-44a5-a195-09a5183542ca",
+  "review_events": [
+    "eac1086e-aaec-4eea-b1ac-c6021ce9c4d5",
+    "4fff6d8e-db53-488e-b0db-eb8717e1df16"
+  ],
+  "r5_disposition_event": "6b8201a4-fd97-46c4-9270-bb4bd92e7d25",
+  "observed_at": "2026-10-29T00:43:02+08:00",
+  "report_sha256": "sha256:85585f488ef1ebfd4aae566ae1cab1794894e0891c3eca80c6d58345367655a1",
+  "new_state": "review-recorded / review-not-required",
+  "r5_disposition": "review-applied"
+}

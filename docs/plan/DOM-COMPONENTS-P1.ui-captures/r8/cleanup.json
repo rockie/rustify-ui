@@ -1,0 +1,24 @@
+{
+  "at": "2026-10-29T10:48:03.375235+00:00",
+  "stopped": [
+    {
+      "example": "theme-studio",
+      "listener_pid": 64102,
+      "process_group": 64082,
+      "command": "target/debug/xtask serve --dir /var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-ui-review-r8-products-efyigeu6/theme-studio --port 4181 --csp strict"
+    },
+    {
+      "example": "component-catalog",
+      "listener_pid": 64339,
+      "process_group": 64320,
+      "command": "target/debug/xtask serve --dir /var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-ui-review-r8-products-efyigeu6/component-catalog --port 4176 --csp strict"
+    }
+  ],
+  "listeners_after": {
+    "4181": "",
+    "4176": ""
+  },
+  "owned_process_groups_remaining": [],
+  "temporary_product_directory": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-ui-review-r8-products-efyigeu6",
+  "temporary_product_directory_removed": true
+}

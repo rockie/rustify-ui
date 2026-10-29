@@ -1,0 +1,91 @@
+{
+  "mode": "manual",
+  "model": "inherited host model (no override)",
+  "effort": "inherited (no override)",
+  "fork_turns": "none",
+  "scope": "one unit per fresh read-only reviewer; no further delegation",
+  "agents": {
+    "U1": "/root/ui_r6_u1",
+    "U2": "/root/ui_r6_u2",
+    "U3": "/root/ui_r6_u3",
+    "U4": "/root/ui_r6_u4",
+    "U5": "/root/ui_r6_u5",
+    "U6": "/root/ui_r6_u6",
+    "U7": "/root/ui_r6_u7"
+  },
+  "results": {
+    "U1": {
+      "raw": "judge-U1-a.md",
+      "sha256": "ecbc19127aac0b9b198f25186383a54ce138af070466d79e2e778ea7027f1220"
+    },
+    "U2": {
+      "raw": "judge-U2-a.md",
+      "sha256": "99d5ef2b23bebf2acb4cdd6e426eff1e6a496a89c84666dfc89b4d0b776c8962"
+    },
+    "U3": {
+      "raw": "judge-U3-a.md",
+      "sha256": "7b6508d02b1ab028abcb677e3ef4e510a0426dca51c782353ff50c7b5c377de7"
+    },
+    "U4": {
+      "raw": "judge-U4-a.md",
+      "sha256": "7247bf54cb6cf099e030fbdaec336ee5dce1ea8a40df76d6816af53a355944b5"
+    },
+    "U5": {
+      "raw": "judge-U5-a.md",
+      "sha256": "53149ca8e9c936bc36ee03ba7c3bf9e50b990f60764e8fb7a951754220a5f3bc"
+    },
+    "U6": {
+      "raw": "judge-U6-a.md",
+      "sha256": "09d79cabe5b1a704e12deb42e512299fd8d2ab7a045b57a6d22b101b81a12a45"
+    },
+    "U7": {
+      "raw": "judge-U7-a.md",
+      "sha256": "4218aeef178b1d5ba0666e711ac4ff13faa44ee6a148f163c916ec4747bd6ca3"
+    }
+  },
+  "U5_trace_supplement": "judge-U5-trace-supplement.md",
+  "confirmation_review": "No threshold-near confirmation: final verdict requires modification because UI-217 is P1; every score is also above 8.5.",
+  "supplement_agents": {
+    "U1-b": "/root/ui_r6_u1_b",
+    "U1-c": "/root/ui_r6_u1_c",
+    "U2-b": "/root/ui_r6_u2_b",
+    "U2-c": "/root/ui_r6_u2_c",
+    "U5-b": "/root/ui_r6_u5_b",
+    "U6-b": "/root/ui_r6_u6_b",
+    "U7-b": "/root/ui_r6_u7_b"
+  },
+  "supplement_reason": "Required viewport/theme cells were omitted by initial script; final U1/U2 preview frames added after blind review evidence limits. No new product changes or score dispute.",
+  "all_raw_sha256": {
+    "U1-a": "ecbc19127aac0b9b198f25186383a54ce138af070466d79e2e778ea7027f1220",
+    "U1-b": "2daf9f1787e2c806b0af8c2d6959e4ebae90d0deb159f7105fae8cbcb75c66f4",
+    "U1-c": "ca5ee41886c4c59971b5c204ff5c492936d98e28c22126b2a6cf7585126b64cd",
+    "U2-a": "99d5ef2b23bebf2acb4cdd6e426eff1e6a496a89c84666dfc89b4d0b776c8962",
+    "U2-b": "a34028be90ec9b79750e446ca97019df1776d8fcb331c6bcd4a989ba864b05c3",
+    "U2-c": "2ba89c3ac820f0617de7f6368cfe6784565cb79c134e7d619eadf703504dd832",
+    "U3-a": "7b6508d02b1ab028abcb677e3ef4e510a0426dca51c782353ff50c7b5c377de7",
+    "U4-a": "7247bf54cb6cf099e030fbdaec336ee5dce1ea8a40df76d6816af53a355944b5",
+    "U5-a": "53149ca8e9c936bc36ee03ba7c3bf9e50b990f60764e8fb7a951754220a5f3bc",
+    "U5-b": "65011302396aef76ff47c1e75992a237e934b36a2d25597741222a8e81cbd3cf",
+    "U6-a": "09d79cabe5b1a704e12deb42e512299fd8d2ab7a045b57a6d22b101b81a12a45",
+    "U6-b": "d5e711a12196c909cb2c2fe4b64bc56a59d23a1806b46d6761dce54f98617b56",
+    "U7-a": "4218aeef178b1d5ba0666e711ac4ff13faa44ee6a148f163c916ec4747bd6ca3",
+    "U7-b": "7f8371407363edb2a9314b99c365ddbbf117412fddc52687f209c0ac8382531e"
+  },
+  "packet_hashes": {
+    "U1-a": "a5be96969d24a1ad595e0af94993d8261b73ee3bde753265da0a695038c02269",
+    "U1-b": "a1893082b272904d0a467edea141d0664ffa6dbf2bc34e6a189336818acdb3ee",
+    "U1-c": "295087ffaef6e0c0f85ebb94335b1b4cf83a9d67acaec0839ad967dce7030e25",
+    "U2-a": "4f293f8538187d4b77c895a4c60217c185f3914485b9df7befebd3241c0849e3",
+    "U2-b": "3e4c26a3420cbbd21f66eb96b6912ed0fad33907402461c422348db77d6d05dd",
+    "U2-c": "548a6e0d54cdad6b72bd757027e576ce803d23f7c99e829ac948f5093735959e",
+    "U3-a": "19a08b8242df0fd9924308d891936d8603ce31ef07e7dbfe35c6a02d351aba14",
+    "U4-a": "edc3e92ab93f9695f6119b916020900246589c43da89a88b6183a868d025a6b5",
+    "U5-a": "f097e473a610f7f8c452e5be0ac78fdb16824ab03448e8fdc7809c627d8de7ee",
+    "U5-b": "61b5bdf82a50b72db8a525d54a37efa774665bd57568c87e2ebff070f5661e45",
+    "U6-a": "6178d79b141adeddef4405d4b7120a0f4125b90a7d104fc1f6296a9d856cabae",
+    "U6-b": "e8a638d62fef21283d619f09318614461d9c001d5ae95aeab5e66e6688d6b527",
+    "U7-a": "d19884d02ecc0dd5fa93e74b52a16953130e1adb94654d4659ba6e126dfd853a",
+    "U7-b": "e663820f539ad5ba5f343ec92281ec1e5596b928b9ba2c537359ebd082dc80cc"
+  },
+  "fresh_reviewers": 14
+}

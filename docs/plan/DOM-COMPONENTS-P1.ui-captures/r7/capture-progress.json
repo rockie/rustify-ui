@@ -1,0 +1,137 @@
+{
+  "records": [
+    {
+      "file": "MC-settled-enter-1440-dark.png",
+      "unit": "MC",
+      "state": "settled-enter",
+      "viewport": "1440x900",
+      "dpr": 1,
+      "theme": "dark",
+      "url": "http://127.0.0.1:4181/",
+      "time": "2026-10-29T03:04:10.023Z",
+      "kind": "viewport",
+      "interventions": "none",
+      "focused": "studio-config-accent_color-list"
+    },
+    {
+      "file": "MC-settled-space-1440-dark.png",
+      "unit": "MC",
+      "state": "settled-space",
+      "viewport": "1440x900",
+      "dpr": 1,
+      "theme": "dark",
+      "url": "http://127.0.0.1:4181/",
+      "time": "2026-10-29T03:04:11.621Z",
+      "kind": "viewport",
+      "interventions": "none",
+      "focused": "studio-config-accent_color-list"
+    },
+    {
+      "file": "MC-settled-enter-second-1440-dark.png",
+      "unit": "MC",
+      "state": "settled-enter-second",
+      "viewport": "1440x900",
+      "dpr": 1,
+      "theme": "dark",
+      "url": "http://127.0.0.1:4181/",
+      "time": "2026-10-29T03:04:13.203Z",
+      "kind": "viewport",
+      "interventions": "none",
+      "focused": "studio-config-accent_color-list"
+    },
+    {
+      "file": "MC-settled-enter-768-light.png",
+      "unit": "MC",
+      "state": "settled-enter",
+      "viewport": "768x1024",
+      "dpr": 1,
+      "theme": "light",
+      "url": "http://127.0.0.1:4181/",
+      "time": "2026-10-29T03:04:24.551Z",
+      "kind": "viewport",
+      "interventions": "none",
+      "focused": "studio-config-accent_color-list"
+    },
+    {
+      "file": "MC-settled-space-768-light.png",
+      "unit": "MC",
+      "state": "settled-space",
+      "viewport": "768x1024",
+      "dpr": 1,
+      "theme": "light",
+      "url": "http://127.0.0.1:4181/",
+      "time": "2026-10-29T03:04:26.135Z",
+      "kind": "viewport",
+      "interventions": "none",
+      "focused": "studio-config-accent_color-list"
+    },
+    {
+      "file": "MC-settled-enter-second-768-light.png",
+      "unit": "MC",
+      "state": "settled-enter-second",
+      "viewport": "768x1024",
+      "dpr": 1,
+      "theme": "light",
+      "url": "http://127.0.0.1:4181/",
+      "time": "2026-10-29T03:04:27.719Z",
+      "kind": "viewport",
+      "interventions": "none",
+      "focused": "studio-config-accent_color-list"
+    },
+    {
+      "file": "MC-settled-enter-390-light.png",
+      "unit": "MC",
+      "state": "settled-enter",
+      "viewport": "390x844",
+      "dpr": 1,
+      "theme": "light",
+      "url": "http://127.0.0.1:4181/",
+      "time": "2026-10-29T03:04:31.461Z",
+      "kind": "viewport",
+      "interventions": "none",
+      "focused": "studio-config-accent_color-list"
+    },
+    {
+      "file": "MC-settled-space-390-light.png",
+      "unit": "MC",
+      "state": "settled-space",
+      "viewport": "390x844",
+      "dpr": 1,
+      "theme": "light",
+      "url": "http://127.0.0.1:4181/",
+      "time": "2026-10-29T03:04:33.027Z",
+      "kind": "viewport",
+      "interventions": "none",
+      "focused": "studio-config-accent_color-list"
+    },
+    {
+      "file": "MC-settled-enter-second-390-light.png",
+      "unit": "MC",
+      "state": "settled-enter-second",
+      "viewport": "390x844",
+      "dpr": 1,
+      "theme": "light",
+      "url": "http://127.0.0.1:4181/",
+      "time": "2026-10-29T03:04:34.595Z",
+      "kind": "viewport",
+      "interventions": "none",
+      "focused": "studio-config-accent_color-list"
+    }
+  ],
+  "actions": {
+    "MC": [
+      "2026-10-29T03:04:07.369Z preset search 'Graphite' → Built-in · Graphite → brand pink → gray Auto",
+      "2026-10-29T03:04:10.024Z screenshot MC-settled-enter-1440-dark.png",
+      "2026-10-29T03:04:11.621Z screenshot MC-settled-space-1440-dark.png",
+      "2026-10-29T03:04:13.204Z screenshot MC-settled-enter-second-1440-dark.png",
+      "2026-10-29T03:04:22.455Z preset search 'Graphite' → Built-in · Graphite → brand pink → gray Auto",
+      "2026-10-29T03:04:24.552Z screenshot MC-settled-enter-768-light.png",
+      "2026-10-29T03:04:26.136Z screenshot MC-settled-space-768-light.png",
+      "2026-10-29T03:04:27.720Z screenshot MC-settled-enter-second-768-light.png",
+      "2026-10-29T03:04:29.375Z preset search 'Graphite' → Built-in · Graphite → brand pink → gray Auto",
+      "2026-10-29T03:04:31.461Z screenshot MC-settled-enter-390-light.png",
+      "2026-10-29T03:04:33.027Z screenshot MC-settled-space-390-light.png",
+      "2026-10-29T03:04:34.595Z screenshot MC-settled-enter-second-390-light.png"
+    ]
+  }
+}

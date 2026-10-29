@@ -1,0 +1,61 @@
+2026-10-28T14:02:42.304Z open http://127.0.0.1:4181/ at 1440x900
+2026-10-28T14:02:42.865Z screenshot U1-default-1440-light.png
+2026-10-28T14:02:43.529Z preset search 'Graphite' → Built-in · Graphite → brand pink → gray Auto
+2026-10-28T14:02:44.100Z screenshot U1-configured-1440-light.png
+2026-10-28T14:02:44.144Z click mode Dark
+2026-10-28T14:02:44.696Z screenshot U1-configured-1440-dark.png
+2026-10-28T14:02:45.245Z screenshot U1-top-1440-dark.png
+2026-10-28T14:02:45.423Z click mode Light, click 中文
+2026-10-28T14:02:45.981Z screenshot U1-zh-top-1440-light.png
+2026-10-28T14:02:46.529Z screenshot U1-zh-configured-1440-light.png
+2026-10-28T14:02:54.952Z open http://127.0.0.1:4181/ at 768x1024
+2026-10-28T14:02:55.509Z screenshot U1-default-768-light.png
+2026-10-28T14:02:55.992Z preset search 'Graphite' → Built-in · Graphite → brand pink → gray Auto
+2026-10-28T14:02:56.642Z screenshot U1-configured-768-light.png
+2026-10-28T14:02:58.022Z open at 390x844
+2026-10-28T14:02:58.566Z screenshot U1-edit-390-light.png
+2026-10-28T14:02:58.861Z preset search 'Graphite' → Built-in · Graphite → brand pink → gray Auto
+2026-10-28T14:02:59.433Z screenshot U1-configured-390-light.png
+2026-10-28T14:02:59.469Z click Preview tab
+2026-10-28T14:03:07.198Z screenshot U1-preview-390-light.png
+2026-10-28T14:03:15.970Z open at 1440x900, then viewport 720x900 and root font-size 200% (WCAG reflow technique)
+2026-10-28T14:03:16.548Z screenshot U1-zoom200-720-light.png
+2026-10-28T14:03:16.561Z focus Colors tab, press End
+2026-10-28T14:03:16.591Z focus Export, press Enter
+2026-10-28T14:03:17.152Z screenshot U1-zoom200-export-720-light.png
+2026-10-28T14:03:25.499Z open at 1440x900, then viewport 720x900 and root font-size 200%
+2026-10-28T14:03:25.765Z click Colors tab
+2026-10-28T14:03:25.793Z scroll the first token (background) to the top of the editor, park pointer
+2026-10-28T14:03:26.345Z screenshot U1-zoom200-colors-720-light.png
+2026-10-28T14:03:26.380Z click token primary
+2026-10-28T14:03:26.411Z scroll the source block (token-source) to the top of the editor, park pointer
+2026-10-28T14:03:26.958Z screenshot U1-zoom200-source-720-light.png
+2026-10-28T14:03:35.466Z keyboard walk from document start at 1440x900
+2026-10-28T14:03:35.484Z Tab ×13 → preset search focused
+2026-10-28T14:03:36.041Z screenshot U1-keyboard-01-1440-light.png
+2026-10-28T14:03:36.051Z Tab ×6 → brand color select focused
+2026-10-28T14:03:36.607Z screenshot U1-keyboard-02-1440-light.png
+2026-10-28T14:03:36.613Z Enter, ArrowDown on brand select
+2026-10-28T14:03:37.156Z screenshot U1-keyboard-03-1440-light.png
+2026-10-28T14:03:37.159Z Escape
+2026-10-28T14:03:37.282Z Tab ×115 → mode Dark focused
+2026-10-28T14:03:37.834Z screenshot U1-keyboard-04-1440-light.png
+2026-10-28T14:05:56.643Z EXTRA: open at 1440x900, then viewport 720x900 and root font-size 200%
+2026-10-28T14:05:56.669Z EXTRA: focus Colors tab, press End
+2026-10-28T14:05:56.690Z EXTRA: focus Export, press Enter
+2026-10-28T14:05:56.704Z scroll clipped scrollers inside data-tools-dialog to their end: div.relative.w-full overflow-y:auto scrollTop 0→355; textarea[export-source].tools-code.tools-output overflow-y:auto scrollTop 0→3536
+2026-10-28T14:05:57.242Z screenshot U1-zoom200-export-end-720-light.png
+2026-10-28T14:06:04.749Z EXTRA: open at 1440x900
+2026-10-28T14:06:04.766Z EXTRA: scroll field tabs (Colors / Typography & other) to the middle of the editor, park pointer
+2026-10-28T14:06:05.320Z screenshot U1-field-tabs-1440-light.png
+2026-10-28T14:06:05.325Z EXTRA: keyboard focus on Colors tab (focus, Shift+Tab, Tab)
+2026-10-28T14:06:05.871Z screenshot U1-field-tabs-focus-1440-light.png
+2026-10-28T14:06:06.411Z preset search 'Graphite' → Built-in · Graphite → brand pink → gray Auto
+2026-10-28T14:06:06.415Z EXTRA: scroll base configuration down to Scaling, park pointer
+2026-10-28T14:06:06.971Z screenshot U1-configured-lower-1440-light.png
+2026-10-28T14:07:27.978Z SUP3: open at 1440x900, then viewport 720x900 and root font-size 200%
+2026-10-28T14:07:28.797Z SUP3: click Colors tab, click token primary, wait until quiet
+2026-10-28T14:07:29.332Z SUP3: scroll token-source to the top, park pointer, wait until quiet (block {"top":317,"bottom":1201,"viewport":900})
+2026-10-28T14:07:29.877Z screenshot U1-zoom200-source-720-light-a2.png
+2026-10-28T14:07:30.396Z SUP3: block is taller than the viewport; scroll token-source so its end meets the viewport bottom
+2026-10-28T14:07:30.941Z screenshot U1-zoom200-source-end-720-light.png

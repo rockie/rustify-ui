@@ -1,0 +1,35 @@
+2026-10-27T05:54:32.263Z seed only rustify-ui.theme-studio.v1 (legacy draft + two named themes), reload at 1440
+2026-10-27T05:54:32.819Z screenshot U4-upgrade-pending-1440-light.png
+2026-10-27T05:54:32.862Z click upgrade Review
+2026-10-27T05:54:33.421Z screenshot U4-upgrade-review-1440-light.png
+2026-10-27T05:54:33.450Z click Cancel upgrade
+2026-10-27T05:54:33.525Z edit primary ← #234567
+2026-10-27T05:54:33.588Z Save locally, name 'Memory only', confirm
+2026-10-27T05:54:34.134Z screenshot U4-upgrade-cancelled-1440-light.png
+2026-10-27T05:54:34.170Z click upgrade Review again
+2026-10-27T05:54:34.203Z click upgrade confirm
+2026-10-27T05:54:36.251Z screenshot U4-upgraded-1440-light.png
+2026-10-27T05:54:38.570Z seed only rustify-ui.theme-studio.v1 (legacy draft + two named themes), reload at 390
+2026-10-27T05:54:39.112Z screenshot U4-upgrade-pending-390-light.png
+2026-10-27T05:54:47.273Z primary ← #123456, wait for idle save
+2026-10-27T05:54:47.274Z inject: Storage.prototype.setItem throws QuotaExceededError
+2026-10-27T05:54:47.340Z Save locally, name 'Retained name', confirm
+2026-10-27T05:54:47.920Z screenshot U4-quota-failure-1440-light.png
+2026-10-27T05:54:47.950Z open pending / recent operations
+2026-10-27T05:54:48.502Z screenshot U4-quota-operations-1440-light.png
+2026-10-27T05:54:56.407Z tab A: primary ← #123456, idle
+2026-10-27T05:54:57.896Z tab B (same origin): primary ← #654321, idle
+2026-10-27T05:54:58.443Z screenshot U4-conflict-1440-light.png
+2026-10-27T05:54:59.010Z screenshot U4-conflict-detail-1440-light.png
+2026-10-27T05:55:07.470Z init script removes navigator.locks; open
+2026-10-27T05:55:07.665Z primary ← #789abc; Save locally 'Not persisted'
+2026-10-27T05:55:08.218Z screenshot U4-no-locks-1440-light.png
+2026-10-27T06:21:11.330Z SUP: seed only v1 (draft + two named themes), reload
+2026-10-27T06:21:11.393Z SUP: click upgrade Review
+2026-10-27T06:21:11.404Z SUP: scroll editor to the upgrade confirm button
+2026-10-27T06:21:11.961Z screenshot U4-upgrade-review-end-1440-light.png
+2026-10-27T06:21:23.016Z SUP: tab A #123456, tab B #654321
+2026-10-27T06:21:23.049Z SUP: expand View exact stored text
+2026-10-27T06:21:23.627Z screenshot U4-conflict-raw-1440-light.png
+2026-10-27T06:21:32.602Z SUP: init script removes navigator.locks; open, no action
+2026-10-27T06:21:33.177Z screenshot U4-no-locks-initial-1440-light.png

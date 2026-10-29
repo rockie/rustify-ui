@@ -1,0 +1,29 @@
+{
+  "unit": "U5",
+  "mode": "manual-whitelist",
+  "files": {
+    "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-target.r6.md": "056e8000993784c074355f85dbea8c66e08f7f3845b8bb711f0102d8bf42d0db",
+    "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r6/capture-U5.md": "75f2867576c263893f8ec2ee4f0abbc34efa4585b5f2dccdaf7ac7a0e1c64505",
+    "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r6/U5-actions.log": "eb6e8dd20354b3b80f3937ee5d496c8e8d44c7ea83435b123da3bf6dc65992db",
+    "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r6/judge-inputs/r5-judge-U5.md": "496370db7fad7ff7a9c087cb8844196c982a41196a9bec8f98fee157df8d94c5",
+    "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r6/judge-inputs/r5-images-U5.txt": "917a469cf50b7ea977e2b5872fbf113a5c7f775b2e1bd908ef2b1e94a4938409",
+    "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r6/U5-compare-nested-1440-light.png": "e26f9fcc1fbd5d1becc67de342f778d7aa78daf7ae55d15bb8404e8cba82f603",
+    "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r6/U5-dialog-1440-light.png": "4d55bc31944bacc72a3a1a63fed5ea3ea0a10a188f3f1b4a22187c4326a7c620",
+    "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r6/U5-dialog-390-light.png": "6dd151e52c5361ba7a794f086a20c077db30a6c7c4f880bbe9f4e9f6a4621ff3",
+    "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r6/U5-dom-1440-dark.png": "52dde5fe76a74224e62c5af8936ca83403a6be8ffb6298918c25c5b9a24d3d6c",
+    "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r6/U5-dom-1440-light.png": "c272f115185c1f54ea82f3bea26ccf817d1f533cff29c31517407aa08358a769",
+    "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r6/U5-dom-caller-1440-dark.png": "fdb437243add050d81d14b60ef4ab4794d3f953a1488dd59e61642b55b2c749f",
+    "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r6/U5-gpu-compare-1440-light.png": "cd1d74c89ff5c0af48aa72e6c0ee2458807c251138cce03cf7ee919500d45ca0",
+    "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r6/U5-inspector-1440-light.png": "d84ccf010ea7b925163eb8bb46268faece37a3396fca6e28fc9093f8b80210f0",
+    "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r6/U5-inspector-card-1440-light.png": "6c94c430f959659aa5082069fcf5ca9e1e869a0d55772cafa208eddc3cd3acd1",
+    "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r6/U5-inspector-picked-1440-light.png": "73279342e68d353afec0d0c687e6edf58a40999b3bb9add5f272a05f72af3e7c",
+    "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r6/U5-inspector-undeclared-1440-light.png": "0a3c57cf1b4aefc96c87aaf72601d4daaf4f91a56e4b186dc6ba395827983106",
+    "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r6/U5-inspector-undeclared-hover-1440-light.png": "0a3c57cf1b4aefc96c87aaf72601d4daaf4f91a56e4b186dc6ba395827983106",
+    "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r6/U5-inspector-undeclared-panel-1440-light.png": "0a3c57cf1b4aefc96c87aaf72601d4daaf4f91a56e4b186dc6ba395827983106",
+    "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r6/U5-local-opposite-1440-light.png": "94d8b336a1b4042932c2ef12fd92e64af47c0c5c21274a1b51273b205d7b8009",
+    "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r6/U5-local-opposite-dialog-1440-light.png": "4cab742a2cc7c80b98b6563a27f9626afb772bc78defef09f645f3b6a1f9c5c3",
+    "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r6/U5-local-opposite-menu-1440-light.png": "d06e413895855f614e0d84288b40606633d3c1bd109401ba86b16541492c54a4",
+    "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r6/U5-menu-1440-light.png": "2a6a65584dba95ec226fe41ab84d62b11c1271b26f0128656891d50e817f479e",
+    "/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r6/U5-preview-390-light.png": "71fac535221d9b7ceacbca5d1a21a1edf038ced0912d6c6d1a013d9e4adf7f0e"
+  }
+}

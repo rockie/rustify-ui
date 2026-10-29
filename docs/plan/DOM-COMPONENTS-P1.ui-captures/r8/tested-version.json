@@ -1,0 +1,25 @@
+{
+  "head": "b9d5d356d00ebef4d387e0753cf14e2d8917ea9e",
+  "captured_at": "2026-10-29T09:43:58.494952+00:00",
+  "product_paths": [
+    "Cargo.toml",
+    "Cargo.lock",
+    "mise.toml",
+    "package.json",
+    "package-lock.json",
+    "crates",
+    "examples",
+    "web",
+    "public",
+    "makepad",
+    "xtask",
+    "scripts",
+    "tests",
+    "sources.lock.json",
+    "playwright.config.ts"
+  ],
+  "product_diff": "",
+  "product_untracked": "",
+  "product_fingerprint_sha256": "e492abef49d9ff1bd4ebb891788621965bcce02dd86f99d53de37417e76c7ab2",
+  "fingerprint_algorithm": "sorted git product paths + NUL + binary SHA256"
+}

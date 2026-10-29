@@ -1,0 +1,45 @@
+2026-10-28T14:05:15.856Z renderer DOM
+2026-10-28T14:05:16.398Z screenshot U5-dom-1440-light.png
+2026-10-28T14:05:16.432Z mode Dark
+2026-10-28T14:05:16.981Z screenshot U5-dom-1440-dark.png
+2026-10-28T14:05:17.015Z mode Light
+2026-10-28T14:05:17.080Z local boundary appearance → Opposite to root
+2026-10-28T14:05:17.662Z screenshot U5-local-opposite-1440-light.png
+2026-10-28T14:05:17.729Z local boundary appearance → Inherit root
+2026-10-28T14:05:17.763Z open preview menu
+2026-10-28T14:05:18.312Z screenshot U5-menu-1440-light.png
+2026-10-28T14:05:18.349Z open preview dialog
+2026-10-28T14:05:18.896Z screenshot U5-dialog-1440-light.png
+2026-10-28T14:05:18.994Z open comparison scope, set its mode Dark
+2026-10-28T14:05:19.562Z screenshot U5-compare-nested-1440-light.png
+2026-10-28T14:05:19.604Z renderer DOM + GPU
+2026-10-28T14:05:20.381Z screenshot U5-gpu-compare-1440-light.png
+2026-10-28T14:05:28.237Z click Inspect
+2026-10-28T14:05:29.113Z wait 800 ms, hover card corner
+2026-10-28T14:05:29.659Z screenshot U5-inspector-card-1440-light.png
+2026-10-28T14:05:29.713Z hover Create profile button
+2026-10-28T14:05:30.258Z screenshot U5-inspector-1440-light.png
+2026-10-28T14:05:30.313Z click Create profile button while inspecting
+2026-10-28T14:05:30.866Z screenshot U5-inspector-picked-1440-light.png
+2026-10-28T14:05:38.539Z click Inspect
+2026-10-28T14:05:39.408Z wait 800 ms, hover preview primary (Create) button
+2026-10-28T14:05:39.965Z screenshot U5-inspector-undeclared-hover-1440-light.png
+2026-10-28T14:05:40.493Z click it while inspecting, wait 500 ms
+2026-10-28T14:05:41.045Z screenshot U5-inspector-undeclared-1440-light.png
+2026-10-28T14:05:42.430Z 390: click Preview tab
+2026-10-28T14:05:48.676Z screenshot U5-preview-390-light.png
+2026-10-28T14:05:48.709Z 390: open preview dialog
+2026-10-28T14:05:49.242Z screenshot U5-dialog-390-light.png
+2026-10-28T14:06:35.376Z EXTRA: renderer DOM, mode Dark, park pointer
+2026-10-28T14:06:35.410Z EXTRA: scroll preview to Caller class override
+2026-10-28T14:06:35.962Z screenshot U5-dom-caller-1440-dark.png
+2026-10-28T14:06:43.047Z EXTRA: local boundary appearance → Opposite to root
+2026-10-28T14:06:43.113Z EXTRA: open Actions menu inside the local boundary
+2026-10-28T14:06:43.668Z screenshot U5-local-opposite-menu-1440-light.png
+2026-10-28T14:06:43.670Z EXTRA: Escape
+2026-10-28T14:06:43.702Z EXTRA: Open dialog inside the local boundary
+2026-10-28T14:06:44.250Z screenshot U5-local-opposite-dialog-1440-light.png
+2026-10-28T14:06:51.219Z EXTRA: click Inspect
+2026-10-28T14:06:52.574Z EXTRA: wait 800 ms, click preview primary (Create) button while inspecting, wait 500 ms
+2026-10-28T14:06:52.577Z EXTRA: scroll the inspector panel into view
+2026-10-28T14:06:53.128Z screenshot U5-inspector-undeclared-panel-1440-light.png

@@ -1,0 +1,50 @@
+Rustify Theme setup / 主题接入说明
+Source revision / 源码修订: dc9df3547c4c164af7cf3433bef883332659b6f6
+
+JSON v2 / Rust: use the SDK and CSS from this source checkout. Published 0.2.1 SDK/CLI reject complete v2 documents.
+JSON v2 / Rust：使用此修订的源码 SDK 与 CSS，已发布的 0.2.1 SDK/CLI 不支持完整 v2。
+Only for Docs / 仅 Docs 路径需要：build the source CLI from the same checkout / 从同一 checkout 构建源码 CLI：
+mbx build --locked -p rustify-docs-cli --profile docs-cli
+Docs author dependencies rustify-docs, rustify-dom and rustify-components must use canonical paths in that checkout.
+Docs 作者项目的上述三个依赖须使用同一 checkout 的规范路径。
+
+CSS: both resolved modes; static CSS needs no wasm or CLI. Compile Tailwind v4 exports with Tailwind 4.1.13.
+CSS：包含两模式解析结果；静态消费无需 wasm 或 CLI。Tailwind v4 输出使用 Tailwind 4.1.13 编译。
+Rustify scoped CSS: import sdk.css then theme-v4.css in one Tailwind input; mark the target with data-rustify-theme-css="brand"dark".
+Rustify 局部 CSS：在同一 Tailwind input 中依次导入 sdk.css、theme-v4.css，给目标添加上述标记。
+Scoped dark: data-theme="dark"; Tailwind standard dark: .dark. CSS does not preserve author intent; keep JSON v2.
+局部深色使用 data-theme="dark"，标准深色使用 .dark；CSS 不保留作者意图，请保留 JSON v2。
+Compatible JSON v1 is lossy; review its losses before using it. / 兼容 JSON v1 有损，使用前请核对损失。
+
+Preview / 当前预览: Light; author appearance / 作者外观: Inherit
+Put theme.json beside the downloaded theme.rs. / 将 theme.json 放在下载的 theme.rs 旁边。
+mount_exported_preview(container, config, ThemeMode::Light, &font_context(16., false))
+container: your application's HtmlElement; config: MountConfig with a unique scope, url_owner and deployment base.
+container 是应用挂载节点；config 是 MountConfig，设置独立 scope、url_owner 和部署 base。
+Set MountConfig.base to your deployment path (e.g. /tools/demo/). Retain AppHandle while mounted.
+MountConfig.base 使用实际部署路径（如 /tools/demo/），挂载期间保持 AppHandle 存活。
+font_context uses the host rem size and motion preference; use load_exported_theme_with_context for a custom font resolver.
+font_context 使用宿主 rem 大小与动效偏好；自定义字体解析使用 load_exported_theme_with_context。
+mount_exported_theme honors author appearance; mount_exported_preview selects a mode without changing JSON/history.
+mount_exported_theme 遵守作者外观；mount_exported_preview 显式预览，不改 JSON 或历史。
+
+Fonts / 外部字体（requested / 请求 → resolved / 有效；resource / 资源）:
+Light sans: IBM Plex Sans, sans-serif → IBM Plex Sans; makepad_widgets/resources/IBMPlexSans-Text.ttf
+Light serif: ui-serif, serif → Noto Serif; makepad_widgets/resources/NotoSerif-Regular.ttf
+Light mono: Liberation Mono, monospace → Liberation Mono; makepad_widgets/resources/LiberationMono-Regular.ttf
+Dark sans: IBM Plex Sans, sans-serif → IBM Plex Sans; makepad_widgets/resources/IBMPlexSans-Text.ttf
+Dark serif: ui-serif, serif → Noto Serif; makepad_widgets/resources/NotoSerif-Regular.ttf
+Dark mono: Liberation Mono, monospace → Liberation Mono; makepad_widgets/resources/LiberationMono-Regular.ttf
+
+Copy resources / 复制资源（deduplicated / 已去重）:
+makepad_widgets/resources/IBMPlexSans-Text.ttf
+makepad_widgets/resources/LXGWWenKaiRegular.ttf
+makepad_widgets/resources/LiberationMono-Regular.ttf
+makepad_widgets/resources/NotoColorEmoji.ttf
+makepad_widgets/resources/NotoSerif-Regular.ttf
+Font files are external; this download contains instructions, not fonts. Copy the listed files and distribute their original licenses.
+字体文件外置，本下载仅含说明；请复制所列文件并分发原许可。
+License source / 许可源文件: makepad/widgets/resources/FONT-LICENSES.md (in the source checkout, not a deployed URL / 位于源码 checkout，非部署 URL).
+Font URLs are relative to the deployed CSS file; preserve the resource paths or adjust URLs for your base/CDN.
+字体 URL 相对于部署后的 CSS 文件；保留资源路径或按实际 base/CDN 调整 URL。
+Guides / 指南: docs/themes.md, docs/dom-components-migration.md; full compiled consumer / 完整编译消费者: tests/theme-export/README.md.

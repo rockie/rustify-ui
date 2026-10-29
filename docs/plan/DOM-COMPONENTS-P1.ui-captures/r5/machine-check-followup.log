@@ -1,0 +1,114 @@
+{
+  "at": "2026-10-28T14:35:02.675Z",
+  "cases": [
+    {
+      "choice": "Opposite to root",
+      "dialogFound": true,
+      "dialogScope": {
+        "tag": "div",
+        "testid": "preview-dialog",
+        "cls": "rustify-layer rui-dialog-layer",
+        "dataTheme": "dark",
+        "dataAppearance": null
+      },
+      "dialogSurface": "rgba(0, 0, 0, 0)",
+      "dialogParent": "div",
+      "confirm": {
+        "background": "rgb(83, 177, 253)",
+        "color": "rgb(12, 17, 29)",
+        "primary": "rgb(83 177 253)",
+        "primaryForeground": "rgb(12 17 29)",
+        "popover": "rgb(29 41 57)",
+        "height": 32,
+        "width": 77.3
+      },
+      "confirmScope": {
+        "tag": "button",
+        "testid": "dialog-confirm",
+        "cls": "rustify-color rustify-button rui-geometry-179",
+        "dataTheme": null,
+        "dataAppearance": "dark"
+      },
+      "boundary": {
+        "background": "rgb(16, 24, 40)",
+        "color": "rgb(249, 250, 251)",
+        "primary": "rgb(83 177 253)",
+        "primaryForeground": "rgb(12 17 29)",
+        "popover": "rgb(29 41 57)",
+        "height": 176.5,
+        "width": 972
+      },
+      "boundaryScope": {
+        "tag": "div",
+        "testid": "local-boundary",
+        "cls": "local-preview mt-6",
+        "dataTheme": "dark",
+        "dataAppearance": null
+      },
+      "boundaryActions": {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(83, 177, 253)",
+        "primary": "rgb(83 177 253)",
+        "primaryForeground": "rgb(12 17 29)",
+        "popover": "rgb(29 41 57)",
+        "height": 32,
+        "width": 74.4
+      }
+    },
+    {
+      "choice": "Inherit root",
+      "dialogFound": true,
+      "dialogScope": {
+        "tag": "div",
+        "testid": "preview-dialog",
+        "cls": "rustify-layer rui-dialog-layer",
+        "dataTheme": "light",
+        "dataAppearance": null
+      },
+      "dialogSurface": "rgba(0, 0, 0, 0)",
+      "dialogParent": "div",
+      "confirm": {
+        "background": "rgb(21, 112, 239)",
+        "color": "rgb(255, 255, 255)",
+        "primary": "rgb(21 112 239)",
+        "primaryForeground": "rgb(255 255 255)",
+        "popover": "rgb(255 255 255)",
+        "height": 32,
+        "width": 77.3
+      },
+      "confirmScope": {
+        "tag": "button",
+        "testid": "dialog-confirm",
+        "cls": "rustify-color rustify-button rui-geometry-180",
+        "dataTheme": null,
+        "dataAppearance": "light"
+      },
+      "boundary": {
+        "background": "rgb(255, 255, 255)",
+        "color": "rgb(29, 41, 57)",
+        "primary": "rgb(21 112 239)",
+        "primaryForeground": "rgb(255 255 255)",
+        "popover": "rgb(255 255 255)",
+        "height": 176.5,
+        "width": 972
+      },
+      "boundaryScope": {
+        "tag": "div",
+        "testid": "studio-preview",
+        "cls": "",
+        "dataTheme": "light",
+        "dataAppearance": null
+      },
+      "boundaryActions": {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(21, 112, 239)",
+        "primary": "rgb(21 112 239)",
+        "primaryForeground": "rgb(255 255 255)",
+        "popover": "rgb(255 255 255)",
+        "height": 32,
+        "width": 74.4
+      }
+    }
+  ],
+  "errors": []
+}

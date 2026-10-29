@@ -1,0 +1,39 @@
+{
+  "at": "2026-10-29T10:54:01.972098+00:00",
+  "review_id": "52acf57f-e15a-4bc4-b538-209c3e21aeab",
+  "delivery_links_valid": true,
+  "prior_events_unchanged": 4,
+  "new_event_sources_hash_verified": 14,
+  "affected_index_coverage_valid": true,
+  "plan_implementation_event_set_unchanged": true,
+  "head": "b9d5d356d00ebef4d387e0753cf14e2d8917ea9e",
+  "product_fingerprint_sha256": "e492abef49d9ff1bd4ebb891788621965bcce02dd86f99d53de37417e76c7ab2",
+  "product_paths_unchanged": true,
+  "read_only_document_hashes_match": 21,
+  "scoring_image_hashes_and_dimensions_match": 340,
+  "independent_raw_hashes_match": 8,
+  "ports_free": [
+    "4181",
+    "4176"
+  ],
+  "temporary_products_removed": true,
+  "report_sha256": "1fa87232330eba8ec858596d73e1ed1c5a4d21194bfb323db22b18dc37537eca",
+  "verdict": "通过验收",
+  "score": "10",
+  "threshold": "8",
+  "unclosed_gaps": 0,
+  "report": "docs/plan/DOM-COMPONENTS-P1.ui-review.r8.md",
+  "ledger_files": {
+    ".xgent-ai/sdlc/status/review/52acf57f-e15a-4bc4-b538-209c3e21aeab.md": "a77a606e638281007628e5cc137cdd7824e024349fc46641214a902c74fd563d",
+    ".xgent-ai/sdlc/events/review/52acf57f-e15a-4bc4-b538-209c3e21aeab/418fb984-7408-4447-9890-9483b60231d3.md": "1ec0a6c3a217bf56258177c9ecaaa1d0151cffb1aa99215d6c7cb52e18ced633",
+    ".xgent-ai/sdlc/events/review/52acf57f-e15a-4bc4-b538-209c3e21aeab/46240be8-c8cc-4a17-9bca-a8ac9603425c.md": "97d8714e409aabbd256574914339d16258ab7bf101b0e1d864b7765b911ac353",
+    ".xgent-ai/sdlc/events/review/52acf57f-e15a-4bc4-b538-209c3e21aeab/index.md": "d33092b3191c4baf38578025b9ec6a9e63a4b333b216a2291dda86d3959070b2",
+    ".xgent-ai/sdlc/events/review/8abc8d80-fa38-4e09-b066-929980601837/d7d87c26-d8a7-4811-9809-435732afa400.md": "84f33a38a5d1a3070cab90763a7bed27badbca10a1966b752fa2a94ab1fe1d6a",
+    ".xgent-ai/sdlc/index.md": "5aab8b551e65dade3b47c08c73a1c4872463ece694bcf5c24222ed957bbae4fe",
+    ".xgent-ai/sdlc/status/review/index.md": "530b43b6748789058b21656328887186078352ddf8f23a1cc198f6957b3bf28f",
+    ".xgent-ai/sdlc/events/review/index.md": "8e0be8286caafa99d12866f00885e05ad7dd47d81f39534846d3bef77311be46",
+    ".xgent-ai/sdlc/events/review/8abc8d80-fa38-4e09-b066-929980601837/index.md": "04126b4343f9c7f0056c772f68ed3f1d553d577fb659381e3fc24af27d69c788",
+    ".xgent-ai/sdlc/status/review/8abc8d80-fa38-4e09-b066-929980601837.md": "9defa8f52581c1f6fab45900f88f16556b03c5417a4aa4e8050b4eff7d31bd9a",
+    ".xgent-ai/sdlc/status/plan/37a2c7b4-7052-4f85-96e9-135b6f7667a1.md": "42425c70ae09c815899b67c664c77d8a1e9422e74bb43f1ca55577226e7345b3"
+  }
+}

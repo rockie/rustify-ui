@@ -1,0 +1,475 @@
+{
+  "at": "2026-10-28T14:38:07.104Z",
+  "focus": [
+    {
+      "label": "export",
+      "immediate": {
+        "testid": "export-kind",
+        "name": "Theme JSON v2",
+        "focusVisible": true,
+        "outline": "none 1px rgb(29, 41, 57) 0px",
+        "shadow": "none",
+        "border": "rgb(208, 213, 221)",
+        "pseudo": {
+          "before": "none",
+          "after": "none"
+        },
+        "rect": {
+          "x": 405,
+          "y": 78,
+          "w": 802,
+          "h": 36
+        }
+      },
+      "settled": {
+        "testid": "export-kind",
+        "name": "Theme JSON v2",
+        "focusVisible": true,
+        "outline": "none 1px rgb(0, 95, 204) 0px",
+        "shadow": "none",
+        "border": "rgb(208, 213, 221)",
+        "pseudo": {
+          "before": "none",
+          "after": "none"
+        },
+        "rect": {
+          "x": 405,
+          "y": 78,
+          "w": 802,
+          "h": 36
+        }
+      },
+      "screenshot": "MC-export-kind-keyboard-focus-1440-light.png"
+    },
+    {
+      "label": "import",
+      "immediate": {
+        "testid": "import-format",
+        "name": "Theme JSON",
+        "focusVisible": true,
+        "outline": "none 1px rgb(29, 41, 57) 0px",
+        "shadow": "none",
+        "border": "rgb(208, 213, 221)",
+        "pseudo": {
+          "before": "none",
+          "after": "none"
+        },
+        "rect": {
+          "x": 405,
+          "y": 111,
+          "w": 802,
+          "h": 36
+        }
+      },
+      "settled": {
+        "testid": "import-format",
+        "name": "Theme JSON",
+        "focusVisible": true,
+        "outline": "none 1px rgb(0, 95, 204) 0px",
+        "shadow": "none",
+        "border": "rgb(208, 213, 221)",
+        "pseudo": {
+          "before": "none",
+          "after": "none"
+        },
+        "rect": {
+          "x": 405,
+          "y": 111,
+          "w": 802,
+          "h": 36
+        }
+      },
+      "screenshot": "MC-import-kind-keyboard-focus-1440-light.png"
+    }
+  ],
+  "reset": {
+    "match": {
+      "aria": "Clear primary · Light only",
+      "title": "Clear primary · Light only",
+      "testid": "color-reset-primary",
+      "disabled": false,
+      "ariaDisabled": "false"
+    },
+    "focus": {
+      "testid": "color-reset-primary",
+      "name": "Clear primary · Light only",
+      "focusVisible": true,
+      "outline": "solid 3px rgba(21, 112, 239, 0.4) 2px",
+      "shadow": "none",
+      "border": "rgb(132, 202, 255)",
+      "pseudo": {
+        "before": "none",
+        "after": "none"
+      },
+      "rect": {
+        "x": 273,
+        "y": 425.4375,
+        "w": 26,
+        "h": 77.890625
+      }
+    },
+    "screenshot": "MC-token-reset-keyboard-focus-1440-light.png"
+  },
+  "download": {
+    "suggestedFilename": "theme.json",
+    "failure": null,
+    "bytes": 2494,
+    "sha256": "7c1c2afb8b970350b30676b961fa0f613969295bec99b3b9c3f661b3f1e12c43",
+    "schemaVersion": 2,
+    "matchesVisibleOutput": true
+  },
+  "nested200": [
+    {
+      "testid": "preview-surface",
+      "visible": true,
+      "detailsOpen": true,
+      "scrollWidth": 300,
+      "clientWidth": 300,
+      "rect": {
+        "left": 369,
+        "right": 671,
+        "top": 3626.671875
+      },
+      "offenders": []
+    },
+    {
+      "testid": "preview-surface",
+      "visible": false,
+      "detailsOpen": false,
+      "scrollWidth": 243,
+      "clientWidth": 236,
+      "rect": {
+        "left": 401,
+        "right": 639,
+        "top": 7980.671875
+      },
+      "offenders": [
+        {
+          "tag": "DIV",
+          "text": "Build something that feels yoursReal controls, one shar",
+          "right": 645.171875
+        },
+        {
+          "tag": "H2",
+          "text": "Build something that feels yours",
+          "right": 645.171875
+        },
+        {
+          "tag": "P",
+          "text": "Real controls, one shared theme.",
+          "right": 645.171875
+        }
+      ]
+    }
+  ],
+  "axeDetail": [
+    {
+      "width": 1280,
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "nodes": [
+            {
+              "target": [
+                ".bg-accent"
+              ],
+              "html": "<span class=\"bg-accent px-3 py-2 text-accent-foreground\" data-testid=\"button-accent-token\">Accent pair</span>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 2.62 (foreground color: #ffffff, background color: #12b76a, font size: 11.3pt (15px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": [
+                ".rui-geometry-69 > .rustify-button-content"
+              ],
+              "html": "<span class=\"rustify-button-content\">Semantic accent</span>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 2.62 (foreground color: #ffffff, background color: #12b76a, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": [
+                ".rui-geometry-71 > .rustify-button-content"
+              ],
+              "html": "<span class=\"rustify-button-content\">gray</span>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.31 (foreground color: #ffffff, background color: #8d8d8d, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": [
+                ".rui-geometry-72 > .rustify-button-content"
+              ],
+              "html": "<span class=\"rustify-button-content\">gold</span>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.65 (foreground color: #ffffff, background color: #978365, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": [
+                ".rui-geometry-73 > .rustify-button-content"
+              ],
+              "html": "<span class=\"rustify-button-content\">bronze</span>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.59 (foreground color: #ffffff, background color: #a18072, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": [
+                ".rui-geometry-74 > .rustify-button-content"
+              ],
+              "html": "<span class=\"rustify-button-content\">brown</span>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.52 (foreground color: #ffffff, background color: #ad7f58, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": [
+                ".rui-geometry-77 > .rustify-button-content"
+              ],
+              "html": "<span class=\"rustify-button-content\">orange</span>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 2.97 (foreground color: #ffffff, background color: #f76b15, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": [
+                ".rui-geometry-78 > .rustify-button-content"
+              ],
+              "html": "<span class=\"rustify-button-content\">tomato</span>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.86 (foreground color: #ffffff, background color: #e54d2e, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": [
+                ".rui-geometry-79 > .rustify-button-content"
+              ],
+              "html": "<span class=\"rustify-button-content\">red</span>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.91 (foreground color: #ffffff, background color: #e5484d, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": [
+                ".rui-geometry-80 > .rustify-button-content"
+              ],
+              "html": "<span class=\"rustify-button-content\">ruby</span>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.88 (foreground color: #ffffff, background color: #e54666, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": [
+                ".rui-geometry-81 > .rustify-button-content"
+              ],
+              "html": "<span class=\"rustify-button-content\">crimson</span>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.84 (foreground color: #ffffff, background color: #e93d82, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": [
+                ".rui-geometry-82 > .rustify-button-content"
+              ],
+              "html": "<span class=\"rustify-button-content\">pink</span>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.12 (foreground color: #ffffff, background color: #d6409f, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": [
+                ".rui-geometry-88 > .rustify-button-content"
+              ],
+              "html": "<span class=\"rustify-button-content\">blue</span>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.26 (foreground color: #ffffff, background color: #0090ff, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": [
+                ".rui-geometry-89 > .rustify-button-content"
+              ],
+              "html": "<span class=\"rustify-button-content\">cyan</span>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3 (foreground color: #ffffff, background color: #00a2c7, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": [
+                ".rui-geometry-90 > .rustify-button-content"
+              ],
+              "html": "<span class=\"rustify-button-content\">teal</span>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.07 (foreground color: #ffffff, background color: #12a594, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": [
+                ".rui-geometry-91 > .rustify-button-content"
+              ],
+              "html": "<span class=\"rustify-button-content\">jade</span>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.15 (foreground color: #ffffff, background color: #29a383, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": [
+                ".rui-geometry-92 > .rustify-button-content"
+              ],
+              "html": "<span class=\"rustify-button-content\">green</span>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.15 (foreground color: #ffffff, background color: #30a46c, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": [
+                ".rui-geometry-93 > .rustify-button-content"
+              ],
+              "html": "<span class=\"rustify-button-content\">grass</span>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.03 (foreground color: #ffffff, background color: #46a758, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": [
+                ".rui-geometry-104 > .rustify-button-content"
+              ],
+              "html": "<span class=\"rustify-button-content\">Caller utilities</span>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 1.24 (foreground color: #c8080a, background color: #d92d20, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ]
+        }
+      ],
+      "incomplete": [
+        {
+          "id": "aria-valid-attr-value",
+          "count": 6
+        },
+        {
+          "id": "color-contrast",
+          "count": 4
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "nodes": [
+            {
+              "target": [
+                ".bg-accent"
+              ],
+              "html": "<span class=\"bg-accent px-3 py-2 text-accent-foreground\" data-testid=\"button-accent-token\">Accent pair</span>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 2.62 (foreground color: #ffffff, background color: #12b76a, font size: 11.3pt (15px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": [
+                ".rui-geometry-69 > .rustify-button-content"
+              ],
+              "html": "<span class=\"rustify-button-content\">Semantic accent</span>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 2.62 (foreground color: #ffffff, background color: #12b76a, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": [
+                ".rui-geometry-71 > .rustify-button-content"
+              ],
+              "html": "<span class=\"rustify-button-content\">gray</span>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.31 (foreground color: #ffffff, background color: #8d8d8d, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": [
+                ".rui-geometry-72 > .rustify-button-content"
+              ],
+              "html": "<span class=\"rustify-button-content\">gold</span>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.65 (foreground color: #ffffff, background color: #978365, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": [
+                ".rui-geometry-73 > .rustify-button-content"
+              ],
+              "html": "<span class=\"rustify-button-content\">bronze</span>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.59 (foreground color: #ffffff, background color: #a18072, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": [
+                ".rui-geometry-74 > .rustify-button-content"
+              ],
+              "html": "<span class=\"rustify-button-content\">brown</span>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.52 (foreground color: #ffffff, background color: #ad7f58, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": [
+                ".rui-geometry-77 > .rustify-button-content"
+              ],
+              "html": "<span class=\"rustify-button-content\">orange</span>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 2.97 (foreground color: #ffffff, background color: #f76b15, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": [
+                ".rui-geometry-78 > .rustify-button-content"
+              ],
+              "html": "<span class=\"rustify-button-content\">tomato</span>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.86 (foreground color: #ffffff, background color: #e54d2e, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": [
+                ".rui-geometry-79 > .rustify-button-content"
+              ],
+              "html": "<span class=\"rustify-button-content\">red</span>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.91 (foreground color: #ffffff, background color: #e5484d, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": [
+                ".rui-geometry-80 > .rustify-button-content"
+              ],
+              "html": "<span class=\"rustify-button-content\">ruby</span>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.88 (foreground color: #ffffff, background color: #e54666, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": [
+                ".rui-geometry-81 > .rustify-button-content"
+              ],
+              "html": "<span class=\"rustify-button-content\">crimson</span>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.84 (foreground color: #ffffff, background color: #e93d82, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": [
+                ".rui-geometry-82 > .rustify-button-content"
+              ],
+              "html": "<span class=\"rustify-button-content\">pink</span>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.12 (foreground color: #ffffff, background color: #d6409f, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": [
+                ".rui-geometry-88 > .rustify-button-content"
+              ],
+              "html": "<span class=\"rustify-button-content\">blue</span>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.26 (foreground color: #ffffff, background color: #0090ff, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": [
+                ".rui-geometry-89 > .rustify-button-content"
+              ],
+              "html": "<span class=\"rustify-button-content\">cyan</span>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3 (foreground color: #ffffff, background color: #00a2c7, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": [
+                ".rui-geometry-90 > .rustify-button-content"
+              ],
+              "html": "<span class=\"rustify-button-content\">teal</span>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.07 (foreground color: #ffffff, background color: #12a594, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": [
+                ".rui-geometry-91 > .rustify-button-content"
+              ],
+              "html": "<span class=\"rustify-button-content\">jade</span>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.15 (foreground color: #ffffff, background color: #29a383, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": [
+                ".rui-geometry-92 > .rustify-button-content"
+              ],
+              "html": "<span class=\"rustify-button-content\">green</span>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.15 (foreground color: #ffffff, background color: #30a46c, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": [
+                ".rui-geometry-93 > .rustify-button-content"
+              ],
+              "html": "<span class=\"rustify-button-content\">grass</span>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.03 (foreground color: #ffffff, background color: #46a758, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": [
+                ".rui-geometry-104 > .rustify-button-content"
+              ],
+              "html": "<span class=\"rustify-button-content\">Caller utilities</span>",
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 1.24 (foreground color: #c8080a, background color: #d92d20, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ]
+        }
+      ],
+      "incomplete": [
+        {
+          "id": "aria-valid-attr-value",
+          "count": 6
+        },
+        {
+          "id": "color-contrast",
+          "count": 4
+        }
+      ]
+    }
+  ]
+}

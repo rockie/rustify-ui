@@ -1,0 +1,777 @@
+# DOM-COMPONENTS-P1 · UI 验收评审 R1
+
+| 轮次 | 开发计划 | 目标包 | 被测版本 | 截图 | 上轮报告 |
+| --- | --- | --- | --- | --- | --- |
+| R1（首轮，全量） | [DOM-COMPONENTS-P1](DOM-COMPONENTS-P1.md) | [DOM-COMPONENTS-P1.ui-target.md](DOM-COMPONENTS-P1.ui-target.md) · `0370d573f009` | HEAD `13ab1a5b`，dirty，产品路径无 diff（tracked diff `bbbeb25fde33`）；Studio `f7f81f184ae45ccd` http://127.0.0.1:4181/ ，catalog `dd1a11d8f8c000cb` http://127.0.0.1:4176/ | [r1](DOM-COMPONENTS-P1.ui-captures/r1/) | 无 |
+
+## 验收判定
+
+**需要修改 · 待裁定（UI-85、UI-100）**
+
+- 本轮分数 5.2（U7）。门槛 8，取默认值。历史最佳 5.2。
+- 未关闭的门槛项（P1）共 18 条，没有 P0。首轮，不涉及停滞。
+
+七个单元都低于门槛。U5 补拍的帧显示两类问题：
+- 精调与来源没有在界面上表达清楚：覆盖标识、草稿保留、预览侧诊断都缺。
+- 存储与迁移的反馈缺少语义层级：Review 是原始 JSON，状态行同为灰字。
+
+组件这边有两类问题：
+- 深色变体的 token 映射与目标规则不符。
+- 布局与排版夹具没有呈现目标图的主体内容；Heading 与 Strong 也不是粗体。
+
+主路径能走通：每个状态都能到达，键盘可用，页面无溢出、无报错。失分集中在状态表达与视觉规则。
+
+### 用户裁定（2026-10-27，本轮报告完成后追加）
+
+- **UI-100**：用户原话「UI-100： accept」。已写入目标包 U6 比较口径：参考或旧 token 选阶得到的对比度不计差距。修复方不处理此条；R2 因目标指纹改变而重建基线，复审标「不再适用」。本轮原分数与原判定不改写。
+- **UI-85**：用户先问「UI-85：how about radix-ui?」，再裁定「Link + Button follows Radix」。目标包 B2 已改为 Radix Themes 3.3.0 的 `:focus-visible` 规则，细则见目标包 B2。
+  - classic、solid：2px 实线、焦点色第 8 阶，offset 2px。
+  - surface、outline、ghost、ghost-offset：offset −1px。
+  - soft：组件色第 8 阶，offset −1px。
+  - Link：offset 2px，圆角 `0.07em × radius-factor`，聚焦时隐藏下划线。
+  - 修复方据此处理：
+    - Button 与 IconButton 的焦点环从 3px 半透明改为上述规则，并同步 DESIGN.md Buttons 第二段；
+    - Link 补上圆角。
+    - 「Link 与按钮环不一致」这一原差距因期望改变，R2 标「不再适用」，由新 B2 复核。
+  - UI-78 的 `opacity` 问题与本裁定无关，照常修复。
+
+## 评分
+
+| 单元 | 布局 | 视觉 | 交互与状态 | 细节 | 单元分 | 各评审单元分（取较低者） |
+| --- | --- | --- | --- | --- | --- | --- |
+| U1 Studio 工作台框架与基础配置 | 2.0 | 2.2 | 2.3 | 0.3 | 6.8 | A 6.8 |
+| U2 Studio 精调与来源解释 | 2.0 | 2.0 | 1.5 | 0.3 | **5.8** | A 5.8 |
+| U3 Studio 导入与导出 | 2.5 | 2.0 | 2.0 | 0.5 | 7.0 | B 7.0 · B2 7.2 |
+| U4 Studio 本地库迁移与存储反馈 | 2.0 | 2.0 | 1.75 | 0.25 | 6.0 | B 6.0 · B2 6.1 |
+| U5 Studio 预览 | 2.0 | 2.1 | 1.75 | 0.5 | 6.35 | C 6.6 · C2 6.35 |
+| U6 Button / IconButton / Link 与 ThemePanel | 3.0 | 1.5 | 2.5 | 0.75 | 7.75 | D 7.8 · D2 7.75 |
+| U7 布局与排版 | 1.6 | 1.0 | 2.1 | 0.5 | **5.2** | C 6.75 · C2 5.2 |
+
+- 本轮分数：**5.2**（U7）。
+- 历史最佳：5.2。
+- 门槛：8（默认；门槛不写入目标包，也不告诉评审）。
+- 达标单元：无。
+
+各维度理由见 [judge.md](DOM-COMPONENTS-P1.ui-captures/r1/judge.md)。
+
+## 轮次轨迹
+
+| 轮次 | 本轮分数（最低单元） | 历史最佳 | 未关闭 P0/P1 | 重构轮 | 备注 |
+| --- | --- | --- | --- | --- | --- |
+| R1 | 5.2（U7） | 5.2 | 0 / 18 | — | 首轮、首次规范基线；补采后重评 U3–U7 |
+
+## 差距清单
+
+共 100 条，按 P0 → P3 排列，同一严重度内按可挽回分从高到低。
+
+- 「来源：评审 R1」后括号中的字母和临时编号，对应评审原文：
+  - A：[judge-A-U1U2-a.md](DOM-COMPONENTS-P1.ui-captures/r1/judge-A-U1U2-a.md)
+  - B：[judge-B-U3U4-a.md](DOM-COMPONENTS-P1.ui-captures/r1/judge-B-U3U4-a.md)
+  - B2：[judge-B2-U3U4-b.md](DOM-COMPONENTS-P1.ui-captures/r1/judge-B2-U3U4-b.md)
+  - C：[judge-C-U5U7-a.md](DOM-COMPONENTS-P1.ui-captures/r1/judge-C-U5U7-a.md)
+  - C2：[judge-C2-U5U7-b.md](DOM-COMPONENTS-P1.ui-captures/r1/judge-C2-U5U7-b.md)
+  - D：[judge-D-U6-a.md](DOM-COMPONENTS-P1.ui-captures/r1/judge-D-U6-a.md)
+  - D2：[judge-D2-U6-b.md](DOM-COMPONENTS-P1.ui-captures/r1/judge-D2-U6-b.md)
+- 每条完整的取样数值和修法细节以原文为准。
+- 截图在 [r1](DOM-COMPONENTS-P1.ui-captures/r1/) 目录中，文件名即证据位置。
+
+### UI-86 · [P1] 夹具缺目标图的主体：字级梯度、字重、变体矩阵、wrap、trim（U7 · 视觉、布局、交互）
+
+- 可挽回分：C2 1.2；C 0.4 + 0.15。
+- 现状：只有 1 个大标题、1 个 24px 标题、三种正文字号，Code、Kbd、Blockquote 各 1 个，以及 1 个 truncate。
+- 期望：radix-sink-heading / text / code / kbd 的 1–9 梯度与变体矩阵、radix-text-wrap 的 6 张卡（L1/L2）。
+- 修法：按目标图结构在布局夹具中重建各区块，每行标注 prop 值。
+- 来源：评审 R1（C2 U7-1、C 新-3、C 新-18）
+
+### UI-65 · [P1] 深色预览 scope 被拆成没有内边距的深色岛（U5 · 布局、视觉、细节）
+
+- 可挽回分：C2 0.9；C 0.4 + 0.25。
+- 现状：作者背景只画在两个矩形上，「Provider & overlay checks」行露出浅色壳底；说明文字和卡片边框贴着深色块边缘。对比区同样如此。
+- 期望：用户预览使用作者主题，连续可辨（G1/P3/P4）；预览 padding 24px 24px 48px（G2）。
+- 修法：把背景、前景、24px 内边距、圆角和描边放到包住整段场景的一个 scope 根上；说明行和 disclosure 都移进去；对比边界同样处理。
+- 来源：评审 R1（C2 U5-1、C 新-8、C 新-12）
+
+### UI-45 · [P1] 升级 Review 塞在编辑列里，内容是原始迁移 JSON（U4 · 布局、交互）
+
+- 可挽回分：B 0.8；B2 0.55 + 0.3。
+- 现状 → 期望：约 260px 宽的列里放 JSON 文本框，哈希断行；首帧看不到命名主题、草稿、偏好和确认按钮 → 展示原 v1 库的完整迁移结果及将保存的草稿和偏好（S3）；显式「升级并保存当前草稿」或取消（S2）。
+- 修法：
+  - 移进与导入审阅同一外壳的对话框；
+  - 结构化摘要：命名主题表、当前草稿、偏好；
+  - 原始 JSON 折叠进 `<details>`；
+  - 底部固定动作行：升级并保存、下载原始数据、取消。
+- 来源：评审 R1（B 新-1、B2 U4-01、B2 U4-04）
+
+### UI-13 · [P1] token 网格看不出覆盖状态和有效值（U2 · 交互、视觉、布局 · 可挽回 0.7）
+
+- 现状 → 期望：被覆盖的 primary 与生成值格子同样式；↺ 图标都一样；没有色值 → 展示有效值、来源、覆盖与重置（F1）；状态用文字加标识（C3）；色值用等宽字（F4）。
+- 修法：
+  - 名称下加等宽 12px 的有效值；
+  - 被覆盖的格子加文字胶囊「Override」；
+  - 无覆盖时重置段设 `aria-disabled` 并变浅；
+  - 加「Overridden only」筛选。
+- 来源：评审 R1（A U2-01）
+
+### UI-14 · [P1] 非法输入回车后被冲回有效值，红框配在合法值上（U2 · 交互 · 可挽回 0.6）
+
+- 位置：U2-field-error-1440-light，Corner radius。
+- 现状 → 期望：输入 `abc` 回车后，输入框显示 `0.35rem` 加红框和错误文案 → 错误贴近字段，未完成输入不破坏有效预览，同时草稿保留（F1）。
+- 修法：非法文本保留在 input 中，设 `aria-invalid` 与 `aria-describedby`；错误文案写明非法值、示例与预览保留值；Esc 或失焦时才回到有效值；中英文同步。
+- 来源：评审 R1（A U2-02）
+
+### UI-15 · [P1] 低对比诊断不在预览侧，失败项不醒目，不能定位来源（U2 · 交互、视觉 · 可挽回 0.6）
+
+- 现状 → 期望：诊断只在编辑列的折叠区；失败与通过同样式；没有 Locate；预览侧没有提示 → 在预览侧给诊断与可定位来源（F3）。
+- 修法：预览头部（作者 scope 外）加诊断条，列出失败对和「Locate」按钮；编辑列中失败项加「Fails」并用 #b42318、排在最前；折叠 summary 显示失败计数。
+- 来源：评审 R1（A U2-03）
+
+### UI-77 · [P1] 非 solid 变体与 Link 的文字用了填充级（第 9 级）（U6 · 视觉）
+
+- 可挽回分：D2 0.6；D 0.6 + 0.15。
+- 现状：文字都是 #3E63DD。深色下对比约 3.3–3.8:1；浅色 soft 1 约 4.4:1。
+- 期望：radix-sink-button 中 soft/surface/outline/ghost 的文字为 #BAA7FF，即第 11 级文字级；Link 同理（B1/B5）。
+- 修法：Button、IconButton、Link 的这些变体改用 accent 第 11 级（high-contrast 用第 12 级），并确认深色 scope 定义了该级。
+- 来源：评审 R1（D2 新-1、D U6-01、D U6-06）
+
+### UI-87 · [P1] 截图里看不到 Inset 贴边（U7 · 布局）
+
+- 可挽回分：C2 0.6；C 0.5。
+- 现状：唯一有可见容器的样例四周各留约 32px；8 个 side 样例没有可见容器。
+- 期望：radix-inset 中图片贴住卡片边（L3）。
+- 修法：给每个样例加可见卡片容器，Inset 子元素用对比填充或 public 目录图片；「consumed once」样例画出最近那层容器。
+- 来源：评审 R1（C2 U7-2、C 新-2）
+
+### UI-01 · [P1] 固定定位的「Host control」浮签压住编辑区和预览内容（U1/U2/U4/U5 · 布局）
+
+- 可挽回分：
+
+  | 单元 | 可挽回 | 评审 |
+  | --- | --- | --- |
+  | U1 | 0.5 | A |
+  | U2 | 0.2 | A |
+  | U4 | 0.15 | B |
+  | U5 | 0.25 | C2；C 给 0.6 |
+
+- 位置：1440 各帧左下 x≈22–97、y≈868–890；390 各帧右下角。被压住的内容随滚动变化，包括：Appearance helper、外观选择器的值、Radius/Scaling、拾色区、HEX 输入、Shadow opacity、Favorites、预览卡片和 GPU 柱状图。中文态下它仍是英文。
+- 现状 → 期望：宿主元素一直遮住内容 → 编辑壳稳定、不遮挡（G1/G2）；宿主元素位于 scope 外但不压在内容上（P3）；新增文案中英同步（G6）。
+- 修法：取消视口固定定位，放回文档流（预览工具栏末尾、Provider 区 scope 外，或编辑区底部）；或者给两个滚动容器加不小于「浮签高度 + 16px」的 `padding-bottom` 与 `scroll-padding-bottom`；文案补「宿主控制」。
+- 来源：评审 R1（A U1-01 / U2-12、B 新-22、B2 U4-13、C 新-1、C2 U5-7）
+
+### UI-02 · [P1] 选中与未选中的切换按钮几乎无法区分（U1/U5 · 视觉、交互）
+
+- 可挽回分：U1 0.5（A），U5 0.35（C2）。
+- 位置：模式 Light/Dark、渲染器 DOM/GPU/DOM+GPU/Inspect、Edit/Preview、EN/中文、对比区 Light/Dark。
+- 现状 → 期望：未选中按钮是蓝字、浅蓝框；选中只多一层 #EFF8FF 底，底色对比约 1.02–1.07:1 → 选中的模式和渲染器使用按下态（G4），选中三色为 #eff8ff / #84caff / #175cd3（G3）。
+- 修法：改为分段控件，用 `aria-pressed` 或 radiogroup。
+  - 未选中：白底，边框 #d0d5dd，文字 #475467，字重 500。
+  - 选中：#eff8ff 底，#84caff 边，#175cd3 字，字重 600。
+  - 焦点环不压到相邻按钮。
+- 来源：评审 R1（A U1-02、C2 U5-4（C 的建议 6 同指））
+
+### UI-66 · [P1] 拾取未声明的部件时没有「未标注」反馈，点击穿透并执行了真实动作（U5 · 交互）
+
+- 可挽回分：C2 0.5；C 0.4。
+- 位置：U5-inspector-undeclared-hover、U5-inspector-undeclared。
+- 现状：悬停时没有轮廓、标签，面板也不变；点击后「Create · 0」变成「Create · 1」。
+- 期望：找不到映射时明确显示未标注（P2）。
+- 修法：拾取模式下在捕获阶段拦截点击；未声明部件画中性虚线框，标「Not annotated / 未标注」；面板说明没有 token 映射。
+- 来源：评审 R1（C2 U5-2、C 新-5）
+
+### UI-78 · [P1] 可聚焦的「Unavailable request」焦点环几乎不可见（U6 · 交互 · 可挽回 0.5 D2）
+
+- 现状：焦点环 #E3E8FB，对白底约 1.2:1；按钮、文字、环的取样都等于 50% 混合。
+- 期望：与其他按钮相同的 3px 环、2px 间隙（B2/B3）；焦点可见（WCAG 2.4.7）。
+- 修法：去掉元素级 `opacity`，用显式 token 表达不可用外观。
+- 来源：评审 R1（D2 新-2）
+- 核对说明（主 agent，页面实测）：用 Tab 聚焦 `button-native-unavailable` 后，计算样式为 `opacity: 0.5`、`aria-disabled="true"`、`outline: solid 3px`。这与评审推断的「元素级 opacity 让焦点环一起变淡」一致。
+
+### UI-88 · [P1] Heading 不是粗体（U7 · 视觉 · 可挽回 0.5 C2 / 0.2 C）
+
+- 修法：Heading 默认字重 700，并确认主题字体的 700 字面可加载。
+- 来源：评审 R1（C2 U7-3、C 新-14）
+
+### UI-24 · [P1] 未知版本的导入错误给出误导性诊断，界面没有显示版本（U3 · 交互 · 可挽回 0.45 B / 0.45 B2）
+
+- 位置：U3-import-error-1440-light。
+- 现状 → 期望：输入 `{"schema_version":999}` 显示「Import failed: json: missing field `id` at line 1 column 22」 → 导入先呈现版本和诊断（X1）；文案中英同步（G6）。
+- 修法：
+  - 先探测 `schema_version`，不在 {1, 2} 内就给出「Unsupported Theme JSON version 999. This Studio reads v1 and v2.」；
+  - 其他 serde 错误映射为本地化文案，原文放进详情；
+  - 文本域设 `aria-invalid`。
+- 来源：评审 R1（B 新-2、B2 U3-01）
+
+### UI-89 · [P1] Strong 没有加粗（U7 · 视觉 · 可挽回 0.3 C2 / 0.25 C）
+
+- 来源：评审 R1（C2 U7-4、C 新-13）
+
+### UI-46 · [P1] 存储状态没有语义变体（U4 · 视觉、交互）
+
+- 可挽回分：B 0.2 + 0.1；B2 0.5。
+- 现状：已保存、仅内存（无 Web Locks）、冲突暂停、待确认，都是同一行 12px #667085 灰字；配额失败是红字，无锁只是灰 caption，严重度不一致。
+- 期望：常驻反馈，并明确「仅内存编辑 / 可下载」（S1/S6）。
+- 修法：存储状态组件分成功、仅内存/警告、错误三种变体，各有文字标签、标题和动作；页面载入时检测到无锁就显示常驻提示。
+- 来源：评审 R1（B2 U4-02、B 新-12、B 新-20）
+- 核对说明（主 agent）：补采帧 `U4-no-locks-initial-1440-light.png` 显示页面载入后、任何动作之前，状态行已有「Secure Web Locks unavailable; memory editing and downloads only」。B 新-20 的评审没有这张帧。差距按原样保留，请修复方据此核实「常驻指示」与「语义变体」两个方面。
+
+### UI-67 · [P1] 已声明样本的拾取轮廓比部件宽很多（U5 · 交互）
+
+- 可挽回分：C2 0.15（C2 判 P2）；C 0.4（C 判 P1）。严重度按较高一级取 P1。
+- 位置：U5-inspector-1440-light-a2。按钮在 x=369–485，轮廓画到 x=843。
+- 期望：选中矩形贴合实际部件（P2）。
+- 修法：声明挂在按钮根元素上，或者轮廓取按钮自身的 rect。
+- 来源：评审 R1（C2 U5-8、C 新-4）
+- 核对说明（主 agent）：两位评审对严重度判断不同，C 判 P1、C2 判 P2。合并时取较高的 P1，并计入门槛项。
+
+### UI-98 · [P1] 预览工具栏的描边按钮文字对比 4.37:1，低于 AA（U1/U5 · 视觉 · 机器检查）
+
+- 位置：运行中的 Studio，1440、768 与 390 预览页的 `renderer-dom`、`renderer-gpu`、`inspector-toggle`、`preview-focus`、`preview-back-edit`。axe-core 4.13 color-contrast：前景 #1570ef，背景 #f9fafb，14px 常规字重，对比 4.37:1，AA 要求 4.5:1。
+- 现状 → 期望：主路径上的渲染器与拾取切换不满足 WCAG AA 文字对比 → G4 的按下态与 G3 的壳层色，未选中态的文字须 ≥ 4.5:1。
+- 修法：与 UI-02 一起处理，未选中按钮的文字改为 #475467，或把背景改为白色；改完复测 axe color-contrast 为 0。
+- 来源：机器检查（[machine-check.json](DOM-COMPONENTS-P1.ui-captures/r1/machine-check.json) `axe` 中的 studio-1440、studio-768、studio-390-preview）
+
+### UI-03 · [P2] 顶部缺主题名和预览模式（U1 · 布局、交互 · 可挽回 0.5）
+
+- 现状 → 期望：主题名只以小字出现在预设选择器下方；模式按钮在编辑列中部，要滚动才看到；390 下滚动后顶部只剩 Edit/Preview → 顶部保留主题名、模式（G5）；界面显示「预览模式」（C4）。
+- 修法：编辑列顶部加 sticky 头，放主题名（18px）+ 状态、Preview mode 分段控件、Undo/Redo、Save、Export；390 下并入粘性条。
+- 来源：评审 R1（A U1-03）
+
+### UI-16 · [P2] 来源文案不随来源类型变化，信息不完整（U2 · 细节、交互 · 可挽回 0.5）
+
+- 现状：生成值下仍写「Removing this override…」；不说明由哪个配置、哪个色阶生成；不显示解除后会露出的值；「current mode」不写具体模式。
+- 期望：回答「值来自哪里 / 哪个覆盖在生效 / 解除影响哪些项」（F2）。
+- 修法：按覆盖和生成分别给模板；生成值隐藏或禁用解除按钮并说明原因；按钮写「Clear primary · Light only」。
+- 来源：评审 R1（A U2-04）
+
+### UI-90 · [P2] Code、Kbd 的样例不是 L1 默认变体：Code 呈 outline 外观，Kbd 是平铺的 soft 外观（U7 · 视觉）
+
+- 可挽回分：C2 0.5；C 0.3 + 0.2。
+- 来源：评审 R1（C2 U7-5、C 新-10、C 新-15）
+
+### UI-91 · [P2] 非法属性后页面上看不到属性定位诊断（U7 · 交互 · 可挽回 0.5 C2 / 0.5 C）
+
+- 期望：L6。
+- 修法：渲染 `role="status"` 的诊断行。
+- 来源：评审 R1（C2 U7-6、C 新-6）
+
+### UI-17 · [P2] 来源与拾色面板远离 token 网格，选中 token 时来源在屏外（U2 · 布局 · 可挽回 0.4）
+
+- 修法：改为「搜索 → 网格 → 选中 token 的编辑块」，编辑块内联展开或 sticky，保证来源与解除按钮同屏。
+- 来源：评审 R1（A U2-05）
+
+### UI-18 · [P2] 字体与其他页层级倒置、间距缺失、label 顺序颠倒（U2 · 布局、视觉 · 可挽回 0.4）
+
+- 修法：小节标题 13px/600，上方 24px 加分隔线；说明段改 12px caption；字段顺序为「label + Reset → 预设字体选择 → 输入框 → helper」。
+- 来源：评审 R1（A U2-06）
+
+### UI-68 · [P2] 预览对话框没有遮罩；390 下面板左右各只留 1px（U5 · 布局、视觉 · 可挽回 0.4 C2）
+
+- 期望：30% 遮罩，宽度为视口减 2rem（X6 / DESIGN Dialogs）。
+- 来源：评审 R1（C2 U5-3（C 的建议 2 同指））
+
+### UI-92 · [P2] Reset 只有一个蓝字、缩进 8px 的按钮样例，无法看出作用范围（U7 · 布局、交互、细节 · 可挽回 0.4 C2 / 0.15 C）
+
+- 来源：评审 R1（C2 U7-7、C 新-19）
+
+### UI-93 · [P2] Container 只看得到 1136px 一档，灰带左右不对称且没有标注（U7 · 布局 · 可挽回 0.4 C2 / 0.2 C）
+
+- 来源：评审 R1（C2 U7-8、C 新-16）
+
+### UI-79 · [P2] 深色 soft/surface 填充与 surface/outline 描边过暗，surface 比页面还暗（U6 · 视觉）
+
+- 可挽回分：D2 0.35；D 0.4。
+- 期望：radix-sink-button 中 soft #2A1F45、surface #1C1526 / 描边 #5B4896、outline 描边 #6958AD。
+- 来源：评审 R1（D2 新-3、D U6-02（D U6-02 同时包含 UI-80 所述的 surface/outline 区分问题））
+
+### UI-04 · [P2] 语言切换无间距，中文态下「EN」被裁成「E|」（U1 · 布局、细节 · 可挽回 0.3）
+
+- 修法：分段控件，每段 padding 0 8px、最小宽 32px，选中段用 G3 选中三色。
+- 来源：评审 R1（A U1-04）
+
+### UI-05 · [P2] 200% 文本下壳层缩放不一致（U1 · 布局 · 可挽回 0.3）
+
+- 现状：控件里的文字是 px 不放大，盒子却翻倍；「Responsive」被截断；状态段大于主标题；导出对话框的 label 不放大。
+- 期望：200% 下主路径可达（G6）；壳层字级遵循 G3。
+- 修法：壳层字级改用 rem（0.875/0.8125/0.75/1.125/1rem），控件高度与内边距用同一单位；工具栏选择器 `min-width: max-content`。
+- 来源：评审 R1（A U1-05）
+
+### UI-06 · [P2] 基础配置的 Overridden 与 Custom 没有状态标识（U1 · 视觉、交互 · 可挽回 0.3）
+
+- 现状 → 期望：覆盖计数是 12px 灰字，与 helper 同样式；「Custom」没有标识 → Custom 与 overridden 用文字加状态标识显示（C3）。
+- 修法：独立状态行，「Overridden」胶囊（#84caff 边、#175cd3 字）+「6 light · 6 dark」；Custom 加徽标；无覆盖时显示中性的「No overrides」。
+- 来源：评审 R1（A U1-06）
+
+### UI-19 · [P2] 顶部 Reset 和字段 Reset 都没标作用域（U2 · 交互 · 可挽回 0.3）
+
+- 修法：顶部改为「Restore preset · Graphite」或「Revert to saved document」；字段级改为「Reset · both modes」；中文同步。
+- 来源：评审 R1（A U2-07）
+
+### UI-33 · [P2] 差异表不区分新增、删除和修改（U3 · 交互 · 可挽回 0.3 B2）
+
+- 修法：加「Change」列（Added / Removed / Changed 文字标签），缺失侧显示「—」，按模式和 base/overrides 分组计数。
+- 来源：评审 R1（B2 U3-03）
+
+### UI-47 · [P2] U4 的次级文字 #667085、错误 #D92D20、callout 边框 #858F9E 不是 G3 token；灰底上对比 4.51:1 / 4.38:1（U4 · 视觉 · 可挽回 0.3）
+
+- 来源：评审 R1（B 新-3）
+
+### UI-49 · [P2] 命名库动作的反馈覆盖通用状态行，不点名、不说结果，与操作列表矛盾；配额失败不说明仍可导出（U4 · 交互）
+
+- 可挽回分：B 0.3 + 0.05；B2 0.2。
+- 期望：命名库动作单独反馈（S4）；写失败时仍可导出（S6）。
+- 修法：草稿状态行与命名动作反馈拆成两个位置；失败消息点名主题，并附「Retry / Export」。
+- 来源：评审 R1（B 新-4、B 新-37、B2 U4-10）
+
+### UI-69 · [P2] 预览菜单相对 Actions 触发按钮左偏约 113px，并盖住边界标题（U5 · 布局 · 可挽回 0.3 C2）
+
+- 来源：评审 R1（C2 U5-5（C 的建议 1 同指））
+
+### UI-70 · [P2] 拾取后来源说明不在视野内，被选中的卡片贴着视口顶边（U5 · 交互、细节）
+
+- 可挽回分：C2 0.3；C 0.4 + 0.15。
+- 修法：滚动到来源块，`scroll-margin-top: 16px`；或在拾取面板中显示来源摘要。
+- 来源：评审 R1（C2 U5-6、C 新-7、C 新-21）
+
+### UI-72 · [P2] 相反外观只以「Compare an independent scope」出现，根内的局部边界没有外观选项（U5 · 交互 · 可挽回 0.3 C）
+
+- 期望：嵌套边界可选与根相反的外观（P3）。
+- 来源：评审 R1（C 新-9）
+
+### UI-83 · [P2] loading 的 spinner 几乎不可见（约 1.2:1），底色与 disabled 相同（U6 · 交互 · 可挽回 0.3 D）
+
+- 期望：loading 一眼可辨，disabled 优先（B3）。
+- 来源：评审 R1（D U6-03）
+
+### UI-25 · [P2] 审阅结果中的版本、名称、配置是三段无标签正文（U3 · 布局 · 可挽回 0.25 B / 0.35 B2）
+
+- 修法：分隔线加小标题「导入候选」；改为 dl 两列（标签 13px/600 #475467）；差异表前加「Changes (N)」。
+- 来源：评审 R1（B 新-6、B2 U3-02）
+
+### UI-26 · [P2] 对话框表单 label、差异表表头、备注标题都是 14px/400（U3 · 视觉 · 可挽回 0.25 B / 0.2 + 0.05 B2）
+
+- 期望：G3 规定 label 为 13px/600。
+- 来源：评审 R1（B 新-5、B2 U3-05、B2 U3-16）
+
+### UI-34 · [P2] 390 下差异表 token 列在字符中间断行（U3 · 布局 · 可挽回 0.25 B2）
+
+- 修法：≤560px 改为两行卡片，只在「/」「.」后断行。
+- 来源：评审 R1（B2 U3-04）
+
+### UI-50 · [P2] callout 没有标题，状态行与 callout 首句重复，Review 标题弱于正文（U4 · 视觉 · 可挽回 0.25）
+
+- 来源：评审 R1（B 新-7）
+
+### UI-51 · [P2] 同级决策混用小 outline、大 outline 与纯链接；推荐的下一步反而最弱（U4 · 视觉 · 可挽回 0.25 B / 0.3 B2）
+
+- 来源：评审 R1（B 新-8、B2 U4-06）
+
+### UI-73 · [P2] 深色下「Caller class override」文字对比约 1.8:1（U5 · 视觉 · 可挽回 0.25 C）
+
+- 来源：评审 R1（C 新-11）
+
+### UI-07 · [P2] 品牌色下拉面板只有触发器一半宽，键盘高亮为灰色（U1 · 布局 · 可挽回 0.2）
+
+- 修法：面板 `min-width` 等于触发器宽度，加 max-height 和内部滚动；当前项用 #eff8ff 底、#175cd3 字。
+- 来源：评审 R1（A U1-07）
+
+### UI-08 · [P2] 390 编辑页底部 y=832 有一条 1px 横线和 12px 色带，切断 label（U1 · 布局 · 可挽回 0.2）
+
+- 修法：非活动面板和分隔条 `display: none`；活动面板高度为 100dvh 减标签条高度，自己滚动。
+- 来源：评审 R1（A U1-08）
+
+### UI-20 · [P2] 切到字体与其他页后，来源面板仍显示颜色 token（U2 · 交互 · 可挽回 0.2）
+
+- 来源：评审 R1（A U2-08）
+
+### UI-21 · [P2] 字段错误色是 #D92D20 而非 #b42318；出错字段焦点为 2px 无 offset，与搜索框、选择器的焦点样式三种不一致（U2 · 视觉 · 可挽回 0.2）
+
+- 修法：统一用 `--shell-error: #b42318`；焦点统一为 3px 40% 蓝、2px offset。
+- 来源：评审 R1（A U2-09）
+
+### UI-27 · [P2] 差异表行线、备注框、代码框描边是 #858F9E（U3 · 视觉 · 可挽回 0.2）
+
+- 期望：壳层分隔色 #d0d5dd / #eaecf0（G3）。
+- 来源：评审 R1（B 新-9）
+
+### UI-28 · [P2] Rust 说明没写所需 SDK/CLI 的具体版本（U3 · 交互 · 可挽回 0.2 B / 0.1 B2）
+
+- 期望：标明所需 SDK/CLI 版本（X4）。
+- 修法：首行写所需版本或修订号，由构建注入，代码注释同步。
+- 来源：评审 R1（B 新-10、B2 U3-11）
+
+### UI-52 · [P2] 冲突面板先给决策再给版本信息；原文是压缩 JSON，在字符中间断行（U4 · 布局 · 可挽回 0.2 B / 0.35 B2）
+
+- 来源：评审 R1（B 新-11、B2 U4-03）
+
+### UI-53 · [P2] 冲突不显示双方差异（U4 · 交互 · 可挽回 0.2 B / 0.3 B2）
+
+- 修法：复用导入差异表，列「This tab | Other tab」。
+- 来源：评审 R1（B 新-14、B2 U4-05）
+
+### UI-54 · [P2] 升级成功后只显示通用的「Saved on this device」（U4 · 交互 · 可挽回 0.2 B / 0.25 B2）
+
+- 来源：评审 R1（B 新-13、B2 U4-07）
+
+### UI-80 · [P2] surface 与 outline 在浅色下完全相同（U6 · 视觉 · 可挽回 0.2 D2）
+
+- 来源：评审 R1（D2 新-5）
+
+### UI-81 · [P2] classic 渐变方向与目标相反，多了外投影（U6 · 视觉 · 可挽回 0.2 D2 / 0.25 D）
+
+- 期望：radix-classic-button / radix-sink-button 中 classic 为上暗下亮，顶部内高光，底部内暗线，没有外投影。
+- 来源：评审 R1（D2 新-4、D U6-04）
+
+### UI-94 · [P2] Quote 不是斜体（U7 · 视觉 · 可挽回 0.2 C2 / 0.15 C）
+
+- 来源：评审 R1（C2 U7-9、C 新-17）
+
+### UI-29 · [P2] 差异表里的颜色值是比例字体（U3 · 视觉 · 可挽回 0.15 / 0.15）
+
+- 期望：颜色值等宽 12px（G3）。
+- 来源：评审 R1（B 新-15、B2 U3-08）
+
+### UI-30 · [P2] 导入错误文字是 #D92D20，文本域没有错误态边框（U3 · 视觉 · 可挽回 0.15 B / 0.2 B2）
+
+- 来源：评审 R1（B 新-16、B2 U3-06）
+
+### UI-31 · [P2] 配置行是 snake_case、`null`、等号串联的开发者格式（U3 · 视觉、细节 · 可挽回 0.15 / 0.15）
+
+- 修法：改用与基础配置一致的标签和值，中英同步。
+- 来源：评审 R1（B 新-17、B2 U3-10）
+
+### UI-32 · [P2] v1 损失清单缺 appearance 意图和 scaling 意图（U3 · 交互 · 可挽回 0.15 / 0.15）
+
+- 期望：列出 X2 的六类损失。
+- 修法：六类固定都列；当前值没有损失的类别也写明。
+- 来源：评审 R1（B 新-18、B2 U3-09）
+
+### UI-48 · [P2] 配额失败的灰字与红字几乎同句重复，异常原文直接拼接（U4 · 视觉、细节 · 可挽回 0.15 B / 0.2 B2）
+
+- 来源：评审 R1（B 新-24、B2 U4-09）
+
+### UI-55 · [P2] 取消升级后的状态与文案过期（U4 · 交互、细节）
+
+- 可挽回分：B 0.15 + 0.1；B2 0.25。
+- 现状：仍显示「Cancel upgrade」和「No old bytes…」；命名保存被拦下的文案以小写「storage:」开头，要求一个不存在的「resume saving」动作，也不点名主题。
+- 来源：评审 R1（B 新-23、B 新-28、B2 U4-08）
+
+### UI-61 · [P2] 状态文案大小写和句号错乱，内部前缀「storage:」暴露在用户文案中（U4 · 细节 · 可挽回 0.15 B2）
+
+- 来源：评审 R1（B2 U4-11）
+
+### UI-71 · [P2] 默认预览场景缺 IconButton、Link、Code、Kbd、Heading 等 P1 新组件，Button 只有一种尺寸（U5 · 交互 · 可挽回 0.15 C2）
+
+- 来源：评审 R1（C2 U5-9）
+
+### UI-82 · [P2] disabled 带品牌色并整体半透明，不是中性灰（U6 · 视觉 · 可挽回 0.15 D2 / 0.25 D）
+
+- 期望：radix-sink-button 的 disabled 列为 gray-a3 填充、gray-a8 文字。
+- 来源：评审 R1（D2 新-6、D U6-05）
+
+### UI-35 · [P2] 导出对话框底部「Saved on this device」与复制反馈夹着按钮，看不出各属于谁（U3 · 交互 · 可挽回 0.1 B / 0.1 B2）
+
+- 修法：复制反馈与按钮同行；库状态加前缀「Local library:」或移出对话框。
+- 来源：评审 R1（B 新-34、B2 U3-12）
+
+### UI-38 · [P2] 次级文字是 #667085（U3 · 视觉 · 可挽回 0.1 B / 0.15 B2）
+
+- 期望：G3 次级文字为 #475467。
+- 来源：评审 R1（B 新-26、B2 U3-07）
+
+### UI-100 · [P2] 〔待裁定〕色族 solid 按钮与语义 accent 对的文字对比低于 AA（U6 · 视觉 · 机器检查）
+
+- 位置：运行中的 catalog 按钮夹具，axe color-contrast。
+  - 16 个色族 solid 按钮是白字压第 9 阶，对比 2.97–4.12:1，涉及 gray、gold、bronze、brown、orange、tomato、red、ruby、crimson、pink、blue、cyan、teal、jade、green、grass。
+  - 「Semantic accent」与「Accent pair」是白字压 #12b76a，对比 2.62:1。
+- 现状 → 期望：
+  - 目标图 radix-sink-button 的 solid 同样是白字压第 9 阶；计划 §5.2 规定 primary-foreground 取参考的 contrast；DESIGN.md 记录的旧 accent 对就是 #12b76a / #ffffff。
+  - 评审标尺把「主路径不满足 WCAG AA 对比度」定为 P1。
+  - PRD §2.4 明写「这是选色依据，不能推导任意前景/背景组合必然满足 WCAG」。
+  - 参考或旧 token 与 AA 要求在这里冲突，需要用户裁定。
+- 可选项：① 接受参考与旧 token 的对比，写入比较口径；② 要求组件默认对满足 AA，修改 contrast 角色或 accent-foreground。
+- 来源：机器检查（machine-check.json `axe` 中的 catalog-buttons-1280、catalog-buttons-390）
+
+### UI-99 · [P2] 语言切换「EN」的点击目标被「中文」遮住，剩 16.2×29px（U1 · 布局 · 机器检查）
+
+- 位置：运行中的 Studio，1440、768 与 390 编辑页的 `locale-en`。axe target-size（WCAG 2.5.8）报「partially obscured」；用 elementFromPoint 取 EN 右缘，命中的是「中文」按钮。
+- 现状 → 期望：两个语言按钮重叠，EN 的有效点击区小于 24×24px → G4 新增控件键盘与指针可用，G6 中英文主路径可达。
+- 修法：与 UI-04 一起改为不重叠的分段控件，每段最小 24×24px。
+- 来源：机器检查（machine-check.json `axe` 中的 studio-1440、studio-768、studio-390-edit）
+
+### UI-84 · [P3] ThemePanel 中文说明「使用基础或配置值会清除该组两模式覆盖…」与英文原意不对应（U6 · 细节 · 可挽回 0.25 D2 / 0.15 D）
+
+- 来源：评审 R1（D2 新-7、D U6-07）
+
+### UI-09 · [P3] label、小节标题、选中标签页的字号和字重与 G3 不符（U1 · 视觉 · 可挽回 0.2）
+
+- 修法：label 用 600 13px/1.4；标签页 13px，选中 600、未选中 500。
+- 来源：评审 R1（A U1-09）
+
+### UI-95 · [P3] 样例都没有标注 props（U7 · 细节 · 可挽回 0.2 C2）
+
+- 来源：评审 R1（C2 U7-10）
+
+### UI-22 · [P3] 同级 disclosure 和按钮字号不一；标签页名「Type & other」有歧义（U2 · 细节 · 可挽回 0.15）
+
+- 来源：评审 R1（A U2-10）
+
+### UI-36 · [P3] 复制反馈插在代码框和按钮之间，按钮下移约 15px，对话框重新居中（U3 · 布局 · 可挽回 0.15 B / 0.05 B2）
+
+- 来源：评审 R1（B 新-19、B2 U3-14）
+
+### UI-56 · [P3] 操作列表计数与条目不符，「Draft · confirmed」重复且无法区分，主题名未加引号（U4 · 细节 · 可挽回 0.15 / 0.15）
+
+- 来源：评审 R1（B 新-25、B2 U4-12）
+
+### UI-96 · [P3] Blockquote 左边框固定 4px，不随字号变化（U7 · 细节 · 可挽回 0.15 C）
+
+- C2 判 Blockquote 与目标一致；两位评审结论不同，按并集保留。
+- 来源：评审 R1（C 新-22）
+- 核对说明（主 agent）：C2 判 Blockquote 与目标一致，C 认为边框应随字号变化。两位评审结论不同，按并集保留，下一轮由评审复核。
+
+### UI-10 · [P3] Undo/Redo 是描边按钮，Reset 是链接（U1 · 视觉、细节 · 可挽回 0.1）
+
+- 来源：评审 R1（A U1-10）
+
+### UI-11 · [P3] 字段标签页下有双分隔线（U1 · 细节 · 可挽回 0.1）
+
+- 来源：评审 R1（A U1-11）
+
+### UI-12 · [P3] 色族选项是小写，其余选项首字母大写，中文态下「pink」与已翻译项混排（U1 · 细节 · 可挽回 0.1）
+
+- 来源：评审 R1（A U1-12）
+
+### U2
+
+### UI-23 · [P3] 分体控件两段边框色不同（#D0D5DD / #ECEEF1）（U2 · 视觉 · 可挽回 0.1）
+
+- 来源：评审 R1（A U2-11）
+
+### U3
+
+### UI-37 · [P3] 复制成功只是一行灰色 caption，没有成功语义（U3 · 交互 · 可挽回 0.1）
+
+- 来源：评审 R1（B 新-21）
+
+### UI-39 · [P3] 字节计数「3332 / 262144 bytes」与「256 KiB」单位不统一（U3 · 细节 · 可挽回 0.1 / 0.05）
+
+- 来源：评审 R1（B 新-32、B2 U3-15）
+
+### UI-40 · [P3] Rust 说明写 `font_context(16, true)`，代码是 `16.`；标识符用比例字（U3 · 细节 · 可挽回 0.1）
+
+- 来源：评审 R1（B 新-33）
+
+### UI-41 · [P3] Output「Tailwind v4 CSS」与 profile「Rustify scoped」命名读起来冲突（U3 · 细节 · 可挽回 0.1）
+
+- 来源：评审 R1（B 新-35）
+
+### UI-42 · [P3] CSS 注释中的字体路径有两种拼法（U3 · 细节 · 可挽回 0.1）
+
+- 来源：评审 R1（B 新-36）
+
+### UI-57 · [P3] 「Download original before upgrade」在升级 callout 外（U4 · 布局 · 可挽回 0.1）
+
+- 来源：评审 R1（B 新-27）
+
+### UI-58 · [P3] 预设选择框占位词是小写「choose」（U4 · 细节 · 可挽回 0.1 / 0.05）
+
+- 来源：评审 R1（B 新-29、B2 U4-15）
+
+### UI-59 · [P3] 按钮名「Review / recheck upgrade」用斜杠合并两个动作（U4 · 细节 · 可挽回 0.1 / 0.05）
+
+- 来源：评审 R1（B 新-30、B2 U4-16）
+
+### UI-60 · [P3] 版本卡「External revision 3 · Rustify Light ·」中的「·」悬挂在行尾（U4 · 细节 · 可挽回 0.1）
+
+- 来源：评审 R1（B 新-31）
+
+### UI-62 · [P3] 保留项为 0 时「Retry retained saves」仍可点（U4 · 交互 · 可挽回 0.1 B2）
+
+- 来源：评审 R1（B2 U4-14）
+
+### UI-74 · [P3] 拾取标签压住上一行文字的下伸部（U5 · 细节 · 可挽回 0.1 C2 / 0.25 C）
+
+- 来源：评审 R1（C2 U5-10、C 新-20）
+
+### UI-75 · [P3] GPU 色样标签写 fg、card-fg 等，与 token 名不一致（U5 · 细节 · 可挽回 0.1 C2）
+
+- 来源：评审 R1（C2 U5-11）
+
+### UI-85 · [P3] 〔待裁定〕 Link 焦点环是 2px 实线、无间隙，与按钮的 3px 环不一致（U6 · 细节 · 可挽回 0.1 D）
+
+- 来源：评审 R1（D U6-08）
+
+### U7
+
+### UI-97 · [P3] 夹具根元素顶边混入外来的 1px 灰色线段（U7 · 细节 · 可挽回 0.1 C）
+
+- 来源：评审 R1（C 新-23）
+
+### UI-43 · [P3] 导出表单行距 12px 与 8px 不一（U3 · 细节 · 可挽回 0.05 B2）
+
+- 来源：评审 R1（B2 U3-13）
+
+### UI-44 · [P3] 损失清单取值写法生硬（U3 · 细节 · 可挽回 0.05 B2）
+
+- 来源：评审 R1（B2 U3-17）
+
+### U4
+
+### UI-63 · [P3] 冲突提示说有保留动作，实际计数是 0（U4 · 细节 · 可挽回 0.05 B2）
+
+- 来源：评审 R1（B2 U4-17）
+
+### UI-64 · [P3] 「No old bytes, backup or v2 library…」是实现行话（U4 · 细节 · 可挽回 0.05 B2）
+
+- 来源：评审 R1（B2 U4-18）
+
+### U5
+
+### UI-76 · [P3] DOM 与 GPU 两列内容起点差 22px（U5 · 细节 · 可挽回 0.05 C2）
+
+- 来源：评审 R1（C2 U5-12（C 的建议 4 同指））
+
+### U6
+
+## 待裁定事项
+
+### UI-100 · 色族 solid 按钮与语义 accent 对的对比度（参考与 AA 冲突）
+
+- **原因**：目标图（Radix solid 是白字压第 9 阶）、计划 §5.2（primary-foreground 取参考 contrast）和 DESIGN.md 的旧 accent 对，都会产生低于 4.5:1 的组合。评审标尺把 AA 对比不足定为 P1，而 PRD §2.4 明写色阶不保证 WCAG。
+- **相关差距**：UI-100；UI-77 的 soft 文字级问题与此不同，属于实现偏离参考，不在本项。
+- **已有尝试**：无，首轮。
+- **可选项**：
+  1. 接受参考与旧 token 的对比，在 U6 比较口径中注明，评审不再扣分；
+  2. 要求组件默认对满足 AA，修改 contrast 角色或 accent-foreground，需同步计划与 DESIGN.md。
+
+### UI-85 · Link 焦点环是否适用 B2
+
+- **原因**：B2 的「3px 半透明环、2px offset」出自 DESIGN.md 的 Buttons 段，目标包把它放在 Button/IconButton/Link 一节下。评审 D 请负责人确认它是否约束 Link。
+- **相关差距**：UI-85。
+- **已有尝试**：无。
+- **可选项**：
+  1. 适用，Link 改用按钮的焦点环；
+  2. 不适用，Link 保留原生焦点样式，从比较口径中移除。
+
+## 建议（不扣分）
+
+汇总自各评审，原文见 [judge.md](DOM-COMPONENTS-P1.ui-captures/r1/judge.md) 的「建议」节。
+
+**夹具与预览**
+- 按目标图补齐夹具：
+  - IconButton 变体 × 尺寸矩阵；
+  - 各变体的 high-contrast、gray、disabled 列；
+  - 文字加图标的按钮；
+  - Link 1–9 与 underline 模式；
+  - 各段与目标图同名的小标题。
+- 修正「Caller utilities」示例的可读性（axe 1.24:1）。
+
+**Studio 交互**
+- 对话框标题与动作行做成 sticky。
+- 导出 JSON 格式化。
+- 色族选项加色点。
+- 解除覆盖后给可撤销提示。
+
+**Studio 视觉**
+- 菜单与对话框加阴影。
+- 默认焦点环 alpha 提高到对相邻背景 ≥ 3:1。
+- Unavailable 与 Disabled 的外观区分开。
+
+**需要目标包负责人澄清**：以下三处若要定为期望，需用户确认后修改目标包，下一轮按重建基线评审。
+- X6 的「视口减 2rem」是上限还是固定尺寸。
+- X2 的「显式选择」是否要求再勾选一次确认。
+- ThemePanel 是否要求与 Radix 外观一致。
+
+## 机器检查
+
+全部在运行中的 release 页面上执行，结果没有交给评审。
+
+| 检查 | 工具与版本 | 结果 | 对应差距 |
+| --- | --- | --- | --- |
+| 控制台错误、失败请求、pageerror | Playwright 1.63.0 / Chromium 153.0.8010.12 事件监听；采集 8 次运行与机器检查会话 | 均为 0 | — |
+| CSP 违规 | 页内 `securitypolicyviolation` 监听（机器检查会话，strict CSP 服务） | 0 | — |
+| 横向溢出 | 页内测量 `scrollWidth`，并找出右缘超出视口且没有被裁剪的元素 | Studio 1440、768、390 编辑与预览、720 + 根字号 200%，catalog 按钮与布局夹具 1280、390：页面溢出 0，越界元素 0 | — |
+| 对话框是否在视口内 | 页内 boundingBox | 导出对话框：1440 下 x208、w1024；768 下 x16、w736；390 下 x16、w358、h613；都在视口内 | — |
+| 可访问性扫描 | @axe-core/playwright 4.13.0，wcag2a/2aa/21a/21aa/22aa | Studio 预览工具栏 color-contrast 4–5 个节点；`locale-en` target-size 1 个；catalog 按钮夹具 color-contrast 23 个，其中 soft 1–4 为 4.41:1，16 个色族与 accent 对为 2.62–4.12:1，Caller utilities 1.24:1；布局夹具 0 违规。incomplete 共 61 项，未人工逐项复核 | UI-98、UI-99、UI-100；soft 的 4 个节点佐证 UI-77；Caller utilities 是夹具示例，见建议 |
+| 键盘走查（真实按键） | Playwright keyboard | Studio 从文档起点 Tab 70 次、catalog 按钮夹具 Tab 61 次，焦点都在屏内且有可见环（3px 半透明 outline 或 box-shadow 环；首次自动判定因日志截断出现假阴性，已用完整计算样式和截图 [MC-select-focus-after-1440-light.png](DOM-COMPONENTS-P1.ui-captures/r1/MC-select-focus-after-1440-light.png) 复核）。导出与导入对话框各 Tab 25 次和 15 次，焦点都留在对话框内；Esc 关闭后焦点回到触发按钮。品牌色选择器 Enter → ↓↓ → Enter 从 Custom 改为 gold，焦点环保留 | UI-78（实测 Unavailable 为 `opacity: 0.5`，见该条核对说明） |
+| 性能 | — | 未检查：本轮 UI 验收不测性能；计划 V9 已有独立测量，且没有新增毫秒 SLO | — |
+
+原始结果：[machine-check.json](DOM-COMPONENTS-P1.ui-captures/r1/machine-check.json)；脚本：[machine-check.cjs](DOM-COMPONENTS-P1.ui-captures/r1/machine-check.cjs)。
+
+## 采集与覆盖
+
+### 环境与被测版本
+
+- HEAD `13ab1a5b5b0d99a08d0b482db452273f713e10ba`（main，dirty）。tracked diff 只有 SDLC 台账和两张旧验证 PNG；产品路径相对 HEAD 无 diff，也没有未跟踪的产品文件。
+- 本轮从 HEAD 重建 Studio 与 catalog 的 release。首次构建后，mbx 低空间 GC 立即回收了托管 `target/`（磁盘 98%）。按 M7 记录的做法，把悬空 symlink 换成普通目录，用 `CARGO_TARGET_DIR=<repo>/target MBX_TARGET_VIEWS=0` 重建；两次 build id 相同。
+- 服务：`mbx xtask serve` strict CSP，Studio 端口 4181，catalog 端口 4176。
+
+### 采集
+
+- 采集工具：Playwright 1.63.0 / Chromium 153.0.8010.12 headless，DPR 1，reduced motion。
+- 等待条件：字体就绪、网络空闲，以及 500ms 内没有长帧。
+- 截图类型：视口截图；组件夹具用根元素截图。
+- 格子覆盖：目标包矩阵全部采到，无 missing。
+- 首采 77 张；首批评审后补采 13 张，用于评审报告看不出的格子。原图全部保留，同状态补采以 `-a2` 命名。
+- U5 拾取的首采帧没有选中态，不作该状态的证据。
+- 逐图登记见 [capture.md](DOM-COMPONENTS-P1.ui-captures/r1/capture.md)。
+
+### 目标文件 hash
+
+| 文件 | SHA-256 前缀 |
+| --- | --- |
+| 目标包 | `58f3ead36857` |
+| radix-classic-button | `5e0cde4315e6` |
+| radix-inset | `4ba1d97cf756` |
+| radix-reset | `1e2de95cd335` |
+| radix-sink-blockquote | `393942095c28` |
+| radix-sink-button | `6233801f8901` |
+| radix-sink-code | `35be92c59ddc` |
+| radix-sink-container | `11ecbe0c0f78` |
+| radix-sink-heading | `feff9f592ad1` |
+| radix-sink-icon-button | `9998c7f4f489` |
+| radix-sink-kbd | `b98354b84bda` |
+| radix-sink-link | `3e73aad631c3` |
+| radix-sink-text | `9f836de47c85` |
+| radix-text-wrap | `09e64a338f06` |
+
+- 目标包的 hash 在本轮采集节变更记录追加后计算。
+- 目标指纹为 `manual-sha256-normative-sections-v1:0370d573f009…`，算法见 [target-fingerprint.py](DOM-COMPONENTS-P1.ui-captures/r1/target-fingerprint.py)，与 Phoenix 算法不兼容，仅用于跨轮比较。
+
+### 未覆盖范围（不计分，供下一轮决定是否扩充矩阵）
+
+评审报告了一些看不出的状态。这些状态不在冻结矩阵内，没有补采：
+- 导入的语法错误、超限、不支持颜色；
+- 复制或下载失败；
+- 缓存损坏；
+- 排队态和「先前快照已保存」；
+- 模式或偏好变化能否绕过升级确认；
+- U3、U4 的中文界面与键盘帧；
+- 深色 scope 中的浮层与对浮层拾取；
+- 预览宽度 1024、768、390 档；
+- GPU 失败态的中文文案；
+- 分隔条拖拽；
+- 非 U1 选择器的选项全集。
+
+把这些加入矩阵会修改目标包的「单元」节，需要用户确认，下一轮按重建基线评审。
+
+- 本机还没有 Phoenix engine，本轮按人工循环执行，没有自动下载。
+- 截图是 headless Chromium 渲染，不代表 Firefox、Safari、真机、人工读屏或 OS IME 的结果。
+
+### 环境噪声
+
+- 首采的 U6 焦点帧与缩放帧因指针停在按钮上，带了悬停色；已补采 `-a2` 帧。
+- 同一版本没有重拍出不一致的结果。
+
+### 评审方式
+
+- 共派 7 位全新上下文的只读评审，模型继承主 agent。
+- 首批 4 位并行，分组为 A：U1 + U2，B：U3 + U4，C：U5 + U7，D：U6。
+- 首批报告看不出的格子补采后，再派 3 位全新评审重评，分组为 B2：U3 + U4，C2：U5 + U7，D2：U6。U1、U2 报告的看不出项都在冻结矩阵外，没有重评。
+- 每个单元取总分较低的那位评审的一整组四维分与理由，差距取并集，同一问题按显式映射合并。映射见 judge.md 各条的「来源」。
+- 评审只拿到目标包、本单元截图、capture.md 和 actions.log，没有拿到代码、计划、门槛、机器检查结果或其他评审的结论。
+- 本轮将判「需要修改」，不需要确认评审。
+
+### 主 agent 核对说明
+
+- 写在 UI-46、UI-67、UI-78、UI-96 条下。主 agent 没有改分、删差距或改门槛项。
+- UI-98 至 UI-100 来自机器检查；本轮没有「主 agent 核实」来源的差距。

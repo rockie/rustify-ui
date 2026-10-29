@@ -1,0 +1,48 @@
+{
+  "mode": "manual",
+  "model": "inherited host model (no override)",
+  "effort": "inherited (no override)",
+  "fork_turns": "none",
+  "scope": "one unit per fresh read-only reviewer; no further delegation",
+  "agents": {
+    "U1": "/root/ui_r6_u1",
+    "U2": "/root/ui_r6_u2",
+    "U3": "/root/ui_r6_u3",
+    "U4": "/root/ui_r6_u4",
+    "U5": "/root/ui_r6_u5",
+    "U6": "/root/ui_r6_u6",
+    "U7": "/root/ui_r6_u7"
+  },
+  "results": {
+    "U1": {
+      "raw": "judge-U1-a.md",
+      "sha256": "ecbc19127aac0b9b198f25186383a54ce138af070466d79e2e778ea7027f1220"
+    },
+    "U2": {
+      "raw": "judge-U2-a.md",
+      "sha256": "99d5ef2b23bebf2acb4cdd6e426eff1e6a496a89c84666dfc89b4d0b776c8962"
+    },
+    "U3": {
+      "raw": "judge-U3-a.md",
+      "sha256": "7b6508d02b1ab028abcb677e3ef4e510a0426dca51c782353ff50c7b5c377de7"
+    },
+    "U4": {
+      "raw": "judge-U4-a.md",
+      "sha256": "7247bf54cb6cf099e030fbdaec336ee5dce1ea8a40df76d6816af53a355944b5"
+    },
+    "U5": {
+      "raw": "judge-U5-a.md",
+      "sha256": "53149ca8e9c936bc36ee03ba7c3bf9e50b990f60764e8fb7a951754220a5f3bc"
+    },
+    "U6": {
+      "raw": "judge-U6-a.md",
+      "sha256": "09d79cabe5b1a704e12deb42e512299fd8d2ab7a045b57a6d22b101b81a12a45"
+    },
+    "U7": {
+      "raw": "judge-U7-a.md",
+      "sha256": "4218aeef178b1d5ba0666e711ac4ff13faa44ee6a148f163c916ec4747bd6ca3"
+    }
+  },
+  "U5_trace_supplement": "judge-U5-trace-supplement.md",
+  "confirmation_review": "not required: minimum 9.7, inherited threshold 8, minimum is not below threshold + 0.5"
+}

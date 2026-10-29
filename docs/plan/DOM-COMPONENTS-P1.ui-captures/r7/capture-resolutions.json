@@ -1,0 +1,37 @@
+{
+  "attempts": 10,
+  "capture_failures": [],
+  "preserved_originals": 278,
+  "required_states_with_alternate_evidence": [
+    {
+      "file": "U1-configured-keyboard-open-1440-dark.png",
+      "observation": "Trigger focused; list not shown in this extra frame. Not accepted as an open-menu frame.",
+      "valid_open_evidence": [
+        "U1-matrix2-keyboard-03-1440-dark.png",
+        "U1-configured-keyboard-down-1440-dark.png"
+      ]
+    },
+    {
+      "file": "U1-configured-keyboard-open-390-light.png",
+      "observation": "Trigger focused; list not shown in this extra frame. Not accepted as an open-menu frame.",
+      "valid_open_evidence": [
+        "U1-matrix-keyboard-03-390-light.png",
+        "U1-configured-keyboard-down-390-light.png"
+      ]
+    }
+  ],
+  "supplements": {
+    "U4": [
+      "upgrade Review/confirm real keyboard focus and Escape return",
+      "upgrade JSON middle/end and conflict raw end"
+    ],
+    "U7": [
+      "Layout primitives and mixed native composition, 1280/390 at 100/110%"
+    ],
+    "U3": [
+      "390 copied feedback",
+      "390 v1 code/actions",
+      "390 review Appearance–Scaling rows"
+    ]
+  }
+}

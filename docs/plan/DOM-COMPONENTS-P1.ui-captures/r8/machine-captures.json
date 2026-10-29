@@ -1,0 +1,250 @@
+{
+  "purpose": "Machine-check captures after independent judges; excluded from scores",
+  "frames": [
+    {
+      "file": "MC-settled-enter-1440-dark.png",
+      "unit": "MC",
+      "state": "settled-enter",
+      "viewport": "1440x900",
+      "dpr": 1,
+      "theme": "dark",
+      "url": "http://127.0.0.1:4181/",
+      "time": "2026-10-29T10:40:32.075Z",
+      "kind": "viewport",
+      "interventions": "none",
+      "focused": "studio-config-accent_color-list",
+      "sha256": "148caf4dde360179c03076332f698f3959847e2031f1480e3b68a68e5c3fb8cd",
+      "dimensions": [
+        1440,
+        900
+      ],
+      "filesystem_mtime_utc": "2026-10-29T10:40:32.075633+00:00",
+      "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12 headless"
+    },
+    {
+      "file": "MC-settled-space-1440-dark.png",
+      "unit": "MC",
+      "state": "settled-space",
+      "viewport": "1440x900",
+      "dpr": 1,
+      "theme": "dark",
+      "url": "http://127.0.0.1:4181/",
+      "time": "2026-10-29T10:40:33.673Z",
+      "kind": "viewport",
+      "interventions": "none",
+      "focused": "studio-config-accent_color-list",
+      "sha256": "148caf4dde360179c03076332f698f3959847e2031f1480e3b68a68e5c3fb8cd",
+      "dimensions": [
+        1440,
+        900
+      ],
+      "filesystem_mtime_utc": "2026-10-29T10:40:33.673307+00:00",
+      "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12 headless"
+    },
+    {
+      "file": "MC-settled-enter-second-1440-dark.png",
+      "unit": "MC",
+      "state": "settled-enter-second",
+      "viewport": "1440x900",
+      "dpr": 1,
+      "theme": "dark",
+      "url": "http://127.0.0.1:4181/",
+      "time": "2026-10-29T10:40:35.272Z",
+      "kind": "viewport",
+      "interventions": "none",
+      "focused": "studio-config-accent_color-list",
+      "sha256": "148caf4dde360179c03076332f698f3959847e2031f1480e3b68a68e5c3fb8cd",
+      "dimensions": [
+        1440,
+        900
+      ],
+      "filesystem_mtime_utc": "2026-10-29T10:40:35.272491+00:00",
+      "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12 headless"
+    },
+    {
+      "file": "MC-settled-enter-768-light.png",
+      "unit": "MC",
+      "state": "settled-enter",
+      "viewport": "768x1024",
+      "dpr": 1,
+      "theme": "light",
+      "url": "http://127.0.0.1:4181/",
+      "time": "2026-10-29T10:40:47.814Z",
+      "kind": "viewport",
+      "interventions": "none",
+      "focused": "studio-config-accent_color-list",
+      "sha256": "880838d5f15027836271bf2abe1c728f0555722f08735533b91e7dae64265891",
+      "dimensions": [
+        768,
+        1024
+      ],
+      "filesystem_mtime_utc": "2026-10-29T10:40:47.813748+00:00",
+      "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12 headless"
+    },
+    {
+      "file": "MC-settled-space-768-light.png",
+      "unit": "MC",
+      "state": "settled-space",
+      "viewport": "768x1024",
+      "dpr": 1,
+      "theme": "light",
+      "url": "http://127.0.0.1:4181/",
+      "time": "2026-10-29T10:40:49.394Z",
+      "kind": "viewport",
+      "interventions": "none",
+      "focused": "studio-config-accent_color-list",
+      "sha256": "880838d5f15027836271bf2abe1c728f0555722f08735533b91e7dae64265891",
+      "dimensions": [
+        768,
+        1024
+      ],
+      "filesystem_mtime_utc": "2026-10-29T10:40:49.394533+00:00",
+      "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12 headless"
+    },
+    {
+      "file": "MC-settled-enter-second-768-light.png",
+      "unit": "MC",
+      "state": "settled-enter-second",
+      "viewport": "768x1024",
+      "dpr": 1,
+      "theme": "light",
+      "url": "http://127.0.0.1:4181/",
+      "time": "2026-10-29T10:40:50.980Z",
+      "kind": "viewport",
+      "interventions": "none",
+      "focused": "studio-config-accent_color-list",
+      "sha256": "880838d5f15027836271bf2abe1c728f0555722f08735533b91e7dae64265891",
+      "dimensions": [
+        768,
+        1024
+      ],
+      "filesystem_mtime_utc": "2026-10-29T10:40:50.980026+00:00",
+      "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12 headless"
+    },
+    {
+      "file": "MC-settled-enter-390-light.png",
+      "unit": "MC",
+      "state": "settled-enter",
+      "viewport": "390x844",
+      "dpr": 1,
+      "theme": "light",
+      "url": "http://127.0.0.1:4181/",
+      "time": "2026-10-29T10:40:54.725Z",
+      "kind": "viewport",
+      "interventions": "none",
+      "focused": "studio-config-accent_color-list",
+      "sha256": "9d3a0c0c264e5dfab234e8abc89f95798556ef98bfcbfa2e324fe7ccffb551c4",
+      "dimensions": [
+        390,
+        844
+      ],
+      "filesystem_mtime_utc": "2026-10-29T10:40:54.725353+00:00",
+      "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12 headless"
+    },
+    {
+      "file": "MC-settled-space-390-light.png",
+      "unit": "MC",
+      "state": "settled-space",
+      "viewport": "390x844",
+      "dpr": 1,
+      "theme": "light",
+      "url": "http://127.0.0.1:4181/",
+      "time": "2026-10-29T10:40:56.292Z",
+      "kind": "viewport",
+      "interventions": "none",
+      "focused": "studio-config-accent_color-list",
+      "sha256": "9d3a0c0c264e5dfab234e8abc89f95798556ef98bfcbfa2e324fe7ccffb551c4",
+      "dimensions": [
+        390,
+        844
+      ],
+      "filesystem_mtime_utc": "2026-10-29T10:40:56.292572+00:00",
+      "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12 headless"
+    },
+    {
+      "file": "MC-settled-enter-second-390-light.png",
+      "unit": "MC",
+      "state": "settled-enter-second",
+      "viewport": "390x844",
+      "dpr": 1,
+      "theme": "light",
+      "url": "http://127.0.0.1:4181/",
+      "time": "2026-10-29T10:40:57.858Z",
+      "kind": "viewport",
+      "interventions": "none",
+      "focused": "studio-config-accent_color-list",
+      "sha256": "9d3a0c0c264e5dfab234e8abc89f95798556ef98bfcbfa2e324fe7ccffb551c4",
+      "dimensions": [
+        390,
+        844
+      ],
+      "filesystem_mtime_utc": "2026-10-29T10:40:57.858499+00:00",
+      "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12 headless"
+    },
+    {
+      "file": "MC-inspector-unmapped-1440-light.png",
+      "viewport": "1440x900",
+      "theme": "light",
+      "url": "http://127.0.0.1:4181/",
+      "run_started_at": "2026-10-29T10:39:02.012Z",
+      "time_note": "Per-frame UTC was not recorded; filesystem mtime below is not a shutter timestamp.",
+      "sha256": "0939d1933c5bac379b6d728f8effc4cbe4d24b9139f8e5ba58d83207fc0a1d15",
+      "dimensions": [
+        1440,
+        900
+      ],
+      "filesystem_mtime_utc": "2026-10-29T10:39:12.932332+00:00",
+      "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12 headless",
+      "dpr": 1
+    },
+    {
+      "file": "MC-inspector-unmapped-1440-dark.png",
+      "viewport": "1440x900",
+      "theme": "dark",
+      "url": "http://127.0.0.1:4181/",
+      "run_started_at": "2026-10-29T10:39:02.012Z",
+      "time_note": "Per-frame UTC was not recorded; filesystem mtime below is not a shutter timestamp.",
+      "sha256": "9c6c0baf17631cdbe30eadecf0679b7e9fd31fd6773d6ef1a5589b3fbdb25bc4",
+      "dimensions": [
+        1440,
+        900
+      ],
+      "filesystem_mtime_utc": "2026-10-29T10:39:23.263806+00:00",
+      "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12 headless",
+      "dpr": 1
+    },
+    {
+      "file": "MC-inspector-unmapped-390-light.png",
+      "viewport": "390x844",
+      "theme": "light",
+      "url": "http://127.0.0.1:4181/",
+      "run_started_at": "2026-10-29T10:39:02.012Z",
+      "time_note": "Per-frame UTC was not recorded; filesystem mtime below is not a shutter timestamp.",
+      "sha256": "1e85a7f529b79d1918255ced3d2c1c66858f4a8535958b89a452b66e29d11f50",
+      "dimensions": [
+        390,
+        844
+      ],
+      "filesystem_mtime_utc": "2026-10-29T10:39:33.241480+00:00",
+      "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12 headless",
+      "dpr": 1
+    },
+    {
+      "file": "MC-root200-preview-720-light.png",
+      "viewport": "720x900",
+      "theme": "light",
+      "url": "http://127.0.0.1:4181/",
+      "interventions": "root font-size 200%",
+      "run_started_at": "2026-10-29T10:36:20.652Z",
+      "time_note": "Per-frame UTC was not recorded; filesystem mtime below is not a shutter timestamp.",
+      "sha256": "d3162bc0581746a38fe65ac9e55372eedcccc7d7a96977efef2d64b6cd80aaa6",
+      "dimensions": [
+        720,
+        900
+      ],
+      "filesystem_mtime_utc": "2026-10-29T10:37:00.894352+00:00",
+      "tool": "Playwright 1.63.0 / Chromium 153.0.8010.12 headless",
+      "dpr": 1
+    }
+  ]
+}

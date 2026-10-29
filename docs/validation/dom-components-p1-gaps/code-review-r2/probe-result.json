@@ -1,0 +1,41 @@
+{
+  "results": [
+    {
+      "id": "static-theme",
+      "root": "<section data-rustify-scope=\"theme-preview\" data-rustify-theme-css=\"static-theme\">...</section>",
+      "revision": "244f58fc9ba38144099950acf33eb8aa83190768",
+      "modes": [
+        {
+          "mode": "light",
+          "background": "rgb(21, 112, 239)",
+          "primary": "rgb(21 112 239)"
+        },
+        {
+          "mode": "dark",
+          "background": "rgb(83, 177, 253)",
+          "primary": "rgb(83 177 253)"
+        }
+      ]
+    },
+    {
+      "id": "brand\"&copy;<dark>",
+      "root": "<section data-rustify-scope=\"theme-preview\" data-rustify-theme-css=\"brand&quot;&amp;copy;&lt;dark&gt;\">...</section>",
+      "revision": "244f58fc9ba38144099950acf33eb8aa83190768",
+      "modes": [
+        {
+          "mode": "light",
+          "background": "rgb(21, 112, 239)",
+          "primary": "rgb(21 112 239)"
+        },
+        {
+          "mode": "dark",
+          "background": "rgb(83, 177, 253)",
+          "primary": "rgb(83 177 253)"
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "failed": [],
+  "csp": []
+}

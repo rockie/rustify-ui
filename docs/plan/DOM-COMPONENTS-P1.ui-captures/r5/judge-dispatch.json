@@ -1,0 +1,133 @@
+{
+  "round": 5,
+  "mode": "manual",
+  "fork_turns": "none",
+  "model": "inherited host default; exact model identifier and effort not exposed by collaboration tool",
+  "rubric": "exact judge.md template, copied into per-unit task files",
+  "forbidden": [
+    "code",
+    "diffs",
+    "commit messages",
+    "repair records",
+    "full reports",
+    "machine checks",
+    "threshold"
+  ],
+  "judges": {
+    "U1": {
+      "task": "/root/ui_r5_u1",
+      "instructions": "judge-inputs/task-U1.md",
+      "current_manifest": "capture-U1.md",
+      "previous_judge": "judge-inputs/r4-judge-U1.md",
+      "previous_images": "judge-inputs/r4-images-U1.txt",
+      "input_sha256": {
+        "judge-inputs/task-U1.md": "7426770a5681a5db3fd1d9620e81f1ad2027c21b17c8190dfead7a6af2f2127a",
+        "capture-U1.md": "a4c0ec67c211cce153b49a35b7dce8e8413e18976f0608fd22b902d7e9400933",
+        "judge-inputs/r4-judge-U1.md": "93de75c16c5708f4238fc508d409da6c9b0c921047c4829406da1b319b745e72",
+        "judge-inputs/r4-images-U1.txt": "a8263fcd7d01d158e789bfb3a45503a24b8f3453d5849063e303c8c1989567d1"
+      }
+    },
+    "U2": {
+      "task": "/root/ui_r5_u2",
+      "instructions": "judge-inputs/task-U2.md",
+      "current_manifest": "capture-U2.md",
+      "previous_judge": "judge-inputs/r4-judge-U2.md",
+      "previous_images": "judge-inputs/r4-images-U2.txt",
+      "input_sha256": {
+        "judge-inputs/task-U2.md": "845ec33efc9a341168d8cc7978b8187ce03a2ec7438ca99eaba3b24653eba3d7",
+        "capture-U2.md": "daf0a4563edad5fb759988f838d163c8f9ba4b1f75c828214d3a74fc2e941f41",
+        "judge-inputs/r4-judge-U2.md": "cac0cc1339af38718a7557320ff3bc9be8fdadd82e349d96df7c8fd424588dca",
+        "judge-inputs/r4-images-U2.txt": "42e357b9ea6eed1c906195a0c4c46730ab582b571c79913b95ff226b8a0a4a5e"
+      }
+    },
+    "U3": {
+      "task": "/root/ui_r5_u3",
+      "instructions": "judge-inputs/task-U3.md",
+      "current_manifest": "capture-U3.md",
+      "previous_judge": "judge-inputs/r4-judge-U3.md",
+      "previous_images": "judge-inputs/r4-images-U3.txt",
+      "input_sha256": {
+        "judge-inputs/task-U3.md": "b480f9259677d085ab7bc27b3dcb14e084d711834df964f17694cf467129873b",
+        "capture-U3.md": "4920b08c580738b28fb1b5d7fb98caaef56dc6b60a52f1dcec1af9f5d4ced0a1",
+        "judge-inputs/r4-judge-U3.md": "bd3e9773d3654c9c57cf56a180a02da3c0bfd9fbc9cd97d0e168c149de55a565",
+        "judge-inputs/r4-images-U3.txt": "59937325ac267b809ecfc3a4ab212b412d77ed9a022d481d253f395d961a1b48"
+      }
+    },
+    "U4": {
+      "task": "/root/ui_r5_u4",
+      "instructions": "judge-inputs/task-U4.md",
+      "current_manifest": "capture-U4.md",
+      "previous_judge": "judge-inputs/r4-judge-U4.md",
+      "previous_images": "judge-inputs/r4-images-U4.txt",
+      "input_sha256": {
+        "judge-inputs/task-U4.md": "edc0abaddf7bb7e12108cf40543be80306003eaab718dd3a97015e05a06d4a84",
+        "capture-U4.md": "528650e646eadcf6b584bf8c330570b1c7f6c001543d2a3a105f28f7483e907e",
+        "judge-inputs/r4-judge-U4.md": "6003fd8e76937402da12529c14819fedc57819226289fd789fe7c5c565f564d9",
+        "judge-inputs/r4-images-U4.txt": "01dee7723c70f144a1f4ef7a7214721d97d303a896ef29d2fcbf69d774dcc507"
+      }
+    },
+    "U5": {
+      "task": "/root/ui_r5_u5",
+      "instructions": "judge-inputs/task-U5.md",
+      "current_manifest": "capture-U5.md",
+      "previous_judge": "judge-inputs/r4-judge-U5.md",
+      "previous_images": "judge-inputs/r4-images-U5.txt",
+      "input_sha256": {
+        "judge-inputs/task-U5.md": "f8b7c45880b83ba925927ab522cc732977ce782ce5e14d02d96e78c19069fbe8",
+        "capture-U5.md": "d7bd8f226929a0f6891bc4dca7d006269894f9777adef53b0bf302216cd31b41",
+        "judge-inputs/r4-judge-U5.md": "0f7b1b0baca7b727d407d01cf9074f16c7b49b0f04252c881026dda034b7f82f",
+        "judge-inputs/r4-images-U5.txt": "752af217965d5d685553d0d63693a0990fae16b131c2e862bd268301e1f71008"
+      }
+    },
+    "U6": {
+      "task": "/root/ui_r5_u6",
+      "instructions": "judge-inputs/task-U6.md",
+      "current_manifest": "capture-U6.md",
+      "previous_judge": "judge-inputs/r4-judge-U6.md",
+      "previous_images": "judge-inputs/r4-images-U6.txt",
+      "input_sha256": {
+        "judge-inputs/task-U6.md": "5bb29a81a9bdf48b15c9d295b4a82ca108f918a80e4d7917985bc65959ade5dc",
+        "capture-U6.md": "df63e0201b8520c680372b9ad4c741041d3c6aa3ac88f1dc5c9028741f8f3abf",
+        "judge-inputs/r4-judge-U6.md": "6a7b475d28220fcaaa0c80308f0b8ab16106b7847d8e275da26bc3f1f9d520dc",
+        "judge-inputs/r4-images-U6.txt": "1c5f4b25d51b4ed6aa66234038f633db9ecc5b78e152c8dba374ce7b4c8b3ab8"
+      }
+    },
+    "U7": {
+      "task": "/root/ui_r5_u7",
+      "instructions": "judge-inputs/task-U7.md",
+      "current_manifest": "capture-U7.md",
+      "previous_judge": "judge-inputs/r4-judge-U7.md",
+      "previous_images": "judge-inputs/r4-images-U7.txt",
+      "input_sha256": {
+        "judge-inputs/task-U7.md": "eb778c9ce7207d01574cb98c045b1689d7ade5172ded23891487e83d46aad064",
+        "capture-U7.md": "4fa7ca02fd69abc3cd5c510067a1e754cb638fa16e133c5d66044e7de297fe99",
+        "judge-inputs/r4-judge-U7.md": "ef40ec72d535ec7dfbc5261cb00741e526b98194dd66cccf85b7e6424c3bcc45",
+        "judge-inputs/r4-images-U7.txt": "cb57915d67cd94f10f95f1e8eaec9307a02169cf9fd54c02aa4955765238d37b"
+      },
+      "dispatch_events": [
+        {
+          "event": "initial attempt failed",
+          "reason": "Selected model is at capacity. Please try a different model."
+        },
+        {
+          "event": "followup retry",
+          "model": "same inherited default",
+          "result": "reviewer reports opening all 26 current originals and 9 target images; final result pending"
+        }
+      ]
+    }
+  },
+  "supplementary_judge": {
+    "task": "/root/ui_r5_u2_b",
+    "basis": "Initial U2 reviewer explicitly reported that the affected-token disclosure was not expanded in the frozen packet. Two new real-product frames were captured; no product code changed.",
+    "instructions": "judge-inputs/task-U2-b.md",
+    "current_manifest": "capture-U2-b.md",
+    "previous_judge": "judge-inputs/r4-judge-U2.md",
+    "previous_images": "judge-inputs/r4-images-U2.txt",
+    "input_sha256": {
+      "judge-inputs/task-U2-b.md": "f72b407b9c4bfc4656df1b773d675c135899a783671a21cc171fc2a2e756663f",
+      "capture-U2-b.md": "5076765098a0a9f6baefe0e595f9610eec0ba802050074e45168f49b71022e1c",
+      "U2-supplement-actions.log": "12145f421899a2fb5f0536923be8ae27bbc5d68cc2eafee8617f2b9609bbced3"
+    }
+  }
+}

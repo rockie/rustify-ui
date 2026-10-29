@@ -1,0 +1,26 @@
+{
+  "report": "docs/plan/DOM-COMPONENTS-P1.ui-review.r6.md",
+  "report_sha256": "sha256:85585f488ef1ebfd4aae566ae1cab1794894e0891c3eca80c6d58345367655a1",
+  "verdict": "通过验收",
+  "scores": [
+    "10",
+    "10",
+    "10",
+    "10",
+    "10",
+    "10",
+    "9.7"
+  ],
+  "minimum": "9.7",
+  "threshold": "8",
+  "p0": 0,
+  "p1": 0,
+  "p2": 1,
+  "open_gap": "UI-216",
+  "local_links_checked": 605,
+  "missing_links": [],
+  "new_event_set_matches_state": true,
+  "head_unchanged": true,
+  "product_diff_empty": true,
+  "services_stopped": true
+}

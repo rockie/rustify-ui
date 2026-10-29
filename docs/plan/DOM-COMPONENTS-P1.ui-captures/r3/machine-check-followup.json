@@ -1,0 +1,737 @@
+{
+  "at": "2026-10-27T15:54:08.300Z",
+  "root200": {
+    "#studio-editor": {
+      "clientWidth": 319,
+      "scrollWidth": 398,
+      "overflowX": "auto",
+      "items": [
+        {
+          "el": "div",
+          "text": "Rustify LightMatches “Rustify Light”Not ",
+          "left": 40,
+          "right": 449,
+          "top": 24,
+          "clipRight": 319
+        },
+        {
+          "el": "span[preview-mode-label]",
+          "text": "Preview mode",
+          "left": 481,
+          "right": 652,
+          "top": 38,
+          "clipRight": 319
+        },
+        {
+          "el": "span",
+          "text": "Light",
+          "left": 502,
+          "right": 562,
+          "top": 99,
+          "clipRight": 319
+        },
+        {
+          "el": "span",
+          "text": "Dark",
+          "left": 603,
+          "right": 659,
+          "top": 99,
+          "clipRight": 319
+        },
+        {
+          "el": "div",
+          "text": "UndoRedo",
+          "left": 40,
+          "right": 449,
+          "top": 180,
+          "clipRight": 319
+        },
+        {
+          "el": "span",
+          "text": "Import",
+          "left": 252,
+          "right": 334,
+          "top": 273,
+          "clipRight": 319
+        },
+        {
+          "el": "span",
+          "text": "Export",
+          "left": 388,
+          "right": 464,
+          "top": 273,
+          "clipRight": 319
+        },
+        {
+          "el": "span",
+          "text": "Overridden · Light",
+          "left": 200,
+          "right": 321,
+          "top": 6442,
+          "clipRight": 319
+        },
+        {
+          "el": "span",
+          "text": "Overridden · Light",
+          "left": 200,
+          "right": 321,
+          "top": 6751,
+          "clipRight": 319
+        },
+        {
+          "el": "span",
+          "text": "Overridden · Light",
+          "left": 200,
+          "right": 321,
+          "top": 7089,
+          "clipRight": 319
+        },
+        {
+          "el": "span",
+          "text": "Overridden · Light",
+          "left": 200,
+          "right": 321,
+          "top": 7488,
+          "clipRight": 319
+        },
+        {
+          "el": "dt",
+          "text": "Effective value",
+          "left": 32,
+          "right": 352,
+          "top": 7772,
+          "clipRight": 319
+        }
+      ]
+    },
+    ".studio-previews": {
+      "clientWidth": 400,
+      "scrollWidth": 405,
+      "overflowX": "auto",
+      "items": [
+        {
+          "el": "button[renderer-compare]",
+          "text": "DOM + GPU",
+          "left": 544,
+          "right": 725,
+          "top": 653,
+          "clipRight": 720
+        },
+        {
+          "el": "span",
+          "text": "Create · 0",
+          "left": 701,
+          "right": 767,
+          "top": 4185,
+          "clipRight": 720
+        },
+        {
+          "el": "span",
+          "text": "Disabled",
+          "left": 674,
+          "right": 733,
+          "top": 5361,
+          "clipRight": 720
+        },
+        {
+          "el": "span",
+          "text": "Create · 0",
+          "left": 701,
+          "right": 767,
+          "top": 12216,
+          "clipRight": 720
+        },
+        {
+          "el": "span",
+          "text": "Disabled",
+          "left": 674,
+          "right": 733,
+          "top": 13392,
+          "clipRight": 720
+        }
+      ]
+    }
+  },
+  "root200EditorEnd": {
+    "#studio-editor": {
+      "clientWidth": 319,
+      "scrollWidth": 398,
+      "overflowX": "auto",
+      "items": [
+        {
+          "el": "div",
+          "text": "Rustify LightMatches “Rustify Light”Not ",
+          "left": 40,
+          "right": 449,
+          "top": 24,
+          "clipRight": 319
+        },
+        {
+          "el": "span[preview-mode-label]",
+          "text": "Preview mode",
+          "left": 481,
+          "right": 652,
+          "top": 38,
+          "clipRight": 319
+        },
+        {
+          "el": "span",
+          "text": "Light",
+          "left": 502,
+          "right": 562,
+          "top": 99,
+          "clipRight": 319
+        },
+        {
+          "el": "span",
+          "text": "Dark",
+          "left": 603,
+          "right": 659,
+          "top": 99,
+          "clipRight": 319
+        },
+        {
+          "el": "div",
+          "text": "UndoRedo",
+          "left": 40,
+          "right": 449,
+          "top": 180,
+          "clipRight": 319
+        },
+        {
+          "el": "span",
+          "text": "Import",
+          "left": 252,
+          "right": 334,
+          "top": 273,
+          "clipRight": 319
+        },
+        {
+          "el": "span",
+          "text": "Export",
+          "left": 388,
+          "right": 464,
+          "top": 273,
+          "clipRight": 319
+        },
+        {
+          "el": "span",
+          "text": "Overridden · Light",
+          "left": 200,
+          "right": 321,
+          "top": -8252,
+          "clipRight": 319
+        },
+        {
+          "el": "span",
+          "text": "Overridden · Light",
+          "left": 200,
+          "right": 321,
+          "top": -7943,
+          "clipRight": 319
+        },
+        {
+          "el": "span",
+          "text": "Overridden · Light",
+          "left": 200,
+          "right": 321,
+          "top": -7605,
+          "clipRight": 319
+        },
+        {
+          "el": "span",
+          "text": "Overridden · Light",
+          "left": 200,
+          "right": 321,
+          "top": -7206,
+          "clipRight": 319
+        },
+        {
+          "el": "dt",
+          "text": "Effective value",
+          "left": 32,
+          "right": 352,
+          "top": -6922,
+          "clipRight": 319
+        }
+      ]
+    },
+    ".studio-previews": {
+      "clientWidth": 400,
+      "scrollWidth": 405,
+      "overflowX": "auto",
+      "items": [
+        {
+          "el": "button[renderer-compare]",
+          "text": "DOM + GPU",
+          "left": 544,
+          "right": 725,
+          "top": 653,
+          "clipRight": 720
+        },
+        {
+          "el": "span",
+          "text": "Create · 0",
+          "left": 701,
+          "right": 767,
+          "top": 4185,
+          "clipRight": 720
+        },
+        {
+          "el": "span",
+          "text": "Disabled",
+          "left": 674,
+          "right": 733,
+          "top": 5361,
+          "clipRight": 720
+        },
+        {
+          "el": "span",
+          "text": "Create · 0",
+          "left": 701,
+          "right": 767,
+          "top": 12216,
+          "clipRight": 720
+        },
+        {
+          "el": "span",
+          "text": "Disabled",
+          "left": 674,
+          "right": 733,
+          "top": 13392,
+          "clipRight": 720
+        }
+      ]
+    }
+  },
+  "linkFocus": [
+    {
+      "id": "type-link",
+      "focusVisible": true,
+      "outline": "solid 2px rgb(141, 164, 239)",
+      "offset": "2px",
+      "radius": "1.26px",
+      "decoration": "none",
+      "transition": "all 0.15s"
+    },
+    {
+      "id": "type-long-link",
+      "focusVisible": true,
+      "outline": "solid 2px rgb(141, 164, 239)",
+      "offset": "2px",
+      "radius": "1.05px",
+      "decoration": "none",
+      "transition": "all 0.15s"
+    }
+  ],
+  "studioCode": [
+    {
+      "text": "ThemeDocument",
+      "variant": "soft",
+      "color": null,
+      "hc": false,
+      "fg": "rgb(21, 112, 239)",
+      "bg": "color(srgb 0.0823529 0.439216 0.937255 / 0.12)",
+      "a11": null,
+      "a3": null,
+      "a9": null,
+      "contrast": null,
+      "primary": "rgb(21, 112, 239)",
+      "primaryFg": "rgb(255, 255, 255)"
+    },
+    {
+      "text": "ThemeDocument",
+      "variant": "soft",
+      "color": null,
+      "hc": false,
+      "fg": "rgb(83, 177, 253)",
+      "bg": "color(srgb 0.32549 0.694118 0.992157 / 0.12)",
+      "a11": null,
+      "a3": null,
+      "a9": null,
+      "contrast": null,
+      "primary": "rgb(83, 177, 253)",
+      "primaryFg": "rgb(12, 17, 29)"
+    }
+  ],
+  "catalogCode": [
+    {
+      "text": "let layout = Responsive:",
+      "variant": "soft",
+      "color": null,
+      "hc": false,
+      "fg": "rgba(0, 43, 183, 0.773)",
+      "bg": "rgba(0, 71, 241, 0.07)",
+      "a11": "rgba(0, 43, 183, 0.773)",
+      "a3": "rgba(0, 71, 241, 0.07)",
+      "a9": "rgba(0, 49, 210, 0.757)",
+      "contrast": "rgb(255, 255, 255)",
+      "primary": "rgb(62, 99, 221)",
+      "primaryFg": "rgb(255, 255, 255)"
+    },
+    {
+      "text": "console.log()",
+      "variant": "solid",
+      "color": "indigo",
+      "hc": false,
+      "fg": "rgb(255, 255, 255)",
+      "bg": "rgba(0, 49, 210, 0.757)",
+      "a11": "rgba(0, 43, 183, 0.773)",
+      "a3": "rgba(0, 71, 241, 0.07)",
+      "a9": "rgba(0, 49, 210, 0.757)",
+      "contrast": "rgb(255, 255, 255)",
+      "primary": "rgb(62, 99, 221)",
+      "primaryFg": "rgb(255, 255, 255)"
+    },
+    {
+      "text": "console.log()",
+      "variant": "solid",
+      "color": "indigo",
+      "hc": true,
+      "fg": "rgb(253, 253, 254)",
+      "bg": "rgb(31, 45, 92)",
+      "a11": "rgba(0, 43, 183, 0.773)",
+      "a3": "rgba(0, 71, 241, 0.07)",
+      "a9": "rgba(0, 49, 210, 0.757)",
+      "contrast": "rgb(255, 255, 255)",
+      "primary": "rgb(62, 99, 221)",
+      "primaryFg": "rgb(255, 255, 255)"
+    },
+    {
+      "text": "console.log()",
+      "variant": "solid",
+      "color": "gray",
+      "hc": false,
+      "fg": "rgb(255, 255, 255)",
+      "bg": "rgba(0, 0, 0, 0.447)",
+      "a11": "rgba(0, 0, 0, 0.608)",
+      "a3": "rgba(0, 0, 0, 0.06)",
+      "a9": "rgba(0, 0, 0, 0.447)",
+      "contrast": "rgb(255, 255, 255)",
+      "primary": "rgb(62, 99, 221)",
+      "primaryFg": "rgb(255, 255, 255)"
+    },
+    {
+      "text": "console.log()",
+      "variant": "solid",
+      "color": "gray",
+      "hc": true,
+      "fg": "rgb(252, 252, 252)",
+      "bg": "rgb(32, 32, 32)",
+      "a11": "rgba(0, 0, 0, 0.608)",
+      "a3": "rgba(0, 0, 0, 0.06)",
+      "a9": "rgba(0, 0, 0, 0.447)",
+      "contrast": "rgb(255, 255, 255)",
+      "primary": "rgb(62, 99, 221)",
+      "primaryFg": "rgb(255, 255, 255)"
+    },
+    {
+      "text": "console.log()",
+      "variant": "soft",
+      "color": "indigo",
+      "hc": false,
+      "fg": "rgba(0, 43, 183, 0.773)",
+      "bg": "rgba(0, 71, 241, 0.07)",
+      "a11": "rgba(0, 43, 183, 0.773)",
+      "a3": "rgba(0, 71, 241, 0.07)",
+      "a9": "rgba(0, 49, 210, 0.757)",
+      "contrast": "rgb(255, 255, 255)",
+      "primary": "rgb(62, 99, 221)",
+      "primaryFg": "rgb(255, 255, 255)"
+    },
+    {
+      "text": "console.log()",
+      "variant": "soft",
+      "color": "indigo",
+      "hc": true,
+      "fg": "rgb(31, 45, 92)",
+      "bg": "rgba(0, 71, 241, 0.07)",
+      "a11": "rgba(0, 43, 183, 0.773)",
+      "a3": "rgba(0, 71, 241, 0.07)",
+      "a9": "rgba(0, 49, 210, 0.757)",
+      "contrast": "rgb(255, 255, 255)",
+      "primary": "rgb(62, 99, 221)",
+      "primaryFg": "rgb(255, 255, 255)"
+    },
+    {
+      "text": "console.log()",
+      "variant": "soft",
+      "color": "gray",
+      "hc": false,
+      "fg": "rgba(0, 0, 0, 0.608)",
+      "bg": "rgba(0, 0, 0, 0.06)",
+      "a11": "rgba(0, 0, 0, 0.608)",
+      "a3": "rgba(0, 0, 0, 0.06)",
+      "a9": "rgba(0, 0, 0, 0.447)",
+      "contrast": "rgb(255, 255, 255)",
+      "primary": "rgb(62, 99, 221)",
+      "primaryFg": "rgb(255, 255, 255)"
+    },
+    {
+      "text": "console.log()",
+      "variant": "soft",
+      "color": "gray",
+      "hc": true,
+      "fg": "rgb(32, 32, 32)",
+      "bg": "rgba(0, 0, 0, 0.06)",
+      "a11": "rgba(0, 0, 0, 0.608)",
+      "a3": "rgba(0, 0, 0, 0.06)",
+      "a9": "rgba(0, 0, 0, 0.447)",
+      "contrast": "rgb(255, 255, 255)",
+      "primary": "rgb(62, 99, 221)",
+      "primaryFg": "rgb(255, 255, 255)"
+    },
+    {
+      "text": "console.log()",
+      "variant": "outline",
+      "color": "indigo",
+      "hc": false,
+      "fg": "rgba(0, 43, 183, 0.773)",
+      "bg": "rgba(0, 0, 0, 0)",
+      "a11": "rgba(0, 43, 183, 0.773)",
+      "a3": "rgba(0, 71, 241, 0.07)",
+      "a9": "rgba(0, 49, 210, 0.757)",
+      "contrast": "rgb(255, 255, 255)",
+      "primary": "rgb(62, 99, 221)",
+      "primaryFg": "rgb(255, 255, 255)"
+    },
+    {
+      "text": "console.log()",
+      "variant": "outline",
+      "color": "indigo",
+      "hc": true,
+      "fg": "rgb(31, 45, 92)",
+      "bg": "rgba(0, 0, 0, 0)",
+      "a11": "rgba(0, 43, 183, 0.773)",
+      "a3": "rgba(0, 71, 241, 0.07)",
+      "a9": "rgba(0, 49, 210, 0.757)",
+      "contrast": "rgb(255, 255, 255)",
+      "primary": "rgb(62, 99, 221)",
+      "primaryFg": "rgb(255, 255, 255)"
+    },
+    {
+      "text": "console.log()",
+      "variant": "outline",
+      "color": "gray",
+      "hc": false,
+      "fg": "rgba(0, 0, 0, 0.608)",
+      "bg": "rgba(0, 0, 0, 0)",
+      "a11": "rgba(0, 0, 0, 0.608)",
+      "a3": "rgba(0, 0, 0, 0.06)",
+      "a9": "rgba(0, 0, 0, 0.447)",
+      "contrast": "rgb(255, 255, 255)",
+      "primary": "rgb(62, 99, 221)",
+      "primaryFg": "rgb(255, 255, 255)"
+    },
+    {
+      "text": "console.log()",
+      "variant": "outline",
+      "color": "gray",
+      "hc": true,
+      "fg": "rgb(32, 32, 32)",
+      "bg": "rgba(0, 0, 0, 0)",
+      "a11": "rgba(0, 0, 0, 0.608)",
+      "a3": "rgba(0, 0, 0, 0.06)",
+      "a9": "rgba(0, 0, 0, 0.447)",
+      "contrast": "rgb(255, 255, 255)",
+      "primary": "rgb(62, 99, 221)",
+      "primaryFg": "rgb(255, 255, 255)"
+    },
+    {
+      "text": "console.log()",
+      "variant": "ghost",
+      "color": "indigo",
+      "hc": false,
+      "fg": "rgba(0, 43, 183, 0.773)",
+      "bg": "rgba(0, 0, 0, 0)",
+      "a11": "rgba(0, 43, 183, 0.773)",
+      "a3": "rgba(0, 71, 241, 0.07)",
+      "a9": "rgba(0, 49, 210, 0.757)",
+      "contrast": "rgb(255, 255, 255)",
+      "primary": "rgb(62, 99, 221)",
+      "primaryFg": "rgb(255, 255, 255)"
+    },
+    {
+      "text": "console.log()",
+      "variant": "ghost",
+      "color": "indigo",
+      "hc": true,
+      "fg": "rgb(31, 45, 92)",
+      "bg": "rgba(0, 0, 0, 0)",
+      "a11": "rgba(0, 43, 183, 0.773)",
+      "a3": "rgba(0, 71, 241, 0.07)",
+      "a9": "rgba(0, 49, 210, 0.757)",
+      "contrast": "rgb(255, 255, 255)",
+      "primary": "rgb(62, 99, 221)",
+      "primaryFg": "rgb(255, 255, 255)"
+    },
+    {
+      "text": "console.log()",
+      "variant": "ghost",
+      "color": "gray",
+      "hc": false,
+      "fg": "rgba(0, 0, 0, 0.608)",
+      "bg": "rgba(0, 0, 0, 0)",
+      "a11": "rgba(0, 0, 0, 0.608)",
+      "a3": "rgba(0, 0, 0, 0.06)",
+      "a9": "rgba(0, 0, 0, 0.447)",
+      "contrast": "rgb(255, 255, 255)",
+      "primary": "rgb(62, 99, 221)",
+      "primaryFg": "rgb(255, 255, 255)"
+    },
+    {
+      "text": "console.log()",
+      "variant": "ghost",
+      "color": "gray",
+      "hc": true,
+      "fg": "rgb(32, 32, 32)",
+      "bg": "rgba(0, 0, 0, 0)",
+      "a11": "rgba(0, 0, 0, 0.608)",
+      "a3": "rgba(0, 0, 0, 0.06)",
+      "a9": "rgba(0, 0, 0, 0.447)",
+      "contrast": "rgb(255, 255, 255)",
+      "primary": "rgb(62, 99, 221)",
+      "primaryFg": "rgb(255, 255, 255)"
+    },
+    {
+      "text": "code",
+      "variant": "soft",
+      "color": null,
+      "hc": false,
+      "fg": "rgba(0, 43, 183, 0.773)",
+      "bg": "rgba(0, 71, 241, 0.07)",
+      "a11": "rgba(0, 43, 183, 0.773)",
+      "a3": "rgba(0, 71, 241, 0.07)",
+      "a9": "rgba(0, 49, 210, 0.757)",
+      "contrast": "rgb(255, 255, 255)",
+      "primary": "rgb(62, 99, 221)",
+      "primaryFg": "rgb(255, 255, 255)"
+    },
+    {
+      "text": "The quick brown fox jump",
+      "variant": "ghost",
+      "color": null,
+      "hc": false,
+      "fg": "rgb(28, 32, 36)",
+      "bg": "rgba(0, 0, 0, 0)",
+      "a11": "rgba(0, 43, 183, 0.773)",
+      "a3": "rgba(0, 71, 241, 0.07)",
+      "a9": "rgba(0, 49, 210, 0.757)",
+      "contrast": "rgb(255, 255, 255)",
+      "primary": "rgb(62, 99, 221)",
+      "primaryFg": "rgb(255, 255, 255)"
+    },
+    {
+      "text": "The quick brown fox jump",
+      "variant": "ghost",
+      "color": null,
+      "hc": false,
+      "fg": "rgb(28, 32, 36)",
+      "bg": "rgba(0, 0, 0, 0)",
+      "a11": "rgba(0, 43, 183, 0.773)",
+      "a3": "rgba(0, 71, 241, 0.07)",
+      "a9": "rgba(0, 49, 210, 0.757)",
+      "contrast": "rgb(255, 255, 255)",
+      "primary": "rgb(62, 99, 221)",
+      "primaryFg": "rgb(255, 255, 255)"
+    },
+    {
+      "text": "The quick brown fox jump",
+      "variant": "ghost",
+      "color": null,
+      "hc": false,
+      "fg": "rgb(28, 32, 36)",
+      "bg": "rgba(0, 0, 0, 0)",
+      "a11": "rgba(0, 43, 183, 0.773)",
+      "a3": "rgba(0, 71, 241, 0.07)",
+      "a9": "rgba(0, 49, 210, 0.757)",
+      "contrast": "rgb(255, 255, 255)",
+      "primary": "rgb(62, 99, 221)",
+      "primaryFg": "rgb(255, 255, 255)"
+    },
+    {
+      "text": "The quick brown fox jump",
+      "variant": "ghost",
+      "color": null,
+      "hc": false,
+      "fg": "rgb(28, 32, 36)",
+      "bg": "rgba(0, 0, 0, 0)",
+      "a11": "rgba(0, 43, 183, 0.773)",
+      "a3": "rgba(0, 71, 241, 0.07)",
+      "a9": "rgba(0, 49, 210, 0.757)",
+      "contrast": "rgb(255, 255, 255)",
+      "primary": "rgb(62, 99, 221)",
+      "primaryFg": "rgb(255, 255, 255)"
+    },
+    {
+      "text": "The quick brown fox jump",
+      "variant": "ghost",
+      "color": null,
+      "hc": false,
+      "fg": "rgb(28, 32, 36)",
+      "bg": "rgba(0, 0, 0, 0)",
+      "a11": "rgba(0, 43, 183, 0.773)",
+      "a3": "rgba(0, 71, 241, 0.07)",
+      "a9": "rgba(0, 49, 210, 0.757)",
+      "contrast": "rgb(255, 255, 255)",
+      "primary": "rgb(62, 99, 221)",
+      "primaryFg": "rgb(255, 255, 255)"
+    },
+    {
+      "text": "The quick brown fox jump",
+      "variant": "ghost",
+      "color": null,
+      "hc": false,
+      "fg": "rgb(28, 32, 36)",
+      "bg": "rgba(0, 0, 0, 0)",
+      "a11": "rgba(0, 43, 183, 0.773)",
+      "a3": "rgba(0, 71, 241, 0.07)",
+      "a9": "rgba(0, 49, 210, 0.757)",
+      "contrast": "rgb(255, 255, 255)",
+      "primary": "rgb(62, 99, 221)",
+      "primaryFg": "rgb(255, 255, 255)"
+    },
+    {
+      "text": "The quick brown fox jump",
+      "variant": "ghost",
+      "color": null,
+      "hc": false,
+      "fg": "rgb(28, 32, 36)",
+      "bg": "rgba(0, 0, 0, 0)",
+      "a11": "rgba(0, 43, 183, 0.773)",
+      "a3": "rgba(0, 71, 241, 0.07)",
+      "a9": "rgba(0, 49, 210, 0.757)",
+      "contrast": "rgb(255, 255, 255)",
+      "primary": "rgb(62, 99, 221)",
+      "primaryFg": "rgb(255, 255, 255)"
+    },
+    {
+      "text": "The quick brown fox jump",
+      "variant": "ghost",
+      "color": null,
+      "hc": false,
+      "fg": "rgb(28, 32, 36)",
+      "bg": "rgba(0, 0, 0, 0)",
+      "a11": "rgba(0, 43, 183, 0.773)",
+      "a3": "rgba(0, 71, 241, 0.07)",
+      "a9": "rgba(0, 49, 210, 0.757)",
+      "contrast": "rgb(255, 255, 255)",
+      "primary": "rgb(62, 99, 221)",
+      "primaryFg": "rgb(255, 255, 255)"
+    },
+    {
+      "text": "The quick brown fox jump",
+      "variant": "ghost",
+      "color": null,
+      "hc": false,
+      "fg": "rgb(28, 32, 36)",
+      "bg": "rgba(0, 0, 0, 0)",
+      "a11": "rgba(0, 43, 183, 0.773)",
+      "a3": "rgba(0, 71, 241, 0.07)",
+      "a9": "rgba(0, 49, 210, 0.757)",
+      "contrast": "rgb(255, 255, 255)",
+      "primary": "rgb(62, 99, 221)",
+      "primaryFg": "rgb(255, 255, 255)"
+    }
+  ]
+}

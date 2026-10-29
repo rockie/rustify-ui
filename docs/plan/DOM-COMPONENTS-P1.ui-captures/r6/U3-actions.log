@@ -1,0 +1,67 @@
+2026-10-28T16:10:15.996Z open Import at 1440
+2026-10-28T16:10:16.070Z paste valid v1 JSON (primary changed), click Review
+2026-10-28T16:10:16.627Z screenshot U3-import-review-1440-light.png
+2026-10-28T16:10:16.638Z scroll dialog to Apply
+2026-10-28T16:10:17.195Z screenshot U3-import-review-end-1440-light.png
+2026-10-28T16:10:17.229Z replace with {schema_version:999}, click Review
+2026-10-28T16:10:17.788Z screenshot U3-import-error-1440-light.png
+2026-10-28T16:10:17.805Z Escape
+2026-10-28T16:10:18.332Z preset search 'Graphite' → Built-in · Graphite → brand pink → gray Auto
+2026-10-28T16:10:18.470Z open Export
+2026-10-28T16:10:19.038Z screenshot U3-export-json-1440-light.png
+2026-10-28T16:10:19.099Z export kind → Compatible JSON v1 · lossy
+2026-10-28T16:10:19.686Z screenshot U3-export-v1-1440-light.png
+2026-10-28T16:10:19.773Z export kind → CSS · resolved values
+2026-10-28T16:10:20.353Z screenshot U3-export-css-1440-light.png
+2026-10-28T16:10:20.380Z open CSS profile list
+2026-10-28T16:10:20.952Z screenshot U3-export-css-profile-open-1440-light.png
+2026-10-28T16:10:20.954Z Escape (close list)
+2026-10-28T16:10:20.980Z open color notation list
+2026-10-28T16:10:21.550Z screenshot U3-export-css-notation-open-1440-light.png
+2026-10-28T16:10:21.552Z Escape (close list)
+2026-10-28T16:10:21.628Z export kind → Rust integration
+2026-10-28T16:10:22.200Z screenshot U3-export-rust-1440-light.png
+2026-10-28T16:10:22.231Z click Copy (clipboard permission granted)
+2026-10-28T16:10:23.101Z screenshot U3-export-copied-1440-light.png
+2026-10-28T16:10:23.105Z scroll exported code to its end
+2026-10-28T16:10:23.663Z screenshot U3-export-rust-end-1440-light.png
+2026-10-28T16:10:25.122Z open Import at 390
+2026-10-28T16:10:25.209Z paste valid v1 JSON (primary changed), click Review
+2026-10-28T16:10:25.744Z screenshot U3-import-review-390-light.png
+2026-10-28T16:10:25.757Z scroll dialog to Apply
+2026-10-28T16:10:26.292Z screenshot U3-import-review-end-390-light.png
+2026-10-28T16:10:26.310Z Escape
+2026-10-28T16:10:26.588Z preset search 'Graphite' → Built-in · Graphite → brand pink → gray Auto
+2026-10-28T16:10:26.638Z open Export
+2026-10-28T16:10:27.176Z screenshot U3-export-json-390-light.png
+2026-10-28T16:14:39.804Z EXTRA 1440: Import, paste valid v1 (primary changed), Review
+2026-10-28T16:14:39.814Z scroll clipped scrollers inside data-tools-dialog to their end: div.relative.w-full overflow-y:auto scrollTop 0→638; textarea[import-source].flex.min-h-16 overflow-y:auto scrollTop 2047→2059
+2026-10-28T16:14:40.368Z screenshot U3-import-review-bottom-1440-light.png
+2026-10-28T16:14:41.794Z EXTRA 390: Import, paste valid v1 (primary changed), Review
+2026-10-28T16:14:41.803Z scroll clipped scrollers inside data-tools-dialog to their end: div.relative.w-full overflow-y:auto scrollTop 0→1865; textarea[import-source].flex.min-h-16 overflow-y:auto scrollTop 2505→2516; thead overflow-y:hidden scrollTop 0→33
+2026-10-28T16:14:42.343Z screenshot U3-import-review-bottom-390-light.png
+2026-10-28T16:15:31.475Z SUP 390: Import, paste valid v1 (primary changed), Review
+2026-10-28T16:15:31.485Z SUP 390: scroll the dialog so the Identity group is in the middle of the viewport
+2026-10-28T16:15:32.027Z screenshot U3-import-review-mid-390-light.png
+2026-10-28T16:15:50.766Z preset search 'Graphite' → Built-in · Graphite → brand pink → gray Auto
+2026-10-28T16:15:50.921Z SUP2: open Export, kind → Rust integration
+2026-10-28T16:15:50.932Z SUP2: scroll the exported code to its vertical middle (scrollTop 531 of 1061)
+2026-10-28T16:15:51.484Z screenshot U3-export-rust-mid-1440-light.png
+2026-10-28T16:16:28.064Z FOCUS6: open Export
+2026-10-28T16:16:28.771Z FOCUS6: keyboard focus export-kind: focus, Shift+Tab, Tab; wait 700ms
+2026-10-28T16:16:29.335Z screenshot U3-export-kind-keyboard-focus-1440-light.png
+2026-10-28T16:16:29.339Z FOCUS6: Enter, ArrowDown in export format
+2026-10-28T16:16:29.900Z screenshot U3-export-kind-keyboard-open-1440-light.png
+2026-10-28T16:16:30.699Z FOCUS6: keyboard focus export-profile: focus, Shift+Tab, Tab; wait 700ms
+2026-10-28T16:16:31.249Z screenshot U3-export-profile-keyboard-focus-1440-light.png
+2026-10-28T16:16:31.956Z FOCUS6: keyboard focus export-color-format: focus, Shift+Tab, Tab; wait 700ms
+2026-10-28T16:16:32.518Z screenshot U3-export-color-format-keyboard-focus-1440-light.png
+2026-10-28T16:16:33.221Z FOCUS6: Tab to next control
+2026-10-28T16:16:33.782Z screenshot U3-export-next-keyboard-focus-1440-light.png
+2026-10-28T16:16:33.849Z FOCUS6: Escape, open Import
+2026-10-28T16:17:49.927Z FOCUS6B: open Import; focus actual import-format; Shift+Tab, Tab; wait 700ms (first capture used a nonexistent test id)
+2026-10-28T16:17:50.495Z screenshot U3-import-kind-keyboard-focus-1440-light.png
+2026-10-28T16:17:50.503Z FOCUS6B: Enter, ArrowDown in import format
+2026-10-28T16:17:51.050Z screenshot U3-import-kind-keyboard-open-1440-light.png
+2026-10-28T16:17:51.053Z FOCUS6B: Enter confirms highlighted import format
+2026-10-28T16:17:51.598Z screenshot U3-import-format-keyboard-selected-1440-light.png

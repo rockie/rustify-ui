@@ -1,0 +1,72 @@
+{
+  "attempt": 1,
+  "reason": "Both build output directories disappeared during capture; local disk missing and both preview servers returned HTTP 404. Root cause of directory removal is unknown.",
+  "proof": "capture-timeout-http.json",
+  "cells": [
+    {
+      "filename": "U3-export-copied-feedback-390-light.png",
+      "status": "missing",
+      "next_attempt": 2
+    },
+    {
+      "filename": "U3-export-v1-actions-390-light.png",
+      "status": "missing",
+      "next_attempt": 2
+    },
+    {
+      "filename": "U3-import-review-config-appearance-390-light.png",
+      "status": "missing",
+      "next_attempt": 2
+    },
+    {
+      "filename": "U3-import-review-config-scaling-390-light.png",
+      "status": "missing",
+      "next_attempt": 2
+    },
+    {
+      "filename": "U4-conflict-raw-end-1440-light.png",
+      "status": "missing",
+      "next_attempt": 2
+    },
+    {
+      "filename": "U7-supp-default-mixed-1280-light.png",
+      "status": "missing",
+      "next_attempt": 2
+    },
+    {
+      "filename": "U7-supp-default-mixed-390-light.png",
+      "status": "missing",
+      "next_attempt": 2
+    },
+    {
+      "filename": "U7-supp-default-primitives-1280-light.png",
+      "status": "missing",
+      "next_attempt": 2
+    },
+    {
+      "filename": "U7-supp-default-primitives-390-light.png",
+      "status": "missing",
+      "next_attempt": 2
+    },
+    {
+      "filename": "U7-supp-scale110-mixed-1280-light.png",
+      "status": "missing",
+      "next_attempt": 2
+    },
+    {
+      "filename": "U7-supp-scale110-mixed-390-light.png",
+      "status": "missing",
+      "next_attempt": 2
+    },
+    {
+      "filename": "U7-supp-scale110-primitives-1280-light.png",
+      "status": "missing",
+      "next_attempt": 2
+    },
+    {
+      "filename": "U7-supp-scale110-primitives-390-light.png",
+      "status": "missing",
+      "next_attempt": 2
+    }
+  ]
+}

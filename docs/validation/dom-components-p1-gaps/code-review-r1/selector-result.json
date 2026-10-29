@@ -1,0 +1,46 @@
+{
+  "marker": "data-rustify-theme-css=\"fixture-a\"",
+  "css": "tests/theme-export/target/site-root/scoped-rgb.css",
+  "before": {
+    "attributes": [
+      [
+        "id",
+        "target"
+      ],
+      [
+        "data-rustify-theme-css",
+        "fixture-a"
+      ],
+      [
+        "data-theme",
+        "dark"
+      ]
+    ],
+    "primary": "",
+    "runtimePrimary": "",
+    "buttonBackground": "rgba(0, 0, 0, 0)"
+  },
+  "after": {
+    "attributes": [
+      [
+        "id",
+        "target"
+      ],
+      [
+        "data-rustify-theme-css",
+        "fixture-a"
+      ],
+      [
+        "data-theme",
+        "dark"
+      ],
+      [
+        "data-rustify-scope",
+        "preview"
+      ]
+    ],
+    "primary": "rgb(255 180 190 / 0.8)",
+    "runtimePrimary": "",
+    "buttonBackground": "rgba(255, 180, 190, 0.8)"
+  }
+}

@@ -1,0 +1,58 @@
+2026-10-28T16:13:47.300Z catalog 1280: mount_layout_fixtures()
+2026-10-28T16:13:48.075Z screenshot U7-fixture-1280-light.png
+2026-10-28T16:13:48.076Z section element type-heading-matrix
+2026-10-28T16:13:48.675Z screenshot U7-type-heading-matrix-1280-light.png
+2026-10-28T16:13:48.676Z section element type-text-matrix
+2026-10-28T16:13:49.265Z screenshot U7-type-text-matrix-1280-light.png
+2026-10-28T16:13:49.266Z section element type-code-matrix
+2026-10-28T16:13:49.850Z screenshot U7-type-code-matrix-1280-light.png
+2026-10-28T16:13:49.851Z section element type-kbd-matrix
+2026-10-28T16:13:50.445Z screenshot U7-type-kbd-matrix-1280-light.png
+2026-10-28T16:13:50.446Z section element type-blockquote-matrix
+2026-10-28T16:13:51.022Z screenshot U7-type-blockquote-matrix-1280-light.png
+2026-10-28T16:13:51.023Z section element type-wrap-matrix
+2026-10-28T16:13:51.619Z screenshot U7-type-wrap-matrix-1280-light.png
+2026-10-28T16:13:51.620Z section element layout-container-matrix
+2026-10-28T16:13:52.214Z screenshot U7-layout-container-matrix-1280-light.png
+2026-10-28T16:13:52.214Z section element layout-inset-demonstration
+2026-10-28T16:13:52.793Z screenshot U7-layout-inset-demonstration-1280-light.png
+2026-10-28T16:13:52.793Z section element layout-reset-comparison
+2026-10-28T16:13:53.399Z screenshot U7-layout-reset-comparison-1280-light.png
+2026-10-28T16:13:53.467Z click scale 110, park pointer
+2026-10-28T16:13:54.242Z screenshot U7-scale110-1280-light.png
+2026-10-28T16:13:54.842Z screenshot U7-scale110-heading-1280-light.png
+2026-10-28T16:13:54.908Z click scale 95, park pointer
+2026-10-28T16:13:55.661Z screenshot U7-scale95-1280-light.png
+2026-10-28T16:13:56.258Z screenshot U7-scale95-heading-1280-light.png
+2026-10-28T16:13:56.391Z scale 100, click Invalid prop, park pointer
+2026-10-28T16:13:57.117Z screenshot U7-invalid-1280-light.png
+2026-10-28T16:13:57.666Z screenshot U7-invalid-detail-1280-light.png
+2026-10-28T16:14:07.849Z catalog 390: mount_layout_fixtures()
+2026-10-28T16:14:08.596Z screenshot U7-fixture-390-light.png
+2026-10-28T16:14:08.596Z section element type-heading-matrix
+2026-10-28T16:14:09.192Z screenshot U7-type-heading-matrix-390-light.png
+2026-10-28T16:14:09.192Z section element type-text-matrix
+2026-10-28T16:14:09.781Z screenshot U7-type-text-matrix-390-light.png
+2026-10-28T16:14:09.782Z section element type-code-matrix
+2026-10-28T16:14:10.385Z screenshot U7-type-code-matrix-390-light.png
+2026-10-28T16:14:10.386Z section element type-kbd-matrix
+2026-10-28T16:14:10.974Z screenshot U7-type-kbd-matrix-390-light.png
+2026-10-28T16:14:10.974Z section element type-blockquote-matrix
+2026-10-28T16:14:11.553Z screenshot U7-type-blockquote-matrix-390-light.png
+2026-10-28T16:14:11.554Z section element type-wrap-matrix
+2026-10-28T16:14:12.145Z screenshot U7-type-wrap-matrix-390-light.png
+2026-10-28T16:14:12.145Z section element layout-container-matrix
+2026-10-28T16:14:12.723Z screenshot U7-layout-container-matrix-390-light.png
+2026-10-28T16:14:12.724Z section element layout-inset-demonstration
+2026-10-28T16:14:13.307Z screenshot U7-layout-inset-demonstration-390-light.png
+2026-10-28T16:14:13.308Z section element layout-reset-comparison
+2026-10-28T16:14:13.903Z screenshot U7-layout-reset-comparison-390-light.png
+2026-10-28T16:54:09.909Z screenshot U7-matrix-scale110-390-light.png
+2026-10-28T16:54:10.518Z screenshot U7-matrix-scale110-heading-390-light.png
+2026-10-28T16:54:11.100Z screenshot U7-matrix-scale110-kbd-390-light.png
+2026-10-28T16:54:11.850Z screenshot U7-matrix-scale95-390-light.png
+2026-10-28T16:54:12.440Z screenshot U7-matrix-scale95-heading-390-light.png
+2026-10-28T16:54:13.030Z screenshot U7-matrix-scale95-kbd-390-light.png
+2026-10-28T16:54:13.820Z screenshot U7-matrix-invalid-390-light.png
+2026-10-28T16:54:14.365Z screenshot U7-matrix-invalid-detail-390-light.png
+2026-10-28T16:54:14.365Z 390: real scale 110%, scale 95%, then scale 100% and invalid prop; original page-clip plus detail sections

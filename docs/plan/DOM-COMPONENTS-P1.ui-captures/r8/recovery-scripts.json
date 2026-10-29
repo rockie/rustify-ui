@@ -1,0 +1,19 @@
+[
+  {
+    "source": "capture-detail-supplement.cjs",
+    "source_sha256": "79e471945a6db3db2586f1f77f773c8e6732dcb71fd8993e4fec3458a9bb2106",
+    "retry": "capture-detail-supplement-a2.cjs",
+    "changes": "append attempt -a2 to new screenshots; original operations unchanged"
+  },
+  {
+    "source": "capture-u3-supplement.cjs",
+    "source_sha256": "e16f47a87f4f5cbc5eebadda2ab4550abd9a620f7a2d1a4eac3c5a1e2ddb1dd1",
+    "retry": "capture-u3-supplement-a2.cjs",
+    "changes": "append attempt -a2 to new screenshots; original operations unchanged"
+  },
+  {
+    "source": "capture-u4-supplement.cjs",
+    "retry": "capture-u4-conflict-a2.cjs",
+    "changes": "only repeat the failed second-tab conflict/end frame; preserve five prior successful images; append -a2"
+  }
+]

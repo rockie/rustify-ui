@@ -1,0 +1,95 @@
+{
+  "at": "2026-10-29T10:08:26.029290+00:00",
+  "rows": [
+    {
+      "url": "http://127.0.0.1:4181/",
+      "status": 404,
+      "bytes": 9,
+      "body_if_error": "not found",
+      "disk_exists": false,
+      "disk_size": null,
+      "same_as_disk": false
+    },
+    {
+      "url": "http://127.0.0.1:4181/build-manifest.json",
+      "status": 404,
+      "bytes": 9,
+      "body_if_error": "not found",
+      "disk_exists": false,
+      "disk_size": null,
+      "same_as_disk": false
+    },
+    {
+      "url": "http://127.0.0.1:4181/index.html",
+      "status": 404,
+      "bytes": 9,
+      "body_if_error": "not found",
+      "disk_exists": false,
+      "disk_size": null,
+      "same_as_disk": false
+    },
+    {
+      "url": "http://127.0.0.1:4181/app.js",
+      "status": 404,
+      "bytes": 9,
+      "body_if_error": "not found",
+      "disk_exists": false,
+      "disk_size": null,
+      "same_as_disk": false
+    },
+    {
+      "url": "http://127.0.0.1:4181/theme-studio.wasm",
+      "status": 404,
+      "bytes": 9,
+      "body_if_error": "not found",
+      "disk_exists": false,
+      "disk_size": null,
+      "same_as_disk": false
+    },
+    {
+      "url": "http://127.0.0.1:4176/",
+      "status": 404,
+      "bytes": 9,
+      "body_if_error": "not found",
+      "disk_exists": false,
+      "disk_size": null,
+      "same_as_disk": false
+    },
+    {
+      "url": "http://127.0.0.1:4176/build-manifest.json",
+      "status": 404,
+      "bytes": 9,
+      "body_if_error": "not found",
+      "disk_exists": false,
+      "disk_size": null,
+      "same_as_disk": false
+    },
+    {
+      "url": "http://127.0.0.1:4176/index.html",
+      "status": 404,
+      "bytes": 9,
+      "body_if_error": "not found",
+      "disk_exists": false,
+      "disk_size": null,
+      "same_as_disk": false
+    },
+    {
+      "url": "http://127.0.0.1:4176/app.js",
+      "status": 404,
+      "bytes": 9,
+      "body_if_error": "not found",
+      "disk_exists": false,
+      "disk_size": null,
+      "same_as_disk": false
+    },
+    {
+      "url": "http://127.0.0.1:4176/component-catalog.wasm",
+      "status": 404,
+      "bytes": 9,
+      "body_if_error": "not found",
+      "disk_exists": false,
+      "disk_size": null,
+      "same_as_disk": false
+    }
+  ]
+}

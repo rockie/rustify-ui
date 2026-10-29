@@ -1,0 +1,157 @@
+{
+  "scores": {
+    "U1": {
+      "dimensions": [
+        "3.0",
+        "3.0",
+        "2.5",
+        "1.0"
+      ],
+      "total": "9.5",
+      "source": "judge-U1-c.md",
+      "all_attempt_totals": [
+        "10",
+        "9.6",
+        "9.5"
+      ]
+    },
+    "U2": {
+      "dimensions": [
+        "3.0",
+        "3.0",
+        "3.0",
+        "1.0"
+      ],
+      "total": "10.0",
+      "source": "judge-U2-c.md",
+      "all_attempt_totals": [
+        "10",
+        "10",
+        "10"
+      ]
+    },
+    "U3": {
+      "dimensions": [
+        "3.0",
+        "3.0",
+        "3.0",
+        "1.0"
+      ],
+      "total": "10.0",
+      "source": "judge-U3-a.md",
+      "all_attempt_totals": [
+        "10"
+      ]
+    },
+    "U4": {
+      "dimensions": [
+        "3.0",
+        "3.0",
+        "3.0",
+        "1.0"
+      ],
+      "total": "10.0",
+      "source": "judge-U4-a.md",
+      "all_attempt_totals": [
+        "10"
+      ]
+    },
+    "U5": {
+      "dimensions": [
+        "3.0",
+        "3.0",
+        "3.0",
+        "1.0"
+      ],
+      "total": "10.0",
+      "source": "judge-U5-b.md",
+      "all_attempt_totals": [
+        "10",
+        "10"
+      ]
+    },
+    "U6": {
+      "dimensions": [
+        "3.0",
+        "3.0",
+        "3.0",
+        "1.0"
+      ],
+      "total": "10.0",
+      "source": "judge-U6-b.md",
+      "all_attempt_totals": [
+        "10",
+        "10"
+      ]
+    },
+    "U7": {
+      "dimensions": [
+        "3.0",
+        "2.7",
+        "3.0",
+        "1.0"
+      ],
+      "total": "9.7",
+      "source": "judge-U7-a.md",
+      "all_attempt_totals": [
+        "9.7",
+        "10"
+      ]
+    }
+  },
+  "previous_review_gaps": {
+    "UI-115": "不再适用",
+    "UI-213": "已解决",
+    "UI-203": "已解决",
+    "UI-76": "已解决",
+    "UI-210": "已解决",
+    "UI-214": "已解决"
+  },
+  "new_id_mappings": [
+    {
+      "unit": "U7",
+      "raw": "新-2",
+      "id": "UI-216",
+      "basis": "R6 Code ghost foreground discrepancy, distinct from R5 Kbd new-1/UI-214"
+    },
+    {
+      "unit": "U1",
+      "raw": "U1-b 新-1; U1-c 新-1",
+      "id": "UI-217",
+      "basis": "Same Pink-origin keyboard menu active option missing in the same three current frames; distinct from export/import selector UI-215"
+    }
+  ],
+  "old_id_mappings": [
+    {
+      "unit": "U3",
+      "raw": "新-1（R5）",
+      "id": "UI-213",
+      "basis": "R5 merged judge explicitly maps this sticky-header remainder gap to UI-213"
+    },
+    {
+      "unit": "U7",
+      "raw": "R5 新-1",
+      "id": "UI-214",
+      "basis": "R5 merged judge explicitly maps Kbd radius gap to UI-214"
+    }
+  ],
+  "raw_sha256": {
+    "U1-a": "ecbc19127aac0b9b198f25186383a54ce138af070466d79e2e778ea7027f1220",
+    "U1-b": "2daf9f1787e2c806b0af8c2d6959e4ebae90d0deb159f7105fae8cbcb75c66f4",
+    "U1-c": "ca5ee41886c4c59971b5c204ff5c492936d98e28c22126b2a6cf7585126b64cd",
+    "U2-a": "99d5ef2b23bebf2acb4cdd6e426eff1e6a496a89c84666dfc89b4d0b776c8962",
+    "U2-b": "a34028be90ec9b79750e446ca97019df1776d8fcb331c6bcd4a989ba864b05c3",
+    "U2-c": "2ba89c3ac820f0617de7f6368cfe6784565cb79c134e7d619eadf703504dd832",
+    "U3-a": "7b6508d02b1ab028abcb677e3ef4e510a0426dca51c782353ff50c7b5c377de7",
+    "U4-a": "7247bf54cb6cf099e030fbdaec336ee5dce1ea8a40df76d6816af53a355944b5",
+    "U5-a": "53149ca8e9c936bc36ee03ba7c3bf9e50b990f60764e8fb7a951754220a5f3bc",
+    "U5-b": "65011302396aef76ff47c1e75992a237e934b36a2d25597741222a8e81cbd3cf",
+    "U6-a": "09d79cabe5b1a704e12deb42e512299fd8d2ab7a045b57a6d22b101b81a12a45",
+    "U6-b": "d5e711a12196c909cb2c2fe4b64bc56a59d23a1806b46d6761dce54f98617b56",
+    "U7-a": "4218aeef178b1d5ba0666e711ac4ff13faa44ee6a148f163c916ec4747bd6ca3",
+    "U7-b": "7f8371407363edb2a9314b99c365ddbbf117412fddc52687f209c0ac8382531e"
+  },
+  "minimum_unit": "U1",
+  "minimum_score": "9.5",
+  "merge_rule": "Minimum whole four-dimension group per unit, union of every reviewer gap; no dimension mixing; same-score latest complete evidence group."
+}

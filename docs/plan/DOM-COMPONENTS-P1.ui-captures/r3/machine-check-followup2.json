@@ -1,0 +1,232 @@
+{
+  "at": "2026-10-27T15:55:49.426Z",
+  "axeButtons": [
+    {
+      "id": "color-contrast",
+      "target": ".bg-accent",
+      "text": "Accent pair",
+      "testid": "button-accent-token",
+      "variant": null,
+      "color": null,
+      "summary": "  Element has insufficient color contrast of 2.62 (foreground color: #ffffff, background color: #12b76a, font size: 11.3"
+    },
+    {
+      "id": "color-contrast",
+      "target": ".rui-geometry-69 > .rustify-button-content",
+      "text": "Semantic accent",
+      "testid": "button-semantic-accent",
+      "variant": "solid",
+      "color": null,
+      "summary": "  Element has insufficient color contrast of 2.62 (foreground color: #ffffff, background color: #12b76a, font size: 10.5"
+    },
+    {
+      "id": "color-contrast",
+      "target": ".rui-geometry-71 > .rustify-button-content",
+      "text": "gray",
+      "testid": "button-color-gray",
+      "variant": "solid",
+      "color": "gray",
+      "summary": "  Element has insufficient color contrast of 3.31 (foreground color: #ffffff, background color: #8d8d8d, font size: 10.5"
+    },
+    {
+      "id": "color-contrast",
+      "target": ".rui-geometry-72 > .rustify-button-content",
+      "text": "gold",
+      "testid": "button-color-gold",
+      "variant": "solid",
+      "color": "gold",
+      "summary": "  Element has insufficient color contrast of 3.65 (foreground color: #ffffff, background color: #978365, font size: 10.5"
+    },
+    {
+      "id": "color-contrast",
+      "target": ".rui-geometry-73 > .rustify-button-content",
+      "text": "bronze",
+      "testid": "button-color-bronze",
+      "variant": "solid",
+      "color": "bronze",
+      "summary": "  Element has insufficient color contrast of 3.59 (foreground color: #ffffff, background color: #a18072, font size: 10.5"
+    },
+    {
+      "id": "color-contrast",
+      "target": ".rui-geometry-74 > .rustify-button-content",
+      "text": "brown",
+      "testid": "button-color-brown",
+      "variant": "solid",
+      "color": "brown",
+      "summary": "  Element has insufficient color contrast of 3.52 (foreground color: #ffffff, background color: #ad7f58, font size: 10.5"
+    },
+    {
+      "id": "color-contrast",
+      "target": ".rui-geometry-77 > .rustify-button-content",
+      "text": "orange",
+      "testid": "button-color-orange",
+      "variant": "solid",
+      "color": "orange",
+      "summary": "  Element has insufficient color contrast of 2.97 (foreground color: #ffffff, background color: #f76b15, font size: 10.5"
+    },
+    {
+      "id": "color-contrast",
+      "target": ".rui-geometry-78 > .rustify-button-content",
+      "text": "tomato",
+      "testid": "button-color-tomato",
+      "variant": "solid",
+      "color": "tomato",
+      "summary": "  Element has insufficient color contrast of 3.86 (foreground color: #ffffff, background color: #e54d2e, font size: 10.5"
+    },
+    {
+      "id": "color-contrast",
+      "target": ".rui-geometry-79 > .rustify-button-content",
+      "text": "red",
+      "testid": "button-color-red",
+      "variant": "solid",
+      "color": "red",
+      "summary": "  Element has insufficient color contrast of 3.91 (foreground color: #ffffff, background color: #e5484d, font size: 10.5"
+    },
+    {
+      "id": "color-contrast",
+      "target": ".rui-geometry-80 > .rustify-button-content",
+      "text": "ruby",
+      "testid": "button-color-ruby",
+      "variant": "solid",
+      "color": "ruby",
+      "summary": "  Element has insufficient color contrast of 3.88 (foreground color: #ffffff, background color: #e54666, font size: 10.5"
+    },
+    {
+      "id": "color-contrast",
+      "target": ".rui-geometry-81 > .rustify-button-content",
+      "text": "crimson",
+      "testid": "button-color-crimson",
+      "variant": "solid",
+      "color": "crimson",
+      "summary": "  Element has insufficient color contrast of 3.84 (foreground color: #ffffff, background color: #e93d82, font size: 10.5"
+    },
+    {
+      "id": "color-contrast",
+      "target": ".rui-geometry-82 > .rustify-button-content",
+      "text": "pink",
+      "testid": "button-color-pink",
+      "variant": "solid",
+      "color": "pink",
+      "summary": "  Element has insufficient color contrast of 4.12 (foreground color: #ffffff, background color: #d6409f, font size: 10.5"
+    },
+    {
+      "id": "color-contrast",
+      "target": ".rui-geometry-88 > .rustify-button-content",
+      "text": "blue",
+      "testid": "button-color-blue",
+      "variant": "solid",
+      "color": "blue",
+      "summary": "  Element has insufficient color contrast of 3.26 (foreground color: #ffffff, background color: #0090ff, font size: 10.5"
+    },
+    {
+      "id": "color-contrast",
+      "target": ".rui-geometry-89 > .rustify-button-content",
+      "text": "cyan",
+      "testid": "button-color-cyan",
+      "variant": "solid",
+      "color": "cyan",
+      "summary": "  Element has insufficient color contrast of 3 (foreground color: #ffffff, background color: #00a2c7, font size: 10.5pt "
+    },
+    {
+      "id": "color-contrast",
+      "target": ".rui-geometry-90 > .rustify-button-content",
+      "text": "teal",
+      "testid": "button-color-teal",
+      "variant": "solid",
+      "color": "teal",
+      "summary": "  Element has insufficient color contrast of 3.07 (foreground color: #ffffff, background color: #12a594, font size: 10.5"
+    },
+    {
+      "id": "color-contrast",
+      "target": ".rui-geometry-91 > .rustify-button-content",
+      "text": "jade",
+      "testid": "button-color-jade",
+      "variant": "solid",
+      "color": "jade",
+      "summary": "  Element has insufficient color contrast of 3.15 (foreground color: #ffffff, background color: #29a383, font size: 10.5"
+    },
+    {
+      "id": "color-contrast",
+      "target": ".rui-geometry-92 > .rustify-button-content",
+      "text": "green",
+      "testid": "button-color-green",
+      "variant": "solid",
+      "color": "green",
+      "summary": "  Element has insufficient color contrast of 3.15 (foreground color: #ffffff, background color: #30a46c, font size: 10.5"
+    },
+    {
+      "id": "color-contrast",
+      "target": ".rui-geometry-93 > .rustify-button-content",
+      "text": "grass",
+      "testid": "button-color-grass",
+      "variant": "solid",
+      "color": "grass",
+      "summary": "  Element has insufficient color contrast of 3.03 (foreground color: #ffffff, background color: #46a758, font size: 10.5"
+    },
+    {
+      "id": "color-contrast",
+      "target": ".rui-geometry-104 > .rustify-button-content",
+      "text": "Caller utilities",
+      "testid": "button-class-override",
+      "variant": "outline",
+      "color": "red",
+      "summary": "  Element has insufficient color contrast of 1.24 (foreground color: #c8080a, background color: #d92d20, font size: 9.0p"
+    }
+  ],
+  "shots": [
+    {
+      "file": "MC-root200-pill-720-light.png",
+      "url": "http://127.0.0.1:4181/",
+      "viewport": "720x900 root 200%",
+      "time": "2026-10-27T15:56:14.242Z",
+      "box": {
+        "left": 66,
+        "right": 187.890625,
+        "top": 611.671875,
+        "editorRight": 319
+      }
+    },
+    {
+      "file": "MC-root200-effective-720-light.png",
+      "url": "http://127.0.0.1:4181/",
+      "viewport": "720x900 root 200%",
+      "time": "2026-10-27T15:56:14.586Z",
+      "box": {
+        "left": 0,
+        "right": 320,
+        "top": 621.703125,
+        "editorRight": 319
+      }
+    },
+    {
+      "file": "MC-root200-preview-create-720-light.png",
+      "url": "http://127.0.0.1:4181/",
+      "viewport": "720x900 root 200%, renderer DOM",
+      "time": "2026-10-27T15:56:24.764Z",
+      "box": {
+        "left": 572.171875,
+        "right": 637.578125,
+        "top": 613.140625,
+        "nearestClip": {
+          "el": "section.preview-surface",
+          "right": 637
+        }
+      }
+    },
+    {
+      "file": "MC-root200-preview-disabled-720-light.png",
+      "url": "http://127.0.0.1:4181/",
+      "viewport": "720x900 root 200%, renderer DOM",
+      "time": "2026-10-27T15:56:25.096Z",
+      "box": {
+        "left": 544.859375,
+        "right": 603.71875,
+        "top": 612.640625,
+        "nearestClip": {
+          "el": "section.preview-surface",
+          "right": 637
+        }
+      }
+    }
+  ]
+}

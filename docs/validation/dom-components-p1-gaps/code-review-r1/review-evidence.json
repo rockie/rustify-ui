@@ -1,0 +1,54 @@
+{
+  "base": "b9d5d356d00ebef4d387e0753cf14e2d8917ea9e",
+  "target": "0abf0f397b343b803cd6a375155a4d0550ab7fe2",
+  "head": "dc9df3547c4c164af7cf3433bef883332659b6f6",
+  "dirty_diff_sha256": "248665b70037bfa36136aeaf7e9faa6b4c2d8d9ed4033c41b6959521fedbc094",
+  "index_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "initial_capture_sha256": "5bcbc6755ae11a9ba2e9b85013c81e1a3252f7ec9ff5996f885daa96cdde93aa",
+  "initial_capture_files": 2724,
+  "initial_capture_local_path": "/var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-gaps-code-review-r1-8j9n1ctb/input-snapshot.json",
+  "inputs_unchanged_before_report": true,
+  "fingerprints": {
+    "examples/theme-studio/src/data_tools.rs": "b96f181a1351919a33421dd88c71ced71d0009d3223f3e16f884c4a3913aba37",
+    "examples/theme-studio/data-tools.css": "ad1d086bd2342fae1e6baf00a438d8395615b0c5d32e1eb684b6a4f02300c378",
+    "docs/themes.md": "1a103f2091194b98a076bbb25caab4260fca44819d593c17c3969ea09f631ec5",
+    "docs/dom-components-migration.md": "720044c81bca2d80ecffbaae9e1ecdc5d2da9c1ab2d7b873295e949c711f3749",
+    "tests/browser/theme-export-ui.spec.ts": "48813925a332f73cb0e933bd5fb6247db92538237b02eaf45cb66578d73e7f5a",
+    "tests/browser/theme-storage.spec.ts": "fb309ffe1eac821fc4ca5c9c985ae2a75e44d8bbc74676e0fc7c072be5af4300",
+    "tests/theme-export/README.md": "3fbfcdf6fac14f7f219a4d708fdd7470d4c6ce66d5c9ea78970976b4c364f153",
+    "tests/theme-export/generator/src/main.rs": "5cfe3ebf95188cd41fa51bf27253f70cbdd9e98a48dc23c24ee741db4e1aed2e",
+    "docs/plan/DOM-COMPONENTS-P1-gaps.md": "28a6bcaaf8f0bf55dad194742c119519e244664a7d67411bcce42ef254bba9b1",
+    "docs/plan/DOM-COMPONENTS-P1-gaps.records/M1.md": "00bf079a177a84416c63e8c22caeafabb36ccdd8f77617c66cadf21780b2ade2",
+    "docs/plan/DOM-COMPONENTS-P1-gaps.records/M2.md": "e12e478343d71bf2e57363038bcbd5ead1e3dca662764f1284ec3c7d45caec17",
+    "docs/PRD-DOM-COMPONENTS.md": "b857222e9da5da10fbd85be3e0f0de47fbec36be9e7a112bf5b6ef1869d6f841",
+    "crates/rustify-dom/src/theme/codec.rs": "4c5e6ea7299485a99aa56737bd5ce298e0563fd35e27b865aed45e55437ff918",
+    "crates/rustify-dom/src/theme/document.rs": "614a9d7621935b6c2a7ee34614ce76d74f816f15667beb3b89c7d70ce61446f3",
+    "crates/rustify-dom/src/theme/provider.rs": "c1f9691e147ae1a77e251fc743b98c37b84eacd89b647d0885b489ef75be79c8",
+    "crates/rustify-dom/src/theme/resolve.rs": "8c650c0df422b7fe826ea09882e7b60ccfe98d9df723f12405535dd2c5f893c3",
+    "crates/rustify-dom/src/theme/fonts.rs": "1712210c1b73b1ea68e8a4f25a60ec8c516972bc7d0f8e292962b3cb7f25bcbd",
+    "playwright.config.ts": "d7867f44e52fa09aba9ac3bfdf3de68e6809076d39005752ed6ff1c71e04982d",
+    "Cargo.lock": "0342e8fb1ee3285da43980fbae110e2b5e5bf1fa209b7af679ad8779bd84f35b",
+    "package-lock.json": "604e76e51058797735930bf001f7b42ed8ed2f709b5562d0c89f3f4607244cd7"
+  },
+  "studio_build_id": "4b0cf79aef8237fc",
+  "studio_browser_stats": {
+    "startTime": "2026-10-29T15:45:11.039Z",
+    "duration": 92530.656,
+    "expected": 26,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "consumer_browser_stats": {
+    "startTime": "2026-10-29T15:47:15.584Z",
+    "duration": 15337.182999999999,
+    "expected": 9,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "probe_commands": [
+    "mise exec -- node /var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-gaps-code-review-r1-8j9n1ctb/selector-probe.mjs",
+    "mise exec -- node /var/folders/cv/pn7p1v7s737cqlt605jyl7lm0000gn/T/rustify-gaps-code-review-r1-8j9n1ctb/quoted-id-probe.mjs"
+  ]
+}

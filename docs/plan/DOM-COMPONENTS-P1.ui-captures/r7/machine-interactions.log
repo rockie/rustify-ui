@@ -1,0 +1,23 @@
+{
+  "menuCases": 3,
+  "clipboard": [
+    {
+      "case": "success",
+      "matchesVisible": true,
+      "feedback": "Copied to clipboard."
+    },
+    {
+      "case": "denied",
+      "feedback": "Clipboard unavailable or refused. Select the text or download it.",
+      "sourceVisible": true,
+      "downloadEnabled": true
+    }
+  ],
+  "download": {
+    "filename": "theme.json",
+    "failure": null,
+    "sha256": "7c1c2afb8b970350b30676b961fa0f613969295bec99b3b9c3f661b3f1e12c43",
+    "matchesVisible": true,
+    "schemaVersion": 2
+  }
+}

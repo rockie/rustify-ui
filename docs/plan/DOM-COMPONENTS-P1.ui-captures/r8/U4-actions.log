@@ -1,0 +1,54 @@
+2026-10-29T09:49:53.562Z seed only rustify-ui.theme-studio.v1 (legacy draft + two named themes), reload at 1440
+2026-10-29T09:49:54.123Z screenshot U4-upgrade-pending-1440-light.png
+2026-10-29T09:49:54.214Z click upgrade Review
+2026-10-29T09:49:54.796Z screenshot U4-upgrade-review-1440-light.png
+2026-10-29T09:49:54.814Z scroll to the upgrade confirm button
+2026-10-29T09:49:55.375Z screenshot U4-upgrade-review-end-1440-light.png
+2026-10-29T09:49:55.417Z click Cancel upgrade
+2026-10-29T09:49:55.503Z edit primary ← #234567
+2026-10-29T09:49:55.599Z Save locally, name 'Memory only', confirm
+2026-10-29T09:49:56.154Z screenshot U4-upgrade-cancelled-1440-light.png
+2026-10-29T09:49:56.221Z click upgrade Review again
+2026-10-29T09:49:56.328Z click upgrade confirm
+2026-10-29T09:49:58.387Z screenshot U4-upgraded-1440-light.png
+2026-10-29T09:50:00.974Z seed only rustify-ui.theme-studio.v1 (legacy draft + two named themes), reload at 390
+2026-10-29T09:50:01.520Z screenshot U4-upgrade-pending-390-light.png
+2026-10-29T09:50:11.374Z primary ← #123456, wait for idle save
+2026-10-29T09:50:11.375Z inject: Storage.prototype.setItem throws QuotaExceededError
+2026-10-29T09:50:11.482Z Save locally, name 'Retained name', confirm
+2026-10-29T09:50:12.057Z screenshot U4-quota-failure-1440-light.png
+2026-10-29T09:50:12.083Z open pending / recent operations
+2026-10-29T09:50:12.643Z screenshot U4-quota-operations-1440-light.png
+2026-10-29T09:50:21.748Z tab A: primary ← #123456, idle
+2026-10-29T09:50:23.422Z tab B (same origin): primary ← #654321, idle
+2026-10-29T09:50:24.002Z screenshot U4-conflict-1440-light.png
+2026-10-29T09:50:24.568Z screenshot U4-conflict-detail-1440-light.png
+2026-10-29T09:50:24.611Z expand View exact stored text
+2026-10-29T09:50:25.185Z screenshot U4-conflict-raw-1440-light.png
+2026-10-29T09:50:33.637Z init script removes navigator.locks; open, no action
+2026-10-29T09:50:34.201Z screenshot U4-no-locks-initial-1440-light.png
+2026-10-29T09:50:34.490Z primary ← #789abc; Save locally 'Not persisted'
+2026-10-29T09:50:35.066Z screenshot U4-no-locks-1440-light.png
+2026-10-29T09:54:30.108Z EXTRA: tab A #123456, tab B #654321
+2026-10-29T09:54:30.124Z EXTRA: scroll so the bottom edge of the conflict panel meets the viewport bottom
+2026-10-29T09:54:30.686Z screenshot U4-conflict-detail-end-1440-light.png
+2026-10-29T09:54:30.688Z EXTRA: scroll the conflict panel's scrolling ancestor 300px further (aside#studio-editor scrollTop 0→300)
+2026-10-29T09:54:31.252Z screenshot U4-conflict-after-1440-light.png
+2026-10-29T09:54:31.294Z EXTRA: open 'Draft differences' disclosure in the conflict panel
+2026-10-29T09:54:31.868Z screenshot U4-conflict-diff-1440-light.png
+2026-10-29T09:55:28.035Z SUP: seed only rustify-ui.theme-studio.v1 (legacy draft + two named themes), reload
+2026-10-29T09:55:28.112Z SUP: click upgrade Review
+2026-10-29T09:55:28.142Z SUP: expand Complete library upgrade JSON
+2026-10-29T09:55:28.737Z screenshot U4-upgrade-review-json-1440-light.png
+2026-10-29T10:01:11.645Z SUP U4: same legacy seed, then actual keyboard focus and review navigation
+2026-10-29T10:01:12.258Z screenshot U4-upgrade-review-keyboard-focus-1440-light.png
+2026-10-29T10:01:12.297Z Enter opens upgrade review
+2026-10-29T10:01:12.905Z screenshot U4-upgrade-confirm-keyboard-focus-1440-light.png
+2026-10-29T10:01:12.915Z Escape closes upgrade review
+2026-10-29T10:01:13.516Z screenshot U4-upgrade-review-keyboard-escape-1440-light.png
+2026-10-29T10:01:13.718Z SUP U4: scroll complete upgrade JSON 0.5: {"top":3463,"height":7199,"client":274}
+2026-10-29T10:01:14.281Z screenshot U4-upgrade-json-middle-1440-light.png
+2026-10-29T10:01:14.296Z SUP U4: scroll complete upgrade JSON 1: {"top":6925,"height":7199,"client":274}
+2026-10-29T10:01:14.866Z screenshot U4-upgrade-json-end-1440-light.png
+2026-10-29T10:15:31.972Z SUP U4: real same-origin A/B conflict; expand stored raw text, scroll to end {"top":3681,"height":3871,"client":190}
+2026-10-29T10:15:32.539Z screenshot U4-conflict-raw-end-1440-light-a2.png

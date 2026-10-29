@@ -1,0 +1,37 @@
+{
+  "new_gaps": {
+    "UI-215": {
+      "source": "机器检查",
+      "unit": "U3",
+      "severity": "P1",
+      "summary": "导入/导出选择器获得键盘焦点后没有可见焦点标识",
+      "evidence": [
+        "machine-focus-confirm.json",
+        "MC-export-format-pure-keyboard-1440-light.png",
+        "MC-import-format-pure-keyboard-1440-light.png",
+        "MC-export-profile-keyboard-focus-1440-light.png",
+        "MC-export-color-format-keyboard-focus-1440-light.png"
+      ],
+      "repro": "新页面 Tab 5 次到 Export（Import 为 4 次）→ Enter → Tab 1 次到格式选择器 → 等待 700ms；CSS profile/notation 也用 Shift+Tab、Tab 聚焦后等待 700ms。",
+      "measured": "4 个触发器均 :focus-visible=true、outline-style:none、box-shadow:none，边框仍 #d0d5dd；下一项 Exported code 是可见的 3px 蓝 outline，Choose file 是 2px outline。",
+      "expected": "G4：新增控件键盘可用、焦点可见；DESIGN.md Inputs：Select 有可见焦点环。",
+      "remedy": "给导入/导出中的 Select trigger 恢复与壳层一致的 :focus-visible 标识，覆盖 Output/Input format、CSS profile、Color notation；用实际 Tab 复验，保留焦点约束与 Esc 回焦。"
+    }
+  },
+  "previous_primary_gaps": {
+    "UI-212": {
+      "status": "已解决",
+      "evidence": "machine-check-followup2.json",
+      "surface": "300 / 300; scrollLeft 0",
+      "button": "Create · 0 完整显示，宽 113.40625px"
+    }
+  },
+  "prior_gate_recheck": {
+    "UI-207": "深色 Confirm 背景 rgb(83,177,253)、前景 rgb(12,17,29)、高32px；浅色正常。"
+  },
+  "threshold": "8",
+  "score": "9.6",
+  "open_P0": 0,
+  "open_P1": 1,
+  "decision": "需要修改"
+}

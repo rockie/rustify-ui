@@ -1,0 +1,28 @@
+{
+  "at": "2026-10-29T10:21:08.604780+00:00",
+  "native_frames": 340,
+  "unique_frames": 340,
+  "sha256_validated": 340,
+  "viewport_frames_dimensions_verified": 207,
+  "contacts_opened_for_authenticity_only": 29,
+  "contacts_used_for_scoring": false,
+  "native_originals_opened_by_primary": [
+    "U1-default-1440-light.png",
+    "U1-configured-768-light.png",
+    "U1-preview-390-light.png",
+    "U1-zoom200-colors-720-light.png",
+    "U5-inspector-undeclared-1440-light.png",
+    "U7-type-heading-matrix-1280-light.png",
+    "U7-layout-inset-demonstration-390-light.png",
+    "U6-focus-soft-1280-light-dpr2.png",
+    "U4-quota-failure-1440-light.png",
+    "U1-configured-keyboard-open-1440-dark.png",
+    "U1-configured-keyboard-open-390-light.png",
+    "U4-conflict-raw-end-1440-light-a2.png",
+    "U3-export-copied-feedback-390-light-a2.png",
+    "U7-supp-default-primitives-1280-light-a2.png"
+  ],
+  "raw_frame_freshness": "New native Playwright captures during this round; HTTP manifests matched current freshly built products. No historical or target image used as a current capture.",
+  "required_missing": [],
+  "additional_zoom_frames": 62
+}

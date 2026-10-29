@@ -1,0 +1,1029 @@
+{
+  "runs": [
+    {
+      "at": "2026-10-28T03:59:34.560Z",
+      "chromium": "153.0.8010.12",
+      "playwright": "1.63.0",
+      "units": [
+        "U1",
+        "U2",
+        "U3",
+        "U4",
+        "U5",
+        "U6",
+        "U6F",
+        "U7",
+        "EXTRA",
+        "SUP",
+        "SUP2"
+      ],
+      "records": [
+        {
+          "file": "U1-default-1440-light.png",
+          "unit": "U1",
+          "state": "default",
+          "viewport": "1440x900",
+          "dpr": 1,
+          "theme": "light",
+          "url": "http://127.0.0.1:4181/",
+          "time": "2026-10-28T03:45:27.224Z",
+          "kind": "viewport",
+          "interventions": "none",
+          "focused": null
+        },
+        {
+          "file": "U1-configured-1440-light.png",
+          "unit": "U1",
+          "state": "configured",
+          "viewport": "1440x900",
+          "dpr": 1,
+          "theme": "light",
+          "url": "http://127.0.0.1:4181/",
+          "time": "2026-10-28T03:45:28.522Z",
+          "kind": "viewport",
+          "interventions": "none",
+          "focused": "studio-config-gray_color"
+        },
+        {
+          "file": "U1-configured-1440-dark.png",
+          "unit": "U1",
+          "state": "configured",
+          "viewport": "1440x900",
+          "dpr": 1,
+          "theme": "dark",
+          "url": "http://127.0.0.1:4181/",
+          "time": "2026-10-28T03:45:29.272Z",
+          "kind": "viewport",
+          "interventions": "none",
+          "focused": "mode-dark"
+        },
+        {
+          "file": "U1-top-1440-dark.png",
+          "unit": "U1",
+          "state": "top",
+          "viewport": "1440x900",
+          "dpr": 1,
+          "theme": "dark",
+          "url": "http://127.0.0.1:4181/",
+          "time": "2026-10-28T03:45:29.836Z",
+          "kind": "viewport",
+          "interventions": "none",
+          "focused": "mode-dark"
+        },
+        {
+          "file": "U1-zh-top-1440-light.png",
+          "unit": "U1",
+          "state": "zh-top",
+          "viewport": "1440x900",
+          "dpr": 1,
+          "theme": "light",
+          "url": "http://127.0.0.1:4181/",
+          "time": "2026-10-28T03:45:30.589Z",
+          "kind": "viewport",
+          "interventions": "none",
+          "focused": "locale-zh"
+        },
+        {
+          "file": "U1-zh-configured-1440-light.png",
+          "unit": "U1",
+          "state": "zh-configured",
+          "viewport": "1440x900",
+          "dpr": 1,
+          "theme": "light",
+          "url": "http://127.0.0.1:4181/",
+          "time": "2026-10-28T03:45:31.155Z",
+          "kind": "viewport",
+          "interventions": "none",
+          "focused": "locale-zh"
+        },
+        {
+          "file": "U1-default-768-light.png",
+          "unit": "U1",
+          "state": "default",
+          "viewport": "768x1024",
+          "dpr": 1,
+          "theme": "light",
+          "url": "http://127.0.0.1:4181/",
+          "time": "2026-10-28T03:45:40.628Z",
+          "kind": "viewport",
+          "interventions": "none",
+          "focused": null
+        },
+        {
+          "file": "U1-configured-768-light.png",
+          "unit": "U1",
+          "state": "configured",
+          "viewport": "768x1024",
+          "dpr": 1,
+          "theme": "light",
+          "url": "http://127.0.0.1:4181/",
+          "time": "2026-10-28T03:45:41.829Z",
+          "kind": "viewport",
+          "interventions": "none",
+          "focused": "studio-config-gray_color"
+        },
+        {
+          "file": "U1-edit-390-light.png",
+          "unit": "U1",
+          "state": "edit",
+          "viewport": "390x844",
+          "dpr": 1,
+          "theme": "light",
+          "url": "http://127.0.0.1:4181/",
+          "time": "2026-10-28T03:45:43.760Z",
+          "kind": "viewport",
+          "interventions": "none",
+          "focused": null
+        },
+        {
+          "file": "U1-configured-390-light.png",
+          "unit": "U1",
+          "state": "configured",
+          "viewport": "390x844",
+          "dpr": 1,
+          "theme": "light",
+          "url": "http://127.0.0.1:4181/",
+          "time": "2026-10-28T03:45:44.611Z",
+          "kind": "viewport",
+          "interventions": "none",
+          "focused": "studio-config-gray_color"
+        },
+        {
+          "file": "U1-preview-390-light.png",
+          "unit": "U1",
+          "state": "preview",
+          "viewport": "390x844",
+          "dpr": 1,
+          "theme": "light",
+          "url": "http://127.0.0.1:4181/",
+          "time": "2026-10-28T03:45:52.659Z",
+          "kind": "viewport",
+          "interventions": "none",
+          "focused": "mobile-preview"
+        },
+        {
+          "file": "U1-zoom200-720-light.png",
+          "unit": "U1",
+          "state": "zoom200",
+          "viewport": "720x900",
+          "dpr": 1,
+          "theme": "light",
+          "url": "http://127.0.0.1:4181/",
+          "time": "2026-10-28T03:46:02.409Z",
+          "kind": "viewport",
+          "interventions": "none",
+          "focused": null
+        },
+        {
+          "file": "U1-zoom200-export-720-light.png",
+          "unit": "U1",
+          "state": "zoom200-export",
+          "viewport": "720x900",
+          "dpr": 1,
+          "theme": "light",
+          "url": "http://127.0.0.1:4181/",
+          "time": "2026-10-28T03:46:03.012Z",
+          "kind": "viewport",
+          "interventions": "none",
+          "focused": "data-tools-dialog-close"
+        },
+        {
+          "file": "U1-zoom200-colors-720-light.png",
+          "unit": "U1",
+          "state": "zoom200-colors",
+          "viewport": "720x900",
+          "dpr": 1,
+          "theme": "light",
+          "url": "http://127.0.0.1:4181/",
+          "time": "2026-10-28T03:46:13.102Z",
+          "kind": "viewport",
+          "interventions": "none",
+          "focused": "editor-colors"
+        },
+        {
+          "file": "U1-zoom200-source-720-light.png",
+          "unit": "U1",
+          "state": "zoom200-source",
+          "viewport": "720x900",
+          "dpr": 1,
+          "theme": "light",
+          "url": "http://127.0.0.1:4181/",
+          "time": "2026-10-28T03:46:13.718Z",
+          "kind": "viewport",
+          "interventions": "none",
+          "focused": "color-token-primary"
+        },
+        {
+          "file": "U1-keyboard-01-1440-light.png",
+          "unit": "U1",
+          "state": "keyboard-01",
+          "viewport": "1440x900",
+          "dpr": 1,
+          "theme": "light",
+          "url": "http://127.0.0.1:4181/",
+          "time": "2026-10-28T03:46:23.587Z",
+          "kind": "viewport",
+          "interventions": "none",
+          "focused": "preset-search"
+        },
+        {
+          "file": "U1-keyboard-02-1440-light.png",
+          "unit": "U1",
+          "state": "keyboard-02",
+          "viewport": "1440x900",
+          "dpr": 1,
+          "theme": "light",
+          "url": "http://127.0.0.1:4181/",
+          "time": "2026-10-28T03:46:24.155Z",
+          "kind": "viewport",
+          "interventions": "none",
+          "focused": "studio-config-accent_color"
+        },
+        {
+          "file": "U1-keyboard-03-1440-light.png",
+          "unit": "U1",
+          "state": "keyboard-03",
+          "viewport": "1440x900",
+          "dpr": 1,
+          "theme": "light",
+          "url": "http://127.0.0.1:4181/",
+          "time": "2026-10-28T03:46:24.720Z",
+          "kind": "viewport",
+          "interventions": "none",
+          "focused": "studio-config-accent_color-list"
+        },
+        {
+          "file": "U1-keyboard-04-1440-light.png",
+          "unit": "U1",
+          "state": "keyboard-04",
+          "viewport": "1440x900",
+          "dpr": 1,
+          "theme": "light",
+          "url": "http://127.0.0.1:4181/",
+          "time": "2026-10-28T03:46:25.415Z",
+          "kind": "viewport",
+          "interventions": "none",
+          "focused": "mode-dark"
+        },
+        {
+          "file": "U2-source-overridden-1440-light.png",
+          "unit": "U2",
+          "state": "source-overridden",
+          "viewport": "1440x900",
+          "dpr": 1,
+          "theme": "light",
+          "url": "http://127.0.0.1:4181/",
+          "time": "2026-10-28T03:46:35.911Z",
+          "kind": "viewport",
+          "interventions": "none",
+          "focused": "color-token-primary"
+        },
+        {
+          "file": "U2-source-overridden-detail-1440-light.png",
+          "unit": "U2",
+          "state": "source-overridden-detail",
+          "viewport": "1440x900",
+          "dpr": 1,
+          "theme": "light",
+          "url": "http://127.0.0.1:4181/",
+          "time": "2026-10-28T03:46:36.484Z",
+          "kind": "viewport",
+          "interventions": "none",
+          "focused": "color-token-primary"
+        },
+        {
+          "file": "U2-token-released-1440-light.png",
+          "unit": "U2",
+          "state": "token-released",
+          "viewport": "1440x900",
+          "dpr": 1,
+          "theme": "light",
+          "url": "http://127.0.0.1:4181/",
+          "time": "2026-10-28T03:46:37.218Z",
+          "kind": "viewport",
+          "interventions": "none",
+          "focused": null
+        },
+        {
+          "file": "U2-group-reset-1440-light.png",
+          "unit": "U2",
+          "state": "group-reset",
+          "viewport": "1440x900",
+          "dpr": 1,
+          "theme": "light",
+          "url": "http://127.0.0.1:4181/",
+          "time": "2026-10-28T03:46:37.998Z",
+          "kind": "viewport",
+          "interventions": "none",
+          "focused": null
+        },
+        {
+          "file": "U2-source-generated-1440-light.png",
+          "unit": "U2",
+          "state": "source-generated",
+          "viewport": "1440x900",
+          "dpr": 1,
+          "theme": "light",
+          "url": "http://127.0.0.1:4181/",
+          "time": "2026-10-28T03:46:38.612Z",
+          "kind": "viewport",
+          "interventions": "none",
+          "focused": "color-token-ring"
+        },
+        {
+          "file": "U2-controls-1440-light.png",
+          "unit": "U2",
+          "state": "controls",
+          "viewport": "1440x900",
+          "dpr": 1,
+          "theme": "light",
+          "url": "http://127.0.0.1:4181/",
+          "time": "2026-10-28T03:46:39.214Z",
+          "kind": "viewport",
+          "interventions": "none",
+          "focused": "editor-controls"
+        },
+        {
+          "file": "U2-field-error-1440-light.png",
+          "unit": "U2",
+          "state": "field-error",
+          "viewport": "1440x900",
+          "dpr": 1,
+          "theme": "light",
+          "url": "http://127.0.0.1:4181/",
+          "time": "2026-10-28T03:46:39.811Z",
+          "kind": "viewport",
+          "interventions": "none",
+          "focused": "edit-radius"
+        },
+        {
+          "file": "U2-low-contrast-1440-light.png",
+          "unit": "U2",
+          "state": "low-contrast",
+          "viewport": "1440x900",
+          "dpr": 1,
+          "theme": "light",
+          "url": "http://127.0.0.1:4181/",
+          "time": "2026-10-28T03:46:52.945Z",
+          "kind": "viewport",
+          "interventions": "none",
+          "focused": "editor-shell"
+        },
+        {
+          "file": "U2-source-overridden-390-light.png",
+          "unit": "U2",
+          "state": "source-overridden",
+          "viewport": "390x844",
+          "dpr": 1,
+          "theme": "light",
+          "url": "http://127.0.0.1:4181/",
+          "time": "2026-10-28T03:46:55.242Z",
+          "kind": "viewport",
+          "interventions": "none",
+          "focused": "color-token-primary"
+        },
+        {
+          "file": "U3-import-review-1440-light.png",
+          "unit": "U3",
+          "state": "import-review",
+          "viewport": "1440x900",
+          "dpr": 1,
+          "theme": "light",
+          "url": "http://127.0.0.1:4181/",
+          "time": "2026-10-28T03:47:04.786Z",
+          "kind": "viewport",
+          "interventions": "none",
+          "focused": "import-review"
+        },
+        {
+          "file": "U3-import-review-end-1440-light.png",
+          "unit": "U3",
+          "state": "import-review-end",
+          "viewport": "1440x900",
+          "dpr": 1,
+          "theme": "light",
+          "url": "http://127.0.0.1:4181/",
+          "time": "2026-10-28T03:47:05.351Z",
+          "kind": "viewport",
+          "interventions": "none",
+          "focused": "import-review"
+        },
+        {
+          "file": "U3-import-error-1440-light.png",
+          "unit": "U3",
+          "state": "import-error",
+          "viewport": "1440x900",
+          "dpr": 1,
+          "theme": "light",
+          "url": "http://127.0.0.1:4181/",
+          "time": "2026-10-28T03:47:05.949Z",
+          "kind": "viewport",
+          "interventions": "none",
+          "focused": "import-review"
+        },
+        {
+          "file": "U3-export-json-1440-light.png",
+          "unit": "U3",
+          "state": "export-json",
+          "viewport": "1440x900",
+          "dpr": 1,
+          "theme": "light",
+          "url": "http://127.0.0.1:4181/",
+          "time": "2026-10-28T03:47:07.314Z",
+          "kind": "viewport",
+          "interventions": "none",
+          "focused": "data-tools-dialog-close"
+        },
+        {
+          "file": "U3-export-v1-1440-light.png",
+          "unit": "U3",
+          "state": "export-v1",
+          "viewport": "1440x900",
+          "dpr": 1,
+          "theme": "light",
+          "url": "http://127.0.0.1:4181/",
+          "time": "2026-10-28T03:47:07.955Z",
+          "kind": "viewport",
+          "interventions": "none",
+          "focused": "export-kind"
+        },
+        {
+          "file": "U3-export-css-1440-light.png",
+          "unit": "U3",
+          "state": "export-css",
+          "viewport": "1440x900",
+          "dpr": 1,
+          "theme": "light",
+          "url": "http://127.0.0.1:4181/",
+          "time": "2026-10-28T03:47:08.611Z",
+          "kind": "viewport",
+          "interventions": "none",
+          "focused": "export-kind"
+        },
+        {
+          "file": "U3-export-css-profile-open-1440-light.png",
+          "unit": "U3",
+          "state": "export-css-profile-open",
+          "viewport": "1440x900",
+          "dpr": 1,
+          "theme": "light",
+          "url": "http://127.0.0.1:4181/",
+          "time": "2026-10-28T03:47:09.210Z",
+          "kind": "viewport",
+          "interventions": "none",
+          "focused": "export-profile-list"
+        },
+        {
+          "file": "U3-export-css-notation-open-1440-light.png",
+          "unit": "U3",
+          "state": "export-css-notation-open",
+          "viewport": "1440x900",
+          "dpr": 1,
+          "theme": "light",
+          "url": "http://127.0.0.1:4181/",
+          "time": "2026-10-28T03:47:09.809Z",
+          "kind": "viewport",
+          "interventions": "none",
+          "focused": "export-color-format-list"
+        },
+        {
+          "file": "U3-export-rust-1440-light.png",
+          "unit": "U3",
+          "state": "export-rust",
+          "viewport": "1440x900",
+          "dpr": 1,
+          "theme": "light",
+          "url": "http://127.0.0.1:4181/",
+          "time": "2026-10-28T03:47:10.460Z",
+          "kind": "viewport",
+          "interventions": "none",
+          "focused": "export-kind"
+        },
+        {
+          "file": "U3-export-copied-1440-light.png",
+          "unit": "U3",
+          "state": "export-copied",
+          "viewport": "1440x900",
+          "dpr": 1,
+          "theme": "light",
+          "url": "http://127.0.0.1:4181/",
+          "time": "2026-10-28T03:47:11.360Z",
+          "kind": "viewport",
+          "interventions": "none",
+          "focused": "export-copy"
+        },
+        {
+          "file": "U3-export-rust-end-1440-light.png",
+          "unit": "U3",
+          "state": "export-rust-end",
+          "viewport": "1440x900",
+          "dpr": 1,
+          "theme": "light",
+          "url": "http://127.0.0.1:4181/",
+          "time": "2026-10-28T03:47:11.923Z",
+          "kind": "viewport",
+          "interventions": "none",
+          "focused": "export-copy"
+        },
+        {
+          "file": "U3-import-review-390-light.png",
+          "unit": "U3",
+          "state": "import-review",
+          "viewport": "390x844",
+          "dpr": 1,
+          "theme": "light",
+          "url": "http://127.0.0.1:4181/",
+          "time": "2026-10-28T03:47:13.986Z",
+          "kind": "viewport",
+          "interventions": "none",
+          "focused": "import-review"
+        },
+        {
+          "file": "U3-import-review-end-390-light.png",
+          "unit": "U3",
+          "state": "import-review-end",
+          "viewport": "390x844",
+          "dpr": 1,
+          "theme": "light",
+          "url": "http://127.0.0.1:4181/",
+          "time": "2026-10-28T03:47:14.533Z",
+          "kind": "viewport",
+          "interventions": "none",
+          "focused": "import-review"
+        },
+        {
+          "file": "U3-export-json-390-light.png",
+          "unit": "U3",
+          "state": "export-json",
+          "viewport": "390x844",
+          "dpr": 1,
+          "theme": "light",
+          "url": "http://127.0.0.1:4181/",
+          "time": "2026-10-28T03:47:15.418Z",
+          "kind": "viewport",
+          "interventions": "none",
+          "focused": "data-tools-dialog-close"
+        },
+        {
+          "file": "U4-upgrade-pending-1440-light.png",
+          "unit": "U4",
+          "state": "upgrade-pending",
+          "viewport": "1440x900",
+          "dpr": 1,
+          "theme": "light",
+          "url": "http://127.0.0.1:4181/",
+          "time": "2026-10-28T03:47:26.615Z",
+          "kind": "viewport",
+          "interventions": "localStorage v1 seeded before reload",
+          "focused": null
+        },
+        {
+          "file": "U4-upgrade-review-1440-light.png",
+          "unit": "U4",
+          "state": "upgrade-review",
+          "viewport": "1440x900",
+          "dpr": 1,
+          "theme": "light",
+          "url": "http://127.0.0.1:4181/",
+          "time": "2026-10-28T03:47:27.268Z",
+          "kind": "viewport",
+          "interventions": "localStorage v1 seeded",
+          "focused": "upgrade-review-close"
+        },
+        {
+          "file": "U4-upgrade-review-end-1440-light.png",
+          "unit": "U4",
+          "state": "upgrade-review-end",
+          "viewport": "1440x900",
+          "dpr": 1,
+          "theme": "light",
+          "url": "http://127.0.0.1:4181/",
+          "time": "2026-10-28T03:47:27.834Z",
+          "kind": "viewport",
+          "interventions": "localStorage v1 seeded",
+          "focused": "upgrade-review-close"
+        },
+        {
+          "file": "U4-upgrade-cancelled-1440-light.png",
+          "unit": "U4",
+          "state": "upgrade-cancelled",
+          "viewport": "1440x900",
+          "dpr": 1,
+          "theme": "light",
+          "url": "http://127.0.0.1:4181/",
+          "time": "2026-10-28T03:47:28.613Z",
+          "kind": "viewport",
+          "interventions": "localStorage v1 seeded",
+          "focused": "theme-save"
+        },
+        {
+          "file": "U4-upgraded-1440-light.png",
+          "unit": "U4",
+          "state": "upgraded",
+          "viewport": "1440x900",
+          "dpr": 1,
+          "theme": "light",
+          "url": "http://127.0.0.1:4181/",
+          "time": "2026-10-28T03:47:30.829Z",
+          "kind": "viewport",
+          "interventions": "localStorage v1 seeded",
+          "focused": null
+        },
+        {
+          "file": "U4-upgrade-pending-390-light.png",
+          "unit": "U4",
+          "state": "upgrade-pending",
+          "viewport": "390x844",
+          "dpr": 1,
+          "theme": "light",
+          "url": "http://127.0.0.1:4181/",
+          "time": "2026-10-28T03:47:33.972Z",
+          "kind": "viewport",
+          "interventions": "localStorage v1 seeded before reload",
+          "focused": null
+        }
+      ],
+      "health": [
+        {
+          "unit": "U1",
+          "url": "http://127.0.0.1:4181/",
+          "pageErrors": [],
+          "consoleErrors": [],
+          "failed": [],
+          "csp": []
+        },
+        {
+          "unit": "U1",
+          "url": "http://127.0.0.1:4181/",
+          "pageErrors": [],
+          "consoleErrors": [],
+          "failed": [],
+          "csp": []
+        },
+        {
+          "unit": "U1",
+          "url": "http://127.0.0.1:4181/",
+          "pageErrors": [],
+          "consoleErrors": [],
+          "failed": [],
+          "csp": []
+        },
+        {
+          "unit": "U1",
+          "url": "http://127.0.0.1:4181/",
+          "pageErrors": [],
+          "consoleErrors": [],
+          "failed": [],
+          "csp": []
+        },
+        {
+          "unit": "U1",
+          "url": "http://127.0.0.1:4181/",
+          "pageErrors": [],
+          "consoleErrors": [],
+          "failed": [],
+          "csp": []
+        },
+        {
+          "unit": "U1",
+          "url": "http://127.0.0.1:4181/",
+          "pageErrors": [],
+          "consoleErrors": [],
+          "failed": [],
+          "csp": []
+        },
+        {
+          "unit": "U2",
+          "url": "http://127.0.0.1:4181/",
+          "pageErrors": [],
+          "consoleErrors": [],
+          "failed": [],
+          "csp": []
+        },
+        {
+          "unit": "U2",
+          "url": "http://127.0.0.1:4181/",
+          "pageErrors": [],
+          "consoleErrors": [],
+          "failed": [],
+          "csp": []
+        },
+        {
+          "unit": "U2",
+          "url": "http://127.0.0.1:4181/",
+          "pageErrors": [],
+          "consoleErrors": [],
+          "failed": [],
+          "csp": []
+        },
+        {
+          "unit": "U3",
+          "url": "http://127.0.0.1:4181/",
+          "pageErrors": [],
+          "consoleErrors": [],
+          "failed": [],
+          "csp": []
+        },
+        {
+          "unit": "U3",
+          "url": "http://127.0.0.1:4181/",
+          "pageErrors": [],
+          "consoleErrors": [],
+          "failed": [],
+          "csp": []
+        },
+        {
+          "unit": "U4",
+          "url": "http://127.0.0.1:4181/",
+          "pageErrors": [],
+          "consoleErrors": [],
+          "failed": [],
+          "csp": []
+        },
+        {
+          "unit": "U4",
+          "url": "http://127.0.0.1:4181/",
+          "pageErrors": [],
+          "consoleErrors": [],
+          "failed": [],
+          "csp": []
+        },
+        {
+          "unit": "U4",
+          "url": null,
+          "pageErrors": [],
+          "consoleErrors": [
+            "Failed to load resource: the server responded with a status of 404 (Not Found)"
+          ],
+          "failed": [
+            "404 http://127.0.0.1:4181/"
+          ],
+          "csp": []
+        },
+        {
+          "unit": "U5",
+          "url": null,
+          "pageErrors": [],
+          "consoleErrors": [
+            "Failed to load resource: the server responded with a status of 404 (Not Found)"
+          ],
+          "failed": [
+            "404 http://127.0.0.1:4181/"
+          ],
+          "csp": []
+        },
+        {
+          "unit": "U6",
+          "url": null,
+          "pageErrors": [],
+          "consoleErrors": [
+            "Failed to load resource: the server responded with a status of 404 (Not Found)"
+          ],
+          "failed": [
+            "404 http://127.0.0.1:4176/"
+          ],
+          "csp": []
+        },
+        {
+          "unit": "U6",
+          "url": null,
+          "pageErrors": [],
+          "consoleErrors": [
+            "Failed to load resource: the server responded with a status of 404 (Not Found)"
+          ],
+          "failed": [
+            "404 http://127.0.0.1:4176/"
+          ],
+          "csp": []
+        },
+        {
+          "unit": "U7",
+          "url": null,
+          "pageErrors": [],
+          "consoleErrors": [
+            "Failed to load resource: the server responded with a status of 404 (Not Found)"
+          ],
+          "failed": [
+            "404 http://127.0.0.1:4176/"
+          ],
+          "csp": []
+        },
+        {
+          "unit": "U1",
+          "url": null,
+          "pageErrors": [],
+          "consoleErrors": [
+            "Failed to load resource: the server responded with a status of 404 (Not Found)"
+          ],
+          "failed": [
+            "404 http://127.0.0.1:4181/"
+          ],
+          "csp": []
+        },
+        {
+          "unit": "U2",
+          "url": null,
+          "pageErrors": [],
+          "consoleErrors": [
+            "Failed to load resource: the server responded with a status of 404 (Not Found)"
+          ],
+          "failed": [
+            "404 http://127.0.0.1:4181/"
+          ],
+          "csp": []
+        },
+        {
+          "unit": "U3",
+          "url": null,
+          "pageErrors": [],
+          "consoleErrors": [
+            "Failed to load resource: the server responded with a status of 404 (Not Found)"
+          ],
+          "failed": [
+            "404 http://127.0.0.1:4181/"
+          ],
+          "csp": []
+        }
+      ],
+      "actions": {
+        "U1": [
+          "2026-10-28T03:45:26.659Z open http://127.0.0.1:4181/ at 1440x900",
+          "2026-10-28T03:45:27.226Z screenshot U1-default-1440-light.png",
+          "2026-10-28T03:45:27.955Z preset search 'Graphite' → Built-in · Graphite → brand pink → gray Auto",
+          "2026-10-28T03:45:28.523Z screenshot U1-configured-1440-light.png",
+          "2026-10-28T03:45:28.567Z click mode Dark",
+          "2026-10-28T03:45:29.273Z screenshot U1-configured-1440-dark.png",
+          "2026-10-28T03:45:29.837Z screenshot U1-top-1440-dark.png",
+          "2026-10-28T03:45:30.024Z click mode Light, click 中文",
+          "2026-10-28T03:45:30.589Z screenshot U1-zh-top-1440-light.png",
+          "2026-10-28T03:45:31.156Z screenshot U1-zh-configured-1440-light.png",
+          "2026-10-28T03:45:40.073Z open http://127.0.0.1:4181/ at 768x1024",
+          "2026-10-28T03:45:40.628Z screenshot U1-default-768-light.png",
+          "2026-10-28T03:45:41.268Z preset search 'Graphite' → Built-in · Graphite → brand pink → gray Auto",
+          "2026-10-28T03:45:41.829Z screenshot U1-configured-768-light.png",
+          "2026-10-28T03:45:43.216Z open at 390x844",
+          "2026-10-28T03:45:43.761Z screenshot U1-edit-390-light.png",
+          "2026-10-28T03:45:44.039Z preset search 'Graphite' → Built-in · Graphite → brand pink → gray Auto",
+          "2026-10-28T03:45:44.611Z screenshot U1-configured-390-light.png",
+          "2026-10-28T03:45:44.647Z click Preview tab",
+          "2026-10-28T03:45:52.660Z screenshot U1-preview-390-light.png",
+          "2026-10-28T03:46:01.832Z open at 1440x900, then viewport 720x900 and root font-size 200% (WCAG reflow technique)",
+          "2026-10-28T03:46:02.410Z screenshot U1-zoom200-720-light.png",
+          "2026-10-28T03:46:02.422Z focus Colors tab, press End",
+          "2026-10-28T03:46:02.451Z focus Export, press Enter",
+          "2026-10-28T03:46:03.013Z screenshot U1-zoom200-export-720-light.png",
+          "2026-10-28T03:46:12.257Z open at 1440x900, then viewport 720x900 and root font-size 200%",
+          "2026-10-28T03:46:12.524Z click Colors tab",
+          "2026-10-28T03:46:12.553Z scroll the first token (background) to the top of the editor, park pointer",
+          "2026-10-28T03:46:13.102Z screenshot U1-zoom200-colors-720-light.png",
+          "2026-10-28T03:46:13.140Z click token primary",
+          "2026-10-28T03:46:13.169Z scroll the source block (token-source) to the top of the editor, park pointer",
+          "2026-10-28T03:46:13.719Z screenshot U1-zoom200-source-720-light.png",
+          "2026-10-28T03:46:23.008Z keyboard walk from document start at 1440x900",
+          "2026-10-28T03:46:23.032Z Tab ×13 → preset search focused",
+          "2026-10-28T03:46:23.588Z screenshot U1-keyboard-01-1440-light.png",
+          "2026-10-28T03:46:23.599Z Tab ×6 → brand color select focused",
+          "2026-10-28T03:46:24.155Z screenshot U1-keyboard-02-1440-light.png",
+          "2026-10-28T03:46:24.163Z Enter, ArrowDown on brand select",
+          "2026-10-28T03:46:24.720Z screenshot U1-keyboard-03-1440-light.png",
+          "2026-10-28T03:46:24.723Z Escape",
+          "2026-10-28T03:46:24.872Z Tab ×115 → mode Dark focused",
+          "2026-10-28T03:46:25.416Z screenshot U1-keyboard-04-1440-light.png"
+        ],
+        "U2": [
+          "2026-10-28T03:46:35.245Z preset search 'Graphite' → Built-in · Graphite → brand pink → gray Auto",
+          "2026-10-28T03:46:35.320Z Colors tab → token primary",
+          "2026-10-28T03:46:35.912Z screenshot U2-source-overridden-1440-light.png",
+          "2026-10-28T03:46:36.485Z screenshot U2-source-overridden-detail-1440-light.png",
+          "2026-10-28T03:46:36.525Z click single-token release (source-clear) on primary",
+          "2026-10-28T03:46:37.219Z screenshot U2-token-released-1440-light.png",
+          "2026-10-28T03:46:37.258Z click brand group reset",
+          "2026-10-28T03:46:37.999Z screenshot U2-group-reset-1440-light.png",
+          "2026-10-28T03:46:38.039Z Colors tab → token ring",
+          "2026-10-28T03:46:38.613Z screenshot U2-source-generated-1440-light.png",
+          "2026-10-28T03:46:38.641Z click Fonts & other tab",
+          "2026-10-28T03:46:39.215Z screenshot U2-controls-1440-light.png",
+          "2026-10-28T03:46:39.249Z radius ← 'abc', Enter",
+          "2026-10-28T03:46:39.812Z screenshot U2-field-error-1440-light.png",
+          "2026-10-28T03:46:52.223Z background ← #ffffff, foreground ← #ffffff",
+          "2026-10-28T03:46:52.382Z open diagnostics",
+          "2026-10-28T03:46:52.946Z screenshot U2-low-contrast-1440-light.png",
+          "2026-10-28T03:46:54.619Z preset search 'Graphite' → Built-in · Graphite → brand pink → gray Auto",
+          "2026-10-28T03:46:54.682Z Colors tab → primary at 390",
+          "2026-10-28T03:46:55.243Z screenshot U2-source-overridden-390-light.png"
+        ],
+        "U3": [
+          "2026-10-28T03:47:04.155Z open Import at 1440",
+          "2026-10-28T03:47:04.232Z paste valid v1 JSON (primary changed), click Review",
+          "2026-10-28T03:47:04.787Z screenshot U3-import-review-1440-light.png",
+          "2026-10-28T03:47:04.798Z scroll dialog to Apply",
+          "2026-10-28T03:47:05.353Z screenshot U3-import-review-end-1440-light.png",
+          "2026-10-28T03:47:05.389Z replace with {schema_version:999}, click Review",
+          "2026-10-28T03:47:05.950Z screenshot U3-import-error-1440-light.png",
+          "2026-10-28T03:47:05.968Z Escape",
+          "2026-10-28T03:47:06.697Z preset search 'Graphite' → Built-in · Graphite → brand pink → gray Auto",
+          "2026-10-28T03:47:06.745Z open Export",
+          "2026-10-28T03:47:07.315Z screenshot U3-export-json-1440-light.png",
+          "2026-10-28T03:47:07.375Z export kind → Compatible JSON v1 · lossy",
+          "2026-10-28T03:47:07.956Z screenshot U3-export-v1-1440-light.png",
+          "2026-10-28T03:47:08.049Z export kind → CSS · resolved values",
+          "2026-10-28T03:47:08.613Z screenshot U3-export-css-1440-light.png",
+          "2026-10-28T03:47:08.640Z open CSS profile list",
+          "2026-10-28T03:47:09.212Z screenshot U3-export-css-profile-open-1440-light.png",
+          "2026-10-28T03:47:09.214Z Escape (close list)",
+          "2026-10-28T03:47:09.240Z open color notation list",
+          "2026-10-28T03:47:09.811Z screenshot U3-export-css-notation-open-1440-light.png",
+          "2026-10-28T03:47:09.812Z Escape (close list)",
+          "2026-10-28T03:47:09.888Z export kind → Rust integration",
+          "2026-10-28T03:47:10.461Z screenshot U3-export-rust-1440-light.png",
+          "2026-10-28T03:47:10.494Z click Copy (clipboard permission granted)",
+          "2026-10-28T03:47:11.361Z screenshot U3-export-copied-1440-light.png",
+          "2026-10-28T03:47:11.364Z scroll exported code to its end",
+          "2026-10-28T03:47:11.924Z screenshot U3-export-rust-end-1440-light.png",
+          "2026-10-28T03:47:13.377Z open Import at 390",
+          "2026-10-28T03:47:13.451Z paste valid v1 JSON (primary changed), click Review",
+          "2026-10-28T03:47:13.987Z screenshot U3-import-review-390-light.png",
+          "2026-10-28T03:47:13.999Z scroll dialog to Apply",
+          "2026-10-28T03:47:14.534Z screenshot U3-import-review-end-390-light.png",
+          "2026-10-28T03:47:14.550Z Escape",
+          "2026-10-28T03:47:14.830Z preset search 'Graphite' → Built-in · Graphite → brand pink → gray Auto",
+          "2026-10-28T03:47:14.878Z open Export",
+          "2026-10-28T03:47:15.419Z screenshot U3-export-json-390-light.png"
+        ],
+        "U4": [
+          "2026-10-28T03:47:26.050Z seed only rustify-ui.theme-studio.v1 (legacy draft + two named themes), reload at 1440",
+          "2026-10-28T03:47:26.616Z screenshot U4-upgrade-pending-1440-light.png",
+          "2026-10-28T03:47:26.701Z click upgrade Review",
+          "2026-10-28T03:47:27.268Z screenshot U4-upgrade-review-1440-light.png",
+          "2026-10-28T03:47:27.281Z scroll to the upgrade confirm button",
+          "2026-10-28T03:47:27.834Z screenshot U4-upgrade-review-end-1440-light.png",
+          "2026-10-28T03:47:27.877Z click Cancel upgrade",
+          "2026-10-28T03:47:27.950Z edit primary ← #234567",
+          "2026-10-28T03:47:28.058Z Save locally, name 'Memory only', confirm",
+          "2026-10-28T03:47:28.614Z screenshot U4-upgrade-cancelled-1440-light.png",
+          "2026-10-28T03:47:28.662Z click upgrade Review again",
+          "2026-10-28T03:47:28.770Z click upgrade confirm",
+          "2026-10-28T03:47:30.829Z screenshot U4-upgraded-1440-light.png",
+          "2026-10-28T03:47:33.428Z seed only rustify-ui.theme-studio.v1 (legacy draft + two named themes), reload at 390",
+          "2026-10-28T03:47:33.973Z screenshot U4-upgrade-pending-390-light.png",
+          "2026-10-28T03:49:04.038Z FAILED locator.waitFor: Timeout 90000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#status[data-status=ready], [data-testid=status][data-status=ready]').first()\u001b[22m\n"
+        ],
+        "U5": [
+          "2026-10-28T03:50:34.104Z FAILED locator.waitFor: Timeout 90000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#status[data-status=ready], [data-testid=status][data-status=ready]').first()\u001b[22m\n"
+        ],
+        "U6": [
+          "2026-10-28T03:52:04.165Z FAILED locator.waitFor: Timeout 90000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#status[data-status=ready], [data-testid=status][data-status=ready]').first()\u001b[22m\n"
+        ],
+        "U6F": [
+          "2026-10-28T03:53:34.235Z FAILED locator.waitFor: Timeout 90000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#status[data-status=ready], [data-testid=status][data-status=ready]').first()\u001b[22m\n"
+        ],
+        "U7": [
+          "2026-10-28T03:55:04.303Z FAILED locator.waitFor: Timeout 90000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#status[data-status=ready], [data-testid=status][data-status=ready]').first()\u001b[22m\n"
+        ],
+        "EXTRA": [
+          "2026-10-28T03:56:34.378Z FAILED locator.waitFor: Timeout 90000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#status[data-status=ready], [data-testid=status][data-status=ready]').first()\u001b[22m\n"
+        ],
+        "SUP": [
+          "2026-10-28T03:58:04.443Z FAILED locator.waitFor: Timeout 90000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#status[data-status=ready], [data-testid=status][data-status=ready]').first()\u001b[22m\n"
+        ],
+        "SUP2": [
+          "2026-10-28T03:59:34.505Z FAILED locator.waitFor: Timeout 90000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#status[data-status=ready], [data-testid=status][data-status=ready]').first()\u001b[22m\n"
+        ]
+      },
+      "failures": [
+        {
+          "unit": "U4",
+          "error": "locator.waitFor: Timeout 90000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#status[data-status=ready], [data-testid=status][data-status=ready]').first()\u001b[22m\n\n    at ready (/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r4/capture-runner.cjs:76:103)\n    at async Object.U4 (/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r4/capture-runner.cjs:354:13)\n    at async /Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r4/capture-runner.cjs:783:15"
+        },
+        {
+          "unit": "U5",
+          "error": "locator.waitFor: Timeout 90000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#status[data-status=ready], [data-testid=status][data-status=ready]').first()\u001b[22m\n\n    at ready (/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r4/capture-runner.cjs:76:103)\n    at async Object.U5 (/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r4/capture-runner.cjs:403:13)\n    at async /Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r4/capture-runner.cjs:783:15"
+        },
+        {
+          "unit": "U6",
+          "error": "locator.waitFor: Timeout 90000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#status[data-status=ready], [data-testid=status][data-status=ready]').first()\u001b[22m\n\n    at ready (/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r4/capture-runner.cjs:76:103)\n    at async Object.U6 (/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r4/capture-runner.cjs:471:13)\n    at async /Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r4/capture-runner.cjs:783:15"
+        },
+        {
+          "unit": "U6F",
+          "error": "locator.waitFor: Timeout 90000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#status[data-status=ready], [data-testid=status][data-status=ready]').first()\u001b[22m\n\n    at ready (/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r4/capture-runner.cjs:76:103)\n    at async Object.U6F (/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r4/capture-runner.cjs:529:9)\n    at async /Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r4/capture-runner.cjs:783:15"
+        },
+        {
+          "unit": "U7",
+          "error": "locator.waitFor: Timeout 90000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#status[data-status=ready], [data-testid=status][data-status=ready]').first()\u001b[22m\n\n    at ready (/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r4/capture-runner.cjs:76:103)\n    at async Object.U7 (/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r4/capture-runner.cjs:570:13)\n    at async /Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r4/capture-runner.cjs:783:15"
+        },
+        {
+          "unit": "EXTRA",
+          "error": "locator.waitFor: Timeout 90000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#status[data-status=ready], [data-testid=status][data-status=ready]').first()\u001b[22m\n\n    at ready (/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r4/capture-runner.cjs:76:103)\n    at async Object.EXTRA (/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r4/capture-runner.cjs:612:13)\n    at async /Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r4/capture-runner.cjs:783:15"
+        },
+        {
+          "unit": "SUP",
+          "error": "locator.waitFor: Timeout 90000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#status[data-status=ready], [data-testid=status][data-status=ready]').first()\u001b[22m\n\n    at ready (/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r4/capture-runner.cjs:76:103)\n    at async Object.SUP (/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r4/capture-runner.cjs:722:13)\n    at async /Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r4/capture-runner.cjs:783:15"
+        },
+        {
+          "unit": "SUP2",
+          "error": "locator.waitFor: Timeout 90000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#status[data-status=ready], [data-testid=status][data-status=ready]').first()\u001b[22m\n\n    at ready (/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r4/capture-runner.cjs:76:103)\n    at async Object.SUP2 (/Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r4/capture-runner.cjs:768:9)\n    at async /Users/rockie/Documents/gh-rockie/rustify-ui/docs/plan/DOM-COMPONENTS-P1.ui-captures/r4/capture-runner.cjs:783:15"
+        }
+      ]
+    }
+  ]
+}

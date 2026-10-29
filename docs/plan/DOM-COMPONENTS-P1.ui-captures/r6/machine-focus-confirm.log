@@ -1,0 +1,73 @@
+{
+  "at": "2026-10-28T16:34:02.062Z",
+  "cases": [
+    {
+      "label": "export",
+      "triggerTabs": 5,
+      "dialogTabs": 1,
+      "focused": {
+        "testid": "export-kind",
+        "focusVisible": true,
+        "outline": "solid 3px rgba(21, 112, 239, 0.4) 2px",
+        "boxShadow": "none",
+        "border": "rgb(208, 213, 221)",
+        "background": "rgb(255, 255, 255)"
+      },
+      "next": {
+        "testid": "export-source",
+        "focusVisible": true,
+        "outline": "solid 3px rgba(21, 112, 239, 0.5) 2px",
+        "boxShadow": "none",
+        "border": "rgb(208, 213, 221)",
+        "background": "rgb(242, 244, 247)"
+      },
+      "screenshot": "MC-export-format-pure-keyboard-1440-light.png",
+      "nextScreenshot": "MC-export-next-control-keyboard-1440-light.png",
+      "css": [
+        {
+          "id": "export-profile",
+          "testid": "export-profile",
+          "focusVisible": true,
+          "outline": "solid 3px rgba(21, 112, 239, 0.4) 2px",
+          "boxShadow": "none",
+          "border": "rgb(208, 213, 221)",
+          "background": "rgb(255, 255, 255)",
+          "screenshot": "MC-export-profile-keyboard-focus-1440-light.png"
+        },
+        {
+          "id": "export-color-format",
+          "testid": "export-color-format",
+          "focusVisible": true,
+          "outline": "solid 3px rgba(21, 112, 239, 0.4) 2px",
+          "boxShadow": "none",
+          "border": "rgb(208, 213, 221)",
+          "background": "rgb(255, 255, 255)",
+          "screenshot": "MC-export-color-format-keyboard-focus-1440-light.png"
+        }
+      ]
+    },
+    {
+      "label": "import",
+      "triggerTabs": 4,
+      "dialogTabs": 1,
+      "focused": {
+        "testid": "import-format",
+        "focusVisible": true,
+        "outline": "solid 3px rgba(21, 112, 239, 0.4) 2px",
+        "boxShadow": "none",
+        "border": "rgb(208, 213, 221)",
+        "background": "rgb(255, 255, 255)"
+      },
+      "next": {
+        "testid": "import-file",
+        "focusVisible": true,
+        "outline": "solid 2px rgb(21, 112, 239) -1px",
+        "boxShadow": "none",
+        "border": "rgb(208, 213, 221)",
+        "background": "rgb(255, 255, 255)"
+      },
+      "screenshot": "MC-import-format-pure-keyboard-1440-light.png",
+      "nextScreenshot": "MC-import-next-control-keyboard-1440-light.png"
+    }
+  ]
+}

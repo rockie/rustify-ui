@@ -1,0 +1,21 @@
+{
+  "issue": "UI-115",
+  "accepted_as_is": true,
+  "not_marked_fixed": true,
+  "whole_review_passed": false,
+  "remaining_gate": "UI-215",
+  "remaining_actionable_gaps": [
+    "UI-215",
+    "UI-214",
+    "UI-213",
+    "UI-203",
+    "UI-76",
+    "UI-210"
+  ],
+  "old_score_unchanged": "9.6",
+  "old_artifacts_preserved": true,
+  "target_new_fingerprint": "6c8b16d50cf78224c314e9c6a8a6c3416ea54069319ba4425751bf4d50d159c4",
+  "next_round_rebuild_baseline": true,
+  "ledger_event": "3f22369e-5726-4996-9240-692430c6b950",
+  "links_valid": true
+}

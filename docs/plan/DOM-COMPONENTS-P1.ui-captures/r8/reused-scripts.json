@@ -1,0 +1,65 @@
+[
+  {
+    "source": "docs/plan/DOM-COMPONENTS-P1.ui-captures/r7/capture-runner.cjs",
+    "source_sha256": "2adcc1512b11659473c1cddff96c64b98aded158d65e7aef60570df31b9b4a11",
+    "copy": "docs/plan/DOM-COMPONENTS-P1.ui-captures/r8/capture-runner.cjs",
+    "copy_sha256": "3ea3b0893ef6c076b093a3ed2ff09d7f38e2d7305028315abbee9448d4a81286",
+    "changes": "round label and artifact path only; original screenshot operations preserved"
+  },
+  {
+    "source": "docs/plan/DOM-COMPONENTS-P1.ui-captures/r7/matrix-supplement.cjs",
+    "source_sha256": "b18b189f4a1e8d3b9bbdd7bcb8a3fceff477d69a8989f2ec7a513612ae2b271c",
+    "copy": "docs/plan/DOM-COMPONENTS-P1.ui-captures/r8/matrix-supplement.cjs",
+    "copy_sha256": "89159bec95a6b8e987e329aa9f77b6c30989c3b4336a97c2eff650aaaa388cd4",
+    "changes": "round label and artifact path only; original screenshot operations preserved"
+  },
+  {
+    "source": "docs/plan/DOM-COMPONENTS-P1.ui-captures/r7/matrix-followup.cjs",
+    "source_sha256": "3e7e4dbdf7abc829d210289270f77c7b7653083868728399776415f1a801f1dc",
+    "copy": "docs/plan/DOM-COMPONENTS-P1.ui-captures/r8/matrix-followup.cjs",
+    "copy_sha256": "e5184b3a01ebb171fdf4178c86e10d15722502e63b7106a7bfccf8d2d2e53150",
+    "changes": "round label and artifact path only; original screenshot operations preserved"
+  },
+  {
+    "source": "docs/plan/DOM-COMPONENTS-P1.ui-captures/r7/matrix-preview.cjs",
+    "source_sha256": "910089b7b2f5606967c0a5701ab8e10e8dec804de6a47313b65f7aa4cf7e1105",
+    "copy": "docs/plan/DOM-COMPONENTS-P1.ui-captures/r8/matrix-preview.cjs",
+    "copy_sha256": "b82e22d2ba81229960209a2de27e062d31aaf938dab6cfde91961efd7082e5b6",
+    "changes": "round label and artifact path only; original screenshot operations preserved"
+  },
+  {
+    "source": "docs/plan/DOM-COMPONENTS-P1.ui-captures/r7/matrix-zh-preview.cjs",
+    "source_sha256": "9e260574aa24367c5b3eb5188bb3e0992cd7b7c3c96a35db8c20d91706638d91",
+    "copy": "docs/plan/DOM-COMPONENTS-P1.ui-captures/r8/matrix-zh-preview.cjs",
+    "copy_sha256": "aff9c77a62cffb7cbf264054980c627a5be6d1eb1fef5fe8d157439f3556b11a",
+    "changes": "round label and artifact path only; original screenshot operations preserved"
+  },
+  {
+    "source": "docs/plan/DOM-COMPONENTS-P1.ui-captures/r7/matrix-complete.cjs",
+    "source_sha256": "25d629cfa8cdce6ef0764bb391b01688e8460c19a6411b2bef9cd4faba775eb8",
+    "copy": "docs/plan/DOM-COMPONENTS-P1.ui-captures/r8/matrix-complete.cjs",
+    "copy_sha256": "937d0de2e24eca2a28ab2fa575fbd923a18917395cdd363da4b2e34d3e6dace7",
+    "changes": "round label and artifact path only; original screenshot operations preserved"
+  },
+  {
+    "source": "docs/plan/DOM-COMPONENTS-P1.ui-captures/r7/capture-u4-supplement.cjs",
+    "source_sha256": "816ee2600d5919795e6979825f1393b5e2e8d8270227052492feaccd073783f6",
+    "copy": "docs/plan/DOM-COMPONENTS-P1.ui-captures/r8/capture-u4-supplement.cjs",
+    "copy_sha256": "5ca5d0487b62a6702c9df637e1a6f1ffb22e5bf78bd85e81aca3d797a0066131",
+    "changes": "round label and artifact path only; original screenshot operations preserved"
+  },
+  {
+    "source": "docs/plan/DOM-COMPONENTS-P1.ui-captures/r7/capture-detail-supplement.cjs",
+    "source_sha256": "e62bd6889ef8e69df8b507df52e17e8588e9df1538a3cb45d212e2ab032bbb71",
+    "copy": "docs/plan/DOM-COMPONENTS-P1.ui-captures/r8/capture-detail-supplement.cjs",
+    "copy_sha256": "79e471945a6db3db2586f1f77f773c8e6732dcb71fd8993e4fec3458a9bb2106",
+    "changes": "round label and artifact path only; original screenshot operations preserved"
+  },
+  {
+    "source": "docs/plan/DOM-COMPONENTS-P1.ui-captures/r7/capture-u3-supplement.cjs",
+    "source_sha256": "43fb25f8821baaba75555c84b1da4bc4cdbe5b8c0088f5b9fedd97b7c5538a01",
+    "copy": "docs/plan/DOM-COMPONENTS-P1.ui-captures/r8/capture-u3-supplement.cjs",
+    "copy_sha256": "e16f47a87f4f5cbc5eebadda2ab4550abd9a620f7a2d1a4eac3c5a1e2ddb1dd1",
+    "changes": "round label and artifact path only; original screenshot operations preserved"
+  }
+]

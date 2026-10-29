@@ -1,0 +1,14 @@
+{
+  "started_for_review": true,
+  "tool_sessions": {
+    "theme-studio": 61128,
+    "component-catalog": 98285
+  },
+  "stop": "write_stdin to each owned tool session with Ctrl-C, or kill only its recorded listener pid",
+  "listeners": "COMMAND   PID   USER   FD   TYPE             DEVICE SIZE/OFF NODE NAME\nxtask   75103 rockie    3u  IPv4 0x313103beb0aa5cea      0t0  TCP 127.0.0.1:4181 (LISTEN)\nxtask   80488 rockie    3u  IPv4 0x613193831e725983      0t0  TCP 127.0.0.1:4176 (LISTEN)\n",
+  "at": "2026-10-29T02:23:47.898604+00:00",
+  "stopped_at": "2026-10-29T03:09:12.241636+00:00",
+  "stopped_with": "SIGTERM only to verified owned listener pids 75103 and 80488",
+  "remaining_listeners": "",
+  "stopped": true
+}

@@ -1,0 +1,232 @@
+{
+  "error": null,
+  "menus": [
+    {
+      "viewport": "1440x900",
+      "theme": "dark",
+      "states": [
+        {
+          "step": "before",
+          "expanded": "false",
+          "focus": "studio-config-accent_color",
+          "visible_lists": 0
+        },
+        {
+          "step": "Enter",
+          "expanded": "true",
+          "focus": "studio-config-accent_color-list",
+          "visible_lists": 1
+        },
+        {
+          "step": "Escape then Space",
+          "expanded": "true",
+          "focus": "studio-config-accent_color-list",
+          "visible_lists": 1
+        },
+        {
+          "step": "Escape then Enter",
+          "expanded": "true",
+          "focus": "studio-config-accent_color-list",
+          "visible_lists": 1
+        }
+      ]
+    },
+    {
+      "viewport": "768x1024",
+      "theme": "light",
+      "states": [
+        {
+          "step": "before",
+          "expanded": "false",
+          "focus": "studio-config-accent_color",
+          "visible_lists": 0
+        },
+        {
+          "step": "Enter",
+          "expanded": "true",
+          "focus": "studio-config-accent_color-list",
+          "visible_lists": 1
+        },
+        {
+          "step": "Escape then Space",
+          "expanded": "true",
+          "focus": "studio-config-accent_color-list",
+          "visible_lists": 1
+        },
+        {
+          "step": "Escape then Enter",
+          "expanded": "true",
+          "focus": "studio-config-accent_color-list",
+          "visible_lists": 1
+        }
+      ]
+    },
+    {
+      "viewport": "390x844",
+      "theme": "light",
+      "states": [
+        {
+          "step": "before",
+          "expanded": "false",
+          "focus": "studio-config-accent_color",
+          "visible_lists": 0
+        },
+        {
+          "step": "Enter",
+          "expanded": "true",
+          "focus": "studio-config-accent_color-list",
+          "visible_lists": 1
+        },
+        {
+          "step": "Escape then Space",
+          "expanded": "true",
+          "focus": "studio-config-accent_color-list",
+          "visible_lists": 1
+        },
+        {
+          "step": "Escape then Enter",
+          "expanded": "true",
+          "focus": "studio-config-accent_color-list",
+          "visible_lists": 1
+        }
+      ]
+    }
+  ],
+  "contrast_nodes": 19,
+  "palette_solid_count": 16,
+  "palette_proof": [
+    {
+      "testid": "button-color-gray",
+      "a9_composited_matches_background": true,
+      "maximum_channel_error": 0.014999999999986358,
+      "contrast_matches_foreground": true
+    },
+    {
+      "testid": "button-color-gold",
+      "a9_composited_matches_background": true,
+      "maximum_channel_error": 0.18000000000000682,
+      "contrast_matches_foreground": true
+    },
+    {
+      "testid": "button-color-bronze",
+      "a9_composited_matches_background": true,
+      "maximum_channel_error": 0.36299999999999955,
+      "contrast_matches_foreground": true
+    },
+    {
+      "testid": "button-color-brown",
+      "a9_composited_matches_background": true,
+      "maximum_channel_error": 0.2750000000000057,
+      "contrast_matches_foreground": true
+    },
+    {
+      "testid": "button-color-orange",
+      "a9_composited_matches_background": true,
+      "maximum_channel_error": 0.26200000000000045,
+      "contrast_matches_foreground": true
+    },
+    {
+      "testid": "button-color-tomato",
+      "a9_composited_matches_background": true,
+      "maximum_channel_error": 0.2400000000000091,
+      "contrast_matches_foreground": true
+    },
+    {
+      "testid": "button-color-red",
+      "a9_composited_matches_background": true,
+      "maximum_channel_error": 0.1519999999999868,
+      "contrast_matches_foreground": true
+    },
+    {
+      "testid": "button-color-ruby",
+      "a9_composited_matches_background": true,
+      "maximum_channel_error": 0.125,
+      "contrast_matches_foreground": true
+    },
+    {
+      "testid": "button-color-crimson",
+      "a9_composited_matches_background": true,
+      "maximum_channel_error": 0.3599999999999852,
+      "contrast_matches_foreground": true
+    },
+    {
+      "testid": "button-color-pink",
+      "a9_composited_matches_background": true,
+      "maximum_channel_error": 0.25,
+      "contrast_matches_foreground": true
+    },
+    {
+      "testid": "button-color-blue",
+      "a9_composited_matches_background": true,
+      "maximum_channel_error": 0.0,
+      "contrast_matches_foreground": true
+    },
+    {
+      "testid": "button-color-cyan",
+      "a9_composited_matches_background": true,
+      "maximum_channel_error": 0.0,
+      "contrast_matches_foreground": true
+    },
+    {
+      "testid": "button-color-teal",
+      "a9_composited_matches_background": true,
+      "maximum_channel_error": 0.21000000000000796,
+      "contrast_matches_foreground": true
+    },
+    {
+      "testid": "button-color-jade",
+      "a9_composited_matches_background": true,
+      "maximum_channel_error": 0.39999999999997726,
+      "contrast_matches_foreground": true
+    },
+    {
+      "testid": "button-color-green",
+      "a9_composited_matches_background": true,
+      "maximum_channel_error": 0.44999999999998863,
+      "contrast_matches_foreground": true
+    },
+    {
+      "testid": "button-color-grass",
+      "a9_composited_matches_background": true,
+      "maximum_channel_error": 0.27499999999997726,
+      "contrast_matches_foreground": true
+    }
+  ],
+  "legacy_pairs": [
+    {
+      "text": "Accent pair",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(18, 183, 106)"
+    },
+    {
+      "text": "Semantic accent",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(18, 183, 106)"
+    }
+  ],
+  "caller_utilities": [
+    {
+      "id": "color-contrast",
+      "target": [
+        ".rui-geometry-104 > .rustify-button-content"
+      ],
+      "summary": "Fix any of the following:\n  Element has insufficient color contrast of 1.24 (foreground color: #c8080a, background color: #d92d20, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1",
+      "text": "Caller utilities",
+      "testid": "button-class-override",
+      "color": "red",
+      "variant": "outline",
+      "computedColor": "rgba(196, 0, 6, 0.827)",
+      "computedBackground": "rgb(217, 45, 32)",
+      "a9": "rgba(219, 0, 7, 0.718)",
+      "contrast": "rgb(255, 255, 255)",
+      "scopePrimary": "rgb(62 99 221)",
+      "scopeAccent": "rgb(18 183 106)"
+    }
+  ],
+  "health_totals": {
+    "pageErrors": 0,
+    "consoleErrors": 0,
+    "failed": 0,
+    "csp": 0
+  }
+}
