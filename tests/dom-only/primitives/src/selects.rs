@@ -180,6 +180,11 @@ pub fn SelectLayers() -> impl IntoView {
                         <p::number_field::Root value=number on_change=move |next| number.set(next) aria_label="Nested number">
                             <p::number_field::Input test_id="layer-number" />
                         </p::number_field::Root>
+                        <p::slider::Root values=Signal::derive(move || vec![p::slider::ThumbValue { id: "nested".into(), value: 20.0 }])
+                            on_change=|_| {} on_commit=Callback::new(move |_| calls.update(|all| all.push("slider-commit".into())))
+                            on_cancel=Callback::new(move |_| calls.update(|all| all.push("slider-cancel".into())))>
+                            <p::slider::Track><p::slider::Thumb id="nested" aria_label="Nested slider" test_id="layer-slider" /></p::slider::Track>
+                        </p::slider::Root>
                         <p><button type="button" data-testid="layer-after">"After nested choices"</button></p>
                     </div>
                 </rustify_ui::Layer>

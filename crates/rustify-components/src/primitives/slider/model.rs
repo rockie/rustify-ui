@@ -58,8 +58,8 @@ impl Config {
         {
             return Err(error("step", "must define representable step indices"));
         }
-        let needed = self.gap() * count.saturating_sub(1) as f64;
-        if !needed.is_finite() || needed > self.max - self.min {
+        let needed = f64::from(self.min_steps_between) * count.saturating_sub(1) as f64;
+        if !needed.is_finite() || needed > self.index(self.max) {
             return Err(error(
                 "min_steps_between",
                 "not enough space for the declared thumbs",
@@ -67,8 +67,13 @@ impl Config {
         }
         Ok(())
     }
-    pub fn gap(self) -> f64 {
-        f64::from(self.min_steps_between) * self.step
+    fn index(self, value: f64) -> f64 {
+        // Normalized values share an integer step index, even when their f64
+        // projections lose precision relative to a nonzero minimum.
+        ((value - self.min) / self.step).round()
+    }
+    fn separated(self, high: f64, low: f64) -> bool {
+        self.index(high) - self.index(low) >= f64::from(self.min_steps_between)
     }
     pub fn snap(self, value: f64) -> f64 {
         rustify_ui::snap(value, self.min, self.max, self.step)
@@ -77,25 +82,17 @@ impl Config {
         (self.min + index * self.step).clamp(self.min, self.max)
     }
     fn bounded(self, value: f64, low: f64, high: f64) -> Option<f64> {
-        let last = ((self.max - self.min) / self.step).round();
-        let low_index = ((low - self.min) / self.step - 1e-9)
-            .ceil()
-            .clamp(0.0, last);
-        let high_index = ((high - self.min) / self.step + 1e-9)
-            .floor()
-            .clamp(0.0, last);
+        let last = self.index(self.max);
+        let low_index = self.index(low).clamp(0.0, last);
+        let high_index = self.index(high).clamp(0.0, last);
         if low_index > high_index {
             return None;
         }
-        let index = ((value.clamp(low, high) - self.min) / self.step)
-            .round()
+        let index = self
+            .index(value.clamp(low, high))
             .clamp(low_index, high_index);
-        let value = self.at(index);
-        (separated(value, low, 0.0) && separated(high, value, 0.0)).then_some(value)
+        Some(self.at(index))
     }
-}
-fn separated(high: f64, low: f64, gap: f64) -> bool {
-    high - low >= gap - gap.abs() * f64::EPSILON * 8.0
 }
 
 #[derive(Clone, Debug, PartialEq, Eq)]
@@ -177,7 +174,7 @@ impl Model {
         }
         if !values
             .windows(2)
-            .all(|pair| separated(pair[1].value, pair[0].value, config.gap()))
+            .all(|pair| config.separated(pair[1].value, pair[0].value))
         {
             return Err(error(
                 "values",
@@ -230,11 +227,17 @@ impl Model {
         let low = neighbours
             .and_then(|n| n.before.as_ref())
             .and_then(|id| self.get(id))
-            .map_or(self.config.min, |value| value + self.config.gap());
+            .map_or(self.config.min, |value| {
+                self.config
+                    .at(self.config.index(value) + f64::from(self.config.min_steps_between))
+            });
         let high = neighbours
             .and_then(|n| n.after.as_ref())
             .and_then(|id| self.get(id))
-            .map_or(self.config.max, |value| value - self.config.gap());
+            .map_or(self.config.max, |value| {
+                self.config
+                    .at(self.config.index(value) - f64::from(self.config.min_steps_between))
+            });
         (low, high)
     }
     pub fn candidate(
@@ -258,10 +261,10 @@ impl Model {
         let at = result.partition_point(|item| {
             item.value < value || (item.value == value && self.rank[&item.id] < self.rank[id])
         });
-        if at > 0 && !separated(value, result[at - 1].value, self.config.gap()) {
+        if at > 0 && !self.config.separated(value, result[at - 1].value) {
             return None;
         }
-        if at < result.len() && !separated(result[at].value, value, self.config.gap()) {
+        if at < result.len() && !self.config.separated(result[at].value, value) {
             return None;
         }
         result.insert(at, active);
@@ -460,6 +463,101 @@ mod tests {
         )
         .unwrap_err();
         assert_eq!(error.field, "min_steps_between");
+    }
+
+    #[test]
+    fn decimal_gap_accepts_adjacent_steps_at_a_nonzero_minimum() {
+        let config = Config {
+            min: 100.0,
+            max: 200.0,
+            step: 0.1,
+            min_steps_between: 1,
+            ..Config::default()
+        };
+        let state = model(&[("a", 100.2), ("b", 100.3)], config);
+        assert_eq!(state.values, values(&[("a", 100.2), ("b", 100.3)]));
+    }
+
+    #[test]
+    fn decimal_candidate_accepts_exact_gap_and_rejects_a_smaller_gap() {
+        let config = Config {
+            min: 100.0,
+            max: 200.0,
+            step: 0.1,
+            min_steps_between: 1,
+            ..Config::default()
+        };
+        let state = model(&[("a", 100.0), ("b", 100.3)], config);
+        assert_eq!(
+            state.candidate("a", 100.2, None).unwrap(),
+            values(&[("a", 100.2), ("b", 100.3)])
+        );
+        assert!(state.candidate("a", 100.3, None).is_none());
+        assert!(Model::new(
+            &values(&[("a", 100.2), ("b", 100.3)]),
+            Config {
+                min_steps_between: 2,
+                ..config
+            },
+            None,
+        )
+        .is_err());
+    }
+
+    #[test]
+    fn decimal_preserve_order_uses_the_same_step_limits_as_gap_validation() {
+        let config = Config {
+            min: 100.0,
+            max: 200.0,
+            step: 0.1,
+            min_steps_between: 1,
+            preserve_order: true,
+        };
+        let state = model(&[("a", 100.1), ("b", 100.5), ("c", 100.7)], config);
+        let neighbours = state.neighbours("b");
+        assert_eq!(state.bounds("b", neighbours.as_ref()), (100.2, 100.6));
+        assert_eq!(
+            state.candidate("b", 100.0, neighbours.as_ref()).unwrap(),
+            values(&[("a", 100.1), ("b", 100.2), ("c", 100.7)])
+        );
+        assert_eq!(
+            state.candidate("b", 200.0, neighbours.as_ref()).unwrap(),
+            values(&[("a", 100.1), ("b", 100.6), ("c", 100.7)])
+        );
+    }
+
+    #[test]
+    fn decimal_configuration_can_fill_the_range_with_exact_step_intervals() {
+        let state = model(
+            &[("a", 100.0), ("b", 100.1), ("c", 100.2), ("d", 100.3)],
+            Config {
+                min: 100.0,
+                max: 100.3,
+                step: 0.1,
+                min_steps_between: 1,
+                ..Config::default()
+            },
+        );
+        assert_eq!(state.values.len(), 4);
+    }
+
+    #[test]
+    fn clamped_maximum_keeps_the_snap_terminal_step_index() {
+        let state = model(
+            &[("a", 100.0), ("b", 100.26)],
+            Config {
+                min: 100.0,
+                max: 100.26,
+                step: 0.1,
+                min_steps_between: 3,
+                preserve_order: true,
+            },
+        );
+        assert_eq!(
+            state.candidate("b", 200.0, None).unwrap(),
+            values(&[("a", 100.0), ("b", 100.26)])
+        );
+        assert_eq!(state.bounds("a", None), (100.0, 100.0));
     }
 
     #[test]

@@ -7,6 +7,8 @@ mod fields;
 #[cfg(target_arch = "wasm32")]
 mod form_choices;
 #[cfg(target_arch = "wasm32")]
+mod lifecycle;
+#[cfg(target_arch = "wasm32")]
 mod selects;
 #[cfg(target_arch = "wasm32")]
 mod sliders;
@@ -58,6 +60,7 @@ mod app {
             <crate::form_choices::FormChoices />
             <crate::selects::Selects />
             <crate::selects::SelectLayers />
+            <crate::lifecycle::Lifecycle />
         }
     }
 

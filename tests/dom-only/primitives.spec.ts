@@ -985,3 +985,148 @@ test('field keeps browser selection, clipboard paste and native undo through con
     await expect(input).toHaveValue('Pasted edit');
     expect((await nativeValues(page)).title).toBe('Pasted edit');
 });
+
+for (const [kind, draft, accepted] of [['number', '18', '12'], ['color', '#abcdef', '#112233']]) {
+    test(`successful reset discards the focused ${kind} draft before blur, Enter and submit`, async ({ page }) => {
+        await page.goto('/');
+        const editor = page.getByTestId(`field-${kind}`);
+        for (const end of ['blur', 'Enter', 'submit']) {
+            await editor.fill(draft);
+            await page.locator('#native-form').evaluate(node => (node as HTMLFormElement).reset());
+            await expect(editor).toBeFocused();
+            await expect(editor).toHaveValue(accepted);
+            if (end === 'blur') await editor.blur();
+            else if (end === 'Enter') await editor.press('Enter');
+            else await page.locator('#native-form').evaluate(node => (node as HTMLFormElement).requestSubmit());
+            await expect(page.getByTestId('field-requests')).toHaveText('');
+            await page.getByTestId('field-saved').click();
+        }
+    });
+    test(`refused and busy reset retain the focused ${kind} draft`, async ({ page }) => {
+        await page.goto('/');
+        await page.getByTestId('field-policy').selectOption('refuse');
+        const editor = page.getByTestId(`field-${kind}`);
+        await editor.fill(draft);
+        await page.locator('#native-form').evaluate(node => (node as HTMLFormElement).reset());
+        await expect(editor).toHaveValue(draft);
+        await page.getByTestId('field-policy').selectOption('accept');
+        await page.locator('#native-form').evaluate(node => (node as HTMLFormElement).requestSubmit());
+        const busyDraft = kind === 'number' ? '19' : '#fedcba';
+        await editor.fill(busyDraft);
+        await page.locator('#native-form').evaluate(node => (node as HTMLFormElement).reset());
+        await expect(editor).toHaveValue(busyDraft);
+    });
+}
+
+test('field input registration follows mounted owners and recovers from duplicates', async ({ page }) => {
+    await page.goto('/');
+    const input = page.getByTestId('lifecycle-input');
+    for (let round = 0; round < 3; round++) {
+        await page.getByTestId('input-toggle').click();
+        await expect(input).toHaveCount(0);
+        await page.getByTestId('input-toggle').click();
+        await expect(input).toBeEnabled();
+        await input.fill(`title${round}`);
+        await expect(input).toHaveValue(`title${round}`);
+    }
+    await page.getByTestId('input-duplicate').click();
+    await expect(input).toBeDisabled();
+    await expect(input.locator('..')).toHaveAttribute('data-rustify-issue', 'multiple-inputs');
+    await page.getByTestId('input-duplicate').click();
+    await expect(input).toBeEnabled();
+    await input.fill('recovered');
+    await expect(input).toHaveValue('recovered');
+    await input.evaluate(node => {
+        const editor = node as HTMLInputElement;
+        editor.value = 'refused';
+        editor.addEventListener('input', event => event.preventDefault(), { once: true });
+        editor.dispatchEvent(new Event('input', { bubbles: true, cancelable: true }));
+    });
+    await expect(input).toHaveValue('recovered');
+    await page.getByTestId('input-duplicate').click();
+    await page.getByTestId('input-toggle').click();
+    const remaining = page.getByTestId('lifecycle-second');
+    await expect(remaining).toBeEnabled();
+    await remaining.fill('second survives');
+    await expect(remaining).toHaveValue('second survives');
+    await remaining.evaluate(node => {
+        const editor = node as HTMLInputElement;
+        editor.value = 'refused';
+        editor.addEventListener('input', event => event.preventDefault(), { once: true });
+        editor.dispatchEvent(new Event('input', { bubbles: true, cancelable: true }));
+    });
+    await expect(remaining).toHaveValue('second survives');
+    await page.getByTestId('lifecycle-submit').click();
+    await expect(remaining).toBeFocused();
+});
+
+test('field labels follow explicit IDs and replacement controls', async ({ page }) => {
+    await page.goto('/');
+    for (let round = 0; round < 3; round++) {
+        for (const prefix of ['lifecycle', 'implicit']) {
+            const input = page.getByTestId(`${prefix}-input`);
+            const label = page.getByTestId(`${prefix}-label`);
+            expect(await label.evaluate(node => (node as HTMLLabelElement).control?.id)).toBe(await input.getAttribute('id'));
+            await label.click();
+            await expect(input).toBeFocused();
+            await expect(page.getByRole('textbox', { name: prefix === 'lifecycle' ? 'Explicit title' : 'Implicit title', exact: true })).toHaveCount(1);
+        }
+        await page.getByTestId('lifecycle-submit').click();
+        await expect(page.getByTestId('lifecycle-input')).toBeFocused();
+        await page.getByTestId('control-toggle').click();
+        await page.getByTestId('control-toggle').click();
+    }
+    await page.getByTestId('legacy-submit').click();
+    await expect(page.getByTestId('legacy-input')).toBeFocused();
+    const select = page.getByRole('combobox', { name: 'Fruit', exact: true });
+    await expect(select).toHaveAttribute('id', 'raw-select-trigger');
+    expect(await page.getByText('Fruit', { exact: true }).evaluate(node => (node as HTMLLabelElement).control?.id)).toBe('raw-select-trigger');
+});
+
+test('conditional orphan parts retain caller content and diagnostics without aborting', async ({ page }) => {
+    await page.goto('/');
+    await page.getByTestId('missing-toggle').click();
+    const parts = page.getByTestId('orphan-parts');
+    for (const text of ['Content child', 'Viewport child', 'Text child', 'Indicator child', 'Up child', 'Down child', 'Description child']) {
+        await expect(parts.getByText(text, { exact: true })).toBeVisible();
+    }
+    expect(await parts.locator('[data-rustify-issue]').count()).toBeGreaterThanOrEqual(9);
+    await page.getByTestId('lifecycle-input').fill('still running');
+    await expect(page.getByTestId('lifecycle-input')).toHaveValue('still running');
+});
+
+test('decimal slider accepts adjacent fractional steps at a nonzero minimum', async ({ page }) => {
+    await page.goto('/');
+    const low = page.getByTestId('decimal-low');
+    await expect(low).not.toBeDisabled();
+    await expect(low).toHaveAttribute('aria-valuenow', '100.2');
+    await low.press('ArrowLeft');
+    await expect(low).toHaveAttribute('aria-valuenow', '100.1');
+    await low.press('ArrowRight');
+    await expect(low).toHaveAttribute('aria-valuenow', '100.2');
+    await low.press('ArrowRight');
+    await expect(low).toHaveAttribute('aria-valuenow', '100.2');
+});
+
+test('Escape cancels an active nested slider gesture and closes the parent layer', async ({ page }) => {
+    await page.goto('/');
+    await page.getByTestId('layer-open').click();
+    const slider = page.getByTestId('layer-slider');
+    await slider.focus();
+    await page.keyboard.down('ArrowRight');
+    await page.keyboard.press('Escape');
+    await page.keyboard.up('ArrowRight');
+    await expect(page.getByTestId('layer-panel')).toHaveCount(0);
+    await expect(page.getByTestId('layer-calls')).toContainText('slider-cancel');
+    await expect(page.getByTestId('layer-calls')).not.toContainText('slider-commit');
+    await page.getByTestId('layer-open').click();
+    const box = await slider.boundingBox();
+    expect(box).not.toBeNull();
+    await page.mouse.move(box!.x + box!.width / 2, box!.y + box!.height / 2);
+    await page.mouse.down();
+    await page.keyboard.press('Escape');
+    await page.mouse.up();
+    await expect(page.getByTestId('layer-panel')).toHaveCount(0);
+    await expect(page.getByTestId('layer-calls')).not.toContainText('slider-commit');
+    expect((await page.getByTestId('layer-calls').innerText()).split('slider-cancel').length - 1).toBe(2);
+});

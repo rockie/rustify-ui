@@ -334,6 +334,7 @@ where
             target,
             (
                 attr::disabled(true),
+                data("data-rustify-part", "select-trigger"),
                 data("data-rustify-issue", "missing-root"),
             ),
         )
@@ -439,7 +440,9 @@ pub fn Value(
     #[prop(optional, into)] placeholder: String,
     #[prop(optional, into)] class: String,
 ) -> impl IntoView {
-    let context = expect_context::<Context>();
+    let Some(context) = use_context::<Context>() else {
+        return view! { <span class=crate::macros::reactive_merge("", &class) data-rustify-part="select-value" data-rustify-issue="missing-root">{placeholder}</span> }.into_any();
+    };
     let locale = rustify_ui::use_locale();
     let placeholder = StoredValue::new(placeholder);
     view! { <span class=crate::macros::reactive_merge("", &class) data-rustify-part="select-value" data-placeholder=move || context.accepted().is_none().then_some("")>
@@ -448,7 +451,7 @@ pub fn Value(
             if !placeholder.is_empty() { placeholder } else if !context.placeholder.read_value().is_empty() { context.placeholder.get_value() }
             else { match locale.get() { rustify_ui::Locale::English => "Choose".into(), rustify_ui::Locale::Chinese => "请选择".into() } }
         })}
-    </span> }
+    </span> }.into_any()
 }
 #[component]
 pub fn Icon(
@@ -511,12 +514,13 @@ pub fn Content(
     #[prop(optional, into)] test_id: String,
     children: ChildrenFn,
 ) -> impl IntoView {
-    let context = expect_context::<Context>();
+    let context = use_context::<Context>();
     let class = StoredValue::new(class);
     let test_id = StoredValue::new(test_id);
     let children = StoredValue::new(children);
     view! { <leptos::attribute_interceptor::AttributeInterceptor let:attributes>
     {let attributes = StoredValue::new_local(attributes);
+    if let Some(context) = context {
     view! { <Show when=move || {
         #[cfg(target_arch = "wasm32")] { context.open.get() && !context.disabled() && context.trigger.get().is_some() }
         #[cfg(not(target_arch = "wasm32"))] { false }
@@ -541,14 +545,22 @@ pub fn Content(
             on_placement=Some(Callback::new(move |placement| { let _ = context.placement.try_set(placement); })) class="rui-select-layer">
             <ContentBody class=class.get_value() test_id=test_id.get_value() attributes=attributes.get_value()>{children.with_value(|children| children())}</ContentBody>
         </rustify_ui::Layer>
-    </Show> }}
+    </Show> }.into_any()
+    } else {
+        view! { <div class=crate::macros::reactive_merge("", &class.get_value()) data-testid=optional(test_id.get_value())
+            data-rustify-part="select-content" data-rustify-issue="missing-root" {..attributes.get_value()}>
+            {children.with_value(|children| children())}
+        </div> }.into_any()
+    }}
     </leptos::attribute_interceptor::AttributeInterceptor> }
 }
 #[component]
 pub fn Viewport(#[prop(optional, into)] class: String, children: Children) -> impl IntoView {
-    let context = expect_context::<Context>();
+    let Some(context) = use_context::<Context>() else {
+        return view! { <div class=crate::macros::reactive_merge("", &class) data-rustify-part="select-viewport" data-rustify-issue="missing-root">{children()}</div> }.into_any();
+    };
     view! { <div node_ref=context.viewport class=crate::macros::reactive_merge("", &class) role="presentation" data-rustify-part="select-viewport"
-    on:scroll=move |_| { #[cfg(target_arch = "wasm32")] context.measure_scroll(); }>{children()}</div> }
+    on:scroll=move |_| { #[cfg(target_arch = "wasm32")] context.measure_scroll(); }>{children()}</div> }.into_any()
 }
 #[derive(Clone, Copy)]
 struct GroupContext {
@@ -611,7 +623,14 @@ where
 {
     use leptos::attr::{self, custom::custom_attribute as data};
     let Some(context) = context else {
-        return super::Slot(target, data("data-rustify-issue", "missing-root")).into_any();
+        return super::Slot(
+            target,
+            (
+                data("data-rustify-part", "select-item"),
+                data("data-rustify-issue", "missing-root"),
+            ),
+        )
+        .into_any();
     };
     super::Slot(
         target,
@@ -703,9 +722,19 @@ pub fn ItemText(
     #[prop(optional, into)] class: String,
     #[prop(optional)] children: Option<Children>,
 ) -> impl IntoView {
-    let context = expect_context::<Context>();
-    let item = expect_context::<ItemBinding>();
+    let context = use_context::<Context>();
+    let item = use_context::<ItemBinding>();
+    let issue = if context.is_none() {
+        Some("missing-root")
+    } else if item.is_none() {
+        Some("missing-item")
+    } else {
+        None
+    };
     let text = move || {
+        let Some((context, item)) = context.zip(item) else {
+            return String::new();
+        };
         item.value.with_value(|value| {
             context.index.with(|index| {
                 index
@@ -715,28 +744,36 @@ pub fn ItemText(
             })
         })
     };
-    view! { <span class=crate::macros::reactive_merge("", &class) data-rustify-part="select-item-text">{children.map(|children| children()).unwrap_or_else(|| text.into_any())}</span> }
+    view! { <span class=crate::macros::reactive_merge("", &class) data-rustify-part="select-item-text" data-rustify-issue=issue>{children.map(|children| children()).unwrap_or_else(|| text.into_any())}</span> }
 }
 #[component]
 pub fn ItemIndicator(
     #[prop(optional, into)] class: String,
     #[prop(optional)] children: Option<Children>,
 ) -> impl IntoView {
-    let context = expect_context::<Context>();
-    let item = expect_context::<ItemBinding>();
+    let context = use_context::<Context>();
+    let item = use_context::<ItemBinding>();
+    let issue = if context.is_none() {
+        Some("missing-root")
+    } else if item.is_none() {
+        Some("missing-item")
+    } else {
+        None
+    };
     view! { <span class=crate::macros::reactive_merge("", &class) aria-hidden="true" data-rustify-part="select-item-indicator"
-    data-state=move || if item.value.with_value(|value| context.selected(value)) { "checked" } else { "unchecked" }>{children.map(|children| children())}</span> }
+    data-rustify-issue=issue data-state=move || context.zip(item).map(|(context, item)| if item.value.with_value(|value| context.selected(value)) { "checked" } else { "unchecked" })>{children.map(|children| children())}</span> }
 }
 #[component]
 pub fn Separator(#[prop(optional, into)] class: String) -> impl IntoView {
     view! { <div class=crate::macros::reactive_merge("", &class) role="separator" data-rustify-part="select-separator" /> }
 }
 fn scroll_button(up: bool, class: String, children: Option<Children>) -> impl IntoView {
-    let context = expect_context::<Context>();
+    let context = use_context::<Context>();
     view! { <button type="button" tabindex="-1" aria-hidden="true" class=crate::macros::reactive_merge("", &class)
             data-rustify-part=if up { "select-scroll-up" } else { "select-scroll-down" }
-            data-rustify-select-owner=context.key.get_value()
-            disabled=move || context.disabled() || !(if up { context.scroll_up.get() } else { context.scroll_down.get() })
+            data-rustify-issue=context.is_none().then_some("missing-root")
+            data-rustify-select-owner=context.map(|context| context.key.get_value())
+            disabled=move || context.is_none_or(|context| context.disabled() || !(if up { context.scroll_up.get() } else { context.scroll_down.get() }))
     >{children.map(|children| children())}</button> }
 }
 #[component]

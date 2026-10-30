@@ -19,6 +19,8 @@ pub struct Form {
     group: StoredValue<String>,
     save: StoredValue<Arc<dyn Fn() + Send + Sync>>,
     focus: StoredValue<Option<(String, Callback<&'static str>)>>,
+    resets: StoredValue<Vec<(StoredValue<()>, Callback<()>)>>,
+    controls: StoredValue<std::collections::HashMap<&'static str, RwSignal<String>>>,
 }
 
 impl Form {
@@ -30,13 +32,35 @@ impl Form {
             group: StoredValue::new(crate::id::next("form")),
             save: StoredValue::new(Arc::new(save)),
             focus: StoredValue::new(None),
+            resets: StoredValue::new(Vec::new()),
+            controls: StoredValue::new(std::collections::HashMap::new()),
         }
     }
 
     /// The id of a field's control. A `Label` points at it and the keyboard is
     /// moved to it; both need the same answer, so there is one.
     pub fn control_id(&self, field: &'static str) -> String {
+        self.controls
+            .with_value(|controls| controls.get(field).copied())
+            .map(|id| id.get())
+            .unwrap_or_else(|| self.default_control_id(field))
+    }
+
+    pub(crate) fn default_control_id(&self, field: &'static str) -> String {
         format!("{}-{field}", self.group.get_value())
+    }
+
+    pub(crate) fn bind_control_id(self, field: &'static str, id: RwSignal<String>) {
+        self.controls.update_value(|controls| {
+            controls.insert(field, id);
+        });
+        on_cleanup(move || {
+            self.controls.try_update_value(|controls| {
+                if controls.get(field) == Some(&id) {
+                    controls.remove(field);
+                }
+            });
+        });
     }
 
     /// The id of the element holding a field's error text.
@@ -96,7 +120,24 @@ impl Form {
     /// Resets validation bookkeeping after the application resets its values.
     /// Returns false while a save is in flight; the current session is retained.
     pub fn reset(&self) -> bool {
-        self.state.try_update(FormState::reset).unwrap_or(false)
+        let reset = self.state.try_update(FormState::reset).unwrap_or(false);
+        if reset {
+            let callbacks = self.resets.get_value();
+            for (_, callback) in callbacks {
+                callback.run(());
+            }
+        }
+        reset
+    }
+
+    pub(crate) fn on_reset(self, callback: Callback<()>) {
+        let key = StoredValue::new(());
+        self.resets
+            .update_value(|callbacks| callbacks.push((key, callback)));
+        on_cleanup(move || {
+            self.resets
+                .try_update_value(|callbacks| callbacks.retain(|(id, _)| *id != key));
+        });
     }
 
     /// Ask to submit. `rules` is every synchronous check, including the ones

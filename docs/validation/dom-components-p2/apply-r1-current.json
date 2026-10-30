@@ -1,0 +1,2435 @@
+{
+  "phase": "current",
+  "collected_at": "2026-10-30T16:28:23.117Z",
+  "product": "target/dom/dom-consumer",
+  "parameters": {
+    "warmups": 5,
+    "samples": 40,
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "browser_version": "153.0.8010.12",
+    "executable": null,
+    "environment": {
+      "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.8010.12 Safari/537.36",
+      "dpr": 1,
+      "visibility": "visible"
+    }
+  },
+  "sizes": {
+    "pkg/app_bg.wasm": {
+      "bytes": 11271230,
+      "gzip": 1285603
+    },
+    "rustify.css": {
+      "bytes": 94986,
+      "gzip": 12591
+    },
+    "rustify-runtime.css": {
+      "bytes": 796,
+      "gzip": 442
+    }
+  },
+  "workloads": {
+    "checkbox": {
+      "p50_ms": 14.599999904632568,
+      "p95_ms": 15.5,
+      "counts": {
+        "checked": true,
+        "text": "initial",
+        "slider": 50,
+        "selected": "alpha",
+        "requests": 45,
+        "accepts": 45,
+        "commits": 0
+      },
+      "idle": {
+        "before": {
+          "tasks": 0,
+          "timers": 0,
+          "observers": 1,
+          "errors": 0,
+          "aborted": false
+        },
+        "after": {
+          "tasks": 0,
+          "timers": 0,
+          "observers": 1,
+          "errors": 0,
+          "aborted": false
+        }
+      },
+      "raw": [
+        {
+          "input_ms": 658.0999999046326,
+          "dom_frame_ms": 673.2000000476837,
+          "latency_ms": 15.100000143051147,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 6,
+            "accepts": 6,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 708.5999999046326,
+          "dom_frame_ms": 723,
+          "latency_ms": 14.400000095367432,
+          "state": {
+            "checked": true,
+            "text": "initial",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 7,
+            "accepts": 7,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 758.7000000476837,
+          "dom_frame_ms": 773.0999999046326,
+          "latency_ms": 14.399999856948853,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 8,
+            "accepts": 8,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 808.7000000476837,
+          "dom_frame_ms": 823.4000000953674,
+          "latency_ms": 14.700000047683716,
+          "state": {
+            "checked": true,
+            "text": "initial",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 9,
+            "accepts": 9,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 858.0999999046326,
+          "dom_frame_ms": 873.2999999523163,
+          "latency_ms": 15.200000047683716,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 10,
+            "accepts": 10,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 909.9000000953674,
+          "dom_frame_ms": 922.5999999046326,
+          "latency_ms": 12.699999809265137,
+          "state": {
+            "checked": true,
+            "text": "initial",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 11,
+            "accepts": 11,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 958.5999999046326,
+          "dom_frame_ms": 973.7000000476837,
+          "latency_ms": 15.100000143051147,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 12,
+            "accepts": 12,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 1009,
+          "dom_frame_ms": 1023.5999999046326,
+          "latency_ms": 14.599999904632568,
+          "state": {
+            "checked": true,
+            "text": "initial",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 13,
+            "accepts": 13,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 1058.4000000953674,
+          "dom_frame_ms": 1073.5,
+          "latency_ms": 15.099999904632568,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 14,
+            "accepts": 14,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 1108.9000000953674,
+          "dom_frame_ms": 1123.5999999046326,
+          "latency_ms": 14.699999809265137,
+          "state": {
+            "checked": true,
+            "text": "initial",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 15,
+            "accepts": 15,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 1158,
+          "dom_frame_ms": 1172.7999999523163,
+          "latency_ms": 14.799999952316284,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 16,
+            "accepts": 16,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 1209.2999999523163,
+          "dom_frame_ms": 1223.5,
+          "latency_ms": 14.200000047683716,
+          "state": {
+            "checked": true,
+            "text": "initial",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 17,
+            "accepts": 17,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 1259.0999999046326,
+          "dom_frame_ms": 1273.5999999046326,
+          "latency_ms": 14.5,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 18,
+            "accepts": 18,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 1309.2999999523163,
+          "dom_frame_ms": 1322.9000000953674,
+          "latency_ms": 13.600000143051147,
+          "state": {
+            "checked": true,
+            "text": "initial",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 19,
+            "accepts": 19,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 1358.7999999523163,
+          "dom_frame_ms": 1373.5999999046326,
+          "latency_ms": 14.799999952316284,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 20,
+            "accepts": 20,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 1408.7999999523163,
+          "dom_frame_ms": 1422.7999999523163,
+          "latency_ms": 14,
+          "state": {
+            "checked": true,
+            "text": "initial",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 21,
+            "accepts": 21,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 1458.5,
+          "dom_frame_ms": 1472.5999999046326,
+          "latency_ms": 14.099999904632568,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 22,
+            "accepts": 22,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 1508.9000000953674,
+          "dom_frame_ms": 1523.5,
+          "latency_ms": 14.599999904632568,
+          "state": {
+            "checked": true,
+            "text": "initial",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 23,
+            "accepts": 23,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 1559.2999999523163,
+          "dom_frame_ms": 1572.7999999523163,
+          "latency_ms": 13.5,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 24,
+            "accepts": 24,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 1608.5,
+          "dom_frame_ms": 1622.9000000953674,
+          "latency_ms": 14.400000095367432,
+          "state": {
+            "checked": true,
+            "text": "initial",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 25,
+            "accepts": 25,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 1659,
+          "dom_frame_ms": 1673.0999999046326,
+          "latency_ms": 14.099999904632568,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 26,
+            "accepts": 26,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 1709.5999999046326,
+          "dom_frame_ms": 1722.9000000953674,
+          "latency_ms": 13.300000190734863,
+          "state": {
+            "checked": true,
+            "text": "initial",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 27,
+            "accepts": 27,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 1759.2000000476837,
+          "dom_frame_ms": 1773.5999999046326,
+          "latency_ms": 14.399999856948853,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 28,
+            "accepts": 28,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 1808.2000000476837,
+          "dom_frame_ms": 1823.7000000476837,
+          "latency_ms": 15.5,
+          "state": {
+            "checked": true,
+            "text": "initial",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 29,
+            "accepts": 29,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 1858.7999999523163,
+          "dom_frame_ms": 1873.0999999046326,
+          "latency_ms": 14.299999952316284,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 30,
+            "accepts": 30,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 1909.2000000476837,
+          "dom_frame_ms": 1922.9000000953674,
+          "latency_ms": 13.700000047683716,
+          "state": {
+            "checked": true,
+            "text": "initial",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 31,
+            "accepts": 31,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 1960.4000000953674,
+          "dom_frame_ms": 1973.5999999046326,
+          "latency_ms": 13.199999809265137,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 32,
+            "accepts": 32,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 2008.9000000953674,
+          "dom_frame_ms": 2023,
+          "latency_ms": 14.099999904632568,
+          "state": {
+            "checked": true,
+            "text": "initial",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 33,
+            "accepts": 33,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 2058.2000000476837,
+          "dom_frame_ms": 2073.2000000476837,
+          "latency_ms": 15,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 34,
+            "accepts": 34,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 2108.9000000953674,
+          "dom_frame_ms": 2123.5,
+          "latency_ms": 14.599999904632568,
+          "state": {
+            "checked": true,
+            "text": "initial",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 35,
+            "accepts": 35,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 2158.4000000953674,
+          "dom_frame_ms": 2173.5,
+          "latency_ms": 15.099999904632568,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 36,
+            "accepts": 36,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 2208.2999999523163,
+          "dom_frame_ms": 2222.9000000953674,
+          "latency_ms": 14.600000143051147,
+          "state": {
+            "checked": true,
+            "text": "initial",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 37,
+            "accepts": 37,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 2258.7000000476837,
+          "dom_frame_ms": 2273,
+          "latency_ms": 14.299999952316284,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 38,
+            "accepts": 38,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 2308,
+          "dom_frame_ms": 2323.5,
+          "latency_ms": 15.5,
+          "state": {
+            "checked": true,
+            "text": "initial",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 39,
+            "accepts": 39,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 2358.5999999046326,
+          "dom_frame_ms": 2373.5,
+          "latency_ms": 14.900000095367432,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 40,
+            "accepts": 40,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 2408.4000000953674,
+          "dom_frame_ms": 2423,
+          "latency_ms": 14.599999904632568,
+          "state": {
+            "checked": true,
+            "text": "initial",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 41,
+            "accepts": 41,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 2458.0999999046326,
+          "dom_frame_ms": 2473.5999999046326,
+          "latency_ms": 15.5,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 42,
+            "accepts": 42,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 2509,
+          "dom_frame_ms": 2523.5,
+          "latency_ms": 14.5,
+          "state": {
+            "checked": true,
+            "text": "initial",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 43,
+            "accepts": 43,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 2558.2000000476837,
+          "dom_frame_ms": 2573.5999999046326,
+          "latency_ms": 15.399999856948853,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 44,
+            "accepts": 44,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 2608.9000000953674,
+          "dom_frame_ms": 2623.5,
+          "latency_ms": 14.599999904632568,
+          "state": {
+            "checked": true,
+            "text": "initial",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 45,
+            "accepts": 45,
+            "commits": 0
+          }
+        }
+      ]
+    },
+    "text": {
+      "p50_ms": 8.700000047683716,
+      "p95_ms": 10.100000143051147,
+      "counts": {
+        "checked": false,
+        "text": "sample-44",
+        "slider": 50,
+        "selected": "alpha",
+        "requests": 45,
+        "accepts": 45,
+        "commits": 0
+      },
+      "idle": {
+        "before": {
+          "tasks": 0,
+          "timers": 0,
+          "observers": 1,
+          "errors": 0,
+          "aborted": false
+        },
+        "after": {
+          "tasks": 0,
+          "timers": 0,
+          "observers": 1,
+          "errors": 0,
+          "aborted": false
+        }
+      },
+      "raw": [
+        {
+          "input_ms": 2980.7000000476837,
+          "dom_frame_ms": 2989.5999999046326,
+          "latency_ms": 8.899999856948853,
+          "state": {
+            "checked": false,
+            "text": "sample-5",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 6,
+            "accepts": 6,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 2997,
+          "dom_frame_ms": 3006.9000000953674,
+          "latency_ms": 9.900000095367432,
+          "state": {
+            "checked": false,
+            "text": "sample-6",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 7,
+            "accepts": 7,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 3016.2000000476837,
+          "dom_frame_ms": 3023.5999999046326,
+          "latency_ms": 7.3999998569488525,
+          "state": {
+            "checked": false,
+            "text": "sample-7",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 8,
+            "accepts": 8,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 3031.5999999046326,
+          "dom_frame_ms": 3039.9000000953674,
+          "latency_ms": 8.300000190734863,
+          "state": {
+            "checked": false,
+            "text": "sample-8",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 9,
+            "accepts": 9,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 3047.5,
+          "dom_frame_ms": 3056.9000000953674,
+          "latency_ms": 9.400000095367432,
+          "state": {
+            "checked": false,
+            "text": "sample-9",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 10,
+            "accepts": 10,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 3064.5,
+          "dom_frame_ms": 3072.9000000953674,
+          "latency_ms": 8.400000095367432,
+          "state": {
+            "checked": false,
+            "text": "sample-10",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 11,
+            "accepts": 11,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 3080.7000000476837,
+          "dom_frame_ms": 3090.2000000476837,
+          "latency_ms": 9.5,
+          "state": {
+            "checked": false,
+            "text": "sample-11",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 12,
+            "accepts": 12,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 3099,
+          "dom_frame_ms": 3105.7999999523163,
+          "latency_ms": 6.799999952316284,
+          "state": {
+            "checked": false,
+            "text": "sample-12",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 13,
+            "accepts": 13,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 3113.4000000953674,
+          "dom_frame_ms": 3123.4000000953674,
+          "latency_ms": 10,
+          "state": {
+            "checked": false,
+            "text": "sample-13",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 14,
+            "accepts": 14,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 3131.2999999523163,
+          "dom_frame_ms": 3140.2000000476837,
+          "latency_ms": 8.900000095367432,
+          "state": {
+            "checked": false,
+            "text": "sample-14",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 15,
+            "accepts": 15,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 3146.9000000953674,
+          "dom_frame_ms": 3155.9000000953674,
+          "latency_ms": 9,
+          "state": {
+            "checked": false,
+            "text": "sample-15",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 16,
+            "accepts": 16,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 3163.5999999046326,
+          "dom_frame_ms": 3173.5,
+          "latency_ms": 9.900000095367432,
+          "state": {
+            "checked": false,
+            "text": "sample-16",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 17,
+            "accepts": 17,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 3180.7000000476837,
+          "dom_frame_ms": 3190.2000000476837,
+          "latency_ms": 9.5,
+          "state": {
+            "checked": false,
+            "text": "sample-17",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 18,
+            "accepts": 18,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 3197.7999999523163,
+          "dom_frame_ms": 3206.5,
+          "latency_ms": 8.700000047683716,
+          "state": {
+            "checked": false,
+            "text": "sample-18",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 19,
+            "accepts": 19,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 3213.0999999046326,
+          "dom_frame_ms": 3223.5,
+          "latency_ms": 10.400000095367432,
+          "state": {
+            "checked": false,
+            "text": "sample-19",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 20,
+            "accepts": 20,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 3232,
+          "dom_frame_ms": 3240.0999999046326,
+          "latency_ms": 8.099999904632568,
+          "state": {
+            "checked": false,
+            "text": "sample-20",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 21,
+            "accepts": 21,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 3247.0999999046326,
+          "dom_frame_ms": 3256.7999999523163,
+          "latency_ms": 9.700000047683716,
+          "state": {
+            "checked": false,
+            "text": "sample-21",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 22,
+            "accepts": 22,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 3263.5999999046326,
+          "dom_frame_ms": 3272.5999999046326,
+          "latency_ms": 9,
+          "state": {
+            "checked": false,
+            "text": "sample-22",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 23,
+            "accepts": 23,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 3279.5999999046326,
+          "dom_frame_ms": 3289.7000000476837,
+          "latency_ms": 10.100000143051147,
+          "state": {
+            "checked": false,
+            "text": "sample-23",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 24,
+            "accepts": 24,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 3297.2999999523163,
+          "dom_frame_ms": 3306.5999999046326,
+          "latency_ms": 9.299999952316284,
+          "state": {
+            "checked": false,
+            "text": "sample-24",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 25,
+            "accepts": 25,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 3319.0999999046326,
+          "dom_frame_ms": 3323,
+          "latency_ms": 3.9000000953674316,
+          "state": {
+            "checked": false,
+            "text": "sample-25",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 26,
+            "accepts": 26,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 3336.4000000953674,
+          "dom_frame_ms": 3339.2999999523163,
+          "latency_ms": 2.8999998569488525,
+          "state": {
+            "checked": false,
+            "text": "sample-26",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 27,
+            "accepts": 27,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 3351.9000000953674,
+          "dom_frame_ms": 3356.2000000476837,
+          "latency_ms": 4.299999952316284,
+          "state": {
+            "checked": false,
+            "text": "sample-27",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 28,
+            "accepts": 28,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 3366.2000000476837,
+          "dom_frame_ms": 3373.2000000476837,
+          "latency_ms": 7,
+          "state": {
+            "checked": false,
+            "text": "sample-28",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 29,
+            "accepts": 29,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 3380.5999999046326,
+          "dom_frame_ms": 3390.0999999046326,
+          "latency_ms": 9.5,
+          "state": {
+            "checked": false,
+            "text": "sample-29",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 30,
+            "accepts": 30,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 3397.9000000953674,
+          "dom_frame_ms": 3406.2999999523163,
+          "latency_ms": 8.399999856948853,
+          "state": {
+            "checked": false,
+            "text": "sample-30",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 31,
+            "accepts": 31,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 3415.2000000476837,
+          "dom_frame_ms": 3423.5,
+          "latency_ms": 8.399999856948853,
+          "state": {
+            "checked": false,
+            "text": "sample-31",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 32,
+            "accepts": 32,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 3435.5999999046326,
+          "dom_frame_ms": 3440.0999999046326,
+          "latency_ms": 4.5,
+          "state": {
+            "checked": false,
+            "text": "sample-32",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 33,
+            "accepts": 33,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 3452.4000000953674,
+          "dom_frame_ms": 3456.9000000953674,
+          "latency_ms": 4.5,
+          "state": {
+            "checked": false,
+            "text": "sample-33",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 34,
+            "accepts": 34,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 3476.9000000953674,
+          "dom_frame_ms": 3489.9000000953674,
+          "latency_ms": 13,
+          "state": {
+            "checked": false,
+            "text": "sample-34",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 35,
+            "accepts": 35,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 3498.2999999523163,
+          "dom_frame_ms": 3506,
+          "latency_ms": 7.700000047683716,
+          "state": {
+            "checked": false,
+            "text": "sample-35",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 36,
+            "accepts": 36,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 3515.2999999523163,
+          "dom_frame_ms": 3523,
+          "latency_ms": 7.700000047683716,
+          "state": {
+            "checked": false,
+            "text": "sample-36",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 37,
+            "accepts": 37,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 3531.2000000476837,
+          "dom_frame_ms": 3540.0999999046326,
+          "latency_ms": 8.899999856948853,
+          "state": {
+            "checked": false,
+            "text": "sample-37",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 38,
+            "accepts": 38,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 3548.2999999523163,
+          "dom_frame_ms": 3556.9000000953674,
+          "latency_ms": 8.600000143051147,
+          "state": {
+            "checked": false,
+            "text": "sample-38",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 39,
+            "accepts": 39,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 3565,
+          "dom_frame_ms": 3573.4000000953674,
+          "latency_ms": 8.400000095367432,
+          "state": {
+            "checked": false,
+            "text": "sample-39",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 40,
+            "accepts": 40,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 3582.2000000476837,
+          "dom_frame_ms": 3590.0999999046326,
+          "latency_ms": 7.8999998569488525,
+          "state": {
+            "checked": false,
+            "text": "sample-40",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 41,
+            "accepts": 41,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 3599,
+          "dom_frame_ms": 3606.5,
+          "latency_ms": 7.5,
+          "state": {
+            "checked": false,
+            "text": "sample-41",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 42,
+            "accepts": 42,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 3613.9000000953674,
+          "dom_frame_ms": 3623.2000000476837,
+          "latency_ms": 9.299999952316284,
+          "state": {
+            "checked": false,
+            "text": "sample-42",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 43,
+            "accepts": 43,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 3631.2000000476837,
+          "dom_frame_ms": 3640.2000000476837,
+          "latency_ms": 9,
+          "state": {
+            "checked": false,
+            "text": "sample-43",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 44,
+            "accepts": 44,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 3647.2000000476837,
+          "dom_frame_ms": 3656.5999999046326,
+          "latency_ms": 9.399999856948853,
+          "state": {
+            "checked": false,
+            "text": "sample-44",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 45,
+            "accepts": 45,
+            "commits": 0
+          }
+        }
+      ]
+    },
+    "slider": {
+      "p50_ms": 8.600000143051147,
+      "p95_ms": 9.799999952316284,
+      "counts": {
+        "checked": false,
+        "text": "initial",
+        "slider": 95,
+        "selected": "alpha",
+        "requests": 45,
+        "accepts": 45,
+        "commits": 0
+      },
+      "idle": {
+        "before": {
+          "tasks": 0,
+          "timers": 0,
+          "observers": 1,
+          "errors": 0,
+          "aborted": false
+        },
+        "after": {
+          "tasks": 0,
+          "timers": 0,
+          "observers": 1,
+          "errors": 0,
+          "aborted": false
+        }
+      },
+      "raw": [
+        {
+          "input_ms": 4015.0999999046326,
+          "dom_frame_ms": 4023.5,
+          "latency_ms": 8.400000095367432,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 56,
+            "selected": "alpha",
+            "requests": 6,
+            "accepts": 6,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 4031.7000000476837,
+          "dom_frame_ms": 4040.0999999046326,
+          "latency_ms": 8.399999856948853,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 57,
+            "selected": "alpha",
+            "requests": 7,
+            "accepts": 7,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 4047.5999999046326,
+          "dom_frame_ms": 4056.7999999523163,
+          "latency_ms": 9.200000047683716,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 58,
+            "selected": "alpha",
+            "requests": 8,
+            "accepts": 8,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 4064.2000000476837,
+          "dom_frame_ms": 4073.5999999046326,
+          "latency_ms": 9.399999856948853,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 59,
+            "selected": "alpha",
+            "requests": 9,
+            "accepts": 9,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 4082.0999999046326,
+          "dom_frame_ms": 4090.2000000476837,
+          "latency_ms": 8.200000047683716,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 60,
+            "selected": "alpha",
+            "requests": 10,
+            "accepts": 10,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 4097.5,
+          "dom_frame_ms": 4106.700000047684,
+          "latency_ms": 9.299999952316284,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 61,
+            "selected": "alpha",
+            "requests": 11,
+            "accepts": 11,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 4115.200000047684,
+          "dom_frame_ms": 4123,
+          "latency_ms": 7.799999952316284,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 62,
+            "selected": "alpha",
+            "requests": 12,
+            "accepts": 12,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 4130.599999904633,
+          "dom_frame_ms": 4139.799999952316,
+          "latency_ms": 9.200000047683716,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 63,
+            "selected": "alpha",
+            "requests": 13,
+            "accepts": 13,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 4147.200000047684,
+          "dom_frame_ms": 4156,
+          "latency_ms": 8.799999952316284,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 64,
+            "selected": "alpha",
+            "requests": 14,
+            "accepts": 14,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 4163.700000047684,
+          "dom_frame_ms": 4173.5,
+          "latency_ms": 9.799999952316284,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 65,
+            "selected": "alpha",
+            "requests": 15,
+            "accepts": 15,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 4181.599999904633,
+          "dom_frame_ms": 4190.200000047684,
+          "latency_ms": 8.600000143051147,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 66,
+            "selected": "alpha",
+            "requests": 16,
+            "accepts": 16,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 4197.5,
+          "dom_frame_ms": 4206.5,
+          "latency_ms": 9,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 67,
+            "selected": "alpha",
+            "requests": 17,
+            "accepts": 17,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 4215.299999952316,
+          "dom_frame_ms": 4223,
+          "latency_ms": 7.700000047683716,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 68,
+            "selected": "alpha",
+            "requests": 18,
+            "accepts": 18,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 4230.099999904633,
+          "dom_frame_ms": 4240.099999904633,
+          "latency_ms": 10,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 69,
+            "selected": "alpha",
+            "requests": 19,
+            "accepts": 19,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 4247.200000047684,
+          "dom_frame_ms": 4256.400000095367,
+          "latency_ms": 9.200000047683716,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 70,
+            "selected": "alpha",
+            "requests": 20,
+            "accepts": 20,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 4264.299999952316,
+          "dom_frame_ms": 4273.099999904633,
+          "latency_ms": 8.799999952316284,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 71,
+            "selected": "alpha",
+            "requests": 21,
+            "accepts": 21,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 4281,
+          "dom_frame_ms": 4290.099999904633,
+          "latency_ms": 9.099999904632568,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 72,
+            "selected": "alpha",
+            "requests": 22,
+            "accepts": 22,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 4298.200000047684,
+          "dom_frame_ms": 4306.400000095367,
+          "latency_ms": 8.200000047683716,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 73,
+            "selected": "alpha",
+            "requests": 23,
+            "accepts": 23,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 4313.400000095367,
+          "dom_frame_ms": 4323.200000047684,
+          "latency_ms": 9.799999952316284,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 74,
+            "selected": "alpha",
+            "requests": 24,
+            "accepts": 24,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 4331.299999952316,
+          "dom_frame_ms": 4340.099999904633,
+          "latency_ms": 8.799999952316284,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 75,
+            "selected": "alpha",
+            "requests": 25,
+            "accepts": 25,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 4347,
+          "dom_frame_ms": 4356.5,
+          "latency_ms": 9.5,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 76,
+            "selected": "alpha",
+            "requests": 26,
+            "accepts": 26,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 4364.599999904633,
+          "dom_frame_ms": 4373.400000095367,
+          "latency_ms": 8.800000190734863,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 77,
+            "selected": "alpha",
+            "requests": 27,
+            "accepts": 27,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 4381.799999952316,
+          "dom_frame_ms": 4390.099999904633,
+          "latency_ms": 8.299999952316284,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 78,
+            "selected": "alpha",
+            "requests": 28,
+            "accepts": 28,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 4397.400000095367,
+          "dom_frame_ms": 4406.400000095367,
+          "latency_ms": 9,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 79,
+            "selected": "alpha",
+            "requests": 29,
+            "accepts": 29,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 4415.299999952316,
+          "dom_frame_ms": 4422.700000047684,
+          "latency_ms": 7.400000095367432,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 80,
+            "selected": "alpha",
+            "requests": 30,
+            "accepts": 30,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 4430.900000095367,
+          "dom_frame_ms": 4440,
+          "latency_ms": 9.099999904632568,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 81,
+            "selected": "alpha",
+            "requests": 31,
+            "accepts": 31,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 4448.400000095367,
+          "dom_frame_ms": 4456.299999952316,
+          "latency_ms": 7.8999998569488525,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 82,
+            "selected": "alpha",
+            "requests": 32,
+            "accepts": 32,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 4471.099999904633,
+          "dom_frame_ms": 4473.200000047684,
+          "latency_ms": 2.1000001430511475,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 83,
+            "selected": "alpha",
+            "requests": 33,
+            "accepts": 33,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 4485.299999952316,
+          "dom_frame_ms": 4490,
+          "latency_ms": 4.700000047683716,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 84,
+            "selected": "alpha",
+            "requests": 34,
+            "accepts": 34,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 4499.5,
+          "dom_frame_ms": 4506,
+          "latency_ms": 6.5,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 85,
+            "selected": "alpha",
+            "requests": 35,
+            "accepts": 35,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 4515.099999904633,
+          "dom_frame_ms": 4523.5,
+          "latency_ms": 8.400000095367432,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 86,
+            "selected": "alpha",
+            "requests": 36,
+            "accepts": 36,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 4532.599999904633,
+          "dom_frame_ms": 4540,
+          "latency_ms": 7.400000095367432,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 87,
+            "selected": "alpha",
+            "requests": 37,
+            "accepts": 37,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 4549.200000047684,
+          "dom_frame_ms": 4556.5,
+          "latency_ms": 7.299999952316284,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 88,
+            "selected": "alpha",
+            "requests": 38,
+            "accepts": 38,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 4565.900000095367,
+          "dom_frame_ms": 4573.5,
+          "latency_ms": 7.599999904632568,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 89,
+            "selected": "alpha",
+            "requests": 39,
+            "accepts": 39,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 4581.299999952316,
+          "dom_frame_ms": 4589.599999904633,
+          "latency_ms": 8.299999952316284,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 90,
+            "selected": "alpha",
+            "requests": 40,
+            "accepts": 40,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 4597.299999952316,
+          "dom_frame_ms": 4606.799999952316,
+          "latency_ms": 9.5,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 91,
+            "selected": "alpha",
+            "requests": 41,
+            "accepts": 41,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 4616.099999904633,
+          "dom_frame_ms": 4623.400000095367,
+          "latency_ms": 7.300000190734863,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 92,
+            "selected": "alpha",
+            "requests": 42,
+            "accepts": 42,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 4631.799999952316,
+          "dom_frame_ms": 4639.700000047684,
+          "latency_ms": 7.900000095367432,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 93,
+            "selected": "alpha",
+            "requests": 43,
+            "accepts": 43,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 4647.799999952316,
+          "dom_frame_ms": 4656.400000095367,
+          "latency_ms": 8.600000143051147,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 94,
+            "selected": "alpha",
+            "requests": 44,
+            "accepts": 44,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 4664.200000047684,
+          "dom_frame_ms": 4673.099999904633,
+          "latency_ms": 8.899999856948853,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 95,
+            "selected": "alpha",
+            "requests": 45,
+            "accepts": 45,
+            "commits": 0
+          }
+        }
+      ]
+    },
+    "select": {
+      "p50_ms": 14.200000047683716,
+      "p95_ms": 14.700000047683716,
+      "counts": {
+        "checked": false,
+        "text": "initial",
+        "slider": 50,
+        "selected": "beta",
+        "requests": 45,
+        "accepts": 45,
+        "commits": 0
+      },
+      "idle": {
+        "before": {
+          "tasks": 0,
+          "timers": 0,
+          "observers": 1,
+          "errors": 0,
+          "aborted": false
+        },
+        "after": {
+          "tasks": 0,
+          "timers": 0,
+          "observers": 1,
+          "errors": 0,
+          "aborted": false
+        }
+      },
+      "raw": [
+        {
+          "input_ms": 5409.200000047684,
+          "dom_frame_ms": 5423.400000095367,
+          "latency_ms": 14.200000047683716,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 6,
+            "accepts": 6,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 5492.5,
+          "dom_frame_ms": 5506.299999952316,
+          "latency_ms": 13.799999952316284,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 50,
+            "selected": "beta",
+            "requests": 7,
+            "accepts": 7,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 5575.5,
+          "dom_frame_ms": 5590.099999904633,
+          "latency_ms": 14.599999904632568,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 8,
+            "accepts": 8,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 5659.099999904633,
+          "dom_frame_ms": 5672.900000095367,
+          "latency_ms": 13.800000190734863,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 50,
+            "selected": "beta",
+            "requests": 9,
+            "accepts": 9,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 5742.200000047684,
+          "dom_frame_ms": 5756.599999904633,
+          "latency_ms": 14.399999856948853,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 10,
+            "accepts": 10,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 5825.700000047684,
+          "dom_frame_ms": 5839.700000047684,
+          "latency_ms": 14,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 50,
+            "selected": "beta",
+            "requests": 11,
+            "accepts": 11,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 5909.900000095367,
+          "dom_frame_ms": 5922.400000095367,
+          "latency_ms": 12.5,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 12,
+            "accepts": 12,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 5992.599999904633,
+          "dom_frame_ms": 6006,
+          "latency_ms": 13.400000095367432,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 50,
+            "selected": "beta",
+            "requests": 13,
+            "accepts": 13,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 6075.5,
+          "dom_frame_ms": 6090,
+          "latency_ms": 14.5,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 14,
+            "accepts": 14,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 6159.299999952316,
+          "dom_frame_ms": 6173.400000095367,
+          "latency_ms": 14.100000143051147,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 50,
+            "selected": "beta",
+            "requests": 15,
+            "accepts": 15,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 6242.200000047684,
+          "dom_frame_ms": 6256.700000047684,
+          "latency_ms": 14.5,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 16,
+            "accepts": 16,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 6325.599999904633,
+          "dom_frame_ms": 6339.700000047684,
+          "latency_ms": 14.100000143051147,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 50,
+            "selected": "beta",
+            "requests": 17,
+            "accepts": 17,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 6408.200000047684,
+          "dom_frame_ms": 6422.900000095367,
+          "latency_ms": 14.700000047683716,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 18,
+            "accepts": 18,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 6492.099999904633,
+          "dom_frame_ms": 6506.700000047684,
+          "latency_ms": 14.600000143051147,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 50,
+            "selected": "beta",
+            "requests": 19,
+            "accepts": 19,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 6575.599999904633,
+          "dom_frame_ms": 6590,
+          "latency_ms": 14.400000095367432,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 20,
+            "accepts": 20,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 6658.900000095367,
+          "dom_frame_ms": 6673.200000047684,
+          "latency_ms": 14.299999952316284,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 50,
+            "selected": "beta",
+            "requests": 21,
+            "accepts": 21,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 6742.099999904633,
+          "dom_frame_ms": 6756.599999904633,
+          "latency_ms": 14.5,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 22,
+            "accepts": 22,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 6825,
+          "dom_frame_ms": 6840,
+          "latency_ms": 15,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 50,
+            "selected": "beta",
+            "requests": 23,
+            "accepts": 23,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 6908.400000095367,
+          "dom_frame_ms": 6923,
+          "latency_ms": 14.599999904632568,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 24,
+            "accepts": 24,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 6995.599999904633,
+          "dom_frame_ms": 7006.700000047684,
+          "latency_ms": 11.100000143051147,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 50,
+            "selected": "beta",
+            "requests": 25,
+            "accepts": 25,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 7076.400000095367,
+          "dom_frame_ms": 7090.099999904633,
+          "latency_ms": 13.699999809265137,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 26,
+            "accepts": 26,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 7158.799999952316,
+          "dom_frame_ms": 7173.400000095367,
+          "latency_ms": 14.600000143051147,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 50,
+            "selected": "beta",
+            "requests": 27,
+            "accepts": 27,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 7242.299999952316,
+          "dom_frame_ms": 7256.700000047684,
+          "latency_ms": 14.400000095367432,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 28,
+            "accepts": 28,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 7325.5,
+          "dom_frame_ms": 7339.599999904633,
+          "latency_ms": 14.099999904632568,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 50,
+            "selected": "beta",
+            "requests": 29,
+            "accepts": 29,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 7408.400000095367,
+          "dom_frame_ms": 7423,
+          "latency_ms": 14.599999904632568,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 30,
+            "accepts": 30,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 7491.700000047684,
+          "dom_frame_ms": 7506.099999904633,
+          "latency_ms": 14.399999856948853,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 50,
+            "selected": "beta",
+            "requests": 31,
+            "accepts": 31,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 7575.400000095367,
+          "dom_frame_ms": 7589.5,
+          "latency_ms": 14.099999904632568,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 32,
+            "accepts": 32,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 7659.200000047684,
+          "dom_frame_ms": 7673.299999952316,
+          "latency_ms": 14.099999904632568,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 50,
+            "selected": "beta",
+            "requests": 33,
+            "accepts": 33,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 7741.900000095367,
+          "dom_frame_ms": 7755.700000047684,
+          "latency_ms": 13.799999952316284,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 34,
+            "accepts": 34,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 7825.400000095367,
+          "dom_frame_ms": 7839.900000095367,
+          "latency_ms": 14.5,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 50,
+            "selected": "beta",
+            "requests": 35,
+            "accepts": 35,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 7908.900000095367,
+          "dom_frame_ms": 7923.099999904633,
+          "latency_ms": 14.199999809265137,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 36,
+            "accepts": 36,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 7991.5,
+          "dom_frame_ms": 8005.700000047684,
+          "latency_ms": 14.200000047683716,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 50,
+            "selected": "beta",
+            "requests": 37,
+            "accepts": 37,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 8075.400000095367,
+          "dom_frame_ms": 8089.200000047684,
+          "latency_ms": 13.799999952316284,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 38,
+            "accepts": 38,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 8160.200000047684,
+          "dom_frame_ms": 8173.099999904633,
+          "latency_ms": 12.899999856948853,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 50,
+            "selected": "beta",
+            "requests": 39,
+            "accepts": 39,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 8242,
+          "dom_frame_ms": 8256.599999904633,
+          "latency_ms": 14.599999904632568,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 40,
+            "accepts": 40,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 8325.400000095367,
+          "dom_frame_ms": 8339.900000095367,
+          "latency_ms": 14.5,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 50,
+            "selected": "beta",
+            "requests": 41,
+            "accepts": 41,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 8408,
+          "dom_frame_ms": 8423,
+          "latency_ms": 15,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 42,
+            "accepts": 42,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 8492.200000047684,
+          "dom_frame_ms": 8506.599999904633,
+          "latency_ms": 14.399999856948853,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 50,
+            "selected": "beta",
+            "requests": 43,
+            "accepts": 43,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 8575.799999952316,
+          "dom_frame_ms": 8589.099999904633,
+          "latency_ms": 13.299999952316284,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 50,
+            "selected": "alpha",
+            "requests": 44,
+            "accepts": 44,
+            "commits": 0
+          }
+        },
+        {
+          "input_ms": 8659,
+          "dom_frame_ms": 8672.799999952316,
+          "latency_ms": 13.799999952316284,
+          "state": {
+            "checked": false,
+            "text": "initial",
+            "slider": 50,
+            "selected": "beta",
+            "requests": 45,
+            "accepts": 45,
+            "commits": 0
+          }
+        }
+      ]
+    }
+  },
+  "baseline": {
+    "collected_at": "2026-10-30T05:53:57.805Z",
+    "sizes": {
+      "pkg/app_bg.wasm": {
+        "bytes": 3343729,
+        "gzip": 528004
+      },
+      "rustify.css": {
+        "bytes": 70314,
+        "gzip": 9580
+      },
+      "rustify-runtime.css": {
+        "bytes": 796,
+        "gzip": 442
+      }
+    }
+  },
+  "delta": {
+    "checkbox": {
+      "p50_ms": 1.0999999046325684,
+      "p95_ms": 0.7999999523162842
+    },
+    "text": {
+      "p50_ms": 1.2000000476837158,
+      "p95_ms": 0.10000014305114746
+    },
+    "slider": {
+      "p50_ms": 3.4000003337860107,
+      "p95_ms": 1.6000001430511475
+    },
+    "select": {
+      "p50_ms": -0.09999990463256836,
+      "p95_ms": -0.5
+    }
+  }
+}

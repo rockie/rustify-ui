@@ -852,3 +852,19 @@ fn select_themes_expose_every_trigger_variant_and_size_without_parallel_behavior
     }
     assert_eq!(s::SelectContentVariant::ALL.len(), 2);
 }
+
+#[test]
+fn field_explicit_id_is_the_forms_current_focus_target() {
+    render(|| {
+        let form = rustify_components::Form::new(&["title"], || {});
+        let view = view! {
+            <p::form::Field form=form field="title"><p::form::Label>"Title"</p::form::Label>
+                <p::text_field::Root id="explicit-title" value="accepted" on_change=|_| {}>
+                    <p::text_field::Input />
+                </p::text_field::Root>
+            </p::form::Field>
+        };
+        assert_eq!(form.control_id("title"), "explicit-title");
+        view.into_any()
+    });
+}

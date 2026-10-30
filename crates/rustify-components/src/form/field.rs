@@ -14,16 +14,41 @@ use super::provider::Form;
 pub(crate) struct FieldContext {
     pub form: Form,
     pub field: &'static str,
-    claimed: StoredValue<bool>,
+    controls: StoredValue<Vec<(StoredValue<()>, String)>>,
 }
 
 pub(crate) fn control_id(explicit: String, part: &str) -> String {
     if let Some(context) = use_context::<FieldContext>() {
-        let first = !context.claimed.get_value();
-        context.claimed.set_value(true);
-        if explicit.is_empty() && first {
-            return context.form.control_id(context.field);
+        let first = context.controls.with_value(Vec::is_empty);
+        let id = if explicit.is_empty() {
+            if first {
+                context.form.default_control_id(context.field)
+            } else {
+                crate::id::next(part)
+            }
+        } else {
+            explicit
+        };
+        let key = StoredValue::new(());
+        context
+            .controls
+            .update_value(|controls| controls.push((key, id.clone())));
+        if let Some(binding) = use_context::<FieldBinding>() {
+            if first {
+                binding.id.set(id.clone());
+            }
+            on_cleanup(move || {
+                if let Some(next) = context.controls.try_update_value(|controls| {
+                    controls.retain(|(control, _)| *control != key);
+                    controls.first().map(|(_, id)| id.clone())
+                }) {
+                    binding.id.try_set(
+                        next.unwrap_or_else(|| context.form.default_control_id(context.field)),
+                    );
+                }
+            });
         }
+        return id;
     }
     if explicit.is_empty() {
         crate::id::next(part)
@@ -54,7 +79,7 @@ pub(crate) fn metadata(
 /// Native association metadata shared by all field parts.
 #[derive(Clone, Copy)]
 pub struct FieldBinding {
-    id: StoredValue<String>,
+    id: RwSignal<String>,
     description_id: StoredValue<String>,
     error_id: StoredValue<String>,
     error: Memo<Option<(String, rustify_ui::FieldErrorSource)>>,
@@ -65,7 +90,7 @@ pub struct FieldBinding {
 }
 impl FieldBinding {
     pub fn id(&self) -> String {
-        self.id.get_value()
+        self.id.get()
     }
     /// IDs of mounted hints and the currently visible error, without duplicates.
     pub fn described_by(&self) -> Signal<String> {
@@ -92,7 +117,8 @@ fn boundary(
 ) -> impl IntoView {
     let owner = Owner::new();
     let view = owner.with(move || {
-        let id = StoredValue::new(form.control_id(field));
+        let id = RwSignal::new(form.default_control_id(field));
+        form.bind_control_id(field, id);
         let description_id = StoredValue::new(form.description_id(field));
         let error_id = StoredValue::new(form.error_id(field));
         let error = Memo::new(move |_| form.error(field).zip(form.error_source(field)));
@@ -124,7 +150,7 @@ fn boundary(
         provide_context(FieldContext {
             form,
             field,
-            claimed: StoredValue::new(false),
+            controls: StoredValue::new(Vec::new()),
         });
         content(binding)
     });
@@ -156,20 +182,24 @@ pub fn Label(
 }
 #[component]
 pub fn Description(#[prop(optional, into)] class: String, children: Children) -> impl IntoView {
-    let binding = expect_context::<FieldBinding>();
+    let Some(binding) = use_context::<FieldBinding>() else {
+        return view! { <p class=crate::macros::reactive_merge("", &class) data-rustify-part="field-description" data-rustify-issue="missing-root">{children()}</p> }.into_any();
+    };
     binding.descriptions.update(|count| *count += 1);
     #[cfg(target_arch = "wasm32")]
     on_cleanup(move || {
         binding.descriptions.try_update(|count| *count -= 1);
     });
-    view! { <p id=binding.description_id() class=crate::macros::reactive_merge("", &class) data-rustify-part="field-description">{children()}</p> }
+    view! { <p id=binding.description_id() class=crate::macros::reactive_merge("", &class) data-rustify-part="field-description">{children()}</p> }.into_any()
 }
 #[component]
 pub fn Message(
     #[prop(optional, into)] class: String,
     #[prop(optional, into)] test_id: String,
 ) -> impl IntoView {
-    let binding = expect_context::<FieldBinding>();
+    let Some(binding) = use_context::<FieldBinding>() else {
+        return view! { <p class=crate::macros::reactive_merge("", &class) data-rustify-part="field-message" data-rustify-issue="missing-root" data-testid=test_id /> }.into_any();
+    };
     binding.messages.update(|count| *count += 1);
     #[cfg(target_arch = "wasm32")]
     on_cleanup(move || {
@@ -181,7 +211,7 @@ pub fn Message(
             data-source=move || binding.error.get().map(|(_, source)| source.as_str())>
             {move || binding.error.get().map(|(message, _)| message).unwrap_or_default()}
         </p>
-    </Show> }
+    </Show> }.into_any()
 }
 /// A themed label, description, control and error using the same field boundary.
 #[component]
@@ -199,7 +229,7 @@ pub fn Field(
             <div class=crate::macros::reactive_merge("flex flex-col gap-1.5", &class)
                 data-name="Field" data-rustify-part="field-root" data-testid=format!("field-{field}")
                 data-invalid=move || binding.invalid.get().then_some("")>
-                <crate::label::Label control=binding.id() test_id=format!("label-{field}")>{label}</crate::label::Label>
+                <crate::label::Label test_id=format!("label-{field}")>{label}</crate::label::Label>
                 {has_description.then(|| view! { <Description class="text-sm text-muted-foreground">{description}</Description> })}
                 {control(binding)}
                 <Message class="text-sm text-destructive" test_id=format!("error-{field}") />

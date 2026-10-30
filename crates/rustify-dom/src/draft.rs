@@ -356,6 +356,15 @@ mod dom {
             self.ask(request);
         }
 
+        /// Discards an old edit after the application has reset its accepted value.
+        /// Keeps native focus and sends no preview, commit or cancel request.
+        pub fn reset(&self) {
+            self.change(|session| {
+                session.edit = None;
+                session.composing = false;
+            });
+        }
+
         fn touched(&self) -> bool {
             self.session
                 .try_with_untracked(Session::touched)

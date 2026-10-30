@@ -120,6 +120,7 @@ struct Behavior {
     key: Option<Callback<web_sys::KeyboardEvent>>,
     composition: Callback<bool>,
     commit: Option<Callback<()>>,
+    reset: Option<Callback<()>>,
     role: Option<&'static str>,
     value_now: Option<Signal<String>>,
     value_min: Option<f64>,
@@ -127,6 +128,7 @@ struct Behavior {
     mirror: bool,
     parse_message: &'static str,
 }
+#[cfg_attr(not(target_arch = "wasm32"), allow(dead_code))]
 #[derive(Clone, Copy)]
 enum Editor {
     Input(NodeRef<leptos::html::Input>),
@@ -204,11 +206,11 @@ struct Context {
     key: StoredValue<String>,
     options: StoredValue<Options>,
     behavior: Behavior,
-    editor: Editor,
+    area: bool,
+    editors: RwSignal<Vec<(StoredValue<()>, Editor)>>,
     root: NodeRef<leptos::html::Div>,
     mirror: NodeRef<leptos::html::Input>,
-    count: StoredValue<u32>,
-    duplicate: RwSignal<bool>,
+    duplicate: Signal<bool>,
     #[cfg(target_arch = "wasm32")]
     completion: StoredValue<Completion>,
     #[cfg(target_arch = "wasm32")]
@@ -226,17 +228,21 @@ impl Context {
     fn invalid(self) -> bool {
         self.behavior.invalid.get() || self.options.with_value(|options| options.invalid.get())
     }
-    fn claim(self) {
-        self.count.update_value(|count| {
-            *count += 1;
-            if *count > 1 {
-                self.duplicate.set(true);
-            }
+    fn claim(self, editor: Editor) {
+        let key = StoredValue::new(());
+        self.editors.update(|editors| editors.push((key, editor)));
+        on_cleanup(move || {
+            self.editors
+                .try_update(|editors| editors.retain(|(id, _)| *id != key));
         });
     }
 }
 #[cfg(target_arch = "wasm32")]
 impl Context {
+    fn editor(self) -> Option<Editor> {
+        self.editors
+            .with_untracked(|editors| editors.first().map(|(_, editor)| *editor))
+    }
     fn owns(self, event: &web_sys::Event) -> bool {
         use leptos::wasm_bindgen::JsCast;
         let Some(key) = self.key.try_get_value() else {
@@ -250,18 +256,21 @@ impl Context {
             })
     }
     fn settle(self) {
-        self.editor.set(&self.behavior.shown.get_untracked());
+        let Some(editor) = self.editor() else {
+            return;
+        };
+        editor.set(&self.behavior.shown.get_untracked());
         let message = self
             .behavior
             .invalid
             .get_untracked()
             .then_some(self.behavior.parse_message);
         if let Some(message) = message {
-            self.editor.validity(message);
+            editor.validity(message);
             self.owned_message.set_value(Some(message.into()));
         } else if let Some(previous) = self.owned_message.get_value() {
-            if self.editor.validation_message() == previous {
-                self.editor.validity("");
+            if editor.validation_message() == previous {
+                editor.validity("");
             }
             self.owned_message.set_value(None);
         }
@@ -280,7 +289,7 @@ impl Context {
         if !self.owns(&event) || self.behavior.composing.get_untracked() {
             return;
         }
-        let text = self.editor.value().unwrap_or_default();
+        let text = self.editor().and_then(Editor::value).unwrap_or_default();
         let mut deliver = true;
         self.completion
             .update_value(|completion| deliver = completion.input(&text));
@@ -325,7 +334,7 @@ impl Context {
         if !self.owns(&event) {
             return;
         }
-        let chosen = self.editor.value().unwrap_or_default();
+        let chosen = self.editor().and_then(Editor::value).unwrap_or_default();
         self.behavior.composition.run(false);
         self.composing_key.update_value(|held| {
             held.take();
@@ -336,8 +345,8 @@ impl Context {
             self.behavior.input.run(event.into());
         }
         if self
-            .editor
-            .element()
+            .editor()
+            .and_then(Editor::element)
             .is_some_and(|element| document().active_element().as_ref() != Some(element.as_ref()))
         {
             if let Some(blur) = self.behavior.blur {
@@ -345,8 +354,9 @@ impl Context {
             }
         }
         self.settle();
-        self.completion
-            .update_value(|completion| completion.settled(self.editor.value().unwrap_or_default()));
+        self.completion.update_value(|completion| {
+            completion.settled(self.editor().and_then(Editor::value).unwrap_or_default())
+        });
     }
     fn key(self, event: web_sys::KeyboardEvent) {
         if !self.owns(&event) || event.default_prevented() {
@@ -414,10 +424,11 @@ fn boundary(
             options.invalid = Signal::derive(move || invalid.get() || binding.invalid().get());
         }
         let behavior = make();
+        let editors = RwSignal::new(Vec::new());
         let context = Context {
             key: StoredValue::new(crate::id::next("field-owner")), options: StoredValue::new(options.clone()), behavior,
-            editor: if area { Editor::Area(NodeRef::new()) } else { Editor::Input(NodeRef::new()) }, root: NodeRef::new(), mirror: NodeRef::new(),
-            count: StoredValue::new(0), duplicate: RwSignal::new(false),
+            area, editors, root: NodeRef::new(), mirror: NodeRef::new(),
+            duplicate: Signal::derive(move || editors.with(|editors| editors.len() > 1)),
             #[cfg(target_arch = "wasm32")]
             completion: StoredValue::new(Completion::default()),
             #[cfg(target_arch = "wasm32")]
@@ -426,10 +437,21 @@ fn boundary(
             owned_message: StoredValue::new(None),
         };
         provide_context(context);
+        if let Some(form) = crate::form::use_form().or_else(|| use_context::<crate::form::field::FieldContext>().map(|field| field.form)) {
+            form.on_reset(Callback::new(move |_| {
+                if let Some(reset) = behavior.reset { reset.run(()); }
+                #[cfg(target_arch = "wasm32")]
+                {
+                    context.completion.update_value(Completion::start);
+                    context.composing_key.update_value(|held| { held.take(); });
+                    context.flush();
+                }
+            }));
+        }
         super::form::register(context.key, &options.form, super::form::ControlSpec {
             composing: behavior.composing, commit: behavior.commit,
             flush: Callback::new(move |_| { #[cfg(target_arch = "wasm32")] context.flush(); }),
-            focus: Callback::new(move |_| { #[cfg(target_arch = "wasm32")] if let Some(element) = context.editor.element() { let _ = element.focus(); } }),
+            focus: Callback::new(move |_| { #[cfg(target_arch = "wasm32")] if let Some(element) = context.editor().and_then(Editor::element) { let _ = element.focus(); } }),
             owns: Callback::new(move |_element: web_sys::Element| {
                 #[cfg(target_arch = "wasm32")]
                 { context.root.try_get_untracked().flatten().is_some_and(|root| root.contains(Some(&_element))) }
@@ -439,7 +461,7 @@ fn boundary(
         });
         #[cfg(target_arch = "wasm32")]
         {
-            Effect::new(move |_| { behavior.shown.track(); behavior.invalid.track(); if !behavior.composing.get() { context.settle(); } });
+            Effect::new(move |_| { context.editors.track(); behavior.shown.track(); behavior.invalid.track(); if !behavior.composing.get() { context.settle(); } });
             on_cleanup(move || { context.composing_key.try_update_value(|held| { held.take(); }); });
         }
         let classes = crate::macros::reactive_merge_with(move || vec![options.class.get()]);
@@ -482,6 +504,7 @@ fn text_behavior(value: Signal<String>, change: Callback<String>, part: &'static
         key: None,
         composition: Callback::new(move |active| composing.set(active)),
         commit: None,
+        reset: None,
         role: None,
         value_now: None,
         value_min: None,
@@ -510,7 +533,7 @@ where
         )
         .into_any();
     };
-    let Editor::Input(node) = context.editor else {
+    if context.area {
         return super::Slot(
             target,
             (
@@ -519,8 +542,9 @@ where
             ),
         )
         .into_any();
-    };
-    context.claim();
+    }
+    let node = NodeRef::new();
+    context.claim(Editor::Input(node));
     let options = context.options.get_value();
     let behavior = context.behavior;
     let direction = rustify_ui::use_direction();
@@ -605,10 +629,8 @@ pub fn Input(
 }
 fn area_view() -> impl IntoView {
     let context = expect_context::<Context>();
-    let Editor::Area(node) = context.editor else {
-        unreachable!("textarea editor kind");
-    };
-    context.claim();
+    let node = NodeRef::new();
+    context.claim(Editor::Area(node));
     let options = context.options.get_value();
     let initial = context.behavior.shown.get_untracked();
     let initial_html = initial
@@ -908,6 +930,7 @@ pub mod number_field {
                     })),
                     composition: Callback::new(move |active| draft.set_composing(active)),
                     commit: Some(Callback::new(move |_| draft.commit())),
+                    reset: Some(Callback::new(move |_| draft.reset())),
                     role: Some("spinbutton"),
                     value_now: Some(Signal::derive(move || format_number(value.get()))),
                     value_min: min,
@@ -1025,6 +1048,7 @@ pub mod color_field {
                     key: Some(Callback::new(draft.on_keydown())),
                     composition: Callback::new(move |active| draft.set_composing(active)),
                     commit: Some(Callback::new(move |_| draft.commit())),
+                    reset: Some(Callback::new(move |_| draft.reset())),
                     role: None,
                     value_now: None,
                     value_min: None,
@@ -1062,10 +1086,13 @@ pub fn Label(
     #[prop(optional, into)] test_id: String,
     children: Children,
 ) -> impl IntoView {
-    let control = if control.is_empty() {
-        use_context::<crate::form::FieldBinding>().map(|binding| binding.id())
-    } else {
-        Some(control)
+    let binding = use_context::<crate::form::FieldBinding>();
+    let control = move || {
+        if control.is_empty() {
+            binding.map(|binding| binding.id())
+        } else {
+            Some(control.clone())
+        }
     };
     view! { <label r#for=control class=crate::macros::reactive_merge("", &class) data-rustify-part="label" data-testid=optional(test_id)>{children()}</label> }
 }

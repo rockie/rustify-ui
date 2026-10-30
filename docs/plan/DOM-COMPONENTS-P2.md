@@ -188,24 +188,23 @@
 
 ### 恢复快照
 
-- 最近更新：2026-10-30T22:13:23+08:00
+- 最近更新：2026-10-31T00:30:39+08:00
 - 当前进度：5/5 个里程碑完成
-- 当前状态：M1–M5 已完成；最终实现已提交并回填 SHA，待用户代码评审
+- 当前状态：M1–M5 已完成；R1 五项问题均已修复并验证，待提交修复与独立复审
 - 最近完成：M5 · 真实样本、资料与阶段收口
 - 下一步：由用户发起 `review-code docs/plan/DOM-COMPONENTS-P2.md`；实施中不自行发起评审
 - 当前阻塞：无；OS IME/VoiceOver/真机触控/浏览器 UI 缩放按记录留作 P5 missing
-- 代码基线：`9fd21ca8`（main；最终实现提交，原验收基线与产物限制见 M5 记录）
+- 代码基线：`dirty@19cba0c6`（main；本轮修复，原实现 `9fd21ca8`；验证与复用边界见 M5 记录）
 
 ### 完成记录
 
 | Milestone | 状态 | 更新时间 | 简要记录 | 实现与验收记录 | 提交 |
 | --- | --- | --- | --- | --- | --- |
 | M1 | 已完成 | 2026-10-30T15:29:43+08:00 | 改前基线冻结；组合基础、受控选择控件/组/卡片、共用 Themes 和独立消费者已交付。V-1—V-3 通过，最新局部浏览器 6 项通过；整期验收留 M5。 | [M1 记录](DOM-COMPONENTS-P2.records/M1.md) | `9fd21ca8` |
-| M2 | 已完成 | 2026-10-30T16:21:04+08:00 | 具名多滑块/标量共用行为、手势提交/取消、Themes 与直接迁移交付；V-4、15 项无皮肤与 1 项皮肤浏览器检查通过，整期收口留 M5。 | [M2 记录](DOM-COMPONENTS-P2.records/M2.md) | `9fd21ca8` |
-| M3 | 已完成 | 2026-10-30T18:02:45+08:00 | 字段/草稿与原生 FormRoot、复合控件注册、Field parts 和 TextField Slot 交付；V-5、局部无皮肤/主题浏览器通过，整期收口留 M5。 | [M3 记录](DOM-COMPONENTS-P2.records/M3.md) | `9fd21ca8` |
-| M4 | 已完成 | 2026-10-30T19:07:14+08:00 | Select 原始/主题部件、受控镜像及可取消 Layer 交付；V-6、13 项浏览器和短视口增量、2 项主题检查通过，整期收口留 M5。 | [M4 记录](DOM-COMPONENTS-P2.records/M4.md) | `9fd21ca8` |
-| M5 | 已完成 | 2026-10-30T22:08:42+08:00 | 样本、资料与本期 19 AC 工程验证闭合；静态/模式/真实消费者、性能与资源检查通过，人工 missing 按计划留 P5。 | [M5 记录](DOM-COMPONENTS-P2.records/M5.md) | `9fd21ca8` |
-
+| M2 | 已完成 | 2026-10-31T00:30:39+08:00 | 具名 Slider 交付保留；R1 F-03 以整数 step 序号修复，U-01 按用户决定明确，纯逻辑/raw 回归通过。 | [M2 记录](DOM-COMPONENTS-P2.records/M2.md) | `9fd21ca8` |
+| M3 | 已完成 | 2026-10-31T00:30:39+08:00 | 字段/Form 原交付保留；R1 reset、实际 ID/legacy 聚焦和 Input/editor 生命周期已修复，55 SSR 与 raw/恢复增量通过。 | [M3 记录](DOM-COMPONENTS-P2.records/M3.md) | `9fd21ca8` |
+| M4 | 已完成 | 2026-10-31T00:30:39+08:00 | Select 原交付保留；R1 缺上下文降级已修复，属性转发/取消与条件挂载、SSR/raw 回归通过。 | [M4 记录](DOM-COMPONENTS-P2.records/M4.md) | `9fd21ca8` |
+| M5 | 已完成 | 2026-10-31T00:30:39+08:00 | R1 五项确认问题全部修复并验证，最终三模式、真实 DOM/Docs 消费者与性能取证闭合；人工 missing 仍留 P5，待独立复审。 | [M5 记录](DOM-COMPONENTS-P2.records/M5.md) | `9fd21ca8` |
 
 ## 0. 需求、范围与决策
 
@@ -422,6 +421,7 @@ pub struct ThumbLabel { pub id: String, pub label: String }
 - 沿用 `rustify_ui::snap` 的边界/步长；按 min 为基点计算整数 step 序号，避免浮点累积。候选更新带 id，数值输出按 value 排序，相等时按稳定声明顺序。相邻最小距离为 min_steps_between × step；空间不足的配置失败，不悄悄压缩间隔。
 - preserve_order=false 时允许跨越，更新的是拖动的同一个 id；开启后按手势开始时的数值邻接关系约束上下限。最小间隔对候选排序后的邻居始终成立；不能成立的候选不发请求。Thumb DOM 顺序取首次声明顺序，增项追加、删项移除，值排序不移动 DOM/焦点。
 - 横向从左增加由 LTR/RTL 与 inverted 共同确定；竖向默认向上增加，inverted 翻转。键盘 Arrow/Home/End/PageUp/PageDown 走同一计算；Page 为 10 step，此为本期交互决策。aria-valuemin/max 在 preserve_order 下反映实际邻接限制；每个 Thumb 有 role=slider、值/方向/名称，键盘都可达。
+- 嵌套 Layer 内的活动 Slider 收到 Escape 时沿父 Layer 的既有优先级关闭浮层，Slider 在卸载清理中取消手势且不 commit；不单独保留父浮层。键盘与指针手势遵循同一规则。
 - pointerdown 在轨道选最近可用 thumb，等距优先已聚焦、再声明顺序；Thumb 捕获 pointer。缓存轨道 rect 到手势结束/实际 resize/scroll 失效；pointermove 不每次查询所有 DOM 或重建样式规则。纵向保留水平滚动、横向保留纵向滚动，触控 drag 用 Pointer Events；多指不抢占已有手势。
 - 临时 session 只保存 pointer id、活动 thumb、开始接受值与**最后请求候选**，不作为显示来源。每次 move 发 on_change 后显示仍取应用 Signal。pointerup 在有有效变化时 on_commit **一次**，载荷是最后请求候选，即使应用拒绝；键盘一次按键序列在 keyup/失焦结束时提交一次。
 - pointercancel、lostpointercapture、Escape、活动 thumb 移除/禁用或 scope 清理都取消，不发 commit；on_cancel 供应用撤回已经接受的 preview，组件不擅自恢复业务值。没有手势不发取消。所有结束路径先解除捕获/临时监听；提交后 blur 不再提交。
@@ -444,7 +444,7 @@ pub struct ThumbLabel { pub id: String, pub label: String }
 3. 随后依次检查当前成功控件/required 约束、应用同步 rules、尚未返回的异步代次；继续 `FormState::submit`/`validated` 处理 Busy/Blocked/Waiting/Save，on_asked 只报告这条 FormState 路径的结果。保存函数只由 Form handle 运行一次，不能先 button 保存再 form 保存。
 4. 错误来源公开为 `FieldErrorSource { Constraint, Rule, Check, Application }`。每个 Field 把当前单个 error tuple 改为按来源存放的错误集合，展示优先序为 Constraint → Rule → Check → Application；error/error_source 返回同一条。既有 set_error 保持 Rule；新增 set_application_error、error_source 与约束错误入口。重跑 rules/constraints 只替换各自那一格，不能覆盖或抹掉未修改值的应用错误；高优先来源清除后仍可显示保留的低优先来源。changed 清除此字段旧错误和陈旧等待，与现有语义一致。错误文本有对应 data-source。
 5. `FieldBinding` 增 description_id、error_id 与当前 source；described_by 以去重 ID 列表合并 hint 与真实存在的错误，label/ARIA 都指向实际 Control。新 `Field` 保留现有 control(binding) 接缝，增加 description；parts 公开 Label/Description/Message，不能强迫开发者依赖固定 DOM 层级。
-6. reset 事件总是先 preventDefault，再交 on_reset；应用接受后设置业务值并调用新增 `Form::reset()`，后者只清校验/等待/dirty/failure 并递增各字段 generation，旧异步回包失效；没有回调或应用拒绝时显示和 FormData 不变。submitting 时拒绝 reset，报告 Busy，不让旧保存结果写入新会话。
+6. reset 事件总是先 preventDefault，再交 on_reset；应用接受后设置业务值并调用新增 `Form::reset()`，后者清校验/等待/dirty/failure 并递增各字段 generation，旧异步回包失效；成功时同步使已注册字段的旧 Draft 会话失效并显示当前接受值，不交付旧 preview/commit/cancel；没有回调或应用拒绝时显示和 FormData 不变。submitting 时拒绝 reset，报告 Busy，不让旧保存结果写入新会话。
 7. FormStatus/SubmitButton 继续可单独使用。FormRoot 内 SubmitButton 是 native submit，只呈现状态；外部 legacy 调用仍直接 Form::submit，同一 save 防重。失败保留接受值与错误说明，submitted(Err) 后可修改/重试。
 
 原生表单键与 Label 不能从用户 value 拼接为全局 ID。库不自动把 name 变为业务字段身份；Field 的 field 继续用已声明的静态键，外部 form attr 通过 form 的 id 关联。离开 FormRoot 的命名控件也保持 FormData/原生约束语义，其 invalid 事件仍指向实际 Control；FormRoot 提交桥按上述前置分支聚焦。
