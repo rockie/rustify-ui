@@ -97,7 +97,7 @@ async function initialControls(page: Page, scope: string) {
     await expect(control(page, scope, "switch")).toHaveAttribute("aria-checked", "false");
     await expect(control(page, scope, "select")).toHaveText("Red");
     await expect(control(page, scope, "select")).toHaveAttribute("aria-expanded", "false");
-    await expect(control(page, scope, "slider")).toHaveValue("42.5");
+    await expect(control(page, scope, "slider")).toHaveAttribute("aria-valuenow", "42.5");
     await expect(control(page, scope, "progress")).toHaveAttribute("aria-valuenow", "34");
     await expect(control(page, scope, "loading")).toHaveAttribute("role", "status");
     await expect(control(page, scope, "loading")).toHaveAttribute("aria-label", "Loading fixture");
@@ -116,6 +116,82 @@ async function initialControls(page: Page, scope: string) {
     await expect(control(page, scope, "static-toast")).toContainText("Deterministic status");
     await expect(root(page, scope).locator("[style]")).toHaveCount(0);
     await expect(root(page, scope).locator("[role=dialog], [role=tooltip], [role=menu], [role=listbox]")).toHaveCount(0);
+}
+
+async function partsData(page: Page, scope: string, name = "parts-form") {
+    return control(page, scope, name).evaluate((form) => [...new FormData(form as HTMLFormElement).entries()]);
+}
+
+async function initialParts(page: Page, scope: string, attached: boolean, allRoots = true) {
+    await expect(control(page, scope, "raw-mixed")).toHaveAttribute("aria-checked", "mixed");
+    if (attached) await expect(control(page, scope, "raw-mixed")).toHaveJSProperty("indeterminate", true);
+    await expect(control(page, scope, "raw-title")).toHaveValue("Parts title");
+    await expect(control(page, scope, "raw-number")).toHaveValue("12.5");
+    await expect(control(page, scope, "raw-color")).toHaveValue("#336699");
+    await expect(control(page, scope, "raw-select")).toContainText("Bravo");
+    await expect(control(page, scope, "raw-select-list")).toHaveCount(0);
+    const data = await partsData(page, scope);
+    expect(data.filter(([key]) => key === "topics")).toEqual([["topics", "a"], ["topics", "b"]]);
+    expect(data.filter(([key]) => key === "range")).toEqual([["range", "10"], ["range", "40"]]);
+    expect(Object.fromEntries(data)).toMatchObject({ title: "Parts title", number: "12.5", color: "#336699", choice: "b" });
+    expect(data.some(([key]) => /radio|cards|group/.test(key))).toBe(false);
+    for (const place of allRoots ? ["form", "outside"] : ["form"]) {
+        for (const kind of ["radio", "cards"]) {
+            await expect(control(page, scope, `${place}-${kind}-left-a`)).toBeChecked();
+            await expect(control(page, scope, `${place}-${kind}-right-b`)).toBeChecked();
+            await expect(control(page, scope, `${place}-${kind}-left-a`)).not.toHaveAttribute("name");
+        }
+    }
+    if (allRoots) {
+    expect(await partsData(page, scope, "named-form-left")).toEqual([["shared-radio", "a"], ["shared-cards", "a"]]);
+    expect(await partsData(page, scope, "named-form-right")).toEqual([["shared-radio", "b"], ["shared-cards", "b"]]);
+    }
+}
+
+async function exerciseParts(page: Page, scope: string) {
+    const observations: unknown[] = [];
+    const record = async (input: string) => observations.push({ input, state: await publicState(page, scope), data: await partsData(page, scope) });
+    await control(page, scope, "parts-submit").click();
+    await expect(control(page, scope, "raw-mixed")).toBeFocused();
+    await expect(control(page, scope, "raw-agree-error")).not.toBeEmpty();
+    await expect(control(page, scope, "parts-saves")).toHaveText("0");
+    await control(page, scope, "raw-refuse").click();
+    await control(page, scope, "raw-mixed").click();
+    await expect(control(page, scope, "raw-mixed")).toHaveAttribute("aria-checked", "mixed");
+    await expect(control(page, scope, "raw-requests")).toHaveText("1");
+    await record("refused mixed");
+    await control(page, scope, "raw-refuse").click();
+    await control(page, scope, "raw-mixed").click();
+    await control(page, scope, "raw-topic-a").click();
+    await control(page, scope, "raw-low").focus();
+    await control(page, scope, "raw-low").press("ArrowRight");
+    await expect(control(page, scope, "raw-low")).toHaveAttribute("aria-valuenow", "11");
+    await control(page, scope, "raw-select").click();
+    await control(page, scope, "raw-select").press("a");
+    await control(page, scope, "raw-select").press("Enter");
+    await expect(control(page, scope, "raw-select")).toBeFocused();
+    await expect(control(page, scope, "raw-select")).toContainText("Alpha");
+    await record("accepted choices and range");
+    for (const kind of ["radio", "cards"]) {
+        for (const place of ["form", "outside", "named"]) {
+            await control(page, scope, `${place}-${kind}-left-b`).click();
+            await expect(control(page, scope, `${place}-${kind}-left-b`)).toBeChecked();
+            await expect(control(page, scope, `${place}-${kind}-right-b`)).toBeChecked();
+        }
+    }
+    expect(await partsData(page, scope, "named-form-left")).toEqual([["shared-radio", "b"], ["shared-cards", "b"]]);
+    await record("independent radio roots");
+    await control(page, scope, "raw-number").fill("17.5");
+    expect(Object.fromEntries(await partsData(page, scope)).number).toBe("12.5");
+    await control(page, scope, "parts-submit").click();
+    await expect(control(page, scope, "parts-saves")).toHaveText("1");
+    expect(Object.fromEntries(await partsData(page, scope)).number).toBe("17.5");
+    await record("draft flush and native submit");
+    await control(page, scope, "parts-reset").click();
+    await initialParts(page, scope, true, false);
+    await expect(control(page, scope, "outside-radio-left-b")).toBeChecked();
+    await record("native reset");
+    return observations;
 }
 
 async function nativeColor(page: Page, color: string) {
@@ -211,7 +287,7 @@ async function exercise(page: Page, scope: string) {
     await record("select");
     await control(page, scope, "slider").focus();
     await control(page, scope, "slider").press("ArrowRight");
-    await expect(control(page, scope, "slider")).toHaveValue("45");
+    await expect(control(page, scope, "slider")).toHaveAttribute("aria-valuenow", "45");
     await expect(control(page, scope, "progress")).toHaveAttribute("aria-valuenow", "36");
     await record("slider and progress");
     await control(page, scope, "tooltip-trigger").hover();
@@ -287,11 +363,17 @@ async function windowListeners(page: Page) {
 }
 
 async function widthRules(fill: Locator) {
-    return fill.evaluate((element) => [...document.adoptedStyleSheets]
-        .flatMap((sheet) => [...sheet.cssRules])
-        .filter((rule): rule is CSSStyleRule => rule instanceof CSSStyleRule)
-        .filter((rule) => rule.style.width && element.matches(rule.selectorText))
-        .map((rule) => rule.style.width));
+    return fill.evaluate((element) => {
+        const widths: string[] = [];
+        const visit = (rules: CSSRuleList) => {
+            for (const rule of rules) {
+                if (rule instanceof CSSStyleRule && rule.style.width && element.matches(rule.selectorText)) widths.push(rule.style.width);
+                if ('cssRules' in rule) visit((rule as CSSGroupingRule).cssRules);
+            }
+        };
+        for (const sheet of document.adoptedStyleSheets) visit(sheet.cssRules);
+        return widths;
+    });
 }
 
 test("static catalog remains useful without JavaScript", async ({ browser, baseURL }, testInfo) => {
@@ -308,6 +390,7 @@ test("static catalog remains useful without JavaScript", async ({ browser, baseU
             const rendered = await root(page, scope).locator("[data-category]").evaluateAll((elements) => elements.map((element) => element.getAttribute("data-category")));
             expect(rendered).toEqual(catalog);
             await initialControls(page, scope);
+            await initialParts(page, scope, false);
             observations.push({ scope, ...await geometry(page, scope) });
             await expect(root(page, scope)).toHaveAttribute("data-rustify-scope", scope);
             await expect(root(page, scope)).toHaveAttribute("data-rustify-ssr", "1");
@@ -349,6 +432,8 @@ test("all catalog nodes, IDs, ARIA and geometry survive and match independent CS
             expect(await publicState(page, scope)).toEqual(await publicState(csr, scope));
             await initialControls(page, scope);
             await initialControls(csr, scope);
+            await initialParts(page, scope, true);
+            await initialParts(csr, scope, true);
             await geometry(page, scope);
             await geometry(csr, scope);
         }
@@ -373,6 +458,10 @@ test("the same component inputs produce the same public state in hydrate and CSR
         await attach(csr);
         const hydrated = await exercise(page, "catalog-a");
         const mounted = await exercise(csr, "catalog-a");
+        const hydratedParts = await exerciseParts(page, "catalog-a");
+        const mountedParts = await exerciseParts(csr, "catalog-a");
+        expect(hydratedParts).toEqual(mountedParts);
+        await testInfo.attach("composed-parts-state.json", { body: JSON.stringify(hydratedParts, null, 2), contentType: "application/json" });
         expect(hydrated).toEqual(mounted);
         for (const scope of scopes.slice(1)) {
             expect(await publicState(page, scope)).toEqual(await publicState(csr, scope));
@@ -561,6 +650,25 @@ test("independent CSR runtimes isolate identical geometry classes and their clea
 });
 
 test("a trap aborts shared listeners, tasks and overlays and restores static scopes", async ({ page }, testInfo) => {
+    await page.addInitScript(() => {
+        const mutations = new Set<MutationObserver>(); const resizes = new Set<ResizeObserver>(); const timers = new Set<number>();
+        const Mutation = window.MutationObserver; const Resize = window.ResizeObserver;
+        const timeout = window.setTimeout.bind(window); const clear = window.clearTimeout.bind(window);
+        window.MutationObserver = class extends Mutation {
+            observe(node: Node, options?: MutationObserverInit) { super.observe(node, options); mutations.add(this); }
+            disconnect() { mutations.delete(this); super.disconnect(); }
+        };
+        window.ResizeObserver = class extends Resize {
+            observe(node: Element, options?: ResizeObserverOptions) { super.observe(node, options); resizes.add(this); }
+            disconnect() { resizes.delete(this); super.disconnect(); }
+        };
+        window.setTimeout = ((handler: TimerHandler, delay?: number, ...args: any[]) => {
+            if (delay !== 1000 || typeof handler !== 'function') return timeout(handler, delay, ...args);
+            const id = timeout(() => { timers.delete(id); handler(...args); }, delay); timers.add(id); return id;
+        }) as typeof window.setTimeout;
+        window.clearTimeout = (id?: number) => { if (id !== undefined) timers.delete(id); clear(id); };
+        (window as any).__formResources = () => ({ mutations: mutations.size, resizes: resizes.size, timers: timers.size });
+    });
     await open(page);
     const before = await page.evaluate((scopes) => scopes.map((scope) => window.__hydration.content(scope)), scopes);
     await attach(page);
@@ -580,12 +688,14 @@ test("a trap aborts shared listeners, tasks and overlays and restores static sco
     expect(stats).toMatchObject({ tasks: 0, timers: 0, observers: 0, aborted: true });
     await expect(page.getByRole("dialog")).toHaveCount(0);
     await expect(page.getByRole("menu")).toHaveCount(0);
+    await expect(page.getByRole("listbox")).toHaveCount(0);
     await expect(page.locator("[data-rustify-content][inert]")).toHaveCount(0);
     for (const [index, scope] of scopes.entries()) {
         expect(await page.evaluate((scope) => window.__hydration.content(scope), scope)).toEqual(before[index]);
         await expect(root(page, scope)).not.toHaveAttribute("data-rustify-mounted");
     }
     expect(await page.evaluate(() => [...document.adoptedStyleSheets].every((sheet) => sheet.cssRules.length === 0))).toBe(true);
+    await expect.poll(() => page.evaluate(() => (window as any).__formResources())).toEqual({ mutations: 0, resizes: 0, timers: 0 });
     await testInfo.attach("fatal-runtime.json", { body: JSON.stringify({ active, stats, fatal: await page.evaluate(() => window.__hydration.fatal()) }, null, 2), contentType: "application/json" });
 });
 

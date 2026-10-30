@@ -18,6 +18,7 @@
 | 4096c476-5ee3-44a5-a195-09a5183542ca | DOM-COMPONENTS-P1 UI 验收评审 R6 事件 | [入口](4096c476-5ee3-44a5-a195-09a5183542ca/index.md) |
 | 5307296b-348d-4666-bda3-55b208901877 | DOM-COMPONENTS-P1-gaps 代码复审 R2 事件 | [入口](5307296b-348d-4666-bda3-55b208901877/index.md) |
 | c5423b46-21f3-4f6f-9b17-a6a6fc0e5033 | 发行工具按包修订代码评审事件 | [入口](c5423b46-21f3-4f6f-9b17-a6a6fc0e5033/index.md) |
+| d2eed6a8-ae96-481f-b597-ddd75656fe17 | DOM-COMPONENTS-P2 完整计划评审事件 | [入口](d2eed6a8-ae96-481f-b597-ddd75656fe17/index.md) |
 | f842f675-9424-4d76-a778-469c4ef66fba | 发行工具 F-01/F-02 修复复审 R2 事件 | [入口](f842f675-9424-4d76-a778-469c4ef66fba/index.md) |
 | 459cfd1e-c07b-491f-9798-9bedd11b6296 | DOCS-SSG-P4 F-01 代码复审 R3 事件 | [入口](459cfd1e-c07b-491f-9798-9bedd11b6296/index.md) |
 | 4a0edc00-c638-4313-af24-7726f88bc321 | 子目录入口 | [4a0edc00-c638-4313-af24-7726f88bc321](4a0edc00-c638-4313-af24-7726f88bc321/index.md) |

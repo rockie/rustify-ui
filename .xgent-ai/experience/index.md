@@ -13,3 +13,4 @@
 | cd0eba4a-928f-4fd8-95c3-47a609b7735b | CRATES-IO-P1 开发 | [cd0eba4a-928f-4fd8-95c3-47a609b7735b.md](cd0eba4a-928f-4fd8-95c3-47a609b7735b.md) |
 | f36dda5e-ce97-49af-926c-0146968daa01 | DOCS-SSG-P4 开发 | [f36dda5e-ce97-49af-926c-0146968daa01.md](f36dda5e-ce97-49af-926c-0146968daa01.md) |
 | bba16439-b67d-4fa5-bbff-fddfc2e1317a | DOM-COMPONENTS-P1-gaps 开发 | [bba16439-b67d-4fa5-bbff-fddfc2e1317a.md](bba16439-b67d-4fa5-bbff-fddfc2e1317a.md) |
+| 667600ae-475d-405d-a2be-44f97c89e1b3 | DOM-COMPONENTS-P2 开发 | [667600ae-475d-405d-a2be-44f97c89e1b3.md](667600ae-475d-405d-a2be-44f97c89e1b3.md) |

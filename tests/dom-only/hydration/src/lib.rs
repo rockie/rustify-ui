@@ -12,6 +12,7 @@ compile_error!("select exactly one of ssr, hydrate or csr");
 use leptos::prelude::*;
 use rustify_ui::MountConfig;
 
+mod form_parts;
 mod view;
 
 #[cfg(target_arch = "wasm32")]

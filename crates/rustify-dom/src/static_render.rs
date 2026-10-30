@@ -17,7 +17,8 @@ impl StaticRenderIssues {
             .clone()
     }
 
-    pub(crate) fn record(message: &'static str) {
+    /// Records unsupported initial browser state from a component renderer.
+    pub fn record(message: &'static str) {
         if let Some(issues) = use_context::<Self>() {
             issues
                 .0

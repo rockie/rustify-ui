@@ -7,6 +7,13 @@
 //! instances of it and kill one.
 
 #[cfg(target_arch = "wasm32")]
+mod field_samples;
+#[cfg(target_arch = "wasm32")]
+mod form_benchmark;
+#[cfg(target_arch = "wasm32")]
+mod select_samples;
+
+#[cfg(target_arch = "wasm32")]
 mod app {
     use leptos::prelude::*;
     use leptos::wasm_bindgen::JsCast;

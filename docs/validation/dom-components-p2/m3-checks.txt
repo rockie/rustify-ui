@@ -1,0 +1,192 @@
+Baseline: dirty@721651e6e71906e046753dd258df5e7b527128e7 / main
+Captured: 2026-10-30T18:02:45+08:00
+
+[FormState]
+     Running unittests src/lib.rs (target/debug/deps/rustify_dom-6d87d0e336bb5147)
+running 18 tests
+test form::tests::a_failed_rule_names_the_first_field_in_field_order_not_the_first_rule_to_fail ... ok
+test form::tests::a_rule_that_stops_failing_stops_showing ... ok
+test form::tests::a_validation_that_fails_turns_a_waiting_submit_into_a_block ... ok
+test form::tests::asking_twenty_times_after_an_async_failure_never_saves ... ok
+test form::tests::changing_a_field_while_a_submit_waits_voids_the_submit ... ok
+test form::tests::sources_reveal_retained_lower_priority_errors_and_changed_clears_them ... ok
+test form::tests::an_error_from_a_check_survives_the_next_ask_and_a_rules_error_does_not ... ok
+test form::tests::a_save_that_fails_keeps_the_form_dirty_and_says_why ... ok
+test form::tests::can_submit_is_false_for_each_of_the_three_reasons ... ok
+test form::tests::reset_invalidates_old_checks_waiting_requests_and_dirty_state ... ok
+test form::tests::a_new_form_is_clean_and_ready ... ok
+test form::tests::a_change_clears_what_was_said_about_the_old_value ... ok
+test form::tests::a_field_the_form_does_not_have_is_recorded_rather_than_ignored ... ok
+test form::tests::reset_is_refused_during_save_and_old_completion_after_reset_is_ignored ... ok
+test form::tests::asking_right_after_a_change_waits_for_the_check_that_change_started ... ok
+test form::tests::submitting_while_a_validation_runs_waits_and_then_saves_once ... ok
+test form::tests::twenty_clicks_while_a_save_runs_are_one_save ... ok
+test form::tests::twenty_validations_arriving_out_of_order_leave_the_latest_one_showing ... ok
+test result: ok. 18 passed; 0 failed; 0 ignored; 0 measured; 245 filtered out; finished in 0.01s
+
+[Draft]
+     Running unittests src/lib.rs (target/debug/deps/rustify_dom-6d87d0e336bb5147)
+running 14 tests
+test draft::tests::an_input_without_a_focus_event_is_still_an_edit ... ok
+test draft::tests::text_that_never_parsed_commits_nothing_and_shows_the_application_value ... ok
+test draft::tests::composition_defers_input_commit_escape_and_blur_until_it_ends ... ok
+test draft::tests::unfocused_and_untouched_the_field_shows_the_application_value ... ok
+test draft::tests::escape_on_an_untouched_field_is_not_the_field_s_key ... ok
+test draft::tests::enter_commits_once_and_the_field_settles_on_the_application_value ... ok
+test draft::tests::after_a_commit_an_untouched_field_follows_the_application_again ... ok
+test draft::tests::a_draft_is_invalid_only_while_its_text_does_not_parse ... ok
+test draft::tests::every_input_that_parses_is_a_preview_and_a_refusal_keeps_the_draft ... ok
+test draft::tests::blur_commits_once ... ok
+test draft::tests::a_refused_commit_goes_back_to_the_application_value ... ok
+test draft::tests::text_that_stopped_parsing_commits_the_last_preview ... ok
+test draft::tests::a_touched_draft_outlasts_an_outside_change_and_settles_on_blur ... ok
+test draft::tests::escape_drops_the_draft_and_asks_for_the_preview_back ... ok
+test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 249 filtered out; finished in 0.00s
+
+[Field pure]
+     Running unittests src/lib.rs (target/debug/deps/rustify_components-9e07092670a1db5a)
+running 3 tests
+test primitives::field::tests::a_different_input_after_composition_is_not_suppressed ... ok
+test primitives::field::tests::composition_completion_delivers_the_end_only_once ... ok
+test primitives::field::tests::a_refused_composition_does_not_turn_the_settled_value_into_a_second_request ... ok
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 140 filtered out; finished in 0.00s
+
+[Form bridge host (0 tests; native behavior below)]
+     Running unittests src/lib.rs (target/debug/deps/rustify_components-9e07092670a1db5a)
+running 0 tests
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 143 filtered out; finished in 0.00s
+
+[Field SSR final]
+     Running tests/forms_ssr.rs (target/debug/deps/forms_ssr-56b9a37fd0ea3054)
+running 8 tests
+test field_nested_form_root_is_diagnosed_without_a_second_form_or_lost_children ... ok
+test field_form_root_has_one_native_form_and_preserves_host_attributes ... ok
+test field_parts_keep_native_attributes_and_separate_wrapper_from_editor ... ok
+test field_form_submit_button_is_native_inside_root_and_legacy_outside ... ok
+test field_themes_share_native_parts_and_slot_overrides_emit_external_responsive_rules ... ok
+test field_composed_parts_name_the_actual_editor_and_only_reference_present_messages ... ok
+test field_drafts_submit_only_the_accepted_mirror_and_keep_constraints_on_the_editor ... ok
+test field_description_and_visible_error_reference_the_native_control_and_source ... ok
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 19 filtered out; finished in 0.01s
+
+[SSR regression]
+     Running tests/forms_ssr.rs (target/debug/deps/forms_ssr-56b9a37fd0ea3054)
+running 27 tests
+test choice_custom_group_target_preserves_host_class_and_exposes_native_item_attributes ... ok
+test choice_single_toggle_mode_never_displays_or_submits_multiple_values ... ok
+test choice_raw_parts_do_not_reference_the_skin_or_generate_names ... ok
+test choice_themed_custom_control_retains_target_class_and_adds_native_skin ... ok
+test field_drafts_submit_only_the_accepted_mirror_and_keep_constraints_on_the_editor ... ok
+test field_form_root_has_one_native_form_and_preserves_host_attributes ... ok
+test choice_mixed_checkbox_exposes_aria_and_accepted_form_state ... ok
+test field_nested_form_root_is_diagnosed_without_a_second_form_or_lost_children ... ok
+test choice_switch_has_one_native_successful_control_and_toggle_only_accepted_hidden_value ... ok
+test field_composed_parts_name_the_actual_editor_and_only_reference_present_messages ... ok
+test field_description_and_visible_error_reference_the_native_control_and_source ... ok
+test choice_cards_have_native_controls_and_real_label_and_description_references ... ok
+test choice_card_without_label_slot_uses_the_supplied_accessible_name ... ok
+test field_form_submit_button_is_native_inside_root_and_legacy_outside ... ok
+test field_parts_keep_native_attributes_and_separate_wrapper_from_editor ... ok
+test slider_invalid_initial_props_are_readable_and_do_not_submit ... ok
+test slider_unnamed_thumb_is_diagnosed_disabled_and_excluded_from_submission ... ok
+test choice_group_required_uses_one_proxy_and_accepts_any_enabled_selection ... ok
+test slider_custom_thumb_keeps_native_target_attributes_and_additive_geometry ... ok
+test slider_native_form_values_follow_normalized_numeric_order_and_thumb_order_is_stable ... ok
+test choice_named_radios_preserve_explicit_form_owner_and_name ... ok
+test field_themes_share_native_parts_and_slot_overrides_emit_external_responsive_rules ... ok
+test choice_anonymous_groups_in_one_form_have_no_native_names_and_independent_selection ... ok
+test choice_anonymous_cards_keep_both_selections_with_and_without_a_form ... ok
+test choice_group_identity_is_seeded_independent_of_business_values ... ok
+test choice_visual_matrix_has_external_responsive_geometry_and_no_inline_style ... ok
+test slider_themed_scalar_and_range_share_parts_form_semantics_and_external_visual_rules ... ok
+test result: ok. 27 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+     Running tests/ssr_controls.rs (target/debug/deps/ssr_controls-7641ccb63e890d65)
+running 13 tests
+test text_area_serializes_escaped_multiline_contents_instead_of_a_value_attribute ... ok
+test checked_disabled_checkboxes_emit_the_native_state ... ok
+test a_disabled_radio_group_emits_disabled_for_every_option ... ok
+test writable_enabled_text_fields_omit_false_native_flags ... ok
+test unchecked_enabled_checkboxes_omit_false_native_state ... ok
+test unavailable_tabs_emit_native_disabled_state ... ok
+test text_field_serializes_its_initial_value_and_native_flags ... ok
+test text_area_serializes_disabled_and_read_only_flags ... ok
+test text_area_preserves_a_leading_line_feed_through_document_parsing ... ok
+test disabled_switches_emit_native_availability ... ok
+test sliders_emit_the_snapped_value_and_native_availability ... ok
+test radio_options_emit_selection_and_each_options_native_availability ... ok
+test toggle_groups_combine_group_and_item_availability_in_native_buttons ... ok
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+[Field library SSR]
+     Running unittests src/lib.rs (target/debug/deps/rustify_components-f564267b2b21feb9)
+running 17 tests
+test number_field::tests::a_number_is_what_rust_reads_as_a_finite_one ... ok
+test primitives::field::tests::a_refused_composition_does_not_turn_the_settled_value_into_a_second_request ... ok
+test number_field::tests::a_value_is_written_the_shortest_way_that_reads_back ... ok
+test primitives::field::tests::a_different_input_after_composition_is_not_suppressed ... ok
+test number_field::tests::text_on_its_way_to_a_number_is_not_one_yet ... ok
+test number_field::tests::a_step_lands_on_the_decimals_its_two_parts_have ... ok
+test color_field::tests::six_digits_are_a_colour_with_or_without_the_hash ... ok
+test color_field::tests::text_on_its_way_to_a_colour_is_not_one_yet ... ok
+test primitives::field::tests::composition_completion_delivers_the_end_only_once ... ok
+test catalog::inventory_tests::layout_field_inventory_compiles_against_the_complete_public_structures ... ok
+test color_field::tests::an_opacity_is_a_colour_only_where_alpha_is_allowed ... ok
+test color_field::tests::three_digits_are_shorthand_for_six ... ok
+test theme_panel::tests::each_select_option_requests_exactly_one_set_and_all_other_fields_keep ... ok
+test layout::tests::every_shared_layout_field_emits_its_corresponding_property ... ok
+test layout::tests::every_margin_and_padding_field_has_the_documented_edge_mapping ... ok
+test color_field::tests::host_color_field_renders_the_controlled_value_and_external_swatch ... ok
+test number_field::tests::host_number_field_renders_the_controlled_value_and_native_flags ... ok
+test result: ok. 17 passed; 0 failed; 0 ignored; 0 measured; 175 filtered out; finished in 0.01s
+
+[Clippy final]
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 4.39s
+
+[CSS check final]
+css: no drift (86503 bytes; 4701 SDK candidates)
+
+[Unstyled browser 21]
+Running 21 tests using 1 worker
+  ✓   1 [dom-primitives] › tests/dom-only/primitives.spec.ts:15:5 › loads only structural styles and preserves a single native target (429ms)
+  ✓   2 [dom-primitives] › tests/dom-only/primitives.spec.ts:39:5 › portal retains local direction, has no theme tokens and cleans up its wrapper (566ms)
+  ✓   3 [dom-primitives] › tests/dom-only/primitives.spec.ts:71:5 › choice requests remain separate from accepted native state and FormData (403ms)
+  ✓   4 [dom-primitives] › tests/dom-only/primitives.spec.ts:106:5 › choice readonly moves radio focus without requesting and reordered multi-values follow declaration (388ms)
+  ✓   5 [dom-primitives] › tests/dom-only/primitives.spec.ts:129:5 › choice Slot target cancellation retains caller attributes and does not request (181ms)
+  ✓   6 [dom-primitives] › tests/dom-only/primitives.spec.ts:139:5 › choice structural observers disconnect on scope disposal (153ms)
+  ✓   7 [dom-primitives] › tests/dom-only/primitives.spec.ts:160:5 › slider refuses previews, commits the final keyboard request once and accepts delayed values (218ms)
+  ✓   8 [dom-primitives] › tests/dom-only/primitives.spec.ts:183:5 › slider crossing preserves DOM focus identity while form values sort numerically (283ms)
+  ✓   9 [dom-primitives] › tests/dom-only/primitives.spec.ts:205:5 › slider pointer capture requests accepted geometry and Escape cancels without committing (234ms)
+  ✓  10 [dom-primitives] › tests/dom-only/primitives.spec.ts:227:5 › slider configuration errors retain the last valid display and recover when repaired (237ms)
+  ✓  11 [dom-primitives] › tests/dom-only/primitives.spec.ts:241:5 › slider returning to a refused starting value does not commit a stale pointer request (242ms)
+  ✓  12 [dom-primitives] › tests/dom-only/primitives.spec.ts:259:5 › slider disabling or removing the active thumb cancels its session before blur can commit (221ms)
+  ✓  13 [dom-primitives] › tests/dom-only/primitives.spec.ts:280:5 › slider scope disposal releases a live native pointer capture and geometry resources (216ms)
+  ✓  14 [dom-primitives] › tests/dom-only/primitives.spec.ts:300:5 › slider caches the track rectangle between moves and invalidates it on viewport resize (367ms)
+  ✓  15 [dom-primitives] › tests/dom-only/primitives.spec.ts:328:5 › slider vertical direction and inversion share normalized keyboard requests (167ms)
+  ✓  16 [dom-primitives] › tests/dom-only/primitives.spec.ts:347:5 › field controlled edits preserve caller cancellation, native attributes and delayed acceptance (267ms)
+  ✓  17 [dom-primitives] › tests/dom-only/primitives.spec.ts:383:5 › field IME keeps composition private and delivers one final request followed by real edits (231ms)
+  ✓  18 [dom-primitives] › tests/dom-only/primitives.spec.ts:421:5 › field drafts keep invalid and refused text out of FormData and settle once (296ms)
+  ✓  19 [dom-primitives] › tests/dom-only/primitives.spec.ts:455:5 › field submit flushes accepted drafts once, reports Busy and rejects reset during save (326ms)
+  ✓  20 [dom-primitives] › tests/dom-only/primitives.spec.ts:478:5 › field unbound native constraints block before rules and expose real invalid targets (331ms)
+  ✓  21 [dom-primitives] › tests/dom-only/primitives.spec.ts:515:5 › field reset remains an application request and composing Draft never previews or submits (286ms)
+  21 passed (22.9s)
+
+[Choice registration + first disposal run]
+Running 2 tests using 1 worker
+  ✓  1 [dom-primitives] › tests/dom-only/primitives.spec.ts:552:5 › field registered choices and slider focus real controls in native form order (1.1s)
+  ✘  2 [dom-primitives] › tests/dom-only/primitives.spec.ts:586:5 › field scope disposal releases an active composition listener and native form bridges (359ms)
+    Error: expect(received).toBe(expected) // Object.is equality
+    Expected: NaN
+    Received: undefined
+  1 failed
+  1 passed (12.7s)
+
+[Final disposal browser]
+Running 1 test using 1 worker
+  ✓  1 [dom-primitives] › tests/dom-only/primitives.spec.ts:586:5 › field scope disposal releases an active composition listener and native form bridges (414ms)
+  1 passed (2.0s)
+
+[Themed browser final]
+Running 2 tests using 1 worker
+  ✓  1 [dom-only] › tests/dom-only/forms.spec.ts:20:5 › field skins apply all sizes and variants with independent responsive slots and utility overrides (741ms)
+  ✓  2 [dom-only] › tests/dom-only/forms.spec.ts:58:5 › field themed native submit commits a draft once and exposes real constraint errors (460ms)
+  2 passed (10.0s)

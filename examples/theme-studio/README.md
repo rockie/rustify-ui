@@ -87,6 +87,30 @@ application. The shared font catalogue includes the repaired Rustify WenKai
 family at the existing `LXGWWenKaiRegular.ttf` path. Unknown author stacks are
 retained while preview diagnostics identify the bundled fallback.
 
+## Form components
+
+Open **Cards** in the DOM preview to use the complete **Form components**
+sample. It combines fields, groups, cards, a named range, Draft number/colour
+inputs and a grouped Select. Save shows the native FormData; required fields
+and a short-name rule block submission. **Fail next local save** exercises an
+application error and retry. Reset restores application values. These sample
+values live only in memory and do not change the theme document.
+
+Expand **States and parts** to choose any of the 15 controls, switch between
+Primitives and Themes, and accept, refuse or delay value requests. Apply a
+pending request to compare it with the accepted value. The controls also expose
+size, supported variants, local colour/radius, disabled, read-only, invalid and
+RTL states. Select has a cancelable selection option. The shell language
+translates labels while preserving author values and native names. These new
+controls use DOM; the existing GPU scene remains available in compare mode.
+
+Read the [form composition guide](../../docs/forms.md) for the public parts and
+stylesheet choices. A focused browser check after the release build is:
+
+```sh
+npx playwright test --project=theme-studio theme-forms.spec.ts
+```
+
 ## Local data and failures
 
 New writes use `rustify-ui.theme-studio.v2`. Its envelope contains

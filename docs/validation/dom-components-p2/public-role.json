@@ -1,0 +1,52 @@
+[
+  {
+    "mode": "raw",
+    "data": [
+      [
+        "title",
+        "Recipe title"
+      ],
+      [
+        "agree",
+        "on"
+      ]
+    ],
+    "requests": "3",
+    "styles": [
+      "http://127.0.0.1:4194/raw/runtime.css",
+      "http://127.0.0.1:4194/raw/components.css"
+    ],
+    "cssBytes": 2521,
+    "errors": [],
+    "wasm": {
+      "bytes": 1535951,
+      "gzip": 324849
+    },
+    "cssGzip": 697
+  },
+  {
+    "mode": "themed",
+    "data": [
+      [
+        "title",
+        "Recipe title"
+      ],
+      [
+        "agree",
+        "on"
+      ]
+    ],
+    "requests": "3",
+    "styles": [
+      "http://127.0.0.1:4194/themed/runtime.css",
+      "http://127.0.0.1:4194/themed/components.css"
+    ],
+    "cssBytes": 94986,
+    "errors": [],
+    "wasm": {
+      "bytes": 1954142,
+      "gzip": 451611
+    },
+    "cssGzip": 12591
+  }
+]

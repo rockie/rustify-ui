@@ -257,3 +257,13 @@ button,input,textarea {font:inherit;}
 .studio-editor-top[data-saving-paused="true"] [data-testid="theme-save"] {background:#fff;border-color:#d0d5dd;color:#475467;}
 .studio-renderer-buttons {max-width:100%;min-width:0;align-items:stretch;}
 .studio-renderer-buttons>button[data-name="Button"] {flex:1 1 auto;min-width:0;white-space:normal;}
+/* Authored example styles consume only the public primitive part/state contract. */
+.form-parts-example[data-presentation="primitives"] [data-rustify-part="slider-root"] {min-height:32px;padding-block:14px;box-sizing:border-box;}
+.form-parts-example[data-presentation="primitives"] [data-rustify-part="slider-track"] {height:4px;background:var(--border);}
+.form-parts-example[data-presentation="primitives"] [data-rustify-part="slider-range"] {background:var(--foreground);}
+.form-parts-example[data-presentation="primitives"] [data-rustify-part="slider-thumb"] {top:50%;width:20px;height:20px;border:1px solid var(--foreground);border-radius:50%;background:var(--background);}
+.form-parts-example[data-presentation="primitives"] [data-rustify-part="slider-thumb"]:focus-visible {outline:2px solid var(--ring);outline-offset:2px;}
+.form-parts-popup {border:1px solid var(--border);border-radius:4px;padding:4px;background:linear-gradient(var(--popover),var(--popover)),var(--background);color:var(--popover-foreground);}
+.form-parts-popup [data-rustify-part="select-item"] {padding:4px 8px;cursor:pointer;}
+.form-parts-popup [data-highlighted] {outline:2px solid var(--ring);outline-offset:-2px;}
+.form-parts-popup [data-disabled] {opacity:.5;cursor:default;}

@@ -1,27 +1,431 @@
-//! Choosing one of a list that is too long to show all at once.
-//!
-//! Rust/UI's select measured the trigger and flipped the panel from an inline
-//! `<script>`, and carried no `combobox`, `listbox` or `option` role. Here the
-//! panel is a layer on the SDK's stack, the roles are the ones a reader
-//! expects, and the value is the application's: what the trigger shows is what
-//! the application holds, never what was clicked.
-
-use leptos::ev::KeyboardEvent;
+//! Themed parts and the legacy convenience view share one select-only combobox.
+use crate::{primitives, Responsive};
 use leptos::prelude::*;
-use rustify_ui::{Anchor, Layer};
+pub use primitives::select::SelectEntry;
+use rustify_ui::{AccentColor, Cancelable, LayerDismiss, ThemeRadius};
 
-const TRIGGER: &str = "flex h-9 w-full items-center justify-between gap-2 rounded-md border border-border bg-input px-3 py-1 text-sm text-foreground transition-colors cursor-pointer outline-none focus-visible:ring-ring/50 focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive";
-const PANEL: &str = "box-border max-h-64 overflow-auto rounded-md border border-border bg-popover text-popover-foreground p-1 shadow-lg outline-none";
-const OPTION: &str = "flex w-full items-center gap-2 rounded-sm px-2 py-1.5 text-sm text-popover-foreground cursor-pointer aria-disabled:opacity-50 aria-disabled:cursor-not-allowed";
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+pub enum SelectSize {
+    One,
+    #[default]
+    Two,
+    Three,
+}
+impl SelectSize {
+    pub const ALL: &'static [Self] = &[Self::One, Self::Two, Self::Three];
+    pub const fn number(self) -> u8 {
+        match self {
+            Self::One => 1,
+            Self::Two => 2,
+            Self::Three => 3,
+        }
+    }
+}
+impl From<SelectSize> for Signal<Responsive<SelectSize>> {
+    fn from(value: SelectSize) -> Self {
+        Self::stored(value.into())
+    }
+}
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+pub enum SelectTriggerVariant {
+    Classic,
+    #[default]
+    Surface,
+    Soft,
+    GhostOffset,
+    Ghost,
+}
+impl SelectTriggerVariant {
+    pub const ALL: &'static [Self] = &[
+        Self::Classic,
+        Self::Surface,
+        Self::Soft,
+        Self::GhostOffset,
+        Self::Ghost,
+    ];
+    pub const fn as_str(self) -> &'static str {
+        match self {
+            Self::Classic => "classic",
+            Self::Surface => "surface",
+            Self::Soft => "soft",
+            Self::GhostOffset => "ghost-offset",
+            Self::Ghost => "ghost",
+        }
+    }
+}
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+pub enum SelectContentVariant {
+    #[default]
+    Solid,
+    Soft,
+}
+impl SelectContentVariant {
+    pub const ALL: &'static [Self] = &[Self::Solid, Self::Soft];
+    pub const fn as_str(self) -> &'static str {
+        match self {
+            Self::Solid => "solid",
+            Self::Soft => "soft",
+        }
+    }
+}
+#[derive(Clone, Copy)]
+struct Context {
+    size: Signal<Responsive<SelectSize>>,
+}
+fn size() -> Signal<Responsive<SelectSize>> {
+    use_context::<Context>().map_or_else(
+        || Signal::stored(Responsive::default()),
+        |context| context.size,
+    )
+}
+fn geometry(
+    size: Signal<Responsive<SelectSize>>,
+    color: Signal<Option<AccentColor>>,
+    radius: Signal<Option<ThemeRadius>>,
+    content: bool,
+) -> String {
+    let mode = crate::component_color::use_mode();
+    crate::geometry::style_class(move || {
+        let mut styles = crate::geometry::StyleSet::default();
+        for (width, size) in size.get().iter() {
+            let n = size.number();
+            let (height, padding, gap, radius_step, fallback_height, fallback_font, fallback_line) =
+                match n {
+                    1 => (5, 2, "var(--rustify-space-1, 4px)", 1, 24, 12, 16),
+                    3 => (7, 4, "var(--rustify-space-2, 8px)", 3, 40, 16, 24),
+                    _ => (
+                        6,
+                        3,
+                        "calc(var(--rustify-space-1, 4px) * 1.5)",
+                        2,
+                        32,
+                        14,
+                        20,
+                    ),
+                };
+            styles.insert(
+                width,
+                "--rustify-select-height",
+                format!("var(--rustify-space-{height}, {fallback_height}px)"),
+            )?;
+            styles.insert(
+                width,
+                "--rustify-select-padding",
+                format!("var(--rustify-space-{padding}, {}px)", padding * 4),
+            )?;
+            styles.insert(width, "--rustify-select-gap", gap)?;
+            styles.insert(
+                width,
+                "--rustify-select-ghost-x",
+                if n == 3 {
+                    "var(--rustify-space-3, 12px)"
+                } else {
+                    "var(--rustify-space-2, 8px)"
+                },
+            )?;
+            styles.insert(
+                width,
+                "--rustify-select-ghost-y",
+                if n == 3 {
+                    "calc(var(--rustify-space-1, 4px) * 1.5)"
+                } else {
+                    "var(--rustify-space-1, 4px)"
+                },
+            )?;
+            styles.insert(
+                width,
+                "--rustify-select-font",
+                format!("var(--rustify-font-size-{n}, {fallback_font}px)"),
+            )?;
+            styles.insert(
+                width,
+                "--rustify-select-line",
+                format!("var(--rustify-line-height-{n}, {fallback_line}px)"),
+            )?;
+            styles.insert(
+                width,
+                "--rustify-select-radius-base",
+                format!(
+                    "var(--rustify-radius-{radius_step}, {}px)",
+                    match radius_step {
+                        1 => 3,
+                        3 => 6,
+                        _ => 4,
+                    }
+                ),
+            )?;
+            styles.insert(
+                width,
+                "--rustify-select-radius-unit",
+                format!(
+                    "calc(var(--rustify-unit, 4px) * {})",
+                    match n {
+                        1 => 0.75,
+                        3 => 1.5,
+                        _ => 1.0,
+                    }
+                ),
+            )?;
+            if content {
+                styles.insert(
+                    width,
+                    "--rustify-select-content-padding",
+                    if n == 1 {
+                        "var(--rustify-space-1, 4px)"
+                    } else {
+                        "var(--rustify-space-2, 8px)"
+                    },
+                )?;
+                styles.insert(
+                    width,
+                    "--rustify-select-item-height",
+                    if n == 1 {
+                        "var(--rustify-space-5, 24px)"
+                    } else {
+                        "var(--rustify-space-6, 32px)"
+                    },
+                )?;
+                styles.insert(
+                    width,
+                    "--rustify-select-indicator-width",
+                    if n == 1 {
+                        "calc(var(--rustify-space-5, 24px) / 1.2)"
+                    } else {
+                        "var(--rustify-space-5, 24px)"
+                    },
+                )?;
+                styles.insert(
+                    width,
+                    "--rustify-select-content-radius",
+                    if n == 1 {
+                        "var(--rustify-radius-3, 6px)"
+                    } else {
+                        "var(--rustify-radius-4, 8px)"
+                    },
+                )?;
+                styles.insert(
+                    width,
+                    "--rustify-select-item-radius",
+                    if n == 1 {
+                        "var(--rustify-radius-1, 3px)"
+                    } else {
+                        "var(--rustify-radius-2, 4px)"
+                    },
+                )?;
+                styles.insert(
+                    width,
+                    "--rustify-select-line",
+                    if n == 1 {
+                        "var(--rustify-line-height-1, 16px)"
+                    } else {
+                        "var(--rustify-line-height-2, 20px)"
+                    },
+                )?;
+                styles.insert(
+                    width,
+                    "--rustify-select-label-font",
+                    if n == 1 {
+                        "var(--rustify-font-size-1, 12px)"
+                    } else {
+                        "var(--rustify-font-size-2, 14px)"
+                    },
+                )?;
+            }
+        }
+        crate::component_color::set_color(&mut styles, color.get(), mode.get())?;
+        if let Some(radius) = radius.get() {
+            styles.insert(
+                0,
+                "--rustify-select-radius",
+                if radius == ThemeRadius::Full {
+                    "9999px".into()
+                } else {
+                    format!(
+                        "calc(var(--rustify-select-radius-unit, 4px) * {})",
+                        radius.factor()
+                    )
+                },
+            )?;
+        }
+        Ok(styles)
+    })
+}
 
-/// One choice.
+/// Select state and metadata, with the size inherited by its themed parts.
+#[component]
+pub fn Root(
+    #[prop(into)] value: Signal<Option<String>>,
+    #[prop(into)] on_change: Callback<Option<String>>,
+    #[prop(into)] open: Signal<bool>,
+    #[prop(into)] on_open_change: Callback<bool>,
+    #[prop(into)] entries: Signal<Vec<SelectEntry>>,
+    #[prop(optional_no_strip, into)] on_select: Option<Callback<Cancelable<String>>>,
+    #[prop(optional_no_strip, into)] on_escape_key_down: Option<Callback<Cancelable<LayerDismiss>>>,
+    #[prop(optional_no_strip, into)] on_pointer_down_outside: Option<
+        Callback<Cancelable<LayerDismiss>>,
+    >,
+    #[prop(optional_no_strip, into)] on_open_auto_focus: Option<Callback<Cancelable<()>>>,
+    #[prop(optional_no_strip, into)] on_close_auto_focus: Option<Callback<Cancelable<()>>>,
+    #[prop(optional, into)] id: String,
+    #[prop(optional, into)] name: String,
+    #[prop(optional, into)] form: String,
+    #[prop(optional, into)] placeholder: String,
+    #[prop(optional, into)] aria_label: String,
+    #[prop(optional, into)] labelled_by: String,
+    #[prop(optional, into)] described_by: Signal<String>,
+    #[prop(optional, into)] disabled: Signal<bool>,
+    #[prop(optional, into)] read_only: Signal<bool>,
+    #[prop(optional, into)] invalid: Signal<bool>,
+    #[prop(optional, into)] required: Signal<bool>,
+    #[prop(optional, into)] size: Signal<Responsive<SelectSize>>,
+    #[prop(optional, into)] class: Signal<String>,
+    children: Children,
+) -> impl IntoView {
+    let owner = Owner::new();
+    let view = owner.with(move || {
+        provide_context(Context { size });
+        view! { <primitives::select::Root value=value on_change=on_change open=open on_open_change=on_open_change entries=entries
+            on_select=on_select on_escape_key_down=on_escape_key_down on_pointer_down_outside=on_pointer_down_outside
+            on_open_auto_focus=on_open_auto_focus on_close_auto_focus=on_close_auto_focus
+            id=id name=name form=form placeholder=placeholder aria_label=aria_label labelled_by=labelled_by described_by=described_by
+            disabled=disabled read_only=read_only invalid=invalid required=required class=class>{children()}</primitives::select::Root> }
+    });
+    leptos::tachys::reactive_graph::OwnedView::new_with_owner(view, owner)
+}
+#[component]
+pub fn Trigger(
+    #[prop(optional, into)] variant: Signal<SelectTriggerVariant>,
+    #[prop(optional, into)] color: Signal<Option<AccentColor>>,
+    #[prop(optional, into)] radius: Signal<Option<ThemeRadius>>,
+    #[prop(optional, into)] placeholder: String,
+    #[prop(optional, into)] class: String,
+    #[prop(optional, into)] test_id: String,
+    #[prop(optional)] children: Option<Children>,
+) -> impl IntoView {
+    let geometry = geometry(size(), color, radius, false);
+    let children = children.unwrap_or_else(|| {
+        Box::new(move || view! { <Value placeholder=placeholder /><Icon /> }.into_any())
+    });
+    view! { <primitives::select::Trigger class=format!("rustify-color rustify-select-trigger {geometry} {class}") test_id=test_id>{children()}</primitives::select::Trigger> }
+        .add_any_attr((leptos::attr::custom::custom_attribute("data-name", "Select"), leptos::attr::custom::custom_attribute("data-variant", move || variant.get().as_str())))
+}
+/// The default trigger skin on one caller-owned button, retaining host classes/listeners.
+pub fn trigger_as<At, Ch>(
+    target: leptos::html::HtmlElement<leptos::html::Button, At, Ch>,
+) -> impl IntoView
+where
+    At: leptos::attr::Attribute + Send,
+    Ch: RenderHtml + Send,
+{
+    let geometry = geometry(size(), Signal::stored(None), Signal::stored(None), false);
+    primitives::select::trigger_as(target).add_any_attr((
+        leptos::tachys::html::class::class(("rustify-color", true)),
+        leptos::tachys::html::class::class(("rustify-select-trigger", true)),
+        primitives::slot::class_token(geometry),
+        leptos::attr::custom::custom_attribute("data-variant", "surface"),
+    ))
+}
+#[component]
+pub fn Value(
+    #[prop(optional, into)] placeholder: String,
+    #[prop(optional, into)] class: String,
+) -> impl IntoView {
+    view! { <primitives::select::Value placeholder=placeholder class=format!("rustify-select-value {class}") /> }
+}
+#[component]
+pub fn Icon(
+    #[prop(optional, into)] class: String,
+    #[prop(optional)] children: Option<Children>,
+) -> impl IntoView {
+    view! { <primitives::select::Icon class=format!("rustify-select-icon {class}")>{children.map(|children| children()).unwrap_or_else(|| view! { <crate::Icon glyph=crate::Glyph::ChevronDown /> }.into_any())}</primitives::select::Icon> }
+}
+#[component]
+pub fn Content(
+    #[prop(optional, into)] variant: Signal<SelectContentVariant>,
+    #[prop(optional, into)] color: Signal<Option<AccentColor>>,
+    #[prop(optional, into)] high_contrast: Signal<bool>,
+    #[prop(optional, into)] class: String,
+    #[prop(optional, into)] test_id: String,
+    children: ChildrenFn,
+) -> impl IntoView {
+    let geometry = geometry(size(), color, Signal::stored(None), true);
+    view! { <primitives::select::Content class=format!("rustify-color rustify-select-content {geometry} {class}") test_id=test_id>{children()}</primitives::select::Content> }
+        .add_any_attr((leptos::attr::custom::custom_attribute("data-variant", move || variant.get().as_str()),
+            leptos::attr::custom::custom_attribute("data-high-contrast", move || high_contrast.get().then_some(""))))
+}
+#[component]
+pub fn Viewport(#[prop(optional, into)] class: String, children: Children) -> impl IntoView {
+    view! { <primitives::select::Viewport class=format!("rustify-select-viewport {class}")>{children()}</primitives::select::Viewport> }
+}
+#[component]
+pub fn Group(#[prop(optional, into)] class: String, children: Children) -> impl IntoView {
+    view! { <primitives::select::Group class=format!("rustify-select-group {class}")>{children()}</primitives::select::Group> }
+}
+#[component]
+pub fn Label(#[prop(optional, into)] class: String, children: Children) -> impl IntoView {
+    view! { <primitives::select::Label class=format!("rustify-select-label {class}")>{children()}</primitives::select::Label> }
+}
+#[component]
+pub fn Item(
+    #[prop(into)] value: String,
+    #[prop(optional, into)] class: String,
+    #[prop(optional, into)] test_id: String,
+    #[prop(optional)] children: Option<Children>,
+) -> impl IntoView {
+    let children =
+        children.unwrap_or_else(|| Box::new(|| view! { <ItemText /><ItemIndicator /> }.into_any()));
+    view! { <primitives::select::Item value=value class=format!("rustify-select-item {class}") test_id=test_id>{children()}</primitives::select::Item> }
+}
+pub fn item_as<At, Ch>(
+    target: leptos::html::HtmlElement<leptos::html::Div, At, Ch>,
+    value: impl Into<String>,
+) -> impl IntoView
+where
+    At: leptos::attr::Attribute + Send,
+    Ch: RenderHtml + Send,
+{
+    primitives::select::item_as(target, value).add_any_attr(leptos::tachys::html::class::class((
+        "rustify-select-item",
+        true,
+    )))
+}
+#[component]
+pub fn ItemText(
+    #[prop(optional, into)] class: String,
+    #[prop(optional)] children: Option<Children>,
+) -> impl IntoView {
+    // Passing the option through keeps metadata text reactive when no custom children were supplied.
+    primitives::select::ItemText(primitives::select::ItemTextProps {
+        class: format!("rustify-select-item-text {class}"),
+        children,
+    })
+}
+#[component]
+pub fn ItemIndicator(
+    #[prop(optional, into)] class: String,
+    #[prop(optional)] children: Option<Children>,
+) -> impl IntoView {
+    view! { <primitives::select::ItemIndicator class=format!("rustify-select-indicator {class}")>{children.map(|children| children()).unwrap_or_else(|| view! { <crate::Icon glyph=crate::Glyph::Check /> }.into_any())}</primitives::select::ItemIndicator> }
+}
+#[component]
+pub fn Separator(#[prop(optional, into)] class: String) -> impl IntoView {
+    view! { <primitives::select::Separator class=format!("rustify-select-separator {class}") /> }
+}
+#[component]
+pub fn ScrollUpButton(#[prop(optional, into)] class: String) -> impl IntoView {
+    view! { <primitives::select::ScrollUpButton class=format!("rustify-select-scroll {class}")><crate::Icon glyph=crate::Glyph::ChevronUp /></primitives::select::ScrollUpButton> }
+}
+#[component]
+pub fn ScrollDownButton(#[prop(optional, into)] class: String) -> impl IntoView {
+    view! { <primitives::select::ScrollDownButton class=format!("rustify-select-scroll {class}")><crate::Icon glyph=crate::Glyph::ChevronDown /></primitives::select::ScrollDownButton> }
+}
+
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct SelectOption {
     pub value: String,
     pub label: String,
     pub disabled: bool,
 }
-
 impl SelectOption {
     pub fn new(value: impl Into<String>, label: impl Into<String>) -> Self {
         Self {
@@ -30,13 +434,12 @@ impl SelectOption {
             disabled: false,
         }
     }
-
     pub fn disabled(mut self) -> Self {
         self.disabled = true;
         self
     }
 }
-
+/// Convenience assembly. Empty strings mean no selection; non-empty values must be unique.
 #[component]
 pub fn Select(
     #[prop(into)] value: Signal<String>,
@@ -44,278 +447,55 @@ pub fn Select(
     on_change: impl Fn(String) + Send + Sync + 'static,
     #[prop(into)] open: Signal<bool>,
     on_open_change: impl Fn(bool) + Send + Sync + 'static,
-    /// What the trigger shows when the value matches no option - before a
-    /// first choice, or after the options changed under one.
-    #[prop(optional, into)]
-    placeholder: String,
+    #[prop(optional, into)] placeholder: String,
     #[prop(optional, into)] id: String,
+    #[prop(optional, into)] name: String,
+    #[prop(optional, into)] form: String,
     #[prop(optional, into)] aria_label: String,
+    #[prop(optional, into)] labelled_by: String,
     #[prop(optional, into)] disabled: Signal<bool>,
     #[prop(optional, into)] read_only: Signal<bool>,
     #[prop(optional, into)] invalid: Signal<bool>,
+    #[prop(optional, into)] required: Signal<bool>,
     #[prop(optional, into)] described_by: Signal<String>,
+    #[prop(optional, into)] size: Signal<Responsive<SelectSize>>,
+    #[prop(optional, into)] variant: Signal<SelectTriggerVariant>,
+    #[prop(optional, into)] color: Signal<Option<AccentColor>>,
+    #[prop(optional, into)] radius: Signal<Option<ThemeRadius>>,
+    #[prop(optional, into)] content_variant: Signal<SelectContentVariant>,
+    #[prop(optional, into)] high_contrast: Signal<bool>,
     #[prop(optional, into)] class: String,
     #[prop(optional, into)] test_id: String,
 ) -> impl IntoView {
-    let group = crate::id::next("select");
-    let trigger_id = StoredValue::new(if id.is_empty() {
-        format!("{group}-trigger")
-    } else {
-        id
-    });
-    let list_id = StoredValue::new(format!("{group}-listbox"));
-    let group = StoredValue::new(group);
-    let locale = rustify_ui::use_locale();
-    let placeholder = StoredValue::new((!placeholder.is_empty()).then_some(placeholder));
-    let panel_test_id = StoredValue::new(test_id.clone());
-    let aria_label = (!aria_label.is_empty()).then_some(aria_label);
-    let on_change = StoredValue::new(on_change);
-    let on_open_change = StoredValue::new(on_open_change);
-    let trigger = NodeRef::<leptos::html::Button>::new();
-    let list = NodeRef::<leptos::html::Ul>::new();
-    let trigger_width = RwSignal::new(0.0_f64);
-    let panel_geometry = crate::geometry::geometry_class(move || {
-        let measured = trigger_width.get();
-        let width = if measured > 0.0 { measured } else { 160.0 };
-        format!("min-width:{width}px;max-width:calc(100vw - 2rem);")
-    });
-    let panel_class = StoredValue::new(format!("{PANEL} {panel_geometry}"));
-    #[cfg(target_arch = "wasm32")]
-    Effect::new(move || {
-        let Some(element) = trigger.get() else { return };
-        let measure = move || {
-            if let Some(element) = trigger.get_untracked() {
-                trigger_width.set(element.get_bounding_client_rect().width());
-            }
-        };
-        measure();
-        StoredValue::new_local(rustify_ui::observe_resize(element.as_ref(), measure));
-    });
-
-    let option_id = move |value: &str| format!("{}-option-{value}", group.get_value());
-    // Which option the keyboard is on while the list is open. It starts at the
-    // chosen one, so the arrows continue from what the user picked last rather
-    // than from the top.
-    let active = RwSignal::new(String::new());
-
-    let shown = Memo::new(move |_| {
-        let held = value.get();
-        options
-            .get()
-            .into_iter()
-            .find(|option| option.value == held)
-            .map(|option| option.label)
-    });
-
-    let set_open = move |open: bool| {
-        if open {
-            active.set(value.get_untracked());
-        }
-        on_open_change.with_value(|change| change(open));
-    };
-
-    let choose = move |asked: String| {
-        if read_only.get_untracked() {
-            set_open(false);
-            return;
-        }
-        on_change.with_value(|change| change(asked));
-        set_open(false);
-        // The keyboard goes back where it came from, which is what makes a
-        // second choice possible without the mouse.
-        if let Some(button) = trigger.get_untracked() {
-            let _ = (*button).focus();
-        }
-    };
-
-    // The keyboard moves into the list when it opens: the list carries the
-    // focus and `aria-activedescendant` says which option is current, which is
-    // the arrangement a combobox is read with.
-    #[cfg(target_arch = "wasm32")]
-    Effect::new(move || {
-        if !open.get() {
-            return;
-        }
-        if let Some(list) = list.get() {
-            let _ = (*list).focus();
-        }
-    });
-
-    // Move only the list's scrollport, keeping the editor and anchor in place.
-    #[cfg(target_arch = "wasm32")]
-    Effect::new(move || {
-        let active = active.get();
-        if !open.get() {
-            return;
-        }
-        let Some(list) = list.get() else { return };
-        let Some(option) = list
-            .owner_document()
-            .and_then(|document| document.get_element_by_id(&option_id(&active)))
-        else {
-            return;
-        };
-        let row = option.get_bounding_client_rect();
-        let top = row.top() - list.get_bounding_client_rect().top() - f64::from(list.client_top());
-        let bottom = top + row.height();
-        let height = f64::from(list.client_height());
-        if top < 0.0 {
-            list.scroll_by_with_x_and_y(0.0, top);
-        } else if bottom > height {
-            list.scroll_by_with_x_and_y(0.0, bottom - height);
-        }
-    });
-
-    let on_trigger_key = move |ev: KeyboardEvent| {
-        if disabled.get_untracked() {
-            return;
-        }
-        if matches!(ev.key().as_str(), "ArrowDown" | "ArrowUp") {
-            ev.prevent_default();
-            set_open(true);
-        }
-    };
-
-    let on_list_key = move |ev: KeyboardEvent| {
-        let options = options.get_untracked();
-        let here = options
-            .iter()
-            .position(|option| option.value == active.get_untracked());
-        let reachable = |index: usize| !options[index].disabled;
-        let moved = match ev.key().as_str() {
-            "ArrowDown" => crate::roving::step(options.len(), reachable, here, 1),
-            "ArrowUp" => crate::roving::step(options.len(), reachable, here, -1),
-            "Home" => crate::roving::edge(options.len(), reachable, false),
-            "End" => crate::roving::edge(options.len(), reachable, true),
-            "Enter" | " " => {
-                ev.prevent_default();
-                if let Some(option) = here.map(|here| &options[here]) {
-                    if !option.disabled {
-                        choose(option.value.clone());
-                    }
-                }
-                return;
-            }
-            _ => return,
-        };
-        let Some(moved) = moved else {
-            return;
-        };
-        ev.prevent_default();
-        active.set(options[moved].value.clone());
-    };
-
-    view! {
-        <button
-            node_ref=trigger
-            type="button"
-            id=move || trigger_id.get_value()
-            class=crate::macros::reactive_merge(TRIGGER, &class)
-            data-name="Select"
-            data-testid=test_id
-            role="combobox"
-            aria-label=aria_label
-            aria-haspopup="listbox"
-            aria-controls=move || list_id.get_value()
-            aria-expanded=move || open.get().to_string()
-            aria-invalid=move || invalid.get().then_some("true")
-            aria-readonly=move || read_only.get().then_some("true")
-            aria-describedby=move || {
-                let described_by = described_by.get();
-                (!described_by.is_empty()).then_some(described_by)
-            }
-            disabled=move || disabled.get()
-            prop:disabled=move || disabled.get()
-            on:click=move |_| {
-                if !disabled.get_untracked() {
-                    set_open(!open.get_untracked());
-                }
-            }
-            on:keydown=on_trigger_key
-        >
-            <span
-                class=move || {
-                    if shown.get().is_some() {
-                        "truncate"
-                    } else {
-                        "truncate text-muted-foreground"
-                    }
-                }
-                data-name="SelectValue"
-            >
-                {move || shown.get().unwrap_or_else(|| placeholder.get_value().unwrap_or_else(|| match locale.get() {
-                    rustify_ui::Locale::English => "Choose".into(),
-                    rustify_ui::Locale::Chinese => "请选择".into(),
-                }))}
-            </span>
-            <crate::icon::Icon glyph=crate::icon::Glyph::ChevronDown class="text-muted-foreground" />
-        </button>
-        <Show when=move || open.get() fallback=|| ()>
-            <Layer
-                fit=true
-                anchor=Signal::derive(move || {
-                    #[cfg(target_arch = "wasm32")]
-                    if let Some(element) = trigger.get() {
-                        return Anchor::element(&element.into());
-                    }
-                    Anchor::Centred
+    let entries = Signal::derive(move || {
+        options.with(|options| {
+            options
+                .iter()
+                .map(|option| SelectEntry {
+                    value: option.value.clone(),
+                    text_value: option.label.clone(),
+                    disabled: option.disabled,
                 })
-                on_close=move || set_open(false)
-                class="rui-select-layer"
-            >
-                <ul
-                    node_ref=list
-                    id=move || list_id.get_value()
-                    class=move || panel_class.get_value()
-                    data-name="SelectList"
-                    data-testid=move || format!("{}-list", panel_test_id.get_value())
-                    role="listbox"
-                    tabindex="-1"
-                    aria-labelledby=move || trigger_id.get_value()
-                    aria-activedescendant=move || option_id(&active.get())
-                    on:keydown=on_list_key
-                >
-                    <For each=move || options.get() key=|option| option.value.clone() let:option>
-                        {
-                            let SelectOption { value: option_value, label, disabled: option_disabled } = option;
-                            let mine = option_value.clone();
-                            let chosen = Memo::new(move |_| value.get() == mine);
-                            let asked = option_value.clone();
-                            view! {
-                                <li
-                                    id=option_id(&option_value)
-                                    class=OPTION
-                                    class=("bg-muted", {
-                                        let mine = option_value.clone();
-                                        move || active.get() == mine
-                                    })
-                                    data-name="SelectOption"
-                                    data-active={let mine = option_value.clone(); move || (active.get() == mine).to_string()}
-                                    data-testid=format!("option-{option_value}")
-                                    role="option"
-                                    aria-selected=move || chosen.get().to_string()
-                                    aria-disabled=option_disabled.then_some("true")
-                                    on:click=move |_| {
-                                        if !option_disabled {
-                                            choose(asked.clone());
-                                        }
-                                    }
-                                >
-                                    <span class="flex-1">{label}</span>
-                                    <Show when=move || chosen.get() fallback=|| ()>
-                                        <crate::icon::Icon
-                                            glyph=crate::icon::Glyph::Check
-                                            class="text-muted-foreground"
-                                        />
-                                    </Show>
-                                </li>
-                            }
-                        }
-                    </For>
-                </ul>
-            </Layer>
-        </Show>
-    }
+                .collect::<Vec<_>>()
+        })
+    });
+    let value = Signal::derive(move || {
+        let value = value.get();
+        (!value.is_empty()).then_some(value)
+    });
+    let change = Callback::new(move |value: Option<String>| on_change(value.unwrap_or_default()));
+    let panel_id = format!("{test_id}-list");
+    let locale = rustify_ui::use_locale();
+    view! { <Root value=value on_change=change open=open on_open_change=on_open_change entries=entries id=id name=name form=form
+        placeholder=placeholder aria_label=aria_label labelled_by=labelled_by described_by=described_by disabled=disabled read_only=read_only invalid=invalid required=required size=size>
+        <Trigger variant=variant color=color radius=radius class=format!("w-full {class}") test_id=test_id />
+        <Content variant=content_variant color=color high_contrast=high_contrast test_id=panel_id>
+            <ScrollUpButton /><Viewport>
+                <Show when=move || entries.with(Vec::is_empty)><div class="rustify-select-label" data-rustify-part="select-empty">{move || match locale.get() { rustify_ui::Locale::English => "No options", rustify_ui::Locale::Chinese => "暂无选项" }}</div></Show>
+                {move || entries.with(|entries| entries.iter().map(|entry| view! { <Item value=entry.value.clone() test_id=format!("option-{}", entry.value) /> }).collect_view())}
+            </Viewport><ScrollDownButton />
+        </Content>
+    </Root> }
 }
 
 #[cfg(all(test, feature = "ssr", not(target_arch = "wasm32")))]

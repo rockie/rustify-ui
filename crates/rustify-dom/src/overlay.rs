@@ -7,6 +7,141 @@
 //! of its own scope inert rather than merely painting over it, so a control
 //! underneath cannot be clicked, focused or read out while it is open.
 
+/// A synchronous semantic event whose clones share one cancellation decision.
+#[derive(Clone, Debug)]
+pub struct Cancelable<T> {
+    value: T,
+    prevented: std::sync::Arc<std::sync::atomic::AtomicBool>,
+}
+
+impl<T> Cancelable<T> {
+    /// Starts a fresh callback chain with its default action enabled.
+    pub fn new(value: T) -> Self {
+        Self {
+            value,
+            prevented: Default::default(),
+        }
+    }
+
+    /// The semantic payload, independent of any browser event type.
+    pub fn value(&self) -> &T {
+        &self.value
+    }
+
+    /// Cancels the default action for every clone in this callback chain.
+    pub fn prevent_default(&self) {
+        self.prevented
+            .store(true, std::sync::atomic::Ordering::Relaxed);
+    }
+
+    /// Whether a callback in this chain canceled the default action.
+    pub fn default_prevented(&self) -> bool {
+        self.prevented.load(std::sync::atomic::Ordering::Relaxed)
+    }
+}
+
+/// Why the top layer was asked to dismiss.
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum LayerDismiss {
+    Escape,
+    PointerOutside,
+}
+/// The resolved vertical side of an anchored layer.
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+pub enum Side {
+    Top,
+    #[default]
+    Bottom,
+}
+impl Side {
+    pub const fn as_str(self) -> &'static str {
+        match self {
+            Self::Top => "top",
+            Self::Bottom => "bottom",
+        }
+    }
+}
+/// The resolved logical horizontal alignment of an anchored layer.
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+pub enum Align {
+    #[default]
+    Start,
+    Center,
+    End,
+}
+impl Align {
+    pub const fn as_str(self) -> &'static str {
+        match self {
+            Self::Start => "start",
+            Self::Center => "center",
+            Self::End => "end",
+        }
+    }
+}
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+pub struct LayerPlacement {
+    pub side: Side,
+    pub align: Align,
+}
+
+#[cfg_attr(not(target_arch = "wasm32"), allow(dead_code))]
+fn dismiss(
+    hook: Option<leptos::prelude::Callback<Cancelable<LayerDismiss>>>,
+    reason: LayerDismiss,
+    close: impl FnOnce(),
+) {
+    use leptos::prelude::Callable;
+    let event = Cancelable::new(reason);
+    if let Some(hook) = hook {
+        hook.try_run(event.clone());
+    }
+    if !event.default_prevented() {
+        close();
+    }
+}
+
+#[cfg_attr(not(target_arch = "wasm32"), allow(dead_code))]
+fn place(
+    anchor: Option<LocalRect>,
+    size: (f64, f64),
+    viewport: (f64, f64),
+    direction: crate::Direction,
+    fit: bool,
+) -> ((f64, f64), LayerPlacement) {
+    let Some(anchor) = anchor else {
+        return (
+            LocalRect::centred(viewport, size),
+            LayerPlacement {
+                side: Side::Bottom,
+                align: Align::Center,
+            },
+        );
+    };
+    let rtl = direction == crate::Direction::RightToLeft;
+    let (start, end) = if rtl {
+        (anchor.x + anchor.width - size.0, anchor.x)
+    } else {
+        (anchor.x, anchor.x + anchor.width - size.0)
+    };
+    let inside = |x: f64| x >= 0.0 && x + size.0 <= viewport.0;
+    let (x, align) = if !fit || inside(start) {
+        (start, Align::Start)
+    } else if inside(end) {
+        (end, Align::End)
+    } else {
+        (start.min(viewport.0 - size.0).max(0.0), Align::Start)
+    };
+    let under = anchor.y + anchor.height;
+    let (y, side) = if !fit || under + size.1 <= viewport.1 {
+        (under, Side::Bottom)
+    } else if anchor.y - size.1 >= 0.0 {
+        (anchor.y - size.1, Side::Top)
+    } else {
+        ((viewport.1 - size.1).max(0.0), Side::Bottom)
+    };
+    ((x, y), LayerPlacement { side, align })
+}
+
 /// A rectangle in whichever space it was measured in: a GPU region's local CSS
 /// pixels for a region anchor, the viewport for a placed layer.
 #[derive(Clone, Copy, Debug, Default, PartialEq)]
@@ -82,6 +217,81 @@ impl LocalRect {
 #[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord)]
 pub struct LayerId(u64);
 
+/// Scope-owned portal content, retaining its creating theme and direction.
+///
+/// On the host, `client_only` emits a deterministic placeholder. Other host
+/// uses record a static render issue: floating content must be attached in
+/// the browser. A browser without a mount scope retains readable inline content.
+#[leptos::component]
+pub fn ScopePortal(
+    #[prop(optional)] client_only: bool,
+    children: leptos::children::ChildrenFn,
+) -> impl leptos::IntoView {
+    use leptos::prelude::*;
+    #[cfg(not(target_arch = "wasm32"))]
+    {
+        #[cfg(feature = "ssr")]
+        if !client_only {
+            crate::StaticRenderIssues::record(
+                "portal content requires client_only during static rendering",
+            );
+        }
+        let _ = (client_only, children);
+        view! { <span hidden data-rustify-part="portal-placeholder"></span> }
+    }
+    #[cfg(target_arch = "wasm32")]
+    {
+        use leptos::wasm_bindgen::JsCast;
+        let _ = client_only;
+        let stack = use_overlay();
+        let theme = crate::theme::use_resolved_theme();
+        let locale = crate::use_locale();
+        let direction = crate::use_direction();
+        let node = NodeRef::<leptos::html::Div>::new();
+        let ready = RwSignal::new(false);
+        Effect::new(move |_| ready.set(true));
+        let release = StoredValue::new(None::<crate::AbortRelease>);
+        Effect::new(move |_| {
+            let Some(node) = node.get() else { return };
+            let element: leptos::web_sys::HtmlElement = node.into();
+            if let Some(theme) = theme {
+                crate::theme::provider::write_snapshot(&element, &theme.get(), true);
+            }
+            let _ = element.set_attribute("lang", locale.get().tag());
+            let _ = element.set_attribute("dir", direction.get().attribute());
+            if release.with_value(|held| held.is_none()) {
+                if let Some(wrapper) = element.parent_element() {
+                    // Bind the browser's own remove method. Abort must not
+                    // invoke a closure in an instance which has trapped.
+                    if let Ok(remove) = js_sys::Reflect::get(&wrapper, &"remove".into()) {
+                        if let Some(remove) = remove.dyn_ref::<js_sys::Function>() {
+                            release
+                                .set_value(Some(crate::release_on_abort(remove.bind0(&wrapper))));
+                        }
+                    }
+                }
+            }
+        });
+        view! {
+            <span hidden data-rustify-part="portal-placeholder"></span>
+            {move || {
+                if !ready.get() { return ().into_any(); }
+                match stack.as_ref() {
+                    Some(stack) => {
+                        let children = children.clone();
+                        view! {
+                            <leptos::portal::Portal mount=stack.overlay_root()>
+                                <div node_ref=node data-rustify-part="portal">{children()}</div>
+                            </leptos::portal::Portal>
+                        }.into_any()
+                    }
+                    None => view! { <div data-rustify-part="portal" data-rustify-issue="missing-scope">{children()}</div> }.into_any(),
+                }
+            }}
+        }
+    }
+}
+
 /// Where the keyboard is, among a modal layer's tab stops.
 #[cfg_attr(not(target_arch = "wasm32"), allow(dead_code))]
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -139,6 +349,21 @@ mod host {
         #[prop(into)] anchor: Signal<Anchor>,
         #[prop(optional)] fit: bool,
         on_close: impl Fn() + Send + Sync + 'static,
+        #[prop(optional_no_strip, into)] on_escape_key_down: Option<
+            Callback<super::Cancelable<super::LayerDismiss>>,
+        >,
+        /// Enables outside dismissal for this layer. Omission preserves legacy
+        /// outside-pointer behavior; cancellation suppresses the close request.
+        #[prop(optional_no_strip, into)]
+        on_pointer_down_outside: Option<Callback<super::Cancelable<super::LayerDismiss>>>,
+        #[prop(optional_no_strip, into)] on_open_auto_focus: Option<
+            Callback<super::Cancelable<()>>,
+        >,
+        #[prop(optional_no_strip, into)] on_close_auto_focus: Option<
+            Callback<super::Cancelable<()>>,
+        >,
+        #[prop(optional_no_strip, into)] direction: Option<Signal<crate::Direction>>,
+        #[prop(optional_no_strip, into)] on_placement: Option<Callback<super::LayerPlacement>>,
         #[prop(optional, into)] labelled_by: String,
         #[prop(optional, into)] described_by: String,
         #[prop(optional, into)] class: String,
@@ -154,6 +379,12 @@ mod host {
             anchor,
             fit,
             on_close,
+            on_escape_key_down,
+            on_pointer_down_outside,
+            on_open_auto_focus,
+            on_close_auto_focus,
+            direction,
+            on_placement,
             labelled_by,
             described_by,
             class,
@@ -165,7 +396,10 @@ mod host {
 
 #[cfg(target_arch = "wasm32")]
 mod dom {
-    use super::{wrap_tab, LayerId, LocalRect, TabFocus};
+    use super::{
+        dismiss, place, wrap_tab, Cancelable, LayerDismiss, LayerId, LayerPlacement, LocalRect,
+        TabFocus,
+    };
     use crate::listeners::{listen, ListenOptions, Listener};
     use leptos::html::Div;
     use leptos::portal::Portal;
@@ -235,6 +469,10 @@ mod dom {
         modal: bool,
         element: SendWrapper<Element>,
         close: Arc<dyn Fn() + Send + Sync>,
+        dismiss: Arc<dyn Fn(LayerDismiss) + Send + Sync>,
+        escape: Option<Callback<Cancelable<LayerDismiss>>>,
+        outside: Option<Callback<Cancelable<LayerDismiss>>>,
+        anchor: Signal<Anchor>,
     }
 
     struct Roots {
@@ -249,6 +487,41 @@ mod dom {
         _escape: Listener,
         _scroll: Listener,
         _resize: Listener,
+        _pointer: Listener,
+        _mutation: Option<SendWrapper<MutationWatch>>,
+    }
+    struct MutationWatch {
+        observer: web_sys::MutationObserver,
+        _callback: leptos::wasm_bindgen::closure::Closure<
+            dyn FnMut(js_sys::Array, web_sys::MutationObserver),
+        >,
+        _release: Option<crate::AbortRelease>,
+    }
+    impl Drop for MutationWatch {
+        fn drop(&mut self) {
+            self.observer.disconnect();
+        }
+    }
+    fn observe_tree(element: &Element, moved: RwSignal<u32>) -> Option<MutationWatch> {
+        use leptos::wasm_bindgen::closure::Closure;
+        let callback =
+            Closure::<dyn FnMut(js_sys::Array, web_sys::MutationObserver)>::new(move |_, _| {
+                moved.try_update(|value| *value += 1);
+            });
+        let observer = web_sys::MutationObserver::new(callback.as_ref().unchecked_ref()).ok()?;
+        let options = web_sys::MutationObserverInit::new();
+        options.set_child_list(true);
+        options.set_subtree(true);
+        observer.observe_with_options(element, &options).ok()?;
+        let release = js_sys::Reflect::get(&observer, &"disconnect".into())
+            .ok()
+            .and_then(|method| method.dyn_into::<js_sys::Function>().ok())
+            .map(|disconnect| crate::release_on_abort(disconnect.bind0(&observer)));
+        Some(MutationWatch {
+            observer,
+            _callback: callback,
+            _release: release,
+        })
     }
 
     /// A native editing session. It outranks the layer stack: a key pressed
@@ -355,6 +628,10 @@ mod dom {
             modal: bool,
             element: Element,
             close: Arc<dyn Fn() + Send + Sync>,
+            dismiss: Arc<dyn Fn(LayerDismiss) + Send + Sync>,
+            escape: Option<Callback<Cancelable<LayerDismiss>>>,
+            outside: Option<Callback<Cancelable<LayerDismiss>>>,
+            anchor: Signal<Anchor>,
         ) -> LayerId {
             let id = {
                 let mut inner = self.lock();
@@ -365,6 +642,10 @@ mod dom {
                     modal,
                     element: SendWrapper::new(element),
                     close,
+                    dismiss,
+                    escape,
+                    outside,
+                    anchor,
                 });
                 id
             };
@@ -377,7 +658,7 @@ mod dom {
             let empty = {
                 let mut inner = self.lock();
                 inner.layers.retain(|layer| layer.id != id);
-                inner.layers.is_empty()
+                inner.layers.is_empty() && inner.edit.is_none()
             };
             self.refresh_inert();
             if empty {
@@ -423,9 +704,16 @@ mod dom {
                     if key != "Escape" && key != "Enter" {
                         return;
                     }
-                    match route(&weak, &key) {
+                    match if event.is_composing() {
+                        Routed::Native
+                    } else {
+                        route(&weak, &key)
+                    } {
                         // Nothing above the application wanted it.
                         Routed::Ignored => {}
+                        // Reserve the key for the input method without
+                        // cancelling the browser's composition action.
+                        Routed::Native => event.stop_propagation(),
                         Routed::Taken => {
                             event.prevent_default();
                             event.stop_propagation();
@@ -448,10 +736,66 @@ mod dom {
             let resize = listen(&window(), "resize", ListenOptions::default(), move |_| {
                 moved.update(|n| *n += 1)
             });
+            let weak = Arc::downgrade(&self.inner);
+            let pointer = listen(
+                &document(),
+                "pointerdown",
+                ListenOptions {
+                    capture: true,
+                    passive: false,
+                },
+                move |event| {
+                    if event.default_prevented() {
+                        return;
+                    }
+                    let Some(inner) = weak.upgrade() else {
+                        return;
+                    };
+                    let top = {
+                        let inner = inner
+                            .lock()
+                            .expect("overlay stack is never held across a panic");
+                        inner.layers.last().map(|layer| {
+                            (
+                                layer.element.clone(),
+                                layer.anchor,
+                                layer.outside,
+                                layer.dismiss.clone(),
+                            )
+                        })
+                    };
+                    let Some((element, anchor, Some(hook), close)) = top else {
+                        return;
+                    };
+                    let Some(target) = event
+                        .target()
+                        .and_then(|target| target.dyn_into::<Node>().ok())
+                    else {
+                        return;
+                    };
+                    if element.contains(Some(&target)) {
+                        return;
+                    }
+                    let trigger = anchor.try_get_untracked().and_then(|anchor| match anchor {
+                        Anchor::Element(element) => Some((*element).clone()),
+                        Anchor::Region { canvas, .. } => Some((*canvas).clone()),
+                        Anchor::Centred => None,
+                    });
+                    if trigger.is_some_and(|trigger| trigger.contains(Some(&target))) {
+                        return;
+                    }
+                    dismiss(Some(hook), LayerDismiss::PointerOutside, || {
+                        close(LayerDismiss::PointerOutside)
+                    });
+                },
+            );
+            let mutation = observe_tree(&inner.roots.container, moved).map(SendWrapper::new);
             inner.watchers = Some(Watchers {
                 _escape: escape,
                 _scroll: scroll,
                 _resize: resize,
+                _pointer: pointer,
+                _mutation: mutation,
             });
         }
 
@@ -474,6 +818,7 @@ mod dom {
 
     enum Routed {
         Taken,
+        Native,
         Ignored,
     }
 
@@ -492,14 +837,17 @@ mod dom {
             (
                 edit.map(|edit| edit.composing.clone()),
                 edit.map(|edit| edit.cancel.clone()),
-                inner.layers.last().map(|layer| layer.close.clone()),
+                inner
+                    .layers
+                    .last()
+                    .map(|layer| (layer.escape, layer.dismiss.clone())),
             )
         };
         if let Some(composing) = composing {
             if composing() {
                 // The key is part of what is being typed. It commits nothing
                 // and closes nothing.
-                return Routed::Taken;
+                return Routed::Native;
             }
             if key == "Escape" {
                 if let Some(cancel) = cancel {
@@ -512,8 +860,8 @@ mod dom {
             return Routed::Ignored;
         }
         if key == "Escape" {
-            if let Some(close) = close_top {
-                close();
+            if let Some((hook, close)) = close_top {
+                dismiss(hook, LayerDismiss::Escape, || close(LayerDismiss::Escape));
                 return Routed::Taken;
             }
         }
@@ -692,6 +1040,31 @@ mod dom {
         }
     }
 
+    #[derive(Clone, Copy)]
+    struct LayerResources {
+        registered: RwSignal<Option<LayerId>>,
+        size: StoredValue<Option<SendWrapper<crate::ResizeObservation>>>,
+        anchor: StoredValue<Option<SendWrapper<crate::ResizeObservation>>>,
+        tab: StoredValue<Option<Listener>>,
+    }
+    impl LayerResources {
+        fn release(self, stack: &OverlayStack) {
+            self.size.try_update_value(|held| {
+                held.take();
+            });
+            self.anchor.try_update_value(|held| {
+                held.take();
+            });
+            self.tab.try_update_value(|held| {
+                held.take();
+            });
+            if let Some(id) = self.registered.try_get_untracked().flatten() {
+                let _ = self.registered.try_set(None);
+                stack.remove(id);
+            }
+        }
+    }
+
     /// One layer of the scope's stack.
     ///
     /// The application owns whether the layer exists; `on_close` is how the
@@ -709,6 +1082,21 @@ mod dom {
         #[prop(optional)]
         fit: bool,
         on_close: impl Fn() + Send + Sync + 'static,
+        #[prop(optional_no_strip, into)] on_escape_key_down: Option<
+            Callback<super::Cancelable<super::LayerDismiss>>,
+        >,
+        /// Enables outside dismissal for this layer. Omission preserves legacy
+        /// outside-pointer behavior; cancellation suppresses the close request.
+        #[prop(optional_no_strip, into)]
+        on_pointer_down_outside: Option<Callback<super::Cancelable<super::LayerDismiss>>>,
+        #[prop(optional_no_strip, into)] on_open_auto_focus: Option<
+            Callback<super::Cancelable<()>>,
+        >,
+        #[prop(optional_no_strip, into)] on_close_auto_focus: Option<
+            Callback<super::Cancelable<()>>,
+        >,
+        #[prop(optional_no_strip, into)] direction: Option<Signal<crate::Direction>>,
+        #[prop(optional_no_strip, into)] on_placement: Option<Callback<super::LayerPlacement>>,
         /// The id of the element that names this layer, for the layers that
         /// carry a role a reader announces. A modal dialog needs one; a
         /// presentation wrapper around a menu does not, because the menu
@@ -723,6 +1111,8 @@ mod dom {
         children: ChildrenFn,
     ) -> impl IntoView {
         let theme = crate::theme::use_resolved_theme();
+        let directional = direction.is_some() || on_placement.is_some();
+        let direction = direction.unwrap_or_else(crate::use_direction);
         use_overlay().map(|stack| {
             let root = stack.overlay_root();
             let class = format!("rustify-layer {class}");
@@ -742,60 +1132,63 @@ mod dom {
             let on_close = Arc::new(on_close);
             let left = RwSignal::new(0.0f64);
             let top = RwSignal::new(0.0f64);
-            let registered = RwSignal::new(None::<LayerId>);
-            let size_watch = StoredValue::new(None::<SendWrapper<crate::ResizeObservation>>);
-            let anchor_watch = StoredValue::new(None::<SendWrapper<crate::ResizeObservation>>);
+            let placement = RwSignal::new(LayerPlacement::default());
+            let placed = StoredValue::new(false);
+            let alive = RwSignal::new(true);
+            let reported_dead = StoredValue::new(false);
+            let resources = LayerResources { registered: RwSignal::new(None), size: StoredValue::new(None), anchor: StoredValue::new(None), tab: StoredValue::new(None) };
             let returns_to: StoredValue<Option<SendWrapper<Element>>> = StoredValue::new(None);
-            // Dropped with the layer, which takes the listener with it.
-            let tab_loop = StoredValue::new(None::<Listener>);
+            let restore_focus = RwSignal::new(true);
 
             Effect::new({
+                let stack = stack.clone();
                 let on_close = on_close.clone();
                 move || {
-                    moved.get();
+                    moved.track();
                     let anchor = anchor.get();
-                    let Some(element) = node.get() else {
-                        return;
-                    };
+                    let direction = direction.get();
+                    let Some(element) = node.get() else { return; };
                     let Some(rect) = anchor.viewport_rect() else {
-                        // Whatever it was anchored to is gone.
-                        on_close();
+                        if alive.get_untracked() { alive.set(false); }
+                        resources.release(&stack);
+                        if !reported_dead.get_value() {
+                            reported_dead.set_value(true);
+                            on_close();
+                        }
                         return;
                     };
-                    let (x, y) = match rect {
-                        Some(rect) if fit => {
-                            // Fractional: a layer placed flush with the right
-                            // edge a rounding short of its width would wrap.
-                            let measured = element.get_bounding_client_rect();
-                            rect.below_within((measured.width(), measured.height()), visible_area())
-                        }
-                        Some(rect) => rect.below(),
-                        None => LocalRect::centred(
-                            viewport(),
-                            (
-                                element.offset_width() as f64,
-                                element.offset_height() as f64,
-                            ),
-                        ),
+                    reported_dead.set_value(false);
+                    if !alive.get_untracked() { alive.set(true); }
+                    let measured = element.get_bounding_client_rect();
+                    let size = (measured.width(), measured.height());
+                    let ((x, y), resolved) = if directional {
+                        place(rect, size, if fit { visible_area() } else { viewport() }, direction, fit)
+                    } else {
+                        let coordinates = match rect {
+                            Some(rect) if fit => rect.below_within(size, visible_area()),
+                            Some(rect) => rect.below(),
+                            None => LocalRect::centred(viewport(), size),
+                        };
+                        (coordinates, LayerPlacement::default())
                     };
-                    left.set(x);
-                    top.set(y);
+                    left.set(x); top.set(y);
+                    let changed = placement.get_untracked() != resolved || !placed.get_value();
+                    placement.set(resolved);
+                    placed.set_value(true);
+                    if changed { if let Some(callback) = on_placement { callback.try_run(resolved); } }
                 }
             });
 
-            // An anchor that grows or shrinks moves where the layer belongs as
-            // surely as a scroll does, and neither the window nor the layer
-            // would say so. Observed through the runtime host like the layer's
-            // own size, so a failed instance stops hearing about it.
             Effect::new(move || {
-                let observed = match anchor.get() {
+                let anchor = anchor.get();
+                if !alive.get() { resources.anchor.set_value(None); return; }
+                let observed = match anchor {
                     Anchor::Element(element) => Some((*element).clone()),
                     Anchor::Region { canvas, .. } => Some((*canvas).clone()),
                     Anchor::Centred => None,
                 };
-                anchor_watch.set_value(observed.and_then(|element| {
-                    crate::observe_resize(&element, move || moved.update(|n| *n += 1))
-                        .map(SendWrapper::new)
+                resources.anchor.set_value(observed.and_then(|element| {
+                    crate::observe_resize(&element, move || { moved.try_update(|n| *n += 1); }).map(SendWrapper::new)
                 }));
             });
 
@@ -803,63 +1196,41 @@ mod dom {
                 let stack = stack.clone();
                 let on_close = on_close.clone();
                 move || {
-                    let Some(element) = node.get() else {
-                        return;
-                    };
-                    if registered.get_untracked().is_some() {
-                        return;
-                    }
+                    if !alive.get() { return; }
+                    let Some(element) = node.get() else { return; };
+                    if resources.registered.get_untracked().is_some() { return; }
                     let element: Element = element.into();
-                    // Dialog steps and menu contents can change after opening.
-                    // Reposition on the layer's own size, as well as its anchor.
-                    size_watch.set_value(
-                        crate::observe_resize(&element, move || moved.update(|n| *n += 1))
-                            .map(SendWrapper::new),
-                    );
-                    returns_to.set_value(
-                        document()
-                            .active_element()
-                            .filter(|active| active.is_connected())
-                            .map(SendWrapper::new),
-                    );
-                    let on_close = on_close.clone();
-                    let close = Arc::new(move || on_close()) as Arc<dyn Fn() + Send + Sync>;
-                    let id = stack.push(modal, element.clone(), close);
-                    registered.set(Some(id));
+                    resources.size.set_value(crate::observe_resize(&element, move || { moved.try_update(|n| *n += 1); }).map(SendWrapper::new));
+                    let trigger = match anchor.get_untracked() { Anchor::Element(element) => Some((*element).clone()), _ => None };
+                    returns_to.set_value(trigger.filter(|element| element.matches(FOCUSABLE).unwrap_or(false)).or_else(|| document().active_element()).filter(|element| element.is_connected()).map(SendWrapper::new));
+                    let close = on_close.clone() as Arc<dyn Fn() + Send + Sync>;
+                    let ask = on_close.clone();
+                    let dismiss = Arc::new(move |reason| { restore_focus.set(reason != LayerDismiss::PointerOutside); ask(); });
+                    let id = stack.push(modal, element.clone(), close, dismiss, on_escape_key_down, on_pointer_down_outside, anchor);
+                    resources.registered.set(Some(id));
+                    let event = Cancelable::new(());
+                    if let Some(callback) = on_open_auto_focus { callback.try_run(event.clone()); }
+                    if resources.registered.try_get_untracked().flatten() != Some(id) { return; }
+                    if !event.default_prevented() && modal { focus_first(&element); }
                     if modal {
-                        focus_first(&element);
-                        // Inert keeps the keyboard off the scope behind the
-                        // layer, but Tab past the last stop would still leave
-                        // for whatever follows the layer on the page. Bubbling,
-                        // so a control that uses Tab itself goes first.
                         let root = element.clone();
-                        tab_loop.set_value(Some(listen(
-                            &element,
-                            "keydown",
-                            ListenOptions::default(),
-                            move |event| {
-                                if let Some(event) = event.dyn_ref::<KeyboardEvent>() {
-                                    keep_tab_inside(&root, event);
-                                }
-                            },
-                        )));
+                        resources.tab.set_value(Some(listen(&element, "keydown", ListenOptions::default(), move |event| {
+                            if let Some(event) = event.dyn_ref::<KeyboardEvent>() { keep_tab_inside(&root, event); }
+                        })));
                     }
                 }
             });
 
             on_cleanup(move || {
-                size_watch.set_value(None);
-                anchor_watch.set_value(None);
-                if let Some(id) = registered.get_untracked() {
-                    stack.remove(id);
-                }
-                // Only a layer that still holds the keyboard hands it back: if
-                // the user has already moved on, taking focus would be the
-                // theft this exists to prevent.
-                if !holds_focus(node.get_untracked().map(Into::into).as_ref()) {
-                    return;
-                }
-                match returns_to.get_value() {
+                resources.release(&stack);
+                let event = Cancelable::new(());
+                if let Some(callback) = on_close_auto_focus { callback.try_run(event.clone()); }
+                if event.default_prevented() || !restore_focus.try_get_untracked().unwrap_or(false) { return; }
+                let trigger = match anchor.try_get_untracked() { Some(Anchor::Element(element)) => Some((*element).clone()), _ => None };
+                let owned = holds_focus(node.try_get_untracked().flatten().map(Into::into).as_ref())
+                    || holds_focus(trigger.as_ref());
+                if !owned { return; }
+                match returns_to.try_get_value().flatten() {
                     Some(element) if element.is_connected() => focus(&element),
                     _ => focus(&stack.fallback()),
                 }
@@ -867,17 +1238,13 @@ mod dom {
 
             view! {
                 <Portal mount=root>
-                    <div
-                        node_ref=node
-                        class=class.clone()
-                        data-testid=test_id.clone()
+                    <div node_ref=node class=class.clone() data-testid=test_id.clone()
+                        hidden=move || !alive.get()
                         role=if modal { "dialog" } else { "presentation" }
-                        aria-modal=modal.then_some("true")
-                        aria-labelledby=labelled_by.clone()
-                        aria-describedby=described_by.clone()
-                        style:left=move || format!("{}px", left.get())
-                        style:top=move || format!("{}px", top.get())
-                    >
+                        aria-modal=modal.then_some("true") aria-labelledby=labelled_by.clone() aria-describedby=described_by.clone()
+                        data-side=move || placement.get().side.as_str() data-align=move || placement.get().align.as_str()
+                        dir=move || direction.get().attribute()
+                        style:left=move || format!("{}px", left.get()) style:top=move || format!("{}px", top.get())>
                         {children()}
                     </div>
                 </Portal>
@@ -889,6 +1256,112 @@ mod dom {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn cancellation_is_shared_only_with_clones_of_the_same_event() {
+        let event = Cancelable::new("choice");
+        let callback_event = event.clone();
+        callback_event.prevent_default();
+        assert!(event.default_prevented());
+        assert_eq!(event.value(), &"choice");
+        assert!(!Cancelable::new("choice").default_prevented());
+    }
+
+    #[cfg(feature = "ssr")]
+    #[test]
+    fn portal_static_placeholder_requires_an_explicit_client_only_contract() {
+        use leptos::prelude::*;
+        Owner::new().with(|| {
+            let issues = crate::StaticRenderIssues::default();
+            crate::provide_static_render_issues(issues.clone());
+            let html =
+                view! { <ScopePortal client_only=true><p>"Browser content"</p></ScopePortal> }
+                    .to_html();
+            assert!(html.contains("portal-placeholder"));
+            assert!(!html.contains("Browser content"));
+            assert!(issues.messages().is_empty());
+            let _ =
+                view! { <ScopePortal><p>"Unsupported initial content"</p></ScopePortal> }.to_html();
+            assert_eq!(issues.messages().len(), 1);
+        });
+    }
+
+    #[test]
+    fn placement_reports_direction_and_the_edges_chosen_after_collision() {
+        let anchor = LocalRect::new(100.0, 100.0, 80.0, 30.0);
+        assert_eq!(
+            place(
+                Some(anchor),
+                (160.0, 120.0),
+                (1000.0, 800.0),
+                crate::Direction::RightToLeft,
+                true
+            ),
+            (
+                (20.0, 130.0),
+                LayerPlacement {
+                    side: Side::Bottom,
+                    align: Align::Start
+                }
+            )
+        );
+        let anchor = LocalRect::new(900.0, 700.0, 80.0, 30.0);
+        assert_eq!(
+            place(
+                Some(anchor),
+                (160.0, 120.0),
+                (1000.0, 800.0),
+                crate::Direction::LeftToRight,
+                true
+            ),
+            (
+                (820.0, 580.0),
+                LayerPlacement {
+                    side: Side::Top,
+                    align: Align::End
+                }
+            )
+        );
+        let unfitted = place(
+            Some(anchor),
+            (160.0, 120.0),
+            (1000.0, 800.0),
+            crate::Direction::LeftToRight,
+            false,
+        );
+        assert_eq!(unfitted.0, anchor.below());
+        assert_eq!(
+            unfitted.1,
+            LayerPlacement {
+                side: Side::Bottom,
+                align: Align::Start
+            }
+        );
+    }
+
+    #[test]
+    fn dismiss_hooks_cancel_only_the_default_close_of_that_semantic_event() {
+        use leptos::prelude::*;
+        use std::sync::{
+            atomic::{AtomicUsize, Ordering},
+            Arc,
+        };
+        Owner::new().with(|| {
+            let closes = Arc::new(AtomicUsize::new(0));
+            let canceled = Callback::new(|event: Cancelable<LayerDismiss>| {
+                assert_eq!(*event.value(), LayerDismiss::Escape);
+                event.prevent_default();
+            });
+            dismiss(Some(canceled), LayerDismiss::Escape, || {
+                closes.fetch_add(1, Ordering::SeqCst);
+            });
+            assert_eq!(closes.load(Ordering::SeqCst), 0);
+            dismiss(None, LayerDismiss::PointerOutside, || {
+                closes.fetch_add(1, Ordering::SeqCst);
+            });
+            assert_eq!(closes.load(Ordering::SeqCst), 1);
+        });
+    }
 
     #[test]
     fn a_region_anchor_is_measured_from_the_region_it_belongs_to() {

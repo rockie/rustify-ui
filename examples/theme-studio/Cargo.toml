@@ -17,4 +17,4 @@ sha2 = "0.10.9"
 rustify-makepad = { path = "../../crates/rustify-makepad" }
 wasm-bindgen.workspace = true
 js-sys.workspace = true
-web-sys = { workspace = true, features = ["Window", "Storage", "StorageEvent"] }
+web-sys = { workspace = true, features = ["Window", "Storage", "StorageEvent", "FormData", "HtmlFormElement"] }

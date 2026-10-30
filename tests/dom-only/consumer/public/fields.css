@@ -1,0 +1,9 @@
+.field-samples { width: min(100% - 32px, 960px); margin: 32px auto; background: var(--background); color: var(--foreground); font-family: var(--rustify-font-sans, system-ui); }
+.field-actions, .field-stack { display: flex; gap: 16px; margin-block: 24px; }
+.field-stack { flex-direction: column; }
+.field-matrix { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+.field-matrix label { display: flex; flex-direction: column; gap: 8px; }
+@media (max-width: 600px) { .field-matrix { grid-template-columns: minmax(0, 1fr); } .field-actions { flex-wrap: wrap; } }
+@layer utilities { .field-utility { padding-left: 1px; padding-right: 1px; gap: 1px; } }
+
+@layer utilities { .select-utility { height: 48px; padding-inline: 1px; border-radius: 0; } }

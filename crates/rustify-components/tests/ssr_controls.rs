@@ -185,12 +185,14 @@ fn a_disabled_radio_group_emits_disabled_for_every_option() {
 fn sliders_emit_the_snapped_value_and_native_availability() {
     let html = render(|| {
         view! {
-            <Slider value=7.4 on_change=|_| {} min=0.0 max=10.0 step=2.0 disabled=true test_id="range" />
+            <Slider value=7.4 on_change=|_| {} min=0.0 max=10.0 step=2.0 disabled=true aria_label="Amount" test_id="range" />
         }
     });
     let tag = opening_tag(&html, "range");
     assert!(
-        tag.contains("value=\"8\"") && has_boolean_attribute(tag, "disabled"),
+        tag.contains("aria-valuenow=\"8\"")
+            && tag.contains("role=\"slider\"")
+            && has_boolean_attribute(tag, "disabled"),
         "{tag}"
     );
 }

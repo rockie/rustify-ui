@@ -64,13 +64,14 @@ const TOKENS = {
 test("slider paint stays inside its aligned bounds at both endpoints", async ({ page }) => {
     await open(page, "slider");
     const slider = example(page).getByRole("slider");
+    const root = example(page).locator('[data-rustify-part="slider-root"]');
     for (const theme of ["light", "dark"] as const) {
         if (theme === "dark") await toDark(page);
         const primary = rgb(TOKENS[theme].primary).match(/\d+/g)!.map(Number);
         for (const key of ["Home", "ArrowRight", "End"]) {
             await slider.press(key);
             await page.getByTestId("category-name").click();
-            const box = (await slider.boundingBox())!;
+            const box = (await root.boundingBox())!;
             // A shadow can paint outside the box without causing layout overflow.
             const pixels = PNG.sync.read(await page.screenshot({
                 scale: "css",
@@ -81,14 +82,14 @@ test("slider paint stays inside its aligned bounds at both endpoints", async ({ 
                 if (primary.every((channel, offset) => pixels.data[i + offset] === channel)) escaped++;
             }
             expect(escaped, `${theme} ${key}: filled track outside the slider`).toBe(0);
-            const parent = await slider.evaluate(node => node.parentElement!.getBoundingClientRect().toJSON());
+            const parent = await root.evaluate(node => node.parentElement!.getBoundingClientRect().toJSON());
             expect(box.x).toBeCloseTo(parent.x, 1);
             expect(box.x + box.width).toBeCloseTo(parent.right, 1);
         }
         await slider.press("Home");
-        await expect(slider).toHaveValue("0");
+        await expect(slider).toHaveAttribute("aria-valuenow", "0");
         await slider.press("End");
-        await expect(slider).toHaveValue("100");
+        await expect(slider).toHaveAttribute("aria-valuenow", "100");
         await expect(slider).toBeFocused();
         expect(await computed(slider, "outline-style")).toBe("solid");
     }
@@ -583,7 +584,7 @@ test.describe("menu: headings, separators, shortcuts, and staying in view", () =
         await page.keyboard.press("Escape");
     });
 
-    test("a menu with no room under its trigger opens over it", async ({ page }) => {
+    test("a menu with no room under its trigger flips when it fits or stays within the viewport", async ({ page }) => {
         await open(page, "menu");
         const trigger = example(page).getByRole("button", { name: "open the menu" });
         await trigger.click();
@@ -595,7 +596,10 @@ test.describe("menu: headings, separators, shortcuts, and staying in view", () =
         await trigger.click();
         const over = (await menu(page).boundingBox())!;
         const now = (await trigger.boundingBox())!;
-        expect(over.y + over.height).toBeLessThanOrEqual(now.y + 1);
+        // Flipping requires enough room above; otherwise the panel is clamped
+        // into the viewport, including after a responsive layout change.
+        if (now.y >= over.height) expect(over.y + over.height).toBeLessThanOrEqual(now.y + 1);
+        expect(over.y + over.height).toBeLessThanOrEqual(page.viewportSize()!.height + 1);
         expect(over.y).toBeGreaterThanOrEqual(0);
     });
 
@@ -657,8 +661,9 @@ test.describe("light and dark", () => {
     test("the new controls draw from the scope's tokens in both themes", async ({ page }) => {
         const read = async () => {
             await open(page, "number-field");
-            const number = await computed(page.getByTestId("default-number"), "background-color");
-            const border = await computed(page.getByTestId("default-number"), "border-top-color");
+            const field = page.getByTestId("default-number").locator("..");
+            const number = await computed(field, "background-color");
+            const border = await field.evaluate(element => getComputedStyle(element).boxShadow.match(/rgba?\([^)]+\)/)?.[0] ?? "none");
             await open(page, "toggle-group");
             const pressed = await computed(page.getByTestId("default-align-start"), "background-color");
             await open(page, "toast");

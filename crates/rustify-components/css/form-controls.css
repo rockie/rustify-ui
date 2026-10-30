@@ -1,0 +1,410 @@
+/* Native choice metrics and treatments adapted from the vendored Themes CSS. */
+@layer components {
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-choice, .rustify-choice-group) {
+    --rustify-choice-size: var(--rustify-space-4, 16px);
+    --rustify-choice-mark: calc(var(--rustify-unit, 4px) * 2.5);
+    --rustify-choice-radius: var(--rustify-radius-1, 3px);
+    --rustify-switch-height: calc(var(--rustify-space-5, 24px) * 5 / 6);
+    --rustify-switch-radius: max(var(--rustify-radius-2, 4px), var(--rustify-radius-thumb, 9999px));
+    --rustify-choice-gap: var(--rustify-space-2, 8px);
+    --rustify-choice-font: var(--rustify-font-size-2, 14px);
+    --rustify-choice-line: var(--rustify-line-height-2, 20px);
+    --rustify-choice-on: var(--rustify-component-color-9, var(--primary));
+    --rustify-choice-contrast: var(--rustify-component-color-contrast, var(--primary-foreground));
+    --rustify-choice-soft: var(--rustify-component-color-a3, color-mix(in srgb, var(--primary) 12%, transparent));
+    --rustify-choice-text: var(--rustify-component-color-a11, var(--primary));
+    --rustify-choice-boundary: var(--rustify-gray-9, var(--muted-foreground));
+    color: var(--foreground);
+    font-family: var(--rustify-font-sans, inherit);
+    font-size: var(--rustify-choice-font);
+    line-height: var(--rustify-choice-line);
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-choice) {
+    display: inline-flex;
+    position: relative;
+    align-items: center;
+    flex-shrink: 0;
+    vertical-align: middle;
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-choice-group) {
+    display: flex;
+    flex-direction: column;
+    gap: var(--rustify-choice-gap);
+  }
+  :where(.rustify-choice-group[data-orientation="horizontal"]) { flex-direction: row; flex-wrap: wrap; }
+  :where(.rustify-choice-item) {
+    display: inline-flex;
+    position: relative;
+    align-items: center;
+    min-width: 0;
+    gap: var(--rustify-choice-gap);
+    cursor: pointer;
+  }
+  :where(.rustify-choice-native) {
+    box-sizing: border-box;
+    appearance: none;
+    position: relative;
+    flex-shrink: 0;
+    width: var(--rustify-choice-size);
+    height: var(--rustify-choice-size);
+    margin: 0;
+    padding: 0;
+    border: 1px solid var(--rustify-choice-boundary);
+    border-radius: var(--rustify-choice-radius);
+    background: var(--input);
+    cursor: pointer;
+    outline: none;
+    transition: background-color var(--motion-duration, 150ms), border-color var(--motion-duration, 150ms);
+  }
+  :where(.rustify-choice-native[type="radio"]) { border-radius: 50%; }
+  :where(.rustify-choice-native[data-state="checked"], .rustify-choice-native[data-state="indeterminate"]) {
+    background: var(--rustify-choice-on);
+    border-color: var(--rustify-choice-on);
+  }
+  :where(.rustify-choice-indicator) {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    inset-inline-start: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: var(--rustify-choice-size);
+    height: var(--rustify-choice-size);
+    pointer-events: none;
+    color: var(--rustify-choice-contrast);
+  }
+  :where(.rustify-choice-glyph) { width: var(--rustify-choice-mark); height: var(--rustify-choice-mark); }
+  :where(.rustify-choice[data-variant="soft"], .rustify-choice-group[data-variant="soft"]) :where(.rustify-choice-native) {
+    background: var(--rustify-choice-soft);
+    border-color: transparent;
+  }
+  :where(.rustify-choice[data-variant="soft"], .rustify-choice-group[data-variant="soft"]) :where(.rustify-choice-indicator) {
+    color: var(--rustify-choice-text);
+  }
+  :where(.rustify-choice[data-variant="classic"], .rustify-choice-group[data-variant="classic"]) :where(.rustify-choice-native) {
+    box-shadow: 0 1px 2px rgb(0 0 0 / 0.12), inset 0 0.5px 0.5px rgb(255 255 255 / 0.3);
+    background-image: linear-gradient(to bottom, rgb(255 255 255 / 0.12), transparent, rgb(0 0 0 / 0.04));
+  }
+  :where(.rustify-choice[data-high-contrast], .rustify-choice-group[data-high-contrast]) {
+    --rustify-choice-on: var(--rustify-component-color-12, var(--foreground));
+    --rustify-choice-contrast: var(--rustify-component-color-1, var(--background));
+    --rustify-choice-text: var(--rustify-component-color-12, var(--foreground));
+  }
+  :where(.rustify-choice-native:focus-visible) { outline: 2px solid var(--ring); outline-offset: 2px; }
+  :where(.rustify-choice-native[data-invalid]) { border-color: var(--destructive); }
+  :where(.rustify-choice-native[data-invalid]:focus-visible) { outline-color: var(--destructive); }
+  :where(.rustify-choice-native:disabled) { cursor: not-allowed; background: var(--muted); border-color: var(--rustify-gray-a6, var(--border)); }
+  :where(.rustify-choice-indicator[data-disabled]) { color: var(--muted-foreground); }
+  :where(.rustify-choice-item[data-disabled]) { cursor: not-allowed; color: var(--muted-foreground); }
+  :where(.rustify-switch) { --rustify-choice-size: var(--rustify-switch-height); }
+  :where(.rustify-switch) :where(.rustify-choice-native) {
+    width: calc(var(--rustify-switch-height) * 1.75);
+    height: var(--rustify-switch-height);
+    border-radius: var(--rustify-switch-radius);
+    background: var(--muted);
+  }
+  :where(.rustify-switch) :where(.rustify-choice-native[data-state="checked"]) { background: var(--rustify-choice-on); }
+  :where(.rustify-switch-thumb) {
+    position: absolute;
+    inset-inline-start: 1px;
+    top: 1px;
+    width: calc(var(--rustify-switch-height) - 2px);
+    height: calc(var(--rustify-switch-height) - 2px);
+    border-radius: max(0px, calc(var(--rustify-switch-radius) - 1px));
+    background: var(--background);
+    pointer-events: none;
+    transition: transform var(--motion-duration, 150ms);
+  }
+  :where(.rustify-switch-thumb[data-state="checked"]) { transform: translateX(calc(var(--rustify-switch-height) * 0.75)); }
+  :where(.rustify-switch[dir="rtl"]) :where(.rustify-switch-thumb[data-state="checked"]) { transform: translateX(calc(var(--rustify-switch-height) * -0.75)); }
+  :where(.rustify-choice-cards) {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--rustify-space-3, 12px);
+    --rustify-card-padding-x: var(--rustify-space-4, 16px);
+    --rustify-card-padding-y: calc(var(--rustify-space-4, 16px) * 0.875);
+    --rustify-card-radius: var(--rustify-radius-3, 6px);
+  }
+  :where(.rustify-choice-card) {
+    padding: var(--rustify-card-padding-y) var(--rustify-card-padding-x);
+    border-radius: var(--rustify-card-radius);
+    border: 1px solid var(--border);
+    background: var(--card);
+    color: var(--card-foreground);
+  }
+  :where(.rustify-choice-card[data-state="checked"]) { border-color: var(--rustify-choice-on); outline: 1px solid var(--rustify-choice-on); }
+  :where(.rustify-choice-card:has(:focus-visible)) { outline: 2px solid var(--ring); outline-offset: 2px; }
+  :where(.rustify-choice-card) :where(.rustify-choice-indicator) { inset-inline-start: var(--rustify-card-padding-x); }
+  :where(.rustify-choice-cards[data-variant="classic"]) :where(.rustify-choice-card) { box-shadow: 0 1px 3px rgb(0 0 0 / 0.12); }
+  :where(.rustify-choice-card-content) { display: flex; flex-direction: column; min-width: 0; overflow-wrap: anywhere; }
+  :where(.rustify-choice-card-description) { color: var(--muted-foreground); font-size: var(--rustify-font-size-1, 12px); }
+  @media (prefers-reduced-motion: reduce) {
+    :where(.rustify-choice-native, .rustify-switch-thumb) { transition-duration: 0ms; }
+  }
+}
+
+/* Slider dimensions and treatments follow the vendored Themes slider. */
+@layer components {
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-slider) {
+    --rustify-slider-track: var(--rustify-space-2, 8px);
+    --rustify-slider-thumb: calc(var(--rustify-slider-track) + var(--rustify-space-1, 4px));
+    --rustify-slider-radius: max(calc(var(--rustify-radius-factor, 1) * var(--rustify-slider-track) / 3), var(--rustify-radius-thumb, 9999px));
+    --rustify-slider-on: var(--rustify-component-color-track, var(--primary));
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    border-radius: var(--rustify-slider-radius);
+  }
+  :where(.rustify-slider[data-orientation="horizontal"]) { width: 100%; min-width: 0; min-height: 24px; }
+  :where(.rustify-slider[data-orientation="vertical"]) { min-width: 24px; height: 100%; min-height: 100px; flex-direction: column; }
+  :where(.rustify-slider-track) { flex-grow: 1; border-radius: inherit; background: var(--rustify-gray-a3, var(--muted)); box-shadow: inset 0 0 0 1px var(--rustify-gray-a5, var(--border)); }
+  :where(.rustify-slider-track[data-orientation="horizontal"]) { width: 100%; height: var(--rustify-slider-track); }
+  :where(.rustify-slider-track[data-orientation="vertical"]) { height: 100%; width: var(--rustify-slider-track); }
+  :where(.rustify-slider-range) { border-radius: inherit; background: var(--rustify-slider-on); box-shadow: inset 0 0 0 1px var(--rustify-gray-a5, var(--border)); pointer-events: none; }
+  :where(.rustify-slider-thumb) {
+    display: block; box-sizing: border-box; width: var(--rustify-slider-thumb); height: var(--rustify-slider-thumb);
+    padding: 0; margin: 0; border: 0; border-radius: var(--rustify-slider-radius);
+    outline: none; background: white; box-shadow: 0 0 0 1px rgb(0 0 0 / 0.25); cursor: grab;
+  }
+  :where(.rustify-slider-thumb)::before { content: ''; position: absolute; width: 300%; height: 300%; left: 50%; top: 50%; transform: translate(-50%, -50%); }
+  :where(.rustify-slider-thumb)::after { content: ''; position: absolute; inset: calc(var(--rustify-slider-track) * -0.25); border-radius: inherit; background: inherit; box-shadow: inherit; pointer-events: none; }
+  :where(.rustify-slider-thumb:focus-visible) { outline: 2px solid var(--ring); outline-offset: 3px; }
+  :where(.rustify-slider-thumb:active) { cursor: grabbing; }
+  :where(.rustify-slider[data-variant="classic"]) :where(.rustify-slider-track) { box-shadow: inset 0 1px 2px rgb(0 0 0 / 0.15); }
+  :where(.rustify-slider[data-variant="classic"]) :where(.rustify-slider-range) { box-shadow: inset 0 0 0 1px rgb(0 0 0 / 0.12), inset 0 1.5px 2px rgb(0 0 0 / 0.12); }
+  :where(.rustify-slider[data-variant="classic"]) :where(.rustify-slider-thumb) { box-shadow: 0 0 0 1px rgb(0 0 0 / 0.2), 0 1px 3px rgb(0 0 0 / 0.15); }
+  :where(.rustify-slider[data-variant="soft"]) :where(.rustify-slider-track) { background: var(--rustify-gray-a4, var(--muted)); box-shadow: none; }
+  :where(.rustify-slider[data-variant="soft"]) :where(.rustify-slider-range) { background: var(--rustify-component-color-6, color-mix(in srgb, var(--primary) 45%, var(--background))); box-shadow: none; }
+  :where(.rustify-slider[data-high-contrast]) { --rustify-slider-on: var(--rustify-component-color-12, var(--foreground)); }
+  :where(.rustify-slider[data-high-contrast][data-variant="soft"]) :where(.rustify-slider-range) { background: var(--rustify-slider-on); }
+  :where(.rustify-slider[data-disabled]) :where(.rustify-slider-range) { background: var(--rustify-gray-a6, var(--muted-foreground)); }
+  :where(.rustify-slider-thumb:disabled) { background: var(--rustify-gray-1, var(--background)); box-shadow: 0 0 0 1px var(--rustify-gray-6, var(--border)); cursor: not-allowed; }
+  :where(.rustify-slider[data-invalid]) :where(.rustify-slider-track) { outline: 1px solid var(--destructive); }
+}
+
+/* Field metrics and treatments adapted from the vendored TextField/TextArea. */
+@layer components {
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-field) {
+    --rustify-field-height: var(--rustify-space-6, 32px);
+    --rustify-field-padding: calc(var(--rustify-space-2, 8px) - 1px);
+    --rustify-field-slot-gap: var(--rustify-space-2, 8px);
+    --rustify-field-slot-padding: var(--rustify-space-2, 8px);
+    --rustify-field-radius-base: var(--rustify-radius-2, 4px);
+    --rustify-field-radius-unit: var(--rustify-space-1, 4px);
+    --rustify-field-radius: max(var(--rustify-field-radius-base), var(--rustify-radius-full, 0px));
+    --rustify-field-font: var(--rustify-font-size-2, 14px);
+    --rustify-field-line: var(--rustify-line-height-2, 20px);
+    --rustify-field-focus: var(--rustify-component-color-8, var(--ring));
+    --rustify-field-selection: var(--rustify-component-color-a5, color-mix(in srgb, var(--ring) 25%, transparent));
+    --rustify-field-edge: var(--rustify-gray-9, var(--border));
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    height: var(--rustify-field-height);
+    padding: 1px;
+    border-radius: var(--rustify-field-radius);
+    background: var(--input);
+    box-shadow: inset 0 0 0 1px var(--rustify-field-edge);
+    color: var(--foreground);
+    font-family: var(--rustify-font-sans, inherit);
+    font-size: var(--rustify-field-font);
+    line-height: var(--rustify-field-line);
+    text-align: start;
+  }
+  :where(.rustify-field[data-variant="classic"]) {
+    box-shadow: inset 0 0 0 1px var(--rustify-field-edge), 0 1px 2px rgb(0 0 0 / 0.1);
+  }
+  :where(.rustify-field[data-variant="soft"]) {
+    background: var(--rustify-component-color-a3, color-mix(in srgb, var(--primary) 12%, var(--background)));
+    box-shadow: none;
+    color: var(--rustify-component-color-12, var(--foreground));
+  }
+  :where(.rustify-field:focus-within) { outline: 2px solid var(--rustify-field-focus); outline-offset: -1px; }
+  :where(.rustify-field[data-invalid]) { --rustify-field-edge: var(--destructive); outline: 2px solid var(--destructive); outline-offset: -1px; }
+  :where(.rustify-field[data-disabled]) { cursor: not-allowed; opacity: 0.5; }
+  :where(.rustify-field[data-readonly]) { background: var(--muted); }
+  :where(.rustify-field-input) {
+    box-sizing: border-box;
+    appearance: none;
+    display: block;
+    width: 100%;
+    min-width: 0;
+    margin: 0;
+    padding: 0 var(--rustify-field-padding);
+    border: 0;
+    border-radius: calc(var(--rustify-field-radius) - 1px);
+    outline: none;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    text-align: inherit;
+    caret-color: var(--rustify-field-focus);
+  }
+  :where(.rustify-field-input::placeholder) { color: var(--rustify-gray-11, var(--muted-foreground)); opacity: 1; }
+  :where(.rustify-field-input::selection) { background: var(--rustify-field-selection); }
+  :where(.rustify-field-input:disabled) { cursor: not-allowed; }
+  :where(.rustify-field-input[role="spinbutton"]) { font-variant-numeric: tabular-nums; }
+  :where(.rustify-field[data-name="ColorField"]) :where(.rustify-field-input) { font-family: var(--rustify-font-mono, monospace); }
+  :where(.rustify-field-input[type="number"]) { -moz-appearance: textfield; }
+  .rustify-field-input::-webkit-inner-spin-button, .rustify-field-input::-webkit-search-cancel-button { appearance: none; }
+  :where(.rustify-field-slot) {
+    gap: var(--rustify-field-slot-gap);
+    padding-left: var(--rustify-field-slot-padding);
+    padding-right: var(--rustify-field-slot-padding);
+    color: var(--rustify-gray-11, var(--muted-foreground));
+  }
+  :where(.rustify-field-slot[data-color]) { color: var(--rustify-component-color-11); }
+  :where(.rustify-field:has(> [data-side="start"])) > :where(.rustify-field-input) { padding-inline-start: 0; }
+  :where(.rustify-field:has(> [data-side="end"])) > :where(.rustify-field-input) { padding-inline-end: 0; }
+  :where(.rustify-field-swatch) {
+    display: block;
+    flex-shrink: 0;
+    align-self: center;
+    width: calc(var(--rustify-field-height) - 2px);
+    height: calc(var(--rustify-field-height) - 2px);
+    border: 1px solid var(--rustify-field-edge);
+    border-radius: calc(var(--rustify-field-radius) - 1px);
+  }
+  :where(.rustify-text-area) {
+    --rustify-area-height: var(--rustify-space-9, 80px);
+    --rustify-area-padding-y: calc(var(--rustify-space-1, 4px) * 1.5 - 1px);
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    min-height: var(--rustify-area-height);
+    overflow: hidden;
+  }
+  :where(.rustify-text-area) > :where(.rustify-field-input) {
+    flex-grow: 1;
+    resize: none;
+    padding-top: var(--rustify-area-padding-y);
+    padding-bottom: var(--rustify-area-padding-y);
+    scrollbar-color: var(--rustify-gray-a8, var(--muted-foreground)) var(--rustify-gray-a3, var(--muted));
+  }
+}
+
+/* Select metrics and treatments adapted from the vendored Themes parts. */
+@layer components {
+  :where(.rustify-select-trigger, .rustify-select-content, .rustify-select-viewport, .rustify-select-item, .rustify-select-label, .rustify-select-scroll) {
+    transition-property: background-color, color, box-shadow, opacity;
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-select-trigger) {
+    --rustify-select-height: var(--rustify-space-6, 32px);
+    --rustify-select-padding: var(--rustify-space-3, 12px);
+    --rustify-select-gap: calc(var(--rustify-space-1, 4px) * 1.5);
+    --rustify-select-font: var(--rustify-font-size-2, 14px);
+    --rustify-select-line: var(--rustify-line-height-2, 20px);
+    --rustify-select-radius-base: var(--rustify-radius-2, 4px);
+    --rustify-select-radius: max(var(--rustify-select-radius-base), var(--rustify-radius-full, 0px));
+    --rustify-select-focus: var(--rustify-component-color-8, var(--ring));
+    box-sizing: border-box;
+    appearance: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+    gap: var(--rustify-select-gap);
+    height: var(--rustify-select-height);
+    padding: 0 var(--rustify-select-padding);
+    margin: 0;
+    border: 0;
+    border-radius: var(--rustify-select-radius);
+    outline: none;
+    background: var(--input);
+    color: var(--foreground);
+    box-shadow: inset 0 0 0 1px var(--rustify-gray-9, var(--border));
+    font-family: var(--rustify-font-sans, inherit);
+    font-size: var(--rustify-select-font);
+    line-height: var(--rustify-select-line);
+    text-align: start;
+    cursor: pointer;
+    user-select: none;
+    vertical-align: top;
+  }
+  :where(.rustify-select-trigger[data-variant="classic"]) {
+    background-image: linear-gradient(var(--rustify-gray-2, var(--muted)), var(--rustify-gray-1, var(--input)));
+    box-shadow: inset 0 0 0 1px var(--rustify-gray-9, var(--border)), inset 0 1px 1px rgb(255 255 255 / 0.3), 0 1px 2px rgb(0 0 0 / 0.1);
+  }
+  :where(.rustify-select-trigger[data-variant="soft"]) {
+    background: var(--rustify-component-color-a3, color-mix(in srgb, var(--primary) 12%, var(--background)));
+    color: var(--rustify-component-color-12, var(--foreground));
+    box-shadow: none;
+  }
+  :where(.rustify-select-trigger[data-variant="ghost"], .rustify-select-trigger[data-variant="ghost-offset"]) {
+    background: transparent;
+    color: var(--rustify-component-color-12, var(--foreground));
+    box-shadow: none;
+  }
+  :where(.rustify-select-trigger[data-variant="ghost"]) {
+    box-sizing: content-box;
+    height: fit-content;
+    padding: var(--rustify-select-ghost-y, 4px) var(--rustify-select-ghost-x, 8px);
+    margin: calc(var(--rustify-select-ghost-y, 4px) * -1) calc(var(--rustify-select-ghost-x, 8px) * -1);
+  }
+  :where(.rustify-select-trigger[data-variant="ghost"]:hover, .rustify-select-trigger[data-variant="ghost-offset"]:hover,
+    .rustify-select-trigger[data-variant="ghost"][data-state="open"], .rustify-select-trigger[data-variant="ghost-offset"][data-state="open"]) {
+    background: var(--rustify-component-color-a3, var(--muted));
+  }
+  :where(.rustify-select-trigger:focus-visible) { outline: 2px solid var(--rustify-select-focus); outline-offset: -1px; }
+  :where(.rustify-select-trigger[data-invalid]) { outline: 2px solid var(--destructive); outline-offset: -1px; }
+  :where(.rustify-select-trigger:disabled) { opacity: 0.5; cursor: not-allowed; }
+  :where(.rustify-select-value) { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  :where(.rustify-select-value[data-placeholder]) { color: var(--rustify-gray-11, var(--muted-foreground)); }
+  :where(.rustify-select-icon) { display: inline-flex; align-items: center; flex-shrink: 0; }
+  :where(.rustify-select-icon) > :where(svg) { width: 1em; height: 1em; }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-select-content) {
+    --rustify-select-font: var(--rustify-font-size-2, 14px);
+    --rustify-select-line: var(--rustify-line-height-2, 20px);
+    --rustify-select-content-padding: var(--rustify-space-2, 8px);
+    --rustify-select-item-height: var(--rustify-space-6, 32px);
+    --rustify-select-indicator-width: var(--rustify-space-5, 24px);
+    --rustify-select-content-radius: var(--rustify-radius-4, 8px);
+    --rustify-select-item-radius: var(--rustify-radius-2, 4px);
+    --rustify-select-label-font: var(--rustify-font-size-2, 14px);
+    --rustify-select-highlight: var(--rustify-component-color-9, var(--primary));
+    --rustify-select-contrast: var(--rustify-component-color-contrast, var(--primary-foreground));
+    box-sizing: border-box;
+    overflow: hidden;
+    border-radius: var(--rustify-select-content-radius);
+    /* Alpha panel colors need their own surface behind floating content. */
+    background: linear-gradient(var(--popover), var(--popover)), var(--background);
+    color: var(--popover-foreground);
+    box-shadow: var(--shadow-lg, 0 4px 12px rgb(0 0 0 / 0.18));
+    font-family: var(--rustify-font-sans, inherit);
+    font-size: var(--rustify-select-font);
+    line-height: var(--rustify-select-line);
+  }
+  :where(.rustify-select-content[data-high-contrast]) {
+    --rustify-select-highlight: var(--rustify-component-color-12, var(--foreground));
+    --rustify-select-contrast: var(--rustify-component-color-1, var(--background));
+  }
+  :where(.rustify-select-viewport) { padding: var(--rustify-select-content-padding); scrollbar-color: var(--rustify-gray-a8, var(--muted-foreground)) transparent; }
+  :where(.rustify-select-item) {
+    display: flex;
+    align-items: center;
+    position: relative;
+    box-sizing: border-box;
+    min-height: var(--rustify-select-item-height);
+    padding-inline: var(--rustify-select-indicator-width);
+    border-radius: var(--rustify-select-item-radius);
+    user-select: none;
+    cursor: pointer;
+    outline: none;
+  }
+  :where(.rustify-select-item[data-highlighted]) { background: var(--rustify-select-highlight); color: var(--rustify-select-contrast); }
+  :where(.rustify-select-content[data-variant="soft"]) :where(.rustify-select-item[data-highlighted]) {
+    background: var(--rustify-component-color-a4, color-mix(in srgb, var(--primary) 18%, var(--background)));
+    color: var(--rustify-component-color-12, var(--foreground));
+  }
+  :where(.rustify-select-item[data-disabled]) { color: var(--rustify-gray-11, var(--muted-foreground)); cursor: default; opacity: 0.5; }
+  :where(.rustify-select-item-text) { flex: 1; }
+  :where(.rustify-select-indicator) { position: absolute; inset-inline-start: 0; display: inline-flex; align-items: center; justify-content: center; width: var(--rustify-select-indicator-width); }
+  :where(.rustify-select-indicator) > :where(svg) { width: 0.75em; height: 0.75em; }
+  :where(.rustify-select-label) { display: flex; align-items: center; min-height: var(--rustify-select-item-height); padding-inline: var(--rustify-select-indicator-width); color: var(--rustify-gray-11, var(--muted-foreground)); font-size: var(--rustify-select-label-font); }
+  :where(.rustify-select-separator) { height: 1px; margin-block: var(--rustify-space-2, 8px); margin-inline: var(--rustify-select-indicator-width); background: var(--rustify-gray-a6, var(--border)); }
+  :where(.rustify-select-scroll) { display: flex; justify-content: center; border: 0; background: inherit; color: inherit; cursor: pointer; padding: 0; }
+  :where(.rustify-select-scroll:disabled) { visibility: hidden; height: 0; }
+  :where(.rustify-select-scroll) > :where(svg) { height: var(--rustify-space-4, 16px); width: var(--rustify-space-4, 16px); }
+}

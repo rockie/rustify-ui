@@ -55,15 +55,17 @@ pub use diagnostics::{
 };
 pub use drag::{Drags, HitAnswer, HitQuery, Outcome, Query};
 pub use files::{Import, Limits, Refusal};
-pub use form::{FormState, Generation, Submit};
-pub use i18n::{Direction, Locale, Message};
+pub use form::{FieldErrorSource, FormState, Generation, Submit};
+pub use i18n::{provide_direction, use_direction, Direction, Locale, Message};
 pub use job::{Budget, Ended, Job, Step};
 #[cfg(all(feature = "hydrate", target_arch = "wasm32"))]
 pub use mount::hydrate;
 #[cfg(feature = "ssr")]
 pub use mount::ssr_scope;
 pub use mount::{mount, AppHandle, MountConfig, ScopeRoots};
-pub use overlay::{LayerId, LocalRect};
+pub use overlay::{
+    Align, Cancelable, LayerDismiss, LayerId, LayerPlacement, LocalRect, ScopePortal, Side,
+};
 pub use router::{Arrival, History, Location, Navigation, Params, Route, Routes};
 pub use scheduler::{Admission, Pace, Scheduler, Seq};
 pub use selection::{Counts, Selection};

@@ -30,121 +30,121 @@ pub fn parse_hex(text: &str, alpha: bool) -> Option<String> {
     }
 }
 
-pub use dom::ColorField;
-
-mod dom {
-    use super::parse_hex;
-    use leptos::prelude::*;
-    use rustify_ui::Draft;
-
-    const FIELD: &str = "flex items-center gap-2";
-    const INPUT: &str = "flex h-9 w-full min-w-0 rounded-md border border-border bg-input text-foreground px-3 py-1 font-mono text-sm transition-colors outline-none placeholder:text-muted-foreground focus-visible:ring-ring/50 focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 read-only:bg-muted aria-invalid:border-destructive aria-invalid:ring-destructive/40";
-    const SWATCH: &str = "size-9 shrink-0 rounded-md border border-border";
-
-    /// A field for one colour, with a swatch of it.
-    ///
-    /// The swatch is decoration: the text is the value, and the text is what
-    /// a reader hears. A disabled or read-only field asks for nothing.
-    #[component]
-    pub fn ColorField(
-        /// The colour as the application holds it: what the field shows and
-        /// the swatch paints.
-        #[prop(into)]
-        value: Signal<String>,
-        /// Asked for the colour an edit ended on, as `parse_hex` writes it.
-        on_change: impl Fn(String) + Send + Sync + 'static,
-        /// Asked for every colour typed while the edit goes on.
-        #[prop(optional, into)]
-        on_preview: Option<Callback<String>>,
-        /// Asked to take back the previews of an edit Escape abandoned.
-        #[prop(optional, into)]
-        on_cancel: Option<Callback<()>>,
-        /// Whether eight digits, an opacity after the colour, are a colour.
-        #[prop(optional)]
-        alpha: bool,
-        #[prop(optional, into)] id: String,
-        #[prop(optional, into)] aria_label: String,
-        #[prop(optional, into)] disabled: Signal<bool>,
-        #[prop(optional, into)] read_only: Signal<bool>,
-        /// The application's own verdict on the colour it holds. A draft that
-        /// does not parse is marked invalid without being asked.
-        #[prop(optional, into)]
-        invalid: Signal<bool>,
-        #[prop(optional, into)] described_by: Signal<String>,
-        #[prop(optional, into)] class: String,
-        #[prop(optional, into)] test_id: String,
-    ) -> impl IntoView {
-        let id = if id.is_empty() {
-            crate::id::next("color")
-        } else {
-            id
-        };
-        let aria_label = (!aria_label.is_empty()).then_some(aria_label);
-        let swatch_id = format!("{test_id}-swatch");
-        let draft = Draft::new(value, String::clone, move |text| parse_hex(text, alpha))
-            .with_commit(on_change)
-            .with_preview(move |value| {
-                if let Some(preview) = on_preview {
-                    preview.run(value);
-                }
-            })
-            .with_cancel(move || {
-                if let Some(cancel) = on_cancel {
-                    cancel.run(());
-                }
-            });
-        let still = move || disabled.get_untracked() || read_only.get_untracked();
-        let keydown = draft.on_keydown();
-        let input = draft.on_input();
-        let invalid_draft = draft.invalid();
-        let swatch = crate::geometry::geometry_class(move || {
-            let color = parse_hex(&value.get(), true).unwrap_or_else(|| "transparent".to_string());
-            format!("background-color:{color};")
-        });
-        view! {
-            <div class=crate::macros::reactive_merge(FIELD, &class) data-name="ColorField">
-                <span
-                    class=format!("{SWATCH} {swatch}")
-                    data-name="ColorSwatch"
-                    data-testid=swatch_id
-                    aria-hidden="true"
-                />
-                <input
-                    type="text"
-                    autocomplete="off"
-                    spellcheck="false"
-                    id=id
-                    class=INPUT
-                    data-testid=test_id
-                    aria-label=aria_label
-                    aria-invalid=move || (invalid.get() || invalid_draft.get()).then_some("true")
-                    aria-readonly=move || read_only.get().then_some("true")
-                    aria-describedby=move || {
-                        let described_by = described_by.get();
-                        (!described_by.is_empty()).then_some(described_by)
-                    }
-                    prop:value=draft.text()
-                    prop:disabled=move || disabled.get()
-                    prop:readOnly=move || read_only.get()
-                    value=draft.text()
-                    disabled=move || disabled.get()
-                    readonly=move || read_only.get()
-                    on:focus=draft.on_focus()
-                    on:blur=draft.on_blur()
-                    on:keydown=move |event| {
-                        if !still() {
-                            keydown(event);
-                        }
-                    }
-                    on:input=move |event| {
-                        if !still() {
-                            input(event);
-                        }
-                    }
-                />
-            </div>
-        }
-    }
+use crate::{primitives, Responsive};
+use leptos::prelude::*;
+use rustify_ui::{AccentColor, ThemeRadius};
+crate::choice_style::visual_types!(ColorFieldSize, ColorFieldVariant);
+#[component]
+pub fn Root(
+    #[prop(into)] value: Signal<String>,
+    #[prop(into)] on_change: Callback<String>,
+    #[prop(optional_no_strip, into)] on_preview: Option<Callback<String>>,
+    #[prop(optional_no_strip, into)] on_cancel: Option<Callback<()>>,
+    #[prop(optional)] alpha: bool,
+    #[prop(optional, into)] id: String,
+    #[prop(optional, into)] name: String,
+    #[prop(optional, into)] form: String,
+    #[prop(optional, into)] aria_label: String,
+    #[prop(optional, into)] labelled_by: String,
+    #[prop(optional, into)] described_by: Signal<String>,
+    #[prop(optional, into)] placeholder: String,
+    #[prop(optional, into)] autocomplete: String,
+    #[prop(optional, into)] inputmode: String,
+    #[prop(optional, into)] required: Signal<bool>,
+    #[prop(optional, into)] disabled: Signal<bool>,
+    #[prop(optional, into)] read_only: Signal<bool>,
+    #[prop(optional, into)] invalid: Signal<bool>,
+    #[prop(optional_no_strip, into)] pattern: Option<String>,
+    #[prop(optional_no_strip, into)] minlength: Option<u32>,
+    #[prop(optional_no_strip, into)] maxlength: Option<u32>,
+    #[prop(optional, into)] size: Signal<Responsive<ColorFieldSize>>,
+    #[prop(optional, into)] variant: Signal<ColorFieldVariant>,
+    #[prop(optional, into)] color: Signal<Option<AccentColor>>,
+    #[prop(optional, into)] radius: Signal<Option<ThemeRadius>>,
+    #[prop(optional, into)] class: Signal<String>,
+    #[prop(optional, into)] input_class: String,
+    #[prop(optional, into)] test_id: String,
+    children: Children,
+) -> impl IntoView {
+    let classes = crate::field_style::classes(
+        Signal::derive(move || size.get().map(|size| size.number())),
+        color,
+        radius,
+        class,
+        false,
+    );
+    view! { <primitives::color_field::Root value=value on_change=on_change alpha=alpha
+        id=id name=name form=form aria_label=aria_label labelled_by=labelled_by described_by=described_by placeholder=placeholder autocomplete=autocomplete inputmode=inputmode required=required disabled=disabled read_only=read_only invalid=invalid pattern=pattern minlength=minlength maxlength=maxlength class=classes input_class=input_class test_id=test_id on_preview=on_preview on_cancel=on_cancel>
+        {children()}
+    </primitives::color_field::Root> }.add_any_attr((leptos::attr::custom::custom_attribute("data-name", "ColorField"),
+        leptos::attr::custom::custom_attribute("data-variant", move || variant.get().as_str())))
+}
+#[component]
+pub fn Input(
+    #[prop(optional, into)] class: String,
+    #[prop(optional, into)] test_id: String,
+) -> impl IntoView {
+    view! { <primitives::field::Input class=format!("rustify-field-input {class}") test_id=test_id /> }
+}
+/// Styles the actual caller-supplied input without adding another editor.
+pub fn control_as<At, Ch>(
+    target: leptos::html::HtmlElement<leptos::html::Input, At, Ch>,
+) -> impl IntoView
+where
+    At: leptos::attr::Attribute + Send,
+    Ch: RenderHtml + Send,
+{
+    primitives::text_field::control_as(target).add_any_attr(leptos::tachys::html::class::class((
+        "rustify-field-input",
+        true,
+    )))
+}
+#[component]
+pub fn Swatch(
+    #[prop(optional, into)] class: String,
+    #[prop(optional, into)] test_id: String,
+) -> impl IntoView {
+    view! { <primitives::color_field::Swatch class=format!("rustify-field-swatch {class}") test_id=test_id /> }
+}
+#[component]
+pub fn ColorField(
+    #[prop(into)] value: Signal<String>,
+    on_change: impl Fn(String) + Send + Sync + 'static,
+    #[prop(optional_no_strip, into)] on_preview: Option<Callback<String>>,
+    #[prop(optional_no_strip, into)] on_cancel: Option<Callback<()>>,
+    #[prop(optional)] alpha: bool,
+    #[prop(optional, into)] id: String,
+    #[prop(optional, into)] name: String,
+    #[prop(optional, into)] form: String,
+    #[prop(optional, into)] aria_label: String,
+    #[prop(optional, into)] labelled_by: String,
+    #[prop(optional, into)] described_by: Signal<String>,
+    #[prop(optional, into)] placeholder: String,
+    #[prop(optional, into)] autocomplete: String,
+    #[prop(optional, into)] inputmode: String,
+    #[prop(optional, into)] required: Signal<bool>,
+    #[prop(optional, into)] disabled: Signal<bool>,
+    #[prop(optional, into)] read_only: Signal<bool>,
+    #[prop(optional, into)] invalid: Signal<bool>,
+    #[prop(optional_no_strip, into)] pattern: Option<String>,
+    #[prop(optional_no_strip, into)] minlength: Option<u32>,
+    #[prop(optional_no_strip, into)] maxlength: Option<u32>,
+    #[prop(optional, into)] size: Signal<Responsive<ColorFieldSize>>,
+    #[prop(optional, into)] variant: Signal<ColorFieldVariant>,
+    #[prop(optional, into)] color: Signal<Option<AccentColor>>,
+    #[prop(optional, into)] radius: Signal<Option<ThemeRadius>>,
+    #[prop(optional, into)] class: String,
+    #[prop(optional, into)] input_class: String,
+    #[prop(optional, into)] test_id: String,
+    #[prop(optional)] children: Option<Children>,
+) -> impl IntoView {
+    let on_change = Callback::new(on_change);
+    let swatch_test = format!("{test_id}-swatch");
+    view! { <Root value=value on_change=on_change alpha=alpha
+        id=id name=name form=form aria_label=aria_label labelled_by=labelled_by described_by=described_by placeholder=placeholder autocomplete=autocomplete inputmode=inputmode required=required disabled=disabled read_only=read_only invalid=invalid pattern=pattern minlength=minlength maxlength=maxlength size=size variant=variant color=color radius=radius class=class input_class=input_class test_id=test_id on_preview=on_preview on_cancel=on_cancel>
+        <Swatch test_id=swatch_test />
+        <Input />{children.map(|children| children())}
+    </Root> }
 }
 
 #[cfg(test)]

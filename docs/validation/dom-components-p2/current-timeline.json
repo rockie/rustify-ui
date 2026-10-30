@@ -1,0 +1,126 @@
+{
+  "kind": "current-only Chrome timeline diagnostic; not a new baseline",
+  "parameters": {
+    "warmups": 5,
+    "samples": 40,
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "browser_version": "153.0.8010.12",
+    "executable": null,
+    "environment": {
+      "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.8010.12 Safari/537.36",
+      "dpr": 1,
+      "visibility": "visible"
+    }
+  },
+  "warmups": 5,
+  "samples": 40,
+  "results": {
+    "checkbox": {
+      "dispatch": {
+        "count": 40,
+        "p50_ms": 0.138,
+        "p95_ms": 0.15,
+        "max_ms": 0.154
+      },
+      "animationCallbacks": {
+        "count": 135,
+        "p50_ms": 0.074,
+        "p95_ms": 0.156,
+        "max_ms": 0.614
+      },
+      "layout": {
+        "count": 45,
+        "p50_ms": 0.079,
+        "p95_ms": 0.096,
+        "max_ms": 0.108
+      },
+      "style": {
+        "count": 206,
+        "p50_ms": 0.042,
+        "p95_ms": 0.173,
+        "max_ms": 1.086
+      }
+    },
+    "text": {
+      "dispatch": {
+        "count": 40,
+        "p50_ms": 0.086,
+        "p95_ms": 0.098,
+        "max_ms": 0.106
+      },
+      "animationCallbacks": {
+        "count": 45,
+        "p50_ms": 0.027,
+        "p95_ms": 0.036,
+        "max_ms": 0.049
+      },
+      "layout": {
+        "count": 90,
+        "p50_ms": 0.06,
+        "p95_ms": 0.09,
+        "max_ms": 0.12
+      },
+      "style": {
+        "count": 12,
+        "p50_ms": 0.06,
+        "p95_ms": 0.088,
+        "max_ms": 0.088
+      }
+    },
+    "slider": {
+      "dispatch": {
+        "count": 40,
+        "p50_ms": 0.177,
+        "p95_ms": 0.204,
+        "max_ms": 0.228
+      },
+      "animationCallbacks": {
+        "count": 45,
+        "p50_ms": 0.027,
+        "p95_ms": 0.036,
+        "max_ms": 0.041
+      },
+      "layout": {
+        "count": 45,
+        "p50_ms": 0.077,
+        "p95_ms": 0.087,
+        "max_ms": 0.09
+      },
+      "style": {
+        "count": 57,
+        "p50_ms": 0.164,
+        "p95_ms": 0.187,
+        "max_ms": 0.189
+      }
+    },
+    "select": {
+      "dispatch": {
+        "count": 80,
+        "p50_ms": 0.403,
+        "p95_ms": 1.684,
+        "max_ms": 6.751
+      },
+      "animationCallbacks": {
+        "count": 225,
+        "p50_ms": 0.032,
+        "p95_ms": 0.095,
+        "max_ms": 0.191
+      },
+      "layout": {
+        "count": 135,
+        "p50_ms": 0.17,
+        "p95_ms": 0.204,
+        "max_ms": 0.274
+      },
+      "style": {
+        "count": 270,
+        "p50_ms": 0.12,
+        "p95_ms": 0.693,
+        "max_ms": 2.095
+      }
+    }
+  }
+}

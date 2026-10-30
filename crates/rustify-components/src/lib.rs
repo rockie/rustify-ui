@@ -10,6 +10,9 @@
 pub mod button;
 pub mod catalog;
 pub mod checkbox;
+pub mod checkbox_cards;
+pub mod checkbox_group;
+mod choice_style;
 #[cfg(all(test, rustify_repo_tests))]
 mod class_migration;
 pub mod color_field;
@@ -17,6 +20,7 @@ mod component_color;
 pub mod data_table;
 mod dom;
 pub mod drop_zone;
+mod field_style;
 pub mod file_picker;
 pub mod form;
 pub mod geometry;
@@ -30,8 +34,10 @@ pub mod link;
 pub mod macros;
 pub mod menu;
 pub mod number_field;
+pub mod primitives;
 pub mod progress;
 pub mod radio;
+pub mod radio_cards;
 pub mod responsive;
 pub mod roving;
 pub mod scroll_area;
@@ -43,6 +49,7 @@ pub mod textarea;
 pub mod theme;
 pub mod theme_panel;
 pub mod toast;
+pub mod toggle;
 pub mod toggle_group;
 pub mod tree;
 pub mod typography;
@@ -61,11 +68,21 @@ pub mod tooltip;
 pub use button::{Button, ButtonColorRole, ButtonSize, ButtonType, ButtonVariant};
 pub use catalog::{Capability, Category, Entry, Presentation, Support, CATALOG};
 pub use checkbox::Checkbox;
+pub use checkbox_cards::Root as CheckboxCards;
+pub use checkbox_group::{CheckboxGroup, CheckboxOption};
+pub use radio::Radio;
+pub use radio_cards::Root as RadioCards;
+pub mod radio_group {
+    pub use crate::radio::group::*;
+}
 pub use color_field::ColorField;
 pub use data_table::{Column, DataTable};
 pub use drop_zone::DropZone;
 pub use file_picker::FilePicker;
-pub use form::{provide_form, use_form, Field, FieldBinding, Form, FormStatus, SubmitButton};
+pub use form::{
+    provide_form, use_form, Field, FieldBinding, FieldErrorSource, Form, FormRoot, FormStatus,
+    SubmitButton,
+};
 pub use geometry::{provide_geometry_styles, GeometryStyles};
 pub use icon::{Glyph, Icon};
 pub use icon_button::IconButton;
@@ -79,13 +96,14 @@ pub use progress::Progress;
 pub use radio::{RadioGroup, RadioOption};
 pub use responsive::Responsive;
 pub use scroll_area::{Boundary, ScrollArea};
-pub use slider::Slider;
+pub use slider::{RangeSlider, Slider, SliderSize, SliderVariant, ThumbLabel, ThumbValue};
 pub use spinner::Spinner;
 pub use switch::Switch;
 pub use tabs::{Orientation, Tab, TabPanel, Tabs};
 pub use textarea::TextArea;
 pub use theme_panel::{ThemeOverrideCounts, ThemePanel};
 pub use toast::{Toast, Toaster};
+pub use toggle::Toggle;
 pub use toggle_group::{ToggleGroup, ToggleItem};
 pub use tree::Tree;
 pub use tree::TreeNode;
@@ -100,7 +118,9 @@ pub use dialog::Dialog;
 #[cfg(target_arch = "wasm32")]
 pub use menu::anchor_at;
 pub use menu::Menu;
-pub use select::{Select, SelectOption};
+pub use select::{
+    Select, SelectContentVariant, SelectEntry, SelectOption, SelectSize, SelectTriggerVariant,
+};
 pub use tooltip::Tooltip;
 
 /// The stylesheet every class these components use compiles to: the
@@ -315,3 +335,13 @@ mod stylesheet {
 
 #[cfg(all(test, rustify_repo_tests))]
 mod repo_tests;
+
+/// Theme-independent structural rules; no component skin or brand tokens.
+pub use primitives::PRIMITIVES_CSS;
+
+pub mod text_field {
+    pub use crate::input::*;
+}
+pub mod text_area {
+    pub use crate::textarea::*;
+}

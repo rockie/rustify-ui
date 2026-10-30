@@ -21,17 +21,18 @@ test.describe("configured selector keyboard scrolling", () => {
             await expect(trigger).toBeFocused();
             await page.keyboard.press("Enter");
             const list = page.getByTestId("studio-config-accent_color-list");
-            await expect(list).toBeFocused();
+            await expect(trigger).toBeFocused();
             const editor = page.locator("#studio-editor");
             const editorScroll = await editor.evaluate(element => element.scrollTop);
             const checkActivity = async () => {
-                await expect.poll(() => list.evaluate(element => {
+                await expect.poll(() => trigger.evaluate(element => {
                     const row = document.getElementById(element.getAttribute("aria-activedescendant")!);
-                    if (!row || row.dataset.active !== "true") return false;
-                    const bounds = element.getBoundingClientRect();
+                    const viewport = row?.closest('[data-rustify-part="select-viewport"]');
+                    if (!row?.hasAttribute("data-highlighted") || !viewport) return false;
+                    const bounds = viewport.getBoundingClientRect();
                     const active = row.getBoundingClientRect();
-                    const top = bounds.top + element.clientTop;
-                    return active.top >= top - 1 && active.bottom <= top + element.clientHeight + 1;
+                    const top = bounds.top + viewport.clientTop;
+                    return active.top >= top - 1 && active.bottom <= top + viewport.clientHeight + 1;
                 })).toBe(true);
                 expect(await editor.evaluate(element => element.scrollTop)).toBe(editorScroll);
             };
@@ -39,13 +40,13 @@ test.describe("configured selector keyboard scrolling", () => {
             await expect(list.getByRole("option", { selected: true })).toHaveText("Pink");
             await page.keyboard.press("ArrowDown");
             await checkActivity();
-            await expect(list.locator('[data-active="true"]')).toHaveText("Plum");
+            await expect(list.locator('[data-highlighted]')).toHaveText("Plum");
             await expect(list.getByRole("option", { selected: true })).toHaveText("Pink");
             await page.keyboard.press("Enter");
             await expect(trigger).toBeFocused();
             await expect(trigger).toHaveText("Plum");
             await page.keyboard.press("Enter");
-            await expect(list).toBeFocused();
+            await expect(trigger).toBeFocused();
             await checkActivity();
             for (const direction of ["ArrowDown", "ArrowUp"]) {
                 for (let step = 0; step < 28; step++) {
@@ -91,6 +92,9 @@ test.describe("dialog selector keyboard focus", () => {
             await page.keyboard.press("ArrowDown");
             await page.keyboard.press("ArrowDown");
             await page.keyboard.press("Enter");
+            await checkFocus("export-kind");
+            await page.keyboard.press("Tab");
+            await expect(page.getByTestId("export-setup-details").locator("summary")).toBeFocused();
             await page.keyboard.press("Tab");
             await checkFocus("export-profile");
             await page.keyboard.press("Tab");

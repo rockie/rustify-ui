@@ -69,6 +69,8 @@ web-sys = { workspace = true, features = [
     "Clipboard",
     # A text field has to know whether an input method is composing in it.
     "CompositionEvent",
+    "MutationObserver",
+    "MutationObserverInit",
     "Navigator",
     # Listeners and animation frames end with the instance's abort signal.
     "AbortSignal",

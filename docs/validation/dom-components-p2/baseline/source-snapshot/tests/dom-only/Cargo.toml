@@ -1,0 +1,8 @@
+# An application of the SDK as an outside consumer has it: its own workspace,
+# no patch from the repository root, and plain Cargo plus wasm-bindgen to
+# build. `consumer` is the DOM application; `gpu-opt-in` asks for GPU regions
+# and must build; `gpu-negative` does not ask and must not.
+[workspace]
+resolver = "2"
+members = ["consumer", "gpu-opt-in"]
+exclude = ["gpu-negative"]

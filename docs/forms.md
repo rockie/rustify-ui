@@ -7,6 +7,198 @@ A form here is a state machine, not a store. It holds what is wrong with each
 field, whether a validation is running, whether a save is in flight and whether
 anything has changed - and it deliberately does **not** hold the values.
 
+## Choose the public entry point
+
+The current source checkout provides both unstyled parts in
+`rustify_components::primitives` and themed parts in the matching top-level
+modules. They use the same controlled behavior. These additions are not part
+of the published 0.2.1 API; use matching source dependencies and styles as
+explained in the [migration guide](dom-components-migration.md).
+
+| Parts namespace | Composition |
+| --- | --- |
+| `checkbox`, `switch`, `radio` | Root, Control, Indicator or Thumb; Checkbox uses `CheckedState::Unchecked`, `Checked`, `Indeterminate` |
+| `checkbox_group`, `radio_group`, `toggle_group` | Root and Item; selection order and keyboard movement follow declared items |
+| `toggle` | Root is the native button |
+| `slider` | Root, Track, Range and stable, named Thumb parts |
+| `text_field`, `text_area` | TextField Root/Input/Slot; TextArea Root is the native textarea |
+| `number_field`, `color_field` | Root/Input and optional colour Swatch; focused input uses Draft |
+| `select` | Root/Trigger/Value/Icon, Content/Viewport, Group/Label, Item/ItemText/ItemIndicator, Separator and scroll buttons |
+| `form` | Root, Field, Label, Description and Message |
+
+Themed `checkbox_cards` and `radio_cards` use the same group behavior with
+label/description card content. The existing `Checkbox`, `Switch`,
+`RadioGroup`, `Select`, `Slider`, `TextField` and other convenience exports
+assemble the corresponding parts.
+
+For a page with unstyled parts, write `rustify_components::PRIMITIVES_CSS` and
+`rustify_ui::runtime::DOM_RUNTIME_CSS` to separate external stylesheets. Do not
+also load `rustify_components::CSS` on that page. Give custom sliders a visible
+track and thumb size in your own CSS; the structural stylesheet deliberately
+supplies no visual dimensions, brand palette, fonts or elevation. Public
+`data-rustify-part` and state attributes can be styled without depending on
+private wrapper depth.
+
+Themed consumers load `rustify_components::CSS`, or import `sdk.css` into the
+application's one Tailwind build. The themed stylesheet already includes the
+structural rules. [Quick start](quickstart.md#using-tailwind-v4-in-your-app)
+contains the build and asset recipe. ThemeScope supplies configured theme
+geometry; component classes do not load fonts or styles automatically.
+
+## A native form made from parts
+
+This example saves only to local component state. The application owns `title`
+and explicitly completes each save. Run it inside an SDK mount as described in
+[the DOM-only recipe](quickstart.md#a-dom-application-without-gpu-regions).
+
+```rust,ignore
+use leptos::prelude::*;
+use rustify_components::{primitives as p, Form};
+
+#[component]
+fn LocalForm() -> impl IntoView {
+    let title = RwSignal::new(String::new());
+    let saved = RwSignal::new(false);
+    let completion = StoredValue::new(None::<Form>);
+    let form = Form::new(&["title"], move || {
+        saved.set(true);
+        if let Some(form) = completion.get_value() {
+            form.submitted(Ok(()));
+        }
+    });
+    completion.set_value(Some(form));
+    view! {
+        <p::form::Root form=form rules=Vec::new
+            on_reset=Callback::new(move |_| {
+                title.set(String::new());
+                saved.set(false);
+                form.reset();
+            })>
+            <p::form::Field form=form field="title">
+                <p::form::Label>"Title"</p::form::Label>
+                <p::form::Description>"Required"</p::form::Description>
+                <p::text_field::Root value=title name="title" required=true
+                    on_change=move |next| {
+                        title.set(next);
+                        form.changed("title");
+                    }>
+                    <p::text_field::Input />
+                </p::text_field::Root>
+                <p::form::Message />
+            </p::form::Field>
+            <button type="submit">"Save locally"</button>
+            <button type="reset">"Reset"</button>
+            <output>{move || if saved.get() { "Saved locally" } else { "" }}</output>
+        </p::form::Root>
+    }
+}
+```
+
+For a themed version use `FormRoot`, `form::field::{Root, Label, Description,
+Message}` and `text_field::{Root, Input, Slot}`. The themed input convenience
+`TextField` is also valid inside the same Field. Keep the application's
+signals, save callback and `form.changed` calls unchanged.
+
+Root renders one native form and handles real submit/reset events. It flushes
+registered Draft/composition participants, checks the form's actual native
+controls and then calls the existing form owner. Native required controls
+outside a Field, including controls linked with `form=`, still block before
+rules or save callbacks. Nested FormRoot is diagnosed and does not create a
+second native form. The `on_reset` callback changes application values;
+FormRoot prevents the browser from silently restoring a second set of defaults.
+Reset is refused while saving.
+
+Inside FormRoot, SubmitButton is a native submit button and Root owns rules.
+Outside it, the existing direct SubmitButton path still calls the owner. Use
+native `name`, `form`, `required`, `disabled` and the controls' accepted values
+for FormData. No name means no submitted key. Anonymous radio groups retain
+independent identity without adding internal names to FormData; explicitly
+named groups in different forms may reuse a name.
+
+## Select metadata and independent content
+
+The entries exist while Content is closed, so SSR, Value and native form
+submission do not depend on mounting the popup. `text_value` is also the search
+text; rich Item children and group labels do not replace it.
+
+```rust,ignore
+use leptos::prelude::*;
+use rustify_components::primitives::select as s;
+
+#[component]
+fn Fruit() -> impl IntoView {
+    let value = RwSignal::new(None::<String>);
+    let open = RwSignal::new(false);
+    view! {
+        <s::Root value=value on_change={move |next: Option<String>| value.set(next)}
+            open=open on_open_change=move |next| open.set(next)
+            entries=vec![s::SelectEntry::new("a", "Apricot"),
+                         s::SelectEntry::new("b", "Banana")]
+            name="fruit" aria_label="Fruit">
+            <s::Trigger><s::Value placeholder="Choose fruit" /><s::Icon>"▾"</s::Icon></s::Trigger>
+            <s::Content><s::Viewport>
+                <s::Group><s::Label>"Fruit"</s::Label>
+                    <s::Item value="a"><s::ItemText />" · Orchard"<s::ItemIndicator>"✓"</s::ItemIndicator></s::Item>
+                    <s::Item value="b" />
+                </s::Group>
+            </s::Viewport></s::Content>
+        </s::Root>
+    }
+}
+```
+
+Put the Root inside your native form or FormRoot to submit `fruit`. The themed
+`select` module exposes the same parts; its default Item assembles text and a
+check indicator. The existing `Select`/`SelectOption` convenience view remains
+available, with empty string mapped to no selection. New entries must have
+unique, nonempty values. Unknown or removed accepted values display the
+placeholder and submit an empty mirror without changing the business signal.
+Illegal or missing Item/entry pairs expose `data-rustify-issue` and are not
+usable targets.
+
+Trigger retains focus. Arrows and Home/End navigate, Enter/Space request a
+selection, Tab requests closure and continues normal focus movement. Printable
+characters locate entries with a 1000ms prefix buffer; repeated characters
+cycle. Disabled entries are skipped. Read-only Select can inspect its list and
+continues submitting the accepted value, while refusing new value requests.
+Only mounted listboxes/options appear in `aria-controls`/`aria-activedescendant`.
+
+`on_select: Callback<Cancelable<String>>` runs synchronously before the value
+and close requests. `prevent_default()` cancels both. Optional Escape, outside
+pointer and opening/closing autofocus hooks also use Cancelable. Rejected or
+delayed application requests leave the accepted label/native mirror unchanged.
+Content lives in the creating scope's overlay and retains its direction/theme;
+its arbitrary attributes and native listeners reach the actual listbox.
+
+## Named sliders and input completion
+
+For multiple thumbs use `slider::Root` with `Vec<ThumbValue { id, value }>` and
+explicit Thumb parts, or `RangeSlider` with ThumbLabel declarations. Keep each
+id stable when values cross. `min_steps_between` and `preserve_order` describe
+normalization; displayed, ARIA and submitted values use that same normalized
+projection. A named Root emits repeated native names, readable with
+`FormData.getAll(name)`; retain business thumb identities in application state.
+
+Slider `on_change` requests previews. `on_commit` reports the last requested
+candidate once when a pointer/keyboard gesture completes, even if the
+application refused it; it does not report an invented accepted value. Escape
+or a lost capture cancels without a commit. Other thumbs continue updating by
+stable identity. Single-value Slider uses this same behavior.
+
+Text inputs and TextArea display accepted values and preserve selection when
+no native value write is necessary. IME composition does not publish partial
+input. Number/Color fields keep a focused Draft, with preview requests for
+parseable input and one completion on Enter, blur or FormRoot submit. Their
+named mirrors still hold accepted values. Read-only and disabled controls do
+not publish value requests.
+
+Source entry points: `crates/rustify-components/src/primitives/form.rs:74`,
+`crates/rustify-components/src/primitives/select.rs:227`, and
+`crates/rustify-components/src/primitives/slider.rs:177`. The
+[generated catalogue](components.md) lists the declared props and visual
+subsets; typed `control_as`/`trigger_as`/`item_as` and `primitives::Slot` accept
+known native Leptos targets, rather than arbitrary rendered component trees.
+
 ## Why the values are not here
 
 A controlled component's displayed value comes only from its `value` prop. If
@@ -61,6 +253,23 @@ by tests rather than by reading:
   field's generation at that moment. If any field moves on before the checks
   finish, the request is void: the user changed something after asking to save,
   and saving the thing they asked about is no longer what they asked for.
+
+## Error sources and reset
+
+A field retains separate Constraint, Rule, Check and Application errors and
+shows the first active one in that order. Re-running rules only replaces Rule;
+it cannot erase a failed asynchronous Check or an Application error.
+`changed(field)` clears that field's previous errors/pending validation and
+advances its generation. `set_error` retains its existing Rule meaning;
+`set_application_error` records an application result. Message renders a public
+`data-source` marker, and FieldBinding exposes `error_source()` for custom UI.
+
+`reset()` returns false during a save. Otherwise it clears errors/dirty state
+and advances generations, so old validation results and waiting submissions
+cannot revive the reset form. It does not reset your value signals.
+
+Source: `crates/rustify-dom/src/form.rs:35` and the public Form handle in
+`crates/rustify-components/src/form/provider.rs`.
 
 ## Fields the form does not have
 

@@ -7,6 +7,7 @@ use std::sync::Arc;
 
 #[derive(Clone, Copy)]
 pub(crate) struct State {
+    pub parts: crate::form_parts::Parts,
     pub count: RwSignal<u32>,
     pub text: RwSignal<String>,
     pub area: RwSignal<String>,
@@ -44,6 +45,7 @@ impl State {
         let mut selection = Selection::new();
         selection.set([101]);
         Self {
+            parts: crate::form_parts::Parts::new(),
             count: RwSignal::new(7),
             text: RwSignal::new("Résumé <&>".to_string()),
             area: RwSignal::new("\nRésumé </textarea> & <line>\r\nCRLF\rCR\nlast".to_string()),
@@ -80,6 +82,7 @@ impl State {
     #[cfg(target_arch = "wasm32")]
     pub fn snapshot(self) -> String {
         serde_json::json!({
+            "parts": self.parts.snapshot(),
             "count": self.count.get_untracked(),
             "text": self.text.get_untracked(),
             "area": self.area.get_untracked(),
@@ -277,6 +280,7 @@ pub(crate) fn CatalogView(scope: String) -> impl IntoView {
                     <Splitter test_id=id("splitter") sizes=state.sizes mins=vec![80.0, 80.0] on_resize=move |sizes| state.sizes.set(sizes) step=7.5 divider_label="Resize fixture panel" />
                 </div>
             </section>
+            <crate::form_parts::FormParts scope=scope.clone() state=state.parts />
             <section data-extra="asynchronous" class="harness-card">
                 <h3>"Browser work after attachment"</h3>
                 <output data-testid=id("asynchronous")>{move || state.asynchronous.get()}</output>

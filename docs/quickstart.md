@@ -258,9 +258,9 @@ and `rustify-dom-loader.js`, `rustify-runtime.css` and `rustify.css`. The page
 script boots one instance and then calls the application's own start:
 
 ```js
-import { boot, show_fatal } from "./rustify-dom-loader.js";
+import { boot } from "./rustify-dom-loader.js";
 
-const runtime = await boot({ glue_url: "./pkg/app.js", wasm_url: "./pkg/app_bg.wasm", on_fatal });
+const runtime = await boot({ glue_url: "./pkg/app.js", wasm_url: "./pkg/app_bg.wasm" });
 runtime.app.my_app_mount("app");
 ```
 
@@ -396,6 +396,33 @@ same numbers. `rustify_components::CATALOG` (printed in `docs/components.md`)
 says which categories exist and what each of them supports.
 
 `rustify_ui::mount(container, config, view)` returns an `AppHandle`; disposing it runs the scope's cleanups (destroying its regions) and unmounts the DOM. A GPU build's page loads the wasm through `web/loader.js` (`boot(...)`), which validates the bridge fingerprint and the runtime protocol and hands the host hooks to the runtime before the application's own exported entry points are called; `examples/fusion-basic/app.js` is the reference page script. A DOM build boots through the SDK's own loader instead ([above](#a-dom-application-without-gpu-regions)); `tests/dom-only/consumer/public/app.js` is its reference.
+
+## Composable form components from source
+
+The full DOM library is `rustify_components`; the smaller
+`rustify_ui::components` helpers in the example above retain their own API.
+For native FormRoot, three-state choices/groups/cards, named sliders, field
+slots and composed Select, use one matching **source checkout** for the core
+and components. These APIs are not supplied by the registry 0.2.1 pair above.
+For a consumer next to that checkout, replace its two framework dependencies:
+
+```toml
+rustify-ui = { package = "rustify-dom", path = "../rustify-ui/crates/rustify-dom" }
+rustify-components = { path = "../rustify-ui/crates/rustify-components" }
+```
+
+Keep the same Leptos/wasm-bindgen dependency versions and DOM build/boot recipe.
+A pure parts page writes and links DOM_RUNTIME_CSS plus
+`rustify_components::PRIMITIVES_CSS`; a themed page uses
+`rustify_components::CSS` or the single Tailwind product. Unstyled sliders need
+track/thumb dimensions from application CSS. No stylesheet is loaded by a
+component itself. The [Forms guide](forms.md) provides complete native-form and
+Select examples, error sources, accepted-value FormData and completion rules.
+
+Studio's Cards scene contains a complete local form and expandable
+**States and parts** tool. It can refuse or delay requests, switch between
+Primitives/Themes and show requests separately from accepted values. New form
+parts render in DOM; the existing GPU comparison remains available.
 
 ## More than one application on a page
 

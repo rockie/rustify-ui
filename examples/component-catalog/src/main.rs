@@ -937,12 +937,12 @@ mod app {
                         disabled=disabled
                         read_only=read_only
                         invalid=invalid
-                        on_preview=move |next| values.preview_number(next)
+                        on_preview=Some(Callback::new(move |next| values.preview_number(next)))
                         on_change=move |next| values.commit_number(next)
-                        on_cancel=move |_| {
+                        on_cancel=Some(Callback::new(move |_| {
                             values.asked("number cancel".to_string());
                             values.number.cancel();
-                        }
+                        }))
                     />
                     {live
                         .then(|| {
@@ -971,19 +971,19 @@ mod app {
                             disabled=disabled
                             read_only=read_only
                             invalid=invalid
-                            on_preview=move |next: String| {
+                            on_preview=Some(Callback::new(move |next: String| {
                                 values.asked(format!("{which} preview {next}"));
                                 edited.preview(next);
-                            }
+                            }))
                             on_change=move |next: String| {
                                 values.asked(format!("{which} commit {next}"));
                                 edited.commit(next);
                                 values.accept();
                             }
-                            on_cancel=move |_| {
+                            on_cancel=Some(Callback::new(move |_| {
                                 values.asked(format!("{which} cancel"));
                                 edited.cancel();
-                            }
+                            }))
                         />
                     }
                 };

@@ -15,7 +15,7 @@ use std::collections::BTreeSet;
 use std::sync::Arc;
 
 const TREE: &str = "flex flex-col gap-0.5 overflow-auto p-1 text-sm outline-none";
-const ITEM: &str = "flex w-full items-center gap-1 rounded px-2 py-1 text-left cursor-pointer select-none outline-none hover:bg-accent/50 focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-selected:bg-accent";
+const ITEM: &str = "flex w-full items-center gap-1 rounded pr-2 py-1 text-left cursor-pointer select-none outline-none hover:bg-accent/50 focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-selected:bg-accent";
 
 /// One group. A group with children is a level the arrows can open.
 #[derive(Clone, Debug, PartialEq, Eq)]

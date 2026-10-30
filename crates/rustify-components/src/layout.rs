@@ -425,7 +425,7 @@ impl From<String> for GridTracks {
     }
 }
 impl GridTracks {
-    fn css(&self, field: &'static str) -> Result<String, PropError> {
+    pub(crate) fn css(&self, field: &'static str) -> Result<String, PropError> {
         match self {
             Self::Count(count) if (1..=9).contains(count) => {
                 Ok(format!("repeat({count}, minmax(0, 1fr))"))

@@ -30,6 +30,7 @@ fn tr(locale: Locale, en: &'static str, zh: &'static str) -> &'static str {
 pub fn ScenePreview(
     #[prop(into)] scene: Signal<String>,
     #[prop(into)] locale: Signal<Locale>,
+    #[prop(optional, into)] reset_epoch: Signal<u64>,
 ) -> impl IntoView {
     let scene = Memo::new(move |_| scene.get());
     view! {
@@ -44,14 +45,14 @@ pub fn ScenePreview(
                 "Mail" => view! { <MailScene locale=locale /> }.into_any(),
                 "Typography" => view! { <TypographyScene locale=locale /> }.into_any(),
                 "Color Palette" => view! { <PaletteScene locale=locale /> }.into_any(),
-                _ => view! { <CardsScene locale=locale /> }.into_any(),
+                _ => view! { <CardsScene locale=locale reset_epoch=reset_epoch /> }.into_any(),
             }}
         </div>
     }
 }
 
 #[component]
-fn CardsScene(locale: Signal<Locale>) -> impl IntoView {
+fn CardsScene(locale: Signal<Locale>, reset_epoch: Signal<u64>) -> impl IntoView {
     let name = RwSignal::new(String::new());
     let email = RwSignal::new(String::new());
     let terms = RwSignal::new(false);
@@ -149,6 +150,7 @@ fn CardsScene(locale: Signal<Locale>) -> impl IntoView {
                     <Button on_click=move || confirmation.set(false) variant=ButtonVariant::Outline test_id="cards-cancel">{move || tr(locale.get(), "Cancel", "取消")}</Button>
                 </div>
             </Dialog>
+            <For each=move || vec![reset_epoch.get()] key=|epoch| *epoch children=move |_| view! { <crate::form_samples::FormSamples locale=locale /> } />
         </section>
     }
 }

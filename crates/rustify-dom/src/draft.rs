@@ -26,6 +26,7 @@
 #[derive(Clone, Debug, PartialEq)]
 struct Session<T> {
     focused: bool,
+    composing: bool,
     /// What has been typed since focus, a commit or a revert. `None` while
     /// untouched, and then the field shows the application's value.
     edit: Option<Edit<T>>,
@@ -56,6 +57,7 @@ impl<T> Default for Session<T> {
     fn default() -> Self {
         Self {
             focused: false,
+            composing: false,
             edit: None,
         }
     }
@@ -65,11 +67,19 @@ impl<T> Default for Session<T> {
 impl<T: Clone> Session<T> {
     fn focus(&mut self) {
         self.focused = true;
+        self.composing = false;
         self.edit = None;
+    }
+
+    fn set_composing(&mut self, composing: bool) {
+        self.composing = composing;
     }
 
     /// The field now holds `text`, which parses to `value`.
     fn input(&mut self, text: String, value: Option<T>) -> Option<Request<T>> {
+        if self.composing {
+            return None;
+        }
         // An input can arrive without a focus event before it - a value set by
         // an extension or a test - and it is an edit all the same.
         self.focused = true;
@@ -87,6 +97,9 @@ impl<T: Clone> Session<T> {
     /// Enter: the edit so far becomes one commit, and the field stays focused
     /// on the application's value.
     fn commit(&mut self) -> Option<Request<T>> {
+        if self.composing {
+            return None;
+        }
         let edit = self.edit.take()?;
         edit.value.or(edit.previewed).map(Request::Commit)
     }
@@ -94,6 +107,9 @@ impl<T: Clone> Session<T> {
     /// Leaving the field commits, and the field shows the application's
     /// value again.
     fn blur(&mut self) -> Option<Request<T>> {
+        if self.composing {
+            return None;
+        }
         let request = self.commit();
         self.focused = false;
         request
@@ -101,6 +117,9 @@ impl<T: Clone> Session<T> {
 
     /// Escape: the draft goes, and a preview is asked to be taken back.
     fn escape(&mut self) -> Option<Request<T>> {
+        if self.composing {
+            return None;
+        }
         let edit = self.edit.take()?;
         edit.previewed.map(|_| Request::Cancel)
     }
@@ -213,7 +232,7 @@ mod dom {
             // A field that goes away mid-edit must not leave its Escape handler
             // registered with the scope.
             on_cleanup(move || {
-                if draft.touched() {
+                if draft.touched() || draft.is_composing() {
                     draft.leave_stack();
                 }
             });
@@ -256,6 +275,18 @@ mod dom {
             self.invalid.into()
         }
 
+        /// The field's native IME composition state, also read by its layer stack.
+        pub fn composing(&self) -> Signal<bool> {
+            let this = *self;
+            Signal::derive(move || this.session.with(|session| session.composing))
+        }
+
+        /// Called by the native composition boundary before it publishes input.
+        /// The stack immediately reserves Escape while composition is in flight.
+        pub fn set_composing(&self, composing: bool) {
+            self.change(move |session| session.set_composing(composing));
+        }
+
         /// For `on:focus`: an edit starts from the application's value.
         pub fn on_focus(&self) -> impl Fn(FocusEvent) + Copy + 'static {
             let this = *self;
@@ -267,6 +298,9 @@ mod dom {
         pub fn on_input(&self) -> impl Fn(Event) + Copy + 'static {
             let this = *self;
             move |event| {
+                if this.is_composing() {
+                    return;
+                }
                 let text = event_target_value(&event);
                 let Some(value) = this.hooks.try_with_value(|hooks| (hooks.parse)(&text)) else {
                     return;
@@ -282,7 +316,7 @@ mod dom {
             move |event| {
                 // Keys pressed while an input method is composing belong to
                 // the composition.
-                if event.is_composing() {
+                if event.is_composing() || this.is_composing() {
                     return;
                 }
                 match event.key().as_str() {
@@ -301,10 +335,13 @@ mod dom {
         /// again.
         pub fn on_blur(&self) -> impl Fn(FocusEvent) + Copy + 'static {
             let this = *self;
-            move |_| {
-                let request = this.change(Session::blur);
-                this.ask(request);
-            }
+            move |_| this.blur()
+        }
+
+        /// Ends a native focus session after composition has finished.
+        pub fn blur(&self) {
+            let request = self.change(Session::blur);
+            self.ask(request);
         }
 
         /// Ends the edit as Enter does: what was typed becomes one commit
@@ -325,6 +362,12 @@ mod dom {
                 .unwrap_or(false)
         }
 
+        fn is_composing(&self) -> bool {
+            self.session
+                .try_with_untracked(|session| session.composing)
+                .unwrap_or(false)
+        }
+
         fn revert(&self) {
             let request = self.change(Session::escape);
             self.ask(request);
@@ -334,12 +377,17 @@ mod dom {
         /// the scope's Escape handler in step with it.
         fn change<R: Default>(&self, f: impl FnOnce(&mut Session<T>) -> R) -> R {
             let before = self.touched();
+            let was_composing = self.is_composing();
+            let registered = before || was_composing;
             let changed = self.session.try_maybe_update(|session| {
                 let result = f(session);
                 let touched = session.touched();
-                // Only the end of an edit changes what the field shows: until
-                // then it shows the draft, which is what is already in it.
-                (before && !touched, (result, touched, session.invalid()))
+                // Ordinary input already lives in the editor. Notify only at
+                // edit/composition boundaries; the field guards native writes.
+                (
+                    before && !touched || was_composing != session.composing,
+                    (result, touched || session.composing, session.invalid()),
+                )
             });
             let Some((result, touched, invalid)) = changed else {
                 return R::default();
@@ -347,7 +395,7 @@ mod dom {
             if self.invalid.get_untracked() != invalid {
                 self.invalid.set(invalid);
             }
-            match (before, touched) {
+            match (registered, touched) {
                 (false, true) => self.join_stack(),
                 (true, false) => self.leave_stack(),
                 _ => {}
@@ -365,9 +413,7 @@ mod dom {
                 let stack = self.hooks.with_value(|hooks| hooks.stack.clone());
                 if let Some(stack) = stack {
                     stack.begin_edit(EditSession {
-                        // Not followed: the values a draft is for - numbers,
-                        // colours - are not typed through an input method.
-                        composing: Arc::new(|| false),
+                        composing: Arc::new(move || this.is_composing()),
                         cancel: Arc::new(move || this.revert()),
                     });
                 }
@@ -744,5 +790,23 @@ mod tests {
         assert_eq!(session.text(|| "10".into()), "5");
         assert_eq!(session.blur(), Some(Commit(5.0)));
         assert_eq!(session.text(|| "10".into()), "10");
+    }
+    #[test]
+    fn composition_defers_input_commit_escape_and_blur_until_it_ends() {
+        let mut session = Session::default();
+        session.focus();
+        assert_eq!(
+            session.input("2".into(), Some(2.0)),
+            Some(Request::Preview(2.0))
+        );
+        session.set_composing(true);
+        assert_eq!(session.input("unfinished".into(), None), None);
+        assert_eq!(session.commit(), None);
+        assert_eq!(session.escape(), None);
+        assert_eq!(session.blur(), None);
+        assert!(session.touched());
+        session.set_composing(false);
+        assert_eq!(session.blur(), Some(Request::Commit(2.0)));
+        assert_eq!(session.text(|| "accepted".into()), "accepted");
     }
 }

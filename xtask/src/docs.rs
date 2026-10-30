@@ -964,6 +964,25 @@ fn features() -> Result<(), String> {
         &graph(&mut mbx(), &manifest, "dom-consumer")?,
     )?;
     check_product(&output)?;
+    let primitives_manifest = fixture.join("primitives/Cargo.toml");
+    let primitives_output = build(&primitives_manifest, None)?;
+    check_graph(
+        "dom-primitives (in the repository, path dependencies)",
+        &graph(&mut mbx(), &primitives_manifest, "dom-primitives")?,
+    )?;
+    check_product(&primitives_output)?;
+    for skin in ["rustify.css", "sdk.css", "theme-v4.css"] {
+        if primitives_output.join(skin).exists() {
+            return Err(format!("unstyled product includes {skin}"));
+        }
+    }
+    let structural = primitives_output.join("primitives.css");
+    let expected = root.join("crates/rustify-components/css/primitives.css");
+    if std::fs::read(&structural).map_err(|error| error.to_string())?
+        != std::fs::read(&expected).map_err(|error| error.to_string())?
+    {
+        return Err("unstyled structural CSS differs from the packaged source".into());
+    }
     check_gpu_switch(mbx, &fixture)?;
     check_library_copies(&root)?;
     check_docs_graphs(&root)?;

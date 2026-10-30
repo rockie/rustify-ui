@@ -42,6 +42,8 @@
 /* The rules no utility expresses. Both are scoped to this SDK's own root; the
    slider's came from Rust/UI, where it selected the host page's range controls
    through a bare element selector. */
+@import "./primitives.css";
+@import "./form-controls.css";
 @import "./slider.css";
 @import "./controls.css";
 @import "./button.css";

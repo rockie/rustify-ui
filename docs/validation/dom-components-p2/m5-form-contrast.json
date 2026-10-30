@@ -1,0 +1,72 @@
+[
+  {
+    "mode": "light",
+    "rows": [
+      {
+        "name": "shell text",
+        "color": "rgb(23, 92, 211)",
+        "minimum": 4.5,
+        "ratio": 5.570567693861603
+      },
+      {
+        "name": "field text",
+        "color": "rgb(29, 41, 57)",
+        "minimum": 4.5,
+        "ratio": 14.70074593586825
+      },
+      {
+        "name": "field boundary",
+        "color": "rgb(139 141 152)",
+        "minimum": 3,
+        "ratio": 3.30129309753753
+      },
+      {
+        "name": "field keyboard focus",
+        "color": "rgb(29, 41, 57)",
+        "minimum": 3,
+        "ratio": 14.70074593586825
+      },
+      {
+        "name": "unchecked choice boundary",
+        "color": "rgb(139, 141, 152)",
+        "minimum": 3,
+        "ratio": 3.1590540832085683
+      }
+    ]
+  },
+  {
+    "mode": "dark",
+    "rows": [
+      {
+        "name": "shell text",
+        "color": "rgb(23, 92, 211)",
+        "minimum": 4.5,
+        "ratio": 5.570567693861603
+      },
+      {
+        "name": "field text",
+        "color": "rgb(249, 250, 251)",
+        "minimum": 4.5,
+        "ratio": 16.98196724143105
+      },
+      {
+        "name": "field boundary",
+        "color": "rgb(105 110 119)",
+        "minimum": 3,
+        "ratio": 3.462618757952176
+      },
+      {
+        "name": "field keyboard focus",
+        "color": "rgb(249, 250, 251)",
+        "minimum": 3,
+        "ratio": 16.98196724143105
+      },
+      {
+        "name": "unchecked choice boundary",
+        "color": "rgb(105, 110, 119)",
+        "minimum": 3,
+        "ratio": 3.679575999634346
+      }
+    ]
+  }
+]

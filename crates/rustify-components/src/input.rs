@@ -1,142 +1,142 @@
-//! One line of text the application owns.
+//! Themed TextField parts over the shared native editing boundary.
 
+use crate::{primitives, Responsive};
 use leptos::prelude::*;
-
-const BASE: &str = "flex h-9 w-full min-w-0 rounded-md border border-border bg-input text-foreground px-3 py-1 text-sm transition-colors outline-none placeholder:text-muted-foreground focus-visible:ring-ring/50 focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 read-only:bg-muted aria-invalid:border-destructive aria-invalid:ring-destructive/40";
-
-/// Which keyboard the browser offers and which value it will accept.
-///
-/// Rust/UI's list had fifteen; these are the ones with a keyboard or a
-/// validation rule of their own. `File` and `Color` are their own controls and
-/// are not text fields, and `Hidden` is not a control at all.
-#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub enum TextKind {
-    #[default]
-    Text,
-    Email,
-    Password,
-    Number,
-    Search,
-    Tel,
-    Url,
+use rustify_ui::{AccentColor, ThemeRadius};
+crate::choice_style::visual_types!(TextFieldSize, TextFieldVariant);
+pub use primitives::field::{SlotSide, TextKind};
+#[component]
+pub fn Root(
+    #[prop(into)] value: Signal<String>,
+    #[prop(into)] on_change: Callback<String>,
+    #[prop(optional)] kind: TextKind,
+    #[prop(optional, into)] id: String,
+    #[prop(optional, into)] name: String,
+    #[prop(optional, into)] form: String,
+    #[prop(optional, into)] aria_label: String,
+    #[prop(optional, into)] labelled_by: String,
+    #[prop(optional, into)] described_by: Signal<String>,
+    #[prop(optional, into)] placeholder: String,
+    #[prop(optional, into)] autocomplete: String,
+    #[prop(optional, into)] inputmode: String,
+    #[prop(optional, into)] required: Signal<bool>,
+    #[prop(optional, into)] disabled: Signal<bool>,
+    #[prop(optional, into)] read_only: Signal<bool>,
+    #[prop(optional, into)] invalid: Signal<bool>,
+    #[prop(optional_no_strip, into)] pattern: Option<String>,
+    #[prop(optional_no_strip, into)] minlength: Option<u32>,
+    #[prop(optional_no_strip, into)] maxlength: Option<u32>,
+    #[prop(optional, into)] size: Signal<Responsive<TextFieldSize>>,
+    #[prop(optional, into)] variant: Signal<TextFieldVariant>,
+    #[prop(optional, into)] color: Signal<Option<AccentColor>>,
+    #[prop(optional, into)] radius: Signal<Option<ThemeRadius>>,
+    #[prop(optional, into)] class: Signal<String>,
+    #[prop(optional, into)] input_class: String,
+    #[prop(optional, into)] test_id: String,
+    children: Children,
+) -> impl IntoView {
+    let classes = crate::field_style::classes(
+        Signal::derive(move || size.get().map(|size| size.number())),
+        color,
+        radius,
+        class,
+        false,
+    );
+    view! { <primitives::text_field::Root value=value on_change=on_change kind=kind
+        id=id name=name form=form aria_label=aria_label labelled_by=labelled_by described_by=described_by placeholder=placeholder autocomplete=autocomplete inputmode=inputmode required=required disabled=disabled read_only=read_only invalid=invalid pattern=pattern minlength=minlength maxlength=maxlength class=classes input_class=input_class test_id=test_id>
+        {children()}
+    </primitives::text_field::Root> }.add_any_attr((leptos::attr::custom::custom_attribute("data-name", "TextField"),
+        leptos::attr::custom::custom_attribute("data-variant", move || variant.get().as_str())))
 }
-
-impl TextKind {
-    fn attribute(self) -> &'static str {
-        match self {
-            Self::Text => "text",
-            Self::Email => "email",
-            Self::Password => "password",
-            Self::Number => "number",
-            Self::Search => "search",
-            Self::Tel => "tel",
-            Self::Url => "url",
-        }
-    }
+#[component]
+pub fn Input(
+    #[prop(optional, into)] class: String,
+    #[prop(optional, into)] test_id: String,
+) -> impl IntoView {
+    view! { <primitives::field::Input class=format!("rustify-field-input {class}") test_id=test_id /> }
 }
-
-/// A text field whose value is the application's.
-///
-/// After every keystroke the control is put back in step with what the
-/// application holds: a value it refused is not left on screen pretending to
-/// have been taken. That is the same rule the SDK's own `TextField` follows,
-/// and the reason both can be bound to one value without disagreeing.
+/// Styles the actual caller-supplied input without adding another editor.
+pub fn control_as<At, Ch>(
+    target: leptos::html::HtmlElement<leptos::html::Input, At, Ch>,
+) -> impl IntoView
+where
+    At: leptos::attr::Attribute + Send,
+    Ch: RenderHtml + Send,
+{
+    primitives::text_field::control_as(target).add_any_attr(leptos::tachys::html::class::class((
+        "rustify-field-input",
+        true,
+    )))
+}
 #[component]
 pub fn TextField(
     #[prop(into)] value: Signal<String>,
     on_change: impl Fn(String) + 'static,
     #[prop(optional)] kind: TextKind,
-    /// The id other elements point at - a `Label`'s `control`, a form's error
-    /// message. Generated when the caller has no opinion.
-    #[prop(optional, into)]
-    id: String,
-    /// The accessible name, when no `Label` provides one.
-    #[prop(optional, into)]
-    aria_label: String,
+    #[prop(optional, into)] id: String,
+    #[prop(optional, into)] name: String,
+    #[prop(optional, into)] form: String,
+    #[prop(optional, into)] aria_label: String,
+    #[prop(optional, into)] labelled_by: String,
+    #[prop(optional, into)] described_by: Signal<String>,
     #[prop(optional, into)] placeholder: String,
+    #[prop(optional, into)] autocomplete: String,
+    #[prop(optional, into)] inputmode: String,
+    #[prop(optional, into)] required: Signal<bool>,
     #[prop(optional, into)] disabled: Signal<bool>,
     #[prop(optional, into)] read_only: Signal<bool>,
     #[prop(optional, into)] invalid: Signal<bool>,
-    /// The id of the text that explains the value - an error, a hint.
-    #[prop(optional, into)]
-    described_by: Signal<String>,
+    #[prop(optional_no_strip, into)] pattern: Option<String>,
+    #[prop(optional_no_strip, into)] minlength: Option<u32>,
+    #[prop(optional_no_strip, into)] maxlength: Option<u32>,
+    #[prop(optional, into)] size: Signal<Responsive<TextFieldSize>>,
+    #[prop(optional, into)] variant: Signal<TextFieldVariant>,
+    #[prop(optional, into)] color: Signal<Option<AccentColor>>,
+    #[prop(optional, into)] radius: Signal<Option<ThemeRadius>>,
     #[prop(optional, into)] class: String,
+    #[prop(optional, into)] input_class: String,
     #[prop(optional, into)] test_id: String,
+    #[prop(optional)] children: Option<Children>,
 ) -> impl IntoView {
-    let id = if id.is_empty() {
-        crate::id::next("field")
-    } else {
-        id
-    };
-    let aria_label = (!aria_label.is_empty()).then_some(aria_label);
-    let placeholder = (!placeholder.is_empty()).then_some(placeholder);
-    let node = NodeRef::<leptos::html::Input>::new();
-    // Whether an input method is composing in this field right now.
-    let composing = StoredValue::new(false);
-    // Two handlers report now - an ordinary keystroke and the end of a
-    // composition - and the application gave us one callback.
-    let on_change = std::rc::Rc::new(on_change);
-    let on_composed = std::rc::Rc::clone(&on_change);
-    let settle = move || {
-        if let Some(input) = node.get_untracked() {
-            let held = value.get_untracked();
-            if input.value() != held {
-                input.set_value(&held);
-            }
+    let on_change = StoredValue::new_local(on_change);
+    let on_change = Callback::new(move |value| on_change.with_value(|change| change(value)));
+    view! { <Root value=value on_change=on_change kind=kind
+        id=id name=name form=form aria_label=aria_label labelled_by=labelled_by described_by=described_by placeholder=placeholder autocomplete=autocomplete inputmode=inputmode required=required disabled=disabled read_only=read_only invalid=invalid pattern=pattern minlength=minlength maxlength=maxlength size=size variant=variant color=color radius=radius class=class input_class=input_class test_id=test_id>
+        <Input />{children.map(|children| children())}
+    </Root> }
+}
+
+/// Themed logical decoration. Its color is independent of the Root's color.
+#[component]
+pub fn Slot(
+    #[prop(optional)] side: SlotSide,
+    #[prop(optional, into)] color: Signal<Option<AccentColor>>,
+    #[prop(optional, into)] gap: Signal<Responsive<crate::Spacing>>,
+    #[prop(optional, into)] px: Signal<Responsive<crate::Spacing>>,
+    #[prop(optional, into)] pl: Signal<Responsive<crate::Spacing>>,
+    #[prop(optional, into)] pr: Signal<Responsive<crate::Spacing>>,
+    #[prop(optional, into)] class: String,
+    children: Children,
+) -> impl IntoView {
+    let mode = crate::component_color::use_mode();
+    let geometry = crate::geometry::style_class(move || {
+        let mut styles = crate::geometry::StyleSet::default();
+        crate::Gap {
+            gap: gap.get(),
+            ..Default::default()
         }
-    };
-    view! {
-        <input
-            node_ref=node
-            type=kind.attribute()
-            id=id
-            class=crate::macros::reactive_merge(BASE, &class)
-            data-name="TextField"
-            data-testid=test_id
-            placeholder=placeholder
-            aria-label=aria_label
-            aria-invalid=move || invalid.get().then_some("true")
-            aria-describedby=move || {
-                let described_by = described_by.get();
-                (!described_by.is_empty()).then_some(described_by)
-            }
-            aria-readonly=move || read_only.get().then_some("true")
-            value=move || value.get()
-            disabled=move || disabled.get()
-            readonly=move || read_only.get()
-            prop:value=move || value.get()
-            prop:disabled=move || disabled.get()
-            prop:readOnly=move || read_only.get()
-            on:compositionstart=move |_| composing.set_value(true)
-            on:compositionend:target=move |ev| {
-                // The composition is over and the user has chosen. This is the
-                // first moment the field holds a value rather than the keys
-                // that were being used to look one up.
-                composing.set_value(false);
-                let chosen = ev.target().value();
-                if !disabled.get_untracked() && !read_only.get_untracked() {
-                    on_composed(chosen);
-                }
-                settle();
-            }
-            on:input:target=move |ev| {
-                // A composition in flight is not a value. An input method puts
-                // the keys being used to *look up* a character into the field -
-                // pinyin, a bopomofo string, a partial Hangul syllable - and
-                // reporting those to the application would name an object
-                // "gongzuo" and leave it named that if the user changed their
-                // mind. Settling is skipped for the same reason: writing the
-                // held value back into the element mid-composition takes the
-                // input method's own text away from it.
-                if composing.get_value() {
-                    return;
-                }
-                let typed = ev.target().value();
-                if !disabled.get_untracked() && !read_only.get_untracked() {
-                    on_change(typed);
-                }
-                settle();
-            }
-        />
-    }
+        .write(&mut styles)?;
+        crate::Padding {
+            px: px.get(),
+            pl: pl.get(),
+            pr: pr.get(),
+            ..Default::default()
+        }
+        .write(&mut styles)?;
+        crate::component_color::set_color(&mut styles, color.get(), mode.get())?;
+        Ok(styles)
+    });
+    view! { <primitives::text_field::Slot side=side class=format!("rustify-color rustify-field-slot {geometry} {class}")>
+        {children()}
+    </primitives::text_field::Slot> }.add_any_attr(leptos::attr::custom::custom_attribute("data-color", move || color.get().map(AccentColor::as_str)))
 }

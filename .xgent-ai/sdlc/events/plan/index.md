@@ -9,6 +9,7 @@
 | 37a2c7b4-7052-4f85-96e9-135b6f7667a1 | DOM-COMPONENTS-P1 事件 | [入口](37a2c7b4-7052-4f85-96e9-135b6f7667a1/index.md) |
 | 41817647-c138-4651-a076-a022339fd6bc | 子目录入口 | [41817647-c138-4651-a076-a022339fd6bc](41817647-c138-4651-a076-a022339fd6bc/index.md) |
 | 526c88c7-a4b3-4ea9-9193-371420b66d1d | 子目录入口 | [526c88c7-a4b3-4ea9-9193-371420b66d1d](526c88c7-a4b3-4ea9-9193-371420b66d1d/index.md) |
+| 667600ae-475d-405d-a2be-44f97c89e1b3 | DOM-COMPONENTS-P2 事件 | [入口](667600ae-475d-405d-a2be-44f97c89e1b3/index.md) |
 | 7493fc99-98cd-4d7e-aaa7-ac842d36d490 | 子目录入口 | [7493fc99-98cd-4d7e-aaa7-ac842d36d490](7493fc99-98cd-4d7e-aaa7-ac842d36d490/index.md) |
 | 7c105838-be0d-4f3b-ae5c-9998b8f4cfdc | 子目录入口 | [对象事件](7c105838-be0d-4f3b-ae5c-9998b8f4cfdc/index.md) |
 | 9d18c85f-ac5e-4c1d-9c21-c938474537eb | 子目录入口 | [9d18c85f-ac5e-4c1d-9c21-c938474537eb](9d18c85f-ac5e-4c1d-9c21-c938474537eb/index.md) |

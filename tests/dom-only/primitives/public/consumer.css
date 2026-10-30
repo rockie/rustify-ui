@@ -1,0 +1,8 @@
+/* A consumer can style the public state protocol without private selectors. */
+[data-rustify-part="trigger"] { border: 2px solid currentColor; }
+[data-state="checked"] { text-decoration: underline; }
+
+.sample-track { width: 300px; height: 12px; margin: 24px; background: #ddd; }
+.sample-vertical { width: 12px; height: 150px; margin: 24px; background: #ddd; }
+.sample-thumb { width: 20px; height: 20px; border: 2px solid currentColor; border-radius: 50%; background: white; }
+.sample-range { background: #777; }

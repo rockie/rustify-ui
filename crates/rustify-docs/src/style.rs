@@ -23,11 +23,14 @@ const TAILWIND_PREFLIGHT: &str = include_str!("../assets/tailwindcss/preflight.c
 /// What `tailwindcss/utilities.css` holds upstream; not worth a file.
 const TAILWIND_UTILITIES: &str = "@tailwind utilities;\n";
 const SDK_LAYER: &str = rustify_components::styles::SDK;
+const SDK_PRIMITIVES: &str = rustify_components::styles::PRIMITIVES;
+const SDK_FORM_CONTROLS: &str = rustify_components::styles::FORM_CONTROLS;
 const SDK_SLIDER: &str = rustify_components::styles::SLIDER;
 const SDK_CONTROLS: &str = rustify_components::styles::CONTROLS;
 const SDK_BUTTON: &str = rustify_components::styles::BUTTON;
 const SDK_LAYOUT: &str = rustify_components::styles::LAYOUT;
 const SDK_TYPOGRAPHY: &str = rustify_components::styles::TYPOGRAPHY;
+const SDK_THEME_PANEL: &str = rustify_components::styles::THEME_PANEL;
 const DOCS_LAYER: &str = include_str!("../assets/docs.css");
 
 /// The SDK layer's dark variant follows a scope's own `data-theme`. A
@@ -246,11 +249,14 @@ fn assets() -> Result<Vec<Stylesheet>, StyleError> {
         asset("tailwindcss/preflight.css", TAILWIND_PREFLIGHT),
         asset("tailwindcss/utilities.css", TAILWIND_UTILITIES),
         asset("/rustify-docs/sdk.css", &sdk_layer()?),
+        asset("/rustify-docs/primitives.css", SDK_PRIMITIVES),
+        asset("/rustify-docs/form-controls.css", SDK_FORM_CONTROLS),
         asset("/rustify-docs/slider.css", SDK_SLIDER),
         asset("/rustify-docs/controls.css", SDK_CONTROLS),
         asset("/rustify-docs/button.css", SDK_BUTTON),
         asset("/rustify-docs/layout.css", SDK_LAYOUT),
         asset("/rustify-docs/typography.css", SDK_TYPOGRAPHY),
+        asset("/rustify-docs/theme-panel.css", SDK_THEME_PANEL),
         asset("/rustify-docs/docs.css", DOCS_LAYER),
     ])
 }

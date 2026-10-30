@@ -8,7 +8,7 @@
 //! once, and the two moments are this module's problem.
 
 use leptos::prelude::*;
-use rustify_ui::{FormState, Generation, Submit};
+use rustify_ui::{FieldErrorSource, FormState, Generation, Submit};
 use std::sync::Arc;
 
 /// One form, as an application and its components both see it.
@@ -18,6 +18,7 @@ pub struct Form {
     /// Distinguishes two forms on one page whose fields are named the same.
     group: StoredValue<String>,
     save: StoredValue<Arc<dyn Fn() + Send + Sync>>,
+    focus: StoredValue<Option<(String, Callback<&'static str>)>>,
 }
 
 impl Form {
@@ -28,6 +29,7 @@ impl Form {
             state: RwSignal::new(FormState::new(fields)),
             group: StoredValue::new(crate::id::next("form")),
             save: StoredValue::new(Arc::new(save)),
+            focus: StoredValue::new(None),
         }
     }
 
@@ -40,6 +42,11 @@ impl Form {
     /// The id of the element holding a field's error text.
     pub fn error_id(&self, field: &'static str) -> String {
         format!("{}-{field}-error", self.group.get_value())
+    }
+
+    /// The id of the field's optional description text.
+    pub fn description_id(&self, field: &'static str) -> String {
+        format!("{}-{field}-description", self.group.get_value())
     }
 
     /// The application took a new value for this field.
@@ -70,6 +77,26 @@ impl Form {
     /// An error from a rule the application ran itself.
     pub fn set_error(&self, field: &'static str, error: Option<String>) {
         self.state.update(|state| state.set_error(field, error));
+    }
+
+    pub fn set_application_error(&self, field: &'static str, error: Option<String>) {
+        self.state
+            .update(|state| state.set_application_error(field, error));
+    }
+
+    pub fn set_constraint_error(&self, field: &'static str, error: Option<String>) {
+        self.state
+            .update(|state| state.set_constraint_error(field, error));
+    }
+
+    pub fn error_source(&self, field: &'static str) -> Option<FieldErrorSource> {
+        self.state.with(|state| state.error_source(field))
+    }
+
+    /// Resets validation bookkeeping after the application resets its values.
+    /// Returns false while a save is in flight; the current session is retained.
+    pub fn reset(&self) -> bool {
+        self.state.try_update(FormState::reset).unwrap_or(false)
     }
 
     /// Ask to submit. `rules` is every synchronous check, including the ones
@@ -112,12 +139,48 @@ impl Form {
         self.state.with(|state| state.fields().to_vec())
     }
 
+    pub(crate) fn same(self, other: Self) -> bool {
+        self.group == other.group
+    }
+    #[cfg(target_arch = "wasm32")]
+    pub(crate) fn install_focus(self, owner: String, focus: Callback<&'static str>) {
+        self.focus.set_value(Some((owner, focus)));
+    }
+    #[cfg(target_arch = "wasm32")]
+    pub(crate) fn remove_focus(self, owner: &str) {
+        self.focus.try_update_value(|focus| {
+            if focus.as_ref().is_some_and(|(current, _)| current == owner) {
+                *focus = None;
+            }
+        });
+    }
+    #[cfg(target_arch = "wasm32")]
+    pub(crate) fn replace_constraints(
+        self,
+        mut errors: std::collections::HashMap<&'static str, String>,
+    ) {
+        self.state.update(|state| {
+            for field in state.fields().to_vec() {
+                state.set_constraint_error(field, errors.remove(field));
+            }
+        });
+    }
+
     /// Saving, or moving the keyboard to the first thing that is wrong.
     /// `Busy` and `Waiting` are answers, not actions.
     fn carry_out(&self, asked: Submit) {
         match asked {
             Submit::Save => self.save.with_value(|save| save()),
-            Submit::Blocked { first_error } => crate::dom::focus_id(&self.control_id(first_error)),
+            Submit::Blocked { first_error } => {
+                let focus = self
+                    .focus
+                    .with_value(|focus| focus.as_ref().map(|(_, callback)| *callback));
+                if let Some(focus) = focus {
+                    focus.run(first_error);
+                } else {
+                    crate::dom::focus_id(&self.control_id(first_error));
+                }
+            }
             Submit::Busy | Submit::Waiting => {}
         }
     }

@@ -4,5 +4,5 @@
 # and must build; `gpu-negative` does not ask and must not.
 [workspace]
 resolver = "2"
-members = ["consumer", "gpu-opt-in"]
+members = ["consumer", "gpu-opt-in", "primitives"]
 exclude = ["gpu-negative"]

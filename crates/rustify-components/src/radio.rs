@@ -1,17 +1,114 @@
-//! One of several, and the application holding which.
-//!
-//! Rust/UI's version put the chosen value in a context signal the item wrote
-//! to directly, which makes the group its own owner. Here the group takes the
-//! value and reports the request, like every other control in this crate, and
-//! the items are the browser's own radios: one tab stop for the group and the
-//! arrow keys moving within it are the platform's, not a re-implementation.
+//! Themed native radio parts backed by the unstyled controlled behavior.
 
-use crate::icon::{Glyph, Icon};
+use crate::{primitives, Responsive};
 use leptos::prelude::*;
+use rustify_ui::AccentColor;
+crate::choice_style::visual_types!(RadioSize, RadioVariant);
 
-const DOT: &str = "pointer-events-none absolute inset-0 flex items-center justify-center rounded-full border border-border bg-input text-primary transition-colors peer-checked:border-primary peer-focus-visible:ring-ring/50 peer-focus-visible:ring-[3px] peer-disabled:opacity-50";
-const INPUT: &str =
-    "peer absolute inset-0 size-full m-0 opacity-0 cursor-pointer disabled:cursor-not-allowed";
+#[component]
+pub fn Root(
+    #[prop(into)] checked: Signal<bool>,
+    #[prop(into)] on_change: Callback<bool>,
+    #[prop(optional, into)] id: String,
+    #[prop(optional, into)] name: String,
+    #[prop(default = "on".into(), into)] value: String,
+    #[prop(optional, into)] form: String,
+    #[prop(optional, into)] aria_label: String,
+    #[prop(optional, into)] labelled_by: String,
+    #[prop(optional, into)] described_by: Signal<String>,
+    #[prop(optional, into)] disabled: Signal<bool>,
+    #[prop(optional, into)] read_only: Signal<bool>,
+    #[prop(optional, into)] invalid: Signal<bool>,
+    #[prop(optional, into)] required: Signal<bool>,
+    #[prop(optional, into)] size: Signal<Responsive<RadioSize>>,
+    #[prop(optional, into)] variant: Signal<RadioVariant>,
+    #[prop(optional, into)] color: Signal<Option<AccentColor>>,
+    #[prop(optional, into)] high_contrast: Signal<bool>,
+    #[prop(optional, into)] class: Signal<String>,
+    children: Children,
+) -> impl IntoView {
+    let geometry = crate::choice_style::geometry(
+        Signal::derive(move || size.get().map(|size| size.number())),
+        color,
+        Signal::stored(None),
+    );
+    let classes = crate::macros::reactive_merge_with(move || {
+        vec![
+            "rustify-color rustify-choice rustify-radio".into(),
+            geometry.clone(),
+            class.get(),
+        ]
+    });
+    view! {
+        <primitives::radio::Root checked=checked on_change=on_change id=id name=name value=value form=form
+            aria_label=aria_label labelled_by=labelled_by described_by=described_by disabled=disabled
+            read_only=read_only invalid=invalid required=required class=Signal::derive(classes)>
+            {children()}
+        </primitives::radio::Root>
+    }.add_any_attr((leptos::attr::custom::custom_attribute("data-variant", move || variant.get().as_str()),
+        leptos::attr::custom::custom_attribute("data-high-contrast", move || high_contrast.get().then_some("")),
+        leptos::attr::custom::custom_attribute("data-name", "Radio")))
+}
+#[component]
+pub fn Control(
+    #[prop(optional, into)] class: String,
+    #[prop(optional, into)] test_id: String,
+) -> impl IntoView {
+    view! { <primitives::radio::Control class=format!("rustify-choice-native {class}") test_id=test_id /> }
+}
+/// Styles a caller-supplied native control while retaining its attributes and listeners.
+pub fn control_as<At, Ch>(
+    target: leptos::html::HtmlElement<leptos::html::Input, At, Ch>,
+) -> impl IntoView
+where
+    At: leptos::attr::Attribute + Send,
+    Ch: RenderHtml + Send,
+{
+    primitives::radio::control_as(target).add_any_attr(leptos::tachys::html::class::class((
+        "rustify-choice-native",
+        true,
+    )))
+}
+#[component]
+pub fn Indicator(
+    #[prop(optional, into)] class: String,
+    #[prop(optional)] children: Option<Children>,
+) -> impl IntoView {
+    view! { <primitives::radio::Indicator class=format!("rustify-choice-indicator {class}")>
+        {children.map_or_else(|| view! { <crate::choice_style::Mark radio=true /> }.into_any(), |children| children().into_any())}
+    </primitives::radio::Indicator> }
+}
+
+/// Boolean convenience entry point using the same native parts.
+#[component]
+pub fn Radio(
+    #[prop(into)] checked: Signal<bool>,
+    on_change: impl Fn(bool) + 'static,
+    #[prop(optional, into)] id: String,
+    #[prop(optional, into)] aria_label: String,
+    #[prop(optional, into)] labelled_by: String,
+    #[prop(optional, into)] name: String,
+    #[prop(default = "on".into(), into)] value: String,
+    #[prop(optional, into)] form: String,
+    #[prop(optional, into)] required: Signal<bool>,
+    #[prop(optional, into)] disabled: Signal<bool>,
+    #[prop(optional, into)] read_only: Signal<bool>,
+    #[prop(optional, into)] invalid: Signal<bool>,
+    #[prop(optional, into)] described_by: Signal<String>,
+    #[prop(optional, into)] size: Signal<Responsive<RadioSize>>,
+    #[prop(optional, into)] variant: Signal<RadioVariant>,
+    #[prop(optional, into)] color: Signal<Option<AccentColor>>,
+    #[prop(optional, into)] high_contrast: Signal<bool>,
+    #[prop(optional, into)] class: Signal<String>,
+    #[prop(optional, into)] test_id: String,
+) -> impl IntoView {
+    let on_change = StoredValue::new_local(on_change);
+    view! { <Root checked=checked on_change=Callback::new(move |state| on_change.with_value(|callback| callback(state)))
+        id=id aria_label=aria_label labelled_by=labelled_by name=name value=value form=form required=required disabled=disabled
+        read_only=read_only invalid=invalid described_by=described_by size=size variant=variant color=color high_contrast=high_contrast class=class >
+        <Control test_id=test_id /><Indicator />
+    </Root> }
+}
 
 /// One choice in a group.
 #[derive(Clone, Debug, PartialEq, Eq)]
@@ -36,100 +133,5 @@ impl RadioOption {
     }
 }
 
-/// A group of choices, exactly one of which the application holds.
-#[component]
-pub fn RadioGroup(
-    #[prop(into)] value: Signal<String>,
-    #[prop(into)] options: Signal<Vec<RadioOption>>,
-    on_change: impl Fn(String) + Send + Sync + 'static,
-    /// The name that groups the radios for the browser. Two groups on one page
-    /// must not share it, so it is generated unless the caller says.
-    #[prop(optional, into)]
-    name: String,
-    #[prop(optional, into)] aria_label: String,
-    #[prop(optional, into)] disabled: Signal<bool>,
-    #[prop(optional, into)] read_only: Signal<bool>,
-    #[prop(optional, into)] class: String,
-    #[prop(optional, into)] test_id: String,
-) -> impl IntoView {
-    let name = if name.is_empty() {
-        crate::id::next("radio")
-    } else {
-        name
-    };
-    let aria_label = (!aria_label.is_empty()).then_some(aria_label);
-    let on_change = std::sync::Arc::new(on_change);
-    let group_test_id = test_id.clone();
-    view! {
-        <div
-            class=crate::macros::reactive_merge("flex flex-col gap-3", &class)
-            data-name="RadioGroup"
-            data-testid=group_test_id
-            role="radiogroup"
-            aria-label=aria_label
-            aria-readonly=move || read_only.get().then_some("true")
-        >
-            <For each=move || options.get() key=|option| option.value.clone() let:option>
-                {
-                    let RadioOption { value: option_value, label, disabled: option_disabled } = option;
-                    let name = name.clone();
-                    let id = crate::id::next("radio-item");
-                    let mine = option_value.clone();
-                    let checked = Memo::new(move |_| value.get() == mine);
-                    let node = NodeRef::<leptos::html::Input>::new();
-                    // A read-only radio has taken the click by the time we see
-                    // it: the browser moved the dot, so put it back where the
-                    // application has it.
-                    let settle = move || {
-                        if let Some(input) = node.get_untracked() {
-                            let held = checked.get_untracked();
-                            if input.checked() != held {
-                                input.set_checked(held);
-                            }
-                        }
-                    };
-                    let on_change = on_change.clone();
-                    let asked = option_value.clone();
-                    let test_id = format!("{test_id}-{option_value}");
-                    view! {
-                        <label class="flex items-center gap-2 text-sm text-foreground">
-                            <span
-                                class="relative inline-block size-4 shrink-0"
-                                data-name="RadioItem"
-                                data-value=option_value
-                                data-state=move || if checked.get() { "checked" } else { "unchecked" }
-                            >
-                                <input
-                                    node_ref=node
-                                    type="radio"
-                                    id=id
-                                    name=name
-                                    class=INPUT
-                                    data-testid=test_id
-                                    checked=move || checked.get()
-                                    disabled=move || disabled.get() || option_disabled
-                                    prop:checked=move || checked.get()
-                                    prop:disabled=move || disabled.get() || option_disabled
-                                    on:change=move |_| {
-                                        if !disabled.get_untracked() && !read_only.get_untracked()
-                                            && !option_disabled
-                                        {
-                                            on_change(asked.clone());
-                                        }
-                                        settle();
-                                    }
-                                />
-                                <span class=DOT aria-hidden="true">
-                                    <Show when=move || checked.get()>
-                                        <Icon glyph=Glyph::Dot class="size-3.5" />
-                                    </Show>
-                                </span>
-                            </span>
-                            {label}
-                        </label>
-                    }
-                }
-            </For>
-        </div>
-    }
-}
+pub mod group;
+pub use group::RadioGroup;

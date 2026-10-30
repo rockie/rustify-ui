@@ -20,9 +20,9 @@ pub fn SubmitButton(
     /// moment of asking rather than earlier, because a rule that compares two
     /// fields has no single field to run on.
     rules: impl Fn() -> Vec<(&'static str, String)> + Send + Sync + 'static,
-    /// What the application is told when asking got somewhere it should hear
-    /// about: `Busy`, `Waiting`, or a `Blocked` whose field already has the
-    /// keyboard. `Save` never arrives here - the form carries it out.
+    /// The legacy submit result, including Save after the handle starts saving.
+    /// Inside FormRoot, the native form owns submission and reports through
+    /// FormRoot's on_asked callback instead.
     #[prop(optional)]
     on_asked: Option<Callback<Submit>>,
     #[prop(optional, into)] class: String,
@@ -34,12 +34,15 @@ pub fn SubmitButton(
     } else {
         test_id
     };
+    let native = crate::primitives::form::inside(form);
     view! {
         <crate::button::Button
+            r#type=if native { crate::button::ButtonType::Submit } else { crate::button::ButtonType::Button }
             test_id=test_id
             class=class
             unavailable=Signal::derive(move || !form.can_submit())
             on_click=move || {
+                if native { return; }
                 let asked = form.submit(&rules);
                 if let Some(on_asked) = on_asked {
                     on_asked.run(asked);

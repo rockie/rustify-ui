@@ -673,7 +673,7 @@ mod ui {
                         on:blur=move |_| {if draft.try_get_untracked().is_none() {return;}focused.set_value(false);dirty.set_value(false);draft.set(value.get_untracked().to_string());}
                         on:keydown=move |event| {if event.is_composing() ||composing.get_value() {return;}let multiplier=match event.key().as_str() {"ArrowUp"=>1.,"ArrowDown"=>-1.,"PageUp"=>10.,"PageDown"=>-10.,"Enter"=>{event.prevent_default();if let Some(value)=parse(&draft.get_untracked()) {batch.axis(axis,value);}return;},_=>return};event.prevent_default();let from=parse(&draft.get_untracked()).unwrap_or_else(||value.get_untracked());let next=rustify_components::number_field::stepped(from,step*multiplier).clamp(min,max);preview(next.to_string());} />
                 </div>
-                <label class="block" for=slider_id.clone()><span class="sr-only">{move ||axis.label(locale.get())}</span><Slider id=slider_id.clone() value=value min=min max=max step=step on_change=move |value|batch.axis(axis,value) test_id=format!("hsl-{}-slider",axis.name()) /></label>
+                <label class="block" for=slider_id.clone()><span id=format!("{slider_id}-label") class="sr-only">{move ||axis.label(locale.get())}</span><Slider id=slider_id.clone() labelled_by=format!("{slider_id}-label") value=value min=min max=max step=step on_change=move |value|batch.axis(axis,value) test_id=format!("hsl-{}-slider",axis.name()) /></label>
                 <p class="text-xs text-destructive" id=error_id role="status">{move ||if invalid.get() {format!("{} {min}…{max}",tr(locale.get(),"Use a finite number in","请输入有限数值，范围："))} else {String::new()}}</p>
             </div>
         }

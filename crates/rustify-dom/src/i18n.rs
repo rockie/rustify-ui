@@ -258,6 +258,25 @@ impl Message {
 pub use browser::{browser_languages, format_date, format_number};
 pub use browser::{provide_locale, use_locale, LocaleHandle};
 
+/// Provides an explicit writing direction for this owner and its descendants.
+pub fn provide_direction(direction: leptos::prelude::Signal<Direction>) {
+    leptos::prelude::provide_context(DirectionContext(direction));
+}
+
+#[derive(Clone, Copy)]
+struct DirectionContext(leptos::prelude::Signal<Direction>);
+
+/// Reads the nearest explicit direction, falling back to the locale's direction.
+pub fn use_direction() -> leptos::prelude::Signal<Direction> {
+    use leptos::prelude::*;
+    use_context::<DirectionContext>()
+        .map(|context| context.0)
+        .unwrap_or_else(|| {
+            let locale = use_locale();
+            Signal::derive(move || locale.get().direction())
+        })
+}
+
 mod browser {
     use super::{Locale, Message};
     use leptos::prelude::*;

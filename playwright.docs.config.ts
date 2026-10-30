@@ -12,6 +12,7 @@ import { tierFilter } from "./tests/tier";
 /// same checks at another build of the same fixture, such as the one built
 /// outside the repository from a git commit.
 const domOnlyDir = process.env.DOM_ONLY_DIR || "target/dom/dom-consumer";
+const primitivesDir = process.env.PRIMITIVES_DIR || "target/dom/dom-primitives";
 const domOnlyPort = Number(process.env.DOM_ONLY_PORT || 4190);
 const xtask = process.env.RUSTIFY_XTASK || "mbx xtask";
 const docsV2Site = process.env.RUSTIFY_DOCS_V2_SITE || "tests/docs-ssg/target/theme-v2-author";
@@ -59,7 +60,7 @@ const searchProjects = [
     ["docs-search-perf", "subpath", 4210, "search-perf.spec.ts"],
 ] as const;
 
-type Server = "dom-only" | "dom-hydrate" | "colors-static" | "components-static" | "docs-theme-v2" | Docs | Components | Official | typeof i18nProjects[number][0] | typeof searchProjects[number][0];
+type Server = "dom-primitives" | "dom-only" | "dom-hydrate" | "colors-static" | "components-static" | "docs-theme-v2" | Docs | Components | Official | typeof i18nProjects[number][0] | typeof searchProjects[number][0];
 const docsIgnore = ["docs-ssg/dev*.spec.ts", "docs-ssg/islands.spec.ts", "docs-ssg/custom.spec.ts", "docs-ssg/official.spec.ts", "docs-ssg/i18n*.spec.ts", "docs-ssg/search*.spec.ts", "docs-ssg/theme-v2.spec.ts"];
 
 const serversOf: Record<string, Server[]> = {
@@ -67,6 +68,7 @@ const serversOf: Record<string, Server[]> = {
     "components-static": ["components-static"],
     "docs-theme-v2": ["docs-theme-v2"],
     "dom-only": ["dom-only"],
+    "dom-primitives": ["dom-primitives"],
     "dom-hydrate": ["dom-hydrate"],
     "docs-root": ["docs-root"],
     "docs-subpath": ["docs-subpath"],
@@ -144,7 +146,12 @@ export default defineConfig({
         {
             name: "dom-only",
             testMatch: ["dom-only/**/*.spec.ts"],
-            testIgnore: ["dom-only/hydration.spec.ts"],
+            testIgnore: ["dom-only/hydration.spec.ts", "dom-only/primitives.spec.ts", "dom-only/forms-performance.spec.ts"],
+            use: { baseURL: `http://127.0.0.1:${domOnlyPort}/` },
+        },
+        {
+            name: "dom-primitives",
+            testMatch: ["dom-only/primitives.spec.ts", "dom-only/forms-performance.spec.ts"],
             use: { baseURL: `http://127.0.0.1:${domOnlyPort}/` },
         },
         {
@@ -206,6 +213,7 @@ export default defineConfig({
             ["docs-theme-v2", `${shellQuote(docsV2Cli)} preview --dir ${shellQuote(docsV2Dist)} --port 4213`, "http://127.0.0.1:4213/theme-v2/"],
             ["components-static", `sh tests/dom-components-ssr/build.sh && ${xtask} serve --dir tests/dom-components-ssr/target/site --port 4212`, "http://127.0.0.1:4212/"],
             ["colors-static", `sh tests/colors-static/build.sh && ${xtask} serve --dir tests/colors-static/target/site --port 4211`, "http://127.0.0.1:4211/"],
+            ["dom-primitives", `${xtask} serve --dir ${shellQuote(primitivesDir)} --port ${domOnlyPort}`, `http://127.0.0.1:${domOnlyPort}/`],
             ["dom-only", `${xtask} serve --dir ${domOnlyDir} --port ${domOnlyPort}`, `http://127.0.0.1:${domOnlyPort}/`],
             ["dom-hydrate", `${xtask} serve --dir target/dom/hydration --port 4194`, "http://127.0.0.1:4194/"],
             ...docsProjects.map(

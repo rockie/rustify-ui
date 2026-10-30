@@ -1,0 +1,39 @@
+/* Structural rules only: no reset, palette, typography or elevation. */
+@layer components {
+  :where([data-rustify-part="slider-root"]) { position: relative; user-select: none; }
+  :where([data-rustify-part="slider-root"][data-orientation="horizontal"]) { touch-action: pan-y; }
+  :where([data-rustify-part="slider-root"][data-orientation="vertical"]) { touch-action: pan-x; }
+  :where([data-rustify-part="slider-track"]) { display: block; position: relative; }
+  :where([data-rustify-part="slider-range"], [data-rustify-part="slider-thumb"]) { position: absolute; }
+  :where([data-rustify-part="slider-range"][data-orientation="horizontal"]) { height: 100%; }
+  :where([data-rustify-part="slider-range"][data-orientation="vertical"]) { width: 100%; }
+  :where([data-rustify-part="slider-thumb"][data-orientation="horizontal"]) { transform: translate(-50%, -50%); }
+  :where([data-rustify-part="slider-thumb"][data-orientation="vertical"]) { transform: translate(-50%, 50%); }
+  :where([data-rustify-part="choice-indicator"][data-state="unchecked"]) { visibility: hidden; }
+  :where([data-rustify-part="visually-hidden"], [data-rustify-part="toggle-constraint"], [data-rustify-part="select-native"]) {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+  }
+}
+
+@layer components {
+  :where([data-rustify-part="text-field-root"], [data-rustify-part="number-field-root"], [data-rustify-part="color-field-root"]) { display: flex; align-items: stretch; }
+  :where([data-rustify-part="text-field-input"], [data-rustify-part="number-field-input"], [data-rustify-part="color-field-input"]) { min-width: 0; flex: 1; }
+  :where([data-rustify-part="text-field-slot"]) { display: flex; align-items: center; flex-shrink: 0; }
+  :where([data-rustify-part="text-field-slot"][data-side="start"]) { order: -1; }
+  :where([data-rustify-part="text-field-slot"][data-side="end"]) { order: 1; }
+}
+
+@layer components {
+  :where([data-rustify-part="select-content"]) { display: flex; flex-direction: column; max-height: calc(100vh - 2rem); }
+  :where([data-rustify-part="select-viewport"]) { min-height: 0; overflow: auto; max-height: min(20rem, calc(100vh - 2rem)); overscroll-behavior: contain; }
+  :where([data-rustify-part="select-item-indicator"][data-state="unchecked"]) { visibility: hidden; }
+  :where([data-rustify-part="select-scroll-up"], [data-rustify-part="select-scroll-down"]) { flex-shrink: 0; }
+}

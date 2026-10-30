@@ -18,5 +18,13 @@ pub const BUTTON: &str = include_str!("../css/button.css");
 pub const LAYOUT: &str = include_str!("../css/layout.css");
 /// Native text semantics and theme typography defaults.
 pub const TYPOGRAPHY: &str = include_str!("../css/typography.css");
+/// Configuration status badges shared by theme consumers.
+pub const THEME_PANEL: &str = include_str!("../css/theme-panel.css");
 /// The fourth-generation theme surface.
 pub const THEME_V4: &str = include_str!("../css/theme-v4.css");
+
+/// Theme-independent structural and accessibility rules for DOM parts.
+pub const PRIMITIVES: &str = include_str!("../css/primitives.css");
+
+/// Theme skins for native fields and choice controls.
+pub const FORM_CONTROLS: &str = include_str!("../css/form-controls.css");

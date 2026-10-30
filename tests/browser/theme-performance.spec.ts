@@ -47,12 +47,13 @@ test.describe('theme update measurements',{tag:EVIDENCE},()=>{
   expect(measurements.afterNoop.history).toEqual(measurements.beforeNoop.history);
   await page.getByTestId('editor-controls').click();await page.getByTestId('hsl-hue-slider').scrollIntoViewIfNeeded();
   const gesture=await page.evaluate(async()=>{
-   const api=window.__theme_studio,input=document.querySelector('[data-testid="hsl-hue-slider"]') as HTMLInputElement;
+   const api=window.__theme_studio,input=document.querySelector('[data-testid="hsl-hue-slider"]') as HTMLButtonElement;
    const before=api.snapshot();let inputs=0;const at=performance.now();
    for(let frame=0;frame<60;frame++){
-    for(let j=0;j<4;j++){input.value=String(frame*2+j*.25+1);input.dispatchEvent(new Event('input',{bubbles:true}));inputs++;}
+    for(let j=0;j<4;j++){input.dispatchEvent(new KeyboardEvent('keydown',{key:'ArrowRight',bubbles:true,cancelable:true,repeat:inputs>0}));inputs++;}
     await new Promise<void>(resolve=>requestAnimationFrame(()=>resolve()));
    }
+   input.dispatchEvent(new KeyboardEvent('keyup',{key:'ArrowRight',bubbles:true,cancelable:true}));
    (document.querySelector('[data-testid="hsl-apply"]') as HTMLButtonElement).click();
    const deadline=performance.now()+10000;let after=api.snapshot();
    while(performance.now()<deadline){after=api.snapshot();if(!after.history.gesture&&after.drawn_revision===after.revision)break;await new Promise<void>(resolve=>requestAnimationFrame(()=>resolve()));}

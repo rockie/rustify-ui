@@ -18,15 +18,6 @@ pub fn Label(
     #[prop(optional, into)] test_id: String,
     children: Children,
 ) -> impl IntoView {
-    let control = (!control.is_empty()).then_some(control);
-    view! {
-        <label
-            class=crate::macros::reactive_merge(BASE, &class)
-            data-name="Label"
-            data-testid=test_id
-            r#for=control
-        >
-            {children()}
-        </label>
-    }
+    view! { <crate::primitives::field::Label control=control
+    class=format!("{BASE} {class}") test_id=test_id>{children()}</crate::primitives::field::Label> }
 }

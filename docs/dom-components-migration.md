@@ -77,6 +77,60 @@ TextAlign, TextTrim and TextWrap provide the applicable responsive choices.
 Text and Link leave inherited size intact when size is omitted. Truncate is
 a nonresponsive boolean.
 
+## Forms and selection
+
+Use `rustify_components::primitives` for unstyled parts and the matching
+`checkbox`, `radio_group`, `slider`, `text_field`, `select` and other modules
+for themed parts. Convenience components use that same behavior; they do not
+keep a second accepted value. [Forms](forms.md) includes complete composition,
+submit/reset and Select examples.
+
+| Previous use | Current source behavior / migration |
+| --- | --- |
+| A boolean Checkbox | The convenience API remains boolean plus `indeterminate`; parts use `CheckedState::{Unchecked, Checked, Indeterminate}`. Mixed is not a submitted checked value |
+| A fixed radio/options view | Keep RadioGroup/RadioOption or compose radio_group Root/Item; checkbox_group is multi-value and selection cards reuse those groups |
+| A scalar Slider | Keep Slider; add on_commit/on_cancel if completion matters. Multi-thumb Root uses `Vec<ThumbValue { id, value }>` and stable named thumbs, never array-position identity |
+| A Select options array | Keep Select/SelectOption or provide Root entries independently of Item content. New Root uses Option<String>; the convenience API maps empty string to None |
+| Keyboard focus in a Select listbox | Trigger now retains focus as the combobox. Read aria-activedescendant there; the referenced option id is opaque and exists only while mounted |
+| Selected rows inferred from old data-active | Item data-state is checked/unchecked for accepted selection; data-highlighted is temporary navigation. A refused request never marks the candidate selected |
+| Reading a number/colour editor's text for submission | Give the field a name and read native FormData; the named mirror represents accepted values. Focused Draft is completed by Enter, blur or FormRoot submit |
+| Calling a save again after submit returns Save | Form owns the save callback and runs it once. Call submitted(result) when it finishes; SubmitButton inside FormRoot uses native submission and Root rules |
+| Resetting only browser defaults | Supply on_reset to reset application values and call Form::reset. Root prevents native defaults from diverging from controlled signals; Busy refuses reset |
+| Replacing all errors with one message | Constraint, Rule, Check and Application coexist. Field Message displays the first active source and exposes data-source; changed(field) withdraws old field results |
+
+Inside a Field, metadata connects the first actual control with the label,
+description and visible error. Give composite groups their own accessible
+group name; name each slider thumb. Keep `name` for native submission, separate
+from the field's validation key and generated DOM ids. Anonymous radio groups
+remain independent and do not add private keys to FormData.
+
+`NumberField` and `ColorField` keep `on_change` as the completion callback.
+Their optional `on_preview` and `on_cancel` props take an explicit optional
+callback: use `on_preview=Some(Callback::new(move |next| { /* preview */ }))`
+and `on_cancel=Some(Callback::new(move |_| { /* cancel */ }))`, or omit them.
+The callback type comes from `leptos::prelude::*`. Existing bare closures for
+these two optional props need this wrapper.
+
+The form visual sizes are 1/2/3 and support Responsive; use each component's
+own size/variant enum and ALL constants. They are not Button's four-size type.
+Checkbox, Radio, Switch, Slider and ordinary fields use classic/surface/soft;
+cards use surface/classic. Select Trigger adds ghost-offset/ghost and Content
+uses solid/soft. Colour, high contrast and radius apply only where declared in
+the [catalogue](components.md). TextField Slot has its own colour and responsive
+gap/px/pl/pr; Start/End follows direction while pl/pr retain physical meaning.
+
+Pure parts consumers load DOM_RUNTIME_CSS plus PRIMITIVES_CSS. Themed consumers
+load CSS or compile sdk.css once; sdk.css already imports the structure. Give
+unstyled Slider a visible track/thumb size in application CSS. Typed Slot,
+control_as, trigger_as and item_as decorate supported native Leptos elements
+and preserve caller classes/listeners. They do not take arbitrary rendered
+component trees. Cancelable Select/Layer hooks must cancel synchronously.
+
+SSR Select starts closed. Its explicit entries already provide selected text
+and native form options, while Content is absent. Initially open floating
+content is rejected through StaticRenderIssues; open it after attachment.
+Use identical scope seed, values and declared item sequence during hydration.
+
 ## Styles and static rendering
 
 Declare layer order before importing Tailwind's layers, then import the SDK
@@ -133,23 +187,23 @@ name does not add new props or composition parts.
 | `Button`, `ButtonSize`, `ButtonVariant` | Same root paths with the replacements above; no parallel LegacyButton implementation |
 | `button::ButtonClass` | Component props plus `class`; the class-builder type is removed |
 | `Link`, `LinkMatch`, `CurrentPath`, `provide_current_path`, `current_path`, `is_within` | Same paths and matching contract; visual options are additions |
-| `Checkbox`, `RadioGroup`, `RadioOption`, `Switch` | Same controlled boolean/options APIs; no indeterminate state, standalone Radio or cards/groups added |
-| `Select`, `SelectOption`, `Slider` | Same controlled value/open or single-value APIs; no public Select parts or multi-thumb Slider |
-| `TextField`, `TextKind`, `TextArea`, `Label` | Same native field and naming APIs; no new text-field slot family |
-| `Form`, `Field`, `FieldBinding`, `FormStatus`, `SubmitButton`, `provide_form`, `use_form` | Same validation/submission owner and binding APIs; not replaced by layout components or the reference Form parts |
+| `Checkbox`, `RadioGroup`, `RadioOption`, `Switch` | Convenience paths remain; Checkbox adds indeterminate projection. Standalone Radio, CheckboxGroup, RadioCards/CheckboxCards and composable modules are available |
+| `Select`, `SelectOption`, `Slider` | Convenience paths remain and share public Select/Slider parts; RangeSlider accepts named ThumbValue/ThumbLabel declarations |
+| `TextField`, `TextKind`, `TextArea`, `Label` | Native fields remain; text_field Root/Input/Slot and responsive TextArea resize are available. class styles the field boundary; input_class styles the editor |
+| `Form`, `Field`, `FieldBinding`, `FormStatus`, `SubmitButton`, `provide_form`, `use_form` | Owner/binding APIs remain; FormRoot and form/Field parts add native participation, description/source metadata and submit/reset flushing |
 | `Dialog`, `Tooltip`, `Menu`, `MenuItem`, `MenuItemKind`, `menu::anchor_at` / root `anchor_at` | Same scoped overlays and anchors; `anchor_at` remains browser-only. No AlertDialog/Popover/HoverCard/ContextMenu/DropdownMenu part families are implied |
 | `Tabs`, `Tab`, `TabPanel`, `Orientation` | Same tabs data, panels and navigation semantics; no TabNav/SegmentedControl API |
 | `ScrollArea`, `Boundary` | Same browser scroll and overscroll behavior |
 | `Progress`, `Spinner`, `Toast`, `Toaster` | Same feedback APIs; no Skeleton or full Toast parts surface |
-| `NumberField`, `ColorField` | Same focused Draft exception and preview/commit/cancel semantics |
+| `NumberField`, `ColorField` | Focused Draft remains; named mirrors submit accepted values, and FormRoot can complete an active draft before validation |
 | `DataTable`, `Column`, `Tree`, `TreeNode` | Same Rustify data controls; ordinary Table is a separate unimplemented reference capability |
-| `ToggleGroup`, `ToggleItem` | Same controlled group/toolbar mode; no standalone Toggle or full Toolbar |
+| `ToggleGroup`, `ToggleItem` | Group/toolbar convenience mode remains; standalone Toggle and toggle_group Root/Item are available. Full Toolbar is separate |
 | `FilePicker`, `DropZone` | Same native file-selection/drop requests |
 | `Splitter`, `PanelTabs`, `PanelTab`, `CommandPalette`, `Command` | Same workspace controls and data types |
 | `Icon`, `Glyph` | Same SVG wrapper and six glyphs; IconButton reuses this icon path |
 | `GeometryStyles`, `provide_geometry_styles`, `geometry` | Same external stylesheet collector, extended for media rules and field diagnostics |
 | `clx!`, `variants!`, `macros`, `cn`, `paste` | Same class merging/generation helpers; caller utilities remain last in the merge and above component CSS layers |
-| `CSS`, `CANDIDATES_JSON`, `styles` | Same package asset interfaces; regenerate the application's stylesheet when moving to changed source components |
+| `CSS`, `CANDIDATES_JSON`, `styles` | Package assets remain; PRIMITIVES_CSS/styles::PRIMITIVES provide only structural rules. Choose one themed or unstyled CSS path |
 | `id`, `roving` | Same deterministic identity and keyboard-navigation helpers |
 | `CATALOG`, `Capability`, `Category`, `Entry`, `Presentation`, `Support` | Legacy 24-category navigation remains intact. Use `catalog::COMPONENTS`, `STABLE_REFERENCES`, `SUB_CAPABILITIES` and `catalogue_markdown()` for expanded source facts |
 
@@ -428,12 +482,11 @@ in v1 remain separate. Verification results and their scope are kept in the
 
 ## Capabilities that are still absent
 
-The complete reference inventory includes Accordion, AlertDialog, content
-components, selection cards, navigation families and other entries that have
-no public Rust implementation yet. Existing Select/Dialog/Menu/Checkbox/
-RadioGroup/Slider APIs expose their declared controlled subset; they do not
-establish complete unstyled Primitives, three-state selection, multiple thumbs
-or public part composition. Generic asChild, Slot and Slottable are absent.
-Unstable reference exports are candidates only. Consult the generated
-[reference and sub-capability tables](components.md#stable-reference-inventory)
-before treating a same-name component or demo as complete support.
+Accordion, AlertDialog and several content/navigation reference families remain
+outside the supplied Rust APIs. The form/selection families above provide
+unstyled parts and their declared themed subsets; Dialog/Menu are still their
+existing scoped APIs, without a new arbitrary overlay-parts family. Generic
+React asChild/ref composition and Slottable remain unsupported; Rust typed Slot
+supports one known native target. Unstable reference exports are candidates
+only. Consult the generated [reference and sub-capability tables](components.md#stable-reference-inventory)
+for each mapping rather than treating a matching name as complete support.

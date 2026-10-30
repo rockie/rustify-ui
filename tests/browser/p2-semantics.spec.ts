@@ -69,7 +69,7 @@ test.describe("M2 V4: name, role, value, state", () => {
 
         await open(page, "slider");
         const slider = example(page).getByRole("slider", { name: "a size" });
-        await expect(slider).toHaveValue(String((await snapshot(page)).size));
+        await expect(slider).toHaveAttribute("aria-valuenow", String((await snapshot(page)).size));
 
         await open(page, "progress");
         // A quantity nobody knows carries no value: "in progress" and "nothing
@@ -162,9 +162,14 @@ test.describe("M2 V4: name, role, value, state", () => {
         const list = page.getByRole("listbox");
         await expect(list).toBeVisible();
         // It opens on what is chosen, so the arrows continue from there.
-        await expect(list).toHaveAttribute("aria-activedescendant", /medium$/);
+        await expect(trigger).toBeFocused();
+        const activeOption = () => trigger.evaluate(element => {
+            const id = element.getAttribute("aria-activedescendant");
+            return id ? document.getElementById(id)?.getAttribute("data-testid") : null;
+        });
+        await expect.poll(activeOption).toBe("option-medium");
         await page.keyboard.press("ArrowDown");
-        await expect(list).toHaveAttribute("aria-activedescendant", /large$/);
+        await expect.poll(activeOption).toBe("option-large");
         await page.keyboard.press("Enter");
         await expect(list).toBeHidden();
         expect(await snapshot(page)).toMatchObject({ chooser: "large" });

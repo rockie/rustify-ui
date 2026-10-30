@@ -418,7 +418,7 @@ fn Preview(state: StudioState, compare: bool) -> impl IntoView {
                 <Button size=ButtonSize::One variant=ButtonVariant::Outline attr:aria-pressed=move || (state.compare_mode.get() == ThemeMode::Light).to_string() on_click=move || state.set_compare_mode(ThemeMode::Light) test_id="compare-light">{move || state.tr("Light", "浅色")}</Button>
                 <Button size=ButtonSize::One variant=ButtonVariant::Outline attr:aria-pressed=move || (state.compare_mode.get() == ThemeMode::Dark).to_string() on_click=move || state.set_compare_mode(ThemeMode::Dark) test_id="compare-dark">{move || state.tr("Dark", "深色")}</Button>
             </div></ThemeBoundary>
-            <div class="studio-authored-preview"><ScenePreview scene=scene locale=state.locale() />
+            <div class="studio-authored-preview"><ScenePreview scene=scene locale=state.locale() reset_epoch=state.reset_epoch />
             <details class="studio-provider-fixture"><summary>{move || state.tr("Provider & overlay checks", "主题作用域与浮层验证")}</summary><ProviderFixture patch=Signal::derive(ThemeValuePatch::default) locale=state.locale() preview_mode=Signal::derive(move ||resolved.get().mode) reset_epoch=state.reset_epoch /></details></div>
         }.into_any();
     }
@@ -545,7 +545,7 @@ fn Preview(state: StudioState, compare: bool) -> impl IntoView {
             })}
             <div class="studio-renderers" data-renderer=move || state.envelope.with(|e| e.preferences.renderer.clone())>
                 <section class="studio-renderer-pane studio-dom-pane" hidden=move || state.envelope.with(|e| e.preferences.renderer == "gpu") data-testid="dom-preview">
-                    <p class="studio-renderer-label">"DOM"</p><div class="studio-authored-preview"><ScenePreview scene=scene locale=state.locale() />
+                    <p class="studio-renderer-label">"DOM"</p><div class="studio-authored-preview"><ScenePreview scene=scene locale=state.locale() reset_epoch=state.reset_epoch />
                     <details class="studio-provider-fixture" open><summary>{move || state.tr("Provider & overlay checks", "主题作用域与浮层验证")}</summary><ProviderFixture patch=state.patch locale=state.locale() preview_mode=Signal::derive(move ||resolved.get().mode) reset_epoch=state.reset_epoch /></details></div>
                 </section>
                 <section class="studio-renderer-pane studio-gpu-pane" hidden=move || state.envelope.with(|e| e.preferences.renderer == "dom") data-testid="gpu-preview">

@@ -15,6 +15,13 @@ separates supported fields from full reference coverage and the existing 24
 navigation categories; the [DOM migration guide](docs/dom-components-migration.md)
 records the API and CSS changes.
 
+Source form consumers can choose unstyled `primitives` or themed parts sharing
+one controlled implementation: choices/cards, named sliders, fields, native
+FormRoot and Select. Load `PRIMITIVES_CSS` for structural rules or the themed
+`CSS` bundle; [Forms](docs/forms.md) includes composition and submission
+examples. Studio's Cards scene provides a complete local form and an expandable
+states/parts tool. These source additions are not published by the 0.2.1 packages.
+
 ## Quick start
 
 The validated development environment is macOS. Use a browser with WebAssembly and WebGL2; macOS Chrome is the current pass gate. See [compatibility](docs/compatibility.md) for the tested browser matrix.

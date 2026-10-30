@@ -10,7 +10,7 @@
 //! is what a controlled component means - and a second copy would be a second
 //! answer to "what is in this field", which is the bug P1 spent a milestone
 //! removing from its controls. What lives here is the bookkeeping around the
-//! values: a generation per field, an error per field, what is pending, and
+//! values: a generation and source-specific errors per field, what is pending, and
 //! whether a submit is waiting on it. Rules and saving are the application's
 //! functions, called from here at the moments the ordering matters.
 
@@ -30,24 +30,34 @@ impl Generation {
     }
 }
 
-/// Who put an error on a field.
-///
-/// It matters at exactly one moment: asking to submit re-runs the rules, and
-/// a rule that no longer fails must stop showing - but an answer that came
-/// back from a check is about the value itself and is not the rules' to
-/// clear. Without the distinction, asking twice after a failed check saves.
+/// The source of a field error, in display priority order.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
-enum Source {
-    /// A synchronous rule the application ran.
+pub enum FieldErrorSource {
+    Constraint,
     Rule,
-    /// A validation that finished.
     Check,
+    Application,
+}
+impl FieldErrorSource {
+    pub const ALL: &'static [Self] =
+        &[Self::Constraint, Self::Rule, Self::Check, Self::Application];
+    pub const fn as_str(self) -> &'static str {
+        match self {
+            Self::Constraint => "constraint",
+            Self::Rule => "rule",
+            Self::Check => "check",
+            Self::Application => "application",
+        }
+    }
+    const fn index(self) -> usize {
+        self as usize
+    }
 }
 
 #[derive(Clone, Debug, Default)]
 struct Field {
     generation: Generation,
-    error: Option<(Source, String)>,
+    errors: [Option<String>; 4],
     /// The generation a validation is running for, if one is.
     pending: Option<Generation>,
 }
@@ -125,7 +135,7 @@ impl FormState {
             return;
         };
         entry.generation = entry.generation.next();
-        entry.error = None;
+        entry.errors = Default::default();
         entry.pending = None;
         self.dirty = true;
         self.failure = None;
@@ -173,24 +183,67 @@ impl FormState {
         if entry.pending == Some(generation) {
             entry.pending = None;
         }
-        entry.error = error.map(|error| (Source::Check, error));
+        entry.errors[FieldErrorSource::Check.index()] = error;
         self.resume()
     }
 
-    /// An error the application wants shown against a field, from a rule it
-    /// ran itself.
+    /// Replaces only the synchronous Rule error, preserving other sources.
     pub fn set_error(&mut self, field: &'static str, error: Option<String>) {
+        self.set_source_error(field, FieldErrorSource::Rule, error);
+    }
+
+    /// Replaces only the native constraint result for the accepted control.
+    pub fn set_constraint_error(&mut self, field: &'static str, error: Option<String>) {
+        self.set_source_error(field, FieldErrorSource::Constraint, error);
+    }
+
+    /// An application error remains until replaced or the accepted value changes.
+    pub fn set_application_error(&mut self, field: &'static str, error: Option<String>) {
+        self.set_source_error(field, FieldErrorSource::Application, error);
+    }
+
+    fn set_source_error(
+        &mut self,
+        field: &'static str,
+        source: FieldErrorSource,
+        error: Option<String>,
+    ) {
         match self.fields.get_mut(field) {
-            Some(entry) => entry.error = error.map(|error| (Source::Rule, error)),
+            Some(entry) => entry.errors[source.index()] = error,
             None => unknown(field),
         }
     }
-
+    fn error_entry(&self, field: &str) -> Option<(FieldErrorSource, &str)> {
+        let entry = self.fields.get(field)?;
+        FieldErrorSource::ALL
+            .iter()
+            .copied()
+            .zip(&entry.errors)
+            .find_map(|(source, error)| error.as_deref().map(|error| (source, error)))
+    }
     pub fn error(&self, field: &str) -> Option<&str> {
-        self.fields
-            .get(field)
-            .and_then(|entry| entry.error.as_ref())
-            .map(|(_, error)| error.as_str())
+        self.error_entry(field).map(|(_, error)| error)
+    }
+    /// The source of the same error returned by [`Self::error`].
+    pub fn error_source(&self, field: &str) -> Option<FieldErrorSource> {
+        self.error_entry(field).map(|(source, _)| source)
+    }
+
+    /// Clears bookkeeping without changing application values. A save in flight
+    /// refuses reset and returns false; otherwise all old check generations expire.
+    pub fn reset(&mut self) -> bool {
+        if self.submitting {
+            return false;
+        }
+        for entry in self.fields.values_mut() {
+            entry.generation = entry.generation.next();
+            entry.errors = Default::default();
+            entry.pending = None;
+        }
+        self.request = None;
+        self.dirty = false;
+        self.failure = None;
+        true
     }
 
     /// The first field in field order with an error.
@@ -243,13 +296,7 @@ impl FormState {
         // The rules replace what the last run of them said - a rule that no
         // longer fails must not leave its error behind - and nothing else.
         for entry in self.fields.values_mut() {
-            if entry
-                .error
-                .as_ref()
-                .is_some_and(|(source, _)| *source == Source::Rule)
-            {
-                entry.error = None;
-            }
+            entry.errors[FieldErrorSource::Rule.index()] = None;
         }
         for (field, error) in rules() {
             self.set_error(field, Some(error));
@@ -274,6 +321,9 @@ impl FormState {
 
     /// The save finished.
     pub fn submitted(&mut self, result: Result<(), String>) {
+        if !self.submitting {
+            return;
+        }
         self.submitting = false;
         match result {
             Ok(()) => {
@@ -315,7 +365,7 @@ impl FormState {
 
 #[cfg(test)]
 mod tests {
-    use super::{FormState, Submit};
+    use super::{FieldErrorSource, FormState, Submit};
 
     /// A ten-field form, which is what V5 asks about.
     fn form() -> FormState {
@@ -578,5 +628,81 @@ mod tests {
             }
         );
         assert_eq!(state.error("email"), Some("a check said no"));
+    }
+    #[test]
+    fn sources_reveal_retained_lower_priority_errors_and_changed_clears_them() {
+        let mut state = form();
+        state.set_application_error("email", Some("application".into()));
+        let generation = state.validating("email");
+        state.validated("email", generation, Some("check".into()));
+        state.set_error("email", Some("rule".into()));
+        state.set_constraint_error("email", Some("constraint".into()));
+        assert_eq!(
+            (state.error("email"), state.error_source("email")),
+            (Some("constraint"), Some(FieldErrorSource::Constraint))
+        );
+        state.set_constraint_error("email", None);
+        assert_eq!(
+            (state.error("email"), state.error_source("email")),
+            (Some("rule"), Some(FieldErrorSource::Rule))
+        );
+        assert_eq!(
+            state.submit(Vec::new),
+            Submit::Blocked {
+                first_error: "email"
+            }
+        );
+        assert_eq!(
+            (state.error("email"), state.error_source("email")),
+            (Some("check"), Some(FieldErrorSource::Check))
+        );
+        state.validated("email", generation, None);
+        assert_eq!(
+            (state.error("email"), state.error_source("email")),
+            (Some("application"), Some(FieldErrorSource::Application))
+        );
+        assert_eq!(
+            state.submit(Vec::new),
+            Submit::Blocked {
+                first_error: "email"
+            }
+        );
+        state.changed("email");
+        assert_eq!(
+            (state.error("email"), state.error_source("email")),
+            (None, None)
+        );
+    }
+
+    #[test]
+    fn reset_invalidates_old_checks_waiting_requests_and_dirty_state() {
+        let mut state = form();
+        state.changed("email");
+        let old = state.validating("email");
+        assert_eq!(state.submit(Vec::new), Submit::Waiting);
+        assert!(state.reset());
+        assert!(state.generation("email") > old);
+        assert!(!state.dirty() && !state.waiting() && !state.is_validating());
+        assert_eq!(state.validated("email", old, Some("stale".into())), None);
+        assert_eq!(state.error("email"), None);
+        assert!(state.can_submit());
+    }
+
+    #[test]
+    fn reset_is_refused_during_save_and_old_completion_after_reset_is_ignored() {
+        let mut state = form();
+        state.changed("email");
+        let generation = state.generation("email");
+        assert_eq!(state.submit(Vec::new), Submit::Save);
+        assert!(!state.reset());
+        assert!(state.submitting() && state.dirty());
+        assert_eq!(state.generation("email"), generation);
+        state.submitted(Err("failed".into()));
+        assert_eq!(state.failure(), Some("failed"));
+        assert!(state.reset());
+        assert!(!state.dirty());
+        assert_eq!(state.failure(), None);
+        state.submitted(Err("old completion".into()));
+        assert_eq!(state.failure(), None);
     }
 }
