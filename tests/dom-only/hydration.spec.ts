@@ -794,3 +794,42 @@ for (const cleanupOrder of ["first", "second"] as const) {
         }
     });
 }
+
+for (const scripted of [false, true]) {
+    test(`deferred field labels work in static SSR and retain references after hydration: js=${scripted}`, async ({ browser }) => {
+        const context = await browser.newContext({ javaScriptEnabled: scripted });
+        const page = await context.newPage();
+        const errors: string[] = [];
+        page.on("pageerror", error => errors.push(String(error)));
+        page.on("console", message => { if (message.type() === "error") errors.push(message.text()); });
+        page.on("requestfailed", request => errors.push(request.url()));
+        await page.goto("http://127.0.0.1:4194/");
+        const nodes = await page.locator('input[data-testid*="-deferred-"]').elementHandles();
+        const ids = await Promise.all(nodes.map(node => node.getAttribute("id")));
+        for (const scope of scopes) {
+            for (const mode of ["direct", "show", "for", "closure"]) {
+                const label = control(page, scope, `deferred-${mode}-label`);
+                const editor = control(page, scope, `deferred-${mode}`);
+                await expect(label).toHaveAttribute("for", `${scope}-deferred-${mode}`);
+                expect(await label.evaluate((node: HTMLLabelElement) => node.control?.id)).toBe(`${scope}-deferred-${mode}`);
+                await expect(root(page, scope).getByRole("textbox", { name: `Deferred ${mode}`, exact: true })).toHaveCount(1);
+                await label.click();
+                await expect(editor).toBeFocused();
+            }
+        }
+        if (scripted) {
+            await expect(page.getByTestId("status")).toHaveAttribute("data-status", "runtime-ready");
+            await attach(page);
+            expect(await Promise.all(nodes.map(node => node.evaluate(el => el.isConnected)))).toEqual(nodes.map(() => true));
+            expect(await Promise.all(nodes.map(node => node.getAttribute("id")))).toEqual(ids);
+            for (const scope of scopes) {
+                for (const mode of ["direct", "show", "for", "closure"]) {
+                    await control(page, scope, `deferred-${mode}-label`).click();
+                    await expect(control(page, scope, `deferred-${mode}`)).toBeFocused();
+                }
+            }
+        }
+        expect(errors).toEqual([]);
+        await context.close();
+    });
+}

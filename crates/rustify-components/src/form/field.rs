@@ -37,6 +37,9 @@ pub(crate) fn control_id(explicit: String, part: &str) -> String {
             if first {
                 binding.id.set(id.clone());
             }
+            // Server serialization drops each control view before the enclosing
+            // field finishes. Its accepted ID must survive that drop for labels.
+            #[cfg(target_arch = "wasm32")]
             on_cleanup(move || {
                 if let Some(next) = context.controls.try_update_value(|controls| {
                     controls.retain(|(control, _)| *control != key);
@@ -80,6 +83,8 @@ pub(crate) fn metadata(
 #[derive(Clone, Copy)]
 pub struct FieldBinding {
     id: RwSignal<String>,
+    #[cfg(all(feature = "ssr", not(target_arch = "wasm32")))]
+    label_marker: StoredValue<String>,
     description_id: StoredValue<String>,
     error_id: StoredValue<String>,
     error: Memo<Option<(String, rustify_ui::FieldErrorSource)>>,
@@ -91,6 +96,16 @@ pub struct FieldBinding {
 impl FieldBinding {
     pub fn id(&self) -> String {
         self.id.get()
+    }
+    pub(crate) fn label_control(&self) -> String {
+        #[cfg(all(feature = "ssr", not(target_arch = "wasm32")))]
+        {
+            self.label_marker.get_value()
+        }
+        #[cfg(not(all(feature = "ssr", not(target_arch = "wasm32"))))]
+        {
+            self.id()
+        }
     }
     /// IDs of mounted hints and the currently visible error, without duplicates.
     pub fn described_by(&self) -> Signal<String> {
@@ -126,6 +141,8 @@ fn boundary(
         let messages = RwSignal::new(0);
         let binding = FieldBinding {
             id,
+            #[cfg(all(feature = "ssr", not(target_arch = "wasm32")))]
+            label_marker: StoredValue::new(format!("\0{}-label\0", form.default_control_id(field))),
             description_id,
             error_id,
             error,
@@ -152,7 +169,10 @@ fn boundary(
             field,
             controls: StoredValue::new(Vec::new()),
         });
-        content(binding)
+        let view = content(binding);
+        #[cfg(all(feature = "ssr", not(target_arch = "wasm32")))]
+        let view = super::ssr_field::FieldHtml { view, binding }.into_any();
+        view
     });
     leptos::tachys::reactive_graph::OwnedView::new_with_owner(view, owner)
 }

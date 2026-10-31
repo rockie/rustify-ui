@@ -1089,7 +1089,7 @@ pub fn Label(
     let binding = use_context::<crate::form::FieldBinding>();
     let control = move || {
         if control.is_empty() {
-            binding.map(|binding| binding.id())
+            binding.map(|binding| binding.label_control())
         } else {
             Some(control.clone())
         }

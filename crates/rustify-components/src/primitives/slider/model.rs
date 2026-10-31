@@ -68,9 +68,19 @@ impl Config {
         Ok(())
     }
     fn index(self, value: f64) -> f64 {
-        // Normalized values share an integer step index, even when their f64
-        // projections lose precision relative to a nonzero minimum.
-        ((value - self.min) / self.step).round()
+        let index = (value - self.min) / self.step;
+        let rounded = index.round();
+        // Ordinary snapped values use integer indices. A clamped terminal step
+        // has only its actual fractional capacity, unless it differs from the
+        // full grid point by floating-point projection error alone.
+        if value == self.max {
+            let grid = self.min + rounded * self.step;
+            let tolerance = 4.0 * f64::EPSILON * index.abs().max(1.0);
+            if grid != value && (index - rounded).abs() > tolerance {
+                return index;
+            }
+        }
+        rounded
     }
     fn separated(self, high: f64, low: f64) -> bool {
         self.index(high) - self.index(low) >= f64::from(self.min_steps_between)
@@ -82,14 +92,18 @@ impl Config {
         (self.min + index * self.step).clamp(self.min, self.max)
     }
     fn bounded(self, value: f64, low: f64, high: f64) -> Option<f64> {
-        let last = self.index(self.max);
-        let low_index = self.index(low).clamp(0.0, last);
-        let high_index = self.index(high).clamp(0.0, last);
+        let last = self.index(self.snap(self.max));
+        let low_index = self.index(low).ceil().min(last);
+        let high_index = if high == self.max {
+            last
+        } else {
+            self.index(high).floor()
+        };
         if low_index > high_index {
             return None;
         }
         let index = self
-            .index(value.clamp(low, high))
+            .index(self.snap(value.clamp(low, high)))
             .clamp(low_index, high_index);
         Some(self.at(index))
     }
@@ -228,15 +242,23 @@ impl Model {
             .and_then(|n| n.before.as_ref())
             .and_then(|id| self.get(id))
             .map_or(self.config.min, |value| {
-                self.config
-                    .at(self.config.index(value) + f64::from(self.config.min_steps_between))
+                if self.config.min_steps_between == 0 {
+                    return value;
+                }
+                self.config.at((self.config.index(value)
+                    + f64::from(self.config.min_steps_between))
+                .ceil())
             });
         let high = neighbours
             .and_then(|n| n.after.as_ref())
             .and_then(|id| self.get(id))
             .map_or(self.config.max, |value| {
-                self.config
-                    .at(self.config.index(value) - f64::from(self.config.min_steps_between))
+                if self.config.min_steps_between == 0 {
+                    return value;
+                }
+                self.config.at((self.config.index(value)
+                    - f64::from(self.config.min_steps_between))
+                .floor())
             });
         (low, high)
     }
@@ -542,22 +564,87 @@ mod tests {
     }
 
     #[test]
-    fn clamped_maximum_keeps_the_snap_terminal_step_index() {
-        let state = model(
-            &[("a", 100.0), ("b", 100.26)],
-            Config {
-                min: 100.0,
-                max: 100.26,
-                step: 0.1,
-                min_steps_between: 3,
-                preserve_order: true,
-            },
-        );
+    fn clamped_maximum_does_not_expand_available_space() {
+        let config = Config {
+            min: 100.0,
+            max: 100.26,
+            step: 0.1,
+            min_steps_between: 3,
+            preserve_order: true,
+        };
+        assert!(Model::new(&values(&[("a", 100.0), ("b", 100.26)]), config, None).is_err());
+    }
+
+    #[test]
+    fn clamped_maximum_requires_the_actual_minimum_distance() {
+        let config = Config {
+            min: 100.0,
+            max: 100.26,
+            step: 0.1,
+            min_steps_between: 1,
+            preserve_order: false,
+        };
+        assert!(Model::new(&values(&[("a", 100.2), ("b", 100.26)]), config, None).is_err());
+        let state = model(&[("a", 100.1), ("b", 100.26)], config);
+        assert!(state.candidate("a", 100.2, None).is_none());
+        let state = model(&[("a", 100.1), ("b", 100.2)], config);
+        assert!(state.candidate("b", 100.26, None).is_some());
+        assert!(state.candidate("a", 100.26, None).is_none());
+    }
+
+    #[test]
+    fn clamped_maximum_preserve_order_bounds_stay_on_valid_grid_points() {
+        let config = Config {
+            min: 100.0,
+            max: 100.26,
+            step: 0.1,
+            min_steps_between: 1,
+            preserve_order: true,
+        };
+        let state = model(&[("a", 100.1), ("b", 100.26)], config);
+        assert_eq!(state.bounds("a", None), (100.0, 100.1));
+        assert_eq!(state.bounds("b", None), (100.2, 100.26));
+        assert_eq!(state.candidate("a", 200.0, None).unwrap(), state.values);
         assert_eq!(
-            state.candidate("b", 200.0, None).unwrap(),
-            values(&[("a", 100.0), ("b", 100.26)])
+            state.candidate("b", 100.0, None).unwrap(),
+            values(&[("a", 100.1), ("b", 100.2)])
         );
-        assert_eq!(state.bounds("a", None), (100.0, 100.0));
+    }
+
+    #[test]
+    fn large_minimum_does_not_hide_a_truncated_interval_in_value_tolerance() {
+        let config = Config {
+            min: 1_000_000_000.0,
+            max: 1_000_000_000.000_002_6,
+            step: 0.000_001,
+            min_steps_between: 3,
+            ..Config::default()
+        };
+        assert!(Model::new(
+            &values(&[("a", config.min), ("b", config.max)]),
+            config,
+            None
+        )
+        .is_err());
+    }
+
+    #[test]
+    fn terminal_candidates_keep_snap_semantics_and_allow_zero_gap() {
+        for (max, expected) in [(100.24, 100.2), (100.26, 100.26), (100.3, 100.3)] {
+            let config = Config {
+                min: 100.0,
+                max,
+                step: 0.1,
+                preserve_order: true,
+                ..Config::default()
+            };
+            let state = model(&[("a", 100.1), ("b", max)], config);
+            assert_eq!(state.bounds("a", None).1, expected);
+            assert_eq!(
+                state.candidate("a", max, None).unwrap(),
+                values(&[("a", expected), ("b", expected)])
+            );
+        }
     }
 
     #[test]

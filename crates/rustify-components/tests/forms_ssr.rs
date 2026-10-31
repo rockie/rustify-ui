@@ -868,3 +868,80 @@ fn field_explicit_id_is_the_forms_current_focus_target() {
         view.into_any()
     });
 }
+
+#[test]
+fn field_labels_reference_controls_in_deferred_ssr_children() {
+    #[component]
+    fn DeferredControl(mode: &'static str) -> impl IntoView {
+        let control = move || {
+            view! {
+                <p::text_field::Root id="deferred-title" value="accepted" on_change=|_| {}>
+                <p::text_field::Input test_id="deferred-control" />
+                </p::text_field::Root>
+            }
+        };
+        match mode {
+            "direct" => control().into_any(),
+            "show" => view! { <Show when=|| true>{control}</Show> }.into_any(),
+            "for" => {
+                view! { <For each=|| [1] key=|n| *n children=move |_| control() /> }.into_any()
+            }
+            _ => control.into_any(),
+        }
+    }
+    for mode in ["direct", "show", "for", "closure"] {
+        let html = render(|| {
+            let form = rustify_components::Form::new(&["title"], || {});
+            view! {
+                <p::form::Field form=form field="title">
+                    <p::form::Label test_id="deferred-label">"Title"</p::form::Label>
+                    <DeferredControl mode=mode />
+                </p::form::Field>
+            }
+            .into_any()
+        });
+        assert!(
+            tag(&html, "deferred-label").contains("for=\"deferred-title\""),
+            "{mode}: {html}"
+        );
+        assert!(
+            tag(&html, "deferred-control").contains("id=\"deferred-title\""),
+            "{mode}: {html}"
+        );
+    }
+}
+
+#[test]
+fn field_ssr_reference_completion_preserves_nested_and_explicit_labels_and_escapes_ids() {
+    let html = render(|| {
+        let form = rustify_components::Form::new(&["outer", "inner"], || {});
+        view! {
+            <p::form::Field form=form field="outer">
+                <p::form::Label test_id="outer-label">"Outer"</p::form::Label>
+                <p::field::Label control="manual" test_id="manual-label">"Manual"</p::field::Label>
+                <p::form::Field form=form field="inner">
+                    <p::form::Label test_id="inner-label">"Inner"</p::form::Label>
+                    <Show when=|| true><p::text_field::Root id="inner-control" value="" on_change=|_| {}><p::text_field::Input /></p::text_field::Root></Show>
+                </p::form::Field>
+                <Show when=|| true><p::text_field::Root id="outer-&amp;\"<" value="" on_change=|_| {}><p::text_field::Input test_id="outer-control" /></p::text_field::Root></Show>
+            </p::form::Field>
+        }.into_any()
+    });
+    assert!(
+        tag(&html, "outer-label").contains("for=\"outer-&amp;amp;&quot;&lt;\""),
+        "{html}"
+    );
+    assert!(
+        tag(&html, "outer-control").contains("id=\"outer-&amp;amp;&quot;&lt;\""),
+        "{html}"
+    );
+    assert!(
+        tag(&html, "inner-label").contains("for=\"inner-control\""),
+        "{html}"
+    );
+    assert!(
+        tag(&html, "manual-label").contains("for=\"manual\""),
+        "{html}"
+    );
+    assert!(!html.contains('\0'), "{html}");
+}

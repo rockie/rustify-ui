@@ -4,6 +4,8 @@
 
 pub mod field;
 pub mod provider;
+#[cfg(all(feature = "ssr", not(target_arch = "wasm32")))]
+mod ssr_field;
 pub mod submit;
 
 pub use field::{Field, FieldBinding};

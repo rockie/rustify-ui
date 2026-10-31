@@ -106,6 +106,7 @@ pub(crate) fn FormParts(scope: String, state: Parts) -> impl IntoView {
     view! {
         <section class="harness-card harness-form-parts" data-testid=id("form-parts")>
             <h3>"Composed form parts"</h3>
+            <DeferredFields scope=scope.get_value() />
             <button type="button" data-testid=id("raw-refuse") aria-pressed=move || state.refuse.get().to_string() on:click=move |_| state.refuse.update(|flag| *flag=!*flag)>"Refuse value requests"</button>
             <output data-testid=id("raw-requests")>{move || state.requests.get()}</output>
             <p::form::Root form=form id=id("parts-form") test_id=id("parts-form") rules=Vec::new
@@ -170,5 +171,36 @@ pub(crate) fn FormParts(scope: String, state: Parts) -> impl IntoView {
                 <RadioCase value=state.radio[9] key=id("named-radio-right") name="shared-radio" /><RadioCase value=state.radio[11] key=id("named-cards-right") name="shared-cards" cards=true />
             </form>
         </section>
+    }
+}
+
+#[component]
+fn DeferredFields(scope: String) -> impl IntoView {
+    let scope = StoredValue::new(scope);
+    let form = Form::new(&["direct", "show", "for", "closure"], || {});
+    view! {
+        <For each=|| ["direct", "show", "for", "closure"] key=|mode| *mode children=move |mode| view! {
+            <p::form::Field form=form field=mode>
+                <p::form::Label test_id=format!("{}-deferred-{mode}-label", scope.get_value())>{format!("Deferred {mode}")}</p::form::Label>
+                <DeferredEditor mode=mode id=format!("{}-deferred-{mode}", scope.get_value()) />
+            </p::form::Field>
+        } />
+    }
+}
+#[component]
+fn DeferredEditor(mode: &'static str, id: String) -> impl IntoView {
+    let id = StoredValue::new(id);
+    let control = move || {
+        view! {
+            <p::text_field::Root id=id.get_value() value="Accepted" on_change=|_| {}>
+                <p::text_field::Input test_id=id.get_value() />
+            </p::text_field::Root>
+        }
+    };
+    match mode {
+        "direct" => control().into_any(),
+        "show" => view! { <Show when=|| true>{control}</Show> }.into_any(),
+        "for" => view! { <For each=|| [1] key=|n| *n children=move |_| control() /> }.into_any(),
+        _ => control.into_any(),
     }
 }
