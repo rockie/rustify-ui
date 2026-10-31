@@ -1130,3 +1130,37 @@ test('Escape cancels an active nested slider gesture and closes the parent layer
     await expect(page.getByTestId('layer-calls')).not.toContainText('slider-commit');
     expect((await page.getByTestId('layer-calls').innerText()).split('slider-cancel').length - 1).toBe(2);
 });
+
+test('raw form feedback distinguishes saving, failure and completion', async ({ page }) => {
+    await page.goto('/');
+    await page.getByTestId('field-text').fill('Valid title');
+    await page.getByTestId('field-submit').click();
+    await expect(page.getByTestId('field-status')).toHaveText('Saving');
+    await page.getByTestId('field-submit').click();
+    await expect(page.getByTestId('field-saves')).toHaveText('1');
+    await page.getByTestId('field-failed').click();
+    await expect(page.getByTestId('field-status')).toHaveText('Save failed');
+    await page.getByTestId('field-submit').click();
+    await page.getByTestId('field-saved').click();
+    await expect(page.getByTestId('field-status')).toHaveText('Saved');
+    await expect(page.getByTestId('field-saves')).toHaveText('2');
+});
+
+test('raw select has an opaque surface and explicit cancelled selection feedback', async ({ page }) => {
+    await page.goto('/');
+    const trigger = page.getByTestId('raw-select-trigger');
+    await trigger.click();
+    await page.getByTestId('raw-option-0-a').click();
+    await expect(page.getByTestId('select-accepted')).toHaveText('a');
+    await page.getByTestId('select-cancel').click();
+    await trigger.click();
+    const list = page.getByTestId('raw-select-list');
+    await expect(list).not.toHaveCSS('background-color', 'rgba(0, 0, 0, 0)');
+    await page.getByTestId('raw-option-1-b').click();
+    await expect(page.getByTestId('select-result')).toHaveText('Cancelled: b');
+    await expect(page.getByTestId('select-accepted')).toHaveText('a');
+    await expect(page.getByTestId('select-request-count')).toHaveText('1');
+    await expect(list).toBeVisible();
+    await trigger.press('Escape');
+    await expect(trigger).toBeFocused();
+});

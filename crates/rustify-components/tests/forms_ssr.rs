@@ -106,11 +106,11 @@ fn choice_named_radios_preserve_explicit_form_owner_and_name() {
 fn choice_group_required_uses_one_proxy_and_accepts_any_enabled_selection() {
     let html = render(|| {
         view! {
-        <p::checkbox_group::Root value=vec!["b".to_string()] on_change=|_| {} required=true>
+        <p::checkbox_group::Root value=vec!["b".to_string()] on_change=|_| {} required=true test_id="required-checks">
             <p::checkbox_group::Item value="a" test_id="a">"A"</p::checkbox_group::Item>
             <p::checkbox_group::Item value="b" test_id="b">"B"</p::checkbox_group::Item>
         </p::checkbox_group::Root>
-        <p::radio_group::Root value=Signal::stored(None::<String>) on_change=|_| {} required=true>
+        <p::radio_group::Root value=Signal::stored(None::<String>) on_change=|_| {} required=true test_id="required-radio">
             <p::radio_group::Item value="x" disabled=true test_id="off">"Off"</p::radio_group::Item>
             <p::radio_group::Item value="y" test_id="first">"First"</p::radio_group::Item>
             <p::radio_group::Item value="z" test_id="last">"Last"</p::radio_group::Item>
@@ -122,6 +122,14 @@ fn choice_group_required_uses_one_proxy_and_accepts_any_enabled_selection() {
         "{html}"
     );
     assert!(flag(tag(&html, "first"), "required"), "{html}");
+    assert!(
+        !tag(&html, "required-checks").contains("aria-required="),
+        "{html}"
+    );
+    assert!(
+        tag(&html, "required-radio").contains("aria-required=\"true\""),
+        "{html}"
+    );
     assert!(
         !flag(tag(&html, "off"), "required") && !flag(tag(&html, "last"), "required"),
         "{html}"

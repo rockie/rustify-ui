@@ -102,9 +102,11 @@ test('select skins cover all trigger sizes and treatments with utility and respo
         }
     }
     const responsive = page.getByTestId('select-responsive');
+    await expect(responsive).toHaveAccessibleName('Responsive fruit');
     expect(await responsive.evaluate(node => node.getBoundingClientRect().height)).toBe(40);
     expect(await responsive.evaluate(node => parseFloat(getComputedStyle(node).borderRadius))).toBeGreaterThanOrEqual(20);
     const custom = page.getByTestId('select-typed');
+    await expect(custom).toHaveAccessibleName('Custom trigger fruit');
     await expect(custom).toHaveClass(/select-utility/);
     await expect(custom).toHaveClass(/rustify-select-trigger/);
     expect(await custom.evaluate(node => ({ height: node.getBoundingClientRect().height, padding: getComputedStyle(node).paddingLeft, radius: getComputedStyle(node).borderRadius }))).toEqual({ height: 48, padding: '1px', radius: '0px' });

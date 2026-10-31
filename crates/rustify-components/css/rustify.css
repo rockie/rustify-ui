@@ -1038,6 +1038,9 @@
   :where(.rustify-switch) :where(.rustify-choice-native[data-state="checked"]) {
     background: var(--rustify-choice-on);
   }
+  :where(.rustify-switch[data-variant="soft"]) :where(.rustify-choice-native[data-state="unchecked"]:not(:disabled):not([data-invalid])) {
+    border-color: var(--rustify-choice-boundary);
+  }
   :where(.rustify-switch-thumb) {
     position: absolute;
     inset-inline-start: 1px;
@@ -1554,7 +1557,7 @@
     width: var(--rustify-space-4, 16px);
   }
 }
-[data-rustify-scope] [data-name="Slider"] {
+[data-rustify-scope] input[data-name="Slider"] {
   --thumb-height: 1rem;
   --track-height: 0.25rem;
   --track-color: var(--border);
@@ -1570,18 +1573,18 @@
   overflow: hidden;
   cursor: grab;
 }
-[data-rustify-scope] [data-name="Slider"]:active {
+[data-rustify-scope] input[data-name="Slider"]:active {
   cursor: grabbing;
 }
-[data-rustify-scope] [data-name="Slider"]:disabled, [data-rustify-scope] [data-name="Slider"][aria-readonly="true"] {
+[data-rustify-scope] input[data-name="Slider"]:disabled, [data-rustify-scope] input[data-name="Slider"][aria-readonly="true"] {
   cursor: not-allowed;
   opacity: 0.5;
 }
-[data-rustify-scope] [data-name="Slider"]::-webkit-slider-runnable-track {
+[data-rustify-scope] input[data-name="Slider"]::-webkit-slider-runnable-track {
   height: calc(var(--track-height) + 1px);
   background: linear-gradient(var(--track-color) 0 0) scroll no-repeat center / 100% calc(var(--track-height) + 1px);
 }
-[data-rustify-scope] [data-name="Slider"]::-webkit-slider-thumb {
+[data-rustify-scope] input[data-name="Slider"]::-webkit-slider-thumb {
   --thumb-radius: calc((var(--thumb-height) * 0.5) - 1px);
   --clip-top: calc((var(--thumb-height) - var(--track-height)) * 0.5 - 0.5px);
   --clip-bottom: calc(var(--thumb-height) - var(--clip-top));
@@ -1596,19 +1599,19 @@
   border-radius: var(--thumb-height);
   clip-path: polygon( 100% -1px, var(--clip-edges) -1px, 0 var(--clip-top), -100vmax var(--clip-top), -100vmax var(--clip-bottom), 0 var(--clip-bottom), var(--clip-edges) 100%, var(--clip-further) var(--clip-further) );
 }
-[data-rustify-scope] [data-name="Slider"]::-moz-range-track, [data-rustify-scope] [data-name="Slider"]::-moz-range-progress {
+[data-rustify-scope] input[data-name="Slider"]::-moz-range-track, [data-rustify-scope] input[data-name="Slider"]::-moz-range-progress {
   height: calc(var(--track-height) + 1px);
   border-radius: var(--track-height);
 }
-[data-rustify-scope] [data-name="Slider"]::-moz-range-track {
+[data-rustify-scope] input[data-name="Slider"]::-moz-range-track {
   width: 100%;
   background: var(--track-color);
 }
-[data-rustify-scope] [data-name="Slider"]::-moz-range-progress {
+[data-rustify-scope] input[data-name="Slider"]::-moz-range-progress {
   appearance: none;
   background: var(--thumb-border);
 }
-[data-rustify-scope] [data-name="Slider"]::-moz-range-thumb {
+[data-rustify-scope] input[data-name="Slider"]::-moz-range-thumb {
   appearance: none;
   height: var(--thumb-height);
   width: var(--thumb-height);
@@ -1616,7 +1619,7 @@
   border: var(--border-width) solid var(--thumb-border);
   border-radius: var(--thumb-height);
 }
-[data-rustify-scope] [data-name="Slider"]:focus-visible {
+[data-rustify-scope] input[data-name="Slider"]:focus-visible {
   outline: 3px solid var(--ring);
   @supports (color: color-mix(in lab, red, red)) {
     outline: 3px solid color-mix(in srgb, var(--ring) 50%, transparent);

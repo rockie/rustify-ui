@@ -12,7 +12,7 @@
    the second variant, which was a different thumb shape and no different
    behaviour, and the `--slider-track` variable, which no token table defined. */
 
-[data-rustify-scope] [data-name="Slider"] {
+[data-rustify-scope] input[data-name="Slider"] {
   --thumb-height: 1rem;
   --track-height: 0.25rem;
   --track-color: var(--border);
@@ -29,24 +29,24 @@
   cursor: grab;
 }
 
-[data-rustify-scope] [data-name="Slider"]:active {
+[data-rustify-scope] input[data-name="Slider"]:active {
   cursor: grabbing;
 }
 
-[data-rustify-scope] [data-name="Slider"]:disabled,
-[data-rustify-scope] [data-name="Slider"][aria-readonly="true"] {
+[data-rustify-scope] input[data-name="Slider"]:disabled,
+[data-rustify-scope] input[data-name="Slider"][aria-readonly="true"] {
   cursor: not-allowed;
   opacity: 0.5;
 }
 
 /* WebKit: the thumb carries the filled part of the track in its shadow. */
-[data-rustify-scope] [data-name="Slider"]::-webkit-slider-runnable-track {
+[data-rustify-scope] input[data-name="Slider"]::-webkit-slider-runnable-track {
   height: calc(var(--track-height) + 1px);
   background: linear-gradient(var(--track-color) 0 0) scroll no-repeat center /
     100% calc(var(--track-height) + 1px);
 }
 
-[data-rustify-scope] [data-name="Slider"]::-webkit-slider-thumb {
+[data-rustify-scope] input[data-name="Slider"]::-webkit-slider-thumb {
   --thumb-radius: calc((var(--thumb-height) * 0.5) - 1px);
   --clip-top: calc((var(--thumb-height) - var(--track-height)) * 0.5 - 0.5px);
   --clip-bottom: calc(var(--thumb-height) - var(--clip-top));
@@ -72,23 +72,23 @@
 }
 
 /* Firefox draws the filled part itself, so the thumb is only the thumb. */
-[data-rustify-scope] [data-name="Slider"]::-moz-range-track,
-[data-rustify-scope] [data-name="Slider"]::-moz-range-progress {
+[data-rustify-scope] input[data-name="Slider"]::-moz-range-track,
+[data-rustify-scope] input[data-name="Slider"]::-moz-range-progress {
   height: calc(var(--track-height) + 1px);
   border-radius: var(--track-height);
 }
 
-[data-rustify-scope] [data-name="Slider"]::-moz-range-track {
+[data-rustify-scope] input[data-name="Slider"]::-moz-range-track {
   width: 100%;
   background: var(--track-color);
 }
 
-[data-rustify-scope] [data-name="Slider"]::-moz-range-progress {
+[data-rustify-scope] input[data-name="Slider"]::-moz-range-progress {
   appearance: none;
   background: var(--thumb-border);
 }
 
-[data-rustify-scope] [data-name="Slider"]::-moz-range-thumb {
+[data-rustify-scope] input[data-name="Slider"]::-moz-range-thumb {
   appearance: none;
   height: var(--thumb-height);
   width: var(--thumb-height);
@@ -97,7 +97,7 @@
   border-radius: var(--thumb-height);
 }
 
-[data-rustify-scope] [data-name="Slider"]:focus-visible {
+[data-rustify-scope] input[data-name="Slider"]:focus-visible {
   outline: 3px solid color-mix(in srgb, var(--ring) 50%, transparent);
   outline-offset: 2px;
 }

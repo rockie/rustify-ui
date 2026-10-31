@@ -18,8 +18,10 @@ pub fn Fields() -> impl IntoView {
     let rules = RwSignal::new(0);
     let asked = RwSignal::new(Vec::<String>::new());
     let resets = RwSignal::new(0);
+    let status = RwSignal::new("Not saved yet");
     let form = Form::new(&["text", "area", "number", "color"], move || {
-        saves.update(|n| *n += 1)
+        saves.update(|n| *n += 1);
+        status.set("Saving");
     });
     let change = Callback::new(move |(field, value): (&'static str, String)| {
         requests.update(|requests| requests.push(format!("{field}:{value}")));
@@ -39,6 +41,7 @@ pub fn Fields() -> impl IntoView {
             _ => {}
         }
         form.changed(field);
+        status.set("Unsaved changes");
     });
     view! {
         <section data-testid="native-fields">
@@ -52,17 +55,21 @@ pub fn Fields() -> impl IntoView {
                         "number" => { number.set(value.parse().unwrap()); form.changed("number"); }, "color" => { color.set(value); form.changed("color"); }, _ => {} }
                 }
                 pending.set(Vec::new());
+                status.set("Unsaved changes");
             }>"Apply delayed values"</button>
             <button type="button" data-testid="field-disabled" on:click=move |_| disabled.update(|value| *value = !*value)>"Toggle disabled"</button>
             <button type="button" data-testid="field-readonly" on:click=move |_| readonly.update(|value| *value = !*value)>"Toggle read only"</button>
-            <button type="button" data-testid="field-saved" on:click=move |_| form.submitted(Ok(()))>"Complete save"</button>
-            <button type="button" data-testid="field-failed" on:click=move |_| form.submitted(Err("Try again".into()))>"Fail save"</button>
-            <p data-testid="field-requests">{move || requests.get().join("|")}</p>
-            <p data-testid="field-previews">{move || previews.get().join("|")}</p>
-            <p data-testid="field-asked">{move || asked.get().join("|")}</p>
-            <output data-testid="field-saves">{move || saves.get()}</output>
-            <output data-testid="field-rules">{move || rules.get()}</output>
-            <output data-testid="field-resets">{move || resets.get()}</output>
+            <button type="button" data-testid="field-saved" on:click=move |_| { if form.submitting() { form.submitted(Ok(())); status.set("Saved"); } }>"Complete save"</button>
+            <button type="button" data-testid="field-failed" on:click=move |_| { if form.submitting() { form.submitted(Err("Try again".into())); status.set("Save failed"); } }>"Fail save"</button>
+            <p role="status">"Save status: "<output data-testid="field-status">{move || if form.submitting() { "Saving" } else { status.get() }}</output></p>
+            <dl class="sample-feedback">
+                <div><dt>"Value requests:"</dt><dd><output data-testid="field-requests">{move || requests.get().join("|")}</output></dd></div>
+                <div><dt>"Draft previews:"</dt><dd><output data-testid="field-previews">{move || previews.get().join("|")}</output></dd></div>
+                <div><dt>"Submit history:"</dt><dd><output data-testid="field-asked">{move || asked.get().join("|")}</output></dd></div>
+                <div><dt>"Save calls:"</dt><dd><output data-testid="field-saves">{move || saves.get()}</output></dd></div>
+                <div><dt>"Rule checks:"</dt><dd><output data-testid="field-rules">{move || rules.get()}</output></dd></div>
+                <div><dt>"Reset requests:"</dt><dd><output data-testid="field-resets">{move || resets.get()}</output></dd></div>
+            </dl>
             <p data-testid="field-failure">{move || form.failure().unwrap_or_default()}</p>
             <p::form::Root form=form id="native-form" test_id="native-form"
                 rules=move || { rules.update(|n| *n += 1); Vec::new() }
@@ -71,6 +78,7 @@ pub fn Fields() -> impl IntoView {
                     resets.update(|n| *n += 1);
                     if policy.get_untracked() == "accept" {
                         text.set("accepted".into()); area.set("notes".into()); number.set(12.0); color.set("#112233".into()); form.reset();
+                        status.set("Not saved yet");
                     }
                 })>
                 <p::form::Field form=form field="text">

@@ -60,6 +60,7 @@ pub fn Selects() -> impl IntoView {
     let requests = RwSignal::new(Vec::<String>::new());
     let open_requests = RwSignal::new(Vec::<String>::new());
     let hooks = RwSignal::new(Vec::<String>::new());
+    let selection_result = RwSignal::new("No selection attempted".to_string());
     let cancel = RwSignal::new(false);
     let cancel_escape = RwSignal::new(false);
     let cancel_outside = RwSignal::new(false);
@@ -94,11 +95,17 @@ pub fn Selects() -> impl IntoView {
             <button type="button" data-testid="select-trigger-visible" on:click=move |_| trigger_visible.update(|value| *value = !*value)>"Toggle trigger"</button>
             <button type="button" data-testid="select-program-close" on:click=move |_| open.set(false)>"Program close"</button>
             <button type="button" data-testid="select-clear" on:click=move |_| { value.set(None); form.changed("fruit"); }>"Clear value"</button>
-            <output data-testid="select-requests">{move || requests.get().join("|")}</output>
-            <output data-testid="select-open-requests">{move || open_requests.get().join("|")}</output>
-            <output data-testid="select-hooks">{move || hooks.get().join("|")}</output>
-            <output data-testid="select-accepted">{move || value.get().unwrap_or_default()}</output>
-            <output data-testid="select-saves">{move || saves.get()}</output>
+            <dl class="sample-feedback">
+                <div><dt>"Accepted value:"</dt><dd><output data-testid="select-accepted">{move || value.get().unwrap_or_default()}</output></dd></div>
+                <div><dt>"Value request count:"</dt><dd><output data-testid="select-request-count">{move || requests.with(Vec::len)}</output></dd></div>
+                <div><dt>"Last value request:"</dt><dd><output data-testid="select-last-request">{move || requests.with(|all| all.last().cloned().unwrap_or_else(|| "—".into()))}</output></dd></div>
+                <div><dt>"Value request history:"</dt><dd><output data-testid="select-requests">{move || requests.get().join("|")}</output></dd></div>
+                <div><dt>"List open:"</dt><dd><output data-testid="select-open">{move || open.get()}</output></dd></div>
+                <div><dt>"Open / close requests:"</dt><dd><output data-testid="select-open-requests">{move || open_requests.get().join("|")}</output></dd></div>
+                <div><dt>"Selection result:"</dt><dd><output data-testid="select-result">{move || selection_result.get()}</output></dd></div>
+                <div><dt>"Hook events:"</dt><dd><output data-testid="select-hooks">{move || hooks.get().join("|")}</output></dd></div>
+                <div><dt>"Save calls:"</dt><dd><output data-testid="select-saves">{move || saves.get()}</output></dd></div>
+            </dl>
             <p::DirectionProvider direction=direction>
                 <p::form::Root form=form rules=Vec::new id="raw-select-form" test_id="raw-select-form">
                     <p::form::Field form=form field="fruit"><p::form::Label>"Fruit"</p::form::Label>
@@ -109,7 +116,12 @@ pub fn Selects() -> impl IntoView {
                                 match policy.get_untracked().as_str() { "refuse" => {}, "delay" => pending.set(Some(next)), _ => { value.set(next); form.changed("fruit"); } }
                             }}
                             on_open_change=move |next: bool| { open_requests.update(|all| all.push(next.to_string())); if next || !refuse_close.get_untracked() { open.set(next); } }
-                            on_select=Callback::new(move |event: rustify_ui::Cancelable<String>| { hooks.update(|all| all.push(format!("select:{}", event.value()))); if cancel.get_untracked() { event.prevent_default(); } })
+                            on_select=Callback::new(move |event: rustify_ui::Cancelable<String>| {
+                                hooks.update(|all| all.push(format!("select:{}", event.value())));
+                                let cancelled = cancel.get_untracked();
+                                selection_result.set(format!("{}: {}", if cancelled { "Cancelled" } else { "Requested" }, event.value()));
+                                if cancelled { event.prevent_default(); }
+                            })
                             on_escape_key_down=Callback::new(move |event: rustify_ui::Cancelable<rustify_ui::LayerDismiss>| { hooks.update(|all| all.push("escape".into())); if cancel_escape.get_untracked() { event.prevent_default(); } })
                             on_pointer_down_outside=Callback::new(move |event: rustify_ui::Cancelable<rustify_ui::LayerDismiss>| { hooks.update(|all| all.push("outside".into())); if cancel_outside.get_untracked() { event.prevent_default(); } })
                             on_open_auto_focus=Callback::new(move |_| hooks.update(|all| all.push("open-focus".into())))
@@ -117,7 +129,7 @@ pub fn Selects() -> impl IntoView {
                             <Show when=move || trigger_visible.get()>
                                 {p::select::trigger_as(leptos::html::button().attr("data-testid", "raw-select-trigger").class("host-select-trigger")
                                     .on(leptos::ev::click, move |event| { if cancel_target.get_untracked() { event.prevent_default(); } })
-                                    .child(view! { <p::select::Value /><p::select::Icon>"Open"</p::select::Icon> }))}
+                                    .child(view! { <p::select::Value />" "<p::select::Icon>"Open"</p::select::Icon> }))}
                             </Show>
                             <p::select::Content test_id="raw-select-list" attr:data-caller-content="kept" on:click=move |event| { if cancel_content.get_untracked() { event.prevent_default(); } }>
                                 <p::select::ScrollUpButton>"Up"</p::select::ScrollUpButton>

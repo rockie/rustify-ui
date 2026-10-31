@@ -105,6 +105,7 @@
     background: var(--muted);
   }
   :where(.rustify-switch) :where(.rustify-choice-native[data-state="checked"]) { background: var(--rustify-choice-on); }
+  :where(.rustify-switch[data-variant="soft"]) :where(.rustify-choice-native[data-state="unchecked"]:not(:disabled):not([data-invalid])) { border-color: var(--rustify-choice-boundary); }
   :where(.rustify-switch-thumb) {
     position: absolute;
     inset-inline-start: 1px;

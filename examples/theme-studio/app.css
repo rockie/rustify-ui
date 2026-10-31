@@ -259,6 +259,8 @@ button,input,textarea {font:inherit;}
 .studio-renderer-buttons>button[data-name="Button"] {flex:1 1 auto;min-width:0;white-space:normal;}
 /* Authored example styles consume only the public primitive part/state contract. */
 .form-parts-example[data-presentation="primitives"] [data-rustify-part="slider-root"] {min-height:32px;padding-block:14px;box-sizing:border-box;}
+.sample-number-draft-help {display:block;visibility:hidden;}
+.sample-amount-field:has([data-rustify-part="number-field-input"][aria-invalid="true"]) .sample-number-draft-help {visibility:visible;}
 .form-parts-example[data-presentation="primitives"] [data-rustify-part="slider-track"] {height:4px;background:var(--border);}
 .form-parts-example[data-presentation="primitives"] [data-rustify-part="slider-range"] {background:var(--foreground);}
 .form-parts-example[data-presentation="primitives"] [data-rustify-part="slider-thumb"] {top:50%;width:20px;height:20px;border:1px solid var(--foreground);border-radius:50%;background:var(--background);}

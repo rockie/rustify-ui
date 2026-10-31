@@ -85,13 +85,16 @@ pub fn Sliders() -> impl IntoView {
                     <p::slider::Thumb id="vertical" aria_label="Inverted vertical amount" class="sample-thumb" test_id="slider-inverted-thumb" />
                 </p::slider::Track>
             </p::slider::Root>
-            <output data-testid="slider-vertical-last">{move || vertical_asked.get()}</output>
-            <output data-testid="slider-values">{move || encode(&values.get())}</output>
-            <output data-testid="slider-requests">{move || requests.get()}</output>
-            <output data-testid="slider-last">{move || last.get()}</output>
-            <output data-testid="slider-commits">{move || commits.get()}</output>
-            <output data-testid="slider-committed">{move || committed.get()}</output>
-            <output data-testid="slider-cancels">{move || cancels.get()}</output>
+            <dl class="sample-feedback">
+                <div><dt>"Vertical accepted value:"</dt><dd>"vertical=35 (request refused)"</dd></div>
+                <div><dt>"Last vertical request:"</dt><dd><output data-testid="slider-vertical-last">{move || vertical_asked.get()}</output></dd></div>
+                <div><dt>"Range accepted values:"</dt><dd><output data-testid="slider-values">{move || encode(&values.get())}</output></dd></div>
+                <div><dt>"Range value requests:"</dt><dd><output data-testid="slider-requests">{move || requests.get()}</output></dd></div>
+                <div><dt>"Last range request:"</dt><dd><output data-testid="slider-last">{move || last.get()}</output></dd></div>
+                <div><dt>"Completed gestures:"</dt><dd><output data-testid="slider-commits">{move || commits.get()}</output></dd></div>
+                <div><dt>"Last completed candidate:"</dt><dd><output data-testid="slider-committed">{move || committed.get()}</output></dd></div>
+                <div><dt>"Cancelled gestures:"</dt><dd><output data-testid="slider-cancels">{move || cancels.get()}</output></dd></div>
+            </dl>
         </section>
     }
 }

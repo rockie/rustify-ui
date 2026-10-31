@@ -6,3 +6,11 @@
 .sample-vertical { width: 12px; height: 150px; margin: 24px; background: #ddd; }
 .sample-thumb { width: 20px; height: 20px; border: 2px solid currentColor; border-radius: 50%; background: white; }
 .sample-range { background: #777; }
+
+.sample-feedback > div { display: flex; flex-wrap: wrap; gap: 0.5em; }
+.sample-feedback dd { margin: 0; overflow-wrap: anywhere; }
+section > label { display: inline-flex; align-items: center; gap: 0.5em; margin-inline-end: 0.5em; }
+#choices-form > [data-rustify-part="checkbox-root"],
+#choices-form > [data-rustify-part="switch-root"] { margin-inline-end: 0.75em; }
+.host-select-trigger { display: inline-flex; align-items: center; gap: 0.5em; }
+[data-rustify-part="select-content"] { background: white; color: black; border: 1px solid currentColor; }

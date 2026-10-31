@@ -41,8 +41,9 @@ pub fn SelectSamples() -> impl IntoView {
                 <button type="button" data-testid="select-skin-empty" on:click=move |_| empty.update(|flag| *flag = !*flag)>"Toggle empty entries"</button>
             </div>
             <div class="field-stack">
+                <label for="responsive-fruit">"Responsive fruit"</label>
                 <s::Root value=value on_change={move |next: Option<String>| value.set(next)} open=open on_open_change=move |next| open.set(next)
-                    entries=entries size=Signal::stored(Responsive { initial: Some(s::SelectSize::One), md: Some(s::SelectSize::Three), ..Default::default() })>
+                    id="responsive-fruit" entries=entries size=Signal::stored(Responsive { initial: Some(s::SelectSize::One), md: Some(s::SelectSize::Three), ..Default::default() })>
                     <s::Trigger color=Some(AccentColor::Blue) radius=Some(ThemeRadius::Full) test_id="select-responsive" />
                     <s::Content color=Some(AccentColor::Red) variant=variant high_contrast=contrast test_id="select-responsive-list" attr:data-caller="kept">
                         <s::ScrollUpButton /><s::Viewport><s::Group><s::Label>"Seasonal fruit"</s::Label>
@@ -51,7 +52,8 @@ pub fn SelectSamples() -> impl IntoView {
                         </s::Group><s::Separator /></s::Viewport><s::ScrollDownButton />
                     </s::Content>
                 </s::Root>
-                <s::Root value=value on_change=|_| {} open=false on_open_change=|_| {} entries=entries>
+                <label for="typed-fruit">"Custom trigger fruit"</label>
+                <s::Root value=value on_change=|_| {} open=false on_open_change=|_| {} entries=entries id="typed-fruit">
                     {s::trigger_as(leptos::html::button().class("select-utility").attr("data-testid", "select-typed").child(view! { <s::Value /><s::Icon /> }))}
                 </s::Root>
                 <form id="select-skin-form" data-testid="select-skin-form">

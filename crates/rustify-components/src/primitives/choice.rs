@@ -847,7 +847,7 @@ fn group_root(options: GroupOptions, children: Children) -> impl IntoView {
                 data-invalid=move || invalid.get().then_some("") data-orientation=orientation.attribute()
                 dir=move || direction.get().attribute()
                 role=if toolbar { "toolbar" } else if kind == GroupKind::Radio { "radiogroup" } else { "group" }
-                aria-label=optional(aria_label) aria-required=move || required.get().then_some("true")
+                aria-label=optional(aria_label) aria-required=move || (kind == GroupKind::Radio && !toolbar && required.get()).then_some("true")
                 aria-readonly=move || read_only.get().then_some("true")
                 on:focusin=move |event| { if let Some(item) = group.event_item(event.as_ref()) {
                     group.last.set(Some(item.id.get_value())); group.focus_owned.set(true);

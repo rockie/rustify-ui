@@ -32,6 +32,84 @@ async function region(page: Page) {
     await page.locator(`#${id}`).getByRole('option', { name: 'East Asia', exact: true }).click();
 }
 
+test('form examples associate visible guidance, error sources and incomplete drafts', async ({ page }) => {
+    const root = sample(page);
+    await save(page);
+    await expect(root.getByTestId('sample-name')).toHaveAccessibleDescription(/Input requirement/);
+    await root.getByTestId('sample-name').fill('A');
+    await save(page);
+    await expect(root.getByTestId('sample-name')).toHaveAccessibleDescription(/Form rule/);
+    await root.getByTestId('sample-amount').fill('-');
+    await expect(root.getByTestId('sample-amount')).toHaveAccessibleDescription(/Number incomplete/);
+    expect(await root.getByTestId('sample-form').evaluate(node => new FormData(node as HTMLFormElement).get('amount'))).toBe('12');
+    await root.getByTestId('sample-amount').press('Escape');
+    await expect(root.getByTestId('sample-amount')).toHaveValue('12');
+    await expect(root.getByTestId('sample-amount-draft-help')).toBeHidden();
+    await expect(root.getByTestId('sample-amount')).not.toHaveAccessibleDescription(/Number incomplete/);
+    for (const finish of ['Enter', 'submit']) {
+        await root.getByTestId('sample-amount').fill('-');
+        if (finish === 'Enter') await root.getByTestId('sample-amount').press('Enter');
+        else await root.getByTestId('sample-form').evaluate(node => (node as HTMLFormElement).requestSubmit());
+        await expect(root.getByTestId('sample-amount')).toHaveValue('12');
+        await expect(root.getByTestId('sample-amount-draft-help')).toBeHidden();
+        await expect(root.getByTestId('sample-amount')).not.toHaveAccessibleDescription(/Number incomplete/);
+    }
+    await root.getByTestId('sample-amount').fill('-');
+    await root.getByTestId('form-states-details').locator('summary').click();
+    await expect(root.getByTestId('parts-component')).toBeVisible();
+    await expect(root.getByTestId('sample-amount')).toHaveValue('12');
+    await expect(root.getByTestId('sample-amount-draft-help')).toBeHidden();
+});
+
+test('state examples associate visible labels and help in both presentations', async ({ page }) => {
+    const root = sample(page);
+    await root.getByTestId('form-states-details').locator('summary').click();
+    const tool = root.getByTestId('form-states');
+    for (const presentation of ['themes', 'primitives']) {
+        await tool.getByTestId('parts-presentation').selectOption(presentation);
+        for (const [part, label] of [['Checkbox', 'Receive email updates'], ['Switch', 'Enable notifications'], ['TextField', 'Display name'], ['TextArea', 'Notes'], ['NumberField', 'Quantity'], ['ColorField', 'Colour']]) {
+            await tool.getByTestId('parts-component').selectOption(part);
+            await expect(tool.getByTestId('parts-label')).toHaveText(label);
+            await expect(tool.getByTestId('parts-control')).toHaveAccessibleName(label);
+            await expect(tool.getByTestId('parts-control')).toHaveAccessibleDescription(/.+/);
+        }
+        await tool.getByTestId('parts-state').selectOption('invalid');
+        await expect(tool.getByTestId('parts-control')).toHaveAccessibleDescription(/Invalid appearance demonstration/);
+        await tool.getByTestId('parts-component').selectOption('CheckboxCards');
+        await expect(tool.getByTestId('parts-example').getByRole('checkbox').first()).toHaveAccessibleDescription(/Invalid appearance demonstration/);
+        await tool.getByTestId('parts-state').selectOption('normal');
+        await tool.getByTestId('parts-component').selectOption('ToggleGroup');
+        await expect(tool.getByTestId('parts-example').getByRole('button', { name: 'Email', exact: true })).toHaveAccessibleDescription(/including none/);
+    }
+});
+
+test('themed range endpoints and soft switch retain their visible boundaries', async ({ page }) => {
+    await sample(page).getByTestId('form-states-details').locator('summary').click();
+    const tool = sample(page).getByTestId('form-states');
+    await tool.getByTestId('parts-component').selectOption('RangeSlider');
+    for (const rtl of [false, true]) {
+        await tool.getByTestId('parts-rtl').setChecked(rtl);
+        for (const key of ['End', 'Home']) {
+            const thumb = tool.getByTestId('parts-start');
+            await thumb.focus(); await thumb.press(key);
+            await expect(thumb).toBeFocused();
+            expect(await thumb.evaluate(node => {
+                const box = node.getBoundingClientRect();
+                let parent = node.parentElement;
+                while (parent) {
+                    const css = getComputedStyle(parent), clip = parent.getBoundingClientRect();
+                    if (css.overflowX !== 'visible' && (box.left < clip.left || box.right > clip.right)) return false;
+                    parent = parent.parentElement;
+                }
+                return box.width === box.height;
+            })).toBe(true);
+        }
+    }
+    await tool.getByTestId('parts-component').selectOption('Switch');
+    await tool.getByTestId('parts-variant').selectOption('soft');
+    await expect(tool.getByTestId('parts-control')).not.toHaveCSS('border-color', 'rgba(0, 0, 0, 0)');
+});
+
 test('complete local form exposes constraints, grouped values, Draft completion and application retry', async ({ page }) => {
     const form = sample(page).getByTestId('sample-form');
     const name = form.getByTestId('sample-name');

@@ -1,0 +1,182 @@
+{
+  "tested_version": "dirty@64bb17281567a646b312a4b7050219fe5a7f0c55",
+  "browser": "Google Chrome 156.0.8078.74; Playwright 1.63.0; headless",
+  "locale": "en-US",
+  "timezone": "Asia/Shanghai",
+  "viewports": [
+    [
+      1440,
+      1000
+    ],
+    [
+      768,
+      1000
+    ],
+    [
+      390,
+      844
+    ]
+  ],
+  "dpr": 1,
+  "studio": {
+    "url": "http://127.0.0.1:4181/",
+    "time": "2026-10-31T10:32:20.537Z",
+    "logs": [],
+    "constraint": "请填写此字段。",
+    "draft": {
+      "value": "-",
+      "invalid": "true",
+      "description": "rui-form-203-amount-description"
+    },
+    "button": {
+      "color": "rgb(31, 45, 92)",
+      "background": "rgba(0, 0, 0, 0)",
+      "primary": "rgb(21 112 239)",
+      "brand11": "rgb(0 43 183 / 0.77254902)",
+      "text": "rgb(31 45 92)"
+    },
+    "required": [],
+    "switch": {
+      "border": "rgb(139, 141, 152)",
+      "background": "rgb(242, 244, 247)",
+      "outer": "<span class=\"rustify-color rustify-choice rustify-switch rui-geometry-396\" data-rustify-part=\"switch-root\" data-state=\"unchecked\" dir=\"ltr\" data-variant=\"soft\" data-name=\"Switch\"><input type=\"checkbox\" id=\"rui-switch-397\" value=\"on\" data-rustify-choice-owner=\"rui-switch-397\" data-rustify-form-control=\"rui-switch-397\" aria-labelledby=\"rui-parts-label-254\" aria-describedby=\"rui-parts-label-254-help\" aria-checked=\"false\" data-state=\"unchecked\" dir=\"ltr\" data-rustify-part=\"switch-control\" style=\"\" role=\"switch\" class=\"rustify-choice-native\" data-testid=\"parts-control\"><span class=\"rustify-switch-thumb\" data-rustify-part=\"switch-thumb\" aria-hidden=\"true\" dir=\"ltr\" data-state=\"unchecked\"><!----></span></span>"
+    },
+    "cardsDescription": null,
+    "slider": {
+      "width": 14,
+      "height": 14,
+      "cssWidth": "14px",
+      "maxWidth": "none",
+      "ancestors": [
+        {
+          "tag": "BUTTON",
+          "part": "slider-thumb",
+          "cls": "rustify-slider-thumb rui-geometry-448",
+          "overflow": "visible",
+          "maxWidth": "none",
+          "rect": {
+            "x": 1367,
+            "y": 515.765625,
+            "width": 14,
+            "height": 14,
+            "top": 515.765625,
+            "right": 1381,
+            "bottom": 529.765625,
+            "left": 1367
+          }
+        },
+        {
+          "tag": "DIV",
+          "part": "slider-root",
+          "cls": "rustify-color rustify-slider rui-geometry-444",
+          "overflow": "visible",
+          "maxWidth": "none",
+          "rect": {
+            "x": 386,
+            "y": 510.765625,
+            "width": 988,
+            "height": 24,
+            "top": 510.765625,
+            "right": 1374,
+            "bottom": 534.765625,
+            "left": 386
+          }
+        },
+        {
+          "tag": "DIV",
+          "part": null,
+          "cls": "form-parts-example min-w-0 rounded-md border border-border p-4",
+          "overflow": "visible",
+          "maxWidth": "none",
+          "rect": {
+            "x": 369,
+            "y": 431.265625,
+            "width": 1022,
+            "height": 120.5,
+            "top": 431.265625,
+            "right": 1391,
+            "bottom": 551.765625,
+            "left": 369
+          }
+        },
+        {
+          "tag": "DIV",
+          "part": "direction-provider",
+          "cls": "",
+          "overflow": "visible",
+          "maxWidth": "none",
+          "rect": {
+            "x": 369,
+            "y": 431.265625,
+            "width": 1022,
+            "height": 120.5,
+            "top": 431.265625,
+            "right": 1391,
+            "bottom": 551.765625,
+            "left": 369
+          }
+        },
+        {
+          "tag": "DIV",
+          "part": null,
+          "cls": "mt-5 space-y-5",
+          "overflow": "visible",
+          "maxWidth": "none",
+          "rect": {
+            "x": 369,
+            "y": 117.765625,
+            "width": 1022,
+            "height": 594,
+            "top": 117.765625,
+            "right": 1391,
+            "bottom": 711.765625,
+            "left": 369
+          }
+        },
+        {
+          "tag": "DETAILS",
+          "part": null,
+          "cls": "border-t border-border pt-4",
+          "overflow": "visible",
+          "maxWidth": "none",
+          "rect": {
+            "x": 369,
+            "y": 58.265625,
+            "width": 1022,
+            "height": 653.5,
+            "top": 58.265625,
+            "right": 1391,
+            "bottom": 711.765625,
+            "left": 369
+          }
+        }
+      ]
+    },
+    "toggleCleared": "[]",
+    "applicationDescription": "rui-form-203-name-error-source rui-form-203-name-description rui-form-203-name-error",
+    "saved": "Saved in this preview only · 2",
+    "axe": [],
+    "mobileOverflow": false,
+    "existingCard": "- radio \"Team Share with collaborators\""
+  },
+  "raw": {
+    "console": [],
+    "requests": [],
+    "choices": "First anonymous group\nAccepted value:\nSome(\"a\")\nValue requests:\n1\nAccepted requests:\n0\nLast request:\nSome(\"b\")",
+    "saves": "1",
+    "busy": "Native fields\nAcceptance\nAccept\nRefuse\nDelay\nApply delayed valuesToggle disabledToggle read onlyComplete saveFail save\n\nSave status: Saving\n\nValue requests:\ntext:Valid title\nDraft previews:\nSubmit history:\nSave|Busy\nSave calls:\n1\nRule checks:\n1\nReset requests:\n0\n\nTitle\n\nApplication controlled\n\nPrefix\nNotes\nNumber\nColor\nSaveReset",
+    "popup": {
+      "background": "rgb(255, 255, 255)",
+      "border": "rgb(0, 0, 0)"
+    },
+    "cancel": {
+      "result": "Cancelled: b",
+      "accepted": "a"
+    },
+    "names": {
+      "responsive": "- combobox \"Responsive fruit\": Apricot",
+      "typed": "- combobox \"Custom trigger fruit\": Apricot"
+    },
+    "nameViolations": []
+  }
+}

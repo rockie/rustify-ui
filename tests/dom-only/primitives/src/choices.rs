@@ -54,12 +54,15 @@ impl<T: Clone + Debug + Send + Sync + 'static> Controlled<T> {
             self.accepted.update(|n| *n += 1);
         }
     }
-    fn output(self, id: &'static str) -> impl IntoView {
+    fn output(self, id: &'static str, label: &'static str) -> impl IntoView {
         view! { <div data-testid=id>
-            <output data-value>{move || format!("{:?}", self.value.get())}</output>
-            <output data-requests>{move || self.requests.get()}</output>
-            <output data-accepts>{move || self.accepted.get()}</output>
-            <output data-last>{move || self.last.get()}</output>
+            <h3>{label}</h3>
+            <dl class="sample-feedback">
+                <div><dt>"Accepted value:"</dt><dd><output data-value>{move || format!("{:?}", self.value.get())}</output></dd></div>
+                <div><dt>"Value requests:"</dt><dd><output data-requests>{move || self.requests.get()}</output></dd></div>
+                <div><dt>"Accepted requests:"</dt><dd><output data-accepts>{move || self.accepted.get()}</output></dd></div>
+                <div><dt>"Last request:"</dt><dd><output data-last>{move || self.last.with(|value| if value.is_empty() { "—".into() } else { value.clone() })}</output></dd></div>
+            </dl>
         </div> }
     }
 }
@@ -96,7 +99,7 @@ pub fn Choices() -> impl IntoView {
                 <label for="mixed-native">"Mixed checkbox"</label>
                 <p::checkbox::Root checked=mixed.value on_change=move |value| mixed.request(value)
                     id="mixed-native" name="consent" value="yes" read_only=readonly disabled=disabled>
-                    <p::checkbox::Control test_id="choice-mixed" /><p::checkbox::Indicator>"mixed marker"</p::checkbox::Indicator>
+                    <p::checkbox::Control test_id="choice-mixed" /><p::checkbox::Indicator>" mixed marker "</p::checkbox::Indicator>
                 </p::checkbox::Root>
                 <label for="switch-native">"Notifications"</label>
                 <p::switch::Root checked=switch.value on_change=move |value| switch.request(value)
@@ -144,9 +147,9 @@ pub fn Choices() -> impl IntoView {
                         .on(leptos::ev::click, |event| event.prevent_default()))}
                 </p::checkbox::Root>
             </form>
-            {mixed.output("choice-mixed-state")}{switch.output("choice-switch-state")}
-            {one.output("choice-one-state")}{two.output("choice-two-state")}{peers.output("choice-peers-state")}
-            {checks.output("choice-checks-state")}{toggles.output("choice-toggles-state")}
+            {mixed.output("choice-mixed-state", "Mixed checkbox")}{switch.output("choice-switch-state", "Notifications")}
+            {one.output("choice-one-state", "First anonymous group")}{two.output("choice-two-state", "Second anonymous group")}{peers.output("choice-peers-state", "Peer radios")}
+            {checks.output("choice-checks-state", "Features")}{toggles.output("choice-toggles-state", "Formatting")}
         </section>
     }
 }
