@@ -96,6 +96,7 @@
 | c87b4302-8506-4530-b668-bc9b0d2130fd | [CRATES-IO-P1 完整计划评审](../../../../docs/plan/CRATES-IO-P1.review.md) | [对象](c87b4302-8506-4530-b668-bc9b0d2130fd.md) | 活动 |
 | 03d811fc-1289-4de6-aba0-59837b7ca681 | [DOM-COMPONENTS-P1 PRD覆盖核查](../../../../docs/plan/DOM-COMPONENTS-P1.prd-dev-gaps.md) | [对象](03d811fc-1289-4de6-aba0-59837b7ca681.md) | 活动 |
 | 9152677e-02be-4557-ac77-d2fb2244a90a | [DOM-COMPONENTS-P1-gaps 完整计划评审](../../../../docs/plan/DOM-COMPONENTS-P1-gaps.review.md) | [对象](9152677e-02be-4557-ac77-d2fb2244a90a.md) | 活动 |
+| 82810742-c017-4d8a-a8d0-8eb10b49b487 | [DOM-COMPONENTS-P3 完整计划评审](../../../../docs/plan/DOM-COMPONENTS-P3.review.md) | [对象](82810742-c017-4d8a-a8d0-8eb10b49b487.md) | 活动 |
 
 
 维护约定：改变本层内容者同步索引；按稳定 ID/路径保留历史，无变化不重写，索引不作为事件。详见[目录索引维护](../../protocol.md#目录索引维护)。

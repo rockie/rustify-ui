@@ -4,6 +4,7 @@
 
 | 对象 ID | 标题 / 来源 | 状态页 | 活动 / 归档 |
 | --- | --- | --- | --- |
+| 5291ea27-775f-422c-a9dc-444ed893f028 | [DOM-COMPONENTS-P3](../../../../docs/plan/DOM-COMPONENTS-P3.md) | [对象](5291ea27-775f-422c-a9dc-444ed893f028.md) | 活动 |
 | 526c88c7-a4b3-4ea9-9193-371420b66d1d | [DOCS-SSG-P1](../../../../docs/plan/DOCS-SSG-P1.md) | [526c88c7](526c88c7-a4b3-4ea9-9193-371420b66d1d.md) | 活动 |
 | 667600ae-475d-405d-a2be-44f97c89e1b3 | [DOM-COMPONENTS-P2](../../../../docs/plan/DOM-COMPONENTS-P2.md) | [对象](667600ae-475d-405d-a2be-44f97c89e1b3.md) | 活动 |
 | 7493fc99-98cd-4d7e-aaa7-ac842d36d490 | [DX-REFINE](../../../../docs/plan/DX-REFINE.md) | [7493fc99](7493fc99-98cd-4d7e-aaa7-ac842d36d490.md) | 活动 |

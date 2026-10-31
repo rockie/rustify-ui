@@ -1,0 +1,4091 @@
+{
+  "phase": "baseline",
+  "collected_at": "2026-10-31T16:07:22.272Z",
+  "source": "614173ecc11354a7f5083bd0250849c90073141e",
+  "worktree": " M .xgent-ai/sdlc/events/plan/index.md\n M .xgent-ai/sdlc/events/review/index.md\n M .xgent-ai/sdlc/index.md\n M .xgent-ai/sdlc/status/plan/index.md\n M .xgent-ai/sdlc/status/review/index.md\n M sources.lock.json\n M tests/dom-only/consumer/src/lib.rs\n?? .xgent-ai/sdlc/events/plan/5291ea27-775f-422c-a9dc-444ed893f028/\n?? .xgent-ai/sdlc/events/review/82810742-c017-4d8a-a8d0-8eb10b49b487/\n?? .xgent-ai/sdlc/status/plan/5291ea27-775f-422c-a9dc-444ed893f028.md\n?? .xgent-ai/sdlc/status/review/82810742-c017-4d8a-a8d0-8eb10b49b487.md\n?? crates/rustify-components/vendor/radix/primitives-panels/\n?? crates/rustify-components/vendor/radix/themes-panels/\n?? docs/plan/DOM-COMPONENTS-P3.md\n?? docs/plan/DOM-COMPONENTS-P3.review.md\n?? tests/dom-only/consumer/public/panels.css\n?? tests/dom-only/consumer/public/panels.html\n?? tests/dom-only/consumer/public/panels.js\n?? tests/dom-only/consumer/src/panel_benchmark.rs\n?? tests/dom-only/panels-performance.spec.ts\n",
+  "product": "target/dom/dom-consumer",
+  "parameters": {
+    "warmups": 5,
+    "samples": 40,
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "browser": "153.0.8010.12",
+    "os": {
+      "platform": "darwin",
+      "release": "27.0.0"
+    },
+    "environment": {
+      "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.8010.12 Safari/537.36",
+      "dpr": 1,
+      "visibility": "visible"
+    },
+    "rust": "rustc 1.99.0 (b940084d7 2026-09-28)",
+    "node": "v26.12.1"
+  },
+  "sizes": {
+    "app.js": {
+      "bytes": 4214,
+      "gzip": 1492
+    },
+    "fields.css": {
+      "bytes": 771,
+      "gzip": 385
+    },
+    "fields.js": {
+      "bytes": 474,
+      "gzip": 298
+    },
+    "forms.js": {
+      "bytes": 1036,
+      "gzip": 507
+    },
+    "panels.css": {
+      "bytes": 121,
+      "gzip": 123
+    },
+    "panels.js": {
+      "bytes": 1044,
+      "gzip": 536
+    },
+    "pkg/app.js": {
+      "bytes": 68970,
+      "gzip": 11898
+    },
+    "pkg/app_bg.wasm": {
+      "bytes": 11576101,
+      "gzip": 1345482
+    },
+    "pkg/snippets/rustify-dom-10d6ba93cd4ca154/web/dom-runtime.js": {
+      "bytes": 7096,
+      "gzip": 2368
+    },
+    "pkg/snippets/rustify-dom-10d6ba93cd4ca154/web/theme.js": {
+      "bytes": 908,
+      "gzip": 380
+    },
+    "rustify-dom-loader.js": {
+      "bytes": 11686,
+      "gzip": 4086
+    },
+    "rustify-runtime.css": {
+      "bytes": 796,
+      "gzip": 442
+    },
+    "rustify.css": {
+      "bytes": 95239,
+      "gzip": 12633
+    }
+  },
+  "workloads": {
+    "dialog": {
+      "p50_ms": 11.299999952316284,
+      "p95_ms": 15,
+      "requests": 46,
+      "accepts": 46,
+      "idle": {
+        "before": {
+          "tasks": 0,
+          "timers": 0,
+          "observers": 0,
+          "errors": 0,
+          "aborted": false,
+          "nodes": 142,
+          "geometry_rules": 1
+        },
+        "after": {
+          "tasks": 0,
+          "timers": 0,
+          "observers": 0,
+          "errors": 0,
+          "aborted": false,
+          "nodes": 142,
+          "geometry_rules": 1
+        }
+      },
+      "raw": [
+        {
+          "latency_ms": 7.200000047683716,
+          "input_ms": 554.2000000476837,
+          "dom_frame_ms": 561.4000000953674,
+          "state": {
+            "requests": 8,
+            "accepts": 6,
+            "active": "summary",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 15.5,
+          "input_ms": 596.9000000953674,
+          "dom_frame_ms": 612.4000000953674,
+          "state": {
+            "requests": 9,
+            "accepts": 7,
+            "active": "summary",
+            "dialog": true,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 9.5,
+          "input_ms": 619.2000000476837,
+          "dom_frame_ms": 628.7000000476837,
+          "state": {
+            "requests": 10,
+            "accepts": 8,
+            "active": "summary",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 14,
+          "input_ms": 663.9000000953674,
+          "dom_frame_ms": 677.9000000953674,
+          "state": {
+            "requests": 11,
+            "accepts": 9,
+            "active": "summary",
+            "dialog": true,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 9.900000095367432,
+          "input_ms": 685.5999999046326,
+          "dom_frame_ms": 695.5,
+          "state": {
+            "requests": 12,
+            "accepts": 10,
+            "active": "summary",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 12.599999904632568,
+          "input_ms": 732,
+          "dom_frame_ms": 744.5999999046326,
+          "state": {
+            "requests": 13,
+            "accepts": 11,
+            "active": "summary",
+            "dialog": true,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 11.099999904632568,
+          "input_ms": 751,
+          "dom_frame_ms": 762.0999999046326,
+          "state": {
+            "requests": 14,
+            "accepts": 12,
+            "active": "summary",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 14.899999856948853,
+          "input_ms": 797.4000000953674,
+          "dom_frame_ms": 812.2999999523163,
+          "state": {
+            "requests": 15,
+            "accepts": 13,
+            "active": "summary",
+            "dialog": true,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 9.600000143051147,
+          "input_ms": 818.7999999523163,
+          "dom_frame_ms": 828.4000000953674,
+          "state": {
+            "requests": 16,
+            "accepts": 14,
+            "active": "summary",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 14.200000047683716,
+          "input_ms": 863.5999999046326,
+          "dom_frame_ms": 877.7999999523163,
+          "state": {
+            "requests": 17,
+            "accepts": 15,
+            "active": "summary",
+            "dialog": true,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 9.399999856948853,
+          "input_ms": 885.7000000476837,
+          "dom_frame_ms": 895.0999999046326,
+          "state": {
+            "requests": 18,
+            "accepts": 16,
+            "active": "summary",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 12.699999809265137,
+          "input_ms": 932.4000000953674,
+          "dom_frame_ms": 945.0999999046326,
+          "state": {
+            "requests": 19,
+            "accepts": 17,
+            "active": "summary",
+            "dialog": true,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 9.5,
+          "input_ms": 952.9000000953674,
+          "dom_frame_ms": 962.4000000953674,
+          "state": {
+            "requests": 20,
+            "accepts": 18,
+            "active": "summary",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 13.5,
+          "input_ms": 997.9000000953674,
+          "dom_frame_ms": 1011.4000000953674,
+          "state": {
+            "requests": 21,
+            "accepts": 19,
+            "active": "summary",
+            "dialog": true,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 10.099999904632568,
+          "input_ms": 1018.2000000476837,
+          "dom_frame_ms": 1028.2999999523163,
+          "state": {
+            "requests": 22,
+            "accepts": 20,
+            "active": "summary",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 14,
+          "input_ms": 1063.9000000953674,
+          "dom_frame_ms": 1077.9000000953674,
+          "state": {
+            "requests": 23,
+            "accepts": 21,
+            "active": "summary",
+            "dialog": true,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 12.200000047683716,
+          "input_ms": 1083.2999999523163,
+          "dom_frame_ms": 1095.5,
+          "state": {
+            "requests": 24,
+            "accepts": 22,
+            "active": "summary",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 14.099999904632568,
+          "input_ms": 1131.4000000953674,
+          "dom_frame_ms": 1145.5,
+          "state": {
+            "requests": 25,
+            "accepts": 23,
+            "active": "summary",
+            "dialog": true,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 10.299999952316284,
+          "input_ms": 1151.5,
+          "dom_frame_ms": 1161.7999999523163,
+          "state": {
+            "requests": 26,
+            "accepts": 24,
+            "active": "summary",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 14.300000190734863,
+          "input_ms": 1197.0999999046326,
+          "dom_frame_ms": 1211.4000000953674,
+          "state": {
+            "requests": 27,
+            "accepts": 25,
+            "active": "summary",
+            "dialog": true,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 10.299999952316284,
+          "input_ms": 1218,
+          "dom_frame_ms": 1228.2999999523163,
+          "state": {
+            "requests": 28,
+            "accepts": 26,
+            "active": "summary",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 13.599999904632568,
+          "input_ms": 1264,
+          "dom_frame_ms": 1277.5999999046326,
+          "state": {
+            "requests": 29,
+            "accepts": 27,
+            "active": "summary",
+            "dialog": true,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 10,
+          "input_ms": 1284.7000000476837,
+          "dom_frame_ms": 1294.7000000476837,
+          "state": {
+            "requests": 30,
+            "accepts": 28,
+            "active": "summary",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 12.099999904632568,
+          "input_ms": 1333.2000000476837,
+          "dom_frame_ms": 1345.2999999523163,
+          "state": {
+            "requests": 31,
+            "accepts": 29,
+            "active": "summary",
+            "dialog": true,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 7.599999904632568,
+          "input_ms": 1354,
+          "dom_frame_ms": 1361.5999999046326,
+          "state": {
+            "requests": 32,
+            "accepts": 30,
+            "active": "summary",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 14.299999952316284,
+          "input_ms": 1396.7999999523163,
+          "dom_frame_ms": 1411.0999999046326,
+          "state": {
+            "requests": 33,
+            "accepts": 31,
+            "active": "summary",
+            "dialog": true,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 9.399999856948853,
+          "input_ms": 1419.4000000953674,
+          "dom_frame_ms": 1428.7999999523163,
+          "state": {
+            "requests": 34,
+            "accepts": 32,
+            "active": "summary",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 12.299999952316284,
+          "input_ms": 1465.5,
+          "dom_frame_ms": 1477.7999999523163,
+          "state": {
+            "requests": 35,
+            "accepts": 33,
+            "active": "summary",
+            "dialog": true,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 6.5,
+          "input_ms": 1488.2000000476837,
+          "dom_frame_ms": 1494.7000000476837,
+          "state": {
+            "requests": 36,
+            "accepts": 34,
+            "active": "summary",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 14,
+          "input_ms": 1532.2000000476837,
+          "dom_frame_ms": 1546.2000000476837,
+          "state": {
+            "requests": 37,
+            "accepts": 35,
+            "active": "summary",
+            "dialog": true,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 4.700000047683716,
+          "input_ms": 1556.7999999523163,
+          "dom_frame_ms": 1561.5,
+          "state": {
+            "requests": 38,
+            "accepts": 36,
+            "active": "summary",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 11.700000047683716,
+          "input_ms": 1599.7999999523163,
+          "dom_frame_ms": 1611.5,
+          "state": {
+            "requests": 39,
+            "accepts": 37,
+            "active": "summary",
+            "dialog": true,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 5,
+          "input_ms": 1639.5999999046326,
+          "dom_frame_ms": 1644.5999999046326,
+          "state": {
+            "requests": 40,
+            "accepts": 38,
+            "active": "summary",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 11.699999809265137,
+          "input_ms": 1683.4000000953674,
+          "dom_frame_ms": 1695.0999999046326,
+          "state": {
+            "requests": 41,
+            "accepts": 39,
+            "active": "summary",
+            "dialog": true,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 7.299999952316284,
+          "input_ms": 1704.9000000953674,
+          "dom_frame_ms": 1712.2000000476837,
+          "state": {
+            "requests": 42,
+            "accepts": 40,
+            "active": "summary",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 15,
+          "input_ms": 1747.2000000476837,
+          "dom_frame_ms": 1762.2000000476837,
+          "state": {
+            "requests": 43,
+            "accepts": 41,
+            "active": "summary",
+            "dialog": true,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 11.299999952316284,
+          "input_ms": 1768.2000000476837,
+          "dom_frame_ms": 1779.5,
+          "state": {
+            "requests": 44,
+            "accepts": 42,
+            "active": "summary",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 15.099999904632568,
+          "input_ms": 1814.4000000953674,
+          "dom_frame_ms": 1829.5,
+          "state": {
+            "requests": 45,
+            "accepts": 43,
+            "active": "summary",
+            "dialog": true,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 6.599999904632568,
+          "input_ms": 1838.4000000953674,
+          "dom_frame_ms": 1845,
+          "state": {
+            "requests": 46,
+            "accepts": 44,
+            "active": "summary",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 9.700000047683716,
+          "input_ms": 1884.5999999046326,
+          "dom_frame_ms": 1894.2999999523163,
+          "state": {
+            "requests": 47,
+            "accepts": 45,
+            "active": "summary",
+            "dialog": true,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        }
+      ]
+    },
+    "tabs": {
+      "p50_ms": 13.700000047683716,
+      "p95_ms": 15.5,
+      "requests": 45,
+      "accepts": 45,
+      "idle": {
+        "before": {
+          "tasks": 0,
+          "timers": 0,
+          "observers": 0,
+          "errors": 0,
+          "aborted": false,
+          "nodes": 142,
+          "geometry_rules": 1
+        },
+        "after": {
+          "tasks": 0,
+          "timers": 0,
+          "observers": 0,
+          "errors": 0,
+          "aborted": false,
+          "nodes": 142,
+          "geometry_rules": 1
+        }
+      },
+      "raw": [
+        {
+          "latency_ms": 14.100000143051147,
+          "input_ms": 3380.2999999523163,
+          "dom_frame_ms": 3394.4000000953674,
+          "state": {
+            "requests": 54,
+            "accepts": 52,
+            "active": "summary",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 13.599999904632568,
+          "input_ms": 3430.7000000476837,
+          "dom_frame_ms": 3444.2999999523163,
+          "state": {
+            "requests": 55,
+            "accepts": 53,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 12,
+          "input_ms": 3482.7999999523163,
+          "dom_frame_ms": 3494.7999999523163,
+          "state": {
+            "requests": 56,
+            "accepts": 54,
+            "active": "summary",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 10.5,
+          "input_ms": 3533.9000000953674,
+          "dom_frame_ms": 3544.4000000953674,
+          "state": {
+            "requests": 57,
+            "accepts": 55,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 15.5,
+          "input_ms": 3579.7999999523163,
+          "dom_frame_ms": 3595.2999999523163,
+          "state": {
+            "requests": 58,
+            "accepts": 56,
+            "active": "summary",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 12.5,
+          "input_ms": 3631.7999999523163,
+          "dom_frame_ms": 3644.2999999523163,
+          "state": {
+            "requests": 59,
+            "accepts": 57,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 14.700000047683716,
+          "input_ms": 3680.5999999046326,
+          "dom_frame_ms": 3695.2999999523163,
+          "state": {
+            "requests": 60,
+            "accepts": 58,
+            "active": "summary",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 13.200000047683716,
+          "input_ms": 3731.0999999046326,
+          "dom_frame_ms": 3744.2999999523163,
+          "state": {
+            "requests": 61,
+            "accepts": 59,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 13.700000047683716,
+          "input_ms": 3781.2999999523163,
+          "dom_frame_ms": 3795,
+          "state": {
+            "requests": 62,
+            "accepts": 60,
+            "active": "summary",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 13.400000095367432,
+          "input_ms": 3832.5999999046326,
+          "dom_frame_ms": 3846,
+          "state": {
+            "requests": 63,
+            "accepts": 61,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 11.5,
+          "input_ms": 3917.2000000476837,
+          "dom_frame_ms": 3928.7000000476837,
+          "state": {
+            "requests": 64,
+            "accepts": 62,
+            "active": "summary",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 13.099999904632568,
+          "input_ms": 3965.5,
+          "dom_frame_ms": 3978.7000000476837,
+          "state": {
+            "requests": 65,
+            "accepts": 63,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 13.099999904632568,
+          "input_ms": 4015.5,
+          "dom_frame_ms": 4028.5999999046326,
+          "state": {
+            "requests": 66,
+            "accepts": 64,
+            "active": "summary",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 12.400000095367432,
+          "input_ms": 4065.5999999046326,
+          "dom_frame_ms": 4078,
+          "state": {
+            "requests": 67,
+            "accepts": 65,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 14.699999809265137,
+          "input_ms": 4114.400000095367,
+          "dom_frame_ms": 4129.099999904633,
+          "state": {
+            "requests": 68,
+            "accepts": 66,
+            "active": "summary",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 14.799999952316284,
+          "input_ms": 4163.299999952316,
+          "dom_frame_ms": 4178.099999904633,
+          "state": {
+            "requests": 69,
+            "accepts": 67,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 15.599999904632568,
+          "input_ms": 4213.900000095367,
+          "dom_frame_ms": 4229.5,
+          "state": {
+            "requests": 70,
+            "accepts": 68,
+            "active": "summary",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 12.799999952316284,
+          "input_ms": 4264.900000095367,
+          "dom_frame_ms": 4277.700000047684,
+          "state": {
+            "requests": 71,
+            "accepts": 69,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 13.899999856948853,
+          "input_ms": 4314.400000095367,
+          "dom_frame_ms": 4328.299999952316,
+          "state": {
+            "requests": 72,
+            "accepts": 70,
+            "active": "summary",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 13.699999809265137,
+          "input_ms": 4364.900000095367,
+          "dom_frame_ms": 4378.599999904633,
+          "state": {
+            "requests": 73,
+            "accepts": 71,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 14.700000047683716,
+          "input_ms": 4413.700000047684,
+          "dom_frame_ms": 4428.400000095367,
+          "state": {
+            "requests": 74,
+            "accepts": 72,
+            "active": "summary",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 13.699999809265137,
+          "input_ms": 4464.900000095367,
+          "dom_frame_ms": 4478.599999904633,
+          "state": {
+            "requests": 75,
+            "accepts": 73,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 14.800000190734863,
+          "input_ms": 4513.599999904633,
+          "dom_frame_ms": 4528.400000095367,
+          "state": {
+            "requests": 76,
+            "accepts": 74,
+            "active": "summary",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 14,
+          "input_ms": 4564.200000047684,
+          "dom_frame_ms": 4578.200000047684,
+          "state": {
+            "requests": 77,
+            "accepts": 75,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 14.399999856948853,
+          "input_ms": 4613.200000047684,
+          "dom_frame_ms": 4627.599999904633,
+          "state": {
+            "requests": 78,
+            "accepts": 76,
+            "active": "summary",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 15,
+          "input_ms": 4663.200000047684,
+          "dom_frame_ms": 4678.200000047684,
+          "state": {
+            "requests": 79,
+            "accepts": 77,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 14.300000190734863,
+          "input_ms": 4713.599999904633,
+          "dom_frame_ms": 4727.900000095367,
+          "state": {
+            "requests": 80,
+            "accepts": 78,
+            "active": "summary",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 15.200000047683716,
+          "input_ms": 4763.200000047684,
+          "dom_frame_ms": 4778.400000095367,
+          "state": {
+            "requests": 81,
+            "accepts": 79,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 14.299999952316284,
+          "input_ms": 4813.700000047684,
+          "dom_frame_ms": 4828,
+          "state": {
+            "requests": 82,
+            "accepts": 80,
+            "active": "summary",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 13.600000143051147,
+          "input_ms": 4864.099999904633,
+          "dom_frame_ms": 4877.700000047684,
+          "state": {
+            "requests": 83,
+            "accepts": 81,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 15.599999904632568,
+          "input_ms": 4914,
+          "dom_frame_ms": 4929.599999904633,
+          "state": {
+            "requests": 84,
+            "accepts": 82,
+            "active": "summary",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 15.200000047683716,
+          "input_ms": 4963.200000047684,
+          "dom_frame_ms": 4978.400000095367,
+          "state": {
+            "requests": 85,
+            "accepts": 83,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 13,
+          "input_ms": 5015.400000095367,
+          "dom_frame_ms": 5028.400000095367,
+          "state": {
+            "requests": 86,
+            "accepts": 84,
+            "active": "summary",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 15.5,
+          "input_ms": 5063.799999952316,
+          "dom_frame_ms": 5079.299999952316,
+          "state": {
+            "requests": 87,
+            "accepts": 85,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 13.400000095367432,
+          "input_ms": 5114.599999904633,
+          "dom_frame_ms": 5128,
+          "state": {
+            "requests": 88,
+            "accepts": 86,
+            "active": "summary",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 14.5,
+          "input_ms": 5163.900000095367,
+          "dom_frame_ms": 5178.400000095367,
+          "state": {
+            "requests": 89,
+            "accepts": 87,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 13.700000047683716,
+          "input_ms": 5213.799999952316,
+          "dom_frame_ms": 5227.5,
+          "state": {
+            "requests": 90,
+            "accepts": 88,
+            "active": "summary",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 12.400000095367432,
+          "input_ms": 5265.299999952316,
+          "dom_frame_ms": 5277.700000047684,
+          "state": {
+            "requests": 91,
+            "accepts": 89,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 14.899999856948853,
+          "input_ms": 5313.900000095367,
+          "dom_frame_ms": 5328.799999952316,
+          "state": {
+            "requests": 92,
+            "accepts": 90,
+            "active": "summary",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 12.900000095367432,
+          "input_ms": 5364.799999952316,
+          "dom_frame_ms": 5377.700000047684,
+          "state": {
+            "requests": 93,
+            "accepts": 91,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        }
+      ]
+    },
+    "tooltip": {
+      "p50_ms": 5.8999998569488525,
+      "p95_ms": 8.099999904632568,
+      "requests": 113,
+      "accepts": 113,
+      "idle": {
+        "before": {
+          "tasks": 0,
+          "timers": 0,
+          "observers": 0,
+          "errors": 0,
+          "aborted": false,
+          "nodes": 142,
+          "geometry_rules": 1
+        },
+        "after": {
+          "tasks": 0,
+          "timers": 0,
+          "observers": 0,
+          "errors": 0,
+          "aborted": false,
+          "nodes": 142,
+          "geometry_rules": 1
+        }
+      },
+      "raw": [
+        {
+          "latency_ms": 5.200000047683716,
+          "input_ms": 6690.700000047684,
+          "dom_frame_ms": 6695.900000095367,
+          "state": {
+            "requests": 107,
+            "accepts": 105,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 5,
+          "input_ms": 6706.299999952316,
+          "dom_frame_ms": 6711.299999952316,
+          "state": {
+            "requests": 109,
+            "accepts": 107,
+            "active": "details",
+            "dialog": false,
+            "tooltip": true,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 6.5,
+          "input_ms": 6722.799999952316,
+          "dom_frame_ms": 6729.299999952316,
+          "state": {
+            "requests": 112,
+            "accepts": 110,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 6.199999809265137,
+          "input_ms": 6738.400000095367,
+          "dom_frame_ms": 6744.599999904633,
+          "state": {
+            "requests": 114,
+            "accepts": 112,
+            "active": "details",
+            "dialog": false,
+            "tooltip": true,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 4.799999952316284,
+          "input_ms": 6756.5,
+          "dom_frame_ms": 6761.299999952316,
+          "state": {
+            "requests": 117,
+            "accepts": 115,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 7.1000001430511475,
+          "input_ms": 6770.299999952316,
+          "dom_frame_ms": 6777.400000095367,
+          "state": {
+            "requests": 119,
+            "accepts": 117,
+            "active": "details",
+            "dialog": false,
+            "tooltip": true,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 7.700000047683716,
+          "input_ms": 6788.299999952316,
+          "dom_frame_ms": 6796,
+          "state": {
+            "requests": 122,
+            "accepts": 120,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 6.799999952316284,
+          "input_ms": 6805,
+          "dom_frame_ms": 6811.799999952316,
+          "state": {
+            "requests": 124,
+            "accepts": 122,
+            "active": "details",
+            "dialog": false,
+            "tooltip": true,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 3.5999999046325684,
+          "input_ms": 6824.5,
+          "dom_frame_ms": 6828.099999904633,
+          "state": {
+            "requests": 127,
+            "accepts": 125,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 5,
+          "input_ms": 6839.599999904633,
+          "dom_frame_ms": 6844.599999904633,
+          "state": {
+            "requests": 129,
+            "accepts": 127,
+            "active": "details",
+            "dialog": false,
+            "tooltip": true,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 1.9000000953674316,
+          "input_ms": 6860.099999904633,
+          "dom_frame_ms": 6862,
+          "state": {
+            "requests": 132,
+            "accepts": 130,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 6.1000001430511475,
+          "input_ms": 6871.299999952316,
+          "dom_frame_ms": 6877.400000095367,
+          "state": {
+            "requests": 134,
+            "accepts": 132,
+            "active": "details",
+            "dialog": false,
+            "tooltip": true,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 5.599999904632568,
+          "input_ms": 6889.200000047684,
+          "dom_frame_ms": 6894.799999952316,
+          "state": {
+            "requests": 137,
+            "accepts": 135,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 7.900000095367432,
+          "input_ms": 6903.799999952316,
+          "dom_frame_ms": 6911.700000047684,
+          "state": {
+            "requests": 139,
+            "accepts": 137,
+            "active": "details",
+            "dialog": false,
+            "tooltip": true,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 3.5,
+          "input_ms": 6924.900000095367,
+          "dom_frame_ms": 6928.400000095367,
+          "state": {
+            "requests": 142,
+            "accepts": 140,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 5.900000095367432,
+          "input_ms": 6938.5,
+          "dom_frame_ms": 6944.400000095367,
+          "state": {
+            "requests": 144,
+            "accepts": 142,
+            "active": "details",
+            "dialog": false,
+            "tooltip": true,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 5.699999809265137,
+          "input_ms": 6956.400000095367,
+          "dom_frame_ms": 6962.099999904633,
+          "state": {
+            "requests": 147,
+            "accepts": 145,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 6.5,
+          "input_ms": 6971.299999952316,
+          "dom_frame_ms": 6977.799999952316,
+          "state": {
+            "requests": 149,
+            "accepts": 147,
+            "active": "details",
+            "dialog": false,
+            "tooltip": true,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 7.400000095367432,
+          "input_ms": 6988.5,
+          "dom_frame_ms": 6995.900000095367,
+          "state": {
+            "requests": 152,
+            "accepts": 150,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 6.400000095367432,
+          "input_ms": 7005.5,
+          "dom_frame_ms": 7011.900000095367,
+          "state": {
+            "requests": 154,
+            "accepts": 152,
+            "active": "details",
+            "dialog": false,
+            "tooltip": true,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 4.599999904632568,
+          "input_ms": 7024.700000047684,
+          "dom_frame_ms": 7029.299999952316,
+          "state": {
+            "requests": 157,
+            "accepts": 155,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 5.799999952316284,
+          "input_ms": 7038.799999952316,
+          "dom_frame_ms": 7044.599999904633,
+          "state": {
+            "requests": 159,
+            "accepts": 157,
+            "active": "details",
+            "dialog": false,
+            "tooltip": true,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 4.200000047683716,
+          "input_ms": 7056.5,
+          "dom_frame_ms": 7060.700000047684,
+          "state": {
+            "requests": 162,
+            "accepts": 160,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 8.099999904632568,
+          "input_ms": 7069.400000095367,
+          "dom_frame_ms": 7077.5,
+          "state": {
+            "requests": 164,
+            "accepts": 162,
+            "active": "details",
+            "dialog": false,
+            "tooltip": true,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 5.8999998569488525,
+          "input_ms": 7088.200000047684,
+          "dom_frame_ms": 7094.099999904633,
+          "state": {
+            "requests": 167,
+            "accepts": 165,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 8.100000143051147,
+          "input_ms": 7103.099999904633,
+          "dom_frame_ms": 7111.200000047684,
+          "state": {
+            "requests": 169,
+            "accepts": 167,
+            "active": "details",
+            "dialog": false,
+            "tooltip": true,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 4.5,
+          "input_ms": 7123.200000047684,
+          "dom_frame_ms": 7127.700000047684,
+          "state": {
+            "requests": 172,
+            "accepts": 170,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 7,
+          "input_ms": 7137.099999904633,
+          "dom_frame_ms": 7144.099999904633,
+          "state": {
+            "requests": 174,
+            "accepts": 172,
+            "active": "details",
+            "dialog": false,
+            "tooltip": true,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 5.599999904632568,
+          "input_ms": 7156.200000047684,
+          "dom_frame_ms": 7161.799999952316,
+          "state": {
+            "requests": 177,
+            "accepts": 175,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 7.400000095367432,
+          "input_ms": 7171.099999904633,
+          "dom_frame_ms": 7178.5,
+          "state": {
+            "requests": 179,
+            "accepts": 177,
+            "active": "details",
+            "dialog": false,
+            "tooltip": true,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 4.599999904632568,
+          "input_ms": 7190.900000095367,
+          "dom_frame_ms": 7195.5,
+          "state": {
+            "requests": 182,
+            "accepts": 180,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 6.599999904632568,
+          "input_ms": 7205,
+          "dom_frame_ms": 7211.599999904633,
+          "state": {
+            "requests": 184,
+            "accepts": 182,
+            "active": "details",
+            "dialog": false,
+            "tooltip": true,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 4.200000047683716,
+          "input_ms": 7223.599999904633,
+          "dom_frame_ms": 7227.799999952316,
+          "state": {
+            "requests": 187,
+            "accepts": 185,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 8,
+          "input_ms": 7236.700000047684,
+          "dom_frame_ms": 7244.700000047684,
+          "state": {
+            "requests": 189,
+            "accepts": 187,
+            "active": "details",
+            "dialog": false,
+            "tooltip": true,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 5.099999904632568,
+          "input_ms": 7256.5,
+          "dom_frame_ms": 7261.599999904633,
+          "state": {
+            "requests": 192,
+            "accepts": 190,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 7.799999952316284,
+          "input_ms": 7270.799999952316,
+          "dom_frame_ms": 7278.599999904633,
+          "state": {
+            "requests": 194,
+            "accepts": 192,
+            "active": "details",
+            "dialog": false,
+            "tooltip": true,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 3.299999952316284,
+          "input_ms": 7291.799999952316,
+          "dom_frame_ms": 7295.099999904633,
+          "state": {
+            "requests": 197,
+            "accepts": 195,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 5.900000095367432,
+          "input_ms": 7305,
+          "dom_frame_ms": 7310.900000095367,
+          "state": {
+            "requests": 199,
+            "accepts": 197,
+            "active": "details",
+            "dialog": false,
+            "tooltip": true,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 17.5,
+          "input_ms": 7327.799999952316,
+          "dom_frame_ms": 7345.299999952316,
+          "state": {
+            "requests": 202,
+            "accepts": 200,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 2.8999998569488525,
+          "input_ms": 7359.700000047684,
+          "dom_frame_ms": 7362.599999904633,
+          "state": {
+            "requests": 204,
+            "accepts": 202,
+            "active": "details",
+            "dialog": false,
+            "tooltip": true,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        }
+      ]
+    },
+    "toast": {
+      "p50_ms": 14.5,
+      "p95_ms": 15.700000047683716,
+      "requests": 46,
+      "accepts": 46,
+      "idle": {
+        "before": {
+          "tasks": 0,
+          "timers": 0,
+          "observers": 0,
+          "errors": 0,
+          "aborted": false,
+          "nodes": 142,
+          "geometry_rules": 1
+        },
+        "after": {
+          "tasks": 0,
+          "timers": 0,
+          "observers": 0,
+          "errors": 0,
+          "aborted": false,
+          "nodes": 142,
+          "geometry_rules": 1
+        }
+      },
+      "raw": [
+        {
+          "latency_ms": 14.400000095367432,
+          "input_ms": 8881.099999904633,
+          "dom_frame_ms": 8895.5,
+          "state": {
+            "requests": 213,
+            "accepts": 211,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 15,
+          "input_ms": 8930.200000047684,
+          "dom_frame_ms": 8945.200000047684,
+          "state": {
+            "requests": 214,
+            "accepts": 212,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 14,
+          "input_ms": 8981.200000047684,
+          "dom_frame_ms": 8995.200000047684,
+          "state": {
+            "requests": 215,
+            "accepts": 213,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 14.599999904632568,
+          "input_ms": 9030.700000047684,
+          "dom_frame_ms": 9045.299999952316,
+          "state": {
+            "requests": 216,
+            "accepts": 214,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 13.200000047683716,
+          "input_ms": 9081.099999904633,
+          "dom_frame_ms": 9094.299999952316,
+          "state": {
+            "requests": 217,
+            "accepts": 215,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 14.900000095367432,
+          "input_ms": 9129.5,
+          "dom_frame_ms": 9144.400000095367,
+          "state": {
+            "requests": 218,
+            "accepts": 216,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 15.200000047683716,
+          "input_ms": 9180.200000047684,
+          "dom_frame_ms": 9195.400000095367,
+          "state": {
+            "requests": 219,
+            "accepts": 217,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 14.700000047683716,
+          "input_ms": 9230.5,
+          "dom_frame_ms": 9245.200000047684,
+          "state": {
+            "requests": 220,
+            "accepts": 218,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 14,
+          "input_ms": 9281.099999904633,
+          "dom_frame_ms": 9295.099999904633,
+          "state": {
+            "requests": 221,
+            "accepts": 219,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 13.5,
+          "input_ms": 9330.799999952316,
+          "dom_frame_ms": 9344.299999952316,
+          "state": {
+            "requests": 222,
+            "accepts": 220,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 14.700000047683716,
+          "input_ms": 9379.299999952316,
+          "dom_frame_ms": 9394,
+          "state": {
+            "requests": 223,
+            "accepts": 221,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 13.700000047683716,
+          "input_ms": 9430.599999904633,
+          "dom_frame_ms": 9444.299999952316,
+          "state": {
+            "requests": 224,
+            "accepts": 222,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 14.300000190734863,
+          "input_ms": 9480.099999904633,
+          "dom_frame_ms": 9494.400000095367,
+          "state": {
+            "requests": 225,
+            "accepts": 223,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 14.399999856948853,
+          "input_ms": 9529.900000095367,
+          "dom_frame_ms": 9544.299999952316,
+          "state": {
+            "requests": 226,
+            "accepts": 224,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 14.5,
+          "input_ms": 9580.299999952316,
+          "dom_frame_ms": 9594.799999952316,
+          "state": {
+            "requests": 227,
+            "accepts": 225,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 13.5,
+          "input_ms": 9630.5,
+          "dom_frame_ms": 9644,
+          "state": {
+            "requests": 228,
+            "accepts": 226,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 15.099999904632568,
+          "input_ms": 9680.400000095367,
+          "dom_frame_ms": 9695.5,
+          "state": {
+            "requests": 229,
+            "accepts": 227,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 14.200000047683716,
+          "input_ms": 9730.5,
+          "dom_frame_ms": 9744.700000047684,
+          "state": {
+            "requests": 230,
+            "accepts": 228,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 15,
+          "input_ms": 9780.5,
+          "dom_frame_ms": 9795.5,
+          "state": {
+            "requests": 231,
+            "accepts": 229,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 14.5,
+          "input_ms": 9831.200000047684,
+          "dom_frame_ms": 9845.700000047684,
+          "state": {
+            "requests": 232,
+            "accepts": 230,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 13.799999952316284,
+          "input_ms": 9880.5,
+          "dom_frame_ms": 9894.299999952316,
+          "state": {
+            "requests": 233,
+            "accepts": 231,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 15.700000047683716,
+          "input_ms": 9929.299999952316,
+          "dom_frame_ms": 9945,
+          "state": {
+            "requests": 234,
+            "accepts": 232,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 15.299999952316284,
+          "input_ms": 9979.900000095367,
+          "dom_frame_ms": 9995.200000047684,
+          "state": {
+            "requests": 235,
+            "accepts": 233,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 15,
+          "input_ms": 10029.599999904633,
+          "dom_frame_ms": 10044.599999904633,
+          "state": {
+            "requests": 236,
+            "accepts": 234,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 13.899999856948853,
+          "input_ms": 10080.900000095367,
+          "dom_frame_ms": 10094.799999952316,
+          "state": {
+            "requests": 237,
+            "accepts": 235,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 15.700000047683716,
+          "input_ms": 10129.599999904633,
+          "dom_frame_ms": 10145.299999952316,
+          "state": {
+            "requests": 238,
+            "accepts": 236,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 14.400000095367432,
+          "input_ms": 10181,
+          "dom_frame_ms": 10195.400000095367,
+          "state": {
+            "requests": 239,
+            "accepts": 237,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 16.299999952316284,
+          "input_ms": 10229.400000095367,
+          "dom_frame_ms": 10245.700000047684,
+          "state": {
+            "requests": 240,
+            "accepts": 238,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 14.200000047683716,
+          "input_ms": 10280,
+          "dom_frame_ms": 10294.200000047684,
+          "state": {
+            "requests": 241,
+            "accepts": 239,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 14.5,
+          "input_ms": 10330.200000047684,
+          "dom_frame_ms": 10344.700000047684,
+          "state": {
+            "requests": 242,
+            "accepts": 240,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 15.200000047683716,
+          "input_ms": 10379.099999904633,
+          "dom_frame_ms": 10394.299999952316,
+          "state": {
+            "requests": 243,
+            "accepts": 241,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 14.099999904632568,
+          "input_ms": 10430.400000095367,
+          "dom_frame_ms": 10444.5,
+          "state": {
+            "requests": 244,
+            "accepts": 242,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 14,
+          "input_ms": 10481.299999952316,
+          "dom_frame_ms": 10495.299999952316,
+          "state": {
+            "requests": 245,
+            "accepts": 243,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 13.899999856948853,
+          "input_ms": 10530.400000095367,
+          "dom_frame_ms": 10544.299999952316,
+          "state": {
+            "requests": 246,
+            "accepts": 244,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 14.899999856948853,
+          "input_ms": 10579.400000095367,
+          "dom_frame_ms": 10594.299999952316,
+          "state": {
+            "requests": 247,
+            "accepts": 245,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 16.100000143051147,
+          "input_ms": 10629.799999952316,
+          "dom_frame_ms": 10645.900000095367,
+          "state": {
+            "requests": 248,
+            "accepts": 246,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 13.299999952316284,
+          "input_ms": 10680.799999952316,
+          "dom_frame_ms": 10694.099999904633,
+          "state": {
+            "requests": 249,
+            "accepts": 247,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 14.399999856948853,
+          "input_ms": 10729.700000047684,
+          "dom_frame_ms": 10744.099999904633,
+          "state": {
+            "requests": 250,
+            "accepts": 248,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 14.900000095367432,
+          "input_ms": 10779.799999952316,
+          "dom_frame_ms": 10794.700000047684,
+          "state": {
+            "requests": 251,
+            "accepts": 249,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 14.900000095367432,
+          "input_ms": 10829.599999904633,
+          "dom_frame_ms": 10844.5,
+          "state": {
+            "requests": 252,
+            "accepts": 250,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 0
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        }
+      ]
+    },
+    "progress": {
+      "p50_ms": 13.700000047683716,
+      "p95_ms": 15.299999952316284,
+      "requests": 45,
+      "accepts": 45,
+      "idle": {
+        "before": {
+          "tasks": 0,
+          "timers": 0,
+          "observers": 0,
+          "errors": 0,
+          "aborted": false,
+          "nodes": 142,
+          "geometry_rules": 1
+        },
+        "after": {
+          "tasks": 0,
+          "timers": 0,
+          "observers": 0,
+          "errors": 0,
+          "aborted": false,
+          "nodes": 142,
+          "geometry_rules": 1
+        }
+      },
+      "raw": [
+        {
+          "latency_ms": 14.799999952316284,
+          "input_ms": 12363.900000095367,
+          "dom_frame_ms": 12378.700000047684,
+          "state": {
+            "requests": 258,
+            "accepts": 256,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 6
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 10.200000047683716,
+          "input_ms": 12417.200000047684,
+          "dom_frame_ms": 12427.400000095367,
+          "state": {
+            "requests": 259,
+            "accepts": 257,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 7
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 13.600000143051147,
+          "input_ms": 12464.299999952316,
+          "dom_frame_ms": 12477.900000095367,
+          "state": {
+            "requests": 260,
+            "accepts": 258,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 8
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 14.300000190734863,
+          "input_ms": 12513.099999904633,
+          "dom_frame_ms": 12527.400000095367,
+          "state": {
+            "requests": 261,
+            "accepts": 259,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 9
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 13.899999856948853,
+          "input_ms": 12564.400000095367,
+          "dom_frame_ms": 12578.299999952316,
+          "state": {
+            "requests": 262,
+            "accepts": 260,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 10
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 12.400000095367432,
+          "input_ms": 12615.599999904633,
+          "dom_frame_ms": 12628,
+          "state": {
+            "requests": 263,
+            "accepts": 261,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 11
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 14.100000143051147,
+          "input_ms": 12664.299999952316,
+          "dom_frame_ms": 12678.400000095367,
+          "state": {
+            "requests": 264,
+            "accepts": 262,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 12
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 14.200000047683716,
+          "input_ms": 12713.299999952316,
+          "dom_frame_ms": 12727.5,
+          "state": {
+            "requests": 265,
+            "accepts": 263,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 13
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 13.299999952316284,
+          "input_ms": 12764.400000095367,
+          "dom_frame_ms": 12777.700000047684,
+          "state": {
+            "requests": 266,
+            "accepts": 264,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 14
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 14.300000190734863,
+          "input_ms": 12813.099999904633,
+          "dom_frame_ms": 12827.400000095367,
+          "state": {
+            "requests": 267,
+            "accepts": 265,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 15
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 13,
+          "input_ms": 12864.400000095367,
+          "dom_frame_ms": 12877.400000095367,
+          "state": {
+            "requests": 268,
+            "accepts": 266,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 16
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 13.799999952316284,
+          "input_ms": 12915,
+          "dom_frame_ms": 12928.799999952316,
+          "state": {
+            "requests": 269,
+            "accepts": 267,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 17
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 13.200000047683716,
+          "input_ms": 12965.200000047684,
+          "dom_frame_ms": 12978.400000095367,
+          "state": {
+            "requests": 270,
+            "accepts": 268,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 18
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 14.200000047683716,
+          "input_ms": 13013.299999952316,
+          "dom_frame_ms": 13027.5,
+          "state": {
+            "requests": 271,
+            "accepts": 269,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 19
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 13.799999952316284,
+          "input_ms": 13063.900000095367,
+          "dom_frame_ms": 13077.700000047684,
+          "state": {
+            "requests": 272,
+            "accepts": 270,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 20
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 13.599999904632568,
+          "input_ms": 13113.700000047684,
+          "dom_frame_ms": 13127.299999952316,
+          "state": {
+            "requests": 273,
+            "accepts": 271,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 21
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 13.299999952316284,
+          "input_ms": 13164.200000047684,
+          "dom_frame_ms": 13177.5,
+          "state": {
+            "requests": 274,
+            "accepts": 272,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 22
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 12.599999904632568,
+          "input_ms": 13214.900000095367,
+          "dom_frame_ms": 13227.5,
+          "state": {
+            "requests": 275,
+            "accepts": 273,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 23
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 13.700000047683716,
+          "input_ms": 13263.599999904633,
+          "dom_frame_ms": 13277.299999952316,
+          "state": {
+            "requests": 276,
+            "accepts": 274,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 24
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 12.700000047683716,
+          "input_ms": 13314.599999904633,
+          "dom_frame_ms": 13327.299999952316,
+          "state": {
+            "requests": 277,
+            "accepts": 275,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 25
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 3.799999952316284,
+          "input_ms": 13374.700000047684,
+          "dom_frame_ms": 13378.5,
+          "state": {
+            "requests": 278,
+            "accepts": 276,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 26
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 14.899999856948853,
+          "input_ms": 13414.200000047684,
+          "dom_frame_ms": 13429.099999904633,
+          "state": {
+            "requests": 279,
+            "accepts": 277,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 27
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 11.299999952316284,
+          "input_ms": 13466.400000095367,
+          "dom_frame_ms": 13477.700000047684,
+          "state": {
+            "requests": 280,
+            "accepts": 278,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 28
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 14.299999952316284,
+          "input_ms": 13514.299999952316,
+          "dom_frame_ms": 13528.599999904633,
+          "state": {
+            "requests": 281,
+            "accepts": 279,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 29
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 16.09999990463257,
+          "input_ms": 13563,
+          "dom_frame_ms": 13579.099999904633,
+          "state": {
+            "requests": 282,
+            "accepts": 280,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 30
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 12.5,
+          "input_ms": 13615.099999904633,
+          "dom_frame_ms": 13627.599999904633,
+          "state": {
+            "requests": 283,
+            "accepts": 281,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 31
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 14.400000095367432,
+          "input_ms": 13663.299999952316,
+          "dom_frame_ms": 13677.700000047684,
+          "state": {
+            "requests": 284,
+            "accepts": 282,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 32
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 13.799999952316284,
+          "input_ms": 13713.799999952316,
+          "dom_frame_ms": 13727.599999904633,
+          "state": {
+            "requests": 285,
+            "accepts": 283,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 33
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 13.700000047683716,
+          "input_ms": 13763.799999952316,
+          "dom_frame_ms": 13777.5,
+          "state": {
+            "requests": 286,
+            "accepts": 284,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 34
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 13.200000047683716,
+          "input_ms": 13814.299999952316,
+          "dom_frame_ms": 13827.5,
+          "state": {
+            "requests": 287,
+            "accepts": 285,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 35
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 13.299999952316284,
+          "input_ms": 13864.5,
+          "dom_frame_ms": 13877.799999952316,
+          "state": {
+            "requests": 288,
+            "accepts": 286,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 36
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 13.200000047683716,
+          "input_ms": 13914.299999952316,
+          "dom_frame_ms": 13927.5,
+          "state": {
+            "requests": 289,
+            "accepts": 287,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 37
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 13.799999952316284,
+          "input_ms": 13963.700000047684,
+          "dom_frame_ms": 13977.5,
+          "state": {
+            "requests": 290,
+            "accepts": 288,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 38
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 13.5,
+          "input_ms": 14014.200000047684,
+          "dom_frame_ms": 14027.700000047684,
+          "state": {
+            "requests": 291,
+            "accepts": 289,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 39
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 15.299999952316284,
+          "input_ms": 14063,
+          "dom_frame_ms": 14078.299999952316,
+          "state": {
+            "requests": 292,
+            "accepts": 290,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 40
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 13.099999904632568,
+          "input_ms": 14114.200000047684,
+          "dom_frame_ms": 14127.299999952316,
+          "state": {
+            "requests": 293,
+            "accepts": 291,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 41
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 15,
+          "input_ms": 14164,
+          "dom_frame_ms": 14179,
+          "state": {
+            "requests": 294,
+            "accepts": 292,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 42
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 13.100000143051147,
+          "input_ms": 14214.799999952316,
+          "dom_frame_ms": 14227.900000095367,
+          "state": {
+            "requests": 295,
+            "accepts": 293,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 43
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 15.299999952316284,
+          "input_ms": 14263,
+          "dom_frame_ms": 14278.299999952316,
+          "state": {
+            "requests": 296,
+            "accepts": 294,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 44
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 14.599999904632568,
+          "input_ms": 14314,
+          "dom_frame_ms": 14328.599999904633,
+          "state": {
+            "requests": 297,
+            "accepts": 295,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 45
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "scroll_top": 0
+        }
+      ]
+    },
+    "scroll": {
+      "p50_ms": 0.09999990463256836,
+      "p95_ms": 0.20000004768371582,
+      "requests": 0,
+      "accepts": 0,
+      "idle": {
+        "before": {
+          "tasks": 0,
+          "timers": 0,
+          "observers": 0,
+          "errors": 0,
+          "aborted": false,
+          "nodes": 142,
+          "geometry_rules": 1
+        },
+        "after": {
+          "tasks": 0,
+          "timers": 0,
+          "observers": 0,
+          "errors": 0,
+          "aborted": false,
+          "nodes": 142,
+          "geometry_rules": 1
+        }
+      },
+      "raw": [
+        {
+          "latency_ms": 0.09999990463256836,
+          "input_ms": 16177.700000047684,
+          "dom_frame_ms": 16177.799999952316,
+          "state": {
+            "requests": 297,
+            "accepts": 295,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 45
+          },
+          "request_delta": 0,
+          "accept_delta": 0,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 0.09999990463256836,
+          "input_ms": 16278.5,
+          "dom_frame_ms": 16278.599999904633,
+          "state": {
+            "requests": 297,
+            "accepts": 295,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 45
+          },
+          "request_delta": 0,
+          "accept_delta": 0,
+          "scroll_top": 120
+        },
+        {
+          "latency_ms": 0,
+          "input_ms": 16378.299999952316,
+          "dom_frame_ms": 16378.299999952316,
+          "state": {
+            "requests": 297,
+            "accepts": 295,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 45
+          },
+          "request_delta": 0,
+          "accept_delta": 0,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 0,
+          "input_ms": 16478.900000095367,
+          "dom_frame_ms": 16478.900000095367,
+          "state": {
+            "requests": 297,
+            "accepts": 295,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 45
+          },
+          "request_delta": 0,
+          "accept_delta": 0,
+          "scroll_top": 120
+        },
+        {
+          "latency_ms": 0,
+          "input_ms": 16578.400000095367,
+          "dom_frame_ms": 16578.400000095367,
+          "state": {
+            "requests": 297,
+            "accepts": 295,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 45
+          },
+          "request_delta": 0,
+          "accept_delta": 0,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 0.20000004768371582,
+          "input_ms": 16677.200000047684,
+          "dom_frame_ms": 16677.400000095367,
+          "state": {
+            "requests": 297,
+            "accepts": 295,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 45
+          },
+          "request_delta": 0,
+          "accept_delta": 0,
+          "scroll_top": 120
+        },
+        {
+          "latency_ms": 0.19999980926513672,
+          "input_ms": 16778.900000095367,
+          "dom_frame_ms": 16779.099999904633,
+          "state": {
+            "requests": 297,
+            "accepts": 295,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 45
+          },
+          "request_delta": 0,
+          "accept_delta": 0,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 0.10000014305114746,
+          "input_ms": 16877.799999952316,
+          "dom_frame_ms": 16877.900000095367,
+          "state": {
+            "requests": 297,
+            "accepts": 295,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 45
+          },
+          "request_delta": 0,
+          "accept_delta": 0,
+          "scroll_top": 120
+        },
+        {
+          "latency_ms": 0.09999990463256836,
+          "input_ms": 16977.5,
+          "dom_frame_ms": 16977.599999904633,
+          "state": {
+            "requests": 297,
+            "accepts": 295,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 45
+          },
+          "request_delta": 0,
+          "accept_delta": 0,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 0.20000004768371582,
+          "input_ms": 17077.5,
+          "dom_frame_ms": 17077.700000047684,
+          "state": {
+            "requests": 297,
+            "accepts": 295,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 45
+          },
+          "request_delta": 0,
+          "accept_delta": 0,
+          "scroll_top": 120
+        },
+        {
+          "latency_ms": 0.09999990463256836,
+          "input_ms": 17178.200000047684,
+          "dom_frame_ms": 17178.299999952316,
+          "state": {
+            "requests": 297,
+            "accepts": 295,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 45
+          },
+          "request_delta": 0,
+          "accept_delta": 0,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 0.09999990463256836,
+          "input_ms": 17278.5,
+          "dom_frame_ms": 17278.599999904633,
+          "state": {
+            "requests": 297,
+            "accepts": 295,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 45
+          },
+          "request_delta": 0,
+          "accept_delta": 0,
+          "scroll_top": 120
+        },
+        {
+          "latency_ms": 0,
+          "input_ms": 17378.200000047684,
+          "dom_frame_ms": 17378.200000047684,
+          "state": {
+            "requests": 297,
+            "accepts": 295,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 45
+          },
+          "request_delta": 0,
+          "accept_delta": 0,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 0.09999990463256836,
+          "input_ms": 17478.5,
+          "dom_frame_ms": 17478.599999904633,
+          "state": {
+            "requests": 297,
+            "accepts": 295,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 45
+          },
+          "request_delta": 0,
+          "accept_delta": 0,
+          "scroll_top": 120
+        },
+        {
+          "latency_ms": 0.09999990463256836,
+          "input_ms": 17577.400000095367,
+          "dom_frame_ms": 17577.5,
+          "state": {
+            "requests": 297,
+            "accepts": 295,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 45
+          },
+          "request_delta": 0,
+          "accept_delta": 0,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 0.20000004768371582,
+          "input_ms": 17678.299999952316,
+          "dom_frame_ms": 17678.5,
+          "state": {
+            "requests": 297,
+            "accepts": 295,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 45
+          },
+          "request_delta": 0,
+          "accept_delta": 0,
+          "scroll_top": 120
+        },
+        {
+          "latency_ms": 0.10000014305114746,
+          "input_ms": 17778.599999904633,
+          "dom_frame_ms": 17778.700000047684,
+          "state": {
+            "requests": 297,
+            "accepts": 295,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 45
+          },
+          "request_delta": 0,
+          "accept_delta": 0,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 0.20000004768371582,
+          "input_ms": 17877.700000047684,
+          "dom_frame_ms": 17877.900000095367,
+          "state": {
+            "requests": 297,
+            "accepts": 295,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 45
+          },
+          "request_delta": 0,
+          "accept_delta": 0,
+          "scroll_top": 120
+        },
+        {
+          "latency_ms": 0.10000014305114746,
+          "input_ms": 17978.299999952316,
+          "dom_frame_ms": 17978.400000095367,
+          "state": {
+            "requests": 297,
+            "accepts": 295,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 45
+          },
+          "request_delta": 0,
+          "accept_delta": 0,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 0.20000004768371582,
+          "input_ms": 18077.099999904633,
+          "dom_frame_ms": 18077.299999952316,
+          "state": {
+            "requests": 297,
+            "accepts": 295,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 45
+          },
+          "request_delta": 0,
+          "accept_delta": 0,
+          "scroll_top": 120
+        },
+        {
+          "latency_ms": 0.20000004768371582,
+          "input_ms": 18177.099999904633,
+          "dom_frame_ms": 18177.299999952316,
+          "state": {
+            "requests": 297,
+            "accepts": 295,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 45
+          },
+          "request_delta": 0,
+          "accept_delta": 0,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 0.10000014305114746,
+          "input_ms": 18277.099999904633,
+          "dom_frame_ms": 18277.200000047684,
+          "state": {
+            "requests": 297,
+            "accepts": 295,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 45
+          },
+          "request_delta": 0,
+          "accept_delta": 0,
+          "scroll_top": 120
+        },
+        {
+          "latency_ms": 0.10000014305114746,
+          "input_ms": 18378.599999904633,
+          "dom_frame_ms": 18378.700000047684,
+          "state": {
+            "requests": 297,
+            "accepts": 295,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 45
+          },
+          "request_delta": 0,
+          "accept_delta": 0,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 0.19999980926513672,
+          "input_ms": 18477.900000095367,
+          "dom_frame_ms": 18478.099999904633,
+          "state": {
+            "requests": 297,
+            "accepts": 295,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 45
+          },
+          "request_delta": 0,
+          "accept_delta": 0,
+          "scroll_top": 120
+        },
+        {
+          "latency_ms": 0.09999990463256836,
+          "input_ms": 18577.5,
+          "dom_frame_ms": 18577.599999904633,
+          "state": {
+            "requests": 297,
+            "accepts": 295,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 45
+          },
+          "request_delta": 0,
+          "accept_delta": 0,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 0.09999990463256836,
+          "input_ms": 18677.5,
+          "dom_frame_ms": 18677.599999904633,
+          "state": {
+            "requests": 297,
+            "accepts": 295,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 45
+          },
+          "request_delta": 0,
+          "accept_delta": 0,
+          "scroll_top": 120
+        },
+        {
+          "latency_ms": 0.09999990463256836,
+          "input_ms": 18778.5,
+          "dom_frame_ms": 18778.599999904633,
+          "state": {
+            "requests": 297,
+            "accepts": 295,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 45
+          },
+          "request_delta": 0,
+          "accept_delta": 0,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 0.09999990463256836,
+          "input_ms": 18877.700000047684,
+          "dom_frame_ms": 18877.799999952316,
+          "state": {
+            "requests": 297,
+            "accepts": 295,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 45
+          },
+          "request_delta": 0,
+          "accept_delta": 0,
+          "scroll_top": 120
+        },
+        {
+          "latency_ms": 0.10000014305114746,
+          "input_ms": 18978.299999952316,
+          "dom_frame_ms": 18978.400000095367,
+          "state": {
+            "requests": 297,
+            "accepts": 295,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 45
+          },
+          "request_delta": 0,
+          "accept_delta": 0,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 0.10000014305114746,
+          "input_ms": 19077.299999952316,
+          "dom_frame_ms": 19077.400000095367,
+          "state": {
+            "requests": 297,
+            "accepts": 295,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 45
+          },
+          "request_delta": 0,
+          "accept_delta": 0,
+          "scroll_top": 120
+        },
+        {
+          "latency_ms": 0.09999990463256836,
+          "input_ms": 19177.400000095367,
+          "dom_frame_ms": 19177.5,
+          "state": {
+            "requests": 297,
+            "accepts": 295,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 45
+          },
+          "request_delta": 0,
+          "accept_delta": 0,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 0.09999990463256836,
+          "input_ms": 19277.700000047684,
+          "dom_frame_ms": 19277.799999952316,
+          "state": {
+            "requests": 297,
+            "accepts": 295,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 45
+          },
+          "request_delta": 0,
+          "accept_delta": 0,
+          "scroll_top": 120
+        },
+        {
+          "latency_ms": 0.20000004768371582,
+          "input_ms": 19378.200000047684,
+          "dom_frame_ms": 19378.400000095367,
+          "state": {
+            "requests": 297,
+            "accepts": 295,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 45
+          },
+          "request_delta": 0,
+          "accept_delta": 0,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 0,
+          "input_ms": 19477,
+          "dom_frame_ms": 19477,
+          "state": {
+            "requests": 297,
+            "accepts": 295,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 45
+          },
+          "request_delta": 0,
+          "accept_delta": 0,
+          "scroll_top": 120
+        },
+        {
+          "latency_ms": 0.09999990463256836,
+          "input_ms": 19577,
+          "dom_frame_ms": 19577.099999904633,
+          "state": {
+            "requests": 297,
+            "accepts": 295,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 45
+          },
+          "request_delta": 0,
+          "accept_delta": 0,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 0.09999990463256836,
+          "input_ms": 19677,
+          "dom_frame_ms": 19677.099999904633,
+          "state": {
+            "requests": 297,
+            "accepts": 295,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 45
+          },
+          "request_delta": 0,
+          "accept_delta": 0,
+          "scroll_top": 120
+        },
+        {
+          "latency_ms": 0.20000004768371582,
+          "input_ms": 19778.799999952316,
+          "dom_frame_ms": 19779,
+          "state": {
+            "requests": 297,
+            "accepts": 295,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 45
+          },
+          "request_delta": 0,
+          "accept_delta": 0,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 0.20000004768371582,
+          "input_ms": 19877.200000047684,
+          "dom_frame_ms": 19877.400000095367,
+          "state": {
+            "requests": 297,
+            "accepts": 295,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 45
+          },
+          "request_delta": 0,
+          "accept_delta": 0,
+          "scroll_top": 120
+        },
+        {
+          "latency_ms": 0.10000014305114746,
+          "input_ms": 19977.799999952316,
+          "dom_frame_ms": 19977.900000095367,
+          "state": {
+            "requests": 297,
+            "accepts": 295,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 45
+          },
+          "request_delta": 0,
+          "accept_delta": 0,
+          "scroll_top": 0
+        },
+        {
+          "latency_ms": 0.10000014305114746,
+          "input_ms": 20078.799999952316,
+          "dom_frame_ms": 20078.900000095367,
+          "state": {
+            "requests": 297,
+            "accepts": 295,
+            "active": "details",
+            "dialog": false,
+            "tooltip": false,
+            "progress": 45
+          },
+          "request_delta": 0,
+          "accept_delta": 0,
+          "scroll_top": 120
+        }
+      ]
+    }
+  }
+}

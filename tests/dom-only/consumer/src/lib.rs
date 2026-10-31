@@ -11,6 +11,8 @@ mod field_samples;
 #[cfg(target_arch = "wasm32")]
 mod form_benchmark;
 #[cfg(target_arch = "wasm32")]
+mod panel_benchmark;
+#[cfg(target_arch = "wasm32")]
 mod select_samples;
 
 #[cfg(target_arch = "wasm32")]
