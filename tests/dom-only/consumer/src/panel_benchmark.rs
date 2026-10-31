@@ -55,9 +55,8 @@ fn Panels() -> impl IntoView {
                 <TabPanel value="details">"Entry details"</TabPanel>
             </Tabs>
             <Tooltip open=tooltip label="More information about this entry" test_id="bench-tooltip"
-                on_open_change=move |value| { if state.request() { tooltip.set(value); } }>
-                <button type="button" data-testid="bench-tooltip-trigger">"Entry information"</button>
-            </Tooltip>
+                on_open_change=move |value| { if state.request() { tooltip.set(value); } }
+                trigger=leptos::html::button().r#type("button").attr("data-testid","bench-tooltip-trigger").child("Entry information") />
             <Button test_id="bench-toast-show" on_click=move || { if state.request() { serial.update(|n| *n += 1); toasts.show(format!("Saved {}", serial.get_untracked()), ToastOptions { duration_ms: 1000, ..Default::default() }); } }>"Save entry"</Button>
             <Button test_id="bench-progress-update" on_click=move || { if state.request() { progress.update(|n| *n = (*n + 1.0) % 100.0); } }>"Advance progress"</Button>
             <Progress value=progress aria_label="Entry progress" test_id="bench-progress" />
@@ -71,6 +70,7 @@ fn Panels() -> impl IntoView {
             <output data-testid="bench-tooltip-state">{move || tooltip.get().to_string()}</output>
             <output data-testid="bench-progress-state">{move || progress.get()}</output>
             <Toaster test_id="bench-toaster" />
+            <crate::panels::Panels />
         </section>
     }
 }

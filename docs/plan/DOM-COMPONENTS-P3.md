@@ -187,19 +187,22 @@ REVIEW @progress_consistency:
 
 ### 恢复快照
 
-- 最近更新：2026-11-01T00:07:45+08:00
-- 当前进度：1/7 个里程碑完成
+- 最近更新：2026-11-01T06:08:43+08:00
+- 当前进度：4/7 个里程碑完成
 - 当前状态：进行中
-- 最近完成：M1 · 可取回的行为基线与正式参考输入
-- 下一步：M2 · 按 §5.2 实现切换/展开、单选/链接导航与样本/SSG 测试，批次齐备后执行 V-2
+- 最近完成：M4 · 辅助浮层与阶段一面板收口
+- 下一步：M5 · 集成结构化内容与图片草稿，完成 ScrollArea 和两消费者内容样本后执行 V-5；真实浏览器留 M7/V-8
 - 当前阻塞：无
-- 代码基线：`614173ecc11354a7f5083bd0250849c90073141e`；M1 新增测量 fixture 与来源，旧组件行为未改
+- 代码基线：`5e20a074`；M2—M4 已完成增量在 dirty 工作树，按 M4 提交点收口，M1 before 已由 `3f23c064` 冻结
 
 ### 完成记录
 
 | Milestone | 状态 | 更新时间 | 简要记录 | 实现与验收记录 | 提交 |
 | --- | --- | --- | --- | --- | --- |
 | M1 | 已完成 | 2026-11-01T00:07:45+08:00 | 六组旧面板负载及正式参考已冻结，V-1 通过 | [M1 记录](DOM-COMPONENTS-P3.records/M1.md) | `3f23c064` |
+| M2 | 已完成 | 2026-11-01T00:46:19+08:00 | 同源切换/展开/导航交付，V-2 及两消费者定向浏览器通过 | [M2 记录](DOM-COMPONENTS-P3.records/M2.md) | 待提交 |
+| M3 | 已完成 | 2026-11-01T03:13:11+08:00 | V-3 通过；同源 Dialog/AlertDialog、生命周期/名称/取消/恢复与旧调用迁移齐备，真实两消费者及 Studio 定向验证通过 | [M3 记录](DOM-COMPONENTS-P3.records/M3.md) | 待提交 |
+| M4 | 已完成 | 2026-11-01T06:08:43+08:00 | V-4/V-6 通过；辅助浮层、Arrow/hover/typed 迁移和完整任务面板齐备，两消费者及旧入口验证通过 | [M4 记录](DOM-COMPONENTS-P3.records/M4.md) | 待提交 |
 
 ## 0. 需求、范围与决策
 
@@ -320,6 +323,7 @@ REVIEW @progress_consistency:
 | 系统/模块 | 改动路径与符号 | 复用锚点与边界 |
 | --- | --- | --- |
 | DOM 浮层核心 | `crates/rustify-dom/src/overlay.rs` 的 Layer/OverlayStack/Side/LayerDismiss/place；必要时内部拆 ★ `crates/rustify-dom/src/overlay/placement.rs`，不改变 module 公共路径；`crates/rustify-dom/src/lib.rs` 重导出 | 保留 Anchor::Region、现有 hooks、runtime listeners/resize/abort；只加 §5.1 所需行为 |
+| 原生链接接缝 | `crates/rustify-dom/src/router.rs` 的 anchor_target | TabNav 标记仅使其原生 a 跳过 owner/guest router；普通 scope 链接契约保留，不建设导航框架 |
 | 通知核心 | `crates/rustify-dom/src/toast.rs`、core i18n.rs、lib.rs；Cargo.toml 仅补实际用到的 web-sys feature | ToastHandle/ToastRegion 上演进；SDK facade 已 glob 重导出，不复制类型 |
 | 交互原语 | `crates/rustify-components/src/primitives/mod.rs`；★ 同目录 `tabs.rs`、`accordion.rs`、`collapsible.rs`、`floating.rs`、`dialog.rs`、`alert_dialog.rs`、`popover.rs`、`hover_card.rs`、`tooltip.rs`、`avatar.rs`、`progress.rs`、`scroll_area.rs`、`aspect_ratio.rs`、`separator.rs`、`toast.rs` | select.rs/browser.rs 的 Owner、typed target、缺上下文诊断/注销；choice.rs 与 roving.rs。toast.rs 只重导出 core 无样式部件 |
 | 主题组件 | 现有 tabs.rs/dialog.rs/tooltip.rs/progress.rs/spinner.rs/scroll_area.rs/toast.rs；★ 同目录 `accordion.rs`、`collapsible.rs`、`segmented_control.rs`、`tab_nav.rs`、`alert_dialog.rs`、`popover.rs`、`hover_card.rs`、`avatar.rs`、`badge.rs`、`callout.rs`、`card.rs`、`data_list.rs`、`table.rs`、`aspect_ratio.rs`、`separator.rs`、`skeleton.rs`；lib.rs | select.rs、checkbox_cards.rs 的行为投影与 theme/color/geometry。表格不碰 data_table/；卡片复用既有选择组件 |
@@ -393,8 +397,8 @@ pub struct FloatingPosition {
     pub hide_when_detached: bool, pub update: PositionUpdate,
 }
 // Anchor 增加 Viewport { align: ViewportAlign }，Centred 与 Region/Element 仍有用途。
-// Layer 新增 active: Signal<bool> (=true)，panel: Option<NodeRef<html::Div>>，
-// trigger_id: String，以及 position: Option<Signal<FloatingPosition>>。
+// Layer 新增 active: Signal<bool> (=true)，panel / arrow: Option<NodeRef<html::Div>>，
+// trigger_id: Signal<String>（静态 String 可 into），以及 position: Option<Signal<FloatingPosition>>。
 // LayerDismiss 增加 FocusOutside；以下 hooks 为 Option<Callback<Cancelable<LayerDismiss>>>：
 // on_focus_outside / on_interact_outside；已有 Escape/pointer/auto_focus hooks 保留。
 ```
@@ -436,7 +440,8 @@ pub struct FloatingPosition {
 - `alert_dialog` 复用同一 floating 生命周期，公开 Root/Trigger/Portal/Overlay/Content/Title/Description/Cancel/Action，始终为 scope 局部 modal。Content 的 role=alertdialog，Title 与必要 Description 显式关联；普通 Dialog 不论 modal 值均为 role=dialog。两者均按 §5.1 省略 aria-modal，可访问名称不能为空。Title 默认 h2，语义级别可选，不用视觉 size 决定标题级别。
 - 普通 Dialog 接受打开时聚焦第一个可用项，无项则 Content；可取消 open_auto_focus 并由调用方选择长内容标题。AlertDialog 默认聚焦 Cancel，缺 Cancel 诊断且聚焦 Content，绝不默认聚焦危险 Action。焦点与命名参照 [APG modal dialog](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/) / [alertdialog](https://www.w3.org/WAI/ARIA/apg/patterns/alertdialog/)；与其整页模态模式的差异是本 SDK 只约束本 scope，宿主和其他 scope 保持可达，因此不声明整页模态属性。
 - AlertDialog 的普通遮罩/外部 pointer/focus 不关闭，更不触发确认；Escape 仅请求取消关闭，允许公开 hook 阻止。Action 增 `on_action: Callback<Cancelable<()>>`：原生目标 handler → on_action → 未取消时一次关闭请求。只有 Action 发确认回调；Cancel、Close、Escape、外部或程序关闭都不伪造确认。应用拒绝关闭时内容保留，可继续修改/取消。
-- Overlay 只是一份拥有该层 ID 的遮罩；pointer outside 由 stack 集中处理，不能再用 backdrop click 多发一次。普通 Dialog 的 close_on_backdrop=false 映射为取消外点默认；AlertDialog 的安全默认不能被“自动确认”替换。
+- 非 modal Dialog 不挂载 Overlay；modal 的 Overlay 只是一份拥有该层 ID 的遮罩；pointer outside 由 stack 集中处理，不能再用 backdrop click 多发一次。普通 Dialog 的 close_on_backdrop=false 映射为取消外点默认；AlertDialog 的安全默认不能被“自动确认”替换。
+- 独立 Content 清理在其回调 Owner 释放前调用 core 的 `overlay::on_layer_content_cleanup()` 撤销所属层；唯一存活 Content 重新投影 panel、align 和 hooks，重复部件修复后不保留失效引用。打开 auto_focus 延至 DOM 可见后调用，默认普通对话复用 core `overlay::focus_first`；重开后跳过旧 session 的默认回焦。
 - Title/Description 的关联随实际部件挂载/移除变化；说明缺省时不引用不存在节点。Root 无 Trigger 的程序打开是合法路径，返回打开前的有效元素；多 Trigger 使用诊断而非猜选返回位置。动态卸载和嵌套关闭按 §5.1。
 - 原 Dialog 便捷视图使用同一部件组装既有标题/关闭栏；新 Content 不强制标题栏布局。不能把新库面板强行应用到 Studio 的中性编辑壳，preview dialog 仍取创建处主题。
 
@@ -616,8 +621,8 @@ pub struct ToastAction {
 | --- | --- | --- | --- |
 | V-1 | C-1、WORK-N2/WORK-N8；P2 具体前置可用、旧面板行为可重现，before 数据与正式参考可取 | §9.2 的 baseline 命令；`mbx test --locked -p rustify-dom --lib overlay::tests`；`mbx test --locked -p rustify-dom --lib toast::tests`；`mbx test --locked -p rustify-components --no-default-features --features ssr --test ssr_controls`；`mbx xtask sources verify` | M1：同功能测量 fixture、来源/许可与 before 实验齐备后；baseline 必须在改旧行为前，作为重构风险门 |
 | V-2 | WORK-F10/AC-1、AC-2；本期 WORK-F15/AC-3；单/多展开、手动/自动/方向/拒绝、动态焦点/隐藏状态 | `mbx test --locked -p rustify-components --lib primitives::`；`mbx test --locked -p rustify-components --no-default-features --features ssr --test panels_ssg`；`mbx clippy --locked -p rustify-components --all-targets -- -D warnings`；`cargo fmt -p rustify-components -- --check` | M2：切换/展开原语、Themes、同语义样本与模型/SSG 测试整批齐备后；真实键盘留 V-6 |
-| V-3 | WORK-F11/AC-1—AC-3；Dialog/AlertDialog 取消、命名、安全 Action、局部模态 ARIA 投影（含旧 Layer/便捷入口）；动态通知父引用、迁移/关闭和防自环的纯层级模型 | `mbx test --locked -p rustify-dom --lib overlay::tests`；`mbx test --locked -p rustify-components --lib primitives::`；`mbx test --locked -p rustify-components --no-default-features --features ssr --test panels_ssg --test missing_context_ssr`；`mbx clippy --locked -p rustify-dom -p rustify-components --all-targets -- -D warnings` | M3：core 父子/焦点域/通知宿主重绑契约与 Dialog/AlertDialog、便捷调用迁移、对应 tests 齐备后；解除 M4/M6 的 core 前置，不代替 V-6 |
-| V-4 | WORK-F12/AC-1、AC-2；四边/RTL/collision/arrow、可撤计时、grace、Tooltip 非交互/不移焦 | `mbx test --locked -p rustify-dom --lib overlay::tests`；`mbx test --locked -p rustify-components --lib primitives::`；`mbx test --locked -p rustify-components --no-default-features --features ssr --test panels_ssg`；定向两包 Clippy 同 V-3，另以 `--no-default-features --features ssr` 检查 | M4：辅助浮层的行为、皮肤、typed 旧调用迁移与定位/计时测试齐备后，随后进入本阶段 V-6 |
+| V-3 | WORK-F11/AC-1—AC-3；Dialog/AlertDialog 取消、命名、安全 Action、局部模态 ARIA 投影（含旧 Layer/便捷入口）；动态通知父引用、迁移/关闭和防自环的纯层级模型 | `mbx test --locked -p rustify-dom --lib overlay::`；`mbx test --locked -p rustify-components --lib primitives::`；`mbx test --locked -p rustify-components --no-default-features --features ssr --test panels_ssg --test missing_context_ssr`；`mbx clippy --locked -p rustify-dom -p rustify-components --all-targets -- -D warnings` | M3：core 父子/焦点域/通知宿主重绑契约与 Dialog/AlertDialog、便捷调用迁移、对应 tests 齐备后；解除 M4/M6 的 core 前置，不代替 V-6 |
+| V-4 | WORK-F12/AC-1、AC-2；四边/RTL/collision/arrow、可撤计时、grace、Tooltip 非交互/不移焦 | `mbx test --locked -p rustify-dom --lib overlay::`；`mbx test --locked -p rustify-components --lib primitives::`；`mbx test --locked -p rustify-components --no-default-features --features ssr --test panels_ssg`；定向两包 Clippy 同 V-3，另以 `--no-default-features --features ssr` 检查 | M4：辅助浮层的行为、皮肤、typed 旧调用迁移与定位/计时测试齐备后，随后进入本阶段 V-6 |
 | V-5 | WORK-F17/AC-1、AC-2；内容原生语义/图片代次、比例/分隔与滚动模型，WORK-F15/AC-3 参数静态输出 | `mbx test --locked -p rustify-components --lib primitives::`；`mbx test --locked -p rustify-components --no-default-features --features ssr --test content_ssg`；组件 CSR/ssr 各自 Clippy；`cargo fmt -p rustify-components -- --check` | M5：全部内容、滚动部件/便捷入口、raw 适用样本与 styled 真实内容整批齐备后；不逐个组件跑包级门 |
 | V-6 | UAT-5/6 的 P3 范围：WORK-F10 全部、WORK-F11 全部、WORK-F12 全部及本阶段视觉；含 P2 Select 嵌套与旧 Layer；实查 Content 角色/名称、无 aria-modal、本 scope inert/Tab 约束，另一 scope/宿主的真实点击与键盘可达 | §9.4 两个 build-dom；串行 `npx --no-install playwright test -c playwright.docs.config.ts --project=dom-primitives panels.spec.ts` 与 `--project=dom-only panels.spec.ts`；实际截图与同一次 UI 走查；旧 GPU anchor `--project=fusion-basic m4-overlay.spec.ts`（先 build-web） | M4：V-2—V-4、完整面板和最新两消费者产物齐备后的**阶段一收口**；不等内容/通知全完成，验证模态/输入风险；后续仅改相关路径才补受影响项 |
 | V-7 | WORK-F14 全部；本期 WORK-F15/AC-3：进度原单位/未知状态、Spinner/Skeleton、通知 FIFO/替换/暂停/拒绝/取消/计时及换宿主后剩余时长保持 | `mbx test --locked -p rustify-dom --lib toast::tests`；`mbx test --locked -p rustify-components --no-default-features --features ssr --test feedback_ssg`；两包 CSR/ssr Clippy；`cargo fmt -p rustify-dom -p rustify-components -- --check` | M6：core 唯一通知调度、原语/Themes、反馈样本与确定性模型/静态测试齐备后 |

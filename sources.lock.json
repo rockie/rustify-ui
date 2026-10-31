@@ -2301,6 +2301,7 @@
         "LICENSE": "89e4ae7d91c640c6e8a3ca90ba578d799eb2491b766ed65e0725ba36499d56ba",
         "packages/radix-ui-themes/package.json": "0565d38c0bc04882fdfb0fe1d45f11869d5620216c4967b27ddcabc07a524337",
         "packages/radix-ui-themes/src/components/_internal/base-card.css": "48b4998bb80910aa3bfa81386654f33f81cd9769d4f08fef4906a511d49b9f53",
+        "packages/radix-ui-themes/src/components/_internal/base-dialog.css": "c1cc1495a5df537aa59b8b4cb234b4d72d13cd104ab66d7fbd600e37b0b6932b",
         "packages/radix-ui-themes/src/components/_internal/base-tab-list.css": "510da49513f6cc3cd809b511c5b3bca7b8aa97da967bb4a8ca0a1066f696ee7a",
         "packages/radix-ui-themes/src/components/_internal/base-tab-list.props.ts": "e2343d8d1cb5c30cd4978fd8fd5ea755c8a132df83c3bbd098d1c12b8df197a1",
         "packages/radix-ui-themes/src/components/alert-dialog.css": "332c37f1b483740c0bc29e3231a5c703da71dd48c89958de22183c426ace4f95",
@@ -2366,6 +2367,7 @@
         "crates/rustify-components/vendor/radix/themes-panels/LICENSE": "89e4ae7d91c640c6e8a3ca90ba578d799eb2491b766ed65e0725ba36499d56ba",
         "crates/rustify-components/vendor/radix/themes-panels/packages/radix-ui-themes/package.json": "0565d38c0bc04882fdfb0fe1d45f11869d5620216c4967b27ddcabc07a524337",
         "crates/rustify-components/vendor/radix/themes-panels/packages/radix-ui-themes/src/components/_internal/base-card.css": "48b4998bb80910aa3bfa81386654f33f81cd9769d4f08fef4906a511d49b9f53",
+        "crates/rustify-components/vendor/radix/themes-panels/packages/radix-ui-themes/src/components/_internal/base-dialog.css": "c1cc1495a5df537aa59b8b4cb234b4d72d13cd104ab66d7fbd600e37b0b6932b",
         "crates/rustify-components/vendor/radix/themes-panels/packages/radix-ui-themes/src/components/_internal/base-tab-list.css": "510da49513f6cc3cd809b511c5b3bca7b8aa97da967bb4a8ca0a1066f696ee7a",
         "crates/rustify-components/vendor/radix/themes-panels/packages/radix-ui-themes/src/components/_internal/base-tab-list.props.ts": "e2343d8d1cb5c30cd4978fd8fd5ea755c8a132df83c3bbd098d1c12b8df197a1",
         "crates/rustify-components/vendor/radix/themes-panels/packages/radix-ui-themes/src/components/alert-dialog.css": "332c37f1b483740c0bc29e3231a5c703da71dd48c89958de22183c426ace4f95",
@@ -2429,7 +2431,7 @@
       },
       "xtask_import_list": {
         "algorithm": "sha256(sorted(relative_path + SPACE + sha256(file) hex + LF))",
-        "sha256": "72f9067ac568b2fa1656cde6e8f81076b52490db84c930ee0c07f41102d45e5a"
+        "sha256": "8b67c57cd7f5f0713b44880400ff3dcc75707f75c0a3680a63f14e0dfddcc93e"
       }
     },
     {

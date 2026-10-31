@@ -131,11 +131,8 @@ mod app {
                     on_open_change=move |open| tooltip.set(open)
                     label="anchored below the button"
                     test_id=id("tooltip")
-                >
-                    <button type="button" data-testid=tooltip_anchor>
-                        "anchor"
-                    </button>
-                </Tooltip>
+                    trigger=leptos::html::button().r#type("button").attr("data-testid",tooltip_anchor).child("anchor")
+                />
                 <button
                     type="button"
                     data-testid=id("trap")
@@ -244,3 +241,8 @@ mod app {
         rustify_ui::defer(|| unreachable!("deliberate trap in a deferred task"));
     }
 }
+
+#[cfg(target_arch = "wasm32")]
+mod panels;
+#[cfg(target_arch = "wasm32")]
+mod stage_panel;

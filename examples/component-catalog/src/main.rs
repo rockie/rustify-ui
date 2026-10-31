@@ -632,11 +632,10 @@ mod app {
                     label="what this button does"
                     open=values.tooltip
                     on_open_change=move |open| values.tooltip.set(open)
-                >
-                    <Button test_id=id("tooltip-trigger") on_click=move || values.accept()>
-                        "hover or focus me"
-                    </Button>
-                </Tooltip>
+                    trigger=leptos::html::button().r#type("button").attr("data-testid",id("tooltip-trigger"))
+                        .class("rustify-color rustify-button").attr("data-variant","solid")
+                        .on(leptos::ev::click,move |_|values.accept()).child("hover or focus me")
+                />
             }
             .into_any(),
             Category::Menu => {

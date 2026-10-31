@@ -20,21 +20,17 @@
 
 .rui-dialog-layer .tools-dialog {
   box-sizing: border-box;
-  width: calc(100vw - 2rem);
-  max-width: 64rem;
-  max-height: calc(100dvh - 2rem);
+  width: min(calc(100vw - 2rem), var(--rustify-floating-available-width));
+  max-width: min(64rem, var(--rustify-floating-available-width));
+  max-height: min(calc(100dvh - 2rem), var(--rustify-floating-available-height));
   overflow-y: auto;
-}
-
-.rui-dialog-layer:has(.studio-preview-dialog) {
-  top: 1rem !important;
 }
 
 .rui-dialog-layer .studio-preview-dialog {
   box-sizing: border-box;
-  width: calc(100vw - 2rem);
-  max-width: 64rem;
-  max-height: calc(100dvh - 2rem);
+  width: min(calc(100vw - 2rem), var(--rustify-floating-available-width));
+  max-width: min(64rem, var(--rustify-floating-available-width));
+  max-height: min(calc(100dvh - 2rem), var(--rustify-floating-available-height));
   margin: 0;
   overflow-y: auto;
   container-type: inline-size;
@@ -478,7 +474,6 @@
 }
 
 /* This workbench keeps the form header fixed while its content changes. */
-.rui-dialog-layer:has(.tools-dialog) {top:1rem!important;}
 .rui-dialog-layer .tools-dialog {margin:0;container-type:inline-size;}
 .tools-dialog [data-name="Button"] {box-sizing:border-box;height:auto;min-height:2rem;padding:.375rem .75rem;line-height:1.4;box-shadow:none;background:#fff;border:1px solid #d0d5dd;color:#475467;white-space:normal;}
 .tools-dialog [data-name="Button"][data-variant="solid"] {background:#1570ef;border-color:#1570ef;color:#fff;}

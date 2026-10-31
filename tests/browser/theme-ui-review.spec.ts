@@ -162,7 +162,7 @@ test("a local opposite appearance and its dialog preserve the root theme", async
     await expect(local).toHaveAttribute("data-theme", "dark");
     await preview.getByTestId("open-preview-dialog").click();
     const layer = preview.getByTestId("preview-dialog");
-    await expect(layer).toHaveAttribute("aria-modal", "true");
+    await expect(layer).not.toHaveAttribute("aria-modal");
     const box = await layer.locator('[data-name="Dialog"]').boundingBox();
     expect(box!.x).toBeGreaterThanOrEqual(15);
     expect(box!.x + box!.width).toBeLessThanOrEqual(375);
@@ -170,6 +170,7 @@ test("a local opposite appearance and its dialog preserve the root theme", async
     await expect(confirm).toHaveCSS("background-color", "rgb(83, 177, 253)");
     await expect(confirm).toHaveCSS("color", "rgb(12, 17, 29)");
     expect((await confirm.boundingBox())!.height).toBe(32);
+    await page.screenshot({path:"docs/validation/dom-components-p3/m3-studio-dialog-narrow.png"});
     await page.keyboard.press("Escape");
     await expect(preview.getByTestId("open-preview-dialog")).toBeFocused();
     await preview.getByTestId("local-appearance").click();

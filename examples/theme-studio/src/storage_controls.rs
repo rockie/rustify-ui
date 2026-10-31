@@ -203,7 +203,7 @@ pub fn StorageControls(state: StudioState) -> impl IntoView {
             <Dialog open=Signal::derive(move || state.upgrade_review.with(Option::is_some))
                 on_open_change=move |open|if !open{state.upgrade_review.set(None);}
                 title=Signal::derive(move ||state.tr("Review the library upgrade","检查主题库升级").to_owned())
-                class="tools-dialog tools-upgrade-dialog" test_id="upgrade-review">
+                align=rustify_ui::ViewportAlign::Start class="tools-dialog tools-upgrade-dialog" test_id="upgrade-review">
                 <div class="tools-stack">
                     <p>{move || state.tr("Review every saved theme, the current draft and preferences before upgrading. Confirmation preserves your editing history and preview mode.", "升级前请核对全部命名主题、当前草稿和偏好。确认会保留编辑历史与预览模式。")}</p>
                     {move ||state.upgrade_review.get().map(|review|{

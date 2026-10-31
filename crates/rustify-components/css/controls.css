@@ -1,12 +1,11 @@
 /* The rules a utility cannot express, all of them under `[data-rustify-scope]`
    and named by `data-name`, so nothing here can reach the host page. */
 
-/* One duration for everything in a scope. `reduce_motion` sets the token to
-   0ms, and every transition in the scope stops with it - which is what V3's
-   "no unnecessary movement" is asking about, in one place rather than in
-   eighteen class strings. */
+/* Transition utilities use the scope's motion token. Setting duration on
+   every named element would also animate the default transition-property:
+   all, delaying inherited visibility and making opening panels unfocusable. */
 [data-rustify-scope] [data-name] {
-  transition-duration: var(--motion-duration);
+  --tw-duration: var(--motion-duration);
 }
 
 /* The spinner turns at eight times the scope's own duration: fast enough to

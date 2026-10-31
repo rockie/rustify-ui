@@ -163,6 +163,7 @@ test.describe("a DOM application starts without Makepad", () => {
         const opener = page.getByTestId("instance-one-dialog-open");
         await opener.click();
         await expect(page.getByRole("dialog")).toBeVisible();
+        await expect(page.getByTestId("instance-one-dialog-close")).toBeFocused();
         expect((await one.state())?.dialog).toBe(true);
         await page.keyboard.press("Escape");
         await expect(page.getByRole("dialog")).toHaveCount(0);
@@ -212,9 +213,11 @@ test.describe("a DOM application starts without Makepad", () => {
                 (content: HTMLElement) => (content.closest(".rustify-layer") as HTMLElement & { __kept?: boolean }).__kept
             )
         ).toBe(true);
-        expect((await one.stats()).observers).toBe(3);
+        // Box, anchor, panel, arrow and the shared active-scope size watch.
+        expect((await one.stats()).observers).toBe(5);
         await page.evaluate(() => window.__dom_instances[1].tooltip(false));
         await expect(tip).toHaveCount(0);
+        await expect.poll(async () => (await one.stats()).observers).toBe(1);
 
         // And the listener on the window hears keys.
         const keys = (await one.state())!.keys;

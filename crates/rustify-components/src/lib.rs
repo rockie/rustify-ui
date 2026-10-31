@@ -7,6 +7,8 @@
 //! ever comes from the application, and a name, role, value and state for
 //! everything a person can reach.
 
+pub mod accordion;
+pub mod alert_dialog;
 pub mod button;
 pub mod catalog;
 pub mod checkbox;
@@ -15,6 +17,7 @@ pub mod checkbox_group;
 mod choice_style;
 #[cfg(all(test, rustify_repo_tests))]
 mod class_migration;
+pub mod collapsible;
 pub mod color_field;
 mod component_color;
 pub mod data_table;
@@ -24,6 +27,7 @@ mod field_style;
 pub mod file_picker;
 pub mod form;
 pub mod geometry;
+pub mod hover_card;
 pub mod icon;
 pub mod icon_button;
 pub mod id;
@@ -34,6 +38,7 @@ pub mod link;
 pub mod macros;
 pub mod menu;
 pub mod number_field;
+pub mod popover;
 pub mod primitives;
 pub mod progress;
 pub mod radio;
@@ -41,9 +46,11 @@ pub mod radio_cards;
 pub mod responsive;
 pub mod roving;
 pub mod scroll_area;
+pub mod segmented_control;
 pub mod slider;
 pub mod spinner;
 pub mod switch;
+pub mod tab_nav;
 pub mod tabs;
 pub mod textarea;
 pub mod theme;

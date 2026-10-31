@@ -786,7 +786,10 @@ mod browser {
         }
         let target = event.target()?.dyn_into::<Element>().ok()?;
         let anchor = target.closest("a").ok().flatten()?;
-        if anchor.has_attribute("download") || anchor.has_attribute("target") {
+        if anchor.has_attribute("download")
+            || anchor.has_attribute("target")
+            || anchor.has_attribute("data-rustify-native-navigation")
+        {
             return None;
         }
         if anchor

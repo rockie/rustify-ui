@@ -48,6 +48,10 @@ test.describe("resolved DOM themes",()=> {
     await preview.getByTestId("open-preview-dialog").click();
     const layer=preview.getByTestId("preview-dialog");
     const panel=layer.locator('[data-name="Dialog"]');
+    await expect.poll(()=>panel.evaluate(element=>{
+      const scope=element.closest('[data-rustify-scope]')!.getBoundingClientRect(),r=element.getBoundingClientRect();
+      return Math.max(Math.max(0,scope.left)-r.left,Math.max(0,scope.top)-r.top,r.right-Math.min(innerWidth,scope.right),r.bottom-Math.min(innerHeight,scope.bottom));
+    })).toBeLessThanOrEqual(1);
     await expect.poll(async()=> (await computed(panel)).radius).toBe("0px");
     expect((await computed(panel)).background).toBe("rgb(255, 244, 221)");
     expect((await computed(panel)).shadow).toContain("0.4");
@@ -58,6 +62,7 @@ test.describe("resolved DOM themes",()=> {
     expect((await computed(panel)).background).toBe("rgb(255, 255, 255)");
     expect((await computed(panel)).shadow).not.toContain("0.4");
     expect(await preview.getByTestId("local-boundary").getAttribute("style")).toBe("");
+    await page.screenshot({path:"docs/validation/dom-components-p3/m3-studio-dialog.png"});
     await preview.getByTestId("preview-dialog-close").click();
     await preview.getByTestId("open-preview-menu").click();
     const menu=preview.getByTestId("preview-menu");

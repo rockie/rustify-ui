@@ -38,6 +38,19 @@
 
 .rustify-layer {
     position: fixed;
+    pointer-events: auto;
+}
+
+[data-rustify-layer-children],
+[data-rustify-layer-notifications] {
+    position: absolute;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+}
+
+.rustify-layer[data-rustify-inactive-ancestor] {
+    pointer-events: none;
 }
 
 /* The native control takes exactly the rectangle the region drew its text
@@ -49,4 +62,9 @@
     padding: 0 2px;
     border: 1px solid #2e90fa;
     font: inherit;
+}
+
+[data-rustify-notifications] {
+    display: contents;
+    pointer-events: auto;
 }

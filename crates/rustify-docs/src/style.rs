@@ -25,6 +25,7 @@ const TAILWIND_UTILITIES: &str = "@tailwind utilities;\n";
 const SDK_LAYER: &str = rustify_components::styles::SDK;
 const SDK_PRIMITIVES: &str = rustify_components::styles::PRIMITIVES;
 const SDK_FORM_CONTROLS: &str = rustify_components::styles::FORM_CONTROLS;
+const SDK_PANELS: &str = rustify_components::styles::PANELS;
 const SDK_SLIDER: &str = rustify_components::styles::SLIDER;
 const SDK_CONTROLS: &str = rustify_components::styles::CONTROLS;
 const SDK_BUTTON: &str = rustify_components::styles::BUTTON;
@@ -251,6 +252,7 @@ fn assets() -> Result<Vec<Stylesheet>, StyleError> {
         asset("/rustify-docs/sdk.css", &sdk_layer()?),
         asset("/rustify-docs/primitives.css", SDK_PRIMITIVES),
         asset("/rustify-docs/form-controls.css", SDK_FORM_CONTROLS),
+        asset("/rustify-docs/panels.css", SDK_PANELS),
         asset("/rustify-docs/slider.css", SDK_SLIDER),
         asset("/rustify-docs/controls.css", SDK_CONTROLS),
         asset("/rustify-docs/button.css", SDK_BUTTON),

@@ -146,7 +146,13 @@ test('export dialogs recenter as contents and viewport change, with reachable ac
   await page.getByTestId('theme-export').click();
   const panel=page.getByTestId('data-tools-dialog').locator('[data-name="Dialog"]');
   for(const kind of ['CSS · resolved values','Compatible JSON v1 · lossy']){
-    await select(page,'export-kind',kind);
+    const trigger=page.getByTestId('export-kind');await trigger.click();
+    const popup=page.getByTestId('export-kind-list');await expect(popup).toBeVisible();
+    await expect.poll(async()=>{
+      const [anchor,left]=await Promise.all([trigger.boundingBox(),popup.evaluate(element=>element.closest('.rustify-layer')!.getBoundingClientRect().x)]);
+      return Math.abs(left-anchor!.x);
+    }).toBeLessThan(1);
+    await popup.getByRole('option',{name:kind,exact:true}).click();
     for(const viewport of [{width:1280,height:720},{width:768,height:1024},{width:390,height:844}]){
       await page.setViewportSize(viewport);
       await expect.poll(async()=>{

@@ -1156,7 +1156,7 @@ mod browser {
                 Some(Panel::Import) => tr(locale.get(), "Import theme", "导入主题"),
                 Some(Panel::Export) => tr(locale.get(), "Export theme", "导出主题"),
                 _ => tr(locale.get(), "Local themes", "本地主题"),
-            }.to_owned()) class="tools-dialog" test_id="data-tools-dialog">
+            }.to_owned()) align=rustify_ui::ViewportAlign::Start class="tools-dialog" test_id="data-tools-dialog">
                 <Show when=move || panel.get()==Some(Panel::Import) fallback=|| ()>
                     <div class="tools-stack">
                         <p>{move || tr(locale.get(), "Paste or choose one CSS / JSON file, up to 262,144 bytes (256 KiB). Review changes before applying.", "粘贴或选择一个 CSS / JSON 文件，上限 262,144 字节（256 KiB）。应用前请核对变更。")}</p>

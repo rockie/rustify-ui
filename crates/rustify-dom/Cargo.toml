@@ -63,6 +63,7 @@ web-sys = { workspace = true, features = [
     "FileList",
     "HtmlAnchorElement",
     "HtmlInputElement",
+    "HtmlFormElement",
     # The clipboard, for the copy and paste controls. Both accessors are behind
     # `--cfg=web_sys_unstable_apis`, which `mbx xtask build-web` sets; a build
     # without it compiles against `clipboard::available() == false` instead.
@@ -76,6 +77,7 @@ web-sys = { workspace = true, features = [
     "AbortSignal",
     # A draft field's focus and blur.
     "FocusEvent",
+    "FocusOptions",
     # A modal layer's tab stops: found, ordered in the document, and skipped
     # when they are not rendered or not visible.
     "CssStyleDeclaration",

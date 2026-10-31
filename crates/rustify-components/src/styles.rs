@@ -28,3 +28,6 @@ pub const PRIMITIVES: &str = include_str!("../css/primitives.css");
 
 /// Theme skins for native fields and choice controls.
 pub const FORM_CONTROLS: &str = include_str!("../css/form-controls.css");
+
+/// Skins for composable panels and content switching.
+pub const PANELS: &str = include_str!("../css/panels.css");

@@ -45,6 +45,18 @@ pub fn edge(count: usize, reachable: impl Fn(usize) -> bool, last: bool) -> Opti
     }
 }
 
+/// Replaces a removed or disabled item at its former index without wrapping.
+#[cfg_attr(not(target_arch = "wasm32"), allow(dead_code))]
+pub(crate) fn replacement(
+    count: usize,
+    reachable: impl Fn(usize) -> bool,
+    former: usize,
+) -> Option<usize> {
+    (former..count)
+        .find(|i| reachable(*i))
+        .or_else(|| (0..former.min(count)).rev().find(|i| reachable(*i)))
+}
+
 #[cfg(test)]
 mod tests {
     use super::{edge, step};
@@ -83,5 +95,16 @@ mod tests {
     fn the_edges_skip_the_unreachable_too() {
         assert_eq!(edge(3, |index| index != 0, false), Some(1));
         assert_eq!(edge(3, |index| index != 2, true), Some(1));
+    }
+}
+
+#[cfg(test)]
+mod replacement_tests {
+    #[test]
+    fn replacing_an_item_prefers_the_following_live_index_then_the_previous() {
+        assert_eq!(super::replacement(4, |i| i == 0 || i == 3, 2), Some(3));
+        assert_eq!(super::replacement(3, |i| i == 0, 2), Some(0));
+        assert_eq!(super::replacement(2, |_| true, 5), Some(1));
+        assert_eq!(super::replacement(0, |_| true, 0), None);
     }
 }

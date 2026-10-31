@@ -44,6 +44,7 @@
    through a bare element selector. */
 @import "./primitives.css";
 @import "./form-controls.css";
+@import "./panels.css";
 @import "./slider.css";
 @import "./controls.css";
 @import "./button.css";

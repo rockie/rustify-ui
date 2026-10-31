@@ -7,6 +7,14 @@
 //! of its own scope inert rather than merely painting over it, so a control
 //! underneath cannot be clicked, focused or read out while it is open.
 
+#[cfg_attr(not(target_arch = "wasm32"), allow(dead_code))]
+mod hierarchy;
+mod placement;
+pub use placement::{
+    CollisionPadding, FloatingPosition, FloatingPositionError, PositionUpdate, Sticky,
+    ViewportAlign,
+};
+
 /// A synchronous semantic event whose clones share one cancellation decision.
 #[derive(Clone, Debug)]
 pub struct Cancelable<T> {
@@ -45,19 +53,24 @@ impl<T> Cancelable<T> {
 pub enum LayerDismiss {
     Escape,
     PointerOutside,
+    FocusOutside,
 }
-/// The resolved vertical side of an anchored layer.
+/// The resolved physical side of an anchored layer.
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub enum Side {
     Top,
+    Right,
     #[default]
     Bottom,
+    Left,
 }
 impl Side {
     pub const fn as_str(self) -> &'static str {
         match self {
             Self::Top => "top",
+            Self::Right => "right",
             Self::Bottom => "bottom",
+            Self::Left => "left",
         }
     }
 }
@@ -93,6 +106,26 @@ fn dismiss(
     use leptos::prelude::Callable;
     let event = Cancelable::new(reason);
     if let Some(hook) = hook {
+        hook.try_run(event.clone());
+    }
+    if !event.default_prevented() {
+        close();
+    }
+}
+
+#[cfg_attr(not(target_arch = "wasm32"), allow(dead_code))]
+fn dismiss_outside(
+    specific: Option<leptos::prelude::Callback<Cancelable<LayerDismiss>>>,
+    interact: Option<leptos::prelude::Callback<Cancelable<LayerDismiss>>>,
+    reason: LayerDismiss,
+    close: impl FnOnce(),
+) {
+    use leptos::prelude::Callable;
+    let event = Cancelable::new(reason);
+    if let Some(hook) = specific {
+        hook.try_run(event.clone());
+    }
+    if let Some(hook) = interact {
         hook.try_run(event.clone());
     }
     if !event.default_prevented() {
@@ -323,9 +356,9 @@ fn wrap_tab(stops: usize, focus: TabFocus, backwards: bool) -> Option<usize> {
 }
 
 #[cfg(target_arch = "wasm32")]
-pub(crate) use dom::EditSession;
+pub use dom::{focus_first, on_layer_content_cleanup, use_overlay, Anchor, Layer, OverlayStack};
 #[cfg(target_arch = "wasm32")]
-pub use dom::{use_overlay, Anchor, Layer, OverlayStack};
+pub(crate) use dom::{EditSession, NotificationPortal};
 
 #[cfg(not(target_arch = "wasm32"))]
 pub use host::{Anchor, Layer};
@@ -337,6 +370,7 @@ mod host {
     /// A closed floating component's deterministic initial anchor.
     #[derive(Clone)]
     pub enum Anchor {
+        Viewport { align: super::ViewportAlign },
         Centred,
     }
 
@@ -346,8 +380,21 @@ mod host {
     #[component]
     pub fn Layer(
         #[prop(optional)] modal: bool,
+        /// Whether this retained layer participates in the stack.
+        #[prop(default = Signal::derive(|| true), into)]
+        active: Signal<bool>,
+        /// The measured interaction root; omission uses the outer wrapper.
+        #[prop(optional_no_strip)]
+        panel: Option<NodeRef<leptos::html::Div>>,
+        /// Measured arrow geometry; used with FloatingPosition.
+        #[prop(optional_no_strip)]
+        arrow: Option<NodeRef<leptos::html::Div>>,
+        /// Explicit scope-local trigger for restoring focus.
+        #[prop(optional, into)]
+        trigger_id: Signal<String>,
         #[prop(into)] anchor: Signal<Anchor>,
         #[prop(optional)] fit: bool,
+        #[prop(optional_no_strip, into)] position: Option<Signal<super::FloatingPosition>>,
         on_close: impl Fn() + Send + Sync + 'static,
         #[prop(optional_no_strip, into)] on_escape_key_down: Option<
             Callback<super::Cancelable<super::LayerDismiss>>,
@@ -356,6 +403,12 @@ mod host {
         /// outside-pointer behavior; cancellation suppresses the close request.
         #[prop(optional_no_strip, into)]
         on_pointer_down_outside: Option<Callback<super::Cancelable<super::LayerDismiss>>>,
+        #[prop(optional_no_strip, into)] on_focus_outside: Option<
+            Callback<super::Cancelable<super::LayerDismiss>>,
+        >,
+        #[prop(optional_no_strip, into)] on_interact_outside: Option<
+            Callback<super::Cancelable<super::LayerDismiss>>,
+        >,
         #[prop(optional_no_strip, into)] on_open_auto_focus: Option<
             Callback<super::Cancelable<()>>,
         >,
@@ -371,16 +424,25 @@ mod host {
         children: ChildrenFn,
     ) -> impl IntoView {
         #[cfg(feature = "ssr")]
-        crate::StaticRenderIssues::record(
+        if active.get_untracked() {
+            crate::StaticRenderIssues::record(
             "floating content must start closed; open it after attachment or declare a fixed client-only placeholder",
         );
+        }
         let _ = (
             modal,
+            active,
+            panel,
+            arrow,
+            trigger_id,
             anchor,
             fit,
+            position,
             on_close,
             on_escape_key_down,
             on_pointer_down_outside,
+            on_focus_outside,
+            on_interact_outside,
             on_open_auto_focus,
             on_close_auto_focus,
             direction,
@@ -397,10 +459,10 @@ mod host {
 #[cfg(target_arch = "wasm32")]
 mod dom {
     use super::{
-        dismiss, place, wrap_tab, Cancelable, LayerDismiss, LayerId, LayerPlacement, LocalRect,
-        TabFocus,
+        dismiss, dismiss_outside, place, wrap_tab, Cancelable, LayerDismiss, LayerId,
+        LayerPlacement, LocalRect, TabFocus,
     };
-    use crate::listeners::{listen, ListenOptions, Listener};
+    use crate::listeners::{listen, listen_reentrant, ListenOptions, Listener};
     use leptos::html::Div;
     use leptos::portal::Portal;
     use leptos::prelude::*;
@@ -409,6 +471,38 @@ mod dom {
     use send_wrapper::SendWrapper;
     use std::collections::HashSet;
     use std::sync::{Arc, Mutex, Weak};
+
+    #[component]
+    pub(crate) fn NotificationPortal(children: ChildrenFn) -> impl IntoView {
+        let owner = Owner::new();
+        let theme = crate::theme::use_resolved_theme();
+        let locale = crate::i18n::use_locale();
+        let direction = crate::use_direction();
+        let view = owner.with(move || use_overlay().map(|stack| {
+            let root = stack.overlay_root();
+            let node = NodeRef::<Div>::new();
+            if let Some(theme) = theme { Effect::new(move || {
+                let snapshot = theme.get();
+                if let Some(node) = node.get() { let element: HtmlElement = node.into(); crate::theme::provider::write_snapshot(&element, &snapshot, true); }
+            }); }
+            let parent = RwSignal::new(None);
+            provide_context(ParentContext { id: parent, notification: true });
+            let registered = StoredValue::new(false);
+            Effect::new({ let stack = stack.clone(); move || {
+                let Some(element) = node.get() else { return; };
+                if registered.get_value() { return; }
+                registered.set_value(true);
+                stack.lock().notifications.push(NotificationHost { element: SendWrapper::new(element.into()), parent });
+                stack.refresh_inert();
+            }});
+            on_cleanup(move || {
+                stack.lock().notifications.retain(|host| host.parent != parent);
+                stack.refresh_inert();
+            });
+            view! { <Portal mount=root><div node_ref=node data-rustify-notifications="" dir=move ||direction.get().attribute() lang=move ||locale.get().tag()>{children()}</div></Portal> }
+        }));
+        leptos::tachys::reactive_graph::OwnedView::new_with_owner(view, owner)
+    }
 
     /// What a layer is placed against.
     #[derive(Clone)]
@@ -422,7 +516,9 @@ mod dom {
         },
         /// An element of this scope.
         Element(SendWrapper<Element>),
-        /// Centred in the viewport: what a dialog uses.
+        /// Within the visible part of this mount scope.
+        Viewport { align: super::ViewportAlign },
+        /// Centred in the viewport for existing direct consumers.
         Centred,
     }
 
@@ -443,7 +539,7 @@ mod dom {
         /// it is not anchored to anything.
         pub(crate) fn viewport_rect(&self) -> Option<Option<LocalRect>> {
             let element = match self {
-                Self::Centred => return Some(None),
+                Self::Centred | Self::Viewport { .. } => return Some(None),
                 Self::Region { canvas, .. } => canvas,
                 Self::Element(element) => element,
             };
@@ -464,15 +560,43 @@ mod dom {
         }
     }
 
+    #[derive(Clone)]
+    struct LayerRelease(Arc<dyn Fn() + Send + Sync>);
+
+    /// Releases the enclosing Layer while the Content's callback properties
+    /// still belong to a live Owner. Composite Content calls this once at setup.
+    pub fn on_layer_content_cleanup() {
+        if let Some(release) = use_context::<LayerRelease>() {
+            on_cleanup(move || (release.0)());
+        }
+    }
+
+    #[derive(Clone, Copy)]
+    struct ParentContext {
+        id: RwSignal<Option<LayerId>>,
+        notification: bool,
+    }
+
     struct LayerRecord {
         id: LayerId,
-        modal: bool,
         element: SendWrapper<Element>,
+        panel: SendWrapper<Element>,
+        children_host: SendWrapper<Element>,
+        notifications_host: SendWrapper<Element>,
+        retire: Arc<dyn Fn() + Send + Sync>,
         close: Arc<dyn Fn() + Send + Sync>,
         dismiss: Arc<dyn Fn(LayerDismiss) + Send + Sync>,
         escape: Option<Callback<Cancelable<LayerDismiss>>>,
         outside: Option<Callback<Cancelable<LayerDismiss>>>,
+        focus_outside: Option<Callback<Cancelable<LayerDismiss>>>,
+        interact_outside: Option<Callback<Cancelable<LayerDismiss>>>,
         anchor: Signal<Anchor>,
+        trigger_id: Signal<String>,
+    }
+
+    struct NotificationHost {
+        element: SendWrapper<Element>,
+        parent: RwSignal<Option<LayerId>>,
     }
 
     struct Roots {
@@ -485,10 +609,16 @@ mod dom {
     /// for their `Drop`, which is what takes them off the page.
     struct Watchers {
         _escape: Listener,
+        _pointer: Listener,
+        _pointer_up: Listener,
+        _pointer_cancel: Listener,
+        _focus: Listener,
+    }
+    struct LifecycleWatch {
+        _tree: Option<SendWrapper<MutationWatch>>,
+        _size: Option<SendWrapper<crate::ResizeObservation>>,
         _scroll: Listener,
         _resize: Listener,
-        _pointer: Listener,
-        _mutation: Option<SendWrapper<MutationWatch>>,
     }
     struct MutationWatch {
         observer: web_sys::MutationObserver,
@@ -512,6 +642,13 @@ mod dom {
         let options = web_sys::MutationObserverInit::new();
         options.set_child_list(true);
         options.set_subtree(true);
+        options.set_attributes(true);
+        options.set_attribute_filter(&js_sys::Array::of4(
+            &"disabled".into(),
+            &"hidden".into(),
+            &"id".into(),
+            &"aria-disabled".into(),
+        ));
         observer.observe_with_options(element, &options).ok()?;
         let release = js_sys::Reflect::get(&observer, &"disconnect".into())
             .ok()
@@ -535,9 +672,15 @@ mod dom {
     struct Inner {
         roots: SendWrapper<Roots>,
         layers: Vec<LayerRecord>,
-        next: u64,
+        notifications: Vec<NotificationHost>,
+        hierarchy: super::hierarchy::Hierarchy,
+        inert: Vec<SendWrapper<Element>>,
+        pointer_target: Option<SendWrapper<Node>>,
+        last_focus: Option<SendWrapper<Element>>,
         edit: Option<EditSession>,
         watchers: Option<Watchers>,
+        lifecycle_users: usize,
+        lifecycle: Option<LifecycleWatch>,
     }
 
     /// The scope's layer stack. Provided by `mount`, read with [`use_overlay`].
@@ -564,9 +707,15 @@ mod dom {
                         overlay: overlay.clone(),
                     }),
                     layers: Vec::new(),
-                    next: 1,
+                    notifications: Vec::new(),
+                    hierarchy: super::hierarchy::Hierarchy::default(),
+                    inert: Vec::new(),
+                    pointer_target: None,
+                    last_focus: None,
                     edit: None,
                     watchers: None,
+                    lifecycle_users: 0,
+                    lifecycle: None,
                 })),
                 moved: RwSignal::new(0),
             }
@@ -581,7 +730,7 @@ mod dom {
         }
 
         pub fn top(&self) -> Option<LayerId> {
-            self.lock().layers.last().map(|layer| layer.id)
+            self.lock().hierarchy.top()
         }
 
         /// Asks the topmost layer to close. The layer belongs to the
@@ -597,6 +746,54 @@ mod dom {
             }
         }
 
+        fn watch_lifecycle(&self, active: bool) {
+            let released = {
+                let mut inner = self.lock();
+                if active {
+                    if inner.lifecycle_users == 0 {
+                        let moved = self.moved;
+                        inner.lifecycle = Some(LifecycleWatch {
+                            _tree: observe_tree(&inner.roots.container, moved)
+                                .map(SendWrapper::new),
+                            _size: crate::observe_resize(&inner.roots.container, move || {
+                                moved.try_update(|n| *n += 1);
+                            })
+                            .map(SendWrapper::new),
+                            _scroll: listen(
+                                &document(),
+                                "scroll",
+                                ListenOptions {
+                                    capture: true,
+                                    passive: true,
+                                },
+                                move |_| {
+                                    moved.try_update(|n| *n += 1);
+                                },
+                            ),
+                            _resize: listen(
+                                &window(),
+                                "resize",
+                                ListenOptions::default(),
+                                move |_| {
+                                    moved.try_update(|n| *n += 1);
+                                },
+                            ),
+                        });
+                    }
+                    inner.lifecycle_users += 1;
+                    None
+                } else {
+                    inner.lifecycle_users -= 1;
+                    if inner.lifecycle_users == 0 {
+                        inner.lifecycle.take()
+                    } else {
+                        None
+                    }
+                }
+            };
+            drop(released);
+        }
+
         pub(crate) fn moved(&self) -> RwSignal<u32> {
             self.moved
         }
@@ -604,16 +801,21 @@ mod dom {
         /// Registers the scope's one native editing session. Ends any session
         /// still registered, so a scope never has two.
         pub(crate) fn begin_edit(&self, session: EditSession) {
-            self.lock().edit = Some(session);
+            let fresh = self.lock().edit.replace(session).is_none();
+            if fresh {
+                self.watch_lifecycle(true);
+            }
             self.arm();
         }
 
         pub(crate) fn end_edit(&self) {
-            let empty = {
+            let (ended, empty) = {
                 let mut inner = self.lock();
-                inner.edit = None;
-                inner.layers.is_empty()
+                (inner.edit.take().is_some(), inner.layers.is_empty())
             };
+            if ended {
+                self.watch_lifecycle(false);
+            }
             if empty {
                 self.disarm();
             }
@@ -625,27 +827,41 @@ mod dom {
 
         fn push(
             &self,
+            parent: Option<LayerId>,
+            notification: bool,
             modal: bool,
             element: Element,
+            panel: Element,
+            children_host: Element,
+            notifications_host: Element,
+            retire: Arc<dyn Fn() + Send + Sync>,
             close: Arc<dyn Fn() + Send + Sync>,
             dismiss: Arc<dyn Fn(LayerDismiss) + Send + Sync>,
             escape: Option<Callback<Cancelable<LayerDismiss>>>,
             outside: Option<Callback<Cancelable<LayerDismiss>>>,
+            focus_outside: Option<Callback<Cancelable<LayerDismiss>>>,
+            interact_outside: Option<Callback<Cancelable<LayerDismiss>>>,
             anchor: Signal<Anchor>,
+            trigger_id: Signal<String>,
         ) -> LayerId {
             let id = {
                 let mut inner = self.lock();
-                let id = LayerId(inner.next);
-                inner.next += 1;
+                let id = inner.hierarchy.insert(parent, modal, notification);
                 inner.layers.push(LayerRecord {
                     id,
-                    modal,
                     element: SendWrapper::new(element),
+                    panel: SendWrapper::new(panel),
+                    children_host: SendWrapper::new(children_host),
+                    notifications_host: SendWrapper::new(notifications_host),
+                    retire,
                     close,
                     dismiss,
                     escape,
                     outside,
+                    focus_outside,
+                    interact_outside,
                     anchor,
+                    trigger_id,
                 });
                 id
             };
@@ -655,25 +871,134 @@ mod dom {
         }
 
         fn remove(&self, id: LayerId) {
-            let empty = {
+            let (retired, empty) = {
                 let mut inner = self.lock();
-                inner.layers.retain(|layer| layer.id != id);
-                inner.layers.is_empty() && inner.edit.is_none()
+                let ids = inner.hierarchy.remove(id);
+                let retired: Vec<_> = ids
+                    .iter()
+                    .filter_map(|id| {
+                        inner
+                            .layers
+                            .iter()
+                            .find(|layer| layer.id == *id)
+                            .map(|layer| layer.retire.clone())
+                    })
+                    .collect();
+                inner.layers.retain(|layer| !ids.contains(&layer.id));
+                (retired, inner.layers.is_empty() && inner.edit.is_none())
             };
+            // Move surviving notification branches before their former host's
+            // resources and DOM can be released. Application callbacks run unlocked.
             self.refresh_inert();
+            for retire in retired {
+                retire();
+            }
             if empty {
                 self.disarm();
             }
         }
 
-        /// Everything below the topmost modal layer is inert: the scope's own
-        /// content, and any layer opened before that one.
         fn refresh_inert(&self) {
-            let inner = self.lock();
-            let modal_at = inner.layers.iter().rposition(|layer| layer.modal);
-            set_inert(&inner.roots.content, modal_at.is_some());
+            let mut inner = self.lock();
+            for element in inner.inert.drain(..) {
+                let _ = element.remove_attribute("inert");
+            }
+            let order = inner.hierarchy.ordered().to_vec();
+            inner
+                .layers
+                .sort_by_key(|layer| order.iter().position(|id| *id == layer.id));
+            // A host can become hidden before migration runs; its surviving
+            // notification control may still be active but temporarily unreachable.
+            let actual = document().active_element();
+            let focused = actual
+                .clone()
+                .filter(|element| element.dyn_ref::<HtmlElement>().is_some_and(reachable))
+                .filter(|element| {
+                    !document()
+                        .body()
+                        .is_some_and(|body| AsRef::<Element>::as_ref(&body) == element)
+                })
+                .or_else(|| {
+                    let no_target = actual.as_ref().is_none_or(|element| {
+                        document()
+                            .body()
+                            .is_some_and(|body| AsRef::<Element>::as_ref(&body) == element)
+                            || !element.dyn_ref::<HtmlElement>().is_some_and(reachable)
+                    });
+                    no_target
+                        .then(|| inner.last_focus.as_ref().map(|element| (**element).clone()))
+                        .flatten()
+                        .filter(|element| {
+                            inner.layers.iter().any(|layer| {
+                                inner.hierarchy.notification(layer.id)
+                                    && layer.element.contains(Some(element))
+                            }) || inner
+                                .notifications
+                                .iter()
+                                .any(|host| host.element.contains(Some(element)))
+                        })
+                });
             for (index, layer) in inner.layers.iter().enumerate() {
-                set_inert(&layer.element, modal_at.is_some_and(|top| index < top));
+                let host = inner
+                    .hierarchy
+                    .parent(layer.id)
+                    .and_then(|parent| inner.layers.iter().find(|layer| layer.id == parent))
+                    .map(|parent| &*parent.children_host)
+                    .unwrap_or(&inner.roots.overlay);
+                if let Some(wrapper) = layer.element.parent_element() {
+                    if wrapper.parent_element().as_ref() != Some(host) {
+                        let _ = host.append_child(&wrapper);
+                    }
+                }
+                if let Some(element) = layer.element.dyn_ref::<HtmlElement>() {
+                    let _ = element.style().set_property("z-index", &index.to_string());
+                }
+            }
+            let modal = inner.hierarchy.top_modal();
+            let notification_host = modal
+                .and_then(|id| inner.layers.iter().find(|layer| layer.id == id))
+                .map(|layer| &*layer.notifications_host)
+                .unwrap_or(&inner.roots.overlay);
+            for notification in &inner.notifications {
+                if let Some(wrapper) = notification.element.parent_element() {
+                    if wrapper.parent_element().as_ref() != Some(notification_host) {
+                        let _ = notification_host.append_child(&wrapper);
+                    }
+                }
+                let _ = notification.parent.try_set(modal);
+            }
+            let mut claims = Vec::new();
+            if modal.is_some() {
+                claim_inert(&inner.roots.content, &mut claims);
+            }
+            let modal_element = modal
+                .and_then(|id| inner.layers.iter().find(|layer| layer.id == id))
+                .map(|layer| &*layer.element);
+            for layer in &inner.layers {
+                let interactive = inner.hierarchy.interactive(layer.id);
+                if interactive {
+                    let _ = layer
+                        .element
+                        .remove_attribute("data-rustify-inactive-ancestor");
+                } else if modal.is_some_and(|modal| inner.hierarchy.within(modal, layer.id)) {
+                    let _ = layer
+                        .element
+                        .set_attribute("data-rustify-inactive-ancestor", "");
+                    if let Some(modal) = modal_element {
+                        inert_outside_branch(&layer.element, modal, &mut claims);
+                    }
+                } else {
+                    claim_inert(&layer.element, &mut claims);
+                }
+            }
+            inner.inert = claims;
+            drop(inner);
+            if let Some(element) =
+                focused.filter(|element| document().active_element().as_ref() != Some(element))
+            {
+                if element.dyn_ref::<HtmlElement>().is_some_and(reachable) {
+                    focus(&element);
+                }
             }
         }
 
@@ -701,6 +1026,22 @@ mod dom {
                         return;
                     };
                     let key = event.key();
+                    if key == "Tab" {
+                        let modal = weak.upgrade().and_then(|inner| {
+                            let inner = inner
+                                .lock()
+                                .expect("overlay stack is never held across a panic");
+                            inner
+                                .hierarchy
+                                .top_modal()
+                                .and_then(|id| inner.layers.iter().find(|layer| layer.id == id))
+                                .map(|layer| layer.panel.clone())
+                        });
+                        if let Some(modal) = modal {
+                            keep_tab_inside(&modal, event);
+                        }
+                        return;
+                    }
                     if key != "Escape" && key != "Enter" {
                         return;
                     }
@@ -721,21 +1062,6 @@ mod dom {
                     }
                 },
             );
-            let moved = self.moved;
-            // Capture, on the document: any container between a layer and its
-            // anchor can scroll, and only the capture phase sees all of them.
-            let scroll = listen(
-                &document(),
-                "scroll",
-                ListenOptions {
-                    capture: true,
-                    passive: true,
-                },
-                move |_| moved.update(|n| *n += 1),
-            );
-            let resize = listen(&window(), "resize", ListenOptions::default(), move |_| {
-                moved.update(|n| *n += 1)
-            });
             let weak = Arc::downgrade(&self.inner);
             let pointer = listen(
                 &document(),
@@ -748,59 +1074,161 @@ mod dom {
                     if event.default_prevented() {
                         return;
                     }
-                    let Some(inner) = weak.upgrade() else {
-                        return;
-                    };
-                    let top = {
-                        let inner = inner
-                            .lock()
-                            .expect("overlay stack is never held across a panic");
-                        inner.layers.last().map(|layer| {
-                            (
-                                layer.element.clone(),
-                                layer.anchor,
-                                layer.outside,
-                                layer.dismiss.clone(),
-                            )
-                        })
-                    };
-                    let Some((element, anchor, Some(hook), close)) = top else {
-                        return;
-                    };
                     let Some(target) = event
                         .target()
                         .and_then(|target| target.dyn_into::<Node>().ok())
                     else {
                         return;
                     };
-                    if element.contains(Some(&target)) {
+                    let Some(inner) = weak.upgrade() else {
+                        return;
+                    };
+                    let top = {
+                        let mut inner = inner
+                            .lock()
+                            .expect("overlay stack is never held across a panic");
+                        inner.pointer_target = Some(SendWrapper::new(target.clone()));
+                        inner.layers.last().map(|layer| {
+                            (
+                                layer.panel.clone(),
+                                layer.anchor,
+                                layer.trigger_id,
+                                layer.outside,
+                                layer.interact_outside,
+                                layer.dismiss.clone(),
+                            )
+                        })
+                    };
+                    let Some((panel, anchor, trigger_id, specific, interact, close)) = top else {
+                        return;
+                    };
+                    if (specific.is_none() && interact.is_none())
+                        || inside(&panel, anchor, trigger_id, &target)
+                    {
                         return;
                     }
-                    let trigger = anchor.try_get_untracked().and_then(|anchor| match anchor {
-                        Anchor::Element(element) => Some((*element).clone()),
-                        Anchor::Region { canvas, .. } => Some((*canvas).clone()),
-                        Anchor::Centred => None,
-                    });
-                    if trigger.is_some_and(|trigger| trigger.contains(Some(&target))) {
-                        return;
-                    }
-                    dismiss(Some(hook), LayerDismiss::PointerOutside, || {
+                    dismiss_outside(specific, interact, LayerDismiss::PointerOutside, || {
                         close(LayerDismiss::PointerOutside)
                     });
                 },
             );
-            let mutation = observe_tree(&inner.roots.container, moved).map(SendWrapper::new);
+            let weak = Arc::downgrade(&self.inner);
+            let clear_pointer = move |_: web_sys::Event| {
+                if let Some(inner) = weak.upgrade() {
+                    inner
+                        .lock()
+                        .expect("overlay stack is never held across a panic")
+                        .pointer_target = None;
+                }
+            };
+            let pointer_up = listen(
+                &document(),
+                "pointerup",
+                ListenOptions::default(),
+                clear_pointer.clone(),
+            );
+            let pointer_cancel = listen(
+                &document(),
+                "pointercancel",
+                ListenOptions::default(),
+                clear_pointer,
+            );
+            let weak = Arc::downgrade(&self.inner);
+            let focus_outside = listen_reentrant(
+                &document(),
+                "focusin",
+                ListenOptions {
+                    capture: true,
+                    passive: false,
+                },
+                move |event| {
+                    let Some(target) = event
+                        .target()
+                        .and_then(|target| target.dyn_into::<Node>().ok())
+                    else {
+                        return;
+                    };
+                    let Some(inner) = weak.upgrade() else {
+                        return;
+                    };
+                    let (top, modal, duplicate) = {
+                        let mut inner = inner
+                            .lock()
+                            .expect("overlay stack is never held across a panic");
+                        if let Some(element) = target.dyn_ref::<Element>() {
+                            if !document()
+                                .body()
+                                .is_some_and(|body| AsRef::<Element>::as_ref(&body) == element)
+                            {
+                                inner.last_focus = Some(SendWrapper::new(element.clone()));
+                            }
+                        }
+                        let duplicate = inner.pointer_target.take().is_some_and(|pointer| {
+                            pointer.contains(Some(&target)) || target.contains(Some(&pointer))
+                        });
+                        let top = inner.layers.last().map(|layer| {
+                            (
+                                layer.id,
+                                layer.panel.clone(),
+                                layer.anchor,
+                                layer.trigger_id,
+                                layer.focus_outside,
+                                layer.interact_outside,
+                                layer.dismiss.clone(),
+                            )
+                        });
+                        let modal = inner
+                            .hierarchy
+                            .top_modal()
+                            .and_then(|id| inner.layers.iter().find(|layer| layer.id == id))
+                            .map(|layer| (layer.id, layer.panel.clone()));
+                        (top, modal, duplicate)
+                    };
+                    if let Some((id, panel, anchor, trigger_id, specific, interact, close)) = top {
+                        if !duplicate
+                            && (specific.is_some() || interact.is_some())
+                            && !inside(&panel, anchor, trigger_id, &target)
+                        {
+                            dismiss_outside(specific, interact, LayerDismiss::FocusOutside, || {
+                                if !modal.as_ref().is_some_and(|(modal, _)| *modal == id) {
+                                    close(LayerDismiss::FocusOutside);
+                                }
+                            });
+                        }
+                    }
+                    if let Some((id, modal)) = modal {
+                        let restore = {
+                            let inner = inner
+                                .lock()
+                                .expect("overlay stack is never held across a panic");
+                            inner.hierarchy.top_modal() == Some(id)
+                                && document().active_element().is_some_and(|active| {
+                                    inner.roots.container.contains(Some(&active))
+                                        && !modal.contains(Some(&active))
+                                })
+                        };
+                        if restore {
+                            focus_first(&modal);
+                        }
+                    }
+                },
+            );
             inner.watchers = Some(Watchers {
                 _escape: escape,
-                _scroll: scroll,
-                _resize: resize,
                 _pointer: pointer,
-                _mutation: mutation,
+                _pointer_up: pointer_up,
+                _pointer_cancel: pointer_cancel,
+                _focus: focus_outside,
             });
         }
 
         fn disarm(&self) {
-            let watchers = self.lock().watchers.take();
+            let watchers = {
+                let mut inner = self.lock();
+                inner.last_focus = None;
+                inner.pointer_target = None;
+                inner.watchers.take()
+            };
             drop(watchers);
         }
 
@@ -868,17 +1296,62 @@ mod dom {
         Routed::Ignored
     }
 
-    fn set_inert(element: &Element, inert: bool) {
-        if inert {
+    fn inside(
+        panel: &Element,
+        anchor: Signal<Anchor>,
+        trigger_id: Signal<String>,
+        target: &Node,
+    ) -> bool {
+        if panel.contains(Some(target))
+            || trigger_id
+                .try_get_untracked()
+                .filter(|id| !id.is_empty())
+                .and_then(|id| document().get_element_by_id(&id))
+                .is_some_and(|trigger| trigger.contains(Some(target)))
+        {
+            return true;
+        }
+        anchor
+            .try_get_untracked()
+            .and_then(|anchor| match anchor {
+                Anchor::Element(element) => Some(element),
+                Anchor::Region { canvas, .. } => Some(canvas),
+                Anchor::Centred | Anchor::Viewport { .. } => None,
+            })
+            .is_some_and(|trigger| trigger.contains(Some(target)))
+    }
+
+    fn claim_inert(element: &Element, claims: &mut Vec<SendWrapper<Element>>) {
+        if !element.has_attribute("inert") {
             let _ = element.set_attribute("inert", "");
-        } else {
-            let _ = element.remove_attribute("inert");
+            claims.push(SendWrapper::new(element.clone()));
+        }
+    }
+
+    fn inert_outside_branch(
+        root: &Element,
+        modal: &Element,
+        claims: &mut Vec<SendWrapper<Element>>,
+    ) {
+        let mut next = root.first_element_child();
+        while let Some(child) = next {
+            next = child.next_element_sibling();
+            if child == *modal {
+                continue;
+            }
+            if child.contains(Some(modal)) {
+                inert_outside_branch(&child, modal, claims);
+            } else {
+                claim_inert(&child, claims);
+            }
         }
     }
 
     fn focus(element: &Element) {
         if let Some(element) = element.dyn_ref::<HtmlElement>() {
-            let _ = element.focus();
+            let options = leptos::web_sys::FocusOptions::new();
+            options.set_prevent_scroll(true);
+            let _ = element.focus_with_options(&options);
         }
     }
 
@@ -909,27 +1382,62 @@ mod dom {
             })
             .collect();
 
-        let group = |element: &HtmlElement| {
-            element
-                .dyn_ref::<HtmlInputElement>()
-                .filter(|input| input.type_() == "radio" && !input.name().is_empty())
-                .map(|input| (input.name(), input.checked()))
-        };
-        let checked: HashSet<String> = stops
+        let mut forms = Vec::new();
+        let groups: Vec<_> = stops
             .iter()
-            .filter_map(|(_, element)| group(element))
-            .filter_map(|(name, checked)| checked.then_some(name))
+            .map(|(_, element)| {
+                let input = element
+                    .dyn_ref::<HtmlInputElement>()
+                    .filter(|input| input.type_() == "radio" && !input.name().is_empty())?;
+                let form = input.form();
+                let owner = forms
+                    .iter()
+                    .position(|candidate| candidate == &form)
+                    .unwrap_or_else(|| {
+                        forms.push(form);
+                        forms.len() - 1
+                    });
+                Some(((input.name(), owner), input.checked()))
+            })
+            .collect();
+        let checked: HashSet<_> = groups
+            .iter()
+            .flatten()
+            .filter_map(|(group, checked)| checked.then_some(group.clone()))
             .collect();
         let mut first_of_group = HashSet::new();
-        stops.retain(|(_, element)| match group(element) {
-            None => true,
-            Some((name, is_checked)) if checked.contains(&name) => is_checked,
-            Some((name, _)) => first_of_group.insert(name),
+        let mut index = 0;
+        stops.retain(|_| {
+            let keep = match &groups[index] {
+                None => true,
+                Some((group, is_checked)) if checked.contains(group) => *is_checked,
+                Some((group, _)) => first_of_group.insert(group.clone()),
+            };
+            index += 1;
+            keep
         });
 
         // Stable, so equal indices keep their document order.
         stops.sort_by_key(|(index, _)| if *index > 0 { *index } else { i32::MAX });
         stops.into_iter().map(|(_, element)| element).collect()
+    }
+
+    fn live_trigger(element: &Element) -> bool {
+        if !element.is_connected()
+            || element
+                .matches(":disabled, [aria-disabled='true']")
+                .unwrap_or(false)
+            || element.closest("[hidden]").ok().flatten().is_some()
+            || element.get_client_rects().length() == 0
+        {
+            return false;
+        }
+        !window()
+            .get_computed_style(element)
+            .ok()
+            .flatten()
+            .and_then(|style| style.get_property_value("visibility").ok())
+            .is_some_and(|visibility| visibility == "hidden" || visibility == "collapse")
     }
 
     /// Whether `element` is on screen and neither disabled nor shut away.
@@ -953,7 +1461,7 @@ mod dom {
     }
 
     /// The first tab stop inside `root`, or `root` itself.
-    fn focus_first(root: &Element) {
+    pub fn focus_first(root: &Element) {
         match tab_stops(root).first() {
             Some(first) => {
                 let _ = first.focus();
@@ -1044,18 +1552,38 @@ mod dom {
     struct LayerResources {
         registered: RwSignal<Option<LayerId>>,
         size: StoredValue<Option<SendWrapper<crate::ResizeObservation>>>,
+        arrow_size: StoredValue<Option<SendWrapper<crate::ResizeObservation>>>,
+        frame: StoredValue<Option<crate::FrameHandle>>,
         anchor: StoredValue<Option<SendWrapper<crate::ResizeObservation>>>,
-        tab: StoredValue<Option<Listener>>,
+        watching: StoredValue<bool>,
     }
     impl LayerResources {
+        fn watch(self, stack: &OverlayStack, active: bool) {
+            if self
+                .watching
+                .try_get_value()
+                .is_some_and(|watching| watching != active)
+            {
+                let _ = self.watching.try_set_value(active);
+                stack.watch_lifecycle(active);
+            }
+        }
+        fn cancel_frame(self) {
+            self.frame.try_update_value(|held| {
+                if let Some(frame) = held.take() {
+                    frame.cancel();
+                }
+            });
+        }
         fn release(self, stack: &OverlayStack) {
+            self.cancel_frame();
             self.size.try_update_value(|held| {
                 held.take();
             });
-            self.anchor.try_update_value(|held| {
+            self.arrow_size.try_update_value(|held| {
                 held.take();
             });
-            self.tab.try_update_value(|held| {
+            self.anchor.try_update_value(|held| {
                 held.take();
             });
             if let Some(id) = self.registered.try_get_untracked().flatten() {
@@ -1075,12 +1603,25 @@ mod dom {
         /// A modal layer makes the rest of its scope inert while it is open.
         #[prop(optional)]
         modal: bool,
+        /// Whether this retained layer participates in the stack.
+        #[prop(default = Signal::derive(|| true), into)]
+        active: Signal<bool>,
+        /// The measured interaction root; omission uses the outer wrapper.
+        #[prop(optional_no_strip)]
+        panel: Option<NodeRef<leptos::html::Div>>,
+        /// Measured arrow geometry; used with FloatingPosition.
+        #[prop(optional_no_strip)]
+        arrow: Option<NodeRef<leptos::html::Div>>,
+        /// Explicit scope-local trigger for restoring focus.
+        #[prop(optional, into)]
+        trigger_id: Signal<String>,
         #[prop(into)] anchor: Signal<Anchor>,
         /// Keeps an anchored layer inside the viewport, moving it off its
         /// anchor as little as that takes. Off, the layer stays exactly under
         /// its anchor wherever that is.
         #[prop(optional)]
         fit: bool,
+        #[prop(optional_no_strip, into)] position: Option<Signal<super::FloatingPosition>>,
         on_close: impl Fn() + Send + Sync + 'static,
         #[prop(optional_no_strip, into)] on_escape_key_down: Option<
             Callback<super::Cancelable<super::LayerDismiss>>,
@@ -1089,6 +1630,12 @@ mod dom {
         /// outside-pointer behavior; cancellation suppresses the close request.
         #[prop(optional_no_strip, into)]
         on_pointer_down_outside: Option<Callback<super::Cancelable<super::LayerDismiss>>>,
+        #[prop(optional_no_strip, into)] on_focus_outside: Option<
+            Callback<super::Cancelable<super::LayerDismiss>>,
+        >,
+        #[prop(optional_no_strip, into)] on_interact_outside: Option<
+            Callback<super::Cancelable<super::LayerDismiss>>,
+        >,
         #[prop(optional_no_strip, into)] on_open_auto_focus: Option<
             Callback<super::Cancelable<()>>,
         >,
@@ -1111,15 +1658,20 @@ mod dom {
         children: ChildrenFn,
     ) -> impl IntoView {
         let theme = crate::theme::use_resolved_theme();
+        let locale = crate::i18n::use_locale();
         let directional = direction.is_some() || on_placement.is_some();
         let direction = direction.unwrap_or_else(crate::use_direction);
-        use_overlay().map(|stack| {
+        let parent = use_context::<ParentContext>();
+        let owner = Owner::new();
+        let view = owner.with(move || use_overlay().map(|stack| {
             let root = stack.overlay_root();
             let class = format!("rustify-layer {class}");
             let labelled_by = (!labelled_by.is_empty()).then(|| labelled_by.clone());
             let described_by = (!described_by.is_empty()).then(|| described_by.clone());
             let moved = stack.moved();
             let node = NodeRef::<Div>::new();
+            let children_host = NodeRef::<Div>::new();
+            let notifications_host = NodeRef::<Div>::new();
             if let Some(theme) = theme {
                 Effect::new(move || {
                     let snapshot = theme.get();
@@ -1133,35 +1685,130 @@ mod dom {
             let left = RwSignal::new(0.0f64);
             let top = RwSignal::new(0.0f64);
             let placement = RwSignal::new(LayerPlacement::default());
+            let position_issue=RwSignal::new(None::<&'static str>);
+            let last_position=StoredValue::new(super::FloatingPosition::default());
+            let last_boundary=StoredValue::new(None::<LocalRect>);
             let placed = StoredValue::new(false);
-            let alive = RwSignal::new(true);
+            let alive = RwSignal::new(false);
+            let detached = RwSignal::new(false);
+            let seen_panel = StoredValue::new(false);
+            let projected_scope = StoredValue::new(false);
             let reported_dead = StoredValue::new(false);
-            let resources = LayerResources { registered: RwSignal::new(None), size: StoredValue::new(None), anchor: StoredValue::new(None), tab: StoredValue::new(None) };
+            let resources = LayerResources { registered: RwSignal::new(None), size: StoredValue::new(None), arrow_size: StoredValue::new(None), frame: StoredValue::new(None), anchor: StoredValue::new(None), watching: StoredValue::new(false) };
+            provide_context(ParentContext { id: resources.registered, notification: false });
             let returns_to: StoredValue<Option<SendWrapper<Element>>> = StoredValue::new(None);
-            let restore_focus = RwSignal::new(true);
 
-            Effect::new({
+            Effect::new({ let stack = stack.clone(); move || resources.watch(&stack, active.get()) });
+
+            let measure=Arc::new({
                 let stack = stack.clone();
                 let on_close = on_close.clone();
-                move || {
-                    moved.track();
+                move || untrack(|| {
+                    if !active.get() { return; }
+                    if parent.is_some_and(|parent|!parent.notification && parent.id.get().is_none()) {if alive.get_untracked(){alive.set(false);}return;}
                     let anchor = anchor.get();
                     let direction = direction.get();
-                    let Some(element) = node.get() else { return; };
-                    let Some(rect) = anchor.viewport_rect() else {
+                    let element = panel.unwrap_or(node).get().filter(|element|element.is_connected());
+                    if element.is_some() { seen_panel.set_value(true); }
+                    let explicit = trigger_id.get();
+                    let valid_trigger = explicit.is_empty() || document().get_element_by_id(&explicit)
+                        .filter(|element|stack.fallback().contains(Some(element))).is_some_and(|element|live_trigger(&element));
+                    let scope = if matches!(anchor,Anchor::Viewport {..}) {
+                        let bounds=stack.fallback().get_bounding_client_rect();
+                        super::placement::visible_scope(LocalRect::new(bounds.left(),bounds.top(),bounds.width(),bounds.height()),visible_area())
+                    } else {None};
+                    let visible = !matches!(anchor,Anchor::Viewport {..}) || scope.is_some();
+                    let valid = element.zip(anchor.viewport_rect()).filter(|_|valid_trigger && visible);
+                    let Some((element,rect)) = valid else {
+
                         if alive.get_untracked() { alive.set(false); }
-                        resources.release(&stack);
-                        if !reported_dead.get_value() {
+                        if seen_panel.get_value() && !reported_dead.get_value() {
                             reported_dead.set_value(true);
                             on_close();
                         }
                         return;
                     };
                     reported_dead.set_value(false);
-                    if !alive.get_untracked() { alive.set(true); }
                     let measured = element.get_bounding_client_rect();
                     let size = (measured.width(), measured.height());
-                    let ((x, y), resolved) = if directional {
+                    if scope.is_none() && projected_scope.get_value() {
+                        if let Some(wrapper)=node.get() {
+                            let wrapper:HtmlElement=wrapper.into();
+                            for name in ["--rustify-layer-scope-x","--rustify-layer-scope-y","--rustify-layer-scope-width","--rustify-layer-scope-height","--rustify-floating-available-width","--rustify-floating-available-height"] {let _=wrapper.style().remove_property(name);}
+                        }
+                        projected_scope.set_value(false);
+                    }
+                    let scoped = scope.map(|bounds| {
+                        projected_scope.set_value(true);
+                        let inset=document().document_element().and_then(|root|window().get_computed_style(&root).ok().flatten())
+                            .and_then(|style|style.get_property_value("font-size").ok()).and_then(|size|size.trim_end_matches("px").parse::<f64>().ok()).unwrap_or(16.);
+                        let align=match anchor {Anchor::Viewport {align}=>align,_=>super::ViewportAlign::Center};
+                        let result=super::placement::place_viewport(bounds,size,align,inset);
+                        if let Some(wrapper)=node.get() {
+                            let wrapper:HtmlElement=wrapper.into();
+                            for(name,value)in [("x",bounds.x),("y",bounds.y),("width",bounds.width),("height",bounds.height)] {
+                                let _=wrapper.style().set_property(&format!("--rustify-layer-scope-{name}"),&format!("{value}px"));
+                            }
+                            let _=wrapper.style().set_property("--rustify-floating-available-width",&format!("{}px",result.available_width));
+                            let _=wrapper.style().set_property("--rustify-floating-available-height",&format!("{}px",result.available_height));
+                        }
+                        result
+                    });
+                    let mut hidden=false;
+                    let advanced=position.zip(rect).map(|(position,rect)| {
+                        let requested=position.get();
+                        let mut config=match requested.validate() {
+                            Ok(())=>{position_issue.set(None);requested},
+                            Err(error)=>{position_issue.set(Some(error.field));last_position.get_value()}
+                        };
+                        let area=visible_area();
+                        let viewport=LocalRect::new(0.,0.,area.0,area.1);
+                        let mut boundary=viewport;
+                        let container=stack.lock().roots.container.clone();
+                        let mut valid=true;
+                        for id in &config.collision_boundary_ids {
+                            let Some(bound)=document().get_element_by_id(id).filter(|element|container.contains(Some(element))) else {valid=false;break;};
+                            let bounds=bound.get_bounding_client_rect();
+                            let x=boundary.x.max(bounds.left());let y=boundary.y.max(bounds.top());
+                            let right=(boundary.x+boundary.width).min(bounds.right());let bottom=(boundary.y+boundary.height).min(bounds.bottom());
+                            boundary=LocalRect::new(x,y,(right-x).max(0.),(bottom-y).max(0.));
+                        }
+                        if valid {last_boundary.set_value(Some(boundary));last_position.set_value(config.clone());}
+                        else {position_issue.set(Some("collision_boundary_ids"));boundary=last_boundary.get_value().unwrap_or(viewport);config=last_position.get_value();}
+                        let tip=arrow.and_then(|arrow|arrow.get()).filter(|tip|tip.is_connected());
+                        let arrow_size=tip.as_ref().map(|tip| {
+                            let rect=tip.get_bounding_client_rect();
+                            if matches!(tip.get_attribute("data-side").as_deref(),Some("left"|"right")) {(rect.height(),rect.width())}else{(rect.width(),rect.height())}
+                        });
+                        let result=super::placement::place_floating(rect,size,arrow_size,boundary,direction,&config);
+                        hidden=config.hide_when_detached && result.detached;
+                        if let Some(tip)=tip {
+                            let tip:HtmlElement=tip.into();
+                            let _=tip.set_attribute("data-side",result.placement.side.as_str());
+                            let _=tip.set_attribute("data-align",result.placement.align.as_str());
+                            let _=tip.style().set_property("visibility",if result.arrow_hidden || hidden {"hidden"}else{"inherit"});
+                            if let Some((ax,ay))=result.arrow {
+                                if let Some(wrapper)=node.get() {
+                                    let wrapper=wrapper.get_bounding_client_rect();
+                                    let _=tip.style().set_property("left",&format!("{}px",result.x+measured.left()-wrapper.left()+ax));
+                                    let _=tip.style().set_property("top",&format!("{}px",result.y+measured.top()-wrapper.top()+ay));
+                                }
+                            }
+                        }
+                        let surface:Element=element.clone().into();
+                        if let Some(surface)=surface.dyn_ref::<HtmlElement>() {
+                            let _=surface.style().set_property("--rustify-floating-anchor-width",&format!("{}px",rect.width));
+                            let _=surface.style().set_property("--rustify-floating-anchor-height",&format!("{}px",rect.height));
+                            let _=surface.style().set_property("--rustify-floating-available-width",&format!("{}px",result.available_width));
+                            let _=surface.style().set_property("--rustify-floating-available-height",&format!("{}px",result.available_height));
+                        }
+                        result
+                    });
+                    let ((x, y), resolved) = if let Some(result)=scoped {
+                        ((result.x,result.y),LayerPlacement {side:super::Side::Bottom,align:super::Align::Center})
+                    } else if let Some(result)=advanced {
+                        ((result.x,result.y),result.placement)
+                    } else if directional {
                         place(rect, size, if fit { visible_area() } else { viewport() }, direction, fit)
                     } else {
                         let coordinates = match rect {
@@ -1171,91 +1818,200 @@ mod dom {
                         };
                         (coordinates, LayerPlacement::default())
                     };
-                    left.set(x); top.set(y);
+                    let surface:Element=element.into();
+                    let _=surface.set_attribute("data-side",resolved.side.as_str());
+                    let _=surface.set_attribute("data-align",resolved.align.as_str());
+                    left.set(x);
+                    top.set(y);
+                    if detached.get_untracked()!=hidden {detached.set(hidden);}
+                    if !alive.get_untracked(){alive.set(true);}
                     let changed = placement.get_untracked() != resolved || !placed.get_value();
                     placement.set(resolved);
                     placed.set_value(true);
                     if changed { if let Some(callback) = on_placement { callback.try_run(resolved); } }
+                })
+            });
+
+            let frame_epoch=RwSignal::new(0_u64);
+            Effect::new(move || {
+                moved.track();frame_epoch.track();anchor.track();direction.track();trigger_id.track();node.track();panel.unwrap_or(node).track();
+                if let Some(position)=position {position.track();}
+                if let Some(arrow)=arrow {arrow.track();}
+                if let Some(parent)=parent {parent.id.track();}
+                if !active.get() || parent.is_some_and(|parent|!parent.notification && parent.id.get().is_none()) {
+                    resources.cancel_frame();
+
+                    if alive.get_untracked(){alive.set(false);}
+                    return;
+                }
+                if resources.frame.with_value(Option::is_none) {
+                    let measure=measure.clone();
+                    resources.frame.set_value(Some(crate::next_frame(move || {
+                        resources.frame.try_update_value(|held| {held.take();});
+                        measure();
+                        if active.try_get_untracked()==Some(true) && alive.try_get_untracked()==Some(true)
+                            && position.is_some() && last_position.try_get_value().is_some_and(|position|position.update==super::PositionUpdate::Always) {
+                            frame_epoch.try_update(|epoch|*epoch=epoch.wrapping_add(1));
+                        }
+                    })));
                 }
             });
 
             Effect::new(move || {
                 let anchor = anchor.get();
-                if !alive.get() { resources.anchor.set_value(None); return; }
+                if !active.get() || !alive.get() || detached.get() { resources.anchor.set_value(None); return; }
                 let observed = match anchor {
                     Anchor::Element(element) => Some((*element).clone()),
                     Anchor::Region { canvas, .. } => Some((*canvas).clone()),
-                    Anchor::Centred => None,
+                    Anchor::Centred | Anchor::Viewport {..} => None,
                 };
                 resources.anchor.set_value(observed.and_then(|element| {
                     crate::observe_resize(&element, move || { moved.try_update(|n| *n += 1); }).map(SendWrapper::new)
                 }));
             });
 
+            Effect::new(move || {
+                let tip=arrow.and_then(|arrow|arrow.get()).filter(|tip|tip.is_connected());
+                resources.arrow_size.set_value(if active.get() && alive.get() && !detached.get() {
+                    tip.and_then(|tip|crate::observe_resize(&tip,move ||{moved.try_update(|n|*n+=1);})).map(SendWrapper::new)
+                }else{None});
+            });
+
+            let deactivate: Arc<dyn Fn() + Send + Sync> = Arc::new({
+                let weak = Arc::downgrade(&stack.inner);
+                move || {
+                    let Some(inner) = weak.upgrade() else { return; };
+                    let stack = OverlayStack { inner, moved };
+                    if resources.registered.try_get_untracked().flatten().is_none() { return; }
+                    resources.release(&stack);
+                    let event = Cancelable::new(());
+                    if let Some(callback) = on_close_auto_focus { callback.try_run(event.clone()); }
+                    if event.default_prevented() { return; }
+                    let root: Option<Element> = node.try_get_untracked().flatten().map(Into::into);
+                    if !holds_focus(root.as_ref()) { return; }
+                    let explicit = trigger_id.try_get_untracked().and_then(|id|document().get_element_by_id(&id))
+                        .filter(|element| stack.fallback().contains(Some(element)))
+                        .or_else(||match anchor.try_get_untracked(){Some(Anchor::Element(element))=>Some((*element).clone()),_=>None});
+                    let mut targets: Vec<_> = explicit.into_iter().chain(returns_to.try_get_value().flatten().map(|element| (*element).clone())).collect();
+                    let parent_id = parent.and_then(|parent| parent.id.try_get_untracked().flatten());
+                    let parent = {let inner=stack.lock();parent_id.and_then(|id|inner.layers.iter().find(|layer|layer.id==id)).map(|layer|(*layer.panel).clone())};
+                    let fallback = stack.fallback();
+                    // Native pointer focus follows pointerdown. Wait for that default
+                    // action, then preserve any valid focus the interaction established.
+                    let scope_alive=weak.clone();
+                    crate::runtime::defer(move || {
+                        if scope_alive.upgrade().is_none() || resources.registered.try_get_untracked().flatten().is_some() {return;}
+                        let current=document().active_element();
+                        let vacant=current.as_ref().is_none_or(|active|document().body().is_some_and(|body|AsRef::<Element>::as_ref(&body)==active)
+                            || active==&fallback || root.as_ref().is_some_and(|root|root.contains(Some(active))));
+                        if !vacant || !fallback.is_connected() {return;}
+                        if let Some(target)=targets.drain(..).find(|element|element.is_connected() && element.dyn_ref::<HtmlElement>().is_some_and(reachable)) {focus(&target);}
+                        else if let Some(parent)=parent.filter(|element|element.is_connected() && element.dyn_ref::<HtmlElement>().is_some_and(reachable)) {focus_first(&parent);}
+                        else {focus(&fallback);}
+                    });
+                }
+            });
+            provide_context(LayerRelease(deactivate.clone()));
             Effect::new({
                 let stack = stack.clone();
                 let on_close = on_close.clone();
+                let deactivate = deactivate.clone();
                 move || {
-                    if !alive.get() { return; }
+                    let parent_id = parent.and_then(|parent| parent.id.get());
+                    if !active.get() || !alive.get() || detached.get() || parent.is_some_and(|parent| !parent.notification && parent_id.is_none()) {
+                        deactivate(); return;
+                    }
                     let Some(element) = node.get() else { return; };
+                    let Some(surface) = panel.unwrap_or(node).get() else { return; };
+                    let Some(host) = children_host.get() else { return; };
+                    let Some(notifications) = notifications_host.get() else { return; };
                     if resources.registered.get_untracked().is_some() { return; }
-                    let element: Element = element.into();
-                    resources.size.set_value(crate::observe_resize(&element, move || { moved.try_update(|n| *n += 1); }).map(SendWrapper::new));
-                    let trigger = match anchor.get_untracked() { Anchor::Element(element) => Some((*element).clone()), _ => None };
-                    returns_to.set_value(trigger.filter(|element| element.matches(FOCUSABLE).unwrap_or(false)).or_else(|| document().active_element()).filter(|element| element.is_connected()).map(SendWrapper::new));
+                    let surface: Element = surface.into();
+                    let host: Element = host.into();
+                    let notifications: Element = notifications.into();
+                    if notifications.parent_element().as_ref() != Some(&surface) { let _ = surface.append_child(&notifications); }
+                    if host.parent_element().as_ref() != Some(&surface) { let _ = surface.append_child(&host); }
+                    resources.size.set_value(crate::observe_resize(&surface, move || { moved.try_update(|n| *n += 1); }).map(SendWrapper::new));
+                    returns_to.set_value(document().active_element().filter(|element|element.is_connected()).map(SendWrapper::new));
                     let close = on_close.clone() as Arc<dyn Fn() + Send + Sync>;
                     let ask = on_close.clone();
-                    let dismiss = Arc::new(move |reason| { restore_focus.set(reason != LayerDismiss::PointerOutside); ask(); });
-                    let id = stack.push(modal, element.clone(), close, dismiss, on_escape_key_down, on_pointer_down_outside, anchor);
+                    let dismiss = Arc::new(move |_| ask());
+                    let id = stack.push(parent_id, parent.is_some_and(|parent|parent.notification), modal, element.into(), surface.clone(), host, notifications, deactivate.clone(), close, dismiss, on_escape_key_down, on_pointer_down_outside, on_focus_outside, on_interact_outside, anchor, trigger_id);
                     resources.registered.set(Some(id));
-                    let event = Cancelable::new(());
-                    if let Some(callback) = on_open_auto_focus { callback.try_run(event.clone()); }
-                    if resources.registered.try_get_untracked().flatten() != Some(id) { return; }
-                    if !event.default_prevented() && modal { focus_first(&element); }
-                    if modal {
-                        let root = element.clone();
-                        resources.tab.set_value(Some(listen(&element, "keydown", ListenOptions::default(), move |event| {
-                            if let Some(event) = event.dyn_ref::<KeyboardEvent>() { keep_tab_inside(&root, event); }
-                        })));
-                    }
+                    crate::runtime::defer(move || {
+                        if resources.registered.try_get_untracked().flatten()!=Some(id) {return;}
+                        let event=Cancelable::new(());
+                        if let Some(callback)=on_open_auto_focus {callback.try_run(event.clone());}
+                        if resources.registered.try_get_untracked().flatten()!=Some(id) {return;}
+                        if !event.default_prevented() && modal {focus_first(&surface);}
+                    });
                 }
             });
-
-            on_cleanup(move || {
-                resources.release(&stack);
-                let event = Cancelable::new(());
-                if let Some(callback) = on_close_auto_focus { callback.try_run(event.clone()); }
-                if event.default_prevented() || !restore_focus.try_get_untracked().unwrap_or(false) { return; }
-                let trigger = match anchor.try_get_untracked() { Some(Anchor::Element(element)) => Some((*element).clone()), _ => None };
-                let owned = holds_focus(node.try_get_untracked().flatten().map(Into::into).as_ref())
-                    || holds_focus(trigger.as_ref());
-                if !owned { return; }
-                match returns_to.try_get_value().flatten() {
-                    Some(element) if element.is_connected() => focus(&element),
-                    _ => focus(&stack.fallback()),
-                }
-            });
+            on_cleanup(move || { resources.watch(&stack, false); deactivate(); resources.release(&stack); });
 
             view! {
                 <Portal mount=root>
                     <div node_ref=node class=class.clone() data-testid=test_id.clone()
-                        hidden=move || !alive.get()
-                        role=if modal { "dialog" } else { "presentation" }
-                        aria-modal=modal.then_some("true") aria-labelledby=labelled_by.clone() aria-describedby=described_by.clone()
+                        hidden=move || !active.get() || parent.is_some_and(|parent| !parent.notification && parent.id.get().is_none())
+                        style:visibility=move || (!alive.get() || detached.get()).then_some("hidden")
+                        style:pointer-events=move || (!alive.get() || detached.get()).then_some("none")
+                        inert=move || !alive.get() || detached.get()
+                        data-rustify-issue=move || position_issue.get()
+                        role=if modal && panel.is_none() { "dialog" } else { "presentation" } aria-labelledby=labelled_by.clone() aria-describedby=described_by.clone()
                         data-side=move || placement.get().side.as_str() data-align=move || placement.get().align.as_str()
-                        dir=move || direction.get().attribute()
-                        style:left=move || format!("{}px", left.get()) style:top=move || format!("{}px", top.get())>
+                        dir=move || direction.get().attribute() lang=move || locale.get().tag()
+                        style:left=move || format!("{}px",left.get()) style:top=move || format!("{}px",top.get())>
                         {children()}
+                        <div node_ref=children_host data-rustify-layer-children="" />
+                        <div node_ref=notifications_host data-rustify-layer-notifications="" />
                     </div>
                 </Portal>
             }
-        })
+        }));
+        leptos::tachys::reactive_graph::OwnedView::new_with_owner(view, owner)
     }
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn outside_hooks_share_cancellation_and_only_uncanceled_interaction_closes() {
+        use leptos::prelude::*;
+        use std::sync::{Arc, Mutex};
+        Owner::new().with(|| {
+            let calls = Arc::new(Mutex::new(Vec::new()));
+            let specific = Callback::new({
+                let calls = calls.clone();
+                move |event: Cancelable<LayerDismiss>| {
+                    calls.lock().unwrap().push(*event.value());
+                    event.prevent_default();
+                }
+            });
+            let interact = Callback::new({
+                let calls = calls.clone();
+                move |event: Cancelable<LayerDismiss>| {
+                    assert!(event.default_prevented());
+                    calls.lock().unwrap().push(*event.value());
+                }
+            });
+            dismiss_outside(
+                Some(specific),
+                Some(interact),
+                LayerDismiss::FocusOutside,
+                || panic!("canceled outside interaction closed"),
+            );
+            assert_eq!(
+                *calls.lock().unwrap(),
+                [LayerDismiss::FocusOutside, LayerDismiss::FocusOutside]
+            );
+            dismiss_outside(None, None, LayerDismiss::PointerOutside, || {
+                calls.lock().unwrap().clear()
+            });
+            assert!(calls.lock().unwrap().is_empty());
+        });
+    }
 
     #[test]
     fn cancellation_is_shared_only_with_clones_of_the_same_event() {
@@ -1283,6 +2039,19 @@ mod tests {
             let _ =
                 view! { <ScopePortal><p>"Unsupported initial content"</p></ScopePortal> }.to_html();
             assert_eq!(issues.messages().len(), 1);
+        });
+    }
+
+    #[cfg(feature = "ssr")]
+    #[test]
+    fn inactive_layer_is_a_valid_closed_static_initial_state() {
+        use leptos::prelude::*;
+        Owner::new().with(|| {
+            let issues = crate::StaticRenderIssues::default();
+            crate::provide_static_render_issues(issues.clone());
+            let html = view! { <Layer active=false anchor=Anchor::Centred on_close=||{}><p>"Retained but closed"</p></Layer> }.to_html();
+            assert!(!html.contains("Retained but closed"));
+            assert!(issues.messages().is_empty());
         });
     }
 

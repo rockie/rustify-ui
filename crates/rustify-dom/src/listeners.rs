@@ -18,7 +18,7 @@
 pub use dom::{instance_failed, listen, release_on_abort, AbortRelease, ListenOptions, Listener};
 
 #[cfg(target_arch = "wasm32")]
-pub(crate) use dom::page_level;
+pub(crate) use dom::{listen_reentrant, page_level};
 
 #[cfg(target_arch = "wasm32")]
 mod dom {
@@ -131,7 +131,20 @@ mod dom {
         target: EventTarget,
         event: String,
         capture: bool,
-        callback: Closure<dyn FnMut(Event)>,
+        callback: Handler,
+    }
+
+    enum Handler {
+        Mutable(Closure<dyn FnMut(Event)>),
+        Reentrant(Closure<dyn Fn(Event)>),
+    }
+    impl Handler {
+        fn function(&self) -> &js_sys::Function {
+            match self {
+                Self::Mutable(callback) => callback.as_ref().unchecked_ref(),
+                Self::Reentrant(callback) => callback.as_ref().unchecked_ref(),
+            }
+        }
     }
 
     impl Drop for Registered {
@@ -140,7 +153,7 @@ mod dom {
             // capture listener asked to go as a bubbling one stays.
             let _ = self.target.remove_event_listener_with_callback_and_bool(
                 &self.event,
-                self.callback.as_ref().unchecked_ref(),
+                self.callback.function(),
                 self.capture,
             );
         }
@@ -159,13 +172,42 @@ mod dom {
         options: ListenOptions,
         handler: impl FnMut(Event) + 'static,
     ) -> Listener {
-        let callback = Closure::<dyn FnMut(Event)>::new(handler);
+        register(
+            target,
+            event,
+            options,
+            Handler::Mutable(Closure::<dyn FnMut(Event)>::new(handler)),
+        )
+    }
+
+    // Focus callbacks may synchronously focus another element, dispatching
+    // another focus event before the current callback returns.
+    pub(crate) fn listen_reentrant(
+        target: &EventTarget,
+        event: &str,
+        options: ListenOptions,
+        handler: impl Fn(Event) + 'static,
+    ) -> Listener {
+        register(
+            target,
+            event,
+            options,
+            Handler::Reentrant(Closure::<dyn Fn(Event)>::new(handler)),
+        )
+    }
+
+    fn register(
+        target: &EventTarget,
+        event: &str,
+        options: ListenOptions,
+        callback: Handler,
+    ) -> Listener {
         let registration = page_level();
         registration.set_capture(options.capture);
         registration.set_passive(options.passive);
         let _ = target.add_event_listener_with_callback_and_add_event_listener_options(
             event,
-            callback.as_ref().unchecked_ref(),
+            callback.function(),
             &registration,
         );
         Listener {

@@ -31,6 +31,20 @@ impl std::error::Error for PropError {}
 pub struct StyleSet(BTreeMap<u16, BTreeMap<&'static str, String>>);
 
 impl StyleSet {
+    pub(crate) fn set_floating_surface(
+        &mut self,
+        theme: &rustify_ui::ResolvedTheme,
+    ) -> Result<(), PropError> {
+        // A translucent semantic panel needs its own backdrop to keep page text from bleeding through.
+        let color =
+            rustify_ui::theme::composite_over(theme.colors["popover"], theme.colors["background"]);
+        self.insert(
+            0,
+            "--rustify-floating-surface",
+            rustify_ui::theme::format_color(color, rustify_ui::theme::ColorFormat::Rgb),
+        )
+    }
+
     /// Adds only explicitly set responsive values. Gaps inherit through CSS.
     pub fn set<T>(
         &mut self,
@@ -55,6 +69,17 @@ impl StyleSet {
         validate_value(property, &value)?;
         self.0.entry(min_width).or_default().insert(property, value);
         Ok(())
+    }
+
+    pub(crate) fn set_dimension_variable(
+        &mut self,
+        property: &'static str,
+        variable: &'static str,
+        value: &Responsive<String>,
+    ) -> Result<(), PropError> {
+        // Validate the real dimension before storing it in a constrained CSS variable.
+        Self::default().set(property, value, Clone::clone)?;
+        self.set(variable, value, Clone::clone)
     }
 
     pub(crate) fn value_at(&self, width: u16, property: &str) -> Option<&str> {

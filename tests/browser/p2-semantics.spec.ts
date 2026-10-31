@@ -144,7 +144,7 @@ test.describe("M2 V4: name, role, value, state", () => {
 
         const dialog = page.getByRole("dialog", { name: "a modal dialog" });
         await expect(dialog).toBeVisible();
-        await expect(dialog).toHaveAttribute("aria-modal", "true");
+        await expect(dialog).not.toHaveAttribute("aria-modal");
         await expect(dialog).toContainText("the rest of the scope is inert");
 
         await page.keyboard.press("Escape");

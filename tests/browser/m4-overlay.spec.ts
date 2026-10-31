@@ -85,6 +85,7 @@ test.describe("M4 V4 / R10: layers of one scope", () => {
         await openMenuOn(page, 7);
         await page.getByTestId("menu-open-dialog").click();
         await expect.poll(async () => (await geometry(page)).dialog).toBe(true);
+        await expect(page.getByTestId("dialog-input")).toBeFocused();
 
         const before = (await geometry(page)).hits;
         const anchor = (await geometry(page)).anchors[7];
@@ -109,14 +110,13 @@ test.describe("M4 V4 / R10: layers of one scope", () => {
         await openMenuOn(page, 7);
         await page.getByTestId("menu-open-dialog").click();
         await expect.poll(async () => (await geometry(page)).dialog).toBe(true);
-        // A modal layer takes focus; the rest of the scope cannot be reached.
-        expect(await focused(page)).toBe("dialog-input");
+        await expect(page.getByTestId("dialog-input")).toBeFocused();
 
         await page.keyboard.press("Escape");
         await expect.poll(async () => (await geometry(page)).dialog).toBe(false);
+        await expect(page.getByTestId("menu-open-dialog")).toBeFocused();
         // Only the top one: the menu is still open, and holds focus again.
         expect((await geometry(page)).menu).toBe(7);
-        expect(await focused(page)).toBe("menu-open-dialog");
 
         await page.keyboard.press("Escape");
         await expect.poll(async () => (await geometry(page)).menu).toBeNull();
@@ -134,11 +134,13 @@ test.describe("M4 V4 / R10: layers of one scope", () => {
         await openMenuOn(page, 7);
         await page.getByTestId("menu-open-dialog").click();
         await expect.poll(async () => (await geometry(page)).dialog).toBe(true);
+        await expect(page.getByTestId("dialog-input")).toBeFocused();
 
         // Two layers, two presses, two closes - and the command underneath
         // ran neither time.
         await page.keyboard.press("Escape");
         await expect.poll(async () => (await geometry(page)).dialog).toBe(false);
+        await expect(page.getByTestId("menu-open-dialog")).toBeFocused();
         await page.keyboard.press("Escape");
         await expect.poll(async () => (await geometry(page)).menu).toBeNull();
         expect((await geometry(page)).commands).toBe(1);
@@ -165,7 +167,7 @@ test.describe("M4 V4 / R10: layers of one scope", () => {
         );
         await expect.poll(async () => (await geometry(page)).anchored).toBe(false);
         await expect(page.getByTestId("anchor-layer")).toHaveCount(0);
-        expect(await focused(page)).toBe("geometry");
+        await expect.poll(() => focused(page)).toBe("geometry");
     });
 
     test("a layer that no longer holds focus does not take it back", async ({ page }) => {
@@ -191,6 +193,7 @@ test.describe("M4 V4 / R10: layers of one scope", () => {
         await openMenuOn(page, 7);
         await page.getByTestId("menu-open-dialog").click();
         await expect.poll(async () => (await geometry(page)).dialog).toBe(true);
+        await expect(page.getByTestId("dialog-input")).toBeFocused();
 
         const seen: (string | null)[] = [];
         for (let step = 0; step < 8; step++) {
@@ -202,6 +205,7 @@ test.describe("M4 V4 / R10: layers of one scope", () => {
 
         await page.getByTestId("dialog-close").click();
         await expect.poll(async () => (await geometry(page)).dialog).toBe(false);
+        await expect(page.getByTestId("menu-open-dialog")).toBeFocused();
         await page.keyboard.press("Escape");
         await expect.poll(async () => (await geometry(page)).menu).toBeNull();
         // With every layer gone the scope answers the keyboard again.

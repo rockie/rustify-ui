@@ -191,8 +191,8 @@ name does not add new props or composition parts.
 | `Select`, `SelectOption`, `Slider` | Convenience paths remain and share public Select/Slider parts; RangeSlider accepts named ThumbValue/ThumbLabel declarations |
 | `TextField`, `TextKind`, `TextArea`, `Label` | Native fields remain; text_field Root/Input/Slot and responsive TextArea resize are available. class styles the field boundary; input_class styles the editor |
 | `Form`, `Field`, `FieldBinding`, `FormStatus`, `SubmitButton`, `provide_form`, `use_form` | Owner/binding APIs remain; FormRoot and form/Field parts add native participation, description/source metadata and submit/reset flushing |
-| `Dialog`, `Tooltip`, `Menu`, `MenuItem`, `MenuItemKind`, `menu::anchor_at` / root `anchor_at` | Same scoped overlays and anchors; `anchor_at` remains browser-only. No AlertDialog/Popover/HoverCard/ContextMenu/DropdownMenu part families are implied |
-| `Tabs`, `Tab`, `TabPanel`, `Orientation` | Same tabs data, panels and navigation semantics; no TabNav/SegmentedControl API |
+| `Dialog`, `Tooltip`, `Menu`, `MenuItem`, `MenuItemKind`, `menu::anchor_at` / root `anchor_at` | Dialog/AlertDialog/Popover/HoverCard/Tooltip now have controlled Primitives and Themes parts on the same scoped stack. Tooltip replaces children with one typed native `trigger`; Menu and browser-only `anchor_at` retain their existing contract. ContextMenu/DropdownMenu remain separate unimplemented capabilities |
+| `Tabs`, `Tab`, `TabPanel`, `Orientation` | Tabs/TabPanel delegate to controlled tabs parts with automatic/manual activation. TabNav preserves real links, and SegmentedControl uses the shared native radio group |
 | `ScrollArea`, `Boundary` | Same browser scroll and overscroll behavior |
 | `Progress`, `Spinner`, `Toast`, `Toaster` | Same feedback APIs; no Skeleton or full Toast parts surface |
 | `NumberField`, `ColorField` | Focused Draft remains; named mirrors submit accepted values, and FormRoot can complete an active draft before validation |
@@ -490,3 +490,22 @@ React asChild/ref composition and Slottable remain unsupported; Rust typed Slot
 supports one known native target. Unstable reference exports are candidates
 only. Consult the generated [reference and sub-capability tables](components.md#stable-reference-inventory)
 for each mapping rather than treating a matching name as complete support.
+
+### Native Tooltip targets and anchored parts
+
+The source Tooltip convenience entry accepts one native target. Existing listeners,
+attributes and keyboard entry remain on that element:
+
+```rust
+<Tooltip open=help_open on_open_change=move |next|help_open.set(next)
+    label="Dates use your local time zone"
+    trigger=leptos::html::button().r#type("button").child("About dates") />
+```
+
+Use `tooltip::{Provider, Root, trigger_as, Portal, Content, Arrow}` for shared hover
+intent and custom descriptions. Content stays noninteractive; put selectable
+supplemental text and links in HoverCard, or editing controls in Popover.
+`hover_card::trigger_as` accepts a native anchor; Popover and Dialog use native
+buttons. Application `open` remains the displayed state, including when an open
+or close request is refused. `force_mount` belongs to Portal and does not emit
+browser floating content during static HTML generation.

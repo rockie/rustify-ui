@@ -64,7 +64,8 @@ pub use mount::hydrate;
 pub use mount::ssr_scope;
 pub use mount::{mount, AppHandle, MountConfig, ScopeRoots};
 pub use overlay::{
-    Align, Cancelable, LayerDismiss, LayerId, LayerPlacement, LocalRect, ScopePortal, Side,
+    Align, Cancelable, CollisionPadding, FloatingPosition, FloatingPositionError, LayerDismiss,
+    LayerId, LayerPlacement, LocalRect, PositionUpdate, ScopePortal, Side, Sticky, ViewportAlign,
 };
 pub use router::{Arrival, History, Location, Navigation, Params, Route, Routes};
 pub use scheduler::{Admission, Pace, Scheduler, Seq};

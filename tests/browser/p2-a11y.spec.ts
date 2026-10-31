@@ -122,8 +122,8 @@ test.describe("M8: the accessibility tree, and the way out of it", () => {
         // scope altogether: a modal makes the rest of **its own scope** inert,
         // and the host page around it is not the SDK's to make inert. What may
         // never happen is focus landing on the scope's own content behind the
-        // modal, which is what `aria-modal` promises and what `p2-semantics`
-        // cannot catch - a broken trap passes an Escape test too.
+        // modal. This scope-local focus boundary needs a keyboard check;
+        // an Escape-only check would also pass with a broken trap.
         const escaped: string[] = [];
         for (let n = 0; n < 20; n += 1) {
             await page.keyboard.press("Tab");

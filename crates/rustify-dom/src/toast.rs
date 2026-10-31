@@ -138,9 +138,7 @@ mod dom {
     #[cfg(target_arch = "wasm32")]
     use crate::i18n::{use_locale, Message};
     #[cfg(target_arch = "wasm32")]
-    use crate::overlay::use_overlay;
-    #[cfg(target_arch = "wasm32")]
-    use leptos::portal::Portal;
+    use crate::overlay::NotificationPortal;
     use leptos::prelude::*;
 
     /// The scope's toasts. `Copy`, so it goes into every closure that needs it.
@@ -256,52 +254,49 @@ mod dom {
             let toasts = use_toasts();
             let locale = use_locale();
             let dismiss_id = format!("{test_id}-dismiss");
-            use_overlay().map(|stack| {
-                let root = stack.overlay_root();
-                view! {
-                    <Portal mount=root>
-                        <div
-                            class=move || class.get()
-                            data-testid=test_id.clone()
-                            role="status"
-                            aria-live="polite"
-                        >
-                            {
-                                let dismiss_id = dismiss_id.clone();
-                                move || {
-                                    toasts
-                                        .current()
-                                        .map(|toast| match render {
-                                            Some(render) => render.run(toast),
-                                            None => {
-                                                let seq = toast.seq;
-                                                view! {
-                                                    <div
-                                                        class="rustify-toast"
-                                                        data-tone=toast.tone.key()
+            view! {
+                <NotificationPortal>
+                    <div
+                        class=move || class.get()
+                        data-testid=test_id.clone()
+                        role="status"
+                        aria-live="polite"
+                    >
+                        {
+                            let dismiss_id = dismiss_id.clone();
+                            move || {
+                                toasts
+                                    .current()
+                                    .map(|toast| match render {
+                                        Some(render) => render.run(toast),
+                                        None => {
+                                            let seq = toast.seq;
+                                            view! {
+                                                <div
+                                                    class="rustify-toast"
+                                                    data-tone=toast.tone.key()
+                                                >
+                                                    <span>{toast.message}</span>
+                                                    <button
+                                                        type="button"
+                                                        data-testid=dismiss_id.clone()
+                                                        aria-label=move || {
+                                                            locale.text(Message::Dismiss)
+                                                        }
+                                                        on:click=move |_| toasts.dismiss(seq)
                                                     >
-                                                        <span>{toast.message}</span>
-                                                        <button
-                                                            type="button"
-                                                            data-testid=dismiss_id.clone()
-                                                            aria-label=move || {
-                                                                locale.text(Message::Dismiss)
-                                                            }
-                                                            on:click=move |_| toasts.dismiss(seq)
-                                                        >
-                                                            "\u{d7}"
-                                                        </button>
-                                                    </div>
-                                                }
-                                                    .into_any()
+                                                        "\u{d7}"
+                                                    </button>
+                                                </div>
                                             }
-                                        })
-                                }
+                                                .into_any()
+                                        }
+                                    })
                             }
-                        </div>
-                    </Portal>
-                }
-            })
+                        }
+                    </div>
+                </NotificationPortal>
+            }
         }
     }
 }

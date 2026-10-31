@@ -1,2 +1,30 @@
 [aria-label="Panel benchmark"] { max-width: 48rem; margin-inline: auto; }
 [data-testid="bench-scroll"] { height: 8rem; }
+
+[data-testid="core-layer"] { width: 100px; height: 40px; }
+
+[data-testid="tree-toast-region"] { position: fixed; bottom: 16px; right: 16px; width: 200px; background: white; border: 1px solid #999; padding: 12px; }
+
+[data-testid="tree-notice-popup"] { display: grid; gap: 8px; width: 260px; box-sizing: border-box; background: white; border: 1px solid #999; padding: 12px; }
+
+[data-testid="viewport-row"] { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+[data-testid="viewport-a"], [data-testid="viewport-b"] { height: 260px; border: 1px solid #999; }
+[data-core-scope-shade] { position: fixed; left: var(--rustify-layer-scope-x); top: var(--rustify-layer-scope-y); width: var(--rustify-layer-scope-width); height: var(--rustify-layer-scope-height); background: rgb(0 0 0 / 15%); }
+[data-core-scope-panel] { position: relative; box-sizing: border-box; width: 240px; height: 140px; max-width: var(--rustify-floating-available-width); max-height: var(--rustify-floating-available-height); overflow: auto; padding: 16px; background: white; border: 1px solid #999; }
+
+[data-testid="popover-anchor"] { width: 160px; padding: 8px; border: 1px solid #999; }
+
+
+[data-testid="popover-anchor"][data-arrow] { position: fixed; left: 50%; top: 320px; }
+.stage-panel { font-family: var(--rustify-font-sans, system-ui, sans-serif); line-height: 1.5; color: var(--foreground); background: var(--background); max-width: 48rem; margin-block: 2rem; padding: 1.25rem; border: 1px solid var(--border); border-radius: .75rem; }
+.stage-heading h2, .stage-entry h3 { margin-block: 0 .5rem; }
+.stage-heading p { color: var(--muted-foreground); margin-block: .5rem 1.25rem; }
+.stage-actions { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem; margin-block: 1rem; }
+.stage-feedback { min-height: 1.5em; color: var(--muted-foreground); }
+.stage-tab-content { padding-block: 1rem; }
+.stage-editor-form { display: grid; gap: .75rem; }
+.stage-panel textarea, .stage-editor-form input { box-sizing: border-box; display: block; width: 100%; min-width: 0; padding: .5rem .75rem; border: 1px solid var(--border); border-radius: .375rem; background: var(--background); color: var(--foreground); font: inherit; }
+.stage-panel textarea { min-height: 6rem; resize: vertical; }
+.stage-dialog-content { width: min(480px, var(--rustify-floating-available-width, calc(100vw - 2rem))); }
+.stage-options-content { width: min(300px, var(--rustify-floating-available-width, calc(100vw - 2rem))); }
+.stage-options-content h3 { margin-top: 0; }

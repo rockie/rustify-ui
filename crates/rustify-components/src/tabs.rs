@@ -1,16 +1,6 @@
-//! Several views in one place, one of them showing.
-//!
-//! Rust/UI's tabs held the selection in a context signal a trigger wrote to,
-//! and carried no `tablist`, `tab` or `tabpanel` role and no keyboard beyond
-//! the click. This version is controlled, and is the pattern a screen reader
-//! expects: one tab stop for the whole strip, the arrows moving inside it.
+//! Themed panel parts and a convenience tab strip sharing one controlled implementation.
 
-use leptos::ev::KeyboardEvent;
 use leptos::prelude::*;
-use std::sync::Arc;
-
-const LIST: &str = "inline-flex w-fit items-center justify-center rounded-lg bg-muted p-[3px] text-muted-foreground";
-const TRIGGER: &str = "inline-flex items-center justify-center gap-1.5 rounded-md border border-transparent px-2.5 py-1 text-sm font-medium whitespace-nowrap transition-all cursor-pointer select-none outline-none focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-selected:bg-background aria-selected:text-foreground disabled:pointer-events-none disabled:opacity-50";
 
 /// One tab, and whether it can be reached.
 #[derive(Clone, Debug, PartialEq, Eq)]
@@ -52,6 +42,7 @@ impl Orientation {
     }
 
     /// The key that moves one step along, and the one that moves one back.
+    #[cfg_attr(not(target_arch = "wasm32"), allow(dead_code))]
     pub(crate) fn steps(self, key: &str) -> Option<i32> {
         match (self, key) {
             (Self::Horizontal, "ArrowRight") | (Self::Vertical, "ArrowDown") => Some(1),
@@ -61,194 +52,196 @@ impl Orientation {
     }
 }
 
-#[derive(Clone)]
-struct TabsContext {
-    group: String,
-    active: Signal<String>,
+pub use crate::primitives::tabs::{ActivationMode, PanelEntry};
+
+fn margin_geometry(margin: Signal<crate::Margin>) -> String {
+    crate::geometry::style_class(move || {
+        let mut styles = crate::geometry::StyleSet::default();
+        margin.get().write(&mut styles)?;
+        Ok(styles)
+    })
+}
+#[component]
+pub fn Root(
+    #[prop(into)] value: Signal<Option<String>>,
+    #[prop(into)] on_change: Callback<Option<String>>,
+    #[prop(into)] entries: Signal<Vec<PanelEntry>>,
+    #[prop(optional)] orientation: Orientation,
+    #[prop(optional)] activation_mode: ActivationMode,
+    #[prop(default = true)] loop_focus: bool,
+    #[prop(optional_no_strip, into)] direction: Option<Signal<rustify_ui::Direction>>,
+    #[prop(optional, into)] margin: Signal<crate::Margin>,
+    #[prop(optional, into)] class: String,
+    #[prop(optional, into)] test_id: String,
+    children: Children,
+) -> impl IntoView {
+    let geometry = margin_geometry(margin);
+    view! { <crate::primitives::tabs::Root value=value on_change=on_change entries=entries orientation=orientation activation_mode=activation_mode
+    loop_focus=loop_focus direction=direction class=format!("{geometry} {class}") test_id=test_id>{children()}</crate::primitives::tabs::Root> }
 }
 
-fn tab_id(group: &str, value: &str) -> String {
-    format!("{group}-tab-{value}")
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+pub enum TabsSize {
+    One,
+    #[default]
+    Two,
+}
+impl TabsSize {
+    pub const ALL: &'static [Self] = &[Self::One, Self::Two];
+    pub const fn number(self) -> u8 {
+        match self {
+            Self::One => 1,
+            Self::Two => 2,
+        }
+    }
+}
+impl From<TabsSize> for Signal<crate::Responsive<TabsSize>> {
+    fn from(value: TabsSize) -> Self {
+        Signal::stored(value.into())
+    }
+}
+#[component]
+pub fn List(
+    #[prop(optional, into)] aria_label: String,
+    #[prop(optional, into)] size: Signal<crate::Responsive<TabsSize>>,
+    #[prop(optional, into)] wrap: Signal<crate::Responsive<crate::FlexWrap>>,
+    #[prop(optional, into)] justify: Signal<crate::Responsive<crate::Justify>>,
+    #[prop(optional, into)] color: Signal<Option<rustify_ui::AccentColor>>,
+    #[prop(optional, into)] high_contrast: Signal<bool>,
+    #[prop(optional, into)] margin: Signal<crate::Margin>,
+    #[prop(optional, into)] class: String,
+    children: Children,
+) -> impl IntoView {
+    let mode = crate::component_color::use_mode();
+    let geometry = crate::geometry::style_class(move || {
+        let mut styles = crate::geometry::StyleSet::default();
+        for (width, size) in size.get().iter() {
+            let n = size.number();
+            styles.insert(
+                width,
+                "--rustify-tab-height",
+                if n == 1 {
+                    "var(--rustify-space-6, 32px)"
+                } else {
+                    "var(--rustify-space-7, 40px)"
+                },
+            )?;
+            styles.insert(
+                width,
+                "--rustify-tab-padding",
+                if n == 1 {
+                    "var(--rustify-space-1, 4px)"
+                } else {
+                    "var(--rustify-space-2, 8px)"
+                },
+            )?;
+            styles.insert(
+                width,
+                "font-size",
+                if n == 1 {
+                    "var(--rustify-font-size-1, 12px)"
+                } else {
+                    "var(--rustify-font-size-2, 14px)"
+                },
+            )?;
+            styles.insert(
+                width,
+                "line-height",
+                if n == 1 {
+                    "var(--rustify-line-height-1, 16px)"
+                } else {
+                    "var(--rustify-line-height-2, 20px)"
+                },
+            )?;
+        }
+        for (width, wrap) in wrap.get().iter() {
+            styles.insert(width, "flex-wrap", wrap.css())?;
+        }
+        for (width, justify) in justify.get().iter() {
+            styles.insert(width, "justify-content", justify.css())?;
+        }
+        margin.get().write(&mut styles)?;
+        crate::component_color::set_color(&mut styles, color.get(), mode.get())?;
+        Ok(styles)
+    });
+    view! { <crate::primitives::tabs::List aria_label=aria_label class=format!("rustify-color rustify-tabs-list {geometry} {class}")
+    attr:data-high-contrast=move || high_contrast.get().then_some("")>{children()}</crate::primitives::tabs::List> }
+}
+#[component]
+pub fn Trigger(
+    #[prop(into)] value: String,
+    #[prop(optional, into)] class: String,
+    #[prop(optional, into)] test_id: String,
+    children: Children,
+) -> impl IntoView {
+    view! { <crate::primitives::tabs::Trigger value=value class=format!("rustify-tab-trigger {class}") test_id=test_id><span class="rustify-tab-inner">{children()}</span></crate::primitives::tabs::Trigger> }
+}
+pub fn trigger_as<At, Ch>(
+    target: leptos::html::HtmlElement<leptos::html::Button, At, Ch>,
+    value: impl Into<String>,
+) -> impl IntoView
+where
+    At: leptos::attr::Attribute + Send,
+    Ch: RenderHtml + Send,
+{
+    crate::primitives::tabs::trigger_as(
+        target.add_any_attr(crate::primitives::slot::class_token(
+            "rustify-tab-trigger".into(),
+        )),
+        value,
+    )
+}
+#[component]
+pub fn Content(
+    #[prop(into)] value: String,
+    #[prop(optional, into)] margin: Signal<crate::Margin>,
+    #[prop(optional, into)] class: String,
+    #[prop(optional, into)] test_id: String,
+    children: Children,
+) -> impl IntoView {
+    let geometry = margin_geometry(margin);
+    view! { <crate::primitives::tabs::Content value=value class=format!("rustify-tab-content {geometry} {class}") test_id=test_id>{children()}</crate::primitives::tabs::Content> }
 }
 
-fn panel_id(group: &str, value: &str) -> String {
-    format!("{group}-panel-{value}")
-}
-
-/// The next tab a person can actually reach, `step` places along from the one
-/// showing.
-fn neighbour(tabs: &[Tab], active: &str, step: i32) -> Option<String> {
-    let here = tabs.iter().position(|tab| tab.value == active);
-    crate::roving::step(tabs.len(), |index| !tabs[index].disabled, here, step)
-        .map(|index| tabs[index].value.clone())
-}
-
-/// The first tab an arrow can reach, or the last.
-fn end(tabs: &[Tab], last: bool) -> Option<String> {
-    crate::roving::edge(tabs.len(), |index| !tabs[index].disabled, last)
-        .map(|index| tabs[index].value.clone())
-}
-
-/// The strip and the panels below it. `children` are the [`TabPanel`]s.
+/// The strip and panels below it, using the same behavior as the composable parts.
 #[component]
 pub fn Tabs(
     #[prop(into)] active: Signal<String>,
     #[prop(into)] tabs: Signal<Vec<Tab>>,
     on_activate: impl Fn(String) + Send + Sync + 'static,
     #[prop(optional)] orientation: Orientation,
+    #[prop(optional)] activation_mode: ActivationMode,
+    #[prop(optional, into)] direction: Option<Signal<rustify_ui::Direction>>,
     #[prop(optional, into)] aria_label: String,
     #[prop(optional, into)] class: String,
     #[prop(optional, into)] test_id: String,
     children: Children,
 ) -> impl IntoView {
-    let group = crate::id::next("tabs");
-    provide_context(TabsContext {
-        group: group.clone(),
-        active,
+    let entries = Signal::derive(move || {
+        tabs.get()
+            .into_iter()
+            .map(|tab| PanelEntry {
+                value: tab.value,
+                disabled: tab.disabled,
+            })
+            .collect::<Vec<_>>()
     });
-    let aria_label = (!aria_label.is_empty()).then_some(aria_label);
-    let activate = Arc::new(on_activate);
-    let list_class = match orientation {
-        Orientation::Horizontal => LIST,
-        Orientation::Vertical => "inline-flex w-fit flex-col items-stretch rounded-lg bg-muted p-[3px] text-muted-foreground",
-    };
-    let on_keydown = {
-        let activate = activate.clone();
-        let group = group.clone();
-        move |ev: KeyboardEvent| {
-            let key = ev.key();
-            let tabs = tabs.get_untracked();
-            let next = match key.as_str() {
-                "Home" => end(&tabs, false),
-                "End" => end(&tabs, true),
-                _ => orientation
-                    .steps(&key)
-                    .and_then(|step| neighbour(&tabs, &active.get_untracked(), step)),
-            };
-            let Some(next) = next else {
-                return;
-            };
-            ev.prevent_default();
-            activate(next.clone());
-            crate::dom::focus_id(&tab_id(&group, &next));
-        }
-    };
-    view! {
-        <div
-            class=crate::macros::reactive_merge("flex gap-2 flex-col", &class)
-            data-name="Tabs"
-            data-testid=test_id
-            data-orientation=orientation.attribute()
-        >
-            <div
-                class=list_class
-                data-name="TabList"
-                role="tablist"
-                aria-label=aria_label
-                aria-orientation=orientation.attribute()
-                on:keydown=on_keydown
-            >
-                <For each=move || tabs.get() key=|tab| tab.value.clone() let:tab>
-                    {
-                        let Tab { value, label, disabled } = tab;
-                        let group = group.clone();
-                        let mine = value.clone();
-                        let selected = Memo::new(move |_| active.get() == mine);
-                        let activate = activate.clone();
-                        let asked = value.clone();
-                        view! {
-                            <button
-                                type="button"
-                                role="tab"
-                                id=tab_id(&group, &value)
-                                class=TRIGGER
-                                data-name="Tab"
-                                data-testid=format!("tab-{value}")
-                                aria-selected=move || selected.get().to_string()
-                                aria-controls=panel_id(&group, &value)
-                                tabindex=move || if selected.get() { "0" } else { "-1" }
-                                disabled=disabled
-                                prop:disabled=disabled
-                                on:click=move |_| {
-                                    if !disabled {
-                                        activate(asked.clone());
-                                    }
-                                }
-                            >
-                                {label}
-                            </button>
-                        }
-                    }
-                </For>
-            </div>
-            {children()}
-        </div>
-    }
+    view! { <Root value=Signal::derive(move || Some(active.get())) entries=entries
+        on_change=move |value| { if let Some(value)=value {on_activate(value);} }
+        orientation=orientation activation_mode=activation_mode direction=direction class=format!("flex gap-2 flex-col {class}") test_id=test_id>
+        <List aria_label=aria_label>
+            <For each=move || tabs.get() key=|tab|tab.value.clone() let:tab>
+                <Trigger value=tab.value.clone() test_id=format!("tab-{}",tab.value)>{tab.label}</Trigger>
+            </For>
+        </List>
+        {children()}
+    </Root> }
 }
-
-/// One panel. It is in the document whether or not it is showing, so that the
-/// application's state inside it survives a look at another tab.
 #[component]
 pub fn TabPanel(
     #[prop(into)] value: String,
     #[prop(optional, into)] class: String,
     children: Children,
 ) -> impl IntoView {
-    let context = use_context::<TabsContext>().expect("a TabPanel belongs inside Tabs");
-    let active = context.active;
-    let mine = value.clone();
-    let showing = Memo::new(move |_| active.get() == mine);
-    view! {
-        <div
-            id=panel_id(&context.group, &value)
-            class=crate::macros::reactive_merge("flex-1 text-sm outline-none", &class)
-            class=("hidden", move || !showing.get())
-            data-name="TabPanel"
-            data-testid=format!("panel-{value}")
-            role="tabpanel"
-            aria-labelledby=tab_id(&context.group, &value)
-            tabindex="0"
-            hidden=move || !showing.get()
-        >
-            {children()}
-        </div>
-    }
-}
-
-#[cfg(test)]
-mod tests {
-    use super::{end, neighbour, Tab};
-
-    fn strip() -> Vec<Tab> {
-        vec![
-            Tab::new("a", "A"),
-            Tab::new("b", "B").disabled(),
-            Tab::new("c", "C"),
-        ]
-    }
-
-    #[test]
-    fn an_arrow_moves_by_value_and_skips_what_cannot_be_chosen() {
-        assert_eq!(neighbour(&strip(), "a", 1).as_deref(), Some("c"));
-        assert_eq!(neighbour(&strip(), "c", 1).as_deref(), Some("a"));
-    }
-
-    #[test]
-    fn home_and_end_reach_the_first_and_last_tab_anyone_can_choose() {
-        let strip = vec![
-            Tab::new("a", "A").disabled(),
-            Tab::new("b", "B"),
-            Tab::new("c", "C").disabled(),
-        ];
-        assert_eq!(end(&strip, false).as_deref(), Some("b"));
-        assert_eq!(end(&strip, true).as_deref(), Some("b"));
-    }
-
-    #[test]
-    fn arrows_still_work_when_the_tab_showing_is_not_in_the_strip() {
-        // The application changed the tabs under the selection; the arrows
-        // have to be a way back rather than a dead key.
-        assert_eq!(neighbour(&strip(), "gone", 1).as_deref(), Some("a"));
-        assert_eq!(neighbour(&strip(), "gone", -1).as_deref(), Some("c"));
-    }
+    view! { <Content value=value.clone() class=class test_id=format!("panel-{value}")>{children()}</Content> }
 }

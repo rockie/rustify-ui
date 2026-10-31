@@ -61,6 +61,7 @@ mod app {
             <crate::selects::Selects />
             <crate::selects::SelectLayers />
             <crate::lifecycle::Lifecycle />
+            <crate::panels::Panels />
         }
     }
 
@@ -90,3 +91,8 @@ mod app {
         });
     }
 }
+
+#[cfg(target_arch = "wasm32")]
+mod panels;
+#[cfg(target_arch = "wasm32")]
+mod stage_panel;

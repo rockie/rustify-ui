@@ -37,3 +37,41 @@
   :where([data-rustify-part="select-item-indicator"][data-state="unchecked"]) { visibility: hidden; }
   :where([data-rustify-part="select-scroll-up"], [data-rustify-part="select-scroll-down"]) { flex-shrink: 0; }
 }
+
+@layer components {
+  :where([data-rustify-part="tab-content"][hidden], [data-rustify-part="collapsible-content"][hidden]) { display: none !important; }
+}
+
+@layer components {
+:where([data-rustify-part="dialog-overlay"], [data-rustify-part="alert-dialog-overlay"]) {
+    position: fixed;
+    left: var(--rustify-layer-scope-x);
+    top: var(--rustify-layer-scope-y);
+    width: var(--rustify-layer-scope-width);
+    height: var(--rustify-layer-scope-height);
+}
+:where([data-rustify-part="dialog-content"], [data-rustify-part="alert-dialog-content"]) {
+    position: relative;
+    box-sizing: border-box;
+    min-width: 0;
+    max-width: var(--rustify-floating-available-width, calc(100vw - 2rem));
+    max-height: var(--rustify-floating-available-height, calc(100vh - 2rem));
+    overflow: auto;
+}
+:where([data-rustify-part="dialog-content"], [data-rustify-part="alert-dialog-content"])[hidden] { display: none !important; }
+
+:where([data-rustify-part="popover-content"], [data-rustify-part="hover-card-content"], [data-rustify-part="tooltip-content"]) { position: relative; box-sizing: border-box; min-width: 0; max-width: var(--rustify-floating-available-width, calc(100vw - 2rem)); max-height: var(--rustify-floating-available-height, calc(100vh - 2rem)); overflow: auto; }
+:where([data-rustify-part="popover-content"], [data-rustify-part="hover-card-content"], [data-rustify-part="tooltip-content"])[hidden] { display: none !important; }
+}
+
+@layer components {
+  :where([data-rustify-floating-arrow]) { position: fixed; visibility: hidden; pointer-events: none; width: var(--rustify-floating-arrow-width, 10px); height: var(--rustify-floating-arrow-height, 5px); clip-path: polygon(50% 0, 100% 100%, 0 100%); }
+  :where([data-rustify-floating-arrow][data-side="top"]) { clip-path: polygon(0 0, 100% 0, 50% 100%); }
+  :where([data-rustify-floating-arrow][data-side="left"], [data-rustify-floating-arrow][data-side="right"]) { width: var(--rustify-floating-arrow-height, 5px); height: var(--rustify-floating-arrow-width, 10px); }
+  :where([data-rustify-floating-arrow][data-side="left"]) { clip-path: polygon(0 0, 100% 50%, 0 100%); }
+  :where([data-rustify-floating-arrow][data-side="right"]) { clip-path: polygon(100% 0, 100% 100%, 0 50%); }
+}
+
+@layer components {
+  :where([data-rustify-part="hover-card-root"], [data-rustify-part="tooltip-root"]) { display: contents; }
+}

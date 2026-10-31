@@ -175,9 +175,8 @@ pub(crate) fn CatalogView(scope: String) -> impl IntoView {
             </section>
             <section data-category=Category::Tooltip.name() class="min-w-0 space-y-3 border-b border-border pb-6">
                 <h3>"Tooltip"</h3>
-                <Tooltip test_id=id("tooltip") open=state.tooltip on_open_change=move |open| state.tooltip.set(open) label="Help for this control">
-                    <button type="button" data-testid=id("tooltip-trigger")>"Hover for help"</button>
-                </Tooltip>
+                <Tooltip test_id=id("tooltip") open=state.tooltip on_open_change=move |open| state.tooltip.set(open) label="Help for this control"
+                    trigger=leptos::html::button().r#type("button").attr("data-testid",id("tooltip-trigger")).child("Hover for help") />
             </section>
             <section data-category=Category::Menu.name() class="min-w-0 space-y-3 border-b border-border pb-6">
                 <h3>"Menu"</h3>

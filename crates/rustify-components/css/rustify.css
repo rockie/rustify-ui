@@ -32,6 +32,9 @@
   .pointer-events-none {
     pointer-events: none;
   }
+  .collapse {
+    visibility: collapse;
+  }
   .invisible {
     visibility: hidden;
   }
@@ -386,15 +389,6 @@
   .bg-card {
     background-color: var(--card);
   }
-  .bg-foreground {
-    background-color: var(--foreground);
-  }
-  .bg-foreground\/30 {
-    background-color: var(--foreground);
-    @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--foreground) 30%, transparent);
-    }
-  }
   .bg-muted {
     background-color: var(--muted);
   }
@@ -430,9 +424,6 @@
   }
   .p-8 {
     padding: calc(0.25rem * 8);
-  }
-  .p-\[3px\] {
-    padding: 3px;
   }
   .px-2 {
     padding-inline: calc(0.25rem * 2);
@@ -524,9 +515,6 @@
   .whitespace-nowrap {
     white-space: nowrap;
   }
-  .text-background {
-    color: var(--background);
-  }
   .text-destructive {
     color: var(--destructive);
   }
@@ -576,13 +564,11 @@
     --tw-blur: blur(8px);
     filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);
   }
+  .filter {
+    filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);
+  }
   .transition-\[width\] {
     transition-property: width;
-    transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
-    transition-duration: var(--tw-duration, var(--default-transition-duration));
-  }
-  .transition-all {
-    transition-property: all;
     transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
     transition-duration: var(--tw-duration, var(--default-transition-duration));
   }
@@ -899,6 +885,70 @@
   }
   :where([data-rustify-part="select-scroll-up"], [data-rustify-part="select-scroll-down"]) {
     flex-shrink: 0;
+  }
+}
+@layer components {
+  :where([data-rustify-part="tab-content"][hidden], [data-rustify-part="collapsible-content"][hidden]) {
+    display: none !important;
+  }
+}
+@layer components {
+  :where([data-rustify-part="dialog-overlay"], [data-rustify-part="alert-dialog-overlay"]) {
+    position: fixed;
+    left: var(--rustify-layer-scope-x);
+    top: var(--rustify-layer-scope-y);
+    width: var(--rustify-layer-scope-width);
+    height: var(--rustify-layer-scope-height);
+  }
+  :where([data-rustify-part="dialog-content"], [data-rustify-part="alert-dialog-content"]) {
+    position: relative;
+    box-sizing: border-box;
+    min-width: 0;
+    max-width: var(--rustify-floating-available-width, calc(100vw - 2rem));
+    max-height: var(--rustify-floating-available-height, calc(100vh - 2rem));
+    overflow: auto;
+  }
+  :where([data-rustify-part="dialog-content"], [data-rustify-part="alert-dialog-content"])[hidden] {
+    display: none !important;
+  }
+  :where([data-rustify-part="popover-content"], [data-rustify-part="hover-card-content"], [data-rustify-part="tooltip-content"]) {
+    position: relative;
+    box-sizing: border-box;
+    min-width: 0;
+    max-width: var(--rustify-floating-available-width, calc(100vw - 2rem));
+    max-height: var(--rustify-floating-available-height, calc(100vh - 2rem));
+    overflow: auto;
+  }
+  :where([data-rustify-part="popover-content"], [data-rustify-part="hover-card-content"], [data-rustify-part="tooltip-content"])[hidden] {
+    display: none !important;
+  }
+}
+@layer components {
+  :where([data-rustify-floating-arrow]) {
+    position: fixed;
+    visibility: hidden;
+    pointer-events: none;
+    width: var(--rustify-floating-arrow-width, 10px);
+    height: var(--rustify-floating-arrow-height, 5px);
+    clip-path: polygon(50% 0, 100% 100%, 0 100%);
+  }
+  :where([data-rustify-floating-arrow][data-side="top"]) {
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+  }
+  :where([data-rustify-floating-arrow][data-side="left"], [data-rustify-floating-arrow][data-side="right"]) {
+    width: var(--rustify-floating-arrow-height, 5px);
+    height: var(--rustify-floating-arrow-width, 10px);
+  }
+  :where([data-rustify-floating-arrow][data-side="left"]) {
+    clip-path: polygon(0 0, 100% 50%, 0 100%);
+  }
+  :where([data-rustify-floating-arrow][data-side="right"]) {
+    clip-path: polygon(100% 0, 100% 100%, 0 50%);
+  }
+}
+@layer components {
+  :where([data-rustify-part="hover-card-root"], [data-rustify-part="tooltip-root"]) {
+    display: contents;
   }
 }
 @layer components {
@@ -1557,6 +1607,266 @@
     width: var(--rustify-space-4, 16px);
   }
 }
+@layer components {
+  :where(.rustify-tabs-list) {
+    --rustify-tab-height: var(--rustify-space-7, 40px);
+    --rustify-tab-padding: var(--rustify-space-2, 8px);
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    overflow-x: auto;
+    box-shadow: inset 0 -1px 0 0 var(--border);
+    font-size: var(--rustify-font-size-2, 14px);
+    line-height: var(--rustify-line-height-2, 20px);
+  }
+  :where([data-rustify-part="tabs-root"][data-orientation="vertical"] > .rustify-tabs-list) {
+    flex-direction: column;
+  }
+  :where(.rustify-tab-trigger) {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    min-height: var(--rustify-tab-height);
+    padding-inline: var(--rustify-tab-padding);
+    border: 0;
+    background: transparent;
+    color: var(--muted-foreground);
+    font: inherit;
+    cursor: pointer;
+    white-space: nowrap;
+    outline-offset: -2px;
+  }
+  :where(.rustify-tab-trigger:hover) {
+    color: var(--foreground);
+    background: var(--muted);
+  }
+  :where(.rustify-tab-trigger[data-state="active"]) {
+    color: var(--foreground);
+    font-weight: 500;
+  }
+  :where(.rustify-tab-trigger[data-state="active"])::after {
+    content: "";
+    position: absolute;
+    inset-inline: 0;
+    bottom: 0;
+    height: 2px;
+    background: var(--rustify-component-color-indicator, var(--primary));
+  }
+  :where(.rustify-tabs-list[data-high-contrast] .rustify-tab-trigger[data-state="active"])::after {
+    background: var(--rustify-component-color-12, var(--foreground));
+  }
+  :where(.rustify-tab-trigger:focus-visible, .rustify-tab-content:focus-visible) {
+    outline: 2px solid var(--rustify-component-color-8, var(--ring));
+  }
+  :where(.rustify-tab-trigger:disabled) {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+  :where(.rustify-tab-content) {
+    min-width: 0;
+    outline-offset: 2px;
+  }
+}
+@layer components {
+  :where(.rustify-disclosure-trigger) {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--rustify-space-2, 8px);
+    padding: var(--rustify-space-2, 8px);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--background);
+    color: var(--foreground);
+    font: inherit;
+    cursor: pointer;
+  }
+  :where(.rustify-disclosure-trigger:hover) {
+    background: var(--muted);
+  }
+  :where(.rustify-disclosure-trigger:focus-visible) {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+  :where(.rustify-disclosure-trigger:disabled) {
+    opacity: .5;
+    cursor: not-allowed;
+  }
+  :where(.rustify-disclosure-content) {
+    padding-block: var(--rustify-space-3, 12px);
+    color: var(--foreground);
+  }
+}
+@layer components {
+  :where(.rustify-segmented-control) {
+    --rustify-segment-height: var(--rustify-space-6, 32px);
+    --rustify-segment-padding: var(--rustify-space-3, 12px);
+    --rustify-segment-radius-base: var(--rustify-radius-2, 4px);
+    display: inline-flex;
+    align-items: stretch;
+    padding: 0;
+    border-radius: var(--rustify-segment-radius, var(--rustify-segment-radius-base));
+    background: var(--muted);
+    color: var(--foreground);
+    gap: 0;
+    font-size: var(--rustify-font-size-2, 14px);
+  }
+  :where(.rustify-segmented-item) {
+    position: relative;
+    display: flex;
+    align-items: stretch;
+    cursor: pointer;
+  }
+  :where(.rustify-segmented-input) {
+    position: absolute;
+    opacity: 0;
+    width: 1px;
+    height: 1px;
+  }
+  :where(.rustify-segmented-label) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: var(--rustify-segment-height);
+    padding-inline: var(--rustify-segment-padding);
+    border-radius: var(--rustify-segment-radius, var(--rustify-segment-radius-base));
+  }
+  :where(.rustify-segmented-item:has(input:checked) .rustify-segmented-label) {
+    background: var(--background);
+    font-weight: 500;
+  }
+  :where(.rustify-segmented-control[data-variant="classic"] .rustify-segmented-item:has(input:checked) .rustify-segmented-label) {
+    box-shadow: 0 1px 3px rgb(0 0 0 / .15);
+  }
+  :where(.rustify-segmented-item:has(input:focus-visible) .rustify-segmented-label) {
+    outline: 2px solid var(--ring);
+    outline-offset: -1px;
+  }
+  :where(.rustify-segmented-item:has(input:disabled)) {
+    cursor: not-allowed;
+    opacity: .5;
+  }
+}
+@layer components {
+  :where(.rustify-accordion-header) {
+    margin-block: var(--rustify-space-2, 8px);
+    font: inherit;
+  }
+}
+@layer components {
+  :where(.rustify-dialog-overlay) {
+    background: rgb(0 0 0 / 35%);
+  }
+  :where(.rustify-dialog-content) {
+    --rustify-dialog-padding: var(--rustify-space-5, 24px);
+    --rustify-dialog-radius: var(--rustify-radius-5, 12px);
+    width: var(--rustify-dialog-width, 600px);
+    min-width: min(var(--rustify-dialog-min-width, 0px), var(--rustify-floating-available-width, calc(100vw - 2rem)));
+    max-width: min(var(--rustify-dialog-max-width, 600px), var(--rustify-floating-available-width, calc(100vw - 2rem)));
+    height: var(--rustify-dialog-height, auto);
+    min-height: min(var(--rustify-dialog-min-height, 0px), var(--rustify-floating-available-height, calc(100vh - 2rem)));
+    max-height: min(var(--rustify-dialog-max-height, 100vh), var(--rustify-floating-available-height, calc(100vh - 2rem)));
+    padding: var(--rustify-dialog-padding);
+    border-radius: var(--rustify-dialog-radius);
+    background: var(--rustify-floating-surface, var(--popover, white));
+    color: var(--popover-foreground, black);
+    box-shadow: var(--rustify-shadow-lg, 0 12px 40px rgb(0 0 0 / 20%));
+    font-family: var(--rustify-font-sans, system-ui, sans-serif);
+    font-size: var(--rustify-font-size-3, 16px);
+    line-height: var(--rustify-line-height-3, 24px);
+  }
+  :where(.rustify-dialog-title) {
+    margin: 0 0 var(--rustify-space-2, 8px);
+    font-size: var(--rustify-font-size-5, 20px);
+    line-height: var(--rustify-line-height-5, 28px);
+    font-weight: 600;
+  }
+  :where(.rustify-dialog-description) {
+    margin: 0 0 var(--rustify-space-4, 16px);
+    color: var(--muted-foreground, #555);
+  }
+  :where(.rustify-dialog-button) {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 12px;
+    border: 1px solid var(--border, #ccc);
+    border-radius: var(--radius, 6px);
+    background: var(--background, white);
+    color: var(--foreground, black);
+    font: inherit;
+    cursor: pointer;
+  }
+  :where(.rustify-dialog-button:hover) {
+    background: var(--muted, #eee);
+  }
+  :where(.rustify-dialog-button:focus-visible, .rustify-dialog-content:focus-visible) {
+    outline: 2px solid var(--ring, #444);
+    outline-offset: 2px;
+  }
+  :where(.rustify-dialog-button:disabled, .rustify-dialog-button[aria-disabled="true"]) {
+    opacity: .5;
+    cursor: not-allowed;
+  }
+}
+@layer components {
+  :where(.rustify-popover-content) {
+    width: var(--rustify-popover-width, auto);
+    min-width: min(var(--rustify-popover-min-width, var(--rustify-floating-anchor-width, 0px)), var(--rustify-floating-available-width, calc(100vw - 2rem)));
+    max-width: min(var(--rustify-popover-max-width, 480px), var(--rustify-floating-available-width, calc(100vw - 2rem)));
+    height: var(--rustify-popover-height, auto);
+    min-height: min(var(--rustify-popover-min-height, 0px), var(--rustify-floating-available-height, calc(100vh - 2rem)));
+    max-height: min(var(--rustify-popover-max-height, 100vh), var(--rustify-floating-available-height, calc(100vh - 2rem)));
+    padding: var(--rustify-popover-padding, var(--rustify-space-4, 16px));
+    border-radius: var(--rustify-popover-radius, var(--rustify-radius-4, 8px));
+    background: var(--rustify-floating-surface, var(--popover, white));
+    color: var(--popover-foreground, black);
+    box-shadow: var(--rustify-shadow-lg, 0 12px 40px rgb(0 0 0 / 20%));
+    font-family: var(--rustify-font-sans, system-ui, sans-serif);
+    font-size: var(--rustify-font-size-3, 16px);
+    line-height: var(--rustify-line-height-3, 24px);
+  }
+  :where(.rustify-popover-content:focus-visible) {
+    outline: 2px solid var(--ring, #444);
+    outline-offset: 2px;
+  }
+}
+@layer components {
+  :where(.rustify-popover-arrow) {
+    --rustify-floating-arrow-width: var(--rustify-space-3, 12px);
+    --rustify-floating-arrow-height: calc(var(--rustify-space-3, 12px) / 2);
+    background: inherit;
+  }
+}
+@layer components {
+  :where(.rustify-tooltip-content) {
+    box-sizing: border-box;
+    width: var(--rustify-tooltip-width, auto);
+    min-width: min(var(--rustify-tooltip-min-width, 0px), var(--rustify-floating-available-width, calc(100vw - 2rem)));
+    max-width: min(var(--rustify-tooltip-max-width, 360px), var(--rustify-floating-available-width, calc(100vw - 2rem)));
+    max-height: var(--rustify-floating-available-height, calc(100vh - 2rem));
+    overflow: auto;
+    padding: var(--rustify-space-1, 4px) var(--rustify-space-2, 8px);
+    border-radius: var(--rustify-radius-2, 4px);
+    background: var(--rustify-gray-12, var(--foreground));
+    color: var(--rustify-gray-1, var(--background));
+    font-family: var(--rustify-font-sans, system-ui, sans-serif);
+    font-size: var(--rustify-font-size-1, 12px);
+    line-height: var(--rustify-line-height-1, 16px);
+    overflow-wrap: anywhere;
+    cursor: default;
+    user-select: none;
+  }
+  :where(.rustify-tooltip-arrow) {
+    background: inherit;
+  }
+}
+@layer components {
+  :where(.rustify-hover-card-content) {
+    min-width: min(var(--rustify-popover-min-width, 0px), var(--rustify-floating-available-width, calc(100vw - 2rem)));
+  }
+}
 [data-rustify-scope] input[data-name="Slider"] {
   --thumb-height: 1rem;
   --track-height: 0.25rem;
@@ -1627,7 +1937,7 @@
   outline-offset: 2px;
 }
 [data-rustify-scope] [data-name] {
-  transition-duration: var(--motion-duration);
+  --tw-duration: var(--motion-duration);
 }
 [data-rustify-scope] [data-name="Spinner"] > svg {
   animation: rui-spin calc(var(--motion-duration) * 8) linear infinite;

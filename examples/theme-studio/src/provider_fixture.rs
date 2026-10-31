@@ -83,7 +83,7 @@ pub fn ProviderFixture(
                         <span class="inline-flex" node_ref=menu_anchor><Button on_click=move || menu.set(true) variant=ButtonVariant::Outline test_id="open-preview-menu">{move || tr("Actions", "操作")}</Button></span>
                     </div>
                     <p class="text-sm text-muted-foreground" role="status">{move || action.get()}</p>
-                    <Dialog open=dialog on_open_change=move |open| dialog.set(open) title=Signal::derive(move || tr("Theme preview", "主题预览").to_owned()) class="studio-preview-dialog" test_id="preview-dialog">
+                    <Dialog open=dialog on_open_change=move |open| dialog.set(open) title=Signal::derive(move || tr("Theme preview", "主题预览").to_owned()) align=rustify_ui::ViewportAlign::Start class="studio-preview-dialog" test_id="preview-dialog">
                         <p>{move || tr("This layer follows the theme where it was opened.", "此浮层跟随创建它的局部主题。")}</p>
                         <Button on_click=move || {action.set(tr("Confirmed", "已确认").into());dialog.set(false);} test_id="dialog-confirm">{move || tr("Confirm", "确认")}</Button>
                     </Dialog>
