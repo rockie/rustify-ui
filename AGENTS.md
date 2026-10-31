@@ -86,6 +86,7 @@ Rustify UI 是实验性 Rust SDK，按能力分工组合 Leptos CSR（DOM）与�
 入口文档：[架构与运行时契约](docs/architecture.md)、[SDK 快速入门](docs/quickstart.md)。
 
 - **项目目标**：为交互应用提供比同等功能的 React 应用更高性能的 WASM 实现，或通过 SSG 直接提供静态 HTML，同时保持较小的 WASM binary。字体、图片等 assets 不得嵌入 WASM，应与二进制分离，放在 public 静态资源目录或 CDN，通过 URL 引用。
+- **呈现路线仅限 CSR 与 SSG，不走 SSR 路线。** 不实现请求时服务端渲染、流式 SSR 或 SSR 服务部署。现有 `ssr` feature、宿主渲染 API 及相关测试仅用于 SSG 的构建期静态 HTML 生成；`hydrate` 用于静态 HTML 的浏览器接管，不代表新增 SSR 产品路线。实施、计划与评审均以 CSR/SSG 的实际入口为范围，不因内部 `ssr` 命名追加 SSR 功能、验收条件或缺陷。
 - 每个任务先说明采用 DOM、GPU 或跨区协作及选择依据，默认只实现本次需要的呈现路径，不自动补齐另一端。
 - 用户明确要求两端支持，或实际跨区协作需要时，才覆盖两端；说明各端承担的职责，复用共享逻辑。
 - 共享状态、主题和动作语义不要求组件、样式与布局双端对等；不为组件目录或演示对称而新增另一套实现。
@@ -95,7 +96,7 @@ Rustify UI 是实验性 Rust SDK，按能力分工组合 Leptos CSR（DOM）与�
 
 根 workspace 排除 `makepad/`、`ref/` 和 `site/`；Makepad fork 有自己的 workspace。
 
-- `crates/rustify-dom`：共享状态、类型和中立的 `crates/rustify-dom/src/runtime.rs` 宿主绑定（`rustify_runtime_boot`、`runtime::PROTOCOL`）。DOM loader、宿主和样式位于 `crates/rustify-dom/web/`，包括 `DOM_LOADER_JS`、`DOM_RUNTIME_CSS` 和 wasm-bindgen runtime snippet。`csr`（默认）、`ssr`、`hydrate` 分别构建。
+- `crates/rustify-dom`：共享状态、类型和中立的 `crates/rustify-dom/src/runtime.rs` 宿主绑定（`rustify_runtime_boot`、`runtime::PROTOCOL`）。DOM loader、宿主和样式位于 `crates/rustify-dom/web/`，包括 `DOM_LOADER_JS`、`DOM_RUNTIME_CSS` 和 wasm-bindgen runtime snippet。`csr`（默认）、供 SSG 构建期使用的 `ssr`、供静态 HTML 浏览器接管使用的 `hydrate` 分别构建。
 - `crates/rustify-ui`：Git 分发的 SDK 门面，重导出核心类型，并通过可选的 `gpu` feature 增加 Makepad region。
 - `crates/rustify-components`：24 类 DOM 组件；包含从 Rust/UI fork 的 `clx!` / `variants!` 宏，以及生成 `docs/components.md` 的 `CATALOG`。样式集中在 `crates/rustify-components/css/`：`sdk.css` 定义组件 source、scope 内的 `dark` variant、token utilities 和默认 tokens，每个 Tailwind input 都应导入；`rustify.tailwind.css` 单独编译这一层，产物 `rustify.css` 提交入库，由 `rustify_components::CSS` 暴露。
 - `crates/rustify-makepad`：私有 Makepad 集成，包含 `RegionApp`、不复用 `RegionId` 的 region registry、导出给 JS 的 pump 入口、延迟 props 和 action outbox；`crates/rustify-makepad/web/embedded.js` 是 region canvas 与 GL 的 JS 宿主。

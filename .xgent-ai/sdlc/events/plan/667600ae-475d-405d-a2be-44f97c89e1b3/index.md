@@ -17,3 +17,5 @@
 | ed8e447d-df13-4bd6-87bb-109a34cbde1d | implementation / plan | [M3 completed](ed8e447d-df13-4bd6-87bb-109a34cbde1d.md) |
 | f7508b64-b494-4374-b59d-8a0e19f7a53a | implementation / plan | [初始实施状态](f7508b64-b494-4374-b59d-8a0e19f7a53a.md) |
 | ff894c96-4fc2-4e58-afd7-d8a9190513df | implementation / plan | [M3 started](ff894c96-4fc2-4e58-afd7-d8a9190513df.md) |
+| c887bbb5-312f-4b33-85c7-c3bc64a64e52 | implementation / plan | [R1 修复后保留五个里程碑完成](c887bbb5-312f-4b33-85c7-c3bc64a64e52.md) |
+| eed36fff-b7a5-471f-b865-517e483b7a8c | implementation / plan | [R2 修复已验证](eed36fff-b7a5-471f-b865-517e483b7a8c.md) |
