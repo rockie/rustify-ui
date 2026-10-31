@@ -68,6 +68,15 @@
         ],
         "createdAt": "2026-10-27T12:20:04.492Z",
         "reason": "Codex: DESIGN.md Typography documents this existing authored-preview font; the shell remains IBM Plex Sans."
+      },
+      {
+        "rule": "flat-type-hierarchy",
+        "value": "*",
+        "files": [
+          "tests/dom-only/consumer/public/index.html"
+        ],
+        "createdAt": "2026-10-31T10:53:11.507Z",
+        "reason": "Codex: Chromium measurement on 2026-10-31 renders this DOM-only runtime fixture with h1 32px, h2 24px and body 16px (steps 1.33x and 1.5x); the source-only detector incorrectly reported all three roles as 16px."
       }
     ]
   }
