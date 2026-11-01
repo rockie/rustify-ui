@@ -10,7 +10,7 @@
   :where(.rustify-progress[data-variant="surface"])::after { box-shadow: inset 0 0 0 1px var(--rustify-gray-a4, var(--border)); }
   :where(.rustify-progress[data-variant="classic"])::after { box-shadow: var(--rustify-shadow-sm, 0 1px 2px rgb(0 0 0 / 12%)); }
   :where(.rustify-progress[data-variant="soft"]) { background: var(--rustify-gray-a4, var(--muted)); }
-  :where(.rustify-progress-indicator) { position: relative; background: var(--rustify-component-color-track, var(--primary)); transition: width 120ms; }
+  :where(.rustify-progress-indicator) { position: relative; background: var(--rustify-component-color-track, var(--primary)); transition: transform 120ms; }
   :where(.rustify-progress[data-variant="soft"] .rustify-progress-indicator) { background: var(--rustify-component-color-8, var(--primary)); background-image: linear-gradient(var(--rustify-component-color-a5, transparent), var(--rustify-component-color-a5, transparent)); }
   :where(.rustify-progress[data-high-contrast] .rustify-progress-indicator) { background: var(--rustify-component-color-12, var(--foreground)); }
   :where(.rustify-progress-indicator[data-state="indeterminate"]) { width: 35%; animation: rustify-progress-travel var(--rustify-progress-duration, 5000ms) ease-in-out infinite; }

@@ -474,17 +474,17 @@ async function windowListeners(page: Page) {
     return listeners.filter((listener) => listener.type === "harness-key").length;
 }
 
-async function widthRules(fill: Locator) {
+async function transformRules(fill: Locator) {
     return fill.evaluate((element) => {
-        const widths: string[] = [];
+        const transforms: string[] = [];
         const visit = (rules: CSSRuleList) => {
             for (const rule of rules) {
-                if (rule instanceof CSSStyleRule && rule.style.width && element.matches(rule.selectorText)) widths.push(rule.style.width);
+                if (rule instanceof CSSStyleRule && rule.style.transform && element.matches(rule.selectorText)) transforms.push(rule.style.transform);
                 if ('cssRules' in rule) visit((rule as CSSGroupingRule).cssRules);
             }
         };
         for (const sheet of document.adoptedStyleSheets) visit(sheet.cssRules);
-        return widths;
+        return transforms;
     });
 }
 
@@ -724,13 +724,13 @@ test("independent CSR runtimes isolate identical geometry classes and their clea
         const style = getComputedStyle(element);
         return { property: style.transitionProperty, duration: style.transitionDuration };
     });
-    expect(transition).toEqual({ property: "width", duration: "0.12s" });
+    expect(transition).toEqual({ property: "transform", duration: "0.12s" });
     const measurements: number[] = [];
     await first.getByTestId("shared-seed-slider").focus();
     await first.getByTestId("shared-seed-slider").press("ArrowRight");
     await expect(progress(first)).toHaveAttribute("aria-valuenow", "45");
     await expect(progress(second)).toHaveAttribute("aria-valuenow", "42.5");
-    await expect.poll(() => widthRules(progress(first).locator("div"))).toEqual(["36%"]);
+    await expect.poll(() => transformRules(progress(first).locator("div"))).toEqual(["scaleX(0.36)"]);
     await expect.poll(async () => {
         const width = await ratio(progress(first));
         measurements.push(width);
@@ -751,7 +751,7 @@ test("independent CSR runtimes isolate identical geometry classes and their clea
     await second.getByTestId("shared-seed-slider").focus();
     await second.getByTestId("shared-seed-slider").press("ArrowRight");
     await expect(progress(second)).toHaveAttribute("aria-valuenow", "45");
-    await expect.poll(() => widthRules(progress(second).locator("div"))).toEqual(["36%"]);
+    await expect.poll(() => transformRules(progress(second).locator("div"))).toEqual(["scaleX(0.36)"]);
     await expect.poll(() => ratio(progress(second))).toBeCloseTo(36, 1);
     expect(await ratio(control(page, "catalog-a", "progress"))).toBeCloseTo(34, 1);
     expect(await page.evaluate(() => window.__hydration.peers.second.dispose())).toBe(true);
@@ -846,7 +846,7 @@ for (const cleanupOrder of ["first", "second"] as const) {
             await expect(progress(scope, branch)).toHaveAttribute("aria-valuenow", String(percent));
             await expect(progress(scope, branch)).toHaveCSS("width", "256px");
             await expect.poll(() => progress(scope, branch).locator("div").evaluate((fill) => fill.getBoundingClientRect().width)).toBeCloseTo(256 * percent / 100, 1);
-            await expect.poll(() => widthRules(progress(scope, branch).locator("div"))).toEqual([`${percent}%`]);
+            await expect.poll(() => transformRules(progress(scope, branch).locator("div"))).toEqual([`scaleX(${percent / 100})`]);
         };
         try {
             await first.getByTestId("first-toggle").click();

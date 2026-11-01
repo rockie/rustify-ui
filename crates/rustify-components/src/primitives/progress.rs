@@ -48,7 +48,7 @@ pub fn Indicator(
     let geometry = crate::geometry::style_class(move || {
         let mut styles = crate::geometry::StyleSet::default();
         if let Some(percent) = state().percent() {
-            styles.insert(0, "width", format!("{percent}%"))?;
+            styles.insert(0, "transform", format!("scaleX({})", percent / 100.))?;
         }
         Ok(styles)
     });

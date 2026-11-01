@@ -155,6 +155,26 @@ test('progress keeps original units, unknown state, and actionable invalid-input
     await expect(meter).not.toHaveAttribute('data-rustify-issue');
 });
 
+test('progress changes the painted fill without resizing its layout box and follows RTL', async ({ page }, testInfo) => {
+    const meter = id(page, 'progress');
+    const indicator = id(page, 'progress-indicator');
+    const geometry = () => indicator.evaluate(node => {
+        const root = node.parentElement!;
+        return { layout: (node as HTMLElement).offsetWidth / root.clientWidth,
+            fill: node.getBoundingClientRect().width / root.getBoundingClientRect().width,
+            right: node.getBoundingClientRect().right - root.getBoundingClientRect().right + parseFloat(getComputedStyle(root).borderRightWidth) };
+    });
+    expect((await geometry()).layout).toBeCloseTo(1, 2);
+    await expect.poll(async () => (await geometry()).fill).toBeCloseTo(.25, 2);
+    await meter.evaluate(node => node.setAttribute('dir', 'rtl'));
+    await expect.poll(async () => (await geometry()).right).toBeCloseTo(0, 1);
+    await testInfo.attach('progress-rtl', { body: await meter.screenshot(), contentType: 'image/png' });
+    await details(page, 'progress-tools');
+    await id(page, 'progress-complete').click();
+    await expect.poll(async () => (await geometry()).fill).toBeCloseTo(1, 2);
+    expect((await geometry()).layout).toBeCloseTo(1, 2);
+});
+
 test('loading retains native nodes, drafts and listeners without reclaiming external focus', async ({ page }) => {
     const spinner = id(page, 'spinner-draft'), skeleton = id(page, 'skeleton-draft');
     await spinner.fill('A retained release-owner draft');

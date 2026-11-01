@@ -52,7 +52,7 @@ fn progress_announces_original_units_and_uses_percentage_only_in_external_geomet
             && root.contains("data-state=\"loading\""),
         "{html}"
     );
-    assert!(css.contains("width:50%;"), "{css}");
+    assert!(css.contains("transform:scaleX(0.5);"), "{css}");
     assert!(!html.contains("style=\""), "{html}");
 }
 #[test]
@@ -73,7 +73,7 @@ fn invalid_progress_does_not_expose_a_false_completed_value() {
             "{html}"
         );
         assert!(
-            !root.contains("aria-valuenow") && !css.contains("width:"),
+            !root.contains("aria-valuenow") && !css.contains("transform:"),
             "{html} {css}"
         );
         assert!(

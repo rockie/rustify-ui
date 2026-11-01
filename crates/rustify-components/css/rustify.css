@@ -1077,6 +1077,10 @@
     display: block;
     height: 100%;
     width: 100%;
+    transform-origin: left center;
+  }
+  :where([data-rustify-part="progress-indicator"]:dir(rtl)) {
+    transform-origin: right center;
   }
   :where([data-rustify-part="spinner-root"]) {
     position: relative;
@@ -2634,7 +2638,7 @@
   :where(.rustify-progress-indicator) {
     position: relative;
     background: var(--rustify-component-color-track, var(--primary));
-    transition: width 120ms;
+    transition: transform 120ms;
   }
   :where(.rustify-progress[data-variant="soft"] .rustify-progress-indicator) {
     background: var(--rustify-component-color-8, var(--primary));
