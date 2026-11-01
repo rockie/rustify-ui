@@ -462,4 +462,3 @@
     :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-scroll-area > [data-rustify-part="scroll-area-scrollbar"] > [data-rustify-part="scroll-area-thumb"]) { transition: none; }
   }
 }
-
