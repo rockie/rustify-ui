@@ -129,7 +129,12 @@ fn CoreHierarchy() -> impl IntoView {
     let closed = RwSignal::new(0);
     let opened = RwSignal::new(0);
     let trigger = NodeRef::<leptos::html::Button>::new();
-    let anchor = Signal::derive(move || trigger.get().map(|node| Anchor::element(&node.into())).unwrap_or(Anchor::Centred));
+    let anchor = Signal::derive(move || {
+        trigger
+            .get()
+            .map(|node| Anchor::element(&node.into()))
+            .unwrap_or(Anchor::Centred)
+    });
     view! { <section aria-label="Nested layer ownership">
         <CoreNotifications deactivate=Callback::new(move |_|outer_active.set(false)) />
         <button type="button" data-testid="tree-open" id="tree-trigger" on:click=move |_|outer.set(true)>"Edit nested details"</button>
@@ -174,8 +179,14 @@ fn CoreNotificationBody(deactivate: Callback<()>) -> impl IntoView {
     let trigger = NodeRef::<leptos::html::Button>::new();
     let open = RwSignal::new(false);
     let modal = RwSignal::new(false);
-    let anchor = Signal::derive(move ||trigger.get().map(|node|Anchor::element(&node.into())).unwrap_or(Anchor::Centred));
+    let anchor = Signal::derive(move || {
+        trigger
+            .get()
+            .map(|node| Anchor::element(&node.into()))
+            .unwrap_or(Anchor::Centred)
+    });
     view! { <div data-testid="tree-toast">
+        <rustify_ui::toast::Description>"Saved task"</rustify_ui::toast::Description>
         <button type="button" node_ref=trigger data-testid="tree-toast-action" on:click=move |_|open.set(true)>"Edit saved task"</button>
         <Show when=move ||open.get()><Layer anchor=anchor fit=true test_id="tree-notice-popup" on_close=move ||open.set(false)>
             <input data-testid="tree-notice-input" aria-label="Notification draft" on:keydown=move |event|{if event.key()=="F2"{deactivate.run(());event.prevent_default();}} />
@@ -196,12 +207,27 @@ fn CoreOutside() -> impl IntoView {
     let trace = RwSignal::new(String::new());
     let panel = NodeRef::<leptos::html::Div>::new();
     let trigger = NodeRef::<leptos::html::Button>::new();
-    let anchor = Signal::derive(move ||trigger.get().map(|node|Anchor::element(&node.into())).unwrap_or(Anchor::Centred));
-    let specific = Callback::new(move |event: Cancelable<LayerDismiss>| {
-        trace.update(|trace|trace.push(if *event.value()==LayerDismiss::PointerOutside {'p'}else{'f'}));
-        if cancel.get_untracked() {event.prevent_default();}
+    let anchor = Signal::derive(move || {
+        trigger
+            .get()
+            .map(|node| Anchor::element(&node.into()))
+            .unwrap_or(Anchor::Centred)
     });
-    let interact = Callback::new(move |event: Cancelable<LayerDismiss>| trace.update(|trace|trace.push(if event.default_prevented(){'c'}else{'i'})));
+    let specific = Callback::new(move |event: Cancelable<LayerDismiss>| {
+        trace.update(|trace| {
+            trace.push(if *event.value() == LayerDismiss::PointerOutside {
+                'p'
+            } else {
+                'f'
+            })
+        });
+        if cancel.get_untracked() {
+            event.prevent_default();
+        }
+    });
+    let interact = Callback::new(move |event: Cancelable<LayerDismiss>| {
+        trace.update(|trace| trace.push(if event.default_prevented() { 'c' } else { 'i' }))
+    });
     view! { <section aria-label="Outside interaction requests">
         <button type="button" data-testid="outside-open" node_ref=trigger on:click=move |_|open.set(true)>"Open nonmodal editor"</button>
         <output data-testid="outside-requests">{move ||requests.get()}</output><output data-testid="outside-trace">{move ||trace.get()}</output>
@@ -218,7 +244,7 @@ fn CoreOutside() -> impl IntoView {
 
 #[component]
 fn CoreLifecycle() -> impl IntoView {
-    use rustify_ui::{Anchor, Layer, use_overlay};
+    use rustify_ui::{use_overlay, Anchor, Layer};
     let open = RwSignal::new(false);
     let trigger_present = RwSignal::new(true);
     let disabled = RwSignal::new(false);
@@ -284,15 +310,29 @@ fn CoreScopeViewports() -> impl IntoView {
     let hits = RwSignal::new(0);
     let hidden = RwSignal::new(false);
     Effect::new(move || {
-        let (Some(a),Some(b))=(a.get(),b.get()) else {return;};
-        if !handles.with_value(|handles|handles.is_empty()) {return;}
-        for (key,node) in [("viewport-a",a),("viewport-b",b)] {
-            match mount(node.into(),MountConfig {scope:key.into(),..Default::default()},move ||view!{<CoreScopedViewport scope_key=key />}) {
-                Ok(handle)=>handles.update_value(|handles|handles.push(handle)),Err(issue)=>error.set(issue.to_string()),
+        let (Some(a), Some(b)) = (a.get(), b.get()) else {
+            return;
+        };
+        if !handles.with_value(|handles| handles.is_empty()) {
+            return;
+        }
+        for (key, node) in [("viewport-a", a), ("viewport-b", b)] {
+            match mount(
+                node.into(),
+                MountConfig {
+                    scope: key.into(),
+                    ..Default::default()
+                },
+                move || view! {<CoreScopedViewport scope_key=key />},
+            ) {
+                Ok(handle) => handles.update_value(|handles| handles.push(handle)),
+                Err(issue) => error.set(issue.to_string()),
             }
         }
     });
-    on_cleanup(move ||{handles.try_update_value(|handles|handles.clear());});
+    on_cleanup(move || {
+        handles.try_update_value(|handles| handles.clear());
+    });
     view! {<section aria-label="Independent scoped viewports">
         <button type="button" data-testid="viewport-host" on:click=move |_|hits.update(|n|*n+=1)>"Use host control"</button>
         <button type="button" data-testid="viewport-hide" on:click=move |_|hidden.update(|value|*value=!*value)>"Hide or restore first scope"</button>
@@ -301,14 +341,14 @@ fn CoreScopeViewports() -> impl IntoView {
     </section>}
 }
 #[component]
-fn CoreScopedViewport(#[prop(into)] scope_key:String) -> impl IntoView {
+fn CoreScopedViewport(#[prop(into)] scope_key: String) -> impl IntoView {
     use rustify_ui::{Anchor, Layer, ViewportAlign};
-    let key=StoredValue::new(scope_key);
-    let open=RwSignal::new(false);
-    let align=RwSignal::new(ViewportAlign::Center);
-    let requests=RwSignal::new(0);
-    let panel=NodeRef::<leptos::html::Div>::new();
-    let anchor=Signal::derive(move ||Anchor::Viewport {align:align.get()});
+    let key = StoredValue::new(scope_key);
+    let open = RwSignal::new(false);
+    let align = RwSignal::new(ViewportAlign::Center);
+    let requests = RwSignal::new(0);
+    let panel = NodeRef::<leptos::html::Div>::new();
+    let anchor = Signal::derive(move || Anchor::Viewport { align: align.get() });
     view! {
         <ScopedPopover scope_key=key.get_value() />
         <button type="button" id=format!("{}-trigger",key.get_value()) data-testid=format!("{}-open",key.get_value()) on:click=move |_|open.set(true)>"Open scoped editor"</button>
@@ -326,22 +366,28 @@ fn CoreScopedViewport(#[prop(into)] scope_key:String) -> impl IntoView {
 #[component]
 fn DialogParts() -> impl IntoView {
     use rustify_components::dialog;
-    let open=RwSignal::new(false);
-    let layout=RwSignal::new(rustify_components::Layout::default());
-    let size=RwSignal::new(dialog::DialogSize::default());
-    let accept=RwSignal::new(true);
-    let cancel=RwSignal::new(false);
-    let native_cancel=RwSignal::new(false);
-    let custom_focus=RwSignal::new(false);
-    let reopen=RwSignal::new(false);
-    let description=RwSignal::new(true);
-    let title=RwSignal::new(true);
-    let empty_title=RwSignal::new(false);
-    let requests=RwSignal::new(0);
-    let opened=RwSignal::new(0);
-    let closed=RwSignal::new(0);
-    let targets=RwSignal::new(0);
-    let escape=Callback::new(move |event:rustify_ui::Cancelable<rustify_ui::LayerDismiss>|{if cancel.get_untracked(){event.prevent_default();}});
+    let open = RwSignal::new(false);
+    let layout = RwSignal::new(rustify_components::Layout::default());
+    let size = RwSignal::new(dialog::DialogSize::default());
+    let accept = RwSignal::new(true);
+    let cancel = RwSignal::new(false);
+    let native_cancel = RwSignal::new(false);
+    let custom_focus = RwSignal::new(false);
+    let reopen = RwSignal::new(false);
+    let description = RwSignal::new(true);
+    let title = RwSignal::new(true);
+    let empty_title = RwSignal::new(false);
+    let requests = RwSignal::new(0);
+    let opened = RwSignal::new(0);
+    let closed = RwSignal::new(0);
+    let targets = RwSignal::new(0);
+    let escape = Callback::new(
+        move |event: rustify_ui::Cancelable<rustify_ui::LayerDismiss>| {
+            if cancel.get_untracked() {
+                event.prevent_default();
+            }
+        },
+    );
     view! { <section aria-label="Dialog parts">
         <h2>"Task editor"</h2>
         <button type="button" data-testid="parts-dialog-refuse" on:click=move |_|accept.update(|value|*value=!*value)>"Accept or refuse dialog changes"</button>
@@ -379,15 +425,25 @@ fn DialogParts() -> impl IntoView {
     </section> }
 }
 #[component]
-fn AlertParts(accept:RwSignal<bool>,cancel:RwSignal<bool>,native_cancel:RwSignal<bool>) -> impl IntoView {
+fn AlertParts(
+    accept: RwSignal<bool>,
+    cancel: RwSignal<bool>,
+    native_cancel: RwSignal<bool>,
+) -> impl IntoView {
     use rustify_components::alert_dialog;
-    let open=RwSignal::new(false);
-    let actions=RwSignal::new(0);
-    let requests=RwSignal::new(0);
-    let cancel_action=RwSignal::new(false);
-    let missing_cancel=RwSignal::new(false);
-    let empty_description=RwSignal::new(false);
-    let escape=Callback::new(move |event:rustify_ui::Cancelable<rustify_ui::LayerDismiss>|{if cancel.get_untracked(){event.prevent_default();}});
+    let open = RwSignal::new(false);
+    let actions = RwSignal::new(0);
+    let requests = RwSignal::new(0);
+    let cancel_action = RwSignal::new(false);
+    let missing_cancel = RwSignal::new(false);
+    let empty_description = RwSignal::new(false);
+    let escape = Callback::new(
+        move |event: rustify_ui::Cancelable<rustify_ui::LayerDismiss>| {
+            if cancel.get_untracked() {
+                event.prevent_default();
+            }
+        },
+    );
     view! { <section aria-label="Removal confirmation">
         <button type="button" data-testid="parts-alert-missing" on:click=move |_|missing_cancel.update(|value|*value=!*value)>"Show confirmation without Cancel"</button>
         <output data-testid="parts-alert-actions">{move ||actions.get()}</output><output data-testid="parts-alert-requests">{move ||requests.get()}</output>
@@ -410,17 +466,20 @@ fn AlertParts(accept:RwSignal<bool>,cancel:RwSignal<bool>,native_cancel:RwSignal
     </section> }
 }
 
-fn focus_test_element(id:&str) {
+fn focus_test_element(id: &str) {
     use leptos::wasm_bindgen::JsCast;
-    if let Ok(Some(element))=document().query_selector(&format!("[data-testid='{id}']")) {
-        if let Some(element)=element.dyn_ref::<web_sys::HtmlElement>() {let _=element.focus();}
+    if let Ok(Some(element)) = document().query_selector(&format!("[data-testid='{id}']")) {
+        if let Some(element) = element.dyn_ref::<web_sys::HtmlElement>() {
+            let _ = element.focus();
+        }
     }
 }
 #[component]
 fn ProgramDialog() -> impl IntoView {
     use rustify_components::dialog;
-    let open=RwSignal::new(false);let closed=RwSignal::new(0);
-    view!{<section aria-label="Programmatic modeless editor">
+    let open = RwSignal::new(false);
+    let closed = RwSignal::new(0);
+    view! {<section aria-label="Programmatic modeless editor">
         <button type="button" data-testid="program-dialog-open" on:click=move |_|open.set(true)>"Open modeless editor"</button>
         <output data-testid="program-dialog-closed">{move ||closed.get()}</output>
         <dialog::Root open=open modal=false on_open_change=move |next|open.set(next)>
@@ -436,12 +495,12 @@ fn ProgramDialog() -> impl IntoView {
 #[component]
 fn DynamicDialog() -> impl IntoView {
     use rustify_components::dialog;
-    let open=RwSignal::new(false);
-    let trigger=RwSignal::new(false);
-    let duplicate=RwSignal::new(false);
-    let duplicate_trigger=RwSignal::new(false);
-    let closed=RwSignal::new(0);
-    view!{<section aria-label="Dynamic dialog composition">
+    let open = RwSignal::new(false);
+    let trigger = RwSignal::new(false);
+    let duplicate = RwSignal::new(false);
+    let duplicate_trigger = RwSignal::new(false);
+    let closed = RwSignal::new(0);
+    view! {<section aria-label="Dynamic dialog composition">
         <button type="button" data-testid="dynamic-dialog-trigger-toggle" on:click=move |_|trigger.update(|value|*value=!*value)>"Toggle trigger"</button>
         <button type="button" data-testid="dynamic-dialog-trigger-duplicate" on:click=move |_|duplicate_trigger.update(|value|*value=!*value)>"Toggle second trigger"</button>
         <button type="button" data-testid="dynamic-dialog-repair" on:click=move |_|duplicate.set(false)>"Remove duplicate content"</button>
@@ -466,13 +525,33 @@ fn DynamicDialog() -> impl IntoView {
 #[component]
 fn PopoverParts() -> impl IntoView {
     use rustify_components::popover;
-    let size=RwSignal::new(popover::PopoverSize::default());
-    let open=RwSignal::new(false);let label=RwSignal::new(String::from("Task schedule"));let accept=RwSignal::new(true);let cancel=RwSignal::new(false);let native=RwSignal::new(false);
-    let delayed=RwSignal::new(false);let pending=RwSignal::new(None::<bool>);
-    let anchor=RwSignal::new(true);let arrow=RwSignal::new(false);let requests=RwSignal::new(0);let clicks=RwSignal::new(0);let targets=RwSignal::new(0);
-    let dismiss=Callback::new(move |event:rustify_ui::Cancelable<rustify_ui::LayerDismiss>|if cancel.get_untracked(){event.prevent_default();});
-    let position=RwSignal::new(rustify_ui::FloatingPosition {align:rustify_ui::Align::Start,side_offset:8.,avoid_collisions:false,..Default::default()});
-    view!{<section aria-label="Anchored task editor">
+    let size = RwSignal::new(popover::PopoverSize::default());
+    let open = RwSignal::new(false);
+    let label = RwSignal::new(String::from("Task schedule"));
+    let accept = RwSignal::new(true);
+    let cancel = RwSignal::new(false);
+    let native = RwSignal::new(false);
+    let delayed = RwSignal::new(false);
+    let pending = RwSignal::new(None::<bool>);
+    let anchor = RwSignal::new(true);
+    let arrow = RwSignal::new(false);
+    let requests = RwSignal::new(0);
+    let clicks = RwSignal::new(0);
+    let targets = RwSignal::new(0);
+    let dismiss = Callback::new(
+        move |event: rustify_ui::Cancelable<rustify_ui::LayerDismiss>| {
+            if cancel.get_untracked() {
+                event.prevent_default();
+            }
+        },
+    );
+    let position = RwSignal::new(rustify_ui::FloatingPosition {
+        align: rustify_ui::Align::Start,
+        side_offset: 8.,
+        avoid_collisions: false,
+        ..Default::default()
+    });
+    view! {<section aria-label="Anchored task editor">
         <button type="button" data-testid="popover-delay" on:click=move |_|delayed.update(|value|*value=!*value)>"Delay application decisions"</button>
         <button type="button" data-testid="popover-apply" on:click=move |_|{if let Some(next)=pending.get_untracked(){pending.set(None);open.set(next);}}>"Apply delayed change"</button>
         <button type="button" data-testid="popover-native" on:click=move |_|native.update(|value|*value=!*value)>"Cancel target default"</button>
@@ -510,14 +589,29 @@ fn PopoverParts() -> impl IntoView {
 
 #[component]
 fn HoverParts() -> impl IntoView {
-    use rustify_components::{hover_card,tooltip};
-    let size=RwSignal::new(hover_card::HoverCardSize::default());
-    let one=RwSignal::new(false);let two=RwSignal::new(false);let card=RwSignal::new(false);
-    let mounted=RwSignal::new(true);let accept=RwSignal::new(true);let interactive=RwSignal::new(false);let native=RwSignal::new(false);
-    let requests=RwSignal::new(0);let targets=RwSignal::new(0);
-    let cancel_outside=Callback::new(move |event:rustify_ui::Cancelable<rustify_ui::LayerDismiss>|if native.get_untracked(){event.prevent_default();});
-    let position=Signal::stored(rustify_ui::FloatingPosition {side_offset:16.,..Default::default()});
-    view!{<section aria-label="Supplemental reading">
+    use rustify_components::{hover_card, tooltip};
+    let size = RwSignal::new(hover_card::HoverCardSize::default());
+    let one = RwSignal::new(false);
+    let two = RwSignal::new(false);
+    let card = RwSignal::new(false);
+    let mounted = RwSignal::new(true);
+    let accept = RwSignal::new(true);
+    let interactive = RwSignal::new(false);
+    let native = RwSignal::new(false);
+    let requests = RwSignal::new(0);
+    let targets = RwSignal::new(0);
+    let cancel_outside = Callback::new(
+        move |event: rustify_ui::Cancelable<rustify_ui::LayerDismiss>| {
+            if native.get_untracked() {
+                event.prevent_default();
+            }
+        },
+    );
+    let position = Signal::stored(rustify_ui::FloatingPosition {
+        side_offset: 16.,
+        ..Default::default()
+    });
+    view! {<section aria-label="Supplemental reading">
         <p id="hover-help">"Additional help remains available."</p>
         <button type="button" data-testid="hover-outside">"Continue reading"</button>
         <button type="button" data-testid="hover-unmount" on:click=move |_|mounted.update(|v|*v=!*v)>"Remove or restore descriptions"</button>
@@ -553,8 +647,8 @@ fn HoverParts() -> impl IntoView {
 }
 
 #[component]
-fn FloatingPanelSurface()->impl IntoView {
-    let owner=Owner::new();
+fn FloatingPanelSurface() -> impl IntoView {
+    let owner = Owner::new();
     let view=owner.with(move || {
     let theme=rustify_ui::resolve(&rustify_ui::ThemeDocument::standard("panel-fixture","Panel fixture"),rustify_ui::ThemeMode::Light,&rustify_ui::ResolveContext::default()).expect("standard fixture theme is valid");
     rustify_ui::provide_static_theme(std::sync::Arc::new(theme));
@@ -570,14 +664,17 @@ fn FloatingPanelSurface()->impl IntoView {
         </rustify_ui::ThemeBoundary>
     </section>}
     });
-    leptos::tachys::reactive_graph::OwnedView::new_with_owner(view,owner)
+    leptos::tachys::reactive_graph::OwnedView::new_with_owner(view, owner)
 }
 
 #[component]
-fn ScopedPopover(scope_key:String)->impl IntoView {
+fn ScopedPopover(scope_key: String) -> impl IntoView {
     use rustify_components::popover;
-    let key=StoredValue::new(scope_key);let open=RwSignal::new(false);let accept=RwSignal::new(true);let requests=RwSignal::new(0);
-    view!{<popover::Root modal=true open=open on_open_change=move |next:bool|{if !next {requests.update(|n|*n+=1);}if next||accept.get_untracked(){open.set(next);}}>
+    let key = StoredValue::new(scope_key);
+    let open = RwSignal::new(false);
+    let accept = RwSignal::new(true);
+    let requests = RwSignal::new(0);
+    view! {<popover::Root modal=true open=open on_open_change=move |next:bool|{if !next {requests.update(|n|*n+=1);}if next||accept.get_untracked(){open.set(next);}}>
         <popover::Trigger test_id=format!("{}-popover-open",key.get_value())>"Open scoped task options"</popover::Trigger>
         <output data-testid=format!("{}-popover-requests",key.get_value())>{move ||requests.get()}</output>
         <popover::Portal><popover::Content aria_label="Scoped task options" class="stage-options-content" position=rustify_ui::FloatingPosition{align:rustify_ui::Align::Start,..Default::default()} test_id=format!("{}-popover-content",key.get_value())>

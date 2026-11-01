@@ -17,7 +17,8 @@ section > label { display: inline-flex; align-items: center; gap: 0.5em; margin-
 
 [data-testid="core-layer"] { width: 100px; height: 40px; }
 
-[data-testid="tree-toast-region"] { position: fixed; bottom: 16px; right: 16px; width: 200px; background: white; border: 1px solid #999; padding: 12px; }
+[data-testid="tree-toast-region"] { position: fixed; bottom: 16px; right: 16px; width: 226px; }
+[data-testid="tree-toast"] { box-sizing: border-box; width: 100%; background: white; color: #1d2939; border: 1px solid #999; padding: 12px; }
 
 [data-testid="tree-notice-popup"] { display: grid; gap: 8px; width: 260px; box-sizing: border-box; background: white; border: 1px solid #999; padding: 12px; }
 

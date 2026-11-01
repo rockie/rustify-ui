@@ -74,7 +74,10 @@ pub use shortcut::{Keystroke, Modifiers, Platform, Shortcut, ShortcutError};
 #[cfg(feature = "ssr")]
 pub use static_render::{provide_static_render_issues, StaticRenderIssues};
 pub use task::{Load, Requests, Ticket};
-pub use toast::{Toast, ToastOptions, ToastTone};
+pub use toast::{
+    SwipeDirection, Toast, ToastAction, ToastConfig, ToastImportance, ToastIssue, ToastOptions,
+    ToastQueuePolicy, ToastSwipe, ToastTone,
+};
 
 #[cfg(target_arch = "wasm32")]
 pub use components::{Button, Checkbox, Label, LoadView, Slider, TextArea, TextField};
@@ -117,7 +120,7 @@ pub use theme::{
 pub use theme::{
     use_theme, use_theme_values, ThemeBoundary, ThemeOverride, ThemeScope, ThemedScope,
 };
-pub use toast::{provide_toasts, use_toasts, ToastHandle, ToastRegion};
+pub use toast::{provide_toasts, provide_toasts_with, use_toasts, ToastHandle, ToastRegion};
 
 #[cfg(all(test, rustify_repo_tests))]
 mod repo_tests;

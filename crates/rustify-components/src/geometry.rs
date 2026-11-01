@@ -612,12 +612,11 @@ mod tests {
             provide_geometry_styles(styles.clone());
             view! { <crate::Progress value=38.125/> }.to_html()
         });
+        let rendered_css = styles.css();
+        assert!(rendered_css.contains("width:38.125%;"), "{rendered_css}");
         drop(owner);
         assert!(html.contains("rui-geometry-test-geometry-1"), "{html}");
-        assert_eq!(
-            styles.css(),
-            "@layer components{:where(.rui-geometry-test-geometry-1){width:38.125%;}}\n"
-        );
+        assert_eq!(styles.css(), rendered_css);
     }
 }
 

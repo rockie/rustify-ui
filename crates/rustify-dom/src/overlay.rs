@@ -358,7 +358,9 @@ fn wrap_tab(stops: usize, focus: TabFocus, backwards: bool) -> Option<usize> {
 #[cfg(target_arch = "wasm32")]
 pub use dom::{focus_first, on_layer_content_cleanup, use_overlay, Anchor, Layer, OverlayStack};
 #[cfg(target_arch = "wasm32")]
-pub(crate) use dom::{EditSession, NotificationPortal};
+pub(crate) use dom::{
+    reachable as notification_reachable, EditSession, NotificationEvents, NotificationPortal,
+};
 
 #[cfg(not(target_arch = "wasm32"))]
 pub use host::{Anchor, Layer};
@@ -472,8 +474,19 @@ mod dom {
     use std::collections::HashSet;
     use std::sync::{Arc, Mutex, Weak};
 
+    #[derive(Clone, Copy)]
+    pub(crate) struct NotificationEvents {
+        pub viewport: StoredValue<NodeRef<Div>>,
+        pub on_key_down: Callback<KeyboardEvent, bool>,
+        pub on_host_change: Callback<()>,
+        pub on_focus_out: Callback<Option<Element>>,
+    }
+
     #[component]
-    pub(crate) fn NotificationPortal(children: ChildrenFn) -> impl IntoView {
+    pub(crate) fn NotificationPortal(
+        #[prop(optional_no_strip)] events: Option<NotificationEvents>,
+        children: ChildrenFn,
+    ) -> impl IntoView {
         let owner = Owner::new();
         let theme = crate::theme::use_resolved_theme();
         let locale = crate::i18n::use_locale();
@@ -487,17 +500,24 @@ mod dom {
             }); }
             let parent = RwSignal::new(None);
             provide_context(ParentContext { id: parent, notification: true });
+            if let Some(events) = events { provide_context(events); }
             let registered = StoredValue::new(false);
             Effect::new({ let stack = stack.clone(); move || {
                 let Some(element) = node.get() else { return; };
                 if registered.get_value() { return; }
                 registered.set_value(true);
-                stack.lock().notifications.push(NotificationHost { element: SendWrapper::new(element.into()), parent });
+                stack.lock().notifications.push(NotificationHost { element: SendWrapper::new(element.into()), parent, events });
                 stack.refresh_inert();
+                stack.arm();
             }});
             on_cleanup(move || {
                 stack.lock().notifications.retain(|host| host.parent != parent);
                 stack.refresh_inert();
+                let empty = {
+                    let inner = stack.lock();
+                    inner.layers.is_empty() && inner.edit.is_none() && inner.notifications.is_empty()
+                };
+                if empty { stack.disarm(); }
             });
             view! { <Portal mount=root><div node_ref=node data-rustify-notifications="" dir=move ||direction.get().attribute() lang=move ||locale.get().tag()>{children()}</div></Portal> }
         }));
@@ -579,6 +599,7 @@ mod dom {
 
     struct LayerRecord {
         id: LayerId,
+        notification_owner: Option<StoredValue<NodeRef<Div>>>,
         element: SendWrapper<Element>,
         panel: SendWrapper<Element>,
         children_host: SendWrapper<Element>,
@@ -597,6 +618,7 @@ mod dom {
     struct NotificationHost {
         element: SendWrapper<Element>,
         parent: RwSignal<Option<LayerId>>,
+        events: Option<NotificationEvents>,
     }
 
     struct Roots {
@@ -811,7 +833,10 @@ mod dom {
         pub(crate) fn end_edit(&self) {
             let (ended, empty) = {
                 let mut inner = self.lock();
-                (inner.edit.take().is_some(), inner.layers.is_empty())
+                (
+                    inner.edit.take().is_some(),
+                    inner.layers.is_empty() && inner.notifications.is_empty(),
+                )
             };
             if ended {
                 self.watch_lifecycle(false);
@@ -825,10 +850,35 @@ mod dom {
             self.fallback()
         }
 
+        pub(crate) fn notification_presence(
+            &self,
+            viewport: StoredValue<NodeRef<Div>>,
+            active: Option<&Element>,
+        ) -> (bool, bool) {
+            let inner = self.lock();
+            let hovered =
+                notification_owner_at(&inner, |element| element.matches(":hover").unwrap_or(false));
+            let focused = notification_owner_at(&inner, |element| {
+                active.is_some_and(|active| element.contains(Some(active)))
+            });
+            (hovered == Some(viewport), focused == Some(viewport))
+        }
+
+        pub(crate) fn notification_fallback(&self) -> Element {
+            let inner = self.lock();
+            inner
+                .hierarchy
+                .top_modal()
+                .and_then(|id| inner.layers.iter().find(|layer| layer.id == id))
+                .map(|layer| (*layer.panel).clone())
+                .unwrap_or_else(|| inner.roots.container.clone())
+        }
+
         fn push(
             &self,
             parent: Option<LayerId>,
             notification: bool,
+            notification_owner: Option<StoredValue<NodeRef<Div>>>,
             modal: bool,
             element: Element,
             panel: Element,
@@ -849,6 +899,7 @@ mod dom {
                 let id = inner.hierarchy.insert(parent, modal, notification);
                 inner.layers.push(LayerRecord {
                     id,
+                    notification_owner,
                     element: SendWrapper::new(element),
                     panel: SendWrapper::new(panel),
                     children_host: SendWrapper::new(children_host),
@@ -885,7 +936,12 @@ mod dom {
                     })
                     .collect();
                 inner.layers.retain(|layer| !ids.contains(&layer.id));
-                (retired, inner.layers.is_empty() && inner.edit.is_none())
+                (
+                    retired,
+                    inner.layers.is_empty()
+                        && inner.edit.is_none()
+                        && inner.notifications.is_empty(),
+                )
             };
             // Move surviving notification branches before their former host's
             // resources and DOM can be released. Application callbacks run unlocked.
@@ -900,9 +956,7 @@ mod dom {
 
         fn refresh_inert(&self) {
             let mut inner = self.lock();
-            for element in inner.inert.drain(..) {
-                let _ = element.remove_attribute("inert");
-            }
+            let previous_inert = std::mem::take(&mut inner.inert);
             let order = inner.hierarchy.ordered().to_vec();
             inner
                 .layers
@@ -938,6 +992,8 @@ mod dom {
                                 .any(|host| host.element.contains(Some(element)))
                         })
                 });
+            let mut moves = Vec::new();
+            let mut levels = Vec::new();
             for (index, layer) in inner.layers.iter().enumerate() {
                 let host = inner
                     .hierarchy
@@ -947,52 +1003,78 @@ mod dom {
                     .unwrap_or(&inner.roots.overlay);
                 if let Some(wrapper) = layer.element.parent_element() {
                     if wrapper.parent_element().as_ref() != Some(host) {
-                        let _ = host.append_child(&wrapper);
+                        moves.push((host.clone(), wrapper));
                     }
                 }
-                if let Some(element) = layer.element.dyn_ref::<HtmlElement>() {
-                    let _ = element.style().set_property("z-index", &index.to_string());
-                }
+                levels.push(((*layer.element).clone(), index + 1));
             }
             let modal = inner.hierarchy.top_modal();
             let notification_host = modal
                 .and_then(|id| inner.layers.iter().find(|layer| layer.id == id))
                 .map(|layer| &*layer.notifications_host)
                 .unwrap_or(&inner.roots.overlay);
+            let mut notifications_changed = Vec::new();
+            let mut parents = Vec::new();
             for notification in &inner.notifications {
                 if let Some(wrapper) = notification.element.parent_element() {
                     if wrapper.parent_element().as_ref() != Some(notification_host) {
-                        let _ = notification_host.append_child(&wrapper);
+                        moves.push((notification_host.clone(), wrapper));
                     }
                 }
-                let _ = notification.parent.try_set(modal);
+                parents.push(notification.parent);
+                if let Some(events) = notification.events {
+                    notifications_changed.push(events.on_host_change);
+                }
+            }
+            let content = inner.roots.content.clone();
+            let modal_element = modal
+                .and_then(|id| inner.layers.iter().find(|layer| layer.id == id))
+                .map(|layer| (*layer.element).clone());
+            let layers: Vec<_> = inner
+                .layers
+                .iter()
+                .map(|layer| {
+                    (
+                        (*layer.element).clone(),
+                        inner.hierarchy.interactive(layer.id),
+                        modal.is_some_and(|modal| inner.hierarchy.within(modal, layer.id)),
+                    )
+                })
+                .collect();
+            drop(inner);
+            // Moving focused DOM synchronously emits focusout. Its notification
+            // callbacks read the stack, so no DOM mutation may hold this lock.
+            for element in previous_inert {
+                let _ = element.remove_attribute("inert");
+            }
+            for (host, wrapper) in moves {
+                let _ = host.append_child(&wrapper);
+            }
+            for (element, index) in levels {
+                if let Some(element) = element.dyn_ref::<HtmlElement>() {
+                    let _ = element.style().set_property("z-index", &index.to_string());
+                }
+            }
+            for parent in parents {
+                let _ = parent.try_set(modal);
             }
             let mut claims = Vec::new();
             if modal.is_some() {
-                claim_inert(&inner.roots.content, &mut claims);
+                claim_inert(&content, &mut claims);
             }
-            let modal_element = modal
-                .and_then(|id| inner.layers.iter().find(|layer| layer.id == id))
-                .map(|layer| &*layer.element);
-            for layer in &inner.layers {
-                let interactive = inner.hierarchy.interactive(layer.id);
+            for (element, interactive, ancestor) in layers {
                 if interactive {
-                    let _ = layer
-                        .element
-                        .remove_attribute("data-rustify-inactive-ancestor");
-                } else if modal.is_some_and(|modal| inner.hierarchy.within(modal, layer.id)) {
-                    let _ = layer
-                        .element
-                        .set_attribute("data-rustify-inactive-ancestor", "");
-                    if let Some(modal) = modal_element {
-                        inert_outside_branch(&layer.element, modal, &mut claims);
+                    let _ = element.remove_attribute("data-rustify-inactive-ancestor");
+                } else if ancestor {
+                    let _ = element.set_attribute("data-rustify-inactive-ancestor", "");
+                    if let Some(modal) = &modal_element {
+                        inert_outside_branch(&element, modal, &mut claims);
                     }
                 } else {
-                    claim_inert(&layer.element, &mut claims);
+                    claim_inert(&element, &mut claims);
                 }
             }
-            inner.inert = claims;
-            drop(inner);
+            self.lock().inert = claims;
             if let Some(element) =
                 focused.filter(|element| document().active_element().as_ref() != Some(element))
             {
@@ -1000,9 +1082,12 @@ mod dom {
                     focus(&element);
                 }
             }
+            for changed in notifications_changed {
+                changed.run(());
+            }
         }
 
-        /// Installs the scope's listeners on the way from no layers to one.
+        /// Installs the scope's listeners while layers, editing or notifications need them.
         fn arm(&self) {
             let mut inner = self.lock();
             if inner.watchers.is_some() {
@@ -1042,13 +1127,14 @@ mod dom {
                         }
                         return;
                     }
-                    if key != "Escape" && key != "Enter" {
-                        return;
-                    }
                     match if event.is_composing() {
-                        Routed::Native
+                        if key == "Escape" || key == "Enter" {
+                            Routed::Native
+                        } else {
+                            Routed::Ignored
+                        }
                     } else {
-                        route(&weak, &key)
+                        route(&weak, event)
                     } {
                         // Nothing above the application wanted it.
                         Routed::Ignored => {}
@@ -1250,18 +1336,70 @@ mod dom {
         Ignored,
     }
 
-    /// The command order of §6.2, in the one place that can enforce it:
-    /// composition and native editing first, then the top layer, then whatever
-    /// the application does with the key.
-    fn route(weak: &Weak<Mutex<Inner>>, key: &str) -> Routed {
+    // Ownership comes from the creating Owner. A migrated foreign viewport
+    // takes precedence over the modal surface that physically contains it.
+    fn notification_owner_at(
+        inner: &Inner,
+        contains: impl Fn(&Element) -> bool,
+    ) -> Option<StoredValue<NodeRef<Div>>> {
+        if let Some(host) = inner
+            .notifications
+            .iter()
+            .find(|host| contains(&host.element))
+        {
+            return host.events.map(|events| events.viewport);
+        }
+        inner
+            .layers
+            .iter()
+            .rev()
+            .find(|layer| contains(&layer.element))
+            .and_then(|layer| layer.notification_owner)
+    }
+
+    // Native editing wins. A notification-owned child layer outranks its
+    // notification, which in turn outranks the modal hosting its viewport.
+    fn route(weak: &Weak<Mutex<Inner>>, event: &KeyboardEvent) -> Routed {
         let Some(inner) = weak.upgrade() else {
             return Routed::Ignored;
         };
-        let (composing, cancel, close_top) = {
+        let key = event.key();
+        let (composing, cancel, close_top, notifications, notification_child) = {
             let inner = inner
                 .lock()
                 .expect("overlay stack is never held across a panic");
             let edit = inner.edit.as_ref();
+            let active = document().active_element();
+            let focused_owner = notification_owner_at(&inner, |element| {
+                active
+                    .as_ref()
+                    .is_some_and(|active| element.contains(Some(active)))
+            });
+            let focused = inner.notifications.iter().find(|host| {
+                host.events
+                    .is_some_and(|events| Some(events.viewport) == focused_owner)
+            });
+            let notification_child = focused.and_then(|host| {
+                let parent = host.parent.get_untracked();
+                inner
+                    .layers
+                    .iter()
+                    .rev()
+                    .find(|layer| {
+                        layer.notification_owner == focused_owner
+                            && inner.hierarchy.interactive(layer.id)
+                            && !parent
+                                .is_some_and(|parent| inner.hierarchy.within(parent, layer.id))
+                    })
+                    .map(|layer| (layer.escape, layer.dismiss.clone()))
+            });
+            let notifications = inner
+                .notifications
+                .iter()
+                .rev()
+                .filter_map(|host| host.events)
+                .filter(|events| key != "Escape" || Some(events.viewport) == focused_owner)
+                .collect::<Vec<_>>();
             (
                 edit.map(|edit| edit.composing.clone()),
                 edit.map(|edit| edit.cancel.clone()),
@@ -1269,13 +1407,17 @@ mod dom {
                     .layers
                     .last()
                     .map(|layer| (layer.escape, layer.dismiss.clone())),
+                notifications,
+                notification_child,
             )
         };
         if let Some(composing) = composing {
             if composing() {
-                // The key is part of what is being typed. It commits nothing
-                // and closes nothing.
-                return Routed::Native;
+                return if key == "Escape" || key == "Enter" {
+                    Routed::Native
+                } else {
+                    Routed::Ignored
+                };
             }
             if key == "Escape" {
                 if let Some(cancel) = cancel {
@@ -1283,9 +1425,20 @@ mod dom {
                     return Routed::Taken;
                 }
             }
-            // Enter outside a composition belongs to the field itself, which
-            // sees it on the way down.
-            return Routed::Ignored;
+            if key == "Enter" {
+                return Routed::Ignored;
+            }
+        }
+        if key == "Escape" {
+            if let Some((hook, close)) = notification_child {
+                dismiss(hook, LayerDismiss::Escape, || close(LayerDismiss::Escape));
+                return Routed::Taken;
+            }
+        }
+        for notification in notifications {
+            if notification.on_key_down.run(event.clone()) {
+                return Routed::Taken;
+            }
         }
         if key == "Escape" {
             if let Some((hook, close)) = close_top {
@@ -1441,7 +1594,7 @@ mod dom {
     }
 
     /// Whether `element` is on screen and neither disabled nor shut away.
-    fn reachable(element: &HtmlElement) -> bool {
+    pub(crate) fn reachable(element: &HtmlElement) -> bool {
         if element.matches(":disabled").unwrap_or(false)
             || element
                 .closest("[inert], [hidden]")
@@ -1662,6 +1815,7 @@ mod dom {
         let directional = direction.is_some() || on_placement.is_some();
         let direction = direction.unwrap_or_else(crate::use_direction);
         let parent = use_context::<ParentContext>();
+        let notification_events = use_context::<NotificationEvents>();
         let owner = Owner::new();
         let view = owner.with(move || use_overlay().map(|stack| {
             let root = stack.overlay_root();
@@ -1905,7 +2059,7 @@ mod dom {
                         let vacant=current.as_ref().is_none_or(|active|document().body().is_some_and(|body|AsRef::<Element>::as_ref(&body)==active)
                             || active==&fallback || root.as_ref().is_some_and(|root|root.contains(Some(active))));
                         if !vacant || !fallback.is_connected() {return;}
-                        if let Some(target)=targets.drain(..).find(|element|element.is_connected() && element.dyn_ref::<HtmlElement>().is_some_and(reachable)) {focus(&target);}
+                        if let Some(target)=targets.drain(..).find(|element|element.is_connected() && element.matches(FOCUSABLE).unwrap_or(false) && element.dyn_ref::<HtmlElement>().is_some_and(reachable)) {focus(&target);}
                         else if let Some(parent)=parent.filter(|element|element.is_connected() && element.dyn_ref::<HtmlElement>().is_some_and(reachable)) {focus_first(&parent);}
                         else {focus(&fallback);}
                     });
@@ -1936,11 +2090,15 @@ mod dom {
                     let close = on_close.clone() as Arc<dyn Fn() + Send + Sync>;
                     let ask = on_close.clone();
                     let dismiss = Arc::new(move |_| ask());
-                    let id = stack.push(parent_id, parent.is_some_and(|parent|parent.notification), modal, element.into(), surface.clone(), host, notifications, deactivate.clone(), close, dismiss, on_escape_key_down, on_pointer_down_outside, on_focus_outside, on_interact_outside, anchor, trigger_id);
+                    let id = stack.push(parent_id, parent.is_some_and(|parent|parent.notification), notification_events.map(|events| events.viewport), modal, element.into(), surface.clone(), host, notifications, deactivate.clone(), close, dismiss, on_escape_key_down, on_pointer_down_outside, on_focus_outside, on_interact_outside, anchor, trigger_id);
                     resources.registered.set(Some(id));
                     crate::runtime::defer(move || {
                         if resources.registered.try_get_untracked().flatten()!=Some(id) {return;}
                         let event=Cancelable::new(());
+                        if document().active_element().is_some_and(|active| {
+                            surface.contains(Some(&active))
+                                && active.dyn_ref::<HtmlElement>().is_some_and(reachable)
+                        }) {event.prevent_default();}
                         if let Some(callback)=on_open_auto_focus {callback.try_run(event.clone());}
                         if resources.registered.try_get_untracked().flatten()!=Some(id) {return;}
                         if !event.default_prevented() && modal {focus_first(&surface);}
@@ -1952,6 +2110,11 @@ mod dom {
             view! {
                 <Portal mount=root>
                     <div node_ref=node class=class.clone() data-testid=test_id.clone()
+                        on:pointerenter=move |_| { if let Some(events) = notification_events { events.on_host_change.run(()); } }
+                        on:pointermove=move |_| { if let Some(events) = notification_events { events.on_host_change.run(()); } }
+                        on:pointerleave=move |_| { if let Some(events) = notification_events { events.on_host_change.run(()); } }
+                        on:focusin=move |_| { if let Some(events) = notification_events { events.on_host_change.run(()); } }
+                        on:focusout=move |event| { if let Some(events) = notification_events { events.on_focus_out.run(event.related_target().and_then(|target| target.dyn_into::<Element>().ok())); } }
                         hidden=move || !active.get() || parent.is_some_and(|parent| !parent.notification && parent.id.get().is_none())
                         style:visibility=move || (!alive.get() || detached.get()).then_some("hidden")
                         style:pointer-events=move || (!alive.get() || detached.get()).then_some("none")

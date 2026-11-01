@@ -5,6 +5,8 @@
 pub mod accessible;
 pub mod accordion;
 pub mod alert_dialog;
+pub mod aspect_ratio;
+pub mod avatar;
 pub mod choice;
 pub mod collapsible;
 pub mod dialog;
@@ -16,12 +18,19 @@ mod hover;
 pub mod hover_card;
 #[cfg(any(target_arch = "wasm32", test))]
 mod hover_grace;
+mod loading;
 pub mod popover;
 pub mod portal;
+pub mod progress;
+pub mod scroll_area;
 pub mod select;
+pub mod separator;
+pub mod skeleton;
 pub mod slider;
 pub mod slot;
+pub mod spinner;
 pub mod tabs;
+pub mod toast;
 pub mod tooltip;
 
 pub use accessible::{AccessibleIcon, VisuallyHidden};

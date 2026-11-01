@@ -157,7 +157,10 @@ test.describe("M4 V4 / R10: layers of one scope", () => {
         expect(await focused(page)).toBe("anchor-host");
         // The layer holds the keyboard when it closes, so it has one to hand
         // back.
-        await page.getByTestId("anchor-layer-button").focus();
+        const inside = page.getByTestId("anchor-layer-button");
+        await expect(inside).toBeVisible();
+        await inside.focus();
+        await expect(inside).toBeFocused();
 
         // The element the layer is anchored to - and the control it was opened
         // from - leaves the document while the layer is open. Removed without

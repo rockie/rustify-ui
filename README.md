@@ -22,6 +22,12 @@ FormRoot and Select. Load `PRIMITIVES_CSS` for structural rules or the themed
 examples. Studio's Cards scene provides a complete local form and an expandable
 states/parts tool. These source additions are not published by the 0.2.1 packages.
 
+Source panel and feedback consumers can compose safe confirmations, anchored
+choices and persistent results using shared raw/themed parts. [Panels and
+feedback](docs/panels.md) covers controlled requests, native Tooltip targets,
+loading content and the single Toast scheduler, including modal-host migration.
+Use matching source SDK and CSS; these APIs are not in registry 0.2.1.
+
 ## Quick start
 
 The validated development environment is macOS. Use a browser with WebAssembly and WebGL2; macOS Chrome is the current pass gate. See [compatibility](docs/compatibility.md) for the tested browser matrix.
@@ -290,6 +296,6 @@ This preview uses single-threaded wasm and WebGL2. It provides no WebGPU backend
 | [crates/rustify-docs](crates/rustify-docs/), [crates/rustify-docs-cli](crates/rustify-docs-cli/) and [tests/docs-ssg](tests/docs-ssg/) | Rustify Docs, the documentation site generator ([author's reference](docs/docs-ssg.md)), and its fixtures |
 | [docs/plan](docs/plan/), [docs/validation](docs/validation/) and [docs/reports](docs/reports/) | Development plans, validation records and release reports |
 
-Read the [architecture](docs/architecture.md) for runtime ownership and lifecycle contracts, and the [component reference](docs/components.md) for supported controls. Application guides cover [navigation](docs/navigation.md), [workspace layout](docs/workspace.md), [forms](docs/forms.md), [localisation](docs/i18n.md), [large data](docs/data.md) and [full theme integration](docs/themes.md).
+Read the [architecture](docs/architecture.md) for runtime ownership and lifecycle contracts, and the [component reference](docs/components.md) for supported controls. Application guides cover [navigation](docs/navigation.md), [workspace layout](docs/workspace.md), [forms](docs/forms.md), [panels and feedback](docs/panels.md), [localisation](docs/i18n.md), [large data](docs/data.md) and [full theme integration](docs/themes.md).
 
 Third-party source provenance and file digests are recorded in [sources.lock.json](sources.lock.json). Included license notices cover [Makepad](makepad/LICENSE), its [fonts](makepad/widgets/resources/FONT-LICENSES.md), [Rust/UI component sources](crates/rustify-components/LICENSE-RUST-UI), [noUiSlider](examples/property-workbench/vendor/nouislider/LICENSE.md), [Vellum](examples/vellum/LICENSE-VELLUM) and [tweakcn theme data](examples/theme-studio/vendor/tweakcn/LICENSE).

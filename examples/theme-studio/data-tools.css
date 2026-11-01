@@ -20,6 +20,7 @@
 
 .rui-dialog-layer .tools-dialog {
   box-sizing: border-box;
+  padding: 1rem;
   width: min(calc(100vw - 2rem), var(--rustify-floating-available-width));
   max-width: min(64rem, var(--rustify-floating-available-width));
   max-height: min(calc(100dvh - 2rem), var(--rustify-floating-available-height));

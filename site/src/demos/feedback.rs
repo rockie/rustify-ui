@@ -27,9 +27,12 @@ pub fn tooltip_demo() -> impl IntoView {
     let open = RwSignal::new(false);
     view! {
         <div class="space-y-4">
-            <Tooltip open=open on_open_change=move |value| open.set(value) label="Help also appears when this button receives keyboard focus.">
-                <Button variant=ButtonVariant::Outline on_click=|| {}>"Hover or focus for help"</Button>
-            </Tooltip>
+            <Tooltip open=open on_open_change=move |value| open.set(value)
+                label="Help also appears when this button receives keyboard focus."
+                trigger=leptos::html::button().r#type("button")
+                    .class("inline-flex h-9 items-center rounded-md border border-border bg-background px-4 text-sm font-medium outline-none hover:bg-muted focus-visible:ring-ring/50 focus-visible:ring-[3px]")
+                    .child("Hover or focus for help")
+            />
             <p class="text-sm">"Tooltip: "<output data-demo-state="">{move || if open.get() { "Open" } else { "Closed" }}</output></p>
         </div>
     }
@@ -98,6 +101,7 @@ pub fn toast_demo() -> impl IntoView {
                 toasts.show("The example action completed.", ToastOptions {
                     duration_ms: 5000,
                     tone: ToastTone::Success,
+                    ..Default::default()
                 });
             }>"Show notification"</Button>
             <p class="text-sm">"Notification: "<output data-demo-state="">{move || {

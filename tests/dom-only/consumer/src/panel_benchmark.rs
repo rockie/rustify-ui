@@ -71,6 +71,8 @@ fn Panels() -> impl IntoView {
             <output data-testid="bench-progress-state">{move || progress.get()}</output>
             <Toaster test_id="bench-toaster" />
             <crate::panels::Panels />
+            <crate::content::Content />
+            <crate::feedback::Feedback />
         </section>
     }
 }

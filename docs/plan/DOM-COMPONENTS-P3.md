@@ -187,13 +187,13 @@ REVIEW @progress_consistency:
 
 ### 恢复快照
 
-- 最近更新：2026-11-01T06:08:43+08:00
-- 当前进度：4/7 个里程碑完成
-- 当前状态：进行中
-- 最近完成：M4 · 辅助浮层与阶段一面板收口
-- 下一步：M5 · 集成结构化内容与图片草稿，完成 ScrollArea 和两消费者内容样本后执行 V-5；真实浏览器留 M7/V-8
+- 最近更新：2026-11-01T18:38:29+08:00
+- 当前进度：7/7 个里程碑完成
+- 当前状态：进行中（退出检查已通过，待最终提交与 SHA 回填）
+- 最近完成：M7 · 完整任务与最终交付收口
+- 下一步：按 M7 提交点保存源码与证据，回填 M5—M7 的 SHA，随后由用户发起代码评审
 - 当前阻塞：无
-- 代码基线：`4152c4c2`；M2—M4 已按阶段一提交点收口，M1 before 已由 `3f23c064` 冻结
+- 代码基线：`3e16d326`；M2—M4 已由 `4152c4c2` 提交并回填，M5/M6 增量在 dirty 工作树待 M7 收口，M1 before 为 `3f23c064`
 
 ### 完成记录
 
@@ -203,6 +203,9 @@ REVIEW @progress_consistency:
 | M2 | 已完成 | 2026-11-01T00:46:19+08:00 | 同源切换/展开/导航交付，V-2 及两消费者定向浏览器通过 | [M2 记录](DOM-COMPONENTS-P3.records/M2.md) | `4152c4c2` |
 | M3 | 已完成 | 2026-11-01T03:13:11+08:00 | V-3 通过；同源 Dialog/AlertDialog、生命周期/名称/取消/恢复与旧调用迁移齐备，真实两消费者及 Studio 定向验证通过 | [M3 记录](DOM-COMPONENTS-P3.records/M3.md) | `4152c4c2` |
 | M4 | 已完成 | 2026-11-01T06:08:43+08:00 | V-4/V-6 通过；辅助浮层、Arrow/hover/typed 迁移和完整任务面板齐备，两消费者及旧入口验证通过 | [M4 记录](DOM-COMPONENTS-P3.records/M4.md) | `4152c4c2` |
+| M5 | 已完成 | 2026-11-01T06:45:10+08:00 | V-5 通过；内容/媒体/原生滚动与样本、静态语义和参数齐备，两消费者构建通过，真实浏览器留 M7 | [M5 记录](DOM-COMPONENTS-P3.records/M5.md) | 待提交 |
+| M6 | 已完成 | 2026-11-01T07:23:10+08:00 | V-7 通过；唯一通知调度、加载反馈、直接调用及两消费者构建齐备，真实行为留 M7 | [M6 记录](DOM-COMPONENTS-P3.records/M6.md) | 待提交 |
+| M7 | 已完成 | 2026-11-01T18:38:29+08:00 | V-8—V-14 通过；真实内容/反馈/完整任务、接管、调用方与性能闭合，原生wheel一帧回退已修正，人工missing归P5 | [M7 记录](DOM-COMPONENTS-P3.records/M7.md) | 待提交 |
 
 ## 0. 需求、范围与决策
 
@@ -485,7 +488,7 @@ Arrow 是真实定位部件，使用同一几何结果转向，不能画固定�
 
 **Progress。** 原语 Root(value: Signal<Option<f64>>, max: Signal<f64>=100, value_label: Option<Callback<ProgressValue,String>>)/Indicator；`ProgressValue { value: Option<f64>, max: f64 }`。有限 max>0，Some(value) 需有限且在 0..=max；无效值给 prop 诊断并呈现 indeterminate，无效 max 用 100，不改应用值。aria-valuenow 为原单位 value，aria-valuemax 为 max，视觉宽度才用 value/max；None 无 aria-valuenow，data-state 为 indeterminate/loading/complete，aria-valuetext 使用显式 value_label。名称通过 aria_label/labelled_by。便捷 Progress 的 indeterminate=true 映射 None。
 
-**Spinner / Skeleton。** Spinner(label、loading: Signal<bool>=true、size、可选 children) 在 loading 时提供唯一可读 status 和装饰图形，保留 children 的占位尺寸、隐藏其朗读与交互；loading=false 恢复 children/无内容时不留 status。label 缺省从 core locale 获取 Loading；不要继续固定英文。Skeleton(loading=true、layout: Signal<Layout>、children) 加载时 hidden-to-AT/inert，不重复朗读或留下可聚焦子项；结束后原 children/ID/业务状态继续，不重建输入。减少动效时图形静止/无 shimmer，加载事实仍可读。Progress 的不确定动画 duration 采用结构化 `duration_ms`，沿 CSSOM 写样式；不是虚假的完成百分比。
+**Spinner / Skeleton。** Spinner(label、loading: Signal<bool>=true、size、可选 children) 在 loading 时提供唯一可读 status 和装饰图形，保留 children 的占位尺寸、隐藏其朗读与交互；loading=false 恢复 children/无内容时不留 status。label 缺省从 core locale 获取 Loading；不要继续固定英文。Skeleton(loading=true、layout: Signal<Layout>、children) 加载时 hidden-to-AT/inert，不重复朗读或留下可聚焦子项；结束后原 children/ID/业务状态继续，不重建输入；恢复其键盘可达性，不增加异步自动回焦。减少动效时图形静止/无 shimmer，加载事实仍可读。Progress 的不确定动画 duration 采用结构化 `duration_ms`，沿 CSSOM 写样式；不是虚假的完成百分比。
 
 针对已有单 native 元素，公开 `spinner_as` / `skeleton_as(target: HtmlElement<E,At,Ch>, ...)` 并沿 Slot 装饰/隐藏该元素，保留原标签和 listeners；不将 block/table 结构塞进固定 span。无目标的 Skeleton 是独立占位 span，调用方可显式选择 block 展示；带普通 children 的便捷组装使用合法 div 包装。这些入口共用同一 loading 投影，不在状态切换时重建目标。
 
@@ -517,9 +520,9 @@ pub struct ToastAction {
 // Action(alt_text:String, on_action:Callback<Cancelable<()>>, children)；Close 为 native button。
 ```
 
-- Provider 只拥有注册顺序、可见槽位、剩余时间、暂停原因与手势，不拥有 open。Root 注册使用内部 ID；ToastHandle 持有应用通过 show 接受的消息列表，ToastRegion 将其映射到同一 Root，render 回调只画 body，避免嵌套两个 Root/重复计时。便捷 ToastAction 数据若由 show 使用，采用 `label/alt_text/on_action: Callback<Cancelable<()>>`，不把 Fn/DOM 节点序列化到业务对象。
+- Provider 只拥有注册顺序、可见槽位、剩余时间、暂停原因与手势，不拥有 open。Root 注册使用内部 ID；ToastHandle 持有应用通过 show 接受的消息列表，ToastRegion 将其映射到同一 Root，render 回调在该 Root 的 Owner 下构造 body，避免缺失部件 context、嵌套两个 Root或重复计时。便捷 ToastAction 数据若由 show 使用，采用 `label/alt_text/on_action: Callback<Cancelable<()>>`，不把 Fn/DOM 节点序列化到业务对象。
 - FIFO 按被接受 open 的登记顺序展示，排队不提前耗时；Replace 在便捷 handle 中原子替换列表。声明式 Replace 对旧 Root 仅发一次关闭请求，未被接受则新项等待，不强行抹掉外部 open。visible_limit=0、非有限/负 swipe_threshold、超出可调度范围的时间等配置在边界诊断，拒绝非法字段并保留有效配置；不在内部反复校验已成立不变量。
-- Provider 使用一个可取消的最早到期 timer，基于单调 performance 时间保存剩余时长。hover、focus、window blur/document hidden、活动 swipe 都暂停；只有全部暂停原因解除才继续，恢复不重置为完整 duration。关闭请求被拒绝后不每帧重发，到下一次明确重新打开/时长改变才重设 session。timer、监听、pointer capture 在 Root 注销/Provider 清理/abort 释放。
+- Provider 使用一个可取消的最早到期 timer，基于单调 performance 时间保存剩余时长。Viewport（含通知浮层子树）的 hover/focus 暂停 Provider 内全部可见 session，window blur/document hidden 同样全局暂停；活动 swipe 暂停所属 Root。只有全部暂停原因解除才继续，恢复不重置为完整 duration。关闭请求被拒绝后不每帧重发，到下一次明确重新打开/时长改变才重设 session。timer、监听、pointer capture 在 Root 注销/Provider 清理/abort 释放。
 - Viewport 有本地化名称与可配置 hotkey，F8 仅在当前 scope 有通知时把焦点送到首个可操作通知；不劫持普通输入字符。关闭当前通知后到下一可用通知、有效原焦点或 scope fallback；Tab 自然退出通知区，Escape 只请求关闭当前聚焦通知。
 - 与 modal 的组合在 core 完成：stack 拥有本 scope 的通知宿主及有效父层引用；Viewport 的 Owner 向通知内容提供同一个动态引用，DOM 搬动不改变 Owner 继承。当前有效 top modal 为 M 时，Viewport 的同一个 DOM 根挂入 M 的 Content notifications host，引用指向 M；无 modal 时放本 scope overlay，引用为 None。通知内新浮层在实际注册时读取该引用；若其外侧已有实际 Layer，则优先使用最近 Layer 的 context。有效主题/方向仍来自创建 provider。stack 在 native 编辑之后、父 modal 之前处理聚焦通知的 Escape；通知上方已打开的后代浮层先处理。Toast 不是新的 outside-dismiss/modal 层，不在 scope 外加第二套键盘监听。
 - **已打开后代采用重绑并保留，不因换宿主请求关闭。** 直接从通知动态引用注册的浮层是迁移子树根；换宿主时把这些存活根的 parent 和 Portal 挂载点一起改到新父层的 children host，无 modal 时改到本 scope overlay，子树内部父子关系保持。保留 LayerId、Owner、Root DOM、业务 open、通知 session/剩余时间与原登记次序，后代优先级按 §5.1 的父子关系确定，不重注册、不重跑 auto_focus、不重复宣告；完成父关系与 DOM 更新后再统一刷新 inert、Tab 域和 outside/Escape 仲裁。相比迁移时关闭，这一选择保留正在进行的通知内任务，无需增加公共 props。
@@ -625,7 +628,7 @@ pub struct ToastAction {
 | V-4 | WORK-F12/AC-1、AC-2；四边/RTL/collision/arrow、可撤计时、grace、Tooltip 非交互/不移焦 | `mbx test --locked -p rustify-dom --lib overlay::`；`mbx test --locked -p rustify-components --lib primitives::`；`mbx test --locked -p rustify-components --no-default-features --features ssr --test panels_ssg`；定向两包 Clippy 同 V-3，另以 `--no-default-features --features ssr` 检查 | M4：辅助浮层的行为、皮肤、typed 旧调用迁移与定位/计时测试齐备后，随后进入本阶段 V-6 |
 | V-5 | WORK-F17/AC-1、AC-2；内容原生语义/图片代次、比例/分隔与滚动模型，WORK-F15/AC-3 参数静态输出 | `mbx test --locked -p rustify-components --lib primitives::`；`mbx test --locked -p rustify-components --no-default-features --features ssr --test content_ssg`；组件 CSR/ssr 各自 Clippy；`cargo fmt -p rustify-components -- --check` | M5：全部内容、滚动部件/便捷入口、raw 适用样本与 styled 真实内容整批齐备后；不逐个组件跑包级门 |
 | V-6 | UAT-5/6 的 P3 范围：WORK-F10 全部、WORK-F11 全部、WORK-F12 全部及本阶段视觉；含 P2 Select 嵌套与旧 Layer；实查 Content 角色/名称、无 aria-modal、本 scope inert/Tab 约束，另一 scope/宿主的真实点击与键盘可达 | §9.4 两个 build-dom；串行 `npx --no-install playwright test -c playwright.docs.config.ts --project=dom-primitives panels.spec.ts` 与 `--project=dom-only panels.spec.ts`；实际截图与同一次 UI 走查；旧 GPU anchor `--project=fusion-basic m4-overlay.spec.ts`（先 build-web） | M4：V-2—V-4、完整面板和最新两消费者产物齐备后的**阶段一收口**；不等内容/通知全完成，验证模态/输入风险；后续仅改相关路径才补受影响项 |
-| V-7 | WORK-F14 全部；本期 WORK-F15/AC-3：进度原单位/未知状态、Spinner/Skeleton、通知 FIFO/替换/暂停/拒绝/取消/计时及换宿主后剩余时长保持 | `mbx test --locked -p rustify-dom --lib toast::tests`；`mbx test --locked -p rustify-components --no-default-features --features ssr --test feedback_ssg`；两包 CSR/ssr Clippy；`cargo fmt -p rustify-dom -p rustify-components -- --check` | M6：core 唯一通知调度、原语/Themes、反馈样本与确定性模型/静态测试齐备后 |
+| V-7 | WORK-F14 全部；本期 WORK-F15/AC-3：进度原单位/未知状态、Spinner/Skeleton、通知 FIFO/替换/暂停/拒绝/取消/计时及换宿主后剩余时长保持 | `mbx test --locked -p rustify-dom --lib toast::`；`mbx test --locked -p rustify-components --no-default-features --features ssr --test feedback_ssg`；两包 CSR/ssr Clippy；`cargo fmt -p rustify-dom -p rustify-components -- --check` | M6：core 唯一通知调度、原语/Themes、反馈样本与确定性模型/静态测试齐备后 |
 | V-8 | WORK-F17/AC-1、AC-2 与本期 WORK-F15/AC-3；真实图片/滚动/长内容/table/dl/卡片、全部视觉声明 | 最新 build-dom 后，串行 `npx --no-install playwright test -c playwright.docs.config.ts --project=dom-only content.spec.ts`、`--project=dom-primitives content.spec.ts`；§9.3 参数矩阵与截图 | M7：V-5 与内容/皮肤/组合样本全部齐备后的**阶段二收口**；raw 只验其实际 primitive 集合，不能把跳过的 themed rows 算通过 |
 | V-9 | 本期 WORK-N4：同步 SSG 内容、唯一 ID/关联、原节点接管/关闭 Portal，覆盖本期交付组件 | `mbx test --locked -p rustify-components --no-default-features --features ssr --test panels_ssg --test content_ssg --test feedback_ssg --test ssr_controls --test missing_context_ssr`；V-12 构建 fixture 后 `npx --no-install playwright test -c playwright.docs.config.ts --project=dom-hydrate hydration.spec.ts` | M7：扩展 deterministic view、独立 features 产物与所有静态测试齐备后的阶段二收口；不测试流式 SSR 服务 |
 | V-10 | WORK-F14/AC-1、AC-2、WORK-F15/AC-3；真实计时/hover/focus/window pause、swipe/F8/action、宣告结构及动效 | 串行 `npx --no-install playwright test -c playwright.docs.config.ts --project=dom-only feedback.spec.ts`、`--project=dom-primitives feedback.spec.ts`；§9.3 的反馈视觉矩阵 | M7：V-7 与新通知/反馈真实产物齐备后的阶段二收口 |
@@ -660,7 +663,7 @@ PANEL_BENCH_PHASE=current RUSTIFY_TIER=evidence npx --no-install playwright test
 
 - **阶段一面板**：键盘/指针完成自动/手动 Tabs、单/多 Accordion、Collapsible、SegmentedControl 和真实 TabNav 链接；分别接受/拒绝/延迟请求。Dialog → Popover → Select 的三层组合只关闭顶层；AlertDialog 初始聚焦安全 Cancel，取消零危险回调，Action 仅一次；outside/Escape/auto_focus 各可取消；移除 Trigger/当前项后焦点确定，hidden/force_mount 内容不误入。
 - **浮层边界**：四边、三种 align、LTR/RTL、offset/箭头/碰撞边界、很长内容、嵌套滚动/resize；hover 从触发器移到卡片/Tooltip 可停留阅读，选区不误关，focus/blur/Escape 不劫持；触控路径用真实浏览器 Pointer Events 验证可操作行为，OS 真机结论单列。
-- **内容和反馈**：普通/空/长 table/dl、header/label 关联、Avatar 正常/失败/换 src 竞态、ratio/Separator、两轴滚动与拖动取消、卡片 FormData/描述；Progress 非 100 max 的原单位与未知状态；Spinner/Skeleton 在 loading 结束后保留节点/焦点，隐藏内容不可操作。
+- **内容和反馈**：普通/空/长 table/dl、header/label 关联、Avatar 正常/失败/换 src 竞态、ratio/Separator、两轴滚动与拖动取消、卡片 FormData/描述；Progress 非 100 max 的原单位与未知状态；Spinner/Skeleton 在 loading 结束后保留原节点/草稿并恢复键盘可达，不抢走外部已有焦点；加载时隐藏内容不可操作。
 - **通知组合**：FIFO/Replace、限量/持久条目、等待不耗时、hover+focus 多原因暂停、blur/hidden、拒绝过期关闭、滑动成功/取消、Action/Close/热键进入与返回；分别验证“先创建 Toast → 打开 modal → 从原 Toast 打开 Popover → Select → Tab/outside/Escape → 关闭 modal”和“Toast 内已有 Popover/Select → 打开另一个 modal → 关闭宿主/返回”；再从 Toast 操作打开新 modal，并覆盖新 modal 嵌在已有通知浮层内的路径。按 §5.6 核对新/既存后代的父关系与实际挂载、无自环/无主层、Tab 域和关闭顺序、有效回焦与 native Draft/IME composing 优先；迁移前后 Root/Content DOM 身份、业务 open、auto_focus/关闭/宣告计数及剩余时长保持。重复操作计数与两个 live region 的结构证明不重复派发；不以 DOM 断言冒充 VoiceOver 实际朗读。
 - **视觉采集**：每个 §5.7 枚举的 ALL 都有至少一个真实可消费状态，并在正常/焦点/选中或打开/禁用/加载及适用错误状态检查，不做没有意义的全参数笛卡尔积。浅/深两模式、默认/局部色板、高对比和 caller utility 覆盖均有结果；390/768/桌面、200% 放大与 reduced motion 按受影响任务采集。浏览器 UI 缩放若只能用 CSS/视口模拟须分别标注，真实浏览器 UI 缩放缺失仍记 missing。
 - **隔离/清理**：两个 scope、嵌套反向主题与普通宿主元素共存；局部 Dialog/AlertDialog/modal Popover 与旧 modal Layer 分别核对角色/名称、无 aria-modal、本 scope 底层不可操作，以及另一 scope/宿主可点击且可键盘聚焦。正常 dispose/Trigger 失效只释放所属资源；新实例 fatal 结束其全部 scope，独立实例继续。沿已有故障 fixture 触发，不新增 GPU 故障隔离机制；Studio 已有持久化/GPU 故障证据未变部分引用原记录。

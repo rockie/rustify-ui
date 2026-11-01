@@ -1,24 +1,28 @@
-use leptos::portal::Portal;
 use leptos::prelude::*;
+use rustify_ui::toast::{Description, Root, Viewport};
 
 use crate::app::Editor;
 
-/// Vellum's markup for the SDK's toasts.
-///
-/// Not the SDK's `ToastRegion`, which renders a message's markup only while
-/// it shows: Vellum's specs and stylesheet expect one `#toast` that stays in
-/// the page, hidden between messages.
+/// Vellum keeps one measurable `#toast` box, hidden between messages.
+/// Each accepted message uses the core's scheduling and announcement parts.
 #[component]
 pub fn Toast(editor: Editor) -> impl IntoView {
-    let message = Memo::new(move |_| editor.toasts.current().map(|toast| toast.message));
-    // A status message stays outside inert content without joining the Escape stack.
-    rustify_ui::use_overlay().map(|stack| {
-        let root = stack.overlay_root();
-        view! {
-            <Portal mount=root>
-                <div id="toast" class=move || if message.with(Option::is_some) { "toast" } else { "toast hidden" }
-                    role="status" aria-live="polite">{move || message.get().unwrap_or_default()}</div>
-            </Portal>
-        }
-    })
+    let toasts = editor.toasts;
+    view! {
+        <Viewport>
+            <div id="toast" class=move || if toasts.items().is_empty() { "toast hidden" } else { "toast" }>
+                <For each=move || toasts.items() key=|toast|toast.seq let:toast>
+                    {
+                        let seq=toast.seq;
+                        view! {
+                            <Root open=true duration_ms=toast.duration_ms importance=toast.importance
+                                on_open_change=move |open: bool| {if !open {toasts.dismiss(seq);}}>
+                                <Description>{toast.message}</Description>
+                            </Root>
+                        }
+                    }
+                </For>
+            </div>
+        </Viewport>
+    }
 }

@@ -43,7 +43,7 @@ test('portal retains local direction, has no theme tokens and cleans up its wrap
     page.on('requestfailed', request => errors.push(request.url()));
     await page.goto('/');
     await expect(page.locator('#status')).toHaveAttribute('data-status', 'ready');
-    const root = page.locator('[data-rustify-overlay]');
+    const root = page.locator('[data-rustify-scope="primitives"] > [data-rustify-overlay]');
     const before = await root.evaluate(node => node.childElementCount);
     const idle = await page.evaluate(() => (window as any).__primitives.stats());
     for (let round = 0; round < 3; round++) {
@@ -935,10 +935,11 @@ test('select scope disposal clears native typeahead timers, observers and conten
     expect((await page.evaluate(() => (window as any).__selectResources())).timers).toBe(1);
     const bridge = await cdp.send('Runtime.evaluate', { expression: 'document.querySelector("[data-testid=raw-select-list]").parentElement', objectGroup: 'select-listeners' });
     expect(await count(bridge.result.objectId!, 'click')).toBe(1);
-    expect(await count(documentRef.result.objectId!, 'pointerdown')).toBe(idlePointer + 1);
+    expect(idlePointer).toBe(1);
+    expect(await count(documentRef.result.objectId!, 'pointerdown')).toBe(idlePointer);
     await page.evaluate(() => (window as any).__primitives.dispose());
     expect(await count(bridge.result.objectId!, 'click')).toBe(0);
-    expect(await count(documentRef.result.objectId!, 'pointerdown')).toBe(idlePointer);
+    expect(await count(documentRef.result.objectId!, 'pointerdown')).toBe(0);
     await expect.poll(() => page.evaluate(() => (window as any).__selectResources())).toEqual({ mutation: 0, resize: 0, timers: 0 });
     await expect.poll(() => page.evaluate(() => (window as any).__primitives.stats())).toMatchObject({ tasks: 0, timers: 0, observers: 0, errors: 0 });
     await cdp.detach();

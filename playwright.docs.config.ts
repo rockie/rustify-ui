@@ -151,7 +151,7 @@ export default defineConfig({
         },
         {
             name: "dom-primitives",
-            testMatch: ["dom-only/primitives.spec.ts", "dom-only/forms-performance.spec.ts", "dom-only/panels.spec.ts"],
+            testMatch: ["dom-only/primitives.spec.ts", "dom-only/forms-performance.spec.ts", "dom-only/panels.spec.ts", "dom-only/content.spec.ts", "dom-only/feedback.spec.ts"],
             use: { baseURL: `http://127.0.0.1:${domOnlyPort}/` },
         },
         {

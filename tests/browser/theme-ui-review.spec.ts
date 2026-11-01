@@ -86,6 +86,7 @@ test.describe("dialog selector keyboard focus", () => {
             }
             await expect(page.getByTestId("theme-export")).toBeFocused();
             await page.keyboard.press("Enter");
+            await expect(page.getByTestId("data-tools-dialog-close")).toBeFocused();
             await page.keyboard.press("Tab");
             await checkFocus("export-kind");
             await page.keyboard.press("Enter");
@@ -108,6 +109,7 @@ test.describe("dialog selector keyboard focus", () => {
             await page.keyboard.press("Shift+Tab");
             await expect(page.getByTestId("theme-import")).toBeFocused();
             await page.keyboard.press("Enter");
+            await expect(page.getByTestId("data-tools-dialog-close")).toBeFocused();
             await page.keyboard.press("Tab");
             await checkFocus("import-format");
             await page.keyboard.press("Escape");

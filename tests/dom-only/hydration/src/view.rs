@@ -257,8 +257,8 @@ pub(crate) fn CatalogView(scope: String) -> impl IntoView {
             </section>
             <section data-category=Category::Toast.name() class="harness-card">
                 <h3>"Toast"</h3>
-                <Toast test_id=id("static-toast") toast=rustify_ui::Toast {seq: 0, message: "Deterministic status".to_string(), tone: ToastTone::Success} />
-                <Button test_id=id("toast-trigger") on_click=move || {state.toasts.show("Runtime status", ToastOptions {duration_ms: 800, tone: ToastTone::Success});}>"Show timed toast"</Button>
+                <callout::Root test_id=id("static-toast") color=Some(rustify_ui::AccentColor::Green)><callout::Text>"Deterministic status"</callout::Text></callout::Root>
+                <Button test_id=id("toast-trigger") on_click=move || {state.toasts.show("Runtime status", ToastOptions {duration_ms: 60_000, tone: ToastTone::Success, ..Default::default()});}>"Show timed toast"</Button>
                 <Toaster test_id=id("toaster") />
             </section>
             <section data-category=Category::NumberField.name() class="harness-card">
@@ -280,10 +280,112 @@ pub(crate) fn CatalogView(scope: String) -> impl IntoView {
                 </div>
             </section>
             <crate::form_parts::FormParts scope=scope.clone() state=state.parts />
+            <DeliveryParts scope=scope.clone() />
             <section data-extra="asynchronous" class="harness-card">
                 <h3>"Browser work after attachment"</h3>
                 <output data-testid=id("asynchronous")>{move || state.asynchronous.get()}</output>
             </section>
         </div>
+    }
+}
+
+#[component]
+fn DeliveryParts(scope: String) -> impl IntoView {
+    let scope = StoredValue::new(scope);
+    let id = move |part: &str| format!("{}-{part}", scope.get_value());
+    let accordion = RwSignal::new(accordion::AccordionValue::Single(Some("summary".into())));
+    let expanded = RwSignal::new(false);
+    let segment = RwSignal::new(Some("ready".to_string()));
+    let popup = RwSignal::new(false);
+    let confirmation = RwSignal::new(false);
+    let hover = RwSignal::new(false);
+    let removals = RwSignal::new(0_u32);
+    let loading = RwSignal::new(false);
+    let note = RwSignal::new("Keep this delivery note".to_string());
+    let owner = RwSignal::new("Release owner".to_string());
+    let checks = RwSignal::new(0_u32);
+    let avatar_source = RwSignal::new(String::new());
+    let spinner_target = leptos::html::div().attr("data-testid", id("retained-spinner")).child(view! {
+        <label for=id("owner-draft")>"Delivery owner"</label>
+        <input id=id("owner-draft") data-testid=id("owner-draft") value=move || owner.get() prop:value=move || owner.get()
+            on:input=move |event| owner.set(event_target_value(&event)) />
+        <button type="button" data-testid=id("owner-check") on:click=move |_| checks.update(|count| *count += 1)>"Check owner"</button>
+    });
+    let skeleton_target = leptos::html::article().attr("data-testid", id("retained-skeleton")).child(view! {
+        <label for=id("delivery-draft")>"Delivery note"</label>
+        <input id=id("delivery-draft") data-testid=id("delivery-draft") value=move || note.get() prop:value=move || note.get()
+            on:input=move |event| note.set(event_target_value(&event)) />
+    });
+    view! {
+        <section data-extra="delivery-parts" class="harness-card" data-testid=id("delivery-parts")>
+            <h3>"Delivery review"</h3>
+            <tab_nav::Root aria_label="Delivery pages">
+                <tab_nav::Link href=format!("#{}",id("delivery-destination")) active=true test_id=id("delivery-link")>"Delivery summary"</tab_nav::Link>
+            </tab_nav::Root>
+            <span id=id("delivery-destination")>"Current delivery"</span>
+            <segmented_control::Root value=segment on_change=move |value| segment.set(value) aria_label="Delivery readiness" test_id=id("delivery-segments")>
+                <segmented_control::Item value="ready" test_id=id("segment-ready")>"Ready"</segmented_control::Item>
+                <segmented_control::Item value="review" test_id=id("segment-review")>"Needs review"</segmented_control::Item>
+            </segmented_control::Root>
+            <accordion::Root value=accordion on_change=move |value| accordion.set(value) collapsible=true>
+                <accordion::Item value="summary"><accordion::Header><accordion::Trigger test_id=id("summary-trigger")>"Delivery summary"</accordion::Trigger></accordion::Header>
+                    <accordion::Content force_mount=true test_id=id("summary-content")><p>"The release checklist is ready."</p></accordion::Content>
+                </accordion::Item>
+                <accordion::Item value="history"><accordion::Header><accordion::Trigger test_id=id("history-trigger")>"Delivery history"</accordion::Trigger></accordion::Header>
+                    <accordion::Content force_mount=true test_id=id("history-content")><button type="button" data-testid=id("history-action")>"Review previous delivery"</button></accordion::Content>
+                </accordion::Item>
+            </accordion::Root>
+            <collapsible::Root open=expanded on_open_change=move |value| expanded.set(value)>
+                <collapsible::Trigger test_id=id("delivery-more")>"Additional delivery note"</collapsible::Trigger>
+                <collapsible::Content force_mount=true test_id=id("delivery-more-content")><p>"Keep the owner informed before delivery."</p></collapsible::Content>
+            </collapsible::Root>
+            <popover::Root open=popup on_open_change=move |value| popup.set(value)>
+                <popover::Trigger test_id=id("delivery-popover-open")>"Edit delivery note"</popover::Trigger>
+                <popover::Portal><popover::Content test_id=id("delivery-popover") aria_label="Delivery note editor">
+                    <p>"Review the local note before continuing."</p><popover::Close test_id=id("delivery-popover-close")>"Done editing"</popover::Close>
+                </popover::Content></popover::Portal>
+            </popover::Root>
+            <alert_dialog::Root open=confirmation on_open_change=move |value| confirmation.set(value)>
+                <alert_dialog::Trigger test_id=id("delivery-confirm-open")>"Remove local reminder"</alert_dialog::Trigger>
+                <alert_dialog::Portal><alert_dialog::Overlay />
+                    <alert_dialog::Content test_id=id("delivery-confirm")>
+                        <Show when=|| true><alert_dialog::Title test_id=id("delivery-confirm-title")>"Remove local reminder?"</alert_dialog::Title></Show>
+                        <For each=|| vec!["This only removes the reminder from this example."] key=|text| *text let:text>
+                            <alert_dialog::Description test_id=id("delivery-confirm-description")>{text}</alert_dialog::Description>
+                        </For>
+                        <alert_dialog::Cancel test_id=id("delivery-confirm-cancel")>"Keep reminder"</alert_dialog::Cancel>
+                        <alert_dialog::Action test_id=id("delivery-confirm-action") on_action=move |_| removals.update(|count| *count += 1)>"Remove reminder"</alert_dialog::Action>
+                    </alert_dialog::Content>
+                </alert_dialog::Portal>
+            </alert_dialog::Root>
+            <output data-testid=id("delivery-removals")>{move || removals.get()}</output>
+            <hover_card::Root open=hover on_open_change=move |value| hover.set(value) open_delay_ms=0 close_delay_ms=0>
+                <hover_card::Trigger href=format!("#{}",id("delivery-destination")) test_id=id("delivery-hover-open")>"About the delivery owner"</hover_card::Trigger>
+                <hover_card::Portal><hover_card::Content test_id=id("delivery-hover")><p>"The release owner reviews this checklist."</p></hover_card::Content></hover_card::Portal>
+            </hover_card::Root>
+            <card::Card test_id=id("delivery-card")>
+                <badge::Badge test_id=id("delivery-badge")>"Ready to review"</badge::Badge>
+                <avatar::Root test_id=id("delivery-avatar")>
+                    <avatar::Image src=avatar_source alt="Delivery owner portrait" test_id=id("delivery-avatar-image") />
+                    <avatar::Fallback test_id=id("delivery-avatar-fallback")>"RO"</avatar::Fallback>
+                </avatar::Root>
+                <button type="button" data-testid=id("delivery-avatar-load") on:click=move |_| avatar_source.set(format!("./hydration-avatar.svg?scope={}",scope.get_value()))>"Load owner portrait"</button>
+                <data_list::Root test_id=id("delivery-list")><data_list::Item><data_list::Label>"Owner"</data_list::Label><data_list::Value>"Release owner"</data_list::Value><data_list::Value>"Backup reviewer"</data_list::Value></data_list::Item></data_list::Root>
+                <table::Root test_id=id("delivery-table")>
+                    <table::Caption>"Delivery checks"</table::Caption>
+                    <table::Header><table::Row><table::ColumnHeaderCell>"Check"</table::ColumnHeaderCell><table::ColumnHeaderCell id=id("delivery-status-heading")>"Status"</table::ColumnHeaderCell></table::Row></table::Header>
+                    <table::Body><table::Row><table::RowHeaderCell id=id("delivery-check-heading")>"Checklist"</table::RowHeaderCell><table::Cell test_id=id("delivery-table-value") headers=format!("{} {}",id("delivery-check-heading"),id("delivery-status-heading"))>"Ready"</table::Cell></table::Row></table::Body>
+                </table::Root>
+                <aspect_ratio::Root ratio=2. test_id=id("delivery-ratio")><p>"Delivery preview"</p></aspect_ratio::Root>
+                <separator::Separator decorative=false test_id=id("delivery-separator") />
+                <callout::Root test_id=id("delivery-callout")><callout::Text>"The local checklist is ready for review."</callout::Text></callout::Root>
+            </card::Card>
+            <progress::Root max=150. aria_label="Pending delivery checks" test_id=id("delivery-unknown-progress")><progress::Indicator /></progress::Root>
+            <button type="button" data-testid=id("delivery-loading-start") on:click=move |_| loading.set(true)>"Refresh delivery notes"</button>
+            <button type="button" data-testid=id("delivery-loading-finish") on:click=move |_| loading.set(false)>"Finish refreshing delivery notes"</button>
+            <div data-testid=id("delivery-loading")>{spinner::spinner_as(spinner_target,loading,"Refreshing delivery owner",spinner::SpinnerSize::Two)}</div>
+            {skeleton::skeleton_as(skeleton_target,loading,Layout::default())}
+            <output data-testid=id("owner-checks")>{move || checks.get()}</output>
+        </section>
     }
 }

@@ -1,9 +1,9 @@
 //! A DOM application of the SDK with its default features, built the way an
 //! outside consumer builds one: plain Cargo, wasm-bindgen, no Makepad.
 //!
-//! One scope shows what the runtime host owns for an instance - a toast that
-//! hides itself on a timer, a dialog on the overlay stack, a size observer, a
-//! listener on the window - and the exports below let a page start several
+//! One scope exercises instance cleanup: a toast with a cancellable native
+//! timer, a dialog on the overlay stack, a host-owned size observer and a
+//! listener on the window. The exports below let a page start several
 //! instances of it and kill one.
 
 #[cfg(target_arch = "wasm32")]
@@ -246,3 +246,9 @@ mod app {
 mod panels;
 #[cfg(target_arch = "wasm32")]
 mod stage_panel;
+
+#[cfg(target_arch = "wasm32")]
+mod content;
+
+#[cfg(target_arch = "wasm32")]
+mod feedback;

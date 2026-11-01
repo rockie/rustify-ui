@@ -1,0 +1,29 @@
+[workspace]
+resolver = "2"
+
+[package]
+name = "public-panel-consumer"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[lib]
+crate-type = ["cdylib"]
+
+[[bin]]
+name = "export-dom-assets"
+path = "src/bin/export-dom-assets.rs"
+
+[dependencies]
+rustify-ui = { package = "rustify-dom", path = "../../../crates/rustify-dom" }
+rustify-components = { path = "../../../crates/rustify-components" }
+leptos = { version = "=0.8.22", features = ["csr"] }
+
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+wasm-bindgen = "=0.2.128"
+web-sys = { version = "=0.3.105", features = ["Document", "Element", "HtmlElement", "Window"] }
+
+[profile.release]
+codegen-units = 1
+lto = "fat"
+panic = "abort"

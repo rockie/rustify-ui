@@ -75,3 +75,149 @@
 @layer components {
   :where([data-rustify-part="hover-card-root"], [data-rustify-part="tooltip-root"]) { display: contents; }
 }
+
+@layer components {
+  :where([data-rustify-part="avatar-root"]) { position: relative; display: inline-grid; vertical-align: middle; }
+  :where([data-rustify-part="avatar-image"]) { position: absolute; inset: 0; width: 100%; height: 100%; }
+  /* Retain a measurable box for lazy images and stable fallback dimensions. */
+  :where([data-rustify-part="avatar-image"]:not([data-state="loaded"]):not([data-rustify-issue="missing-root"])) { opacity: 0; pointer-events: none; }
+  :where([data-rustify-part="avatar-fallback"][data-visible="false"]) { visibility: hidden; pointer-events: none; }
+  :where([data-rustify-part="avatar-fallback"]) { grid-area: 1 / 1; }
+  :where([data-rustify-part="aspect-ratio-root"]) { position: relative; width: 100%; }
+  :where([data-rustify-part="aspect-ratio-content"]) { position: absolute; inset: 0; }
+  :where([data-rustify-part="separator-root"]) { display: block; flex-shrink: 0; }
+  :where([data-rustify-part="separator-root"][data-orientation="horizontal"]) { width: 100%; height: 1px; }
+  :where([data-rustify-part="separator-root"][data-orientation="vertical"]) { width: 1px; height: 100%; }
+}
+
+
+@layer components {
+  :where([data-rustify-part="scroll-area-root"]) {
+    --rustify-scrollbar-size: 8px;
+    --rustify-scrollbar-gap: 0px;
+    --rustify-scroll-area-corner-width: 0px;
+    --rustify-scroll-area-corner-height: 0px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    min-height: 0;
+    overflow: hidden;
+  }
+  :where([data-rustify-part="scroll-area-root"][data-x-visible]) {
+    --rustify-scroll-area-corner-height: calc(var(--rustify-scrollbar-size) + var(--rustify-scrollbar-gap));
+  }
+  :where([data-rustify-part="scroll-area-root"][data-y-visible]) {
+    --rustify-scroll-area-corner-width: calc(var(--rustify-scrollbar-size) + var(--rustify-scrollbar-gap));
+  }
+  :where([data-rustify-part="scroll-area-viewport"]) {
+    box-sizing: border-box;
+    flex: 1 1 auto;
+    min-width: 0;
+    min-height: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    scrollbar-width: none;
+  }
+  :where([data-rustify-part="scroll-area-viewport"])::-webkit-scrollbar { display: none; }
+  :where([data-rustify-part="scroll-area-viewport"][data-scrollbars="vertical"]) { overflow-x: hidden; }
+  :where([data-rustify-part="scroll-area-viewport"][data-scrollbars="horizontal"]) { overflow-y: hidden; }
+  :where([data-rustify-part="scroll-area-viewport"][data-boundary="propagate"]) { overscroll-behavior: auto; }
+  :where([data-rustify-part="scroll-area-viewport"][data-boundary="stop"]) { overscroll-behavior: contain; }
+  :where([data-rustify-part="scroll-area-content"]) { display: table; min-width: 100%; }
+  :where([data-rustify-part="scroll-area-scrollbar"]) {
+    box-sizing: border-box;
+    position: absolute;
+    user-select: none;
+    touch-action: none;
+    opacity: 1;
+    visibility: visible;
+    transition: opacity var(--motion-duration, 120ms) ease-out;
+  }
+  :where([data-rustify-part="scroll-area-scrollbar"][data-orientation="vertical"]) {
+    top: var(--rustify-scrollbar-gap);
+    right: var(--rustify-scrollbar-gap);
+    bottom: calc(var(--rustify-scrollbar-gap) + var(--rustify-scroll-area-corner-height));
+    width: var(--rustify-scrollbar-size);
+  }
+  :where([data-rustify-part="scroll-area-scrollbar"][data-orientation="horizontal"]) {
+    left: var(--rustify-scrollbar-gap);
+    right: calc(var(--rustify-scrollbar-gap) + var(--rustify-scroll-area-corner-width));
+    bottom: var(--rustify-scrollbar-gap);
+    height: var(--rustify-scrollbar-size);
+  }
+  :where([data-rustify-part="scroll-area-root"][dir="rtl"] > [data-rustify-part="scroll-area-scrollbar"][data-orientation="vertical"]) {
+    right: auto;
+    left: var(--rustify-scrollbar-gap);
+  }
+  :where([data-rustify-part="scroll-area-root"][dir="rtl"] > [data-rustify-part="scroll-area-scrollbar"][data-orientation="horizontal"]) {
+    left: calc(var(--rustify-scrollbar-gap) + var(--rustify-scroll-area-corner-width));
+    right: var(--rustify-scrollbar-gap);
+  }
+  :where([data-rustify-part="scroll-area-scrollbar"][data-state="hidden"]) {
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+  }
+  :where([data-rustify-part="scroll-area-scrollbar"][data-disabled]) { pointer-events: none; }
+  :where([data-rustify-part="scroll-area-thumb"]) { position: absolute; top: 0; left: 0; }
+  :where([data-rustify-part="scroll-area-thumb"][data-orientation="vertical"]) { width: 100%; }
+  :where([data-rustify-part="scroll-area-thumb"][data-orientation="horizontal"]) { height: 100%; }
+  :where([data-rustify-part="scroll-area-thumb"])::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    min-width: 16px;
+    min-height: 16px;
+  }
+  :where([data-rustify-part="scroll-area-corner"]) {
+    position: absolute;
+    bottom: var(--rustify-scrollbar-gap);
+    right: var(--rustify-scrollbar-gap);
+    width: var(--rustify-scrollbar-size);
+    height: var(--rustify-scrollbar-size);
+    pointer-events: none;
+  }
+  :where([data-rustify-part="scroll-area-root"][dir="rtl"] > [data-rustify-part="scroll-area-corner"]) {
+    right: auto;
+    left: var(--rustify-scrollbar-gap);
+  }
+  :where([data-rustify-part="scroll-area-scrollbar"][hidden], [data-rustify-part="scroll-area-thumb"][hidden], [data-rustify-part="scroll-area-corner"][hidden]) { display: none !important; }
+  @media (prefers-reduced-motion: reduce) {
+    :where([data-rustify-part="scroll-area-scrollbar"]) { transition: none; }
+  }
+}
+
+@layer components {
+  :where([data-rustify-part="progress-root"]) { position: relative; overflow: hidden; }
+  :where([data-rustify-part="progress-indicator"]) { display: block; height: 100%; width: 100%; }
+  :where([data-rustify-part="spinner-root"]) { position: relative; display: inline-grid; max-width: 100%; align-items: center; justify-items: center; }
+  :where([data-rustify-part="spinner-root"] > [data-rustify-part="spinner-target"]) { grid-area: 1 / 1; }
+  :where([data-rustify-part="spinner-root"] > [data-rustify-part="spinner-status"]) { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+  :where([data-rustify-part="spinner-target"][data-loading="true"]) { visibility: hidden !important; }
+  :where([data-rustify-part="spinner-status"]) { display: inline-flex; vertical-align: middle; pointer-events: none; }
+  :where([data-rustify-part="spinner-status"][hidden]) { display: none !important; }
+  :where([data-rustify-part="spinner-graphic"]) { display: block; position: relative; width: var(--rustify-spinner-size, 1em); height: var(--rustify-spinner-size, 1em); }
+  :where([data-rustify-part="spinner-leaf"]) { position: absolute; inset-block-start: 0; inset-inline-start: calc(50% - 12.5% / 2); width: 12.5%; height: 100%; }
+  :where([data-rustify-part="spinner-leaf"])::before { content: ""; display: block; width: 100%; height: 30%; border-radius: var(--rustify-radius-1, 3px); background: currentColor; }
+  :where([data-rustify-part="spinner-leaf"]:nth-child(1)) { transform: rotate(0deg); }
+  :where([data-rustify-part="spinner-leaf"]:nth-child(2)) { transform: rotate(45deg); }
+  :where([data-rustify-part="spinner-leaf"]:nth-child(3)) { transform: rotate(90deg); }
+  :where([data-rustify-part="spinner-leaf"]:nth-child(4)) { transform: rotate(135deg); }
+  :where([data-rustify-part="spinner-leaf"]:nth-child(5)) { transform: rotate(180deg); }
+  :where([data-rustify-part="spinner-leaf"]:nth-child(6)) { transform: rotate(225deg); }
+  :where([data-rustify-part="spinner-leaf"]:nth-child(7)) { transform: rotate(270deg); }
+  :where([data-rustify-part="spinner-leaf"]:nth-child(8)) { transform: rotate(315deg); }
+  :where([data-rustify-part="skeleton-target"][data-loading="true"]) { color: transparent !important; text-shadow: none !important; pointer-events: none !important; user-select: none !important; }
+  :where([data-rustify-part="skeleton-target"][data-loading="true"])::placeholder { color: transparent !important; }
+  :where([data-rustify-part="skeleton-target"][data-loading="true"] > *),
+  :where([data-rustify-part="skeleton-target"][data-loading="true"])::before,
+  :where([data-rustify-part="skeleton-target"][data-loading="true"])::after { visibility: hidden !important; }
+  /* Replaced pixels cannot be covered by styling the element's children. */
+  :where([data-rustify-part="skeleton-target"][data-loading="true"]:is(img, video, canvas, iframe, object, embed, input[type="image"])) { visibility: hidden !important; }
+}

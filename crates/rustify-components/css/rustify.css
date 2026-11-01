@@ -3,7 +3,6 @@
 @layer theme, base, components, utilities;
 @layer theme {
   :root, :host {
-    --container-sm: 24rem;
     --container-lg: 32rem;
     --text-xs: 0.75rem;
     --text-xs--line-height: calc(1 / 0.75);
@@ -35,9 +34,6 @@
   .collapse {
     visibility: collapse;
   }
-  .invisible {
-    visibility: hidden;
-  }
   .visible {
     visibility: visible;
   }
@@ -59,23 +55,14 @@
   .inset-0 {
     inset: calc(0.25rem * 0);
   }
-  .end-4 {
-    inset-inline-end: calc(0.25rem * 4);
-  }
   .top-0 {
     top: calc(0.25rem * 0);
   }
   .bottom-0 {
     bottom: calc(0.25rem * 0);
   }
-  .bottom-4 {
-    bottom: calc(0.25rem * 4);
-  }
   .left-0 {
     left: calc(0.25rem * 0);
-  }
-  .z-50 {
-    z-index: 50;
   }
   .container {
     width: 100%;
@@ -154,9 +141,6 @@
     width: calc(0.25rem * 4);
     height: calc(0.25rem * 4);
   }
-  .h-2 {
-    height: calc(0.25rem * 2);
-  }
   .h-9 {
     height: calc(0.25rem * 9);
   }
@@ -165,9 +149,6 @@
   }
   .h-auto {
     height: auto;
-  }
-  .h-full {
-    height: 100%;
   }
   .h-px {
     height: 1px;
@@ -199,9 +180,6 @@
   .max-w-lg {
     max-width: var(--container-lg);
   }
-  .max-w-sm {
-    max-width: var(--container-sm);
-  }
   .min-w-9 {
     min-width: calc(0.25rem * 9);
   }
@@ -226,6 +204,9 @@
   .grow {
     flex-grow: 1;
   }
+  .transform {
+    transform: var(--tw-rotate-x,) var(--tw-rotate-y,) var(--tw-rotate-z,) var(--tw-skew-x,) var(--tw-skew-y,);
+  }
   .cursor-col-resize {
     cursor: col-resize;
   }
@@ -249,9 +230,6 @@
   }
   .items-center {
     align-items: center;
-  }
-  .items-end {
-    align-items: flex-end;
   }
   .items-start {
     align-items: flex-start;
@@ -311,17 +289,8 @@
   .overflow-x-auto {
     overflow-x: auto;
   }
-  .overscroll-auto {
-    overscroll-behavior: auto;
-  }
-  .overscroll-contain {
-    overscroll-behavior: contain;
-  }
   .rounded {
     border-radius: 0.25rem;
-  }
-  .rounded-full {
-    border-radius: calc(infinity * 1px);
   }
   .rounded-lg {
     border-radius: calc(var(--radius) + 2px);
@@ -343,10 +312,6 @@
   .border-0 {
     border-style: var(--tw-border-style);
     border-width: 0px;
-  }
-  .border-s-4 {
-    border-inline-start-style: var(--tw-border-style);
-    border-inline-start-width: 4px;
   }
   .border-b {
     border-bottom-style: var(--tw-border-style);
@@ -370,15 +335,6 @@
   }
   .border-transparent {
     border-color: transparent;
-  }
-  .border-s-destructive {
-    border-inline-start-color: var(--destructive);
-  }
-  .border-s-success {
-    border-inline-start-color: var(--success);
-  }
-  .border-s-warning {
-    border-inline-start-color: var(--warning);
   }
   .bg-background {
     background-color: var(--background);
@@ -539,12 +495,6 @@
   .underline {
     text-decoration-line: underline;
   }
-  .opacity-25 {
-    opacity: 25%;
-  }
-  .opacity-40 {
-    opacity: 40%;
-  }
   .opacity-50 {
     opacity: 50%;
   }
@@ -566,11 +516,6 @@
   }
   .filter {
     filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);
-  }
-  .transition-\[width\] {
-    transition-property: width;
-    transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
-    transition-duration: var(--tw-duration, var(--default-transition-duration));
   }
   .transition-colors {
     transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to;
@@ -949,6 +894,277 @@
 @layer components {
   :where([data-rustify-part="hover-card-root"], [data-rustify-part="tooltip-root"]) {
     display: contents;
+  }
+}
+@layer components {
+  :where([data-rustify-part="avatar-root"]) {
+    position: relative;
+    display: inline-grid;
+    vertical-align: middle;
+  }
+  :where([data-rustify-part="avatar-image"]) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+  :where([data-rustify-part="avatar-image"]:not([data-state="loaded"]):not([data-rustify-issue="missing-root"])) {
+    opacity: 0;
+    pointer-events: none;
+  }
+  :where([data-rustify-part="avatar-fallback"][data-visible="false"]) {
+    visibility: hidden;
+    pointer-events: none;
+  }
+  :where([data-rustify-part="avatar-fallback"]) {
+    grid-area: 1 / 1;
+  }
+  :where([data-rustify-part="aspect-ratio-root"]) {
+    position: relative;
+    width: 100%;
+  }
+  :where([data-rustify-part="aspect-ratio-content"]) {
+    position: absolute;
+    inset: 0;
+  }
+  :where([data-rustify-part="separator-root"]) {
+    display: block;
+    flex-shrink: 0;
+  }
+  :where([data-rustify-part="separator-root"][data-orientation="horizontal"]) {
+    width: 100%;
+    height: 1px;
+  }
+  :where([data-rustify-part="separator-root"][data-orientation="vertical"]) {
+    width: 1px;
+    height: 100%;
+  }
+}
+@layer components {
+  :where([data-rustify-part="scroll-area-root"]) {
+    --rustify-scrollbar-size: 8px;
+    --rustify-scrollbar-gap: 0px;
+    --rustify-scroll-area-corner-width: 0px;
+    --rustify-scroll-area-corner-height: 0px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    min-height: 0;
+    overflow: hidden;
+  }
+  :where([data-rustify-part="scroll-area-root"][data-x-visible]) {
+    --rustify-scroll-area-corner-height: calc(var(--rustify-scrollbar-size) + var(--rustify-scrollbar-gap));
+  }
+  :where([data-rustify-part="scroll-area-root"][data-y-visible]) {
+    --rustify-scroll-area-corner-width: calc(var(--rustify-scrollbar-size) + var(--rustify-scrollbar-gap));
+  }
+  :where([data-rustify-part="scroll-area-viewport"]) {
+    box-sizing: border-box;
+    flex: 1 1 auto;
+    min-width: 0;
+    min-height: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    scrollbar-width: none;
+  }
+  :where([data-rustify-part="scroll-area-viewport"])::-webkit-scrollbar {
+    display: none;
+  }
+  :where([data-rustify-part="scroll-area-viewport"][data-scrollbars="vertical"]) {
+    overflow-x: hidden;
+  }
+  :where([data-rustify-part="scroll-area-viewport"][data-scrollbars="horizontal"]) {
+    overflow-y: hidden;
+  }
+  :where([data-rustify-part="scroll-area-viewport"][data-boundary="propagate"]) {
+    overscroll-behavior: auto;
+  }
+  :where([data-rustify-part="scroll-area-viewport"][data-boundary="stop"]) {
+    overscroll-behavior: contain;
+  }
+  :where([data-rustify-part="scroll-area-content"]) {
+    display: table;
+    min-width: 100%;
+  }
+  :where([data-rustify-part="scroll-area-scrollbar"]) {
+    box-sizing: border-box;
+    position: absolute;
+    user-select: none;
+    touch-action: none;
+    opacity: 1;
+    visibility: visible;
+    transition: opacity var(--motion-duration, 120ms) ease-out;
+  }
+  :where([data-rustify-part="scroll-area-scrollbar"][data-orientation="vertical"]) {
+    top: var(--rustify-scrollbar-gap);
+    right: var(--rustify-scrollbar-gap);
+    bottom: calc(var(--rustify-scrollbar-gap) + var(--rustify-scroll-area-corner-height));
+    width: var(--rustify-scrollbar-size);
+  }
+  :where([data-rustify-part="scroll-area-scrollbar"][data-orientation="horizontal"]) {
+    left: var(--rustify-scrollbar-gap);
+    right: calc(var(--rustify-scrollbar-gap) + var(--rustify-scroll-area-corner-width));
+    bottom: var(--rustify-scrollbar-gap);
+    height: var(--rustify-scrollbar-size);
+  }
+  :where([data-rustify-part="scroll-area-root"][dir="rtl"] > [data-rustify-part="scroll-area-scrollbar"][data-orientation="vertical"]) {
+    right: auto;
+    left: var(--rustify-scrollbar-gap);
+  }
+  :where([data-rustify-part="scroll-area-root"][dir="rtl"] > [data-rustify-part="scroll-area-scrollbar"][data-orientation="horizontal"]) {
+    left: calc(var(--rustify-scrollbar-gap) + var(--rustify-scroll-area-corner-width));
+    right: var(--rustify-scrollbar-gap);
+  }
+  :where([data-rustify-part="scroll-area-scrollbar"][data-state="hidden"]) {
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+  }
+  :where([data-rustify-part="scroll-area-scrollbar"][data-disabled]) {
+    pointer-events: none;
+  }
+  :where([data-rustify-part="scroll-area-thumb"]) {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  :where([data-rustify-part="scroll-area-thumb"][data-orientation="vertical"]) {
+    width: 100%;
+  }
+  :where([data-rustify-part="scroll-area-thumb"][data-orientation="horizontal"]) {
+    height: 100%;
+  }
+  :where([data-rustify-part="scroll-area-thumb"])::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    min-width: 16px;
+    min-height: 16px;
+  }
+  :where([data-rustify-part="scroll-area-corner"]) {
+    position: absolute;
+    bottom: var(--rustify-scrollbar-gap);
+    right: var(--rustify-scrollbar-gap);
+    width: var(--rustify-scrollbar-size);
+    height: var(--rustify-scrollbar-size);
+    pointer-events: none;
+  }
+  :where([data-rustify-part="scroll-area-root"][dir="rtl"] > [data-rustify-part="scroll-area-corner"]) {
+    right: auto;
+    left: var(--rustify-scrollbar-gap);
+  }
+  :where([data-rustify-part="scroll-area-scrollbar"][hidden], [data-rustify-part="scroll-area-thumb"][hidden], [data-rustify-part="scroll-area-corner"][hidden]) {
+    display: none !important;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    :where([data-rustify-part="scroll-area-scrollbar"]) {
+      transition: none;
+    }
+  }
+}
+@layer components {
+  :where([data-rustify-part="progress-root"]) {
+    position: relative;
+    overflow: hidden;
+  }
+  :where([data-rustify-part="progress-indicator"]) {
+    display: block;
+    height: 100%;
+    width: 100%;
+  }
+  :where([data-rustify-part="spinner-root"]) {
+    position: relative;
+    display: inline-grid;
+    max-width: 100%;
+    align-items: center;
+    justify-items: center;
+  }
+  :where([data-rustify-part="spinner-root"] > [data-rustify-part="spinner-target"]) {
+    grid-area: 1 / 1;
+  }
+  :where([data-rustify-part="spinner-root"] > [data-rustify-part="spinner-status"]) {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  :where([data-rustify-part="spinner-target"][data-loading="true"]) {
+    visibility: hidden !important;
+  }
+  :where([data-rustify-part="spinner-status"]) {
+    display: inline-flex;
+    vertical-align: middle;
+    pointer-events: none;
+  }
+  :where([data-rustify-part="spinner-status"][hidden]) {
+    display: none !important;
+  }
+  :where([data-rustify-part="spinner-graphic"]) {
+    display: block;
+    position: relative;
+    width: var(--rustify-spinner-size, 1em);
+    height: var(--rustify-spinner-size, 1em);
+  }
+  :where([data-rustify-part="spinner-leaf"]) {
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline-start: calc(50% - 12.5% / 2);
+    width: 12.5%;
+    height: 100%;
+  }
+  :where([data-rustify-part="spinner-leaf"])::before {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 30%;
+    border-radius: var(--rustify-radius-1, 3px);
+    background: currentColor;
+  }
+  :where([data-rustify-part="spinner-leaf"]:nth-child(1)) {
+    transform: rotate(0deg);
+  }
+  :where([data-rustify-part="spinner-leaf"]:nth-child(2)) {
+    transform: rotate(45deg);
+  }
+  :where([data-rustify-part="spinner-leaf"]:nth-child(3)) {
+    transform: rotate(90deg);
+  }
+  :where([data-rustify-part="spinner-leaf"]:nth-child(4)) {
+    transform: rotate(135deg);
+  }
+  :where([data-rustify-part="spinner-leaf"]:nth-child(5)) {
+    transform: rotate(180deg);
+  }
+  :where([data-rustify-part="spinner-leaf"]:nth-child(6)) {
+    transform: rotate(225deg);
+  }
+  :where([data-rustify-part="spinner-leaf"]:nth-child(7)) {
+    transform: rotate(270deg);
+  }
+  :where([data-rustify-part="spinner-leaf"]:nth-child(8)) {
+    transform: rotate(315deg);
+  }
+  :where([data-rustify-part="skeleton-target"][data-loading="true"]) {
+    color: transparent !important;
+    text-shadow: none !important;
+    pointer-events: none !important;
+    user-select: none !important;
+  }
+  :where([data-rustify-part="skeleton-target"][data-loading="true"])::placeholder {
+    color: transparent !important;
+  }
+  :where([data-rustify-part="skeleton-target"][data-loading="true"] > *), :where([data-rustify-part="skeleton-target"][data-loading="true"])::before, :where([data-rustify-part="skeleton-target"][data-loading="true"])::after {
+    visibility: hidden !important;
+  }
+  :where([data-rustify-part="skeleton-target"][data-loading="true"]:is(img, video, canvas, iframe, object, embed, input[type="image"])) {
+    visibility: hidden !important;
   }
 }
 @layer components {
@@ -1867,6 +2083,780 @@
     min-width: min(var(--rustify-popover-min-width, 0px), var(--rustify-floating-available-width, calc(100vw - 2rem)));
   }
 }
+@layer components {
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-badge) {
+    --rustify-badge-font-size: var(--rustify-font-size-1, 12px);
+    --rustify-badge-line-height: var(--rustify-line-height-1, 16px);
+    --rustify-badge-tracking: 0.0025em;
+    --rustify-badge-padding-y: calc(var(--rustify-space-1, 4px) * 0.5);
+    --rustify-badge-padding-x: calc(var(--rustify-space-1, 4px) * 1.5);
+    --rustify-badge-gap: calc(var(--rustify-space-1, 4px) * 1.5);
+    --rustify-badge-radius-1: var(--rustify-radius-1, 3px);
+    --rustify-badge-radius-2: var(--rustify-radius-2, 4px);
+    --rustify-badge-radius-full: var(--rustify-radius-full, 0px);
+    --rustify-badge-radius: max(var(--rustify-badge-radius-1), var(--rustify-badge-radius-full));
+    --rustify-badge-text: var(--rustify-component-color-a11, var(--rustify-brand-a11, var(--primary)));
+    --rustify-badge-soft: var(--rustify-component-color-a3, var(--rustify-brand-a3, var(--primary)));
+    @supports (color: color-mix(in lab, red, red)) {
+      --rustify-badge-soft: var(--rustify-component-color-a3, var(--rustify-brand-a3, color-mix(in srgb, var(--primary) 12%, transparent)));
+    }
+    --rustify-badge-surface: var(--rustify-component-color-surface, var(--rustify-brand-surface, var(--card)));
+    --rustify-badge-surface-border: var(--rustify-component-color-a6, var(--rustify-brand-a6, var(--primary)));
+    @supports (color: color-mix(in lab, red, red)) {
+      --rustify-badge-surface-border: var(--rustify-component-color-a6, var(--rustify-brand-a6, color-mix(in srgb, var(--primary) 30%, transparent)));
+    }
+    --rustify-badge-outline: var(--rustify-component-color-a8, var(--rustify-brand-a8, var(--primary)));
+    @supports (color: color-mix(in lab, red, red)) {
+      --rustify-badge-outline: var(--rustify-component-color-a8, var(--rustify-brand-a8, color-mix(in srgb, var(--primary) 50%, transparent)));
+    }
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+    height: fit-content;
+    gap: var(--rustify-badge-gap);
+    margin: 0;
+    padding: var(--rustify-badge-padding-y) var(--rustify-badge-padding-x);
+    border: 0;
+    border-radius: var(--rustify-badge-radius);
+    background: transparent;
+    color: var(--rustify-badge-text);
+    font-family: var(--rustify-font-sans, sans-serif);
+    font-size: var(--rustify-badge-font-size);
+    font-weight: 500;
+    font-style: normal;
+    line-height: var(--rustify-badge-line-height);
+    letter-spacing: calc(var(--rustify-letter-spacing, 0em) + var(--rustify-badge-tracking));
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-badge[data-authored-primary]) {
+    --rustify-badge-text: var(--rustify-component-color-a11, var(--primary));
+    --rustify-badge-soft: var(--rustify-component-color-a3, var(--primary));
+    @supports (color: color-mix(in lab, red, red)) {
+      --rustify-badge-soft: var(--rustify-component-color-a3, color-mix(in srgb, var(--primary) 12%, transparent));
+    }
+    --rustify-badge-surface: var(--rustify-component-color-surface, var(--primary));
+    @supports (color: color-mix(in lab, red, red)) {
+      --rustify-badge-surface: var(--rustify-component-color-surface, color-mix(in srgb, var(--primary) 5%, var(--card)));
+    }
+    --rustify-badge-surface-border: var(--rustify-component-color-a6, var(--primary));
+    @supports (color: color-mix(in lab, red, red)) {
+      --rustify-badge-surface-border: var(--rustify-component-color-a6, color-mix(in srgb, var(--primary) 30%, transparent));
+    }
+    --rustify-badge-outline: var(--rustify-component-color-a8, var(--primary));
+    @supports (color: color-mix(in lab, red, red)) {
+      --rustify-badge-outline: var(--rustify-component-color-a8, color-mix(in srgb, var(--primary) 50%, transparent));
+    }
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-badge[data-variant="solid"]) {
+    background-color: var(--rustify-component-color-9, var(--primary));
+    color: var(--rustify-component-color-contrast, var(--primary-foreground));
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-badge[data-variant="solid"])::selection {
+    background-color: var(--rustify-component-color-7, var(--primary));
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: var(--rustify-component-color-7, color-mix(in srgb, var(--primary) 40%, var(--background)));
+    }
+    color: var(--rustify-component-color-12, var(--foreground));
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-badge[data-variant="soft"]) {
+    background-color: var(--rustify-badge-soft);
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-badge[data-variant="surface"]) {
+    background-color: var(--rustify-badge-surface);
+    box-shadow: inset 0 0 0 1px var(--rustify-badge-surface-border);
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-badge[data-variant="outline"]) {
+    box-shadow: inset 0 0 0 1px var(--rustify-badge-outline);
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-badge[data-high-contrast]) {
+    color: var(--rustify-component-color-12, var(--rustify-brand-12, var(--foreground)));
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-badge[data-high-contrast][data-authored-primary]) {
+    color: var(--rustify-component-color-12, var(--foreground));
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-badge[data-variant="solid"][data-high-contrast]) {
+    background-color: var(--rustify-component-color-12, var(--foreground));
+    color: var(--rustify-component-color-1, var(--background));
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-badge[data-variant="solid"][data-high-contrast])::selection {
+    background-color: var(--rustify-component-color-a11, var(--primary));
+    color: var(--rustify-component-color-1, var(--background));
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-badge[data-variant="outline"][data-high-contrast]) {
+    box-shadow: inset 0 0 0 1px var(--rustify-component-color-a7, var(--primary)), inset 0 0 0 1px var(--rustify-gray-a11, var(--foreground));
+    @supports (color: color-mix(in lab, red, red)) {
+      box-shadow: inset 0 0 0 1px var(--rustify-component-color-a7, color-mix(in srgb, var(--primary) 40%, transparent)), inset 0 0 0 1px var(--rustify-gray-a11, var(--foreground));
+    }
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-callout) {
+    --rustify-callout-row-gap: var(--rustify-space-2, 8px);
+    --rustify-callout-column-gap: var(--rustify-space-3, 12px);
+    --rustify-callout-padding: var(--rustify-space-4, 16px);
+    --rustify-callout-radius: var(--rustify-radius-4, 8px);
+    --rustify-callout-font-size: var(--rustify-font-size-2, 14px);
+    --rustify-callout-line-height: var(--rustify-line-height-2, 20px);
+    --rustify-callout-text: var(--rustify-component-color-a11, var(--rustify-brand-a11, var(--primary)));
+    --rustify-callout-soft: var(--rustify-component-color-a3, var(--rustify-brand-a3, var(--primary)));
+    @supports (color: color-mix(in lab, red, red)) {
+      --rustify-callout-soft: var(--rustify-component-color-a3, var(--rustify-brand-a3, color-mix(in srgb, var(--primary) 12%, transparent)));
+    }
+    --rustify-callout-surface: var(--rustify-component-color-a2, var(--rustify-brand-a2, var(--primary)));
+    @supports (color: color-mix(in lab, red, red)) {
+      --rustify-callout-surface: var(--rustify-component-color-a2, var(--rustify-brand-a2, color-mix(in srgb, var(--primary) 5%, transparent)));
+    }
+    --rustify-callout-surface-border: var(--rustify-component-color-a6, var(--rustify-brand-a6, var(--primary)));
+    @supports (color: color-mix(in lab, red, red)) {
+      --rustify-callout-surface-border: var(--rustify-component-color-a6, var(--rustify-brand-a6, color-mix(in srgb, var(--primary) 30%, transparent)));
+    }
+    --rustify-callout-outline: var(--rustify-component-color-a7, var(--rustify-brand-a7, var(--primary)));
+    @supports (color: color-mix(in lab, red, red)) {
+      --rustify-callout-outline: var(--rustify-component-color-a7, var(--rustify-brand-a7, color-mix(in srgb, var(--primary) 40%, transparent)));
+    }
+    box-sizing: border-box;
+    display: grid;
+    align-items: flex-start;
+    justify-content: flex-start;
+    row-gap: var(--rustify-callout-row-gap);
+    column-gap: var(--rustify-callout-column-gap);
+    margin: 0;
+    padding: var(--rustify-callout-padding);
+    border-radius: var(--rustify-callout-radius);
+    color: var(--rustify-callout-text);
+    text-align: start;
+    font-family: var(--rustify-font-sans, sans-serif);
+    font-weight: 400;
+    font-style: normal;
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-callout[data-authored-primary]) {
+    --rustify-callout-text: var(--rustify-component-color-a11, var(--primary));
+    --rustify-callout-soft: var(--rustify-component-color-a3, var(--primary));
+    @supports (color: color-mix(in lab, red, red)) {
+      --rustify-callout-soft: var(--rustify-component-color-a3, color-mix(in srgb, var(--primary) 12%, transparent));
+    }
+    --rustify-callout-surface: var(--rustify-component-color-a2, var(--primary));
+    @supports (color: color-mix(in lab, red, red)) {
+      --rustify-callout-surface: var(--rustify-component-color-a2, color-mix(in srgb, var(--primary) 5%, transparent));
+    }
+    --rustify-callout-surface-border: var(--rustify-component-color-a6, var(--primary));
+    @supports (color: color-mix(in lab, red, red)) {
+      --rustify-callout-surface-border: var(--rustify-component-color-a6, color-mix(in srgb, var(--primary) 30%, transparent));
+    }
+    --rustify-callout-outline: var(--rustify-component-color-a7, var(--primary));
+    @supports (color: color-mix(in lab, red, red)) {
+      --rustify-callout-outline: var(--rustify-component-color-a7, color-mix(in srgb, var(--primary) 40%, transparent));
+    }
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-callout[data-high-contrast]) {
+    color: var(--rustify-component-color-12, var(--rustify-brand-12, var(--foreground)));
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-callout[data-high-contrast][data-authored-primary]) {
+    color: var(--rustify-component-color-12, var(--foreground));
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-callout[data-variant="soft"]) {
+    background-color: var(--rustify-callout-soft);
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-callout[data-variant="surface"]) {
+    background-color: var(--rustify-callout-surface);
+    box-shadow: inset 0 0 0 1px var(--rustify-callout-surface-border);
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-callout[data-variant="outline"]) {
+    box-shadow: inset 0 0 0 1px var(--rustify-callout-outline);
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-callout-icon) {
+    display: flex;
+    align-items: center;
+    grid-column-start: -2;
+    height: var(--rustify-callout-line-height, var(--rustify-line-height-2, 20px));
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-callout) > :where(:not(.rustify-callout-icon)) {
+    grid-column-start: -1;
+    min-width: 0;
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-callout-text) {
+    margin: 0;
+    font-size: var(--rustify-callout-font-size, var(--rustify-font-size-2, 14px));
+    line-height: var(--rustify-callout-line-height, var(--rustify-line-height-2, 20px));
+    letter-spacing: var(--rustify-letter-spacing, 0em);
+    overflow-wrap: anywhere;
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-card) {
+    --rustify-card-padding: var(--rustify-space-3, 12px);
+    --rustify-card-radius: var(--rustify-radius-4, 8px);
+    --rustify-card-border-width: 1px;
+    --rustify-card-surface-border: var(--rustify-gray-a5, var(--border));
+    --rustify-card-border: var(--rustify-card-surface-border);
+    --rustify-inset-top: calc(var(--rustify-card-padding) - var(--rustify-card-border-width));
+    --rustify-inset-right: calc(var(--rustify-card-padding) - var(--rustify-card-border-width));
+    --rustify-inset-bottom: calc(var(--rustify-card-padding) - var(--rustify-card-border-width));
+    --rustify-inset-left: calc(var(--rustify-card-padding) - var(--rustify-card-border-width));
+    --rustify-inset-radius: var(--rustify-card-radius);
+    --rustify-inset-border-width: var(--rustify-card-border-width);
+    box-sizing: border-box;
+    display: block;
+    position: relative;
+    overflow: hidden;
+    margin: 0;
+    padding: calc(var(--rustify-card-padding) - var(--rustify-card-border-width));
+    border: var(--rustify-card-border-width) solid var(--rustify-card-border);
+    border-radius: var(--rustify-card-radius);
+    background-color: transparent;
+    color: var(--card-foreground, var(--foreground));
+    font-family: var(--rustify-font-sans, sans-serif);
+    font-weight: 400;
+    font-style: normal;
+    text-align: start;
+    text-decoration: none;
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-card[data-variant="surface"], .rustify-card[data-variant="classic"]) {
+    background-color: var(--rustify-panel, var(--card));
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-card[data-variant="classic"]) {
+    --rustify-card-border: var(--rustify-gray-a3, var(--border));
+    box-shadow: var(--rustify-shadow-sm, 0 1px 3px rgb(0 0 0 / 10%), 0 1px 2px -1px rgb(0 0 0 / 10%));
+    transition: box-shadow 120ms;
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-card[data-variant="ghost"]) {
+    --rustify-card-border-width: 0px;
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-card:focus-visible) {
+    outline: 2px solid var(--ring);
+    outline-offset: -1px;
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-card:is(:any-link, button, label)) {
+    cursor: pointer;
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-card:disabled) {
+    cursor: default;
+  }
+  @supports (color: color-mix(in oklab, white, black)) {
+    :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-card[data-variant="surface"]) {
+      --rustify-card-surface-border: var(--rustify-gray-a5, var(--border));
+      @supports (color: color-mix(in lab, red, red)) {
+        --rustify-card-surface-border: color-mix(in oklab, var(--rustify-gray-a5, var(--border)), var(--rustify-gray-5, var(--border)) 25%);
+      }
+    }
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-card[data-variant="surface"]:is(:any-link, button, label):not(:disabled)[data-state="open"]) {
+    --rustify-card-surface-border: var(--rustify-gray-a7, var(--border));
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-card[data-variant="surface"]:is(:any-link, button, label):not(:disabled):active:not([data-state="open"])) {
+    --rustify-card-surface-border: var(--rustify-gray-a6, var(--border));
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-card[data-variant="classic"]:is(:any-link, button, label):not(:disabled)[data-state="open"]) {
+    box-shadow: var(--rustify-shadow-md, 0 4px 6px -1px rgb(0 0 0 / 10%), 0 2px 4px -2px rgb(0 0 0 / 10%));
+    transition-duration: 40ms;
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-card[data-variant="classic"]:is(:any-link, button, label):not(:disabled):active:not([data-state="open"])) {
+    --rustify-card-border: var(--rustify-gray-a4, var(--border));
+    box-shadow: var(--rustify-shadow-xs, 0 1px 2px rgb(0 0 0 / 5%));
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-card[data-variant="ghost"]:is(:any-link, button, label):not(:disabled)[data-state="open"]) {
+    background-color: var(--rustify-gray-a3, var(--muted));
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-card[data-variant="ghost"]:is(:any-link, button, label):not(:disabled):active:not([data-state="open"])) {
+    background-color: var(--rustify-gray-a4, var(--muted));
+  }
+  @media (hover: hover) {
+    :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-card[data-variant="surface"]:is(:any-link, button, label):not(:disabled):hover:not(:active, [data-state="open"])) {
+      --rustify-card-surface-border: var(--rustify-gray-a7, var(--border));
+    }
+    :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-card[data-variant="classic"]:is(:any-link, button, label):not(:disabled):hover:not(:active, [data-state="open"])) {
+      box-shadow: var(--rustify-shadow-md, 0 4px 6px -1px rgb(0 0 0 / 10%), 0 2px 4px -2px rgb(0 0 0 / 10%));
+      transition-duration: 40ms;
+    }
+    :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-card[data-variant="ghost"]:is(:any-link, button, label):not(:disabled):hover:not(:active, [data-state="open"])) {
+      background-color: var(--rustify-gray-a3, var(--muted));
+    }
+    :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-card[data-variant="ghost"]:is(:any-link, button, label):not(:disabled):hover:focus-visible:not(:active, [data-state="open"])) {
+      background-color: var(--ring);
+      @supports (color: color-mix(in lab, red, red)) {
+        background-color: color-mix(in srgb, var(--ring) 5%, transparent);
+      }
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-card) {
+      transition: none;
+    }
+  }
+}
+@layer components {
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-table) {
+    --rustify-table-cell-padding: var(--rustify-space-3, 12px);
+    --rustify-table-cell-min-height: calc(var(--rustify-space-7, 40px) + var(--rustify-space-1, 4px));
+    --rustify-table-radius: var(--rustify-radius-4, 8px);
+    --rustify-table-row-background: transparent;
+    --rustify-table-row-shadow: inset 0 -1px var(--rustify-gray-a5, var(--border));
+    box-sizing: border-box;
+    width: 100%;
+    height: 0;
+    border-collapse: separate;
+    border-spacing: 0;
+    table-layout: auto;
+    text-align: start;
+    vertical-align: top;
+    font-family: var(--rustify-font-sans, sans-serif);
+    font-size: var(--rustify-font-size-2, 14px);
+    line-height: var(--rustify-line-height-2, 20px);
+    color: var(--foreground);
+    font-variant-numeric: tabular-nums;
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-table-header, .rustify-table-body, .rustify-table-row) {
+    vertical-align: inherit;
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-table-cell) {
+    box-sizing: border-box;
+    vertical-align: inherit;
+    text-align: inherit;
+    padding: var(--rustify-table-cell-padding);
+    height: var(--rustify-table-cell-min-height);
+    background-color: var(--rustify-table-row-background);
+    box-shadow: var(--rustify-table-row-shadow);
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-table-column-header-cell) {
+    font-weight: 700;
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-table-row-header-cell) {
+    font-weight: 400;
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-table-caption) {
+    text-align: start;
+    color: var(--muted-foreground);
+    padding-bottom: var(--rustify-space-3, 12px);
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-table[data-variant="surface"]) {
+    border: 1px solid var(--rustify-gray-a5, var(--border));
+    border-radius: var(--rustify-table-radius);
+    background-color: var(--rustify-panel, var(--card));
+    background-clip: padding-box;
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-table[data-variant="surface"] > .rustify-table-header) {
+    --rustify-table-row-background: var(--rustify-gray-a2, var(--muted));
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-table[data-variant="surface"] > .rustify-table-body > .rustify-table-row:last-child) {
+    --rustify-table-row-shadow: none;
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-table[data-variant="surface"] > .rustify-table-header > .rustify-table-row:first-child > .rustify-table-cell:first-child) {
+    border-start-start-radius: max(0px, calc(var(--rustify-table-radius) - 1px));
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-table[data-variant="surface"] > .rustify-table-header > .rustify-table-row:first-child > .rustify-table-cell:last-child) {
+    border-start-end-radius: max(0px, calc(var(--rustify-table-radius) - 1px));
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-data-list) {
+    --rustify-data-list-display: grid;
+    --rustify-data-list-item-display: grid;
+    --rustify-data-list-columns: auto minmax(0, 1fr);
+    --rustify-data-list-label-min-width: 120px;
+    --rustify-data-list-value-column: 2;
+    --rustify-data-list-default-align: baseline;
+    --rustify-data-list-value-trim-factor: 1;
+    --rustify-data-list-item-align: initial;
+    --rustify-data-list-line-height: var(--rustify-line-height-2, 20px);
+    --rustify-data-list-gap: var(--rustify-space-4, 16px);
+    --rustify-data-list-trim-start: 0px;
+    --rustify-data-list-trim-end: 0px;
+    box-sizing: border-box;
+    display: var(--rustify-data-list-display);
+    flex-direction: column;
+    grid-template-columns: var(--rustify-data-list-columns);
+    gap: var(--rustify-data-list-gap);
+    margin: 0;
+    text-align: start;
+    overflow-wrap: anywhere;
+    font-family: var(--rustify-font-sans, sans-serif);
+    font-size: var(--rustify-font-size-2, 14px);
+    line-height: var(--rustify-data-list-line-height);
+    font-weight: 400;
+    font-style: normal;
+    color: var(--foreground);
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-data-list-item) {
+    box-sizing: border-box;
+    --rustify-data-list-value-trim-start: -0.25em;
+    --rustify-data-list-value-trim-end: -0.25em;
+    --rustify-data-list-first-value-trim-start: 0px;
+    --rustify-data-list-last-value-trim-end: 0px;
+    display: var(--rustify-data-list-item-display);
+    flex-direction: column;
+    grid-template-columns: subgrid;
+    grid-column: 1 / -1;
+    gap: var(--rustify-space-1, 4px) var(--rustify-data-list-gap);
+    align-items: var(--rustify-data-list-item-align, var(--rustify-data-list-default-align));
+    min-width: 0;
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-data-list-item:first-child) {
+    margin-top: var(--rustify-data-list-trim-start);
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-data-list-item:last-child) {
+    margin-bottom: var(--rustify-data-list-trim-end);
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-data-list-label, .rustify-data-list-value) {
+    box-sizing: border-box;
+    display: flex;
+    margin: 0;
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-data-list-label) {
+    min-width: var(--rustify-data-list-label-min-width);
+    color: var(--muted-foreground);
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-data-list-label[data-color]) {
+    color: var(--rustify-component-color-a11, var(--muted-foreground));
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-data-list-label[data-high-contrast]) {
+    color: var(--rustify-component-color-12, var(--foreground));
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-data-list-value) {
+    grid-column: var(--rustify-data-list-value-column);
+    min-width: 0;
+    margin-top: calc(var(--rustify-data-list-value-trim-start) * var(--rustify-data-list-value-trim-factor));
+    margin-bottom: calc(var(--rustify-data-list-value-trim-end) * var(--rustify-data-list-value-trim-factor));
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-data-list-item:first-child > .rustify-data-list-value) {
+    margin-top: calc(var(--rustify-data-list-first-value-trim-start) * var(--rustify-data-list-value-trim-factor));
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-data-list-item:last-child > .rustify-data-list-value) {
+    margin-bottom: calc(var(--rustify-data-list-last-value-trim-end) * var(--rustify-data-list-value-trim-factor));
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-data-list-label, .rustify-data-list-value)::before {
+    content: '\200d';
+  }
+}
+@layer components {
+  :where(.rustify-avatar) {
+    width: var(--rustify-avatar-size, var(--rustify-space-7, 40px));
+    height: var(--rustify-avatar-size, var(--rustify-space-7, 40px));
+    border-radius: var(--rustify-avatar-radius, max(var(--rustify-radius-3, 6px), var(--rustify-radius-full, 0px)));
+    flex-shrink: 0;
+    overflow: hidden;
+    user-select: none;
+  }
+  :where(.rustify-avatar [data-rustify-part="avatar-image"]) {
+    object-fit: cover;
+    border-radius: inherit;
+  }
+  :where(.rustify-avatar [data-rustify-part="avatar-fallback"]) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    font-family: var(--rustify-font-sans, system-ui, sans-serif);
+    font-weight: 500;
+    font-style: normal;
+    line-height: 1;
+    text-transform: uppercase;
+    font-size: var(--rustify-avatar-font-one, var(--rustify-font-size-4, 18px));
+    letter-spacing: var(--rustify-avatar-tracking, normal);
+    background: var(--rustify-component-color-a3, var(--primary));
+    @supports (color: color-mix(in lab, red, red)) {
+      background: var(--rustify-component-color-a3, color-mix(in srgb, var(--primary) 12%, transparent));
+    }
+    color: var(--rustify-component-color-a11, var(--primary));
+  }
+  :where(.rustify-avatar [data-rustify-part="avatar-fallback"][data-letters="2"]) {
+    font-size: var(--rustify-avatar-font-two, var(--rustify-font-size-3, 16px));
+  }
+  :where(.rustify-avatar[data-variant="solid"] [data-rustify-part="avatar-fallback"]) {
+    background: var(--rustify-component-color-9, var(--primary));
+    color: var(--rustify-component-color-contrast, var(--primary-foreground));
+  }
+  :where(.rustify-avatar[data-variant="solid"][data-high-contrast] [data-rustify-part="avatar-fallback"]) {
+    background: var(--rustify-component-color-12, var(--foreground));
+    color: var(--rustify-component-color-1, var(--background));
+  }
+  :where(.rustify-avatar[data-variant="soft"][data-high-contrast] [data-rustify-part="avatar-fallback"]) {
+    color: var(--rustify-component-color-12, var(--foreground));
+  }
+  :where(.rustify-separator) {
+    width: var(--rustify-separator-size, var(--rustify-space-4, 16px));
+    height: 1px;
+    background: var(--rustify-component-color-a6, var(--rustify-gray-a6, var(--border)));
+  }
+}
+@layer components {
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-scroll-area) {
+    --rustify-scrollbar-size: var(--rustify-space-1, 4px);
+    --rustify-scrollbar-gap: var(--rustify-space-1, 4px);
+    --rustify-scrollbar-radius: max(var(--rustify-radius-1, 3px), var(--rustify-radius-full, 0px));
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-scroll-area > [data-rustify-part="scroll-area-viewport"]:focus-visible) {
+    outline: 2px solid var(--ring);
+    outline-offset: -2px;
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-scroll-area > [data-rustify-part="scroll-area-scrollbar"]) {
+    background-color: var(--rustify-gray-a3, var(--muted));
+    border-radius: var(--rustify-scrollbar-radius);
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-scroll-area > [data-rustify-part="scroll-area-scrollbar"] > [data-rustify-part="scroll-area-thumb"]) {
+    background-color: var(--rustify-gray-a8, var(--border));
+    border-radius: inherit;
+    transition: background-color var(--motion-duration, 100ms);
+  }
+  @media (hover: hover) {
+    :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-scroll-area > [data-rustify-part="scroll-area-scrollbar"] > [data-rustify-part="scroll-area-thumb"]:hover) {
+      background-color: var(--rustify-gray-a9, var(--foreground));
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-scroll-area > [data-rustify-part="scroll-area-scrollbar"] > [data-rustify-part="scroll-area-thumb"]) {
+      transition: none;
+    }
+  }
+}
+@layer components {
+  :where(.rustify-progress) {
+    --rustify-progress-height: calc(var(--rustify-space-2, 8px) * 0.75);
+    height: var(--rustify-progress-height);
+    border-radius: max(calc(var(--rustify-progress-radius-factor, var(--rustify-radius-factor, 1)) * var(--rustify-progress-height) / 3), calc(var(--rustify-progress-radius-factor, var(--rustify-radius-factor, 1)) * var(--rustify-progress-radius-thumb, var(--rustify-radius-thumb, 9999px))));
+    pointer-events: none;
+    flex-grow: 1;
+    background: var(--rustify-gray-a3, var(--secondary));
+  }
+  :where(.rustify-progress)::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+  }
+  :where(.rustify-progress[data-variant="surface"])::after {
+    box-shadow: inset 0 0 0 1px var(--rustify-gray-a4, var(--border));
+  }
+  :where(.rustify-progress[data-variant="classic"])::after {
+    box-shadow: var(--rustify-shadow-sm, 0 1px 2px rgb(0 0 0 / 12%));
+  }
+  :where(.rustify-progress[data-variant="soft"]) {
+    background: var(--rustify-gray-a4, var(--muted));
+  }
+  :where(.rustify-progress-indicator) {
+    position: relative;
+    background: var(--rustify-component-color-track, var(--primary));
+    transition: width 120ms;
+  }
+  :where(.rustify-progress[data-variant="soft"] .rustify-progress-indicator) {
+    background: var(--rustify-component-color-8, var(--primary));
+    background-image: linear-gradient(var(--rustify-component-color-a5, transparent), var(--rustify-component-color-a5, transparent));
+  }
+  :where(.rustify-progress[data-high-contrast] .rustify-progress-indicator) {
+    background: var(--rustify-component-color-12, var(--foreground));
+  }
+  :where(.rustify-progress-indicator[data-state="indeterminate"]) {
+    width: 35%;
+    animation: rustify-progress-travel var(--rustify-progress-duration, 5000ms) ease-in-out infinite;
+  }
+  :where(.rustify-spinner [data-rustify-part="spinner-graphic"], .rustify-spinner[data-rustify-part="spinner-status"] [data-rustify-part="spinner-graphic"]) {
+    width: var(--rustify-spinner-size, var(--rustify-space-4, 16px));
+    height: var(--rustify-spinner-size, var(--rustify-space-4, 16px));
+    opacity: .65;
+  }
+  :where(.rustify-spinner [data-rustify-part="spinner-leaf"]) {
+    animation: rustify-spinner-fade 800ms linear infinite;
+  }
+  :where(.rustify-spinner [data-rustify-part="spinner-leaf"]:nth-child(1)) {
+    animation-delay: -800ms;
+  }
+  :where(.rustify-spinner [data-rustify-part="spinner-leaf"]:nth-child(2)) {
+    animation-delay: -700ms;
+  }
+  :where(.rustify-spinner [data-rustify-part="spinner-leaf"]:nth-child(3)) {
+    animation-delay: -600ms;
+  }
+  :where(.rustify-spinner [data-rustify-part="spinner-leaf"]:nth-child(4)) {
+    animation-delay: -500ms;
+  }
+  :where(.rustify-spinner [data-rustify-part="spinner-leaf"]:nth-child(5)) {
+    animation-delay: -400ms;
+  }
+  :where(.rustify-spinner [data-rustify-part="spinner-leaf"]:nth-child(6)) {
+    animation-delay: -300ms;
+  }
+  :where(.rustify-spinner [data-rustify-part="spinner-leaf"]:nth-child(7)) {
+    animation-delay: -200ms;
+  }
+  :where(.rustify-spinner [data-rustify-part="spinner-leaf"]:nth-child(8)) {
+    animation-delay: -100ms;
+  }
+  :where(.rustify-skeleton[data-loading="true"]) {
+    background: var(--rustify-gray-a3, var(--muted));
+    border-radius: var(--rustify-radius-1, 3px);
+    background-image: none !important;
+    border-color: transparent !important;
+    box-shadow: none !important;
+    outline: none !important;
+    animation: rustify-skeleton-pulse 1000ms infinite alternate-reverse;
+  }
+  :where(.rustify-skeleton:empty) {
+    display: inline-block;
+    width: 100%;
+    height: var(--rustify-space-3, 12px);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    :where(.rustify-progress-indicator, .rustify-spinner [data-rustify-part="spinner-leaf"], .rustify-skeleton) {
+      animation: none;
+      transition: none;
+    }
+  }
+  @container style(--motion-duration: 0ms) {
+    :where(.rustify-progress-indicator, .rustify-spinner [data-rustify-part="spinner-leaf"], .rustify-skeleton) {
+      animation: none;
+      transition: none;
+    }
+  }
+}
+@keyframes rustify-progress-travel {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(300%);
+  }
+}
+@keyframes rustify-spinner-fade {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: .25;
+  }
+}
+@keyframes rustify-skeleton-pulse {
+  from {
+    background-color: var(--rustify-gray-a3, var(--muted));
+  }
+  to {
+    background-color: var(--rustify-gray-a4, var(--secondary));
+  }
+}
+@layer components {
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-toast-viewport, .rustify-toaster) {
+    position: fixed;
+    inset-block-end: var(--rustify-space-4, 16px);
+    inset-inline-end: var(--rustify-space-4, 16px);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: var(--rustify-space-2, 8px);
+    max-width: min(24rem, calc(100vw - var(--rustify-space-4, 16px) * 2));
+    max-height: calc(100dvh - var(--rustify-space-4, 16px) * 2);
+    overflow-y: auto;
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-toast, .rustify-toaster [data-rustify-part="toast-root"]) {
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: start;
+    column-gap: var(--rustify-space-3, 12px);
+    row-gap: var(--rustify-space-1, 4px);
+    width: 100%;
+    padding: var(--rustify-space-3, 12px) var(--rustify-space-4, 16px);
+    border: 1px solid var(--border);
+    border-radius: var(--rustify-radius-md, var(--radius, 6px));
+    background: linear-gradient(var(--popover), var(--popover)), var(--background);
+    color: var(--popover-foreground);
+    box-shadow: var(--rustify-shadow-lg, 0 10px 15px -3px rgb(0 0 0 / 10%), 0 4px 6px -4px rgb(0 0 0 / 10%));
+    font-family: var(--rustify-font-sans, sans-serif);
+    font-size: var(--rustify-font-size-2, 14px);
+    line-height: var(--rustify-line-height-2, 20px);
+    overflow-wrap: anywhere;
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-toast[data-tone="success"], .rustify-toaster [data-rustify-part="toast-root"][data-tone="success"]) {
+    border-inline-start-width: 4px;
+    border-inline-start-color: var(--success);
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-toast[data-tone="warning"], .rustify-toaster [data-rustify-part="toast-root"][data-tone="warning"]) {
+    border-inline-start-width: 4px;
+    border-inline-start-color: var(--warning);
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-toast[data-tone="error"], .rustify-toaster [data-rustify-part="toast-root"][data-tone="error"]) {
+    border-inline-start-width: 4px;
+    border-inline-start-color: var(--destructive);
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-toast:focus-visible, .rustify-toaster [data-rustify-part="toast-root"]:focus-visible) {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-toast, .rustify-toaster [data-rustify-part="toast-root"]) > :where([data-rustify-part="toast-title"], [data-rustify-part="toast-description"], [data-rustify-part="toast-action"]) {
+    grid-column: 1;
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-toast, .rustify-toaster [data-rustify-part="toast-root"]) > :where([data-rustify-part="toast-close"]) {
+    grid-column: 2;
+    grid-row: 1 / span 3;
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-toast-body) {
+    display: flex;
+    grid-column: 1 / -1;
+    align-items: flex-start;
+    gap: var(--rustify-space-3, 12px);
+    min-width: 0;
+    width: 100%;
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-toast-content) {
+    flex: 1;
+    min-width: 0;
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-toast-title, .rustify-toast-description) {
+    margin: 0;
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-toast-title) {
+    font-weight: 600;
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-toast-content) > :where(.rustify-toast-title) + :where(.rustify-toast-description) {
+    margin-block-start: var(--rustify-space-1, 4px);
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-toast-action, .rustify-toast-close) {
+    box-sizing: border-box;
+    flex-shrink: 0;
+    border-radius: var(--rustify-radius-sm, 4px);
+    font: inherit;
+    cursor: pointer;
+    transition-property: color, background-color;
+    transition-duration: var(--motion-duration, 150ms);
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-toast-action) {
+    display: inline-flex;
+    justify-self: start;
+    align-items: center;
+    margin-block-start: var(--rustify-space-2, 8px);
+    padding: calc(var(--rustify-space-1, 4px) * 0.5) var(--rustify-space-2, 8px);
+    border: 1px solid var(--border);
+    background-color: transparent;
+    color: inherit;
+    font-weight: 500;
+    white-space: normal;
+    text-align: start;
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-toast-close) {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: calc(var(--rustify-space-1, 4px) * 0.5);
+    border: 0;
+    background-color: transparent;
+    color: var(--muted-foreground);
+    line-height: 1;
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-toast-action:focus-visible, .rustify-toast-close:focus-visible) {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-toast-action:disabled, .rustify-toast-close:disabled) {
+    cursor: default;
+    opacity: 0.5;
+  }
+  @media (hover: hover) {
+    :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-toast-action:hover:not(:disabled), .rustify-toast-close:hover:not(:disabled)) {
+      background-color: var(--muted);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-toast-action, .rustify-toast-close) {
+      transition: none;
+    }
+  }
+}
 [data-rustify-scope] input[data-name="Slider"] {
   --thumb-height: 1rem;
   --track-height: 0.25rem;
@@ -1938,31 +2928,6 @@
 }
 [data-rustify-scope] [data-name] {
   --tw-duration: var(--motion-duration);
-}
-[data-rustify-scope] [data-name="Spinner"] > svg {
-  animation: rui-spin calc(var(--motion-duration) * 8) linear infinite;
-}
-@keyframes rui-spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-[data-rustify-scope] [data-name="ScrollArea"] {
-  scrollbar-width: thin;
-  scrollbar-color: var(--border) transparent;
-}
-[data-rustify-scope] [data-name="ScrollArea"]::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-}
-[data-rustify-scope] [data-name="ScrollArea"]::-webkit-scrollbar-track {
-  background: transparent;
-}
-[data-rustify-scope] [data-name="ScrollArea"]::-webkit-scrollbar-thumb {
-  background: var(--border);
-  border-radius: 999px;
-  border: 3px solid transparent;
-  background-clip: content-box;
 }
 @layer components {
   :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-color) {
@@ -2760,6 +3725,26 @@
   --spacing: 8px;
   --motion-duration: 150ms;
 }
+@property --tw-rotate-x {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-rotate-y {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-rotate-z {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-skew-x {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-skew-y {
+  syntax: "*";
+  inherits: false;
+}
 @property --tw-space-y-reverse {
   syntax: "*";
   inherits: false;
@@ -2908,6 +3893,11 @@
 @layer properties {
   @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {
     *, ::before, ::after, ::backdrop {
+      --tw-rotate-x: initial;
+      --tw-rotate-y: initial;
+      --tw-rotate-z: initial;
+      --tw-skew-x: initial;
+      --tw-skew-y: initial;
       --tw-space-y-reverse: 0;
       --tw-border-style: solid;
       --tw-leading: initial;

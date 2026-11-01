@@ -14,7 +14,7 @@
 
 ## 当前重点
 
-- [DOM-COMPONENTS-P3](status/plan/5291ea27-775f-422c-a9dc-444ed893f028.md)：v0.2 / Ready，dev-plan-ready；实施 4/7。[完整计划评审](status/review/82810742-c017-4d8a-a8d0-8eb10b49b487.md)原“需要修改、建议 Blocked，2×P2”结论保留；[同轮文档处置](../../docs/plan/DOM-COMPONENTS-P3.review.md#修订处置与复核)已修订并复核 F-01/F-02，review-applied。局部模态 ARIA 与 scope 边界一致，通知动态父层/存活子树迁移/防自环/回焦及任务前置、验收已明确。[M1/V-1](../../docs/plan/DOM-COMPONENTS-P3.records/M1.md)已通过：旧面板六组 before 与正式参考已冻结；[M2/V-2 已退出](../../docs/plan/DOM-COMPONENTS-P3.records/M2.md)，69 项 host/静态与两消费者 11 条不同浏览器用例通过，按 M4 提交点保留源码；[M3/V-3 已退出](../../docs/plan/DOM-COMPONENTS-P3.records/M3.md)：同源 Dialog/AlertDialog、core 生命周期/恢复、局部名称与安全确认、便捷调用及 Studio scope 尺寸迁移齐备；真实两消费者与 Studio 定向验证通过，具体合并口径见记录；[M4/V-4/V-6](../../docs/plan/DOM-COMPONENTS-P3.records/M4.md)退出，辅助浮层与完整任务面板齐备，两消费者及旧入口通过；按阶段提交点收口 M2—M4，继续 M5 内容/滚动。整期未完成、未推送/发布。
+- [DOM-COMPONENTS-P3](status/plan/5291ea27-775f-422c-a9dc-444ed893f028.md)：v0.2 / Ready；7/7退出检查完成，待最终提交与SHA回填。当前[M7证据](../../docs/plan/DOM-COMPONENTS-P3.records/M7.md)覆盖内容/反馈/完整任务、接管、真实调用方与同功能性能；原计划评审及同轮文档处置保留在对象页。P5人工missing及已有Pagination边界单列；未推送、发行或独立代码评审。
 
 - [DOM-COMPONENTS-P2](status/plan/667600ae-475d-405d-a2be-44f97c89e1b3.md)：v0.2 / Ready，实施 5/5。[代码复审 R3](status/review/09cb5ab0-a1c6-4684-a9bd-65b998cf31dd.md)在 CSR/SSG 修复范围**通过验收**，F-04/F-06 已解决，旧问题回归通过、新增 0，无需 apply。154 项产品测试及相关构建/静态门通过；完整应用/Docs/GPU/性能/人工与 UI/UX 限制见报告。AGENTS.md 已明确只走 CSR/SSG。原 R1/R2 历史、P5 missing 保留；本轮报告/台账/规则留工作树，未提交、推送或发布。 [UI验收 R1](status/review/11950391-b9f3-4338-bca2-fd19718aad85.md)现判**需补证**，最低7.5（U5）；已确认差距可先apply，补齐键盘/busy/边界与兼容结果后再评。用户确认只要求已有卡片说明正确关联，下轮用新指纹重建基线；工程实施历史不变。 作者UI修复 `8c30e003`、计划登记 `72f004ab` 已提交：19条已修改待评审、1条按既有口径不采纳；[M5处置](../../docs/plan/DOM-COMPONENTS-P2.records/M5.md#ui-验收修复)及作者自检已落盘，下一步review-ui，原补证结论保留。
 

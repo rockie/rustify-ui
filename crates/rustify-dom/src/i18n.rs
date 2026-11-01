@@ -143,6 +143,8 @@ pub enum Message {
     MissingGlyph,
     /// The default words on a drop zone.
     DropFileHere,
+    /// The scope's notification viewport.
+    Notifications,
     /// Taking a status message down before it goes on its own.
     Dismiss,
 }
@@ -175,6 +177,7 @@ impl Message {
             Self::RegionFailed => "this view could not start",
             Self::DropFileHere => "drop a file here",
             Self::Dismiss => "dismiss this message",
+            Self::Notifications => "Notifications",
             // The character, and what it means, because a lone box tells a
             // reader nothing about whose fault it is.
             Self::MissingGlyph => "□ (no glyph in this font)",
@@ -201,12 +204,13 @@ impl Message {
             Self::MissingGlyph => "□（当前字体没有这个字形）",
             Self::DropFileHere => "把文件拖到这里",
             Self::Dismiss => "关闭这条消息",
+            Self::Notifications => "通知",
         }
     }
 
     /// Every message there is, for a catalogue page and for the test that
     /// keeps the two languages the same size.
-    pub fn all() -> [Self; 18] {
+    pub fn all() -> [Self; 19] {
         [
             Self::Retry,
             Self::Close,
@@ -225,6 +229,7 @@ impl Message {
             Self::RegionFailed,
             Self::MissingGlyph,
             Self::DropFileHere,
+            Self::Notifications,
             Self::Dismiss,
         ]
     }
@@ -250,6 +255,7 @@ impl Message {
             Self::MissingGlyph => "missing-glyph",
             Self::DropFileHere => "drop-file-here",
             Self::Dismiss => "dismiss",
+            Self::Notifications => "notifications",
         }
     }
 }

@@ -604,11 +604,12 @@ mod app {
             .into_any(),
             Category::Progress => view! {
                 <Progress
+                    class="w-full"
                     test_id=id("progress")
                     aria_label="how far along"
                     value=Signal::derive(move || values.fraction.get() * 100.0)
                 />
-                <Progress test_id=id("progress-unknown") aria_label="working" indeterminate=true />
+                <Progress class="w-full" test_id=id("progress-unknown") aria_label="working" indeterminate=true />
             }
             .into_any(),
             Category::Loading => view! {
@@ -881,6 +882,7 @@ mod app {
                         ToastOptions {
                             duration_ms,
                             tone: values.tone.get_untracked(),
+                            ..Default::default()
                         },
                     );
                     values.accept();

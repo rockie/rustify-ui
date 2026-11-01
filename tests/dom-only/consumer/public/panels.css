@@ -1,9 +1,10 @@
 [aria-label="Panel benchmark"] { max-width: 48rem; margin-inline: auto; }
-[data-testid="bench-scroll"] { height: 8rem; }
+[data-testid="bench-scroll-root"] { height: 8rem; }
 
 [data-testid="core-layer"] { width: 100px; height: 40px; }
 
-[data-testid="tree-toast-region"] { position: fixed; bottom: 16px; right: 16px; width: 200px; background: white; border: 1px solid #999; padding: 12px; }
+[data-testid="tree-toast-region"] { position: fixed; bottom: 16px; right: 16px; width: 226px; }
+[data-testid="tree-toast"] { box-sizing: border-box; width: 100%; background: white; color: #1d2939; border: 1px solid #999; padding: 12px; }
 
 [data-testid="tree-notice-popup"] { display: grid; gap: 8px; width: 260px; box-sizing: border-box; background: white; border: 1px solid #999; padding: 12px; }
 
@@ -28,3 +29,8 @@
 .stage-dialog-content { width: min(480px, var(--rustify-floating-available-width, calc(100vw - 2rem))); }
 .stage-options-content { width: min(300px, var(--rustify-floating-available-width, calc(100vw - 2rem))); }
 .stage-options-content h3 { margin-top: 0; }
+.stage-checklist-progress { max-width: 28rem; margin-block: 1.5rem; }
+.stage-checklist-progress p { margin-block: .5rem; }
+.stage-checklist-items { display: grid; gap: .75rem; }
+.stage-checklist-items label { display: flex; align-items: start; gap: .5rem; }
+.stage-checklist-items input { flex: none; margin-top: .35rem; accent-color: var(--primary); }

@@ -1,6 +1,110 @@
 import { test, expect, Page } from '@playwright/test';
 const errors=new WeakMap<Page,string[]>();
 
+test.describe('integration: release task',()=>{
+    test('safe confirmation and auxiliary selection lead to accepted content feedback',async({page},info)=>{
+        const title='Reviewed launch checklist';
+        await page.getByTestId('stage-notes').fill('Keep this summary while reviewing delivery.');
+        await page.getByTestId('stage-delete').click();
+        await expect(page.getByTestId('stage-confirmation')).toHaveAccessibleName('Remove this task?');
+        await expect(page.getByTestId('stage-keep')).toBeFocused();
+        await page.keyboard.press('Escape');
+        await expect(page.getByTestId('stage-name')).toHaveText('Launch checklist');
+        await expect(page.getByTestId('stage-feedback')).toBeEmpty();
+        if(info.project.name==='dom-only')await expect(page.getByTestId('bench-toaster-toast')).toHaveCount(0);
+
+        await page.getByTestId('stage-edit').click();
+        await page.getByTestId('stage-draft-name').fill(title);
+        await page.getByTestId('stage-options').click();
+        await page.getByTestId('stage-status-trigger').click();
+        await page.keyboard.press('End');await page.keyboard.press('Enter');
+        await expect(page.getByTestId('stage-status-trigger')).toHaveText('Ready');
+        await expect(page.getByTestId('stage-editor')).toBeVisible();
+        await expect(page.getByTestId('stage-options-content')).toBeVisible();
+        await page.getByTestId('stage-options-close').click();
+        await page.getByTestId('stage-save').click();
+        await expect(page.getByTestId('stage-editor')).toHaveCount(0);
+        await expect(page.getByTestId('stage-name')).toHaveText(title);
+        await expect(page.getByTestId('stage-status')).toHaveText('Ready');
+        await expect(page.getByTestId('stage-feedback')).toHaveText('Task changes saved.');
+        await expect(page.getByTestId('stage-notes')).toHaveValue('Keep this summary while reviewing delivery.');
+        if(info.project.name==='dom-only'){
+            const region=page.getByTestId('bench-toaster'),notice=page.getByTestId('bench-toaster-toast');
+            await expect(notice).toHaveCount(1);await expect(notice).toContainText('Task saved');
+            await expect(notice).toContainText(`${title} is now Ready.`);
+            await expect(region.locator('[data-rustify-part="toast-root"]')).toHaveCount(1);
+            await notice.getByRole('button',{name:'Review details',exact:true}).click();
+            await expect(notice).toHaveCount(0);
+            await expect(page.getByTestId('stage-details-tab')).toHaveAttribute('aria-selected','true');
+            const table=page.getByTestId('stage-details-table');
+            await expect(table).toHaveAccessibleName('Release task details');
+            await expect(table.getByRole('rowheader')).toHaveText(title);
+            await expect(table.getByRole('cell',{name:'Ready',exact:true})).toHaveAttribute('headers','stage-status-column stage-task-row');
+            await expect(page.getByTestId('stage-data-list')).toContainText('Release operations');
+            await expect(page.getByTestId('stage-owner-avatar')).toHaveAccessibleName('Jamie Morgan');
+        }else{
+            await page.getByTestId('stage-details-tab').click();
+            await expect(page.getByTestId('stage-detail-notes')).toHaveValue('Review with the delivery team before marking Ready.');
+        }
+        await page.getByTestId('stage-panel').screenshot({path:`docs/validation/dom-components-p3/m7-integration-${info.project.name}.png`});
+    });
+
+    test('actual owner loading and completed checks remain truthful across task removal',async({page},info)=>{
+        test.skip(info.project.name==='dom-primitives','The full themed task composes the raw parts verified by content and feedback suites.');
+        let release!:()=>void;const gate=new Promise<void>(resolve=>release=resolve);
+        await page.route('**/content-avatar.svg',async route=>{await gate;await route.continue();});
+        try{
+            await page.reload({waitUntil:'domcontentloaded'});
+            await expect(page.locator('#status')).toHaveAttribute('data-status','ready');
+            await page.getByTestId('stage-details-tab').click();
+            const avatar=page.getByTestId('stage-owner-avatar'),image=page.getByTestId('stage-owner-image'),loading=page.getByTestId('stage-owner-loading');
+            await expect(avatar).toHaveAttribute('data-state','loading');
+            await expect(loading).toHaveRole('status');await expect(loading).toHaveAccessibleName('Loading release owner photo');
+            await image.evaluate(element=>(element as HTMLElement).dataset.identity='owner-photo');
+            await page.getByTestId('stage-detail-notes').fill('Confirm the last two delivery checks.');
+            release();
+            await expect(avatar).toHaveAttribute('data-state','loaded');await expect(loading).toBeHidden();
+            await expect(image).toHaveAttribute('data-identity','owner-photo');
+            await expect(page.getByTestId('stage-detail-notes')).toHaveValue('Confirm the last two delivery checks.');
+            await expect(page.getByTestId('stage-detail-notes')).toBeFocused();
+            const progress=page.getByTestId('stage-checklist-progress');
+            await expect(progress).toHaveAccessibleName('Delivery checks');await expect(progress).toHaveAttribute('aria-valuemax','2');await expect(progress).toHaveAttribute('aria-valuenow','0');
+            await page.getByTestId('stage-checklist').click();await page.getByTestId('stage-owner-confirmed').check();
+            await expect(progress).toHaveAttribute('aria-valuenow','1');await expect(progress).toHaveAttribute('aria-valuetext','1 of 2 checks complete');
+            await page.getByTestId('stage-work-reviewed').check();await expect(progress).toHaveAttribute('data-state','complete');await expect(progress).toHaveAttribute('aria-valuenow','2');
+            await page.getByTestId('stage-summary-tab').click();await page.getByTestId('stage-details-tab').click();await expect(page.getByTestId('stage-owner-confirmed')).toBeChecked();
+            await page.getByTestId('stage-delete').click();await expect(page.getByTestId('stage-keep')).toBeFocused();await page.getByTestId('stage-confirm-delete').click();
+            await expect(page.getByTestId('stage-empty')).toBeVisible();await expect(page.getByTestId('stage-details-table')).toHaveCount(0);
+            await expect(page.getByTestId('bench-toaster-toast')).toContainText('Task removed from this local panel.');
+            await page.getByTestId('stage-restore').click();await expect(page.getByTestId('bench-toaster-toast')).toHaveCount(1);await expect(page.getByTestId('bench-toaster-toast')).toContainText('Sample task restored.');
+            await page.getByTestId('stage-details-tab').click();await expect(progress).toHaveAttribute('aria-valuenow','0');await page.getByTestId('stage-checklist').click();
+            await expect(page.getByTestId('stage-owner-confirmed')).not.toBeChecked();await expect(page.getByTestId('stage-work-reviewed')).not.toBeChecked();
+            await expect(page.getByTestId('stage-details-table').getByRole('rowheader')).toHaveText('Launch checklist');
+        }finally{release();}
+    });
+
+    test('one saved notification survives editor migration without changing its accepted task',async({page},info)=>{
+        test.skip(info.project.name==='dom-primitives','The themed application reuses its one existing scope notification scheduler.');
+        await page.getByTestId('stage-edit').click();await page.getByTestId('stage-draft-name').fill('Accepted delivery checklist');await page.getByTestId('stage-save').click();
+        const region=page.getByTestId('bench-toaster'),notice=page.getByTestId('bench-toaster-toast');
+        await expect(notice).toHaveCount(1);await notice.evaluate(element=>(element as HTMLElement).dataset.identity='accepted-notification');
+        const announcement=region.locator('[data-rustify-toast-announcer] > span');
+        await expect(announcement).toHaveCount(1);
+        await page.getByTestId('stage-edit').click();await page.getByTestId('stage-draft-name').fill('Unaccepted editor draft');
+        await expect.poll(()=>notice.evaluate(element=>!!element.closest('[data-testid="stage-editor"]'))).toBe(true);
+        await expect(notice).toHaveAttribute('data-identity','accepted-notification');await expect(announcement).toHaveCount(1);
+        await page.getByTestId('stage-options').click();await page.getByTestId('stage-status-trigger').click();await page.keyboard.press('End');await page.keyboard.press('Enter');
+        await page.keyboard.press('Escape');await expect(page.getByTestId('stage-editor')).toBeVisible();await expect(page.getByTestId('stage-draft-name')).toHaveValue('Unaccepted editor draft');
+        await page.getByTestId('stage-cancel').click();await expect(page.getByTestId('stage-name')).toHaveText('Accepted delivery checklist');await expect(page.getByTestId('stage-status')).toHaveText('Planned');
+        await expect(notice).toHaveAttribute('data-identity','accepted-notification');await expect(announcement).toHaveCount(1);
+        await expect(region.locator('[data-rustify-toast-announcer]')).toHaveCount(2);
+        await expect(region.locator('[data-rustify-part="toast-root"]')).toHaveCount(1);
+        await notice.getByRole('button',{name:'Review details',exact:true}).click();await expect(notice).toHaveCount(0);
+        await expect(page.getByTestId('stage-details-table').getByRole('rowheader')).toHaveText('Accepted delivery checklist');
+        await expect(page.getByTestId('stage-data-list')).toContainText('Planned');
+    });
+});
+
 test.beforeEach(async ({page},info)=>{
     const failures:string[]=[];errors.set(page,failures);
     page.on('pageerror',error=>failures.push(error.message));
@@ -329,7 +433,7 @@ test('themed floating surfaces enforce explicit max dimensions over the structur
 });
 test('modeless popover lets Shift Tab reach the preceding page control without stealing focus',async({page})=>{
     await page.getByTestId('popover-trigger').click();await expect(page.getByTestId('popover-input')).toBeFocused();
-    await page.keyboard.press('Shift+Tab');await expect(page.getByTestId('stage-notes')).toBeFocused();await expect(page.getByTestId('popover-content')).toBeHidden();await expect(page.getByTestId('popover-requests')).toHaveText('2');
+    await page.keyboard.press('Shift+Tab');await expect(page.getByTestId('feedback-outside')).toBeFocused();await expect(page.getByTestId('popover-content')).toBeHidden();await expect(page.getByTestId('popover-requests')).toHaveText('2');
 });
 
 test('popover arrow measures each physical side, follows its resized depth and inherits the panel surface',async({page},info)=>{

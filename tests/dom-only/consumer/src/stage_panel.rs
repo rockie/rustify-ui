@@ -1,14 +1,18 @@
 use leptos::prelude::*;
 use rustify_components::primitives::tabs::PanelEntry;
-use rustify_components::{accordion, alert_dialog, collapsible, dialog, popover, select, tabs};
+use rustify_components::{
+    accordion, alert_dialog, avatar, collapsible, dialog, popover, progress, select, spinner, tabs,
+};
 
 #[component]
 pub fn StagePanel() -> impl IntoView {
     let present = RwSignal::new(true);
     let name = RwSignal::new("Launch checklist".to_string());
     let status = RwSignal::new(Some("planned".to_string()));
-    let notes = RwSignal::new("Confirm the release owner and review the final checklist.".to_string());
-    let detail_notes = RwSignal::new("Review with the delivery team before marking Ready.".to_string());
+    let notes =
+        RwSignal::new("Confirm the release owner and review the final checklist.".to_string());
+    let detail_notes =
+        RwSignal::new("Review with the delivery team before marking Ready.".to_string());
     let tab = RwSignal::new(Some("summary".to_string()));
     let expanded = RwSignal::new(accordion::AccordionValue::Single(None));
     let references = RwSignal::new(false);
@@ -19,6 +23,14 @@ pub fn StagePanel() -> impl IntoView {
     let draft_name = RwSignal::new(String::new());
     let draft_status = RwSignal::new(None::<String>);
     let feedback = RwSignal::new(String::new());
+    let owner_confirmed = RwSignal::new(false);
+    let work_reviewed = RwSignal::new(false);
+    let checks_complete = Signal::derive(move || {
+        f64::from(u8::from(owner_confirmed.get()) + u8::from(work_reviewed.get()))
+    });
+    let photo_state = RwSignal::new(avatar::ImageLoadingStatus::Idle);
+    let toasts = rustify_ui::use_toasts();
+    let review_details = Callback::new(move |_| tab.set(Some("details".into())));
     let position = Signal::stored(rustify_ui::FloatingPosition {
         align: rustify_ui::Align::Start,
         side_offset: 8.,
@@ -56,6 +68,17 @@ pub fn StagePanel() -> impl IntoView {
                             name.set(draft_name.get_untracked());
                             status.set(draft_status.get_untracked());
                             feedback.set("Task changes saved.".into());
+                            toasts.show(format!("{} is now {}.", name.get_untracked(), match status.get_untracked().as_deref() { Some("ready")=>"Ready", Some("in-review")=>"In review", _=>"Planned" }), rustify_ui::ToastOptions {
+                                duration_ms: 0,
+                                tone: rustify_ui::ToastTone::Success,
+                                title: Some("Task saved".into()),
+                                action: Some(rustify_ui::ToastAction {
+                                    label: "Review details".into(),
+                                    alt_text: "Open the saved task details and delivery checklist".into(),
+                                    on_action: review_details,
+                                }),
+                                ..Default::default()
+                            });
                             status_open.set(false);
                             options.set(false);
                             editor.set(false);
@@ -107,6 +130,7 @@ pub fn StagePanel() -> impl IntoView {
                             <alert_dialog::Action test_id="stage-confirm-delete" on_action=Callback::new(move |_| {
                                 present.set(false);
                                 feedback.set("Task removed.".into());
+                                toasts.show("Task removed from this local panel.", rustify_ui::ToastOptions::default());
                             })>"Remove task"</alert_dialog::Action>
                         </div>
                     </alert_dialog::Content>
@@ -120,8 +144,11 @@ pub fn StagePanel() -> impl IntoView {
                 tab.set(Some("summary".into()));
                 expanded.set(accordion::AccordionValue::Single(None));
                 references.set(false);
+                owner_confirmed.set(false);
+                work_reviewed.set(false);
                 present.set(true);
                 feedback.set("Sample task restored.".into());
+                toasts.show("Sample task restored.", rustify_ui::ToastOptions::default());
             }>"Restore sample task"</button>
         </div>
         <p class="stage-feedback" data-testid="stage-feedback">{move ||feedback.get()}</p>
@@ -138,14 +165,52 @@ pub fn StagePanel() -> impl IntoView {
                     on:input=move |event|notes.set(event_target_value(&event)) />
             </tabs::Content>
             <tabs::Content value="details" class="stage-tab-content" test_id="stage-details">
+                <div class="stage-details-grid">
+                    <div class="stage-owner-profile">
+                        <avatar::Root test_id="stage-owner-avatar" attr:role="img" attr:aria-label="Jamie Morgan">
+                            <avatar::Image src="content-avatar.svg" alt="Jamie Morgan" test_id="stage-owner-image" on_loading_status_change=Callback::new(move |next| photo_state.set(next)) />
+                            <avatar::Fallback>"JM"</avatar::Fallback>
+                        </avatar::Root>
+                        <div><strong>"Jamie Morgan"</strong><p>"Release owner"</p></div>
+                        <spinner::Spinner loading=Signal::derive(move ||matches!(photo_state.get(), avatar::ImageLoadingStatus::Idle | avatar::ImageLoadingStatus::Loading)) label="Loading release owner photo" test_id="stage-owner-loading" />
+                    </div>
+                    <rustify_components::data_list::Root test_id="stage-data-list">
+                        <rustify_components::data_list::Item><rustify_components::data_list::Label>"Owner"</rustify_components::data_list::Label><rustify_components::data_list::Value>"Jamie Morgan"</rustify_components::data_list::Value><rustify_components::data_list::Value>"Release operations"</rustify_components::data_list::Value></rustify_components::data_list::Item>
+                        <rustify_components::data_list::Item><rustify_components::data_list::Label>"Status"</rustify_components::data_list::Label><rustify_components::data_list::Value>{move ||match status.get().as_deref(){Some("ready")=>"Ready",Some("in-review")=>"In review",_=>"Planned"}}</rustify_components::data_list::Value></rustify_components::data_list::Item>
+                    </rustify_components::data_list::Root>
+                </div>
+                <div class="content-table-scroll" tabindex="0" aria-label="Task details table scrollport">
+                    <rustify_components::table::Root test_id="stage-details-table">
+                        <rustify_components::table::Caption>"Release task details"</rustify_components::table::Caption>
+                        <rustify_components::table::Header><rustify_components::table::Row>
+                            <rustify_components::table::ColumnHeaderCell id="stage-task-column">"Task"</rustify_components::table::ColumnHeaderCell>
+                            <rustify_components::table::ColumnHeaderCell id="stage-status-column">"Status"</rustify_components::table::ColumnHeaderCell>
+                            <rustify_components::table::ColumnHeaderCell id="stage-owner-column">"Owner"</rustify_components::table::ColumnHeaderCell>
+                        </rustify_components::table::Row></rustify_components::table::Header>
+                        <rustify_components::table::Body><rustify_components::table::Row>
+                            <rustify_components::table::RowHeaderCell id="stage-task-row" headers="stage-task-column">{move ||name.get()}</rustify_components::table::RowHeaderCell>
+                            <rustify_components::table::Cell headers="stage-status-column stage-task-row">{move ||match status.get().as_deref(){Some("ready")=>"Ready",Some("in-review")=>"In review",_=>"Planned"}}</rustify_components::table::Cell>
+                            <rustify_components::table::Cell headers="stage-owner-column stage-task-row">"Jamie Morgan"</rustify_components::table::Cell>
+                        </rustify_components::table::Row></rustify_components::table::Body>
+                    </rustify_components::table::Root>
+                </div>
                 <label for="stage-detail-notes">"Review notes"</label>
                 <textarea id="stage-detail-notes" data-testid="stage-detail-notes" prop:value=move ||detail_notes.get()
                     on:input=move |event|detail_notes.set(event_target_value(&event)) />
+                <div class="stage-checklist-progress">
+                    <p id="stage-checklist-label">"Delivery checks"</p>
+                    <progress::Progress value=checks_complete max=2. labelled_by="stage-checklist-label" test_id="stage-checklist-progress"
+                        value_label=Some(Callback::new(|value: progress::ProgressValue| format!("{} of {} checks complete", value.value.unwrap_or_default(), value.max))) />
+                    <p data-testid="stage-checklist-count">{move ||format!("{} of 2 checks complete", checks_complete.get())}</p>
+                </div>
                 <accordion::Root value=expanded on_change=move |next|expanded.set(next) collapsible=true>
                     <accordion::Item value="checklist">
                         <accordion::Header><accordion::Trigger test_id="stage-checklist">"Delivery checklist"</accordion::Trigger></accordion::Header>
                         <accordion::Content test_id="stage-checklist-content">
-                            <ul><li>"Confirm the release owner."</li><li>"Review outstanding work before moving to Ready."</li></ul>
+                            <div class="stage-checklist-items">
+                                <label><input type="checkbox" data-testid="stage-owner-confirmed" prop:checked=move ||owner_confirmed.get() on:change=move |event|owner_confirmed.set(event_target_checked(&event)) />"Release owner confirmed"</label>
+                                <label><input type="checkbox" data-testid="stage-work-reviewed" prop:checked=move ||work_reviewed.get() on:change=move |event|work_reviewed.set(event_target_checked(&event)) />"Outstanding work reviewed"</label>
+                            </div>
                         </accordion::Content>
                     </accordion::Item>
                     <accordion::Item value="history">

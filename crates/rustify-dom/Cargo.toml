@@ -81,6 +81,11 @@ web-sys = { workspace = true, features = [
     # A modal layer's tab stops: found, ordered in the document, and skipped
     # when they are not rendered or not visible.
     "CssStyleDeclaration",
+    "CssStyleSheet",
+    "CssStyleRule",
+    "CssRule",
+    "CssRuleList",
+    "PointerEvent",
     "DomRectList",
     "Node",
     "NodeList",

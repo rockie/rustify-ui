@@ -17,6 +17,7 @@ declare global {
         __dom_instances: Record<number, Instance>;
         __csp: string[];
         __booting?: Promise<number>;
+        __nativeToastTimers?: { tag: number; timers: Map<number, NativeToastTimer> };
     }
 }
 
@@ -37,6 +38,45 @@ interface Instance {
     trap_deferred(): void;
     simulate_trap(message?: string): void;
     restart(): Promise<number | null>;
+}
+
+type NativeToastTimer = { id: number; tag: number; delay: number; fired: boolean; cancelled: boolean };
+
+// Observe real timeouts during a known toast-show action, as the panels probe
+// does for hover timers. Runtime host statistics do not include this native timer.
+async function watchNativeToastTimers(page: Page, tag: number) {
+    await page.evaluate((tag) => {
+        if (!window.__nativeToastTimers) {
+            const schedule = window.setTimeout.bind(window), clear = window.clearTimeout.bind(window);
+            const probe = { tag, timers: new Map<number, NativeToastTimer>() };
+            window.__nativeToastTimers = probe;
+            window.setTimeout = ((callback: TimerHandler, delay?: number, ...args: unknown[]) => {
+                if (!probe.tag || typeof callback !== "function" || delay === undefined || delay <= 0 || delay > 400) {
+                    return schedule(callback, delay, ...args);
+                }
+                const timer: NativeToastTimer = { id: 0, tag: probe.tag, delay, fired: false, cancelled: false };
+                const id = schedule((...values: unknown[]) => {
+                    timer.fired = true;
+                    return callback.apply(window, values);
+                }, delay, ...args);
+                timer.id = id;
+                probe.timers.set(id, timer);
+                return id;
+            }) as typeof window.setTimeout;
+            window.clearTimeout = (id?: number) => {
+                if (id !== undefined) {
+                    const timer = probe.timers.get(id);
+                    if (timer) timer.cancelled = true;
+                }
+                clear(id);
+            };
+        }
+        window.__nativeToastTimers.tag = tag;
+    }, tag);
+}
+
+async function nativeToastTimers(page: Page, tag: number): Promise<NativeToastTimer[]> {
+    return page.evaluate((tag) => [...(window.__nativeToastTimers?.timers.values() ?? [])].filter((timer) => timer.tag === tag), tag);
 }
 
 const status = (page: Page) => page.getByTestId("status");
@@ -151,12 +191,15 @@ test.describe("a DOM application starts without Makepad", () => {
         await open(page);
         const one = instance(page, 1);
 
-        // A toast hides itself on a timer the host owns.
+        // The Provider schedules a real native timer and the message expires.
+        await watchNativeToastTimers(page, 1);
         await page.getByTestId("instance-one-toast-show").click();
         await expect(page.getByTestId("instance-one-toaster-toast")).toBeVisible();
-        expect((await one.stats()).timers).toBeGreaterThan(0);
+        await expect.poll(async () => (await nativeToastTimers(page, 1)).filter((timer) => !timer.fired && !timer.cancelled).length).toBeGreaterThan(0);
+        await watchNativeToastTimers(page, 0);
         await expect(page.getByTestId("instance-one-toaster-toast")).toHaveCount(0);
-        await expect.poll(async () => (await one.stats()).timers).toBe(0);
+        expect((await nativeToastTimers(page, 1)).some((timer) => timer.fired)).toBe(true);
+        expect((await nativeToastTimers(page, 1)).every((timer) => timer.fired || timer.cancelled)).toBe(true);
 
         // The dialog stands on the overlay stack: focus moves in, Escape
         // closes it, and focus comes back to what opened it.
@@ -329,8 +372,13 @@ test.describe("one instance fails, the other does not", () => {
             });
             // Something pending in each: a toast's timer, a size observer, a
             // listener on the window; and the first one owns the address bar.
+            await watchNativeToastTimers(page, 1);
             await page.getByTestId("instance-one-toast-show").click();
-            expect((await one.stats()).timers).toBeGreaterThan(0);
+            await expect(page.getByTestId("instance-one-toaster-toast")).toBeVisible();
+            await expect.poll(async () => (await nativeToastTimers(page, 1)).filter((timer) => !timer.fired && !timer.cancelled).length).toBeGreaterThan(0);
+            const pendingToastTimers = (await nativeToastTimers(page, 1)).filter((timer) => !timer.fired && !timer.cancelled).map((timer) => timer.id);
+            expect(pendingToastTimers.length).toBeGreaterThan(0);
+            await watchNativeToastTimers(page, 0);
             expect((await one.stats()).observers).toBe(1);
             expect(await page.evaluate(() => document.documentElement.getAttribute("data-rustify-url-owner"))).toBe(
                 "1:instance-one"
@@ -349,6 +397,10 @@ test.describe("one instance fails, the other does not", () => {
             // address bar, and its listeners - its scope's keydown and the
             // loader's own error and rejection listeners.
             expect(await one.stats()).toMatchObject({ tasks: 0, timers: 0, observers: 0, aborted: true });
+            const nativeTimers = await nativeToastTimers(page, 1);
+            for (const id of pendingToastTimers) {
+                expect(nativeTimers.find((timer) => timer.id === id)).toMatchObject({ cancelled: true, fired: false });
+            }
             expect(await page.evaluate(() => window.__dom_consumer.released)).toEqual([1]);
             expect(await page.evaluate(() => document.documentElement.getAttribute("data-rustify-url-owner"))).toBeNull();
             const after = await windowListeners(page);
@@ -362,9 +414,14 @@ test.describe("one instance fails, the other does not", () => {
             expect(await liveActions(page, "instance-two")).toBe(100);
             expect(await two.fatal()).toBeNull();
             expect((await two.stats()).aborted).toBe(false);
+            await watchNativeToastTimers(page, 2);
             await page.getByTestId("instance-two-toast-show").click();
             await expect(page.getByTestId("instance-two-toaster-toast")).toBeVisible();
+            await expect.poll(async () => (await nativeToastTimers(page, 2)).filter((timer) => !timer.fired && !timer.cancelled).length).toBeGreaterThan(0);
+            await watchNativeToastTimers(page, 0);
             await expect(page.getByTestId("instance-two-toaster-toast")).toHaveCount(0);
+            expect((await nativeToastTimers(page, 2)).some((timer) => timer.fired)).toBe(true);
+            expect((await nativeToastTimers(page, 2)).every((timer) => timer.fired || timer.cancelled)).toBe(true);
             const resizes = (await two.state())!.resizes;
             await page.getByTestId("instance-two-box").evaluate((box: HTMLElement) => {
                 box.style.width = "320px";

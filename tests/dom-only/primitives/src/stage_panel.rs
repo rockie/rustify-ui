@@ -1,14 +1,18 @@
 use leptos::prelude::*;
 use rustify_components::primitives::tabs::PanelEntry;
-use rustify_components::primitives::{accordion, alert_dialog, collapsible, dialog, popover, select, tabs};
+use rustify_components::primitives::{
+    accordion, alert_dialog, collapsible, dialog, popover, select, tabs,
+};
 
 #[component]
 pub fn StagePanel() -> impl IntoView {
     let present = RwSignal::new(true);
     let name = RwSignal::new("Launch checklist".to_string());
     let status = RwSignal::new(Some("planned".to_string()));
-    let notes = RwSignal::new("Confirm the release owner and review the final checklist.".to_string());
-    let detail_notes = RwSignal::new("Review with the delivery team before marking Ready.".to_string());
+    let notes =
+        RwSignal::new("Confirm the release owner and review the final checklist.".to_string());
+    let detail_notes =
+        RwSignal::new("Review with the delivery team before marking Ready.".to_string());
     let tab = RwSignal::new(Some("summary".to_string()));
     let expanded = RwSignal::new(accordion::AccordionValue::Single(None));
     let references = RwSignal::new(false);

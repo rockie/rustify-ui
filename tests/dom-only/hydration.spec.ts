@@ -98,7 +98,8 @@ async function initialControls(page: Page, scope: string) {
     await expect(control(page, scope, "select")).toHaveText("Red");
     await expect(control(page, scope, "select")).toHaveAttribute("aria-expanded", "false");
     await expect(control(page, scope, "slider")).toHaveAttribute("aria-valuenow", "42.5");
-    await expect(control(page, scope, "progress")).toHaveAttribute("aria-valuenow", "34");
+    await expect(control(page, scope, "progress")).toHaveAttribute("aria-valuenow", "42.5");
+    await expect(control(page, scope, "progress")).toHaveAttribute("aria-valuemax", "125");
     await expect(control(page, scope, "loading")).toHaveAttribute("role", "status");
     await expect(control(page, scope, "loading")).toHaveAttribute("aria-label", "Loading fixture");
     await expect(control(page, scope, "icon")).toHaveAttribute("data-glyph", "close");
@@ -114,8 +115,117 @@ async function initialControls(page: Page, scope: string) {
     await expect(control(page, scope, "table")).toHaveAttribute("aria-colcount", "3");
     await expect(control(page, scope, "table-row-1")).toHaveAttribute("aria-selected", "true");
     await expect(control(page, scope, "static-toast")).toContainText("Deterministic status");
+    await expect(control(page, scope, "static-toast").getByRole("button")).toHaveCount(0);
     await expect(root(page, scope).locator("[style]")).toHaveCount(0);
-    await expect(root(page, scope).locator("[role=dialog], [role=tooltip], [role=menu], [role=listbox]")).toHaveCount(0);
+    await expect(root(page, scope).locator("[role=dialog], [role=alertdialog], [role=tooltip], [role=menu], [role=listbox]")).toHaveCount(0);
+    await initialDeliveryParts(page, scope);
+}
+
+
+async function initialDeliveryParts(page: Page, scope: string) {
+    await expect(control(page, scope, "summary-trigger")).toHaveAttribute("aria-expanded", "true");
+    await expect(control(page, scope, "summary-content")).toBeVisible();
+    await expect(control(page, scope, "history-content")).toBeHidden();
+    await expect(control(page, scope, "history-content")).toHaveAttribute("inert", "");
+    for (const [trigger, content] of [["summary-trigger", "summary-content"], ["history-trigger", "history-content"], ["delivery-more", "delivery-more-content"]]) {
+        await expect(control(page, scope, trigger)).toHaveAttribute("aria-controls", (await control(page, scope, content).getAttribute("id"))!);
+        await expect(control(page, scope, content)).toHaveAttribute("aria-labelledby", (await control(page, scope, trigger).getAttribute("id"))!);
+    }
+    await expect(control(page, scope, "delivery-more-content")).toBeHidden();
+    await expect(control(page, scope, "delivery-link")).toHaveAttribute("href", `#${scope}-delivery-destination`);
+    await expect(control(page, scope, "delivery-link")).toHaveAttribute("aria-current", "page");
+    await expect(control(page, scope, "segment-ready")).toBeChecked();
+    const table = control(page, scope, "delivery-table");
+    await expect(table).toHaveJSProperty("tagName", "TABLE");
+    await expect(table).toHaveAccessibleName("Delivery checks");
+    await expect(table.locator("thead th").last()).toHaveAttribute("scope", "col");
+    await expect(table.locator("tbody th")).toHaveAttribute("scope", "row");
+    await expect(control(page, scope, "delivery-table-value")).toHaveAttribute("headers", `${scope}-delivery-check-heading ${scope}-delivery-status-heading`);
+    await expect(control(page, scope, "delivery-list")).toHaveJSProperty("tagName", "DL");
+    await expect(control(page, scope, "delivery-list").locator("dt")).toHaveText("Owner");
+    await expect(control(page, scope, "delivery-list").locator("dd")).toHaveText(["Release owner", "Backup reviewer"]);
+    await expect(control(page, scope, "delivery-avatar-fallback")).toHaveText("RO");
+    await expect(control(page, scope, "delivery-avatar-fallback")).toBeVisible();
+    await expect(control(page, scope, "delivery-avatar-image")).not.toHaveAttribute("src");
+    await expect(control(page, scope, "delivery-ratio")).toHaveCSS("aspect-ratio", "2 / 1");
+    await expect(control(page, scope, "delivery-separator")).toHaveRole("separator");
+    await expect(control(page, scope, "delivery-unknown-progress")).toHaveAttribute("aria-valuemax", "150");
+    await expect(control(page, scope, "delivery-unknown-progress")).not.toHaveAttribute("aria-valuenow");
+    await expect(control(page, scope, "owner-draft")).toHaveValue("Release owner");
+    await expect(control(page, scope, "delivery-draft")).toHaveValue("Keep this delivery note");
+    await expect(control(page, scope, "delivery-loading").getByRole("status")).toHaveCount(0);
+    await expect(control(page, scope, "toaster-toast")).toHaveCount(0);
+    for (const name of ["delivery-popover", "delivery-confirm", "delivery-hover"]) await expect(control(page, scope, name)).toHaveCount(0);
+}
+
+async function exerciseDeliveryParts(page: Page, scope: string) {
+    await control(page, scope, "segment-ready").focus();
+    await control(page, scope, "history-action").evaluate(node => (node as HTMLElement).focus());
+    await expect(control(page, scope, "segment-ready")).toBeFocused();
+    await control(page, scope, "segment-review").check();
+    await expect(control(page, scope, "segment-review")).toBeChecked();
+    await control(page, scope, "history-trigger").click();
+    await expect(control(page, scope, "history-content")).toBeVisible();
+    await expect(control(page, scope, "summary-content")).toBeHidden();
+    await control(page, scope, "delivery-more").click();
+    await expect(control(page, scope, "delivery-more-content")).toBeVisible();
+    await control(page, scope, "delivery-popover-open").click();
+    await expect(control(page, scope, "delivery-popover")).toHaveAccessibleName("Delivery note editor");
+    await control(page, scope, "delivery-popover-close").click();
+    await expect(control(page, scope, "delivery-popover-open")).toBeFocused();
+    await control(page, scope, "delivery-confirm-open").click();
+    const confirmation = control(page, scope, "delivery-confirm");
+    await expect(confirmation).toHaveRole("alertdialog");
+    await expect(confirmation).toHaveAccessibleName("Remove local reminder?");
+    await expect(confirmation).toHaveAccessibleDescription("This only removes the reminder from this example.");
+    await expect(control(page, scope, "delivery-confirm-cancel")).toBeFocused();
+    await assertReferences(page);
+    await control(page, scope, "delivery-confirm-cancel").click();
+    await expect(control(page, scope, "delivery-removals")).toHaveText("0");
+    await control(page, scope, "delivery-confirm-open").click();
+    await control(page, scope, "delivery-confirm-action").click();
+    await expect(control(page, scope, "delivery-removals")).toHaveText("1");
+    await expect(control(page, scope, "delivery-confirm-open")).toBeFocused();
+    await control(page, scope, "delivery-hover-open").focus();
+    await expect(control(page, scope, "delivery-hover")).toBeVisible();
+    await page.keyboard.press("Escape");
+    await expect(control(page, scope, "delivery-hover")).toHaveCount(0);
+    await control(page, scope, "owner-draft").fill("Retained owner draft");
+    await control(page, scope, "delivery-draft").fill("Retained delivery draft");
+    const names = ["owner-draft", "delivery-draft", "retained-spinner", "retained-skeleton"];
+    const nodes = await Promise.all(names.map(name => control(page, scope, name).elementHandle()));
+    await control(page, scope, "delivery-loading-start").click();
+    await expect(control(page, scope, "delivery-loading").getByRole("status")).toHaveCount(1);
+    await expect(control(page, scope, "retained-spinner")).toHaveAttribute("inert", "");
+    await expect(control(page, scope, "retained-skeleton")).toHaveAttribute("inert", "");
+    await control(page, scope, "delivery-loading-finish").focus();
+    for (const name of ["owner-draft", "delivery-draft"]) {
+        await control(page, scope, name).evaluate(node => (node as HTMLElement).focus());
+        await expect(control(page, scope, "delivery-loading-finish")).toBeFocused();
+    }
+    await page.keyboard.press("Enter");
+    await expect(control(page, scope, "delivery-loading").getByRole("status")).toHaveCount(0);
+    await expect(control(page, scope, "delivery-loading-finish")).toBeFocused();
+    for (const [index, node] of nodes.entries()) {
+        expect(await node!.evaluate((node, expected) => node === document.querySelector(`[data-testid="${expected}"]`), `${scope}-${names[index]}`)).toBe(true);
+    }
+    await expect(control(page, scope, "owner-draft")).toHaveValue("Retained owner draft");
+    await expect(control(page, scope, "delivery-draft")).toHaveValue("Retained delivery draft");
+    await page.keyboard.press("Tab");
+    await expect(control(page, scope, "owner-draft")).toBeFocused();
+    await page.keyboard.press("Tab");
+    await expect(control(page, scope, "owner-check")).toBeFocused();
+    await page.keyboard.press("Space");
+    await expect(control(page, scope, "owner-checks")).toHaveText("1");
+    await page.keyboard.press("Tab");
+    await expect(control(page, scope, "delivery-draft")).toBeFocused();
+    return {
+        selected: await control(page, scope, "segment-review").isChecked(),
+        expanded: await control(page, scope, "delivery-more").getAttribute("aria-expanded"),
+        removals: await control(page, scope, "delivery-removals").textContent(),
+        owner: await control(page, scope, "owner-draft").inputValue(),
+        note: await control(page, scope, "delivery-draft").inputValue(),
+    };
 }
 
 async function partsData(page: Page, scope: string, name = "parts-form") {
@@ -232,12 +342,13 @@ async function assertReferences(page: Page) {
                 if (ids.has(element.id)) faults.push(`duplicate ${element.id}`);
                 ids.add(element.id);
             }
-            for (const element of root.querySelectorAll("[for], [aria-labelledby], [aria-describedby], [aria-controls]")) {
-                for (const attribute of ["for", "aria-labelledby", "aria-describedby", "aria-controls"]) {
+            for (const element of root.querySelectorAll("[for], [headers], [aria-labelledby], [aria-describedby], [aria-controls]")) {
+                for (const attribute of ["for", "headers", "aria-labelledby", "aria-describedby", "aria-controls"]) {
                     for (const id of (element.getAttribute(attribute) ?? "").split(/\s+/).filter(Boolean)) {
                         const target = document.getElementById(id);
-                        // A closed Select keeps the identity of its future listbox.
-                        if (attribute === "aria-controls" && element.getAttribute("role") === "combobox" && element.getAttribute("aria-expanded") === "false") continue;
+                        // Closed portals keep their future panel ID without mounting browser-only content.
+                        if (attribute === "aria-controls" && element.getAttribute("aria-expanded") === "false"
+                            && (element.getAttribute("role") === "combobox" || element.getAttribute("aria-haspopup") === "dialog")) continue;
                         if (!target || !root.contains(target)) faults.push(`${attribute}=${id} crosses or misses its scope`);
                     }
                 }
@@ -288,7 +399,7 @@ async function exercise(page: Page, scope: string) {
     await control(page, scope, "slider").focus();
     await control(page, scope, "slider").press("ArrowRight");
     await expect(control(page, scope, "slider")).toHaveAttribute("aria-valuenow", "45");
-    await expect(control(page, scope, "progress")).toHaveAttribute("aria-valuenow", "36");
+    await expect(control(page, scope, "progress")).toHaveAttribute("aria-valuenow", "45");
     await record("slider and progress");
     await control(page, scope, "tooltip-trigger").hover();
     await expect(root(page, scope).getByRole("tooltip")).toHaveText("Help for this control");
@@ -329,7 +440,8 @@ async function exercise(page: Page, scope: string) {
     await control(page, scope, "tree-root").press("ArrowLeft");
     await expect(control(page, scope, "tree-root")).toHaveAttribute("aria-expanded", "false");
     await record("tree");
-    await control(page, scope, "static-toast-dismiss").click();
+    await expect(control(page, scope, "static-toast")).toContainText("Deterministic status");
+    await expect(control(page, scope, "static-toast").getByRole("button")).toHaveCount(0);
     await control(page, scope, "toast-trigger").click();
     await expect(control(page, scope, "toaster-toast")).toHaveText("Runtime status");
     await control(page, scope, "toaster-toast-dismiss").click();
@@ -460,6 +572,7 @@ test("the same component inputs produce the same public state in hydrate and CSR
         const mounted = await exercise(csr, "catalog-a");
         const hydratedParts = await exerciseParts(page, "catalog-a");
         const mountedParts = await exerciseParts(csr, "catalog-a");
+        expect(await exerciseDeliveryParts(page, "catalog-a")).toEqual(await exerciseDeliveryParts(csr, "catalog-a"));
         expect(hydratedParts).toEqual(mountedParts);
         await testInfo.attach("composed-parts-state.json", { body: JSON.stringify(hydratedParts, null, 2), contentType: "application/json" });
         expect(hydrated).toEqual(mounted);
@@ -611,12 +724,12 @@ test("independent CSR runtimes isolate identical geometry classes and their clea
         const style = getComputedStyle(element);
         return { property: style.transitionProperty, duration: style.transitionDuration };
     });
-    expect(transition).toEqual({ property: "width", duration: "0.15s" });
+    expect(transition).toEqual({ property: "width", duration: "0.12s" });
     const measurements: number[] = [];
     await first.getByTestId("shared-seed-slider").focus();
     await first.getByTestId("shared-seed-slider").press("ArrowRight");
-    await expect(progress(first)).toHaveAttribute("aria-valuenow", "36");
-    await expect(progress(second)).toHaveAttribute("aria-valuenow", "34");
+    await expect(progress(first)).toHaveAttribute("aria-valuenow", "45");
+    await expect(progress(second)).toHaveAttribute("aria-valuenow", "42.5");
     await expect.poll(() => widthRules(progress(first).locator("div"))).toEqual(["36%"]);
     await expect.poll(async () => {
         const width = await ratio(progress(first));
@@ -637,7 +750,7 @@ test("independent CSR runtimes isolate identical geometry classes and their clea
     expect((await page.evaluate(() => window.__hydration.stats())).aborted).toBe(false);
     await second.getByTestId("shared-seed-slider").focus();
     await second.getByTestId("shared-seed-slider").press("ArrowRight");
-    await expect(progress(second)).toHaveAttribute("aria-valuenow", "36");
+    await expect(progress(second)).toHaveAttribute("aria-valuenow", "45");
     await expect.poll(() => widthRules(progress(second).locator("div"))).toEqual(["36%"]);
     await expect.poll(() => ratio(progress(second))).toBeCloseTo(36, 1);
     expect(await ratio(control(page, "catalog-a", "progress"))).toBeCloseTo(34, 1);
@@ -663,7 +776,7 @@ test("a trap aborts shared listeners, tasks and overlays and restores static sco
             disconnect() { resizes.delete(this); super.disconnect(); }
         };
         window.setTimeout = ((handler: TimerHandler, delay?: number, ...args: any[]) => {
-            if (delay !== 1000 || typeof handler !== 'function') return timeout(handler, delay, ...args);
+            if (typeof handler !== 'function') return timeout(handler, delay, ...args);
             const id = timeout(() => { timers.delete(id); handler(...args); }, delay); timers.add(id); return id;
         }) as typeof window.setTimeout;
         window.clearTimeout = (id?: number) => { if (id !== undefined) timers.delete(id); clear(id); };
@@ -679,7 +792,8 @@ test("a trap aborts shared listeners, tasks and overlays and restores static sco
     await expect(root(page, "catalog-a").getByRole("dialog")).toBeVisible();
     await expect(root(page, "catalog-b").getByRole("menu")).toBeVisible();
     const active = await page.evaluate(() => window.__hydration.stats());
-    expect(active.timers).toBeGreaterThan(0);
+    const native = await page.evaluate(() => (window as any).__formResources());
+    expect(native.timers).toBeGreaterThan(0);
     expect(active.observers).toBeGreaterThan(0);
     await page.evaluate(() => window.__hydration.trap());
     await expect(page.getByTestId("status")).toHaveAttribute("data-status", "failed");
@@ -696,7 +810,7 @@ test("a trap aborts shared listeners, tasks and overlays and restores static sco
     }
     expect(await page.evaluate(() => [...document.adoptedStyleSheets].every((sheet) => sheet.cssRules.length === 0))).toBe(true);
     await expect.poll(() => page.evaluate(() => (window as any).__formResources())).toEqual({ mutations: 0, resizes: 0, timers: 0 });
-    await testInfo.attach("fatal-runtime.json", { body: JSON.stringify({ active, stats, fatal: await page.evaluate(() => window.__hydration.fatal()) }, null, 2), contentType: "application/json" });
+    await testInfo.attach("fatal-runtime.json", { body: JSON.stringify({ active, native, stats, fatal: await page.evaluate(() => window.__hydration.fatal()) }, null, 2), contentType: "application/json" });
 });
 
 for (const cleanupOrder of ["first", "second"] as const) {
@@ -833,3 +947,28 @@ for (const scripted of [false, true]) {
         await context.close();
     });
 }
+
+test("Avatar hydrates its readable fallback before a native image result changes presentation", async ({ page }) => {
+    const errors = await open(page);
+    const fallback = control(page, "catalog-a", "delivery-avatar-fallback");
+    const before = await fallback.elementHandle();
+    const initialId = await control(page, "catalog-a", "delivery-draft").getAttribute("id");
+    await expect(fallback).toBeVisible();
+    await attach(page);
+    expect(await before!.evaluate(node => node === document.querySelector('[data-testid="catalog-a-delivery-avatar-fallback"]'))).toBe(true);
+    await expect(fallback).toBeVisible();
+    await expect(control(page, "catalog-a", "delivery-draft")).toHaveAttribute("id", initialId!);
+    await page.route("**/hydration-avatar.svg?*", route => route.fulfill({
+        contentType: "image/svg+xml",
+        body: '<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40"><rect width="40" height="40" fill="#2563eb"/></svg>',
+    }));
+    await control(page, "catalog-a", "delivery-avatar-load").click();
+    await expect(control(page, "catalog-a", "delivery-avatar-image")).toHaveAttribute("data-state", "loaded");
+    await expect(fallback).toBeHidden();
+    expect(await before!.evaluate(node => node === document.querySelector('[data-testid="catalog-a-delivery-avatar-fallback"]'))).toBe(true);
+    await expect(control(page, "catalog-b", "delivery-avatar-fallback")).toBeVisible();
+    await expect(control(page, "catalog-b", "delivery-avatar-image")).not.toHaveAttribute("src");
+    await assertReferences(page);
+    expect(errors).toEqual([]);
+    expect(await page.evaluate(() => window.__hydrate_csp)).toEqual([]);
+});

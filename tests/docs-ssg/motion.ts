@@ -1,17 +1,16 @@
 import { expect, Page } from "@playwright/test";
 
 // What the reduced-motion contract names, relative to an island's SDK scope.
-// The five child elements carry their own transition utility and no
-// `data-name`, so a rule that only reaches `[data-name]` misses them.
+// Include native controls and animated children, not only named component roots.
 export const motionTargets = {
-    "Switch thumb": '[role="switch"] > span',
-    "Checkbox box": 'input[type="checkbox"] + span',
-    "Radio dot": 'input[type="radio"] + span',
-    "Progress fill": '[role="progressbar"] > div',
-    "ColorField input": '[data-name="ColorField"] > input',
-    Tab: '[data-name="Tab"]',
+    "Switch thumb": '[data-rustify-part="switch-thumb"]',
+    "Checkbox control": '[data-rustify-part="checkbox-control"]',
+    "Radio control": '[data-rustify-part="radio-control"]',
+    "Progress fill": '[data-rustify-part="progress-indicator"]',
+    "ColorField input": '[data-rustify-part="color-field-input"]',
+    Tab: '[data-rustify-part="tab-trigger"]',
     Button: '[data-name="Button"]',
-    "Spinner svg": '[data-name="Spinner"] > svg',
+    "Spinner leaf": '[data-rustify-part="spinner-leaf"]',
 } as const;
 export type MotionTarget = keyof typeof motionTargets;
 
@@ -98,10 +97,10 @@ export async function sampleMotion(page: Page, label: string): Promise<MotionSam
                 duration: animation.effect?.getTiming().duration,
                 state: animation.playState,
             }));
-        const spinners = [...document.querySelectorAll('[data-rustify-scope] [data-name="Spinner"] > svg')].map(svg => ({
-            name: getComputedStyle(svg).animationName,
-            running: animations.filter(animation => animation instanceof CSSAnimation && animation.animationName === "rui-spin"
-                && (animation.effect as KeyframeEffect | null)?.target === svg && animation.playState === "running").length,
+        const spinners = [...document.querySelectorAll('[data-rustify-scope] [data-rustify-part="spinner-leaf"]')].map(leaf => ({
+            name: getComputedStyle(leaf).animationName,
+            running: animations.filter(animation => animation instanceof CSSAnimation
+                && (animation.effect as KeyframeEffect | null)?.target === leaf && animation.playState === "running").length,
         }));
         const tokens = scopes.map(scope => getComputedStyle(scope).getPropertyValue("--motion-duration").trim());
         return { label, tokens, present, computed, moving, transitions, runs: [...(window.__gaps_motion ?? [])], spinners };
@@ -120,10 +119,6 @@ export async function attachMotion(page: Page, info: { attach(name: string, opti
     await info.attach(name, { body: JSON.stringify({ url: page.url(), samples }, null, 2), contentType: "application/json" });
 }
 
-// Children that carry a Tailwind transition utility and Tailwind's default
-// duration; the `[data-name]` roots follow the scope's motion token instead.
-const utilityChildren: string[] = ["Switch thumb", "Checkbox box", "Radio dot", "Progress fill", "ColorField input"];
-
 export const seconds = (value: string) => value.trim().endsWith("ms") ? parseFloat(value) / 1000 : parseFloat(value);
 
 /** Without a preference: the SDK's own durations, unchanged by the reduce rule. */
@@ -131,11 +126,13 @@ export function expectNormal(sample: MotionSample) {
     expect(new Set(sample.tokens).size, `${sample.label}: one motion token`).toBe(1);
     const token = seconds(sample.tokens[0]);
     for (const entry of sample.computed) {
-        if (entry.target === "Spinner svg") {
-            expect(entry.animation, `${sample.label}: ${entry.target}`).toBe("rui-spin");
+        if (entry.target === "Spinner leaf") {
+            expect(entry.animation, `${sample.label}: ${entry.target}`).toBe(token === 0 ? "none" : "rustify-spinner-fade");
             continue;
         }
-        const expected = utilityChildren.includes(entry.target) ? 0.15 : token;
+        const expected = ["Tab", "ColorField input"].includes(entry.target) ? 0
+            : entry.target === "Progress fill" && token !== 0 ? 0.12 : token;
         expect(entry.duration.split(",").map(seconds), `${sample.label}: ${entry.target} duration`).toEqual(entry.duration.split(",").map(() => expected));
     }
+    for (const spinner of sample.spinners) expect(spinner.running, `${sample.label}: spinner animation`).toBe(token === 0 ? 0 : 1);
 }

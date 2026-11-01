@@ -814,19 +814,26 @@ test("gaps reduced motion: under reduce the proxy's controls attach and change w
     await healthy(page, audit);
 });
 
-test("gaps reduced motion: without a preference the proxy keeps the SDK's durations and the spinner's animation", async ({ page, audit }) => {
+test("gaps reduced motion: authored reduction stays still and an explicit motion token restores SDK animation", async ({ page, audit }) => {
     await installMotionProbe(page);
     await page.emulateMedia({ reducedMotion: "no-preference" });
     await page.goto(url("proxy/"));
     await ready(page, 4);
+    const reduced = await sampleMotion(page, "authored reduction");
+    expect(new Set(reduced.tokens.map(value => parseFloat(value)))).toEqual(new Set([0]));
+    expectNormal(reduced);
+    await page.evaluate(() => {
+        for (const scope of document.querySelectorAll<HTMLElement>('[data-rustify-scope]')) {
+            scope.style.setProperty('--motion-duration', '150ms');
+        }
+    });
     const rest = await sampleMotion(page, "ready");
     await proxyCategory(page, "switch").getByRole("switch").click();
     const toggled = await sampleMotion(page, "toggle switch");
     await attachMotion(page, test.info(), "gaps-normal-motion.json", [rest, toggled]);
     for (const target of Object.keys(motionTargets)) expect(rest.present[target], target).toBeGreaterThan(0);
     expectNormal(rest);
-    // Tailwind v4 moves the thumb with `translate`, which `transition-transform` covers.
-    expect(toggled.transitions.filter(entry => entry.node.startsWith("span.") && entry.node.endsWith("in Switch") && entry.property === "translate").map(entry => entry.duration)).toEqual([150]);
+    expect(toggled.transitions.filter(entry => entry.node.startsWith("span.") && entry.node.endsWith("in Switch") && entry.property === "transform").map(entry => entry.duration)).toEqual([150]);
     await healthy(page, audit);
 });
 

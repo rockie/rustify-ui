@@ -217,10 +217,10 @@ pub(crate) fn CatalogView(scope: String) -> impl IntoView {
             <section data-category=Category::Toast.name() class="min-w-0 space-y-3 border-b border-border pb-6">
                 <h3>"Toast"</h3>
                 <Show when=move || state.toast_visible.get() fallback=|| ()>
-                    <Toast test_id=id("static-toast") toast=rustify_ui::Toast {seq: 0, message: "Deterministic status".to_string(), tone: ToastTone::Success} />
+                    <callout::Root test_id=id("static-toast") color=Some(rustify_ui::AccentColor::Green)><callout::Text>"Deterministic status"</callout::Text></callout::Root>
                 </Show>
                 <Button test_id=id("toast-toggle") on_click=move || state.toast_visible.update(|value| *value = !*value)>"Toggle static status"</Button>
-                <Button test_id=id("toast-trigger") on_click=move || {state.toasts.show("Runtime status", ToastOptions {duration_ms: 800, tone: ToastTone::Success});}>"Show timed toast"</Button>
+                <Button test_id=id("toast-trigger") on_click=move || {state.toasts.show("Runtime status", ToastOptions {duration_ms: 800, tone: ToastTone::Success, ..Default::default()});}>"Show timed toast"</Button>
                 <Toaster test_id=id("toaster") />
             </section>
             <section data-category=Category::NumberField.name() class="min-w-0 space-y-3 border-b border-border pb-6">

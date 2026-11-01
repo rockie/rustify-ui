@@ -62,6 +62,8 @@ mod app {
             <crate::selects::SelectLayers />
             <crate::lifecycle::Lifecycle />
             <crate::panels::Panels />
+            <crate::content::Content />
+            <crate::feedback::Feedback />
         }
     }
 
@@ -96,3 +98,9 @@ mod app {
 mod panels;
 #[cfg(target_arch = "wasm32")]
 mod stage_panel;
+
+#[cfg(target_arch = "wasm32")]
+mod content;
+
+#[cfg(target_arch = "wasm32")]
+mod feedback;

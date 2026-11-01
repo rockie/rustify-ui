@@ -1,0 +1,168 @@
+@layer components {
+  :where(.rustify-progress) {
+    --rustify-progress-height: calc(var(--rustify-space-2, 8px) * 0.75);
+    height: var(--rustify-progress-height);
+    border-radius: max(calc(var(--rustify-progress-radius-factor, var(--rustify-radius-factor, 1)) * var(--rustify-progress-height) / 3), calc(var(--rustify-progress-radius-factor, var(--rustify-radius-factor, 1)) * var(--rustify-progress-radius-thumb, var(--rustify-radius-thumb, 9999px))));
+    pointer-events: none; flex-grow: 1;
+    background: var(--rustify-gray-a3, var(--secondary));
+  }
+  :where(.rustify-progress)::after { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; }
+  :where(.rustify-progress[data-variant="surface"])::after { box-shadow: inset 0 0 0 1px var(--rustify-gray-a4, var(--border)); }
+  :where(.rustify-progress[data-variant="classic"])::after { box-shadow: var(--rustify-shadow-sm, 0 1px 2px rgb(0 0 0 / 12%)); }
+  :where(.rustify-progress[data-variant="soft"]) { background: var(--rustify-gray-a4, var(--muted)); }
+  :where(.rustify-progress-indicator) { position: relative; background: var(--rustify-component-color-track, var(--primary)); transition: width 120ms; }
+  :where(.rustify-progress[data-variant="soft"] .rustify-progress-indicator) { background: var(--rustify-component-color-8, var(--primary)); background-image: linear-gradient(var(--rustify-component-color-a5, transparent), var(--rustify-component-color-a5, transparent)); }
+  :where(.rustify-progress[data-high-contrast] .rustify-progress-indicator) { background: var(--rustify-component-color-12, var(--foreground)); }
+  :where(.rustify-progress-indicator[data-state="indeterminate"]) { width: 35%; animation: rustify-progress-travel var(--rustify-progress-duration, 5000ms) ease-in-out infinite; }
+  :where(.rustify-spinner [data-rustify-part="spinner-graphic"], .rustify-spinner[data-rustify-part="spinner-status"] [data-rustify-part="spinner-graphic"]) { width: var(--rustify-spinner-size, var(--rustify-space-4, 16px)); height: var(--rustify-spinner-size, var(--rustify-space-4, 16px)); opacity: .65; }
+  :where(.rustify-spinner [data-rustify-part="spinner-leaf"]) { animation: rustify-spinner-fade 800ms linear infinite; }
+  :where(.rustify-spinner [data-rustify-part="spinner-leaf"]:nth-child(1)) { animation-delay: -800ms; }
+  :where(.rustify-spinner [data-rustify-part="spinner-leaf"]:nth-child(2)) { animation-delay: -700ms; }
+  :where(.rustify-spinner [data-rustify-part="spinner-leaf"]:nth-child(3)) { animation-delay: -600ms; }
+  :where(.rustify-spinner [data-rustify-part="spinner-leaf"]:nth-child(4)) { animation-delay: -500ms; }
+  :where(.rustify-spinner [data-rustify-part="spinner-leaf"]:nth-child(5)) { animation-delay: -400ms; }
+  :where(.rustify-spinner [data-rustify-part="spinner-leaf"]:nth-child(6)) { animation-delay: -300ms; }
+  :where(.rustify-spinner [data-rustify-part="spinner-leaf"]:nth-child(7)) { animation-delay: -200ms; }
+  :where(.rustify-spinner [data-rustify-part="spinner-leaf"]:nth-child(8)) { animation-delay: -100ms; }
+  :where(.rustify-skeleton[data-loading="true"]) { background: var(--rustify-gray-a3, var(--muted)); border-radius: var(--rustify-radius-1, 3px); background-image: none !important; border-color: transparent !important; box-shadow: none !important; outline: none !important; animation: rustify-skeleton-pulse 1000ms infinite alternate-reverse; }
+  :where(.rustify-skeleton:empty) { display: inline-block; width: 100%; height: var(--rustify-space-3, 12px); }
+  @media (prefers-reduced-motion: reduce) {
+    :where(.rustify-progress-indicator, .rustify-spinner [data-rustify-part="spinner-leaf"], .rustify-skeleton) { animation: none; transition: none; }
+  }
+  @container style(--motion-duration: 0ms) {
+    :where(.rustify-progress-indicator, .rustify-spinner [data-rustify-part="spinner-leaf"], .rustify-skeleton) { animation: none; transition: none; }
+  }
+}
+@keyframes rustify-progress-travel { from { transform: translateX(-100%); } to { transform: translateX(300%); } }
+@keyframes rustify-spinner-fade { from { opacity: 1; } to { opacity: .25; } }
+@keyframes rustify-skeleton-pulse { from { background-color: var(--rustify-gray-a3, var(--muted)); } to { background-color: var(--rustify-gray-a4, var(--secondary)); } }
+
+@layer components {
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-toast-viewport, .rustify-toaster) {
+    position: fixed;
+    inset-block-end: var(--rustify-space-4, 16px);
+    inset-inline-end: var(--rustify-space-4, 16px);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: var(--rustify-space-2, 8px);
+    max-width: min(24rem, calc(100vw - var(--rustify-space-4, 16px) * 2));
+    max-height: calc(100dvh - var(--rustify-space-4, 16px) * 2);
+    overflow-y: auto;
+  }
+
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-toast, .rustify-toaster [data-rustify-part="toast-root"]) {
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: start;
+    column-gap: var(--rustify-space-3, 12px);
+    row-gap: var(--rustify-space-1, 4px);
+    width: 100%;
+    padding: var(--rustify-space-3, 12px) var(--rustify-space-4, 16px);
+    border: 1px solid var(--border);
+    border-radius: var(--rustify-radius-md, var(--radius, 6px));
+    background: linear-gradient(var(--popover), var(--popover)), var(--background);
+    color: var(--popover-foreground);
+    box-shadow: var(--rustify-shadow-lg, 0 10px 15px -3px rgb(0 0 0 / 10%), 0 4px 6px -4px rgb(0 0 0 / 10%));
+    font-family: var(--rustify-font-sans, sans-serif);
+    font-size: var(--rustify-font-size-2, 14px);
+    line-height: var(--rustify-line-height-2, 20px);
+    overflow-wrap: anywhere;
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-toast[data-tone="success"], .rustify-toaster [data-rustify-part="toast-root"][data-tone="success"]) {
+    border-inline-start-width: 4px;
+    border-inline-start-color: var(--success);
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-toast[data-tone="warning"], .rustify-toaster [data-rustify-part="toast-root"][data-tone="warning"]) {
+    border-inline-start-width: 4px;
+    border-inline-start-color: var(--warning);
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-toast[data-tone="error"], .rustify-toaster [data-rustify-part="toast-root"][data-tone="error"]) {
+    border-inline-start-width: 4px;
+    border-inline-start-color: var(--destructive);
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-toast:focus-visible, .rustify-toaster [data-rustify-part="toast-root"]:focus-visible) {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-toast, .rustify-toaster [data-rustify-part="toast-root"]) > :where([data-rustify-part="toast-title"], [data-rustify-part="toast-description"], [data-rustify-part="toast-action"]) {
+    grid-column: 1;
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-toast, .rustify-toaster [data-rustify-part="toast-root"]) > :where([data-rustify-part="toast-close"]) {
+    grid-column: 2;
+    grid-row: 1 / span 3;
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-toast-body) {
+    display: flex;
+    grid-column: 1 / -1;
+    align-items: flex-start;
+    gap: var(--rustify-space-3, 12px);
+    min-width: 0;
+    width: 100%;
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-toast-content) {
+    flex: 1;
+    min-width: 0;
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-toast-title, .rustify-toast-description) {
+    margin: 0;
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-toast-title) {
+    font-weight: 600;
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-toast-content) > :where(.rustify-toast-title) + :where(.rustify-toast-description) {
+    margin-block-start: var(--rustify-space-1, 4px);
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-toast-action, .rustify-toast-close) {
+    box-sizing: border-box;
+    flex-shrink: 0;
+    border-radius: var(--rustify-radius-sm, 4px);
+    font: inherit;
+    cursor: pointer;
+    transition-property: color, background-color;
+    transition-duration: var(--motion-duration, 150ms);
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-toast-action) {
+    display: inline-flex;
+    justify-self: start;
+    align-items: center;
+    margin-block-start: var(--rustify-space-2, 8px);
+    padding: calc(var(--rustify-space-1, 4px) * 0.5) var(--rustify-space-2, 8px);
+    border: 1px solid var(--border);
+    background-color: transparent;
+    color: inherit;
+    font-weight: 500;
+    white-space: normal;
+    text-align: start;
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-toast-close) {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: calc(var(--rustify-space-1, 4px) * 0.5);
+    border: 0;
+    background-color: transparent;
+    color: var(--muted-foreground);
+    line-height: 1;
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-toast-action:focus-visible, .rustify-toast-close:focus-visible) {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+  :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-toast-action:disabled, .rustify-toast-close:disabled) {
+    cursor: default;
+    opacity: 0.5;
+  }
+  @media (hover: hover) {
+    :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-toast-action:hover:not(:disabled), .rustify-toast-close:hover:not(:disabled)) {
+      background-color: var(--muted);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    :where([data-rustify-scope], [data-rustify-theme-boundary], .rustify-layer) :where(.rustify-toast-action, .rustify-toast-close) {
+      transition: none;
+    }
+  }
+}

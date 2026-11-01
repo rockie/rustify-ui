@@ -131,6 +131,141 @@ and native form options, while Content is absent. Initially open floating
 content is rejected through StaticRenderIssues; open it after attachment.
 Use identical scope seed, values and declared item sequence during hydration.
 
+## Structured content and native scroll areas
+
+The source checkout adds these DOM families. Where size or variant is exposed,
+use that family's named enum and `ALL`; a shared theme does not add matching GPU
+components.
+The [public exports](../crates/rustify-components/src/lib.rs) and generated
+[component catalogue](components.md) identify the supported fields.
+
+| Family | Public entry and migration boundary |
+| --- | --- |
+| Avatar | `Avatar` requires src, alt and fallback and composes `avatar::{Root, Image, Fallback}`; `primitives::avatar` provides the same loading behavior without a skin. Size 1–9 defaults to 3; solid/soft defaults to soft. Give nondecorative images readable alt/fallback text; image attributes pass through to Image |
+| Badge | `Badge` is a span; `badge_as(target, BadgeOptions)` decorates one native element. Size 1/2/3 defaults to 1; solid/soft/surface/outline defaults to soft. Color, high contrast, radius and margin are explicit fields |
+| Card | `Card` is a div; `card_as(target, CardOptions)` keeps a native link or other target and its listeners. Size 1–5 defaults to 1; surface/classic/ghost defaults to surface. Layout and margin apply to the target; Card adds no click handler or tab stop |
+| Callout | `callout::{Root, Icon, Text}` retains static text by default. Set `role=Some(callout::CalloutRole::Status)` or `Some(callout::CalloutRole::Alert)` only when an announcement is intended. Size 1/2/3 defaults to 2; soft/surface/outline defaults to soft. Icon is decorative by default; Root has color/high_contrast, without a radius prop |
+| DataList | `data_list::{Root, Item, Label, Value}` renders dl/div/dt/dd. Root size 1/2/3 defaults to 2; responsive Horizontal/Vertical defaults to Horizontal and trim uses TextTrim. Item accepts responsive Align; Label has responsive width/min_width/max_width and local color/high_contrast. Keep multiple Value/dd nodes in their Item and retain long text |
+| Table | `table::{Root, Header, Body, Row, ColumnHeaderCell, RowHeaderCell, Cell, Caption}` renders native table sections and cells. Root size 1/2/3 defaults to 2, surface/ghost defaults to ghost, and responsive TableLayout selects Auto/Fixed. Row align and Cell justify/dimensions/Padding are separate props; header scope, colspan/rowspan/headers and Caption preserve native relationships. Place Root inside an outer local scrollport for horizontal overflow |
+| AspectRatio | `AspectRatio` and `aspect_ratio::Root` reexport `primitives::aspect_ratio::Root`. A finite positive ratio defaults to 1; invalid input reports ratio and retains the last usable external geometry. Children remain ordinary DOM content |
+| Separator | `Separator`/`separator::Root` adds responsive size 1–4 (default 1), responsive orientation, Gray color by default and margin. `primitives::separator::Root` takes a single orientation signal and decorative=true by default. Nondecorative separators expose role/orientation; neither adds a keyboard stop |
+
+Badge, Card, Callout, DataList and Table have no separate `primitives` namespace.
+Their native tags, attribute passthrough and typed Badge/Card targets are the
+composition surface. Badge/Card convenience `class` is a static String. For
+dynamic utility tokens on typed targets, use an additive directive such as
+`.class(("p-8", move || expanded.get()))`; whole-string reactive
+`.class(move || classes.get())` replaces the native attribute and removes Slot
+part/geometry tokens when it updates. Table is independent of DataTable's interactive grid,
+sorting and virtualization. Images remain URL assets outside wasm.
+
+Avatar static HTML keeps the fallback; hydration takes over that content before
+handling current image results. Source generations prevent an old URL's load or
+error result from replacing the current request. AspectRatio and explicit content
+dimensions use the existing GeometryStyles collector during static rendering.
+
+### ScrollArea parts and the convenience entry
+
+Both `scroll_area` and `primitives::scroll_area` expose Root, Viewport, Scrollbar,
+Thumb and Corner. The [shared native parts](../crates/rustify-components/src/primitives/scroll_area.rs)
+keep Viewport as the only overflow element and keyboard entry. Root supplies its
+default aria_label/labelled_by; explicit Viewport naming overrides it. Root itself
+adds no tab stop, and custom bars are decorative to assistive technology.
+
+```rust,ignore
+use rustify_components::{scroll_area as scroll, Orientation};
+
+view! {
+    <scroll::Root class="h-48" aria_label="Entry history"
+        boundary=scroll::Boundary::Stop>
+        <scroll::Viewport test_id="history">
+            <p>"Local entry history"</p>
+        </scroll::Viewport>
+        <scroll::Scrollbar orientation=Orientation::Horizontal><scroll::Thumb /></scroll::Scrollbar>
+        <scroll::Scrollbar orientation=Orientation::Vertical><scroll::Thumb /></scroll::Scrollbar>
+        <scroll::Corner />
+    </scroll::Root>
+}
+```
+
+Root accepts Scrollbars Vertical/Horizontal/Both (default Both), Visibility
+Auto/Always/Hover/Scroll (default Hover), hide_delay_ms=600, Boundary, naming and
+optional direction. Direction otherwise comes from the nearest provider. Themed
+Root also accepts responsive ScrollAreaSize 1/2/3 (default 1), optional radius and
+margin. Give Root a height or other layout constraint when its content must scroll.
+
+The convenience `ScrollArea` composes these same parts. Its `class` now styles
+Root; its existing `test_id` still identifies the real Viewport, and Root receives
+`<test_id>-root` when a test id is supplied. Existing `scrollTop`/`scrollLeft`
+inspection by that test id continues to address the native scrollport. Use an
+explicit Viewport for native scroll-element attributes and listeners.
+
+Native scrollLeft/scrollTop remain the source of truth. Custom thumb size/offset
+come from actual viewport, content and track dimensions; the thumb is at least
+18px and capped by track length. Track clicks and pointer dragging change the
+native scroll position, using the same logical RTL mapping for reading and
+writing. Content is not translated to simulate scrolling. Native wheel, touch,
+inertia and viewport keyboard scrolling remain available; Boundary selects only
+overscroll propagation or containment.
+
+Auto displays overflowing axes; Always keeps tracks present and disables them
+without overflow. Hover displays while hovered/focused and delays hiding; Scroll
+starts with actual scrolling, with hover/focus retaining the visible session.
+Active dragging keeps its target visible. Pointerup/cancel/lost capture and
+unmount release capture and short listeners. Static HTML retains native content
+and its name; measured thumb geometry starts empty until browser attachment.
+
+## Controlled panels and feedback
+
+Use the [panel guide](panels.md) for a complete DOM confirmation → auxiliary
+choice → persistent result example and the raw/themed runtime prerequisites.
+These APIs belong to the source checkout, not registry 0.2.1. Keep SDK, styles and
+callers on the same source revision; rollback those pieces together. There is no
+business-data or theme-document schema migration for these components.
+
+| Previous call or expectation | Source API and behavior |
+| --- | --- |
+| `Tabs(active, tabs, on_activate)` / `TabPanel` | Retained convenience over `tabs::{Root, List, Trigger, Content}`. Parts use optional value, explicit PanelEntry declarations and on_change. New activation_mode defaults Automatic; Manual moves focus without selecting until Enter/Space. direction is explicit or inherited |
+| A custom disclosure or linked tab strip | Accordion supports Single/Multiple; Collapsible controls one open region. SegmentedControl is a native radio-group setting, while TabNav preserves href navigation. They are separate semantics, not Tabs variants |
+| `Dialog(open, title, description, ...)` | Same purpose over Root/Trigger/Portal/Overlay/Content/Title/Description/Close. AlertDialog adds safe Cancel and cancellable Action. Content has dismissal/autofocus hooks; one Portal owns the layer. Retained closed content is hidden/inert |
+| Page-wide modal ARIA assumed from modal=true | Modal is scoped. Dialog, AlertDialog, modal Popover and direct modal Layer omit aria-modal; other scopes and the host remain usable |
+| Tooltip children wrapper | Pass one native `trigger` or use `tooltip::trigger_as`. Keep existing attributes/listeners on it. HoverCard uses a native anchor and allows supplemental reading; Popover holds controls |
+| `Progress(value=20, max=40)` asserted as aria-valuenow=50 | Now aria-valuenow=20 and aria-valuemax=40; only width is 50%. Parts use Option value; None/indeterminate omits aria-valuenow. Name with aria_label/labelled_by and optionally value_label |
+| A permanently active Spinner | `loading` defaults true; false removes its status and restores retained children. Label defaults to localized Loading. `spinner_as` adds a status sibling and needs a flow-content parent |
+| Replacing children with a placeholder | Skeleton/loading wrappers retain nodes and input drafts, hide/inert them while loading, then restore keyboard access without refocus. Use skeleton_as for native table rows/cells and a legal container for replaced images |
+| `ToastOptions { duration_ms, tone }` | Add `..Default::default()` or supply importance/title/action. Zero duration is persistent; default duration remains 3200ms |
+| Copy/Eq notification snapshots | Toast/ToastOptions are Clone because actions carry callbacks. Clone snapshots or map handle.items by seq |
+| Fixed literal Toast previews | Use Callout or an explicit controlled toast::Root under its Provider. Real `Toast(snapshot)` owns one Root; never nest it inside another Root |
+| A separate queue/timer around Toaster | Remove it. Core Provider/Root is the single scheduler used by primitives, themed parts, ToastHandle, ToastRegion and Toaster |
+
+Toast defaults to Replace with visible_limit=1. Explicit ToastConfig can select
+Fifo and a positive visible_limit. Queued entries do not spend reading time;
+declarative replacement waits for the old Root's accepted close. A rejected
+expiry close is not retried until a new session or duration change. Viewport
+hover/focus pauses that Provider's visible Roots; blur/hidden and a Root's swipe
+compose with those reasons. Clearing them resumes remaining time. duration_ms=0
+stays until application dismissal.
+
+Action needs alt_text and a cancellable on_action; Close has a localized name.
+Tone is visual, importance chooses polite/assertive announcement. The whole
+interactive Viewport is not a live region. Keep essential recovery actions in
+persistent content. F8 enters the current scope's notifications; Tab leaves
+naturally and Escape respects native editing and open notification descendants.
+
+The current modal's notification host receives the same Viewport DOM. Existing
+notification child layers rebind their parent and host while keeping Owner,
+Root/Content identity, open state, registration order and remaining duration.
+Migration does not reopen, autofocus or reannounce. A modal opened from a toast
+cannot become its own ancestor. Closing the host migrates surviving independent
+notification branches before normal descendant cleanup; scope disposal/instance
+abort still releases everything. The creating theme/direction/locale remains in
+force, and other Providers do not supply pause or Escape ownership.
+
+Floating Portal starts closed in SSG and reports an initially open request via
+StaticRenderIssues; force_mount cannot override that rule. ToastRegion/Viewport
+are empty during SSG. Static accepted inline content and Callout remain available;
+no request-time SSR is added.
+
 ## Styles and static rendering
 
 Declare layer order before importing Tailwind's layers, then import the SDK
@@ -149,7 +284,18 @@ Regenerate the stylesheet after changing component classes. Applications
 without their own Tailwind input can consume `rustify_components::CSS`.
 Keep the SDK styles off the host's bare elements; no global reset is required.
 
-For SSR, build with `ssr` separately from CSR/hydrate, seed `ssr_scope`, call
+[sdk.css](../crates/rustify-components/css/sdk.css) imports
+[panels.css](../crates/rustify-components/css/panels.css),
+[content.css](../crates/rustify-components/css/content.css) and
+[feedback.css](../crates/rustify-components/css/feedback.css) for themed skins, alongside [primitives.css](../crates/rustify-components/css/primitives.css)
+for structural rules. `styles::PANELS`, `styles::CONTENT` and `styles::FEEDBACK`
+expose those skin sources; `PRIMITIVES_CSS`/`styles::PRIMITIVES` expose the structural source.
+Raw form, panel, media, scroll and feedback consumers load DOM_RUNTIME_CSS
+plus PRIMITIVES_CSS and supply their own visual treatment. Themed consumers load
+the compiled CSS bundle or compile sdk.css once. A skin fragment alone does not
+supply the raw structure. Visual defaults remain beneath caller utilities.
+
+For SSG build-time HTML, build with `ssr` separately from CSR/hydrate, seed `ssr_scope`, call
 `provide_static_theme` with the complete snapshot and provide a `GeometryStyles`
 collector. Write `styles.css()` into an external stylesheet. Use the same seed
 and initial props when hydrating. Responsive rules share the existing scope
@@ -193,17 +339,17 @@ name does not add new props or composition parts.
 | `Form`, `Field`, `FieldBinding`, `FormStatus`, `SubmitButton`, `provide_form`, `use_form` | Owner/binding APIs remain; FormRoot and form/Field parts add native participation, description/source metadata and submit/reset flushing |
 | `Dialog`, `Tooltip`, `Menu`, `MenuItem`, `MenuItemKind`, `menu::anchor_at` / root `anchor_at` | Dialog/AlertDialog/Popover/HoverCard/Tooltip now have controlled Primitives and Themes parts on the same scoped stack. Tooltip replaces children with one typed native `trigger`; Menu and browser-only `anchor_at` retain their existing contract. ContextMenu/DropdownMenu remain separate unimplemented capabilities |
 | `Tabs`, `Tab`, `TabPanel`, `Orientation` | Tabs/TabPanel delegate to controlled tabs parts with automatic/manual activation. TabNav preserves real links, and SegmentedControl uses the shared native radio group |
-| `ScrollArea`, `Boundary` | Same browser scroll and overscroll behavior |
-| `Progress`, `Spinner`, `Toast`, `Toaster` | Same feedback APIs; no Skeleton or full Toast parts surface |
+| `ScrollArea`, `Boundary` | Convenience over Root/Viewport/Scrollbar/Thumb/Corner. class sizes Root; test_id and native scrollTop/scrollLeft stay on Viewport. Boundary retains native overscroll behavior |
+| `Progress`, `Spinner`, `Toast`, `Toaster` | Convenience names remain over shared parts. Progress ARIA uses original units; Spinner adds loading/retained children. Skeleton and complete declared Toast parts are available; Toast snapshots/options are Clone, not Copy/Eq |
 | `NumberField`, `ColorField` | Focused Draft remains; named mirrors submit accepted values, and FormRoot can complete an active draft before validation |
-| `DataTable`, `Column`, `Tree`, `TreeNode` | Same Rustify data controls; ordinary Table is a separate unimplemented reference capability |
+| `DataTable`, `Column`, `Tree`, `TreeNode` | Same Rustify data controls; table::Root now supplies a separate native table without grid sorting or virtualization |
 | `ToggleGroup`, `ToggleItem` | Group/toolbar convenience mode remains; standalone Toggle and toggle_group Root/Item are available. Full Toolbar is separate |
 | `FilePicker`, `DropZone` | Same native file-selection/drop requests |
 | `Splitter`, `PanelTabs`, `PanelTab`, `CommandPalette`, `Command` | Same workspace controls and data types |
 | `Icon`, `Glyph` | Same SVG wrapper and six glyphs; IconButton reuses this icon path |
 | `GeometryStyles`, `provide_geometry_styles`, `geometry` | Same external stylesheet collector, extended for media rules and field diagnostics |
 | `clx!`, `variants!`, `macros`, `cn`, `paste` | Same class merging/generation helpers; caller utilities remain last in the merge and above component CSS layers |
-| `CSS`, `CANDIDATES_JSON`, `styles` | Package assets remain; PRIMITIVES_CSS/styles::PRIMITIVES provide only structural rules. Choose one themed or unstyled CSS path |
+| `CSS`, `CANDIDATES_JSON`, `styles` | Package assets remain; PRIMITIVES_CSS/styles::PRIMITIVES provide structural rules and styles::PANELS/styles::CONTENT/styles::FEEDBACK expose their skin sources. Choose one themed or unstyled CSS path |
 | `id`, `roving` | Same deterministic identity and keyboard-navigation helpers |
 | `CATALOG`, `Capability`, `Category`, `Entry`, `Presentation`, `Support` | Legacy 24-category navigation remains intact. Use `catalog::COMPONENTS`, `STABLE_REFERENCES`, `SUB_CAPABILITIES` and `catalogue_markdown()` for expanded source facts |
 
@@ -482,13 +628,13 @@ in v1 remain separate. Verification results and their scope are kept in the
 
 ## Capabilities that are still absent
 
-Accordion, AlertDialog and several content/navigation reference families remain
-outside the supplied Rust APIs. The form/selection families above provide
-unstyled parts and their declared themed subsets; Dialog/Menu are still their
-existing scoped APIs, without a new arbitrary overlay-parts family. Generic
-React asChild/ref composition and Slottable remain unsupported; Rust typed Slot
-supports one known native target. Unstable reference exports are candidates
-only. Consult the generated [reference and sub-capability tables](components.md#stable-reference-inventory)
+Menubar, NavigationMenu and the full Toolbar reference APIs remain outside the
+supplied Rust APIs. The raw form/selection, panel, media and scroll families
+provide their declared parts; the native content families above do not imply
+other raw namespaces or complete reference coverage. Generic React asChild/ref
+composition and Slottable remain unsupported; Rust typed Slot supports one
+known native target. Unstable reference exports are candidates only. Consult the
+generated [reference and sub-capability tables](components.md#stable-reference-inventory)
 for each mapping rather than treating a matching name as complete support.
 
 ### Native Tooltip targets and anchored parts

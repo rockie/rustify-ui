@@ -194,27 +194,11 @@ mod dom {
         // callable once.
         let on_open_change = StoredValue::new(on_open_change);
         let on_activate = StoredValue::new(on_activate);
-        let list = NodeRef::<leptos::html::Ul>::new();
         // Only a change to the rows redraws them: a signal that sends the same
         // list again would otherwise take the keyboard off the row it is on.
         let drawn = Memo::new(move |_| items.with(|items| blocks(items)));
 
         let item_id = move |id: &str| format!("{}-item-{id}", group.get_value());
-
-        // The keyboard lands in the menu, not behind it: a menu is not modal,
-        // so the stack does not move focus for it.
-        #[cfg(target_arch = "wasm32")]
-        Effect::new(move || {
-            if !open.get() || list.get().is_none() {
-                return;
-            }
-            let items = items.get_untracked();
-            if let Some(first) =
-                crate::roving::edge(items.len(), |index| items[index].reachable(), false)
-            {
-                crate::dom::focus_id(&item_id(&items[first].id));
-            }
-        });
 
         let close = move || on_open_change.with_value(|close| close(false));
 
@@ -352,11 +336,25 @@ mod dom {
                 .collect_view()
         };
 
+        let on_open_auto_focus = Some(Callback::new(move |event: rustify_ui::Cancelable<()>| {
+            // Mounting precedes the Layer's measurable, interactive state.
+            #[cfg(target_arch = "wasm32")]
+            if !event.default_prevented() {
+                let items = items.get_untracked();
+                if let Some(first) =
+                    crate::roving::edge(items.len(), |index| items[index].reachable(), false)
+                {
+                    crate::dom::focus_id(&item_id(&items[first].id));
+                }
+            }
+            #[cfg(not(target_arch = "wasm32"))]
+            let _ = event;
+        }));
+
         view! {
             <Show when=move || open.get() fallback=|| ()>
-                <Layer anchor=anchor fit=true on_close=close class="rui-menu-layer">
+                <Layer anchor=anchor fit=true on_close=close class="rui-menu-layer" on_open_auto_focus=on_open_auto_focus>
                     <ul
-                        node_ref=list
                         class=panel_class
                         data-name="Menu"
                         data-testid=move || panel_test_id.get_value()

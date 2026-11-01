@@ -31,3 +31,9 @@ pub const FORM_CONTROLS: &str = include_str!("../css/form-controls.css");
 
 /// Skins for composable panels and content switching.
 pub const PANELS: &str = include_str!("../css/panels.css");
+
+/// Skins for structured content, media and native scrollports.
+pub const CONTENT: &str = include_str!("../css/content.css");
+
+/// Skins for progress, loading placeholders and notifications.
+pub const FEEDBACK: &str = include_str!("../css/feedback.css");

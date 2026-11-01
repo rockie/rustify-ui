@@ -17,16 +17,20 @@ test("one Tailwind product retains legacy geometry and elevation beside v4",asyn
   expect(await shadow(oldDialog)).toBe(oldShadow);
   await modern.getByTestId("fixture-dialog-open").click();
   const newDialog=modern.getByTestId("fixture-dialog").locator('[data-name="Dialog"]');
-  await modern.getByTestId("fixture-change").click();
+  await expect(newDialog).toBeVisible();
+  // Configure the retained modeless sample without an outside pointer/focus dismissal.
+  await modern.getByTestId("fixture-change").evaluate((el:HTMLElement)=>el.click());
   await expect.poll(()=>radii(modern)).toEqual(["6px","8px","10px","14px"]);
   expect(await radii(old)).toEqual(["4px","6px","8px","12px"]);
-  expect(await shadow(oldDialog)).toBe(oldShadow);
-  await modern.getByTestId("fixture-patch").click();
+  await modern.getByTestId("fixture-patch").evaluate((el:HTMLElement)=>el.click());
   await expect.poll(()=>radii(modern)).toEqual(["0px","0px","0px","4px"]);
   await expect.poll(()=>shadow(newDialog)).toContain("0.3");
-  await modern.getByTestId("fixture-unpatch").click();
+  await modern.getByTestId("fixture-unpatch").evaluate((el:HTMLElement)=>el.click());
   await expect.poll(()=>radii(modern)).toEqual(["6px","8px","10px","14px"]);
   await expect.poll(()=>shadow(newDialog)).not.toContain("0.3");
+  await modern.getByTestId("fixture-dialog-close").click();
+  await old.getByTestId("fixture-dialog-open").click();
+  expect(await shadow(oldDialog)).toBe(oldShadow);
   expect(await page.locator('link[href$="tailwind.css"]').count()).toBe(1);
   expect(await page.locator('link[href$="rustify.css"]').count()).toBe(0);
   await page.evaluate(()=>window.__component_catalog.dispose_theme_fixtures());
@@ -75,14 +79,15 @@ test("two source-backed scopes isolate appearance, palettes, geometry and local 
   const screenshot=process.env.RUSTIFY_THEME_BOUNDARY_OUT || 'docs/validation/dom-components-p1/source-boundaries.png';
   await first.screenshot({path:screenshot});
   await info.attach('source boundaries',{path:screenshot,contentType:'image/png'});
-  await first.getByTestId('config-parent').click();
+  // Keep the modeless layer open while its application configuration changes.
+  await first.getByTestId('config-parent').evaluate((el:HTMLElement)=>el.click());
   await expect(root).toHaveAttribute('data-scaling','110');
   await expect(child).toHaveAttribute('data-gray','sand');
   expect(await child.evaluate(el=>getComputedStyle(el).getPropertyValue('--rustify-unit'))).toBe(unit);
   expect(await layer.evaluate(el=>getComputedStyle(el).getPropertyValue('--rustify-unit'))).toBe(unit);
-  await first.getByTestId('config-auto').click();
+  await first.getByTestId('config-auto').evaluate((el:HTMLElement)=>el.click());
   await expect(child).toHaveAttribute('data-gray','mauve');
-  await first.getByTestId('config-clear').click();
+  await first.getByTestId('config-clear').evaluate((el:HTMLElement)=>el.click());
   await expect(child).toHaveAttribute('data-mode','dark');
   await expect(child).toHaveAttribute('data-scaling','110');
   await expect(boundary).not.toHaveAttribute('data-theme');
