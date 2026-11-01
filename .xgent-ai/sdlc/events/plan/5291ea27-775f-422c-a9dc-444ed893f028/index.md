@@ -4,6 +4,8 @@
 
 | 事件 ID | facet / scope | 文件 |
 | --- | --- | --- |
+| 61e99e43-3095-425c-a974-0d43bd989032 | implementation / plan | [7/7 实施与SHA登记完成](61e99e43-3095-425c-a974-0d43bd989032.md) |
+| 7299e6cc-aad8-4882-a6a1-e4a64d896d1a | implementation / M7 | [M7 退出与提交完成](7299e6cc-aad8-4882-a6a1-e4a64d896d1a.md) |
 | 7593bcc2-094e-47b0-b522-1169ce58e047 | implementation / M7 | [M7 退出检查完成待提交](7593bcc2-094e-47b0-b522-1169ce58e047.md) |
 | 1bef47fc-48da-4325-9e86-40e8c552ffca | implementation / M7 | [M7 调用方与通知补证](1bef47fc-48da-4325-9e86-40e8c552ffca.md) |
 | 04926724-90e1-4e42-b4b4-d78deed07597 | implementation / M7 | [M7 收口实施中](04926724-90e1-4e42-b4b4-d78deed07597.md) |

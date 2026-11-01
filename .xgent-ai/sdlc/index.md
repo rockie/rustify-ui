@@ -14,7 +14,7 @@
 
 ## 当前重点
 
-- [DOM-COMPONENTS-P3](status/plan/5291ea27-775f-422c-a9dc-444ed893f028.md)：v0.2 / Ready；7/7退出检查完成，待最终提交与SHA回填。当前[M7证据](../../docs/plan/DOM-COMPONENTS-P3.records/M7.md)覆盖内容/反馈/完整任务、接管、真实调用方与同功能性能；原计划评审及同轮文档处置保留在对象页。P5人工missing及已有Pagination边界单列；未推送、发行或独立代码评审。
+- [DOM-COMPONENTS-P3](status/plan/5291ea27-775f-422c-a9dc-444ed893f028.md)：v0.2 / Ready，实施7/7、dev-plan-completed。实现`ef8b0156`、整理`ec6bd506`及计划登记`1c97d60c`已提交；[M7原证据](../../docs/plan/DOM-COMPONENTS-P3.records/M7.md)覆盖12条P3 AC、接管、真实调用方、同功能性能及资源成本。下一步由用户发起review-code；P5人工missing、已有Pagination动效边界与历史文档评审结论保留，未执行推送/发布或独立代码评审。
 
 - [DOM-COMPONENTS-P2](status/plan/667600ae-475d-405d-a2be-44f97c89e1b3.md)：v0.2 / Ready，实施 5/5。[代码复审 R3](status/review/09cb5ab0-a1c6-4684-a9bd-65b998cf31dd.md)在 CSR/SSG 修复范围**通过验收**，F-04/F-06 已解决，旧问题回归通过、新增 0，无需 apply。154 项产品测试及相关构建/静态门通过；完整应用/Docs/GPU/性能/人工与 UI/UX 限制见报告。AGENTS.md 已明确只走 CSR/SSG。原 R1/R2 历史、P5 missing 保留；本轮报告/台账/规则留工作树，未提交、推送或发布。 [UI验收 R1](status/review/11950391-b9f3-4338-bca2-fd19718aad85.md)现判**需补证**，最低7.5（U5）；已确认差距可先apply，补齐键盘/busy/边界与兼容结果后再评。用户确认只要求已有卡片说明正确关联，下轮用新指纹重建基线；工程实施历史不变。 作者UI修复 `8c30e003`、计划登记 `72f004ab` 已提交：19条已修改待评审、1条按既有口径不采纳；[M5处置](../../docs/plan/DOM-COMPONENTS-P2.records/M5.md#ui-验收修复)及作者自检已落盘，下一步review-ui，原补证结论保留。
 
