@@ -5,7 +5,7 @@
       "source": "XGENT-ai/skills",
       "sourceType": "github",
       "skillPath": "skills/agi-mode/SKILL.md",
-      "computedHash": "efb8aeeeb932a599a40d77e485aff06f6975df51a67482c9aa5ace08b1c196e7"
+      "computedHash": "31f9919812a918f41bfa869923b41148b1dc4af687e0fec6414e40348181ae62"
     },
     "apply-code-review": {
       "source": "XGENT-ai/skills",
@@ -23,7 +23,7 @@
       "source": "XGENT-ai/skills",
       "sourceType": "github",
       "skillPath": "skills/apply-ui-review/SKILL.md",
-      "computedHash": "adfdcd15c53af1409026c05f44bbb3de899f50e99bef26d69501651d0e4cb564"
+      "computedHash": "ab33abd6db009b86a7551e61dacdc413f527f9f07253f48c3656e7f695c060f2"
     },
     "archify": {
       "source": "XGENT-ai/skills",
@@ -65,13 +65,13 @@
       "source": "XGENT-ai/skills",
       "sourceType": "github",
       "skillPath": "skills/crd/SKILL.md",
-      "computedHash": "7b9f8dca1bffcc9dc5103767b59cc9d10b32c98599de0e119f6a754a157a2762"
+      "computedHash": "ca784752e15944fc777fa1206d627561f711144771eb69f4473ecb17399d8842"
     },
     "crd-respond": {
       "source": "XGENT-ai/skills",
       "sourceType": "github",
       "skillPath": "skills/crd-respond/SKILL.md",
-      "computedHash": "e7ed0957b410ca62b20ecb53046abbe4d61feb92d9d377317bd619cce3525888"
+      "computedHash": "aef6218a3b91fa2a2e6abb349e4b82fdb9f0eb9f35aed9e134655b32e109a94b"
     },
     "create-verification-skill": {
       "source": "XGENT-ai/skills",
@@ -89,7 +89,7 @@
       "source": "XGENT-ai/skills",
       "sourceType": "github",
       "skillPath": "skills/design-md/SKILL.md",
-      "computedHash": "60687ffec994ffdfcc093c785dfdec56bce0d753a5f0700c0a6b033990d14cf4"
+      "computedHash": "f3573412e450b5fe9f071463812b25a0aad781c1e0443de6f75f4ac09195781f"
     },
     "design-reference": {
       "source": "XGENT-ai/skills",
@@ -173,7 +173,7 @@
       "source": "XGENT-ai/skills",
       "sourceType": "github",
       "skillPath": "skills/optimize-agents-md/SKILL.md",
-      "computedHash": "78de432dffcf93e1bdf4da5609e227c7cdce988560b429aea2847f6dc308ce2b"
+      "computedHash": "276143b6b73406656f1886da2dead74454618595e03ccb6e47c8893fd9f5c6a8"
     },
     "pardon": {
       "source": "XGENT-ai/skills",
@@ -199,6 +199,12 @@
       "skillPath": "skills/portal-app-exchange/SKILL.md",
       "computedHash": "ed7cd577fa6073fcb94c46dbec5f5978dbcc675b169db1a17dc91fdb86f11bc7"
     },
+    "portal-app-init": {
+      "source": "XGENT-ai/skills",
+      "sourceType": "github",
+      "skillPath": "skills/portal-app-init/SKILL.md",
+      "computedHash": "65f5bd47cb880620b4ebeb950c284809d6d42be0ad30f132d5c1a40cbfb1687f"
+    },
     "portal-dev-setup": {
       "source": "XGENT-ai/skills",
       "sourceType": "github",
@@ -209,7 +215,7 @@
       "source": "XGENT-ai/skills",
       "sourceType": "github",
       "skillPath": "skills/portal-external-app/SKILL.md",
-      "computedHash": "bbaac2c29d5aee54134d9ed80ec24a64bb40304fb34a9b469c1189a1d3e1b84a"
+      "computedHash": "64a866535924d93bf42e6a13a976a9088f1f4546266f887ced8c4d8179e98c80"
     },
     "portal-logging": {
       "source": "XGENT-ai/skills",
@@ -245,7 +251,7 @@
       "source": "XGENT-ai/skills",
       "sourceType": "github",
       "skillPath": "skills/resolve-blocked/SKILL.md",
-      "computedHash": "27c9c715bc215cc98b202c66103172b03ff033d3d6e417d7f5eec7574d84646c"
+      "computedHash": "f8d422a9f9a69776e740f12d6626d271ec6ea245cd749ef1a77df4bc844f034b"
     },
     "review-code": {
       "source": "XGENT-ai/skills",
@@ -275,7 +281,7 @@
       "source": "XGENT-ai/skills",
       "sourceType": "github",
       "skillPath": "skills/review-ui/SKILL.md",
-      "computedHash": "747e4a42110c019a330f216a58f62d29173f9becd326c8072f674cac5f091767"
+      "computedHash": "74f1b9556c0dee3107dcb807e6daa64c3ccfcd2939d7a72c87c1f4b378e09807"
     },
     "rust": {
       "source": "XGENT-ai/skills",
@@ -425,7 +431,7 @@
       "source": "XGENT-ai/skills",
       "sourceType": "github",
       "skillPath": "skills/xgent-app-release/SKILL.md",
-      "computedHash": "11160bd858aeb90b2ac480c40e4416d6004112b490e0f753d6b198f303e6a9b7"
+      "computedHash": "4c19132c3a015baed144e65fdb8da2ac12cb1c5344937a84aa97eb5d6ccbbe33"
     },
     "xgent-image-push": {
       "source": "XGENT-ai/skills",
