@@ -127,9 +127,11 @@ async function initialDeliveryParts(page: Page, scope: string) {
     await expect(control(page, scope, "summary-content")).toBeVisible();
     await expect(control(page, scope, "history-content")).toBeHidden();
     await expect(control(page, scope, "history-content")).toHaveAttribute("inert", "");
-    for (const [trigger, content] of [["summary-trigger", "summary-content"], ["history-trigger", "history-content"], ["delivery-more", "delivery-more-content"]]) {
-        await expect(control(page, scope, trigger)).toHaveAttribute("aria-controls", (await control(page, scope, content).getAttribute("id"))!);
+    for (const [trigger, content, open] of [["summary-trigger", "summary-content", true], ["history-trigger", "history-content", false], ["delivery-more", "delivery-more-content", false]] as const) {
         await expect(control(page, scope, content)).toHaveAttribute("aria-labelledby", (await control(page, scope, trigger).getAttribute("id"))!);
+        // A closed disclosure may unmount its panel, so it names no controls target.
+        if (open) await expect(control(page, scope, trigger)).toHaveAttribute("aria-controls", (await control(page, scope, content).getAttribute("id"))!);
+        else await expect(control(page, scope, trigger)).not.toHaveAttribute("aria-controls");
     }
     await expect(control(page, scope, "delivery-more-content")).toBeHidden();
     await expect(control(page, scope, "delivery-link")).toHaveAttribute("href", `#${scope}-delivery-destination`);
@@ -166,9 +168,11 @@ async function exerciseDeliveryParts(page: Page, scope: string) {
     await expect(control(page, scope, "segment-review")).toBeChecked();
     await control(page, scope, "history-trigger").click();
     await expect(control(page, scope, "history-content")).toBeVisible();
+    await expect(control(page, scope, "history-trigger")).toHaveAttribute("aria-controls", (await control(page, scope, "history-content").getAttribute("id"))!);
     await expect(control(page, scope, "summary-content")).toBeHidden();
     await control(page, scope, "delivery-more").click();
     await expect(control(page, scope, "delivery-more-content")).toBeVisible();
+    await expect(control(page, scope, "delivery-more")).toHaveAttribute("aria-controls", (await control(page, scope, "delivery-more-content").getAttribute("id"))!);
     await control(page, scope, "delivery-popover-open").click();
     await expect(control(page, scope, "delivery-popover")).toHaveAccessibleName("Delivery note editor");
     await control(page, scope, "delivery-popover-close").click();
