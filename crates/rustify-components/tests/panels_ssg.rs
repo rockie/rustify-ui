@@ -102,12 +102,27 @@ fn force_mounted_disclosures_are_inert_and_keep_heading_associations() {
         .filter(|tag| tag.contains("data-rustify-part=\"collapsible-content\""))
         .collect();
     for (trigger, panel) in headers.iter().zip(panels) {
-        assert_eq!(attribute(trigger, "aria-controls"), attribute(panel, "id"));
         assert_eq!(
             attribute(trigger, "id"),
             attribute(panel, "aria-labelledby")
         );
+        if attribute(trigger, "aria-expanded") == "true" {
+            assert_eq!(attribute(trigger, "aria-controls"), attribute(panel, "id"));
+        } else {
+            assert!(!trigger.contains("aria-controls"), "{trigger}");
+        }
     }
+}
+#[test]
+fn a_closed_disclosure_never_points_at_an_unmounted_panel() {
+    use rustify_components::primitives::collapsible as c;
+    let html = render(|| {
+        view! {
+        <c::Root open=false on_open_change=|_|{}><c::Trigger>"More"</c::Trigger><c::Content>"Unmounted body"</c::Content></c::Root>
+    }.into_any()
+    });
+    assert!(!html.contains("Unmounted body"), "{html}");
+    assert!(!html.contains("aria-controls"), "{html}");
 }
 fn attribute<'a>(tag: &'a str, name: &str) -> &'a str {
     tag.split(&format!(" {name}=\""))

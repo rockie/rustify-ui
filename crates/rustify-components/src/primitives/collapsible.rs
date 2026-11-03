@@ -84,7 +84,9 @@ where
                 data("data-rustify-part", "collapsible-trigger"),
                 data("data-rustify-collapsible-owner", context.key.get_value()),
                 data("aria-expanded", move || context.open.get().to_string()),
-                data("aria-controls", context.content.get_value()),
+                data("aria-controls", move || {
+                    context.open.get().then(|| context.content.get_value())
+                }),
                 data("data-rustify-issue", move || {
                     (context.triggers.get() > 1).then_some("duplicate-part")
                 }),
