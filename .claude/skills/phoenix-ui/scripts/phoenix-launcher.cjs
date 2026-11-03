@@ -3,7 +3,7 @@
 
 const path = require('node:path');
 const { main, shellQuote } = require('./phoenix-bootstrap.cjs');
-const provider = "generic";
+const provider = "claude-code";
 process.env.PHOENIX_UI_PROVIDER_ID ||= provider;
 main(process.argv.slice(2), {
   skillDir: path.resolve(__dirname, '..'),

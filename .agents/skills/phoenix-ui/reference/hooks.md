@@ -42,7 +42,7 @@ The first argument is the action. Defaults to `status`.
 2. Invoke the admin script and pass the user's output through verbatim:
 
    ```bash
-   <skill-base-dir>/scripts/phoenix-ui hooks <action> [args...]
+   .agents/skills/phoenix-ui/scripts/phoenix-ui hooks <action> [args...]
    ```
 
 3. If `<action>` is `off`, follow up with a one-line note: "Done. New edits will not trigger the design hook in this project until you run `$phoenix-ui hooks on`."
@@ -72,32 +72,32 @@ Prefer the narrowest exception:
 Example value-specific exception:
 
 ```bash
-<skill-base-dir>/scripts/phoenix-ui hooks ignore-value overused-font Inter --shared --reason "User confirmed Inter is intentional"
+.agents/skills/phoenix-ui/scripts/phoenix-ui hooks ignore-value overused-font Inter --shared --reason "User confirmed Inter is intentional"
 ```
 
 Example self-served exception, with the evidence named:
 
 ```bash
-<skill-base-dir>/scripts/phoenix-ui hooks ignore-value bounce-easing bounce-ball --shared --reason "Agent: literal ball-bounce animation, bounce easing is the subject"
+.agents/skills/phoenix-ui/scripts/phoenix-ui hooks ignore-value bounce-easing bounce-ball --shared --reason "Agent: literal ball-bounce animation, bounce easing is the subject"
 ```
 
 Example whole-rule font exception:
 
 ```bash
-<skill-base-dir>/scripts/phoenix-ui hooks ignore-rule overused-font --all-values --reason "User asked to ignore overused fonts generally"
+.agents/skills/phoenix-ui/scripts/phoenix-ui hooks ignore-rule overused-font --all-values --reason "User asked to ignore overused fonts generally"
 ```
 
 Example one-rule-in-one-file exception, for a file that is still worth reviewing
 for everything else:
 
 ```bash
-<skill-base-dir>/scripts/phoenix-ui hooks ignore-value design-system-font-size "*" --file "src/overlay/widget.js" --reason "Injected widget builds its own type scale; DESIGN.md's ramp describes the site"
+.agents/skills/phoenix-ui/scripts/phoenix-ui hooks ignore-value design-system-font-size "*" --file "src/overlay/widget.js" --reason "Injected widget builds its own type scale; DESIGN.md's ramp describes the site"
 ```
 
 Example whole-file exception, for a file that is out of scope entirely:
 
 ```bash
-<skill-base-dir>/scripts/phoenix-ui hooks ignore-file "src/legacy/Card.tsx"
+.agents/skills/phoenix-ui/scripts/phoenix-ui hooks ignore-file "src/legacy/Card.tsx"
 ```
 
 ## Constraints

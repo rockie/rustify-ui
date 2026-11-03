@@ -100,7 +100,7 @@ For each issue, document:
 - **Impact**: How it affects users
 - **WCAG/Standard**: Which standard it violates (if applicable)
 - **Recommendation**: How to fix it
-- **Suggested command**: Which command to use (prefer: $phoenix-ui adapt, $phoenix-ui animate, $phoenix-ui audit, $phoenix-ui bolder, $phoenix-ui clarify, $phoenix-ui colorize, $phoenix-ui critique, $phoenix-ui delight, $phoenix-ui distill, $phoenix-ui document, $phoenix-ui harden, $phoenix-ui layout, $phoenix-ui onboard, $phoenix-ui optimize, $phoenix-ui overdrive, $phoenix-ui polish, $phoenix-ui quieter, $phoenix-ui shape, $phoenix-ui typeset)
+- **Suggested command**: Which command to use (prefer: /phoenix-ui adapt, /phoenix-ui animate, /phoenix-ui audit, /phoenix-ui bolder, /phoenix-ui clarify, /phoenix-ui colorize, /phoenix-ui critique, /phoenix-ui delight, /phoenix-ui distill, /phoenix-ui document, /phoenix-ui harden, /phoenix-ui layout, /phoenix-ui onboard, /phoenix-ui optimize, /phoenix-ui overdrive, /phoenix-ui polish, /phoenix-ui quieter, /phoenix-ui shape, /phoenix-ui typeset)
 
 ### Patterns & Systemic Issues
 
@@ -116,16 +116,16 @@ Note what's working well: good practices to maintain and replicate.
 
 List recommended commands in priority order (P0 first, then P1, then P2):
 
-1. **[P?] `$command-name`**: Brief description (specific context from audit findings)
-2. **[P?] `$command-name`**: Brief description (specific context)
+1. **[P?] `/command-name`**: Brief description (specific context from audit findings)
+2. **[P?] `/command-name`**: Brief description (specific context)
 
-**Rules**: Only recommend commands from: $phoenix-ui adapt, $phoenix-ui animate, $phoenix-ui audit, $phoenix-ui bolder, $phoenix-ui clarify, $phoenix-ui colorize, $phoenix-ui critique, $phoenix-ui delight, $phoenix-ui distill, $phoenix-ui document, $phoenix-ui harden, $phoenix-ui layout, $phoenix-ui onboard, $phoenix-ui optimize, $phoenix-ui overdrive, $phoenix-ui polish, $phoenix-ui quieter, $phoenix-ui shape, $phoenix-ui typeset. Map findings to the most appropriate command. End with `$phoenix-ui polish` as the final step if any fixes were recommended.
+**Rules**: Only recommend commands from: /phoenix-ui adapt, /phoenix-ui animate, /phoenix-ui audit, /phoenix-ui bolder, /phoenix-ui clarify, /phoenix-ui colorize, /phoenix-ui critique, /phoenix-ui delight, /phoenix-ui distill, /phoenix-ui document, /phoenix-ui harden, /phoenix-ui layout, /phoenix-ui onboard, /phoenix-ui optimize, /phoenix-ui overdrive, /phoenix-ui polish, /phoenix-ui quieter, /phoenix-ui shape, /phoenix-ui typeset. Map findings to the most appropriate command. End with `/phoenix-ui polish` as the final step if any fixes were recommended.
 
 After presenting the summary, tell the user:
 
 > You can ask me to run these one at a time, all at once, or in any order you prefer.
 >
-> Re-run `$phoenix-ui audit` after fixes to see your score improve.
+> Re-run `/phoenix-ui audit` after fixes to see your score improve.
 
 **IMPORTANT**: Be thorough but actionable. Too many P3 issues creates noise. Focus on what actually matters.
 

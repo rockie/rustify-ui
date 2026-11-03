@@ -67,22 +67,10 @@ function projectRoot(start) {
   const initial = fs.realpathSync(path.resolve(start));
   let dir = initial;
   for (;;) {
-    if (fs.existsSync(path.join(dir, '.phoenix-ui/install/active.json')) || fs.existsSync(path.join(dir, '.git'))) return dir;
+    if (['.agents', '.claude', '.cursor', '.gemini', '.github', '.grok'].some(provider => fs.existsSync(path.join(dir, provider, 'skills/phoenix-ui/scripts/ENGINE.json'))) || fs.existsSync(path.join(dir, '.git'))) return dir;
     const parent = path.dirname(dir);
     if (parent === dir) return initial;
     dir = parent;
-  }
-}
-
-// The transactional installer writes this receipt last. It names the package and
-// bundle, not a platform, so one project serves every supported engine target.
-function verifyReceipt(project, manifest) {
-  const file = path.join(project, '.phoenix-ui/install/active.json');
-  if (!fs.existsSync(file)) return;
-  const receipt = JSON.parse(fs.readFileSync(file, 'utf8'));
-  if (receipt.schema_version !== 1 || receipt.manifest?.version !== manifest.data.npmPackageVersion
-      || receipt.manifest?.sha256 !== manifest.data.bundleSha256) {
-    throw failure(`Project receipt requires a different Phoenix package. Run @xgent-ai/skills@${receipt.manifest?.version || manifest.data.npmPackageVersion} for this project.`);
   }
 }
 
@@ -313,23 +301,16 @@ async function main(args, options = {}) {
         }
         else releaseDir = path.resolve(args[i]);
       }
-      verifyReceipt(project, manifest);
       const binary = await installEngine(manifest, target, project, releaseDir, env);
       process.stdout.write(json ? `${JSON.stringify({ status: 'installed', toolVersion: manifest.data.toolVersion, target, binary })}\n` : `Phoenix UI ${manifest.data.toolVersion} ready: ${binary}\n`);
       return 0;
     }
-    // Installer verbs replace or roll back the installed package themselves.
-    if (!['install', 'migrate'].includes(args[0])) verifyReceipt(project, manifest);
     const binary = verifyEngine(enginePath(manifest, target, env), manifest, target, env);
     clearReminders(project, manifest, env);
     const childEnv = { ...env, PHOENIX_UI_SELF: options.self || process.argv[1], PHOENIX_UI_SKILL_DIR: options.skillDir || path.resolve(__dirname, '..') };
     const childArgs = [...args];
     const skillsVerb = args[0] === 'skills' ? args[1] : args[0];
     if (options.bundleRoot && ['install', 'update', 'link', 'check'].includes(skillsVerb) && !args.some(a => a === '--bundle-root' || a.startsWith('--bundle-root='))) childArgs.push('--bundle-root', options.bundleRoot);
-    // Project installs also carry the auxiliary skills shipped beside phoenix-ui.
-    const userLevel = args.some((a, i) => ['--user', '--global', '--scope=global', '--help', '-h'].includes(a) || (a === '--scope' && args[i + 1] === 'global'));
-    if (options.bundleRoot && options.skillDir && ['install', 'update'].includes(args[0]) && !userLevel
-        && !args.some(a => a === '--auxiliary-root' || a.startsWith('--auxiliary-root='))) childArgs.push('--auxiliary-root', path.dirname(options.skillDir));
     return await new Promise((resolve, reject) => {
       const child = spawn(binary, childArgs, { env: childEnv, stdio: hook ? ['pipe', 'inherit', 'inherit'] : 'inherit', windowsHide: true });
       if (hook) {
@@ -369,5 +350,5 @@ async function main(args, options = {}) {
   }
 }
 
-module.exports = { TARGETS, platformTarget, manifestAt, enginePath, verifyEngine, verifyReceipt, setupCommand, shellQuote, proxyFor, installEngine, sha256, main };
+module.exports = { TARGETS, platformTarget, manifestAt, enginePath, verifyEngine, setupCommand, shellQuote, proxyFor, installEngine, sha256, main };
 if (require.main === module) main(process.argv.slice(2)).then(code => { process.exitCode = code; }).catch(error => { process.stderr.write(`${error.message}\n`); process.exitCode = 4; });

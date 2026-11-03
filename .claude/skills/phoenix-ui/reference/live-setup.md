@@ -47,7 +47,7 @@ Keep all allowances below development-only, including manual middleware and meta
 If `config.cspChecked === true`, skip this whole section; the user was already asked once.
 
 ```bash
-<skill-base-dir>/scripts/phoenix-ui detect-csp
+.claude/skills/phoenix-ui/scripts/phoenix-ui detect-csp
 ```
 
 Output `{ shape, signals }`; the shape names the *patch mechanism*, so one template covers many frameworks:
