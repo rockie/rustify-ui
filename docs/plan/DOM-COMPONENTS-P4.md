@@ -203,13 +203,13 @@ REVIEW @progress_consistency:
 - 最近完成：M1 · 旧菜单同功能基线与正式参考输入
 - 下一步：M2 · 实现 floating 菜单增量、共享菜单部件、DropdownMenu/ContextMenu 与便捷 Menu 重组；齐备后运行 V-2
 - 当前阻塞：无
-- 代码基线：dirty@`0d96270f`；M1 fixture、参考源与 before 已验证，旧 Menu 未改
+- 代码基线：`0b6f0d6c`；M1 fixture、参考源与 before 已提交，旧 Menu 未改；既有台账/评审/skills-lock 改动保留
 
 ### 完成记录
 
 | Milestone | 状态 | 更新时间 | 简要记录 | 实现与验收记录 | 提交 |
 | --- | --- | --- | --- | --- | --- |
-| M1 | 已完成 | 2026-11-04T09:30:33+08:00 | 旧 Menu 同功能 before 与 19 个正式参考文件入仓；V-1 通过 | [M1 记录](DOM-COMPONENTS-P4.records/M1.md) | 待提交 |
+| M1 | 已完成 | 2026-11-04T09:30:33+08:00 | 旧 Menu 同功能 before 与 19 个正式参考文件入仓；V-1 通过 | [M1 记录](DOM-COMPONENTS-P4.records/M1.md) | `0b6f0d6c` |
 
 ## 0. 需求、范围与决策
 
