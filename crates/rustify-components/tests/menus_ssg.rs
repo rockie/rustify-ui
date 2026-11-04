@@ -82,6 +82,21 @@ fn static_menu_triggers_keep_closed_semantics_and_portals_stay_browser_only() {
     });
 }
 #[test]
+fn application_owned_anchor_is_valid_in_a_static_closed_menu() {
+    let html = render(|| {
+        view! {
+            <rustify_components::Menu open=false on_open_change=|_|{}
+                anchor=rustify_ui::Anchor::Centred
+                items=vec![rustify_components::MenuItem::new("save", "Save")]
+                on_activate=|_|{} aria_label="Commands" />
+        }
+        .into_any()
+    });
+    assert!(html.contains("data-rustify-part=\"menu-root\""), "{html}");
+    assert!(!html.contains("data-rustify-issue"), "{html}");
+}
+
+#[test]
 fn inline_menu_parts_retain_roles_and_associations_with_a_missing_portal_diagnostic() {
     let html = render(|| {
         view!{

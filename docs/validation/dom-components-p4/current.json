@@ -1,0 +1,3279 @@
+{
+  "phase": "current",
+  "collected_at": "2026-11-04T06:35:20.310Z",
+  "source": "b8a90e5992b9338157b1d9b7cfe6e0a7183a8e65",
+  "worktree": " M .github/workflows/verify.yml\n M .impeccable/surfaces/examples-theme-studio-src-app-rs.md\n M .xgent-ai/experience/d3982b58-e895-40b6-a66b-979a5d747863.md\n M .xgent-ai/sdlc/events/plan/d3982b58-e895-40b6-a66b-979a5d747863/index.md\n M .xgent-ai/sdlc/events/review/index.md\n M .xgent-ai/sdlc/index.md\n M .xgent-ai/sdlc/status/plan/d3982b58-e895-40b6-a66b-979a5d747863.md\n M .xgent-ai/sdlc/status/review/index.md\n M DESIGN.md\n M README.md\n M crates/rustify-components/css/candidates.json\n M crates/rustify-components/css/rustify.css\n M crates/rustify-components/css/sdk.css\n M crates/rustify-components/src/geometry.rs\n M crates/rustify-components/src/primitives/floating.rs\n M crates/rustify-components/src/primitives/menu.rs\n M crates/rustify-components/tests/feedback/toast.rs\n M crates/rustify-components/tests/menus_ssg.rs\n M crates/rustify-dom/src/lib.rs\n M crates/rustify-dom/src/overlay.rs\n M crates/rustify-dom/src/theme.rs\n M crates/rustify-dom/src/theme/provider.rs\n M crates/rustify-dom/src/toast.rs\n M crates/rustify-dom/web/theme.js\n M docs/architecture.md\n M docs/dom-components-migration.md\n M docs/plan/DOM-COMPONENTS-P4.md\n M docs/themes.md\n M docs/validation/dom-components-p1/M3-gpu/fonts.json\n M docs/validation/dom-components-p1/M3-gpu/gpu-font-spacing.json\n M docs/validation/dom-components-p1/M3-gpu/gpu-restored.json\n M docs/validation/dom-components-p1/M3-gpu/gpu-shadow.json\n M docs/validation/dom-components-p2/m5-form-contrast.json\n M docs/validation/dom-components-p2/m5-form-matrix.json\n M docs/validation/dom-components-p3/m3-alert-narrow-dom-only.png\n M docs/validation/dom-components-p3/m3-alert-narrow-dom-primitives.png\n M docs/validation/dom-components-p3/m3-core-dom-only.png\n M docs/validation/dom-components-p3/m3-core-dom-primitives.png\n M docs/validation/dom-components-p3/m3-dialog-desktop-dom-only.png\n M docs/validation/dom-components-p3/m3-dialog-narrow-dom-only.png\n M docs/validation/dom-components-p3/m3-dialog-narrow-dom-primitives.png\n M docs/validation/dom-components-p3/m3-scopes-dom-only.png\n M docs/validation/dom-components-p3/m3-scopes-dom-primitives.png\n M docs/validation/dom-components-p3/m3-studio-dialog-narrow.png\n M docs/validation/dom-components-p3/m3-studio-dialog.png\n M docs/validation/dom-components-p3/m4-popover-arrow-dom-only.png\n M docs/validation/dom-components-p3/m4-popover-arrow-dom-primitives.png\n M docs/validation/dom-components-p3/m4-task-dom-only-390-rtl-dark.png\n M docs/validation/dom-components-p3/m4-task-dom-only-390-rtl.png\n M docs/validation/dom-components-p3/m4-task-dom-only-zoom-simulation.png\n M docs/validation/dom-components-p3/m4-task-dom-only.png\n M docs/validation/dom-components-p3/m4-task-dom-primitives-390-rtl.png\n M docs/validation/dom-components-p3/m4-task-dom-primitives-zoom-simulation.png\n M docs/validation/dom-components-p3/m4-task-dom-primitives.png\n M docs/validation/dom-components-p3/m5-content-dom-only-dark-390.png\n M docs/validation/dom-components-p3/m5-content-dom-primitives-dark-768.png\n M docs/validation/dom-components-p3/m5-content-dom-primitives-light-1280.png\n M docs/validation/dom-components-p3/m7-feedback-dom-only-1440-dark.png\n M docs/validation/dom-components-p3/m7-feedback-dom-only-390-dark.png\n M docs/validation/dom-components-p3/m7-feedback-dom-only-390-light.png\n M docs/validation/dom-components-p3/m7-feedback-dom-only-768-dark.png\n M docs/validation/dom-components-p3/m7-feedback-dom-primitives-1440-dark.png\n M docs/validation/dom-components-p3/m7-feedback-dom-primitives-1440-light.png\n M docs/validation/dom-components-p3/m7-feedback-dom-primitives-390-dark.png\n M docs/validation/dom-components-p3/m7-feedback-dom-primitives-390-light.png\n M docs/validation/dom-components-p3/m7-feedback-dom-primitives-768-dark.png\n M docs/validation/dom-components-p3/m7-feedback-dom-primitives-768-light.png\n M docs/validation/dom-components-p4/m4-shell-768.png\n M examples/theme-studio/app.css\n M examples/theme-studio/src/app.rs\n M examples/theme-studio/src/controller.rs\n M examples/theme-studio/src/inspector.rs\n M examples/theme-studio/src/main.rs\n M examples/theme-studio/src/persistence.rs\n M examples/theme-studio/src/presets.rs\n M examples/theme-studio/src/preview_region.rs\n M examples/theme-studio/src/provider_fixture.rs\n M examples/theme-studio/src/scenes.rs\n M examples/theme-studio/src/theme_controls.rs\n M playwright.docs.config.ts\n M site/src/demos/choices.rs\n M skills-lock.json\n M tests/browser/catalog-inputs.spec.ts\n M tests/browser/theme-dom.spec.ts\n M tests/browser/theme-editor.spec.ts\n M tests/browser/theme-gpu.spec.ts\n M tests/browser/theme-storage.spec.ts\n M tests/browser/theme-ui-review.spec.ts\n M tests/docs-ssg/custom.spec.ts\n M tests/docs-ssg/official.spec.ts\n M tests/docs-ssg/serve.sh\n M tests/dom-only/consumer/src/lib.rs\n M tests/dom-only/hydration.spec.ts\n M tests/dom-only/menus-performance.spec.ts\n M tests/dom-only/menus.spec.ts\n M tests/dom-only/primitives.spec.ts\n M tests/dom-only/primitives/src/lib.rs\n M tests/dom-only/public-panel-consumer/README.md\n M tests/dom-only/public-panel-consumer/public-panel.spec.ts\n M tests/dom-only/public-panel-consumer/public/app.css\n M tests/dom-only/public-panel-consumer/src/lib.rs\n?? .xgent-ai/sdlc/events/plan/d3982b58-e895-40b6-a66b-979a5d747863/4ff8ee33-47b4-410c-b28b-1a5136595969.md\n?? .xgent-ai/sdlc/events/plan/d3982b58-e895-40b6-a66b-979a5d747863/7df84489-7d42-47cd-a9d7-35bbd9102cb3.md\n?? .xgent-ai/sdlc/events/plan/d3982b58-e895-40b6-a66b-979a5d747863/a1df434a-bef4-4f6e-90c1-129a53d2848b.md\n?? .xgent-ai/sdlc/events/plan/d3982b58-e895-40b6-a66b-979a5d747863/a8884192-a192-4bd3-854a-7409fa347593.md\n?? .xgent-ai/sdlc/events/review/3bc23089-adb5-4844-b005-7144614ac86e/\n?? .xgent-ai/sdlc/events/review/660d9527-6e1c-4b23-b131-cb23d5fb8256/\n?? .xgent-ai/sdlc/events/review/a17022e4-74c1-40f5-80d0-f5e9862ecc9e/\n?? .xgent-ai/sdlc/events/review/ae6d3308-3fd4-4575-9962-7343a4878548/\n?? .xgent-ai/sdlc/events/review/d3d6652f-c036-4cdd-a233-fb8286710fff/\n?? .xgent-ai/sdlc/status/review/3bc23089-adb5-4844-b005-7144614ac86e.md\n?? .xgent-ai/sdlc/status/review/660d9527-6e1c-4b23-b131-cb23d5fb8256.md\n?? .xgent-ai/sdlc/status/review/a17022e4-74c1-40f5-80d0-f5e9862ecc9e.md\n?? .xgent-ai/sdlc/status/review/ae6d3308-3fd4-4575-9962-7343a4878548.md\n?? .xgent-ai/sdlc/status/review/d3d6652f-c036-4cdd-a233-fb8286710fff.md\n?? docs/menus.md\n?? docs/plan/DOM-COMPONENTS-P3.code-review.r3.md\n?? docs/plan/DOM-COMPONENTS-P3.prd-dev-gaps.md\n?? docs/plan/DOM-COMPONENTS-P4.records/M5.md\n?? docs/plan/DOM-COMPONENTS-P4.records/M6.md\n?? docs/plan/DOM-COMPONENTS-P4.records/M7.md\n?? docs/plan/DOM-COMPONENTS-P4.review.md\n?? docs/validation/dom-components-p4/gallery-complete-dark.json\n?? docs/validation/dom-components-p4/gallery-complete-light.json\n?? docs/validation/dom-components-p4/gallery-representative-dark.json\n?? docs/validation/dom-components-p4/gallery-representative-light.json\n?? docs/validation/dom-components-p4/gpu-current/\n?? examples/theme-studio/src/gallery.rs\n?? examples/theme-studio/src/gallery_catalog.rs\n?? examples/theme-studio/src/inspector.js\n?? tests/browser/gallery-matrix.ts\n?? tests/browser/theme-gallery.spec.ts\n?? tests/dom-only/consumer/public/parity.html\n?? tests/dom-only/consumer/public/parity.js\n?? tests/dom-only/consumer/src/parity.rs\n?? tests/dom-only/parity.spec.ts\n?? tests/dom-only/primitives/public/parity.html\n?? tests/dom-only/primitives/public/parity.js\n?? tests/dom-only/primitives/src/parity.rs\n",
+  "product": "target/dom/dom-consumer",
+  "parameters": {
+    "warmups": 5,
+    "samples": 40,
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "browser": "153.0.8010.12",
+    "os": {
+      "platform": "darwin",
+      "release": "27.0.0"
+    },
+    "environment": {
+      "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.8010.12 Safari/537.36",
+      "dpr": 1,
+      "visibility": "visible"
+    },
+    "rust": "rustc 1.99.0 (b940084d7 2026-09-28)",
+    "node": "v26.12.1",
+    "load": {
+      "items": 6,
+      "enabled_commands": 3,
+      "input": "trusted Enter / ArrowDown / Enter",
+      "endpoint": "accepted DOM and focus on animation frame"
+    }
+  },
+  "sizes": {
+    "content.css": {
+      "bytes": 3349,
+      "gzip": 1064
+    },
+    "feedback.css": {
+      "bytes": 3715,
+      "gzip": 1132
+    },
+    "fields.css": {
+      "bytes": 771,
+      "gzip": 385
+    },
+    "menus.css": {
+      "bytes": 1773,
+      "gzip": 575
+    },
+    "panels.css": {
+      "bytes": 3088,
+      "gzip": 970
+    },
+    "pkg/app_bg.wasm": {
+      "bytes": 35975960,
+      "gzip": 3384354
+    },
+    "rustify-runtime.css": {
+      "bytes": 1750,
+      "gzip": 725
+    },
+    "rustify.css": {
+      "bytes": 168881,
+      "gzip": 20394
+    }
+  },
+  "workloads": {
+    "open": {
+      "p50_ms": 27.59999990463257,
+      "p95_ms": 28.699999809265137,
+      "raw": [
+        {
+          "latency_ms": 30,
+          "input_ms": 547.5999999046326,
+          "dom_frame_ms": 577.5999999046326,
+          "trusted": true,
+          "focused": "menu-item-bench-open",
+          "state": {
+            "requests": 15,
+            "accepts": 13,
+            "commands": 5,
+            "last": "bench-copy",
+            "open": true
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "command_delta": 0
+        },
+        {
+          "latency_ms": 27.800000190734863,
+          "input_ms": 616.5999999046326,
+          "dom_frame_ms": 644.4000000953674,
+          "trusted": true,
+          "focused": "menu-item-bench-open",
+          "state": {
+            "requests": 17,
+            "accepts": 15,
+            "commands": 6,
+            "last": "bench-copy",
+            "open": true
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "command_delta": 0
+        },
+        {
+          "latency_ms": 28.5,
+          "input_ms": 683,
+          "dom_frame_ms": 711.5,
+          "trusted": true,
+          "focused": "menu-item-bench-open",
+          "state": {
+            "requests": 19,
+            "accepts": 17,
+            "commands": 7,
+            "last": "bench-copy",
+            "open": true
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "command_delta": 0
+        },
+        {
+          "latency_ms": 26,
+          "input_ms": 751.5999999046326,
+          "dom_frame_ms": 777.5999999046326,
+          "trusted": true,
+          "focused": "menu-item-bench-open",
+          "state": {
+            "requests": 21,
+            "accepts": 19,
+            "commands": 8,
+            "last": "bench-copy",
+            "open": true
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "command_delta": 0
+        },
+        {
+          "latency_ms": 27.300000190734863,
+          "input_ms": 817,
+          "dom_frame_ms": 844.3000001907349,
+          "trusted": true,
+          "focused": "menu-item-bench-open",
+          "state": {
+            "requests": 23,
+            "accepts": 21,
+            "commands": 9,
+            "last": "bench-copy",
+            "open": true
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "command_delta": 0
+        },
+        {
+          "latency_ms": 25.200000286102295,
+          "input_ms": 885.6999998092651,
+          "dom_frame_ms": 910.9000000953674,
+          "trusted": true,
+          "focused": "menu-item-bench-open",
+          "state": {
+            "requests": 25,
+            "accepts": 23,
+            "commands": 10,
+            "last": "bench-copy",
+            "open": true
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "command_delta": 0
+        },
+        {
+          "latency_ms": 27.299999713897705,
+          "input_ms": 950.4000000953674,
+          "dom_frame_ms": 977.6999998092651,
+          "trusted": true,
+          "focused": "menu-item-bench-open",
+          "state": {
+            "requests": 27,
+            "accepts": 25,
+            "commands": 11,
+            "last": "bench-copy",
+            "open": true
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "command_delta": 0
+        },
+        {
+          "latency_ms": 28.700000286102295,
+          "input_ms": 1015.6999998092651,
+          "dom_frame_ms": 1044.4000000953674,
+          "trusted": true,
+          "focused": "menu-item-bench-open",
+          "state": {
+            "requests": 29,
+            "accepts": 27,
+            "commands": 12,
+            "last": "bench-copy",
+            "open": true
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "command_delta": 0
+        },
+        {
+          "latency_ms": 26.300000190734863,
+          "input_ms": 1084.6999998092651,
+          "dom_frame_ms": 1111,
+          "trusted": true,
+          "focused": "menu-item-bench-open",
+          "state": {
+            "requests": 31,
+            "accepts": 29,
+            "commands": 13,
+            "last": "bench-copy",
+            "open": true
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "command_delta": 0
+        },
+        {
+          "latency_ms": 27.899999618530273,
+          "input_ms": 1149.8000001907349,
+          "dom_frame_ms": 1177.6999998092651,
+          "trusted": true,
+          "focused": "menu-item-bench-open",
+          "state": {
+            "requests": 33,
+            "accepts": 31,
+            "commands": 14,
+            "last": "bench-copy",
+            "open": true
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "command_delta": 0
+        },
+        {
+          "latency_ms": 28.5,
+          "input_ms": 1215.6999998092651,
+          "dom_frame_ms": 1244.1999998092651,
+          "trusted": true,
+          "focused": "menu-item-bench-open",
+          "state": {
+            "requests": 35,
+            "accepts": 33,
+            "commands": 15,
+            "last": "bench-copy",
+            "open": true
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "command_delta": 0
+        },
+        {
+          "latency_ms": 26.299999713897705,
+          "input_ms": 1284.8000001907349,
+          "dom_frame_ms": 1311.0999999046326,
+          "trusted": true,
+          "focused": "menu-item-bench-open",
+          "state": {
+            "requests": 37,
+            "accepts": 35,
+            "commands": 16,
+            "last": "bench-copy",
+            "open": true
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "command_delta": 0
+        },
+        {
+          "latency_ms": 27.799999713897705,
+          "input_ms": 1349.9000000953674,
+          "dom_frame_ms": 1377.6999998092651,
+          "trusted": true,
+          "focused": "menu-item-bench-open",
+          "state": {
+            "requests": 39,
+            "accepts": 37,
+            "commands": 17,
+            "last": "bench-copy",
+            "open": true
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "command_delta": 0
+        },
+        {
+          "latency_ms": 27.600000381469727,
+          "input_ms": 1416.6999998092651,
+          "dom_frame_ms": 1444.3000001907349,
+          "trusted": true,
+          "focused": "menu-item-bench-open",
+          "state": {
+            "requests": 41,
+            "accepts": 39,
+            "commands": 18,
+            "last": "bench-copy",
+            "open": true
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "command_delta": 0
+        },
+        {
+          "latency_ms": 23.90000009536743,
+          "input_ms": 1487.0999999046326,
+          "dom_frame_ms": 1511,
+          "trusted": true,
+          "focused": "menu-item-bench-open",
+          "state": {
+            "requests": 43,
+            "accepts": 41,
+            "commands": 19,
+            "last": "bench-copy",
+            "open": true
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "command_delta": 0
+        },
+        {
+          "latency_ms": 27.59999990463257,
+          "input_ms": 1550.5,
+          "dom_frame_ms": 1578.0999999046326,
+          "trusted": true,
+          "focused": "menu-item-bench-open",
+          "state": {
+            "requests": 45,
+            "accepts": 43,
+            "commands": 20,
+            "last": "bench-copy",
+            "open": true
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "command_delta": 0
+        },
+        {
+          "latency_ms": 27.90000009536743,
+          "input_ms": 1616.4000000953674,
+          "dom_frame_ms": 1644.3000001907349,
+          "trusted": true,
+          "focused": "menu-item-bench-open",
+          "state": {
+            "requests": 47,
+            "accepts": 45,
+            "commands": 21,
+            "last": "bench-copy",
+            "open": true
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "command_delta": 0
+        },
+        {
+          "latency_ms": 27.90000009536743,
+          "input_ms": 1683.0999999046326,
+          "dom_frame_ms": 1711,
+          "trusted": true,
+          "focused": "menu-item-bench-open",
+          "state": {
+            "requests": 49,
+            "accepts": 47,
+            "commands": 22,
+            "last": "bench-copy",
+            "open": true
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "command_delta": 0
+        },
+        {
+          "latency_ms": 28.399999618530273,
+          "input_ms": 1749.8000001907349,
+          "dom_frame_ms": 1778.1999998092651,
+          "trusted": true,
+          "focused": "menu-item-bench-open",
+          "state": {
+            "requests": 51,
+            "accepts": 49,
+            "commands": 23,
+            "last": "bench-copy",
+            "open": true
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "command_delta": 0
+        },
+        {
+          "latency_ms": 28.300000190734863,
+          "input_ms": 1816.5,
+          "dom_frame_ms": 1844.8000001907349,
+          "trusted": true,
+          "focused": "menu-item-bench-open",
+          "state": {
+            "requests": 53,
+            "accepts": 51,
+            "commands": 24,
+            "last": "bench-copy",
+            "open": true
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "command_delta": 0
+        },
+        {
+          "latency_ms": 28.699999809265137,
+          "input_ms": 1882.8000001907349,
+          "dom_frame_ms": 1911.5,
+          "trusted": true,
+          "focused": "menu-item-bench-open",
+          "state": {
+            "requests": 55,
+            "accepts": 53,
+            "commands": 25,
+            "last": "bench-copy",
+            "open": true
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "command_delta": 0
+        },
+        {
+          "latency_ms": 27.59999990463257,
+          "input_ms": 1950.0999999046326,
+          "dom_frame_ms": 1977.6999998092651,
+          "trusted": true,
+          "focused": "menu-item-bench-open",
+          "state": {
+            "requests": 57,
+            "accepts": 55,
+            "commands": 26,
+            "last": "bench-copy",
+            "open": true
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "command_delta": 0
+        },
+        {
+          "latency_ms": 27.200000286102295,
+          "input_ms": 2017.1999998092651,
+          "dom_frame_ms": 2044.4000000953674,
+          "trusted": true,
+          "focused": "menu-item-bench-open",
+          "state": {
+            "requests": 59,
+            "accepts": 57,
+            "commands": 27,
+            "last": "bench-copy",
+            "open": true
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "command_delta": 0
+        },
+        {
+          "latency_ms": 26.699999809265137,
+          "input_ms": 2084.300000190735,
+          "dom_frame_ms": 2111,
+          "trusted": true,
+          "focused": "menu-item-bench-open",
+          "state": {
+            "requests": 61,
+            "accepts": 59,
+            "commands": 28,
+            "last": "bench-copy",
+            "open": true
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "command_delta": 0
+        },
+        {
+          "latency_ms": 25.299999713897705,
+          "input_ms": 2152.300000190735,
+          "dom_frame_ms": 2177.5999999046326,
+          "trusted": true,
+          "focused": "menu-item-bench-open",
+          "state": {
+            "requests": 63,
+            "accepts": 61,
+            "commands": 29,
+            "last": "bench-copy",
+            "open": true
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "command_delta": 0
+        },
+        {
+          "latency_ms": 26.700000286102295,
+          "input_ms": 2217.5999999046326,
+          "dom_frame_ms": 2244.300000190735,
+          "trusted": true,
+          "focused": "menu-item-bench-open",
+          "state": {
+            "requests": 65,
+            "accepts": 63,
+            "commands": 30,
+            "last": "bench-copy",
+            "open": true
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "command_delta": 0
+        },
+        {
+          "latency_ms": 27.699999809265137,
+          "input_ms": 2283.300000190735,
+          "dom_frame_ms": 2311,
+          "trusted": true,
+          "focused": "menu-item-bench-open",
+          "state": {
+            "requests": 67,
+            "accepts": 65,
+            "commands": 31,
+            "last": "bench-copy",
+            "open": true
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "command_delta": 0
+        },
+        {
+          "latency_ms": 27.40000009536743,
+          "input_ms": 2350.199999809265,
+          "dom_frame_ms": 2377.5999999046326,
+          "trusted": true,
+          "focused": "menu-item-bench-open",
+          "state": {
+            "requests": 69,
+            "accepts": 67,
+            "commands": 32,
+            "last": "bench-copy",
+            "open": true
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "command_delta": 0
+        },
+        {
+          "latency_ms": 25.600000381469727,
+          "input_ms": 2418.699999809265,
+          "dom_frame_ms": 2444.300000190735,
+          "trusted": true,
+          "focused": "menu-item-bench-open",
+          "state": {
+            "requests": 71,
+            "accepts": 69,
+            "commands": 33,
+            "last": "bench-copy",
+            "open": true
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "command_delta": 0
+        },
+        {
+          "latency_ms": 25.09999990463257,
+          "input_ms": 2485.4000000953674,
+          "dom_frame_ms": 2510.5,
+          "trusted": true,
+          "focused": "menu-item-bench-open",
+          "state": {
+            "requests": 73,
+            "accepts": 71,
+            "commands": 34,
+            "last": "bench-copy",
+            "open": true
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "command_delta": 0
+        },
+        {
+          "latency_ms": 27.799999713897705,
+          "input_ms": 2549.4000000953674,
+          "dom_frame_ms": 2577.199999809265,
+          "trusted": true,
+          "focused": "menu-item-bench-open",
+          "state": {
+            "requests": 75,
+            "accepts": 73,
+            "commands": 35,
+            "last": "bench-copy",
+            "open": true
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "command_delta": 0
+        },
+        {
+          "latency_ms": 27.40000009536743,
+          "input_ms": 2616.9000000953674,
+          "dom_frame_ms": 2644.300000190735,
+          "trusted": true,
+          "focused": "menu-item-bench-open",
+          "state": {
+            "requests": 77,
+            "accepts": 75,
+            "commands": 36,
+            "last": "bench-copy",
+            "open": true
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "command_delta": 0
+        },
+        {
+          "latency_ms": 28.5,
+          "input_ms": 2682.5,
+          "dom_frame_ms": 2711,
+          "trusted": true,
+          "focused": "menu-item-bench-open",
+          "state": {
+            "requests": 79,
+            "accepts": 77,
+            "commands": 37,
+            "last": "bench-copy",
+            "open": true
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "command_delta": 0
+        },
+        {
+          "latency_ms": 28.299999713897705,
+          "input_ms": 2749.4000000953674,
+          "dom_frame_ms": 2777.699999809265,
+          "trusted": true,
+          "focused": "menu-item-bench-open",
+          "state": {
+            "requests": 81,
+            "accepts": 79,
+            "commands": 38,
+            "last": "bench-copy",
+            "open": true
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "command_delta": 0
+        },
+        {
+          "latency_ms": 28.40000009536743,
+          "input_ms": 2815.9000000953674,
+          "dom_frame_ms": 2844.300000190735,
+          "trusted": true,
+          "focused": "menu-item-bench-open",
+          "state": {
+            "requests": 83,
+            "accepts": 81,
+            "commands": 39,
+            "last": "bench-copy",
+            "open": true
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "command_delta": 0
+        },
+        {
+          "latency_ms": 27.09999990463257,
+          "input_ms": 2883.9000000953674,
+          "dom_frame_ms": 2911,
+          "trusted": true,
+          "focused": "menu-item-bench-open",
+          "state": {
+            "requests": 85,
+            "accepts": 83,
+            "commands": 40,
+            "last": "bench-copy",
+            "open": true
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "command_delta": 0
+        },
+        {
+          "latency_ms": 27.300000190734863,
+          "input_ms": 2950.5,
+          "dom_frame_ms": 2977.800000190735,
+          "trusted": true,
+          "focused": "menu-item-bench-open",
+          "state": {
+            "requests": 87,
+            "accepts": 85,
+            "commands": 41,
+            "last": "bench-copy",
+            "open": true
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "command_delta": 0
+        },
+        {
+          "latency_ms": 27.300000190734863,
+          "input_ms": 3017.0999999046326,
+          "dom_frame_ms": 3044.4000000953674,
+          "trusted": true,
+          "focused": "menu-item-bench-open",
+          "state": {
+            "requests": 89,
+            "accepts": 87,
+            "commands": 42,
+            "last": "bench-copy",
+            "open": true
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "command_delta": 0
+        },
+        {
+          "latency_ms": 27.90000009536743,
+          "input_ms": 3083.199999809265,
+          "dom_frame_ms": 3111.0999999046326,
+          "trusted": true,
+          "focused": "menu-item-bench-open",
+          "state": {
+            "requests": 91,
+            "accepts": 89,
+            "commands": 43,
+            "last": "bench-copy",
+            "open": true
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "command_delta": 0
+        },
+        {
+          "latency_ms": 26.59999990463257,
+          "input_ms": 3151,
+          "dom_frame_ms": 3177.5999999046326,
+          "trusted": true,
+          "focused": "menu-item-bench-open",
+          "state": {
+            "requests": 93,
+            "accepts": 91,
+            "commands": 44,
+            "last": "bench-copy",
+            "open": true
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "command_delta": 0
+        }
+      ]
+    },
+    "move": {
+      "p50_ms": 12.5,
+      "p95_ms": 13.5,
+      "raw": [
+        {
+          "latency_ms": 11.800000190734863,
+          "input_ms": 582.5,
+          "dom_frame_ms": 594.3000001907349,
+          "trusted": true,
+          "focused": "menu-item-bench-copy",
+          "state": {
+            "requests": 15,
+            "accepts": 13,
+            "commands": 5,
+            "last": "bench-copy",
+            "open": true
+          },
+          "request_delta": 0,
+          "accept_delta": 0,
+          "command_delta": 0
+        },
+        {
+          "latency_ms": 12.099999904632568,
+          "input_ms": 648.9000000953674,
+          "dom_frame_ms": 661,
+          "trusted": true,
+          "focused": "menu-item-bench-copy",
+          "state": {
+            "requests": 17,
+            "accepts": 15,
+            "commands": 6,
+            "last": "bench-copy",
+            "open": true
+          },
+          "request_delta": 0,
+          "accept_delta": 0,
+          "command_delta": 0
+        },
+        {
+          "latency_ms": 10.199999809265137,
+          "input_ms": 717.4000000953674,
+          "dom_frame_ms": 727.5999999046326,
+          "trusted": true,
+          "focused": "menu-item-bench-copy",
+          "state": {
+            "requests": 19,
+            "accepts": 17,
+            "commands": 7,
+            "last": "bench-copy",
+            "open": true
+          },
+          "request_delta": 0,
+          "accept_delta": 0,
+          "command_delta": 0
+        },
+        {
+          "latency_ms": 11.700000286102295,
+          "input_ms": 782.5999999046326,
+          "dom_frame_ms": 794.3000001907349,
+          "trusted": true,
+          "focused": "menu-item-bench-copy",
+          "state": {
+            "requests": 21,
+            "accepts": 19,
+            "commands": 8,
+            "last": "bench-copy",
+            "open": true
+          },
+          "request_delta": 0,
+          "accept_delta": 0,
+          "command_delta": 0
+        },
+        {
+          "latency_ms": 12,
+          "input_ms": 849,
+          "dom_frame_ms": 861,
+          "trusted": true,
+          "focused": "menu-item-bench-copy",
+          "state": {
+            "requests": 23,
+            "accepts": 21,
+            "commands": 9,
+            "last": "bench-copy",
+            "open": true
+          },
+          "request_delta": 0,
+          "accept_delta": 0,
+          "command_delta": 0
+        },
+        {
+          "latency_ms": 12.099999904632568,
+          "input_ms": 915.5999999046326,
+          "dom_frame_ms": 927.6999998092651,
+          "trusted": true,
+          "focused": "menu-item-bench-copy",
+          "state": {
+            "requests": 25,
+            "accepts": 23,
+            "commands": 10,
+            "last": "bench-copy",
+            "open": true
+          },
+          "request_delta": 0,
+          "accept_delta": 0,
+          "command_delta": 0
+        },
+        {
+          "latency_ms": 12.200000286102295,
+          "input_ms": 982.1999998092651,
+          "dom_frame_ms": 994.4000000953674,
+          "trusted": true,
+          "focused": "menu-item-bench-copy",
+          "state": {
+            "requests": 27,
+            "accepts": 25,
+            "commands": 11,
+            "last": "bench-copy",
+            "open": true
+          },
+          "request_delta": 0,
+          "accept_delta": 0,
+          "command_delta": 0
+        },
+        {
+          "latency_ms": 12.900000095367432,
+          "input_ms": 1048.0999999046326,
+          "dom_frame_ms": 1061,
+          "trusted": true,
+          "focused": "menu-item-bench-copy",
+          "state": {
+            "requests": 29,
+            "accepts": 27,
+            "commands": 12,
+            "last": "bench-copy",
+            "open": true
+          },
+          "request_delta": 0,
+          "accept_delta": 0,
+          "command_delta": 0
+        },
+        {
+          "latency_ms": 10.199999809265137,
+          "input_ms": 1117.5,
+          "dom_frame_ms": 1127.6999998092651,
+          "trusted": true,
+          "focused": "menu-item-bench-copy",
+          "state": {
+            "requests": 31,
+            "accepts": 29,
+            "commands": 13,
+            "last": "bench-copy",
+            "open": true
+          },
+          "request_delta": 0,
+          "accept_delta": 0,
+          "command_delta": 0
+        },
+        {
+          "latency_ms": 13.099999904632568,
+          "input_ms": 1181.3000001907349,
+          "dom_frame_ms": 1194.4000000953674,
+          "trusted": true,
+          "focused": "menu-item-bench-copy",
+          "state": {
+            "requests": 33,
+            "accepts": 31,
+            "commands": 14,
+            "last": "bench-copy",
+            "open": true
+          },
+          "request_delta": 0,
+          "accept_delta": 0,
+          "command_delta": 0
+        },
+        {
+          "latency_ms": 13,
+          "input_ms": 1248,
+          "dom_frame_ms": 1261,
+          "trusted": true,
+          "focused": "menu-item-bench-copy",
+          "state": {
+            "requests": 35,
+            "accepts": 33,
+            "commands": 15,
+            "last": "bench-copy",
+            "open": true
+          },
+          "request_delta": 0,
+          "accept_delta": 0,
+          "command_delta": 0
+        },
+        {
+          "latency_ms": 13,
+          "input_ms": 1314.6999998092651,
+          "dom_frame_ms": 1327.6999998092651,
+          "trusted": true,
+          "focused": "menu-item-bench-copy",
+          "state": {
+            "requests": 37,
+            "accepts": 35,
+            "commands": 16,
+            "last": "bench-copy",
+            "open": true
+          },
+          "request_delta": 0,
+          "accept_delta": 0,
+          "command_delta": 0
+        },
+        {
+          "latency_ms": 9.900000095367432,
+          "input_ms": 1384.4000000953674,
+          "dom_frame_ms": 1394.3000001907349,
+          "trusted": true,
+          "focused": "menu-item-bench-copy",
+          "state": {
+            "requests": 39,
+            "accepts": 37,
+            "commands": 17,
+            "last": "bench-copy",
+            "open": true
+          },
+          "request_delta": 0,
+          "accept_delta": 0,
+          "command_delta": 0
+        },
+        {
+          "latency_ms": 13.199999809265137,
+          "input_ms": 1448.3000001907349,
+          "dom_frame_ms": 1461.5,
+          "trusted": true,
+          "focused": "menu-item-bench-copy",
+          "state": {
+            "requests": 41,
+            "accepts": 39,
+            "commands": 18,
+            "last": "bench-copy",
+            "open": true
+          },
+          "request_delta": 0,
+          "accept_delta": 0,
+          "command_delta": 0
+        },
+        {
+          "latency_ms": 13.199999809265137,
+          "input_ms": 1514.9000000953674,
+          "dom_frame_ms": 1528.0999999046326,
+          "trusted": true,
+          "focused": "menu-item-bench-copy",
+          "state": {
+            "requests": 43,
+            "accepts": 41,
+            "commands": 19,
+            "last": "bench-copy",
+            "open": true
+          },
+          "request_delta": 0,
+          "accept_delta": 0,
+          "command_delta": 0
+        },
+        {
+          "latency_ms": 11.100000381469727,
+          "input_ms": 1583.6999998092651,
+          "dom_frame_ms": 1594.8000001907349,
+          "trusted": true,
+          "focused": "menu-item-bench-copy",
+          "state": {
+            "requests": 45,
+            "accepts": 43,
+            "commands": 20,
+            "last": "bench-copy",
+            "open": true
+          },
+          "request_delta": 0,
+          "accept_delta": 0,
+          "command_delta": 0
+        },
+        {
+          "latency_ms": 12.900000095367432,
+          "input_ms": 1648.0999999046326,
+          "dom_frame_ms": 1661,
+          "trusted": true,
+          "focused": "menu-item-bench-copy",
+          "state": {
+            "requests": 47,
+            "accepts": 45,
+            "commands": 21,
+            "last": "bench-copy",
+            "open": true
+          },
+          "request_delta": 0,
+          "accept_delta": 0,
+          "command_delta": 0
+        },
+        {
+          "latency_ms": 13.5,
+          "input_ms": 1714.1999998092651,
+          "dom_frame_ms": 1727.6999998092651,
+          "trusted": true,
+          "focused": "menu-item-bench-copy",
+          "state": {
+            "requests": 49,
+            "accepts": 47,
+            "commands": 22,
+            "last": "bench-copy",
+            "open": true
+          },
+          "request_delta": 0,
+          "accept_delta": 0,
+          "command_delta": 0
+        },
+        {
+          "latency_ms": 12.5,
+          "input_ms": 1781.8000001907349,
+          "dom_frame_ms": 1794.3000001907349,
+          "trusted": true,
+          "focused": "menu-item-bench-copy",
+          "state": {
+            "requests": 51,
+            "accepts": 49,
+            "commands": 23,
+            "last": "bench-copy",
+            "open": true
+          },
+          "request_delta": 0,
+          "accept_delta": 0,
+          "command_delta": 0
+        },
+        {
+          "latency_ms": 12.5,
+          "input_ms": 1848.5,
+          "dom_frame_ms": 1861,
+          "trusted": true,
+          "focused": "menu-item-bench-copy",
+          "state": {
+            "requests": 53,
+            "accepts": 51,
+            "commands": 24,
+            "last": "bench-copy",
+            "open": true
+          },
+          "request_delta": 0,
+          "accept_delta": 0,
+          "command_delta": 0
+        },
+        {
+          "latency_ms": 11.900000095367432,
+          "input_ms": 1916.1999998092651,
+          "dom_frame_ms": 1928.0999999046326,
+          "trusted": true,
+          "focused": "menu-item-bench-copy",
+          "state": {
+            "requests": 55,
+            "accepts": 53,
+            "commands": 25,
+            "last": "bench-copy",
+            "open": true
+          },
+          "request_delta": 0,
+          "accept_delta": 0,
+          "command_delta": 0
+        },
+        {
+          "latency_ms": 12.600000381469727,
+          "input_ms": 1981.6999998092651,
+          "dom_frame_ms": 1994.3000001907349,
+          "trusted": true,
+          "focused": "menu-item-bench-copy",
+          "state": {
+            "requests": 57,
+            "accepts": 55,
+            "commands": 26,
+            "last": "bench-copy",
+            "open": true
+          },
+          "request_delta": 0,
+          "accept_delta": 0,
+          "command_delta": 0
+        },
+        {
+          "latency_ms": 12.5,
+          "input_ms": 2048.5,
+          "dom_frame_ms": 2061,
+          "trusted": true,
+          "focused": "menu-item-bench-copy",
+          "state": {
+            "requests": 59,
+            "accepts": 57,
+            "commands": 27,
+            "last": "bench-copy",
+            "open": true
+          },
+          "request_delta": 0,
+          "accept_delta": 0,
+          "command_delta": 0
+        },
+        {
+          "latency_ms": 12.899999618530273,
+          "input_ms": 2114.800000190735,
+          "dom_frame_ms": 2127.699999809265,
+          "trusted": true,
+          "focused": "menu-item-bench-copy",
+          "state": {
+            "requests": 61,
+            "accepts": 59,
+            "commands": 28,
+            "last": "bench-copy",
+            "open": true
+          },
+          "request_delta": 0,
+          "accept_delta": 0,
+          "command_delta": 0
+        },
+        {
+          "latency_ms": 12.400000095367432,
+          "input_ms": 2181.9000000953674,
+          "dom_frame_ms": 2194.300000190735,
+          "trusted": true,
+          "focused": "menu-item-bench-copy",
+          "state": {
+            "requests": 63,
+            "accepts": 61,
+            "commands": 29,
+            "last": "bench-copy",
+            "open": true
+          },
+          "request_delta": 0,
+          "accept_delta": 0,
+          "command_delta": 0
+        },
+        {
+          "latency_ms": 12.400000095367432,
+          "input_ms": 2248.699999809265,
+          "dom_frame_ms": 2261.0999999046326,
+          "trusted": true,
+          "focused": "menu-item-bench-copy",
+          "state": {
+            "requests": 65,
+            "accepts": 63,
+            "commands": 30,
+            "last": "bench-copy",
+            "open": true
+          },
+          "request_delta": 0,
+          "accept_delta": 0,
+          "command_delta": 0
+        },
+        {
+          "latency_ms": 12.800000190734863,
+          "input_ms": 2315,
+          "dom_frame_ms": 2327.800000190735,
+          "trusted": true,
+          "focused": "menu-item-bench-copy",
+          "state": {
+            "requests": 67,
+            "accepts": 65,
+            "commands": 31,
+            "last": "bench-copy",
+            "open": true
+          },
+          "request_delta": 0,
+          "accept_delta": 0,
+          "command_delta": 0
+        },
+        {
+          "latency_ms": 9.900000095367432,
+          "input_ms": 2384.4000000953674,
+          "dom_frame_ms": 2394.300000190735,
+          "trusted": true,
+          "focused": "menu-item-bench-copy",
+          "state": {
+            "requests": 69,
+            "accepts": 67,
+            "commands": 32,
+            "last": "bench-copy",
+            "open": true
+          },
+          "request_delta": 0,
+          "accept_delta": 0,
+          "command_delta": 0
+        },
+        {
+          "latency_ms": 12.800000190734863,
+          "input_ms": 2448.0999999046326,
+          "dom_frame_ms": 2460.9000000953674,
+          "trusted": true,
+          "focused": "menu-item-bench-copy",
+          "state": {
+            "requests": 71,
+            "accepts": 69,
+            "commands": 33,
+            "last": "bench-copy",
+            "open": true
+          },
+          "request_delta": 0,
+          "accept_delta": 0,
+          "command_delta": 0
+        },
+        {
+          "latency_ms": 13.800000190734863,
+          "input_ms": 2514,
+          "dom_frame_ms": 2527.800000190735,
+          "trusted": true,
+          "focused": "menu-item-bench-copy",
+          "state": {
+            "requests": 73,
+            "accepts": 71,
+            "commands": 34,
+            "last": "bench-copy",
+            "open": true
+          },
+          "request_delta": 0,
+          "accept_delta": 0,
+          "command_delta": 0
+        },
+        {
+          "latency_ms": 14.100000381469727,
+          "input_ms": 2580.699999809265,
+          "dom_frame_ms": 2594.800000190735,
+          "trusted": true,
+          "focused": "menu-item-bench-copy",
+          "state": {
+            "requests": 75,
+            "accepts": 73,
+            "commands": 35,
+            "last": "bench-copy",
+            "open": true
+          },
+          "request_delta": 0,
+          "accept_delta": 0,
+          "command_delta": 0
+        },
+        {
+          "latency_ms": 10.199999809265137,
+          "input_ms": 2650.800000190735,
+          "dom_frame_ms": 2661,
+          "trusted": true,
+          "focused": "menu-item-bench-copy",
+          "state": {
+            "requests": 77,
+            "accepts": 75,
+            "commands": 36,
+            "last": "bench-copy",
+            "open": true
+          },
+          "request_delta": 0,
+          "accept_delta": 0,
+          "command_delta": 0
+        },
+        {
+          "latency_ms": 13.5,
+          "input_ms": 2714.699999809265,
+          "dom_frame_ms": 2728.199999809265,
+          "trusted": true,
+          "focused": "menu-item-bench-copy",
+          "state": {
+            "requests": 79,
+            "accepts": 77,
+            "commands": 37,
+            "last": "bench-copy",
+            "open": true
+          },
+          "request_delta": 0,
+          "accept_delta": 0,
+          "command_delta": 0
+        },
+        {
+          "latency_ms": 12.800000190734863,
+          "input_ms": 2781.5,
+          "dom_frame_ms": 2794.300000190735,
+          "trusted": true,
+          "focused": "menu-item-bench-copy",
+          "state": {
+            "requests": 81,
+            "accepts": 79,
+            "commands": 38,
+            "last": "bench-copy",
+            "open": true
+          },
+          "request_delta": 0,
+          "accept_delta": 0,
+          "command_delta": 0
+        },
+        {
+          "latency_ms": 12.099999904632568,
+          "input_ms": 2848.9000000953674,
+          "dom_frame_ms": 2861,
+          "trusted": true,
+          "focused": "menu-item-bench-copy",
+          "state": {
+            "requests": 83,
+            "accepts": 81,
+            "commands": 39,
+            "last": "bench-copy",
+            "open": true
+          },
+          "request_delta": 0,
+          "accept_delta": 0,
+          "command_delta": 0
+        },
+        {
+          "latency_ms": 12.599999904632568,
+          "input_ms": 2915.0999999046326,
+          "dom_frame_ms": 2927.699999809265,
+          "trusted": true,
+          "focused": "menu-item-bench-copy",
+          "state": {
+            "requests": 85,
+            "accepts": 83,
+            "commands": 40,
+            "last": "bench-copy",
+            "open": true
+          },
+          "request_delta": 0,
+          "accept_delta": 0,
+          "command_delta": 0
+        },
+        {
+          "latency_ms": 12.700000286102295,
+          "input_ms": 2981.5999999046326,
+          "dom_frame_ms": 2994.300000190735,
+          "trusted": true,
+          "focused": "menu-item-bench-copy",
+          "state": {
+            "requests": 87,
+            "accepts": 85,
+            "commands": 41,
+            "last": "bench-copy",
+            "open": true
+          },
+          "request_delta": 0,
+          "accept_delta": 0,
+          "command_delta": 0
+        },
+        {
+          "latency_ms": 12.400000095367432,
+          "input_ms": 3048.5999999046326,
+          "dom_frame_ms": 3061,
+          "trusted": true,
+          "focused": "menu-item-bench-copy",
+          "state": {
+            "requests": 89,
+            "accepts": 87,
+            "commands": 42,
+            "last": "bench-copy",
+            "open": true
+          },
+          "request_delta": 0,
+          "accept_delta": 0,
+          "command_delta": 0
+        },
+        {
+          "latency_ms": 12.699999809265137,
+          "input_ms": 3115,
+          "dom_frame_ms": 3127.699999809265,
+          "trusted": true,
+          "focused": "menu-item-bench-copy",
+          "state": {
+            "requests": 91,
+            "accepts": 89,
+            "commands": 43,
+            "last": "bench-copy",
+            "open": true
+          },
+          "request_delta": 0,
+          "accept_delta": 0,
+          "command_delta": 0
+        },
+        {
+          "latency_ms": 12.600000381469727,
+          "input_ms": 3181.699999809265,
+          "dom_frame_ms": 3194.300000190735,
+          "trusted": true,
+          "focused": "menu-item-bench-copy",
+          "state": {
+            "requests": 93,
+            "accepts": 91,
+            "commands": 44,
+            "last": "bench-copy",
+            "open": true
+          },
+          "request_delta": 0,
+          "accept_delta": 0,
+          "command_delta": 0
+        }
+      ]
+    },
+    "activate": {
+      "p50_ms": 13.200000286102295,
+      "p95_ms": 13.699999809265137,
+      "raw": [
+        {
+          "latency_ms": 12.099999904632568,
+          "input_ms": 598.8000001907349,
+          "dom_frame_ms": 610.9000000953674,
+          "trusted": true,
+          "focused": null,
+          "state": {
+            "requests": 16,
+            "accepts": 14,
+            "commands": 6,
+            "last": "bench-copy",
+            "open": false
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "command_delta": 1
+        },
+        {
+          "latency_ms": 13.299999713897705,
+          "input_ms": 664.3000001907349,
+          "dom_frame_ms": 677.5999999046326,
+          "trusted": true,
+          "focused": null,
+          "state": {
+            "requests": 18,
+            "accepts": 16,
+            "commands": 7,
+            "last": "bench-copy",
+            "open": false
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "command_delta": 1
+        },
+        {
+          "latency_ms": 12.300000190734863,
+          "input_ms": 732,
+          "dom_frame_ms": 744.3000001907349,
+          "trusted": true,
+          "focused": null,
+          "state": {
+            "requests": 20,
+            "accepts": 18,
+            "commands": 8,
+            "last": "bench-copy",
+            "open": false
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "command_delta": 1
+        },
+        {
+          "latency_ms": 9.5,
+          "input_ms": 801.5,
+          "dom_frame_ms": 811,
+          "trusted": true,
+          "focused": null,
+          "state": {
+            "requests": 22,
+            "accepts": 20,
+            "commands": 9,
+            "last": "bench-copy",
+            "open": false
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "command_delta": 1
+        },
+        {
+          "latency_ms": 12.699999809265137,
+          "input_ms": 865,
+          "dom_frame_ms": 877.6999998092651,
+          "trusted": true,
+          "focused": null,
+          "state": {
+            "requests": 24,
+            "accepts": 22,
+            "commands": 10,
+            "last": "bench-copy",
+            "open": false
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "command_delta": 1
+        },
+        {
+          "latency_ms": 12.600000381469727,
+          "input_ms": 931.6999998092651,
+          "dom_frame_ms": 944.3000001907349,
+          "trusted": true,
+          "focused": null,
+          "state": {
+            "requests": 26,
+            "accepts": 24,
+            "commands": 11,
+            "last": "bench-copy",
+            "open": false
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "command_delta": 1
+        },
+        {
+          "latency_ms": 12.099999904632568,
+          "input_ms": 998.9000000953674,
+          "dom_frame_ms": 1011,
+          "trusted": true,
+          "focused": null,
+          "state": {
+            "requests": 28,
+            "accepts": 26,
+            "commands": 12,
+            "last": "bench-copy",
+            "open": false
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "command_delta": 1
+        },
+        {
+          "latency_ms": 13.5,
+          "input_ms": 1064.1999998092651,
+          "dom_frame_ms": 1077.6999998092651,
+          "trusted": true,
+          "focused": null,
+          "state": {
+            "requests": 30,
+            "accepts": 28,
+            "commands": 13,
+            "last": "bench-copy",
+            "open": false
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "command_delta": 1
+        },
+        {
+          "latency_ms": 11.599999904632568,
+          "input_ms": 1132.8000001907349,
+          "dom_frame_ms": 1144.4000000953674,
+          "trusted": true,
+          "focused": null,
+          "state": {
+            "requests": 32,
+            "accepts": 30,
+            "commands": 14,
+            "last": "bench-copy",
+            "open": false
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "command_delta": 1
+        },
+        {
+          "latency_ms": 13.200000286102295,
+          "input_ms": 1197.6999998092651,
+          "dom_frame_ms": 1210.9000000953674,
+          "trusted": true,
+          "focused": null,
+          "state": {
+            "requests": 34,
+            "accepts": 32,
+            "commands": 15,
+            "last": "bench-copy",
+            "open": false
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "command_delta": 1
+        },
+        {
+          "latency_ms": 13.599999904632568,
+          "input_ms": 1264,
+          "dom_frame_ms": 1277.5999999046326,
+          "trusted": true,
+          "focused": null,
+          "state": {
+            "requests": 36,
+            "accepts": 34,
+            "commands": 16,
+            "last": "bench-copy",
+            "open": false
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "command_delta": 1
+        },
+        {
+          "latency_ms": 13.400000095367432,
+          "input_ms": 1331,
+          "dom_frame_ms": 1344.4000000953674,
+          "trusted": true,
+          "focused": null,
+          "state": {
+            "requests": 38,
+            "accepts": 36,
+            "commands": 17,
+            "last": "bench-copy",
+            "open": false
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "command_delta": 1
+        },
+        {
+          "latency_ms": 13.400000095367432,
+          "input_ms": 1397.5999999046326,
+          "dom_frame_ms": 1411,
+          "trusted": true,
+          "focused": null,
+          "state": {
+            "requests": 40,
+            "accepts": 38,
+            "commands": 18,
+            "last": "bench-copy",
+            "open": false
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "command_delta": 1
+        },
+        {
+          "latency_ms": 12.699999809265137,
+          "input_ms": 1465.4000000953674,
+          "dom_frame_ms": 1478.0999999046326,
+          "trusted": true,
+          "focused": null,
+          "state": {
+            "requests": 42,
+            "accepts": 40,
+            "commands": 19,
+            "last": "bench-copy",
+            "open": false
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "command_delta": 1
+        },
+        {
+          "latency_ms": 13.300000190734863,
+          "input_ms": 1531.5,
+          "dom_frame_ms": 1544.8000001907349,
+          "trusted": true,
+          "focused": null,
+          "state": {
+            "requests": 44,
+            "accepts": 42,
+            "commands": 20,
+            "last": "bench-copy",
+            "open": false
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "command_delta": 1
+        },
+        {
+          "latency_ms": 13.699999809265137,
+          "input_ms": 1597.8000001907349,
+          "dom_frame_ms": 1611.5,
+          "trusted": true,
+          "focused": null,
+          "state": {
+            "requests": 46,
+            "accepts": 44,
+            "commands": 21,
+            "last": "bench-copy",
+            "open": false
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "command_delta": 1
+        },
+        {
+          "latency_ms": 13.400000095367432,
+          "input_ms": 1664.1999998092651,
+          "dom_frame_ms": 1677.5999999046326,
+          "trusted": true,
+          "focused": null,
+          "state": {
+            "requests": 48,
+            "accepts": 46,
+            "commands": 22,
+            "last": "bench-copy",
+            "open": false
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "command_delta": 1
+        },
+        {
+          "latency_ms": 13.700000286102295,
+          "input_ms": 1730.5999999046326,
+          "dom_frame_ms": 1744.3000001907349,
+          "trusted": true,
+          "focused": null,
+          "state": {
+            "requests": 50,
+            "accepts": 48,
+            "commands": 23,
+            "last": "bench-copy",
+            "open": false
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "command_delta": 1
+        },
+        {
+          "latency_ms": 13,
+          "input_ms": 1797.9000000953674,
+          "dom_frame_ms": 1810.9000000953674,
+          "trusted": true,
+          "focused": null,
+          "state": {
+            "requests": 52,
+            "accepts": 50,
+            "commands": 24,
+            "last": "bench-copy",
+            "open": false
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "command_delta": 1
+        },
+        {
+          "latency_ms": 13.5,
+          "input_ms": 1864.1999998092651,
+          "dom_frame_ms": 1877.6999998092651,
+          "trusted": true,
+          "focused": null,
+          "state": {
+            "requests": 54,
+            "accepts": 52,
+            "commands": 25,
+            "last": "bench-copy",
+            "open": false
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "command_delta": 1
+        },
+        {
+          "latency_ms": 13,
+          "input_ms": 1931.3000001907349,
+          "dom_frame_ms": 1944.3000001907349,
+          "trusted": true,
+          "focused": null,
+          "state": {
+            "requests": 56,
+            "accepts": 54,
+            "commands": 26,
+            "last": "bench-copy",
+            "open": false
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "command_delta": 1
+        },
+        {
+          "latency_ms": 11.199999809265137,
+          "input_ms": 1999.8000001907349,
+          "dom_frame_ms": 2011,
+          "trusted": true,
+          "focused": null,
+          "state": {
+            "requests": 58,
+            "accepts": 56,
+            "commands": 27,
+            "last": "bench-copy",
+            "open": false
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "command_delta": 1
+        },
+        {
+          "latency_ms": 13.299999713897705,
+          "input_ms": 2064.300000190735,
+          "dom_frame_ms": 2077.5999999046326,
+          "trusted": true,
+          "focused": null,
+          "state": {
+            "requests": 60,
+            "accepts": 58,
+            "commands": 28,
+            "last": "bench-copy",
+            "open": false
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "command_delta": 1
+        },
+        {
+          "latency_ms": 13.400000095367432,
+          "input_ms": 2130.9000000953674,
+          "dom_frame_ms": 2144.300000190735,
+          "trusted": true,
+          "focused": null,
+          "state": {
+            "requests": 62,
+            "accepts": 60,
+            "commands": 29,
+            "last": "bench-copy",
+            "open": false
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "command_delta": 1
+        },
+        {
+          "latency_ms": 12.900000095367432,
+          "input_ms": 2198.0999999046326,
+          "dom_frame_ms": 2211,
+          "trusted": true,
+          "focused": null,
+          "state": {
+            "requests": 64,
+            "accepts": 62,
+            "commands": 30,
+            "last": "bench-copy",
+            "open": false
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "command_delta": 1
+        },
+        {
+          "latency_ms": 13.099999904632568,
+          "input_ms": 2264.5999999046326,
+          "dom_frame_ms": 2277.699999809265,
+          "trusted": true,
+          "focused": null,
+          "state": {
+            "requests": 66,
+            "accepts": 64,
+            "commands": 31,
+            "last": "bench-copy",
+            "open": false
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "command_delta": 1
+        },
+        {
+          "latency_ms": 13.300000190734863,
+          "input_ms": 2331,
+          "dom_frame_ms": 2344.300000190735,
+          "trusted": true,
+          "focused": null,
+          "state": {
+            "requests": 68,
+            "accepts": 66,
+            "commands": 32,
+            "last": "bench-copy",
+            "open": false
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "command_delta": 1
+        },
+        {
+          "latency_ms": 12,
+          "input_ms": 2398.9000000953674,
+          "dom_frame_ms": 2410.9000000953674,
+          "trusted": true,
+          "focused": null,
+          "state": {
+            "requests": 70,
+            "accepts": 68,
+            "commands": 33,
+            "last": "bench-copy",
+            "open": false
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "command_delta": 1
+        },
+        {
+          "latency_ms": 13.199999809265137,
+          "input_ms": 2464.4000000953674,
+          "dom_frame_ms": 2477.5999999046326,
+          "trusted": true,
+          "focused": null,
+          "state": {
+            "requests": 72,
+            "accepts": 70,
+            "commands": 34,
+            "last": "bench-copy",
+            "open": false
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "command_delta": 1
+        },
+        {
+          "latency_ms": 14.099999904632568,
+          "input_ms": 2530.5999999046326,
+          "dom_frame_ms": 2544.699999809265,
+          "trusted": true,
+          "focused": null,
+          "state": {
+            "requests": 74,
+            "accepts": 72,
+            "commands": 35,
+            "last": "bench-copy",
+            "open": false
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "command_delta": 1
+        },
+        {
+          "latency_ms": 13.5,
+          "input_ms": 2597.9000000953674,
+          "dom_frame_ms": 2611.4000000953674,
+          "trusted": true,
+          "focused": null,
+          "state": {
+            "requests": 76,
+            "accepts": 74,
+            "commands": 36,
+            "last": "bench-copy",
+            "open": false
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "command_delta": 1
+        },
+        {
+          "latency_ms": 13.299999713897705,
+          "input_ms": 2664.300000190735,
+          "dom_frame_ms": 2677.5999999046326,
+          "trusted": true,
+          "focused": null,
+          "state": {
+            "requests": 78,
+            "accepts": 76,
+            "commands": 37,
+            "last": "bench-copy",
+            "open": false
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "command_delta": 1
+        },
+        {
+          "latency_ms": 12.800000190734863,
+          "input_ms": 2731.5,
+          "dom_frame_ms": 2744.300000190735,
+          "trusted": true,
+          "focused": null,
+          "state": {
+            "requests": 80,
+            "accepts": 78,
+            "commands": 38,
+            "last": "bench-copy",
+            "open": false
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "command_delta": 1
+        },
+        {
+          "latency_ms": 13.599999904632568,
+          "input_ms": 2797.300000190735,
+          "dom_frame_ms": 2810.9000000953674,
+          "trusted": true,
+          "focused": null,
+          "state": {
+            "requests": 82,
+            "accepts": 80,
+            "commands": 39,
+            "last": "bench-copy",
+            "open": false
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "command_delta": 1
+        },
+        {
+          "latency_ms": 12.599999904632568,
+          "input_ms": 2865,
+          "dom_frame_ms": 2877.5999999046326,
+          "trusted": true,
+          "focused": null,
+          "state": {
+            "requests": 84,
+            "accepts": 82,
+            "commands": 40,
+            "last": "bench-copy",
+            "open": false
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "command_delta": 1
+        },
+        {
+          "latency_ms": 13.200000286102295,
+          "input_ms": 2931.199999809265,
+          "dom_frame_ms": 2944.4000000953674,
+          "trusted": true,
+          "focused": null,
+          "state": {
+            "requests": 86,
+            "accepts": 84,
+            "commands": 41,
+            "last": "bench-copy",
+            "open": false
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "command_delta": 1
+        },
+        {
+          "latency_ms": 13.300000190734863,
+          "input_ms": 2997.699999809265,
+          "dom_frame_ms": 3011,
+          "trusted": true,
+          "focused": null,
+          "state": {
+            "requests": 88,
+            "accepts": 86,
+            "commands": 42,
+            "last": "bench-copy",
+            "open": false
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "command_delta": 1
+        },
+        {
+          "latency_ms": 13.299999713897705,
+          "input_ms": 3064.4000000953674,
+          "dom_frame_ms": 3077.699999809265,
+          "trusted": true,
+          "focused": null,
+          "state": {
+            "requests": 90,
+            "accepts": 88,
+            "commands": 43,
+            "last": "bench-copy",
+            "open": false
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "command_delta": 1
+        },
+        {
+          "latency_ms": 12.900000095367432,
+          "input_ms": 3131.4000000953674,
+          "dom_frame_ms": 3144.300000190735,
+          "trusted": true,
+          "focused": null,
+          "state": {
+            "requests": 92,
+            "accepts": 90,
+            "commands": 44,
+            "last": "bench-copy",
+            "open": false
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "command_delta": 1
+        },
+        {
+          "latency_ms": 12.900000095367432,
+          "input_ms": 3198,
+          "dom_frame_ms": 3210.9000000953674,
+          "trusted": true,
+          "focused": null,
+          "state": {
+            "requests": 94,
+            "accepts": 92,
+            "commands": 45,
+            "last": "bench-copy",
+            "open": false
+          },
+          "request_delta": 1,
+          "accept_delta": 1,
+          "command_delta": 1
+        }
+      ]
+    }
+  },
+  "cleanup": {
+    "before": {
+      "tasks": 0,
+      "timers": 0,
+      "observers": 0,
+      "errors": 0,
+      "aborted": false,
+      "nodes": 28,
+      "geometry_rules": 0,
+      "page_listeners": 15
+    },
+    "after": {
+      "tasks": 0,
+      "timers": 0,
+      "observers": 0,
+      "errors": 0,
+      "aborted": false,
+      "nodes": 28,
+      "geometry_rules": 0,
+      "page_listeners": 15
+    }
+  },
+  "delta": {
+    "open": {
+      "p50_ms": -0.19999980926513672,
+      "p95_ms": -0.3000001907348633
+    },
+    "move": {
+      "p50_ms": -0.5,
+      "p95_ms": -0.5
+    },
+    "activate": {
+      "p50_ms": -0.19999980926513672,
+      "p95_ms": -0.6000003814697266
+    }
+  },
+  "size_delta": {
+    "content.css": {
+      "bytes": 0,
+      "gzip": 0
+    },
+    "feedback.css": {
+      "bytes": 0,
+      "gzip": 0
+    },
+    "fields.css": {
+      "bytes": 0,
+      "gzip": 0
+    },
+    "menus.css": {
+      "bytes": 1773,
+      "gzip": 575
+    },
+    "panels.css": {
+      "bytes": 0,
+      "gzip": 0
+    },
+    "pkg/app_bg.wasm": {
+      "bytes": 8044499,
+      "gzip": 516261
+    },
+    "rustify-runtime.css": {
+      "bytes": 0,
+      "gzip": 0
+    },
+    "rustify.css": {
+      "bytes": 13030,
+      "gzip": 1490
+    }
+  },
+  "new_only": {
+    "submenu_open": {
+      "input": "ArrowRight",
+      "endpoint": "accepted DOM and focus on animation frame",
+      "p50_ms": 26.5,
+      "p95_ms": 29.5,
+      "raw": [
+        {
+          "latency_ms": 31,
+          "trusted": true,
+          "focus": "menu-sub-copy",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 26.300000190734863,
+          "trusted": true,
+          "focus": "menu-sub-copy",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 29.09999990463257,
+          "trusted": true,
+          "focus": "menu-sub-copy",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 28,
+          "trusted": true,
+          "focus": "menu-sub-copy",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 26.59999990463257,
+          "trusted": true,
+          "focus": "menu-sub-copy",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 28.90000009536743,
+          "trusted": true,
+          "focus": "menu-sub-copy",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 18.800000190734863,
+          "trusted": true,
+          "focus": "menu-sub-copy",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 26.200000286102295,
+          "trusted": true,
+          "focus": "menu-sub-copy",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 29.5,
+          "trusted": true,
+          "focus": "menu-sub-copy",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 26.199999809265137,
+          "trusted": true,
+          "focus": "menu-sub-copy",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 28.5,
+          "trusted": true,
+          "focus": "menu-sub-copy",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 29.5,
+          "trusted": true,
+          "focus": "menu-sub-copy",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 24.199999809265137,
+          "trusted": true,
+          "focus": "menu-sub-copy",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 26.5,
+          "trusted": true,
+          "focus": "menu-sub-copy",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 25.59999990463257,
+          "trusted": true,
+          "focus": "menu-sub-copy",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 27.799999713897705,
+          "trusted": true,
+          "focus": "menu-sub-copy",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 26.90000009536743,
+          "trusted": true,
+          "focus": "menu-sub-copy",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 23.200000286102295,
+          "trusted": true,
+          "focus": "menu-sub-copy",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 26.199999809265137,
+          "trusted": true,
+          "focus": "menu-sub-copy",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 28.700000286102295,
+          "trusted": true,
+          "focus": "menu-sub-copy",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 29.299999713897705,
+          "trusted": true,
+          "focus": "menu-sub-copy",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 26.5,
+          "trusted": true,
+          "focus": "menu-sub-copy",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 26.700000286102295,
+          "trusted": true,
+          "focus": "menu-sub-copy",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 23.09999990463257,
+          "trusted": true,
+          "focus": "menu-sub-copy",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 22.90000009536743,
+          "trusted": true,
+          "focus": "menu-sub-copy",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 26.09999990463257,
+          "trusted": true,
+          "focus": "menu-sub-copy",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 28.90000009536743,
+          "trusted": true,
+          "focus": "menu-sub-copy",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 25.399999618530273,
+          "trusted": true,
+          "focus": "menu-sub-copy",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 21.199999809265137,
+          "trusted": true,
+          "focus": "menu-sub-copy",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 26.700000286102295,
+          "trusted": true,
+          "focus": "menu-sub-copy",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 24.40000009536743,
+          "trusted": true,
+          "focus": "menu-sub-copy",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 25.300000190734863,
+          "trusted": true,
+          "focus": "menu-sub-copy",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 27.5,
+          "trusted": true,
+          "focus": "menu-sub-copy",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 27.799999713897705,
+          "trusted": true,
+          "focus": "menu-sub-copy",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 27.799999713897705,
+          "trusted": true,
+          "focus": "menu-sub-copy",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 28,
+          "trusted": true,
+          "focus": "menu-sub-copy",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 25.5,
+          "trusted": true,
+          "focus": "menu-sub-copy",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 25.700000286102295,
+          "trusted": true,
+          "focus": "menu-sub-copy",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 28.5,
+          "trusted": true,
+          "focus": "menu-sub-copy",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 26,
+          "trusted": true,
+          "focus": "menu-sub-copy",
+          "request_delta": 1
+        }
+      ],
+      "cleanup": {
+        "before": {
+          "tasks": 0,
+          "timers": 0,
+          "observers": 0,
+          "errors": 0,
+          "aborted": false,
+          "nodes": 98,
+          "geometry_rules": 0,
+          "page_listeners": 16
+        },
+        "after": {
+          "tasks": 0,
+          "timers": 0,
+          "observers": 0,
+          "errors": 0,
+          "aborted": false,
+          "nodes": 98,
+          "geometry_rules": 0,
+          "page_listeners": 16
+        }
+      }
+    },
+    "menubar_switch": {
+      "input": "ArrowRight",
+      "endpoint": "accepted DOM and focus on animation frame",
+      "p50_ms": 24.90000009536743,
+      "p95_ms": 33.80000019073486,
+      "raw": [
+        {
+          "latency_ms": 33.09999990463257,
+          "trusted": true,
+          "focus": "menubar-undo",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 18.700000286102295,
+          "trusted": true,
+          "focus": "menubar-undo",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 20.799999713897705,
+          "trusted": true,
+          "focus": "menubar-undo",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 19.59999990463257,
+          "trusted": true,
+          "focus": "menubar-undo",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 29.199999809265137,
+          "trusted": true,
+          "focus": "menubar-undo",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 29.800000190734863,
+          "trusted": true,
+          "focus": "menubar-undo",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 22.199999809265137,
+          "trusted": true,
+          "focus": "menubar-undo",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 29.899999618530273,
+          "trusted": true,
+          "focus": "menubar-undo",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 28.5,
+          "trusted": true,
+          "focus": "menubar-undo",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 19,
+          "trusted": true,
+          "focus": "menubar-undo",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 20.299999713897705,
+          "trusted": true,
+          "focus": "menubar-undo",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 28.700000286102295,
+          "trusted": true,
+          "focus": "menubar-undo",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 29,
+          "trusted": true,
+          "focus": "menubar-undo",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 24.90000009536743,
+          "trusted": true,
+          "focus": "menubar-undo",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 21.40000009536743,
+          "trusted": true,
+          "focus": "menubar-undo",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 29.40000009536743,
+          "trusted": true,
+          "focus": "menubar-undo",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 30,
+          "trusted": true,
+          "focus": "menubar-undo",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 30,
+          "trusted": true,
+          "focus": "menubar-undo",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 26.899999618530273,
+          "trusted": true,
+          "focus": "menubar-undo",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 21.59999990463257,
+          "trusted": true,
+          "focus": "menubar-undo",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 28.299999713897705,
+          "trusted": true,
+          "focus": "menubar-undo",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 24.800000190734863,
+          "trusted": true,
+          "focus": "menubar-undo",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 21.700000286102295,
+          "trusted": true,
+          "focus": "menubar-undo",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 23.59999990463257,
+          "trusted": true,
+          "focus": "menubar-undo",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 20.699999809265137,
+          "trusted": true,
+          "focus": "menubar-undo",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 29.200000286102295,
+          "trusted": true,
+          "focus": "menubar-undo",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 29.59999990463257,
+          "trusted": true,
+          "focus": "menubar-undo",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 34.09999990463257,
+          "trusted": true,
+          "focus": "menubar-undo",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 21.100000381469727,
+          "trusted": true,
+          "focus": "menubar-undo",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 22.59999990463257,
+          "trusted": true,
+          "focus": "menubar-undo",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 29.90000009536743,
+          "trusted": true,
+          "focus": "menubar-undo",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 22.5,
+          "trusted": true,
+          "focus": "menubar-undo",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 21.800000190734863,
+          "trusted": true,
+          "focus": "menubar-undo",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 30,
+          "trusted": true,
+          "focus": "menubar-undo",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 20.5,
+          "trusted": true,
+          "focus": "menubar-undo",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 21.90000009536743,
+          "trusted": true,
+          "focus": "menubar-undo",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 33.80000019073486,
+          "trusted": true,
+          "focus": "menubar-undo",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 18.899999618530273,
+          "trusted": true,
+          "focus": "menubar-undo",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 34.09999990463257,
+          "trusted": true,
+          "focus": "menubar-undo",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 28.40000009536743,
+          "trusted": true,
+          "focus": "menubar-undo",
+          "request_delta": 1
+        }
+      ],
+      "cleanup": {
+        "before": {
+          "tasks": 0,
+          "timers": 0,
+          "observers": 0,
+          "errors": 0,
+          "aborted": false,
+          "nodes": 98,
+          "geometry_rules": 0,
+          "page_listeners": 16
+        },
+        "after": {
+          "tasks": 0,
+          "timers": 0,
+          "observers": 0,
+          "errors": 0,
+          "aborted": false,
+          "nodes": 98,
+          "geometry_rules": 0,
+          "page_listeners": 16
+        }
+      }
+    },
+    "navigation_open": {
+      "input": "Enter",
+      "endpoint": "accepted DOM and focus on animation frame",
+      "p50_ms": 6.099999904632568,
+      "p95_ms": 7.199999809265137,
+      "raw": [
+        {
+          "latency_ms": 11.600000381469727,
+          "trusted": true,
+          "focus": "navigation-learn",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 5,
+          "trusted": true,
+          "focus": "navigation-learn",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 7.199999809265137,
+          "trusted": true,
+          "focus": "navigation-learn",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 7.100000381469727,
+          "trusted": true,
+          "focus": "navigation-learn",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 3,
+          "trusted": true,
+          "focus": "navigation-learn",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 5.599999904632568,
+          "trusted": true,
+          "focus": "navigation-learn",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 5.599999904632568,
+          "trusted": true,
+          "focus": "navigation-learn",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 5.199999809265137,
+          "trusted": true,
+          "focus": "navigation-learn",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 7.100000381469727,
+          "trusted": true,
+          "focus": "navigation-learn",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 4.599999904632568,
+          "trusted": true,
+          "focus": "navigation-learn",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 5.700000286102295,
+          "trusted": true,
+          "focus": "navigation-learn",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 6.299999713897705,
+          "trusted": true,
+          "focus": "navigation-learn",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 6.5,
+          "trusted": true,
+          "focus": "navigation-learn",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 5.5,
+          "trusted": true,
+          "focus": "navigation-learn",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 6.699999809265137,
+          "trusted": true,
+          "focus": "navigation-learn",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 6.699999809265137,
+          "trusted": true,
+          "focus": "navigation-learn",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 6.700000286102295,
+          "trusted": true,
+          "focus": "navigation-learn",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 6.900000095367432,
+          "trusted": true,
+          "focus": "navigation-learn",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 4.299999713897705,
+          "trusted": true,
+          "focus": "navigation-learn",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 6.300000190734863,
+          "trusted": true,
+          "focus": "navigation-learn",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 6,
+          "trusted": true,
+          "focus": "navigation-learn",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 6.800000190734863,
+          "trusted": true,
+          "focus": "navigation-learn",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 7.200000286102295,
+          "trusted": true,
+          "focus": "navigation-learn",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 5.900000095367432,
+          "trusted": true,
+          "focus": "navigation-learn",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 6.200000286102295,
+          "trusted": true,
+          "focus": "navigation-learn",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 6.099999904632568,
+          "trusted": true,
+          "focus": "navigation-learn",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 6.699999809265137,
+          "trusted": true,
+          "focus": "navigation-learn",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 6.100000381469727,
+          "trusted": true,
+          "focus": "navigation-learn",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 6.099999904632568,
+          "trusted": true,
+          "focus": "navigation-learn",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 6.900000095367432,
+          "trusted": true,
+          "focus": "navigation-learn",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 5.300000190734863,
+          "trusted": true,
+          "focus": "navigation-learn",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 5,
+          "trusted": true,
+          "focus": "navigation-learn",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 4.199999809265137,
+          "trusted": true,
+          "focus": "navigation-learn",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 4.5,
+          "trusted": true,
+          "focus": "navigation-learn",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 6.099999904632568,
+          "trusted": true,
+          "focus": "navigation-learn",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 5.5,
+          "trusted": true,
+          "focus": "navigation-learn",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 6.300000190734863,
+          "trusted": true,
+          "focus": "navigation-learn",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 6.099999904632568,
+          "trusted": true,
+          "focus": "navigation-learn",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 5,
+          "trusted": true,
+          "focus": "navigation-learn",
+          "request_delta": 1
+        },
+        {
+          "latency_ms": 6.5,
+          "trusted": true,
+          "focus": "navigation-learn",
+          "request_delta": 1
+        }
+      ],
+      "cleanup": {
+        "before": {
+          "tasks": 0,
+          "timers": 0,
+          "observers": 0,
+          "errors": 0,
+          "aborted": false,
+          "nodes": 98,
+          "geometry_rules": 0,
+          "page_listeners": 16
+        },
+        "after": {
+          "tasks": 0,
+          "timers": 0,
+          "observers": 0,
+          "errors": 0,
+          "aborted": false,
+          "nodes": 98,
+          "geometry_rules": 0,
+          "page_listeners": 16
+        }
+      }
+    },
+    "toolbar_roving": {
+      "input": "ArrowRight",
+      "endpoint": "accepted DOM and focus on animation frame",
+      "p50_ms": 9.599999904632568,
+      "p95_ms": 10.5,
+      "raw": [
+        {
+          "latency_ms": 10.900000095367432,
+          "trusted": true,
+          "focus": "toolbar-bold",
+          "request_delta": 0
+        },
+        {
+          "latency_ms": 9.5,
+          "trusted": true,
+          "focus": "toolbar-bold",
+          "request_delta": 0
+        },
+        {
+          "latency_ms": 9,
+          "trusted": true,
+          "focus": "toolbar-bold",
+          "request_delta": 0
+        },
+        {
+          "latency_ms": 9.200000286102295,
+          "trusted": true,
+          "focus": "toolbar-bold",
+          "request_delta": 0
+        },
+        {
+          "latency_ms": 9.599999904632568,
+          "trusted": true,
+          "focus": "toolbar-bold",
+          "request_delta": 0
+        },
+        {
+          "latency_ms": 8.600000381469727,
+          "trusted": true,
+          "focus": "toolbar-bold",
+          "request_delta": 0
+        },
+        {
+          "latency_ms": 9.599999904632568,
+          "trusted": true,
+          "focus": "toolbar-bold",
+          "request_delta": 0
+        },
+        {
+          "latency_ms": 9.299999713897705,
+          "trusted": true,
+          "focus": "toolbar-bold",
+          "request_delta": 0
+        },
+        {
+          "latency_ms": 10,
+          "trusted": true,
+          "focus": "toolbar-bold",
+          "request_delta": 0
+        },
+        {
+          "latency_ms": 8.800000190734863,
+          "trusted": true,
+          "focus": "toolbar-bold",
+          "request_delta": 0
+        },
+        {
+          "latency_ms": 8.399999618530273,
+          "trusted": true,
+          "focus": "toolbar-bold",
+          "request_delta": 0
+        },
+        {
+          "latency_ms": 8.700000286102295,
+          "trusted": true,
+          "focus": "toolbar-bold",
+          "request_delta": 0
+        },
+        {
+          "latency_ms": 10.099999904632568,
+          "trusted": true,
+          "focus": "toolbar-bold",
+          "request_delta": 0
+        },
+        {
+          "latency_ms": 9.799999713897705,
+          "trusted": true,
+          "focus": "toolbar-bold",
+          "request_delta": 0
+        },
+        {
+          "latency_ms": 9.800000190734863,
+          "trusted": true,
+          "focus": "toolbar-bold",
+          "request_delta": 0
+        },
+        {
+          "latency_ms": 8.5,
+          "trusted": true,
+          "focus": "toolbar-bold",
+          "request_delta": 0
+        },
+        {
+          "latency_ms": 9.099999904632568,
+          "trusted": true,
+          "focus": "toolbar-bold",
+          "request_delta": 0
+        },
+        {
+          "latency_ms": 8.700000286102295,
+          "trusted": true,
+          "focus": "toolbar-bold",
+          "request_delta": 0
+        },
+        {
+          "latency_ms": 9,
+          "trusted": true,
+          "focus": "toolbar-bold",
+          "request_delta": 0
+        },
+        {
+          "latency_ms": 9.599999904632568,
+          "trusted": true,
+          "focus": "toolbar-bold",
+          "request_delta": 0
+        },
+        {
+          "latency_ms": 6.200000286102295,
+          "trusted": true,
+          "focus": "toolbar-bold",
+          "request_delta": 0
+        },
+        {
+          "latency_ms": 10,
+          "trusted": true,
+          "focus": "toolbar-bold",
+          "request_delta": 0
+        },
+        {
+          "latency_ms": 9.899999618530273,
+          "trusted": true,
+          "focus": "toolbar-bold",
+          "request_delta": 0
+        },
+        {
+          "latency_ms": 11,
+          "trusted": true,
+          "focus": "toolbar-bold",
+          "request_delta": 0
+        },
+        {
+          "latency_ms": 9.099999904632568,
+          "trusted": true,
+          "focus": "toolbar-bold",
+          "request_delta": 0
+        },
+        {
+          "latency_ms": 8.700000286102295,
+          "trusted": true,
+          "focus": "toolbar-bold",
+          "request_delta": 0
+        },
+        {
+          "latency_ms": 9.800000190734863,
+          "trusted": true,
+          "focus": "toolbar-bold",
+          "request_delta": 0
+        },
+        {
+          "latency_ms": 7.599999904632568,
+          "trusted": true,
+          "focus": "toolbar-bold",
+          "request_delta": 0
+        },
+        {
+          "latency_ms": 9.300000190734863,
+          "trusted": true,
+          "focus": "toolbar-bold",
+          "request_delta": 0
+        },
+        {
+          "latency_ms": 9.799999713897705,
+          "trusted": true,
+          "focus": "toolbar-bold",
+          "request_delta": 0
+        },
+        {
+          "latency_ms": 9.900000095367432,
+          "trusted": true,
+          "focus": "toolbar-bold",
+          "request_delta": 0
+        },
+        {
+          "latency_ms": 9.599999904632568,
+          "trusted": true,
+          "focus": "toolbar-bold",
+          "request_delta": 0
+        },
+        {
+          "latency_ms": 10.300000190734863,
+          "trusted": true,
+          "focus": "toolbar-bold",
+          "request_delta": 0
+        },
+        {
+          "latency_ms": 9.899999618530273,
+          "trusted": true,
+          "focus": "toolbar-bold",
+          "request_delta": 0
+        },
+        {
+          "latency_ms": 9.700000286102295,
+          "trusted": true,
+          "focus": "toolbar-bold",
+          "request_delta": 0
+        },
+        {
+          "latency_ms": 10.299999713897705,
+          "trusted": true,
+          "focus": "toolbar-bold",
+          "request_delta": 0
+        },
+        {
+          "latency_ms": 10.5,
+          "trusted": true,
+          "focus": "toolbar-bold",
+          "request_delta": 0
+        },
+        {
+          "latency_ms": 10,
+          "trusted": true,
+          "focus": "toolbar-bold",
+          "request_delta": 0
+        },
+        {
+          "latency_ms": 8.200000286102295,
+          "trusted": true,
+          "focus": "toolbar-bold",
+          "request_delta": 0
+        },
+        {
+          "latency_ms": 9.300000190734863,
+          "trusted": true,
+          "focus": "toolbar-bold",
+          "request_delta": 0
+        }
+      ],
+      "cleanup": {
+        "before": {
+          "tasks": 0,
+          "timers": 0,
+          "observers": 0,
+          "errors": 0,
+          "aborted": false,
+          "nodes": 98,
+          "geometry_rules": 0,
+          "page_listeners": 16
+        },
+        "after": {
+          "tasks": 0,
+          "timers": 0,
+          "observers": 0,
+          "errors": 0,
+          "aborted": false,
+          "nodes": 98,
+          "geometry_rules": 0,
+          "page_listeners": 16
+        }
+      }
+    }
+  }
+}

@@ -278,6 +278,7 @@ pub fn ScopePortal(
         let _ = client_only;
         let stack = use_overlay();
         let theme = crate::theme::use_resolved_theme();
+        let theme_source = crate::theme::use_theme_source();
         let locale = crate::use_locale();
         let direction = crate::use_direction();
         let node = NodeRef::<leptos::html::Div>::new();
@@ -288,7 +289,12 @@ pub fn ScopePortal(
             let Some(node) = node.get() else { return };
             let element: leptos::web_sys::HtmlElement = node.into();
             if let Some(theme) = theme {
-                crate::theme::provider::write_snapshot(&element, &theme.get(), true);
+                crate::theme::provider::write_snapshot(
+                    &element,
+                    &theme.get(),
+                    true,
+                    theme_source.as_deref(),
+                );
             }
             let _ = element.set_attribute("lang", locale.get().tag());
             let _ = element.set_attribute("dir", direction.get().attribute());
@@ -489,6 +495,7 @@ mod dom {
     ) -> impl IntoView {
         let owner = Owner::new();
         let theme = crate::theme::use_resolved_theme();
+        let theme_source = crate::theme::use_theme_source();
         let locale = crate::i18n::use_locale();
         let direction = crate::use_direction();
         let view = owner.with(move || use_overlay().map(|stack| {
@@ -496,7 +503,7 @@ mod dom {
             let node = NodeRef::<Div>::new();
             if let Some(theme) = theme { Effect::new(move || {
                 let snapshot = theme.get();
-                if let Some(node) = node.get() { let element: HtmlElement = node.into(); crate::theme::provider::write_snapshot(&element, &snapshot, true); }
+                if let Some(node) = node.get() { let element: HtmlElement = node.into(); crate::theme::provider::write_snapshot(&element, &snapshot, true, theme_source.as_deref()); }
             }); }
             let parent = RwSignal::new(None);
             provide_context(ParentContext { id: parent, notification: true });
@@ -1811,6 +1818,7 @@ mod dom {
         children: ChildrenFn,
     ) -> impl IntoView {
         let theme = crate::theme::use_resolved_theme();
+        let theme_source = crate::theme::use_theme_source();
         let locale = crate::i18n::use_locale();
         let directional = direction.is_some() || on_placement.is_some();
         let direction = direction.unwrap_or_else(crate::use_direction);
@@ -1831,7 +1839,7 @@ mod dom {
                     let snapshot = theme.get();
                     if let Some(node) = node.get() {
                         let element: leptos::web_sys::HtmlElement = node.into();
-                        crate::theme::provider::write_snapshot(&element, &snapshot, true);
+                        crate::theme::provider::write_snapshot(&element, &snapshot, true, theme_source.as_deref());
                     }
                 });
             }

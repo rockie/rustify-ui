@@ -109,11 +109,11 @@ pub use shortcut::is_text_entry;
 #[cfg(target_arch = "wasm32")]
 pub use text::TextEdit;
 pub use theme::{
-    provide_static_theme, resolve, use_resolved_theme, AccentColor, Appearance, ColorFamily,
-    ConfigChange, EffectiveThemeConfig, FontFace, FontResolution, GrayColor, PanelBackground,
-    ResolveContext, ResolvedPalette, ResolvedTheme, Theme, ThemeBoundaryPatch, ThemeConfig,
-    ThemeConfigGroup, ThemeConfigPatch, ThemeDocument, ThemeError, ThemeGeometry, ThemeMode,
-    ThemeOverrides, ThemePatch, ThemeRadius, ThemeScaling, ThemeSource, ThemeStyles,
+    provide_static_theme, resolve, use_resolved_theme, use_theme_source, AccentColor, Appearance,
+    ColorFamily, ConfigChange, EffectiveThemeConfig, FontFace, FontResolution, GrayColor,
+    PanelBackground, ResolveContext, ResolvedPalette, ResolvedTheme, Theme, ThemeBoundaryPatch,
+    ThemeConfig, ThemeConfigGroup, ThemeConfigPatch, ThemeDocument, ThemeError, ThemeGeometry,
+    ThemeMode, ThemeOverrides, ThemePatch, ThemeRadius, ThemeScaling, ThemeSource, ThemeStyles,
     ThemeValueOrigin, ThemeValuePatch, ThemeValues,
 };
 #[cfg(target_arch = "wasm32")]

@@ -13,6 +13,14 @@ use std::sync::Arc;
 #[derive(Clone, Copy)]
 struct EffectiveTheme(Signal<Arc<ResolvedTheme>>);
 
+#[derive(Clone)]
+struct ThemeOrigin(String);
+
+/// The creating theme frame: `root` or a stable, instance-local boundary ID.
+pub fn use_theme_source() -> Option<String> {
+    use_context::<ThemeOrigin>().map(|source| source.0)
+}
+
 #[cfg(target_arch = "wasm32")]
 type ThemeProjection = (ThemeMode, Vec<(String, String)>);
 
@@ -25,6 +33,7 @@ pub fn use_resolved_theme() -> Option<Signal<Arc<ResolvedTheme>>> {
 /// Unlike ThemeScope, this binding never rewrites the scope's DOM or styles.
 pub fn provide_static_theme(resolved: impl Into<Signal<Arc<ResolvedTheme>>>) {
     provide_context(EffectiveTheme(resolved.into()));
+    provide_context(ThemeOrigin("root".into()));
 }
 
 #[cfg(any(target_arch = "wasm32", test))]
@@ -117,7 +126,12 @@ pub fn ThemeScope(
         .into_iter()
         .map(|(name, _)| name);
     if claim_root(roots.as_ref(), names, "v4") {
-        provide_context(EffectiveTheme(resolved));
+        provide_static_theme(resolved);
+        if let Some(roots) = &roots {
+            let _ = roots
+                .container()
+                .set_attribute("data-rustify-theme-source", "root");
+        }
         let projected = StoredValue::new(None::<ThemeProjection>);
         Effect::new(move || {
             let snapshot = resolved.get();
@@ -136,11 +150,15 @@ pub(crate) fn write_snapshot(
     element: &leptos::web_sys::HtmlElement,
     snapshot: &ResolvedTheme,
     mode: bool,
+    source: Option<&str>,
 ) {
     for (name, value) in snapshot.properties() {
         let _ = element.style().set_property(&name, &value);
     }
     let _ = element.set_attribute("data-rustify-theme-runtime", "v4");
+    if let Some(source) = source {
+        let _ = element.set_attribute("data-rustify-theme-source", source);
+    }
     if mode {
         let _ = element.set_attribute("data-theme", snapshot.mode.as_str());
     }
@@ -204,6 +222,9 @@ pub fn ThemeBoundary(
     });
     let effective = Signal::derive(move || candidate.get().unwrap_or_else(|_| outer.get()));
     provide_context(EffectiveTheme(effective));
+    static NEXT_BOUNDARY: AtomicU64 = AtomicU64::new(1);
+    let source = format!("boundary-{}", NEXT_BOUNDARY.fetch_add(1, Ordering::Relaxed));
+    provide_context(ThemeOrigin(source.clone()));
     let node = NodeRef::<leptos::html::Div>::new();
     let projected = StoredValue::new(None::<ThemeProjection>);
     Effect::new(move || {
@@ -237,7 +258,7 @@ pub fn ThemeBoundary(
         }
     });
     view! {
-        <div node_ref=node class=class data-testid=test_id data-rustify-theme-boundary="">
+        <div node_ref=node class=class data-testid=test_id data-rustify-theme-boundary="" data-rustify-theme-source=source>
             {children()}
         </div>
     }
@@ -294,7 +315,9 @@ mod tests {
                 crate::theme::resolve(&document, ThemeMode::Light, &ResolveContext::default())
                     .unwrap(),
             );
+            assert_eq!(use_theme_source(), None);
             provide_static_theme(root.clone());
+            assert_eq!(use_theme_source().as_deref(), Some("root"));
             let signal = use_resolved_theme().unwrap();
             assert!(Arc::ptr_eq(&signal.get_untracked(), &root));
             let nested = signal

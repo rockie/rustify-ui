@@ -20,3 +20,18 @@ FIRST VIEWPORT: Compact top action bar; left 320px editing column with preset se
 FORM: Approved two-column tool layout from plan §6.1. Seed: user-pinned-theme-studio; no concept tournament because structure and purpose were explicitly approved.
 
 FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
+
+
+## Components and part inspection
+
+Components adds an eight-section index, one working sample per catalog entry,
+compact demo controls and an expandable part tree. Samples inherit the authored
+preview; editor controls keep the neutral shell. A parts toggle names actual
+DOM parts without duplicating the component in a second rendering.
+
+Inspection reads in order: part and palette, source label, effective value and
+origin, then root value when local. Floating content names its inherited source.
+Contrast diagnostics group the existing token pairs by root or labeled preview
+boundary, with a locate action. Picking allows controls that open layers and
+reserves the first Escape for leaving picking. At 390/768px, controls wrap and
+sample cards remain within the preview width.

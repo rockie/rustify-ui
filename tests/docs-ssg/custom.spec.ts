@@ -316,15 +316,17 @@ test("live mode changes reach the theme context and real floating controls, incl
         await page.getByTestId("theme-probe-menu-trigger").press("Enter");
         const menu = page.getByTestId("theme-probe-menu");
         await expect(menu).toHaveCSS("background-color", rgb(theme.styles[mode].popover));
-        await expect(menu).toHaveCSS("border-top-left-radius", `${parseFloat(theme.styles[mode].radius) - 2}px`);
+        await expect.poll(() => menu.evaluate(node => parseFloat(getComputedStyle(node).borderTopLeftRadius)))
+            .toBeCloseTo(8 * parseFloat(theme.styles[mode].radius) / 6, 3);
         expect(await menu.evaluate(firstFontFamily)).toBe("Author Sans");
         await menu.getByRole("menuitem", { name: "Choose résumé 中文 🙂", exact: true }).press("Enter");
         await expect(page.getByTestId("theme-probe-menu-value")).toHaveText("choose");
         await expect(page.getByTestId("theme-probe-menu-trigger")).toBeFocused();
+        await page.getByTestId("theme-probe-dialog-trigger").scrollIntoViewIfNeeded();
         await page.getByTestId("theme-probe-dialog-trigger").focus();
         await page.getByTestId("theme-probe-dialog-trigger").press("Enter");
         const dialog = page.getByRole("dialog", { name: "Theme probe dialog", exact: true });
-        const panel = dialog.locator('[data-name="Dialog"]');
+        const panel = dialog;
         await expect(panel).toHaveCSS("background-color", rgb(theme.styles[mode].popover));
         await expect(panel).toHaveCSS("color", rgb(theme.styles[mode]["popover-foreground"]));
         await expect(panel).toHaveCSS("border-top-left-radius", theme.styles[mode].radius);

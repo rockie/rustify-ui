@@ -50,7 +50,6 @@ pub(super) struct Context {
     align: RwSignal<ViewportAlign>,
     position: RwSignal<rustify_ui::FloatingPosition>,
     anchor: NodeRef<leptos::html::Div>,
-    #[cfg(target_arch = "wasm32")]
     pub(super) virtual_anchor: RwSignal<Option<rustify_ui::Anchor>>,
     anchors: RwSignal<u32>,
     arrow: NodeRef<leptos::html::Div>,
@@ -85,7 +84,6 @@ impl Context {
             || self.cancels.get().len() > 1
     }
     fn has_anchor(self) -> bool {
-        #[cfg(target_arch = "wasm32")]
         if self.virtual_anchor.get().is_some() {
             return true;
         }
@@ -145,7 +143,7 @@ pub(crate) fn root(
     let owner = Owner::new();
     let view=owner.with(move || {
         let context=Context {
-            #[cfg(target_arch="wasm32")] virtual_anchor:RwSignal::new(None),
+            virtual_anchor:RwSignal::new(None),
             interaction_issue:RwSignal::new(None),key:StoredValue::new(crate::id::next(kind.name())),kind,open,change,modal,align:RwSignal::new(ViewportAlign::Center),position:RwSignal::new(rustify_ui::FloatingPosition::default()),anchor:NodeRef::new(),anchors:RwSignal::new(0),arrow:NodeRef::new(),arrows:RwSignal::new(0),
             panel:NodeRef::new(),panel_id:StoredValue::new(crate::id::next("floating-content")),
             trigger_id:RwSignal::new(String::new()),triggers:RwSignal::new(Vec::new()),portals:RwSignal::new(0),contents:RwSignal::new(0),overlays:RwSignal::new(0),

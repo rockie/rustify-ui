@@ -266,6 +266,34 @@ StaticRenderIssues; force_mount cannot override that rule. ToastRegion/Viewport
 are empty during SSG. Static accepted inline content and Callout remain available;
 no request-time SSR is added.
 
+## Menus, navigation and toolbars
+
+The source SDK supplies matching raw/themed `dropdown_menu`, `context_menu`,
+`menubar`, `navigation_menu` and `toolbar` modules. Use the
+[menu guide](menus.md) for controlled application-shell examples, typed native
+targets and keyboard behavior. Menubar/NavigationMenu Root use an optional
+string value; DropdownMenu/ContextMenu Root use open. Toolbar groups retain
+application-owned selection. The standalone ToggleGroup `toolbar` option is a
+single-group convenience; Toolbar's own ToggleGroup participates in its parent
+focus sequence with group semantics.
+
+`Menu`, `MenuItem`, `MenuItemKind` and `anchor_at` retain their signatures for
+data-driven or GPU/point-anchored commands. Menu is nonmodal, opens on the first
+enabled item, and now requests closing for pointer/focus interaction outside
+the anchor element or canvas. Interactions inside an anchor canvas remain the
+application's responsibility through GPU actions. Its default skin is menu
+size 2/solid. The DOM now uses div elements with menuitem roles instead of the
+old ul/li/button shape; use roles or retained `menu-item-{id}` test ids instead
+of tag selectors. Disabled reasons remain associated descriptions and shortcuts
+remain display/ARIA metadata.
+
+Use parts for a DOM trigger, check/radio items or submenus. Menu content consumes
+Tab. Escape closes one submenu and returns to its SubTrigger; selection or an
+outside interaction closes the tree. NavigationMenu links keep native navigation
+and modifier/new-tab behavior; they are not command menu items. Roll source,
+compiled CSS and examples back together when reverting this API change. No
+theme or business-data schema changes are required.
+
 ## Styles and static rendering
 
 Declare layer order before importing Tailwind's layers, then import the SDK
@@ -287,9 +315,10 @@ Keep the SDK styles off the host's bare elements; no global reset is required.
 [sdk.css](../crates/rustify-components/css/sdk.css) imports
 [panels.css](../crates/rustify-components/css/panels.css),
 [content.css](../crates/rustify-components/css/content.css) and
-[feedback.css](../crates/rustify-components/css/feedback.css) for themed skins, alongside [primitives.css](../crates/rustify-components/css/primitives.css)
+[feedback.css](../crates/rustify-components/css/feedback.css) and
+[menus.css](../crates/rustify-components/css/menus.css) for themed skins, alongside [primitives.css](../crates/rustify-components/css/primitives.css)
 for structural rules. `styles::PANELS`, `styles::CONTENT` and `styles::FEEDBACK`
-expose those skin sources; `PRIMITIVES_CSS`/`styles::PRIMITIVES` expose the structural source.
+and `styles::MENUS` expose those skin sources; `PRIMITIVES_CSS`/`styles::PRIMITIVES` expose the structural source.
 Raw form, panel, media, scroll and feedback consumers load DOM_RUNTIME_CSS
 plus PRIMITIVES_CSS and supply their own visual treatment. Themed consumers load
 the compiled CSS bundle or compile sdk.css once. A skin fragment alone does not
@@ -337,7 +366,7 @@ name does not add new props or composition parts.
 | `Select`, `SelectOption`, `Slider` | Convenience paths remain and share public Select/Slider parts; RangeSlider accepts named ThumbValue/ThumbLabel declarations |
 | `TextField`, `TextKind`, `TextArea`, `Label` | Native fields remain; text_field Root/Input/Slot and responsive TextArea resize are available. class styles the field boundary; input_class styles the editor |
 | `Form`, `Field`, `FieldBinding`, `FormStatus`, `SubmitButton`, `provide_form`, `use_form` | Owner/binding APIs remain; FormRoot and form/Field parts add native participation, description/source metadata and submit/reset flushing |
-| `Dialog`, `Tooltip`, `Menu`, `MenuItem`, `MenuItemKind`, `menu::anchor_at` / root `anchor_at` | Dialog/AlertDialog/Popover/HoverCard/Tooltip now have controlled Primitives and Themes parts on the same scoped stack. Tooltip replaces children with one typed native `trigger`; Menu and browser-only `anchor_at` retain their existing contract. ContextMenu/DropdownMenu remain separate unimplemented capabilities |
+| `Dialog`, `Tooltip`, `Menu`, `MenuItem`, `MenuItemKind`, `menu::anchor_at` / root `anchor_at` | Dialog/AlertDialog/Popover/HoverCard/Tooltip now have controlled Primitives and Themes parts on the same scoped stack. Tooltip replaces children with one typed native `trigger`; Menu and browser-only `anchor_at` retain their signatures; Menu now closes on outside interaction. Composable DropdownMenu/ContextMenu are available; see [Menus, navigation and toolbars](#menus-navigation-and-toolbars) |
 | `Tabs`, `Tab`, `TabPanel`, `Orientation` | Tabs/TabPanel delegate to controlled tabs parts with automatic/manual activation. TabNav preserves real links, and SegmentedControl uses the shared native radio group |
 | `ScrollArea`, `Boundary` | Convenience over Root/Viewport/Scrollbar/Thumb/Corner. class sizes Root; test_id and native scrollTop/scrollLeft stay on Viewport. Boundary retains native overscroll behavior |
 | `Progress`, `Spinner`, `Toast`, `Toaster` | Convenience names remain over shared parts. Progress ARIA uses original units; Spinner adds loading/retained children. Skeleton and complete declared Toast parts are available; Toast snapshots/options are Clone, not Copy/Eq |
@@ -628,8 +657,7 @@ in v1 remain separate. Verification results and their scope are kept in the
 
 ## Capabilities that are still absent
 
-Menubar, NavigationMenu and the full Toolbar reference APIs remain outside the
-supplied Rust APIs. The raw form/selection, panel, media and scroll families
+The raw form/selection, menu/navigation, panel, media and scroll families
 provide their declared parts; the native content families above do not imply
 other raw namespaces or complete reference coverage. Generic React asChild/ref
 composition and Slottable remain unsupported; Rust typed Slot supports one

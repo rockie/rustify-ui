@@ -613,7 +613,10 @@ mod tests {
             view! { <crate::Progress value=38.125/> }.to_html()
         });
         let rendered_css = styles.css();
-        assert!(rendered_css.contains("width:38.125%;"), "{rendered_css}");
+        assert!(
+            rendered_css.contains("transform:scaleX(0.38125);"),
+            "{rendered_css}"
+        );
         drop(owner);
         assert!(html.contains("rui-geometry-test-geometry-1"), "{html}");
         assert_eq!(styles.css(), rendered_css);

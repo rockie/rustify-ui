@@ -133,7 +133,7 @@ test("a real other-tab save freezes the draft until explicit load, keep or save-
   await page.getByTestId("conflict-load").click();await confirm(page);
   await expect(page.getByTestId("storage-conflict")).toHaveCount(0);
   expect((await state(page)).values.light.primary).toBe("#224488");expect((await state(page)).modified).toBe(true);
-  await page.getByTestId("theme-reset").click();await expect.poll(async()=> (await state(page)).values.light.primary).toBe("#1570ef");
+  await page.getByTestId("theme-reset").click();await expect.poll(async()=> (await state(page)).values.light.primary).toBe("#175cd3");
   await second.getByTestId("conflict-keep").click();await expect(page.getByTestId("storage-conflict")).toBeVisible();
   await page.getByTestId("conflict-keep").click();await expect(page.getByTestId("storage-conflict")).toHaveCount(0);
   await expect(second.getByTestId("storage-conflict")).toBeVisible();await second.getByTestId("conflict-load").click();await confirm(second);
@@ -141,7 +141,7 @@ test("a real other-tab save freezes the draft until explicit load, keep or save-
   await page.getByTestId("conflict-copy").click();await page.getByTestId("theme-name").fill("Retained branch");await page.getByTestId("theme-name-confirm").click();
   await expect(page.getByTestId("storage-conflict")).toHaveCount(0);
   const envelope=JSON.parse((await raw(page))!);expect(envelope.saved_themes).toHaveLength(1);
-  expect(primary(envelope.saved_themes[0])).toBe("#1570ef");
+  expect(primary(envelope.saved_themes[0])).toBe("#175cd3");
   expect((await state(page)).document.name).toBe("Retained branch");
   await second.close();
 });

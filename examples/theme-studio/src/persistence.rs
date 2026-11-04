@@ -143,6 +143,7 @@ fn validate_metadata(envelope: &Envelope) -> Result<(), ThemeError> {
                 "Mail",
                 "Typography",
                 "Color Palette",
+                "Components",
             ][..],
         ),
         (
@@ -860,6 +861,7 @@ mod tests {
                 "Mail",
                 "Typography",
                 "Color Palette",
+                "Components",
             ] {
                 envelope.preferences.scene = scene.into();
                 for renderer in ["dom", "gpu", "compare"] {

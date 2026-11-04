@@ -10,7 +10,7 @@ use rustify_ui::{
     use_resolved_theme, Locale,
 };
 
-pub const SCENE_NAMES: [&str; 7] = [
+pub const SCENE_NAMES: [&str; 8] = [
     "Cards",
     "Dashboard",
     "Application",
@@ -18,6 +18,7 @@ pub const SCENE_NAMES: [&str; 7] = [
     "Mail",
     "Typography",
     "Color Palette",
+    "Components",
 ];
 
 fn tr(locale: Locale, en: &'static str, zh: &'static str) -> &'static str {
@@ -29,17 +30,19 @@ fn tr(locale: Locale, en: &'static str, zh: &'static str) -> &'static str {
 
 #[component]
 pub fn ScenePreview(
+    #[prop(optional)] state: Option<crate::controller::StudioState>,
     #[prop(into)] scene: Signal<String>,
     #[prop(into)] locale: Signal<Locale>,
     #[prop(optional, into)] reset_epoch: Signal<u64>,
 ) -> impl IntoView {
     let scene = Memo::new(move |_| scene.get());
     view! {
-        <div class="scene-preview min-w-0 bg-background text-foreground font-sans" data-theme-tokens="background,foreground,font-sans,font-size,letter-spacing">
+        <div class="scene-preview min-w-0 bg-background text-foreground font-sans" data-theme-tokens=move ||(scene.get()!="Components").then_some("background,foreground,font-sans,font-size,letter-spacing")>
             <p class="text-sm text-muted-foreground mb-4" data-testid="scene-local-note">
                 {move || tr(locale.get(), "Local demonstration · changes stay in this preview.", "本地演示 · 操作仅保留在此预览中。")}
             </p>
             {move || match scene.get().as_str() {
+                "Components" => view! { <crate::gallery::Gallery locale=locale state=state /> }.into_any(),
                 "Dashboard" => view! { <DashboardScene locale=locale /> }.into_any(),
                 "Application" => view! { <ApplicationScene locale=locale /> }.into_any(),
                 "Marketing" => view! { <MarketingScene locale=locale /> }.into_any(),

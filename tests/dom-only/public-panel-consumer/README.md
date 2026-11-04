@@ -4,7 +4,7 @@ A DOM-only source consumer created from the public onboarding documentation.
 The application owns note, accepted delivery choice and feedback state. It uses
 the matching source DOM core, components and exported CSS, with no GPU feature.
 
-Public sources used:
+Public sources used for the original panel sample:
 
 - Root README: source-version boundary and panel guide link.
 - `docs/quickstart.md`, “A DOM application without GPU regions” and “Composable
@@ -63,3 +63,50 @@ Validation on 2026-11-01:
   `docs/validation/dom-components-p3/m7-public-consumer-390.png`.
 - This is an agent role simulation from public guides, not a human usability or
   assistive-technology result.
+
+## Menu application shell
+
+The DOM-only `ApplicationShell` in `src/lib.rs` surrounds the original
+`NotePanel` with application commands, native site navigation, a toolbar with
+a composed dropdown trigger, and a context menu on the saved note. The
+application owns all open values, the current note and its session-only saved
+copy. Save updates that copy; Restore updates the same input used by the
+original confirmation workflow. Reloading starts a new session.
+
+The source SDK dependencies and asset exporter use the same checkout;
+`rustify_components::CSS` supplies the matching themed CSS. See
+[the menu guide](../../../docs/menus.md) for the public composition API.
+
+The existing quiet, single-column layout, system typography and spacing remain
+the visual basis. `public/app.css` adds the header, locally scrollable toolbar,
+saved-note target and help section, with a 390px layout. No GPU is involved.
+
+Run from the repository root:
+
+```sh
+cargo fmt --manifest-path tests/dom-only/public-panel-consumer/Cargo.toml -- --check
+mbx xtask build-dom --manifest-path tests/dom-only/public-panel-consumer/Cargo.toml
+npx --no-install playwright test -c tests/dom-only/public-panel-consumer/playwright.config.ts --project=public-panel
+```
+
+The `public-panel` project serves this consumer at `http://127.0.0.1:4206` and
+runs the original panel workflow plus the application-shell workflow in
+`public-panel.spec.ts`. Screenshots go to the configured Playwright output
+directory, using `testInfo.outputPath`, so running the original scenario no
+longer overwrites the archived P3 screenshot.
+
+Application-shell workflow:
+
+1. Edit Note, focus File and press ArrowDown/Enter to save; verify the visible
+   saved copy and session feedback.
+2. Edit again, open File and press ArrowRight to switch to Edit; select Restore
+   saved note and verify the input returns to the saved copy.
+3. Open Help and follow the native Delivery guide link; follow Current note
+   back. Verify its href and `aria-current` semantics.
+4. Save from the toolbar, edit again, and use ArrowRight to reach More. Open it,
+   dismiss with Escape, reopen and restore; verify focus and the resulting note.
+5. Right-click Saved note and replace the saved copy. Edit again, focus Saved
+   note and press Shift+F10/Enter to restore; verify focus returns to the target.
+6. Inspect the complete desktop shell and its 390px layout with the More menu
+   open; check horizontal overflow, browser console, page errors, failed
+   requests and CSP violations.

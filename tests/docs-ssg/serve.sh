@@ -101,13 +101,15 @@ PYFONT
     trap - EXIT
     ;;
   official)
-    # A paired CLI consumes detached C sources and genuine history; only the
-    # manifest dependencies and lock differ. Empty-R development stays in place.
+    # A source CLI consumes the current checkout. Released pairs consume
+    # detached C sources with projected manifest dependencies and lock.
     official=$root
     pair=$(python3 - "$root/scripts/docs-pages-prepare.py" "$bin" <<'PY'
 from pathlib import Path
 import json, runpy, sys
-candidate, framework, _ = runpy.run_path(sys.argv[1])['cli_pair'](Path(sys.argv[2]))
+identity = runpy.run_path(sys.argv[1])['cli_identity'](Path(sys.argv[2]))
+candidate = identity['candidate_sha']
+framework = '' if identity['mode'] == 'source' else identity['framework_revision']
 print(json.dumps({'candidate': candidate, 'framework': framework}))
 PY
 )

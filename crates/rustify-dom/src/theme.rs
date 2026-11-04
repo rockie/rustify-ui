@@ -42,7 +42,7 @@ pub use document::{
 pub use metrics::{
     css_px_to_points, parse_css_font_stack, parse_font_stack, parse_length, LengthRule,
 };
-pub use provider::{provide_static_theme, use_resolved_theme};
+pub use provider::{provide_static_theme, use_resolved_theme, use_theme_source};
 #[cfg(target_arch = "wasm32")]
 pub use provider::{ThemeBoundary, ThemeScope};
 pub use resolve::{
@@ -100,17 +100,15 @@ impl Theme {
             name: "light",
             background: 0xf9fafb,
             foreground: 0x1d2939,
-            // A step darker than the blue this started with. White on the
-            // brighter one is 3.24:1, which is under AA for anything that is
-            // not large text - and a primary button's label is not large text.
-            primary: 0x1570ef,
+            // Also used as text on the background and translucent soft surfaces.
+            primary: 0x175cd3,
             primary_foreground: 0xffffff,
             secondary: 0xeaecf0,
             secondary_foreground: 0x1d2939,
             muted: 0xf2f4f7,
             muted_foreground: 0x667085,
             accent: 0x12b76a,
-            accent_foreground: 0xffffff,
+            accent_foreground: 0x0c111d,
             destructive: 0xd92d20,
             destructive_foreground: 0xffffff,
             card: 0xffffff,
@@ -455,7 +453,7 @@ mod tests {
     }
 
     #[test]
-    fn the_two_themes_name_the_same_tokens_and_agree_on_nothing_but_the_metrics() {
+    fn the_two_themes_share_token_names_metrics_and_accent_text() {
         let light = Theme::light().properties();
         let dark = Theme::dark().properties();
         let names: Vec<&str> = light.iter().map(|(name, _)| *name).collect();
@@ -463,8 +461,6 @@ mod tests {
             names,
             dark.iter().map(|(name, _)| *name).collect::<Vec<_>>()
         );
-        // A theme is a set of colours over one set of metrics: every colour
-        // differs, and the sizes are the same in both.
         let shared: Vec<&str> = light
             .iter()
             .zip(dark.iter())
@@ -473,7 +469,13 @@ mod tests {
             .collect();
         assert_eq!(
             shared,
-            ["--radius", "--font-size", "--spacing", "--motion-duration"]
+            [
+                "--accent-foreground",
+                "--radius",
+                "--font-size",
+                "--spacing",
+                "--motion-duration"
+            ]
         );
     }
 
@@ -601,6 +603,12 @@ mod contrast_tests {
                 TEXT,
             ),
             (
+                "accent text on accent",
+                theme.accent_foreground,
+                theme.accent,
+                TEXT,
+            ),
+            (
                 "secondary text on secondary",
                 theme.secondary_foreground,
                 theme.secondary,
@@ -612,13 +620,13 @@ mod contrast_tests {
                 theme.destructive,
                 TEXT,
             ),
-            // Not text: it only has to be seen, not read.
             (
-                "primary against background",
+                "primary text on background",
                 theme.primary,
                 theme.background,
-                LARGE,
+                TEXT,
             ),
+            // Not text: it only has to be seen, not read.
             (
                 "border against background",
                 theme.border,

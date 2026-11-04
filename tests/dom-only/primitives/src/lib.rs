@@ -108,3 +108,6 @@ mod feedback;
 
 #[cfg(target_arch = "wasm32")]
 mod menus;
+
+#[cfg(target_arch = "wasm32")]
+mod parity;

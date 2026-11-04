@@ -1,4 +1,4 @@
-//! Picking is limited to declared samples in this workbench's preview.
+//! Inspect authored preview parts and their projected floating content.
 
 fn viewport_rect(local: [f64; 4], canvas: [f64; 4], layout: [f64; 2]) -> Option<[f64; 4]> {
     if !local
@@ -56,6 +56,45 @@ mod ui {
         ListenOptions,
     };
     use std::collections::BTreeSet;
+
+    use leptos::wasm_bindgen::prelude::*;
+
+    #[wasm_bindgen(module = "/src/inspector.js")]
+    extern "C" {
+        #[wasm_bindgen(js_name = createPartCache)]
+        fn create_part_cache() -> JsValue;
+        #[wasm_bindgen(js_name = inspectPart)]
+        fn inspect_part(
+            cache: &JsValue,
+            element: &leptos::web_sys::Element,
+            allowed: &str,
+        ) -> String;
+    }
+
+    #[derive(Clone, Default, serde::Deserialize)]
+    struct PartTokens {
+        tokens: Vec<String>,
+        steps: Vec<String>,
+        part: String,
+        color: String,
+    }
+
+    fn opens_layer(event: &leptos::web_sys::MouseEvent) -> bool {
+        let Some(element) = event
+            .target()
+            .and_then(|target| target.dyn_into::<leptos::web_sys::Element>().ok())
+        else {
+            return false;
+        };
+        let selector = if event.button() == 2 {
+            "[data-rustify-part='context-menu-trigger']"
+        } else if event.button() == 0 {
+            "[aria-haspopup]"
+        } else {
+            return false;
+        };
+        element.closest(selector).ok().flatten().is_some()
+    }
 
     #[derive(Clone)]
     enum Target {
@@ -127,7 +166,34 @@ mod ui {
         fullscreen: RwSignal<bool>,
     ) -> impl IntoView {
         let target = StoredValue::new_local(None::<Target>);
+        let overlay = StoredValue::new_local(
+            rustify_ui::use_overlay()
+                .expect("preview scope")
+                .overlay_root(),
+        );
+        let cache = StoredValue::new_local(create_part_cache());
+        let allowed = StoredValue::new(
+            COLOR_TOKENS
+                .iter()
+                .chain(VALUE_TOKENS)
+                .copied()
+                .collect::<Vec<_>>()
+                .join(","),
+        );
+        let part = RwSignal::new(PartTokens::default());
+        let floating = RwSignal::new(false);
+
         let picked = RwSignal::new(Vec::<String>::new());
+        let selected = Memo::new(move |_| {
+            let selected = state.selected_token.get();
+            picked.with(|tokens| {
+                if tokens.contains(&selected) {
+                    selected
+                } else {
+                    tokens.first().cloned().unwrap_or_default()
+                }
+            })
+        });
         let annotated = RwSignal::new(true);
         let visible = RwSignal::new(false);
         let confirmed = RwSignal::new(false);
@@ -191,9 +257,26 @@ mod ui {
             else {
                 return false;
             };
-            if !root_element.contains(Some(&element)) {
+            let in_overlay = overlay.with_value(|overlay| overlay.contains(Some(&element)));
+            if !root_element.contains(Some(&element)) && !in_overlay {
                 return false;
             }
+            let source = element
+                .closest("[data-rustify-theme-source]")
+                .ok()
+                .flatten()
+                .and_then(|node| node.get_attribute("data-rustify-theme-source"))
+                .unwrap_or_else(|| "root".into());
+            if source != "root"
+                && !state
+                    .sources
+                    .with_untracked(|sources| sources.contains_key(&source))
+            {
+                return false;
+            }
+            state.inspected_source.set(source);
+            floating.set(in_overlay);
+            part.set(PartTokens::default());
             if element
                 .closest("[data-inspector-ui]")
                 .ok()
@@ -257,14 +340,21 @@ mod ui {
                 .ok()
                 .flatten()
                 .filter(|sample| root_element.contains(Some(sample)));
-            if element
-                .closest(".studio-renderers")
-                .ok()
-                .flatten()
-                .is_none()
+            if !in_overlay
+                && element
+                    .closest(".studio-renderers")
+                    .ok()
+                    .flatten()
+                    .is_none()
             {
                 return false;
             }
+            let data = cache.with_value(|cache| {
+                allowed.with_value(|allowed| {
+                    serde_json::from_str::<PartTokens>(&inspect_part(cache, &element, allowed))
+                        .expect("Inspector CSSOM result")
+                })
+            });
             let ids = sample
                 .as_ref()
                 .map(|sample| {
@@ -274,10 +364,13 @@ mod ui {
                             .unwrap_or_default(),
                     )
                 })
-                .unwrap_or_default();
+                .unwrap_or_else(|| data.tokens.clone());
+            part.set(data);
             let sample = sample.unwrap_or_else(|| {
                 element
-                    .closest("button, a, input, textarea, select, [role='button']")
+                    .closest(
+                        "[data-rustify-part], button, a, input, textarea, select, [role='button']",
+                    )
                     .ok()
                     .flatten()
                     .unwrap_or(element)
@@ -295,8 +388,8 @@ mod ui {
             if listeners.with_value(Option::is_some) {
                 return;
             }
-            let element: leptos::web_sys::Element = node.into();
-            let event_target: leptos::web_sys::EventTarget = element.into();
+            let _ = node;
+            let event_target: leptos::web_sys::EventTarget = document().into();
             let move_listener = rustify_ui::listen(
                 &event_target,
                 "mousemove",
@@ -323,7 +416,7 @@ mod ui {
                 move |event| {
                     if state.inspector.get_untracked() {
                         if let Some(mouse) = event.dyn_ref::<leptos::web_sys::MouseEvent>() {
-                            if choose(mouse) {
+                            if choose(mouse) && !opens_layer(mouse) {
                                 confirmed.set(true);
                                 event.prevent_default();
                                 event.stop_immediate_propagation();
@@ -345,7 +438,7 @@ mod ui {
                 move |event| {
                     if state.inspector.get_untracked() {
                         if let Some(mouse) = event.dyn_ref::<leptos::web_sys::MouseEvent>() {
-                            if choose(mouse) {
+                            if choose(mouse) && !opens_layer(mouse) {
                                 event.prevent_default();
                                 event.stop_immediate_propagation();
                             }
@@ -374,16 +467,19 @@ mod ui {
                 },
                 move |event| {
                     if let Some(key) = event.dyn_ref::<leptos::web_sys::KeyboardEvent>() {
-                        if key.key() == "Escape"
-                            && !key.is_composing()
-                            && document()
+                        if key.key() == "Escape" && !key.is_composing() {
+                            if state.inspector.get_untracked() {
+                                event.prevent_default();
+                                event.stop_immediate_propagation();
+                                state.inspector.set(false);
+                            } else if document()
                                 .query_selector("[role='dialog'][aria-modal='true']")
                                 .ok()
                                 .flatten()
                                 .is_none()
-                        {
-                            state.inspector.set(false);
-                            fullscreen.set(false);
+                            {
+                                fullscreen.set(false);
+                            }
                             visible.set(false);
                         }
                     }
@@ -469,22 +565,44 @@ mod ui {
             </div>
             <aside class="inspector-panel" data-inspector-ui="true" hidden=move || !state.inspector.get() data-testid="inspector-panel">
                 <h3>{move ||state.tr("Inspect preview tokens","检查预览 token")}</h3>
-                <p>{move ||state.tr("Point at a DOM or GPU sample, then choose a token. Picking pauses preview actions. Esc exits.","指向 DOM 或 GPU 样本，再选择 token。拾取期间暂停预览动作。按 Esc 退出。")}</p>
+                <p>{move ||state.tr("Point at a DOM or GPU sample, then choose a token. Preview actions pause except controls that open layers. Esc exits picking.","指向 DOM 或 GPU 样本，再选择 token。除打开浮层的控件外，预览动作暂停；Esc 退出拾取。")}</p>
                 <Show when=move || !annotated.get()><p role="status" data-testid="inspector-unannotated">{move || state.tr("Not annotated · this part has no declared token mapping.", "未标注 · 此部件没有声明 token 映射。")}</p></Show>
+                <p data-testid="inspector-part">{move ||part.with(|part|format!("{} {} {}",part.part,part.color,part.steps.join(", ")))}</p>
+                <Show when=move || floating.get()><p data-testid="inspector-inherited">{move ||format!("{} {}",state.tr("Floating content inherited from", "浮层继承自"),state.source_label(&state.inspected_source.get()))}</p></Show>
+                <Show when=move || state.inspected_source.get() != "root">
+                    <p data-testid="inspector-boundary-note">{move ||format!("{} {} · {}",state.tr("Local boundary", "来自局部边界"),state.source_label(&state.inspected_source.get()),state.tr("Controlled by this sample; the editor changes the root theme.", "由该样本控制；编辑器修改根主题。"))}</p>
+                    <p data-testid="inspector-root-value">{move || {
+                        let token=selected.get();
+                        format!("{} · {token} · {}",state.tr("Root theme", "根主题"),state.resolved().get().values.get(&token).unwrap_or_default())
+                    }}</p>
+                </Show>
                 <Show when=move || annotated.get() && !picked.get().is_empty()>
                     <p role="status" data-testid="inspector-source">{move || {
-                        let selected = state.selected_token.get();
-                        let token = picked.with(|tokens| if tokens.contains(&selected) {selected} else {tokens.first().cloned().unwrap_or_default()});
-                        let theme = state.resolved().get();
+                        let token = selected.get();
+                        let source_id = state.inspected_source.get();
+                        let theme = state.source_theme(&source_id);
                         let value = theme.values.get(&token).unwrap_or_default();
                         let source = match theme.origins.get(token.as_str()) {
                             Some(rustify_ui::ThemeValueOrigin::DocumentOverride) => state.tr("Override", "覆盖"),
                             Some(rustify_ui::ThemeValueOrigin::Configuration(_)) => state.tr("Generated", "配置生成"),
+                            Some(rustify_ui::ThemeValueOrigin::BoundaryConfiguration { .. }) => state.tr("Boundary configuration", "边界配置"),
+                            Some(rustify_ui::ThemeValueOrigin::BoundaryOverride { .. }) => state.tr("Boundary override", "边界覆盖"),
                             _ => state.tr("Authored base", "作者基础值"),
                         };
-                        format!("{} {token} · {} · {value} · {source}", state.tr("Editor source:", "编辑器来源："), if theme.mode == rustify_ui::ThemeMode::Light {state.tr("Light", "浅色")} else {state.tr("Dark", "深色")})
+                        format!("{} {token} · {} · {value} · {source}", state.source_label(&source_id), if theme.mode == rustify_ui::ThemeMode::Light {state.tr("Light", "浅色")} else {state.tr("Dark", "深色")})
                     }}</p>
                 </Show>
+                <ul data-testid="inspector-contrast">{move || {
+                    let source=state.inspected_source.get();
+                    let theme=state.source_theme(&source);
+                    let ids=picked.get();
+                    crate::theme_controls::CONTRAST_PAIRS.into_iter().filter(|(fg,bg)|ids.iter().any(|id|id==fg) && ids.iter().any(|id|id==bg))
+                        .filter_map(|(fg,bg)|crate::theme_controls::pair_contrast(&theme,fg,bg).map(|ratio|(fg,bg,ratio)))
+                        .map(|(fg,bg,ratio)| {
+                            let source=source.clone();
+                            view! { <li>{format!("{fg} / {bg} · {ratio:.2}:1 · {}",if ratio>=4.5 {state.tr("Pass", "合格")}else{state.tr("Below 4.5:1", "低于 4.5:1")})}<button type="button" on:click=move |_|state.locate_source(&source,fg)>{move ||state.tr("Locate source", "定位来源")}</button></li> }
+                        }).collect_view()
+                }}</ul>
                 <div class="inspector-tokens" role="group" aria-label="Sample tokens">
                     {move || picked.get().into_iter().map(|token|{let label=token.clone();view!{<Button variant=ButtonVariant::Outline size=ButtonSize::One on_click=move ||state.inspect(token.clone())>{label}</Button>}}).collect_view()}
                 </div>

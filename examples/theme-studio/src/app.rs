@@ -67,6 +67,7 @@ fn scene_label(state: StudioState, scene: &'static str) -> &'static str {
         "Application" => state.tr("Application", "应用"),
         "Marketing" => state.tr("Marketing", "营销"),
         "Mail" => state.tr("Mail", "邮件"),
+        "Components" => state.tr("Components", "组件陈列"),
         "Typography" => state.tr("Typography", "排版"),
         _ => state.tr("Color palette", "调色板"),
     }
@@ -386,14 +387,36 @@ fn PreviewToolbar(state: StudioState, fullscreen: RwSignal<bool>) -> impl IntoVi
 
 #[component]
 fn PreviewDiagnostics(state: StudioState) -> impl IntoView {
-    let failures = Memo::new(move |_| contrast_failures(&state.resolved().get()));
+    let failures = Memo::new(move |_| {
+        let mut groups = vec![(
+            "root".to_owned(),
+            contrast_failures(&state.resolved().get()),
+        )];
+        state.sources.with(|sources| {
+            groups.extend(
+                sources
+                    .iter()
+                    .map(|(id, source)| (id.clone(), contrast_failures(&source.resolved))),
+            )
+        });
+        groups.retain(|(_, failures)| !failures.is_empty());
+        groups
+    });
     view! {
-        <Show when=move ||!failures.get().is_empty()>
-            <details class="studio-preview-diagnostics" open data-testid="preview-diagnostics" data-inspector-ui="true">
-                <summary>{move ||format!("{} {}",failures.get().len(),if failures.get().len()==1 {state.tr("text pair below 4.5:1 · author colors preserved","组文字对比低于 4.5:1 · 作者颜色保持不变")}else{state.tr("text pairs below 4.5:1 · author colors preserved","组文字对比低于 4.5:1 · 作者颜色保持不变")})}</summary>
-                <ul>{move ||failures.get().into_iter().map(move |(foreground,background,ratio)|view! {
-                    <li><code>{format!("{foreground} / {background} · {ratio:.2}:1")}</code><button type="button" on:click=move |_|state.inspect(foreground.into()) data-testid=format!("contrast-locate-{foreground}-on-{background}")>{move ||state.tr("Locate","定位来源")}</button></li>
-                }).collect_view()}</ul>
+        <Show when=move || !failures.get().is_empty()>
+            <details class="studio-preview-diagnostics" data-testid="preview-diagnostics" data-inspector-ui="true">
+                <summary>{move ||format!("{} {}",failures.get().iter().map(|(_,pairs)|pairs.len()).sum::<usize>(),state.tr("text pairs below 4.5:1 · author colors preserved","组文字对比低于 4.5:1 · 作者颜色保持不变"))}</summary>
+                {move || failures.get().into_iter().map(move |(source,pairs)| {
+                    let heading=source.clone();
+                    let source_attr=source.clone();
+                    view! { <section data-diagnostic-source=source_attr>
+                        <h4>{move ||state.source_label(&heading)}</h4>
+                        <ul>{pairs.into_iter().map(move |(foreground,background,ratio)| {
+                            let source=source.clone();
+                            view! { <li><code>{format!("{foreground} / {background} · {ratio:.2}:1")}</code><button type="button" on:click=move |_|state.locate_source(&source,foreground) data-testid=format!("contrast-locate-{foreground}-on-{background}")>{move ||state.tr("Locate","定位来源")}</button></li> }
+                        }).collect_view()}</ul>
+                    </section> }
+                }).collect_view()}
             </details>
         </Show>
     }
@@ -545,11 +568,11 @@ fn Preview(state: StudioState, compare: bool) -> impl IntoView {
             })}
             <div class="studio-renderers" data-renderer=move || state.envelope.with(|e| e.preferences.renderer.clone())>
                 <section class="studio-renderer-pane studio-dom-pane" hidden=move || state.envelope.with(|e| e.preferences.renderer == "gpu") data-testid="dom-preview">
-                    <p class="studio-renderer-label">"DOM"</p><div class="studio-authored-preview"><ScenePreview scene=scene locale=state.locale() reset_epoch=state.reset_epoch />
-                    <details class="studio-provider-fixture" open><summary>{move || state.tr("Provider & overlay checks", "主题作用域与浮层验证")}</summary><ProviderFixture patch=state.patch locale=state.locale() preview_mode=Signal::derive(move ||resolved.get().mode) reset_epoch=state.reset_epoch /></details></div>
+                    <p class="studio-renderer-label">"DOM"</p><div class="studio-authored-preview"><ScenePreview state=state scene=scene locale=state.locale() reset_epoch=state.reset_epoch />
+                    <details class="studio-provider-fixture" open><summary>{move || state.tr("Provider & overlay checks", "主题作用域与浮层验证")}</summary><ProviderFixture state=state patch=state.patch locale=state.locale() preview_mode=Signal::derive(move ||resolved.get().mode) reset_epoch=state.reset_epoch /></details></div>
                 </section>
                 <section class="studio-renderer-pane studio-gpu-pane" hidden=move || state.envelope.with(|e| e.preferences.renderer == "dom") data-testid="gpu-preview">
-                    <p class="studio-renderer-label">"GPU"</p><GpuPreview props=props locale=state.locale() on_action=action state=state.gpu_state node_ref=canvas />
+                    <p class="studio-renderer-label">"GPU"</p><Show when=move ||scene.get()=="Components"><p class="gallery-gpu-note" data-testid="gallery-gpu-note">{move ||state.tr("Component gallery is DOM only; GPU shows general theme samples.","组件陈列仅 DOM；GPU 显示通用主题样本。")}</p></Show><GpuPreview props=props locale=state.locale() on_action=action state=state.gpu_state node_ref=canvas />
                     <Menu open=dropdown on_open_change=move |v| dropdown.set(v) anchor=anchor items=menu_items on_activate=move |id| { if let Ok(index) = id.parse::<usize>() { state.controls.update(|controls| controls.index = index); } } aria_label="GPU dropdown" test_id="gpu-dropdown-menu" />
                 </section>
             </div>

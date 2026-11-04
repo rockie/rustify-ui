@@ -77,7 +77,7 @@ jobs:
       - name: Deterministic component HTML and static boundary failures
         run: >-
           mbx test --locked -p rustify-components --no-default-features --features ssr
-          --test panels_ssg --test content_ssg --test feedback_ssg
+          --test menus_ssg --test panels_ssg --test content_ssg --test feedback_ssg
           --test ssr_controls --test missing_context_ssr
       - name: Docs library and CLI, each on its own
         run: |
@@ -166,7 +166,7 @@ jobs:
       - name: DOM-only browser checks
         run: npx playwright test -c playwright.docs.config.ts --project=dom-only
       - name: Raw parts, panels, content and feedback browser checks
-        run: npx playwright test -c playwright.docs.config.ts --project=dom-primitives primitives.spec.ts panels.spec.ts content.spec.ts feedback.spec.ts
+        run: npx playwright test -c playwright.docs.config.ts --project=dom-primitives primitives.spec.ts panels.spec.ts content.spec.ts feedback.spec.ts menus.spec.ts parity.spec.ts
       - name: Static DOM hydration and independent CSR comparison
         run: npx playwright test -c playwright.docs.config.ts --project=dom-hydrate hydration.spec.ts
       - uses: actions/upload-artifact@v4

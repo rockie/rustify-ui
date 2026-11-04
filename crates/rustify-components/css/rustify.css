@@ -4057,14 +4057,14 @@
 [data-rustify-scope] {
   --background: #f9fafb;
   --foreground: #1d2939;
-  --primary: #1570ef;
+  --primary: #175cd3;
   --primary-foreground: #ffffff;
   --secondary: #eaecf0;
   --secondary-foreground: #1d2939;
   --muted: #f2f4f7;
   --muted-foreground: #667085;
   --accent: #12b76a;
-  --accent-foreground: #ffffff;
+  --accent-foreground: #0c111d;
   --destructive: #d92d20;
   --destructive-foreground: #ffffff;
   --card: #ffffff;

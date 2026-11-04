@@ -436,6 +436,14 @@ pub fn Provider(#[prop(optional)] config: ToastConfig, children: Children) -> im
     leptos::tachys::reactive_graph::OwnedView::new_with_owner(view, owner)
 }
 
+fn dom_id(prefix: &str) -> String {
+    crate::id::next(prefix).unwrap_or_else(|| {
+        use std::sync::atomic::{AtomicU64, Ordering};
+        static NEXT: AtomicU64 = AtomicU64::new(1);
+        format!("rustify-{prefix}-{}", NEXT.fetch_add(1, Ordering::Relaxed))
+    })
+}
+
 #[derive(Clone, Copy)]
 struct RootContext {
     runtime: Runtime,
@@ -468,7 +476,7 @@ pub fn Root(
         let node = NodeRef::<leptos::html::Div>::new();
         #[cfg(target_arch = "wasm32")]
         let focused = StoredValue::new(false);
-        let dom_id = crate::id::next("toast").unwrap_or_else(|| format!("rustify-toast-{id}"));
+        let dom_id = dom_id("toast");
         let identity = StoredValue::new(dom_id.clone());
         let context = RootContext { runtime, id, titles: RwSignal::new(Vec::new()), descriptions: RwSignal::new(Vec::new()) };
         provide_context(context);
@@ -551,11 +559,11 @@ pub fn Root(
 
 fn part_ids(title: bool) -> Option<(String, RootContext)> {
     let context = use_context::<RootContext>()?;
-    let id = crate::id::next(if title {
+    let id = dom_id(if title {
         "toast-title"
     } else {
         "toast-description"
-    })?;
+    });
     let ids = if title {
         context.titles
     } else {

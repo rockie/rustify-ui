@@ -292,6 +292,15 @@ Validate a candidate with `ResolvedTheme::with_boundary` before publishing it;
 an invalid patch uses the enclosing theme and records a diagnostic. For a
 mode-independent legacy `ThemeValuePatch`, explicitly adapt it with `.into()`. SDK overlay layers consume the effective theme where they were created, including boundary values; they do not need a separate theme provider.
 
+`use_theme_source() -> Option<String>` identifies the effective provider: `root`
+inside ThemeScope, a distinct `boundary-<n>` inside each ThemeBoundary, and None
+without a provider. Treat boundary IDs as opaque, instance-local labels rather
+than persisted identity. `data-rustify-theme-source` projects the same source
+onto scope/boundary elements and their floating or notification hosts. Studio's
+Components Inspector combines that source with the resolved snapshot, labels
+registered preview boundaries, and shows inherited floating sources. Local
+boundary values are read-only there; editor changes still target the root theme.
+
 ## Fonts and GPU consumers
 
 [fonts.rs](../crates/rustify-dom/src/theme/fonts.rs#L34) defines six selectable faces: IBM Plex Sans, Noto Sans, Rustify WenKai, Noto Serif, Liberation Mono and JetBrains Mono. Slot fallbacks are IBM Plex Sans, Noto Serif and Liberation Mono. `dom_font_stack` and `gpu_font_family` append the bundled CJK and emoji glyph fallbacks in the same order. An unknown author stack stays in JSON while `ResolvedFont::fallback` and diagnostics explain the packaged family used for preview. Language preferences do not rewrite author font stacks or theme names.

@@ -2,7 +2,7 @@
 export function captureTheme(root, owner, properties) {
     const style = root.style;
     const previous = properties.map(name => [name, style.getPropertyValue(name), style.getPropertyPriority(name)]);
-    const attributes = ["data-theme", "data-rustify-theme-runtime"].map(name => [name, root.getAttribute(name)]);
+    const attributes = ["data-theme", "data-rustify-theme-runtime", "data-rustify-theme-source"].map(name => [name, root.getAttribute(name)]);
     return () => {
         if (root.getAttribute("data-rustify-theme-owner") !== owner) return;
         for (const [name, value, priority] of previous) {

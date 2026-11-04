@@ -92,7 +92,7 @@ test.describe("resolved DOM themes",()=> {
     await page.getByTestId("color-value").fill("var(--unknown)");await page.getByTestId("color-value").press("Tab");
     await expect(page.getByTestId("color-value")).toHaveAttribute("aria-invalid","true");
     await expect(page.locator("#color-value-help")).not.toBeEmpty();
-    expect((await computed(preview.getByTestId("preview-primary"))).background).toBe("rgb(21, 112, 239)");
+    expect((await computed(preview.getByTestId("preview-primary"))).background).toBe("rgb(23, 92, 211)");
     const before=preview.getByTestId("preview-primary");
     await page.getByTestId("color-value").focus();
     await before.focus();await page.keyboard.press("Tab");await page.keyboard.press("Shift+Tab");

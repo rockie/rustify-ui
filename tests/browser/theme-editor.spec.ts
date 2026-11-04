@@ -215,7 +215,7 @@ test.describe("theme editing through the workbench", () => {
         expect(graphite.document.id).toBe("graphite");
         expect(graphite.values.light["font-sans"]).toBe("Montserrat, sans-serif");
         expect(graphite.values.dark["font-sans"]).toBe("Inter, sans-serif");
-        await expect(page.getByTestId("theme-modified")).toHaveText("Matches preset");
+        await expect(page.getByTestId("theme-modified")).toHaveText("Matches reference document");
         await page.getByTestId("preset-favorite").click();
         await expect(page.getByTestId("preset-favorite")).toHaveAttribute("aria-pressed", "true");
         await page.getByTestId("preset-favorites").click();
@@ -243,7 +243,7 @@ test.describe("theme editing through the workbench", () => {
         state = await drawn(page);
         expect(state.document).toEqual(graphite.document);
         expect(state.mode).toBe("dark");
-        await expect(page.getByTestId("theme-modified")).toHaveText("Matches preset");
+        await expect(page.getByTestId("theme-modified")).toHaveText("Matches reference document");
         await page.getByTestId("preset-search").fill("definitely-unknown-preset");
         await expect(page.getByTestId("preset-search-empty")).toBeVisible();
         await page.getByTestId("preset-search-clear").click();
@@ -279,7 +279,7 @@ test.describe("theme editing through the workbench", () => {
         state = await drawn(page);
         expect(state.document).toEqual(initial.document);
         expect(state.mode).toBe("dark");
-        await expect(page.getByTestId("theme-modified")).toHaveText("Matches preset");
+        await expect(page.getByTestId("theme-modified")).toHaveText("Matches reference document");
         await page.getByTestId("theme-undo").click();
         expect((await drawn(page)).document).toEqual(branch.document);
         await sameRegion(page, mounted);

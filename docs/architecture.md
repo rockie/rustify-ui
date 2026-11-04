@@ -164,6 +164,15 @@ An overlay captures the effective theme signal at its creation point and
 updates its layer from that signal
 ([`overlay.rs`](../crates/rustify-dom/src/overlay.rs#L721)).
 
+ThemeScope also provides the source label `root`; each ThemeBoundary allocates
+its own distinct `boundary-<n>` label. `use_theme_source()` exposes the effective
+label, or None outside a provider. Scope, boundary, Layer, ScopePortal and
+NotificationPortal project it as `data-rustify-theme-source`, alongside the
+effective snapshot. This is inspection metadata, not a new state owner or a
+persisted identifier. Root cleanup restores the previous attribute with the
+other claimed theme attributes (see [provider](../crates/rustify-dom/src/theme/provider.rs)
+and [theme host](../crates/rustify-dom/web/theme.js)).
+
 Applications opt into the document's geometry, fonts and shadows by importing
 [theme-v4.css](../crates/rustify-components/css/theme-v4.css#L1) after
 `sdk.css` in their one Tailwind build. Spacing utilities use `--rustify-unit`,

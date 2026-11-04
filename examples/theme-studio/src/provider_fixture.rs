@@ -8,6 +8,7 @@ use rustify_ui::{
 /// A small real component surface used to verify theme projection and layers.
 #[component]
 pub fn ProviderFixture(
+    #[prop(optional)] state: Option<crate::controller::StudioState>,
     #[prop(into)] patch: Signal<ThemeValuePatch>,
     #[prop(into)] locale: Signal<Locale>,
     #[prop(into)] preview_mode: Signal<ThemeMode>,
@@ -60,6 +61,7 @@ pub fn ProviderFixture(
                 <div class="rounded-xl border border-border bg-card text-card-foreground p-4" data-testid="radius-xl">"Extra large"</div>
             </div>
             <ThemeBoundary patch=boundary class="local-preview mt-6" test_id="local-boundary">
+                {state.map(|state| view! { <crate::controller::RegisterPreviewSource state=state label=["Provider sample", "主题作用域样本"] /> })}
                 <div class="rounded-lg bg-card text-card-foreground border border-border p-4 shadow-lg" data-testid="local-card">
                     <p class="text-sm mb-4">{move || tr("A local theme boundary", "局部主题边界")}</p>
                     <label class="block space-y-2 mb-4"><span>{move || tr("Boundary appearance", "边界外观")}</span>
@@ -72,7 +74,7 @@ pub fn ProviderFixture(
                             ]) on_change=move |value| appearance.set(value) test_id="local-appearance" />
                     </label>
                     <div class="flex flex-wrap gap-2">
-                        <Button on_click=move || dialog.set(true) variant=ButtonVariant::Soft color=Some(rustify_ui::AccentColor::Gray) test_id="open-preview-dialog">{move || tr("Open dialog", "打开对话框")}</Button>
+                        <Button on_click=move || dialog.set(true) variant=ButtonVariant::Soft color=Some(rustify_ui::AccentColor::Gray) test_id="open-preview-dialog" attr:aria-haspopup="dialog">{move || tr("Open dialog", "打开对话框")}</Button>
                         <dm::Root open=menu on_open_change=move |open|menu.set(open)>
                             <dm::Trigger class="rustify-button rustify-color" attr:data-variant="outline" test_id="open-preview-menu">{move ||tr("Actions", "操作")}</dm::Trigger>
                             <dm::Portal><dm::Content test_id="preview-menu">

@@ -57,7 +57,7 @@ function rgb(hex: string): string {
 /// The light and dark values of the tokens these checks read
 /// (`crates/rustify-ui/src/theme.rs`).
 const TOKENS = {
-    light: { primary: "#1570ef", popover: "#ffffff", input: "#ffffff", border: "#858f9e" },
+    light: { primary: "#175cd3", popover: "#ffffff", input: "#ffffff", border: "#858f9e" },
     dark: { primary: "#53b1fd", popover: "#1d2939", input: "#101828", border: "#717c8e" },
 };
 
@@ -596,19 +596,25 @@ test.describe("menu: headings, separators, shortcuts, and staying in view", () =
         await open(page, "menu");
         const trigger = example(page).getByRole("button", { name: "open the menu" });
         await trigger.click();
+        await expect.poll(() => menu(page).evaluate(node => node.contains(document.activeElement))).toBe(true);
         const height = (await menu(page).boundingBox())!.height;
         await page.keyboard.press("Escape");
+        await expect(menu(page)).toBeHidden();
         const below = (await trigger.boundingBox())!;
         await page.setViewportSize({ width: 1280, height: Math.ceil(below.y + below.height + height / 2) });
 
         await trigger.click();
-        const over = (await menu(page).boundingBox())!;
-        const now = (await trigger.boundingBox())!;
-        // Flipping requires enough room above; otherwise the panel is clamped
-        // into the viewport, including after a responsive layout change.
-        if (now.y >= over.height) expect(over.y + over.height).toBeLessThanOrEqual(now.y + 1);
-        expect(over.y + over.height).toBeLessThanOrEqual(page.viewportSize()!.height + 1);
-        expect(over.y).toBeGreaterThanOrEqual(0);
+        await expect.poll(() => menu(page).evaluate(node => node.contains(document.activeElement))).toBe(true);
+        await expect(async () => {
+            const over = (await menu(page).boundingBox())!;
+            const now = (await trigger.boundingBox())!;
+            // Positioning follows the next animation frame after a layout change.
+            if (now.y >= over.height) expect(over.y + over.height).toBeLessThanOrEqual(now.y + 1);
+            expect(over.y + over.height).toBeLessThanOrEqual(page.viewportSize()!.height + 1);
+            expect(over.y).toBeGreaterThanOrEqual(0);
+        }).toPass({ timeout: 5000 });
+        await page.keyboard.press("Escape");
+        await expect(menu(page)).toBeHidden();
     });
 
     test("the keyboard opens the context menu against the box it is in", async ({ page }) => {
@@ -676,10 +682,11 @@ test.describe("light and dark", () => {
             const pressed = await computed(page.getByTestId("default-align-start"), "background-color");
             await open(page, "toast");
             await page.getByTestId("default-toast-show").click();
-            const toast = await computed(page.getByTestId("toaster-toast"), "background-color");
+            const toast = await computed(page.getByTestId("toaster").locator('[data-rustify-part="toast-root"]'), "background-image");
             await page.getByTestId("toaster-toast-dismiss").click();
             await open(page, "menu");
             await example(page).getByRole("button", { name: "open the menu" }).click();
+            await expect.poll(() => page.getByRole("menu", { name: "what can be done", exact: true }).evaluate(node => node.contains(document.activeElement))).toBe(true);
             const separator = await computed(
                 page.getByRole("menu", { name: "what can be done" }).getByRole("separator"),
                 "background-color"
@@ -687,8 +694,10 @@ test.describe("light and dark", () => {
             await page.keyboard.press("Escape");
             await open(page, "dialog");
             await page.getByTestId("default-dialog-trigger").click();
+            await expect(page.getByTestId("dialog-close")).toBeFocused();
             const dialog = await computed(page.locator('[data-name="Dialog"]'), "background-color");
             await page.keyboard.press("Escape");
+            await expect(page.locator('[data-name="Dialog"]')).toBeHidden();
             return { number, border, pressed, toast, separator, dialog };
         };
 
@@ -701,7 +710,7 @@ test.describe("light and dark", () => {
                 number: rgb(tokens.input),
                 border: rgb(tokens.border),
                 pressed: rgb(tokens.primary),
-                toast: rgb(tokens.popover),
+                toast: `linear-gradient(${rgb(tokens.popover)}, ${rgb(tokens.popover)}), none`,
                 separator: rgb(tokens.border),
                 dialog: rgb(tokens.popover),
             });

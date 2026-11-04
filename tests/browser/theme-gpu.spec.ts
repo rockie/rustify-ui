@@ -22,7 +22,7 @@ const sample=(state:any,id:string)=>state.samples.find((value:any)=>value.id===i
 const pixel=(png:PNG,x:number,y:number)=> Array.from(png.data.subarray((Math.floor(y)*png.width+Math.floor(x))*4,(Math.floor(y)*png.width+Math.floor(x))*4+4));
 
 test.describe("GPU consumes the resolved snapshot",()=> {
-  test.beforeEach(async({page})=> {await page.setViewportSize({width:1440,height:3600});await waitForReady(page);await drawn(page);});
+  test.beforeEach(async({page})=> {await page.setViewportSize({width:1440,height:3600});await waitForReady(page);await page.getByTestId("renderer-compare").click();await drawn(page);});
   test("actual solid pixels include all semantics and alpha blends on the checker",async({page})=> {
     await page.evaluate(()=> {window.__theme_studio.edit("primary","rgb(200 40 80 / .5)");window.__theme_studio.edit("chart-3","#18a4e0");window.__theme_studio.edit("sidebar-primary","#844acc");});
     const state=await drawn(page);

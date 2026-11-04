@@ -52,3 +52,88 @@ main, #startup-status {
     flex-wrap: wrap;
     gap: 0.75rem;
 }
+
+.application-shell {
+    display: grid;
+    gap: 1.5rem;
+    min-width: 0;
+}
+
+.shell-header {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.75rem 1.5rem;
+}
+
+.shell-title {
+    margin: 0;
+    font-weight: 650;
+}
+
+.shell-tools {
+    min-width: 0;
+    overflow-x: auto;
+}
+
+.shell-menu-trigger {
+    min-height: 2rem;
+    padding: 0.375rem 0.75rem;
+    border: 0;
+    border-radius: 0.25rem;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    font-size: 0.875rem;
+    cursor: pointer;
+}
+
+.shell-menu-trigger:hover {
+    background: var(--muted, #e9edf2);
+}
+
+.shell-menu-trigger:focus-visible {
+    outline: 2px solid var(--ring, #1570ef);
+    outline-offset: -2px;
+}
+
+.note-context {
+    padding: 1rem;
+    border: 1px solid var(--border, #858f9e);
+    border-radius: 0.375rem;
+}
+
+.note-context p {
+    margin: 0.5rem 0 0;
+    overflow-wrap: anywhere;
+}
+
+.note-context:focus-visible {
+    outline: 2px solid var(--ring, #1570ef);
+    outline-offset: 2px;
+}
+
+.shell-status {
+    margin: 0;
+}
+
+.delivery-help {
+    border-top: 1px solid var(--border, #858f9e);
+    padding-top: 1.5rem;
+}
+
+.delivery-help h2 {
+    margin: 0 0 0.5rem;
+    font-size: 1.125rem;
+}
+
+.delivery-help p {
+    margin: 0;
+}
+
+@media (max-width: 520px) {
+    main, #startup-status {
+        width: calc(100% - 2rem);
+        margin: 1.5rem auto;
+    }
+}

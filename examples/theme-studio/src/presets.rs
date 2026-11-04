@@ -105,7 +105,7 @@ mod tests {
     #[test]
     fn rustify_presets_keep_the_legacy_starting_mode_palettes() {
         let themes = built_in().unwrap();
-        assert_eq!(themes[0].base.light.get("primary").unwrap(), "#1570ef");
+        assert_eq!(themes[0].base.light.get("primary").unwrap(), "#175cd3");
         assert_eq!(themes[1].base.dark.get("primary").unwrap(), "#53b1fd");
     }
 }

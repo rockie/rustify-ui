@@ -23,6 +23,30 @@ pub struct PublishedFrame {
     pub revision: u64,
 }
 
+#[derive(Clone)]
+pub struct PreviewSource {
+    pub label: [&'static str; 2],
+    pub resolved: Arc<ResolvedTheme>,
+}
+
+#[component]
+pub fn RegisterPreviewSource(state: StudioState, label: [&'static str; 2]) -> impl IntoView {
+    let source = rustify_ui::use_theme_source().expect("preview boundary source");
+    let resolved = rustify_ui::use_resolved_theme().expect("preview boundary theme");
+    let cleanup_source = source.clone();
+    Effect::new(move || {
+        let resolved = resolved.get();
+        state.sources.update(|sources| {
+            sources.insert(source.clone(), PreviewSource { label, resolved });
+        });
+    });
+    on_cleanup(move || {
+        state
+            .sources
+            .try_update(|sources| sources.remove(&cleanup_source));
+    });
+}
+
 #[derive(Clone, Debug)]
 pub struct UpgradeReview {
     pub raw: String,
@@ -64,6 +88,8 @@ pub struct StudioState {
     pub editor_tab: RwSignal<String>,
     pub mobile_tab: RwSignal<String>,
     pub inspector: RwSignal<bool>,
+    pub sources: RwSignal<BTreeMap<String, PreviewSource>>,
+    pub inspected_source: RwSignal<String>,
     pub drawn: RwSignal<u64>,
     pub samples: RwSignal<Vec<serde_json::Value>>,
     pub controls: RwSignal<PreviewControls>,
@@ -219,6 +245,8 @@ impl StudioState {
             editor_tab: RwSignal::new("colors".into()),
             mobile_tab: RwSignal::new("edit".into()),
             inspector: RwSignal::new(false),
+            sources: RwSignal::new(BTreeMap::new()),
+            inspected_source: RwSignal::new("root".into()),
             drawn: RwSignal::new(0),
             samples: RwSignal::new(Vec::new()),
             controls: RwSignal::new(PreviewControls::default()),
@@ -226,6 +254,40 @@ impl StudioState {
             publish_count: RwSignal::new(0),
             last_input_ms: RwSignal::new(0.),
             timings: RwSignal::new(Vec::new()),
+        }
+    }
+
+    pub fn source_label(self, source: &str) -> String {
+        if source == "root" {
+            return self.tr("Root theme", "根主题").into();
+        }
+        self.sources
+            .with(|sources| {
+                sources
+                    .get(source)
+                    .map(|source| self.tr(source.label[0], source.label[1]).to_owned())
+            })
+            .unwrap_or_else(|| {
+                self.tr("Unregistered local boundary", "未登记的局部边界")
+                    .into()
+            })
+    }
+
+    pub fn source_theme(self, source: &str) -> Arc<ResolvedTheme> {
+        self.sources
+            .with(|sources| sources.get(source).map(|source| source.resolved.clone()))
+            .unwrap_or_else(|| self.resolved().get())
+    }
+
+    pub fn locate_source(self, source: &str, token: &str) {
+        self.inspected_source.set(source.into());
+        self.inspect(token.into());
+        if source != "root" {
+            if let Ok(Some(element)) = document().query_selector(&format!(
+                ".studio-authored-preview [data-rustify-theme-source='{source}']"
+            )) {
+                element.scroll_into_view();
+            }
         }
     }
 

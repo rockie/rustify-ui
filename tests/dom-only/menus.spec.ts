@@ -331,8 +331,8 @@ test.describe('lifecycle and a11y',()=>{
         const bar=await part(page,'toolbar').boundingBox(), preview=await part(page,'context-trigger').boundingBox();
         expect(bar!.x+bar!.width).toBeCloseTo(preview!.x+preview!.width,0);
         await part(page,'menu-parts').screenshot({path:`docs/validation/dom-components-p4/m4-shell-closed-${width}.png`});
-        await part(page,'menu-trigger').click();const box=await part(page,'menu-content').boundingBox();expect(box).toBeTruthy();expect(box!.x).toBeGreaterThanOrEqual(0);expect(box!.x+box!.width).toBeLessThanOrEqual(width);
-        await page.keyboard.press('Escape');await part(page,'navigation-learn').click();const nav=await part(page,'navigation-learn-content').boundingBox();expect(nav).toBeTruthy();expect(nav!.x+nav!.width).toBeLessThanOrEqual(width);
+        await part(page,'menu-trigger').click();await expect(part(page,'menu-content')).toBeFocused();const box=await part(page,'menu-content').boundingBox();expect(box).toBeTruthy();expect(box!.x).toBeGreaterThanOrEqual(0);expect(box!.x+box!.width).toBeLessThanOrEqual(width);
+        await page.keyboard.press('Escape');await expect(part(page,'menu-content')).toHaveCount(0);await part(page,'navigation-learn').click();const nav=await part(page,'navigation-learn-content').boundingBox();expect(nav).toBeTruthy();expect(nav!.x+nav!.width).toBeLessThanOrEqual(width);
         expect(await page.evaluate(()=>document.documentElement.scrollWidth)).toBeLessThanOrEqual(width);
         await part(page,'menu-parts').screenshot({path:`docs/validation/dom-components-p4/m4-shell-${width}.png`});
     });

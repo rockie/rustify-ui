@@ -178,7 +178,7 @@ test("a local opposite appearance and its dialog preserve the root theme", async
     await preview.getByTestId("local-appearance").click();
     await preview.getByTestId("local-appearance-list").getByRole("option", { name: "Inherit root", exact: true }).click();
     await preview.getByTestId("open-preview-dialog").click();
-    await expect(confirm).toHaveCSS("background-color", "rgb(21, 112, 239)");
+    await expect(confirm).toHaveCSS("background-color", "rgb(23, 92, 211)");
     await expect(confirm).toHaveCSS("color", "rgb(255, 255, 255)");
     expect((await confirm.boundingBox())!.height).toBe(32);
     await page.keyboard.press("Escape");
@@ -392,6 +392,10 @@ test("mobile selection keeps the group heading below a bordered workspace tab", 
 
 test("diagnostic summaries share labels and the shell font in Chinese", async ({ page }) => {
     await waitForReady(page);
+    await page.evaluate(() => {
+        window.__theme_studio.edit("primary", "#ffffff");
+        window.__theme_studio.edit("primary-foreground", "#ffffff");
+    });
     await page.locator(".studio-diagnostics > summary").click();
     await expect(page.getByTestId("font-diagnostics").locator("summary")).toHaveText("Fonts");
     await expect(page.locator(".theme-diagnostics details").nth(1).locator("summary")).toHaveText("Text contrast pairs");

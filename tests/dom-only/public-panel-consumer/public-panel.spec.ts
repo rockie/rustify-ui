@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-test('public guide consumer completes safe confirmation, auxiliary choice and persistent feedback', async ({ page }) => {
+test('public guide consumer completes safe confirmation, auxiliary choice and persistent feedback', async ({ page }, testInfo) => {
     const failures: string[] = [];
     page.on('pageerror', error => failures.push(error.message));
     page.on('console', message => { if (message.type() === 'error') failures.push(message.text()); });
@@ -40,9 +40,97 @@ test('public guide consumer completes safe confirmation, auxiliary choice and pe
     await expect(result).toHaveText('The local note was cleared.');
     await expect(page.locator('[data-rustify-part="toast-root"]')).toContainText('The local note was cleared.');
     await expect.poll(() => page.locator('body').evaluate(node => node.scrollWidth - innerWidth)).toBeLessThanOrEqual(1);
-    await page.screenshot({ path: 'docs/validation/dom-components-p3/m7-public-consumer-390.png' });
+    await page.screenshot({ path: testInfo.outputPath('public-panel-390.png') });
     await expect(page.locator('[data-rustify-part="toast-root"]')).toHaveCount(0, { timeout: 5000 });
     await expect(result).toHaveText('The local note was cleared.');
     await expect(page.getByRole('status').filter({ hasText: /^express$/ })).toHaveText('express');
+    expect(failures).toEqual([]);
+});
+
+test('public menu guide builds a keyboard-accessible delivery application shell', async ({ page }, testInfo) => {
+    const failures: string[] = [];
+    page.on('pageerror', error => failures.push(error.message));
+    page.on('console', message => { if (message.type() === 'error') failures.push(message.text()); });
+    page.on('requestfailed', request => failures.push(request.url()));
+    await page.addInitScript(() => document.addEventListener('securitypolicyviolation', event => console.error(`${event.violatedDirective}: ${event.blockedURI}`)));
+    await page.goto('/');
+    await expect(page.locator('html')).toHaveAttribute('data-ready', 'true');
+    const note = page.getByRole('textbox', { name: 'Note', exact: true });
+    const savedNote = page.locator('.note-context');
+    const status = page.locator('.shell-status');
+    const bar = page.getByRole('menubar', { name: 'Application commands' });
+    const file = bar.getByRole('menuitem', { name: 'File', exact: true });
+    await note.fill('Leave the parcel with reception.');
+    await file.focus();
+    await file.press('ArrowDown');
+    await expect(page.getByRole('menuitem', { name: 'Save note', exact: true })).toBeFocused();
+    await page.keyboard.press('Enter');
+    await expect(savedNote).toContainText('Leave the parcel with reception.');
+    await expect(status).toHaveText('Note saved for this session.');
+
+    await note.fill('An unsaved draft');
+    await file.focus();
+    await file.press('ArrowDown');
+    await expect(page.getByRole('menuitem', { name: 'Save note', exact: true })).toBeFocused();
+    await page.keyboard.press('ArrowRight');
+    await expect(page.getByRole('menu', { name: 'Edit commands' })).toBeVisible();
+    await expect(page.getByRole('menuitem', { name: 'Restore saved note' })).toBeFocused();
+    await page.keyboard.press('Enter');
+    await expect(note).toHaveValue('Leave the parcel with reception.');
+    await expect(status).toHaveText('Saved note restored.');
+
+    const navigation = page.getByRole('navigation', { name: 'Delivery workspace' });
+    const current = navigation.getByRole('link', { name: 'Current note' });
+    await expect(current).toHaveAttribute('href', '#note');
+    await expect(current).toHaveAttribute('aria-current', 'page');
+    await navigation.getByRole('button', { name: 'Help', exact: true }).click();
+    const guide = navigation.getByRole('link', { name: 'Delivery guide' });
+    await expect(guide).toHaveAttribute('href', '#delivery-help');
+    await guide.click();
+    await expect(page).toHaveURL(/#delivery-help$/);
+    await current.click();
+    await expect(page).toHaveURL(/#note$/);
+
+    const toolbar = page.getByRole('toolbar', { name: 'Note tools' });
+    const save = toolbar.getByRole('button', { name: 'Save note', exact: true });
+    const more = toolbar.getByRole('button', { name: 'More', exact: true });
+    await note.fill('Saved from the toolbar');
+    await save.click();
+    await expect(savedNote).toContainText('Saved from the toolbar');
+    await note.fill('Temporary edit');
+    await save.focus();
+    await save.press('ArrowRight');
+    await expect(more).toBeFocused();
+    await more.press('Enter');
+    await expect(page.getByRole('menu', { name: 'More note commands' })).toBeVisible();
+    await page.keyboard.press('Escape');
+    await expect(more).toBeFocused();
+    await more.press('Enter');
+    await page.getByRole('menuitem', { name: 'Restore saved note' }).click();
+    await expect(note).toHaveValue('Saved from the toolbar');
+
+    await note.fill('Saved from context menu');
+    await savedNote.click({ button: 'right' });
+    const context = page.getByRole('menu', { name: 'Saved note commands' });
+    await expect(context).toBeVisible();
+    await context.getByRole('menuitem', { name: 'Replace with current note' }).click();
+    await expect(savedNote).toContainText('Saved from context menu');
+    await note.fill('Another unsaved draft');
+    await savedNote.focus();
+    await savedNote.press('Shift+F10');
+    await expect(context).toBeVisible();
+    await expect(context.getByRole('menuitem', { name: 'Restore saved note' })).toBeFocused();
+    await page.keyboard.press('Enter');
+    await expect(note).toHaveValue('Saved from context menu');
+    await expect(savedNote).toBeFocused();
+
+    await page.evaluate(() => window.scrollTo(0, 0));
+    await page.screenshot({ path: testInfo.outputPath('application-shell-desktop.png'), fullPage: true });
+    await page.setViewportSize({ width: 390, height: 844 });
+    await more.click();
+    await expect(page.getByRole('menu', { name: 'More note commands' })).toBeVisible();
+    await expect.poll(() => page.locator('body').evaluate(node => node.scrollWidth - innerWidth)).toBeLessThanOrEqual(1);
+    await page.screenshot({ path: testInfo.outputPath('application-shell-390.png'), fullPage: true });
+    await page.keyboard.press('Escape');
     expect(failures).toEqual([]);
 });

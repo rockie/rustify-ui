@@ -4,14 +4,14 @@ description: "Incumbent scoped components and the neutral Theme Studio workbench
 colors:
   background: "#f9fafb"
   foreground: "#1d2939"
-  primary: "#1570ef"
+  primary: "#175cd3"
   primary-foreground: "#ffffff"
   secondary: "#eaecf0"
   secondary-foreground: "#1d2939"
   muted: "#f2f4f7"
   muted-foreground: "#667085"
   accent: "#12b76a"
-  accent-foreground: "#ffffff"
+  accent-foreground: "#0c111d"
   destructive: "#d92d20"
   destructive-foreground: "#ffffff"
   card: "#ffffff"
@@ -255,6 +255,21 @@ Editor padding is 24px 20px 48px with a 16px stack gap; preview padding is 24px 
 | 560px | Import/export form rows become one column and local library rows stack. |
 
 The preview width selector deliberately sets renderer widths to 1024px, 768px or 390px; these are simulated content widths, not responsive breakpoints. Automatic width follows the available space. Export/import dialogs use viewport-minus-2rem width and height limits, a 64rem maximum width and internal vertical scrolling ([data-tools.css](examples/theme-studio/data-tools.css)).
+
+### Component gallery and inspection
+
+The Components scene keeps eight section links above a responsive grid of real
+samples. Each sample separates demo controls from the component and puts the
+part tree and primitive path in expandable details. Cards use the authored
+preview's colors, border and radius; they wrap to one column when necessary.
+The parts toggle annotates the existing DOM rather than adding a second render.
+
+The Inspector orders information as part/palette, effective theme source,
+resolved value/origin, and the root value when a local boundary is selected.
+Floating content identifies its inherited source. Local values are read-only;
+root editing remains in the existing editor. Contrast diagnostics keep their warning summary visible and group expanded text
+pairs by root or named preview boundary with a locate action. Picking
+permits layer-opening controls and consumes the first Escape before the layer.
 
 ### Reusable DOM layout
 

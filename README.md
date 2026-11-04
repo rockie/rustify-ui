@@ -28,6 +28,12 @@ feedback](docs/panels.md) covers controlled requests, native Tooltip targets,
 loading content and the single Toast scheduler, including modal-host migration.
 Use matching source SDK and CSS; these APIs are not in registry 0.2.1.
 
+[Menus, navigation and toolbars](docs/menus.md) covers DropdownMenu, ContextMenu,
+Menubar, native NavigationMenu links and composed Toolbar commands. These source
+parts share raw/themed behavior; the data-driven Menu remains available for
+point and GPU anchors. Theme Studio's Components scene presents working samples
+and a part Inspector with root, local-boundary and inherited floating sources.
+
 ## Quick start
 
 The validated development environment is macOS. Use a browser with WebAssembly and WebGL2; macOS Chrome is the current pass gate. See [compatibility](docs/compatibility.md) for the tested browser matrix.
@@ -189,6 +195,20 @@ Vellum has its own configuration:
 mbx xtask build-web --example vellum --release
 npx playwright test -c tests/vellum/playwright.config.ts m2-scene.spec.ts
 ```
+
+Theme Studio's **Components** scene groups working DOM samples by interaction,
+overlay, menu, navigation, content, feedback, layout and typography. Use the
+sample controls to explore sizes, variants and states; expand its structure to
+see the parts and public primitive path. “Show parts” outlines the actual DOM.
+GPU continues to display general theme samples in this scene.
+
+The Inspector reads explicit token annotations first, then the selected part's
+stylesheet references across interaction states. It shows the effective root or
+labeled local theme, local palette steps and the source inherited by floating
+content. Local values are read-only; the editor changes the root document.
+Contrast diagnostics group the existing text pairs by source. Picking allows
+controls that open layers; the first Escape exits picking and the next closes
+the layer.
 
 Theme Studio and the independent export consumers each have root and child-path
 projects. Build their products, then run each project in a separate invocation:

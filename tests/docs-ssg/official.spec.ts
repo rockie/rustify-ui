@@ -173,9 +173,10 @@ async function exercise(page: Page, field: Locator, name: string) {
         }
         case "menu": {
             const trigger = field.getByRole("button", { name: "Open menu", exact: true }); await trigger.click(); await expect(field.getByRole("menu", { name: "Example actions", exact: true })).toBeVisible();
+            await expect(field.getByRole("menuitem", { name: "Copy", exact: true })).toBeFocused();
             await page.keyboard.press("End"); const item = field.getByRole("menuitem", { name: "Rename", exact: true }); await expect(item).toBeFocused(); await page.keyboard.press("Enter");
             await expect(state).toHaveText("rename"); await expect(field.getByRole("menu")).toBeHidden(); await expect(trigger).toBeFocused();
-            await trigger.click(); await page.keyboard.press("Escape"); await expect(field.getByRole("menu")).toBeHidden(); await expect(trigger).toBeFocused(); break;
+            await trigger.click(); await expect(field.getByRole("menuitem", { name: "Copy", exact: true })).toBeFocused(); await page.keyboard.press("Escape"); await expect(field.getByRole("menu")).toBeHidden(); await expect(trigger).toBeFocused(); break;
         }
         case "dialog": {
             const trigger = field.getByRole("button", { name: "Open dialog", exact: true }); await trigger.click(); const dialog = field.getByRole("dialog", { name: "Confirm an action", exact: true }); await expect(dialog).toBeVisible();
@@ -461,8 +462,9 @@ test("gaps reduced motion: without a preference the default theme keeps 150ms tr
     await attachMotion(page, test.info(), "gaps-normal-motion.json", samples);
     for (const sample of samples) expectNormal(sample);
     expect(samples[0].tokens.length).toBeGreaterThan(0); expect(samples[0].tokens.map(seconds).every(value => value === 0.15)).toBe(true);
-    expect(samples[1].transitions.filter(entry => entry.node.startsWith("span.") && entry.node.endsWith("in Switch") && entry.property === "translate").map(entry => entry.duration)).toEqual([150]);
-    expect(samples[2].spinners).toEqual([{ name: "rui-spin", running: 1 }]);
+    expect(samples[1].transitions.filter(entry => entry.node.startsWith("span.") && entry.node.endsWith("in Switch") && entry.property === "transform").map(entry => entry.duration)).toEqual([150]);
+    expect(samples[2].spinners).toHaveLength(8);
+    for (const leaf of samples[2].spinners) expect(leaf).toEqual({ name: "rustify-spinner-fade", running: 1 });
     await healthy(page, audit);
 });
 

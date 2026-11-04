@@ -47,7 +47,7 @@ fn valid_author_value(token: &str, value: &str, theme: &ResolvedTheme) -> bool {
     }
 }
 
-const CONTRAST_PAIRS: [(&str, &str); 15] = [
+pub const CONTRAST_PAIRS: [(&str, &str); 15] = [
     ("foreground", "background"),
     ("card-foreground", "card"),
     ("popover-foreground", "popover"),
@@ -65,7 +65,7 @@ const CONTRAST_PAIRS: [(&str, &str); 15] = [
     ("foreground", "warning"),
 ];
 
-fn pair_contrast(theme: &ResolvedTheme, foreground: &str, background: &str) -> Option<f64> {
+pub fn pair_contrast(theme: &ResolvedTheme, foreground: &str, background: &str) -> Option<f64> {
     // A token snapshot cannot identify the actual underlay of every button or
     // floating panel. Opaque surfaces need no such assumption; text alpha is
     // still composited by the shared WCAG helper.

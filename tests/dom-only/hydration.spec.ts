@@ -821,7 +821,12 @@ test("a trap aborts shared listeners, tasks and overlays and restores static sco
     await control(page, "catalog-a", "toast-trigger").click();
     await control(page, "catalog-a", "dialog-trigger").click();
     await expect(root(page, "catalog-a").getByRole("dialog")).toBeVisible();
+    await expect(root(page, "catalog-b").getByRole("menu")).toHaveCount(0);
+    // Establish both open scopes without requesting an outside-pointer dismissal of the dialog.
+    // Locator.evaluate would add Playwright's own main-world MutationObserver to this leak probe.
+    await page.evaluate(() => document.querySelector<HTMLButtonElement>('[data-testid="catalog-b-menu-trigger"]')!.click());
     await expect(root(page, "catalog-b").getByRole("menu")).toBeVisible();
+    await expect(root(page, "catalog-a").getByRole("dialog")).toBeVisible();
     const active = await page.evaluate(() => window.__hydration.stats());
     const native = await page.evaluate(() => (window as any).__formResources());
     expect(native.timers).toBeGreaterThan(0);

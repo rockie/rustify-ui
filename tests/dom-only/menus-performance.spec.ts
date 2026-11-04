@@ -17,6 +17,69 @@ async function stableStats(page: Page) {
     return page.evaluate(() => ({ ...(window as any).__menu_bench.stats(), page_listeners: (window as any).__menu_listeners.size }));
 }
 type Action = 'open' | 'move' | 'activate';
+async function newWorkloads(page: Page) {
+    await page.goto('menus.html?parts');
+    await expect(page.locator('#status')).toHaveAttribute('data-status', 'ready');
+    const definitions = [
+        { name: 'submenu_open', trigger: 'menu-trigger', prepare: [{ key: 'ArrowDown', focus: 'menu-alpha' }, { key: 'End', focus: 'menu-sub-trigger' }], key: 'ArrowRight', focus: 'menu-sub-copy', content: 'menu-sub-content', counter: 'menu-requests', expected: 1, close: [{ key: 'Escape', focus: 'menu-sub-trigger' }, { key: 'Escape', focus: 'menu-trigger' }] },
+        { name: 'menubar_switch', trigger: 'menubar-file', prepare: [{ key: 'ArrowDown', focus: 'menubar-new' }], key: 'ArrowRight', focus: 'menubar-undo', content: 'menubar-edit-content', counter: 'menubar-log', expected: 1, close: [{ key: 'Escape', focus: 'menubar-edit' }] },
+        { name: 'navigation_open', trigger: 'navigation-learn', prepare: [], key: 'Enter', focus: 'navigation-learn', content: 'navigation-learn-content', counter: 'navigation-log', expected: 1, close: [{ key: 'ArrowDown', focus: 'navigation-guide' }, { key: 'Escape', focus: 'navigation-learn' }] },
+        { name: 'toolbar_roving', trigger: 'toolbar-save', prepare: [], key: 'ArrowRight', focus: 'toolbar-bold', content: 'toolbar', counter: 'toolbar-log', expected: 0, close: [] },
+    ];
+    const workloads: Record<string, unknown> = {};
+    for (const definition of definitions) {
+        const rows: any[] = [];
+        let before: unknown;
+        for (let round = 0; round < warmups + samples; round++) {
+            if (round === warmups) before = await stableStats(page);
+            await page.getByTestId(definition.trigger).focus();
+            for (const step of definition.prepare) {
+                await page.keyboard.press(step.key);
+                await expect(page.getByTestId(step.focus)).toBeFocused();
+            }
+            await page.evaluate(definition => {
+                const bench = (window as any).__menu_bench;
+                bench.pending = null;
+                const count = () => {
+                    const value = document.querySelector(`[data-testid="${definition.counter}"]`)!.textContent!;
+                    return definition.counter === 'menu-requests' ? Number(value) : value ? value.split(definition.counter === 'toolbar-log' ? ';' : ',').length : 0;
+                };
+                const capture = (event: KeyboardEvent) => {
+                    document.removeEventListener('keydown', capture, true);
+                    const start = performance.now(), initial = count();
+                    const observe = () => {
+                        const content = document.querySelector(`[data-testid="${definition.content}"]`);
+                        const focus = document.activeElement?.getAttribute('data-testid');
+                        if (content && content.getBoundingClientRect().height > 0 && !content.closest('[hidden],[inert]') && focus === definition.focus) {
+                            bench.pending = { latency_ms: performance.now() - start, trusted: event.isTrusted, focus, request_delta: count() - initial };
+                        } else if (performance.now() - start < 5000) requestAnimationFrame(observe);
+                        else bench.pending = { error: 'new workload did not reach accepted DOM and focus', definition, focus };
+                    };
+                    requestAnimationFrame(observe);
+                };
+                document.addEventListener('keydown', capture, true);
+            }, definition);
+            await page.keyboard.press(definition.key);
+            await page.waitForFunction(() => (window as any).__menu_bench.pending !== null);
+            const row = await page.evaluate(() => (window as any).__menu_bench.pending);
+            expect(row.error, JSON.stringify(row)).toBeUndefined();
+            expect(row.trusted).toBe(true);
+            expect(row.request_delta, definition.name).toBe(definition.expected);
+            if (round >= warmups) rows.push(row);
+            for (const step of definition.close) {
+                await page.keyboard.press(step.key);
+                await expect(page.getByTestId(step.focus)).toBeFocused();
+            }
+            await page.getByTestId('menu-outside').focus();
+        }
+        const after = await stableStats(page);
+        expect(after, definition.name).toEqual(before);
+        workloads[definition.name] = { input: definition.key, endpoint: 'accepted DOM and focus on animation frame',
+            p50_ms: percentile(rows.map(row => row.latency_ms), .5), p95_ms: percentile(rows.map(row => row.latency_ms), .95),
+            raw: rows, cleanup: { before, after } };
+    }
+    return workloads;
+}
 async function measure(page: Page, action: Action) {
     await page.evaluate(action => {
         const bench = (window as any).__menu_bench;
@@ -142,5 +205,7 @@ test('menu native-input frame workloads', { tag: EVIDENCE }, async ({ page, brow
     await expect(page.getByTestId('menu-item-bench-open')).toBeFocused();
     await page.screenshot({ path: `${directory}/${phase}-menu.png`, fullPage: true });
     await page.keyboard.press('Escape');
+    if (phase === 'current') report.new_only = await newWorkloads(page);
+    expect(errors).toEqual([]);
     await writeFile(`${directory}/${phase}.json`, JSON.stringify(report, null, 2) + '\n');
 });

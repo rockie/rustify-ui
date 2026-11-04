@@ -197,12 +197,12 @@ REVIEW @progress_consistency:
 
 ### 恢复快照
 
-- 最近更新：2026-11-04T11:21:11+08:00
-- 当前进度：4/7 个里程碑完成
-- 当前状态：进行中
-- 最近完成：M4 · NavigationMenu 与阶段一收口
-- 下一步：M5 T-6 主题来源标记；完成后推进 Studio 陈列与 M6 等价 harness
-- 当前阻塞：无
+- 最近更新：2026-11-04T14:37:02+08:00
+- 当前进度：7/7 个里程碑完成
+- 当前状态：验收完成，待最终提交
+- 最近完成：M7 · 全部 AC 与整条终验收口
+- 下一步：提交 M5—M7，回填 SHA 并同步台账；随后由用户发起代码评审
+- 当前阻塞：无；D11 参考配色按 Radix UI 保留并记录实测值，人工辅助技术项目按计划留 P5
 - 代码基线：`60c0a367`；M1、M2—M4 已提交，阶段一 V-4/V-5 通过；既有评审台账/报告/skills-lock 改动保留，未推送
 
 ### 完成记录
@@ -213,6 +213,10 @@ REVIEW @progress_consistency:
 | M2 | 已完成 | 2026-11-04T09:58:00+08:00 | 共享菜单、两族原语/皮肤、便捷入口与 DOM 调用方迁移；V-2 通过，浏览器留 M4 | [M2 记录](DOM-COMPONENTS-P4.records/M2.md) | `60c0a367` |
 | M3 | 已完成 | 2026-11-04T10:16:42+08:00 | Menubar/Toolbar 原语与皮肤、工具栏 roving 接管、两消费者样本；V-3 通过 | [M3 记录](DOM-COMPONENTS-P4.records/M3.md) | `60c0a367` |
 | M4 | 已完成 | 2026-11-04T11:21:11+08:00 | 导航、两消费者及调用方阶段出口完成；V-4/V-5 通过，含验收发现的焦点与命名修正 | [M4 记录](DOM-COMPONENTS-P4.records/M4.md) | `60c0a367` |
+| M6 | 已完成 | 2026-11-04T11:43:28+08:00 | 两侧受控等价夹具与共享 36 用例已集成；V-7 通过，浏览器留 M7 | [M6 记录](DOM-COMPONENTS-P4.records/M6.md) | 待提交 |
+| M5 | 已完成 | 2026-11-04T12:08:19+08:00 | 43 组陈列、来源 Inspector 与诊断；V-6 与定向浏览器通过，修复多 Provider Toast ID | [M5 记录](DOM-COMPONENTS-P4.records/M5.md) | 待提交 |
+| M7 | 已完成 | 2026-11-04T14:37:02+08:00 | V-8—V-15 通过；10 条 AC、四条整条终验可追溯；参考配色例外与 P5 missing 已列明 | [M7 记录](DOM-COMPONENTS-P4.records/M7.md) | 待提交 |
+
 
 ## 0. 需求、范围与决策
 
@@ -263,6 +267,7 @@ REVIEW @progress_consistency:
 | D8 | Menubar/NavigationMenu/Toolbar 视觉 | 参考 Themes 无同名组件：栏/导航/工具栏用 Rustify 语义外观（class 可覆盖，不造 size/variant）；Menubar 的菜单内容复用 base-menu 皮肤及同一 Content 视觉参数 | 不虚构参考参数；同一菜单内容一套视觉契约 | WORK-F15/AC-4；ref base-menu.props.ts |
 | D9 | Studio 陈列与 Inspector | 新增 “Components” 预览场景；Inspector 从实际部件的 CSSOM 规则推导所用 token，读取 SDK 主题来源标记确定根/边界/浮层来源；拾取模式放行会打开浮层的用户激活 | 新组件无需手写 token 表；浮层可检查；需 core 小增量 | ADR-4；WORK-F19/AC-2 |
 | D10 | 两表达等价证据 | 双项目同断言的既有 specs（panels/content/feedback）+ 本期 menus.spec 计为等价证据；为缺共享场景的 P2 表单/选择族新增 parity.spec 与两侧同 test id fixture | 不重复已有场景；Themes 独有组件（SegmentedControl、TabNav、卡片、Button/Link）不在等价对比集合 | WORK-F1/AC-3；§5.9 |
+| D11 | 参考配色与统一对比度门槛 | 与 Radix UI 保持一致，保留其色阶及各组件标准/高对比配色规则 | 对有参考源码依据的低对比组合逐项记录实测值和诊断，不改参考色板、不虚称达到 4.5:1；其余默认 Rustify 语义配色仍按既定门槛验收 | 用户本轮答复“和 radix-ui 保持一致”；[M7 决策证据](DOM-COMPONENTS-P4.records/M7.md#配色决策) |
 
 ### 0.3 ADR-lite
 
@@ -404,6 +409,7 @@ REVIEW @progress_consistency:
 | Studio 持久化 | 已核实缺口 | persistence.rs:133-163 白名单 | 新 scene 名加入白名单 | 旧 envelope 仍可读；未知 scene 继续拒绝 |
 | Docs/站点 | 已核实可接 | docs-ssg 组件 fixture、site demos 用便捷 Menu；rustify-docs style.rs 注册皮肤 | 注册 menus.css；行为随便捷 Menu 回归 | 不改站点系统 |
 | Toast 调用方回归 | Catalog 的最终通知关闭丢失焦点 | catalog-inputs.spec.ts 关闭断言；toast.rs Root 清理在 keyed DOM 卸载之后 | Root 保留焦点归属；无目标 focusout 经实例托管任务延后清理，卸载沿现有回焦链 | 显式 blur 后不抢焦点，任务在实例 abort 时释放；不改通知排队语义 |
+| Toast 陈列双 scope | 已复现 CSR 无 ID seed 时不同 Provider 的 Root ID 重复且文字未关联 | theme-gallery.spec.ts 重复 `rustify-toast-1`；feedback_ssg unseeded 用例先红；mount.rs 普通 CSR 不提供接管 seed | Toast Root/Title/Description 共用单调备用 DOM ID 分配；保留有 seed 时原编号 | 不改变 Scheduler ID、排队或接管协议；双预览 ID 唯一且标题/描述指向本 Root |
 
 没有需要其他仓库、账号、服务或外部部署才能解除的依赖。
 
@@ -509,7 +515,7 @@ Trigger 可聚焦性由调用方的原生元素保证；ContextMenu Trigger 需�
 
 ### 5.7 构建期静态 HTML 与接管
 
-- 菜单族初始关闭：SSG 输出 Trigger/Menubar/Toolbar 与关闭语义，Portal 不输出浏览器内容；host 请求初始打开记录 `StaticRenderIssues`。Toolbar 首个可用项 `tabindex=0`、其余 −1，SSG 与 hydrate 一致。
+- 菜单族初始关闭：SSG 输出 Trigger/Menubar/Toolbar 与关闭语义，Portal 不输出浏览器内容；host 请求初始打开记录 `StaticRenderIssues`。Toolbar 首个可用项 `tabindex=0`、其余 −1，SSG 与 hydrate 一致。 便捷 Menu 的应用自有 anchor 在 host 与浏览器均登记存在，关闭态静态根不误报 `missing-anchor`。
 - NavigationMenu 的 List/Trigger/顶层 Link 静态输出；`force_mount` 的 Content 以 hidden+inert 输出其链接，关闭内容不可键盘进入。
 - hydration 复用节点与 ID；主题来源属性只在浏览器端输出，SSG 不输出，不参与 hydrate 一致性，也不占用组件 ID 序列。
 
@@ -616,7 +622,7 @@ MENU_BENCH_PHASE=current RUSTIFY_TIER=evidence npx --no-install playwright test 
 - **菜单**：嵌套两级子菜单的键盘进入/退回、Escape 逐层、整树外部关闭、宽限区斜向移动不误关、选择子菜单项只交付一次命令与一次根关闭；CheckboxItem 三态、RadioItem 同值不请求；typeahead 同字母循环与空格；应用拒绝打开/关闭/勾选；取消 `on_select` 保持打开；ContextMenu 右键、Shift+F10、ContextMenu 键（键盘去重）、长按（Pointer Events 模拟）。
 - **Menubar/导航/工具栏**：顶层左右切换与悬停切换、Escape 回焦；NavigationMenu 悬停延迟/跳过、Viewport/Indicator 变量、内容 Tab 顺序、修饰键点击不关闭、active 的 aria-current；Toolbar 中搜索字段内方向/Home/End 保持编辑、切换组请求、内嵌菜单 Trigger 打开后再回到工具栏。
 - **生命周期/隔离**：打开中移除 Trigger/SubTrigger/导航项/当前工具栏项；两 scope 与嵌套反向主题共存；scope dispose 与 trap 时菜单与导航打开；断言监听、计时器、capture、inert 恢复，另一实例可点击可键盘操作。
-- **视觉矩阵**：全部陈列组件在桌面、默认色板、浅/深两模式下，各声明 variant/size `ALL` 与适用 rest/hover/focus/open 或 checked/disabled、loading/invalid/empty 至少各一个状态，不要求全组合。局部色板、high_contrast、调用方 utility 覆盖只对菜单、导航、工具栏这样参数已落地的组件及目录中声明 high_contrast 的组件各取一例。390/768 只验 §6 应用外壳、菜单族与陈列布局，不计入 WORK-N7/AC-2（AC-3 归 P5）。断言：同状态不同变体的计算视觉签名（背景、边框、文字色、阴影、outline 的 style/width/color 与 opacity）不同；交互状态相对 rest 有变化；文字与有效背景（合成 alpha 后）≥4.5:1、必要非文本边界 ≥3:1，适用例外（禁用、装饰）在记录列明。回归层跑代表性子集，完整强度只在 evidence 层；截图供人工复核，不以自检冒充 UI 评审。
+- **视觉矩阵**：全部陈列组件在桌面、默认色板、浅/深两模式下，各声明 variant/size `ALL` 与适用 rest/hover/focus/open 或 checked/disabled、loading/invalid/empty 至少各一个状态，不要求全组合。局部色板、high_contrast、调用方 utility 覆盖只对菜单、导航、工具栏这样参数已落地的组件及目录中声明 high_contrast 的组件各取一例。390/768 只验 §6 应用外壳、菜单族与陈列布局，不计入 WORK-N7/AC-2（AC-3 归 P5）。断言：同状态不同变体的计算视觉签名（背景、边框、文字色、阴影、outline 的 style/width/color 与 opacity，以及参考变体定义的尺寸/间距）不同；交互状态相对 rest 有变化；文字与有效背景（合成 alpha 后）≥4.5:1、必要非文本边界 ≥3:1，适用例外（禁用、装饰）在记录列明；D11 确认的 Radix 参考配色组合按原规则保留，逐项记录来源、实测对比度及上下文诊断，不计作达标。回归层跑代表性子集，完整强度只在 evidence 层；截图供人工复核，不以自检冒充 UI 评审。
 - **Studio**：陈列覆盖与结构说明；Inspector 选中菜单项/导航链接/Toolbar 按钮/浮层内容时显示 token、色族/阶、来源帧与“浮层继承自”，浮层经 §5.8 的拾取路径打开；边界显示中英标签、未登记边界不显示原始 ID；局部低对比边界的诊断按来源分组并可定位；Components 场景 GPU 区域显示本地化“组件陈列仅 DOM”说明；GPU Lost 与字体 404 时陈列、编辑、保存、导出继续；fatal 后重启恢复最近持久草稿。
 - **角色模拟**：Agent 模拟应用开发者，只读 README、docs/menus.md、迁移指南与公开示例/API，使用当前 source SDK/CSS，不读私有模块或实现者补充；在独立公开消费者 `tests/dom-only/public-panel-consumer/` 中完成“顶部菜单栏 + 站点导航 + 带菜单的工具栏 + 右键菜单”的应用外壳并在真实浏览器操作；构建 `mbx xtask build-dom --manifest-path tests/dom-only/public-panel-consumer/Cargo.toml`，用其 `playwright.config.ts` 的 `public-panel` project 进入/操作；`tests/dom-only/consumer` 与 `tests/dom-only/primitives` 属测试 fixture，不得作为答案来源。记录代码位置、命令与缺失步骤；失败先补公开文档或接口再以同一角色继续。结果不代表真人上手率。
 - VoiceOver 实际朗读、OS IME、物理触控、真实浏览器 UI 缩放列 P5 missing；本期无需真人。

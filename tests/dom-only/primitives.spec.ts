@@ -717,6 +717,7 @@ test('select Escape and outside hooks cancel synchronously without stealing outs
     await fieldsReady(page);
     await page.getByTestId('select-cancel-escape').click();
     await selectTrigger(page).click();
+    await expect(page.getByTestId('select-hooks')).toHaveText('open-focus');
     await selectTrigger(page).press('Escape');
     await expect(selectList(page)).toBeVisible();
     await expect(page.getByTestId('select-open-requests')).toHaveText('true');

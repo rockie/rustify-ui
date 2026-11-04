@@ -99,16 +99,12 @@ pub(crate) fn anchored_root(
         Box::new(move || {
             let context = expect_context::<Context>();
             context.focus.set_value(OpenFocus::First);
+            context
+                .floating
+                .virtual_anchor
+                .set(Some(anchor.get_untracked()));
             #[cfg(target_arch = "wasm32")]
-            {
-                context
-                    .floating
-                    .virtual_anchor
-                    .set(Some(anchor.get_untracked()));
-                Effect::new(move || context.floating.virtual_anchor.set(Some(anchor.get())));
-            }
-            #[cfg(not(target_arch = "wasm32"))]
-            let _ = anchor;
+            Effect::new(move || context.floating.virtual_anchor.set(Some(anchor.get())));
             children()
         }),
     )

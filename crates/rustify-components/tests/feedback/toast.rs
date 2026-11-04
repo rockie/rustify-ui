@@ -219,3 +219,23 @@ fn themed_actions_outside_a_root_are_readable_and_cannot_pretend_to_close_a_noti
     }
     assert!(html.contains("Updates"), "{html}");
 }
+
+#[test]
+fn independent_unseeded_providers_keep_unique_ids_and_text_associations() {
+    let render = || {
+        Owner::new().with(|| view! {
+        <raw::Provider><raw::Root open=false on_open_change=|_|{}>
+            <raw::Title>"Saved"</raw::Title><raw::Description>"Draft saved locally"</raw::Description>
+            <raw::Action alt_text="Undo saving" on_action=|_|{}>"Undo"</raw::Action><raw::Close />
+        </raw::Root></raw::Provider>
+    }.to_html())
+    };
+    let first = render();
+    let second = render();
+    assert_ne!(
+        toast_ssg_attribute(toast_ssg_tag(&first, "toast-root"), "id"),
+        toast_ssg_attribute(toast_ssg_tag(&second, "toast-root"), "id")
+    );
+    toast_ssg_assert_parts_are_associated(&first);
+    toast_ssg_assert_parts_are_associated(&second);
+}

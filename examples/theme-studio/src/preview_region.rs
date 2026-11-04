@@ -712,7 +712,19 @@ impl Widget for PreviewBoard {
         let x = pane.pos.x + PAD_X;
         let width = (pane.size.x - PAD_X * 2.0).max(1.0);
         let mut y = pane.pos.y + PAD_Y - props.scroll_y;
-        self.heading(cx, x, &mut y, &format!("GPU · {}", props.scene));
+        self.heading(
+            cx,
+            x,
+            &mut y,
+            &format!(
+                "GPU · {}",
+                if props.scene == "Components" {
+                    "Theme samples"
+                } else {
+                    &props.scene
+                }
+            ),
+        );
         self.draw_scene(cx, theme, x, y, width);
         y += 176.0;
         self.heading(cx, x, &mut y, "Color tokens");

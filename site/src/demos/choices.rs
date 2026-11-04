@@ -80,7 +80,7 @@ pub fn slider_demo() -> impl IntoView {
         <div class="space-y-4">
             <div class="max-w-sm space-y-2">
                 <Label control=field_id.clone()>"Value"</Label>
-                <Slider id=field_id value=amount on_change=move |value| amount.set(value)
+                <Slider id=field_id aria_label="Value" value=amount on_change=move |value| amount.set(value)
                     min=0.0 max=100.0 step=5.0 />
             </div>
             <p class="text-sm">"Value: "<output data-demo-state="">{move || amount.get().to_string()}</output></p>
