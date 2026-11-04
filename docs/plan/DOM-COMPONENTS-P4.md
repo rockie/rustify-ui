@@ -197,13 +197,13 @@ REVIEW @progress_consistency:
 
 ### 恢复快照
 
-- 最近更新：2026-11-04T14:37:02+08:00
+- 最近更新：2026-11-04T14:41:10+08:00
 - 当前进度：7/7 个里程碑完成
-- 当前状态：验收完成，待最终提交
+- 当前状态：已完成
 - 最近完成：M7 · 全部 AC 与整条终验收口
-- 下一步：提交 M5—M7，回填 SHA 并同步台账；随后由用户发起代码评审
+- 下一步：由用户发起 `review-code docs/plan/DOM-COMPONENTS-P4.md` 代码评审
 - 当前阻塞：无；D11 参考配色按 Radix UI 保留并记录实测值，人工辅助技术项目按计划留 P5
-- 代码基线：`60c0a367`；M1、M2—M4 已提交，阶段一 V-4/V-5 通过；既有评审台账/报告/skills-lock 改动保留，未推送
+- 代码基线：`16ed128b`；M1、M2—M4、M5—M7 均已提交，V-1—V-15 通过；既有评审台账/报告/skills-lock 改动保留，未推送
 
 ### 完成记录
 
@@ -213,9 +213,9 @@ REVIEW @progress_consistency:
 | M2 | 已完成 | 2026-11-04T09:58:00+08:00 | 共享菜单、两族原语/皮肤、便捷入口与 DOM 调用方迁移；V-2 通过，浏览器留 M4 | [M2 记录](DOM-COMPONENTS-P4.records/M2.md) | `60c0a367` |
 | M3 | 已完成 | 2026-11-04T10:16:42+08:00 | Menubar/Toolbar 原语与皮肤、工具栏 roving 接管、两消费者样本；V-3 通过 | [M3 记录](DOM-COMPONENTS-P4.records/M3.md) | `60c0a367` |
 | M4 | 已完成 | 2026-11-04T11:21:11+08:00 | 导航、两消费者及调用方阶段出口完成；V-4/V-5 通过，含验收发现的焦点与命名修正 | [M4 记录](DOM-COMPONENTS-P4.records/M4.md) | `60c0a367` |
-| M6 | 已完成 | 2026-11-04T11:43:28+08:00 | 两侧受控等价夹具与共享 36 用例已集成；V-7 通过，浏览器留 M7 | [M6 记录](DOM-COMPONENTS-P4.records/M6.md) | 待提交 |
-| M5 | 已完成 | 2026-11-04T12:08:19+08:00 | 43 组陈列、来源 Inspector 与诊断；V-6 与定向浏览器通过，修复多 Provider Toast ID | [M5 记录](DOM-COMPONENTS-P4.records/M5.md) | 待提交 |
-| M7 | 已完成 | 2026-11-04T14:37:02+08:00 | V-8—V-15 通过；10 条 AC、四条整条终验可追溯；参考配色例外与 P5 missing 已列明 | [M7 记录](DOM-COMPONENTS-P4.records/M7.md) | 待提交 |
+| M6 | 已完成 | 2026-11-04T11:43:28+08:00 | 两侧受控等价夹具与共享 36 用例已集成；V-7 通过，浏览器见 M7 | [M6 记录](DOM-COMPONENTS-P4.records/M6.md) | `16ed128b` |
+| M5 | 已完成 | 2026-11-04T12:08:19+08:00 | 43 组陈列、来源 Inspector 与诊断；V-6 与定向浏览器通过，修复多 Provider Toast ID | [M5 记录](DOM-COMPONENTS-P4.records/M5.md) | `16ed128b` |
+| M7 | 已完成 | 2026-11-04T14:41:10+08:00 | V-8—V-15 通过；10 条 AC、四条整条终验可追溯；参考配色例外与 P5 missing 已列明 | [M7 记录](DOM-COMPONENTS-P4.records/M7.md) | `16ed128b` |
 
 
 ## 0. 需求、范围与决策

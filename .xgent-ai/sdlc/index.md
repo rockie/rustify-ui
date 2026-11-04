@@ -14,7 +14,7 @@
 
 ## 当前重点
 
-- [DOM-COMPONENTS-P4](status/plan/d3982b58-e895-40b6-a66b-979a5d747863.md)：v0.2 / Ready，规范 dev-plan-ready，实施 4/7、dev-plan-in-progress。[计划](../../docs/plan/DOM-COMPONENTS-P4.md)承接 PRD P4 的 10 条 AC，并对 WORK-F1、WORK-F15、WORK-N3、WORK-N6 做整条终验：同源 DropdownMenu/ContextMenu/Menubar/NavigationMenu/Toolbar 与旧 Menu 迁移、Studio 完整陈列与部件级 Inspector、两表达等价与跨组件可访问性/清理/视觉终验；7 个里程碑，提交点 M1/M4/M7。[完整计划评审](status/review/3bc23089-adb5-4844-b005-7144614ac86e.md)原判需要修改（11×P2、12×P3，无 P0/P1），[修订处置与复核](status/review/3bc23089-adb5-4844-b005-7144614ac86e.md#修订处置与复核)已将 F-01—F-23 全部落实并复核（文档层面）；[M1 基线](../../docs/plan/DOM-COMPONENTS-P4.records/M1.md)已验证；[M2 局部退出](../../docs/plan/DOM-COMPONENTS-P4.records/M2.md)已验证；[M3 局部退出](../../docs/plan/DOM-COMPONENTS-P4.records/M3.md)已验证；[M4 阶段一收口](../../docs/plan/DOM-COMPONENTS-P4.records/M4.md)V-4/V-5 已通过；阶段一未提交、未推送。
+- [DOM-COMPONENTS-P4](status/plan/d3982b58-e895-40b6-a66b-979a5d747863.md)：v0.2 / Ready，实施 7/7、dev-plan-completed。M1 `0b6f0d6c`、M2—M4 `60c0a367`、M5—M7 `16ed128b` 已提交；[M7 验收](../../docs/plan/DOM-COMPONENTS-P4.records/M7.md)覆盖 V-1—V-15、10 条 AC 与四条整条终验。D11 按用户决定保留 Radix 参考配色并记录低对比实测值；P5 人工 missing 保留。下一步由用户发起 `review-code docs/plan/DOM-COMPONENTS-P4.md`；未独立评审、推送或发行。
 
 - [DOM-COMPONENTS-P3](status/plan/5291ea27-775f-422c-a9dc-444ed893f028.md)：v0.2 / Ready，实施7/7、dev-plan-completed。实现`ef8b0156`、整理`ec6bd506`及计划登记`1c97d60c`已提交；[M7原证据](../../docs/plan/DOM-COMPONENTS-P3.records/M7.md)覆盖12条P3 AC、接管、真实调用方、同功能性能及资源成本。下一步由用户发起review-code；P5人工missing、已有Pagination动效边界与历史文档评审结论保留，未执行推送/发布或独立代码评审。
 
