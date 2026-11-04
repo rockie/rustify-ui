@@ -123,6 +123,19 @@ async function initialControls(page: Page, scope: string) {
 
 
 async function initialDeliveryParts(page: Page, scope: string) {
+    for (const name of ["delivery-dropdown", "delivery-context", "delivery-file", "delivery-edit", "delivery-learn"]) {
+        await expect(control(page,scope,name)).toHaveAttribute("aria-expanded","false");
+        await expect(control(page,scope,name)).not.toHaveAttribute("aria-controls");
+    }
+    for (const name of ["delivery-dropdown-content","delivery-context-content","delivery-file-content","delivery-edit-content"]) await expect(control(page,scope,name)).toHaveCount(0);
+    await expect(control(page,scope,"delivery-file")).toHaveAttribute("tabindex","0");
+    await expect(control(page,scope,"delivery-edit")).toHaveAttribute("tabindex","-1");
+    await expect(control(page,scope,"delivery-tool-save")).toHaveAttribute("tabindex","0");
+    await expect(control(page,scope,"delivery-italic")).toHaveAttribute("tabindex","-1");
+    await expect(control(page,scope,"delivery-italic")).toHaveAttribute("aria-pressed","true");
+    await expect(control(page,scope,"delivery-learn-content")).toHaveAttribute("inert","");
+    await expect(control(page,scope,"delivery-learn-content")).toBeHidden();
+    await expect(control(page,scope,"delivery-guide")).toHaveAttribute("data-rustify-native-navigation","");
     await expect(control(page, scope, "summary-trigger")).toHaveAttribute("aria-expanded", "true");
     await expect(control(page, scope, "summary-content")).toBeVisible();
     await expect(control(page, scope, "history-content")).toBeHidden();
@@ -161,6 +174,20 @@ async function initialDeliveryParts(page: Page, scope: string) {
 }
 
 async function exerciseDeliveryParts(page: Page, scope: string) {
+    await control(page,scope,"delivery-dropdown").focus();await page.keyboard.press("ArrowDown");
+    await expect(control(page,scope,"delivery-command")).toBeFocused();await page.keyboard.press("Enter");
+    await expect(control(page,scope,"delivery-commands")).toHaveText("1");await expect(control(page,scope,"delivery-dropdown")).toBeFocused();
+    await control(page,scope,"delivery-context").focus();await page.keyboard.press("Shift+F10");
+    await expect(control(page,scope,"delivery-context-content").getByRole("menuitem")).toBeFocused();await page.keyboard.press("Escape");await expect(control(page,scope,"delivery-context")).toBeFocused();
+    await control(page,scope,"delivery-file").focus();await page.keyboard.press("ArrowDown");await expect(control(page,scope,"delivery-file-content").getByRole("menuitem")).toBeFocused();await page.keyboard.press("ArrowRight");
+    await expect(control(page,scope,"delivery-edit-content").getByRole("menuitem")).toBeFocused();await page.keyboard.press("Escape");
+    await expect(control(page,scope,"delivery-edit")).toBeFocused();
+    await control(page,scope,"delivery-tool-save").focus();await page.keyboard.press("ArrowRight");
+    await expect(control(page,scope,"delivery-bold")).toBeFocused();await page.keyboard.press("Space");
+    await expect(control(page,scope,"delivery-bold")).toHaveAttribute("aria-pressed","true");
+    await control(page,scope,"delivery-learn").focus();await page.keyboard.press("Enter");await page.keyboard.press("ArrowDown");
+    await expect(control(page,scope,"delivery-guide")).toBeFocused();await page.keyboard.press("Escape");
+    await expect(control(page,scope,"delivery-learn")).toBeFocused();
     await control(page, scope, "segment-ready").focus();
     await control(page, scope, "history-action").evaluate(node => (node as HTMLElement).focus());
     await expect(control(page, scope, "segment-ready")).toBeFocused();

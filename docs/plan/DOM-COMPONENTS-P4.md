@@ -197,19 +197,22 @@ REVIEW @progress_consistency:
 
 ### 恢复快照
 
-- 最近更新：2026-11-04T09:30:33+08:00
-- 当前进度：1/7 个里程碑完成
+- 最近更新：2026-11-04T11:21:11+08:00
+- 当前进度：4/7 个里程碑完成
 - 当前状态：进行中
-- 最近完成：M1 · 旧菜单同功能基线与正式参考输入
-- 下一步：M2 · 实现 floating 菜单增量、共享菜单部件、DropdownMenu/ContextMenu 与便捷 Menu 重组；齐备后运行 V-2
+- 最近完成：M4 · NavigationMenu 与阶段一收口
+- 下一步：提交 M2—M4 并回填 SHA；随后 M5 T-6 主题来源标记，完成后推进 Studio 陈列与 M6 等价 harness
 - 当前阻塞：无
-- 代码基线：`0b6f0d6c`；M1 fixture、参考源与 before 已提交，旧 Menu 未改；既有台账/评审/skills-lock 改动保留
+- 代码基线：dirty@`bb210433`；M1 已提交；M2/M3 局部退出通过；M4 V-4/V-5 通过，待阶段一合并提交；既有台账/评审/skills-lock 改动保留
 
 ### 完成记录
 
 | Milestone | 状态 | 更新时间 | 简要记录 | 实现与验收记录 | 提交 |
 | --- | --- | --- | --- | --- | --- |
 | M1 | 已完成 | 2026-11-04T09:30:33+08:00 | 旧 Menu 同功能 before 与 19 个正式参考文件入仓；V-1 通过 | [M1 记录](DOM-COMPONENTS-P4.records/M1.md) | `0b6f0d6c` |
+| M2 | 已完成 | 2026-11-04T09:58:00+08:00 | 共享菜单、两族原语/皮肤、便捷入口与 DOM 调用方迁移；V-2 通过，浏览器留 M4 | [M2 记录](DOM-COMPONENTS-P4.records/M2.md) | 待提交 |
+| M3 | 已完成 | 2026-11-04T10:16:42+08:00 | Menubar/Toolbar 原语与皮肤、工具栏 roving 接管、两消费者样本；V-3 通过 | [M3 记录](DOM-COMPONENTS-P4.records/M3.md) | 待提交 |
+| M4 | 已完成 | 2026-11-04T11:21:11+08:00 | 导航、两消费者及调用方阶段出口完成；V-4/V-5 通过，含验收发现的焦点与命名修正 | [M4 记录](DOM-COMPONENTS-P4.records/M4.md) | 待提交 |
 
 ## 0. 需求、范围与决策
 
@@ -400,6 +403,7 @@ REVIEW @progress_consistency:
 | 正式参考输入 | 已核实可取 | ref 下 Themes 3.3.0、Primitives 1.8.1 本地快照 | M1 纳入 vendor 与 sources.lock，许可 MIT，上游 commit null | ref 只作导入源，构建不读 |
 | Studio 持久化 | 已核实缺口 | persistence.rs:133-163 白名单 | 新 scene 名加入白名单 | 旧 envelope 仍可读；未知 scene 继续拒绝 |
 | Docs/站点 | 已核实可接 | docs-ssg 组件 fixture、site demos 用便捷 Menu；rustify-docs style.rs 注册皮肤 | 注册 menus.css；行为随便捷 Menu 回归 | 不改站点系统 |
+| Toast 调用方回归 | Catalog 的最终通知关闭丢失焦点 | catalog-inputs.spec.ts 关闭断言；toast.rs Root 清理在 keyed DOM 卸载之后 | Root 保留焦点归属；无目标 focusout 经实例托管任务延后清理，卸载沿现有回焦链 | 显式 blur 后不抢焦点，任务在实例 abort 时释放；不改通知排队语义 |
 
 没有需要其他仓库、账号、服务或外部部署才能解除的依赖。
 
@@ -442,7 +446,7 @@ pub enum OpenFocus { Content, First, Last } // crate 内：Trigger/键盘写入�
 - 导航：keydown 时在当前 panel 内查询 `closest('[role=menu]') == 本 panel` 的可用项（子菜单 panel 在父 panel 的 children host 内，必须排除），用 `choice::navigation`（改 pub(crate)）计算：ArrowDown/Up、Home/PageUp→首项、End/PageDown→末项，`loop_focus` 默认 false。父 panel 的处理函数忽略 target 属于子 panel 的事件。
 - typeahead：无 Ctrl/Alt/Meta 的可打印键追加查询并重启 1000 ms `timer::Timeout`；查询非空时空格视为字符；`model::next_match(labels, enabled, query, current)` 与 Select `Index::search` 同构（同字符重复时循环、大小写不敏感前缀、从当前项之后找）；标签取 `text_value`，缺省取元素 `textContent` 去空白。
 - Tab：Content 内消费 Tab/Shift+Tab（`prevent_default`），焦点不移出。
-- 激活（Enter/Space keydown 先 `prevent_default`，或 click，或在别处 pointerdown 后于该项 pointerup）：禁用项无请求。顺序：原生/调用方监听 → `on_select(c)` → CheckboxItem 请求 `on_checked_change(!checked.is_checked())`（Indeterminate 视为请求 true）一次；RadioItem 仅在 value 不同于当前时请求 `on_value_change(value)` 一次 → 若 `!c.default_prevented()`，请求根 `on_open_change(false)` 一次。
+- 激活（Enter/Space keydown 先 `prevent_default`，或 click，或在别处 pointerdown 后于该项 pointerup）：禁用项无请求。顺序：原生/调用方监听 → `on_select(c)` → CheckboxItem 请求 `on_checked_change(checked != CheckedState::Checked)`（Indeterminate 视为请求 true）一次；RadioItem 仅在 value 不同于当前时请求 `on_value_change(value)` 一次 → 若 `!c.default_prevented()`，请求根 `on_open_change(false)` 一次。
 - 打开焦点：键盘打开（Enter/Space/ArrowDown）→ 首个可用项；ArrowUp → 末项；指针打开 → Content 本身（typeahead 可用、无高亮）。Content 的 open hook 先运行用户 hook，未取消才按 `OpenFocus` 聚焦。
 - 指针：鼠标在可用项上 pointermove 即聚焦该项；离开项回到 Content（宽限期内除外）。
 - 子菜单：SubTrigger 鼠标 pointermove 启动 100 ms Timeout 后请求 `Sub.on_open_change(true)`；click 或 ArrowRight（LTR）/ArrowLeft（RTL）/Enter/Space 立即请求并以 First 打开。SubContent 内 ArrowLeft（LTR）/ArrowRight（RTL）请求关闭，回焦经 trigger_id 回到 SubTrigger；Escape 由 core 交给最上层（即子菜单）关闭。离开 SubTrigger 指向已开 SubContent 时用 `hover_grace::polygon(exit, trigger_rect, content_rect)` 建立宽限区，300 ms 内父项的 pointermove 不夺焦、不关子菜单，期间临时 pointermove 监听进入子菜单或超时即释放；宽限外移到父项时该项获得焦点，core 的 focus-outside 使非模态子层关闭。
@@ -465,7 +469,7 @@ Trigger 可聚焦性由调用方的原生元素保证；ContextMenu Trigger 需�
 
 - `primitives::menubar` / Themes `menubar`：`Root(value: Signal<Option<String>>, on_value_change: Callback<Option<String>>, loop_focus=true, aria_label: String, children)` 渲染 `role=menubar`、`aria-orientation=horizontal`；`Menu(value: String, children)` 以 `open = value == Some(key)`、`change(open)` 映射到 `on_value_change`（关闭只在当前值为本 key 时请求 `None`），`modal=false`；Trigger `role=menuitem`、`aria-haspopup=menu`，其余部件同 §5.1。
 - Trigger 间 roving：单一 `tabindex=0`（当前或首个可用），ArrowLeft/Right（RTL 反向）、Home/End，`loop_focus` 默认 true。ArrowDown/Enter/Space 请求打开（First），ArrowUp（Last）；鼠标 pointerdown 切换；有菜单打开时 pointerenter 另一 Trigger 请求切换到该 key（一次）并聚焦它。
-- Content 的 `on_focus_outside` 在目标为本 Menubar 的 Trigger 时取消（切换请求由该 Trigger 发出，避免 core 另发关闭）；`on_close_auto_focus` 在 Menubar `value` 仍为 `Some` 时取消，只在 Escape 或 value 变为 `None` 后回到本 Trigger。
+- Root 在打开期间以 window capture `pointerdown` 记录目标是否在本栏已注册 Trigger 内；Content 的 `on_pointer_down_outside` 在命中时取消 core 的外部关闭，保证切换只请求新值一次（window capture 先于 core document capture），关闭/卸载释放监听。Content 的 `on_focus_outside` 在目标为本 Menubar 的 Trigger 时取消（切换请求由该 Trigger 发出，避免 core 另发关闭）；`on_close_auto_focus` 在 Menubar `value` 仍为 `Some` 时取消，只在 Escape 或 value 变为 `None` 后回到本 Trigger。
 - Content 内 ArrowRight/Left（RTL 反向）请求相邻菜单 key（一次）并以 First 打开；子 panel 内只忽略后退键（先由子层关闭），前进键仍切到相邻顶层菜单；SubTrigger 上忽略前进键（自身打开子菜单）。Escape 由 core 关闭（请求 `None`），回焦到该 Trigger；Tab 消费。Menubar 自身不是 Layer。
 
 ### 5.4 Toolbar

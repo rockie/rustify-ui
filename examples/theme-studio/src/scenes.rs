@@ -1,12 +1,13 @@
 use leptos::prelude::*;
+use rustify_components::dropdown_menu as dm;
 use rustify_components::{
     Button, ButtonSize, ButtonVariant, Checkbox, Code, Dialog, Glyph, Heading, HeadingLevel, Icon,
-    IconButton, Kbd, Link, Menu, MenuItem, Select, SelectOption, Switch, Tab, TabPanel, Tabs,
-    TextArea, TextField, TextKind, TextSize,
+    IconButton, Kbd, Link, Select, SelectOption, Switch, Tab, TabPanel, Tabs, TextArea, TextField,
+    TextKind, TextSize,
 };
 use rustify_ui::{
     theme::{format_color, ColorFormat, COLOR_TOKENS},
-    use_resolved_theme, Anchor, Locale,
+    use_resolved_theme, Locale,
 };
 
 pub const SCENE_NAMES: [&str; 7] = [
@@ -63,13 +64,6 @@ fn CardsScene(locale: Signal<Locale>, reset_epoch: Signal<u64>) -> impl IntoView
     let menu = RwSignal::new(false);
     let menu_action = RwSignal::new(0u8);
     let sample_clicks = RwSignal::new(0u32);
-    let anchor_node = NodeRef::<leptos::html::Div>::new();
-    let anchor = Signal::derive(move || {
-        anchor_node
-            .get()
-            .map(|node| Anchor::element(&node.into()))
-            .unwrap_or(Anchor::Centred)
-    });
     let submit = move || {
         let name_value = name.get_untracked();
         let email_value = email.get_untracked();
@@ -115,16 +109,20 @@ fn CardsScene(locale: Signal<Locale>, reset_epoch: Signal<u64>) -> impl IntoView
                     <Switch checked=notifications on_change=move |value| notifications.set(value) test_id="cards-notifications" />
                 </label>
                 <p class="text-sm text-muted-foreground" data-testid="cards-notification-status">{move || if notifications.get() {tr(locale.get(), "Notifications enabled in this preview.", "此预览已开启通知。")} else {tr(locale.get(), "Notifications paused in this preview.", "此预览已暂停通知。")}}</p>
-                <div node_ref=anchor_node data-theme-tokens="secondary,secondary-foreground,popover,popover-foreground">
-                    <Button on_click=move || menu.set(true) variant=ButtonVariant::Soft color=Some(rustify_ui::AccentColor::Gray) test_id="cards-actions">{move || tr(locale.get(), "Profile actions", "资料操作")}</Button>
-                </div>
-                <Menu open=menu on_open_change=move |value| menu.set(value) anchor=anchor
-                    items=Signal::derive(move || {
-                        let duplicate = MenuItem::new("duplicate",tr(locale.get(), "Duplicate local profile", "复制本地资料"));
-                        vec![if name.get().trim().is_empty() {duplicate.disabled(tr(locale.get(), "Enter a name first", "请先输入姓名"))} else {duplicate},MenuItem::new("clear",tr(locale.get(), "Clear form", "清空表单"))]
-                    })
-                    on_activate=move |action| {if action=="clear" {name.set(String::new());email.set(String::new());terms.set(false);feedback.set(0);submitted.set(String::new());menu_action.set(2);} else if !name.get_untracked().trim().is_empty() {name.set(format!("{} ({})",name.get_untracked().trim(),tr(locale.get_untracked(),"copy","副本")));submitted.set(String::new());feedback.set(0);menu_action.set(1);} menu.set(false);}
-                    test_id="cards-menu" />
+                <dm::Root open=menu on_open_change=move |value|menu.set(value)>
+                    <dm::Trigger test_id="cards-actions" class="rustify-button rustify-color bg-secondary text-secondary-foreground" attr:data-variant="soft" >{move || tr(locale.get(), "Profile actions", "资料操作")}</dm::Trigger>
+                    <dm::Portal><dm::Content test_id="cards-menu">
+                        <dm::Item test_id="menu-item-duplicate" disabled=Signal::derive(move ||name.get().trim().is_empty())
+                            described_by=Signal::derive(move ||if name.get().trim().is_empty(){"cards-duplicate-reason".into()}else{String::new()})
+                            on_select=move |_|{name.set(format!("{} ({})",name.get_untracked().trim(),tr(locale.get_untracked(),"copy","副本")));submitted.set(String::new());feedback.set(0);menu_action.set(1);}>
+                            {move ||tr(locale.get(), "Duplicate local profile", "复制本地资料")}
+                            <Show when=move ||name.get().trim().is_empty()><span id="cards-duplicate-reason">{move ||tr(locale.get(), "Enter a name first", "请先输入姓名")}</span></Show>
+                        </dm::Item>
+                        <dm::Item test_id="menu-item-clear" on_select=move |_|{name.set(String::new());email.set(String::new());terms.set(false);feedback.set(0);submitted.set(String::new());menu_action.set(2);}>
+                            {move ||tr(locale.get(), "Clear form", "清空表单")}
+                        </dm::Item>
+                    </dm::Content></dm::Portal>
+                </dm::Root>
                 <p role="status" class="text-sm" data-testid="cards-action-status">{move || match menu_action.get() {1=>tr(locale.get(), "A local copy is ready to edit.", "本地副本已准备好，可编辑。"),2=>tr(locale.get(), "The form was cleared.", "表单已清空。"),_=>""}}</p>
                 <Button on_click=move || {name.set(String::new());email.set(String::new());terms.set(false);feedback.set(0);submitted.set(String::new());menu_action.set(2);}
                     disabled=Signal::derive(move || name.get().is_empty() && email.get().is_empty() && !terms.get()) variant=ButtonVariant::Outline test_id="cards-clear-draft">{move || tr(locale.get(), "Clear local draft", "清空本地草稿")}</Button>

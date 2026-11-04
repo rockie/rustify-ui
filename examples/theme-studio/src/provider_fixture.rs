@@ -1,8 +1,8 @@
 use leptos::prelude::*;
-use rustify_components::{Button, ButtonVariant, Dialog, Menu, MenuItem, Select, SelectOption};
+use rustify_components::dropdown_menu as dm;
+use rustify_components::{Button, ButtonVariant, Dialog, Select, SelectOption};
 use rustify_ui::{
-    Anchor, Appearance, ConfigChange, Locale, ThemeBoundary, ThemeBoundaryPatch, ThemeMode,
-    ThemeValuePatch,
+    Appearance, ConfigChange, Locale, ThemeBoundary, ThemeBoundaryPatch, ThemeMode, ThemeValuePatch,
 };
 
 /// A small real component surface used to verify theme projection and layers.
@@ -44,13 +44,6 @@ pub fn ProviderFixture(
         };
         boundary
     });
-    let menu_anchor = NodeRef::<leptos::html::Span>::new();
-    let anchor = Signal::derive(move || {
-        menu_anchor
-            .get()
-            .map(|node| Anchor::element(&node.into()))
-            .unwrap_or(Anchor::Centred)
-    });
     view! {
         <section class="preview-surface bg-background text-foreground p-6" data-testid="preview-surface">
             <header class="flex items-center justify-between gap-4 mb-6">
@@ -80,16 +73,20 @@ pub fn ProviderFixture(
                     </label>
                     <div class="flex flex-wrap gap-2">
                         <Button on_click=move || dialog.set(true) variant=ButtonVariant::Soft color=Some(rustify_ui::AccentColor::Gray) test_id="open-preview-dialog">{move || tr("Open dialog", "打开对话框")}</Button>
-                        <span class="inline-flex" node_ref=menu_anchor><Button on_click=move || menu.set(true) variant=ButtonVariant::Outline test_id="open-preview-menu">{move || tr("Actions", "操作")}</Button></span>
+                        <dm::Root open=menu on_open_change=move |open|menu.set(open)>
+                            <dm::Trigger class="rustify-button rustify-color" attr:data-variant="outline" test_id="open-preview-menu">{move ||tr("Actions", "操作")}</dm::Trigger>
+                            <dm::Portal><dm::Content test_id="preview-menu">
+                                <dm::Item test_id="menu-item-duplicate" on_select=move |_|action.set("duplicate".into())>{move ||tr("Duplicate", "复制")}</dm::Item>
+                                <dm::Item test_id="menu-item-archive" on_select=move |_|action.set("archive".into())>{move ||tr("Archive", "归档")}</dm::Item>
+                            </dm::Content></dm::Portal>
+                        </dm::Root>
                     </div>
                     <p class="text-sm text-muted-foreground" role="status">{move || action.get()}</p>
                     <Dialog open=dialog on_open_change=move |open| dialog.set(open) title=Signal::derive(move || tr("Theme preview", "主题预览").to_owned()) align=rustify_ui::ViewportAlign::Start class="studio-preview-dialog" test_id="preview-dialog">
                         <p>{move || tr("This layer follows the theme where it was opened.", "此浮层跟随创建它的局部主题。")}</p>
                         <Button on_click=move || {action.set(tr("Confirmed", "已确认").into());dialog.set(false);} test_id="dialog-confirm">{move || tr("Confirm", "确认")}</Button>
                     </Dialog>
-                    <Menu open=menu on_open_change=move |open| menu.set(open) anchor=anchor
-                        items=Signal::derive(move || vec![MenuItem::new("duplicate",tr("Duplicate", "复制")),MenuItem::new("archive",tr("Archive", "归档"))])
-                        on_activate=move |id| action.set(id) test_id="preview-menu" />
+
                 </div>
             </ThemeBoundary>
             <div class="mt-6 flex flex-wrap gap-2">

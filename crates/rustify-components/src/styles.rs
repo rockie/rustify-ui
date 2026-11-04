@@ -37,3 +37,6 @@ pub const CONTENT: &str = include_str!("../css/content.css");
 
 /// Skins for progress, loading placeholders and notifications.
 pub const FEEDBACK: &str = include_str!("../css/feedback.css");
+
+/// Skins for command menus, navigation and toolbars.
+pub const MENUS: &str = include_str!("../css/menus.css");

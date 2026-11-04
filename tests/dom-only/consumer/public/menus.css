@@ -1,0 +1,14 @@
+[data-testid="menu-parts"] { box-sizing: border-box; max-width: 64rem; margin-inline: auto; padding: 1.5rem; color: var(--foreground); font: 14px/1.5 var(--rustify-font-sans, system-ui, sans-serif); }
+[data-testid="menu-parts"] h2 { font-size: 1.5rem; margin-block: 0 1rem; }
+[data-testid="menu-parts"] details { margin-block: 1rem; }
+[data-testid="menu-parts"] output { display: block; }
+[data-testid="menubar"], [data-testid="navigation"], [data-testid="toolbar"], [data-testid="toolbar-vertical"] { margin-block-end: 1rem; }
+[data-testid="toolbar"] { box-sizing: border-box; width: 100%; }
+[data-testid="toolbar-search"] { min-width: 8rem; width: 12rem; margin-inline-start: auto; }
+[data-testid="menu-parts"] :is([data-testid="menu-trigger"], [data-testid="navigation-layer-trigger"], [data-testid="toolbar-menu"], [data-testid="menu-outside"], input) { box-sizing: border-box; min-height: 2rem; padding: .375rem .75rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--background); color: inherit; font: inherit; }
+[data-testid="menu-parts"] :is([data-testid="menu-trigger"], [data-testid="navigation-layer-trigger"], [data-testid="toolbar-menu"], [data-testid="menu-outside"]):hover { background: var(--muted); }
+[data-testid="menu-parts"] :is(button, a, input):focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; }
+[data-testid="context-trigger"] { margin-block: 1rem; padding: 1rem; border: 1px solid var(--border); border-radius: var(--radius); }
+.menu-command-shortcut { margin-inline-start: auto; padding-inline-start: 1rem; font: inherit; }
+[data-testid="toolbar-search-error"] { margin-block: -.5rem 1rem; color: var(--destructive); }
+@media (max-width: 480px) { [data-testid="menu-parts"] { padding: 1rem; } }

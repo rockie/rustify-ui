@@ -9,13 +9,14 @@ pub(crate) enum Kind {
     Popover,
     HoverCard,
     Tooltip,
+    Menu,
 }
 impl Kind {
     pub(super) fn hover(self) -> bool {
         matches!(self, Self::HoverCard | Self::Tooltip)
     }
     fn anchored(self) -> bool {
-        self == Self::Popover || self.hover()
+        matches!(self, Self::Popover | Self::Menu) || self.hover()
     }
     fn name(self) -> &'static str {
         match self {
@@ -24,6 +25,7 @@ impl Kind {
             Self::Popover => "popover",
             Self::HoverCard => "hover-card",
             Self::Tooltip => "tooltip",
+            Self::Menu => "menu",
         }
     }
 }
@@ -44,10 +46,12 @@ pub(super) struct Context {
     pub(super) interaction_issue: RwSignal<Option<&'static str>>,
     pub(super) open: Signal<bool>,
     pub(super) change: Callback<bool>,
-    modal: bool,
+    pub(super) modal: bool,
     align: RwSignal<ViewportAlign>,
     position: RwSignal<rustify_ui::FloatingPosition>,
     anchor: NodeRef<leptos::html::Div>,
+    #[cfg(target_arch = "wasm32")]
+    pub(super) virtual_anchor: RwSignal<Option<rustify_ui::Anchor>>,
     anchors: RwSignal<u32>,
     arrow: NodeRef<leptos::html::Div>,
     arrows: RwSignal<u32>,
@@ -80,11 +84,17 @@ impl Context {
             || self.descriptions.get().len() > 1
             || self.cancels.get().len() > 1
     }
+    fn has_anchor(self) -> bool {
+        #[cfg(target_arch = "wasm32")]
+        if self.virtual_anchor.get().is_some() {
+            return true;
+        }
+        self.anchors.get() > 0 || !self.triggers.get().is_empty()
+    }
     fn issue(self) -> Option<&'static str> {
         if self.duplicate() {
             Some("duplicate-part")
-        } else if self.kind.anchored() && self.anchors.get() == 0 && self.triggers.get().is_empty()
-        {
+        } else if self.kind.anchored() && !self.has_anchor() {
             Some("missing-anchor")
         } else if self.portals.get() == 0 {
             Some("missing-portal")
@@ -134,7 +144,9 @@ pub(crate) fn root(
 ) -> impl IntoView {
     let owner = Owner::new();
     let view=owner.with(move || {
-        let context=Context {interaction_issue:RwSignal::new(None),key:StoredValue::new(crate::id::next(kind.name())),kind,open,change,modal,align:RwSignal::new(ViewportAlign::Center),position:RwSignal::new(rustify_ui::FloatingPosition::default()),anchor:NodeRef::new(),anchors:RwSignal::new(0),arrow:NodeRef::new(),arrows:RwSignal::new(0),
+        let context=Context {
+            #[cfg(target_arch="wasm32")] virtual_anchor:RwSignal::new(None),
+            interaction_issue:RwSignal::new(None),key:StoredValue::new(crate::id::next(kind.name())),kind,open,change,modal,align:RwSignal::new(ViewportAlign::Center),position:RwSignal::new(rustify_ui::FloatingPosition::default()),anchor:NodeRef::new(),anchors:RwSignal::new(0),arrow:NodeRef::new(),arrows:RwSignal::new(0),
             panel:NodeRef::new(),panel_id:StoredValue::new(crate::id::next("floating-content")),
             trigger_id:RwSignal::new(String::new()),triggers:RwSignal::new(Vec::new()),portals:RwSignal::new(0),contents:RwSignal::new(0),overlays:RwSignal::new(0),
             titles:RwSignal::new(Vec::new()),descriptions:RwSignal::new(Vec::new()),cancels:RwSignal::new(Vec::new()),
@@ -359,10 +371,11 @@ pub fn Portal(
         count(context.portals);provide_context(PortalContext(context.key));
         let children=StoredValue::new(children);
         let active=Signal::derive(move || context.open.get() && !context.duplicate() && context.portals.get()==1
-            && !(context.kind.anchored() && context.anchors.get()==0 && context.trigger_id.get().is_empty()));
+            && (!context.kind.anchored() || context.has_anchor()));
         let anchor=Signal::derive(move || {
             if context.kind.anchored() {
                 #[cfg(target_arch="wasm32")] {
+                    if let Some(anchor)=context.virtual_anchor.get() {return anchor;}
                     if let Some(anchor)=context.anchor.get() {return rustify_ui::Anchor::element(&anchor.into());}
                     if let Some(trigger)=document().get_element_by_id(&context.trigger_id.get()) {return rustify_ui::Anchor::element(&trigger);}
                 }
@@ -494,7 +507,7 @@ pub(crate) fn content(
     let owner = Owner::new();
     let view=owner.with(move || {
         count(context.contents);provide_context(ContentContext(context.key));
-        if context.kind.anchored() {context.named.set(config.aria_label.is_some_and(|label|!label.get_untracked().trim().is_empty()));}
+        if context.kind.anchored() {context.named.set((context.kind==Kind::Menu && !context.trigger_id.get_untracked().is_empty()) || config.aria_label.is_some_and(|label|!label.get_untracked().trim().is_empty()));}
         let panel=NodeRef::<leptos::html::Div>::new();
         Effect::new(move || {
             if context.contents.get()!=1 {return;}
@@ -513,14 +526,18 @@ pub(crate) fn content(
 
         #[cfg(target_arch="wasm32")]
         browser::observe_names(context);
-        let labelled=(!context.kind.anchored()).then(||leptos::attr::aria_labelledby(move ||(context.titles.get().len()==1 && context.named.get()).then(||context.titles.get()[0].clone())));
+        let labelled=leptos::attr::aria_labelledby(move || {
+            if context.kind==Kind::Menu {return (!config.aria_label.is_some_and(|label|!label.get().trim().is_empty()) && !context.trigger_id.get().is_empty()).then(||context.trigger_id.get());}
+            (!context.kind.anchored() && context.titles.get().len()==1 && context.named.get()).then(||context.titles.get()[0].clone())
+        });
         view!{<div node_ref=panel id=context.panel_id.get_value() class=class data-testid=test_id
-            data-rustify-part=context.part("content") role=match context.kind {Kind::AlertDialog=>Some("alertdialog"),Kind::Tooltip=>Some("tooltip"),Kind::HoverCard=>None,_=>Some("dialog")} tabindex="-1"
+            data-rustify-part=context.part("content") role=match context.kind {Kind::Menu=>Some("menu"),Kind::AlertDialog=>Some("alertdialog"),Kind::Tooltip=>Some("tooltip"),Kind::HoverCard=>None,_=>Some("dialog")} tabindex="-1"
+            aria-orientation=(context.kind==Kind::Menu).then_some("vertical")
             data-state=move ||if context.open.get(){"open"}else{"closed"}
             data-rustify-issue=move ||if !portal{Some("missing-portal")}else{context.content_issue()}
             aria-label=move ||config.aria_label.map(|label|label.get()).filter(|label|!label.trim().is_empty())
             aria-describedby=move ||(context.descriptions.get().len()==1 && context.described.get()).then(||context.descriptions.get()[0].clone())
-            hidden=move ||portal && !context.open.get() inert=move ||portal && !context.open.get()>{children()}</div>}.add_any_attr(super::tabs::optional_attribute(labelled))
+            hidden=move ||portal && !context.open.get() inert=move ||portal && !context.open.get()>{children()}</div>}.add_any_attr(labelled)
     });
     leptos::tachys::reactive_graph::OwnedView::new_with_owner(view, owner).into_any()
 }
@@ -629,6 +646,7 @@ mod browser {
         Effect::new(move || {
             let titles = context.titles.get();
             let descriptions = context.descriptions.get();
+            let trigger = (context.kind == Kind::Menu).then(|| context.trigger_id.get());
             let Some(panel) = context.panel.get() else {
                 return;
             };
@@ -691,6 +709,9 @@ mod browser {
             ));
             if observer.observe_with_options(&panel, &options).is_err() {
                 return;
+            }
+            if let Some(trigger) = trigger.and_then(|id| document().get_element_by_id(&id)) {
+                let _ = observer.observe_with_options(&trigger, &options);
             }
             let disconnect = js_sys::Reflect::get(&observer, &"disconnect".into())
                 .ok()

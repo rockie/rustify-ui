@@ -63,6 +63,7 @@ mod app {
             <crate::lifecycle::Lifecycle />
             <crate::panels::Panels />
             <crate::content::Content />
+            <crate::menus::Menus />
             <crate::feedback::Feedback />
         }
     }
@@ -104,3 +105,6 @@ mod content;
 
 #[cfg(target_arch = "wasm32")]
 mod feedback;
+
+#[cfg(target_arch = "wasm32")]
+mod menus;

@@ -1,0 +1,117 @@
+@layer components {
+  :where(.rustify-menu) {
+    --rustify-menu-padding: var(--rustify-space-2, 8px);
+    --rustify-menu-height: var(--rustify-space-6, 32px);
+    --rustify-menu-item-x: var(--rustify-space-3, 12px);
+    --rustify-menu-check-x: var(--rustify-space-5, 24px);
+    --rustify-menu-font: var(--rustify-font-size-2, 14px);
+    --rustify-menu-line: var(--rustify-line-height-2, 20px);
+    --rustify-menu-radius: var(--rustify-radius-4, 8px);
+    --rustify-menu-item-radius: var(--rustify-radius-2, 4px);
+    --rustify-menu-icon: 10px;
+    display: flex; flex-direction: column; box-sizing: border-box; overflow: hidden;
+    min-width: min(160px, var(--rustify-floating-available-width, 100vw));
+    max-width: var(--rustify-floating-available-width, calc(100vw - 20px));
+    max-height: var(--rustify-floating-available-height, calc(100vh - 20px));
+    border-radius: var(--rustify-menu-radius);
+    background: var(--rustify-floating-surface, var(--popover, white)); color: var(--popover-foreground, black);
+    box-shadow: var(--rustify-shadow-lg, 0 12px 40px rgb(0 0 0 / 20%));
+    font-family: var(--rustify-font-sans, system-ui, sans-serif); outline: none;
+  }
+  :where(.rustify-menu-viewport) { flex: 1 1 auto; min-height: 0; overflow: auto; padding: var(--rustify-menu-padding); box-sizing: border-box; }
+  :where(.rustify-menu-viewport:has(> [role="menuitemcheckbox"], > [role="group"] [role="menuitemradio"])) { --rustify-menu-item-x-start: var(--rustify-menu-check-x); }
+  :where(.rustify-menu-item, .rustify-menu-label) {
+    display: flex; align-items: center; position: relative; box-sizing: border-box;
+    gap: var(--rustify-space-2, 8px); min-height: var(--rustify-menu-height);
+    padding-inline: var(--rustify-menu-item-x-start, var(--rustify-menu-item-x)) var(--rustify-menu-item-x);
+    font-size: var(--rustify-menu-font); line-height: var(--rustify-menu-line);
+    user-select: none; cursor: default;
+  }
+  :where(.rustify-menu-item) { outline: none; border-radius: var(--rustify-menu-item-radius); scroll-margin: var(--rustify-menu-padding) 0; }
+  :where(.rustify-menu-item[data-color]) { color: var(--rustify-component-color-a11, var(--foreground)); }
+  :where(.rustify-menu-item[data-disabled]) { color: var(--rustify-gray-a8, var(--muted-foreground)); }
+  :where(.rustify-menu-item[data-highlighted]) { background: var(--rustify-component-color-9, var(--primary)); color: var(--rustify-component-color-contrast, var(--primary-foreground)); }
+  :where(.rustify-menu-item[data-menu-contrast][data-highlighted]:not([data-color])) { background: var(--rustify-component-color-12, var(--rustify-brand-12, var(--foreground))); color: var(--rustify-component-color-1, var(--rustify-brand-1, var(--background))); }
+  :where(.rustify-menu-item[aria-haspopup="menu"][data-state="open"]:not([data-highlighted])) { background: var(--muted); }
+  :where(.rustify-menu-item[data-menu-variant="soft"][data-highlighted]) { background: var(--rustify-component-color-a4, var(--rustify-brand-a4, var(--muted))); color: var(--popover-foreground); }
+  :where(.rustify-menu-item[data-menu-variant="soft"][data-color][data-highlighted]) { color: var(--rustify-component-color-a11, var(--foreground)); }
+  :where(.rustify-menu-item[data-menu-variant="soft"][aria-haspopup="menu"][data-state="open"]:not([data-highlighted])) { background: var(--rustify-component-color-a3, var(--rustify-brand-a3, var(--muted))); }
+  :where(.rustify-menu-shortcut) { display: flex; align-items: center; margin-inline-start: auto; padding-inline-start: var(--rustify-space-4, 16px); color: var(--muted-foreground); font: inherit; }
+  :where(.rustify-menu-item[data-disabled], .rustify-menu-item[data-highlighted], .rustify-menu-item[data-state="open"]) :where(.rustify-menu-shortcut) { color: inherit; }
+  :where(.rustify-menu-chevron) { margin-inline-start: auto; width: var(--rustify-menu-icon); height: var(--rustify-menu-icon); }
+  :where([dir="rtl"] .rustify-menu-chevron) { transform: rotate(180deg); }
+  :where(.rustify-menu-indicator) { position: absolute; inset-inline-start: 0; width: var(--rustify-menu-item-x-start, var(--rustify-menu-check-x)); display: inline-flex; align-items: center; justify-content: center; }
+  :where(.rustify-menu-indicator svg) { width: var(--rustify-menu-icon); height: var(--rustify-menu-icon); }
+  :where(.rustify-menu-label) { color: var(--muted-foreground); }
+  :where(.rustify-menu-item + .rustify-menu-label) { margin-block-start: var(--rustify-space-2, 8px); }
+  :where(.rustify-menu-separator) { height: 1px; margin-block: var(--rustify-space-2, 8px); margin-inline: var(--rustify-menu-item-x-start, var(--rustify-menu-item-x)) var(--rustify-menu-item-x); background: var(--border); }
+  :where(.rustify-menu-arrow) { background: inherit; }
+}
+
+@layer components {
+  :where(.rustify-menubar) {
+    display: flex; align-items: center; gap: var(--rustify-space-1, 4px); width: fit-content; max-width: 100%;
+    padding: var(--rustify-space-1, 4px); border: 1px solid var(--border); border-radius: var(--rustify-radius-3, 6px);
+    background: var(--background); color: var(--foreground); font-family: var(--rustify-font-sans, system-ui, sans-serif);
+    font-size: var(--rustify-font-size-2, 14px); line-height: var(--rustify-line-height-2, 20px);
+  }
+  :where(.rustify-menubar-trigger) {
+    display: inline-flex; align-items: center; justify-content: center; white-space: nowrap;
+    min-height: var(--rustify-control-height-2, 32px); padding-inline: var(--rustify-space-3, 12px);
+    border: 0; border-radius: var(--rustify-radius-2, 4px); background: transparent; color: inherit; font: inherit; cursor: default;
+  }
+  :where(.rustify-menubar-trigger:hover, .rustify-menubar-trigger[data-state="open"]) { background: var(--muted); }
+  :where(.rustify-menubar-trigger:focus-visible) { outline: 2px solid var(--ring); outline-offset: -2px; }
+  :where(.rustify-menubar-trigger:disabled) { color: var(--muted-foreground); opacity: .5; }
+}
+
+@layer components {
+  :where(.rustify-toolbar) {
+    display: flex; align-items: center; gap: var(--rustify-space-1, 4px); max-width: 100%; width: fit-content;
+    padding: var(--rustify-space-1, 4px); border: 1px solid var(--border); border-radius: var(--rustify-radius-3, 6px);
+    background: var(--background); color: var(--foreground); font-family: var(--rustify-font-sans, system-ui, sans-serif);
+    font-size: var(--rustify-font-size-2, 14px); line-height: var(--rustify-line-height-2, 20px);
+  }
+  :where(.rustify-toolbar[data-orientation="vertical"]) { flex-direction: column; align-items: stretch; }
+  :where(.rustify-toolbar-group) { display: flex; gap: var(--rustify-space-1, 4px); }
+  :where(.rustify-toolbar[data-orientation="vertical"] .rustify-toolbar-group) { flex-direction: column; }
+  :where(.rustify-toolbar-button, .rustify-toolbar-link, .rustify-toolbar-toggle) {
+    display: inline-flex; align-items: center; justify-content: center; white-space: nowrap; text-decoration: none;
+    min-height: var(--rustify-control-height-2, 32px); padding-inline: var(--rustify-space-3, 12px);
+    border: 0; border-radius: var(--rustify-radius-2, 4px); background: transparent; color: inherit; font: inherit;
+  }
+  :where(.rustify-toolbar-button:hover, .rustify-toolbar-link:hover, .rustify-toolbar-toggle:hover) { background: var(--muted); }
+  :where(.rustify-toolbar-toggle[data-state="on"]) { background: var(--accent); color: var(--accent-foreground); }
+  :where(.rustify-toolbar-button:focus-visible, .rustify-toolbar-link:focus-visible, .rustify-toolbar-toggle:focus-visible) { outline: 2px solid var(--ring); outline-offset: -2px; }
+  :where(.rustify-toolbar-button:disabled, .rustify-toolbar-toggle:disabled) { color: var(--muted-foreground); opacity: .5; }
+  :where(.rustify-toolbar-separator) { background: var(--border); flex-shrink: 0; }
+  :where(.rustify-toolbar-separator[data-orientation="vertical"]) { width: 1px; align-self: stretch; margin: var(--rustify-space-1, 4px); }
+  :where(.rustify-toolbar-separator[data-orientation="horizontal"]) { height: 1px; margin: var(--rustify-space-1, 4px); }
+  :where(.rustify-menubar, .rustify-toolbar) { overflow-x: auto; }
+}
+
+@layer components {
+  :where(.rustify-navigation-menu) { width: fit-content; max-width: 100%; font-family: var(--rustify-font-sans, system-ui, sans-serif); color: var(--foreground); }
+  :where(.rustify-navigation-menu-list) { display: flex; align-items: center; gap: var(--rustify-space-1, 4px); list-style: none; margin: 0; padding: 0; overflow-x: auto; }
+  :where(.rustify-navigation-menu-list[data-orientation="vertical"]) { flex-direction: column; align-items: stretch; }
+  :where(.rustify-navigation-menu-trigger, .rustify-navigation-menu-link) {
+    display: inline-flex; align-items: center; white-space: nowrap; box-sizing: border-box; text-decoration: none;
+    min-height: var(--rustify-control-height-2, 32px); padding: var(--rustify-space-2, 8px) var(--rustify-space-3, 12px);
+    border: 0; border-radius: var(--rustify-radius-2, 4px); background: transparent; color: inherit;
+    font-size: var(--rustify-font-size-2, 14px); line-height: var(--rustify-line-height-2, 20px); font-weight: 500;
+  }
+  :where(.rustify-navigation-menu-trigger:hover, .rustify-navigation-menu-trigger[data-state="open"], .rustify-navigation-menu-link:hover) { background: var(--muted); }
+  :where(.rustify-navigation-menu-link[data-active]) { background: var(--accent); color: var(--accent-foreground); text-decoration: underline; text-underline-offset: .2em; }
+  :where(.rustify-navigation-menu-trigger:focus-visible, .rustify-navigation-menu-link:focus-visible) { outline: 2px solid var(--ring); outline-offset: -2px; }
+  :where(.rustify-navigation-menu-trigger:disabled) { color: var(--muted-foreground); opacity: .5; }
+  :where(.rustify-navigation-menu-content, .rustify-navigation-menu-viewport) {
+    background: var(--popover); color: var(--popover-foreground); border-radius: var(--rustify-radius-3, 6px);
+    box-shadow: var(--rustify-shadow-lg, 0 12px 40px rgb(0 0 0 / 20%));
+  }
+  :where(.rustify-navigation-menu-content) { width: min(28rem, calc(100vw - 2rem)); padding: var(--rustify-space-4, 16px); }
+  :where(.rustify-navigation-menu[data-viewport] > .rustify-navigation-menu-list > li > .rustify-navigation-menu-content) { background: transparent; box-shadow: none; }
+  :where(.rustify-navigation-menu-content .rustify-navigation-menu-link) { display: flex; white-space: normal; }
+  :where(.rustify-navigation-menu-indicator) { background: var(--primary); }
+  :where(.rustify-navigation-menu-indicator[data-orientation="horizontal"]) { height: 2px; }
+  :where(.rustify-navigation-menu-indicator[data-orientation="vertical"]) { width: 2px; }
+}

@@ -15,3 +15,4 @@
 | bba16439-b67d-4fa5-bbff-fddfc2e1317a | DOM-COMPONENTS-P1-gaps 开发 | [bba16439-b67d-4fa5-bbff-fddfc2e1317a.md](bba16439-b67d-4fa5-bbff-fddfc2e1317a.md) |
 | 667600ae-475d-405d-a2be-44f97c89e1b3 | DOM-COMPONENTS-P2 开发 | [667600ae-475d-405d-a2be-44f97c89e1b3.md](667600ae-475d-405d-a2be-44f97c89e1b3.md) |
 | 5291ea27-775f-422c-a9dc-444ed893f028 | DOM-COMPONENTS-P3 开发 | [5291ea27-775f-422c-a9dc-444ed893f028.md](5291ea27-775f-422c-a9dc-444ed893f028.md) |
+| d3982b58-e895-40b6-a66b-979a5d747863 | DOM-COMPONENTS-P4 开发 | [d3982b58-e895-40b6-a66b-979a5d747863.md](d3982b58-e895-40b6-a66b-979a5d747863.md) |

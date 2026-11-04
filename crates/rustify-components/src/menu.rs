@@ -1,15 +1,4 @@
-//! A list of commands, opened against something.
-//!
-//! Rust/UI's dropdown menu was 570 lines of Rust around a `format!`-built
-//! `<script>` that measured the trigger, flipped the panel and closed it on an
-//! outside click - none of which a strict policy will run. The measuring, the
-//! Escape order and the return of focus are the SDK overlay stack's here; what
-//! is left is a list with the roles and the arrow keys a menu is expected to
-//! have.
-//!
-//! The items are plain data, so the rules about them - what a heading names,
-//! where a separator ends a group, which rows a keyboard can reach - are
-//! checked without a browser.
+//! Data-driven commands assembled from the shared themed menu parts.
 
 use rustify_ui::Shortcut;
 
@@ -136,49 +125,26 @@ fn blocks(items: &[MenuItem]) -> Vec<Block> {
 
 mod dom {
     use super::{blocks, Block, MenuItem};
-    use leptos::ev::KeyboardEvent;
+    use crate::dropdown_menu as parts;
     use leptos::prelude::*;
-    #[cfg(target_arch = "wasm32")]
-    use leptos::web_sys::Element;
-    #[cfg(target_arch = "wasm32")]
-    use rustify_ui::LocalRect;
-    use rustify_ui::{Anchor, Layer};
+    use rustify_ui::Anchor;
 
-    // `m-0` and `list-none` because nothing resets a list for us: the scope
-    // leaves the host page's defaults alone, and a list's are an em of margin
-    // above and below and a marker beside every row.
-    const PANEL: &str =
-        "m-0 min-w-40 list-none rounded-md border border-border bg-popover text-popover-foreground p-1 shadow-lg";
-    const GROUP: &str = "m-0 p-0";
-    const ITEM: &str = "flex w-full items-center gap-2 rounded-sm px-2 py-1.5 text-sm text-popover-foreground text-left transition-colors outline-none cursor-pointer hover:bg-muted focus-visible:bg-muted aria-disabled:opacity-50 aria-disabled:cursor-not-allowed aria-disabled:hover:bg-transparent";
-    const HEADING: &str = "px-2 py-1.5 text-xs font-medium text-muted-foreground select-none";
-    const SEPARATOR: &str = "-mx-1 my-1 h-px bg-border";
-    const HINT: &str = "ms-auto ps-4 text-xs tracking-widest text-muted-foreground";
-
-    /// Where a menu asked for by a pointer opens: at the point the pointer
-    /// was, held relative to `element`, so that the menu moves with the
-    /// element when anything around it scrolls.
-    ///
-    /// `client_x` and `client_y` are the event's own, in the viewport.
+    /// A point in the viewport, retained relative to the anchor as it scrolls.
     #[cfg(target_arch = "wasm32")]
-    pub fn anchor_at(element: &Element, client_x: f64, client_y: f64) -> Anchor {
+    pub fn anchor_at(element: &leptos::web_sys::Element, client_x: f64, client_y: f64) -> Anchor {
         let bounds = element.get_bounding_client_rect();
         Anchor::region(
             element,
-            LocalRect::new(client_x - bounds.left(), client_y - bounds.top(), 0.0, 0.0),
+            rustify_ui::LocalRect::new(client_x - bounds.left(), client_y - bounds.top(), 0.0, 0.0),
         )
     }
 
-    /// A menu. It stays inside the viewport: it moves left rather than past
-    /// the right edge, and opens above its anchor when there is no room below.
+    /// Data-driven commands with controlled state and an application-owned anchor.
     #[component]
     pub fn Menu(
         #[prop(into)] open: Signal<bool>,
         on_open_change: impl Fn(bool) + Send + Sync + 'static,
-        /// What the menu is placed against: an element of the scope, a
-        /// rectangle inside a GPU region, or a point ([`anchor_at`]).
-        #[prop(into)]
-        anchor: Signal<Anchor>,
+        #[prop(into)] anchor: Signal<Anchor>,
         #[prop(into)] items: Signal<Vec<MenuItem>>,
         on_activate: impl Fn(String) + Send + Sync + 'static,
         #[prop(optional, into)] aria_label: String,
@@ -186,47 +152,8 @@ mod dom {
         #[prop(optional, into)] test_id: String,
     ) -> impl IntoView {
         let group = StoredValue::new(crate::id::next("menu"));
-        let panel_class = crate::macros::reactive_merge(PANEL, &class);
-        let panel_test_id = StoredValue::new(test_id);
-        let label = StoredValue::new((!aria_label.is_empty()).then_some(aria_label));
-        // Stored rather than cloned: `Show` and `Layer` each take a children
-        // function, and a value moved through them makes the outermost
-        // callable once.
-        let on_open_change = StoredValue::new(on_open_change);
         let on_activate = StoredValue::new(on_activate);
-        // Only a change to the rows redraws them: a signal that sends the same
-        // list again would otherwise take the keyboard off the row it is on.
         let drawn = Memo::new(move |_| items.with(|items| blocks(items)));
-
-        let item_id = move |id: &str| format!("{}-item-{id}", group.get_value());
-
-        let close = move || on_open_change.with_value(|close| close(false));
-
-        let on_keydown = move |ev: KeyboardEvent| {
-            let items = items.get_untracked();
-            let here = leptos::prelude::document()
-                .active_element()
-                .and_then(|active| active.get_attribute("data-item"))
-                .and_then(|id| {
-                    items
-                        .iter()
-                        .position(|item| item.reachable() && item.id == id)
-                });
-            let reachable = |index: usize| items[index].reachable();
-            let next = match ev.key().as_str() {
-                "ArrowDown" => crate::roving::step(items.len(), reachable, here, 1),
-                "ArrowUp" => crate::roving::step(items.len(), reachable, here, -1),
-                "Home" => crate::roving::edge(items.len(), reachable, false),
-                "End" => crate::roving::edge(items.len(), reachable, true),
-                _ => None,
-            };
-            let Some(next) = next else {
-                return;
-            };
-            ev.prevent_default();
-            crate::dom::focus_id(&item_id(&items[next].id));
-        };
-
         let command = move |item: MenuItem| {
             let MenuItem {
                 id,
@@ -236,137 +163,43 @@ mod dom {
                 shortcut,
                 ..
             } = item;
-            let element_id = item_id(&id);
-            let reason_id = format!("{element_id}-reason");
-            let described = (!reason.is_empty()).then(|| reason_id.clone());
+            let reason_id = format!("{}-item-{id}-reason", group.get_value());
+            let described = if reason.is_empty() {
+                String::new()
+            } else {
+                reason_id.clone()
+            };
             let asked = id.clone();
             let keys = shortcut.map(|shortcut| shortcut.to_string());
             let announced = keys.clone();
-            view! {
-                <li role="none">
-                    <button
-                        type="button"
-                        role="menuitem"
-                        id=element_id
-                        class=ITEM
-                        data-name="MenuItem"
-                        data-item=id.clone()
-                        data-testid=format!("menu-item-{id}")
-                        aria-disabled=disabled.then_some("true")
-                        aria-describedby=described
-                        aria-keyshortcuts=announced
-                        on:click=move |_| {
-                            if disabled {
-                                return;
-                            }
-                            on_activate.with_value(|run| run(asked.clone()));
-                            on_open_change.with_value(|close| close(false));
-                        }
-                    >
-                        <span class="flex-1">{label}</span>
-                        {(!reason.is_empty())
-                            .then(|| {
-                                view! {
-                                    <span id=reason_id class="text-xs text-muted-foreground">
-                                        {reason}
-                                    </span>
-                                }
-                            })}
-                        // Seen, and not read out a second time: the item
-                        // already carries it as `aria-keyshortcuts`.
-                        {keys
-                            .map(|keys| {
-                                view! {
-                                    <kbd
-                                        class=HINT
-                                        data-name="MenuShortcut"
-                                        data-testid=format!("menu-shortcut-{id}")
-                                        aria-hidden="true"
-                                    >
-                                        {keys}
-                                    </kbd>
-                                }
-                            })}
-                    </button>
-                </li>
-            }
+            parts::Item(parts::ItemProps::builder()
+                .on_select(move |_|on_activate.with_value(|run|run(asked.clone())))
+                .disabled(disabled).text_value(label.clone()).described_by(described)
+                .test_id(format!("menu-item-{id}"))
+                .children(Box::new(move ||view! {
+                    <span class="flex-1">{label}</span>
+                    {(!reason.is_empty()).then(||view!{<span id=reason_id class="text-xs text-muted-foreground">{reason}</span>})}
+                    {keys.map(|keys|view!{<kbd class="rustify-menu-shortcut" data-name="MenuShortcut" data-testid=format!("menu-shortcut-{id}") aria-hidden="true">{keys}</kbd>})}
+                }.into_any())).build())
+                .add_any_attr((leptos::attr::aria_keyshortcuts(announced),leptos::attr::custom::custom_attribute("data-name","MenuItem")))
         };
-
         let rows = move || {
-            drawn
-                .get()
-                .into_iter()
-                .enumerate()
-                .map(|(index, block)| match block {
-                    Block::Separator => view! {
-                        <li role="separator" class=SEPARATOR data-name="MenuSeparator" />
-                    }
-                    .into_any(),
-                    Block::Group {
-                        heading: None,
-                        items,
-                    } => items.into_iter().map(command).collect_view().into_any(),
-                    Block::Group {
-                        heading: Some(heading),
-                        items,
-                    } => {
-                        let heading_id = format!("{}-heading-{index}", group.get_value());
-                        let labelled_by = heading_id.clone();
-                        // The heading names the group rather than being a row
-                        // of its own: hidden from the tree, it is still what
-                        // `aria-labelledby` reads.
-                        view! {
-                            <li role="none">
-                                <ul role="group" class=GROUP aria-labelledby=labelled_by>
-                                    <li
-                                        id=heading_id
-                                        class=HEADING
-                                        data-name="MenuHeading"
-                                        aria-hidden="true"
-                                    >
-                                        {heading}
-                                    </li>
-                                    {items.into_iter().map(command).collect_view()}
-                                </ul>
-                            </li>
-                        }
-                        .into_any()
-                    }
-                })
-                .collect_view()
+            drawn.get().into_iter().map(|block|match block {
+            Block::Separator=>view!{<parts::Separator />}.into_any(),
+            Block::Group {heading:None,items}=>items.into_iter().map(command).collect_view().into_any(),
+            Block::Group {heading:Some(heading),items}=>view!{<parts::Group><parts::Label>{heading}</parts::Label>{items.into_iter().map(command).collect_view()}</parts::Group>}.into_any(),
+        }).collect_view()
         };
-
-        let on_open_auto_focus = Some(Callback::new(move |event: rustify_ui::Cancelable<()>| {
-            // Mounting precedes the Layer's measurable, interactive state.
-            #[cfg(target_arch = "wasm32")]
-            if !event.default_prevented() {
-                let items = items.get_untracked();
-                if let Some(first) =
-                    crate::roving::edge(items.len(), |index| items[index].reachable(), false)
-                {
-                    crate::dom::focus_id(&item_id(&items[first].id));
-                }
-            }
-            #[cfg(not(target_arch = "wasm32"))]
-            let _ = event;
-        }));
-
-        view! {
-            <Show when=move || open.get() fallback=|| ()>
-                <Layer anchor=anchor fit=true on_close=close class="rui-menu-layer" on_open_auto_focus=on_open_auto_focus>
-                    <ul
-                        class=panel_class
-                        data-name="Menu"
-                        data-testid=move || panel_test_id.get_value()
-                        role="menu"
-                        aria-label=move || label.get_value()
-                        on:keydown=on_keydown
-                    >
-                        {rows}
-                    </ul>
-                </Layer>
-            </Show>
-        }
+        crate::primitives::menu::anchored_root(
+            open,
+            Callback::new(on_open_change),
+            anchor,
+            Box::new(move || {
+                view!{
+            <parts::Portal><parts::Content loop_focus=true aria_label=aria_label.clone() class=class.clone() test_id=test_id.clone()>{rows}</parts::Content></parts::Portal>
+        }.into_any()
+            }),
+        )
     }
 }
 

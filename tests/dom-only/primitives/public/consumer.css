@@ -51,3 +51,19 @@ section > label { display: inline-flex; align-items: center; gap: 0.5em; margin-
 .stage-options-content { width: min(300px, var(--rustify-floating-available-width, calc(100vw - 2rem))); padding: 1rem; background: white; color: #172238; border: 1px solid #9aa5b5; }
 .stage-options-content h3 { margin-top: 0; }
 .stage-select-content { background: white; color: #172238; border: 1px solid #9aa5b5; }
+
+[data-testid="menu-parts"] { margin-block: 2rem; padding: 1rem; max-width: 60rem; }
+[data-testid="menu-parts"] details { margin-block: 1rem; }
+[data-testid="menu-parts"] output { display: block; }
+[data-rustify-part="menu-content"] { min-width: 180px; padding: .5rem; background: white; color: #172238; border: 1px solid #9aa5b5; }
+[data-menu-item] { padding: .375rem .5rem; }
+[data-menu-item][data-highlighted] { outline: 2px solid #2458a6; }
+[data-menu-item][data-disabled] { opacity: .5; }
+[data-rustify-part="menubar-root"], [data-rustify-part="toolbar-root"], [data-rustify-part="navigation-menu-list"] { display: flex; gap: .5rem; max-width: 100%; margin-block: .75rem; }
+[data-rustify-part="toolbar-root"][data-orientation="vertical"] { flex-direction: column; width: fit-content; }
+[data-rustify-part="navigation-menu-list"] { list-style: none; padding: 0; }
+[data-rustify-part="navigation-menu-content"] { width: min(400px, calc(100vw - 2rem)); padding: 1rem; background: white; color: #172238; border: 1px solid #9aa5b5; }
+[data-rustify-part="navigation-menu-content"] a { display: block; padding-block: .25rem; }
+[data-rustify-part="navigation-menu-indicator"] { background: #2458a6; height: 2px; }
+[data-rustify-part="navigation-menu-viewport"] { border: 1px solid #9aa5b5; }
+.menu-command-shortcut { margin-inline-start: 1rem; font: inherit; }

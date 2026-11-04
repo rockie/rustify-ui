@@ -214,7 +214,7 @@ test('core hierarchy keeps descendant portals inside the active modal and retire
     await page.getByTestId('tree-child-first').click();await expect(modal).toBeVisible();await expect(page.getByTestId('tree-modal-first')).toBeFocused();
     await page.getByTestId('tree-modal-last').focus();await page.keyboard.press('Tab');await expect(page.getByTestId('tree-modal-first')).toBeFocused();
     await expect(page.getByTestId('tree-first')).toHaveAttribute('inert','');
-    await page.keyboard.press('Escape');await expect(modal).toHaveCount(0);await expect(child).toBeVisible();
+    await page.keyboard.press('Escape');await expect(modal).toHaveCount(0);await expect(child).toBeVisible();await expect(page.getByTestId('tree-child-first')).toBeFocused();
     await page.keyboard.press('Escape');await expect(child).toHaveCount(0);await expect(outer).toBeVisible();
     await page.getByTestId('tree-first').click();await expect(child).toBeVisible();
     await page.getByTestId('tree-disable').click();await expect(outer).toBeHidden();await expect(child).toBeHidden();

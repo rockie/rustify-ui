@@ -319,6 +319,7 @@ fn DeliveryParts(scope: String) -> impl IntoView {
     view! {
         <section data-extra="delivery-parts" class="harness-card" data-testid=id("delivery-parts")>
             <h3>"Delivery review"</h3>
+            <DeliveryMenus scope=scope.get_value() />
             <tab_nav::Root aria_label="Delivery pages">
                 <tab_nav::Link href=format!("#{}",id("delivery-destination")) active=true test_id=id("delivery-link")>"Delivery summary"</tab_nav::Link>
             </tab_nav::Root>
@@ -387,5 +388,43 @@ fn DeliveryParts(scope: String) -> impl IntoView {
             {skeleton::skeleton_as(skeleton_target,loading,Layout::default())}
             <output data-testid=id("owner-checks")>{move || checks.get()}</output>
         </section>
+    }
+}
+
+#[component]
+fn DeliveryMenus(scope: String) -> impl IntoView {
+    let scope = StoredValue::new(scope);
+    let id = move |part: &str| format!("{}-{part}", scope.get_value());
+    let dropdown = RwSignal::new(false);
+    let context = RwSignal::new(false);
+    let menubar = RwSignal::new(None::<String>);
+    let navigation = RwSignal::new(None::<String>);
+    let formatting = RwSignal::new(vec!["italic".to_string()]);
+    let commands = RwSignal::new(0_u32);
+    view! {
+        <dropdown_menu::Root open=dropdown on_open_change=move |value|dropdown.set(value)>
+            <dropdown_menu::Trigger test_id=id("delivery-dropdown")>"Document actions"</dropdown_menu::Trigger>
+            <dropdown_menu::Portal><dropdown_menu::Content test_id=id("delivery-dropdown-content")><dropdown_menu::Item test_id=id("delivery-command") on_select=move |_|commands.update(|n|*n+=1)>"Save document"</dropdown_menu::Item></dropdown_menu::Content></dropdown_menu::Portal>
+        </dropdown_menu::Root>
+        <context_menu::Root open=context on_open_change=move |value|context.set(value)>
+            <context_menu::Trigger test_id=id("delivery-context")>"Document preview"</context_menu::Trigger>
+            <context_menu::Portal><context_menu::Content test_id=id("delivery-context-content")><context_menu::Item on_select=move |_|commands.update(|n|*n+=1)>"Copy document"</context_menu::Item></context_menu::Content></context_menu::Portal>
+        </context_menu::Root>
+        <menubar::Root value=menubar on_value_change=move |value|menubar.set(value) aria_label="Delivery commands">
+            <menubar::Menu value="file"><menubar::Trigger test_id=id("delivery-file")>"File"</menubar::Trigger><menubar::Portal><menubar::Content test_id=id("delivery-file-content")><menubar::Item on_select=move |_|commands.update(|n|*n+=1)>"New document"</menubar::Item></menubar::Content></menubar::Portal></menubar::Menu>
+            <menubar::Menu value="edit"><menubar::Trigger test_id=id("delivery-edit")>"Edit"</menubar::Trigger><menubar::Portal><menubar::Content test_id=id("delivery-edit-content")><menubar::Item on_select=move |_|commands.update(|n|*n+=1)>"Undo"</menubar::Item></menubar::Content></menubar::Portal></menubar::Menu>
+        </menubar::Root>
+        <toolbar::Root aria_label="Delivery formatting">
+            <toolbar::Button test_id=id("delivery-tool-save")>"Save"</toolbar::Button>
+            <toolbar::ToggleGroup value=formatting on_change=move |value|formatting.set(value)>
+                <toolbar::ToggleItem value="bold" test_id=id("delivery-bold")>"Bold"</toolbar::ToggleItem><toolbar::ToggleItem value="italic" test_id=id("delivery-italic")>"Italic"</toolbar::ToggleItem>
+            </toolbar::ToggleGroup>
+        </toolbar::Root>
+        <navigation_menu::Root value=navigation on_value_change=move |value|navigation.set(value) aria_label="Delivery resources">
+            <navigation_menu::List><navigation_menu::Item value="learn"><navigation_menu::Trigger test_id=id("delivery-learn")>"Learn"</navigation_menu::Trigger>
+                <navigation_menu::Content force_mount=true test_id=id("delivery-learn-content")><navigation_menu::Link href=format!("#{}",id("delivery-destination")) test_id=id("delivery-guide") active=true>"Delivery guide"</navigation_menu::Link></navigation_menu::Content>
+            </navigation_menu::Item></navigation_menu::List><navigation_menu::Indicator /><navigation_menu::Viewport />
+        </navigation_menu::Root>
+        <output data-testid=id("delivery-commands")>{move ||commands.get()}</output>
     }
 }

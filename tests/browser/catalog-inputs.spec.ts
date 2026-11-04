@@ -424,10 +424,11 @@ test.describe("toast", () => {
     const region = (page: Page) => page.getByTestId("toaster");
     const card = (page: Page) => page.getByTestId("toaster-toast");
 
-    test("a message is shown in a polite status region, and a newer one replaces it", async ({ page }) => {
+    test("a named notification region announces a message politely, and a newer one replaces it", async ({ page }) => {
         await open(page, "toast");
-        await expect(region(page)).toHaveAttribute("role", "status");
-        await expect(region(page)).toHaveAttribute("aria-live", "polite");
+        await expect(region(page)).toHaveRole("region");
+        await expect(region(page)).toHaveAccessibleName("Notifications");
+        await expect(region(page).locator('[data-rustify-toast-announcer="polite"]')).toHaveAttribute("aria-live", "polite");
         await expect(card(page)).toHaveCount(0);
 
         await page.getByTestId("default-toast-show").click();
@@ -447,7 +448,7 @@ test.describe("toast", () => {
         const second = (await snapshot(page)).toast!;
         expect(second.seq).toBeGreaterThan(first.seq);
         // The tone is how it looks: a coloured edge, nothing more.
-        await expect.poll(() => computed(card(page), "border-inline-start-width")).toBe("4px");
+        await expect.poll(() => computed(region(page).locator('[data-rustify-part="toast-root"]'), "border-inline-start-width")).toBe("4px");
     });
 
     test("a message goes on its own, a replaced one's timer leaves its successor, and dismiss takes it sooner", async ({
@@ -470,13 +471,20 @@ test.describe("toast", () => {
         await dismiss.focus();
         await page.keyboard.press("Enter");
         await expect(card(page)).toHaveCount(0);
-        // The keyboard stays in the scope rather than falling to the page.
-        await expect(page.locator("#catalog")).toBeFocused();
+        // Closing the final notification returns to its valid entry point.
+        await expect(page.getByTestId("default-toast-show")).toBeFocused();
 
         // The button's name is the SDK's, in the scope's language.
         await page.getByTestId("toggle-locale").click();
         await page.getByTestId("default-toast-show").click();
-        await expect(card(page).getByRole("button", { name: "关闭这条消息", exact: true })).toBeVisible();
+        const translatedDismiss = card(page).getByRole("button", { name: "关闭这条消息", exact: true });
+        await expect(translatedDismiss).toBeVisible();
+        await translatedDismiss.focus();
+        await translatedDismiss.evaluate((node: HTMLButtonElement) => node.blur());
+        await expect(page.locator("body")).toBeFocused();
+        await translatedDismiss.evaluate((node: HTMLButtonElement) => node.click());
+        await expect(card(page)).toHaveCount(0);
+        await expect(page.locator("body")).toBeFocused();
     });
 
     test("a message is not a layer: Escape leaves it, and a modal leaves it reachable", async ({ page }) => {
@@ -503,7 +511,8 @@ test.describe("menu: headings, separators, shortcuts, and staying in view", () =
         page,
     }) => {
         await open(page, "menu");
-        await example(page).getByRole("button", { name: "open the menu" }).click();
+        await example(page).getByRole("button", { name: "open the menu" }).focus();
+        await page.keyboard.press("ArrowDown");
         const list = menu(page);
         const group = list.getByRole("group", { name: "on this page", exact: true });
         await expect(group.getByRole("menuitem")).toHaveCount(2);
@@ -511,8 +520,8 @@ test.describe("menu: headings, separators, shortcuts, and staying in view", () =
             list.getByRole("group", { name: "on a selection", exact: true }).getByRole("menuitem")
         ).toHaveCount(1);
         await expect(list.getByRole("separator")).toHaveCount(1);
-        await expect(list.locator('[data-name="MenuHeading"]')).toHaveCount(2);
-        await expect(list.locator('[data-name="MenuHeading"]').first()).toHaveAttribute("aria-hidden", "true");
+        await expect(list.locator('[data-rustify-part="menu-label"]')).toHaveCount(2);
+        await expect(list.locator('[data-rustify-part="menu-label"]')).toHaveText(["on this page", "on a selection"]);
 
         const first = list.getByRole("menuitem", { name: "the first command", exact: true });
         const second = list.getByRole("menuitem", { name: "the second command", exact: true });
@@ -552,19 +561,19 @@ test.describe("menu: headings, separators, shortcuts, and staying in view", () =
         const area = page.getByTestId("default-context-area");
         const context = page.getByRole("menu", { name: "what can be done here", exact: true });
 
-        // With room, its corner is the point.
+        // The themed context surface offsets the point by 2px and its size-2 inset.
         await area.evaluate((element) => element.scrollIntoView({ block: "center" }));
         let box = (await area.boundingBox())!;
         await page.mouse.click(box.x + 10, box.y + 10, { button: "right" });
         await expect(context).toBeVisible();
         expect(await snapshot(page)).toMatchObject({ context_menu: true });
         let placed = (await context.boundingBox())!;
-        expect(Math.abs(placed.x - (box.x + 10))).toBeLessThanOrEqual(1);
-        expect(Math.abs(placed.y - (box.y + 10))).toBeLessThanOrEqual(1);
+        expect(Math.abs(placed.x - (box.x + 12))).toBeLessThanOrEqual(1);
+        expect(Math.abs(placed.y - (box.y + 2))).toBeLessThanOrEqual(1);
         await page.keyboard.press("Escape");
         await expect(context).toBeHidden();
 
-        // Near the bottom right corner, it moves left and opens above.
+        // Near the lower edge, collision adjustment keeps the whole menu in view.
         await page.setViewportSize({ width: 800, height: Math.ceil(box.y + box.height + 8) });
         box = (await area.boundingBox())!;
         const view = await page.evaluate(() => ({
@@ -579,8 +588,7 @@ test.describe("menu: headings, separators, shortcuts, and staying in view", () =
         expect(placed.y).toBeGreaterThanOrEqual(0);
         expect(placed.x + placed.width).toBeLessThanOrEqual(view.width + 1);
         expect(placed.y + placed.height).toBeLessThanOrEqual(view.height + 1);
-        expect(placed.x).toBeLessThan(at.x);
-        expect(placed.y + placed.height).toBeLessThanOrEqual(at.y + 1);
+        expect(placed.y).toBeLessThan(at.y);
         await page.keyboard.press("Escape");
     });
 

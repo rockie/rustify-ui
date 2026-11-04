@@ -24,11 +24,11 @@ mod app {
     use rustify_components::data_table::{Cell as GridCell, Column, DataTable};
     use rustify_components::number_field::format_number;
     use rustify_components::{
-        anchor_at, clx, provide_current_path, variants, Boundary, Button, ButtonVariant, Category,
-        Checkbox, ColorField, Dialog, Glyph, Icon, Label, Link, Menu, MenuItem, NumberField,
-        Progress, RadioGroup, RadioOption, ScrollArea, Select, SelectOption, Slider, Spinner,
-        Support, Switch, Tab, TabPanel, Tabs, TextArea, TextField, Toaster, ToggleGroup,
-        ToggleItem, Tooltip, Tree, TreeNode, CATALOG,
+        clx, provide_current_path, variants, Boundary, Button, ButtonVariant, Category, Checkbox,
+        ColorField, Dialog, Glyph, Icon, Label, Link, Menu, MenuItem, NumberField, Progress,
+        RadioGroup, RadioOption, ScrollArea, Select, SelectOption, Slider, Spinner, Support,
+        Switch, Tab, TabPanel, Tabs, TextArea, TextField, Toaster, ToggleGroup, ToggleItem,
+        Tooltip, Tree, TreeNode, CATALOG,
     };
     use rustify_ui::{
         mount, provide_toasts, use_theme_values, use_toasts, Anchor, AppHandle, GpuRegion,
@@ -258,7 +258,7 @@ mod app {
         /// The last command a menu or its shortcut ran.
         command: RwSignal<String>,
         /// Where the context menu was asked for, while it is open.
-        context: RwSignal<Option<Anchor>>,
+        context: RwSignal<bool>,
         number: Edited<f64>,
         colour: Edited<String>,
         tint: Edited<String>,
@@ -445,7 +445,6 @@ mod app {
         let invalid = Signal::derive(move || state.invalid());
         let prefix = state.name();
         let id = move |name: &str| format!("{prefix}-{name}");
-        let trigger = NodeRef::<leptos::html::Span>::new();
         match category {
             Category::Button => view! {
                 <Button
@@ -640,110 +639,38 @@ mod app {
             }
             .into_any(),
             Category::Menu => {
-                let area = NodeRef::<leptos::html::Div>::new();
+                use rustify_components::{context_menu as cm, dropdown_menu as dm};
                 view! {
-                    <span node_ref=trigger>
-                        <Button
-                            test_id=id("menu-trigger")
-                            expanded=Signal::derive(move || Some(values.menu.get()))
-                            on_click=move || values.menu.update(|open| *open = !*open)
-                        >
-                            "open the menu"
-                        </Button>
-                    </span>
-                    <Menu
-                        test_id=id("menu")
-                        aria_label="what can be done"
-                        open=values.menu
-                        on_open_change=move |open| values.menu.set(open)
-                        anchor=Signal::derive(move || match trigger.get() {
-                            Some(element) => Anchor::element(&element.into()),
-                            None => Anchor::Centred,
-                        })
-                        items=Signal::derive(|| {
-                            let command = |id: &str, label: &str| {
-                                let item = MenuItem::new(id, label);
-                                match menu_shortcut(id) {
-                                    Some(shortcut) => item.shortcut(shortcut),
-                                    None => item,
-                                }
-                            };
-                            vec![
-                                MenuItem::heading("on this page"),
-                                command("first", "the first command"),
-                                command("second", "the second command"),
-                                MenuItem::separator(),
-                                MenuItem::heading("on a selection"),
-                                MenuItem::new("third", "the third command")
-                                    .disabled("nothing is selected"),
-                            ]
-                        })
-                        on_activate=move |command: String| values.run(&command)
-                    />
-                    // A menu opened where the pointer is, rather than under a
-                    // button: the context menu. The keyboard's way to the same
-                    // menu is the context-menu key, or Shift+F10, which open it
-                    // against the box itself.
-                    <div
-                        node_ref=area
-                        tabindex="0"
-                        role="group"
-                        aria-label="a place for a context menu"
-                        class="h-24 w-full rounded-md border border-dashed border-border p-2 text-sm text-muted-foreground outline-none focus-visible:ring-ring/50 focus-visible:ring-[3px]"
-                        data-testid=id("context-area")
-                        on:contextmenu=move |event: leptos::ev::MouseEvent| {
-                            let Some(element) = area.get_untracked() else {
-                                return;
-                            };
-                            event.prevent_default();
-                            let element: leptos::web_sys::Element = element.into();
-                            values
-                                .context
-                                .set(
-                                    Some(
-                                        anchor_at(
-                                            &element,
-                                            f64::from(event.client_x()),
-                                            f64::from(event.client_y()),
-                                        ),
-                                    ),
-                                );
-                        }
-                        on:keydown=move |event: leptos::ev::KeyboardEvent| {
-                            let asked = event.key() == "ContextMenu"
-                                || (event.key() == "F10" && event.shift_key());
-                            let Some(element) = area.get_untracked().filter(|_| asked) else {
-                                return;
-                            };
-                            event.prevent_default();
-                            values.context.set(Some(Anchor::element(&element.into())));
-                        }
-                    >
-                        "right-click anywhere in here"
-                    </div>
-                    <Menu
-                        test_id=id("context-menu")
-                        aria_label="what can be done here"
-                        open=Signal::derive(move || values.context.with(Option::is_some))
-                        on_open_change=move |open| {
-                            if !open {
-                                values.context.set(None);
-                            }
-                        }
-                        anchor=Signal::derive(move || {
-                            values.context.get().unwrap_or(Anchor::Centred)
-                        })
-                        items=Signal::derive(|| {
-                            vec![
-                                MenuItem::new("here", "a command for this point"),
-                                MenuItem::separator(),
-                                MenuItem::new("elsewhere", "a command for anywhere"),
-                            ]
-                        })
-                        on_activate=move |command: String| values.run(&command)
-                    />
-                }
-                .into_any()
+                    <dm::Root open=values.menu on_open_change=move |open|values.menu.set(open)>
+                        <dm::Trigger test_id=id("menu-trigger") class="rustify-button rustify-color" attr:data-variant="solid" >"open the menu"</dm::Trigger>
+                        <dm::Portal><dm::Content test_id=id("menu") aria_label="what can be done" loop_focus=true>
+                            <dm::Group><dm::Label>"on this page"</dm::Label>
+                                <dm::Item on_select=move |_|values.run("first") test_id="menu-item-first" attr:aria-keyshortcuts=menu_shortcut("first").map(|key|key.to_string())>"the first command"
+                                    {menu_shortcut("first").map(|key|view!{<kbd class="rustify-menu-shortcut" data-testid="menu-shortcut-first" aria-hidden="true">{key.to_string()}</kbd>})}
+                                </dm::Item>
+                                <dm::Item on_select=move |_|values.run("second") test_id="menu-item-second" attr:aria-keyshortcuts=menu_shortcut("second").map(|key|key.to_string())>"the second command"
+                                    {menu_shortcut("second").map(|key|view!{<kbd class="rustify-menu-shortcut" data-testid="menu-shortcut-second" aria-hidden="true">{key.to_string()}</kbd>})}
+                                </dm::Item>
+                            </dm::Group>
+                            <dm::Separator />
+                            <dm::Group><dm::Label>"on a selection"</dm::Label>
+                                <dm::Item disabled=true described_by=id("menu-disabled-reason") on_select=move |_|values.run("third") test_id="menu-item-third">
+                                    "the third command"<span id=id("menu-disabled-reason")>"nothing is selected"</span>
+                                </dm::Item>
+                            </dm::Group>
+                        </dm::Content></dm::Portal>
+                    </dm::Root>
+                    <cm::Root open=values.context on_open_change=move |open|values.context.set(open)>
+                        <cm::Trigger test_id=id("context-area") class="h-24 w-full rounded-md border border-dashed border-border p-2 text-sm text-muted-foreground outline-none focus-visible:ring-ring/50 focus-visible:ring-[3px]">
+                            "right-click anywhere in here"
+                        </cm::Trigger>
+                        <cm::Portal><cm::Content test_id=id("context-menu") aria_label="what can be done here" loop_focus=true>
+                            <cm::Item test_id="menu-item-here" on_select=move |_|values.run("here")>"a command for this point"</cm::Item>
+                            <cm::Separator />
+                            <cm::Item test_id="menu-item-elsewhere" on_select=move |_|values.run("elsewhere")>"a command for anywhere"</cm::Item>
+                        </cm::Content></cm::Portal>
+                    </cm::Root>
+                }.into_any()
             }
             Category::Dialog => view! {
                 <Button
@@ -1452,7 +1379,7 @@ mod app {
             actions: first.signal(0),
             dialog_closes: first.signal(0),
             command: first.signal(String::new()),
-            context: first.signal(None),
+            context: first.signal(false),
             number: Edited::new(&mut first, 40.0),
             colour: Edited::new(&mut first, "#1570ef".to_string()),
             tint: Edited::new(&mut first, "#12b76a80".to_string()),
@@ -1575,7 +1502,7 @@ mod app {
                 region_chooser.get().is_some(),
                 values.dialog_closes.get(),
                 json_string(&values.command.get()),
-                values.context.with(Option::is_some),
+                values.context.get(),
                 values.number.value.get(),
                 json_string(&values.colour.value.get()),
                 json_string(&values.tint.value.get()),

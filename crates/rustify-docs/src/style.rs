@@ -28,6 +28,7 @@ const SDK_FORM_CONTROLS: &str = rustify_components::styles::FORM_CONTROLS;
 const SDK_PANELS: &str = rustify_components::styles::PANELS;
 const SDK_CONTENT: &str = rustify_components::styles::CONTENT;
 const SDK_FEEDBACK: &str = rustify_components::styles::FEEDBACK;
+const SDK_MENUS: &str = rustify_components::styles::MENUS;
 const SDK_SLIDER: &str = rustify_components::styles::SLIDER;
 const SDK_CONTROLS: &str = rustify_components::styles::CONTROLS;
 const SDK_BUTTON: &str = rustify_components::styles::BUTTON;
@@ -257,6 +258,7 @@ fn assets() -> Result<Vec<Stylesheet>, StyleError> {
         asset("/rustify-docs/panels.css", SDK_PANELS),
         asset("/rustify-docs/content.css", SDK_CONTENT),
         asset("/rustify-docs/feedback.css", SDK_FEEDBACK),
+        asset("/rustify-docs/menus.css", SDK_MENUS),
         asset("/rustify-docs/slider.css", SDK_SLIDER),
         asset("/rustify-docs/controls.css", SDK_CONTROLS),
         asset("/rustify-docs/button.css", SDK_BUTTON),

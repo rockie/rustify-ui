@@ -222,3 +222,38 @@
   /* Replaced pixels cannot be covered by styling the element's children. */
   :where([data-rustify-part="skeleton-target"][data-loading="true"]:is(img, video, canvas, iframe, object, embed, input[type="image"])) { visibility: hidden !important; }
 }
+
+@layer components {
+  :where([data-rustify-part="menu-content"]) {
+    position: relative; box-sizing: border-box; min-width: 0;
+    max-width: var(--rustify-floating-available-width, calc(100vw - 2rem));
+    max-height: var(--rustify-floating-available-height, calc(100vh - 2rem));
+    overflow: auto;
+  }
+  :where([data-menu-item]) { user-select: none; }
+}
+:where([data-rustify-part="menu-content"])[hidden] { display: none !important; }
+
+@layer components {
+  :where([data-rustify-part="navigation-menu-root"], [data-rustify-part="navigation-menu-sub"]) { position: relative; }
+  :where([data-rustify-part="navigation-menu-list"], [data-rustify-part="navigation-menu-item"]) { position: static; }
+  :where([data-rustify-part="navigation-menu-content"], [data-rustify-part="navigation-menu-viewport"]) {
+    position: absolute; box-sizing: border-box; inset-block-start: 100%; inset-inline-start: 0;
+    max-width: calc(100vw - 2rem);
+  }
+  :where([data-rustify-part="navigation-menu-content"][data-orientation="vertical"], [data-rustify-part="navigation-menu-viewport"][data-orientation="vertical"]) { inset-block-start: 0; inset-inline-start: 100%; }
+  :where([data-rustify-part="navigation-menu-content"]) { z-index: 2; }
+  :where([data-rustify-part="navigation-menu-viewport"]) {
+    z-index: 1; pointer-events: none;
+    width: var(--rustify-navigation-menu-viewport-width); height: var(--rustify-navigation-menu-viewport-height);
+  }
+  :where([data-rustify-part="navigation-menu-indicator"]) { position: absolute; pointer-events: none; z-index: 3; }
+  :where([data-rustify-part="navigation-menu-indicator"][data-orientation="horizontal"]) {
+    inset-block-start: 100%; left: 0; width: var(--rustify-navigation-menu-indicator-size); transform: translateX(var(--rustify-navigation-menu-indicator-offset, 0px));
+  }
+  :where([data-rustify-part="navigation-menu-indicator"][data-orientation="vertical"]) {
+    top: 0; inset-inline-start: 100%; height: var(--rustify-navigation-menu-indicator-size); transform: translateY(var(--rustify-navigation-menu-indicator-offset, 0px));
+  }
+  :where([data-rustify-part="navigation-menu-indicator"][data-state="hidden"]) { visibility: hidden; }
+}
+:where([data-rustify-part="navigation-menu-content"], [data-rustify-part="navigation-menu-viewport"])[hidden] { display: none !important; }

@@ -67,7 +67,8 @@ test.describe("resolved DOM themes",()=> {
     await preview.getByTestId("open-preview-menu").click();
     const menu=preview.getByTestId("preview-menu");
     await expect(menu).toBeVisible();
-    await page.getByTestId("apply-patch").click();
+    // Update the theme without an outside pointer interaction closing the menu.
+    await page.getByTestId("apply-patch").evaluate((node:HTMLButtonElement)=>node.click());
     await expect.poll(async()=> (await computed(menu)).radius).toBe("0px");
     await menu.getByRole("menuitem").first().focus();
     await page.keyboard.press("Escape");await expect(menu).toHaveCount(0);

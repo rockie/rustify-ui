@@ -9,8 +9,10 @@ pub mod aspect_ratio;
 pub mod avatar;
 pub mod choice;
 pub mod collapsible;
+pub mod context_menu;
 pub mod dialog;
 pub mod direction;
+pub mod dropdown_menu;
 pub mod field;
 pub(crate) mod floating;
 pub mod form;
@@ -19,6 +21,9 @@ pub mod hover_card;
 #[cfg(any(target_arch = "wasm32", test))]
 mod hover_grace;
 mod loading;
+pub(crate) mod menu;
+pub mod menubar;
+pub mod navigation_menu;
 pub mod popover;
 pub mod portal;
 pub mod progress;
@@ -30,7 +35,10 @@ pub mod slider;
 pub mod slot;
 pub mod spinner;
 pub mod tabs;
+#[cfg(target_arch = "wasm32")]
+pub(crate) mod timer;
 pub mod toast;
+pub mod toolbar;
 pub mod tooltip;
 
 pub use accessible::{AccessibleIcon, VisuallyHidden};

@@ -502,6 +502,7 @@ impl GroupIndex {
 struct Group {
     id: StoredValue<String>,
     kind: GroupKind,
+    roving: bool,
     orientation: Orientation,
     mode: SelectionMode,
     allow_empty: bool,
@@ -529,7 +530,7 @@ struct Group {
 }
 impl Group {
     fn tabindex(self, id: StoredValue<String>) -> Option<&'static str> {
-        (self.kind != GroupKind::Checkbox).then(|| {
+        (self.roving && self.kind != GroupKind::Checkbox).then(|| {
             if self.stop.get().as_deref() == Some(id.read_value().as_str()) {
                 "0"
             } else {
@@ -773,7 +774,7 @@ struct GroupOptions {
     class: Signal<String>,
     test_id: String,
 }
-fn group_root(options: GroupOptions, children: Children) -> impl IntoView {
+fn group_root(options: GroupOptions, children: Children, roving: bool) -> impl IntoView {
     let owner = Owner::new();
     let view = owner.with(|| {
         let GroupOptions { kind, mode, allow_empty, value, change, name, form, disabled, read_only, invalid, required,
@@ -803,7 +804,7 @@ fn group_root(options: GroupOptions, children: Children) -> impl IntoView {
                 .or_else(|| index.open.iter().find(|&&at| selected.contains(&index.items[at].value.get_value())).map(|&at| index.items[at].id.get_value()))
                 .or_else(|| index.open.first().map(|&at| index.items[at].id.get_value()))
         }));
-        let group = Group { id: StoredValue::new(crate::id::next("choice-group")), kind, orientation, mode, allow_empty, selected, has_selection,
+        let group = Group { id: StoredValue::new(crate::id::next("choice-group")), kind, roving, orientation, mode, allow_empty, selected, has_selection,
             change, items, index, stop, last, focus_owned: RwSignal::new(false), disabled, read_only, invalid, required, described_by,
             name: StoredValue::new(name), form: StoredValue::new(form), node: NodeRef::new(), content_revision: RwSignal::new(0),
             #[cfg(not(target_arch = "wasm32"))]
@@ -849,9 +850,9 @@ fn group_root(options: GroupOptions, children: Children) -> impl IntoView {
                 role=if toolbar { "toolbar" } else if kind == GroupKind::Radio { "radiogroup" } else { "group" }
                 aria-label=optional(aria_label) aria-required=move || (kind == GroupKind::Radio && !toolbar && required.get()).then_some("true")
                 aria-readonly=move || read_only.get().then_some("true")
-                on:focusin=move |event| { if let Some(item) = group.event_item(event.as_ref()) {
+                on:focusin=move |event| { if roving { if let Some(item) = group.event_item(event.as_ref()) {
                     group.last.set(Some(item.id.get_value())); group.focus_owned.set(true);
-                } }
+                } } }
                 on:focusout=move |event| {
                     #[cfg(target_arch = "wasm32")]
                     {
@@ -897,7 +898,7 @@ fn group_root(options: GroupOptions, children: Children) -> impl IntoView {
                     }
                 }
                 on:keydown=move |event| {
-                    if event.default_prevented() || event.is_composing() || disabled.get_untracked() || kind == GroupKind::Checkbox { return; }
+                    if !roving || event.default_prevented() || event.is_composing() || disabled.get_untracked() || kind == GroupKind::Checkbox { return; }
                     let Some(item) = group.event_item(event.as_ref()) else { return; };
                     let key = event.key();
                     let step = match (orientation, key.as_str()) {
@@ -930,7 +931,12 @@ fn group_root(options: GroupOptions, children: Children) -> impl IntoView {
     });
     leptos::tachys::reactive_graph::OwnedView::new_with_owner(view, owner)
 }
-fn navigation(count: usize, here: Option<usize>, step: i32, looping: bool) -> Option<usize> {
+pub(crate) fn navigation(
+    count: usize,
+    here: Option<usize>,
+    step: i32,
+    looping: bool,
+) -> Option<usize> {
     if count == 0 {
         return None;
     }
@@ -1264,6 +1270,7 @@ pub mod radio_group {
                 test_id,
             },
             children,
+            true,
         )
     }
     /// One label and its native input. Custom content may include an Indicator.
@@ -1367,6 +1374,7 @@ pub mod checkbox_group {
                 test_id,
             },
             children,
+            true,
         )
     }
     /// One label and its native input. Custom content may include an Indicator.
@@ -1555,7 +1563,7 @@ where
                 leptos::attr::custom::custom_attribute("data-readonly", move || read_only.get().then_some("")),
                 leptos::attr::custom::custom_attribute("data-invalid", move || invalid.get().then_some("")),
                 leptos::attr::custom::custom_attribute("data-rustify-group-id", group.map(|group| group.id.get_value())),
-                leptos::attr::custom::custom_attribute("tabindex", move || group.and_then(|group| group.tabindex(id))),
+                optional_attribute(group.filter(|group| group.roving).map(|group| leptos::attr::custom::custom_attribute("tabindex", move || group.tabindex(id)))),
                 leptos::attr::custom::custom_attribute("dir", move || direction.get().attribute()),
                 leptos::attr::disabled(move || actual_disabled.get()),
                 leptos::tachys::html::property::prop("disabled", move || actual_disabled.get()),
@@ -1666,6 +1674,43 @@ pub mod toggle_group {
                 test_id,
             },
             children,
+            true,
+        )
+    }
+    #[allow(clippy::too_many_arguments)]
+    pub(crate) fn toolbar_root(
+        value: Signal<Vec<String>>,
+        change: Callback<Vec<String>>,
+        mode: SelectionMode,
+        allow_empty: bool,
+        disabled: Signal<bool>,
+        class: Signal<String>,
+        test_id: String,
+        children: Children,
+    ) -> impl IntoView {
+        group_root(
+            GroupOptions {
+                kind: GroupKind::Toggle,
+                mode,
+                allow_empty,
+                value,
+                change,
+                disabled,
+                name: String::new(),
+                form: String::new(),
+                read_only: false.into(),
+                invalid: false.into(),
+                required: false.into(),
+                described_by: Signal::default(),
+                aria_label: String::new(),
+                orientation: Orientation::Horizontal,
+                looping: false,
+                toolbar: false,
+                class,
+                test_id,
+            },
+            children,
+            false,
         )
     }
     #[component]

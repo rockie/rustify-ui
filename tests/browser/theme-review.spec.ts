@@ -13,7 +13,9 @@ test("tracking of optional ligatures matches same-font DOM widths", async ({ pag
     await waitForReady(page);
     await page.evaluate(async () => {
         window.__theme_studio.edit("font-sans", "IBM Plex Sans");
-        await document.fonts.load('15px "IBM Plex Sans"');
+        // The GPU catalogue uses Plex Text; the editor's Plex Regular is a different face.
+        const reference = new FontFace("Tracking reference", 'url("./makepad_widgets/resources/IBMPlexSans-Text.ttf")');
+        document.fonts.add(await reference.load());
     });
     const widths = [];
     for (const spacing of [0, 0.2, 0.5]) {
@@ -27,7 +29,7 @@ test("tracking of optional ligatures matches same-font DOM widths", async ({ pag
         const dom = await page.evaluate(({ spacing, size }) => {
             const node = document.createElement("span");
             node.textContent = "Rustify · ffi fi · e\u0301";
-            Object.assign(node.style, { fontFamily: '"IBM Plex Sans"', fontSize: `${size}px`, letterSpacing: `${spacing}em`, whiteSpace: "pre", position: "absolute" });
+            Object.assign(node.style, { fontFamily: '"Tracking reference"', fontSize: `${size}px`, letterSpacing: `${spacing}em`, whiteSpace: "pre", position: "absolute" });
             document.body.append(node);
             const width = node.getBoundingClientRect().width;
             node.remove();
@@ -39,7 +41,7 @@ test("tracking of optional ligatures matches same-font DOM widths", async ({ pag
     const lines = await page.evaluate(() => {
         const node = document.createElement("div");
         node.textContent = "fi fi";
-        Object.assign(node.style, { fontFamily: '"IBM Plex Sans"', fontSize: "16px", letterSpacing: "0.5em", width: "35px", lineHeight: "20px", position: "absolute" });
+        Object.assign(node.style, { fontFamily: '"Tracking reference"', fontSize: "16px", letterSpacing: "0.5em", width: "35px", lineHeight: "20px", position: "absolute" });
         document.body.append(node);
         const lines = node.getBoundingClientRect().height / 20;
         node.remove();

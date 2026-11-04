@@ -466,6 +466,8 @@ pub fn Root(
         let runtime = use_toasts().runtime;
         let id = runtime.model.write().register();
         let node = NodeRef::<leptos::html::Div>::new();
+        #[cfg(target_arch = "wasm32")]
+        let focused = StoredValue::new(false);
         let dom_id = crate::id::next("toast").unwrap_or_else(|| format!("rustify-toast-{id}"));
         let identity = StoredValue::new(dom_id.clone());
         let context = RootContext { runtime, id, titles: RwSignal::new(Vec::new()), descriptions: RwSignal::new(Vec::new()) };
@@ -489,7 +491,8 @@ pub fn Root(
         });
         on_cleanup(move || {
             #[cfg(target_arch = "wasm32")]
-            let held_focus = runtime.holds_focus(id);
+            // Keyed views detach their DOM before this Owner is cleaned up.
+            let held_focus = focused.get_value();
             #[cfg(target_arch = "wasm32")]
             {
                 runtime.cancel_swipe(id);
@@ -513,7 +516,28 @@ pub fn Root(
                 aria-describedby=move || { let ids=context.descriptions.get(); (!ids.is_empty()).then(|| ids.join(" ")) }
                 hidden=move || !open.get() || !runtime.model.with(|model| model.visible(id))
                 inert=move || !open.get() || !runtime.model.with(|model| model.visible(id))
-                on:focusin=move |event| { let _ = &event; #[cfg(target_arch = "wasm32")] runtime.focus_enter(&event); }
+                on:focusin=move |event| {
+                    let _ = &event;
+                    #[cfg(target_arch = "wasm32")]
+                    { focused.set_value(true); runtime.focus_enter(&event); }
+                }
+                on:focusout=move |event| {
+                    let _ = &event;
+                    #[cfg(target_arch = "wasm32")]
+                    {
+                        use leptos::wasm_bindgen::JsCast;
+                        if let Some(next) = event.related_target().and_then(|target| target.dyn_into::<web_sys::Node>().ok()) {
+                            focused.set_value(node.get_untracked().is_some_and(|node| node.contains(Some(&next))));
+                        } else {
+                            // Chromium blurs a node before removing it. Preserve focus until
+                            // cleanup, then clear a surviving Root after an explicit blur.
+                            crate::runtime::defer(move || {
+                                let within = node.try_get_untracked().flatten().is_some_and(|node| document().active_element().is_some_and(|active| node.contains(Some(&active))));
+                                focused.try_update_value(|focused| *focused = within);
+                            });
+                        }
+                    }
+                }
                 on:pointerdown=move |event| { let _ = &event; #[cfg(target_arch = "wasm32")] runtime.swipe_down(id, &event); }
                 on:pointermove=move |event| { let _ = &event; #[cfg(target_arch = "wasm32")] runtime.swipe_move(id, &event); }
                 on:pointerup=move |event| { let _ = &event; #[cfg(target_arch = "wasm32")] runtime.swipe_up(id, &event, false); }

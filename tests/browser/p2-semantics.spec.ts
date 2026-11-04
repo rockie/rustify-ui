@@ -110,7 +110,8 @@ test.describe("M2 V4: name, role, value, state", () => {
         await open(page, "menu");
         const trigger = example(page).getByRole("button", { name: "open the menu" });
         await expect(trigger).toHaveAttribute("aria-expanded", "false");
-        await trigger.click();
+        await trigger.focus();
+        await page.keyboard.press("ArrowDown");
         await expect(trigger).toHaveAttribute("aria-expanded", "true");
 
         const menu = page.getByRole("menu", { name: "what can be done" });
