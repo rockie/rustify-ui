@@ -2487,6 +2487,76 @@
         "algorithm": "sha256(sorted(relative_path + SPACE + sha256(file) hex + LF))",
         "sha256": "17908b89e46f9de4d43e97262fbfbe359ce0363d6923816d7c256777c27871df"
       }
+    },
+    {
+      "name": "radix-themes-menus",
+      "version": "3.3.0",
+      "origin": "ref/themes-main",
+      "upstream_commit": null,
+      "modifications": "Verbatim props, CSS and behavior references with MIT license; port to Rust/Leptos, no React runtime dependency.",
+      "import_root": "crates/rustify-components/vendor/radix/themes-menus",
+      "source_files": {
+        "LICENSE": "89e4ae7d91c640c6e8a3ca90ba578d799eb2491b766ed65e0725ba36499d56ba",
+        "packages/radix-ui-themes/package.json": "0565d38c0bc04882fdfb0fe1d45f11869d5620216c4967b27ddcabc07a524337",
+        "packages/radix-ui-themes/src/components/_internal/base-menu.css": "f101f91a368ea492b1a3f8f7a3d6c62decbcb3b3ca6bca151b1291cd0018ae95",
+        "packages/radix-ui-themes/src/components/_internal/base-menu.props.ts": "87c9eb7cef9e7031b7ba5557ac8c30e28f4008609cd00c566863ffffecd95122",
+        "packages/radix-ui-themes/src/components/context-menu.css": "db98b2979cfc640f32919a1c3cc43f0a14f33eb1dd3c2291fa1df8f39f7fc8c1",
+        "packages/radix-ui-themes/src/components/context-menu.props.tsx": "9df4a95ed03191cae7b9203e3160ee41aec23bb882c681fd745315a5d2eaab13",
+        "packages/radix-ui-themes/src/components/context-menu.tsx": "29d1737aed894b65f6b0a293b485854e008238908142e2baf7232664806a5482",
+        "packages/radix-ui-themes/src/components/dropdown-menu.css": "840abd004d6a416705005e13527680b6cb17f5e677677db54fba7f923fec2c57",
+        "packages/radix-ui-themes/src/components/dropdown-menu.props.tsx": "09f4b3edb3f4450d39078fb153f3c692a0a29587a0fe743ba142b3f46cf57af9",
+        "packages/radix-ui-themes/src/components/dropdown-menu.tsx": "2f50c0a81b62fe5e2a9f9a9df5e2b78c2c47de7f06b9a878b7291cabf5f82302"
+      },
+      "files": {
+        "crates/rustify-components/vendor/radix/themes-menus/LICENSE": "89e4ae7d91c640c6e8a3ca90ba578d799eb2491b766ed65e0725ba36499d56ba",
+        "crates/rustify-components/vendor/radix/themes-menus/packages/radix-ui-themes/package.json": "0565d38c0bc04882fdfb0fe1d45f11869d5620216c4967b27ddcabc07a524337",
+        "crates/rustify-components/vendor/radix/themes-menus/packages/radix-ui-themes/src/components/_internal/base-menu.css": "f101f91a368ea492b1a3f8f7a3d6c62decbcb3b3ca6bca151b1291cd0018ae95",
+        "crates/rustify-components/vendor/radix/themes-menus/packages/radix-ui-themes/src/components/_internal/base-menu.props.ts": "87c9eb7cef9e7031b7ba5557ac8c30e28f4008609cd00c566863ffffecd95122",
+        "crates/rustify-components/vendor/radix/themes-menus/packages/radix-ui-themes/src/components/context-menu.css": "db98b2979cfc640f32919a1c3cc43f0a14f33eb1dd3c2291fa1df8f39f7fc8c1",
+        "crates/rustify-components/vendor/radix/themes-menus/packages/radix-ui-themes/src/components/context-menu.props.tsx": "9df4a95ed03191cae7b9203e3160ee41aec23bb882c681fd745315a5d2eaab13",
+        "crates/rustify-components/vendor/radix/themes-menus/packages/radix-ui-themes/src/components/context-menu.tsx": "29d1737aed894b65f6b0a293b485854e008238908142e2baf7232664806a5482",
+        "crates/rustify-components/vendor/radix/themes-menus/packages/radix-ui-themes/src/components/dropdown-menu.css": "840abd004d6a416705005e13527680b6cb17f5e677677db54fba7f923fec2c57",
+        "crates/rustify-components/vendor/radix/themes-menus/packages/radix-ui-themes/src/components/dropdown-menu.props.tsx": "09f4b3edb3f4450d39078fb153f3c692a0a29587a0fe743ba142b3f46cf57af9",
+        "crates/rustify-components/vendor/radix/themes-menus/packages/radix-ui-themes/src/components/dropdown-menu.tsx": "2f50c0a81b62fe5e2a9f9a9df5e2b78c2c47de7f06b9a878b7291cabf5f82302"
+      },
+      "xtask_import_list": {
+        "algorithm": "sha256(sorted(relative_path + SPACE + sha256(file) hex + LF))",
+        "sha256": "d8da9a5ddbcac90f38bdc66ffccdb9df7ed16092a830c2b1818b665e5f6d4d57"
+      }
+    },
+    {
+      "name": "radix-primitives-menus",
+      "version": "1.8.1",
+      "origin": "ref/primitives-main",
+      "upstream_commit": null,
+      "modifications": "Verbatim props, CSS and behavior references with MIT license; port to Rust/Leptos, no React runtime dependency.",
+      "import_root": "crates/rustify-components/vendor/radix/primitives-menus",
+      "source_files": {
+        "LICENSE": "0e80a2d229d2fd4fc7e8636142ec5d0ff0bc031f14c15b682e2ac01dfd5b5138",
+        "packages/react/context-menu/src/context-menu.tsx": "a63ad5fc756382ece71fa1cde4423a0d23676f3413ef99aea884f18c0b8d7be2",
+        "packages/react/dropdown-menu/src/dropdown-menu.tsx": "37abdedd35141de1072686bc1f1257a6acd5be7fd07485ddd1eed3881b1836be",
+        "packages/react/menu/src/menu.tsx": "b2b62344227208e3424863a8dd15df4a5149906f7833c3a7ea581d9505bd98f1",
+        "packages/react/menubar/src/menubar.tsx": "d1de780afc68a75f49a2352dc370117eb2b4b08627926b367af5cf2cc7efa6e5",
+        "packages/react/navigation-menu/src/navigation-menu.tsx": "41a6d1875398d7598e0863fa8e7cf72bc105c664d5b2695cae8e8708e23fb174",
+        "packages/react/radix-ui/package.json": "3295be1b82a760e36b8ecbe0f4d613f05719679ec6cad8f59df428f73a044c5f",
+        "packages/react/roving-focus/src/roving-focus-group.tsx": "6208fed938b1958abb9b301c14c9ed478376d49a653ecf636563ec4398ce08ac",
+        "packages/react/toolbar/src/toolbar.tsx": "c3037e075daed725caf4beb9ffd7ee731047924a89526e0e5bedebde4d1a9217"
+      },
+      "files": {
+        "crates/rustify-components/vendor/radix/primitives-menus/LICENSE": "0e80a2d229d2fd4fc7e8636142ec5d0ff0bc031f14c15b682e2ac01dfd5b5138",
+        "crates/rustify-components/vendor/radix/primitives-menus/packages/react/context-menu/src/context-menu.tsx": "a63ad5fc756382ece71fa1cde4423a0d23676f3413ef99aea884f18c0b8d7be2",
+        "crates/rustify-components/vendor/radix/primitives-menus/packages/react/dropdown-menu/src/dropdown-menu.tsx": "37abdedd35141de1072686bc1f1257a6acd5be7fd07485ddd1eed3881b1836be",
+        "crates/rustify-components/vendor/radix/primitives-menus/packages/react/menu/src/menu.tsx": "b2b62344227208e3424863a8dd15df4a5149906f7833c3a7ea581d9505bd98f1",
+        "crates/rustify-components/vendor/radix/primitives-menus/packages/react/menubar/src/menubar.tsx": "d1de780afc68a75f49a2352dc370117eb2b4b08627926b367af5cf2cc7efa6e5",
+        "crates/rustify-components/vendor/radix/primitives-menus/packages/react/navigation-menu/src/navigation-menu.tsx": "41a6d1875398d7598e0863fa8e7cf72bc105c664d5b2695cae8e8708e23fb174",
+        "crates/rustify-components/vendor/radix/primitives-menus/packages/react/radix-ui/package.json": "3295be1b82a760e36b8ecbe0f4d613f05719679ec6cad8f59df428f73a044c5f",
+        "crates/rustify-components/vendor/radix/primitives-menus/packages/react/roving-focus/src/roving-focus-group.tsx": "6208fed938b1958abb9b301c14c9ed478376d49a653ecf636563ec4398ce08ac",
+        "crates/rustify-components/vendor/radix/primitives-menus/packages/react/toolbar/src/toolbar.tsx": "c3037e075daed725caf4beb9ffd7ee731047924a89526e0e5bedebde4d1a9217"
+      },
+      "xtask_import_list": {
+        "algorithm": "sha256(sorted(relative_path + SPACE + sha256(file) hex + LF))",
+        "sha256": "a4e2f86237ba1a42922bccc67a3388d29687e82bceb94ad89ab5513e037f538a"
+      }
     }
   ],
   "rust_ui": {
