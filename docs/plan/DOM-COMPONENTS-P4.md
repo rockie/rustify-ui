@@ -197,13 +197,13 @@ REVIEW @progress_consistency:
 
 ### 恢复快照
 
-- 最近更新：2026-11-04T15:30:13+08:00
+- 最近更新：2026-11-04T15:54:10+08:00
 - 当前进度：7/7 个里程碑完成
 - 当前状态：已完成
 - 最近完成：M7 · 全部 AC 与整条终验收口
-- 下一步：代码评审 R1 的 G-01、F-01、F-02 与 Indicator 偏差已修复并验证（[M7 评审修复](DOM-COMPONENTS-P4.records/M7.md#评审修复)）；由用户发起 `review-code docs/plan/DOM-COMPONENTS-P4.md` 复审
+- 下一步：代码评审 R2 的 F-03—F-05 已修复并验证（[M7 评审修复](DOM-COMPONENTS-P4.records/M7.md#评审修复)）；由用户发起 `review-code docs/plan/DOM-COMPONENTS-P4.md` 复审
 - 当前阻塞：无；待负责人决定是否为默认调色板变化补迁移说明（R1 待决策项）；D11 参考配色按 Radix UI 保留并记录实测值，人工辅助技术项目按计划留 P5
-- 代码基线：`38bb272a`（R1 评审修复）；M1、M2—M4、M5—M7 均已提交，V-1—V-15 通过；既有评审台账/报告/skills-lock 改动保留，未推送
+- 代码基线：R2 评审修复（待提交）；M1、M2—M4、M5—M7 均已提交，V-1—V-15 通过；既有评审台账/报告/skills-lock 改动保留，未推送
 
 ### 完成记录
 
@@ -215,7 +215,7 @@ REVIEW @progress_consistency:
 | M4 | 已完成 | 2026-11-04T11:21:11+08:00 | 导航、两消费者及调用方阶段出口完成；V-4/V-5 通过，含验收发现的焦点与命名修正 | [M4 记录](DOM-COMPONENTS-P4.records/M4.md) | `60c0a367` |
 | M6 | 已完成 | 2026-11-04T11:43:28+08:00 | 两侧受控等价夹具与共享 36 用例已集成；V-7 通过，浏览器见 M7 | [M6 记录](DOM-COMPONENTS-P4.records/M6.md) | `16ed128b` |
 | M5 | 已完成 | 2026-11-04T12:08:19+08:00 | 43 组陈列、来源 Inspector 与诊断；V-6 与定向浏览器通过，修复多 Provider Toast ID | [M5 记录](DOM-COMPONENTS-P4.records/M5.md) | `16ed128b` |
-| M7 | 已完成 | 2026-11-04T15:30:13+08:00 | V-8—V-15 通过；10 条 AC、四条整条终验可追溯；R1 评审的目录同步与两处 ARIA 已修复复验 | [M7 记录](DOM-COMPONENTS-P4.records/M7.md) | `16ed128b`；修复 `38bb272a` |
+| M7 | 已完成 | 2026-11-04T15:54:10+08:00 | V-8—V-15 通过；10 条 AC、四条整条终验可追溯；R1、R2 评审修复已复验 | [M7 记录](DOM-COMPONENTS-P4.records/M7.md) | `16ed128b`；修复 `38bb272a` |
 
 
 ## 0. 需求、范围与决策
@@ -392,7 +392,7 @@ REVIEW @progress_consistency:
 1. 新入口：`rustify_components::primitives::{dropdown_menu, context_menu, menubar, navigation_menu, toolbar}::*` 与同名 Themes 模块 `rustify_components::{dropdown_menu, context_menu, menubar, navigation_menu, toolbar}::*`。部件与签名见 §5；不提供 React `asChild`/ref/defaultOpen/defaultValue。
 2. `Menu`、`MenuItem`、`MenuItemKind`、`anchor_at` 签名不变。`Menu` 改为 `context`-free 的 Themes 菜单组装：Heading→Group+Label，Separator→Separator，Command→Item（禁用原因经 `aria-describedby`，快捷键显示并输出 `aria-keyshortcuts`），test id `menu-item-{id}`/`menu-shortcut-{id}` 保留；打开时聚焦首个可用项；**锚点元素或 canvas 之外的指针/焦点交互现在请求关闭**（canvas 内点击由应用经 GPU action 决定）；非模态；视觉改为 base-menu 皮肤默认值（size 2、solid）。
 3. 组件目录下拉与右键演示、Studio `cards-menu`/`preview-menu` 改为部件写法，保留原 test id；GPU 锚定调用方继续便捷 Menu。
-4. floating Trigger 的 `aria-haspopup`：Dialog/AlertDialog/Popover 仍为 `dialog`，菜单为 `menu`。菜单 Trigger 不复用 `button_as`，自行输出展开状态与开启时的 `aria-controls`；click 不重复请求。
+4. floating Trigger 的 `aria-haspopup`：Dialog/AlertDialog/Popover 仍为 `dialog`，菜单为 `menu`。菜单 Trigger 不复用 `button_as`，自行输出展开状态与开启时的 `aria-controls`；click 不重复请求。ContextMenu Trigger 例外：自定义目标保留自身角色，只输出 `data-state`，Content 经 `aria-labelledby` 关联（与 Radix 一致；无角色元素不允许 `aria-haspopup`/`aria-expanded`/`aria-controls`）。
 5. `ThemeBoundary` 与 Layer 新增 `data-rustify-theme-source`；`rustify_ui::use_theme_source() -> Option<String>`。
 6. 迁移指南写：旧 Menu 行为差异（外部关闭的范围、视觉、DOM 结构从 ul/li/button 到 div role=menuitem）、何时用部件/便捷入口、Escape/Tab 与参考差异、NavigationMenu 原生导航；“仍缺能力”段删除已交付项。回退以对应提交的源码、CSS、示例一起回退；本期 API 仅属 source 版本，不称已含于公开 registry 版本。
 7. `ToggleGroup` 的 `toolbar` 参数保留为单组便捷用法；Toolbar 内的切换组固定 `toolbar=false`（`role=group`）。目录为五个模块的两种表达新增公开入口（yes）；参考对应中 Primitives Menubar/NavigationMenu/Toolbar 从 No、两库 DropdownMenu/ContextMenu 从经 Menu 映射，改为指向新入口的 Partial（与 P3 浮层同一口径：不提供通用 React props/ref/asChild）；ToggleGroup 记为单组便捷用法。
@@ -420,7 +420,7 @@ REVIEW @progress_consistency:
 **floating 增量：**
 
 1. `Kind::Menu`：`anchored()=true`、`hover()=false`、`name()="menu"`；Content 角色 `menu`、`aria-orientation="vertical"`，有 Trigger 时 `aria-labelledby=<trigger id>`，否则用 `aria_label`，二者皆无给 `missing-name`。
-2. 菜单 Trigger（§5.2）不复用 `button_as`，自行注册 `context.triggers`/`trigger_id` 并输出 `aria-haspopup=menu`、`aria-expanded`、只在开启时 `aria-controls`；`button_as` 保持 `aria-haspopup="dialog"` 与 click 切换，只服务既有 kind。
+2. 菜单 Trigger（§5.2）不复用 `button_as`，自行注册 `context.triggers`/`trigger_id` 并输出 `aria-haspopup=menu`、`aria-expanded`、只在开启时 `aria-controls`（ContextMenu Trigger 除外，只输出 `data-state`，见 §3 第 4 条）；`button_as` 保持 `aria-haspopup="dialog"` 与 click 切换，只服务既有 kind。
 3. Context 新增 crate 内 `virtual_anchor: RwSignal<Option<rustify_ui::Anchor>>`（wasm），Portal 锚点顺序为 virtual → Anchor 部件 → Trigger 元素 → Centred；只由 context_menu 与便捷 Menu 设置；`issue()` 与 Portal `active` 把 `virtual_anchor` 视为锚点（三者皆无仍判 `missing-anchor`）。
 4. Sub 一律以 `Kind::Menu, modal=false` 建嵌套 root，子层不得继承根 `modal=true`；菜单的打开焦点通过 Content 传入的 open hook 完成并 `prevent_default`，floating 默认 `focus_first` 不再执行；不新增 Context 字段。
 
