@@ -453,7 +453,7 @@ fn NavigationSample() -> impl IntoView {
     let disabled = RwSignal::new(false);
     view! { <StateToggle label="Disabled" value=disabled /><n::Root value=value on_value_change=move |next|value.set(next) aria_label="Documentation">
         <n::List><n::Item value="learn"><n::Trigger disabled=disabled>"Learn"</n::Trigger><n::Content><n::Link href=gallery_href("Content")>"Content components"</n::Link><n::Link href=gallery_href("Typography")>"Typography"</n::Link></n::Content></n::Item>
-        <n::Item value="reference"><n::Link href=gallery_href("Interaction") active=true>"Reference"</n::Link></n::Item><n::Indicator /></n::List><n::Viewport />
+        <n::Item value="reference"><n::Link href=gallery_href("Interaction") active=true>"Reference"</n::Link></n::Item></n::List><n::Indicator /><n::Viewport />
     </n::Root> }
 }
 #[component]

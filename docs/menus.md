@@ -116,8 +116,8 @@ fn ApplicationShell() -> impl IntoView {
                     <nav::Content><nav::Link href="/guide/">"Guide"</nav::Link></nav::Content>
                 </nav::Item>
                 <nav::Item value="home"><nav::Link href="/" active=true>"Home"</nav::Link></nav::Item>
-                <nav::Indicator />
             </nav::List>
+            <nav::Indicator />
             <nav::Viewport />
         </nav::Root>
         <toolbar::Root aria_label="Document tools">
@@ -143,7 +143,8 @@ parts as DropdownMenu. Left/Right and hover switch enabled top-level entries.
 
 NavigationMenu is a named `nav`, not a command menu. Content remains inside its
 Item so Tab follows native document order; Viewport measures the active content
-and supplies an outer surface. Indicator tracks the active trigger. `Sub` adds
+and supplies an outer surface. Indicator tracks the active trigger. Place
+Indicator and Viewport after List, which holds only Items. `Sub` adds
 an independent controlled nested list. Root defaults to a 200ms hover delay and
 a 300ms skip-delay window. Link keeps href, target, rel and download; active
 adds `aria-current="page"`. Modified clicks and new-tab navigation remain native.

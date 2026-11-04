@@ -131,8 +131,8 @@ mod app {
                                 <nav::Link href="#delivery-help">"Delivery guide"</nav::Link>
                             </nav::Content>
                         </nav::Item>
-                        <nav::Indicator />
                     </nav::List>
+                    <nav::Indicator />
                     <nav::Viewport />
                 </nav::Root>
                 <div class="shell-tools">

@@ -1,3 +1,4 @@
+import AxeBuilder from '@axe-core/playwright';
 import { test, expect, Page } from '@playwright/test';
 const failures = new WeakMap<Page, string[]>();
 const part = (page: Page, name: string) => page.getByTestId(name);
@@ -313,6 +314,10 @@ test.describe('lifecycle and a11y',()=>{
     test('a11y: names, state references and raw/theme separation remain truthful',async({page},info)=>{
         await expect(part(page,'menubar')).toHaveAccessibleName('Application commands');await expect(part(page,'toolbar')).toHaveAccessibleName('Document formatting');
         await expect(part(page,'navigation')).toHaveAccessibleName('Document resources');
+        // Context targets and groups inside a toolbar keep only the states their roles allow.
+        // Scan before a modal menu makes the rest of the scope inert.
+        const allowed=await new AxeBuilder({page}).withRules(['aria-allowed-attr']).analyze();
+        expect(allowed.violations.flatMap(rule=>rule.nodes.map(node=>`${node.target.join(' ')}: ${node.failureSummary}`))).toEqual([]);
         await keyOpen(page);await expect(part(page,'menu-content')).toHaveRole('menu');await expect(part(page,'menu-content')).toHaveAccessibleName('Document commands');
         await expect(part(page,'menu-disabled')).toHaveAccessibleDescription('Requires approval');await expect(part(page,'menu-checked')).toHaveRole('menuitemcheckbox');
         const issues=await page.evaluate(()=>{

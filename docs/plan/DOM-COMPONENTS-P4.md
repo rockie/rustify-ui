@@ -197,12 +197,12 @@ REVIEW @progress_consistency:
 
 ### 恢复快照
 
-- 最近更新：2026-11-04T14:41:10+08:00
+- 最近更新：2026-11-04T15:30:13+08:00
 - 当前进度：7/7 个里程碑完成
 - 当前状态：已完成
 - 最近完成：M7 · 全部 AC 与整条终验收口
-- 下一步：由用户发起 `review-code docs/plan/DOM-COMPONENTS-P4.md` 代码评审
-- 当前阻塞：无；D11 参考配色按 Radix UI 保留并记录实测值，人工辅助技术项目按计划留 P5
+- 下一步：代码评审 R1 的 G-01、F-01、F-02 与 Indicator 偏差已修复并验证（[M7 评审修复](DOM-COMPONENTS-P4.records/M7.md#评审修复)）；由用户发起 `review-code docs/plan/DOM-COMPONENTS-P4.md` 复审
+- 当前阻塞：无；待负责人决定是否为默认调色板变化补迁移说明（R1 待决策项）；D11 参考配色按 Radix UI 保留并记录实测值，人工辅助技术项目按计划留 P5
 - 代码基线：`16ed128b`；M1、M2—M4、M5—M7 均已提交，V-1—V-15 通过；既有评审台账/报告/skills-lock 改动保留，未推送
 
 ### 完成记录
@@ -215,7 +215,7 @@ REVIEW @progress_consistency:
 | M4 | 已完成 | 2026-11-04T11:21:11+08:00 | 导航、两消费者及调用方阶段出口完成；V-4/V-5 通过，含验收发现的焦点与命名修正 | [M4 记录](DOM-COMPONENTS-P4.records/M4.md) | `60c0a367` |
 | M6 | 已完成 | 2026-11-04T11:43:28+08:00 | 两侧受控等价夹具与共享 36 用例已集成；V-7 通过，浏览器见 M7 | [M6 记录](DOM-COMPONENTS-P4.records/M6.md) | `16ed128b` |
 | M5 | 已完成 | 2026-11-04T12:08:19+08:00 | 43 组陈列、来源 Inspector 与诊断；V-6 与定向浏览器通过，修复多 Provider Toast ID | [M5 记录](DOM-COMPONENTS-P4.records/M5.md) | `16ed128b` |
-| M7 | 已完成 | 2026-11-04T14:41:10+08:00 | V-8—V-15 通过；10 条 AC、四条整条终验可追溯；参考配色例外与 P5 missing 已列明 | [M7 记录](DOM-COMPONENTS-P4.records/M7.md) | `16ed128b` |
+| M7 | 已完成 | 2026-11-04T15:30:13+08:00 | V-8—V-15 通过；10 条 AC、四条整条终验可追溯；R1 评审的目录同步与两处 ARIA 已修复复验 | [M7 记录](DOM-COMPONENTS-P4.records/M7.md) | `16ed128b` |
 
 
 ## 0. 需求、范围与决策
@@ -395,7 +395,7 @@ REVIEW @progress_consistency:
 4. floating Trigger 的 `aria-haspopup`：Dialog/AlertDialog/Popover 仍为 `dialog`，菜单为 `menu`。菜单 Trigger 不复用 `button_as`，自行输出展开状态与开启时的 `aria-controls`；click 不重复请求。
 5. `ThemeBoundary` 与 Layer 新增 `data-rustify-theme-source`；`rustify_ui::use_theme_source() -> Option<String>`。
 6. 迁移指南写：旧 Menu 行为差异（外部关闭的范围、视觉、DOM 结构从 ul/li/button 到 div role=menuitem）、何时用部件/便捷入口、Escape/Tab 与参考差异、NavigationMenu 原生导航；“仍缺能力”段删除已交付项。回退以对应提交的源码、CSS、示例一起回退；本期 API 仅属 source 版本，不称已含于公开 registry 版本。
-7. `ToggleGroup` 的 `toolbar` 参数保留为单组便捷用法；Toolbar 内的切换组固定 `toolbar=false`（`role=group`）。目录把 Primitives Menubar/NavigationMenu/Toolbar 从 No 改为 Yes、DropdownMenu/ContextMenu 从经 Menu 的 Partial 改为独立入口，并把 ToggleGroup 记为单组便捷用法。
+7. `ToggleGroup` 的 `toolbar` 参数保留为单组便捷用法；Toolbar 内的切换组固定 `toolbar=false`（`role=group`）。目录为五个模块的两种表达新增公开入口（yes）；参考对应中 Primitives Menubar/NavigationMenu/Toolbar 从 No、两库 DropdownMenu/ContextMenu 从经 Menu 映射，改为指向新入口的 Partial（与 P3 浮层同一口径：不提供通用 React props/ref/asChild）；ToggleGroup 记为单组便捷用法。
 
 ## 4. 集成与契约
 

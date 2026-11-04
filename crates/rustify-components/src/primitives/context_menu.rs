@@ -54,17 +54,6 @@ where
                     .then_some("duplicate-or-missing-part")
             })
         }),
-        data("aria-haspopup", "menu"),
-        data("aria-expanded", move || {
-            context.floating.open.get().to_string()
-        }),
-        data("aria-controls", move || {
-            context
-                .floating
-                .open
-                .get()
-                .then(|| context.floating.panel_id.get_value())
-        }),
         data("data-state", move || {
             if context.floating.open.get() {
                 "open"

@@ -842,7 +842,7 @@ fn group_root(options: GroupOptions, children: Children, roving: bool) -> impl I
             <div node_ref=group.node id=group.id.get_value() class=move || class.get() data-testid=test_id
                 data-rustify-part=match kind { GroupKind::Checkbox => "checkbox-group", GroupKind::Radio => "radio-group", GroupKind::Toggle => "toggle-group" }
                 data-rustify-group=group.id.get_value() tabindex="-1"
-                aria-orientation=(kind != GroupKind::Checkbox).then_some(orientation.attribute())
+                aria-orientation=(toolbar || kind == GroupKind::Radio).then_some(orientation.attribute())
                 data-rustify-issue=move || if invalid_selection.get() { Some("invalid-selection") } else { index.with(|index| index.invalid.then_some("duplicate-value")) }
                 data-disabled=move || disabled.get().then_some("") data-readonly=move || read_only.get().then_some("")
                 data-invalid=move || invalid.get().then_some("") data-orientation=orientation.attribute()

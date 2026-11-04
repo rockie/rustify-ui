@@ -176,6 +176,10 @@ fn context_trigger_retains_its_native_target_and_menu_association() {
             {cm::trigger_as(leptos::html::article().tabindex(0).attr("data-testid","target").child("Document preview"))}
             <cm::Content test_id="content"><cm::Item on_select=|_|{}>"Copy"</cm::Item></cm::Content>
         </cm::Root>
+        <cm::Root open=false on_open_change=|_|{}>
+            <cm::Trigger test_id="default">"Row"</cm::Trigger>
+            <cm::Portal><cm::Content>"Hidden"</cm::Content></cm::Portal>
+        </cm::Root>
     }.into_any()
     });
     assert!(tag(&html, "target").starts_with("article "), "{html}");
@@ -183,6 +187,14 @@ fn context_trigger_retains_its_native_target_and_menu_association() {
         attribute(tag(&html, "content"), "aria-labelledby"),
         attribute(tag(&html, "target"), "id")
     );
+    // A context target keeps its own role; popup states belong to buttons.
+    for (id, state) in [("target", "open"), ("default", "closed")] {
+        let trigger = tag(&html, id);
+        assert_eq!(attribute(trigger, "data-state"), state, "{id}: {html}");
+        for key in ["aria-haspopup", "aria-expanded", "aria-controls"] {
+            assert!(!trigger.contains(key), "{id} has {key}: {html}");
+        }
+    }
 }
 
 #[test]
@@ -291,13 +303,19 @@ fn toolbar_owns_the_only_tab_stop_across_selected_toggle_groups_and_menu_trigger
                 <tb::ToggleItem value="strike" test_id="strike">"Strike"</tb::ToggleItem>
             </tb::ToggleGroup>
         </tb::Root>
-        <toggle_group::Root value=vec!["b".to_string()] on_change=|_|{} toolbar=true>
+        <toggle_group::Root value=vec!["b".to_string()] on_change=|_|{} toolbar=true test_id="standalone">
             <toggle_group::Item value="a" test_id="standalone-a">"A"</toggle_group::Item>
             <toggle_group::Item value="b" test_id="standalone-b">"B"</toggle_group::Item>
         </toggle_group::Root>
     }.into_any()
     });
     assert_eq!(attribute(tag(&html, "group"), "role"), "group");
+    assert!(!tag(&html, "group").contains("aria-orientation"), "{html}");
+    assert_eq!(attribute(tag(&html, "standalone"), "role"), "toolbar");
+    assert_eq!(
+        attribute(tag(&html, "standalone"), "aria-orientation"),
+        "horizontal"
+    );
     for (id, stop) in [
         ("bold", "0"),
         ("italic", "-1"),
