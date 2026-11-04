@@ -203,7 +203,7 @@ REVIEW @progress_consistency:
 - 最近完成：M7 · 全部 AC 与整条终验收口
 - 下一步：代码评审 R1 的 G-01、F-01、F-02 与 Indicator 偏差已修复并验证（[M7 评审修复](DOM-COMPONENTS-P4.records/M7.md#评审修复)）；由用户发起 `review-code docs/plan/DOM-COMPONENTS-P4.md` 复审
 - 当前阻塞：无；待负责人决定是否为默认调色板变化补迁移说明（R1 待决策项）；D11 参考配色按 Radix UI 保留并记录实测值，人工辅助技术项目按计划留 P5
-- 代码基线：`16ed128b`；M1、M2—M4、M5—M7 均已提交，V-1—V-15 通过；既有评审台账/报告/skills-lock 改动保留，未推送
+- 代码基线：`38bb272a`（R1 评审修复）；M1、M2—M4、M5—M7 均已提交，V-1—V-15 通过；既有评审台账/报告/skills-lock 改动保留，未推送
 
 ### 完成记录
 
@@ -215,7 +215,7 @@ REVIEW @progress_consistency:
 | M4 | 已完成 | 2026-11-04T11:21:11+08:00 | 导航、两消费者及调用方阶段出口完成；V-4/V-5 通过，含验收发现的焦点与命名修正 | [M4 记录](DOM-COMPONENTS-P4.records/M4.md) | `60c0a367` |
 | M6 | 已完成 | 2026-11-04T11:43:28+08:00 | 两侧受控等价夹具与共享 36 用例已集成；V-7 通过，浏览器见 M7 | [M6 记录](DOM-COMPONENTS-P4.records/M6.md) | `16ed128b` |
 | M5 | 已完成 | 2026-11-04T12:08:19+08:00 | 43 组陈列、来源 Inspector 与诊断；V-6 与定向浏览器通过，修复多 Provider Toast ID | [M5 记录](DOM-COMPONENTS-P4.records/M5.md) | `16ed128b` |
-| M7 | 已完成 | 2026-11-04T15:30:13+08:00 | V-8—V-15 通过；10 条 AC、四条整条终验可追溯；R1 评审的目录同步与两处 ARIA 已修复复验 | [M7 记录](DOM-COMPONENTS-P4.records/M7.md) | `16ed128b` |
+| M7 | 已完成 | 2026-11-04T15:30:13+08:00 | V-8—V-15 通过；10 条 AC、四条整条终验可追溯；R1 评审的目录同步与两处 ARIA 已修复复验 | [M7 记录](DOM-COMPONENTS-P4.records/M7.md) | `16ed128b`；修复 `38bb272a` |
 
 
 ## 0. 需求、范围与决策
