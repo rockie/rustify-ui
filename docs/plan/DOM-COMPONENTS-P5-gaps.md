@@ -205,11 +205,11 @@ REVIEW @progress_consistency:
 
 ### 恢复快照
 
-- 最近更新：2026-11-10T01:44:26+08:00
+- 最近更新：2026-11-10T01:50:47+08:00
 - 当前进度：2/2 个里程碑完成
-- 当前状态：M1、M2 均已完成（V-1—V-5 全部通过）；待收口提交与回填 SHA
+- 当前状态：M1、M2 均已完成（V-1—V-5 全部通过）；最终提交 8f828789，收口完成
 - 最近完成：M2 · Studio/GPU 行为补证与终验索引——扩展两组既有浏览器场景覆盖 §6 四段任务，V-2 两命令全过、V-4 消费者走查 11/11、M2 记录补 P1—P4 性能证据索引与 C-7 豁免边界，详见 [M2 记录](DOM-COMPONENTS-P5-gaps.records/M2.md)
-- 下一步：收口 · 最终提交（只暂存本计划列明路径）、回填 M1/M2 行短 SHA、单独提交计划文件更新、同步 SDLC 台账，随后报告完成并提示用户 review-code
+- 下一步：代码评审 · 用户以 review-code 按 docs/plan/DOM-COMPONENTS-P5-gaps.md 发起
 - 当前阻塞：无
 - 代码基线：`f12d5220b014bc7c7baa9679f38afb2388ac749b`
 
@@ -217,8 +217,8 @@ REVIEW @progress_consistency:
 
 | Milestone | 状态 | 更新时间 | 简要记录 | 实现与验收记录 | 提交 |
 | --- | --- | --- | --- | --- | --- |
-| M1 | 已完成 | 2026-11-10T00:43:51+08:00 | 公共事实与真实样本修正：基线 675→693 键与 8 条 fate 行、DropZone aria-invalid、局部 PanelTabs controlled close、DataTable 激活输出、Table/chart 文档与 catalog 再生成；V-1、V-3 通过 | [M1 记录](DOM-COMPONENTS-P5-gaps.records/M1.md) | 待提交 |
-| M2 | 已完成 | 2026-11-10T01:44:26+08:00 | Studio/GPU 行为补证与终验索引：扩展 gallery/acceptance 既有场景覆盖 §6 四段（键盘/真实文件/拖拽/GPU loss 保存导出）、V-2 两命令通过、V-4 消费者走查 11/11、P1—P4 性能证据索引与 C-7 豁免边界 | [M2 记录](DOM-COMPONENTS-P5-gaps.records/M2.md) | 待提交 |
+| M1 | 已完成 | 2026-11-10T00:43:51+08:00 | 公共事实与真实样本修正：基线 675→693 键与 8 条 fate 行、DropZone aria-invalid、局部 PanelTabs controlled close、DataTable 激活输出、Table/chart 文档与 catalog 再生成；V-1、V-3 通过 | [M1 记录](DOM-COMPONENTS-P5-gaps.records/M1.md) | 8f828789 |
+| M2 | 已完成 | 2026-11-10T01:44:26+08:00 | Studio/GPU 行为补证与终验索引：扩展 gallery/acceptance 既有场景覆盖 §6 四段（键盘/真实文件/拖拽/GPU loss 保存导出）、V-2 两命令通过、V-4 消费者走查 11/11、P1—P4 性能证据索引与 C-7 豁免边界 | [M2 记录](DOM-COMPONENTS-P5-gaps.records/M2.md) | 8f828789 |
 
 ## 0. 需求、范围与决策
 
