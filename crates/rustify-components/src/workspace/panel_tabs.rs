@@ -70,7 +70,7 @@ pub fn PanelTabs(
     /// must not do is assume the strip has already done it.
     on_close: impl Fn(String) + Send + Sync + 'static,
     #[prop(optional, into)] aria_label: String,
-    /// The words on the close control, in the application's language.
+    /// The close control's hover hint, in the application's language.
     #[prop(optional, into)]
     close_label: String,
     #[prop(optional, into)] class: String,
@@ -132,6 +132,7 @@ pub fn PanelTabs(
                     let showing = Memo::new(move |_| active.get() == mine);
                     let asked = id.clone();
                     let closed = StoredValue::new(id);
+                    let named = StoredValue::new(label.clone());
                     view! {
                         <div
                             role="presentation"
@@ -159,6 +160,16 @@ pub fn PanelTabs(
                                         data-name="PanelTabClose"
                                         data-rustify-part="panel-tab-close"
                                         data-testid=move || close_test_id.get_value()
+                                        aria-hidden="true"
+                                        title=move || {
+                                            let word = close_label.get_value();
+                                            let word = if word.is_empty() {
+                                                locale.text(rustify_ui::Message::Close).to_string()
+                                            } else {
+                                                word
+                                            };
+                                            format!("{word} {}", named.get_value())
+                                        }
                                         on:click=move |event: MouseEvent| {
                                             // Closing is not choosing: without this
                                             // the tab about to go would be

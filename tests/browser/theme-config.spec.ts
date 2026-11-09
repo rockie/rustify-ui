@@ -5,7 +5,7 @@ test.use({fresh:true});
 const state = (page:Page) => page.evaluate(() => window.__theme_studio.snapshot());
 async function choose(page:Page, field:string, name:string) {
   await page.getByTestId(`studio-config-${field}`).click();
-  await page.getByRole("option", {name, exact:true}).click();
+  await page.getByTestId(`studio-config-${field}-list`).getByRole("option", {name, exact:true}).click();
 }
 async function color(page:Page, token:string, value:string) {
   await page.getByTestId("editor-colors").click();

@@ -1,8 +1,10 @@
 import { expect, Locator, Page, test as playwright } from "@playwright/test";
-import { readFileSync } from "node:fs";
+import { readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { attachMotion, expectNormal, expectStill, installMotionProbe, MotionSample, motionTargets, sampleMotion, seconds } from "./motion";
 import { atRest, attachScans, buildId, scan, Scan, serious } from "./a11y";
+import { EVIDENCE } from "../tier";
+import { capture, fitsWidth, nativeZoom, NATIVE_MISSING, NATIVE_SKIP } from "../native-zoom";
 
 // The official source, without a copied list of categories or pages. These
 // assertions use the same files that root/subpath/meta builds must consume.
@@ -466,6 +468,40 @@ test("gaps reduced motion: without a preference the default theme keeps 150ms tr
     expect(samples[2].spinners).toHaveLength(8);
     for (const leaf of samples[2].spinners) expect(leaf).toEqual({ name: "rustify-spinner-fade", running: 1 });
     await healthy(page, audit);
+});
+
+test("native 200%: home, narrow navigation, tree and data table demos and mode switch fit the zoomed window", { tag: EVIDENCE }, async ({ playwright }, info) => {
+    test.skip(NATIVE_MISSING, NATIVE_SKIP);
+    test.setTimeout(180_000);
+    const zoom = await nativeZoom(playwright.chromium, info);
+    try {
+        const page = zoom.page, audit = await watch(page);
+        await open(page, "./"); await expect(page.locator("h1")).toHaveText("Rustify UI"); await fitsWidth(page);
+        // The home page has no sidebar; its own Components action leads into the docs.
+        await page.getByRole("navigation", { name: "Start reading", exact: true }).getByRole("link", { name: "Components", exact: true }).click();
+        await expect(page.locator("h1")).toHaveText(categories[0].title); await fitsWidth(page);
+        const visited: { route: string; tableScroll?: { scrollWidth: number; clientWidth: number } | null }[] = [];
+        for (const name of ["tree", "data table"]) {
+            const entry = categories.find(entry => entry.name === name)!;
+            const narrow = page.locator(".rd-sidebar-narrow");
+            await expect(page.locator(".rd-sidebar-wide")).toBeHidden();
+            await narrow.locator("summary").click(); await expect(narrow).toHaveAttribute("open", "");
+            await narrow.locator(`a[href="${new URL(url(entry.route)).pathname}"]`).click();
+            await expect(page).toHaveURL(url(entry.route)); await expect(page.locator("h1")).toHaveText(entry.title);
+            const field = await attached(page, entry.demo); await exercise(page, field, name); await fitsWidth(page);
+            const tableScroll = name === "data table" ? await field.getByRole("grid").evaluate(node => {
+                const scroller = [node, ...node.querySelectorAll("*"), ...(node.parentElement ? [node.parentElement] : [])].find(child => child.scrollWidth > child.clientWidth + 1 && /auto|scroll/.test(getComputedStyle(child).overflowX));
+                return scroller ? { scrollWidth: scroller.scrollWidth, clientWidth: scroller.clientWidth } : null;
+            }) : undefined;
+            visited.push({ route: entry.route, tableScroll });
+            await capture(page, `docs/validation/dom-components-p5/native-200-${info.project.name}-${name.replace(" ", "-")}.png`);
+        }
+        const light = await page.locator("body").evaluate(node => getComputedStyle(node).backgroundColor);
+        await page.locator('[data-rd-mode="dark"]').click(); await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
+        expect(await page.locator("body").evaluate(node => getComputedStyle(node).backgroundColor)).not.toBe(light); await fitsWidth(page);
+        await healthy(page, audit);
+        writeFileSync(`docs/validation/dom-components-p5/native-200-${info.project.name}.json`, JSON.stringify({ environment: zoom.environment, visited }, null, 2));
+    } finally { await zoom.close(); }
 });
 
 // Every registered route (home and the 24 categories), the Markdown quick

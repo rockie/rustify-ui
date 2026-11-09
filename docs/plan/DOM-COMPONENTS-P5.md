@@ -195,21 +195,22 @@ REVIEW @progress_consistency:
 
 ### 恢复快照
 
-- 最近更新：2026-11-05T04:30:18+08:00
-- 当前进度：3/4 个里程碑完成
-- 当前状态：M4 未开始
-- 最近完成：M3 · 迁移事实源与文档，V-3、V-4 全过（catalog 15/15、components.md 无漂移、基线副本双模式角色模拟编译；[M3 记录](DOM-COMPONENTS-P5.records/M3.md)）
-- 下一步：M4 · 按 §9.3 建 11b69129 基线产物与 V-10/V6 交付物，串行 V-5—V-13（含清理与 AC→证据→豁免表），@commit_protocol 最终提交与短 SHA 回填，报告完成并提示 review-code
+- 最近更新：2026-11-09T14:20:00+08:00
+- 当前进度：4/4 个里程碑完成
+- 当前状态：全部里程碑完成，待代码评审
+- 最近完成：M4 · 全部 AC 与整条终验收口，V-5—V-13 全过（V-12 三项 missing，按 AC 允许列出；[M4 记录](DOM-COMPONENTS-P5.records/M4.md)）
+- 下一步：用户以 `review-code docs/plan/DOM-COMPONENTS-P5.md` 发起代码评审；豁免与 missing 见 [M4 记录](DOM-COMPONENTS-P5.records/M4.md)「AC → 证据 → 豁免」
 - 当前阻塞：无
-- 代码基线：`3735889c89319be11b0d25857f2a2730d96c6e97`（M1+M2+M3 改动未提交，提交点在 M4）
+- 代码基线：M1—M3 在 `500022a5`；M4 见完成记录
 
 ### 完成记录
 
 | Milestone | 状态 | 更新时间 | 简要记录 | 实现与验收记录 | 提交 |
 | --- | --- | --- | --- | --- | --- |
-| M1 | 已完成 | 2026-11-05T01:17:05+08:00 | 扩展组件统一契约：主题角色/焦点、part 与状态标识、空/错误语义、语义修正、默认文案、Tree 图标、Glyph，V-1 七条全过 | [M1 记录](DOM-COMPONENTS-P5.records/M1.md) | 待提交 |
-| M2 | 已完成 | 2026-11-05T03:55:53+08:00 | Studio Extensions 节（49 组/9 节）、六类样本、局部主题、本地化与 SDK locale 桥、axe=0、矩阵/资源/拾取扩展；V-2 三条全过（spec 15/15）；PanelTabs close 按 axe 实测就地表内修订 | [M2 记录](DOM-COMPONENTS-P5.records/M2.md) | 待提交 |
-| M3 | 已完成 | 2026-11-05T04:30:18+08:00 | 迁移事实源：LEGACY_ENTRIES 152 行+冻结基线 675 键+inventory 完整性测试、目录修正（Primitives.Label/DirectionProvider/Icon/字段）、components.md 再生成含 Legacy API destinations 节、指南重整（How to migrate/生成节替换/Rustify extensions/Default palette/D13/=0.2.1）；V-3、V-4 全过 | [M3 记录](DOM-COMPONENTS-P5.records/M3.md) | 待提交 |
+| M1 | 已完成 | 2026-11-05T01:17:05+08:00 | 扩展组件统一契约：主题角色/焦点、part 与状态标识、空/错误语义、语义修正、默认文案、Tree 图标、Glyph，V-1 七条全过 | [M1 记录](DOM-COMPONENTS-P5.records/M1.md) | 500022a5 |
+| M2 | 已完成 | 2026-11-05T03:55:53+08:00 | Studio Extensions 节（49 组/9 节）、六类样本、局部主题、本地化与 SDK locale 桥、axe=0、矩阵/资源/拾取扩展；V-2 三条全过（spec 15/15）；PanelTabs close 按 axe 实测就地表内修订 | [M2 记录](DOM-COMPONENTS-P5.records/M2.md) | 500022a5 |
+| M3 | 已完成 | 2026-11-05T04:30:18+08:00 | 迁移事实源：LEGACY_ENTRIES 152 行+冻结基线 675 键+inventory 完整性测试、目录修正（Primitives.Label/DirectionProvider/Icon/字段）、components.md 再生成含 Legacy API destinations 节、指南重整（How to migrate/生成节替换/Rustify extensions/Default palette/D13/=0.2.1）；V-3、V-4 全过 | [M3 记录](DOM-COMPONENTS-P5.records/M3.md) | 500022a5 |
+| M4 | 已完成 | 2026-11-09T14:20:00+08:00 | 基线产物、真实 Chrome 200%/减少动效用例、V6 断言修正；收口修复 PanelTabs 闲置参数、candidates.json、Splitter 样本 CSP 与 4 组过期 Studio 用例；V-5—V-13 全过，AC→证据→豁免表与 V-12 missing 已列 | [M4 记录](DOM-COMPONENTS-P5.records/M4.md) | 待提交 |
 
 ## 0. 需求、范围与决策
 
@@ -305,7 +306,7 @@ REVIEW @progress_consistency:
 - **[已核实·足够]** 官方站以 path 依赖当前 SDK（site/Cargo.toml）；source CLI 下 `serve.sh official` 使用当前 checkout，`official.spec.ts` 覆盖 12 篇指南与 24 个 CATALOG 页面的真实 demo。
 - **[已核实·足够]** `mbx check --locked -p fusion-basic --target wasm32-unknown-unknown`、`--manifest-path tests/dom-only/Cargo.toml --workspace` 与 `tests/dom-only/public-panel-consumer` 的 wasm 检查均实跑通过（26 s、16 s、18 s，含缓存命中）。host `--lib --bins` 不覆盖 `cfg(wasm32)` 代码，因此 V-6 必须跑 wasm 目标。
 - **[已核实·足够] 实验**：把 `{"partition":{"default_zoom_level":{"x":3.8017840169239308}}}` 写入新 profile 的 `Default/Preferences`，Playwright `launchPersistentContext` 启动 `/Applications/Google Chrome.app`（156.0.8078.80，headless，`viewport:null`，`--window-size=1280,800`），页面读到 innerWidth 640、devicePixelRatio 2、`max-width:768px` 命中；未预置的对照为 1280/1。
-- **[已核实·足够]** 既有缩放用例：`theme-acceptance.spec.ts:354` 属 `theme-studio` regression 层，用 `chrome.settingsPrivate.setDefaultZoom(2)` 验证编辑、GPU 对比与导出；它需要临时 profile 与 `chrome://settings` 标签页，未设 `RUSTIFY_CHROMIUM` 时跑 Playwright 自带 Chromium。P4 §0.5 把真实缩放划给 P5，P4 未实跑。本期零改动保留，随 V-7 运行，只作回归；`tests/native-zoom.ts` 是 V-10 的证据入口（真实 Chrome、启动前预置、不依赖设置页、官方站同样可用）。两条路径的结论不混用。
+- **[已核实·足够]** 既有缩放用例：`theme-acceptance.spec.ts:354` 属 `theme-studio` regression 层，用 `chrome.settingsPrivate.setDefaultZoom(2)` 验证编辑、GPU 对比与导出；它需要临时 profile 与 `chrome://settings` 标签页，未设 `RUSTIFY_CHROMIUM` 时跑 Playwright 自带 Chromium。P4 §0.5 把真实缩放划给 P5，P4 未实跑。本期保留，随 V-7 运行，只作回归（仅去掉当前 Chromium 已不支持的 CDP `fromSurface: false`，断言不变）；`tests/native-zoom.ts` 是 V-10 的证据入口（真实 Chrome、启动前预置、不依赖设置页、官方站同样可用）。两条路径的结论不混用。
 - **[已核实·缺口]** 选中态对比：`data_table/view.rs:11`、`tree.rs:17` 根无前景色，`view.rs:16-17`、`tree.rs:18` 只有 `aria-selected:bg-accent` → 深色默认主题选中文字继承 `#f9fafb`，叠在 `#32d583` 上只有 1.83:1（改用 accent-foreground 后浅/深为 7.19、9.86）→ §5.1。
 - **[已核实·缺口]** 焦点：DataTable、Tree、PanelTabs、Splitter、FilePicker 用 `focus-visible:ring-ring/50`（半透明 box-shadow），默认主题对背景只有 2.02（浅）、2.89（深），低于 3:1，且与 P4 的 2px outline 不一致；不透明 ring 对背景为 4.37、8.15，但对选中背景只有 1.74、1.21 → §5.1。
 - **[已核实·缺口]** Inspector 只认 `data-rustify-part, button, a, input, textarea, select, [role='button']`（inspector.rs:371-372），扩展组件只有 `data-name` → Tree 项、表格行、Tab 无法定位部件 → §5.2。
@@ -590,7 +591,7 @@ for p in fusion-basic property-workbench data-workbench component-catalog vellum
 done
 mbx check --locked --manifest-path tests/dom-only/Cargo.toml --workspace --target wasm32-unknown-unknown
 mbx check --locked --manifest-path tests/dom-only/public-panel-consumer/Cargo.toml --target wasm32-unknown-unknown
-mbx test --locked --manifest-path tests/theme-export/Cargo.toml --workspace --bins
+RUSTIFY_STUDIO_SOURCE_REVISION="$(git rev-parse HEAD)" mbx test --locked --manifest-path tests/theme-export/Cargo.toml --workspace --bins
 PATH="/opt/homebrew/opt/python@3.12/libexec/bin:$PATH" mbx xtask docs-verify --group features
 ```
 

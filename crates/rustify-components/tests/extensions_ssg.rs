@@ -206,6 +206,10 @@ fn a_panel_tab_is_a_tab_and_its_close_button_does_not_choose_it() {
     assert!(close.starts_with("span "), "{close}");
     assert_eq!(attribute(close, "role"), "");
     assert_eq!(attribute(close, "tabindex"), "");
+    // Mouse users still get the words, as a hover hint the tab's own
+    // accessible name does not absorb.
+    assert_eq!(attribute(close, "aria-hidden"), "true");
+    assert_eq!(attribute(close, "title"), "close blue");
 }
 
 #[test]
@@ -283,6 +287,7 @@ fn the_default_words_follow_the_locale() {
     // The tree and the table each say "nothing to show" in the reader's
     // language rather than the SDK's own.
     assert_eq!(html.matches("没有内容").count(), 2, "{html}");
+    assert!(html.contains("title=\"关闭 blue\""), "{html}");
 }
 
 #[test]

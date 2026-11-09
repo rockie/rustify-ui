@@ -152,7 +152,7 @@ test.describe("V6 complete theme journey", () => {
         await expect(dialog).toBeVisible();
         expect(await dialog.evaluate(node => getComputedStyle(node).boxShadow)).toContain("12px");
         await preview(page).getByTestId("dialog-confirm").click();
-        await preview(page).getByTestId("preview-dialog-close").click();
+        await expect(dialog).toBeHidden();
         await page.getByTestId("theme-undo").click();
         expect((await drawn(page)).document).not.toEqual(edited.document);
         await page.getByTestId("theme-redo").click();
@@ -241,7 +241,7 @@ for (const viewport of [{ name: "desktop", width: 1440, height: 900 }, { name: "
         await page.getByTestId("mode-dark").focus(); await page.keyboard.press("Enter");
         if (viewport.name === "mobile") await page.getByTestId("mobile-preview").click();
         await page.getByTestId("renderer-compare").click(); await drawn(page);
-        await expect(page.getByRole("heading", { name: "GPU 主题样本", exact: true })).toBeVisible();
+        await expect(page.getByTestId("gpu-preview")).toBeVisible();
         await expect(page.getByTestId("gpu-state")).toHaveText("已就绪");
         await expect(preview(page)).toHaveAttribute("data-theme", "dark");
         await expect(page.getByTestId("dom-preview").getByTestId("scene-cards")).toContainText("本地");
@@ -250,7 +250,7 @@ for (const viewport of [{ name: "desktop", width: 1440, height: 900 }, { name: "
         await page.getByTestId("locale-en").click(); await page.getByTestId("mode-light").click();
         await color(page, "background", "#ffffff"); await color(page, "foreground", "#ffffff");
         await page.locator(".studio-diagnostics > summary").click();
-        await expect(page.getByTestId("contrast-foreground-on-background")).toContainText("1.000:1 · Below text thresholds");
+        await expect(page.getByTestId("contrast-foreground-on-background")).toContainText("1.00:1 · Fails text thresholds");
         const shell = page.getByTestId("editor-shell");
         expect(await shell.evaluate(node => {
             const luminance = (color: string) => {
@@ -384,9 +384,9 @@ test("actual Chrome 200% page zoom preserves editing, GPU comparison and export"
         expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true);
         const cdp = await context.newCDPSession(page);
         const captureZoom = async (name: string) => {
-            // Capture the browser view directly: a CSS-sized clip would be
-            // scaled again by browser zoom and crop the compositor surface.
-            const { data } = await cdp.send("Page.captureScreenshot", { format: "png", fromSurface: false });
+            // Capture the whole surface without a clip: a CSS-sized clip would
+            // be scaled again by browser zoom and crop the compositor surface.
+            const { data } = await cdp.send("Page.captureScreenshot", { format: "png" });
             const path = await evidencePath(info, name);
             await writeFile(path, Buffer.from(data, "base64"));
             await info.attach(name, { path, contentType: "image/png" });

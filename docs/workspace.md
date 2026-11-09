@@ -148,5 +148,5 @@ hands wheels over and the list beside it does not is a page where the same
 gesture means two things.
 
 PanelTabs tabs sit behind a presentation frame; the close control is a
-mouse-only target outside the accessibility tree and the Delete key closes
-the active closable tab. Splitters keep arrow keys on physical direction.
+mouse-only target outside the accessibility tree, `close_label` is its hover
+hint, and the Delete key closes the active closable tab. Splitters keep arrow keys on physical direction.

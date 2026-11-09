@@ -199,7 +199,7 @@ pub(crate) fn WorkspaceSample() -> impl IntoView {
         }>"Reset"</button>
         <div
             class="gallery-workspace"
-            style=move || format!("grid-template-columns:{}", columns(&sizes.get()))
+            style:grid-template-columns=move || columns(&sizes.get())
         >
             <div class="gallery-workspace-panel">"Drafts"</div>
             <div class="gallery-workspace-panel">"Editor"</div>

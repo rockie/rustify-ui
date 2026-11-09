@@ -388,6 +388,8 @@ test('extension samples keep working surfaces with parts and states', async ({ p
     await files.getByLabel('Disabled', { exact: true }).uncheck();
 
     const workspace = gallery.locator('[data-gallery-entry="Splitter"]');
+    // The panel sizes reach the grid under the Studio's strict CSP.
+    await expect(workspace.locator('.gallery-workspace')).toHaveCSS('grid-template-columns', '220px 320px 220px');
     const tabs = workspace.getByTestId('gallery-tabs');
     await tabs.getByTestId('close-drafts').click();
     await expect(tabs.getByTestId('panel-tab-drafts')).toHaveCount(0);

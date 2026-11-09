@@ -180,7 +180,9 @@ for(const [label,id] of [["plain","static-theme"],["quoted","brand\"&copy;<dark>
       await expect(target).toHaveAttribute("data-rustify-theme-css",id);
       await expect(target).toHaveAttribute("data-rustify-scope",/\S+/);
       const projections=[];
-      for(const [mode,color] of [["light","rgb(21 112 239)"],["dark","rgb(83 177 253)"]]){
+      // The resolved export writes the document's own values as rgb().
+      const rgb=(hex:string)=>`rgb(${[1,3,5].map(at=>parseInt(hex.slice(at,at+2),16)).join(" ")})`;
+      for(const [mode,color] of [["light",rgb(before.values.light.primary)],["dark",rgb(before.values.dark.primary)]]){
         await target.evaluate((node,mode)=>mode==="dark"?node.setAttribute("data-theme",mode):node.removeAttribute("data-theme"),mode);
         const primary=(await target.evaluate(node=>getComputedStyle(node).getPropertyValue("--primary"))).trim();
         projections.push({mode,primary});expect(primary).toBe(color);

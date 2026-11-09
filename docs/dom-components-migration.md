@@ -483,7 +483,8 @@ message), and `invalid` on FilePicker and DropZone (refusal visuals plus
 added, and `Message::all()` now returns 23 entries instead of 19. `Glyph`
 gained `DividerHorizontal`. PanelTabs tabs render behind a presentation frame
 that carries `data-state`; the close control is a mouse-only target outside
-the accessibility tree, and the Delete key closes the active closable tab.
+the accessibility tree whose hover hint is `close_label` (no longer an
+accessible name), and the Delete key closes the active closable tab.
 Selected rows and tree items use paired accent colors, and extension parts
 carry `data-rustify-part` markers for tooling.
 
