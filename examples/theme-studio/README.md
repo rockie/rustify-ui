@@ -111,6 +111,18 @@ stylesheet choices. A focused browser check after the release build is:
 npx playwright test --project=theme-studio theme-forms.spec.ts
 ```
 
+## Extension components
+
+The **Components** preview adds a **Rustify extensions** section: a windowed
+100,000-row DataTable with sortable headings, a Tree with real open/close
+state, a FilePicker and DropZone pair with a shared output and real invalid and
+disabled states, a Splitter and PanelTabs workspace with closable panels, a
+command palette whose empty and unavailable states stay readable, and every
+Glyph. A local theme boundary at the end of the section overlays the extension
+samples with its own accent, border and popover tokens, and the palette opened
+inside it inherits them. The gallery's own control labels follow the studio
+language; sample content stays in the API's words.
+
 ## Local data and failures
 
 New writes use `rustify-ui.theme-studio.v2`. Its envelope contains

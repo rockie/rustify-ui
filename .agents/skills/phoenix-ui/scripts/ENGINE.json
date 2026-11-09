@@ -2,38 +2,38 @@
   "schemaVersion": 1,
   "distribution": "release",
   "toolVersion": "0.1.0",
-  "npmPackageVersion": "0.7.9",
-  "sourceCommit": "7229a8ba08f7d37bc37530e00e4d933903f1b5cf",
-  "sourceTree": "8f59135bcd1e6ef1cb1db6974fae9dffac0ff0c7",
+  "npmPackageVersion": "0.7.12",
+  "sourceCommit": "1c9e6755c6dbfd7afbb9085cbaed082c5fc22708",
+  "sourceTree": "be99076d8fd89d15d5754a7c0dbf6567a01e677b",
   "sourceState": "dirty",
-  "sourceInputSha256": "3088d11390806058b527f5bbc4b0a4860f34c7cdd52a104d7806f8c46fccf310",
+  "sourceInputSha256": "0a1b3dd8dd24e0501e1eb9802274db67d7064123b853d4cd63692b9cc655b75a",
   "bundleSchema": 1,
-  "bundleSha256": "edc5115dbdd52a5b834ae242ffd46c76d76e6c24ae10ec2dfc6a13cc0ac28921",
+  "bundleSha256": "3d10869f73336882a5d086c2410585b7aee71aecf32c52a2f7b5232c19c8eec6",
   "reviewSchema": 1,
   "engines": {
     "darwin-arm64": {
       "asset": "phoenix-ui-darwin-arm64",
-      "size": 18366832,
-      "sha256": "b843dce661874b9ab7a4799c529193a6cdc7415e6a0a78a5a28e5c87072df0eb",
-      "url": "https://download.xgent.ai/vendor/phoenix-ui/v0.7.9/ci-41410951647/darwin-arm64/phoenix-ui-darwin-arm64"
+      "sha256": "82d369b463aaf57cdeb1cc131166ed761c1b7f9668c724a9c2121789e84e5e15",
+      "size": 14133696,
+      "url": "https://download.xgent.ai/vendor/phoenix-ui/v0.7.12/ci-42016931086/darwin-arm64/phoenix-ui-darwin-arm64"
     },
     "darwin-x64": {
       "asset": "phoenix-ui-darwin-x64",
-      "size": 20858712,
-      "sha256": "9af56bc51bdf6096228fe36ffe7096b85ce0653a21a29554938d94f596d48681",
-      "url": "https://download.xgent.ai/vendor/phoenix-ui/v0.7.9/ci-41410951647/darwin-x64/phoenix-ui-darwin-x64"
+      "sha256": "48880403c97749606acb42d92acbce4641a2785807ac943e935f8c4790cfb901",
+      "size": 15949824,
+      "url": "https://download.xgent.ai/vendor/phoenix-ui/v0.7.12/ci-42016931086/darwin-x64/phoenix-ui-darwin-x64"
     },
     "linux-arm64": {
       "asset": "phoenix-ui-linux-arm64",
-      "size": 19768520,
-      "sha256": "174507b2150985556544ba7cfb61613d054e9908750defb123b981c54b3ec297",
-      "url": "https://download.xgent.ai/vendor/phoenix-ui/v0.7.9/ci-41410951647/linux-arm64/phoenix-ui-linux-arm64"
+      "sha256": "a6f696cac0fe016a7a50f222fb056e9e57048464ddcd8dbb544bccb99b8c6161",
+      "size": 15246760,
+      "url": "https://download.xgent.ai/vendor/phoenix-ui/v0.7.12/ci-42016931086/linux-arm64/phoenix-ui-linux-arm64"
     },
     "linux-x64": {
       "asset": "phoenix-ui-linux-x64",
-      "size": 22950336,
-      "sha256": "ec268516406c0660116c9a1c912bad46580916e8645778dccea2942b8f4cb3a2",
-      "url": "https://download.xgent.ai/vendor/phoenix-ui/v0.7.9/ci-41410951647/linux-x64/phoenix-ui-linux-x64"
+      "sha256": "ef5117e7864729e07cbabbc4e27f27b980f777535a67ab969ad3aa163a667418",
+      "size": 17593496,
+      "url": "https://download.xgent.ai/vendor/phoenix-ui/v0.7.12/ci-42016931086/linux-x64/phoenix-ui-linux-x64"
     }
   }
 }

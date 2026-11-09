@@ -79,8 +79,8 @@ test('component gallery groups real samples and keeps their state local', async 
     const failures: string[] = [];
     page.on('pageerror', error => failures.push(error.message));
     const gallery = await openGallery(page);
-    await expect(gallery.locator('[data-gallery-entry]')).toHaveCount(43);
-    await expect(gallery.locator('.gallery-section')).toHaveCount(8);
+    await expect(gallery.locator('[data-gallery-entry]')).toHaveCount(49);
+    await expect(gallery.locator('.gallery-section')).toHaveCount(9);
     expect(await gallery.locator('[data-rustify-issue]').count()).toBe(0);
     const before = await page.evaluate(() => window.__theme_studio.snapshot());
     const buttons = gallery.locator('[data-gallery-entry="Button"]');
@@ -105,7 +105,8 @@ test('component gallery groups real samples and keeps their state local', async 
 
 test('local contrast diagnostics locate the boundary frame and keep root editing separate', async ({ page }) => {
     const gallery = await openGallery(page);
-    await gallery.getByLabel('Low contrast', { exact: true }).check();
+    const localSection = gallery.getByLabel('Low contrast', { exact: true }).last();
+    await localSection.check();
     const diagnostics = page.getByTestId('preview-diagnostics');
     await expect(diagnostics).toContainText('Gallery local theme');
     const source = await gallery.getByTestId('gallery-boundary').getAttribute('data-rustify-theme-source');
@@ -141,7 +142,7 @@ test('gallery layout keeps samples and controls within desktop and narrow previe
         await gallery.getByRole('heading', { name: 'Components', exact: true }).scrollIntoViewIfNeeded();
         expect.soft(await gallery.evaluate(node => node.scrollWidth - node.clientWidth)).toBeLessThanOrEqual(1);
         expect.soft(await gallery.locator('.gallery-sample').evaluateAll(nodes => nodes.filter(node => node.scrollWidth - node.clientWidth > 1).map(node=>({name:node.getAttribute("data-gallery-entry"),overflow:node.scrollWidth-node.clientWidth})))).toEqual([]);
-        await page.screenshot({ path: `docs/validation/dom-components-p4/m5-gallery-${width}.png` });
+        await page.screenshot({ path: `docs/validation/dom-components-p5/m5-gallery-${width}.png` });
     }
     await page.setViewportSize({ width: 1440, height: 900 });
 });
@@ -200,7 +201,7 @@ for (const complete of [false, true]) {
             const failures: string[] = [];
             page.on('pageerror', error => failures.push(error.message));
             const all = await gallery.locator('[data-gallery-entry]').evaluateAll(nodes => nodes.map(node => node.getAttribute('data-gallery-entry')!));
-            const names = complete ? all : ['Button', 'Checkbox', 'Dialog', 'DropdownMenu', 'NavigationMenu', 'Toolbar', 'Toast', 'Text'];
+            const names = complete ? all : ['Button', 'Checkbox', 'Dialog', 'DropdownMenu', 'NavigationMenu', 'Toolbar', 'Toast', 'Text', 'DataTable', 'Tree', 'FilePicker'];
             const rows: unknown[] = [];
             const checkText = (texts: Awaited<ReturnType<typeof appearance>>['text'], label: string) => {
                 for (const text of texts) {
@@ -227,7 +228,7 @@ for (const complete of [false, true]) {
                         }
                         rows.push({ name, state, text: result.text, edges: result.edges });
                         if (complete || state === 'default') {
-                            await surface.screenshot({ path: `docs/validation/dom-components-p4/gallery-${complete ? 'complete' : 'representative'}-${mode}-${name}-${state.replace(/[^a-z0-9]+/gi, '-')}.png`, animations: 'disabled' });
+                            await surface.screenshot({ path: `docs/validation/dom-components-p5/gallery-${complete ? 'complete' : 'representative'}-${mode}-${name}-${state.replace(/[^a-z0-9]+/gi, '-')}.png`, animations: 'disabled' });
                         }
                         checkText(result.text, `${name} ${state}`);
                         for (const edge of result.edges) expect.soft(edge.ratio, `${name} ${state}: ${edge.kind}`).toBeGreaterThanOrEqual(3);
@@ -272,7 +273,7 @@ for (const complete of [false, true]) {
                         expect.soft(new Set(signatures.map(row => row.value)).size, `${name} ${label}: declared appearances must differ (${signatures.map(row => row.label).join(', ')})`).toBe(signatures.length);
                         await control.selectOption(initial);
                     }
-                    for (const label of ['Disabled', 'Loading', 'Indeterminate', 'Empty']) {
+                    for (const label of ['Disabled', 'Loading', 'Indeterminate', 'Empty', 'Invalid']) {
                         const toggle = sample.getByLabel(label, { exact: true });
                         if (!await toggle.count()) continue;
                         const initial = await toggle.isChecked();
@@ -280,7 +281,8 @@ for (const complete of [false, true]) {
                         await toggle.setChecked(!initial);
                         const after = await appearance(sample.locator('.gallery-demo'));
                         expect.soft(after.visual, `${name} ${label} changes rendered state`).not.toEqual(before.visual);
-                        rows.push({ name, state: label, text: after.text });
+                        rows.push({ name, state: label, text: after.text, edges: after.edges });
+                        if (label === 'Invalid') for (const edge of after.edges) expect.soft(edge.ratio, `${name} ${label}: ${edge.kind}`).toBeGreaterThanOrEqual(3);
                         if (label === 'Empty') await expect(sample.getByRole('button', { name: /Restore/ })).toBeVisible();
                         await toggle.setChecked(initial);
                     }
@@ -308,8 +310,10 @@ for (const complete of [false, true]) {
                         await closeSurface(page, name);
                     }
                     const target = sample.locator('.gallery-demo :is(button:not(:disabled),a[href],input:not(:disabled),textarea:not(:disabled),[tabindex="0"]):not(.gallery-controls *, .gallery-control:has(select,input[type="checkbox"]) *)').filter({ visible: true }).first();
-                    if (await target.count() && (complete || ['Button', 'NavigationMenu', 'Toolbar', 'Text'].includes(name))) {
-                        const control = target;
+                    if (await target.count() && (complete || ['Button', 'NavigationMenu', 'Toolbar', 'Text', 'DataTable', 'Tree'].includes(name))) {
+                        let control = target;
+                        if (name === 'DataTable') await sample.locator('[data-rustify-part="data-table-row"]').first().click();
+                        if (name === 'Tree') { control = sample.getByTestId('gallery-tree-g0'); await control.click(); }
                         await page.mouse.move(0, 0);
                         await page.getByTestId('renderer-dom').focus();
                         const rest = await appearance(sample.locator('.gallery-demo'));
@@ -334,13 +338,212 @@ for (const complete of [false, true]) {
                         await sample.getByRole('button', { name: 'Save locally', exact: true }).click();
                         await expect(sample.getByRole('status')).toContainText('Saved in this sample.');
                     }
-                    await sample.screenshot({ path: `docs/validation/dom-components-p4/gallery-${complete ? 'complete' : 'representative'}-${mode}-${name}.png`, animations: 'disabled' });
+                    await sample.screenshot({ path: `docs/validation/dom-components-p5/gallery-${complete ? 'complete' : 'representative'}-${mode}-${name}.png`, animations: 'disabled' });
                 });
             }
             expect(failures).toEqual([]);
-            await mkdir('docs/validation/dom-components-p4', { recursive: true });
-            await writeFile(`docs/validation/dom-components-p4/gallery-${complete ? 'complete' : 'representative'}-${mode}.json`, JSON.stringify(rows, null, 2) + '\n');
+            await mkdir('docs/validation/dom-components-p5', { recursive: true });
+            await writeFile(`docs/validation/dom-components-p5/gallery-${complete ? 'complete' : 'representative'}-${mode}.json`, JSON.stringify(rows, null, 2) + '\n');
             await info.attach('gallery-contrast.json', { body: JSON.stringify(rows), contentType: 'application/json' });
         });
     }
 }
+
+test('extension samples keep working surfaces with parts and states', async ({ page }) => {
+    const failures: string[] = [];
+    page.on('pageerror', error => failures.push(error.message));
+    const gallery = await openGallery(page);
+    const table = gallery.locator('[data-gallery-entry="DataTable"]');
+    await expect(table.getByTestId('gallery-table')).toHaveAttribute('aria-rowcount', '100001');
+    const rows = table.locator('[data-rustify-part="data-table-row"]');
+    await rows.first().click();
+    await expect(rows.first()).toHaveAttribute('data-selected');
+    await table.getByLabel('Empty', { exact: true }).check();
+    await expect(table.getByTestId('gallery-table-empty')).toBeVisible();
+    await expect(table.getByTestId('gallery-table')).toHaveAttribute('aria-rowcount', '2');
+    await table.getByRole('button', { name: 'Restore rows', exact: true }).click();
+    await expect(table.getByTestId('gallery-table')).toHaveAttribute('aria-rowcount', '100001');
+    await table.getByLabel('Selected', { exact: true }).check();
+    await expect(rows.first()).toHaveAttribute('data-selected');
+
+    const tree = gallery.locator('[data-gallery-entry="Tree"]');
+    const group = tree.getByTestId('gallery-tree-g0');
+    await group.click();
+    await expect(group).toHaveAttribute('data-selected');
+    await tree.getByLabel('Empty', { exact: true }).check();
+    await expect(tree.getByTestId('gallery-tree-empty')).toBeVisible();
+    await tree.getByRole('button', { name: 'Restore tree', exact: true }).click();
+    await expect(tree.getByTestId('gallery-tree-empty')).toHaveCount(0);
+
+    const files = gallery.locator('[data-gallery-entry="FilePicker"]');
+    await expect(files.getByTestId('gallery-drop')).toHaveAttribute('role', 'group');
+    await expect(files.getByTestId('gallery-drop')).toContainText('drop a file here');
+    await files.getByLabel('Invalid', { exact: true }).check();
+    await expect(files.getByTestId('gallery-file')).toHaveAttribute('aria-invalid', 'true');
+    const reason = await files.locator('p.gallery-files-reason').getAttribute('id');
+    await expect(files.getByTestId('gallery-file')).toHaveAttribute('aria-describedby', reason!);
+    await expect(files.locator(`#${reason}`)).not.toBeEmpty();
+    await files.getByLabel('Disabled', { exact: true }).check();
+    await expect(files.getByTestId('gallery-file')).toBeDisabled();
+    await files.getByLabel('Disabled', { exact: true }).uncheck();
+
+    const workspace = gallery.locator('[data-gallery-entry="Splitter"]');
+    const tabs = workspace.getByTestId('gallery-tabs');
+    await tabs.getByTestId('close-drafts').click();
+    await expect(tabs.getByTestId('panel-tab-drafts')).toHaveCount(0);
+    await expect(tabs.getByTestId('panel-tab-overview')).toHaveAttribute('aria-selected', 'true');
+    await workspace.getByRole('button', { name: 'Reset', exact: true }).click();
+    await expect(tabs.getByTestId('panel-tab-drafts')).toBeVisible();
+    await tabs.getByTestId('panel-tab-editor').click();
+    await page.keyboard.press('Delete');
+    await expect(tabs.getByTestId('panel-tab-editor')).toHaveCount(0);
+    await workspace.getByRole('button', { name: 'Reset', exact: true }).click();
+    await expect(tabs.getByTestId('panel-tab-editor')).toBeVisible();
+
+    const commands = gallery.locator('[data-gallery-entry="CommandPalette"]');
+    const open = commands.getByRole('button', { name: 'Open the command palette', exact: true });
+    await expect(open).toHaveAttribute('aria-haspopup', 'dialog');
+    await open.click();
+    const palette = page.getByTestId('studio-preview').getByTestId('gallery-command');
+    const search = palette.getByTestId('command-search');
+    await expect(palette).toBeVisible();
+    await expect(search).toHaveAttribute('aria-expanded', 'true');
+    await expect(palette.getByTestId('command-delete')).toHaveAttribute('aria-disabled', 'true');
+    await search.fill('nothing will match this');
+    await expect(palette.getByTestId('command-empty')).toBeVisible();
+    await expect(search).toHaveAttribute('aria-expanded', 'false');
+    await expect(search).not.toHaveAttribute('aria-activedescendant');
+    await search.fill('');
+    await palette.getByRole('option', { name: 'Save the file', exact: true }).click();
+    await expect(commands.locator('output')).toHaveText('save');
+    expect(failures).toEqual([]);
+});
+
+test('extension samples follow the studio locale without touching the document', async ({ page }) => {
+    const gallery = await openGallery(page);
+    const before = await page.evaluate(() => window.__theme_studio.snapshot());
+    const files = gallery.locator('[data-gallery-entry="FilePicker"]');
+    const table = gallery.locator('[data-gallery-entry="DataTable"]');
+    await page.getByTestId('locale-zh').click();
+    await expect(gallery.locator('.gallery-section').filter({ hasText: 'Rustify 扩展' })).toBeVisible();
+    await expect(files.getByLabel('禁用', { exact: true })).toBeVisible();
+    await expect(files.getByLabel('错误', { exact: true })).toBeVisible();
+    await expect(files.getByTestId('gallery-drop')).toContainText('把文件拖到这里');
+    await table.getByLabel('空', { exact: true }).check();
+    await expect(table.getByTestId('gallery-table-empty')).toContainText('没有内容');
+    await table.getByLabel('空', { exact: true }).uncheck();
+    await page.getByTestId('locale-en').click();
+    await expect(files.getByLabel('Disabled', { exact: true })).toBeVisible();
+    const after = await page.evaluate(() => window.__theme_studio.snapshot());
+    expect(after.document).toEqual(before.document);
+    expect(after.revision).toBe(before.revision);
+});
+
+test('extension samples hold no resources over repeated work', async ({ page }) => {
+    test.setTimeout(300_000);
+    const gallery = await openGallery(page);
+    const before = await page.evaluate(() => window.__theme_studio.stats());
+    const nodes = await gallery.evaluate(node => node.querySelectorAll('*').length);
+    const table = gallery.locator('[data-gallery-entry="DataTable"]');
+    const commands = gallery.locator('[data-gallery-entry="CommandPalette"]');
+    await table.locator('[data-rustify-part="data-table-row"]').first().waitFor();
+    for (let round = 0; round < 20; round++) {
+        await table.locator('[data-rustify-part="data-table-row"]').first().click();
+        await commands.getByRole('button', { name: 'Open the command palette', exact: true }).click();
+        // Running a command closes the palette itself; an Escape left the
+        // layer open often enough to block the next round's clicks.
+        await page.getByTestId('studio-preview').getByTestId('command-search').fill('save');
+        await page.getByTestId('studio-preview').getByRole('option', { name: 'Save the file', exact: true }).click();
+    }
+    await page.waitForTimeout(500);
+    const after = await page.evaluate(() => window.__theme_studio.stats());
+    const detail = `stats ${JSON.stringify(before)} -> ${JSON.stringify(after)}`;
+    for (const [key, value] of Object.entries(before)) {
+        if (typeof value === 'number' && key !== 'frames') {
+            expect.soft(after[key], `${key}: ${detail}`).toBeLessThanOrEqual(value);
+        }
+    }
+    expect(await gallery.evaluate(node => node.querySelectorAll('*').length)).toBe(nodes);
+});
+
+test('extension samples stay accessible in light and dark, including empty and refused states', async ({ page }) => {
+    test.setTimeout(300_000);
+    const gallery = await openGallery(page);
+    const AxeBuilder = (await import('@axe-core/playwright')).default;
+    const { axeTags } = await import('../docs-ssg/a11y');
+    const section = gallery.locator('.gallery-section').filter({ hasText: 'Rustify extensions' });
+    for (const mode of ['light', 'dark'] as const) {
+        await page.getByTestId(`mode-${mode}`).click();
+        await section.scrollIntoViewIfNeeded();
+        const sectionSelector = `[id="${await section.getAttribute('id')}"]`;
+        const scan = async (target: string) => {
+            const result = await new AxeBuilder({ page }).withTags(axeTags).include(target).analyze();
+            const serious = result.violations.filter(violation => ['serious', 'critical'].includes(violation.impact ?? ''));
+            expect(serious, `${mode}: ${JSON.stringify(serious, null, 2)}`).toEqual([]);
+        };
+        await section.locator('[data-rustify-part="data-table-row"]').first().click();
+        await section.getByLabel('Empty', { exact: true }).first().check();
+        await section.getByLabel('Invalid', { exact: true }).check();
+        await scan(sectionSelector);
+        await section.getByLabel('Empty', { exact: true }).first().uncheck();
+        await section.getByLabel('Invalid', { exact: true }).uncheck();
+        await section.getByRole('button', { name: 'Open the command palette', exact: true }).click();
+        const palette = page.getByTestId('studio-preview').getByTestId('gallery-command');
+        await palette.getByTestId('command-search').fill('nothing will match this');
+        await scan('[data-testid="gallery-command"]');
+        await page.keyboard.press('Escape');
+    }
+});
+
+test('gallery picking identifies extension parts and their local source', async ({ page }) => {
+    const gallery = await openGallery(page);
+    await page.getByTestId('inspector-toggle').click();
+    const tree = gallery.locator('[data-gallery-entry="Tree"]');
+    await tree.getByTestId('gallery-tree-g0').hover();
+    await expect(page.getByTestId('inspector-part')).toContainText('tree-item');
+    const table = gallery.locator('[data-gallery-entry="DataTable"]');
+    await table.locator('[data-rustify-part="data-table-row"]').first().hover();
+    await expect(page.getByTestId('inspector-part')).toContainText('data-table-row');
+    const tabs = gallery.locator('[data-gallery-entry="Splitter"]');
+    await tabs.getByTestId('panel-tab-editor').hover();
+    await expect(page.getByTestId('inspector-part')).toContainText('panel-tab');
+    const commands = gallery.locator('[data-gallery-entry="CommandPalette"]');
+    await commands.getByRole('button', { name: 'Open the command palette', exact: true }).click();
+    const palette = page.getByTestId('studio-preview').getByTestId('gallery-command');
+    await palette.getByTestId('command-save').hover();
+    await expect(page.getByTestId('inspector-part')).toContainText('command-item');
+    await expect(page.getByTestId('inspector-inherited')).toContainText('Root theme');
+    // Picking reserves the first Escape for leaving picking; the second
+    // closes the layer. An open modal palette covers the preview toolbar,
+    // so picking is re-entered before the local palette opens.
+    await page.keyboard.press('Escape');
+    await page.keyboard.press('Escape');
+    const local = gallery.getByTestId('extension-local-card');
+    await local.evaluate(node => node.scrollIntoView({ block: 'center' }));
+    await page.getByTestId('inspector-toggle').scrollIntoViewIfNeeded();
+    await page.getByTestId('inspector-toggle').click();
+    await local.getByTestId('tree-l0').hover();
+    await expect(page.getByTestId('inspector-part')).toContainText('tree-item');
+    await expect(page.getByTestId('inspector-source')).toContainText(/Extension local theme|扩展局部主题/);
+    // The palette opens with picking off (a modal layer covers the preview
+    // toolbar) and, although it portals out of the boundary, it resolves the
+    // boundary's patched popover tokens.
+    await page.keyboard.press('Escape');
+    await gallery.getByLabel('Low contrast', { exact: true }).first().check();
+    await local.getByRole('button', { name: /Run a command/ }).click();
+    const localPalette = page.getByTestId('studio-preview').getByTestId('gallery-command-local');
+    await expect(localPalette).toBeVisible();
+    const paletteColors = await localPalette.evaluate(node => ({
+        background: getComputedStyle(node).backgroundColor,
+        color: getComputedStyle(node).color,
+    }));
+    expect(paletteColors.background).toBe('rgb(243, 245, 247)');
+    expect(paletteColors.color).toBe('rgb(195, 203, 210)');
+    await page.keyboard.press('Escape');
+    const icons = gallery.locator('[data-gallery-entry="Icon"]');
+    await icons.evaluate(node => node.scrollIntoView({ block: 'center' }));
+    await page.getByTestId('inspector-toggle').scrollIntoViewIfNeeded();
+    await page.getByTestId('inspector-toggle').click();
+    await icons.locator('svg').nth(1).hover();
+    await expect(page.getByTestId('inspector-panel')).toContainText(/Not annotated|未标注/);
+});

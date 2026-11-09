@@ -147,6 +147,14 @@ pub enum Message {
     Notifications,
     /// Taking a status message down before it goes on its own.
     Dismiss,
+    /// What a command palette is called.
+    Commands,
+    /// The words in a command palette's search box.
+    TypeCommand,
+    /// What a command palette says when nothing matches.
+    NoMatches,
+    /// A divider between panels. The panel number is appended to it.
+    ResizePanel,
 }
 
 impl Message {
@@ -181,6 +189,10 @@ impl Message {
             // The character, and what it means, because a lone box tells a
             // reader nothing about whose fault it is.
             Self::MissingGlyph => "□ (no glyph in this font)",
+            Self::Commands => "commands",
+            Self::TypeCommand => "type a command",
+            Self::NoMatches => "no matches",
+            Self::ResizePanel => "resize panel",
         }
     }
 
@@ -205,12 +217,16 @@ impl Message {
             Self::DropFileHere => "把文件拖到这里",
             Self::Dismiss => "关闭这条消息",
             Self::Notifications => "通知",
+            Self::Commands => "命令",
+            Self::TypeCommand => "输入命令",
+            Self::NoMatches => "没有匹配项",
+            Self::ResizePanel => "调整面板大小",
         }
     }
 
     /// Every message there is, for a catalogue page and for the test that
     /// keeps the two languages the same size.
-    pub fn all() -> [Self; 19] {
+    pub fn all() -> [Self; 23] {
         [
             Self::Retry,
             Self::Close,
@@ -231,6 +247,10 @@ impl Message {
             Self::DropFileHere,
             Self::Notifications,
             Self::Dismiss,
+            Self::Commands,
+            Self::TypeCommand,
+            Self::NoMatches,
+            Self::ResizePanel,
         ]
     }
 
@@ -256,6 +276,10 @@ impl Message {
             Self::DropFileHere => "drop-file-here",
             Self::Dismiss => "dismiss",
             Self::Notifications => "notifications",
+            Self::Commands => "commands",
+            Self::TypeCommand => "type-command",
+            Self::NoMatches => "no-matches",
+            Self::ResizePanel => "resize-panel",
         }
     }
 }

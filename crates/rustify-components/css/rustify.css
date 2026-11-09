@@ -311,6 +311,9 @@
       border-color: color-mix(in oklab, var(--border) 50%, transparent);
     }
   }
+  .border-destructive {
+    border-color: var(--destructive);
+  }
   .border-primary {
     border-color: var(--primary);
   }
@@ -602,12 +605,6 @@
       }
     }
   }
-  .focus-visible\:ring-2 {
-    &:focus-visible {
-      --tw-ring-shadow: var(--tw-ring-inset,) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color, currentcolor);
-      box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
-    }
-  }
   .focus-visible\:ring-\[3px\] {
     &:focus-visible {
       --tw-ring-shadow: var(--tw-ring-inset,) 0 0 0 calc(3px + var(--tw-ring-offset-width)) var(--tw-ring-color, currentcolor);
@@ -622,15 +619,33 @@
       }
     }
   }
-  .focus-visible\:outline-none {
+  .focus-visible\:outline-2 {
     &:focus-visible {
-      --tw-outline-style: none;
-      outline-style: none;
+      outline-style: var(--tw-outline-style);
+      outline-width: 2px;
     }
   }
-  .focus-visible\:ring-inset {
+  .focus-visible\:-outline-offset-2 {
     &:focus-visible {
-      --tw-ring-inset: inset;
+      outline-offset: calc(2px * -1);
+    }
+  }
+  .focus-visible\:outline-ring {
+    &:focus-visible {
+      outline-color: var(--ring);
+    }
+  }
+  .focus-visible\:outline-solid {
+    &:focus-visible {
+      --tw-outline-style: solid;
+      outline-style: solid;
+    }
+  }
+  .group-aria-selected\/row\:focus-visible\:outline-current {
+    &:is(:where(.group\/row)[aria-selected="true"] *) {
+      &:focus-visible {
+        outline-color: currentcolor;
+      }
     }
   }
   .disabled\:pointer-events-none {
@@ -658,6 +673,18 @@
       opacity: 50%;
     }
   }
+  .aria-invalid\:text-destructive {
+    &[aria-invalid="true"] {
+      color: var(--destructive);
+    }
+  }
+  .aria-invalid\:file\:border-destructive {
+    &[aria-invalid="true"] {
+      &::file-selector-button {
+        border-color: var(--destructive);
+      }
+    }
+  }
   .aria-pressed\:bg-primary {
     &[aria-pressed="true"] {
       background-color: var(--primary);
@@ -680,23 +707,35 @@
       }
     }
   }
-  .aria-selected\:border-border {
-    &[aria-selected="true"] {
-      border-color: var(--border);
-    }
-  }
   .aria-selected\:bg-accent {
     &[aria-selected="true"] {
       background-color: var(--accent);
     }
   }
-  .aria-selected\:bg-background {
+  .aria-selected\:text-accent-foreground {
     &[aria-selected="true"] {
+      color: var(--accent-foreground);
+    }
+  }
+  .aria-selected\:focus-visible\:outline-current {
+    &[aria-selected="true"] {
+      &:focus-visible {
+        outline-color: currentcolor;
+      }
+    }
+  }
+  .data-\[state\=active\]\:border-border {
+    &[data-state="active"] {
+      border-color: var(--border);
+    }
+  }
+  .data-\[state\=active\]\:bg-background {
+    &[data-state="active"] {
       background-color: var(--background);
     }
   }
-  .aria-selected\:text-foreground {
-    &[aria-selected="true"] {
+  .data-\[state\=active\]\:text-foreground {
+    &[data-state="active"] {
       color: var(--foreground);
     }
   }

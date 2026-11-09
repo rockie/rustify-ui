@@ -8,6 +8,10 @@
 
 use std::fmt::Write as _;
 
+pub mod legacy;
+
+pub use legacy::{LegacyEntry, LegacyFate, LEGACY_ENTRIES};
+
 /// The legacy navigation categories. Their count is not a component or
 /// public-symbol count; current entries are listed separately in [`COMPONENTS`].
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -212,12 +216,12 @@ pub const CATALOG: [Entry; 24] = [
             gpu: Support::Yes,
             across_regions: Support::Yes,
         },
-        properties: cap(Support::Yes, "one of six glyphs, or any SVG the application passes as children; a label makes it an image and no label makes it decoration"),
+        properties: cap(Support::Yes, "one of seven glyphs, or any SVG the application passes as children; a label makes it an image and no label makes it decoration"),
         actions: cap(Support::No, "none; it is a drawing"),
         theme: cap(Support::Yes, "it takes the text colour around it, in both halves"),
         input: cap(Support::No, "none; an icon-only control is the button around it"),
         accessibility: cap(Support::Yes, "aria-hidden without a label and role=img with one - a second name after the control's own is noise"),
-        environment: cap(Support::Yes, "the same six shapes on the same twenty-four unit grid in both halves; no icon font and no fetched asset"),
+        environment: cap(Support::Yes, "the same seven shapes on the same twenty-four unit grid in both halves; no icon font and no fetched asset"),
     },
     Entry {
         category: Category::TextField,
@@ -850,6 +854,8 @@ const LEGACY_CHECKS: &[&str] = &[
     "examples/component-catalog/src/main.rs",
     "tests/browser/m6-components.spec.ts",
     "tests/browser/catalog-inputs.spec.ts",
+    "tests/browser/theme-gallery.spec.ts",
+    "crates/rustify-components/tests/extensions_ssg.rs",
 ];
 const THEME_CHECKS: &[&str] = &[
     "crates/rustify-dom/src/theme/author_tests.rs",
@@ -932,7 +938,7 @@ pub const COMPONENTS: &[ComponentEntry] = &[
     component!("Quote", Component, "rustify_components::Quote", "crates/rustify-components/src/typography.rs", Yes, DOM_ONLY, ["wrap", "truncate", "class", "test_id", "children"], ["InlineText", "Element"], "Native q keeps browser quotation marks; no Margin/Layout/color group.", TYPE_CHECKS),
     component!("Strong", Component, "rustify_components::Strong", "crates/rustify-components/src/typography.rs", Yes, DOM_ONLY, ["wrap", "truncate", "class", "test_id", "children"], ["InlineText", "Element"], "Native strong; inherited size, no Margin/Layout/color group.", TYPE_CHECKS),
     component!("Label", Component, "rustify_components::Label", "crates/rustify-components/src/label.rs", Yes, Presentation { dom: Support::Yes, gpu: Support::Partial, across_regions: Support::Yes }, ["control", "class", "test_id", "children"], [], "Existing native controlled component contract; no complete upstream visual or primitive part API is implied.", LEGACY_CHECKS),
-    component!("Icon", Component, "rustify_components::Icon", "crates/rustify-components/src/icon.rs", Yes, Presentation { dom: Support::Yes, gpu: Support::Partial, across_regions: Support::Yes }, ["glyph", "label", "class", "test_id", "children"], [], "Six Glyph shapes or caller SVG children; named image/decorative mode. No cloned Radix Icons product.", LEGACY_CHECKS),
+    component!("Icon", Component, "rustify_components::Icon", "crates/rustify-components/src/icon.rs", Yes, Presentation { dom: Support::Yes, gpu: Support::Partial, across_regions: Support::Yes }, ["glyph", "label", "class", "test_id", "children"], [], "Seven Glyph shapes or caller SVG children; named image/decorative mode. No cloned Radix Icons product.", LEGACY_CHECKS),
     component!("TextField", Component, "rustify_components::TextField", "crates/rustify-components/src/input.rs", Yes, Presentation { dom: Support::Yes, gpu: Support::Partial, across_regions: Support::Partial }, ["value", "on_change", "kind", "id", "name", "form", "aria_label", "labelled_by", "described_by", "placeholder", "autocomplete", "inputmode", "required", "disabled", "read_only", "invalid", "pattern", "minlength", "maxlength", "size", "variant", "color", "radius", "class", "input_class", "test_id", "children"], [], "Controlled native editor with Root/Input/Slot; class styles the boundary, input_class the editor. Size 1/2/3 and classic/surface/soft; DOM parts share behavior.", FORM_CHECKS),
     component!("TextArea", Component, "rustify_components::TextArea", "crates/rustify-components/src/textarea.rs", Yes, Presentation { dom: Support::Yes, gpu: Support::Partial, across_regions: Support::Partial }, ["value", "on_change", "rows", "id", "name", "form", "aria_label", "labelled_by", "described_by", "placeholder", "autocomplete", "inputmode", "required", "disabled", "read_only", "invalid", "pattern", "minlength", "maxlength", "size", "variant", "color", "radius", "resize", "class", "input_class", "test_id"], [], "Native textarea with controlled value, composition completion, native form fields and responsive resize. Visual options apply to DOM only.", FORM_CHECKS),
     component!("Checkbox", Component, "rustify_components::Checkbox", "crates/rustify-components/src/checkbox.rs", Yes, Presentation { dom: Support::Yes, gpu: Support::Partial, across_regions: Support::Yes }, ["checked", "on_change", "indeterminate", "id", "aria_label", "labelled_by", "name", "value", "form", "required", "disabled", "read_only", "invalid", "described_by", "size", "variant", "color", "high_contrast", "class", "test_id"], [], "Boolean convenience plus indeterminate; parts use CheckedState. Only accepted checked values submit; native required, readonly and reset follow the shared form contract.", FORM_CHECKS),
@@ -956,21 +962,21 @@ pub const COMPONENTS: &[ComponentEntry] = &[
     component!("Table", Component, "rustify_components::table::Root", "crates/rustify-components/src/table.rs", Yes, DOM_ONLY, ["size", "variant", "layout", "margin", "class", "test_id", "children"], ["Margin", "Element"], "Native table with Header/Body/Row/ColumnHeaderCell/RowHeaderCell/Cell/Caption. Sizes 1..3 default 2, surface/ghost default ghost and responsive Auto/Fixed layout. Caller supplies an outer horizontal scrollport; no grid, sorting, virtualization or separate raw Table family.", CONTENT_CHECKS),
     component!("AspectRatio", Component, "rustify_components::AspectRatio", "crates/rustify-components/src/aspect_ratio.rs", Yes, DOM_ONLY, ["ratio", "class", "test_id", "children"], ["Element"], "Reexports the same primitive Root. Finite positive ratio defaults to 1; invalid input preserves the last usable external geometry and reports ratio. No distinct themed skin is needed.", CONTENT_CHECKS),
     component!("Separator", Component, "rustify_components::Separator", "crates/rustify-components/src/separator.rs", Yes, DOM_ONLY, ["size", "orientation", "color", "decorative", "margin", "class", "test_id"], ["Margin"], "Themed primitive with responsive sizes 1..4 default 1 and orientation, Gray color by default and decorative=true. Nondecorative output has separator semantics; no keyboard stop.", CONTENT_CHECKS),
-    component!("DataTable", Component, "rustify_components::DataTable", "crates/rustify-components/src/data_table/view.rs", Yes, PROJECTED, ["rows", "columns", "cell", "row_id", "selected", "goto", "version", "focus", "on_select", "on_activate", "sorted", "on_sort", "row_height", "column_width", "initial_viewport", "aria_label", "class", "test_id"], [], "Virtualized interactive DOM grid; distinct from an ordinary semantic Table component. No GPU-drawn data table.", LEGACY_CHECKS),
-    component!("Tree", Component, "rustify_components::Tree", "crates/rustify-components/src/tree.rs", Partial, PROJECTED, ["nodes", "expanded", "selected", "on_select", "aria_label", "class", "test_id"], [], "Two group levels without tree virtualization or arbitrary depth.", LEGACY_CHECKS),
+    component!("DataTable", Component, "rustify_components::DataTable", "crates/rustify-components/src/data_table/view.rs", Yes, PROJECTED, ["rows", "columns", "cell", "row_id", "selected", "goto", "version", "focus", "on_select", "on_activate", "sorted", "on_sort", "row_height", "column_width", "initial_viewport", "empty_label", "aria_label", "class", "test_id"], [], "Virtualized interactive DOM grid; distinct from an ordinary semantic Table component. No GPU-drawn data table. Arrow keys follow physical direction; an empty table keeps its grid roles and shows the SDK empty-state words (empty_label).", LEGACY_CHECKS),
+    component!("Tree", Component, "rustify_components::Tree", "crates/rustify-components/src/tree.rs", Partial, PROJECTED, ["nodes", "expanded", "selected", "on_select", "empty_label", "aria_label", "class", "test_id"], [], "Two group levels without tree virtualization or arbitrary depth. Arrow keys follow physical direction; the empty root drops the tree role and shows the SDK empty-state words (empty_label).", LEGACY_CHECKS),
     component!("Toast", Component, "rustify_components::Toast", "crates/rustify-components/src/toast.rs", Yes, DOM_ONLY, ["toast", "class", "test_id"], [], "Convenience for a real handle snapshot; assembles exactly one core Root and its body. Requires the creating toast context and a Viewport; fixed previews use Callout or controlled parts. Snapshot/options are Clone, not Copy/Eq.", FEEDBACK_CHECKS),
     component!("Toaster", Component, "rustify_components::Toaster", "crates/rustify-components/src/toast.rs", Yes, DOM_ONLY, ["class", "test_id"], [], "Themed Viewport and ToastRegion assembly over the core Provider/Root scheduler; default Replace/one visible, optional FIFO. No second queue or timer. SSG output is empty.", FEEDBACK_CHECKS),
     component!("NumberField", Component, "rustify_components::NumberField", "crates/rustify-components/src/number_field.rs", Yes, PROJECTED, ["value", "on_change", "on_preview", "on_cancel", "min", "max", "step", "id", "name", "form", "aria_label", "labelled_by", "described_by", "placeholder", "autocomplete", "inputmode", "required", "disabled", "read_only", "invalid", "pattern", "minlength", "maxlength", "size", "variant", "color", "radius", "class", "input_class", "test_id", "children"], [], "Focused numeric Draft with preview/completion/cancel; named mirror holds accepted value. Native bounds and FormRoot flush; separate Root/Input support composition.", FORM_CHECKS),
     component!("ColorField", Component, "rustify_components::ColorField", "crates/rustify-components/src/color_field.rs", Yes, PROJECTED, ["value", "on_change", "on_preview", "on_cancel", "alpha", "id", "name", "form", "aria_label", "labelled_by", "described_by", "placeholder", "autocomplete", "inputmode", "required", "disabled", "read_only", "invalid", "pattern", "minlength", "maxlength", "size", "variant", "color", "radius", "class", "input_class", "test_id", "children"], [], "Focused hexadecimal Draft and accepted-value mirror; optional alpha and explicit decorative Swatch. No arbitrary CSS color parser or palette editor.", FORM_CHECKS),
     component!("ToggleGroup", Component, "rustify_components::ToggleGroup", "crates/rustify-components/src/toggle_group.rs", Yes, PROJECTED, ["value", "on_change", "items", "multiple", "toolbar", "orientation", "r#loop", "allow_empty", "name", "form", "disabled", "read_only", "invalid", "required", "described_by", "aria_label", "class", "test_id"], [], "Single-group convenience view over toggle_group Root/Item; native pressed state, accepted values and disabled/readonly gates. `toolbar` makes one group its own toolbar; compose larger toolbars with toolbar::Root.", FORM_CHECKS),
-    component!("FilePicker", Component, "rustify_components::FilePicker", "crates/rustify-components/src/file_picker.rs", Yes, DOM_ONLY, ["on_files", "accept", "id", "aria_label", "disabled", "described_by", "class", "test_id"], [], "Rustify extension with its existing controlled contract; no reference counterpart is required.", &["examples/property-workbench/src/main.rs", "tests/browser/p2-workspace.spec.ts", "tests/browser/p2-form.spec.ts", "tests/browser/p2-clipboard-files.spec.ts"]),
-    component!("DropZone", Component, "rustify_components::DropZone", "crates/rustify-components/src/drop_zone.rs", Yes, DOM_ONLY, ["on_files", "label", "disabled", "described_by", "class", "test_id"], [], "Rustify extension with its existing controlled contract; no reference counterpart is required.", &["examples/property-workbench/src/main.rs", "tests/browser/p2-workspace.spec.ts", "tests/browser/p2-form.spec.ts", "tests/browser/p2-clipboard-files.spec.ts"]),
-    component!("Splitter", Component, "rustify_components::Splitter", "crates/rustify-components/src/workspace/splitter.rs", Yes, DOM_ONLY, ["sizes", "mins", "on_resize", "step", "divider_label", "test_id"], [], "Rustify extension with its existing controlled contract; no reference counterpart is required.", &["examples/property-workbench/src/main.rs", "tests/browser/p2-workspace.spec.ts", "tests/browser/p2-form.spec.ts", "tests/browser/p2-clipboard-files.spec.ts"]),
-    component!("PanelTabs", Component, "rustify_components::PanelTabs", "crates/rustify-components/src/workspace/panel_tabs.rs", Yes, DOM_ONLY, ["tabs", "active", "on_activate", "on_close", "aria_label", "close_label", "class", "test_id"], [], "Rustify extension with its existing controlled contract; no reference counterpart is required.", &["examples/property-workbench/src/main.rs", "tests/browser/p2-workspace.spec.ts", "tests/browser/p2-form.spec.ts", "tests/browser/p2-clipboard-files.spec.ts"]),
+    component!("FilePicker", Component, "rustify_components::FilePicker", "crates/rustify-components/src/file_picker.rs", Yes, DOM_ONLY, ["on_files", "accept", "id", "aria_label", "disabled", "invalid", "described_by", "class", "test_id"], [], "Rustify extension with its existing controlled contract; no reference counterpart is required.", &["examples/property-workbench/src/main.rs", "tests/browser/p2-workspace.spec.ts", "tests/browser/p2-form.spec.ts", "tests/browser/p2-clipboard-files.spec.ts", "tests/browser/theme-gallery.spec.ts", "crates/rustify-components/tests/extensions_ssg.rs"]),
+    component!("DropZone", Component, "rustify_components::DropZone", "crates/rustify-components/src/drop_zone.rs", Yes, DOM_ONLY, ["on_files", "label", "disabled", "invalid", "described_by", "class", "test_id"], [], "Rustify extension with its existing controlled contract; no reference counterpart is required.", &["examples/property-workbench/src/main.rs", "tests/browser/p2-workspace.spec.ts", "tests/browser/p2-form.spec.ts", "tests/browser/p2-clipboard-files.spec.ts", "tests/browser/theme-gallery.spec.ts", "crates/rustify-components/tests/extensions_ssg.rs"]),
+    component!("Splitter", Component, "rustify_components::Splitter", "crates/rustify-components/src/workspace/splitter.rs", Yes, DOM_ONLY, ["sizes", "mins", "on_resize", "step", "divider_label", "test_id"], [], "Rustify extension with its existing controlled contract; no reference counterpart is required. Arrow keys follow physical direction; no disabled prop.", &["examples/property-workbench/src/main.rs", "tests/browser/p2-workspace.spec.ts", "tests/browser/p2-form.spec.ts", "tests/browser/p2-clipboard-files.spec.ts", "tests/browser/theme-gallery.spec.ts", "crates/rustify-components/tests/extensions_ssg.rs"]),
+    component!("PanelTabs", Component, "rustify_components::PanelTabs", "crates/rustify-components/src/workspace/panel_tabs.rs", Yes, DOM_ONLY, ["tabs", "active", "on_activate", "on_close", "aria_label", "close_label", "class", "test_id"], [], "Rustify extension with its existing controlled contract; no reference counterpart is required. Arrow keys follow physical direction; no disabled or invalid prop; Delete closes the active closable tab.", &["examples/property-workbench/src/main.rs", "tests/browser/p2-workspace.spec.ts", "tests/browser/p2-form.spec.ts", "tests/browser/p2-clipboard-files.spec.ts", "tests/browser/theme-gallery.spec.ts", "crates/rustify-components/tests/extensions_ssg.rs"]),
     component!("CommandPalette", Component, "rustify_components::CommandPalette", "crates/rustify-components/src/workspace/command_palette.rs", Yes, DOM_ONLY, ["open", "on_open_change", "commands", "on_run", "placeholder", "aria_label", "test_id"], [], "Rustify extension with its existing controlled contract; no reference counterpart is required.", &["examples/property-workbench/src/main.rs", "tests/browser/p2-workspace.spec.ts", "tests/browser/p2-form.spec.ts", "tests/browser/p2-clipboard-files.spec.ts"]),
     component!("Field", Component, "rustify_components::Field", "crates/rustify-components/src/form/field.rs", Yes, DOM_ONLY, ["form", "field", "label", "description", "control", "class"], [], "Convenience label/description/control/message with FieldBinding. Composed Root/Label/Description/Message use the same native association and source-specific errors.", FORM_CHECKS),
-    component!("SubmitButton", Component, "rustify_components::SubmitButton", "crates/rustify-components/src/form/submit.rs", Yes, DOM_ONLY, ["form", "class", "test_id", "children"], [], "Native submit inside FormRoot, legacy direct owner submission outside. Root owns rules; aria-disabled retains focus and allows an explanatory validation request.", FORM_CHECKS),
-    component!("FormStatus", Component, "rustify_components::FormStatus", "crates/rustify-components/src/form/submit.rs", Yes, DOM_ONLY, ["form", "class", "test_id"], [], "Live save/wait/error status from the existing form owner. It does not store application values or provide a business backend.", FORM_CHECKS),
+    component!("SubmitButton", Component, "rustify_components::SubmitButton", "crates/rustify-components/src/form/submit.rs", Yes, DOM_ONLY, ["form", "rules", "on_asked", "class", "test_id", "children"], [], "Native submit inside FormRoot, legacy direct owner submission outside. Root owns rules; aria-disabled retains focus and allows an explanatory validation request.", FORM_CHECKS),
+    component!("FormStatus", Component, "rustify_components::FormStatus", "crates/rustify-components/src/form/submit.rs", Yes, DOM_ONLY, ["form", "saving", "class", "test_id"], [], "Live save/wait/error status from the existing form owner. It does not store application values or provide a business backend.", FORM_CHECKS),
     component!("Theme", Component, "rustify_components::theme::Theme", "crates/rustify-components/src/theme.rs", Yes, DOM_ONLY, ["resolved", "preview_mode"], [], "Browser-only alias of the existing ThemeScope; claims one mount root and retains complete two-mode source. SSR uses provide_static_theme.", THEME_CHECKS),
     component!("ThemeBoundary", Component, "rustify_components::theme::ThemeBoundary", "crates/rustify-components/src/theme.rs", Yes, DOM_ONLY, ["patch", "class", "test_id", "children"], [], "Browser-only scoped boundary with configuration and light/dark patches; an empty patch resumes parent inheritance.", THEME_CHECKS),
     component!("ThemePanel", Component, "rustify_components::ThemePanel", "crates/rustify-components/src/theme_panel.rs", Yes, DOM_ONLY, ["config", "overrides", "on_change", "on_reset", "locale", "class", "test_id"], [], "Controlled configuration/override-count panel and reset requests; not a full theme editor or a second document/history owner.", &["crates/rustify-components/src/theme_panel.rs", "examples/component-catalog/src/button_fixture.rs", "tests/browser/dom-buttons.spec.ts"]),
@@ -1021,6 +1027,7 @@ pub const COMPONENTS: &[ComponentEntry] = &[
     component!("Primitives.NumberField", Helper, "rustify_components::primitives::number_field", "crates/rustify-components/src/primitives/field.rs", Yes, DOM_ONLY, [], [], "Root/Input with numeric Draft and accepted-value mirror.", FORM_CHECKS),
     component!("Primitives.ColorField", Helper, "rustify_components::primitives::color_field", "crates/rustify-components/src/primitives/field.rs", Yes, DOM_ONLY, [], [], "Root/Input/Swatch with hexadecimal Draft and accepted-value mirror.", FORM_CHECKS),
     component!("Primitives.Select", Helper, "rustify_components::primitives::select", "crates/rustify-components/src/primitives/select.rs", Yes, DOM_ONLY, [], [], "Root, Trigger/Value/Icon, Content/Viewport, Group/Label, Item/ItemText/ItemIndicator, Separator and scroll buttons. Explicit metadata, typeahead and cancellable lifecycle hooks.", FORM_CHECKS),
+    component!("Primitives.Label", Helper, "rustify_components::primitives::Label", "crates/rustify-components/src/primitives/field.rs", Yes, DOM_ONLY, [], [], "Unstyled label part of the field family; a native label element associated with its control. No React forwardRef/asChild API.", FORM_CHECKS),
     component!("Accordion", Helper, "rustify_components::accordion", "crates/rustify-components/src/accordion.rs", Yes, DOM_ONLY, ["value", "on_change", "orientation", "collapsible", "disabled", "class", "test_id", "children", "level", "force_mount"], [], "Root/Item/Header/Trigger/Content with Single/Multiple controlled values, native heading levels and roving focus. Closed retained content is hidden/inert; Content owns force_mount.", PANEL_CHECKS),
     component!("Primitives.Accordion", Helper, "rustify_components::primitives::accordion", "crates/rustify-components/src/primitives/accordion.rs", Yes, DOM_ONLY, ["value", "on_change", "orientation", "collapsible", "disabled", "class", "test_id", "children", "level", "force_mount"], [], "Root/Item/Header/Trigger/Content with Single/Multiple controlled values, native heading levels and roving focus. Closed retained content is hidden/inert; Content owns force_mount.", PANEL_CHECKS),
     component!("Collapsible", Helper, "rustify_components::collapsible", "crates/rustify-components/src/collapsible.rs", Yes, DOM_ONLY, ["open", "on_open_change", "disabled", "class", "test_id", "children", "force_mount"], [], "Root/Trigger/Content controlled disclosure. trigger_as keeps one native button; Content force_mount does not expose hidden content to interaction.", PANEL_CHECKS),
@@ -1126,7 +1133,7 @@ pub const STABLE_REFERENCES: &[ReferenceEntry] = &[
     ReferenceEntry { library: ReferenceLibrary::Themes, name: "ChevronDownIcon", component: Some("Icon"), support: Support::Partial, limitation: "Mapped Rust entry supports its listed fields; generic asChild/Slot and exact React export/Props compatibility are not provided." },
     ReferenceEntry { library: ReferenceLibrary::Themes, name: "ThickCheckIcon", component: Some("Icon"), support: Support::Partial, limitation: "Mapped Rust entry supports its listed fields; generic asChild/Slot and exact React export/Props compatibility are not provided." },
     ReferenceEntry { library: ReferenceLibrary::Themes, name: "ThickChevronRightIcon", component: Some("Icon"), support: Support::Partial, limitation: "Mapped Rust entry supports its listed fields; generic asChild/Slot and exact React export/Props compatibility are not provided." },
-    ReferenceEntry { library: ReferenceLibrary::Themes, name: "ThickDividerHorizontalIcon", component: None, support: Support::No, limitation: "No standalone public Rust counterpart; scope internals, examples and similarly named extensions do not implement this reference API." },
+    ReferenceEntry { library: ReferenceLibrary::Themes, name: "ThickDividerHorizontalIcon", component: Some("Icon"), support: Support::Partial, limitation: "Mapped Rust entry supports its listed fields; generic asChild/Slot and exact React export/Props compatibility are not provided." },
     ReferenceEntry { library: ReferenceLibrary::Themes, name: "Inset", component: Some("Inset"), support: Support::Partial, limitation: "Mapped Rust entry supports its listed fields; generic asChild/Slot and exact React export/Props compatibility are not provided." },
     ReferenceEntry { library: ReferenceLibrary::Themes, name: "Kbd", component: Some("Kbd"), support: Support::Partial, limitation: "Mapped Rust entry supports its listed fields; generic asChild/Slot and exact React export/Props compatibility are not provided." },
     ReferenceEntry { library: ReferenceLibrary::Themes, name: "Link", component: Some("Link"), support: Support::Partial, limitation: "Mapped Rust entry supports its listed fields; generic asChild/Slot and exact React export/Props compatibility are not provided." },
@@ -1146,7 +1153,7 @@ pub const STABLE_REFERENCES: &[ReferenceEntry] = &[
     ReferenceEntry { library: ReferenceLibrary::Themes, name: "Skeleton", component: Some("Skeleton"), support: Support::Partial, limitation: "Declared controlled Rust parts are available; generic React props/ref/asChild and uncontrolled defaultValue/defaultOpen compatibility are not supplied." },
     ReferenceEntry { library: ReferenceLibrary::Themes, name: "Slider", component: Some("Slider"), support: Support::Partial, limitation: "Controlled native Rust parts and the listed visual subset are available; generic React props/ref/asChild compatibility is not supplied." },
     ReferenceEntry { library: ReferenceLibrary::Themes, name: "Slot", component: Some("Slot"), support: Support::Partial, limitation: "Controlled native Rust parts and the listed visual subset are available; generic React props/ref/asChild compatibility is not supplied." },
-    ReferenceEntry { library: ReferenceLibrary::Themes, name: "Slottable", component: None, support: Support::No, limitation: "No standalone public Rust counterpart; scope internals, examples and similarly named extensions do not implement this reference API." },
+    ReferenceEntry { library: ReferenceLibrary::Themes, name: "Slottable", component: None, support: Support::No, limitation: "React cloneElement composition helper; PRD §1.3 does not replicate it literally. Rust typed Slot covers single-element composition." },
     ReferenceEntry { library: ReferenceLibrary::Themes, name: "Spinner", component: Some("Spinner"), support: Support::Partial, limitation: "Mapped Rust entry supports its listed fields; generic asChild/Slot and exact React export/Props compatibility are not provided." },
     ReferenceEntry { library: ReferenceLibrary::Themes, name: "Strong", component: Some("Strong"), support: Support::Partial, limitation: "Mapped Rust entry supports its listed fields; generic asChild/Slot and exact React export/Props compatibility are not provided." },
     ReferenceEntry { library: ReferenceLibrary::Themes, name: "Switch", component: Some("Switch"), support: Support::Partial, limitation: "Controlled native Rust parts and the listed visual subset are available; generic React props/ref/asChild compatibility is not supplied." },
@@ -1171,11 +1178,11 @@ pub const STABLE_REFERENCES: &[ReferenceEntry] = &[
     ReferenceEntry { library: ReferenceLibrary::Primitives, name: "Collapsible", component: Some("Primitives.Collapsible"), support: Support::Partial, limitation: "Declared controlled Rust parts are available; generic React props/ref/asChild and uncontrolled defaultValue/defaultOpen compatibility are not supplied." },
     ReferenceEntry { library: ReferenceLibrary::Primitives, name: "ContextMenu", component: Some("Primitives.ContextMenu"), support: Support::Partial, limitation: "Controlled Rust parts and their declared visual fields are available; generic React props/ref/asChild compatibility is not supplied." },
     ReferenceEntry { library: ReferenceLibrary::Primitives, name: "Dialog", component: Some("Primitives.Dialog"), support: Support::Partial, limitation: "Declared controlled Rust parts are available; generic React props/ref/asChild and uncontrolled defaultValue/defaultOpen compatibility are not supplied." },
-    ReferenceEntry { library: ReferenceLibrary::Primitives, name: "Direction", component: None, support: Support::No, limitation: "No standalone public Rust counterpart; scope internals, examples and similarly named extensions do not implement this reference API." },
+    ReferenceEntry { library: ReferenceLibrary::Primitives, name: "Direction", component: Some("DirectionProvider"), support: Support::Partial, limitation: "Rust's DirectionProvider writes the resolved dir on the scope root and follows the Locale direction; React Direction.Provider's per-subtree DOM context wrapper and layout side effects are not replicated." },
     ReferenceEntry { library: ReferenceLibrary::Primitives, name: "DropdownMenu", component: Some("Primitives.DropdownMenu"), support: Support::Partial, limitation: "Controlled Rust parts and their declared visual fields are available; generic React props/ref/asChild compatibility is not supplied." },
     ReferenceEntry { library: ReferenceLibrary::Primitives, name: "Form", component: Some("Primitives.Form"), support: Support::Partial, limitation: "Controlled native Rust parts and the listed visual subset are available; generic React props/ref/asChild compatibility is not supplied." },
     ReferenceEntry { library: ReferenceLibrary::Primitives, name: "HoverCard", component: Some("Primitives.HoverCard"), support: Support::Partial, limitation: "Controlled Rust parts and their declared visual fields are available; generic React props/ref/asChild compatibility is not supplied." },
-    ReferenceEntry { library: ReferenceLibrary::Primitives, name: "Label", component: Some("Label"), support: Support::Partial, limitation: "Existing styled Rustify behavior is only a partial correspondence; no complete unstyled primitive or public parts contract." },
+    ReferenceEntry { library: ReferenceLibrary::Primitives, name: "Label", component: Some("Primitives.Label"), support: Support::Partial, limitation: "Unstyled primitives::Label with a native label element and its control association; generic React props/ref/asChild compatibility is not supplied." },
     ReferenceEntry { library: ReferenceLibrary::Primitives, name: "Menubar", component: Some("Primitives.Menubar"), support: Support::Partial, limitation: "Controlled Rust parts and their declared visual fields are available; generic React props/ref/asChild compatibility is not supplied." },
     ReferenceEntry { library: ReferenceLibrary::Primitives, name: "NavigationMenu", component: Some("Primitives.NavigationMenu"), support: Support::Partial, limitation: "Controlled Rust parts and their declared visual fields are available; generic React props/ref/asChild compatibility is not supplied." },
     ReferenceEntry { library: ReferenceLibrary::Primitives, name: "Popover", component: Some("Primitives.Popover"), support: Support::Partial, limitation: "Controlled Rust parts and their declared visual fields are available; generic React props/ref/asChild compatibility is not supplied." },
@@ -1695,6 +1702,18 @@ pub fn catalogue_markdown() -> String {
             entry.limitation
         );
     }
+    out.push_str("\n## Legacy API destinations\n\nEvery key in the frozen baseline (`catalog/legacy_baseline.txt`, extracted mechanically from the pre-P5 commit 11b69129) resolves through exactly one row below; a name ending in `*` is a wildcard and exact keys win over it. rustify-dom's remaining public items and the rustify-ui facade lost no names against that baseline (compared over `crates/rustify-dom/src` and the facade re-exports), so they carry no baseline keys.\n\n| baseline | fate | destination | reason | guide |\n| --- | --- | --- | --- | --- |\n");
+    for entry in LEGACY_ENTRIES {
+        let _ = writeln!(
+            out,
+            "| {} | {} | {} | {} | {} |",
+            codes(entry.names),
+            entry.fate.name(),
+            cell(entry.destination),
+            cell(entry.reason),
+            cell(entry.guide)
+        );
+    }
     out.push_str("\n## Legacy application categories\n\n`CATALOG` retains its existing 24-category navigation and six capability dimensions. It does not enumerate all current components, public symbols or reference APIs.\n\n");
     out.push_str(&markdown());
     out
@@ -1704,6 +1723,47 @@ pub fn catalogue_markdown() -> String {
 mod inventory_tests {
     use super::*;
     use std::collections::BTreeSet;
+
+    #[test]
+    fn legacy_baseline_keys_resolve_exactly_once() {
+        let text = include_str!("catalog/legacy_baseline.txt");
+        let keys: Vec<&str> = text.lines().filter(|line| !line.is_empty()).collect();
+        let mut sorted = keys.clone();
+        sorted.sort_unstable();
+        assert_eq!(keys, sorted, "baseline keys are sorted and unique");
+        for &key in &keys {
+            let exact = LEGACY_ENTRIES
+                .iter()
+                .filter(|entry| entry.names.contains(&key))
+                .count();
+            if exact > 0 {
+                assert_eq!(exact, 1, "exact key appears once: {key}");
+                continue;
+            }
+            let wildcard = LEGACY_ENTRIES
+                .iter()
+                .filter(|entry| entry.resolves(key))
+                .count();
+            assert_eq!(wildcard, 1, "{key} must resolve through one wildcard");
+        }
+        for entry in LEGACY_ENTRIES {
+            assert!(!entry.destination.is_empty());
+            assert!(!entry.reason.is_empty());
+            for name in entry.names {
+                let Some(prefix) = name.strip_suffix('*') else {
+                    continue;
+                };
+                assert!(
+                    keys.iter().any(|key| {
+                        !LEGACY_ENTRIES.iter().any(|other| other.names.contains(key))
+                            && key.starts_with(prefix)
+                    }),
+                    "{name} matches no baseline key"
+                );
+            }
+        }
+        assert!(catalogue_markdown().contains("## Legacy API destinations"));
+    }
 
     #[test]
     fn frozen_reference_inventories_are_complete_unique_and_separate_from_candidates() {

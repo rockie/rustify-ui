@@ -13,6 +13,30 @@ fn tr(locale: Signal<Locale>, en: &'static str, zh: &'static str) -> &'static st
         en
     }
 }
+/// The gallery's working language, provided once so the sample controls can
+/// say themselves in it. Sample content stays in the API's own words.
+#[derive(Clone, Copy)]
+pub(crate) struct GalleryLocale(pub Signal<Locale>);
+/// The words on the gallery's own controls are the studio's to translate;
+/// labels without a mapping stay as they are.
+pub(crate) fn shell_label(locale: Signal<Locale>, label: &'static str) -> &'static str {
+    let zh = match label {
+        "Size" => "尺寸",
+        "Variant" => "变体",
+        "Palette" => "配色",
+        "High contrast" => "高对比",
+        "Low contrast" => "低对比",
+        "Disabled" => "禁用",
+        "Loading" => "加载中",
+        "Indeterminate" => "半选",
+        "Empty" => "空",
+        "Invalid" => "错误",
+        "Selected" => "选中",
+        "Reset" => "重置",
+        _ => label,
+    };
+    tr(locale, label, zh)
+}
 fn choice<T: Copy + PartialEq + Send + Sync + 'static>(
     label: &'static str,
     all: &'static [T],
@@ -30,7 +54,8 @@ fn choice<T: Copy + PartialEq + Send + Sync + 'static>(
         .enumerate()
         .map(|(index, value)| view! { <option value=index.to_string()>{text(value)}</option> })
         .collect_view();
-    let control = view! { <label class="gallery-control"><span>{label}</span><select aria-label=label prop:value=move ||index.get().to_string() on:change=move |event| {
+    let locale = use_context::<GalleryLocale>().expect("gallery locale").0;
+    let control = view! { <label class="gallery-control"><span>{move || shell_label(locale, label)}</span><select aria-label=move || shell_label(locale, label) prop:value=move ||index.get().to_string() on:change=move |event| {
         if let Ok(next)=event_target_value(&event).parse::<usize>() { if next<all.len() { index.set(next); } }
     }>{options}</select></label> }.into_any();
     (Signal::derive(move || all[index.get()]), control)
@@ -67,8 +92,9 @@ fn palette() -> (
     (color,high,view! { <div class="gallery-controls">{control}<StateToggle label="High contrast" value=high /></div> }.into_any())
 }
 #[component]
-fn StateToggle(label: &'static str, value: RwSignal<bool>) -> impl IntoView {
-    view! { <label class="gallery-control"><input type="checkbox" prop:checked=move ||value.get() on:change=move |event|value.set(event_target_checked(&event)) />{label}</label> }
+pub(crate) fn StateToggle(label: &'static str, value: RwSignal<bool>) -> impl IntoView {
+    let locale = use_context::<GalleryLocale>().expect("gallery locale").0;
+    view! { <label class="gallery-control"><input type="checkbox" prop:checked=move ||value.get() on:change=move |event|value.set(event_target_checked(&event)) />{move || shell_label(locale, label)}</label> }
 }
 #[derive(Clone)]
 struct GalleryLinks(String);
@@ -90,7 +116,14 @@ pub fn Gallery(
     let owner = Owner::new();
     let view=owner.with(move || {
     provide_context(GalleryLinks(id::next("gallery")));
+    provide_context(GalleryLocale(locale));
+    // The gallery owns its samples' SDK words: the scope's own locale handle
+    // may not follow the studio preference, so the gallery provides one for
+    // its samples and keeps it current.
+    let sdk_locale = rustify_ui::provide_locale(locale.get_untracked());
+    Effect::new(move |_| sdk_locale.set(locale.get()));
     let show_parts = RwSignal::new(false);
+    let section_state = state.clone();
     view! { <section class="component-gallery" data-testid="component-gallery" data-show-parts=move ||show_parts.get().to_string()>
         <header class="gallery-header"><h2>{move ||tr(locale,"Components","组件陈列")}</h2>
             <p>{move ||tr(locale,"Working samples · explore treatments, states and parts.","真实组件样本 · 查看外观、状态与部件。")}</p>
@@ -101,9 +134,11 @@ pub fn Gallery(
         </header>
         {GallerySection::ALL.into_iter().map(move |section| {
             let label=section.label();
+            let local=(section==GallerySection::Extensions).then(|| section_state.clone().map(|state| view! { <crate::gallery_extensions::ExtensionLocalSample state=state /> }));
             view! { <section class="gallery-section" id=gallery_id(label[0])>
                 <h3>{move ||tr(locale,label[0],label[1])}</h3>
                 <div class="gallery-grid">{ENTRIES.iter().filter(|entry|entry.section==section).map(move |entry|view! { <Sample entry=entry locale=locale /> }).collect_view()}</div>
+                {local}
             </section> }
         }).collect_view()}
         {state.map(move |state|view! { <LocalThemeSample state=state /> })}
@@ -167,6 +202,12 @@ fn sample(name: &str, locale: Signal<Locale>) -> AnyView {
         "Separator" => view! { <SeparatorSample /> }.into_any(),
         "Text" => view! { <TypographySample /> }.into_any(),
         "AccessibleIcon" => view! { <AccessibilitySample /> }.into_any(),
+        "DataTable" => view! { <crate::gallery_extensions::DataTableSample /> }.into_any(),
+        "Tree" => view! { <crate::gallery_extensions::TreeSample /> }.into_any(),
+        "FilePicker" => view! { <crate::gallery_extensions::FilesSample /> }.into_any(),
+        "Splitter" => view! { <crate::gallery_extensions::WorkspaceSample /> }.into_any(),
+        "CommandPalette" => view! { <crate::gallery_extensions::CommandSample /> }.into_any(),
+        "Icon" => view! { <crate::gallery_extensions::GlyphSample /> }.into_any(),
         _ => unreachable!("gallery entry has a sample"),
     }
 }

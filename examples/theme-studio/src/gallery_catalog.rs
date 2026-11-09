@@ -8,9 +8,10 @@ pub(crate) enum Section {
     Feedback,
     Layout,
     Typography,
+    Extensions,
 }
 impl Section {
-    pub const ALL: [Self; 8] = [
+    pub const ALL: [Self; 9] = [
         Self::Interaction,
         Self::Overlay,
         Self::Menu,
@@ -19,6 +20,7 @@ impl Section {
         Self::Feedback,
         Self::Layout,
         Self::Typography,
+        Self::Extensions,
     ];
     pub fn label(self) -> [&'static str; 2] {
         match self {
@@ -30,6 +32,7 @@ impl Section {
             Self::Feedback => ["Feedback", "反馈"],
             Self::Layout => ["Layout", "布局"],
             Self::Typography => ["Typography", "排版"],
+            Self::Extensions => ["Rustify extensions", "Rustify 扩展"],
         }
     }
 }
@@ -316,6 +319,37 @@ pub const ENTRIES: &[GalleryEntry] = &[
         ["AccessibleIcon → Icon", "VisuallyHidden"],
         Some("primitives::{accessible_icon, visually_hidden}")
     ),
+    entry!(
+        ["DataTable"],
+        Extensions,
+        ["Root → Header → Row → Cell", "Empty row"],
+        None
+    ),
+    entry!(
+        ["Tree"],
+        Extensions,
+        ["Root → Item → Label + Toggle icon", "Empty root"],
+        None
+    ),
+    entry!(
+        ["FilePicker", "DropZone"],
+        Extensions,
+        ["FilePicker → Input", "DropZone → Label"],
+        None
+    ),
+    entry!(
+        ["Splitter", "PanelTabs"],
+        Extensions,
+        ["Splitter → Divider", "PanelTabs → Tab + Close"],
+        None
+    ),
+    entry!(
+        ["CommandPalette"],
+        Extensions,
+        ["Search + Listbox → Item"],
+        None
+    ),
+    entry!(["Icon", "Glyph"], Extensions, ["Icon → path"], None),
 ];
 #[cfg(test)]
 pub const EXCLUDED: &[(&str, &str)] = &[

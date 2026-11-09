@@ -89,11 +89,8 @@ pub fn Splitter(
     let step = step.unwrap_or(16.0);
     let mins = StoredValue::new(mins);
     let on_resize = StoredValue::new(on_resize);
-    let divider_label = StoredValue::new(if divider_label.is_empty() {
-        "resize panel".to_string()
-    } else {
-        divider_label
-    });
+    let divider_label = StoredValue::new(divider_label);
+    let locale = rustify_ui::use_locale();
     // Where the pointer was the last time a drag moved. A drag is a series of
     // deltas rather than an absolute position, so grabbing a divider anywhere
     // along its width does not jump it.
@@ -131,6 +128,7 @@ pub fn Splitter(
         <div
             class="pointer-events-none absolute inset-0"
             data-name="Splitter"
+            data-rustify-part="splitter"
             data-testid=test_id
         >
             <For each=dividers key=|(index, _)| *index let:divider>
@@ -142,15 +140,43 @@ pub fn Splitter(
                     });
                     view! {
                         <div
-                            class=format!("pointer-events-auto absolute top-0 bottom-0 -ml-1 w-2 cursor-col-resize bg-border outline-none focus-visible:ring-ring/50 focus-visible:ring-[3px] {geometry}")
+                            class=format!("pointer-events-auto absolute top-0 bottom-0 -ml-1 w-2 cursor-col-resize bg-border outline-none focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-ring focus-visible:-outline-offset-2 {geometry}")
                             data-name="SplitterDivider"
+                            data-rustify-part="splitter-divider"
                             data-testid=format!("divider-{index}")
                             role="separator"
                             aria-orientation="vertical"
+                            data-orientation="vertical"
+                            data-state=move || {
+                                if dragging.get().is_some_and(|(at, _)| at == index) {
+                                    "dragging"
+                                } else {
+                                    "idle"
+                                }
+                            }
                             aria-label=move || {
-                                format!("{} {}", divider_label.get_value(), index + 1)
+                                let given = divider_label.get_value();
+                                let words = if given.is_empty() {
+                                    locale.text(rustify_ui::Message::ResizePanel).to_string()
+                                } else {
+                                    given
+                                };
+                                format!("{} {}", words, index + 1)
                             }
                             tabindex="0"
+                            aria-valuemin=move || {
+                                mins
+                                    .with_value(|mins| mins.get(index).copied().unwrap_or(0.0))
+                                    .round() as i64
+                            }
+                            aria-valuemax=move || {
+                                let sizes = sizes.get();
+                                let left = sizes.get(index).copied().unwrap_or(0.0);
+                                let right = sizes.get(index + 1).copied().unwrap_or(0.0);
+                                let min_right = mins
+                                    .with_value(|mins| mins.get(index + 1).copied().unwrap_or(0.0));
+                                (left + right - min_right).round() as i64
+                            }
                             aria-valuenow=move || {
                                 sizes.get().get(index).copied().unwrap_or(0.0).round() as i64
                             }

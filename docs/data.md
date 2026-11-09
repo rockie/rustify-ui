@@ -251,3 +251,8 @@ No server paging, no data source protocol, no formula engine, no column
 resizing or reordering, no grouping by value, and no virtualised tree. No
 worker and no second thread: a job is sliced on the one thread there is. The
 table draws what it is told and holds nothing.
+
+Empty and error states belong to the application: DataTable and Tree accept
+`empty_label` (defaulting to the SDK's locale-aware message) and FilePicker
+and DropZone take `invalid` for refusal visuals. Loading failures are
+application states; express them with a Callout or the empty label.

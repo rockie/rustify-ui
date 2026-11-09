@@ -1,0 +1,7835 @@
+[
+  {
+    "name": "Button",
+    "state": "default",
+    "text": [
+      {
+        "part": "span",
+        "text": "Create",
+        "ratio": 5.986453723270191,
+        "foreground": "rgb(255, 255, 255)",
+        "background": [
+          0.09019607843137255,
+          0.3607843137254902,
+          0.8274509803921568,
+          1
+        ]
+      }
+    ],
+    "edges": []
+  },
+  {
+    "name": "Button",
+    "state": "Size=One",
+    "text": [
+      {
+        "part": "span",
+        "text": "Create",
+        "ratio": 5.986453723270191,
+        "foreground": "rgb(255, 255, 255)",
+        "background": [
+          0.09019607843137255,
+          0.3607843137254902,
+          0.8274509803921568,
+          1
+        ]
+      }
+    ],
+    "edges": []
+  },
+  {
+    "name": "Button",
+    "state": "Size=Two",
+    "text": [
+      {
+        "part": "span",
+        "text": "Create",
+        "ratio": 5.986453723270191,
+        "foreground": "rgb(255, 255, 255)",
+        "background": [
+          0.09019607843137255,
+          0.3607843137254902,
+          0.8274509803921568,
+          1
+        ]
+      }
+    ],
+    "edges": []
+  },
+  {
+    "name": "Button",
+    "state": "Variant=classic",
+    "text": [
+      {
+        "part": "span",
+        "text": "Create",
+        "ratio": 5.986453723270191,
+        "foreground": "rgb(255, 255, 255)",
+        "background": [
+          0.09019607843137255,
+          0.3607843137254902,
+          0.8274509803921568,
+          1
+        ]
+      }
+    ],
+    "edges": []
+  },
+  {
+    "name": "Button",
+    "state": "Variant=solid",
+    "text": [
+      {
+        "part": "span",
+        "text": "Create",
+        "ratio": 5.986453723270191,
+        "foreground": "rgb(255, 255, 255)",
+        "background": [
+          0.09019607843137255,
+          0.3607843137254902,
+          0.8274509803921568,
+          1
+        ]
+      }
+    ],
+    "edges": []
+  },
+  {
+    "name": "Button",
+    "state": "Disabled",
+    "text": [],
+    "edges": []
+  },
+  {
+    "name": "Button",
+    "state": "Loading",
+    "text": [],
+    "edges": []
+  },
+  {
+    "name": "Button",
+    "state": "local Blue",
+    "text": [
+      {
+        "part": "span",
+        "text": "Create",
+        "ratio": 3.26426381933503,
+        "foreground": "rgb(255, 255, 255)",
+        "background": [
+          0,
+          0.5647058823529412,
+          1,
+          1
+        ],
+        "reference": {
+          "rule": "Radix solid: accent-9 / accent-contrast",
+          "matches": true
+        }
+      }
+    ],
+    "edges": []
+  },
+  {
+    "name": "Button",
+    "state": "local Blue high contrast",
+    "text": [
+      {
+        "part": "span",
+        "text": "Create",
+        "ratio": 12.307963602912842,
+        "foreground": "rgb(252, 252, 253)",
+        "background": [
+          0.06666666666666667,
+          0.19607843137254902,
+          0.39215686274509803,
+          1
+        ]
+      }
+    ],
+    "edges": []
+  },
+  {
+    "name": "Button",
+    "state": "focus",
+    "text": [
+      {
+        "part": "span",
+        "text": "Create",
+        "ratio": 5.986453723270191,
+        "foreground": "rgb(255, 255, 255)",
+        "background": [
+          0.09019607843137255,
+          0.3607843137254902,
+          0.8274509803921568,
+          1
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "part": "button",
+        "kind": "focus outline",
+        "ratio": 4.372367774254193
+      }
+    ]
+  },
+  {
+    "name": "Checkbox",
+    "state": "default",
+    "text": [
+      {
+        "part": "label",
+        "text": "Receive updates",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "part": "checkbox-control",
+        "kind": "unchecked boundary",
+        "ratio": 3.1590540832085683
+      }
+    ]
+  },
+  {
+    "name": "Checkbox",
+    "state": "checked",
+    "text": [
+      {
+        "part": "label",
+        "text": "Receive updates",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      }
+    ],
+    "edges": []
+  },
+  {
+    "name": "Checkbox",
+    "state": "Size=One",
+    "text": [
+      {
+        "part": "label",
+        "text": "Receive updates",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      }
+    ],
+    "edges": []
+  },
+  {
+    "name": "Checkbox",
+    "state": "Size=Two",
+    "text": [
+      {
+        "part": "label",
+        "text": "Receive updates",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      }
+    ],
+    "edges": []
+  },
+  {
+    "name": "Checkbox",
+    "state": "Variant=classic",
+    "text": [
+      {
+        "part": "label",
+        "text": "Receive updates",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      }
+    ],
+    "edges": []
+  },
+  {
+    "name": "Checkbox",
+    "state": "Variant=surface",
+    "text": [
+      {
+        "part": "label",
+        "text": "Receive updates",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      }
+    ],
+    "edges": []
+  },
+  {
+    "name": "Checkbox",
+    "state": "Disabled",
+    "text": [
+      {
+        "part": "label",
+        "text": "Receive updates",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      }
+    ],
+    "edges": []
+  },
+  {
+    "name": "Checkbox",
+    "state": "Indeterminate",
+    "text": [
+      {
+        "part": "label",
+        "text": "Receive updates",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      }
+    ],
+    "edges": []
+  },
+  {
+    "name": "Checkbox",
+    "state": "local Blue",
+    "text": [
+      {
+        "part": "label",
+        "text": "Receive updates",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      }
+    ],
+    "edges": []
+  },
+  {
+    "name": "Checkbox",
+    "state": "local Blue high contrast",
+    "text": [
+      {
+        "part": "label",
+        "text": "Receive updates",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      }
+    ],
+    "edges": []
+  },
+  {
+    "name": "Dialog",
+    "state": "default",
+    "text": [
+      {
+        "part": "dialog-title",
+        "text": "Edit profile",
+        "ratio": 14.70074593586825,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "part": "dialog-description",
+        "text": "Changes stay in this preview.",
+        "ratio": 4.974752735406439,
+        "foreground": "rgb(102, 112, 133)",
+        "background": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "part": "dialog-close",
+        "text": "Done",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      }
+    ],
+    "edges": []
+  },
+  {
+    "name": "Dialog",
+    "state": "Size=One",
+    "text": [
+      {
+        "part": "dialog-title",
+        "text": "Edit profile",
+        "ratio": 14.70074593586825,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "part": "dialog-description",
+        "text": "Changes stay in this preview.",
+        "ratio": 4.974752735406439,
+        "foreground": "rgb(102, 112, 133)",
+        "background": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "part": "dialog-close",
+        "text": "Done",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "part": "dialog-close",
+        "kind": "focus outline",
+        "ratio": 4.569237237743075
+      }
+    ]
+  },
+  {
+    "name": "Dialog",
+    "state": "Size=Two",
+    "text": [
+      {
+        "part": "dialog-title",
+        "text": "Edit profile",
+        "ratio": 14.70074593586825,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "part": "dialog-description",
+        "text": "Changes stay in this preview.",
+        "ratio": 4.974752735406439,
+        "foreground": "rgb(102, 112, 133)",
+        "background": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "part": "dialog-close",
+        "text": "Done",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "part": "dialog-close",
+        "kind": "focus outline",
+        "ratio": 4.569237237743075
+      }
+    ]
+  },
+  {
+    "name": "Dialog",
+    "state": "Disabled",
+    "text": [],
+    "edges": []
+  },
+  {
+    "name": "DropdownMenu",
+    "state": "default",
+    "text": [
+      {
+        "part": "menu-label",
+        "text": "Document",
+        "ratio": 4.974752735406439,
+        "foreground": "rgb(102, 112, 133)",
+        "background": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "part": "menu-item",
+        "text": "Duplicate",
+        "ratio": 14.70074593586825,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "part": "menu-checkbox-item",
+        "text": "Show guides",
+        "ratio": 14.70074593586825,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "part": "menu-sub-trigger",
+        "text": "Export",
+        "ratio": 14.70074593586825,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          1,
+          1,
+          1,
+          1
+        ]
+      }
+    ],
+    "edges": []
+  },
+  {
+    "name": "DropdownMenu",
+    "state": "default highlighted",
+    "text": [
+      {
+        "part": "menu-label",
+        "text": "Document",
+        "ratio": 4.974752735406439,
+        "foreground": "rgb(102, 112, 133)",
+        "background": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "part": "menu-item",
+        "text": "Duplicate",
+        "ratio": 5.986453723270191,
+        "foreground": "rgb(255, 255, 255)",
+        "background": [
+          0.09019607843137255,
+          0.3607843137254902,
+          0.8274509803921568,
+          1
+        ]
+      },
+      {
+        "part": "menu-checkbox-item",
+        "text": "Show guides",
+        "ratio": 14.70074593586825,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "part": "menu-sub-trigger",
+        "text": "Export",
+        "ratio": 14.70074593586825,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          1,
+          1,
+          1,
+          1
+        ]
+      }
+    ]
+  },
+  {
+    "name": "DropdownMenu",
+    "state": "Size=One",
+    "text": [
+      {
+        "part": "menu-label",
+        "text": "Document",
+        "ratio": 4.974752735406439,
+        "foreground": "rgb(102, 112, 133)",
+        "background": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "part": "menu-item",
+        "text": "Duplicate",
+        "ratio": 14.70074593586825,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "part": "menu-checkbox-item",
+        "text": "Show guides",
+        "ratio": 14.70074593586825,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "part": "menu-sub-trigger",
+        "text": "Export",
+        "ratio": 14.70074593586825,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          1,
+          1,
+          1,
+          1
+        ]
+      }
+    ],
+    "edges": []
+  },
+  {
+    "name": "DropdownMenu",
+    "state": "Size=One highlighted",
+    "text": [
+      {
+        "part": "menu-label",
+        "text": "Document",
+        "ratio": 4.974752735406439,
+        "foreground": "rgb(102, 112, 133)",
+        "background": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "part": "menu-item",
+        "text": "Duplicate",
+        "ratio": 5.986453723270191,
+        "foreground": "rgb(255, 255, 255)",
+        "background": [
+          0.09019607843137255,
+          0.3607843137254902,
+          0.8274509803921568,
+          1
+        ]
+      },
+      {
+        "part": "menu-checkbox-item",
+        "text": "Show guides",
+        "ratio": 14.70074593586825,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "part": "menu-sub-trigger",
+        "text": "Export",
+        "ratio": 14.70074593586825,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          1,
+          1,
+          1,
+          1
+        ]
+      }
+    ]
+  },
+  {
+    "name": "DropdownMenu",
+    "state": "Size=Two",
+    "text": [
+      {
+        "part": "menu-label",
+        "text": "Document",
+        "ratio": 4.974752735406439,
+        "foreground": "rgb(102, 112, 133)",
+        "background": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "part": "menu-item",
+        "text": "Duplicate",
+        "ratio": 14.70074593586825,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "part": "menu-checkbox-item",
+        "text": "Show guides",
+        "ratio": 14.70074593586825,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "part": "menu-sub-trigger",
+        "text": "Export",
+        "ratio": 14.70074593586825,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          1,
+          1,
+          1,
+          1
+        ]
+      }
+    ],
+    "edges": []
+  },
+  {
+    "name": "DropdownMenu",
+    "state": "Size=Two highlighted",
+    "text": [
+      {
+        "part": "menu-label",
+        "text": "Document",
+        "ratio": 4.974752735406439,
+        "foreground": "rgb(102, 112, 133)",
+        "background": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "part": "menu-item",
+        "text": "Duplicate",
+        "ratio": 5.986453723270191,
+        "foreground": "rgb(255, 255, 255)",
+        "background": [
+          0.09019607843137255,
+          0.3607843137254902,
+          0.8274509803921568,
+          1
+        ]
+      },
+      {
+        "part": "menu-checkbox-item",
+        "text": "Show guides",
+        "ratio": 14.70074593586825,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "part": "menu-sub-trigger",
+        "text": "Export",
+        "ratio": 14.70074593586825,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          1,
+          1,
+          1,
+          1
+        ]
+      }
+    ]
+  },
+  {
+    "name": "DropdownMenu",
+    "state": "Variant=solid",
+    "text": [
+      {
+        "part": "menu-label",
+        "text": "Document",
+        "ratio": 4.974752735406439,
+        "foreground": "rgb(102, 112, 133)",
+        "background": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "part": "menu-item",
+        "text": "Duplicate",
+        "ratio": 14.70074593586825,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "part": "menu-checkbox-item",
+        "text": "Show guides",
+        "ratio": 14.70074593586825,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "part": "menu-sub-trigger",
+        "text": "Export",
+        "ratio": 14.70074593586825,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          1,
+          1,
+          1,
+          1
+        ]
+      }
+    ],
+    "edges": []
+  },
+  {
+    "name": "DropdownMenu",
+    "state": "Variant=solid highlighted",
+    "text": [
+      {
+        "part": "menu-label",
+        "text": "Document",
+        "ratio": 4.974752735406439,
+        "foreground": "rgb(102, 112, 133)",
+        "background": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "part": "menu-item",
+        "text": "Duplicate",
+        "ratio": 5.986453723270191,
+        "foreground": "rgb(255, 255, 255)",
+        "background": [
+          0.09019607843137255,
+          0.3607843137254902,
+          0.8274509803921568,
+          1
+        ]
+      },
+      {
+        "part": "menu-checkbox-item",
+        "text": "Show guides",
+        "ratio": 14.70074593586825,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "part": "menu-sub-trigger",
+        "text": "Export",
+        "ratio": 14.70074593586825,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          1,
+          1,
+          1,
+          1
+        ]
+      }
+    ]
+  },
+  {
+    "name": "DropdownMenu",
+    "state": "Variant=soft",
+    "text": [
+      {
+        "part": "menu-label",
+        "text": "Document",
+        "ratio": 4.974752735406439,
+        "foreground": "rgb(102, 112, 133)",
+        "background": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "part": "menu-item",
+        "text": "Duplicate",
+        "ratio": 14.70074593586825,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "part": "menu-checkbox-item",
+        "text": "Show guides",
+        "ratio": 14.70074593586825,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "part": "menu-sub-trigger",
+        "text": "Export",
+        "ratio": 14.70074593586825,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          1,
+          1,
+          1,
+          1
+        ]
+      }
+    ],
+    "edges": []
+  },
+  {
+    "name": "DropdownMenu",
+    "state": "Variant=soft highlighted",
+    "text": [
+      {
+        "part": "menu-label",
+        "text": "Document",
+        "ratio": 4.974752735406439,
+        "foreground": "rgb(102, 112, 133)",
+        "background": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "part": "menu-item",
+        "text": "Duplicate",
+        "ratio": 12.11136751957889,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.8823529411764706,
+          0.9137254901960784,
+          1,
+          1
+        ]
+      },
+      {
+        "part": "menu-checkbox-item",
+        "text": "Show guides",
+        "ratio": 14.70074593586825,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "part": "menu-sub-trigger",
+        "text": "Export",
+        "ratio": 14.70074593586825,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          1,
+          1,
+          1,
+          1
+        ]
+      }
+    ]
+  },
+  {
+    "name": "DropdownMenu",
+    "state": "Disabled",
+    "text": [],
+    "edges": []
+  },
+  {
+    "name": "DropdownMenu",
+    "state": "local Blue",
+    "text": [
+      {
+        "part": "menu-label",
+        "text": "Document",
+        "ratio": 4.974752735406439,
+        "foreground": "rgb(102, 112, 133)",
+        "background": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "part": "menu-item",
+        "text": "Duplicate",
+        "ratio": 14.70074593586825,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "part": "menu-checkbox-item",
+        "text": "Show guides",
+        "ratio": 14.70074593586825,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "part": "menu-sub-trigger",
+        "text": "Export",
+        "ratio": 14.70074593586825,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          1,
+          1,
+          1,
+          1
+        ]
+      }
+    ],
+    "edges": []
+  },
+  {
+    "name": "DropdownMenu",
+    "state": "local Blue highlighted",
+    "text": [
+      {
+        "part": "menu-label",
+        "text": "Document",
+        "ratio": 4.974752735406439,
+        "foreground": "rgb(102, 112, 133)",
+        "background": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "part": "menu-item",
+        "text": "Duplicate",
+        "ratio": 3.26426381933503,
+        "foreground": "rgb(255, 255, 255)",
+        "background": [
+          0,
+          0.5647058823529412,
+          1,
+          1
+        ],
+        "reference": {
+          "rule": "Radix solid: accent-9 / accent-contrast",
+          "matches": true
+        }
+      },
+      {
+        "part": "menu-checkbox-item",
+        "text": "Show guides",
+        "ratio": 14.70074593586825,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "part": "menu-sub-trigger",
+        "text": "Export",
+        "ratio": 14.70074593586825,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          1,
+          1,
+          1,
+          1
+        ]
+      }
+    ]
+  },
+  {
+    "name": "DropdownMenu",
+    "state": "local Blue high contrast",
+    "text": [
+      {
+        "part": "menu-label",
+        "text": "Document",
+        "ratio": 4.974752735406439,
+        "foreground": "rgb(102, 112, 133)",
+        "background": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "part": "menu-item",
+        "text": "Duplicate",
+        "ratio": 14.70074593586825,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "part": "menu-checkbox-item",
+        "text": "Show guides",
+        "ratio": 14.70074593586825,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "part": "menu-sub-trigger",
+        "text": "Export",
+        "ratio": 14.70074593586825,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          1,
+          1,
+          1,
+          1
+        ]
+      }
+    ],
+    "edges": []
+  },
+  {
+    "name": "DropdownMenu",
+    "state": "local Blue high contrast highlighted",
+    "text": [
+      {
+        "part": "menu-label",
+        "text": "Document",
+        "ratio": 4.974752735406439,
+        "foreground": "rgb(102, 112, 133)",
+        "background": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "part": "menu-item",
+        "text": "Duplicate",
+        "ratio": 12.37667193698759,
+        "foreground": "rgb(251, 253, 255)",
+        "background": [
+          0.06666666666666667,
+          0.19607843137254902,
+          0.39215686274509803,
+          1
+        ]
+      },
+      {
+        "part": "menu-checkbox-item",
+        "text": "Show guides",
+        "ratio": 14.70074593586825,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "part": "menu-sub-trigger",
+        "text": "Export",
+        "ratio": 14.70074593586825,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          1,
+          1,
+          1,
+          1
+        ]
+      }
+    ]
+  },
+  {
+    "name": "DropdownMenu",
+    "state": "caller rounded-sm",
+    "text": [
+      {
+        "part": "menu-label",
+        "text": "Document",
+        "ratio": 4.974752735406439,
+        "foreground": "rgb(102, 112, 133)",
+        "background": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "part": "menu-item",
+        "text": "Duplicate",
+        "ratio": 14.70074593586825,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "part": "menu-checkbox-item",
+        "text": "Show guides",
+        "ratio": 14.70074593586825,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "part": "menu-sub-trigger",
+        "text": "Export",
+        "ratio": 14.70074593586825,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          1,
+          1,
+          1,
+          1
+        ]
+      }
+    ],
+    "edges": []
+  },
+  {
+    "name": "DropdownMenu",
+    "state": "caller rounded-sm highlighted",
+    "text": [
+      {
+        "part": "menu-label",
+        "text": "Document",
+        "ratio": 4.974752735406439,
+        "foreground": "rgb(102, 112, 133)",
+        "background": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "part": "menu-item",
+        "text": "Duplicate",
+        "ratio": 5.986453723270191,
+        "foreground": "rgb(255, 255, 255)",
+        "background": [
+          0.09019607843137255,
+          0.3607843137254902,
+          0.8274509803921568,
+          1
+        ]
+      },
+      {
+        "part": "menu-checkbox-item",
+        "text": "Show guides",
+        "ratio": 14.70074593586825,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "part": "menu-sub-trigger",
+        "text": "Export",
+        "ratio": 14.70074593586825,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          1,
+          1,
+          1,
+          1
+        ]
+      }
+    ]
+  },
+  {
+    "name": "NavigationMenu",
+    "state": "default",
+    "text": [
+      {
+        "part": "navigation-menu-trigger",
+        "text": "Learn",
+        "ratio": 13.341838813723779,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9490196078431372,
+          0.9568627450980393,
+          0.9686274509803922,
+          1
+        ]
+      },
+      {
+        "part": "navigation-menu-link",
+        "text": "Content components",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "navigation-menu-link",
+        "text": "Typography",
+        "ratio": 13.341838813723779,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9490196078431372,
+          0.9568627450980393,
+          0.9686274509803922,
+          1
+        ]
+      },
+      {
+        "part": "navigation-menu-link",
+        "text": "Reference",
+        "ratio": 7.190704432254326,
+        "foreground": "rgb(12, 17, 29)",
+        "background": [
+          0.07058823529411765,
+          0.7176470588235294,
+          0.41568627450980394,
+          1
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "part": "navigation-menu-link",
+        "kind": "focus outline",
+        "ratio": 4.372367774254193
+      }
+    ]
+  },
+  {
+    "name": "NavigationMenu",
+    "state": "Disabled",
+    "text": [
+      {
+        "part": "navigation-menu-link",
+        "text": "Reference",
+        "ratio": 7.190704432254326,
+        "foreground": "rgb(12, 17, 29)",
+        "background": [
+          0.07058823529411765,
+          0.7176470588235294,
+          0.41568627450980394,
+          1
+        ]
+      }
+    ],
+    "edges": []
+  },
+  {
+    "name": "NavigationMenu",
+    "state": "caller rounded-sm",
+    "text": [
+      {
+        "part": "navigation-menu-trigger",
+        "text": "Learn",
+        "ratio": 13.341838813723779,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9490196078431372,
+          0.9568627450980393,
+          0.9686274509803922,
+          1
+        ]
+      },
+      {
+        "part": "navigation-menu-link",
+        "text": "Content components",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "navigation-menu-link",
+        "text": "Typography",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "navigation-menu-link",
+        "text": "Reference",
+        "ratio": 7.190704432254326,
+        "foreground": "rgb(12, 17, 29)",
+        "background": [
+          0.07058823529411765,
+          0.7176470588235294,
+          0.41568627450980394,
+          1
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "part": "navigation-menu-link",
+        "kind": "focus outline",
+        "ratio": 4.372367774254193
+      }
+    ]
+  },
+  {
+    "name": "NavigationMenu",
+    "state": "focus",
+    "text": [
+      {
+        "part": "navigation-menu-trigger",
+        "text": "Learn",
+        "ratio": 13.341838813723779,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9490196078431372,
+          0.9568627450980393,
+          0.9686274509803922,
+          1
+        ]
+      },
+      {
+        "part": "navigation-menu-link",
+        "text": "Content components",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "navigation-menu-link",
+        "text": "Typography",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "navigation-menu-link",
+        "text": "Reference",
+        "ratio": 7.190704432254326,
+        "foreground": "rgb(12, 17, 29)",
+        "background": [
+          0.07058823529411765,
+          0.7176470588235294,
+          0.41568627450980394,
+          1
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "part": "navigation-menu-trigger",
+        "kind": "focus outline",
+        "ratio": 4.146866219821659
+      }
+    ]
+  },
+  {
+    "name": "Toolbar",
+    "state": "default",
+    "text": [
+      {
+        "part": "toolbar-button",
+        "text": "Save",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "toggle-root",
+        "text": "B",
+        "ratio": 7.190704432254326,
+        "foreground": "rgb(12, 17, 29)",
+        "background": [
+          0.07058823529411765,
+          0.7176470588235294,
+          0.41568627450980394,
+          1
+        ]
+      },
+      {
+        "part": "toggle-root",
+        "text": "I",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "dropdown-menu-trigger",
+        "text": "More",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "toolbar-link",
+        "text": "Menus",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      }
+    ],
+    "edges": []
+  },
+  {
+    "name": "Toolbar",
+    "state": "Disabled",
+    "text": [
+      {
+        "part": "toggle-root",
+        "text": "B",
+        "ratio": 7.190704432254326,
+        "foreground": "rgb(12, 17, 29)",
+        "background": [
+          0.07058823529411765,
+          0.7176470588235294,
+          0.41568627450980394,
+          1
+        ]
+      },
+      {
+        "part": "toggle-root",
+        "text": "I",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "dropdown-menu-trigger",
+        "text": "More",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "toolbar-link",
+        "text": "Menus",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      }
+    ],
+    "edges": []
+  },
+  {
+    "name": "Toolbar",
+    "state": "caller rounded-sm",
+    "text": [
+      {
+        "part": "toolbar-button",
+        "text": "Save",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "toggle-root",
+        "text": "B",
+        "ratio": 7.190704432254326,
+        "foreground": "rgb(12, 17, 29)",
+        "background": [
+          0.07058823529411765,
+          0.7176470588235294,
+          0.41568627450980394,
+          1
+        ]
+      },
+      {
+        "part": "toggle-root",
+        "text": "I",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "dropdown-menu-trigger",
+        "text": "More",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "toolbar-link",
+        "text": "Menus",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      }
+    ],
+    "edges": []
+  },
+  {
+    "name": "Toolbar",
+    "state": "focus",
+    "text": [
+      {
+        "part": "toolbar-button",
+        "text": "Save",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "toggle-root",
+        "text": "B",
+        "ratio": 7.190704432254326,
+        "foreground": "rgb(12, 17, 29)",
+        "background": [
+          0.07058823529411765,
+          0.7176470588235294,
+          0.41568627450980394,
+          1
+        ]
+      },
+      {
+        "part": "toggle-root",
+        "text": "I",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "dropdown-menu-trigger",
+        "text": "More",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "toolbar-link",
+        "text": "Menus",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "part": "toolbar-button",
+        "kind": "focus outline",
+        "ratio": 4.372367774254193
+      }
+    ]
+  },
+  {
+    "name": "Toast",
+    "state": "default",
+    "text": [
+      {
+        "part": "toast-title",
+        "text": "Draft saved",
+        "ratio": 14.70074593586825,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "part": "toast-description",
+        "text": "Your local preview is up to date.",
+        "ratio": 14.70074593586825,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "part": "toast-action",
+        "text": "Undo",
+        "ratio": 14.70074593586825,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "part": "toast-close",
+        "text": "Dismiss",
+        "ratio": 4.974752735406439,
+        "foreground": "rgb(102, 112, 133)",
+        "background": [
+          1,
+          1,
+          1,
+          1
+        ]
+      }
+    ],
+    "edges": []
+  },
+  {
+    "name": "Text",
+    "state": "default",
+    "text": [
+      {
+        "part": "h4",
+        "text": "A clear hierarchy",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "span",
+        "text": "and  text,  and .",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "strong",
+        "text": "Strong",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "em",
+        "text": "emphasized",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "q",
+        "text": "a quote",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "a",
+        "text": "a link",
+        "ratio": 5.728522284962262,
+        "foreground": "rgb(23, 92, 211)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "blockquote",
+        "text": "Good typography makes structure visible.",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "code",
+        "text": "let theme = resolve(document);",
+        "ratio": 4.793579808690695,
+        "foreground": "rgb(23, 92, 211)",
+        "background": [
+          0.8696808919646289,
+          0.9041138023836985,
+          0.9666743560169164,
+          1
+        ]
+      },
+      {
+        "part": "kbd",
+        "text": "⌘ K",
+        "ratio": 15.983097964235984,
+        "foreground": "rgb(28, 32, 36)",
+        "background": [
+          0.9882352941176471,
+          0.9882352941176471,
+          0.9921568627450981,
+          1
+        ]
+      }
+    ],
+    "edges": []
+  },
+  {
+    "name": "Text",
+    "state": "Text size=One",
+    "text": [
+      {
+        "part": "h4",
+        "text": "A clear hierarchy",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "span",
+        "text": "and  text,  and .",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "strong",
+        "text": "Strong",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "em",
+        "text": "emphasized",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "q",
+        "text": "a quote",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "a",
+        "text": "a link",
+        "ratio": 5.728522284962262,
+        "foreground": "rgb(23, 92, 211)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "blockquote",
+        "text": "Good typography makes structure visible.",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "code",
+        "text": "let theme = resolve(document);",
+        "ratio": 4.793579808690695,
+        "foreground": "rgb(23, 92, 211)",
+        "background": [
+          0.8696808919646289,
+          0.9041138023836985,
+          0.9666743560169164,
+          1
+        ]
+      },
+      {
+        "part": "kbd",
+        "text": "⌘ K",
+        "ratio": 15.983097964235984,
+        "foreground": "rgb(28, 32, 36)",
+        "background": [
+          0.9882352941176471,
+          0.9882352941176471,
+          0.9921568627450981,
+          1
+        ]
+      }
+    ],
+    "edges": []
+  },
+  {
+    "name": "Text",
+    "state": "Text size=Two",
+    "text": [
+      {
+        "part": "h4",
+        "text": "A clear hierarchy",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "span",
+        "text": "and  text,  and .",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "strong",
+        "text": "Strong",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "em",
+        "text": "emphasized",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "q",
+        "text": "a quote",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "a",
+        "text": "a link",
+        "ratio": 5.728522284962262,
+        "foreground": "rgb(23, 92, 211)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "blockquote",
+        "text": "Good typography makes structure visible.",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "code",
+        "text": "let theme = resolve(document);",
+        "ratio": 4.793579808690695,
+        "foreground": "rgb(23, 92, 211)",
+        "background": [
+          0.8696808919646289,
+          0.9041138023836985,
+          0.9666743560169164,
+          1
+        ]
+      },
+      {
+        "part": "kbd",
+        "text": "⌘ K",
+        "ratio": 15.983097964235984,
+        "foreground": "rgb(28, 32, 36)",
+        "background": [
+          0.9882352941176471,
+          0.9882352941176471,
+          0.9921568627450981,
+          1
+        ]
+      }
+    ],
+    "edges": []
+  },
+  {
+    "name": "Text",
+    "state": "Heading size=One",
+    "text": [
+      {
+        "part": "h4",
+        "text": "A clear hierarchy",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "span",
+        "text": "and  text,  and .",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "strong",
+        "text": "Strong",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "em",
+        "text": "emphasized",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "q",
+        "text": "a quote",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "a",
+        "text": "a link",
+        "ratio": 5.728522284962262,
+        "foreground": "rgb(23, 92, 211)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "blockquote",
+        "text": "Good typography makes structure visible.",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "code",
+        "text": "let theme = resolve(document);",
+        "ratio": 4.793579808690695,
+        "foreground": "rgb(23, 92, 211)",
+        "background": [
+          0.8696808919646289,
+          0.9041138023836985,
+          0.9666743560169164,
+          1
+        ]
+      },
+      {
+        "part": "kbd",
+        "text": "⌘ K",
+        "ratio": 15.983097964235984,
+        "foreground": "rgb(28, 32, 36)",
+        "background": [
+          0.9882352941176471,
+          0.9882352941176471,
+          0.9921568627450981,
+          1
+        ]
+      }
+    ],
+    "edges": []
+  },
+  {
+    "name": "Text",
+    "state": "Heading size=Two",
+    "text": [
+      {
+        "part": "h4",
+        "text": "A clear hierarchy",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "span",
+        "text": "and  text,  and .",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "strong",
+        "text": "Strong",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "em",
+        "text": "emphasized",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "q",
+        "text": "a quote",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "a",
+        "text": "a link",
+        "ratio": 5.728522284962262,
+        "foreground": "rgb(23, 92, 211)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "blockquote",
+        "text": "Good typography makes structure visible.",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "code",
+        "text": "let theme = resolve(document);",
+        "ratio": 4.793579808690695,
+        "foreground": "rgb(23, 92, 211)",
+        "background": [
+          0.8696808919646289,
+          0.9041138023836985,
+          0.9666743560169164,
+          1
+        ]
+      },
+      {
+        "part": "kbd",
+        "text": "⌘ K",
+        "ratio": 15.983097964235984,
+        "foreground": "rgb(28, 32, 36)",
+        "background": [
+          0.9882352941176471,
+          0.9882352941176471,
+          0.9921568627450981,
+          1
+        ]
+      }
+    ],
+    "edges": []
+  },
+  {
+    "name": "Text",
+    "state": "Code variant=Solid",
+    "text": [
+      {
+        "part": "h4",
+        "text": "A clear hierarchy",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "span",
+        "text": "and  text,  and .",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "strong",
+        "text": "Strong",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "em",
+        "text": "emphasized",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "q",
+        "text": "a quote",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "a",
+        "text": "a link",
+        "ratio": 5.728522284962262,
+        "foreground": "rgb(23, 92, 211)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "blockquote",
+        "text": "Good typography makes structure visible.",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "code",
+        "text": "let theme = resolve(document);",
+        "ratio": 5.986453723270191,
+        "foreground": "rgb(255, 255, 255)",
+        "background": [
+          0.09019607843137255,
+          0.3607843137254902,
+          0.8274509803921568,
+          1
+        ]
+      },
+      {
+        "part": "kbd",
+        "text": "⌘ K",
+        "ratio": 15.983097964235984,
+        "foreground": "rgb(28, 32, 36)",
+        "background": [
+          0.9882352941176471,
+          0.9882352941176471,
+          0.9921568627450981,
+          1
+        ]
+      }
+    ],
+    "edges": []
+  },
+  {
+    "name": "Text",
+    "state": "Code variant=Soft",
+    "text": [
+      {
+        "part": "h4",
+        "text": "A clear hierarchy",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "span",
+        "text": "and  text,  and .",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "strong",
+        "text": "Strong",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "em",
+        "text": "emphasized",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "q",
+        "text": "a quote",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "a",
+        "text": "a link",
+        "ratio": 5.728522284962262,
+        "foreground": "rgb(23, 92, 211)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "blockquote",
+        "text": "Good typography makes structure visible.",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "code",
+        "text": "let theme = resolve(document);",
+        "ratio": 4.793579808690695,
+        "foreground": "rgb(23, 92, 211)",
+        "background": [
+          0.8696808919646289,
+          0.9041138023836985,
+          0.9666743560169164,
+          1
+        ]
+      },
+      {
+        "part": "kbd",
+        "text": "⌘ K",
+        "ratio": 15.983097964235984,
+        "foreground": "rgb(28, 32, 36)",
+        "background": [
+          0.9882352941176471,
+          0.9882352941176471,
+          0.9921568627450981,
+          1
+        ]
+      }
+    ],
+    "edges": []
+  },
+  {
+    "name": "Text",
+    "state": "Kbd variant=Classic",
+    "text": [
+      {
+        "part": "h4",
+        "text": "A clear hierarchy",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "span",
+        "text": "and  text,  and .",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "strong",
+        "text": "Strong",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "em",
+        "text": "emphasized",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "q",
+        "text": "a quote",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "a",
+        "text": "a link",
+        "ratio": 5.728522284962262,
+        "foreground": "rgb(23, 92, 211)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "blockquote",
+        "text": "Good typography makes structure visible.",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "code",
+        "text": "let theme = resolve(document);",
+        "ratio": 4.793579808690695,
+        "foreground": "rgb(23, 92, 211)",
+        "background": [
+          0.8696808919646289,
+          0.9041138023836985,
+          0.9666743560169164,
+          1
+        ]
+      },
+      {
+        "part": "kbd",
+        "text": "⌘ K",
+        "ratio": 15.983097964235984,
+        "foreground": "rgb(28, 32, 36)",
+        "background": [
+          0.9882352941176471,
+          0.9882352941176471,
+          0.9921568627450981,
+          1
+        ]
+      }
+    ],
+    "edges": []
+  },
+  {
+    "name": "Text",
+    "state": "Kbd variant=Soft",
+    "text": [
+      {
+        "part": "h4",
+        "text": "A clear hierarchy",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "span",
+        "text": "and  text,  and .",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "strong",
+        "text": "Strong",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "em",
+        "text": "emphasized",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "q",
+        "text": "a quote",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "a",
+        "text": "a link",
+        "ratio": 5.728522284962262,
+        "foreground": "rgb(23, 92, 211)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "blockquote",
+        "text": "Good typography makes structure visible.",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "code",
+        "text": "let theme = resolve(document);",
+        "ratio": 4.793579808690695,
+        "foreground": "rgb(23, 92, 211)",
+        "background": [
+          0.8696808919646289,
+          0.9041138023836985,
+          0.9666743560169164,
+          1
+        ]
+      },
+      {
+        "part": "kbd",
+        "text": "⌘ K",
+        "ratio": 13.794220026586428,
+        "foreground": "rgb(28, 32, 36)",
+        "background": [
+          0.9190311418685121,
+          0.922722029988466,
+          0.9381776239907726,
+          1
+        ]
+      }
+    ],
+    "edges": []
+  },
+  {
+    "name": "Text",
+    "state": "local Blue",
+    "text": [
+      {
+        "part": "h4",
+        "text": "A clear hierarchy",
+        "ratio": 4.557377729659127,
+        "foreground": "rgba(0, 109, 203, 0.95)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "span",
+        "text": "and  text,  and .",
+        "ratio": 4.557377729659127,
+        "foreground": "rgba(0, 109, 203, 0.95)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "strong",
+        "text": "Strong",
+        "ratio": 4.557377729659127,
+        "foreground": "rgba(0, 109, 203, 0.95)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "em",
+        "text": "emphasized",
+        "ratio": 4.557377729659127,
+        "foreground": "rgba(0, 109, 203, 0.95)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "q",
+        "text": "a quote",
+        "ratio": 4.557377729659127,
+        "foreground": "rgba(0, 109, 203, 0.95)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "a",
+        "text": "a link",
+        "ratio": 4.557377729659127,
+        "foreground": "rgba(0, 109, 203, 0.95)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "blockquote",
+        "text": "Good typography makes structure visible.",
+        "ratio": 4.557377729659127,
+        "foreground": "rgba(0, 109, 203, 0.95)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "code",
+        "text": "let theme = resolve(document);",
+        "ratio": 4.1026068582831865,
+        "foreground": "rgba(0, 109, 203, 0.95)",
+        "background": [
+          0.8807381776239908,
+          0.9392541330257593,
+          0.9820069204152249,
+          1
+        ],
+        "reference": {
+          "rule": "Radix soft: accent-a3 / accent-a11",
+          "matches": true
+        }
+      },
+      {
+        "part": "kbd",
+        "text": "⌘ K",
+        "ratio": 15.983097964235984,
+        "foreground": "rgb(28, 32, 36)",
+        "background": [
+          0.9882352941176471,
+          0.9882352941176471,
+          0.9921568627450981,
+          1
+        ]
+      }
+    ],
+    "edges": []
+  },
+  {
+    "name": "Text",
+    "state": "local Blue high contrast",
+    "text": [
+      {
+        "part": "h4",
+        "text": "A clear hierarchy",
+        "ratio": 12.075751244870633,
+        "foreground": "rgb(17, 50, 100)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "span",
+        "text": "and  text,  and .",
+        "ratio": 12.075751244870633,
+        "foreground": "rgb(17, 50, 100)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "strong",
+        "text": "Strong",
+        "ratio": 12.075751244870633,
+        "foreground": "rgb(17, 50, 100)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "em",
+        "text": "emphasized",
+        "ratio": 12.075751244870633,
+        "foreground": "rgb(17, 50, 100)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "q",
+        "text": "a quote",
+        "ratio": 12.075751244870633,
+        "foreground": "rgb(17, 50, 100)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "a",
+        "text": "a link",
+        "ratio": 12.075751244870633,
+        "foreground": "rgb(17, 50, 100)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "blockquote",
+        "text": "Good typography makes structure visible.",
+        "ratio": 12.075751244870633,
+        "foreground": "rgb(17, 50, 100)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "code",
+        "text": "let theme = resolve(document);",
+        "ratio": 10.804837606552978,
+        "foreground": "rgb(17, 50, 100)",
+        "background": [
+          0.8807381776239908,
+          0.9392541330257593,
+          0.9820069204152249,
+          1
+        ]
+      },
+      {
+        "part": "kbd",
+        "text": "⌘ K",
+        "ratio": 15.983097964235984,
+        "foreground": "rgb(28, 32, 36)",
+        "background": [
+          0.9882352941176471,
+          0.9882352941176471,
+          0.9921568627450981,
+          1
+        ]
+      }
+    ],
+    "edges": []
+  },
+  {
+    "name": "Text",
+    "state": "focus",
+    "text": [
+      {
+        "part": "h4",
+        "text": "A clear hierarchy",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "span",
+        "text": "and  text,  and .",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "strong",
+        "text": "Strong",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "em",
+        "text": "emphasized",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "q",
+        "text": "a quote",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "a",
+        "text": "a link",
+        "ratio": 5.728522284962262,
+        "foreground": "rgb(23, 92, 211)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "blockquote",
+        "text": "Good typography makes structure visible.",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "code",
+        "text": "let theme = resolve(document);",
+        "ratio": 4.793579808690695,
+        "foreground": "rgb(23, 92, 211)",
+        "background": [
+          0.8696808919646289,
+          0.9041138023836985,
+          0.9666743560169164,
+          1
+        ]
+      },
+      {
+        "part": "kbd",
+        "text": "⌘ K",
+        "ratio": 15.983097964235984,
+        "foreground": "rgb(28, 32, 36)",
+        "background": [
+          0.9882352941176471,
+          0.9882352941176471,
+          0.9921568627450981,
+          1
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "part": "a",
+        "kind": "focus outline",
+        "ratio": 4.372367774254193
+      }
+    ]
+  },
+  {
+    "name": "DataTable",
+    "state": "default",
+    "text": [
+      {
+        "part": "button",
+        "text": "column 1",
+        "ratio": 4.514896687792062,
+        "foreground": "rgb(102, 112, 133)",
+        "background": [
+          0.9490196078431372,
+          0.9568627450980393,
+          0.9686274509803922,
+          1
+        ]
+      },
+      {
+        "part": "button",
+        "text": "column 2",
+        "ratio": 4.514896687792062,
+        "foreground": "rgb(102, 112, 133)",
+        "background": [
+          0.9490196078431372,
+          0.9568627450980393,
+          0.9686274509803922,
+          1
+        ]
+      },
+      {
+        "part": "button",
+        "text": "column 3",
+        "ratio": 4.514896687792062,
+        "foreground": "rgb(102, 112, 133)",
+        "background": [
+          0.9490196078431372,
+          0.9568627450980393,
+          0.9686274509803922,
+          1
+        ]
+      },
+      {
+        "part": "button",
+        "text": "column 4",
+        "ratio": 4.514896687792062,
+        "foreground": "rgb(102, 112, 133)",
+        "background": [
+          0.9490196078431372,
+          0.9568627450980393,
+          0.9686274509803922,
+          1
+        ]
+      },
+      {
+        "part": "button",
+        "text": "column 5",
+        "ratio": 4.514896687792062,
+        "foreground": "rgb(102, 112, 133)",
+        "background": [
+          0.9490196078431372,
+          0.9568627450980393,
+          0.9686274509803922,
+          1
+        ]
+      },
+      {
+        "part": "button",
+        "text": "column 6",
+        "ratio": 4.514896687792062,
+        "foreground": "rgb(102, 112, 133)",
+        "background": [
+          0.9490196078431372,
+          0.9568627450980393,
+          0.9686274509803922,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r0c0",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r0c1",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r0c2",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r0c3",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r0c4",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r0c5",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r1c0",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r1c1",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r1c2",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r1c3",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r1c4",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r1c5",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r2c0",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r2c1",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r2c2",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r2c3",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r2c4",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r2c5",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r3c0",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r3c1",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r3c2",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r3c3",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r3c4",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r3c5",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r4c0",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r4c1",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r4c2",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r4c3",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r4c4",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r4c5",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r5c0",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r5c1",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r5c2",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r5c3",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r5c4",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r5c5",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r6c0",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r6c1",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r6c2",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r6c3",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r6c4",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r6c5",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r7c0",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r7c1",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r7c2",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r7c3",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r7c4",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r7c5",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r8c0",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r8c1",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r8c2",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r8c3",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r8c4",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r8c5",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r9c0",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r9c1",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r9c2",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r9c3",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r9c4",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r9c5",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r10c0",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r10c1",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r10c2",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r10c3",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r10c4",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r10c5",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r11c0",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r11c1",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r11c2",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r11c3",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r11c4",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r11c5",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r12c0",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r12c1",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r12c2",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r12c3",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r12c4",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r12c5",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r13c0",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r13c1",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r13c2",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r13c3",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r13c4",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r13c5",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r14c0",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r14c1",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r14c2",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r14c3",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r14c4",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r14c5",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r15c0",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r15c1",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r15c2",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r15c3",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r15c4",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r15c5",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r16c0",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r16c1",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r16c2",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r16c3",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r16c4",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r16c5",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r17c0",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r17c1",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r17c2",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r17c3",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r17c4",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r17c5",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r18c0",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r18c1",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r18c2",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r18c3",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r18c4",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r18c5",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r19c0",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r19c1",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r19c2",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r19c3",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r19c4",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r19c5",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r20c0",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r20c1",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r20c2",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r20c3",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r20c4",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r20c5",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r21c0",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r21c1",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r21c2",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r21c3",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r21c4",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r21c5",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r22c0",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r22c1",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r22c2",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r22c3",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r22c4",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r22c5",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r23c0",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r23c1",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r23c2",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r23c3",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r23c4",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r23c5",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r24c0",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r24c1",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r24c2",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r24c3",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r24c4",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r24c5",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r25c0",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r25c1",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r25c2",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r25c3",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r25c4",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r25c5",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r26c0",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r26c1",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r26c2",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r26c3",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r26c4",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r26c5",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r27c0",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r27c1",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r27c2",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r27c3",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r27c4",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r27c5",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      }
+    ],
+    "edges": []
+  },
+  {
+    "name": "DataTable",
+    "state": "Empty",
+    "text": [
+      {
+        "part": "button",
+        "text": "Restore rows",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "button",
+        "text": "column 1",
+        "ratio": 4.514896687792062,
+        "foreground": "rgb(102, 112, 133)",
+        "background": [
+          0.9490196078431372,
+          0.9568627450980393,
+          0.9686274509803922,
+          1
+        ]
+      },
+      {
+        "part": "button",
+        "text": "column 2",
+        "ratio": 4.514896687792062,
+        "foreground": "rgb(102, 112, 133)",
+        "background": [
+          0.9490196078431372,
+          0.9568627450980393,
+          0.9686274509803922,
+          1
+        ]
+      },
+      {
+        "part": "button",
+        "text": "column 3",
+        "ratio": 4.514896687792062,
+        "foreground": "rgb(102, 112, 133)",
+        "background": [
+          0.9490196078431372,
+          0.9568627450980393,
+          0.9686274509803922,
+          1
+        ]
+      },
+      {
+        "part": "button",
+        "text": "column 4",
+        "ratio": 4.514896687792062,
+        "foreground": "rgb(102, 112, 133)",
+        "background": [
+          0.9490196078431372,
+          0.9568627450980393,
+          0.9686274509803922,
+          1
+        ]
+      },
+      {
+        "part": "button",
+        "text": "column 5",
+        "ratio": 4.514896687792062,
+        "foreground": "rgb(102, 112, 133)",
+        "background": [
+          0.9490196078431372,
+          0.9568627450980393,
+          0.9686274509803922,
+          1
+        ]
+      },
+      {
+        "part": "button",
+        "text": "column 6",
+        "ratio": 4.514896687792062,
+        "foreground": "rgb(102, 112, 133)",
+        "background": [
+          0.9490196078431372,
+          0.9568627450980393,
+          0.9686274509803922,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "nothing to show",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      }
+    ],
+    "edges": []
+  },
+  {
+    "name": "DataTable",
+    "state": "focus",
+    "text": [
+      {
+        "part": "button",
+        "text": "column 1",
+        "ratio": 4.514896687792062,
+        "foreground": "rgb(102, 112, 133)",
+        "background": [
+          0.9490196078431372,
+          0.9568627450980393,
+          0.9686274509803922,
+          1
+        ]
+      },
+      {
+        "part": "button",
+        "text": "column 2",
+        "ratio": 4.514896687792062,
+        "foreground": "rgb(102, 112, 133)",
+        "background": [
+          0.9490196078431372,
+          0.9568627450980393,
+          0.9686274509803922,
+          1
+        ]
+      },
+      {
+        "part": "button",
+        "text": "column 3",
+        "ratio": 4.514896687792062,
+        "foreground": "rgb(102, 112, 133)",
+        "background": [
+          0.9490196078431372,
+          0.9568627450980393,
+          0.9686274509803922,
+          1
+        ]
+      },
+      {
+        "part": "button",
+        "text": "column 4",
+        "ratio": 4.514896687792062,
+        "foreground": "rgb(102, 112, 133)",
+        "background": [
+          0.9490196078431372,
+          0.9568627450980393,
+          0.9686274509803922,
+          1
+        ]
+      },
+      {
+        "part": "button",
+        "text": "column 5",
+        "ratio": 4.514896687792062,
+        "foreground": "rgb(102, 112, 133)",
+        "background": [
+          0.9490196078431372,
+          0.9568627450980393,
+          0.9686274509803922,
+          1
+        ]
+      },
+      {
+        "part": "button",
+        "text": "column 6",
+        "ratio": 4.514896687792062,
+        "foreground": "rgb(102, 112, 133)",
+        "background": [
+          0.9490196078431372,
+          0.9568627450980393,
+          0.9686274509803922,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r0c0",
+        "ratio": 7.190704432254326,
+        "foreground": "rgb(12, 17, 29)",
+        "background": [
+          0.07058823529411765,
+          0.7176470588235294,
+          0.41568627450980394,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r0c1",
+        "ratio": 7.190704432254326,
+        "foreground": "rgb(12, 17, 29)",
+        "background": [
+          0.07058823529411765,
+          0.7176470588235294,
+          0.41568627450980394,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r0c2",
+        "ratio": 7.190704432254326,
+        "foreground": "rgb(12, 17, 29)",
+        "background": [
+          0.07058823529411765,
+          0.7176470588235294,
+          0.41568627450980394,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r0c3",
+        "ratio": 7.190704432254326,
+        "foreground": "rgb(12, 17, 29)",
+        "background": [
+          0.07058823529411765,
+          0.7176470588235294,
+          0.41568627450980394,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r0c4",
+        "ratio": 7.190704432254326,
+        "foreground": "rgb(12, 17, 29)",
+        "background": [
+          0.07058823529411765,
+          0.7176470588235294,
+          0.41568627450980394,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r0c5",
+        "ratio": 7.190704432254326,
+        "foreground": "rgb(12, 17, 29)",
+        "background": [
+          0.07058823529411765,
+          0.7176470588235294,
+          0.41568627450980394,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r1c0",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r1c1",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r1c2",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r1c3",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r1c4",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r1c5",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r2c0",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r2c1",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r2c2",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r2c3",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r2c4",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r2c5",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r3c0",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r3c1",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r3c2",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r3c3",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r3c4",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r3c5",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r4c0",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r4c1",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r4c2",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r4c3",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r4c4",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r4c5",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r5c0",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r5c1",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r5c2",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r5c3",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r5c4",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r5c5",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r6c0",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r6c1",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r6c2",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r6c3",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r6c4",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r6c5",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r7c0",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r7c1",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r7c2",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r7c3",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r7c4",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r7c5",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r8c0",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r8c1",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r8c2",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r8c3",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r8c4",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r8c5",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r9c0",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r9c1",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r9c2",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r9c3",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r9c4",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r9c5",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r10c0",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r10c1",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r10c2",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r10c3",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r10c4",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r10c5",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r11c0",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r11c1",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r11c2",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r11c3",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r11c4",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r11c5",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r12c0",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r12c1",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r12c2",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r12c3",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r12c4",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r12c5",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r13c0",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r13c1",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r13c2",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r13c3",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r13c4",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r13c5",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r14c0",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r14c1",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r14c2",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r14c3",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r14c4",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r14c5",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r15c0",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r15c1",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r15c2",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r15c3",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r15c4",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r15c5",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r16c0",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r16c1",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r16c2",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r16c3",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r16c4",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r16c5",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r17c0",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r17c1",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r17c2",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r17c3",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r17c4",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r17c5",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r18c0",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r18c1",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r18c2",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r18c3",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r18c4",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r18c5",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r19c0",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r19c1",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r19c2",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r19c3",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r19c4",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r19c5",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r20c0",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r20c1",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r20c2",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r20c3",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r20c4",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r20c5",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r21c0",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r21c1",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r21c2",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r21c3",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r21c4",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r21c5",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r22c0",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r22c1",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r22c2",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r22c3",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r22c4",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r22c5",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r23c0",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r23c1",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r23c2",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r23c3",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r23c4",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r23c5",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r24c0",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r24c1",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r24c2",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r24c3",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r24c4",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r24c5",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r25c0",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r25c1",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r25c2",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r25c3",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r25c4",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r25c5",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r26c0",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r26c1",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r26c2",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r26c3",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r26c4",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r26c5",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r27c0",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r27c1",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r27c2",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r27c3",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r27c4",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "div",
+        "text": "r27c5",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "part": "button",
+        "kind": "focus outline",
+        "ratio": 4.146866219821659
+      }
+    ]
+  },
+  {
+    "name": "Tree",
+    "state": "default",
+    "text": [
+      {
+        "part": "tree-item",
+        "text": "group 1",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "tree-item",
+        "text": "group 1.1",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "tree-item",
+        "text": "group 1.2",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "tree-item",
+        "text": "group 1.3",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "tree-item",
+        "text": "group 2",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "tree-item",
+        "text": "group 3",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      }
+    ],
+    "edges": []
+  },
+  {
+    "name": "Tree",
+    "state": "Empty",
+    "text": [
+      {
+        "part": "button",
+        "text": "Restore tree",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "tree-empty",
+        "text": "nothing to show",
+        "ratio": 4.760411292611697,
+        "foreground": "rgb(102, 112, 133)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      }
+    ],
+    "edges": []
+  },
+  {
+    "name": "Tree",
+    "state": "focus",
+    "text": [
+      {
+        "part": "tree-item",
+        "text": "group 1",
+        "ratio": 7.190704432254326,
+        "foreground": "rgb(12, 17, 29)",
+        "background": [
+          0.07058823529411765,
+          0.7176470588235294,
+          0.41568627450980394,
+          1
+        ]
+      },
+      {
+        "part": "tree-item",
+        "text": "group 2",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "tree-item",
+        "text": "group 3",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "part": "tree-item",
+        "kind": "focus outline",
+        "ratio": 7.190704432254326
+      }
+    ]
+  },
+  {
+    "name": "FilePicker",
+    "state": "default",
+    "text": [
+      {
+        "part": "drop-zone",
+        "text": "drop a file here",
+        "ratio": 4.760411292611697,
+        "foreground": "rgb(102, 112, 133)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      }
+    ],
+    "edges": []
+  },
+  {
+    "name": "FilePicker",
+    "state": "Disabled",
+    "text": [],
+    "edges": []
+  },
+  {
+    "name": "FilePicker",
+    "state": "Invalid",
+    "text": [
+      {
+        "part": "drop-zone",
+        "text": "drop a file here",
+        "ratio": 4.623247939480865,
+        "foreground": "rgb(217, 45, 32)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      },
+      {
+        "part": "p",
+        "text": "Only .json and .txt files are accepted.",
+        "ratio": 14.067351823307295,
+        "foreground": "rgb(29, 41, 57)",
+        "background": [
+          0.9764705882352941,
+          0.9803921568627451,
+          0.984313725490196,
+          1
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "part": "file-picker",
+        "kind": "invalid boundary",
+        "ratio": 4.623247939480865
+      },
+      {
+        "part": "drop-zone",
+        "kind": "invalid boundary",
+        "ratio": 4.623247939480865
+      }
+    ]
+  }
+]

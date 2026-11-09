@@ -3,7 +3,8 @@ import { expect, Locator, Page } from '@playwright/test';
 const floatingParts: Record<string, string> = {
     Dialog: 'dialog-content', AlertDialog: 'alert-dialog-content', Popover: 'popover-content',
     HoverCard: 'hover-card-content', Tooltip: 'tooltip-content', DropdownMenu: 'menu-content',
-    ContextMenu: 'menu-content', Menubar: 'menu-content', Select: 'select-content', Toast: 'toast-root',
+    ContextMenu: 'menu-content', Menubar: 'menu-content', Select: 'select-content',
+    CommandPalette: 'command-palette', Toast: 'toast-root',
 };
 
 export async function openSurface(page: Page, sample: Locator, name: string) {
@@ -102,8 +103,22 @@ export async function appearance(root: Locator) {
                 if (node.matches('.rustify-field:not([data-variant="soft"])')) {
                     edges.push({ part, kind: 'field boundary', ratio: ratio(over(rgba(css.getPropertyValue('--rustify-field-edge')), back), back) });
                 }
+                if (node.matches('[data-invalid]')) {
+                    if (node.matches('[data-rustify-part="drop-zone"]')) {
+                        edges.push({ part, kind: 'invalid boundary', ratio: ratio(over(rgba(css.borderTopColor), back), back) });
+                    }
+                    if (node.matches('[data-rustify-part="file-picker"]')) {
+                        const file = getComputedStyle(node, '::file-selector-button');
+                        if (file.borderStyle !== 'none' && parseFloat(file.borderWidth) >= 1) {
+                            edges.push({ part, kind: 'invalid boundary', ratio: ratio(over(rgba(file.borderTopColor), back), back) });
+                        }
+                    }
+                }
                 if (node.matches(':focus-visible,:focus-within') && css.outlineStyle !== 'none' && parseFloat(css.outlineWidth) >= 1) {
-                    edges.push({ part, kind: 'focus outline', ratio: ratio(over(rgba(css.outlineColor), back), back) });
+                    // An inset outline paints inside the element's own box, so
+                    // it is measured against the element's own background.
+                    const focusBack = parseFloat(css.outlineOffset) < 0 ? background(node) : back;
+                    edges.push({ part, kind: 'focus outline', ratio: ratio(over(rgba(css.outlineColor), focusBack), focusBack) });
                 } else if (node.matches(':focus-visible')) {
                     const rings = [...css.boxShadow.matchAll(/(rgba?\([^)]+\)|color\([^)]+\)) 0px 0px 0px ([\d.]+)px/g)]
                         .filter(match => Number(match[2]) > 0 && rgba(match[1])[3] > 0)

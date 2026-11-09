@@ -7,6 +7,25 @@ This guide describes the current source checkout. Published SDK and Docs CLI
 0.2.1 use the previous APIs and schema v1. Use one matching source checkout for
 the SDK, styles and source CLI; these changes do not publish a release.
 
+## How to migrate
+
+1. **Version pairing.** Published SDK/Docs 0.2.1 ship schema v1 and the
+   previous component API. Use one matching source checkout for the SDK,
+   styles and source CLI; the first registry release containing schema v2 has
+   not been decided yet, and until it is, older published consumers are not
+   compatible with it.
+2. **Style entry.** Import `rustify_components::CSS` (or the structured
+   `PRIMITIVES_CSS` sources) once per page; see
+   [Styles and static rendering](#styles-and-static-rendering).
+3. **Theme documents.** Author, resolve and scope themes through the v2
+   document schema described in [the theme guide](themes.md) and
+   [Author documents](#author-documents).
+4. **Component replacement.** Walk the sections below for the families you
+   use; for an exhaustive key-by-key view use
+   [Legacy API destinations](components.md#legacy-api-destinations).
+5. **Verify.** Rerun your own checks against the source checkout, plus the
+   verification paths each catalogue row names.
+
 ## Buttons and links
 
 `Button` remains a native button. Replace the former visual choices as follows:
@@ -350,43 +369,23 @@ holds configuration and separate light/dark patches; `ThemeValuePatch::into()`
 adapts a mode-independent sparse patch. See [Theme documents](themes.md) for
 strict import rules, root preview mode and source-preserving local appearance.
 
-## Existing exports that remain available
+## Existing exports and the legacy fact source
 
-The table covers the pre-change root exports and supporting public modules
-from `crates/rustify-components/src/lib.rs`. Entries without an API replacement
-keep their current controlled behavior; an upstream component with a similar
-name does not add new props or composition parts.
+The complete per-key destination table is generated: see
+[Legacy API destinations](components.md#legacy-api-destinations). It resolves
+every baseline public key exactly once (exact keys win over wildcards) with a
+fate, destination and reason. Exceptions worth prose:
 
-| Previous entry or group | Source checkout destination / boundary |
-| --- | --- |
-| `Button`, `ButtonSize`, `ButtonVariant` | Same root paths with the replacements above; no parallel LegacyButton implementation |
-| `button::ButtonClass` | Component props plus `class`; the class-builder type is removed |
-| `Link`, `LinkMatch`, `CurrentPath`, `provide_current_path`, `current_path`, `is_within` | Same paths and matching contract; visual options are additions |
-| `Checkbox`, `RadioGroup`, `RadioOption`, `Switch` | Convenience paths remain; Checkbox adds indeterminate projection. Standalone Radio, CheckboxGroup, RadioCards/CheckboxCards and composable modules are available |
-| `Select`, `SelectOption`, `Slider` | Convenience paths remain and share public Select/Slider parts; RangeSlider accepts named ThumbValue/ThumbLabel declarations |
-| `TextField`, `TextKind`, `TextArea`, `Label` | Native fields remain; text_field Root/Input/Slot and responsive TextArea resize are available. class styles the field boundary; input_class styles the editor |
-| `Form`, `Field`, `FieldBinding`, `FormStatus`, `SubmitButton`, `provide_form`, `use_form` | Owner/binding APIs remain; FormRoot and form/Field parts add native participation, description/source metadata and submit/reset flushing |
-| `Dialog`, `Tooltip`, `Menu`, `MenuItem`, `MenuItemKind`, `menu::anchor_at` / root `anchor_at` | Dialog/AlertDialog/Popover/HoverCard/Tooltip now have controlled Primitives and Themes parts on the same scoped stack. Tooltip replaces children with one typed native `trigger`; Menu and browser-only `anchor_at` retain their signatures; Menu now closes on outside interaction. Composable DropdownMenu/ContextMenu are available; see [Menus, navigation and toolbars](#menus-navigation-and-toolbars) |
-| `Tabs`, `Tab`, `TabPanel`, `Orientation` | Tabs/TabPanel delegate to controlled tabs parts with automatic/manual activation. TabNav preserves real links, and SegmentedControl uses the shared native radio group |
-| `ScrollArea`, `Boundary` | Convenience over Root/Viewport/Scrollbar/Thumb/Corner. class sizes Root; test_id and native scrollTop/scrollLeft stay on Viewport. Boundary retains native overscroll behavior |
-| `Progress`, `Spinner`, `Toast`, `Toaster` | Convenience names remain over shared parts. Progress ARIA uses original units; Spinner adds loading/retained children. Skeleton and complete declared Toast parts are available; Toast snapshots/options are Clone, not Copy/Eq |
-| `NumberField`, `ColorField` | Focused Draft remains; named mirrors submit accepted values, and FormRoot can complete an active draft before validation |
-| `DataTable`, `Column`, `Tree`, `TreeNode` | Same Rustify data controls; table::Root now supplies a separate native table without grid sorting or virtualization |
-| `ToggleGroup`, `ToggleItem` | Group/toolbar convenience mode remains; standalone Toggle and toggle_group Root/Item are available. Full Toolbar is separate |
-| `FilePicker`, `DropZone` | Same native file-selection/drop requests |
-| `Splitter`, `PanelTabs`, `PanelTab`, `CommandPalette`, `Command` | Same workspace controls and data types |
-| `Icon`, `Glyph` | Same SVG wrapper and six glyphs; IconButton reuses this icon path |
-| `GeometryStyles`, `provide_geometry_styles`, `geometry` | Same external stylesheet collector, extended for media rules and field diagnostics |
-| `clx!`, `variants!`, `macros`, `cn`, `paste` | Same class merging/generation helpers; caller utilities remain last in the merge and above component CSS layers |
-| `CSS`, `CANDIDATES_JSON`, `styles` | Package assets remain; PRIMITIVES_CSS/styles::PRIMITIVES provide structural rules and styles::PANELS/styles::CONTENT/styles::FEEDBACK expose their skin sources. Choose one themed or unstyled CSS path |
-| `id`, `roving` | Same deterministic identity and keyboard-navigation helpers |
-| `CATALOG`, `Capability`, `Category`, `Entry`, `Presentation`, `Support` | Legacy 24-category navigation remains intact. Use `catalog::COMPONENTS`, `STABLE_REFERENCES`, `SUB_CAPABILITIES` and `catalogue_markdown()` for expanded source facts |
-
-New layout, typography and theme types are listed in the generated
-[component catalogue](components.md). Generated Leptos props remain in their
-component modules; this migration does not promise React `Props` or ref
-compatibility.
-
+- `CSS`, `CANDIDATES_JSON` and `styles` package assets remain; structural rules
+  come from `PRIMITIVES_CSS`/`styles::PRIMITIVES`, with skin sources in
+  `styles::PANELS`, `styles::CONTENT` and `styles::FEEDBACK`. Pick one themed
+  or unstyled CSS path.
+- `Icon` and `Glyph` keep the same SVG wrapper; the glyph set is now seven
+  (`DividerHorizontal` added) and `IconButton` reuses the icon path.
+- `GeometryStyles`, `provide_geometry_styles` and `geometry` are the same
+  stylesheet collector, extended for media rules and field diagnostics.
+- `id` and `roving` keep their deterministic identity and keyboard-navigation
+  helpers.
 ## Root Theme and the legacy Theme value
 
 The existing `rustify_ui::Theme` (or `rustify_dom::Theme` for a DOM-only
@@ -473,6 +472,29 @@ See [the Colors package guide](../crates/rustify-colors/README.md) for exact
 paths, markers and copying APIs. These assets require no React, Leptos,
 Makepad, wasm or browser script.
 
+## Rustify extensions
+
+The extension families (DataTable, Tree, FilePicker/DropZone, Splitter,
+PanelTabs, CommandPalette, Icon) gained new optional parameters: `empty_label`
+on DataTable and Tree (empty-state words default to the SDK's locale-aware
+message), and `invalid` on FilePicker and DropZone (refusal visuals plus
+`aria-invalid`/described-by wiring). `Message` gained `Commands`,
+`TypeCommand`, `NoMatches` and `ResizePanel` — exhaustive `Match` arms must be
+added, and `Message::all()` now returns 23 entries instead of 19. `Glyph`
+gained `DividerHorizontal`. PanelTabs tabs render behind a presentation frame
+that carries `data-state`; the close control is a mouse-only target outside
+the accessibility tree, and the Delete key closes the active closable tab.
+Selected rows and tree items use paired accent colors, and extension parts
+carry `data-rustify-part` markers for tooling.
+
+## Default palette and color semantics
+
+The default `--primary` and `--accent-foreground` values changed with the v2
+palette; `--ring` is unchanged. Applications that pinned the old defaults
+should re-check contrast after upgrading. New applications scope tokens with
+`ThemeScope`/`ThemeBoundary`; the legacy `ThemedScope` paths remain available
+by user decision with no removal planned.
+
 ## Published and source version pairing
 
 The nine published Docs/DOM/style packages remain 0.2.1. Their frozen CLI
@@ -528,6 +550,7 @@ pins SDK, CSS and source CLI to
 canonical author dependencies and browser evidence. Its SDK/runtime/CLI trees
 match the UI fix `d712990c`. A version string alone does not identify that pair.
 
+The first registry release that includes schema v2 has not been decided yet; until it is, older published consumers are not compatible with it.
 ## Storage upgrade, backup and rollback
 
 Studio data belongs to the browser origin. Keep the previous deployment and its

@@ -3,7 +3,7 @@
 //! There is no dependency on Rust/UI's `icons` crate: its manifest turns on
 //! `leptos/nightly`, and the toolchain this repository pins is stable. What is
 //! here instead is a `<svg>` wrapper an application can put any child into,
-//! and the six glyphs the components in this crate draw for themselves.
+//! and the seven glyphs the components in this crate draw for themselves.
 
 use leptos::prelude::*;
 
@@ -19,6 +19,7 @@ pub enum Glyph {
     ChevronRight,
     Close,
     Dot,
+    DividerHorizontal,
 }
 
 impl Glyph {
@@ -30,6 +31,7 @@ impl Glyph {
             Self::ChevronRight => "chevron-right",
             Self::Close => "close",
             Self::Dot => "dot",
+            Self::DividerHorizontal => "divider-horizontal",
         }
     }
 
@@ -42,6 +44,7 @@ impl Glyph {
             Self::ChevronRight => "m9 18 6-6-6-6",
             Self::Close => "M18 6 6 18M6 6l12 12",
             Self::Dot => "M12 8a4 4 0 1 0 0 8 4 4 0 1 0 0-8",
+            Self::DividerHorizontal => "M5 12h14",
         }
     }
 

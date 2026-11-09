@@ -96,16 +96,9 @@ pub fn CommandPalette(
     let group = StoredValue::new(crate::id::next("commands"));
     let on_open_change = StoredValue::new(on_open_change);
     let on_run = StoredValue::new(on_run);
-    let placeholder = StoredValue::new(if placeholder.is_empty() {
-        "type a command".to_string()
-    } else {
-        placeholder
-    });
-    let label = StoredValue::new(if aria_label.is_empty() {
-        "commands".to_string()
-    } else {
-        aria_label
-    });
+    let placeholder = StoredValue::new(placeholder);
+    let label = StoredValue::new(aria_label);
+    let locale = rustify_ui::use_locale();
     let panel_test_id = StoredValue::new(if test_id.is_empty() {
         "command-palette".to_string()
     } else {
@@ -192,6 +185,7 @@ pub fn CommandPalette(
                 <div
                     class=PANEL
                     data-name="CommandPalette"
+                    data-rustify-part="command-palette"
                     data-testid=move || panel_test_id.get_value()
                     on:keydown=on_keydown
                 >
@@ -200,12 +194,33 @@ pub fn CommandPalette(
                         type="text"
                         class=SEARCH
                         data-testid="command-search"
+                        data-rustify-part="command-search"
                         role="combobox"
-                        aria-expanded="true"
-                        aria-label=move || label.get_value()
+                        aria-expanded=move || (!shown.get().is_empty()).to_string()
+                        aria-label=move || {
+                            let given = label.get_value();
+                            if given.is_empty() {
+                                locale.text(rustify_ui::Message::Commands).to_string()
+                            } else {
+                                given
+                            }
+                        }
                         aria-controls=move || format!("{}-list", group.get_value())
-                        aria-activedescendant=move || command_id(&active.get())
-                        placeholder=move || placeholder.get_value()
+                        aria-activedescendant=move || {
+                            shown
+                                .get()
+                                .iter()
+                                .find(|command| command.id == active.get())
+                                .map(|command| command_id(&command.id))
+                        }
+                        placeholder=move || {
+                            let given = placeholder.get_value();
+                            if given.is_empty() {
+                                locale.text(rustify_ui::Message::TypeCommand).to_string()
+                            } else {
+                                given
+                            }
+                        }
                         value=move || query.get()
                         prop:value=move || query.get()
                         on:input:target=move |event| query.set(event.target().value())
@@ -214,7 +229,15 @@ pub fn CommandPalette(
                         id=move || format!("{}-list", group.get_value())
                         class="max-h-80 overflow-auto py-1"
                         role="listbox"
-                        aria-label=move || label.get_value()
+                        aria-label=move || {
+                            let given = label.get_value();
+                            if given.is_empty() {
+                                locale.text(rustify_ui::Message::Commands).to_string()
+                            } else {
+                                given
+                            }
+                        }
+                        hidden=move || shown.get().is_empty()
                     >
                         <For each=move || shown.get() key=|command| command.id.clone() let:command>
                             {
@@ -230,6 +253,9 @@ pub fn CommandPalette(
                                         class=ITEM
                                         class=("bg-muted", move || current.get())
                                         data-name="Command"
+                                        data-rustify-part="command-item"
+                                        data-highlighted=move || current.get().then_some("")
+                                        data-disabled=(!enabled).then_some("")
                                         data-testid=format!("command-{id}")
                                         role="option"
                                         aria-selected=move || current.get().to_string()
@@ -253,15 +279,16 @@ pub fn CommandPalette(
                                 }
                             }
                         </For>
-                        <Show when=move || shown.get().is_empty() fallback=|| ()>
-                            <li
-                                class="px-4 py-3 text-sm text-muted-foreground"
-                                data-testid="command-empty"
-                            >
-                                "nothing matches"
-                            </li>
-                        </Show>
                     </ul>
+                    <Show when=move || shown.get().is_empty() fallback=|| ()>
+                        <p
+                            role="status"
+                            data-testid="command-empty"
+                            class="px-4 py-3 text-sm text-muted-foreground"
+                        >
+                            {move || locale.text(rustify_ui::Message::NoMatches)}
+                        </p>
+                    </Show>
                 </div>
             </Layer>
         </Show>

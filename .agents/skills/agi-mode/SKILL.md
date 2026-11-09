@@ -22,7 +22,7 @@ disable-model-invocation: true
 
 每环只加载当前需要的流程，共用判定协议和搜索状态；协作与沉淀读 [技能演化](references/skill-evolution.md)。这些流程内置于本 skill，外部 `autoresearch`、`arena`、`reflect` 是兼容入口，单独安装 agi-mode 即可运行。
 
-真实可重放的代码或文档任务，可按当前阶段读取 [远端执行工具](references/remote-evolution.md)，提供匹配的任务契约与量表。它是可选执行能力，沿用 Eval/Hillclimb 的协议、判定词和授权；v2 先校准任务适配的多维质量与分辨力，再诊断基线余量/噪声/预算。默认严格；显式获准的一次探索只放行来源精度不足，不晋级/确认/采用，整体 inconclusive。TypeSafe 可在独立校准后辅助 search 反馈，不持有主分或采用权。缺配置时保留未执行状态。仓库 AGENTS 瘦身可路由至已安装的 `optimize-agents-md`：通过 `use-prompt-dsl` 的 Odyssey RULE 精炼原则、去重补缺，保留项目事实与作用域；仅诊断只读，缺 DSL skill 时停止并建议完整安装，优化流程不写入目标文件，也不依赖远端评测。
+仓库 AGENTS 瘦身可路由至已安装的 `optimize-agents-md`：通过 `use-prompt-dsl` 的 Odyssey RULE 精炼原则、去重补缺，保留项目事实与作用域；仅诊断只读，缺 DSL skill 时停止并建议完整安装，优化流程不写入目标文件。
 
 先固定目标、质量底线、可改范围和基线，再改候选。判定器有缺陷时升协议版本并重测，不把换尺当进步。用于选方案的反馈属于开发证据；泛化结论需要未参与选择的任务，重复同题只证明稳定性。没有行为对照时，规则修订仍是改进假设。
 
@@ -75,7 +75,7 @@ disable-model-invocation: true
 - **[按可验证单元推进](principles/verifiable-units.md)**：批量修改、多阶段与多 PR。
 - **[用行为契约检验实现](principles/behavioral-tests.md)**：写、改或审阅测试。
 - **[失败重复时检验共同前提](principles/challenge-premises.md)**：同一假设下反复失败或出现直接反证。
-- **[验证器必须能够拒绝错误](principles/falsifiable-verification.md)**：新验证器、假绿灯、无法区分候选。
+- **[验证器必须能够拒绝错误](principles/falsifiable-verification.md)**：新验证器、假绿灯、无法区分候选、连续修验证器。
 - **[证据有适用条件与失效边界](principles/evidence-lifetime.md)**：复用结果、变基、环境漂移。
 
 **Delegation**
@@ -88,6 +88,18 @@ disable-model-invocation: true
 
 - **[将重复教训变成可执行约束](principles/structural-learning.md)**：同类错误或人工纠正重复出现。
 - **[持续推进到明确的收敛状态](principles/bounded-convergence.md)**：长循环、资源约束或已经达标。
+
+## Subagents
+
+本节只管委派时怎么做，不要求必须委派；环境不支持就串行执行。
+
+**执行者。** 接收 `agi-mode` 的会话是主执行者，负责 playbook 和待办，不派子 agent 运行 playbook 本身。执行中的委派（写代码、临时帮手）用 `agi-agent`，每份 brief 都写明本文件的绝对路径，它要靠这个路径读取本 skill。环境没有 `agi-agent` 时用可用的通用子 agent，并要求它先读完本文件。流程或其他 skill 已规定执行者、可见材料或隔离方式时按其规定，不换成 `agi-agent`，例如 Eval、Arena 的被测候选与评判者。
+
+**默认做法。** 环境支持时在后台运行，继续或转向运行中的子 agent 也一样，因为前台调用会占住当前回合，其他汇报只能等待。传文件指针，不内联大段上下文；brief 内容、写入归属与集成按 [持续执行与恢复](references/continuity.md)。
+
+**结果归主执行者。** 主执行者为每个子 agent 的工作负责：亲自审查实际 diff 或产物，写自己的总结，不转述它的说法。
+
+**默认新开。** 新工作交给全新子 agent，并给齐范围：原始 brief、之后的所有指令、上一个 agent 的报告和分支。修复轮、后续跟进、重试和队列下一项都如此。只有新工作严格依赖该 agent 内部且难以迁移的状态时，才继续、发消息或排队给它：本地工作区、未提交改动，或仍在运行的进程（如开发服务器、模拟器、PR 监听）。要求运行中的 agent 停止或暂缓不算复用。PR 所有者这类角色比单个 agent 长寿，它返回后由新 agent 接下一轮。连续中断再续接会静默丢失指令，应新开并给齐范围，不轻信“已完成”的摘要。
 
 ## 按需能力
 
@@ -112,12 +124,6 @@ disable-model-invocation: true
 | 项目状态、下一步、初始化或更新跟进表；init-sdlc / what-next | [项目状态与下一步](playbooks/what-next.md) |
 
 SDLC 咨询支持 `$agi-mode sdlc [问题]` 与自然语言，项目判断由 what-next 核实事实。`what-next` 默认只读；`init-sdlc [PRD/计划/范围]`（兼容 `what-next 初始化`）初始化，`what-next 更新` 保存变化。状态与原文位置遵循 [目录约定](references/workspace-layout.md)，新台账日常只更新对象当前页，必要时才独立留存事件；已有台账按仓内协议。状态不代替原产物，不从文件名推定完成。
-
-## 复用项目验证能力
-
-操作真实应用时，优先复用已有 `verify-*`、功能地图或测试 harness，将验收映射到功能、入口与必要边界，只执行所选场景及必要依赖；未知场景不退回全量。按入口核对版本 / 环境、通过 / 失败 / 受阻 / 未执行、证据和清理结果，一个入口或生成器冒烟通过不覆盖其他验收。
-
-仅在缺少可复用能力且已授权创建或维护时，读取已安装的 [create-verification-skill](../create-verification-skill/SKILL.md)，生成并试跑项目 skill。未安装则沿现有命令验证，说明缺口；不自动安装，不阻断可执行检查，一次性检查或只读咨询不自动生成文件。
 
 ## 按需参考
 

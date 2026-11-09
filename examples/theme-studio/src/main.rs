@@ -15,6 +15,8 @@ mod gallery;
 #[cfg_attr(not(target_arch = "wasm32"), allow(dead_code))]
 mod gallery_catalog;
 #[cfg(target_arch = "wasm32")]
+mod gallery_extensions;
+#[cfg(target_arch = "wasm32")]
 mod gpu_preview;
 #[cfg(target_arch = "wasm32")]
 mod inspector;

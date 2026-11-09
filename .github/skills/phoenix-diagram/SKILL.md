@@ -1,11 +1,10 @@
 ---
 name: phoenix-diagram
-description: "用于架构、工作流、时序、数据流、状态、ER、类、树、时间线、耗时瀑布图及 Mermaid 转换；不用于数值图表、仪表盘或其他 infographic。缺必需事实时仅提必要问题；齐备后交付经 Rust、浏览器与实际看图核对的独立 HTML。品牌采集、本地预览和架构比较仅在明确请求时启用。"
+description: "用于架构、工作流、时序、数据流、状态、状态机模型检查、ER、类、树、时间线、耗时瀑布图及 Mermaid 转换；不用于数值图表、仪表盘或其他 infographic。缺必需事实时仅提必要问题；齐备后交付经 Rust、浏览器与实际看图核对的独立 HTML。品牌采集、本地预览和架构比较仅在明确请求时启用。"
 license: MIT
 metadata:
   internal: true
   version: "0.2.0"
-  based_on: "tt-a1i/Archify; Cocoon-AI/architecture-diagram-generator (MIT)"
 ---
 
 # Phoenix Diagram
@@ -36,8 +35,9 @@ metadata:
 | `tree` | 单父包含层级：仓库或模块目录、能力分解、组织式拆分 | [最小树](examples/minimal.tree.json) |
 | `timeline` | 何时发生：事故复盘、发布历史、带泳道的成比例时间轴 | [最小时间线](examples/minimal.timeline.json) |
 | `waterfall` | 时间花在哪：一次请求或运行的跨度时长、重叠与嵌套 | [最小耗时瀑布](examples/minimal.waterfall.json) |
+| `statechart` | 流程会不会违反规则或卡住：有限模型穷举，画出状态图与最短出错路径 | [最小状态机](examples/minimal.statechart.json) |
 
-不明确时运行 `guide`，按返回的包内 `schema`、`commonSchema`、`example` 路径选择。数值图表、仪表盘和其他 infographic 不在范围内，不能改称上述图型来绕过。
+要判断流程会不会违反规则、找出出错路径时用 statechart；只画出已知的状态流时用 lifecycle。不明确时运行 `guide`，按返回的包内 `schema`、`commonSchema`、`example` 路径选择。数值图表、仪表盘和其他 infographic 不在范围内，不能改称上述图型来绕过。
 
 Mermaid 作为语义材料处理：`flowchart` / `graph` 转为 workflow，组件连接图可选 architecture；`sequenceDiagram` 保留参与者、消息方向、同步/异步与 return；`stateDiagram` 保留主路径、waiting、终止及真实 recovery 边；`erDiagram` 转为 erd，保留实体、字段、键与两端基数；`classDiagram` 转为 class，保留类型种类、所选成员与关系种类。由宿主写新的 JSON，不运行 Mermaid 或 Node 图解 renderer，不照搬 Mermaid 样式。
 
@@ -46,8 +46,7 @@ Mermaid 作为语义材料处理：`flowchart` / `graph` 转为 workflow，组�
 - 明确要求品牌标识时读[品牌资源](references/brand-marks.md)。固定目录可离线查询；只有明确采集请求才访问用户给出的公共站点，普通生成只消费已固定的本地资源。不从组件名称猜品牌或 URL。
 - 明确要求本地预览时读[预览会话](references/preview.md)。服务与正式成果分离，只有 `--open` 才打开系统浏览器；停止服务后仍按正式交付流程验收。
 - 明确要求比较两份架构输入时读[架构比较](references/architecture-compare.md)，使用 Before/Delta/After 及比较专用审核合同。不能用下方单图 finalize 流程替代比较交付，也不推断风险、原因或可合并性。
-- 明确要求项目级旧入口迁移或安装事务恢复/回滚时读[迁移与安装恢复](references/migration.md)。普通作图和 install 不移除旧入口，旧 skill 无目标备份；只处理已确认的精确项目/provider，不扩到个人或共享配置。
-- 导入旧输入或解释兼容回执时读[兼容约定](references/compatibility.md)；维护者增加图型时读[扩展约定](references/extending-types.md)。
+- 维护者增加图型时读[扩展约定](references/extending-types.md)。
 
 ## 最短创作路径
 
@@ -62,9 +61,11 @@ PD="<当前加载的skill目录>/scripts/phoenix-diagram"
 "$PD" guide "API 调用链" --json
 ```
 
-1. 新稿只读所选 `schemas/<type>.schema.json`、[common schema](schemas/common.schema.json)、一个匹配示例及[创作默认值](references/authoring-defaults.md)。必需资料的宿主读取返回若被截断，先分段补齐缺失内容，再写完整 candidate；子进程 stdout 完整不代表宿主返回完整。新稿设置 `meta.input_contract: "phoenix-v1"`、`meta.quality_profile: "showcase"`；从自动路线和自动标签开始。保留用户提供的固定几何，不在首稿预先添加 `via`、`channelX`、`channelY` 或 `labelAt`。ER 图列出每张表的全部物理列及其类型和键角色，外键写 `references`；时间线每个时刻带明确偏移；没有记录的计时只能标为示意。
+1. 新稿只读所选 `schemas/<type>.schema.json`、[common schema](schemas/common.schema.json)、一个匹配示例及[创作默认值](references/authoring-defaults.md)。必需资料的宿主读取返回若被截断，先分段补齐缺失内容，再写完整 candidate；子进程 stdout 完整不代表宿主返回完整。新稿设置 `meta.quality_profile: "showcase"`；从自动路线和自动标签开始。保留用户提供的固定几何，不在首稿预先添加 `via`、`channelX`、`channelY` 或 `labelAt`。ER 图列出每张表的全部物理列及其类型和键角色，外键写 `references`；时间线每个时刻带明确偏移；没有记录的计时只能标为示意。
 
    ER 图写 candidate 前，分别核对关系每端的最大基数、最小参与数与引用列可空性。外键只证明引用目标，不自动证明 `NOT NULL`；“可有多个”不单独证明最小数为零。`fromOptional`/`toOptional` 省略或写 `false` 仍表示该端最小值为1，写 `true` 表示0；两种取值都要有材料依据，省略字段不能表示未知。以已给 SQL 约束、联合主键、显式文字或 Mermaid 端点为依据，材料已明确就直接使用，不重复询问或要求另选表现形式。需要表示的最小数或可空性缺少依据时，按前述开放问题规则先问并停止；不先画 `0..N`/`1` 再标“待确认”，不用卡片兜底。用户明确授权拟定规则时仍走建议分支。
+
+   statechart 另读[状态机模型检查](references/statechart.md)：先写变量、动作与规则（规则写成读者认同的一句话，不为通过而放宽），再写 view；它没有 `sources`、品牌或架构比较。
 
    类图分别核对关系、生命周期和数量：保留“一个/多个”等已给数量，不能只保留组合或创建销毁而漏掉数量。没有依据的下界不补数字；按[创作默认值](references/authoring-defaults.md)的 Class 规则处理，只有无依据的可选数值标注可以省略。
 
@@ -73,7 +74,7 @@ PD="<当前加载的skill目录>/scripts/phoenix-diagram"
    审批有多个继续分支时，逐条保留各分支所需的全部批准前提；某一分支写有批准，不代表其他仅按资格分流的分支也已获准。逐个从获准结果沿实际可达分支回溯，核对每条路径的条件是否足以推出该结果所需的全部批准；不能只因有拒绝出口，就把其余资格分流边视为已批准。源码或图中的等价条件表达同样有效，不要求固定批准词或独立批准节点、边。
 
    写出 candidate 或完成涉及语义的修复后，按原材料逐分支走读实际可走路径，核对条件、动作、执行者与先后关系；进入处理步骤不等于已经通过或获准；资格条件与批准结果分别核对。原文要求某人批准后才能执行的动作，须由该执行者的批准节点或出边中的批准条件控制，不能仅以进入审批和满足资格条件代替。仅在某条件成立后允许的动作，必须留在该条件控制的分支上，不能前移为其他分支的共同前置动作，也不能因合并节点或回路改变原有顺序。跨阶段适用的动作，先按原文枚举许可覆盖的全部非终态，再逐项核对主图路径；例如“任一下单前可撤回”也覆盖提交、补充材料等适用阶段。每个适用阶段都应能行使该许可并抵达相应结果，无需先满足额外条件或完成审批、提交、补交等其他业务动作。无条件且不执行业务动作的瞬时起始跳转可与后续阶段等价，显式覆盖全部适用阶段的结构也可等价表达，不要求逐节点各画一条直接边。有条件出口或执行检查的阶段不属于这种瞬时起始跳转。例如，材料给“合并前可撤回”时，图中单独表示的批准阶段或获批后尚未合并的阶段也要保留撤回路径，不能在审批通过时提前结束这项许可。卡片或“各阶段可……”文案不能代替主图中这项许可的完整范围。节点文字、`tag`/`sublabel`、卡片标题与条目、线型、颜色与图例都必须对应材料事实。推导比较、极值和排序结论时，以材料已给事实、已知数值或上下界为依据，不默认未知值更小；不能证明全体比较时，写清材料支持的比较范围。材料直接给定的比较事实照用，不为证明它额外索要数值。未说明的同步/异步、批处理等执行方式，使用中性职责、动作与普通关系；不能仅凭 Queue、Worker 等名称推定节点任务的执行方式，也不为可省略的标注追加问题。组件的用途同样须有材料依据，不能按常见用法补充；例如，材料只给“读写 Redis”时，不标为“缓存”。节点、标签齐全或卡片复述不代表路径等价；只据已给事实修正，必需事实缺失时沿用前述澄清规则，不自行补规则。
-2. 已有完整 candidate 直接进入 `finalize`。不先读 renderer、扫描全仓或重新改写输入。架构、工作流、时序、数据流、生命周期的未标记旧 JSON 默认按 `legacy-2.17` 处理，不静默切换新合同；用户说明 JSON 来自 Archify 3.1 时，用 `--input-contract phoenix-v1` 读取，不改写原文件。ER、类、树、时间线、耗时瀑布只有 `phoenix-v1`。
+2. 已有完整 candidate 直接进入 `finalize`。不先读 renderer、扫描全仓或重新改写输入。
 
    ```sh
    "$PD" finalize <type> candidate.json diagram.html --json
@@ -83,15 +84,15 @@ PD="<当前加载的skill目录>/scripts/phoenix-diagram"
    第二种用于带来源的仓库图。退出码 0 不代表来源已核对：读回执 `evidence.status`（`verified`、`partial`、`unverified` 或 `none`）及 `evidence.unverified`、`evidence.unsourced`。
 
 3. 每轮失败后，在可回读的进度或本次项目记录中写明实际失败门、诊断阶段、客观 error 数、历史最佳值和停滞计数；首次失败的停滞计数为0。同一门每次修复后，只有 error 低于该门历史最佳才更新最佳并清零，否则停滞计数加1。修改 candidate 或修复前先核对该门计数：达到2立即停止并列出未解决项；即使不再运行命令，也不能继续修改 candidate 或将它回退到历史较好版本。错误种类变化不能重置计数，也不允许再试一次。修复前实际读到失败 diagnostic 的 `subject`、`evidence`、`supportedFixes`；宿主返回截断或提取遗漏时先补齐，不能把原有实测或字符串修法筛掉、转成空对象后视为已读。只修相关邻域。修复后重新 finalize；必要时用 `validate <type> candidate.json --layout-json --json` 定向诊断。重建 candidate 或交付、调整布局或卡片、返回已记录门时，沿用该门历史，不因新回执重新初始化；对最小示例的只读对照或验证不计修复，也不重置历史。环境失败也不允许无限重试。已通过前门而首次进入后门属于实际进展，按新门初始化记录；同一 validate 门内诊断 `stage` 首次由 `input` 变为 `layout` 也算进入后门。`supportedFixes` 写明经整图验证时，选定的一项修法所列全部路径是同一整组方案，须一次完整应用，不挑单个路径先试；保留每轮全部门的真实状态，不把不同门的顶层 error 数拼成同一停滞序列。不能删语义、降低质量、缩字或隐藏溢出来换通过。
-4. 按[交付合同](references/delivery-contract.md)实际打开当前四张暗/亮截图，检查主图、标签、卡片、关系遮挡、层级和控件。默认必须做实际图像审核；DOM 数值、截图存在或测试通过不能替代看图。随后 `review-record` 登记，再回读**同一交付**的当前 summary。只为登记审核或取得完整状态不得再次 finalize。
+4. 按[交付合同](references/delivery-contract.md)实际打开 summary 列出的四张暗/亮截图，检查主图、标签、卡片、关系遮挡、层级和控件。默认必须做实际图像审核；DOM 数值、截图存在或测试通过不能替代看图。随后写审核记录并 `review-record` 登记，再回读同一 summary。只为登记审核或取得完整状态不得再次 finalize。
 
-自动四门通过后，视觉状态仍可能是 `required-pending`；只有四门 `pass`、`automatedStatus: "pass"`、`visualReview.status: "passed"`、`deliveryStatus: "complete"` 且身份仍绑定当前输入/HTML/配置/引擎/截图时，才能报告完整交付。修改 candidate 会使旧证据失效，需要新交付及对应的新审核。
+自动三门（validate、deliver、browser-check）通过后，视觉状态仍是 `required-pending`；只有三门 `pass`、`automatedStatus: "pass"`、`visualReview.status: "passed"`、`deliveryStatus: "complete"` 时，才能报告完整交付。修改 candidate 后须重新 finalize 并重新看图审核。
 
 ## 环境与停止
 
 普通 launcher 和安装脚本需要 Node.js 18+；图解核心为 Rust，消费环境不需要 Rust、Cargo 或检出源码。普通命令只验证已存在的引擎，不下载、不更新、不安装，不主动打开用户浏览器页面或启动 preview 服务。`finalize` 的隔离浏览器验收属于默认交付路径。
 
-工具或图像能力不可用时如实保留 `unavailable` / `not-run` / `required-pending` 和未完成门，交付可用 candidate 或已有文件。无 shell 时不能手写 SVG 冒充 Rust 校验通过。出现 `recovery-required` 时按交付合同识别确切事务，不自动选择恢复记录。
+工具或图像能力不可用时如实保留 `unavailable` / `not-run` / `required-pending` 和未完成门，交付可用 candidate 或已有文件。无 shell 时不能手写 SVG 冒充 Rust 校验通过。
 
 缺引擎时给出错误回执的 `setupCommand`；只有用户已明确请求引擎安装才执行，并按当前 `ENGINE.json` 的 `distribution` 处理：
 
@@ -104,6 +105,8 @@ PD="<当前加载的skill目录>/scripts/phoenix-diagram"
 
 ## 交付答复
 
-简短返回 HTML 和 candidate 路径、图型、原 `deliveryReceiptId`、当前四门结果、图像审核结果及 summary 路径。答复中的 HTML、candidate 和 summary 路径优先原样复制同一交付回执给出的真实值。若转为相对路径，先以宿主实际报告的本次工作目录逐条核对它们仍指向相同文件，再输出这些已核对的字符串；不能拿上级目录或消息中出现的其他目录作相对基准。简短回复也要保留定位所需的目录，不能用 `...` 代替路径或裁去前缀冒充绝对路径。有失败时说明真实阶段、保留文件和具体缺口。退出码非零、旧输出存在或自动检查通过都不能单独描述为完整成功。另读取同一 summary 中名为 `deliver` 的阶段回执 `receipt.compatibility.coreCompatibility` 与 `receipt.compatibility.dispositions`；逐项交接非 `supported` 字段的实际处理及原因，按[兼容约定](references/compatibility.md)说明未重建的展示能力，不再称为延期。`deliveryStatus: complete` 仅表示交付流程完成，不能代替这些兼容限制的交接。
+简短返回 HTML 和 candidate 路径、图型、当前三门结果、图像审核结果及 summary 路径。答复中的 HTML、candidate 和 summary 路径优先原样复制同一交付回执给出的真实值。若转为相对路径，先以宿主实际报告的本次工作目录逐条核对它们仍指向相同文件，再输出这些已核对的字符串；不能拿上级目录或消息中出现的其他目录作相对基准。简短回复也要保留定位所需的目录，不能用 `...` 代替路径或裁去前缀冒充绝对路径。有失败时说明真实阶段、保留文件和具体缺口。退出码非零、旧输出存在或自动检查通过都不能单独描述为完整成功。
+
+statechart 读同一 summary 的 `model`：逐条列出 `outcome: breaks` 的规则、作者写的那句话与最短路径；说明 `not-checked` 的规则与 `complete: false`、隐藏了哪些步骤、模型省略了什么。模型描述的是代码时，按步复现每条出错路径，复现之前先假定模型有误。规则被违反不影响交付状态。
 
 带来源的图还要说明 `evidence.status`：不是 `verified` 时，列出待核实元素及原因（如工作树改动的路径、缺少 `--repo-root`）和未提供来源的元素，不称其已核对。时间线或耗时瀑布标为示意（`illustrative`）或日精度时，说明这些时间不是实测或只精确到日。回执 `locale.fallback` 为 true 时，说明界面语言已回退英文。

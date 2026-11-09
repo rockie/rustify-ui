@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/tt-a1i/archify/schemas/class.schema.json",
-  "title": "Archify Class and Interface Diagram",
+  "$id": "https://github.com/XGENT-ai/skills/schemas/phoenix-diagram/class.schema.json",
+  "title": "Phoenix Diagram Class and Interface Diagram",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -52,9 +52,6 @@
         "repository": {
           "$ref": "common.schema.json#/$defs/repository"
         },
-        "views": {
-          "$ref": "common.schema.json#/$defs/guidedViews"
-        },
         "legend": {
           "type": "object",
           "additionalProperties": false,
@@ -103,9 +100,6 @@
           "items": false,
           "minItems": 2,
           "maxItems": 2
-        },
-        "input_contract": {
-          "const": "phoenix-v1"
         }
       }
     },

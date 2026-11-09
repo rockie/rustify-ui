@@ -6,12 +6,13 @@
 //! getting it wrong is silent - the user is simply somewhere they did not ask
 //! to be.
 
-use leptos::ev::KeyboardEvent;
+use leptos::ev::{KeyboardEvent, MouseEvent};
 use leptos::prelude::*;
 use std::sync::Arc;
 
 const STRIP: &str = "flex items-stretch gap-1 border-b border-border overflow-x-auto";
-const TAB: &str = "group inline-flex items-center gap-1.5 rounded-t-md border border-transparent px-3 py-1.5 text-sm whitespace-nowrap cursor-pointer outline-none transition-colors hover:bg-muted focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-selected:bg-background aria-selected:border-border aria-selected:text-foreground";
+const FRAME: &str = "group inline-flex items-stretch rounded-t-md border border-transparent text-sm text-muted-foreground whitespace-nowrap transition-colors hover:bg-muted data-[state=active]:bg-background data-[state=active]:border-border data-[state=active]:text-foreground";
+const TRIGGER: &str = "flex items-center gap-1.5 px-3 py-1.5 cursor-pointer rounded-t-md outline-none focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-ring focus-visible:-outline-offset-2";
 
 /// One panel in the strip.
 #[derive(Clone, Debug, PartialEq, Eq)]
@@ -78,33 +79,42 @@ pub fn PanelTabs(
     let group = StoredValue::new(crate::id::next("panels"));
     let on_activate = StoredValue::new(Arc::new(on_activate));
     let on_close = StoredValue::new(Arc::new(on_close));
-    let close_label = StoredValue::new(if close_label.is_empty() {
-        "close".to_string()
-    } else {
-        close_label
-    });
+    let close_label = StoredValue::new(close_label);
+    let locale = rustify_ui::use_locale();
     let aria_label = (!aria_label.is_empty()).then_some(aria_label);
     let tab_id = move |id: &str| format!("{}-{id}", group.get_value());
 
     let on_keydown = move |event: KeyboardEvent| {
         let tabs = tabs.get_untracked();
-        let step = match event.key().as_str() {
-            "ArrowRight" => 1,
-            "ArrowLeft" => -1,
-            _ => return,
-        };
-        let Some(next) = neighbour(&tabs, &active.get_untracked(), step) else {
-            return;
-        };
-        event.prevent_default();
-        on_activate.with_value(|activate| activate(next.clone()));
-        crate::dom::focus_id(&tab_id(&next));
+        match event.key().as_str() {
+            "ArrowRight" | "ArrowLeft" => {
+                let step = if event.key() == "ArrowRight" { 1 } else { -1 };
+                let Some(next) = neighbour(&tabs, &active.get_untracked(), step) else {
+                    return;
+                };
+                event.prevent_default();
+                on_activate.with_value(|activate| activate(next.clone()));
+                crate::dom::focus_id(&tab_id(&next));
+            }
+            // The close control follows the tab's own focus rather than
+            // having a tab stop of its own, so the Delete key closes the
+            // tab the keyboard is on.
+            "Delete" => {
+                let current = active.get_untracked();
+                if tabs.iter().any(|tab| tab.id == current && tab.closable) {
+                    event.prevent_default();
+                    on_close.with_value(|close| close(current));
+                }
+            }
+            _ => {}
+        }
     };
 
     view! {
         <div
             class=crate::macros::reactive_merge(STRIP, &class)
             data-name="PanelTabs"
+            data-rustify-part="panel-tabs"
             data-testid=test_id
             role="tablist"
             aria-label=aria_label
@@ -124,46 +134,51 @@ pub fn PanelTabs(
                     let closed = StoredValue::new(id);
                     view! {
                         <div
-                            role="tab"
-                            id=element_id
-                            class=TAB
-                            data-name="PanelTab"
-                            data-testid=test_id
-                            aria-selected=move || showing.get().to_string()
-                            tabindex=move || if showing.get() { "0" } else { "-1" }
-                            on:click=move |_| {
-                                on_activate.with_value(|activate| activate(asked.clone()))
-                            }
+                            role="presentation"
+                            class=FRAME
+                            data-name="PanelTabFrame"
+                            data-rustify-part="panel-tab"
+                            data-state=move || if showing.get() { "active" } else { "inactive" }
                         >
-                            <span>{label}</span>
-                            <Show when=move || closable fallback=|| ()>
-                                <button
-                                    type="button"
-                                    class="rounded-sm p-0.5 text-muted-foreground outline-none hover:bg-muted focus-visible:ring-ring/50 focus-visible:ring-[3px]"
-                                    data-name="PanelTabClose"
-                                    data-testid=move || close_test_id.get_value()
-                                    aria-label=move || {
-                                        format!(
-                                            "{} {}",
-                                            close_label.get_value(),
-                                            closed.get_value(),
-                                        )
-                                    }
-                                    on:click=move |event| {
-                                        // Closing is not choosing: without this
-                                        // the tab about to go would be
-                                        // activated on the way out.
-                                        event.stop_propagation();
-                                        on_close
-                                            .with_value(|close| close(closed.get_value()));
-                                    }
-                                >
-                                    <crate::icon::Icon
-                                        glyph=crate::icon::Glyph::Close
-                                        class="size-3"
-                                    />
-                                </button>
-                            </Show>
+                            <div
+                                role="tab"
+                                id=element_id
+                                class=TRIGGER
+                                data-name="PanelTab"
+                                data-testid=test_id
+                                aria-selected=move || showing.get().to_string()
+                                tabindex=move || if showing.get() { "0" } else { "-1" }
+                                on:click=move |_| {
+                                    on_activate.with_value(|activate| activate(asked.clone()))
+                                }
+                            >
+                                <span>{label}</span>
+                                <Show when=move || closable fallback=|| ()>
+                                    <span
+                                        class="rounded-sm p-0.5 cursor-pointer text-muted-foreground outline-none hover:bg-muted"
+                                        data-name="PanelTabClose"
+                                        data-rustify-part="panel-tab-close"
+                                        data-testid=move || close_test_id.get_value()
+                                        on:click=move |event: MouseEvent| {
+                                            // Closing is not choosing: without this
+                                            // the tab about to go would be
+                                            // activated on the way out. The control
+                                            // stays outside the accessibility tree
+                                            // — any control-like node inside the
+                                            // tab trips axe — and the Delete key on
+                                            // the tab closes for the keyboard.
+                                            event.stop_propagation();
+                                            on_close
+                                                .with_value(|close| close(closed.get_value()));
+                                        }
+                                    >
+                                        <crate::icon::Icon
+                                            glyph=crate::icon::Glyph::Close
+                                            class="size-3"
+                                        />
+                                    </span>
+                                </Show>
+                            </div>
                         </div>
                     }
                 }

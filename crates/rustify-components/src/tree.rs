@@ -14,8 +14,8 @@ use leptos::prelude::*;
 use std::collections::BTreeSet;
 use std::sync::Arc;
 
-const TREE: &str = "flex flex-col gap-0.5 overflow-auto p-1 text-sm outline-none";
-const ITEM: &str = "flex w-full items-center gap-1 rounded pr-2 py-1 text-left cursor-pointer select-none outline-none hover:bg-accent/50 focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-selected:bg-accent";
+const TREE: &str = "flex flex-col gap-0.5 overflow-auto p-1 text-sm text-foreground outline-none";
+const ITEM: &str = "flex w-full items-center gap-1 rounded pr-2 py-1 text-left cursor-pointer select-none outline-none hover:bg-accent/50 focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-ring focus-visible:-outline-offset-2 aria-selected:bg-accent aria-selected:text-accent-foreground aria-selected:focus-visible:outline-current";
 
 /// One group. A group with children is a level the arrows can open.
 #[derive(Clone, Debug, PartialEq, Eq)]
@@ -193,13 +193,21 @@ pub fn Tree(
         }
     };
     let aria_label = (!aria_label.is_empty()).then_some(aria_label);
+    let locale = rustify_ui::use_locale();
+    let empty_id = format!("{name}-empty");
     view! {
         <div
             class=crate::macros::reactive_merge(TREE, &class)
             data-name="Tree"
+            data-rustify-part="tree"
             data-testid=test_id
-            role="tree"
-            aria-label=aria_label
+            role=move || (!shown.get().is_empty()).then_some("tree")
+            aria-label=move || if shown.get().is_empty() {
+                None
+            } else {
+                aria_label.clone()
+            }
+            data-state=move || if shown.get().is_empty() { "empty" } else { "ready" }
             on:keydown=on_keydown
         >
             <For each=move || shown.get() key=|row| row.key.clone() let:row>
@@ -232,6 +240,12 @@ pub fn Tree(
                             role="treeitem"
                             id=item_id(&key)
                             class=format!("{ITEM} {geometry}")
+                            data-rustify-part="tree-item"
+                            data-state=move || {
+                                expandable
+                                    .then(|| if open.get() { "open" } else { "closed" })
+                            }
+                            data-selected=move || chosen.get().then_some("")
                             data-testid=format!("{}-{}", name.clone(), key)
                             {leptos::tachys::html::attribute::custom::custom_attribute(
                                 "aria-level",
@@ -253,22 +267,32 @@ pub fn Tree(
                                 on_select(select_key.clone());
                             }
                         >
-                            <span aria-hidden="true">
-                                {move || {
-                                    if !expandable {
-                                        "\u{00b7}"
-                                    } else if open.get() {
-                                        "\u{25be}"
-                                    } else {
-                                        "\u{25b8}"
-                                    }
-                                }}
-                            </span>
+                            {move || {
+                                let glyph = if !expandable {
+                                    crate::icon::Glyph::Dot
+                                } else if open.get() {
+                                    crate::icon::Glyph::ChevronDown
+                                } else {
+                                    crate::icon::Glyph::ChevronRight
+                                };
+                                view! {
+                                    <crate::icon::Icon glyph class="size-3" />
+                                }
+                            }}
                             {row.label.clone()}
                         </div>
                     }
                 }
             </For>
+            <Show when=move || shown.get().is_empty() fallback=|| ()>
+                <p
+                    data-rustify-part="tree-empty"
+                    data-testid=empty_id.clone()
+                    class="px-2 py-1 text-muted-foreground"
+                >
+                    {move || locale.text(rustify_ui::Message::Empty)}
+                </p>
+            </Show>
         </div>
     }
 }

@@ -78,7 +78,7 @@ jobs:
         run: >-
           mbx test --locked -p rustify-components --no-default-features --features ssr
           --test menus_ssg --test panels_ssg --test content_ssg --test feedback_ssg
-          --test ssr_controls --test missing_context_ssr
+          --test ssr_controls --test missing_context_ssr --test extensions_ssg
       - name: Docs library and CLI, each on its own
         run: |
           for package in rustify-docs rustify-docs-cli; do

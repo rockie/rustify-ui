@@ -7,7 +7,7 @@
 
 use leptos::prelude::*;
 
-const FIELD: &str = "block w-full text-sm text-muted-foreground file:mr-3 file:rounded-md file:border file:border-border file:bg-secondary file:px-3 file:py-1.5 file:text-sm file:text-foreground file:cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed focus-visible:outline-none focus-visible:ring-ring/50 focus-visible:ring-[3px]";
+const FIELD: &str = "block w-full text-sm text-muted-foreground file:mr-3 file:rounded-md file:border file:border-border file:bg-secondary file:px-3 file:py-1.5 file:text-sm file:text-foreground file:cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed aria-invalid:text-destructive aria-invalid:file:border-destructive outline-none focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-ring focus-visible:-outline-offset-2";
 
 /// A file input.
 ///
@@ -26,6 +26,7 @@ pub fn FilePicker(
     #[prop(optional, into)] id: String,
     #[prop(optional, into)] aria_label: String,
     #[prop(optional, into)] disabled: Signal<bool>,
+    #[prop(optional, into)] invalid: Signal<bool>,
     #[prop(optional, into)] described_by: Signal<String>,
     #[prop(optional, into)] class: String,
     #[prop(optional, into)] test_id: String,
@@ -42,8 +43,12 @@ pub fn FilePicker(
             id=id
             class=crate::macros::reactive_merge(FIELD, &class)
             data-name="FilePicker"
+            data-rustify-part="file-picker"
             data-testid=test_id
             aria-label=aria_label
+            aria-invalid=move || invalid.get().then_some("true")
+            data-disabled=move || disabled.get().then_some("")
+            data-invalid=move || invalid.get().then_some("")
             aria-describedby=move || {
                 let described_by = described_by.get();
                 (!described_by.is_empty()).then_some(described_by)

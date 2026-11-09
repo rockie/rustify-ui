@@ -8,14 +8,14 @@ use leptos::web_sys::{Element, FocusOptions, HtmlElement};
 use rustify_ui::Selection;
 use std::sync::Arc;
 
-const GRID: &str = "relative flex flex-col min-h-0 border border-border rounded-md bg-background text-sm outline-none focus-visible:ring-ring/50 focus-visible:ring-[3px]";
+const GRID: &str = "relative flex flex-col min-h-0 border border-border rounded-md bg-background text-sm text-foreground outline-none focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-ring focus-visible:-outline-offset-2";
 const HEADER: &str = "flex shrink-0 overflow-hidden border-b border-border bg-muted font-medium text-muted-foreground";
 const HEADER_CELL: &str = "shrink-0 truncate px-2 py-1 text-left cursor-default select-none";
-const HEADER_BUTTON: &str = "w-full truncate bg-transparent border-0 p-0 text-left font-medium text-inherit cursor-pointer outline-none focus-visible:ring-ring/50 focus-visible:ring-2";
+const HEADER_BUTTON: &str = "w-full truncate bg-transparent border-0 p-0 text-left font-medium text-inherit cursor-pointer outline-none focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-ring focus-visible:-outline-offset-2";
 const SCROLLER: &str = "relative flex-1 min-h-0 overflow-auto";
 const ROW: &str =
-    "absolute left-0 flex w-full items-center border-b border-border/50 aria-selected:bg-accent";
-const CELL: &str = "absolute shrink-0 truncate px-2 outline-none focus-visible:ring-ring/50 focus-visible:ring-2 focus-visible:ring-inset";
+    "absolute left-0 flex w-full items-center border-b border-border/50 group/row aria-selected:bg-accent aria-selected:text-accent-foreground";
+const CELL: &str = "absolute shrink-0 truncate px-2 outline-none group-aria-selected/row:focus-visible:outline-current focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-ring focus-visible:-outline-offset-2";
 
 /// One column of the table.
 #[derive(Clone, Debug, PartialEq, Eq)]
@@ -388,6 +388,8 @@ pub fn DataTable(
             columns.get().len() as f64 * column_width,
         )
     });
+    let locale = rustify_ui::use_locale();
+    let empty_id = format!("{name}-empty");
     // Nested For views do not create their row and cell Owners in the same
     // order on host and browser. Name their rules from the stable pool slots
     // rather than consuming the scope's ID sequence inside either loop.
@@ -398,10 +400,12 @@ pub fn DataTable(
             node_ref=grid
             class=crate::macros::reactive_merge(GRID, &class)
             data-name="DataTable"
+            data-rustify-part="data-table"
             data-testid=test_id.clone()
             role="grid"
             aria-label=aria_label
-            aria-rowcount=move || (rows.get() + 1).to_string()
+            data-state=move || if rows.get() == 0 { "empty" } else { "ready" }
+            aria-rowcount=move || (rows.get() + 1).max(2).to_string()
             aria-colcount=move || columns.get().len().to_string()
             on:keydown=on_keydown
             on:focusin=on_focusin
@@ -438,6 +442,7 @@ pub fn DataTable(
                                 <div
                                     role="columnheader"
                                     class=format!("{HEADER_CELL} {geometry}")
+                                    data-rustify-part="data-table-header"
                                     data-testid=format!("{name}-column-{index}")
                                     aria-colindex=(index + 1).to_string()
                                     aria-sort=order
@@ -506,8 +511,10 @@ pub fn DataTable(
                                         role="row"
                                         class=format!("{ROW} {row_height_geometry} {row_geometry}")
                                         class=("hidden", move || !within.get())
+                                        data-rustify-part="data-table-row"
                                         data-testid=format!("{name}-row-{slot}")
                                         data-row-id=move || id.get().to_string()
+                                        data-selected=move || chosen.get().then_some("")
                                         aria-rowindex=move || (row.get() + 2).to_string()
                                         aria-selected=move || chosen.get().to_string()
                                         on:click=move |_: MouseEvent| {
@@ -571,6 +578,21 @@ pub fn DataTable(
                                 }
                             }
                         </For>
+                        <Show when=move || rows.get() == 0 fallback=|| ()>
+                            <div
+                                role="row"
+                                aria-rowindex="2"
+                                data-testid=empty_id.clone()
+                            >
+                                <div
+                                    role="gridcell"
+                                    aria-colindex="1"
+                                    aria-colspan=move || columns.get().len().to_string()
+                                >
+                                    {move || locale.text(rustify_ui::Message::Empty)}
+                                </div>
+                            </div>
+                        </Show>
                     </div>
                 </div>
             </div>

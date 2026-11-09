@@ -4,6 +4,7 @@
 
 | 文件 / 子目录 | 用途 / 对象 ID | 入口 |
 | --- | --- | --- |
+| 7d8e0cdb-4684-4ba6-8a88-40ef7b12df73 | DOM-COMPONENTS-P5 事件 | [入口](7d8e0cdb-4684-4ba6-8a88-40ef7b12df73/index.md) |
 | d3982b58-e895-40b6-a66b-979a5d747863 | DOM-COMPONENTS-P4 事件 | [入口](d3982b58-e895-40b6-a66b-979a5d747863/index.md) |
 | 5291ea27-775f-422c-a9dc-444ed893f028 | DOM-COMPONENTS-P3 事件 | [入口](5291ea27-775f-422c-a9dc-444ed893f028/index.md) |
 | 0222c547-cbeb-412a-8c3e-3399b943670e | 子目录入口 | [0222c547-cbeb-412a-8c3e-3399b943670e](0222c547-cbeb-412a-8c3e-3399b943670e/index.md) |

@@ -368,3 +368,9 @@ mbx test -p rustify-ui --lib theme
 mbx test -p theme-studio --bins
 mbx xtask sources verify
 ```
+
+Schema v2 requires one matching source checkout for SDK, styles and CLI. The
+first registry release that includes v2 has not been decided yet; until it
+is, older published consumers are not compatible with it. The default
+`--primary` and `--accent-foreground` values changed with the v2 palette;
+`--ring` is unchanged.

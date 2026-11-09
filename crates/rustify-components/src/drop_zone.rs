@@ -15,6 +15,7 @@ use leptos::web_sys::DragEvent;
 
 const ZONE: &str = "flex flex-col items-center justify-center gap-2 rounded-md border border-dashed border-border bg-background p-6 text-sm text-muted-foreground transition-colors";
 const OVER: &str = "border-primary text-foreground";
+const INVALID: &str = "border-destructive text-destructive";
 const OFF: &str = "opacity-50";
 
 /// A drop zone for files.
@@ -27,6 +28,7 @@ const OFF: &str = "opacity-50";
 pub fn DropZone(
     on_files: impl Fn(Option<leptos::web_sys::FileList>) + 'static,
     #[prop(optional, into)] label: String,
+    #[prop(optional, into)] invalid: Signal<bool>,
     #[prop(optional, into)] disabled: Signal<bool>,
     #[prop(optional, into)] described_by: Signal<String>,
     #[prop(optional, into)] class: String,
@@ -41,10 +43,14 @@ pub fn DropZone(
     // The SDK's words when the application supplies none: a drop zone with no
     // label is still a drop zone, and what it says is the SDK's to say.
     let locale = rustify_ui::use_locale();
-    let label = if label.is_empty() {
-        locale.text(rustify_ui::Message::DropFileHere).to_string()
-    } else {
-        label
+    let label = StoredValue::new(label);
+    let words = move || {
+        let given = label.get_value();
+        if given.is_empty() {
+            locale.text(rustify_ui::Message::DropFileHere).to_string()
+        } else {
+            given
+        }
     };
     // Bound out here because `view!` cannot parse an `if` in an attribute.
     let state = move || {
@@ -56,11 +62,18 @@ pub fn DropZone(
     };
     let classes = crate::macros::reactive_merge_with(move || {
         let over = depth.get() > 0 && !disabled.get();
+        let refused = invalid.get() && depth.get() == 0 && !disabled.get();
         vec![
             ZONE.to_string(),
             format!(
                 "{} {} {}",
-                if over { OVER } else { "" },
+                if over {
+                    OVER
+                } else if refused {
+                    INVALID
+                } else {
+                    ""
+                },
                 if disabled.get() { OFF } else { "" },
                 class,
             ),
@@ -70,8 +83,13 @@ pub fn DropZone(
         <div
             class=classes
             data-name="DropZone"
+            data-rustify-part="drop-zone"
             data-testid=test_id
             data-state=state
+            role="group"
+            aria-label=words
+            data-disabled=move || disabled.get().then_some("")
+            data-invalid=move || invalid.get().then_some("")
             aria-disabled=move || disabled.get().then_some("true")
             aria-describedby=move || {
                 let described_by = described_by.get();
@@ -103,7 +121,7 @@ pub fn DropZone(
                 on_files(event.data_transfer().and_then(|transfer| transfer.files()));
             }
         >
-            {label}
+            {words}
         </div>
     }
 }

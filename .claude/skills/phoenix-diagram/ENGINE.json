@@ -3,37 +3,36 @@
   "distribution": "release",
   "tool": "phoenix-diagram",
   "toolVersion": "0.2.0",
-  "npmPackageVersion": "0.7.9",
-  "sourceCommit": "7229a8ba08f7d37bc37530e00e4d933903f1b5cf",
-  "sourceInputSha256": "910df91b4e857da6e30d8982aea308d2e1bf2d99c2d7644cb5455b37762740d9",
-  "inputContractSchema": 1,
+  "npmPackageVersion": "0.7.12",
+  "sourceCommit": "1c9e6755c6dbfd7afbb9085cbaed082c5fc22708",
+  "sourceInputSha256": "cff3ac1181c97817da9f745ad4dddaccc56a25d430cda9d824337a9d2ce710a8",
   "receiptSchema": 1,
   "viewerRevision": "phoenix-v2",
-  "bundleSha256": "e573234de7918dc87e1630c30a4ea1ba5862cc647dc0023a6d578ccb114e2ab6",
+  "bundleSha256": "e8d3dd047ba9c9b25568c79a9c3ddebbfbb16680e56175571243182b8759094c",
   "engines": {
     "darwin-arm64": {
       "asset": "phoenix-diagram-darwin-arm64",
-      "size": 17549968,
-      "sha256": "5f432a278a433bd456e8b65e0eb7a4128665f31d8c992609d6eb1cd9c48b7429",
-      "url": "https://download.xgent.ai/vendor/phoenix-diagram/v0.7.9/ci-41410951647/darwin-arm64/phoenix-diagram-darwin-arm64"
+      "size": 16441856,
+      "sha256": "59b9e27ec9395f73ef001782a0e8731fc83b8e87a6b8f902f8c1fad2ec98f957",
+      "url": "https://download.xgent.ai/vendor/phoenix-diagram/v0.7.12/ci-42016931086/darwin-arm64/phoenix-diagram-darwin-arm64"
     },
     "darwin-x64": {
       "asset": "phoenix-diagram-darwin-x64",
-      "size": 19556424,
-      "sha256": "236384da35f4f65e892966b5912b1c1631fb4819194a7d51085076f2bc3b1a79",
-      "url": "https://download.xgent.ai/vendor/phoenix-diagram/v0.7.9/ci-41410951647/darwin-x64/phoenix-diagram-darwin-x64"
+      "size": 18190672,
+      "sha256": "63765abe0278a1d4eafc0c4e2cc669770a7177df34e2f38acc440a80c7ea830e",
+      "url": "https://download.xgent.ai/vendor/phoenix-diagram/v0.7.12/ci-42016931086/darwin-x64/phoenix-diagram-darwin-x64"
     },
     "linux-arm64": {
       "asset": "phoenix-diagram-linux-arm64",
-      "size": 19406792,
-      "sha256": "0df998aed2c0d1968a94151e01e1be0ea73b62f279ff3f33fbaa2ec037e3c215",
-      "url": "https://download.xgent.ai/vendor/phoenix-diagram/v0.7.9/ci-41410951647/linux-arm64/phoenix-diagram-linux-arm64"
+      "size": 18227056,
+      "sha256": "c731b05d0537e5d5858f42e48eac1b5e8334afd3f998b66723e6f0d71070ef32",
+      "url": "https://download.xgent.ai/vendor/phoenix-diagram/v0.7.12/ci-42016931086/linux-arm64/phoenix-diagram-linux-arm64"
     },
     "linux-x64": {
       "asset": "phoenix-diagram-linux-x64",
-      "size": 21861536,
-      "sha256": "502c95c538ab6db7c4b3de80c65e7188a84a4326ba6a5a965a1c23e7b6033037",
-      "url": "https://download.xgent.ai/vendor/phoenix-diagram/v0.7.9/ci-41410951647/linux-x64/phoenix-diagram-linux-x64"
+      "size": 20392656,
+      "sha256": "5484186796d5a08a8e2c50795178e35f30aa95b9927a7712c20cd7c8dccb4f39",
+      "url": "https://download.xgent.ai/vendor/phoenix-diagram/v0.7.12/ci-42016931086/linux-x64/phoenix-diagram-linux-x64"
     }
   }
 }

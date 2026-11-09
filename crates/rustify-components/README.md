@@ -8,7 +8,7 @@ Use the exact registry version in your manifest:
 
 ```toml
 [dependencies]
-rustify-components = "=0.2.0"
+rustify-components = "=0.2.1"
 ```
 
 docs.rs is configured for the host SSR mode on Linux. Browser-only APIs are absent there. The validated runtime environment is macOS Chrome; this metadata does not establish Linux or Windows runtime support.

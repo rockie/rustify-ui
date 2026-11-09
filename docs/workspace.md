@@ -146,3 +146,7 @@ says the same thing with `overscroll-behavior`.
 One control should drive both, as the workbench's does. A page where the region
 hands wheels over and the list beside it does not is a page where the same
 gesture means two things.
+
+PanelTabs tabs sit behind a presentation frame; the close control is a
+mouse-only target outside the accessibility tree and the Delete key closes
+the active closable tab. Splitters keep arrow keys on physical direction.

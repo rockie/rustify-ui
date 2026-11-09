@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/tt-a1i/archify/schemas/workflow.schema.json",
-  "title": "Archify Workflow Diagram",
+  "$id": "https://github.com/XGENT-ai/skills/schemas/phoenix-diagram/workflow.schema.json",
+  "title": "Phoenix Diagram Workflow Diagram",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -69,9 +69,6 @@
         "repository": {
           "$ref": "common.schema.json#/$defs/repository"
         },
-        "views": {
-          "$ref": "common.schema.json#/$defs/guidedViews"
-        },
         "legend": {
           "type": "object",
           "additionalProperties": false,
@@ -123,9 +120,6 @@
           "items": false,
           "minItems": 2,
           "maxItems": 2
-        },
-        "input_contract": {
-          "const": "phoenix-v1"
         }
       }
     },
