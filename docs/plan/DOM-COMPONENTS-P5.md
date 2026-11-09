@@ -201,7 +201,7 @@ REVIEW @progress_consistency:
 - 最近完成：M1 · 扩展组件统一契约的 R1 修复，DataTable/Tree `empty_label` 与 PanelTabs 终态文档已补齐（[M1 评审修复](DOM-COMPONENTS-P5.records/M1.md#评审修复)）
 - 下一步：用户以 `review-code docs/plan/DOM-COMPONENTS-P5.md` 复审 R1 修复；豁免与既有 missing 见 [M4 记录](DOM-COMPONENTS-P5.records/M4.md)「AC → 证据 → 豁免」
 - 当前阻塞：无
-- 代码基线：M1—M3 在 `500022a5`，M4 在 `7eba0829`；R1 修复为 dirty@`118202ba`（DataTable/Tree、extensions_ssg、计划与 M1/M4 记录）
+- 代码基线：M1—M3 在 `500022a5`，M4 在 `7eba0829`；R1 修复在 `857507ba`（DataTable/Tree、extensions_ssg、计划与 M1/M4 记录）
 
 ### 完成记录
 
@@ -210,7 +210,7 @@ REVIEW @progress_consistency:
 | M2 | 已完成 | 2026-11-05T03:55:53+08:00 | Studio Extensions 节（49 组/9 节）、六类样本、局部主题、本地化与 SDK locale 桥、axe=0、矩阵/资源/拾取扩展；V-2 三条全过（spec 15/15）；PanelTabs close 按 axe 实测就地表内修订 | [M2 记录](DOM-COMPONENTS-P5.records/M2.md) | 500022a5 |
 | M3 | 已完成 | 2026-11-05T04:30:18+08:00 | 迁移事实源：LEGACY_ENTRIES 152 行+冻结基线 675 键+inventory 完整性测试、目录修正（Primitives.Label/DirectionProvider/Icon/字段）、components.md 再生成含 Legacy API destinations 节、指南重整（How to migrate/生成节替换/Rustify extensions/Default palette/D13/=0.2.1）；V-3、V-4 全过 | [M3 记录](DOM-COMPONENTS-P5.records/M3.md) | 500022a5 |
 | M4 | 已完成 | 2026-11-09T14:20:00+08:00 | 基线产物、真实 Chrome 200%/减少动效用例、V6 断言修正；收口修复 PanelTabs 闲置参数、candidates.json、Splitter 样本 CSP 与 4 组过期 Studio 用例；V-5—V-13 原终验通过，AC→证据→豁免表与 V-12 missing 已列；R1 复用边界见记录 | [M4 记录](DOM-COMPONENTS-P5.records/M4.md) | 7eba0829 |
-| M1 | 已完成 | 2026-11-09T15:41:46+08:00 | 扩展组件统一契约及 R1 修复：DataTable/Tree `empty_label` 自定义与空串 locale 回退、PanelTabs 终态文档；extensions_ssg 7/7、SSR 234、DOM host 187、Clippy/fmt/catalog/CSS 通过 | [M1 记录](DOM-COMPONENTS-P5.records/M1.md) | 500022a5 |
+| M1 | 已完成 | 2026-11-09T15:41:46+08:00 | 扩展组件统一契约及 R1 修复：DataTable/Tree `empty_label` 自定义与空串 locale 回退、PanelTabs 终态文档；extensions_ssg 7/7、SSR 234、DOM host 187、Clippy/fmt/catalog/CSS 通过 | [M1 记录](DOM-COMPONENTS-P5.records/M1.md) | 500022a5；修复 857507ba |
 
 ## 0. 需求、范围与决策
 
