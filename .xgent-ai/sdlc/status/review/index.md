@@ -5,6 +5,7 @@
 | 对象 ID | 标题 / 来源 | 状态页 | 活动 / 归档 |
 | --- | --- | --- | --- |
 | 03a93f04-5364-4e76-ab5c-f47fe6fa8851 | [WASM-TAILWIND 代码评审 R5](../../../../docs/plan/WASM-TAILWIND.code-review.r5.md) | [03a93f04](03a93f04-5364-4e76-ab5c-f47fe6fa8851.md) | 活动 |
+| 0602274a-ffd5-4423-adf6-cc478c3033b3 | [DOM-COMPONENTS-P4 代码评审 R1](../../../../docs/plan/DOM-COMPONENTS-P4.code-review.md) | [对象](0602274a-ffd5-4423-adf6-cc478c3033b3.md) | 活动 |
 | 07fabee1-24c5-4ecf-a54a-87c0caddcb8a | [DOM-COMPONENTS-P1 UI 验收评审 R3](../../../../docs/plan/DOM-COMPONENTS-P1.ui-review.r3.md) | [对象](07fabee1-24c5-4ecf-a54a-87c0caddcb8a.md) | 活动 |
 | 09cb5ab0-a1c6-4684-a9bd-65b998cf31dd | [DOM-COMPONENTS-P2 代码复审 R3](../../../../docs/plan/DOM-COMPONENTS-P2.code-review.r3.md) | [对象](09cb5ab0-a1c6-4684-a9bd-65b998cf31dd.md) | 活动 |
 | 115914b2-cc1d-4b61-a62a-243b74b783aa | [Theme Studio 界面终审](../../../../.impeccable/review/finish-review.md) | [115914b2](115914b2-cc1d-4b61-a62a-243b74b783aa.md) | 活动 |
@@ -16,6 +17,7 @@
 | 2cc80246-5d61-4370-bbd7-462827ecbce3 | [DOM-COMPONENTS-P1 UI 验收评审 R5](../../../../docs/plan/DOM-COMPONENTS-P1.ui-review.r5.md) | [对象](2cc80246-5d61-4370-bbd7-462827ecbce3.md) | 活动 |
 | 36714aee-ee6c-42b0-84d2-2d450716e0f1 | [CRATES-IO-P1 代码评审 R1](../../../../docs/plan/CRATES-IO-P1.code-review.md) | [36714aee](36714aee-ee6c-42b0-84d2-2d450716e0f1.md) | 活动 |
 | 0ce11938-a166-4a20-b109-09e66f4414da | [CRATES-IO-P1 代码复审 R2](../../../../docs/plan/CRATES-IO-P1.code-review.r2.md) | [0ce11938](0ce11938-a166-4a20-b109-09e66f4414da.md) | 活动 |
+| 3bc23089-adb5-4844-b005-7144614ac86e | [DOM-COMPONENTS-P4 完整计划评审](../../../../docs/plan/DOM-COMPONENTS-P4.review.md) | [对象](3bc23089-adb5-4844-b005-7144614ac86e.md) | 活动 |
 | 4096c476-5ee3-44a5-a195-09a5183542ca | [DOM-COMPONENTS-P1 UI 验收评审 R6](../../../../docs/plan/DOM-COMPONENTS-P1.ui-review.r6.md) | [对象](4096c476-5ee3-44a5-a195-09a5183542ca.md) | 活动 |
 | 5307296b-348d-4666-bda3-55b208901877 | [DOM-COMPONENTS-P1-gaps 代码复审 R2](../../../../docs/plan/DOM-COMPONENTS-P1-gaps.code-review.r2.md) | [对象](5307296b-348d-4666-bda3-55b208901877.md) | 活动 |
 | c5423b46-21f3-4f6f-9b17-a6a6fc0e5033 | [发行工具按包修订 代码评审（8e77809c..60554d84）](../../../../docs/reviews/range-8e77809c-60554d84.code-review.md) | [c5423b46](c5423b46-21f3-4f6f-9b17-a6a6fc0e5033.md) | 活动 |
@@ -47,6 +49,12 @@
 | 9972fa15-f73e-47e1-ac84-badd8b8c57cc | [Theme Studio GPU 语言修复复核](../../../../.impeccable/review/finish-verdict.md) | [9972fa15](9972fa15-f73e-47e1-ac84-badd8b8c57cc.md) | 活动 |
 | 9cd6da78-0bc0-4297-9f6b-6fffde099e72 | [DOCS-SSG-P4 代码评审 R1](../../../../docs/plan/DOCS-SSG-P4.code-review.md) | [对象](9cd6da78-0bc0-4297-9f6b-6fffde099e72.md) | 活动 |
 | 9d6d2249-b91c-4d0b-b2f7-414804385321 | [DOCS-SSG-P4-gaps 代码评审 R1](../../../../docs/plan/DOCS-SSG-P4-gaps.code-review.md) | [对象](9d6d2249-b91c-4d0b-b2f7-414804385321.md) | 活动 |
+| ae6d3308-3fd4-4575-9962-7343a4878548 | [DOM-COMPONENTS-P3 代码评审 R1（补记）](../../../../docs/plan/DOM-COMPONENTS-P3.code-review.md) | [对象](ae6d3308-3fd4-4575-9962-7343a4878548.md) | 活动 |
+| 660d9527-6e1c-4b23-b131-cb23d5fb8256 | [DOM-COMPONENTS-P3 代码复审 R2](../../../../docs/plan/DOM-COMPONENTS-P3.code-review.r2.md) | [对象](660d9527-6e1c-4b23-b131-cb23d5fb8256.md) | 活动 |
+| d3d6652f-c036-4cdd-a233-fb8286710fff | [DOM-COMPONENTS-P3 代码复审 R3](../../../../docs/plan/DOM-COMPONENTS-P3.code-review.r3.md) | [对象](d3d6652f-c036-4cdd-a233-fb8286710fff.md) | 活动 |
+| a17022e4-74c1-40f5-80d0-f5e9862ecc9e | [DOM-COMPONENTS-P3 PRD覆盖核查](../../../../docs/plan/DOM-COMPONENTS-P3.prd-dev-gaps.md) | [对象](a17022e4-74c1-40f5-80d0-f5e9862ecc9e.md) | 活动 |
+| b66849a5-849a-45c0-bab2-7468acd4409f | [DOM-COMPONENTS-P4 代码评审 R2（修复效果复审）](../../../../docs/plan/DOM-COMPONENTS-P4.code-review.r2.md) | [对象](b66849a5-849a-45c0-bab2-7468acd4409f.md) | 活动 |
+| 86ae5793-e593-4cbc-aa71-f5ec0fff0bce | [DOM-COMPONENTS-P4 代码评审 R3（修复效果复审）](../../../../docs/plan/DOM-COMPONENTS-P4.code-review.r3.md) | [对象](86ae5793-e593-4cbc-aa71-f5ec0fff0bce.md) | 活动 |
 | b7178384-b6a0-4f39-9800-588a613f076a | [DOCS-SSG-P4 代码评审 R2](../../../../docs/plan/DOCS-SSG-P4.code-review.r2.md) | [对象](b7178384-b6a0-4f39-9800-588a613f076a.md) | 活动 |
 | a3801f0a-6b77-40f4-83e8-3d4eebbe60f5 | [Theme Studio 未提交变更代码评审](../../../../docs/plan/THEME-STUDIO.code-review.md) | [a3801f0a](a3801f0a-6b77-40f4-83e8-3d4eebbe60f5.md) | 活动 |
 | c34cd2c3-3731-433a-90c7-8bb70fdbc9e8 | [DOCS-SSG-P3 完整计划评审](../../../../docs/plan/DOCS-SSG-P3.review.md) | [对象](c34cd2c3-3731-433a-90c7-8bb70fdbc9e8.md) | 活动 |
@@ -97,6 +105,7 @@
 | 03d811fc-1289-4de6-aba0-59837b7ca681 | [DOM-COMPONENTS-P1 PRD覆盖核查](../../../../docs/plan/DOM-COMPONENTS-P1.prd-dev-gaps.md) | [对象](03d811fc-1289-4de6-aba0-59837b7ca681.md) | 活动 |
 | 9152677e-02be-4557-ac77-d2fb2244a90a | [DOM-COMPONENTS-P1-gaps 完整计划评审](../../../../docs/plan/DOM-COMPONENTS-P1-gaps.review.md) | [对象](9152677e-02be-4557-ac77-d2fb2244a90a.md) | 活动 |
 | 82810742-c017-4d8a-a8d0-8eb10b49b487 | [DOM-COMPONENTS-P3 完整计划评审](../../../../docs/plan/DOM-COMPONENTS-P3.review.md) | [对象](82810742-c017-4d8a-a8d0-8eb10b49b487.md) | 活动 |
+| 1c5130cd-8702-4adf-aace-8d605adac501 | [DOM-COMPONENTS-P5 完整计划评审](../../../../docs/plan/DOM-COMPONENTS-P5.review.md) | [对象](1c5130cd-8702-4adf-aace-8d605adac501.md) | 活动 |
 
 
 维护约定：改变本层内容者同步索引；按稳定 ID/路径保留历史，无变化不重写，索引不作为事件。详见[目录索引维护](../../protocol.md#目录索引维护)。

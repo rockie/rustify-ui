@@ -5,6 +5,7 @@
 | 文件 / 子目录 | 用途 / 对象 ID | 入口 |
 | --- | --- | --- |
 | 03a93f04-5364-4e76-ab5c-f47fe6fa8851 | 子目录入口 | [03a93f04-5364-4e76-ab5c-f47fe6fa8851](03a93f04-5364-4e76-ab5c-f47fe6fa8851/index.md) |
+| 0602274a-ffd5-4423-adf6-cc478c3033b3 | DOM-COMPONENTS-P4 代码评审 R1 事件 | [入口](0602274a-ffd5-4423-adf6-cc478c3033b3/index.md) |
 | 07fabee1-24c5-4ecf-a54a-87c0caddcb8a | DOM-COMPONENTS-P1 UI 验收评审 R3 事件 | [入口](07fabee1-24c5-4ecf-a54a-87c0caddcb8a/index.md) |
 | 08ba4ba7-28da-447d-af3e-e0f52741a163 | 子目录入口 | [08ba4ba7-28da-447d-af3e-e0f52741a163](08ba4ba7-28da-447d-af3e-e0f52741a163/index.md) |
 | 09cb5ab0-a1c6-4684-a9bd-65b998cf31dd | DOM-COMPONENTS-P2 代码复审 R3 事件 | [入口](09cb5ab0-a1c6-4684-a9bd-65b998cf31dd/index.md) |
@@ -17,6 +18,7 @@
 | 2cc80246-5d61-4370-bbd7-462827ecbce3 | DOM-COMPONENTS-P1 UI 验收评审 R5 事件 | [入口](2cc80246-5d61-4370-bbd7-462827ecbce3/index.md) |
 | 36714aee-ee6c-42b0-84d2-2d450716e0f1 | CRATES-IO-P1 代码评审 R1 事件 | [入口](36714aee-ee6c-42b0-84d2-2d450716e0f1/index.md) |
 | 0ce11938-a166-4a20-b109-09e66f4414da | CRATES-IO-P1 代码复审 R2 事件 | [入口](0ce11938-a166-4a20-b109-09e66f4414da/index.md) |
+| 3bc23089-adb5-4844-b005-7144614ac86e | DOM-COMPONENTS-P4 完整计划评审事件 | [入口](3bc23089-adb5-4844-b005-7144614ac86e/index.md) |
 | 4096c476-5ee3-44a5-a195-09a5183542ca | DOM-COMPONENTS-P1 UI 验收评审 R6 事件 | [入口](4096c476-5ee3-44a5-a195-09a5183542ca/index.md) |
 | 5307296b-348d-4666-bda3-55b208901877 | DOM-COMPONENTS-P1-gaps 代码复审 R2 事件 | [入口](5307296b-348d-4666-bda3-55b208901877/index.md) |
 | c5423b46-21f3-4f6f-9b17-a6a6fc0e5033 | 发行工具按包修订代码评审事件 | [入口](c5423b46-21f3-4f6f-9b17-a6a6fc0e5033/index.md) |
@@ -56,6 +58,8 @@
 | a9d8fca5-b4a7-43a0-aab3-8a57deb5fef4 | 子目录入口 | [a9d8fca5-b4a7-43a0-aab3-8a57deb5fef4](a9d8fca5-b4a7-43a0-aab3-8a57deb5fef4/index.md) |
 | ab6a1956-23dc-448d-b954-edc43b5bdeb7 | 子目录入口 | [ab6a1956-23dc-448d-b954-edc43b5bdeb7](ab6a1956-23dc-448d-b954-edc43b5bdeb7/index.md) |
 | accc055e-a23c-4390-a62a-fa30c447653f | 子目录入口 | [accc055e-a23c-4390-a62a-fa30c447653f](accc055e-a23c-4390-a62a-fa30c447653f/index.md) |
+| b66849a5-849a-45c0-bab2-7468acd4409f | DOM-COMPONENTS-P4 代码评审 R2 事件 | [入口](b66849a5-849a-45c0-bab2-7468acd4409f/index.md) |
+| 86ae5793-e593-4cbc-aa71-f5ec0fff0bce | DOM-COMPONENTS-P4 代码评审 R3 事件 | [入口](86ae5793-e593-4cbc-aa71-f5ec0fff0bce/index.md) |
 | b7178384-b6a0-4f39-9800-588a613f076a | DOCS-SSG-P4 代码评审 R2 事件 | [入口](b7178384-b6a0-4f39-9800-588a613f076a/index.md) |
 | c34cd2c3-3731-433a-90c7-8bb70fdbc9e8 | DOCS-SSG-P3 计划评审事件 | [入口](c34cd2c3-3731-433a-90c7-8bb70fdbc9e8/index.md) |
 | c84e8f89-9119-4d80-9bc2-71b67b0e99cf | 子目录入口 | [c84e8f89-9119-4d80-9bc2-71b67b0e99cf](c84e8f89-9119-4d80-9bc2-71b67b0e99cf/index.md) |
@@ -97,6 +101,8 @@
 | 03d811fc-1289-4de6-aba0-59837b7ca681 | DOM-COMPONENTS-P1 覆盖核查事件 | [入口](03d811fc-1289-4de6-aba0-59837b7ca681/index.md) |
 | 9152677e-02be-4557-ac77-d2fb2244a90a | DOM-COMPONENTS-P1-gaps 完整计划评审事件 | [入口](9152677e-02be-4557-ac77-d2fb2244a90a/index.md) |
 | 82810742-c017-4d8a-a8d0-8eb10b49b487 | DOM-COMPONENTS-P3 完整计划评审事件 | [入口](82810742-c017-4d8a-a8d0-8eb10b49b487/index.md) |
+| a17022e4-74c1-40f5-80d0-f5e9862ecc9e | DOM-COMPONENTS-P3 覆盖核查事件 | [入口](a17022e4-74c1-40f5-80d0-f5e9862ecc9e/index.md) |
+| 1c5130cd-8702-4adf-aace-8d605adac501 | DOM-COMPONENTS-P5 完整计划评审事件 | [入口](1c5130cd-8702-4adf-aace-8d605adac501/index.md) |
 
 
 维护约定：改变本层内容者同步索引；按稳定 ID/路径保留历史，无变化不重写，索引不作为事件。详见[目录索引维护](../../protocol.md#目录索引维护)。
