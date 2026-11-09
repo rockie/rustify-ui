@@ -14,7 +14,7 @@
 
 ## 当前重点
 
-- [DOM-COMPONENTS-P5](status/plan/7d8e0cdb-4684-4ba6-8a88-40ef7b12df73.md)：原文 Ready，dev-plan-ready，实施 0/4。[完整计划评审](status/review/1c5130cd-8702-4adf-aace-8d605adac501.md)原判需要修改（8×P2、8×P3，无 P0/P1、无 Blocked），F-01—F-16 已修订并复核（review-applied），未运行构建、测试或浏览器。覆盖 PRD P5 的 11 条 AC；用户决定旧主题路径不改、浏览器验收收窄到 Theme Studio 与官方站 components、Pages 本地验证不部署，未验证范围见计划 §9.1。下一步按计划实施 M1。
+- [DOM-COMPONENTS-P5](status/plan/7d8e0cdb-4684-4ba6-8a88-40ef7b12df73.md)：原文 Ready，dev-plan-ready；实施 4/4 dev-plan-completed（M1—M3 `500022a5`，M4 `7eba0829`），V-12 辅助技术与触控 missing，C-6/C-7/C-8 豁免见 M4 记录。下一步由用户发起代码评审。
 
 - [DOM-COMPONENTS-P4](status/plan/d3982b58-e895-40b6-a66b-979a5d747863.md)：v0.2 / Ready，实施 7/7、dev-plan-completed。M1 `0b6f0d6c`、M2—M4 `60c0a367`、M5—M7 `16ed128b` 已提交；[M7 验收](../../docs/plan/DOM-COMPONENTS-P4.records/M7.md)覆盖 V-1—V-15、10 条 AC 与四条整条终验。D11 按用户决定保留 Radix 参考配色并记录低对比实测值；P5 人工 missing 保留。[代码评审 R1](status/review/0602274a-ffd5-4423-adf6-cc478c3033b3.md)判需要修改（G-01 目录未同步、F-01/F-02 ARIA）；已在 `38bb272a` 修复并验证（review-applied）。[代码复审 R2](status/review/b66849a5-849a-45c0-bab2-7468acd4409f.md)判通过验收（G-01、F-01、F-02 与 Indicator 偏差已关闭；新增 F-03—F-05 均 P3，已在 `f5f35257` 修复并验证，review-applied）；[代码复审 R3](status/review/86ae5793-e593-4cbc-aa71-f5ec0fff0bce.md)（修复效果复审）逐项确认 F-03—F-05 关闭、无新增问题，判通过验收（review-not-required）。默认调色板迁移说明待负责人决定；未推送或发行。
 

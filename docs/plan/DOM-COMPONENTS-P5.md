@@ -201,7 +201,7 @@ REVIEW @progress_consistency:
 - 最近完成：M4 · 全部 AC 与整条终验收口，V-5—V-13 全过（V-12 三项 missing，按 AC 允许列出；[M4 记录](DOM-COMPONENTS-P5.records/M4.md)）
 - 下一步：用户以 `review-code docs/plan/DOM-COMPONENTS-P5.md` 发起代码评审；豁免与 missing 见 [M4 记录](DOM-COMPONENTS-P5.records/M4.md)「AC → 证据 → 豁免」
 - 当前阻塞：无
-- 代码基线：M1—M3 在 `500022a5`；M4 见完成记录
+- 代码基线：M1—M3 在 `500022a5`，M4 在 `7eba0829`
 
 ### 完成记录
 
@@ -210,7 +210,7 @@ REVIEW @progress_consistency:
 | M1 | 已完成 | 2026-11-05T01:17:05+08:00 | 扩展组件统一契约：主题角色/焦点、part 与状态标识、空/错误语义、语义修正、默认文案、Tree 图标、Glyph，V-1 七条全过 | [M1 记录](DOM-COMPONENTS-P5.records/M1.md) | 500022a5 |
 | M2 | 已完成 | 2026-11-05T03:55:53+08:00 | Studio Extensions 节（49 组/9 节）、六类样本、局部主题、本地化与 SDK locale 桥、axe=0、矩阵/资源/拾取扩展；V-2 三条全过（spec 15/15）；PanelTabs close 按 axe 实测就地表内修订 | [M2 记录](DOM-COMPONENTS-P5.records/M2.md) | 500022a5 |
 | M3 | 已完成 | 2026-11-05T04:30:18+08:00 | 迁移事实源：LEGACY_ENTRIES 152 行+冻结基线 675 键+inventory 完整性测试、目录修正（Primitives.Label/DirectionProvider/Icon/字段）、components.md 再生成含 Legacy API destinations 节、指南重整（How to migrate/生成节替换/Rustify extensions/Default palette/D13/=0.2.1）；V-3、V-4 全过 | [M3 记录](DOM-COMPONENTS-P5.records/M3.md) | 500022a5 |
-| M4 | 已完成 | 2026-11-09T14:20:00+08:00 | 基线产物、真实 Chrome 200%/减少动效用例、V6 断言修正；收口修复 PanelTabs 闲置参数、candidates.json、Splitter 样本 CSP 与 4 组过期 Studio 用例；V-5—V-13 全过，AC→证据→豁免表与 V-12 missing 已列 | [M4 记录](DOM-COMPONENTS-P5.records/M4.md) | 待提交 |
+| M4 | 已完成 | 2026-11-09T14:20:00+08:00 | 基线产物、真实 Chrome 200%/减少动效用例、V6 断言修正；收口修复 PanelTabs 闲置参数、candidates.json、Splitter 样本 CSP 与 4 组过期 Studio 用例；V-5—V-13 全过，AC→证据→豁免表与 V-12 missing 已列 | [M4 记录](DOM-COMPONENTS-P5.records/M4.md) | 7eba0829 |
 
 ## 0. 需求、范围与决策
 
