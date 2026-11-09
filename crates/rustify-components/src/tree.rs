@@ -143,6 +143,7 @@ pub fn Tree(
     #[prop(into)]
     selected: Signal<Option<String>>,
     on_select: impl Fn(String) + Send + Sync + 'static,
+    #[prop(optional, into)] empty_label: String,
     #[prop(optional, into)] aria_label: String,
     #[prop(optional, into)] class: String,
     #[prop(optional, into)] test_id: String,
@@ -194,6 +195,7 @@ pub fn Tree(
     };
     let aria_label = (!aria_label.is_empty()).then_some(aria_label);
     let locale = rustify_ui::use_locale();
+    let empty_label = StoredValue::new(empty_label);
     let empty_id = format!("{name}-empty");
     view! {
         <div
@@ -290,7 +292,14 @@ pub fn Tree(
                     data-testid=empty_id.clone()
                     class="px-2 py-1 text-muted-foreground"
                 >
-                    {move || locale.text(rustify_ui::Message::Empty)}
+                    {move || {
+                        let given = empty_label.get_value();
+                        if given.is_empty() {
+                            locale.text(rustify_ui::Message::Empty).to_string()
+                        } else {
+                            given
+                        }
+                    }}
                 </p>
             </Show>
         </div>

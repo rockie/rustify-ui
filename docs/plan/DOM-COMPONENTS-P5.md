@@ -195,22 +195,22 @@ REVIEW @progress_consistency:
 
 ### 恢复快照
 
-- 最近更新：2026-11-09T14:20:00+08:00
+- 最近更新：2026-11-09T15:41:46+08:00
 - 当前进度：4/4 个里程碑完成
-- 当前状态：全部里程碑完成，待代码评审
-- 最近完成：M4 · 全部 AC 与整条终验收口，V-5—V-13 全过（V-12 三项 missing，按 AC 允许列出；[M4 记录](DOM-COMPONENTS-P5.records/M4.md)）
-- 下一步：用户以 `review-code docs/plan/DOM-COMPONENTS-P5.md` 发起代码评审；豁免与 missing 见 [M4 记录](DOM-COMPONENTS-P5.records/M4.md)「AC → 证据 → 豁免」
+- 当前状态：代码评审 R1 的 F-01/F-02 已修复并验证，待复审
+- 最近完成：M1 · 扩展组件统一契约的 R1 修复，DataTable/Tree `empty_label` 与 PanelTabs 终态文档已补齐（[M1 评审修复](DOM-COMPONENTS-P5.records/M1.md#评审修复)）
+- 下一步：用户以 `review-code docs/plan/DOM-COMPONENTS-P5.md` 复审 R1 修复；豁免与既有 missing 见 [M4 记录](DOM-COMPONENTS-P5.records/M4.md)「AC → 证据 → 豁免」
 - 当前阻塞：无
-- 代码基线：M1—M3 在 `500022a5`，M4 在 `7eba0829`
+- 代码基线：M1—M3 在 `500022a5`，M4 在 `7eba0829`；R1 修复为 dirty@`118202ba`（DataTable/Tree、extensions_ssg、计划与 M1/M4 记录）
 
 ### 完成记录
 
 | Milestone | 状态 | 更新时间 | 简要记录 | 实现与验收记录 | 提交 |
 | --- | --- | --- | --- | --- | --- |
-| M1 | 已完成 | 2026-11-05T01:17:05+08:00 | 扩展组件统一契约：主题角色/焦点、part 与状态标识、空/错误语义、语义修正、默认文案、Tree 图标、Glyph，V-1 七条全过 | [M1 记录](DOM-COMPONENTS-P5.records/M1.md) | 500022a5 |
 | M2 | 已完成 | 2026-11-05T03:55:53+08:00 | Studio Extensions 节（49 组/9 节）、六类样本、局部主题、本地化与 SDK locale 桥、axe=0、矩阵/资源/拾取扩展；V-2 三条全过（spec 15/15）；PanelTabs close 按 axe 实测就地表内修订 | [M2 记录](DOM-COMPONENTS-P5.records/M2.md) | 500022a5 |
 | M3 | 已完成 | 2026-11-05T04:30:18+08:00 | 迁移事实源：LEGACY_ENTRIES 152 行+冻结基线 675 键+inventory 完整性测试、目录修正（Primitives.Label/DirectionProvider/Icon/字段）、components.md 再生成含 Legacy API destinations 节、指南重整（How to migrate/生成节替换/Rustify extensions/Default palette/D13/=0.2.1）；V-3、V-4 全过 | [M3 记录](DOM-COMPONENTS-P5.records/M3.md) | 500022a5 |
-| M4 | 已完成 | 2026-11-09T14:20:00+08:00 | 基线产物、真实 Chrome 200%/减少动效用例、V6 断言修正；收口修复 PanelTabs 闲置参数、candidates.json、Splitter 样本 CSP 与 4 组过期 Studio 用例；V-5—V-13 全过，AC→证据→豁免表与 V-12 missing 已列 | [M4 记录](DOM-COMPONENTS-P5.records/M4.md) | 7eba0829 |
+| M4 | 已完成 | 2026-11-09T14:20:00+08:00 | 基线产物、真实 Chrome 200%/减少动效用例、V6 断言修正；收口修复 PanelTabs 闲置参数、candidates.json、Splitter 样本 CSP 与 4 组过期 Studio 用例；V-5—V-13 原终验通过，AC→证据→豁免表与 V-12 missing 已列；R1 复用边界见记录 | [M4 记录](DOM-COMPONENTS-P5.records/M4.md) | 7eba0829 |
+| M1 | 已完成 | 2026-11-09T15:41:46+08:00 | 扩展组件统一契约及 R1 修复：DataTable/Tree `empty_label` 自定义与空串 locale 回退、PanelTabs 终态文档；extensions_ssg 7/7、SSR 234、DOM host 187、Clippy/fmt/catalog/CSS 通过 | [M1 记录](DOM-COMPONENTS-P5.records/M1.md) | 500022a5 |
 
 ## 0. 需求、范围与决策
 
@@ -464,10 +464,10 @@ rustify-dom 其他公开项与 rustify-ui 门面的公开名字相对基线无�
 
   ```text
   FRAME   = "group inline-flex items-stretch rounded-t-md border border-transparent text-sm text-muted-foreground whitespace-nowrap transition-colors hover:bg-muted data-[state=active]:bg-background data-[state=active]:border-border data-[state=active]:text-foreground"
-  TRIGGER = "px-3 py-1.5 cursor-pointer rounded-t-md outline-none focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-ring focus-visible:-outline-offset-2"
+  TRIGGER = "flex items-center gap-1.5 px-3 py-1.5 cursor-pointer rounded-t-md outline-none focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-ring focus-visible:-outline-offset-2"
   ```
 
-  框带 `data-name="PanelTabFrame"`（保留 `--motion-duration`）；`data-name="PanelTab"`、`panel-tab-{id}` test id、`aria-selected`、`tabindex`、click 都在 `role=tab` 上。关闭按钮 `mr-1.5 self-center`，`close-{id}` 不变；框上不挂 click，关闭按钮不再嵌套在 tab 内，删除 stop_propagation。
+  框带 `data-name="PanelTabFrame"`（保留 `--motion-duration`）；`data-name="PanelTab"`、`panel-tab-{id}` test id、`aria-selected`、`tabindex`、click 都在 `role=tab` 上。close span 保留 `close-{id}`，嵌在 `role=tab` 内并由 TRIGGER 的 `gap-1.5` 提供间距；框上不挂 click，close 点击保留 `stop_propagation`。
 - **CommandPalette**（command_palette.rs:213-263）：`ul` 增 `hidden=move || shown.get().is_empty()`；空提示移到 `ul` 之后，`<p role="status" data-testid="command-empty" class="px-4 py-3 text-sm text-muted-foreground">`。搜索框 `aria-expanded=move || (!shown.get().is_empty()).to_string()`；`aria-activedescendant` 只在 `active` 位于 `shown` 中时输出（`Option` 属性，不新增信号），避免 IDREF 指向已被过滤掉的选项。
 - **DropZone**：`role="group"`、`aria-label` 与可见文字取同一 reactive 标签（§5.5）。
 - **Splitter**：分隔条增 `aria-valuemin`、`aria-valuemax`（取整），与 `drag` 同一夹取边界和同一越界容忍：min 为 `mins.get(index).copied().unwrap_or(0.0)`，max 为 `sizes` 第 `index`、`index + 1` 项之和减 `mins.get(index + 1).copied().unwrap_or(0.0)`，`sizes` 同样经 `.get(…).copied().unwrap_or(0.0)` 读取。拖动同一分隔条时两侧之和恒定，max 是稳定上界。

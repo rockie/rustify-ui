@@ -85,6 +85,7 @@ pub fn DataTable(
     /// mounting or hydration, the real viewport controls the pool as usual.
     #[prop(optional)]
     initial_viewport: Option<(f64, f64)>,
+    #[prop(optional, into)] empty_label: String,
     #[prop(optional, into)] aria_label: String,
     #[prop(optional, into)] class: String,
     #[prop(optional, into)] test_id: String,
@@ -389,6 +390,7 @@ pub fn DataTable(
         )
     });
     let locale = rustify_ui::use_locale();
+    let empty_label = StoredValue::new(empty_label);
     let empty_id = format!("{name}-empty");
     // Nested For views do not create their row and cell Owners in the same
     // order on host and browser. Name their rules from the stable pool slots
@@ -589,7 +591,14 @@ pub fn DataTable(
                                     aria-colindex="1"
                                     aria-colspan=move || columns.get().len().to_string()
                                 >
-                                    {move || locale.text(rustify_ui::Message::Empty)}
+                                    {move || {
+                                        let given = empty_label.get_value();
+                                        if given.is_empty() {
+                                            locale.text(rustify_ui::Message::Empty).to_string()
+                                        } else {
+                                            given
+                                        }
+                                    }}
                                 </div>
                             </div>
                         </Show>

@@ -83,6 +83,7 @@ fn an_empty_data_table_announces_one_row_and_stays_out_of_the_selection() {
             <DataTable
                 test_id="table"
                 rows=0usize
+                empty_label="no rows match"
                 columns=vec![Column::new("a", "A"), Column::new("b", "B")]
                 cell=Arc::new(|row, _| row.to_string())
                 row_id=Arc::new(|row| row as u32)
@@ -103,7 +104,7 @@ fn an_empty_data_table_announces_one_row_and_stays_out_of_the_selection() {
     assert_eq!(attribute(empty, "aria-rowindex"), "2");
     assert!(html.contains("role=\"gridcell\""), "{html}");
     assert!(html.contains("aria-colspan=\"2\""), "{html}");
-    assert!(html.contains("nothing to show"), "{html}");
+    assert!(html.contains("no rows match"), "{html}");
     assert!(!html.contains("data-row-id="), "{html}");
     assert!(!html.contains("data-selected"), "{html}");
 }
@@ -146,6 +147,7 @@ fn a_tree_marks_items_and_drops_the_tree_role_when_empty() {
             <Tree
                 test_id="tree"
                 nodes=no_nodes
+                empty_label="no nodes match"
                 expanded=RwSignal::new(BTreeSet::new())
                 selected=no_choice
                 on_select=|_| {}
@@ -161,7 +163,7 @@ fn a_tree_marks_items_and_drops_the_tree_role_when_empty() {
         "{empty}"
     );
     assert!(empty.contains("data-testid=\"tree-empty\""), "{empty}");
-    assert!(empty.contains("nothing to show"), "{empty}");
+    assert!(empty.contains("no nodes match"), "{empty}");
 }
 
 #[test]
@@ -257,6 +259,7 @@ fn the_default_words_follow_the_locale() {
             <Tree
                 test_id="zh-tree"
                 nodes=no_nodes
+                empty_label=""
                 expanded=RwSignal::new(BTreeSet::new())
                 selected=no_choice
                 on_select=|_| {}
@@ -264,6 +267,7 @@ fn the_default_words_follow_the_locale() {
             <DataTable
                 test_id="zh-table"
                 rows=0usize
+                empty_label=""
                 columns=vec![Column::new("a", "A")]
                 cell=Arc::new(|row, _| row.to_string())
                 row_id=Arc::new(|row| row as u32)
