@@ -437,7 +437,7 @@ Rust counterparts use component-specific Leptos props and Rust enums/structures.
 
 ## Legacy API destinations
 
-Every key in the frozen baseline (`catalog/legacy_baseline.txt`, extracted mechanically from the pre-P5 commit 11b69129) resolves through exactly one row below; a name ending in `*` is a wildcard and exact keys win over it. rustify-dom's remaining public items and the rustify-ui facade lost no names against that baseline (compared over `crates/rustify-dom/src` and the facade re-exports), so they carry no baseline keys.
+Every key in the frozen baseline (`catalog/legacy_baseline.txt`, extracted mechanically from the pre-P5 commit 11b69129, then completed against the old signatures: theme-component props, receiver-qualified impl methods and chart colour tokens) resolves through exactly one row below; a name ending in `*` is a wildcard and exact keys win over it. rustify-dom's remaining public items and the rustify-ui facade lost no names against that baseline (compared over `crates/rustify-dom/src` and the facade re-exports), so they carry no baseline keys.
 
 | baseline | fate | destination | reason | guide |
 | --- | --- | --- | --- | --- |
@@ -450,6 +450,14 @@ Every key in the frozen baseline (`catalog/legacy_baseline.txt`, extracted mecha
 | `export:theme.rs::ThemedScope` | kept | 同名保留 | 用户决定保留（C-6），当前无删除计划；新应用用 ThemeScope/ThemeBoundary | docs/dom-components-migration.md |
 | `export:theme.rs::use_theme` | kept | 同名保留 | 用户决定保留（C-6），当前无删除计划；新应用用 ThemeScope/ThemeBoundary | docs/dom-components-migration.md |
 | `export:theme.rs::use_theme_values` | kept | 同名保留 | 用户决定保留（C-6），当前无删除计划；新应用用 ThemeScope/ThemeBoundary | docs/dom-components-migration.md |
+| `prop:ThemedScope.theme`, `prop:ThemeOverride.patch`, `prop:ThemeOverride.class`, `prop:ThemeOverride.test_id`, `prop:ThemeOverride.children`, `prop:ThemeScope.resolved`, `prop:ThemeBoundary.class`, `prop:ThemeBoundary.test_id`, `prop:ThemeBoundary.children` | kept | 同名参数 | 主题组件参数同名保留；ThemeScope 后加的 preview_mode 不是旧键 | docs/dom-components-migration.md |
+| `prop:ThemeBoundary.patch` | changed | Signal<ThemeBoundaryPatch> | patch 类型从 ThemeValuePatch 改为 ThemeBoundaryPatch；旧值可 From 转换 | docs/dom-components-migration.md |
+| `export:catalog.rs::Category::name`, `export:catalog.rs::Support::name` | kept | 同名 const 方法 | 同名方法保留，按接收者独立登记 |  |
+| `export:theme.rs::Theme::properties`, `export:theme.rs::ThemePatch::properties` | kept | 同名方法 | 同名方法保留，按接收者独立登记 |  |
+| `export:fonts.rs::ThemeFont::face`, `export:fonts.rs::ThemeFont::slot` | kept | 同名 const 方法 | const 方法保留，补齐首次机械提取的漏列 |  |
+| `export:document.rs::ThemeDocument::values` | replaced | base_values / effective_values | 读基础值用 base_values；需要 overlay 后的组合值用 effective_values | #json-css-and-spacing-changes |
+| `export:document.rs::ThemeDocument::values_mut` | replaced | base_values_mut | 可变访问拆分为按模式的 base_values_mut | #json-css-and-spacing-changes |
+| `semantic:chart-1`, `semantic:chart-2`, `semantic:chart-3`, `semantic:chart-4`, `semantic:chart-5` | kept | 同名主题 token | chart 颜色仍是主题 token，依次回退 --primary/--success/--warning/--destructive/--muted-foreground | docs/dom-components-migration.md |
 | `export:tooltip.rs::Tooltip` | changed | rustify_components::Tooltip | 同名保留；children 由 trigger 原生目标取代 | docs/dom-components-migration.md |
 | `file:studio-storage-v1` | changed | v2 存储与升级流程 | 打开时升级、原文备份与冲突流程见指南 | docs/dom-components-migration.md |
 | `file:theme-css-export` | changed | standard/scoped CSS profile 导出 | 配置文件与 profile 集合有差异 | docs/dom-components-migration.md |
@@ -636,9 +644,9 @@ resolution, scope projection and overlay inheritance.
 
 Existing GPU controls live in [the GPU module](../crates/rustify-ui/src/gpu/).
 GPU draws a declared subset and can report actions or anchor DOM layers;
-it does not implement the new DOM layout/typography catalogue. A themed
-ordinary Table remains unimplemented; the existing DOM DataTable is a distinct
-virtualized interactive grid.
+it does not implement the new DOM layout/typography catalogue. The themed
+ordinary Table lives in [table](../crates/rustify-components/src/table.rs);
+the DOM DataTable is a distinct virtualized interactive grid.
 
 The stable reference names come from the fixed local snapshots recorded in
 [the reference baseline](PRD-DOM-COMPONENTS.md#15-参考基线与适用口径).

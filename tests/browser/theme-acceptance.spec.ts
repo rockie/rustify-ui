@@ -420,6 +420,24 @@ test.describe("V6 isolated failures preserve the document", () => {
         await expect(page.getByTestId("gpu-state")).toHaveText("正在恢复 GPU…");
         await page.getByTestId("locale-en").click();
         await expect(page.getByTestId("gpu-state")).toHaveText("Restoring GPU…");
+        // While the region is still lost, a named save and a full export of
+        // the current draft stay usable; the fatal path is the separate
+        // existing case below.
+        await page.getByTestId("theme-save").click();
+        await page.getByTestId("theme-name").fill("Loss snapshot");
+        await page.getByTestId("theme-name-confirm").click();
+        await expect(page.getByTestId("storage-status")).toContainText("Saved on this device");
+        const draft = (await snapshot(page)).document;
+        await page.getByTestId("theme-export").click();
+        const download = page.waitForEvent("download");
+        await page.getByTestId("export-download").click();
+        const exported = JSON.parse(await readFile((await (await download).path())!, "utf8"));
+        // The default draft is a custom document, so v2 exports it compact
+        // (schema/id/name/styles); the whole current draft is the styles
+        // table, which is the snapshot's base.
+        expect(exported).toMatchObject({ schema_version: 2, id: draft.id, name: "Loss snapshot" });
+        expect(exported.styles).toEqual(draft.base);
+        await page.keyboard.press("Escape");
         await color(page, "primary", "#00a88a");
         await expect.poll(() => preview(page).getByTestId("preview-primary").evaluate(node => getComputedStyle(node).backgroundColor)).toBe("rgb(0, 168, 138)");
         const accepted = await snapshot(page); expect(accepted.drawn_revision).toBeLessThan(accepted.revision);

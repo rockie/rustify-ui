@@ -418,6 +418,101 @@ test('extension samples keep working surfaces with parts and states', async ({ p
     await search.fill('');
     await palette.getByRole('option', { name: 'Save the file', exact: true }).click();
     await expect(commands.locator('output')).toHaveText('save');
+
+    // Keyboard work in the table: arrows move, Space selects the focused
+    // row, Enter/F2 hand the opened row to the application's output, and
+    // the wheel scrolls the table's own window instead of the page.
+    const opened = table.locator('output');
+    await expect(opened).toHaveText('no row opened');
+    await rows.first().click();
+    await page.keyboard.press('Enter');
+    await expect(opened).toHaveText('opened row 1');
+    await page.keyboard.press('ArrowDown');
+    await page.keyboard.press('F2');
+    await expect(opened).toHaveText('opened row 2');
+    await page.keyboard.press(' ');
+    await expect(rows.nth(1)).toHaveAttribute('data-selected');
+    const surface = await table.getByTestId('gallery-table').boundingBox();
+    await page.mouse.move(surface!.x + surface!.width / 2, surface!.y + surface!.height / 2);
+    await page.mouse.wheel(0, 900);
+    await expect.poll(async () => await table.locator('[data-rustify-part="data-table-row"]').first().getAttribute('data-row-id')).not.toBe('1');
+
+    // The tree answers the keyboard: right opens the focused group (or
+    // steps into it when already open), left closes it, and Enter confirms
+    // the choice.
+    await tree.getByTestId('gallery-tree-g0').click();
+    await page.keyboard.press('ArrowRight');
+    await page.keyboard.press('ArrowLeft');
+    await page.keyboard.press('ArrowLeft');
+    await expect(tree.getByTestId('gallery-tree-g0')).toHaveAttribute('data-state', 'closed');
+    await page.keyboard.press('ArrowRight');
+    await expect(tree.getByTestId('gallery-tree-g0')).toHaveAttribute('data-state', 'open');
+    await page.keyboard.press('Enter');
+    await expect(tree.getByTestId('gallery-tree-g0')).toHaveAttribute('data-selected');
+
+    // Enter runs the palette's runnable item from the keyboard and refuses
+    // the unavailable one without closing.
+    await open.click();
+    await search.fill('export');
+    await page.keyboard.press('ArrowDown');
+    await page.keyboard.press('Enter');
+    await expect(commands.locator('output')).toHaveText('export');
+    await open.click();
+    await search.fill('delete');
+    await expect(palette.getByTestId('command-delete')).toHaveAttribute('aria-disabled', 'true');
+    await page.keyboard.press('Enter');
+    await expect(commands.locator('output')).toHaveText('export');
+    await expect(palette).toBeVisible();
+    await page.keyboard.press('Escape');
+
+    // The refusal also reads on the zone, then real files arrive through
+    // the picker's input and a real DOM drop carrying a File.
+    await expect(files.getByTestId('gallery-drop')).toHaveAttribute('aria-invalid', 'true');
+    const dropReason = await files.locator('p.gallery-files-reason').getAttribute('id');
+    await expect(files.getByTestId('gallery-drop')).toHaveAttribute('aria-describedby', dropReason!);
+    await files.getByLabel('Invalid', { exact: true }).uncheck();
+    await files.locator('input[type="file"]').setInputFiles({ name: 'picked-theme.json', mimeType: 'application/json', buffer: Buffer.from('{}\n') });
+    await expect(files.locator('output')).toContainText('picked-theme.json');
+    await files.getByTestId('gallery-drop').evaluate(zone => {
+        const transfer = new DataTransfer();
+        transfer.items.add(new File(['notes'], 'dropped-notes.txt', { type: 'text/plain' }));
+        zone.dispatchEvent(new DragEvent('drop', { dataTransfer: transfer, bubbles: false, cancelable: true }));
+    });
+    await expect(files.locator('output')).toContainText('dropped-notes.txt');
+
+    // A real pointer drag on the first divider, not only the declared
+    // starting sizes.
+    const divider = workspace.getByTestId('divider-0');
+    const drag = await divider.boundingBox();
+    await page.mouse.move(drag!.x + drag!.width / 2, drag!.y + drag!.height / 2);
+    await page.mouse.down();
+    await page.mouse.move(drag!.x - 70, drag!.y + drag!.height / 2, { steps: 8 });
+    await page.mouse.up();
+    await expect.poll(async () => Number((await workspace.locator('.gallery-workspace').evaluate(node => getComputedStyle(node).gridTemplateColumns)).split('px')[0])).toBeLessThan(220);
+    await workspace.getByRole('button', { name: 'Reset', exact: true }).click();
+    await expect(workspace.locator('.gallery-workspace')).toHaveCSS('grid-template-columns', '220px 320px 220px');
+
+    // Closing the active tab by mouse picks the next neighbour, and the
+    // permanent tab never offers a close control.
+    await expect(tabs.getByTestId('close-overview')).toHaveCount(0);
+    await tabs.getByTestId('panel-tab-editor').click();
+    await expect(tabs.getByTestId('panel-tab-editor')).toHaveAttribute('aria-selected', 'true');
+    await tabs.getByTestId('close-editor').click();
+    await expect(tabs.getByTestId('panel-tab-editor')).toHaveCount(0);
+    await expect(tabs.getByTestId('panel-tab-notes')).toHaveAttribute('aria-selected', 'true');
+    await workspace.getByRole('button', { name: 'Reset', exact: true }).click();
+    await expect(tabs.getByTestId('panel-tab-editor')).toBeVisible();
+
+    // The local boundary's tabs close for real as well; its permanent
+    // surface never offers a close control.
+    const local = gallery.getByTestId('extension-local-card');
+    await local.evaluate(node => node.scrollIntoView({ block: 'center' }));
+    await expect(local.getByTestId('close-surface')).toHaveCount(0);
+    await local.getByTestId('panel-tab-shared').click();
+    await expect(local.getByTestId('panel-tab-shared')).toHaveAttribute('aria-selected', 'true');
+    await local.getByTestId('close-shared').click();
+    await expect(local.getByTestId('panel-tab-shared')).toHaveCount(0);
+    await expect(local.getByTestId('panel-tab-surface')).toHaveAttribute('aria-selected', 'true');
     expect(failures).toEqual([]);
 });
 

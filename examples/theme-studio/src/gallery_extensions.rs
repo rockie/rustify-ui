@@ -21,6 +21,7 @@ pub(crate) fn DataTableSample() -> impl IntoView {
     let picked = RwSignal::new(false);
     let selection = RwSignal::new(Selection::new());
     let sorted = RwSignal::new(None::<(usize, bool)>);
+    let activated = RwSignal::new("no row opened".to_string());
     let columns = Signal::stored(
         (0..6)
             .map(|index| Column::new(format!("c{index}"), format!("column {}", index + 1)))
@@ -67,8 +68,9 @@ pub(crate) fn DataTableSample() -> impl IntoView {
                     selection.toggle(row as u32 + 1);
                 });
             }
-            on_activate=|_| {}
+            on_activate=move |row| activated.set(format!("opened row {}", row + 1))
         />
+        <output>{move || activated.get()}</output>
     }
 }
 
@@ -337,7 +339,28 @@ pub(crate) fn ExtensionLocalSample(state: StudioState) -> impl IntoView {
                         tabs=tabs
                         active=active
                         on_activate=move |next| active.set(next)
-                        on_close=move |_| {}
+                        on_close=move |closed| {
+                            let list = tabs.get_untracked();
+                            if active.get_untracked() == closed {
+                                let next = list
+                                    .iter()
+                                    .position(|tab| tab.id == closed)
+                                    .and_then(|at| {
+                                        list.get(at + 1).or_else(|| {
+                                            at.checked_sub(1).and_then(|left| list.get(left))
+                                        })
+                                    })
+                                    .map(|tab| tab.id.clone());
+                                if let Some(next) = next {
+                                    active.set(next);
+                                }
+                            }
+                            tabs.set(
+                                list.into_iter()
+                                    .filter(|tab| tab.id != closed)
+                                    .collect(),
+                            );
+                        }
                     />
                     <button type="button" on:click=move |_| open.set(true)>
                         {move || state.tr("Run a command", "运行命令")}

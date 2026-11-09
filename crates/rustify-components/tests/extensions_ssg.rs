@@ -237,7 +237,7 @@ fn file_and_drop_controls_carry_invalid_and_group_semantics() {
     assert_eq!(attribute(zone, "role"), "group");
     assert_eq!(attribute(zone, "aria-label"), "drop a file here");
     assert!(zone.contains("border-destructive"), "{zone}");
-    assert!(!zone.contains("aria-invalid"), "{zone}");
+    assert_eq!(attribute(zone, "aria-invalid"), "true");
     // Being unable to take a file outranks being unwilling to: a disabled
     // zone says so and never also says its refusal is the reason.
     let off = tag(&html, "off-zone");

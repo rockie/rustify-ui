@@ -91,6 +91,7 @@ pub fn DropZone(
             data-disabled=move || disabled.get().then_some("")
             data-invalid=move || invalid.get().then_some("")
             aria-disabled=move || disabled.get().then_some("true")
+            aria-invalid=move || invalid.get().then_some("true")
             aria-describedby=move || {
                 let described_by = described_by.get();
                 (!described_by.is_empty()).then_some(described_by)

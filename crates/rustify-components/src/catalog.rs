@@ -1702,7 +1702,7 @@ pub fn catalogue_markdown() -> String {
             entry.limitation
         );
     }
-    out.push_str("\n## Legacy API destinations\n\nEvery key in the frozen baseline (`catalog/legacy_baseline.txt`, extracted mechanically from the pre-P5 commit 11b69129) resolves through exactly one row below; a name ending in `*` is a wildcard and exact keys win over it. rustify-dom's remaining public items and the rustify-ui facade lost no names against that baseline (compared over `crates/rustify-dom/src` and the facade re-exports), so they carry no baseline keys.\n\n| baseline | fate | destination | reason | guide |\n| --- | --- | --- | --- | --- |\n");
+    out.push_str("\n## Legacy API destinations\n\nEvery key in the frozen baseline (`catalog/legacy_baseline.txt`, extracted mechanically from the pre-P5 commit 11b69129, then completed against the old signatures: theme-component props, receiver-qualified impl methods and chart colour tokens) resolves through exactly one row below; a name ending in `*` is a wildcard and exact keys win over it. rustify-dom's remaining public items and the rustify-ui facade lost no names against that baseline (compared over `crates/rustify-dom/src` and the facade re-exports), so they carry no baseline keys.\n\n| baseline | fate | destination | reason | guide |\n| --- | --- | --- | --- | --- |\n");
     for entry in LEGACY_ENTRIES {
         let _ = writeln!(
             out,
@@ -1763,6 +1763,61 @@ mod inventory_tests {
             }
         }
         assert!(catalogue_markdown().contains("## Legacy API destinations"));
+        // The ten theme-component props the first mechanical pass missed:
+        // nine kept as named and one whose patch type changed.
+        let baseline: std::collections::BTreeSet<&str> = keys.iter().copied().collect();
+        for key in [
+            "prop:ThemedScope.theme",
+            "prop:ThemeOverride.patch",
+            "prop:ThemeOverride.class",
+            "prop:ThemeOverride.test_id",
+            "prop:ThemeOverride.children",
+            "prop:ThemeScope.resolved",
+            "prop:ThemeBoundary.class",
+            "prop:ThemeBoundary.test_id",
+            "prop:ThemeBoundary.children",
+            "prop:ThemeBoundary.patch",
+        ] {
+            assert!(baseline.contains(key), "missing theme prop key: {key}");
+        }
+        // A pseudo key that names no old item never belonged in the baseline.
+        assert!(!baseline.contains("export:fonts.rs::fn"), "pseudo key");
+        // The two old ThemeDocument methods did not survive under their old
+        // names: they must resolve through exact Replaced rows, not a wildcard.
+        for key in [
+            "export:document.rs::ThemeDocument::values",
+            "export:document.rs::ThemeDocument::values_mut",
+        ] {
+            assert!(
+                baseline.contains(key),
+                "missing receiver-qualified key: {key}"
+            );
+            let entry = LEGACY_ENTRIES
+                .iter()
+                .find(|entry| entry.names.contains(&key))
+                .unwrap_or_else(|| panic!("{key} has no exact row"));
+            assert_eq!(entry.fate, LegacyFate::Replaced, "{key}");
+        }
+        // Chart colours stayed theme tokens, kept with named fallbacks.
+        for key in [
+            "semantic:chart-1",
+            "semantic:chart-2",
+            "semantic:chart-3",
+            "semantic:chart-4",
+            "semantic:chart-5",
+        ] {
+            assert!(baseline.contains(key), "missing chart token: {key}");
+        }
+        // Every exact name a row claims must be a real baseline key, so no
+        // orphan row can drift into the published table.
+        for entry in LEGACY_ENTRIES {
+            for name in entry.names {
+                assert!(
+                    name.ends_with('*') || baseline.contains(name),
+                    "entry name is not a baseline key: {name}"
+                );
+            }
+        }
     }
 
     #[test]

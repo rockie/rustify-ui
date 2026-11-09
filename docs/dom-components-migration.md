@@ -374,7 +374,12 @@ strict import rules, root preview mode and source-preserving local appearance.
 The complete per-key destination table is generated: see
 [Legacy API destinations](components.md#legacy-api-destinations). It resolves
 every baseline public key exactly once (exact keys win over wildcards) with a
-fate, destination and reason. Exceptions worth prose:
+fate, destination and reason. The baseline was extracted mechanically from
+commit 11b69129, then completed against the old signatures: theme-component
+props, impl methods keyed `file::Type::method` so receivers stay distinct
+(`Theme::properties` and `ThemePatch::properties` are separate keys;
+`ThemeFont::face` and `slot` are kept const methods), and the chart colour
+tokens. Exceptions worth prose:
 
 - `CSS`, `CANDIDATES_JSON` and `styles` package assets remain; structural rules
   come from `PRIMITIVES_CSS`/`styles::PRIMITIVES`, with skin sources in
@@ -495,6 +500,12 @@ palette; `--ring` is unchanged. Applications that pinned the old defaults
 should re-check contrast after upgrading. New applications scope tokens with
 `ThemeScope`/`ThemeBoundary`; the legacy `ThemedScope` paths remain available
 by user decision with no removal planned.
+
+Chart colours `chart-1`..`chart-5` remain theme tokens. Each falls back to a
+named semantic token when a theme does not override it: `chart-1`→`--primary`,
+`chart-2`→`--success`, `chart-3`→`--warning`, `chart-4`→`--destructive`,
+`chart-5`→`--muted-foreground`. Applications keep the same token names; only
+the fallback source is now explicit.
 
 ## Published and source version pairing
 
