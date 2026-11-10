@@ -101,6 +101,16 @@ async function projection(page: Page, mode: "light" | "dark") {
                 const tolerance = Math.max(1e-4, Math.abs(expectedQuantity.value) * 1e-5);
                 return Math.abs(actualQuantity.value - expectedQuantity.value) <= tolerance ? [] : [{ name, expected: value, actual }];
             }
+            // The stylesheet serializes unitless factors at significant-digit
+            // precision while the resolved API keeps full float precision, so
+            // compare plain numbers numerically like quantities.
+            const plain = (value: string) => { const match = /^(-?\d*\.?\d+(?:e[+-]?\d+)?)$/i.exec(value.trim()); return match ? Number(match[1]) : undefined; };
+            const actualNumber = plain(actual);
+            const expectedNumber = plain(value);
+            if (actualNumber !== undefined && expectedNumber !== undefined) {
+                const tolerance = Math.max(1e-4, Math.abs(expectedNumber) * 1e-5);
+                return Math.abs(actualNumber - expectedNumber) <= tolerance ? [] : [{ name, expected: value, actual }];
+            }
             // CSS-wide initial makes these unregistered custom properties
             // absent. Other properties compare their complete resolved value.
             const wanted = value === "initial" ? "" : normalize(name, value, value);
