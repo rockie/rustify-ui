@@ -123,10 +123,14 @@ async function initialControls(page: Page, scope: string) {
 
 
 async function initialDeliveryParts(page: Page, scope: string) {
-    for (const name of ["delivery-dropdown", "delivery-context", "delivery-file", "delivery-edit", "delivery-learn"]) {
+    for (const name of ["delivery-dropdown", "delivery-file", "delivery-edit", "delivery-learn"]) {
         await expect(control(page,scope,name)).toHaveAttribute("aria-expanded","false");
         await expect(control(page,scope,name)).not.toHaveAttribute("aria-controls");
     }
+    // A context menu is pointer-opened, not a disclosure; its trigger keeps
+    // data-state instead of aria-expanded.
+    await expect(control(page,scope,"delivery-context")).toHaveAttribute("data-state","closed");
+    await expect(control(page,scope,"delivery-context")).not.toHaveAttribute("aria-controls");
     for (const name of ["delivery-dropdown-content","delivery-context-content","delivery-file-content","delivery-edit-content"]) await expect(control(page,scope,name)).toHaveCount(0);
     await expect(control(page,scope,"delivery-file")).toHaveAttribute("tabindex","0");
     await expect(control(page,scope,"delivery-edit")).toHaveAttribute("tabindex","-1");
