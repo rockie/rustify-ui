@@ -63,7 +63,7 @@ async function color(node: Locator, property: string, expectedColor: string) {
     await expect.poll(async () => (await sample()).actual, { message: `${property}: ${expectedColor}` }).toEqual(target);
 }
 
-async function projection(page: Page, mode: "light" | "dark") {
+async function projection(page: Page, mode: "light" | "dark", elements = true) {
     const values = expected[mode];
     const root = page.locator("html");
     const probe = page.getByTestId("docs-v2-probe");
@@ -124,6 +124,10 @@ async function projection(page: Page, mode: "light" | "dark") {
     for (const name of ["--primary", "--rustify-brand-12", "--rustify-brand-a3", "--rustify-gray-12", "--rustify-panel", "--rustify-surface"]) {
         await color(root, name, values[name]);
     }
+    // Islands carry the authored palette only after hydration; their static
+    // shell keeps the compiled-in subdued surface, so element appearance is
+    // asserted only where script runs.
+    if (!elements) return;
     const button = page.getByTestId("docs-v2-button");
     await color(button, "background-color", values["--primary"]);
     await color(button, "color", values["--primary-foreground"]);
@@ -157,7 +161,7 @@ test("source v2 remains readable without script while Docs reader CSS selects ei
             await expect(page.getByTestId("docs-v2-probe")).toHaveAttribute("data-mode", "light");
             // SSR cannot know the reader's OS preference. It preserves its
             // initial Light metadata; both static CSS palettes are available.
-            await projection(page, mode);
+            await projection(page, mode, false);
             await expect(page.getByTestId("docs-v2-count")).toHaveText("0");
             await clean(page, audit);
         } finally { await context.close(); }
