@@ -229,14 +229,14 @@ mbx, no xtask, no Node, no Makepad.
 
 The application is a `cdylib` whose exports start it, plus a small host program
 that writes the SDK's loader and stylesheets beside the wasm.
-[`tests/dom-only/consumer` at the library release](https://github.com/rockie/rustify-ui/tree/b32844a489943649a49d9fbe46ee837e32017885/tests/dom-only/consumer/) is the complete
+[`tests/dom-only/consumer` at the library release](https://github.com/rockie/rustify-ui/tree/3f2fd1e18e48b0cf76c634512411dfb0493d35d0/tests/dom-only/consumer/) is the complete
 fixture; `src/bin/export-dom-assets.rs` is the host program. Outside this
 repository, replace its two path dependencies with the following registry
 dependencies. The alias keeps the fixture's `rustify_ui` imports:
 
 ```toml
-rustify-ui = { package = "rustify-dom", version = "=0.2.1" }
-rustify-components = { version = "=0.2.1" }
+rustify-ui = { package = "rustify-dom", version = "=0.3.0" }
+rustify-components = { version = "=0.3.0" }
 ```
 
 The release passed DOM-only and hydration browser checks. Keep the fixture's
@@ -286,8 +286,8 @@ uses these dependencies while keeping existing
 `rustify_ui` imports through a Cargo alias:
 
 ```toml
-rustify-ui = { package = "rustify-dom", version = "=0.2.1" }
-rustify-components = { version = "=0.2.1" }
+rustify-ui = { package = "rustify-dom", version = "=0.3.0" }
+rustify-components = { version = "=0.3.0" }
 ```
 
 New code may instead depend on rustify-dom directly and import rustify_dom.
@@ -303,7 +303,7 @@ components, unify the core at the application root:
 ```toml
 [dependencies]
 rustify-ui = { git = "https://github.com/rockie/rustify-ui", rev = "<complete-revision>", features = ["gpu"] }
-rustify-components = { version = "=0.2.1" }
+rustify-components = { version = "=0.3.0" }
 
 [patch.crates-io]
 rustify-dom = { git = "https://github.com/rockie/rustify-ui", rev = "<same-complete-revision>" }
@@ -402,9 +402,9 @@ says which categories exist and what each of them supports.
 The full DOM library is `rustify_components`; the smaller
 `rustify_ui::components` helpers in the example above retain their own API.
 For native FormRoot, three-state choices/groups/cards, named sliders, field
-slots and composed Select, use one matching **source checkout** for the core
-and components. These APIs are not supplied by the registry 0.2.1 pair above.
-For a consumer next to that checkout, replace its two framework dependencies:
+slots and composed Select, the registry **0.3.0** pair above supplies these
+APIs directly; no source checkout is needed. Consumers developing next to a
+local checkout may replace its two framework dependencies:
 
 ```toml
 rustify-ui = { package = "rustify-dom", path = "../rustify-ui/crates/rustify-dom" }

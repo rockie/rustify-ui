@@ -9,10 +9,10 @@ anything has changed - and it deliberately does **not** hold the values.
 
 ## Choose the public entry point
 
-The current source checkout provides both unstyled parts in
+The 0.3.0 release provides both unstyled parts in
 `rustify_components::primitives` and themed parts in the matching top-level
-modules. They use the same controlled behavior. These additions are not part
-of the published 0.2.1 API; use matching source dependencies and styles as
+modules. They use the same controlled behavior. These parts are part of the
+published 0.3.0 API; use matching registry dependencies and styles as
 explained in the [migration guide](dom-components-migration.md).
 
 | Parts namespace | Composition |

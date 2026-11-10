@@ -5,7 +5,7 @@ description: Compose controlled command menus, native site navigation and toolba
 
 Use these parts inside a mounted DOM scope, with the loader and stylesheet setup
 from the [DOM quick start](quickstart.md#a-dom-application-without-gpu-regions).
-Use matching source SDK and CSS; these APIs are not in registry 0.2.1.
+Use matching SDK and CSS; these APIs ship in the registry 0.3.0 packages.
 The default SDK needs no GPU feature. Themed consumers load DOM runtime CSS plus
 `rustify_components::CSS`, or compile an application input importing `sdk.css`.
 Raw consumers use DOM runtime CSS plus `rustify_components::PRIMITIVES_CSS` and

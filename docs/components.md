@@ -3,10 +3,10 @@ description: Source API entries, supported fields, reference coverage, limits an
 ---
 # Component catalogue
 
-This reference describes the current source checkout. The nine published
-Docs/DOM/style packages remain at 0.2.1 with the previous component API and
-schema v1. New configured themes, layout/typography APIs and Colors are source
-capabilities; this document does not announce a package release.
+This reference describes the 0.3.0 release. The ten published
+Docs/DOM/style packages ship the component API and schema v2 described here.
+Configured themes, layout/typography APIs and Colors are part of the published
+packages.
 
 `crates/rustify-components/src/catalog.rs` is the fact source. Regenerate with
 `mbx xtask catalog --write docs/components.md`; add `--check` to detect drift.

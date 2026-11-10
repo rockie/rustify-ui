@@ -18,24 +18,24 @@ and package check/doc pass preflight; full Linux runtime and Windows are not ver
 
 ## Install and maintain the CLI
 
-Install **0.2.1** from crates.io with stable Rust. It includes content sites,
+Install **0.3.0** from crates.io with stable Rust. It includes content sites,
 the components template, multilingual search and landing pages. Archive
 installation and author smoke passed with Rust 1.99.0 on macOS and Ubuntu;
 package check/doc passed on both runners. The runtime/browser support gate
 remains macOS Chrome; Windows and full Linux runtime support are unverified.
 
 ```sh
-cargo install rustify-docs-cli --version 0.2.1 --locked
+cargo install rustify-docs-cli --version 0.3.0 --locked
 rustify-docs --version
 rustify-docs --build-info
 cargo install --list
 ```
 
 Use the standard release profile, without `--profile docs-cli`. Expect
-`rustify-docs 0.2.1`, `panic: unwind`, `distribution: registry`, source C
-`8fd7fd63679196e20f8e3572e4234bb51d8faf17` and a framework JSON line naming
-library R `b32844a489943649a49d9fbe46ee837e32017885`. Its three framework
-packages are all 0.2.1; `cargo install --list` names rustify-docs-cli v0.2.1.
+`rustify-docs 0.3.0`, `panic: unwind`, `distribution: registry`, source C
+`dde6fe85149c7f362f458a8a3139257fd0984c67` and a framework JSON line naming
+library R `3f2fd1e18e48b0cf76c634512411dfb0493d35d0`. Its three framework
+packages are all 0.3.0; `cargo install --list` names rustify-docs-cli v0.3.0.
 
 To create and preview a content site:
 
@@ -53,12 +53,21 @@ and default `check` need no site compilation or network request.
 Reinstall or upgrade to this version with `--force`:
 
 ```sh
+cargo install rustify-docs-cli --version 0.3.0 --locked --force
+```
+
+The rollback target is the registry **0.2.1** pair: reinstall the 0.2.1 CLI
+and restore that version's matching project manifest/lock, schema v1 theme
+files and complete output:
+
+```sh
 cargo install rustify-docs-cli --version 0.2.1 --locked --force
 ```
 
-The rollback target is the historical **0.1.32** Git CLI, source C
+The historical **0.1.32** Git CLI, source C
 `88566ba1ed08223a5834f794840fff5e48f4ba8a`, paired with library R
-`0fd34edaffda1926b38ea64c023b2fe1fc5115c5`. Restore that version's original
+`0fd34edaffda1926b38ea64c023b2fe1fc5115c5`, remains documented for projects
+that predate the registry pair. Restore that version's original
 manifest/lock, sources/configuration, theme/font files and complete output,
 then reinstall it:
 
@@ -330,7 +339,7 @@ route, an unknown route or a Markdown page listed there is an error; use
 
 ### Publish several languages
 
-These multilingual examples use the paired CLI 0.2.1 and framework versions
+These multilingual examples use the paired CLI 0.3.0 and framework versions
 described above.
 
 Declare every language, including the default `site.lang`. The default has
@@ -737,7 +746,7 @@ labelled by each fence's `title`:
 <!-- rustify:code-group name="install" -->
 
 ```sh title="Cargo"
-cargo install rustify-docs-cli --version 0.2.1 --locked
+cargo install rustify-docs-cli --version 0.3.0 --locked
 ```
 
 ```toml title="Config"
@@ -789,8 +798,8 @@ to a draft is an error in `check` and `build`, and a warning in `dev`.
 
 ### Create a component project
 
-The 0.2.1 components template directly depends on rustify-docs, rustify-dom
-and rustify-components, all at `=0.2.1` from crates.io, with an embedded
+The 0.3.0 components template directly depends on rustify-docs, rustify-dom
+and rustify-components, all at `=0.3.0` from crates.io, with an embedded
 checksum-bearing lock. `new` changes only the root package name; generation
 does not compile, contact the network or resolve a new lock. The CLI's
 `--build-info` identifies its frozen registry pair. Wrong versions, mixed

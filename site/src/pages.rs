@@ -98,7 +98,7 @@ pub fn home_zh(context: RenderContext) -> impl IntoView {
             <article class="rd-prose rd-home-prose">
                 <p>"Rustify UI 以 Leptos CSR 管理浏览器界面，默认构建仅使用 DOM。启用 SDK 的 gpu feature 后，GpuRegion 在由 DOM 定位的 canvas 中运行 Makepad WebGL2 绘制；应用向 region 传入 props，并接收类型化动作。"</p>
                 <p>"每项任务按实际需要选择呈现路径。共享状态和主题 token 不要求 DOM 与 GPU 拥有相同的组件目录或 CSS 支持；只有明确需要两端或跨区协作时，才同时实现两端。当前尚未选定具体业务场景。"</p>
-                <p>"本仓包含 SDK、DOM 组件、Makepad fork 和可运行示例。工作区版本为 0.1.0，尚未开放包发布；从快速开始进入本地构建，或在组件文档中操作实际 DOM 示例并查看 Rust 源码。"</p>
+                <p>"本仓包含 SDK、DOM 组件、Makepad fork 和可运行示例。Docs、DOM 与样式等十个包以 0.3.0 发布在 crates.io；GPU SDK、Makepad 桥接和示例仍从 Git 使用。从快速开始进入构建，或在组件文档中操作实际 DOM 示例并查看 Rust 源码。"</p>
             </article>
         </div>
     }

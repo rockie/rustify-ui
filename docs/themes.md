@@ -5,9 +5,9 @@ description: Create, resolve, import and export versioned theme documents and ap
 
 The versioned theme model preserves author values and resolves one snapshot for DOM and GPU consumers. The legacy `Theme`, `ThemePatch`, `ThemedScope` and `ThemeOverride` APIs keep their existing contracts. Conversion is one way: a complete document cannot be reduced to the legacy opaque palette without losing information.
 
-The current source implements schema v2. Published SDK/CLI **0.2.1** supports
-schema v1 only; it cannot consume a full v2 document. Source consumers must use
-the matching SDK and source CLI checkout; this change does not publish a release.
+Schema v2 ships in the published **0.3.0** packages. Published SDK/CLI
+**0.2.1** supports schema v1 only; it cannot consume a full v2 document. Use
+one matching registry release (0.3.0) for the SDK, styles and CLI.
 
 Use [Theme Studio](../examples/theme-studio/README.md) to edit and export a document, or start with the Rust API below. For the application's build setup, see the [quick start](quickstart.md#using-tailwind-v4-in-your-app).
 
@@ -232,8 +232,8 @@ integration** in Studio. The [independent consumer fixture](../tests/theme-expor
 compiles that complete exported snippet, rather than this simplified example.
 Download **setup notes** from any export format to retain the actual source
 revision, selected preview mode, host context, resolved font paths and licenses.
-JSON v2 requires the matching source SDK and CSS; only Docs consumers also need
-the source CLI from the same checkout. Published 0.2.1 cannot read complete v2.
+JSON v2 requires the matching 0.3.0 SDK and CSS; only Docs consumers also need
+the CLI from the same registry release. Published 0.2.1 cannot read complete v2.
 Static CSS consumption needs no wasm or CLI; compile Tailwind profiles through
 their Tailwind v4 build.
 
@@ -369,8 +369,7 @@ mbx test -p theme-studio --bins
 mbx xtask sources verify
 ```
 
-Schema v2 requires one matching source checkout for SDK, styles and CLI. The
-first registry release that includes v2 has not been decided yet; until it
-is, older published consumers are not compatible with it. The default
-`--primary` and `--accent-foreground` values changed with the v2 palette;
-`--ring` is unchanged.
+Schema v2's minimum consumer is registry SDK/CLI **0.3.0**; older published
+consumers (0.2.1) are not compatible with it. Use one matching 0.3.0 registry
+release for SDK, styles and CLI. The default `--primary` and
+`--accent-foreground` values changed with the v2 palette; `--ring` is unchanged.

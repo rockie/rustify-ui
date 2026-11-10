@@ -4,13 +4,13 @@ Rustify UI is an experimental Rust SDK for Leptos CSR applications in the browse
 
 Each task implements only the rendering path it needs. Work on both paths requires an explicit requirement or a concrete need for cooperation across DOM and GPU regions. Shared state and theme tokens do not require matching component sets or CSS support. A specific application use case has not yet been selected.
 
-This repository contains the SDK, DOM components, a Makepad fork and runnable examples. The workspace is version `0.2.1`. Nine Docs/DOM/style packages are published on crates.io; the GPU SDK, Makepad bridge and examples remain Git-only. Use the [repository quick start](#quick-start) to build an example; use the [SDK quick start](docs/quickstart.md) to write a region or integrate the components into an application.
+This repository contains the SDK, DOM components, a Makepad fork and runnable examples. The workspace is version `0.3.0`. Ten Docs/DOM/style packages are published on crates.io; the GPU SDK, Makepad bridge and examples remain Git-only. Use the [repository quick start](#quick-start) to build an example; use the [SDK quick start](docs/quickstart.md) to write a region or integrate the components into an application.
 
-The current source checkout also includes script-free `rustify-colors`, configured
+The published packages include script-free `rustify-colors`, configured
 two-mode theme documents (schema v2), native DOM layout/typography components and
-a controlled ThemePanel. These source changes are not part of the published
-0.2.1 API; the registry SDK and CLI still use schema v1. Use a matching source
-SDK, CSS and source CLI for v2. The [component catalogue](docs/components.md)
+a controlled ThemePanel. Registry SDK and CLI 0.3.0 read schema v2; the older
+0.2.1 pair reads only v1. Use one matching registry version for SDK, CSS
+and CLI. The [component catalogue](docs/components.md)
 separates supported fields from full reference coverage and the existing 24
 navigation categories; the [DOM migration guide](docs/dom-components-migration.md)
 records the API and CSS changes.
@@ -20,13 +20,13 @@ one controlled implementation: choices/cards, named sliders, fields, native
 FormRoot and Select. Load `PRIMITIVES_CSS` for structural rules or the themed
 `CSS` bundle; [Forms](docs/forms.md) includes composition and submission
 examples. Studio's Cards scene provides a complete local form and an expandable
-states/parts tool. These source additions are not published by the 0.2.1 packages.
+states/parts tool. These additions are published by the 0.3.0 packages.
 
 Source panel and feedback consumers can compose safe confirmations, anchored
 choices and persistent results using shared raw/themed parts. [Panels and
 feedback](docs/panels.md) covers controlled requests, native Tooltip targets,
 loading content and the single Toast scheduler, including modal-host migration.
-Use matching source SDK and CSS; these APIs are not in registry 0.2.1.
+Use matching SDK and CSS; these APIs ship in the registry 0.3.0 packages.
 
 [Menus, navigation and toolbars](docs/menus.md) covers DropdownMenu, ContextMenu,
 Menubar, native NavigationMenu links and composed Toolbar commands. These source
@@ -244,10 +244,10 @@ language. The [official documentation](https://rockie.github.io/rustify-ui/)
 has English and Chinese reading shells; the real Chinese sources are the
 home page and [quick start](docs/zh/quickstart.md), with the other guides
 and component categories using explicit English-content fallback.
-Install the `0.2.1` CLI from crates.io:
+Install the `0.3.0` CLI from crates.io:
 
 ```sh
-cargo install rustify-docs-cli --version 0.2.1 --locked
+cargo install rustify-docs-cli --version 0.3.0 --locked
 rustify-docs --version
 rustify-docs --build-info
 cargo install --list
@@ -258,9 +258,10 @@ rustify-docs dev
 
 Use standard release installation without `--profile docs-cli`. Build-info
 reports `distribution: registry`, `panic: unwind`, CLI source
-`8fd7fd63679196e20f8e3572e4234bb51d8faf17` and library revision
-`b32844a489943649a49d9fbe46ee837e32017885`. The rollback target is the
-fixed `0.1.32` Git CLI and its original project files. Archive installation,
+`dde6fe85149c7f362f458a8a3139257fd0984c67` and library revision
+`3f2fd1e18e48b0cf76c634512411dfb0493d35d0`. The rollback target is the
+registry `0.2.1` pair: reinstall the 0.2.1 CLI and restore its matching
+project manifest, lock and schema v1 theme files. Archive installation,
 package check/doc and author smoke passed on macOS and Ubuntu with Rust
 1.99.0; the runtime/browser pass gate remains macOS Chrome. Windows and
 complete Linux runtime support are not verified. See the [author's reference](docs/docs-ssg.md#install-and-maintain-the-cli)

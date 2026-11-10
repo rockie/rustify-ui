@@ -150,14 +150,14 @@ locale.text(Message::Retry)
 
 独立应用需要稳定版 Rust、`wasm32-unknown-unknown` target 和 SDK 固定版本的 wasm-bindgen CLI，不需要本仓的 mbx、xtask、Node 或 Makepad。
 
-应用是一个导出启动函数的 `cdylib`，另用小型宿主程序把 SDK loader 和样式表写到 wasm 旁。[完整消费示例](../../tests/dom-only/consumer/) 的 `Cargo.toml` 使用本仓 path 依赖，[资源导出程序](../../tests/dom-only/consumer/src/bin/export-dom-assets.rs) 负责输出资源。在仓库外，两个 SDK 依赖改为已验证的 Git 来源：
+应用是一个导出启动函数的 `cdylib`，另用小型宿主程序把 SDK loader 和样式表写到 wasm 旁。[完整消费示例](https://github.com/rockie/rustify-ui/tree/3f2fd1e18e48b0cf76c634512411dfb0493d35d0/tests/dom-only/consumer/) 的 `Cargo.toml` 使用本仓 path 依赖，[资源导出程序](https://github.com/rockie/rustify-ui/tree/3f2fd1e18e48b0cf76c634512411dfb0493d35d0/tests/dom-only/consumer/src/bin/export-dom-assets.rs) 负责输出资源。在仓库外，两个 SDK 依赖改为 registry 依赖（别名保留示例中的 `rustify_ui` 导入）：
 
 ```toml
-rustify-ui = { git = "https://github.com/rockie/rustify-ui", rev = "1b81de25f23a25702f61dbfd3d0ecdfe323d4d44" }
-rustify-components = { git = "https://github.com/rockie/rustify-ui", rev = "1b81de25f23a25702f61dbfd3d0ecdfe323d4d44" }
+rustify-ui = { package = "rustify-dom", version = "=0.3.0" }
+rustify-components = { version = "=0.3.0" }
 ```
 
-这个来源已通过本地 Git 与 GitHub 的独立消费构建和 DOM 浏览器检查，不依赖仓根 patches。保留示例中其他依赖版本，让 Cargo 首次解析 Git 依赖，再提交生成的 `Cargo.lock`。构建命令为：
+这两个 0.3.0 registry 包已通过独立消费构建和 DOM 浏览器检查。保留示例中其他依赖版本，让 Cargo 首次解析依赖，再提交生成的 `Cargo.lock`。构建命令为：
 
 ```sh
 cargo install wasm-bindgen-cli --version 0.2.128 --locked

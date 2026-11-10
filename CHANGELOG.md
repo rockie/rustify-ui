@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.3.0
+
+- Publish ten crates.io packages: the nine 0.2.1 packages move to 0.3.0 and
+the new `rustify-colors` publishes 31 typed Radix color families with
+standalone scoped CSS assets. The GPU SDK, Makepad bridge and examples stay
+Git-only.
+- Ship schema v2 theme documents and the DOM component API (menus,
+navigation, toolbars, panels, feedback, layout/typography) in the registry
+packages. Schema v2's minimum consumer is SDK/CLI 0.3.0; 0.2.1 reads only v1.
+The default `--primary` and `--accent-foreground` values changed with the v2
+palette; `--ring` is unchanged. See the
+[migration guide](https://rockie.github.io/rustify-ui/dom-components-migration/)
+for the upgrade from 0.2.1 to 0.3.0.
+- Platform boundary: archive installation, package check/doc and author smoke
+passed on macOS (arm64) and Ubuntu with Rust 1.99.0; the runtime/browser gate
+is macOS Chrome. Windows and complete Linux runtime support remain
+unverified.
+
 ## 0.2.1
 
 - Republish the nine crates.io packages at 0.2.1 so the CLI fix ships inside

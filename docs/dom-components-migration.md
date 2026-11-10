@@ -3,17 +3,16 @@ description: Migrate source consumers to the configured theme and native DOM com
 ---
 # DOM component migration
 
-This guide describes the current source checkout. Published SDK and Docs CLI
-0.2.1 use the previous APIs and schema v1. Use one matching source checkout for
-the SDK, styles and source CLI; these changes do not publish a release.
+This guide migrates consumers from the published 0.2.1 APIs and schema v1 to
+the published 0.3.0 APIs and schema v2. Use one matching registry version for
+the SDK, styles and CLI.
 
 ## How to migrate
 
 1. **Version pairing.** Published SDK/Docs 0.2.1 ship schema v1 and the
-   previous component API. Use one matching source checkout for the SDK,
-   styles and source CLI; the first registry release containing schema v2 has
-   not been decided yet, and until it is, older published consumers are not
-   compatible with it.
+   previous component API; 0.3.0 ships schema v2 and the component API
+   described here. Upgrade the SDK, styles and CLI together to 0.3.0; older
+   published consumers are not compatible with v2.
 2. **Style entry.** Import `rustify_components::CSS` (or the structured
    `PRIMITIVES_CSS` sources) once per page; see
    [Styles and static rendering](#styles-and-static-rendering).
@@ -23,8 +22,8 @@ the SDK, styles and source CLI; these changes do not publish a release.
 4. **Component replacement.** Walk the sections below for the families you
    use; for an exhaustive key-by-key view use
    [Legacy API destinations](components.md#legacy-api-destinations).
-5. **Verify.** Rerun your own checks against the source checkout, plus the
-   verification paths each catalogue row names.
+5. **Verify.** Rerun your own checks on the upgraded registry 0.3.0
+   dependencies, plus the verification paths each catalogue row names.
 
 ## Buttons and links
 
@@ -152,7 +151,7 @@ Use identical scope seed, values and declared item sequence during hydration.
 
 ## Structured content and native scroll areas
 
-The source checkout adds these DOM families. Where size or variant is exposed,
+The 0.3.0 release adds these DOM families. Where size or variant is exposed,
 use that family's named enum and `ALL`; a shared theme does not add matching GPU
 components.
 The [public exports](../crates/rustify-components/src/lib.rs) and generated
@@ -238,8 +237,8 @@ and its name; measured thumb geometry starts empty until browser attachment.
 
 Use the [panel guide](panels.md) for a complete DOM confirmation → auxiliary
 choice → persistent result example and the raw/themed runtime prerequisites.
-These APIs belong to the source checkout, not registry 0.2.1. Keep SDK, styles and
-callers on the same source revision; rollback those pieces together. There is no
+These APIs ship in the registry 0.3.0 packages. Keep SDK, styles and
+callers on one matching registry version; roll back those pieces together. There is no
 business-data or theme-document schema migration for these components.
 
 | Previous call or expectation | Source API and behavior |
@@ -463,7 +462,7 @@ message-bridge fingerprint remain separate from this debugging metadata.
 
 ## Colors without a UI runtime
 
-The source-only `rustify-colors` crate provides 31 named families with
+The published `rustify-colors` crate provides 31 named families with
 light/dark, solid/alpha and sRGB/P3 strings, plus mode-independent black/white
 alpha. Rust uses `ColorFamily::ALL`, `scale`, `css`, `black_alpha` and
 `white_alpha`; steps are one-based 1–12. The optional Rust `p3` feature is
@@ -509,11 +508,10 @@ the fallback source is now explicit.
 
 ## Published and source version pairing
 
-The nine published Docs/DOM/style packages remain 0.2.1. Their frozen CLI
-framework pair and registry source checks remain intact. The workspace's
-unchanged version string does not make the new source APIs or v2 schema
-available from crates.io; `rustify-colors` has not been published by this work.
-An old registry CLI cannot consume complete v2 author documents.
+The ten published Docs/DOM/style packages are 0.3.0 on crates.io, including
+`rustify-colors`. Their frozen CLI framework pair and registry source checks
+remain intact. Schema v2 and the component APIs in this guide ship in the
+0.3.0 packages; the 0.2.1 CLI cannot consume complete v2 author documents.
 
 In Studio, **Export** defaults to complete JSON v2. **Download setup notes**
 (下载接入说明) saves `theme-setup.txt` alongside your theme, without adding
@@ -523,10 +521,10 @@ Copy the listed external font files and distribute their original licenses from
 `makepad/widgets/resources/FONT-LICENSES.md` in that checkout. Font URLs are
 relative to deployed CSS; retain their paths or adjust them for your base/CDN.
 
-Use one pinned checkout for the source SDK and stylesheet assets. Only Docs
-consumers also need its source CLI. Static CSS consumers need no wasm or CLI;
-compile exported Tailwind profiles through the existing Tailwind v4 build.
-Build the Docs CLI with the existing unwind-capable profile:
+Use one pinned registry release (0.3.0) for the SDK and stylesheet assets.
+Only Docs consumers also need its CLI. Static CSS consumers need no wasm or
+CLI; compile exported Tailwind profiles through the existing Tailwind v4
+build. Building the CLI from source still uses the unwind-capable profile:
 
 ```sh
 mbx build --locked -p rustify-docs-cli --profile docs-cli

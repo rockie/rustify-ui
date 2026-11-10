@@ -3,10 +3,10 @@ description: Build controlled DOM panels, safe confirmations and notifications w
 ---
 # Panels and feedback
 
-Use these source APIs for a DOM application. They require no GPU feature and do
-not add Makepad components. The panel and feedback additions described here are
-not in the published 0.2.1 packages. Use the SDK, components, CSS and examples
-from the same source checkout; see the [migration guide](dom-components-migration.md)
+Use these APIs for a DOM application. They require no GPU feature and do
+not add Makepad components. The panel and feedback APIs described here ship
+in the published 0.3.0 packages. Use the SDK, components and CSS from the
+registry; see the [migration guide](dom-components-migration.md)
 for changed calls and the [catalogue](components.md) for individual fields.
 
 ## Prepare the DOM runtime and styles
