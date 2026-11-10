@@ -210,7 +210,7 @@ async function exercise(page: Page, field: Locator, name: string) {
 }
 
 test("home has one English title, the original README introduction and two first-viewport ordinary actions", async ({ page, audit }) => {
-    expect(categories).toHaveLength(24); expect(guides).toHaveLength(12);
+    expect(categories).toHaveLength(24); expect(guides).toHaveLength(15);
     expect(configuredRoutes).toEqual(categories.map(entry => `/${entry.route}`)); expect(configuredGuides).toEqual(guides.map(entry => entry.file));
     await page.setViewportSize({ width: 1280, height: 900 }); await open(page, "./");
     await expect(page.locator("h1")).toHaveCount(1); await expect(page.locator("h1")).toHaveText("Rustify UI");
@@ -252,8 +252,8 @@ test("official Chinese home and quick start are real translations with local sea
     await expect(dialog.getByRole("option").first()).toHaveAttribute("href", /\/zh\/quickstart\/#prerequisites$/);
     const indexURL = await dialog.getAttribute("data-rd-search-index");
     const data = await (await request.get(new URL(indexURL!, url("./")).href)).json();
-    expect(data.pages).toHaveLength(37);
-    expect(data.pages.filter((page: any) => page.is_fallback)).toHaveLength(35);
+    expect(data.pages).toHaveLength(40);
+    expect(data.pages.filter((page: any) => page.is_fallback)).toHaveLength(38);
     await page.keyboard.press("Enter");
     await expect(dialog).toBeHidden();
     await expect(page).toHaveURL(url("zh/quickstart/#prerequisites"));
@@ -262,7 +262,7 @@ test("official Chinese home and quick start are real translations with local sea
         expect(response.status()).toBe(200);
         expect(response.headers()["content-type"]).toContain("text/plain");
         const text = await response.text();
-        expect(text.split("\n").filter(line => line.startsWith("- ["))).toHaveLength(37);
+        expect(text.split("\n").filter(line => line.startsWith("- ["))).toHaveLength(40);
         const target = expected.replace("/rustify-ui/", base());
         expect(text).toContain(`https://rockie.github.io${target}`);
         if (path.startsWith("zh/")) {
@@ -308,11 +308,11 @@ test("all Chinese fallback categories retain real DOM demos, source and target-l
     await healthy(page, audit);
 });
 
-test("the ordinary sidebar contains the exact twelve guides and CATALOG pages in configured order", async ({ page, audit }) => {
+test("the ordinary sidebar contains the exact fifteen guides and CATALOG pages in configured order", async ({ page, audit }) => {
     await open(page, categories[0].route); await attached(page, categories[0].demo);
     const links = page.locator(".rd-sidebar-wide a");
     expect(await links.evaluateAll(nodes => nodes.map(node => node.getAttribute("href")))).toEqual([...guides.map(entry => new URL(url(entry.route)).pathname), ...categories.map(entry => new URL(url(entry.route)).pathname)]);
-    await expect(links).toHaveCount(36);
+    await expect(links).toHaveCount(39);
     await expect(page.locator(".rd-sidebar-wide a[aria-current=page]")).toHaveAttribute("href", new URL(url(categories[0].route)).pathname);
     await healthy(page, audit);
 });

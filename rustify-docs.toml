@@ -12,7 +12,8 @@ dir = "docs"
 include = [
     "quickstart.md", "architecture.md", "navigation.md", "workspace.md",
     "forms.md", "i18n.md", "data.md", "themes.md", "utility.md",
-    "compatibility.md", "components.md", "vellum.md",
+    "compatibility.md", "components.md", "menus.md", "panels.md",
+    "dom-components-migration.md", "vellum.md",
     "zh/quickstart.md",
 ]
 
@@ -36,7 +37,8 @@ label = "Guides"
 items = [
     "quickstart.md", "architecture.md", "navigation.md", "workspace.md",
     "forms.md", "i18n.md", "data.md", "themes.md", "utility.md",
-    "compatibility.md", "components.md", "vellum.md",
+    "compatibility.md", "components.md", "menus.md", "panels.md",
+    "dom-components-migration.md", "vellum.md",
 ]
 
 [[nav.groups]]
@@ -69,7 +71,8 @@ label = "指南"
 items = [
     "quickstart.md", "architecture.md", "navigation.md", "workspace.md",
     "forms.md", "i18n.md", "data.md", "themes.md", "utility.md",
-    "compatibility.md", "components.md", "vellum.md",
+    "compatibility.md", "components.md", "menus.md", "panels.md",
+    "dom-components-migration.md", "vellum.md",
 ]
 
 [[i18n.locales.nav.groups]]
