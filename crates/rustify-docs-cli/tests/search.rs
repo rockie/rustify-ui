@@ -115,7 +115,7 @@ fn official_sources_have_only_two_real_chinese_pages_and_keep_the_existing_catal
             .collect::<Vec<_>>(),
         ["en", "zh"]
     );
-    assert_eq!(snapshot.markdown.len(), 13);
+    assert_eq!(snapshot.markdown.len(), 16);
     assert_eq!(
         snapshot
             .markdown
@@ -128,7 +128,7 @@ fn official_sources_have_only_two_real_chinese_pages_and_keep_the_existing_catal
     assert_eq!(manifest.demos.len(), 24);
     assert_eq!(manifest.pages.len(), 26);
     assert_eq!(analysis.errors(), 0, "{:?}", analysis.diagnostics);
-    assert_eq!(analysis.published().count(), 74);
+    assert_eq!(analysis.published().count(), 80);
     let zh = &analysis.locales["zh"];
     let real: Vec<_> = zh
         .pages
@@ -145,7 +145,7 @@ fn official_sources_have_only_two_real_chinese_pages_and_keep_the_existing_catal
             .collect::<Vec<_>>(),
         ["指南", "组件"]
     );
-    assert_eq!(zh.nav[0].items.len(), 12);
+    assert_eq!(zh.nav[0].items.len(), 15);
     assert_eq!(zh.nav[1].items.len(), 24);
     assert!(zh
         .nav
