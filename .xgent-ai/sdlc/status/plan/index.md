@@ -31,5 +31,6 @@
 | ca735c8c-bc5e-44af-bb23-f591a378bc94 | [DOCS-LANDING](../../../../docs/plan/DOCS-LANDING.md) | [对象](ca735c8c-bc5e-44af-bb23-f591a378bc94.md) | 活动 |
 | cd0eba4a-928f-4fd8-95c3-47a609b7735b | [CRATES-IO-P1](../../../../docs/plan/CRATES-IO-P1.md) | [对象](cd0eba4a-928f-4fd8-95c3-47a609b7735b.md) | 活动 |
 | bba16439-b67d-4fa5-bbff-fddfc2e1317a | [DOM-COMPONENTS-P1-gaps](../../../../docs/plan/DOM-COMPONENTS-P1-gaps.md) | [对象](bba16439-b67d-4fa5-bbff-fddfc2e1317a.md) | 活动 |
+| 31302555-1d68-4a02-9116-d584b50e6882 | [DOM-COMPONENTS-P5-gaps](../../../../docs/plan/DOM-COMPONENTS-P5-gaps.md) | [对象](31302555-1d68-4a02-9116-d584b50e6882.md) | 活动 |
 
 维护约定：改变本层内容者同步索引；按稳定 ID/路径保留历史，无变化不重写，索引不作为事件。详见[目录索引维护](../../protocol.md#目录索引维护)。

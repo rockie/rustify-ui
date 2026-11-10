@@ -31,5 +31,6 @@
 | ca735c8c-bc5e-44af-bb23-f591a378bc94 | DOCS-LANDING 事件 | [入口](ca735c8c-bc5e-44af-bb23-f591a378bc94/index.md) |
 | cd0eba4a-928f-4fd8-95c3-47a609b7735b | CRATES-IO-P1 事件 | [入口](cd0eba4a-928f-4fd8-95c3-47a609b7735b/index.md) |
 | bba16439-b67d-4fa5-bbff-fddfc2e1317a | DOM-COMPONENTS-P1 gaps事件 | [入口](bba16439-b67d-4fa5-bbff-fddfc2e1317a/index.md) |
+| 31302555-1d68-4a02-9116-d584b50e6882 | DOM-COMPONENTS-P5-gaps 事件 | [入口](31302555-1d68-4a02-9116-d584b50e6882/index.md) |
 
 维护约定：改变本层内容者同步索引；按稳定 ID/路径保留历史，无变化不重写，索引不作为事件。详见[目录索引维护](../../protocol.md#目录索引维护)。

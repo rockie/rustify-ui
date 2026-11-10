@@ -16,6 +16,8 @@
 | 1f739015-f48c-4e90-8370-093b2257e67f | [DOCS-SSG-P2-gaps 代码评审 R2](../../../../docs/plan/DOCS-SSG-P2-gaps.code-review.r2.md) | [对象](1f739015-f48c-4e90-8370-093b2257e67f.md) | 活动 |
 | 2cc80246-5d61-4370-bbd7-462827ecbce3 | [DOM-COMPONENTS-P1 UI 验收评审 R5](../../../../docs/plan/DOM-COMPONENTS-P1.ui-review.r5.md) | [对象](2cc80246-5d61-4370-bbd7-462827ecbce3.md) | 活动 |
 | 36714aee-ee6c-42b0-84d2-2d450716e0f1 | [CRATES-IO-P1 代码评审 R1](../../../../docs/plan/CRATES-IO-P1.code-review.md) | [36714aee](36714aee-ee6c-42b0-84d2-2d450716e0f1.md) | 活动 |
+| 39f94a8a-8462-4c80-b452-aa5505899598 | [DOM-COMPONENTS-P5 代码评审 R1](../../../../docs/plan/DOM-COMPONENTS-P5.code-review.md) | [39f94a8a](39f94a8a-8462-4c80-b452-aa5505899598.md) | 活动 |
+| 10111e26-94ab-4789-8bb3-a9cdb13e2d8d | [DOM-COMPONENTS-P5 代码复审 R2](../../../../docs/plan/DOM-COMPONENTS-P5.code-review.r2.md) | [10111e26](10111e26-94ab-4789-8bb3-a9cdb13e2d8d.md) | 活动 |
 | 0ce11938-a166-4a20-b109-09e66f4414da | [CRATES-IO-P1 代码复审 R2](../../../../docs/plan/CRATES-IO-P1.code-review.r2.md) | [0ce11938](0ce11938-a166-4a20-b109-09e66f4414da.md) | 活动 |
 | 3bc23089-adb5-4844-b005-7144614ac86e | [DOM-COMPONENTS-P4 完整计划评审](../../../../docs/plan/DOM-COMPONENTS-P4.review.md) | [对象](3bc23089-adb5-4844-b005-7144614ac86e.md) | 活动 |
 | 4096c476-5ee3-44a5-a195-09a5183542ca | [DOM-COMPONENTS-P1 UI 验收评审 R6](../../../../docs/plan/DOM-COMPONENTS-P1.ui-review.r6.md) | [对象](4096c476-5ee3-44a5-a195-09a5183542ca.md) | 活动 |
@@ -106,6 +108,8 @@
 | 9152677e-02be-4557-ac77-d2fb2244a90a | [DOM-COMPONENTS-P1-gaps 完整计划评审](../../../../docs/plan/DOM-COMPONENTS-P1-gaps.review.md) | [对象](9152677e-02be-4557-ac77-d2fb2244a90a.md) | 活动 |
 | 82810742-c017-4d8a-a8d0-8eb10b49b487 | [DOM-COMPONENTS-P3 完整计划评审](../../../../docs/plan/DOM-COMPONENTS-P3.review.md) | [对象](82810742-c017-4d8a-a8d0-8eb10b49b487.md) | 活动 |
 | 1c5130cd-8702-4adf-aace-8d605adac501 | [DOM-COMPONENTS-P5 完整计划评审](../../../../docs/plan/DOM-COMPONENTS-P5.review.md) | [对象](1c5130cd-8702-4adf-aace-8d605adac501.md) | 活动 |
+| cf6d6b8a-068c-4e33-af64-7866180612d6 | [DOM-COMPONENTS-P5 PRD 覆盖核查](../../../../docs/plan/DOM-COMPONENTS-P5.prd-dev-gaps.md) | [对象](cf6d6b8a-068c-4e33-af64-7866180612d6.md) | 活动 |
+| 6b1d35bf-077b-440d-8d7b-bfef8fdeeff4 | [DOM-COMPONENTS-P5-gaps 完整计划评审](../../../../docs/plan/DOM-COMPONENTS-P5-gaps.review.md) | [对象](6b1d35bf-077b-440d-8d7b-bfef8fdeeff4.md) | 活动 |
 
 
 维护约定：改变本层内容者同步索引；按稳定 ID/路径保留历史，无变化不重写，索引不作为事件。详见[目录索引维护](../../protocol.md#目录索引维护)。

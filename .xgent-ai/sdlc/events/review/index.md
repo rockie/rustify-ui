@@ -17,6 +17,7 @@
 | 1f739015-f48c-4e90-8370-093b2257e67f | 子目录入口 | [对象事件](1f739015-f48c-4e90-8370-093b2257e67f/index.md) |
 | 2cc80246-5d61-4370-bbd7-462827ecbce3 | DOM-COMPONENTS-P1 UI 验收评审 R5 事件 | [入口](2cc80246-5d61-4370-bbd7-462827ecbce3/index.md) |
 | 36714aee-ee6c-42b0-84d2-2d450716e0f1 | CRATES-IO-P1 代码评审 R1 事件 | [入口](36714aee-ee6c-42b0-84d2-2d450716e0f1/index.md) |
+| 39f94a8a-8462-4c80-b452-aa5505899598 | DOM-COMPONENTS-P5 代码评审 R1 事件 | [入口](39f94a8a-8462-4c80-b452-aa5505899598/index.md) |
 | 0ce11938-a166-4a20-b109-09e66f4414da | CRATES-IO-P1 代码复审 R2 事件 | [入口](0ce11938-a166-4a20-b109-09e66f4414da/index.md) |
 | 3bc23089-adb5-4844-b005-7144614ac86e | DOM-COMPONENTS-P4 完整计划评审事件 | [入口](3bc23089-adb5-4844-b005-7144614ac86e/index.md) |
 | 4096c476-5ee3-44a5-a195-09a5183542ca | DOM-COMPONENTS-P1 UI 验收评审 R6 事件 | [入口](4096c476-5ee3-44a5-a195-09a5183542ca/index.md) |
@@ -103,6 +104,8 @@
 | 82810742-c017-4d8a-a8d0-8eb10b49b487 | DOM-COMPONENTS-P3 完整计划评审事件 | [入口](82810742-c017-4d8a-a8d0-8eb10b49b487/index.md) |
 | a17022e4-74c1-40f5-80d0-f5e9862ecc9e | DOM-COMPONENTS-P3 覆盖核查事件 | [入口](a17022e4-74c1-40f5-80d0-f5e9862ecc9e/index.md) |
 | 1c5130cd-8702-4adf-aace-8d605adac501 | DOM-COMPONENTS-P5 完整计划评审事件 | [入口](1c5130cd-8702-4adf-aace-8d605adac501/index.md) |
+| cf6d6b8a-068c-4e33-af64-7866180612d6 | DOM-COMPONENTS-P5 PRD 覆盖核查事件 | [入口](cf6d6b8a-068c-4e33-af64-7866180612d6/index.md) |
+| 6b1d35bf-077b-440d-8d7b-bfef8fdeeff4 | DOM-COMPONENTS-P5-gaps 完整计划评审事件 | [入口](6b1d35bf-077b-440d-8d7b-bfef8fdeeff4/index.md) |
 
 
 维护约定：改变本层内容者同步索引；按稳定 ID/路径保留历史，无变化不重写，索引不作为事件。详见[目录索引维护](../../protocol.md#目录索引维护)。
