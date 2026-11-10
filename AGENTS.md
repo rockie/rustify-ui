@@ -268,4 +268,4 @@ VELLUM_TWIN=baseline VELLUM_BASELINE_DIR=../rustify-ui-vellum-baseline RUSTIFY_T
 ### 完成标准与发布
 
 - 执行改动相关的本仓检查、测试、构建，报告实际结果与未验证项。
-- crates.io 九包走 `docs/crates-io-release.md`、`scripts/crates-io.py`。先 `plan-libraries --reuse … --rev <完整 SHA>`；每包归档绑定自己的 source_rev，仅该包目录/manifest 或解析锁闭包变更才重打升版；其余 `package-libraries --reuse <上一发行目录>` 复用原归档/版本/校验和，CLI-only 不升库版。框架三包 docs/dom/components 版本须同步移动，因 CLI 配对仅带一个 framework revision；库默认继承 workspace version，需独立发版时先给该包自己的 version，其余继续继承。
+- crates.io 十包走 `docs/crates-io-release.md`、`scripts/crates-io.py`。先 `plan-libraries --reuse … --rev <完整 SHA>`；每包归档绑定自己的 source_rev，仅该包目录/manifest 或解析锁闭包变更才重打升版；其余 `package-libraries --reuse <上一发行目录>` 复用原归档/版本/校验和，CLI-only 不升库版。框架三包 docs/dom/components 版本须同步移动，因 CLI 配对仅带一个 framework revision；库默认继承 workspace version，需独立发版时先给该包自己的 version，其余继续继承。

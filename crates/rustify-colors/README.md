@@ -55,5 +55,5 @@ The repository regenerates these assets with `mbx xtask colors` and verifies
 them with `mbx xtask colors --check`. Generation reads the vendored constant
 objects and never executes TypeScript or reads the ignored `ref/` directory.
 Provenance and both independently named fingerprint algorithms are recorded
-in the repository's `sources.lock.json`. Publication is a separate step;
-this new package is currently consumed from this source checkout.
+in the repository's `sources.lock.json`. The package is published to crates.io;
+depend on it with `rustify-colors = "=0.3.0"`.

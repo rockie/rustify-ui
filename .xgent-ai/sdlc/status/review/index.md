@@ -20,6 +20,7 @@
 | 10111e26-94ab-4789-8bb3-a9cdb13e2d8d | [DOM-COMPONENTS-P5 代码复审 R2](../../../../docs/plan/DOM-COMPONENTS-P5.code-review.r2.md) | [10111e26](10111e26-94ab-4789-8bb3-a9cdb13e2d8d.md) | 活动 |
 | 0ce11938-a166-4a20-b109-09e66f4414da | [CRATES-IO-P1 代码复审 R2](../../../../docs/plan/CRATES-IO-P1.code-review.r2.md) | [0ce11938](0ce11938-a166-4a20-b109-09e66f4414da.md) | 活动 |
 | 3bc23089-adb5-4844-b005-7144614ac86e | [DOM-COMPONENTS-P4 完整计划评审](../../../../docs/plan/DOM-COMPONENTS-P4.review.md) | [对象](3bc23089-adb5-4844-b005-7144614ac86e.md) | 活动 |
+| 4068cbe5-0c09-4ed7-9996-1336a588a187 | [DOM-COMPONENTS-RELEASE 计划评审 R1](../../../../docs/plan/DOM-COMPONENTS-RELEASE.review.md) | [对象](4068cbe5-0c09-4ed7-9996-1336a588a187.md) | 活动 |
 | 4096c476-5ee3-44a5-a195-09a5183542ca | [DOM-COMPONENTS-P1 UI 验收评审 R6](../../../../docs/plan/DOM-COMPONENTS-P1.ui-review.r6.md) | [对象](4096c476-5ee3-44a5-a195-09a5183542ca.md) | 活动 |
 | 5307296b-348d-4666-bda3-55b208901877 | [DOM-COMPONENTS-P1-gaps 代码复审 R2](../../../../docs/plan/DOM-COMPONENTS-P1-gaps.code-review.r2.md) | [对象](5307296b-348d-4666-bda3-55b208901877.md) | 活动 |
 | c5423b46-21f3-4f6f-9b17-a6a6fc0e5033 | [发行工具按包修订 代码评审（8e77809c..60554d84）](../../../../docs/reviews/range-8e77809c-60554d84.code-review.md) | [c5423b46](c5423b46-21f3-4f6f-9b17-a6a6fc0e5033.md) | 活动 |

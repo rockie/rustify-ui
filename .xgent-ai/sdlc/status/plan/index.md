@@ -4,6 +4,7 @@
 
 | 对象 ID | 标题 / 来源 | 状态页 | 活动 / 归档 |
 | --- | --- | --- | --- |
+| 478ef381-d91a-43f9-9ea0-3b03abe65d9b | [DOM-COMPONENTS-RELEASE](../../../../docs/plan/DOM-COMPONENTS-RELEASE.md) | [对象](478ef381-d91a-43f9-9ea0-3b03abe65d9b.md) | 活动 |
 | 7d8e0cdb-4684-4ba6-8a88-40ef7b12df73 | [DOM-COMPONENTS-P5](../../../../docs/plan/DOM-COMPONENTS-P5.md) | [对象](7d8e0cdb-4684-4ba6-8a88-40ef7b12df73.md) | 活动 |
 | d3982b58-e895-40b6-a66b-979a5d747863 | [DOM-COMPONENTS-P4](../../../../docs/plan/DOM-COMPONENTS-P4.md) | [对象](d3982b58-e895-40b6-a66b-979a5d747863.md) | 活动 |
 | 5291ea27-775f-422c-a9dc-444ed893f028 | [DOM-COMPONENTS-P3](../../../../docs/plan/DOM-COMPONENTS-P3.md) | [对象](5291ea27-775f-422c-a9dc-444ed893f028.md) | 活动 |

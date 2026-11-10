@@ -27,9 +27,9 @@ hydrate = ["rustify-docs/hydrate", "rustify-ui/hydrate", "rustify-components/hyd
 
 [dependencies]
 leptos = { version = "=0.8.22", default-features = false }
-rustify-ui = { package = "rustify-dom", path = "../../../../crates/rustify-dom", version = "=0.2.1", default-features = false }
-rustify-components = { path = "../../../../crates/rustify-components", version = "=0.2.1", default-features = false }
-rustify-docs = { path = "../../../../crates/rustify-docs", version = "=0.2.1", default-features = false }
+rustify-ui = { package = "rustify-dom", path = "../../../../crates/rustify-dom", version = "=0.3.0", default-features = false }
+rustify-components = { path = "../../../../crates/rustify-components", version = "=0.3.0", default-features = false }
+rustify-docs = { path = "../../../../crates/rustify-docs", version = "=0.3.0", default-features = false }
 serde_json = "=1.0.151"
 
 [target.'cfg(target_arch = "wasm32")'.dependencies]

@@ -49,7 +49,7 @@ class BoundaryTests(unittest.TestCase):
         cls.entries = release.inspect()["packages"]
 
     def test_inventory_and_caret_floors_preserve_locked_third_party_versions(self):
-        self.assertEqual(len(self.entries), 9)
+        self.assertEqual(len(self.entries), 10)
         expected = {"serde": "1.0.229", "serde_json": "1.0.151", "syn": "2.0.119", "quote": "1.0.47", "proc-macro2": "1.0.107"}
         for entry in self.entries:
             manifest = tomllib.loads((ROOT / entry["path"] / "Cargo.toml").read_text())
@@ -121,7 +121,7 @@ class BoundaryTests(unittest.TestCase):
             (probe / "src").mkdir(parents=True)
             snapshot = work / "source"
             snapshot.mkdir()
-            for package in ("rustify-dom", "rustify-ui", "rustify-components", "rustify-style", "rustify-makepad"):
+            for package in ("rustify-colors", "rustify-dom", "rustify-ui", "rustify-components", "rustify-style", "rustify-makepad"):
                 shutil.copytree(ROOT / "crates" / package, snapshot / "crates" / package)
             # Preserve the actual optional GPU dependency manifests and source too.
             # Copy tracked source, never nested target directories or test corpora.
@@ -135,7 +135,7 @@ class BoundaryTests(unittest.TestCase):
             start = root_manifest.index("members = [")
             end = root_manifest.index("]", start) + 1
             members = ', '.join(json.dumps("crates/" + package) for package in (
-                "rustify-dom", "rustify-ui", "rustify-components", "rustify-style", "rustify-makepad",
+                "rustify-colors", "rustify-dom", "rustify-ui", "rustify-components", "rustify-style", "rustify-makepad",
             ))
             (snapshot / "Cargo.toml").write_text(root_manifest[:start] + f"members = [{members}]" + root_manifest[end:])
             shutil.copyfile(ROOT / "Cargo.lock", snapshot / "Cargo.lock")
@@ -151,8 +151,8 @@ version = "0.0.0"
 edition = "2021"
 [dependencies]
 rustify-ui = {{ {git}, default-features = false, features = ["ssr"] }}
-rustify-dom = {{ version = "=0.2.1", default-features = false, features = ["ssr"] }}
-rustify-components = {{ version = "=0.2.1", default-features = false, features = ["ssr"] }}
+rustify-dom = {{ version = "=0.3.0", default-features = false, features = ["ssr"] }}
+rustify-components = {{ version = "=0.3.0", default-features = false, features = ["ssr"] }}
 '''
             (probe / "Cargo.toml").write_text(manifest)
             (probe / "src/lib.rs").write_text('''pub fn theme(value: rustify_ui::Theme) -> rustify_dom::Theme { value }
@@ -171,7 +171,7 @@ pub fn toast(value: rustify_ui::Toast) {
             run(*args, env=build_env)
             metadata = json.loads(run("mbx", "metadata", "--offline", "--format-version", "1", "--config", str(config), "--manifest-path", str(probe / "Cargo.toml")).stdout)
             self.assertEqual(len([p for p in metadata["packages"] if p["name"] == "rustify-dom"]), 1)
-            same_source = manifest.replace('version = "=0.2.1"', git)
+            same_source = manifest.replace('version = "=0.3.0"', git)
             (probe / "Cargo.toml").write_text(same_source)
             run(*args, env=build_env)
 

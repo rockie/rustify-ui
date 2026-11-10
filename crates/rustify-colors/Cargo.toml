@@ -3,10 +3,19 @@ name = "rustify-colors"
 version.workspace = true
 edition.workspace = true
 license.workspace = true
+publish = ["crates-io"]
 description = "Typed Radix color scales and independently consumable scoped CSS assets"
+
 repository = "https://github.com/rockie/rustify-ui"
-include = ["src/**", "css/**", "vendor/**", "README.md", "Cargo.toml"]
+documentation = "https://docs.rs/rustify-colors/0.3.0"
+readme = "README.md"
+rust-version = "1.99"
+include = ["src/**", "css/**", "vendor/**", "README.md", "LICENSE", "Cargo.toml"]
 
 [features]
 default = []
 p3 = []
+
+[package.metadata.docs.rs]
+default-target = "x86_64-unknown-linux-gnu"
+targets = []

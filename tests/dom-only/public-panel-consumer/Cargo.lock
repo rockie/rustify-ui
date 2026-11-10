@@ -1269,11 +1269,11 @@ dependencies = [
 
 [[package]]
 name = "rustify-colors"
-version = "0.2.1"
+version = "0.3.0"
 
 [[package]]
 name = "rustify-components"
-version = "0.2.1"
+version = "0.3.0"
 dependencies = [
  "cssparser",
  "js-sys",
@@ -1286,7 +1286,7 @@ dependencies = [
 
 [[package]]
 name = "rustify-dom"
-version = "0.2.1"
+version = "0.3.0"
 dependencies = [
  "js-sys",
  "leptos",
@@ -1301,7 +1301,7 @@ dependencies = [
 
 [[package]]
 name = "rustify-style"
-version = "0.2.1"
+version = "0.3.0"
 dependencies = [
  "flate2",
  "regex",

@@ -23,10 +23,16 @@ group = "docs"
 dependencies = ["rustify-docs-syntax"]
 
 [[packages]]
+name = "rustify-colors"
+path = "crates/rustify-colors"
+group = "docs"
+dependencies = []
+
+[[packages]]
 name = "rustify-dom"
 path = "crates/rustify-dom"
 group = "docs"
-dependencies = ["rustify-style"]
+dependencies = ["rustify-colors", "rustify-style"]
 
 [[packages]]
 name = "rustify-components"

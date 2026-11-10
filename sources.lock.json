@@ -1622,7 +1622,7 @@
       "upstream_inventory": "tests/utility/scanner/inventory.json",
       "files": {
         "crates/rustify-style/upstream/LICENSE-TAILWIND": "60e0b68c0f35c078eef3a5d29419d0b03ff84ec1df9c3f9d6e39a519a5ae7985",
-        "crates/rustify-style/upstream/classification-macros/Cargo.toml": "935fd03c6b7705891688fe5d6f244b7919edb5111aba929d7cd9e82adcecd54a",
+        "crates/rustify-style/upstream/classification-macros/Cargo.toml": "5d86329c60b046a28996c5ef1383134ac8ef5ad2c76bd8fe8399fd321015d066",
         "crates/rustify-style/upstream/classification-macros/src/lib.rs": "70ef9013d13442a904d30acac7d0b7923b71899fde58cc5c0a3d2b2cb761447c",
         "crates/rustify-style/upstream/oxide/cursor.rs": "a98f18a4ea42281e9025161e2275df0a74b9b281d30b8223101588053b90032e",
         "crates/rustify-style/upstream/oxide/extractor/arbitrary_property_machine.rs": "16e5c07df62d242ea66480d3e3f2975798f77b909304678b6fcfff842a5dfe8b",

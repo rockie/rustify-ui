@@ -1,6 +1,6 @@
 # crates.io release procedure
 
-This procedure releases the nine packages in [the inventory](../release/crates-io.toml).
+This procedure releases the ten packages in [the inventory](../release/crates-io.toml).
 It does not deploy Pages. Use Python 3.12 and the Rust/Cargo and mbx versions
 in [mise.toml](../mise.toml); every build runs through mbx. Publishing is a
 separate, explicitly authorized step. Ordinary CI has no registry credential.
@@ -33,6 +33,7 @@ directory, a command argument or a commit.
    mbx fetch --locked --manifest-path tests/dom-only/Cargo.toml
    mbx fetch --locked --manifest-path tests/dom-only/gpu-negative/Cargo.toml
    mbx fetch --locked --manifest-path tests/dom-only/hydration/Cargo.toml
+   mbx fetch --locked --manifest-path tests/dom-only/public-panel-consumer/Cargo.toml
    mbx fetch --locked --manifest-path makepad/Cargo.toml
    mbx fetch --locked --manifest-path makepad/platform/script/Cargo.toml
    python3.12 scripts/crates-io.py inspect
@@ -85,11 +86,11 @@ python3.12 scripts/crates-io.py plan-libraries --reuse "$PREV" --rev "$R"
 python3.12 scripts/crates-io.py package-libraries --rev "$R" --reuse "$PREV" --out "$DIR"
 ```
 
-A CLI-only change therefore keeps all eight library archives and needs only a
+A CLI-only change therefore keeps all nine library archives and needs only a
 new C and CLI archive. A change to rustify-style or the framework trio still
 rebuilds every package that resolves it, because their packaged locks and exact
 pins change. Library versions are inherited from the workspace, so bumping one
-of them rewrites every manifest and the plan reports all eight; give a package
+of them rewrites every manifest and the plan reports all nine; give a package
 its own `version` when it has to move alone. A byte mismatch against the previous receipt is a failure to
 investigate; do not replace receipt hashes or silently regenerate the release
 to hide it.
@@ -114,7 +115,7 @@ nightly sandbox result. Do not deploy the official site as part of this release.
 
 ## Account and authorization gate
 
-Before any upload, record the user's approval of the nine package names and
+Before any upload, record the user's approval of the ten package names and
 versions, actual upload, and later public documentation/tag pushes. Recheck
 each name, version and existing owner on crates.io; a name query does not
 reserve it. Stop on an unexpected owner or version, rather than selecting a
@@ -174,7 +175,7 @@ Cargo currently documents a [10 MB limit](https://doc.rust-lang.org/cargo/refere
   resume the same R/C/receipt. Do not repackage or pick a new version merely
   to bypass a wait.
 
-After all eight Docs-group packages are public:
+After all nine Docs-group packages are public:
 
 ```sh
 python3.12 scripts/crates-io.py verify --release "$DIR" --public-docs
@@ -188,15 +189,15 @@ is retained; there is no cross-package rollback transaction and no automatic yan
 
 ## Public completion and cleanup
 
-Once all nine packages are available, update the repository's public default
+Once all ten packages are available, update the repository's public default
 installation/upgrade/rollback instructions and CHANGELOG to 0.2.0, commit and
 push within the approval scope. Do not change already validated package README
 or template bytes after freezing. From public links read back the new wording.
 
 Run `verify --release "$DIR" --public` with another fresh Cargo home/root and
-complete the final public author/migration checks. Query all nine exact package
-versions and the eight libraries' docs.rs version/build results; wait for all
-eight documentation jobs to succeed. A queued or failed library job is an unpassed gate.
+complete the final public author/migration checks. Query all ten exact package
+versions and the nine libraries' docs.rs version/build results; wait for all
+nine documentation jobs to succeed. A queued or failed library job is an unpassed gate.
 The CLI is binary-only, while docs.rs invokes `rustdoc --lib`; retain its
 no-library-target build result and verify its public package README, `--help`
 and real installation/use instead. The publishing user confirmed this boundary

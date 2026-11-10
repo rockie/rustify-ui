@@ -64,6 +64,7 @@ jobs:
           mbx fetch --locked --manifest-path tests/dom-only/Cargo.toml
           mbx fetch --locked --manifest-path tests/dom-only/gpu-negative/Cargo.toml
           mbx fetch --locked --manifest-path tests/dom-only/hydration/Cargo.toml
+          mbx fetch --locked --manifest-path tests/dom-only/public-panel-consumer/Cargo.toml
           mbx fetch --locked --manifest-path makepad/Cargo.toml
           mbx fetch --locked --manifest-path makepad/platform/script/Cargo.toml
       - name: Package frozen R, reproduce the real template lock, package C

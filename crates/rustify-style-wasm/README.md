@@ -8,7 +8,7 @@ Use the exact registry version in your manifest:
 
 ```toml
 [dependencies]
-rustify-style-wasm = { version = "=0.2.0", features = ["compiler", "scanner"] }
+rustify-style-wasm = { version = "=0.3.0", features = ["compiler", "scanner"] }
 ```
 
 See the [repository](https://github.com/rockie/rustify-ui) and [author guide](https://github.com/rockie/rustify-ui/blob/main/docs/docs-ssg.md).

@@ -106,6 +106,7 @@
 | 1c5130cd-8702-4adf-aace-8d605adac501 | DOM-COMPONENTS-P5 完整计划评审事件 | [入口](1c5130cd-8702-4adf-aace-8d605adac501/index.md) |
 | cf6d6b8a-068c-4e33-af64-7866180612d6 | DOM-COMPONENTS-P5 PRD 覆盖核查事件 | [入口](cf6d6b8a-068c-4e33-af64-7866180612d6/index.md) |
 | 6b1d35bf-077b-440d-8d7b-bfef8fdeeff4 | DOM-COMPONENTS-P5-gaps 完整计划评审事件 | [入口](6b1d35bf-077b-440d-8d7b-bfef8fdeeff4/index.md) |
+| 4068cbe5-0c09-4ed7-9996-1336a588a187 | DOM-COMPONENTS-RELEASE 计划评审 R1 事件 | [入口](4068cbe5-0c09-4ed7-9996-1336a588a187/index.md) |
 
 
 维护约定：改变本层内容者同步索引；按稳定 ID/路径保留历史，无变化不重写，索引不作为事件。详见[目录索引维护](../../protocol.md#目录索引维护)。

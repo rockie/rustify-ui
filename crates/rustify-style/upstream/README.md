@@ -10,7 +10,7 @@ without source changes. `throughput.rs` is compiled only for upstream native
 tests. `classification-macros/` copies the private host proc-macro crate, with its
 manifest explicitly enabling `syn/full` (normally supplied transitively); it
 builds byte classification tables and introduces no WASM runtime dependency.
-For crates.io it is named `rustify-classification-macros` 0.2.0; its library
+For crates.io it is named `rustify-classification-macros` 0.3.0; its library
 name remains `classification_macros`. The manifest adds publication metadata
 and a content allowlist, and its own LICENSE copies the upstream MIT notice.
 Original and current manifest fingerprints are recorded separately in the inventory.
