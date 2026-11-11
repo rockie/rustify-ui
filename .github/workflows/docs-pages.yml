@@ -59,6 +59,8 @@ jobs:
         run: |
           mbx install --git https://github.com/rockie/rustify-ui --rev "$CANDIDATE_SHA" \
             --locked --profile docs-cli --root "$RUNNER_TEMP/docs-cli" rustify-docs-cli
+      - name: Prefetch the site lock
+        run: mbx fetch --locked --manifest-path site/Cargo.toml
       - name: Prepare the frozen official consumer
         run: |
           mkdir -p "$RUNNER_TEMP/docs-pages-evidence"
