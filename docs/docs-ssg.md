@@ -1773,15 +1773,17 @@ does not enable Pages. This repository now has that configuration. The
 archive includes `.nojekyll`, and its actual members are checked against
 the complete manifest before upload.
 
-The [public site](https://rockie.github.io/rustify-ui/) and public Git
-installation of the pinned 0.1.32 CLI have been verified. The site was
-published from C2 `88566ba1ed08223a5834f794840fff5e48f4ba8a` by workflow run
-[39388531674](https://github.com/rockie/rustify-ui/actions/runs/39388531674); its
-[release record](plan/DOCS-SSG-P4-gaps.records/M3.md) identifies the online
-file and browser checks. The previous release, C1
-`1146b7d8febdf53ca1bc1a4c01946604e7625a95` (0.1.31), is the last-good C. The
-[P4 release record](plan/DOCS-SSG-P4.records/M7.md) identifies its workflow
-runs, online checks and the rollback rehearsal.
+The [public site](https://rockie.github.io/rustify-ui/) has been verified. The
+site was published from the 0.3.0 release candidate
+`596175e3550794fd83683e433702bea0534b509c` by workflow run
+[42953922752](https://github.com/rockie/rustify-ui/actions/runs/42953922752)
+(build `3fe8d486f30d8aa5`, manifest `cli_version` 0.3.0); its
+[release record](plan/DOM-COMPONENTS-RELEASE.records/M4.md) identifies the
+local preview, online checks and real-use acceptance. The previous
+deployment, C2 `88566ba1ed08223a5834f794840fff5e48f4ba8a` (0.1.32), is the
+last-good C. The [P4 gaps record](plan/DOCS-SSG-P4-gaps.records/M3.md)
+identifies that deployment's workflow runs, online checks and the rollback
+rehearsal.
 
 After the required acceptance checks and publication authorization,
 assign `DOCS_C` the approved complete CLI commit SHA and run:
