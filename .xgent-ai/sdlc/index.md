@@ -14,7 +14,7 @@
 
 ## 当前重点
 
-- [DOM-COMPONENTS-RELEASE](status/plan/478ef381-d91a-43f9-9ea0-3b03abe65d9b.md)：实施完成（dev-plan-completed），4/4 里程碑完成。十包 0.3.0 公开在 crates.io，Pages 已上线（run `42953922752`、build_id `3fe8d486f30d8aa5`），E=`458333d5` 在公共 main。遗留：发布人临时 token 撤销（M3 记录）。下一步：用户以计划路径发起 review-code。
+- [DOM-COMPONENTS-RELEASE](status/plan/478ef381-d91a-43f9-9ea0-3b03abe65d9b.md)：实施完成（dev-plan-completed），4/4 里程碑完成。十包 0.3.0 公开在 crates.io，Pages 已上线（run `42953922752`、build_id `3fe8d486f30d8aa5`），E=`458333d5` 在公共 main。临时 token 经用户确认不撤销（2026-11-11）。下一步：用户以计划路径发起 review-code。
 
 - [DOM-COMPONENTS-P5](status/plan/7d8e0cdb-4684-4ba6-8a88-40ef7b12df73.md)：原文 Ready，dev-plan-ready；实施 4/4 dev-plan-completed（M1—M3 `500022a5`，M4 `7eba0829`），V-12 辅助技术与触控 missing，C-6/C-7/C-8 豁免见 M4 记录。[代码评审 R1](status/review/39f94a8a-8462-4c80-b452-aa5505899598.md)原判需要修改；F-01/F-02 已在 `857507ba` 修复并验证（review-applied），计划回填 `f12d5220`；[代码复审 R2](status/review/10111e26-94ab-4789-8bb3-a9cdb13e2d8d.md)确认两项关闭、无新增缺陷，判通过验收（review-not-required），本计划代码验收完成，未推送。[PRD 覆盖核查](status/review/cf6d6b8a-068c-4e33-af64-7866180612d6.md)另发现 A7/B1/C0、待核实 2，本期 PRD 未完整覆盖；[独立 gaps](status/plan/31302555-1d68-4a02-9116-d584b50e6882.md)原文 Ready、实施 0/2，[计划评审 R1](status/review/6b1d35bf-077b-440d-8d7b-bfef8fdeeff4.md)原判需要修改（F-01 P2 + 5×P3）；[同轮文档处置](../../docs/plan/DOM-COMPONENTS-P5-gaps.review.md#修订处置与复核) 已修订并复核六项，review-applied，当前 Ready/dev-plan-ready、0/2；两项实施期待核实留 M1，下一步按该计划开发。原代码验收与 C-6/C-7/C-8 豁免历史保留，未验证范围不记通过。
 
