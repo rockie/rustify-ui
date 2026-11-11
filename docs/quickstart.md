@@ -403,7 +403,7 @@ The full DOM library is `rustify_components`; the smaller
 `rustify_ui::components` helpers in the example above retain their own API.
 For native FormRoot, three-state choices/groups/cards, named sliders, field
 slots and composed Select, the registry **0.3.0** pair above supplies these
-APIs directly; no source checkout is needed. Consumers developing next to a
+APIs directly; no local source copy is required. Consumers developing next to a
 local checkout may replace its two framework dependencies:
 
 ```toml
