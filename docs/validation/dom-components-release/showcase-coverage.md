@@ -30,3 +30,7 @@
 3. `ThemeBoundary` 在 docs island 内挂载 panic（`expect("ThemeBoundary requires a ThemeScope")`，island 无 ThemeScope；不改 SDK）；`theme_boundary_demo` 为双端静态对照说明，根/局部/继承来源比较由公开 Studio 的 Inspector 承担（V-15 已验）。
 4. 新增 `theme.document`（schema v2 标准主题）后，主题运行时在 `data-rustify-notifications` 宿主上经 CSSOM 注入 token 自定义属性（style 属性）；CSP 不拦截 CSSOM 注入，official.spec.ts 的 `[style]` 断言已放行该宿主（其余仍为 0）。
 5. 设计工具：用户指定以 phoenix-ui 替代 impeccable（2026-11-12）；已运行 phoenix-ui context，页面基于 PRODUCT/DESIGN 中性文档壳设计，未使用 impeccable（技能缺失如实记录）。
+
+## 上线终验（M7，2026-11-12/13）
+
+线上 build_id `529f5ec678ee1c77`（run `43247264809`，候选 `cd062cad`）：线上 manifest 与同 run 工件 509 文件一致、11 文件字节抽查全等（含 Studio 全套与打包字体）；V-19 三段真实使用验收全部通过（①发现/比较/键盘/表格树 + 修正复验；②Studio 全流程含三格式导出落盘与非法导入恢复；③仓外 registry =0.3.0 项目消费导出主题，主色与官网一致 [23,92,211]，边界 accent 覆盖 #7c3aed）。证据：`~/Documents/rustify-releases/m5m7-evidence/`（artifact、online-verify、exports/、invalid-theme.json）与 `~/Documents/rustify-releases/m5m7-consumer/`（独立消费项目，含构建产物）。
