@@ -93,7 +93,9 @@ jobs:
         run: |
           mbx fetch --locked
           studio="$RUNNER_TEMP/docs-pages-studio"
-          built=$(mbx xtask build-web --example theme-studio --release --base /rustify-ui/theme-studio/ | sed -n 's/^built theme-studio -> //p')
+          # A base-qualified build prints one line per product (the root product and
+        # the @base variant); the public sub-path product is the last one printed.
+        built=$(mbx xtask build-web --example theme-studio --release --base /rustify-ui/theme-studio/ | sed -n 's/^built theme-studio -> //p' | tail -1)
           test -n "$built"
           rm -rf "$studio"
           cp -R "$built" "$studio"
