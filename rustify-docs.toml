@@ -32,6 +32,13 @@ url = "https://github.com/rockie/rustify-ui"
 ref = "main"
 edit_url = "https://github.com/rockie/rustify-ui/edit/main"
 
+[theme]
+document = "site/theme.json"
+
+[[nav.groups]]
+label = "Explore"
+routes = ["/colors/", "/primitives/", "/studio/"]
+
 [[nav.groups]]
 label = "Guides"
 items = [
@@ -44,6 +51,9 @@ items = [
 [[nav.groups]]
 label = "Components"
 routes = [
+    "/components/interaction/", "/components/overlays/", "/components/menus/",
+    "/components/navigation/", "/components/content/", "/components/feedback/", "/components/layout/",
+    "/components/typography/", "/components/extensions/",
     "/components/button/", "/components/label/", "/components/link/", "/components/icon/",
     "/components/text-field/", "/components/text-area/", "/components/checkbox/", "/components/radio/",
     "/components/switch/", "/components/select/", "/components/slider/", "/components/progress/",
@@ -67,6 +77,10 @@ label = "中文"
 prefix = "zh"
 
 [[i18n.locales.nav.groups]]
+label = "探索"
+routes = ["/colors/", "/primitives/", "/studio/"]
+
+[[i18n.locales.nav.groups]]
 label = "指南"
 items = [
     "quickstart.md", "architecture.md", "navigation.md", "workspace.md",
@@ -78,6 +92,9 @@ items = [
 [[i18n.locales.nav.groups]]
 label = "组件"
 routes = [
+    "/components/interaction/", "/components/overlays/", "/components/menus/",
+    "/components/navigation/", "/components/content/", "/components/feedback/", "/components/layout/",
+    "/components/typography/", "/components/extensions/",
     "/components/button/", "/components/label/", "/components/link/", "/components/icon/",
     "/components/text-field/", "/components/text-area/", "/components/checkbox/", "/components/radio/",
     "/components/switch/", "/components/select/", "/components/slider/", "/components/progress/",

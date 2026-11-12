@@ -34,6 +34,9 @@ parts share raw/themed behavior; the data-driven Menu remains available for
 point and GPU anchors. Theme Studio's Components scene presents working samples
 and a part Inspector with root, local-boundary and inherited floating sources.
 
+
+The official site shows every released family with working examples, plus [Colors](https://rockie.github.io/rustify-ui/colors/), [Primitives](https://rockie.github.io/rustify-ui/primitives/) and the public [Theme Studio](https://rockie.github.io/rustify-ui/theme-studio/).
+
 ## Quick start
 
 The validated development environment is macOS. Use a browser with WebAssembly and WebGL2; macOS Chrome is the current pass gate. See [compatibility](docs/compatibility.md) for the tested browser matrix.

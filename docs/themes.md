@@ -3,6 +3,10 @@ description: Create, resolve, import and export versioned theme documents and ap
 ---
 # Theme documents
 
+Browse the released color scales on [Colors](/colors/), compare raw parts on
+[Primitives](/primitives/), or open the complete public
+[Theme Studio](https://rockie.github.io/rustify-ui/theme-studio/) beside this guide.
+
 The versioned theme model preserves author values and resolves one snapshot for DOM and GPU consumers. The legacy `Theme`, `ThemePatch`, `ThemedScope` and `ThemeOverride` APIs keep their existing contracts. Conversion is one way: a complete document cannot be reduced to the legacy opaque palette without losing information.
 
 Schema v2 ships in the published **0.3.0** packages. Published SDK/CLI

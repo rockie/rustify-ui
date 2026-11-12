@@ -1,8 +1,8 @@
 use leptos::prelude::*;
 use rustify_components::{
-    Button, ButtonVariant, Dialog, Menu, MenuItem, Progress, Toaster, Tooltip,
+    Button, ButtonVariant, Dialog, Menu, MenuItem, Progress, Skeleton, Toaster, Tooltip,
 };
-use rustify_ui::{provide_toasts, Anchor, ToastOptions, ToastTone};
+use rustify_ui::{provide_toasts, ToastOptions, ToastTone};
 
 /// Progress uses external geometry rules for its application-owned value.
 pub fn progress_demo() -> impl IntoView {
@@ -18,6 +18,41 @@ pub fn progress_demo() -> impl IntoView {
                 <Button variant=ButtonVariant::Outline on_click=move || progress.set(0.0)>"Reset"</Button>
             </div>
             <p class="text-sm">"Complete: "<output data-demo-state="">{move || progress.get().to_string()}</output>"%"</p>
+        </div>
+    }
+}
+
+/// A spinner is a named, motion-aware loading indicator.
+pub fn spinner_demo() -> impl IntoView {
+    let busy = RwSignal::new(true);
+    view! {
+        <div class="space-y-4">
+            <div class="flex h-8 items-center gap-3">
+                <Show when=move || busy.get() fallback=|| view! { <span class="text-sm">"Idle"</span> }>
+                    <rustify_components::Spinner label="Loading accounts" />
+                </Show>
+            </div>
+            <Button variant=ButtonVariant::Outline on_click=move || busy.set(!busy.get_untracked())>
+                {move || if busy.get() { "Finish loading" } else { "Load again" }}
+            </Button>
+            <p class="text-sm">"Status: "<output data-demo-state="">{move || if busy.get() { "Loading accounts" } else { "Idle" }}</output></p>
+        </div>
+    }
+}
+
+/// A skeleton holds the shape of content that is not ready yet.
+pub fn skeleton_demo() -> impl IntoView {
+    let loaded = RwSignal::new(false);
+    view! {
+        <div class="space-y-4">
+            <Skeleton loading=Signal::derive(move || !loaded.get()) class="max-w-md space-y-2">
+                <p class="text-sm font-medium">"Accounts loaded"</p>
+                <p class="text-sm">"Three real rows arrived from the application."</p>
+            </Skeleton>
+            <Button variant=ButtonVariant::Outline on_click=move || loaded.set(!loaded.get_untracked())>
+                {move || if loaded.get() { "Show the skeleton" } else { "Load the content" }}
+            </Button>
+            <p class="text-sm">"Content: "<output data-demo-state="">{move || if loaded.get() { "Loaded" } else { "Loading" }}</output></p>
         </div>
     }
 }
@@ -46,9 +81,9 @@ pub fn menu_demo() -> impl IntoView {
     let anchor = Signal::derive(move || {
         #[cfg(target_arch = "wasm32")]
         if let Some(button) = trigger.get() {
-            return Anchor::element(button.as_ref());
+            return rustify_ui::Anchor::element(button.as_ref());
         }
-        Anchor::Centred
+        rustify_ui::Anchor::Centred
     });
     view! {
         <div class="space-y-4">
@@ -71,7 +106,8 @@ pub fn menu_demo() -> impl IntoView {
     }
 }
 
-/// A modal dialog contains focus until confirmation or dismissal.
+/// A modal dialog contains focus until confirmation or dismissal, and the two
+/// exits carry different results.
 pub fn dialog_demo() -> impl IntoView {
     let open = RwSignal::new(false);
     let result = RwSignal::new("Not confirmed".to_string());
@@ -81,13 +117,81 @@ pub fn dialog_demo() -> impl IntoView {
                 "Open dialog"
             </Button>
             <Dialog open=open on_open_change=move |value| open.set(value)
-                title="Confirm an action" description="Press Confirm, or close the dialog without confirming."
+                title="Confirm an action" description="Press Confirm to accept, or close the dialog to keep the draft."
                 close_label="Close dialog">
-                <Button on_click=move || { result.set("Confirmed".to_string()); open.set(false); }>
-                    "Confirm"
-                </Button>
+                <div class="flex gap-3">
+                    <Button on_click=move || { result.set("Confirmed".to_string()); open.set(false); }>"Confirm"</Button>
+                    <Button variant=ButtonVariant::Outline on_click=move || { result.set("Dismissed".to_string()); open.set(false); }>"Dismiss"</Button>
+                </div>
             </Dialog>
             <p class="text-sm">"Result: "<output data-demo-state="">{move || result.get()}</output></p>
+        </div>
+    }
+}
+
+/// An alert dialog separates a destructive action from plain cancellation.
+pub fn alert_dialog_demo() -> impl IntoView {
+    let open = RwSignal::new(false);
+    let outcome = RwSignal::new("Nothing deleted".to_string());
+    view! {
+        <div class="space-y-4">
+            <Button variant=ButtonVariant::Outline on_click=move || open.set(true)>"Delete a workspace"</Button>
+            <rustify_components::alert_dialog::Root open=Signal::derive(move || open.get()) on_open_change=Callback::new(move |next| open.set(next))>
+                <rustify_components::alert_dialog::Content>
+                    <rustify_components::alert_dialog::Title>"Delete this workspace?"</rustify_components::alert_dialog::Title>
+                    <rustify_components::alert_dialog::Description>"The workspace's drafts leave with it; deleting cannot be undone."</rustify_components::alert_dialog::Description>
+                    <div class="flex gap-3">
+                        <rustify_components::alert_dialog::Cancel>"Cancel"</rustify_components::alert_dialog::Cancel>
+                        <rustify_components::alert_dialog::Action on_action=Callback::new(move |_allow: rustify_ui::Cancelable<()>| {
+                            outcome.set("Workspace deleted".to_string());
+                            open.set(false);
+                        })>"Delete"</rustify_components::alert_dialog::Action>
+                    </div>
+                </rustify_components::alert_dialog::Content>
+            </rustify_components::alert_dialog::Root>
+            <p class="text-sm">"Outcome: "<output data-demo-state="">{move || outcome.get()}</output></p>
+        </div>
+    }
+}
+
+/// A popover holds real controls, not just text.
+pub fn popover_demo() -> impl IntoView {
+    let open = RwSignal::new(false);
+    let density = RwSignal::new("comfortable".to_string());
+    view! {
+        <div class="space-y-4">
+            <Button variant=ButtonVariant::Outline on_click=move || open.set(!open.get())>"Choose a density"</Button>
+            <rustify_components::popover::Root open=Signal::derive(move || open.get()) on_open_change=Callback::new(move |next| open.set(next))>
+                <rustify_components::popover::Content aria_label="Density" class="w-64 space-y-3 p-3">
+                    <p class="text-sm font-medium">"Interface density"</p>
+                    <RadioGroupForDensity density=density />
+                    <Button on_click=move || open.set(false)>"Done"</Button>
+                </rustify_components::popover::Content>
+            </rustify_components::popover::Root>
+            <p class="text-sm">"Density: "<output data-demo-state="">{move || density.get()}</output></p>
+        </div>
+    }
+}
+
+/// A hover card previews the destination of a real link.
+pub fn hover_card_demo() -> impl IntoView {
+    let open = RwSignal::new(false);
+    view! {
+        <div class="space-y-4">
+            <rustify_components::hover_card::Root open=Signal::derive(move || open.get()) on_open_change=Callback::new(move |next| open.set(next))>
+                <rustify_components::hover_card::Trigger href="#hover-card-demo-target">
+                    "Hover for the theme guide"
+                </rustify_components::hover_card::Trigger>
+                <rustify_components::hover_card::Portal>
+                    <rustify_components::hover_card::Content class="w-64 space-y-2 p-3">
+                        <p class="text-sm font-medium">"Theme guide"</p>
+                        <p class="text-sm">"Scoped themes, boundaries and the exported codec."</p>
+                        <rustify_components::hover_card::Arrow />
+                    </rustify_components::hover_card::Content>
+                </rustify_components::hover_card::Portal>
+            </rustify_components::hover_card::Root>
+            <p id="hover-card-demo-target" tabindex="-1" class="text-sm">"The link lands on this paragraph."</p>
+            <p class="text-sm">"Hover card: "<output data-demo-state="">{move || if open.get() { "Open" } else { "Closed" }}</output></p>
         </div>
     }
 }
@@ -97,13 +201,22 @@ pub fn toast_demo() -> impl IntoView {
     let toasts = provide_toasts();
     view! {
         <div class="space-y-4">
-            <Button on_click=move || {
-                toasts.show("The example action completed.", ToastOptions {
-                    duration_ms: 5000,
-                    tone: ToastTone::Success,
-                    ..Default::default()
-                });
-            }>"Show notification"</Button>
+            <div class="flex flex-wrap gap-3">
+                <Button on_click=move || {
+                    toasts.show("The example action completed.", ToastOptions {
+                        duration_ms: 5000,
+                        tone: ToastTone::Success,
+                        ..Default::default()
+                    });
+                }>"Show notification"</Button>
+                <Button variant=ButtonVariant::Outline on_click=move || {
+                    toasts.show("The draft kept your last edit.", ToastOptions {
+                        duration_ms: 5000,
+                        tone: ToastTone::Warning,
+                        ..Default::default()
+                    });
+                }>"Show warning"</Button>
+            </div>
             <p class="text-sm">"Notification: "<output data-demo-state="">{move || {
                 toasts.current().map(|toast| toast.message).unwrap_or_else(|| "None".to_string())
             }}</output></p>
@@ -111,3 +224,16 @@ pub fn toast_demo() -> impl IntoView {
         </div>
     }
 }
+
+#[component]
+fn RadioGroupForDensity(density: RwSignal<String>) -> impl IntoView {
+    view! {
+        <RadioGroup value=density on_change=move |value| density.set(value) aria_label="Density"
+            options=vec![
+                RadioOption::new("comfortable", "Comfortable"),
+                RadioOption::new("compact", "Compact"),
+            ] />
+    }
+}
+
+use rustify_components::{RadioGroup, RadioOption};

@@ -3,6 +3,8 @@ description: Compose controlled command menus, native site navigation and toolba
 ---
 # Menus, navigation and toolbars
 
+Operate every menu family on [Menus](/components/menus/).
+
 Use these parts inside a mounted DOM scope, with the loader and stylesheet setup
 from the [DOM quick start](quickstart.md#a-dom-application-without-gpu-regions).
 Use matching SDK and CSS; these APIs ship in the registry 0.3.0 packages.

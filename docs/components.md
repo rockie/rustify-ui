@@ -25,6 +25,23 @@ for defaults and enum values.
 <!-- catalogue -->
 ## Public source entries
 
+## Browse by group
+
+The showcase groups every released family with working examples:
+
+- [Interaction](/components/interaction/) — buttons, choices, ranges, fields and pickers
+- [Overlays](/components/overlays/) — dialogs, alert dialogs, popover, hover cards and tooltips
+- [Menus](/components/menus/) — dropdown, context menu and menubar
+- [Navigation](/components/navigation/) — tabs, tab nav, accordion, collapsible, navigation menu and toolbar
+- [Content](/components/content/) — avatar, badge, card, callout, data lists, tables and sizing
+- [Feedback](/components/feedback/) — progress, spinner, skeleton and toast
+- [Layout](/components/layout/) — box, flex, grid, container, section, inset and reset
+- [Typography](/components/typography/) — semantic text families
+- [Extensions](/components/extensions/) — data table, tree, files and workspace surfaces
+
+Also see [Colors](/colors/), [Primitives](/primitives/) and the public [Theme Studio](https://rockie.github.io/rustify-ui/theme-studio/).
+
+
 182 entries: 67 components, 37 subcomponent, 66 helper groups and 12 data surface. These are source APIs, not a count of all exported Rust symbols. The legacy application navigation has 24 categories.
 
 `yes` describes the listed Rust fields and limits; `partial` describes an available subset. Verification paths name checks and consumers to rerun, not a permanent browser/accessibility certification. GPU columns describe existing presentation subsets, not DOM/GPU API parity.

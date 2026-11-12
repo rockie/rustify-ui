@@ -3,6 +3,8 @@ description: Build controlled DOM panels, safe confirmations and notifications w
 ---
 # Panels and feedback
 
+Operate the overlay families on [Overlays](/components/overlays/).
+
 Use these APIs for a DOM application. They require no GPU feature and do
 not add Makepad components. The panel and feedback APIs described here ship
 in the published 0.3.0 packages. Use the SDK, components and CSS from the

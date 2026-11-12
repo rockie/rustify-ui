@@ -3,6 +3,8 @@ description: Forms as a state machine for field errors, validation, saving and u
 ---
 # Forms
 
+Operate the fields, forms and pickers on [Interaction](/components/interaction/).
+
 A form here is a state machine, not a store. It holds what is wrong with each
 field, whether a validation is running, whether a save is in flight and whether
 anything has changed - and it deliberately does **not** hold the values.
