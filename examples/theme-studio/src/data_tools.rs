@@ -343,8 +343,8 @@ fn integration_notes(
         .replace('>', "&gt;");
     let mut text = format!(
         "Rustify Theme setup / 主题接入说明\nSource revision / 源码修订: {}\n\n\
-        JSON v2 / Rust: use the SDK and CSS from this source checkout. Published 0.2.1 SDK/CLI reject complete v2 documents.\n\
-        JSON v2 / Rust：使用此修订的源码 SDK 与 CSS，已发布的 0.2.1 SDK/CLI 不支持完整 v2。\n\
+        JSON v2 / Rust: the published 0.3.0 SDK/CLI accept complete v2 documents; 0.2.1 and older reject them.\n\
+        JSON v2 / Rust：已发布的 0.3.0 SDK/CLI 支持完整 v2；0.2.1 及更早版本拒绝。\n\
         Only for Docs / 仅 Docs 路径需要：build the source CLI from the same checkout / 从同一 checkout 构建源码 CLI：\n\
         mbx build --locked -p rustify-docs-cli --profile docs-cli\n\
         Docs author dependencies rustify-docs, rustify-dom and rustify-components must use canonical paths in that checkout.\n\
@@ -420,7 +420,7 @@ use std::sync::Arc;
 // Put the downloaded theme.json beside this source file.
 // Include sdk.css and then theme-v4.css in one Tailwind v4 build.
 // Copy the listed same-origin font files and their licenses; fonts are external.
-// Use the matching source SDK/CSS. The published 0.2.1 SDK and CLI reject v2.
+// The published 0.3.0 SDK and CLI accept v2; 0.2.1 and older reject it.
 pub fn load_exported_theme(mode: ThemeMode) -> Result<Arc<ResolvedTheme>, ThemeError> {
     load_exported_theme_with_context(mode, &font_context(16., false))
 }
@@ -1227,7 +1227,7 @@ mod browser {
                             <dt>{move || tr(locale.get(),"Integration","接入方式")}</dt><dd>{move || if export_kind.get()=="css" {
                                 tr(locale.get(),"Two resolved modes. Static CSS needs no wasm or CLI; compile Tailwind profiles with Tailwind 4.1.13. New SDK components/source Docs need matching source assets.","两模式解析值。静态 CSS 无需 wasm 或 CLI；Tailwind 输出使用 Tailwind 4.1.13 编译。新 SDK 组件/源码 Docs 使用同源资产。")
                             } else {
-                                tr(locale.get(),"JSON v2 / Rust require matching source SDK and CSS. Published 0.2.1 SDK/CLI reject complete v2. Compatible v1 is lossy; retain v2. Only Docs needs the source CLI from this checkout.","JSON v2 / Rust 需要匹配修订的源码 SDK 和 CSS。已发布的 0.2.1 SDK/CLI 不支持完整 v2。兼容 v1 有损，请保留 v2。仅 Docs 路径需要同一 checkout 的源码 CLI。")
+                                tr(locale.get(),"JSON v2 / Rust run on the published 0.3.0 SDK/CLI; 0.2.1 and older reject complete v2. Compatible v1 is lossy; retain v2. Only Docs needs the source CLI from this checkout.","JSON v2 / Rust 可直接使用已发布的 0.3.0 SDK/CLI；0.2.1 及更早版本拒绝完整 v2。兼容 v1 有损，请保留 v2。仅 Docs 路径需要同一 checkout 的源码 CLI。")
                             }}</dd>
                             <dt>{move || tr(locale.get(),"External fonts","外部字体")}</dt><dd>{move || tr(locale.get(),"Copy the resolved font files and original licenses listed in the setup notes. This download contains instructions, not font files.","请按接入说明复制实际解析的字体文件及原许可。本下载仅含说明，不含字体文件。")}</dd>
                         </dl>
@@ -1261,7 +1261,7 @@ mod browser {
                             <p class="tools-status">{move ||tr(locale.get(),"CSS contains both resolved sRGB modes. Scoped dark selector:","CSS 包含 sRGB 下两种模式的解析结果。局部深色选择器：")}" "<code>"[data-theme=\"dark\"]"</code>"; "{move ||tr(locale.get(),"standard selector:","标准选择器：")}" "<code>".dark"</code>". "{move ||tr(locale.get(),"Author configuration remains in JSON. Copy the external font files and their licenses.","作者配置保留在 JSON 中。请复制外部字体文件及其许可。")}</p>
                         </Show>
                         <Show when=move || export_kind.get()=="rust" fallback=|| ()>
-                            <p class="tools-status">{move ||tr(locale.get(),"Put","将")}" "<code>"theme.json"</code>" "{move ||tr(locale.get(),"next to","放在")}" "<code>"theme.rs"</code>{move ||tr(locale.get(),". "," 旁边。")}{move ||tr(locale.get(),"Use the matching source SDK and CSS; the published 0.2.1 SDK/CLI reject v2. Keep the returned","使用匹配的源码 SDK 和 CSS；已发布的 0.2.1 SDK/CLI 不支持 v2。UI 挂载期间须保持返回的")}" "<code>"AppHandle"</code>" "{move ||tr(locale.get(),"alive while the UI is mounted. Fonts remain external.","存活。字体仍使用外部资源。")}</p>
+                            <p class="tools-status">{move ||tr(locale.get(),"Put","将")}" "<code>"theme.json"</code>" "{move ||tr(locale.get(),"next to","放在")}" "<code>"theme.rs"</code>{move ||tr(locale.get(),". "," 旁边。")}{move ||tr(locale.get(),"Use the published 0.3.0 SDK/CLI; 0.2.1 and older reject v2. Keep the returned","使用已发布的 0.3.0 SDK/CLI；0.2.1 及更早版本不支持 v2。UI 挂载期间须保持返回的")}" "<code>"AppHandle"</code>" "{move ||tr(locale.get(),"alive while the UI is mounted. Fonts remain external.","存活。字体仍使用外部资源。")}</p>
                             <p class="tools-status">{move || tr(locale.get(),"For Docs only, build the CLI from that revision:","仅 Docs 路径：从同一修订构建 CLI：")}" "<code>"mbx build --locked -p rustify-docs-cli --profile docs-cli"</code></p>
                             <Button variant=ButtonVariant::Outline on_click=move || match export_artifact(&document.get_untracked(),&context.get_untracked(),"json","scoped","rgb") {
                                 Ok(artifact) => download(&artifact,feedback,issue), Err(error) => issue.set(error.to_string())

@@ -303,3 +303,17 @@ button,input,textarea {font:inherit;}
 .gallery-workspace-panel { min-width: 0; padding: 12px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--muted); color: var(--foreground); font-size: 13px; }
 .gallery-files-reason:empty { display: none; }
 .component-gallery[data-show-parts=true] [data-rustify-part]::after { content: attr(data-rustify-part); position: absolute; z-index: 2; inset-inline-start: 0; bottom: 100%; padding: 1px 3px; font: 10px/1.2 monospace; background: var(--background); color: var(--foreground); pointer-events: none; }
+
+.studio-topbar {
+  display: flex;
+  justify-content: flex-end;
+  padding: 8px 16px;
+}
+.studio-back {
+  font: inherit;
+  color: var(--primary, inherit);
+  text-decoration: none;
+}
+.studio-back:hover {
+  text-decoration: underline;
+}

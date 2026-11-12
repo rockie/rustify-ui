@@ -4,6 +4,11 @@ import { createHash } from "node:crypto";
 
 test.use({ fresh: true });
 
+// This spec gates the standalone Theme Studio deployment. The composed
+// deployment beside the official docs is covered by the V-15 scenario in
+// tests/docs-ssg/official.spec.ts, scripts/docs-pages-verify.py::check_studio
+// and the compose protocol tests in tests/crates-io/test_pairing.py.
+
 const packagedFonts = [
     ["IBM Plex Sans", "IBMPlexSans-Text.ttf"],
     ["Noto Sans", "NotoSans-Regular.ttf"],

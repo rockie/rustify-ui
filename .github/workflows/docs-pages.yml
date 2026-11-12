@@ -69,7 +69,6 @@ jobs:
             > "$RUNNER_TEMP/docs-pages-evidence/prepare.json"
           cp "$RUNNER_TEMP/docs-site/.rustify-docs/pages-prepare.json" "$RUNNER_TEMP/docs-pages-evidence/"
       - name: Check and build the complete site
-        id: build
         run: |
           cli="$RUNNER_TEMP/docs-cli/bin/rustify-docs"
           config="$RUNNER_TEMP/docs-site/rustify-docs.toml"
@@ -88,22 +87,46 @@ jobs:
           output = json.loads(manifest.read_text())
           if output['base'] != '/rustify-ui/' or output['mode'] != 'production':
               raise SystemExit('the build must publish the official production base')
-          helpers['verify_inputs'](manifest.parent, {entry['path']: entry['sha256'] for entry in output['files']})
-          evidence = Path(os.environ['RUNNER_TEMP']) / 'docs-pages-evidence'
-          (evidence / manifest.name).write_bytes(manifest.read_bytes())
+          PY
+      - name: Build the public Theme Studio and compose the Pages output
+        id: compose
+        run: |
+          mbx fetch --locked
+          studio="$RUNNER_TEMP/docs-pages-studio"
+          built=$(mbx xtask build-web --example theme-studio --release --base /rustify-ui/theme-studio/ | sed -n 's/^built theme-studio -> //p')
+          test -n "$built"
+          rm -rf "$studio"
+          cp -R "$built" "$studio"
+          composed="$RUNNER_TEMP/docs-pages-composed"
+          rm -rf "$composed"
+          python3 scripts/docs-pages-compose.py \
+            --docs-dir "$RUNNER_TEMP/docs-site/site/dist" \
+            --studio-dir "$studio" --out "$composed" --base /rustify-ui/
+          python3 - <<'PY'
+          import json, os
+          from pathlib import Path
+          temporary = Path(os.environ['RUNNER_TEMP'])
+          evidence = temporary / 'docs-pages-evidence'
+          receipt = json.loads((evidence / 'pages-prepare.json').read_text())
+          composed = temporary / 'docs-pages-composed'
+          manifest_path = composed / 'rustify-docs-manifest.json'
+          manifest = json.loads(manifest_path.read_text())
+          (evidence / manifest_path.name).write_bytes(manifest_path.read_bytes())
+          studio_manifest = composed / 'theme-studio/build-manifest.json'
+          (evidence / 'theme-studio-build-manifest.json').write_bytes(studio_manifest.read_bytes())
           (evidence / 'identity.json').write_text(json.dumps({
               'candidate_sha': receipt['candidate_sha'], 'framework_revision': receipt['framework_revision'],
-              'build_id': output['build_id'], 'cli_version': output['cli_version'],
-              'projection': receipt['projection'],
+              'build_id': manifest['build_id'], 'cli_version': manifest['cli_version'],
+              'projection': receipt['projection'], 'studio_build_id': json.loads(studio_manifest.read_text())['build_id'],
           }, indent=2) + '\n')
           with open(os.environ['GITHUB_OUTPUT'], 'a') as stream:
-              stream.write(f"build_id={output['build_id']}\n")
+              stream.write(f"build_id={manifest['build_id']}\n")
           with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as stream:
-              stream.write(f"C: {receipt['candidate_sha']}\n\nR: {receipt['framework_revision']}\n\nBuild: {output['build_id']}\n")
+              stream.write(f"C: {receipt['candidate_sha']}\n\nR: {receipt['framework_revision']}\n\nBuild: {manifest['build_id']}\n")
           PY
       - name: Verify complete language, search and AI artifacts before upload
         run: |
-          python3 scripts/docs-pages-verify.py --dir "$RUNNER_TEMP/docs-site/site/dist" \
+          python3 scripts/docs-pages-verify.py --dir "$RUNNER_TEMP/docs-pages-composed" \
             --identity "$RUNNER_TEMP/docs-pages-evidence/identity.json" \
             --candidate-sha "$CANDIDATE_SHA" \
             --report "$RUNNER_TEMP/docs-pages-evidence/preflight.json"
@@ -113,7 +136,7 @@ jobs:
           import hashlib, json, os, runpy, tarfile
           from pathlib import Path, PurePosixPath
           temporary = Path(os.environ['RUNNER_TEMP'])
-          root = temporary / 'docs-site/site/dist'
+          root = temporary / 'docs-pages-composed'
           output = temporary / 'artifact.tar'
           with tarfile.open(output, 'w', format=tarfile.GNU_FORMAT) as archive:
               archive.add(root, arcname='.', recursive=False)

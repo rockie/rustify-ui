@@ -137,6 +137,16 @@ PY
     RUSTIFY_DOCS_CARGO=mbx "$bin" build --config "$config" --out "$work/dist" >&2
     rm -f "$config"
     trap - EXIT
+    # The official surface is the composed package: the caller pre-builds the
+    # Studio for this base and the composer binds both manifests.
+    if [ -z "${RUSTIFY_STUDIO_DIR:-}" ]; then
+      echo "serve.sh: official requires RUSTIFY_STUDIO_DIR pointing at a Studio build for base $base" >&2
+      exit 1
+    fi
+    python3 "$root/scripts/docs-pages-compose.py" --docs-dir "$work/dist" \
+      --studio-dir "$RUSTIFY_STUDIO_DIR" --out "$work/composed" --base "$base" >&2
+    rm -rf "$work/dist"
+    mv "$work/composed" "$work/dist"
     ;;
   *) echo "serve.sh: unknown source $source" >&2; exit 2 ;;
 esac

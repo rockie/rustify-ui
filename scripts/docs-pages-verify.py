@@ -173,8 +173,37 @@ def check_artifact(files, identity):
     return manifest
 
 
+def check_studio(files):
+    """The composed public Theme Studio: required entry files, a nested manifest
+    bound to the deployment sub-path, and every listed dependency present at
+    the recorded size. Studio pages are application surfaces, not Docs content
+    pages, and are exempt from sidebar/search expectations."""
+    nested = "theme-studio/build-manifest.json"
+    for name in ("theme-studio/index.html", "theme-studio/app.js", "theme-studio/loader.js", nested):
+        if name not in files:
+            raise ValueError(f"missing public Theme Studio file: {name}")
+    manifest = json.loads(files[nested])
+    if manifest.get("base") != "/rustify-ui/theme-studio/":
+        raise ValueError("studio build-manifest base is not the public sub-path")
+    listed = manifest.get("files")
+    if not isinstance(listed, dict) or not listed:
+        raise ValueError("studio build-manifest lists no files")
+    for entry, size in sorted(listed.items()):
+        name = f"theme-studio/{entry}"
+        if PurePosixPath(entry).is_absolute() or ".." in PurePosixPath(entry).parts:
+            raise ValueError(f"unsafe studio manifest path: {entry}")
+        if name not in files:
+            raise ValueError(f"studio build-manifest lists a missing file: {entry}")
+        if len(files[name]) != size:
+            raise ValueError(f"studio build-manifest size disagrees with bytes: {entry}")
+    report = manifest.get("size_report") or {}
+    if report.get("total") != sum(listed.values()):
+        raise ValueError("studio size_report total disagrees with its file list")
+
+
 def verify(url, files, identity, online=True):
     manifest = check_artifact(files, identity)
+    check_studio(files)
     documents = {}
     for name, expected in files.items():
         if online:
@@ -243,7 +272,8 @@ def verify(url, files, identity, online=True):
     if languages != {"en", "zh"} or indexes != 2 or ai_files != 2:
         raise ValueError("official HTML, search and AI outputs must cover en and zh")
     return {"candidate_sha": identity["candidate_sha"], "framework_revision": identity["framework_revision"],
-            "build_id": manifest["build_id"], "files": len(files), "html": len(documents), "search_indexes": indexes, "ai_indexes": ai_files}
+            "build_id": manifest["build_id"], "files": len(files), "html": len(documents), "search_indexes": indexes, "ai_indexes": ai_files,
+            "studio": True}
 
 
 def main():

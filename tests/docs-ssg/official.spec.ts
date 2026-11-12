@@ -27,6 +27,17 @@ const categories = variants.map(variant => {
     if (!fn) throw new Error(`missing source function ${demo.function} in ${file}`);
     return { name, route, title: page.title, demo: demo.name, file, source, function: fn };
 });
+// The site's own showcase directory (§2): every released family with its
+// shareable place and the registered demo that renders it.
+const showcaseSource = readFileSync("site/src/showcase.rs", "utf8");
+const showcaseEntries = [...showcaseSource.matchAll(/ShowcaseEntry\s*\{\s*group:\s*"([^"]+)",\s*route:\s*"([^"]+)",\s*anchor:\s*"([^"]+)",\s*title:\s*"([^"]+)",\s*demo:\s*"([^"]+)"/g)].map(match => ({ group: match[1], route: match[2], anchor: match[3], title: match[4], demo: match[5] }));
+const showcaseGroups = [...showcaseSource.matchAll(/\("([a-z]+)", "([A-Za-z]+)"\)/g)].map(match => ({ slug: match[1], label: match[2] }));
+for (const entry of showcaseEntries) {
+    if (!declarations.some(demo => demo.name === entry.demo)) throw new Error(`SHOWCASE ${entry.title} references unregistered demo ${entry.demo}`);
+}
+const exploreRoutes = ["/colors/", "/primitives/", "/studio/"];
+const componentNav = [...showcaseGroups.map(group => `/components/${group.slug}/`), ...categories.map(entry => `/${entry.route}`)];
+const indexedPages = 15 + 24 + 9 + 3 + 1;
 const include = config.match(/\[content\][\s\S]*?include\s*=\s*\[([\s\S]*?)\]/)?.[1];
 if (!include) throw new Error("official content.include must be explicit");
 // A source's own frontmatter description; a missing one fails only the assertions that read it.
@@ -118,9 +129,26 @@ async function attached(page: Page, name: string, lang = "en") {
     await expect(field).toHaveJSProperty("disabled", false);
     await expect(field).toHaveJSProperty("inert", false);
     await expect(field.locator(":scope > [data-rustify-scope]")).toHaveAttribute("data-rustify-mounted", metadata.seed);
-    await expect(field.locator("[style]")).toHaveCount(0);
+    await expect(field.locator("[style]:not([data-rustify-notifications])")).toHaveCount(0);
     expect(await page.evaluate(() => { const ids = [...document.querySelectorAll("[id]")].map(node => node.id); return ids.length === new Set(ids).size; })).toBe(true);
     await page.evaluate(() => document.fonts.ready);
+    return field;
+}
+
+// A page can host several named islands; wait for all of them, pick one.
+async function attachedDemo(page: Page, name: string, lang = "en") {
+    const all = island(page);
+    const total = await all.count();
+    expect(total, `island ${name}`).toBeGreaterThan(0);
+    for (let index = 0; index < total; index++) await expect(all.nth(index)).toHaveAttribute("data-rd-island-state", "ready");
+    const names = await all.evaluateAll(nodes => nodes.map(node => { const parsed = JSON.parse(node.getAttribute("data-rustify-island-metadata") || "null"); return parsed?.target?.name ?? ""; }));
+    const index = names.indexOf(name);
+    expect(index, `island ${name} on the page`).toBeGreaterThanOrEqual(0);
+    const metadata = JSON.parse((await all.nth(index).getAttribute("data-rustify-island-metadata"))!);
+    expect(metadata.environment.base).toBe(base());
+    expect(metadata.environment.lang).toBe(lang);
+    const field = all.nth(index).locator("fieldset[data-rd-island-controls]");
+    await expect(field).toHaveJSProperty("disabled", false);
     return field;
 }
 
@@ -211,19 +239,21 @@ async function exercise(page: Page, field: Locator, name: string) {
 
 test("home has one English title, the original README introduction and two first-viewport ordinary actions", async ({ page, audit }) => {
     expect(categories).toHaveLength(24); expect(guides).toHaveLength(15);
-    expect(configuredRoutes).toEqual(categories.map(entry => `/${entry.route}`)); expect(configuredGuides).toEqual(guides.map(entry => entry.file));
+    expect(configuredRoutes).toEqual(componentNav); expect(configuredGuides).toEqual(guides.map(entry => entry.file));
     await page.setViewportSize({ width: 1280, height: 900 }); await open(page, "./");
     await expect(page.locator("h1")).toHaveCount(1); await expect(page.locator("h1")).toHaveText("Rustify UI");
     await expect(page.locator("[data-official-home]")).toHaveCount(1); await expect(page.locator(".rd-sidebar")).toHaveCount(0);
     expect((await page.locator(".rd-home-prose p").allTextContents()).map(text => text.replace(/\s+/g, " ").trim())).toEqual(introParagraphs);
     const quickstart = page.getByRole("navigation", { name: "Start reading", exact: true }).getByRole("link", { name: "Quick start", exact: true });
     const components = page.getByRole("navigation", { name: "Start reading", exact: true }).getByRole("link", { name: "Components", exact: true });
-    await expect(quickstart).toHaveAttribute("href", new URL(url("quickstart/")).pathname); await expect(components).toHaveAttribute("href", new URL(url(categories[0].route)).pathname);
+    await expect(quickstart).toHaveAttribute("href", new URL(url("quickstart/")).pathname); await expect(components).toHaveAttribute("href", new URL(url("components/")).pathname);
     for (const action of [quickstart, components]) { const box = (await action.boundingBox())!; expect(box.y).toBeGreaterThanOrEqual(0); expect(box.y + box.height).toBeLessThanOrEqual(900); }
     await expect(page.locator(".rd-home-prose").getByRole("link", { name: "SDK quick start", exact: true })).toHaveAttribute("href", new URL(url("quickstart/")).pathname);
     await expect(page.locator(".rd-home-prose").getByRole("link", { name: "repository quick start", exact: true })).toHaveAttribute("href", repoQuickstart);
-    await expect(island(page)).toHaveCount(0); expect(wasm(audit)).toEqual([]); await healthy(page, audit);
-    await quickstart.click(); await expect(page.locator("h1")).toHaveText(guides[0].title); expect(wasm(audit)).toEqual([]);
+    await attachedDemo(page, "ButtonDemo");
+    await attachedDemo(page, "SegmentedControlDemo");
+    expect(new Set(wasm(audit)).size).toBe(1); await healthy(page, audit);
+    await quickstart.click(); await expect(page.locator("h1")).toHaveText(guides[0].title); expect(new Set(wasm(audit)).size).toBe(1);
 });
 
 test("official Chinese home and quick start are real translations with local search and AI discovery", async ({ page, request, audit }) => {
@@ -252,8 +282,8 @@ test("official Chinese home and quick start are real translations with local sea
     await expect(dialog.getByRole("option").first()).toHaveAttribute("href", /\/zh\/quickstart\/#prerequisites$/);
     const indexURL = await dialog.getAttribute("data-rd-search-index");
     const data = await (await request.get(new URL(indexURL!, url("./")).href)).json();
-    expect(data.pages).toHaveLength(40);
-    expect(data.pages.filter((page: any) => page.is_fallback)).toHaveLength(38);
+    expect(data.pages).toHaveLength(indexedPages);
+    expect(data.pages.filter((page: any) => page.is_fallback)).toHaveLength(indexedPages - 2);
     await page.keyboard.press("Enter");
     await expect(dialog).toBeHidden();
     await expect(page).toHaveURL(url("zh/quickstart/#prerequisites"));
@@ -262,7 +292,7 @@ test("official Chinese home and quick start are real translations with local sea
         expect(response.status()).toBe(200);
         expect(response.headers()["content-type"]).toContain("text/plain");
         const text = await response.text();
-        expect(text.split("\n").filter(line => line.startsWith("- ["))).toHaveLength(40);
+        expect(text.split("\n").filter(line => line.startsWith("- ["))).toHaveLength(indexedPages);
         const target = expected.replace("/rustify-ui/", base());
         expect(text).toContain(`https://rockie.github.io${target}`);
         if (path.startsWith("zh/")) {
@@ -311,8 +341,8 @@ test("all Chinese fallback categories retain real DOM demos, source and target-l
 test("the ordinary sidebar contains the exact fifteen guides and CATALOG pages in configured order", async ({ page, audit }) => {
     await open(page, categories[0].route); await attached(page, categories[0].demo);
     const links = page.locator(".rd-sidebar-wide a");
-    expect(await links.evaluateAll(nodes => nodes.map(node => node.getAttribute("href")))).toEqual([...guides.map(entry => new URL(url(entry.route)).pathname), ...categories.map(entry => new URL(url(entry.route)).pathname)]);
-    await expect(links).toHaveCount(39);
+    expect(await links.evaluateAll(nodes => nodes.map(node => node.getAttribute("href")))).toEqual([...exploreRoutes.map(route => new URL(url(route.slice(1))).pathname), ...guides.map(entry => new URL(url(entry.route)).pathname), ...componentNav.map(route => new URL(url(route.slice(1))).pathname)]);
+    await expect(links).toHaveCount(exploreRoutes.length + guides.length + componentNav.length);
     await expect(page.locator(".rd-sidebar-wide a[aria-current=page]")).toHaveAttribute("href", new URL(url(categories[0].route)).pathname);
     await healthy(page, audit);
 });
@@ -367,7 +397,7 @@ for (const preference of ["light", "dark", "system"] as const) test(`the ${prefe
     await open(page, "./");
     await page.locator('[data-rd-mode="light"]').press("Enter"); const light = await page.locator("body").evaluate(node => getComputedStyle(node).backgroundColor);
     await page.locator('[data-rd-mode="dark"]').press("Enter"); const dark = await page.locator("body").evaluate(node => getComputedStyle(node).backgroundColor); expect(light).not.toBe(dark);
-    await page.getByRole("navigation", { name: "Start reading", exact: true }).getByRole("link", { name: "Components", exact: true }).click(); await attached(page, categories[0].demo);
+    await open(page, categories[0].route); await attached(page, categories[0].demo);
     await expect(page.locator("html")).toHaveAttribute("data-theme", "dark"); await expect(page.locator('[data-rd-mode="dark"]')).toHaveAttribute("aria-pressed", "true"); await healthy(page, audit);
 });
 
@@ -385,7 +415,7 @@ for (const layout of [{ name: "375px", width: 375, scaleText: false }, { name: "
         }
         if (route !== "./") {
             const details = page.locator(".rd-sidebar-narrow"); await details.locator(":scope > summary").click(); await expect(details).toHaveAttribute("open", "");
-            expect(await details.locator("a").evaluateAll(nodes => nodes.map(node => node.getAttribute("href")))).toEqual([...guides.map(entry => new URL(url(entry.route)).pathname), ...categories.map(entry => new URL(url(entry.route)).pathname)]);
+            expect(await details.locator("a").evaluateAll(nodes => nodes.map(node => node.getAttribute("href")))).toEqual([...exploreRoutes.map(route => new URL(url(route.slice(1))).pathname), ...guides.map(entry => new URL(url(entry.route)).pathname), ...componentNav.map(route => new URL(url(route.slice(1))).pathname)]);
             await details.locator(":scope > summary").click();
         }
         await fits(page); await page.evaluate(() => document.fonts.ready);
@@ -479,7 +509,7 @@ test("native 200%: home, narrow navigation, tree and data table demos and mode s
         await open(page, "./"); await expect(page.locator("h1")).toHaveText("Rustify UI"); await fitsWidth(page);
         // The home page has no sidebar; its own Components action leads into the docs.
         await page.getByRole("navigation", { name: "Start reading", exact: true }).getByRole("link", { name: "Components", exact: true }).click();
-        await expect(page.locator("h1")).toHaveText(categories[0].title); await fitsWidth(page);
+        await expect(page.locator("h1")).toHaveText("Component catalogue"); await fitsWidth(page);
         const visited: { route: string; tableScroll?: { scrollWidth: number; clientWidth: number } | null }[] = [];
         for (const name of ["tree", "data table"]) {
             const entry = categories.find(entry => entry.name === name)!;
@@ -504,6 +534,115 @@ test("native 200%: home, narrow navigation, tree and data table demos and mode s
     } finally { await zoom.close(); }
 });
 
+// V-14: the showcase groups carry the new families next to the old pages.
+const groupPages = showcaseGroups.map(group => ({ ...group, route: `components/${group.slug}/`, entries: showcaseEntries.filter(entry => entry.group === group.slug) }));
+
+test("V-14 every showcase group page renders its inline entries and links the old detail pages", async ({ page, audit }) => {
+    test.setTimeout(300_000);
+    expect(groupPages).toHaveLength(9);
+    for (const group of groupPages) {
+        await open(page, group.route);
+        await expect(page.locator("h1")).toHaveText(group.label);
+        await expect(page.locator(`[data-showcase-category="${group.slug}"]`)).toBeVisible();
+        const inline = group.entries.filter(entry => entry.route === `/${group.route}`);
+        const linked = group.entries.filter(entry => entry.route !== `/${group.route}`);
+        expect(inline.length).toBeGreaterThan(0);
+        for (const entry of inline) {
+            await expect(page.locator(`[data-showcase-entry="${entry.anchor}"]`)).toBeVisible();
+            const field = await attachedDemo(page, entry.demo);
+            await expect(field.locator("[data-demo-state]")).not.toBeEmpty();
+        }
+        for (const entry of linked) await expect(page.locator("ul.rd-showcase-links").getByRole("link", { name: entry.title, exact: true })).toHaveAttribute("href", new RegExp(`#${entry.anchor}$`));
+        await healthy(page, audit);
+    }
+});
+
+test("V-14 the upgraded button page shows the full matrix with working state toggles", async ({ page, audit }) => {
+    await open(page, "components/button/");
+    const field = await attached(page, "ButtonDemo");
+    const increment = field.getByRole("button", { name: "Increment", exact: true });
+    const state = field.locator("[data-demo-state]");
+    await expect(field.getByRole("button", { name: "Unavailable", exact: true })).toBeDisabled();
+    await increment.focus(); await page.keyboard.press("Enter"); await expect(state).toHaveText("1");
+    const solid = await increment.evaluate(node => getComputedStyle(node).backgroundColor);
+    await field.getByLabel("Variant").selectOption("Outline");
+    await expect.poll(() => increment.evaluate(node => getComputedStyle(node).backgroundColor)).not.toBe(solid);
+    await field.getByLabel("Size").selectOption({ index: 3 });
+    await field.getByLabel("Disabled").check(); await expect(increment).toBeDisabled();
+    await page.keyboard.press("Enter"); await expect(state).toHaveText("1");
+    await field.getByLabel("High contrast").check(); await expect(state).toHaveText("1");
+    await field.getByLabel("Disabled").uncheck(); await field.getByLabel("Loading").check();
+    await expect(increment).toBeDisabled();
+    await field.getByLabel("Loading").uncheck(); await increment.click(); await expect(state).toHaveText("2");
+    await healthy(page, audit);
+});
+
+test("V-14 the menubar entry executes commands by keyboard", async ({ page, audit }) => {
+    await open(page, "components/menus/");
+    const field = await attachedDemo(page, "MenubarDemo");
+    const state = field.locator("[data-demo-state]");
+    await field.getByRole("menuitem", { name: "File", exact: true }).focus();
+    await page.keyboard.press("Enter");
+    const menu = field.getByRole("menu", { name: "File commands", exact: true });
+    await expect(menu).toBeVisible();
+    await expect(menu.getByRole("menuitem", { name: "New project", exact: true })).toBeFocused();
+    await page.keyboard.press("Enter");
+    await expect(state).toContainText("New project");
+    await expect(menu).toBeHidden();
+    await field.getByRole("menuitem", { name: "View", exact: true }).focus();
+    await page.keyboard.press("ArrowDown");
+    await expect(field.getByRole("menu", { name: "View commands", exact: true }).getByRole("menuitem", { name: "Zen mode (unavailable)", exact: true })).toBeDisabled();
+    await page.keyboard.press("Escape");
+    await healthy(page, audit);
+});
+
+test("V-15 from the home preview through Colors, Primitives and into the composed public Studio", async ({ page, audit, request }) => {
+    test.setTimeout(480_000);
+    await page.setViewportSize({ width: 1280, height: 900 });
+    await open(page, "./");
+    const preview = await attachedDemo(page, "ButtonDemo");
+    await attachedDemo(page, "SegmentedControlDemo");
+    await preview.getByRole("button", { name: "Increment", exact: true }).click();
+    await expect(preview.locator("[data-demo-state]")).toHaveText("1");
+    await page.getByRole("link", { name: "Colors", exact: true }).first().click();
+    await expect(page).toHaveURL(url("colors/"));
+    const colorField = await attachedDemo(page, "ColorsDemo");
+    await colorField.getByLabel("Family").selectOption("mint");
+    await expect(colorField.locator("[data-demo-state]")).toContainText("mint · light · solid · srgb");
+    await colorField.getByLabel("Mode").selectOption("dark");
+    await expect(colorField.locator("[data-demo-state]")).toContainText("mint · dark");
+    await expect(colorField.locator("svg[aria-hidden='true'] rect").first()).toHaveAttribute("fill", /^#/);
+    const download = page.locator("ul.rd-color-downloads").getByRole("link", { name: "light", exact: true }).first();
+    const css = await request.get(await download.getAttribute("href"));
+    expect(css.status()).toBe(200);
+    expect(css.headers()["content-type"]).toContain("text/css");
+    await page.getByRole("link", { name: "Primitives", exact: true }).first().click();
+    await expect(page).toHaveURL(url("primitives/"));
+    const raw = await attachedDemo(page, "PrimitivesDemo");
+    await raw.getByRole("textbox").first().fill("official reader");
+    await expect(raw.locator("[data-demo-state]")).toContainText("raw official reader");
+    const direction = await attachedDemo(page, "DirectionDemo");
+    await direction.getByRole("button").click();
+    await expect(direction.locator("[data-demo-state]")).toHaveText("rtl");
+    await page.getByRole("link", { name: "Theme Studio", exact: true }).first().click();
+    await expect(page.locator("h1")).toHaveText("Theme Studio");
+    await page.getByRole("link", { name: "Open Theme Studio", exact: true }).click();
+    await expect(page).toHaveURL(new URL("theme-studio/", url("./")).href);
+    await expect(page.getByTestId("status")).toHaveAttribute("data-status", "ready", { timeout: 60_000 });
+    const manifest = await (await request.get(new URL("theme-studio/build-manifest.json", url("./")).href)).json();
+    expect(manifest).toMatchObject({ example: "theme-studio", profile: "release", base: `${base()}theme-studio/` });
+    await page.getByTestId("renderer-dom").click();
+    await page.getByTestId("preview-scene").click();
+    await page.getByTestId("preview-scene-list").getByRole("option", { name: "Components", exact: true }).click();
+    await expect(page.getByTestId("dom-preview").getByTestId("component-gallery")).toBeVisible();
+    await page.getByTestId("inspector-toggle").click();
+    await expect(page.getByTestId("inspector-panel")).toBeVisible();
+    await expect(page.locator("a.studio-back")).toHaveAttribute("href", "../");
+    expect(audit.requests.some(address => new URL(address).pathname.includes("theme-studio/"))).toBe(true);
+    expect(audit.requests.filter(address => { const resource = new URL(address); return resource.protocol !== "data:" && resource.protocol !== "blob:" && (resource.origin !== new URL(url("./")).origin || !resource.pathname.startsWith(base())); })).toEqual([]);
+    expect(audit.failures).toEqual([]); expect(audit.pageErrors).toEqual([]); expect(audit.console).toEqual([]); expect(audit.csp).toEqual([]);
+});
+
 // Every registered route (home and the 24 categories), the Markdown quick
 // start and a deep missing address, as the projected registry lists them.
 const gapsRoutes = [...declaredPages.map(page => page.route.slice(1)), "quickstart/", "__gaps_missing__/deeper/"];
@@ -511,7 +650,7 @@ const gapsRoutes = [...declaredPages.map(page => page.route.slice(1)), "quicksta
 for (const colorScheme of ["light", "dark"] as const) for (const width of [1280, 375]) {
     test(`gaps a11y: every official route at rest has no serious or critical axe violation, ${colorScheme} ${width}px`, async ({ page, audit }) => {
         test.setTimeout(600_000);
-        expect(gapsRoutes).toHaveLength(27);
+        expect(gapsRoutes).toHaveLength(declaredPages.length + 2);
         await page.setViewportSize({ width, height: 900 }); await page.emulateMedia({ colorScheme, reducedMotion: "no-preference" });
         const scans: Scan[] = [];
         for (const route of gapsRoutes) {
