@@ -1,4 +1,4 @@
-# DOM-COMPONENTS-RELEASE · Rustify UI · DOM 组件成果发行与官方站更新（十包 0.3.0 · registry 配对 · 源码 Git CLI 部署 Pages）
+# DOM-COMPONENTS-RELEASE · Rustify UI · DOM 组件成果发行与官方站更新（十包 0.3.0 · 完整 DOM 成果展示 · 公开 Theme Studio · Pages）
 
 ```formal
 INTENT:
@@ -11,14 +11,15 @@ RULE @implementation_entry:
 
 > **计划状态：Ready**
 >
-> 调查基线：2026-11-10 · `e243405029997be74ebc8e6683e05397fc8d8a36`（main，与 origin/main 相同）· dirty（本计划未跟踪＋SDLC 台账登记；代码事实取自 HEAD）。
+> 调查基线：2026-11-11 · `921802b3c9d1022033bd500681b870a430652616`（main）· dirty（M4 补证、代码评审报告与 SDLC 台账；产品代码事实取自 HEAD，补证事实取自当前工作树）。
 >
-> 需求来源：用户需求（2026-11-10）：「更新 rustify-docs 做的 github pages，展示最新的 docs/PRD-DOM-COMPONENTS.md 成果」；用户同日选定「先发 crates.io 新版再部署」「三篇指南都加入 Guides」。发行对象是 [DOM-COMPONENTS PRD](../PRD-DOM-COMPONENTS.md) 在 P1–P5 计划中已交付的源码成果。本计划承接该 PRD §5.2 的 Q3（新 SDK/CLI 配对与破坏性发行版本），以及 §1.3 写明的「发行沿原流程」，不属于 PRD 期次。
+> 需求来源：用户需求（2026-11-10）：「更新 rustify-docs 做的 github pages，展示最新的 docs/PRD-DOM-COMPONENTS.md 成果」；用户同日选定「先发 crates.io 新版再部署」「三篇指南都加入 Guides」。发行对象是 [DOM-COMPONENTS PRD](../PRD-DOM-COMPONENTS.md) 在 P1–P5 计划中已交付的源码成果。用户 2026-11-11 再次明确「要按照原目标完成」「把我们做的东西充分展示」。本计划承接该 PRD P1–P5 已交付能力的官网展示和 §5.2 Q3 的发行配对，不重切 PRD 期次、不重做已交付组件。
 >
-> 本期交付：**crates.io 上的 Rustify 十个 Docs/DOM/样式包 0.3.0（新增 `rustify-colors`），含 P1–P5 的组件、主题 schema v2 与 Colors；切换到 0.3.0 的公开安装、迁移与最低版本说明；官方站 <https://rockie.github.io/rustify-ui/> 从发布后的提交重建，新增 Menus、Panels、迁移三篇指南。**
-> **开发范围：发行清单与 `rustify-colors` 发布元数据、各包版本与内部精确钉、包内 README/模板、CLI 配对记录与模板锁、仓内测试 fixture 的版本与锁、`crates-io.yml` 与 runbook 的预取清单及包数措辞、AGENTS.md 的发行包数、官方站配置（`rustify-docs.toml`）及其 spec、`site/` 的版本钉与中文首页文案、仓根公开说明与 CHANGELOG；依据见 §0。**
-> 本期独特职责：首次发布含破坏性 DOM API 和 schema v2 的 registry 版本；官方站首次以 0.2.x 之后的 source 分发 Git CLI 部署（此前线上一直用 legacy 0.1.x 的 Git CLI）。
-> **顶层排除：GPU SDK（`rustify-ui`）/`rustify-makepad`/示例的 registry 发布；Theme Studio 部署或文案；rustify-docs 生成器、发行脚本或 Pages 工作流的行为改动（预取清单除外）；新增组件 demo 或中文翻译。**
+> 本期交付：**十包 0.3.0 的已完成发行，加上官网可操作的完整成果展示：Colors、Primitives、Themes、全部已交付 DOM 组件与 Rustify 扩展；公开现有 Theme Studio 的组件陈列、主题编辑、Inspector、保存和导出。读者从官网首页即可找到、操作并带走成果。**
+> **开发范围：保留 M1–M4 发行交付；续做 `site/` 页面、demo 与站点导航，必要的站点专属静态样式、公开组件/主题/迁移说明，现有 Theme Studio 的公开入口与部署适配，以及 `scripts/docs-pages-*.py`、`.github/workflows/docs-pages.yml` 的整站产物组合和验证。依据见 §0、§5.5–§6。**
+> 呈现路径：官网与新增示例为 **DOM/SSG**；公开 Studio 复用已有 DOM/GPU/对比功能，组件陈列以 DOM 为主，不新增 GPU 组件、布局或绘制能力。两者为独立应用实例，文档页不加载 Studio 或 Makepad。
+> 本期独特职责：把已完成的组件与主题研发变成可发现、可试用、可复制的公开成果；**版本号、发包成功、三篇指南可访问、旧 24 类简单样例均不能单独证明本期完成。**
+> **顶层排除：重新发布未改字节的 0.3.0 包；新增未交付组件、GPU 能力、账号/云同步/AI、文档生成器重构、另建主题编辑器、全文中文翻译。现有组件 demo 升级、新组件 demo 和现有 Studio 公开部署均属必做。**
 
 ## 实施者定位
 
@@ -205,13 +206,13 @@ REVIEW @progress_consistency:
 
 ### 恢复快照
 
-- 最近更新：2026-11-11 · M4 完成（全部里程碑）
-- 当前进度：4/4 个里程碑完成
-- 当前状态：发行完成——十包 0.3.0 公开在 crates.io、Pages 上线（run `42953922752`、线上 build_id `3fe8d486f30d8aa5`）、E=`458333d5` 在公共 main；临时 token 经用户确认不撤销（2026-11-11，本机单人使用；见 M3 记录）
-- 最近完成：M4 Pages 部署与真实使用验收——部署候选 D3=`596175e3`（差异门通过、V-11 预演全过）、四次派发授权后 run `42953922752` build＋deploy 成功、V-12 线上核验与 8 用例全过、V-13 四任务真实使用全过（V-6 卡点消除）、E=`458333d5` 记录官方站交付；详见 [M4 记录](DOM-COMPONENTS-RELEASE.records/M4.md)
-- 下一步：代码评审——请以本计划路径发起 review-code（评审由用户执行）
-- 当前阻塞：无（临时 token 经用户确认不撤销，见 M3 记录）
-- 代码基线：`e243405029997be74ebc8e6683e05397fc8d8a36`
+- 最近更新：2026-11-11 +08:00 · 官网完整成果展示待续
+- 当前进度：4/7 个里程碑完成
+- 当前状态：进行中；M1–M4 的十包 0.3.0 发行和首轮 Pages 部署已完成，完整成果展示尚未完成，M5–M7 未开始
+- 最近完成：M4 发行阶段 Pages 部署与真实使用验收；现网 build_id=`3fe8d486f30d8aa5`、run `42953922752`；原始记录及 U-01 补证见 [M4 记录](DOM-COMPONENTS-RELEASE.records/M4.md)
+- 下一步：M5–M6 同批续做；先按 §6.2 的展示矩阵升级 Button 与打通新增 Menubar 的官网真实入口，再完成全部样例、公开 Studio 及组合产物，批末运行 V-14–V-17；M7 完成线上终验后才记整期完成
+- 当前阻塞：无开发阻塞；M7 推送/Pages 派发按既有授权门办理，不以部署授权尚未请求阻断本地实现。临时 registry token 保留沿用户 2026-11-11 决定，不需要用于 M5–M7
+- 代码基线：`921802b3c9d1022033bd500681b870a430652616`；R1/R2 仅覆盖原发行范围与 U-01，不代表新增展示范围已验收
 
 ### 完成记录
 
@@ -228,19 +229,22 @@ REVIEW @progress_consistency:
 
 | ID | 类型 | 来源 | 内容 | 设计/验收落点 | 状态 |
 | --- | --- | --- | --- | --- | --- |
-| R-1 | 功能 | 用户 2026-11-10：「更新 rustify-docs 做的 github pages，展示最新的 docs/PRD-DOM-COMPONENTS.md 成果」 | 线上官方站由发布后的提交重建，12 篇原有指南和 24 个组件页反映当前 SDK、组件、主题与迁移状态；读者只看站点就能知道这些能力已在 0.3.0 中可用 | §5.4、ADR-1；V-11、V-12、V-13 | 已确认 |
+| R-1 | 功能 | 用户 2026-11-10 原目标及 2026-11-11 再次确认 | 首页、组件索引、具体 demo 与公开 Studio 完整展示 P1–P5 已交付成果；读者可以找到并实际操作，不能只看到更新后的版本说明 | §5.5–§6、ADR-2；V-14–V-19 | 已确认 |
 | R-2 | 功能 | 用户 2026-11-10 选定「先发 crates.io 新版再部署」 | 十个包以 0.3.0 公开发布，各包 checksum 与冻结归档一致，CLI 的 registry 配对指向 0.3.0 三包；Pages 在公开门通过后才部署 | §5.1–§5.3、D1–D3；V-4、V-7–V-10 | 已确认 |
 | R-3 | 功能 | 用户 2026-11-10 选定「三篇都加入 Guides」 | `docs/menus.md`、`docs/panels.md`、`docs/dom-components-migration.md` 进入 `rustify-docs.toml` 的 include、英文与中文 Guides 导航；官方站 spec 的固定计数同步 | §1.2（A）、D5、§5.4；V-1、V-12、V-13 | 已确认 |
+| R-4 | 功能 | 用户「把我们做的东西充分展示」；[PRD §2.3、WORK-F1/AC-1–AC-3、WORK-F5–WORK-F17、WORK-F22–WORK-F23](../PRD-DOM-COMPONENTS.md#23-组件覆盖表) | 按 §6.2 全量覆盖，保留旧路由并升级样例；每个已交付组件/部件有可定位的真实样本、适用的变体/尺寸/状态、公共 API 与运行示例源代码；Primitives 和 Themes 使用同一受控行为 | §5.5、§6.1–§6.3；V-14、V-15、V-17、V-19 | 已确认 |
+| R-5 | 功能 | 用户完整展示目标；[PRD WORK-F2–WORK-F4、WORK-F18–WORK-F21、WORK-F19/AC-1–AC-3](../PRD-DOM-COMPONENTS.md#3-需求与验收) | Colors 色阶可查看与取用；现有 Studio 在同一 Pages 公开，保留预设、主题配置、精调、完整 DOM 陈列、Inspector、本地库、导入导出与撤销重做 | §5.6、§6.2–§6.4；V-15–V-19 | 已确认 |
+| R-6 | 验收 | 用户 2026-11-11 原目标；[PRD §6.3](../PRD-DOM-COMPONENTS.md#63-uat-预期状态) | 仅凭公开官网完成选组件、比较样式与状态、键盘操作、编辑并导出主题、在独立 registry 应用消费；逐项记录可见结果与卡点，任何必展示项缺失都不能记整期完成 | §9.1、§10 M7；V-18、V-19 | 已确认 |
 | C-1 | 约束 | [PRD §5.2 Q3](../PRD-DOM-COMPONENTS.md#52-待落实项) | 接入说明须写明新导出格式（主题 schema v2）的最低消费者版本 | §5.3 的 D 提交（themes.md、迁移指南、README）；V-10、V-13 | 已确认 |
 | C-2 | 约束 | AGENTS.md「完成标准与发布」；[docs/crates-io-release.md](../crates-io-release.md) | 发行走 runbook 与 `scripts/crates-io.py`；每包归档绑定 source_rev；框架三包 docs/dom/components 版本同步移动；Python 3.12；构建一律 mbx | §5.1–§5.3；V-4、V-9 | 已确认 |
 | C-3 | 约束 | docs/crates-io-release.md「Remote preflight」「Account and authorization gate」 | 推送 main + dispatch、上传（包名与版本）、公开说明与标签推送分别取得用户授权；临时 token 只记账号/权限/过期，不记值；结束后撤销 | §5.2、§5.3、§5.4、§8、§11；V-7、V-8、V-10、V-11（M4 派发门） | 已确认 |
 | C-4 | 约束 | AGENTS.md「浏览器测试」 | Playwright 每条命令只带一个 `--project`，串行执行，不同时运行两个 | §9.4；V-1、V-5 | 已确认 |
 | C-5 | 约束 | AGENTS.md「工具链与本地开发」 | 不新开分支、不升依赖 major；提交直接落 main | §10 提交点 | 已确认 |
 | C-6 | 约束 | `.github/workflows/docs-pages.yml` | 只部署显式给出的完整候选 SHA；候选必须在 origin 上可检出；Pages 已用 Actions 源（[docs-ssg.md 官方站交付](../docs-ssg.md#official-site-delivery)） | ADR-1；V-11、V-12 | 已确认 |
-| C-7 | 约束 | [PRD §1.3](../PRD-DOM-COMPONENTS.md#13-非目标) | 发行与文档沿原流程，不重做 Rustify Docs 的内容、搜索或发布系统 | §0.5；零改动面见 §1.2 | 已确认 |
-| A-1 | 假设 | crates.io API 2026-11-10 对 `rustify-colors` 返回「does not exist」；其余九个名称由本仓库账号持有 0.2.1 | 上传时 `rustify-colors` 名称仍可用；发布人能提供含 `publish-new`（rustify-colors）与 `publish-update`（其余九包）、名称模式覆盖十包的凭证 | V-8 重查名称/owner 与凭证范围；责任人：发布人（用户）；最晚 M3 上传前 | 开放，只阻塞 M3 |
-| A-2 | 假设 | Git 安装的 CLI 已核实报告 `distribution: source`（cargo checkout 含 `.git`，见 §1.1）；CI 中 `cli_identity` 在 `CARGO_HOME/git/checkouts` 下查找该 checkout | Pages 工作流在 CI 中能以 source 模式完成 prepare | V-11 本地预演；CI 中由 V-12 首次证实，失败路线见 §8；责任人：实施者；最晚 M4 | 开放，不阻塞 M1–M3 |
-| A-3 | 假设 | DOM-COMPONENTS-P5 按其 C-7 未运行 `dom-*`、`components-*`、`docs-*` 浏览器项目（[P5 §0.5](DOM-COMPONENTS-P5.md)） | 这些项目在 0.3.0 归档上通过，或失败可定位为本方缺陷或过期 spec 并在范围内修复 | V-5；责任人：实施者；最晚 M2 上传前 | 开放，失败按 §8 处理 |
+| C-7 | 约束 | [PRD §1.3](../PRD-DOM-COMPONENTS.md#13-非目标) | 沿用 Rustify Docs 的页面/demo/SSG、搜索和现有 Pages 流水线；只增加本期展示页面与 Studio 整包组合，不改生成器通用行为 | §0.5、§1.2、§5.6；V-16–V-18 | 已确认 |
+| A-1 | 假设 | [M3 公开发行记录](DOM-COMPONENTS-RELEASE.records/M3.md) | 原上传名称与凭证前提已在十包 0.3.0 发行中核实；M5–M7 不再依赖 registry 上传凭证 | V-8、V-9 原证据复用 | 已解除 |
+| A-2 | 假设 | [M4 成功部署记录](DOM-COMPONENTS-RELEASE.records/M4.md) | source 分发 CLI 已在 run 42953922752 完成 prepare/build/deploy；新增 Studio 的组合交付另由 V-16、V-18 验证 | §5.6–§5.7；V-11、V-12 原证据 | 已解除 |
+| A-3 | 假设 | [M2 浏览器发行矩阵](DOM-COMPONENTS-RELEASE.records/M2.md) | 原 0.3.0 发行矩阵已有记录；新增页面与公开 Studio 不能沿用旧矩阵判通过 | §9.2；V-14–V-19 | 已解除（原范围） |
 
 ### 0.2 决策表
 
@@ -249,67 +253,72 @@ REVIEW @progress_consistency:
 | D1 | 版本号 | 十包统一 **0.3.0**：workspace `version = "0.3.0"`，CLI 自有 `version = "0.3.0"`，所有内部 `=0.2.1` 钉改为 `=0.3.0` | 0.x 下破坏性 API 按 Cargo 语义升 minor；五个源码未变的包（classification-macros、style、docs-syntax、docs-macros、style-wasm）也升 0.3.0，没有 API 变化，只是版本号变 | PRD 允许破坏性调整；`scripts/crates-io.py::library_inputs_changed` 把仓根 `Cargo.toml` 算作每个库的输入，而它自 R `b32844a4` 起已改（新增 `crates/rustify-colors` 成员），脚本会要求所有库升版；CRATES-IO-P1 §5.4 的统一版本先例 |
 | D2 | `rustify-colors` | 作为第十个包进入 `release/crates-io.toml` 的 docs 组，排在 `rustify-dom` 之前，`dependencies = []` | 首次上传新名称，需要 `publish-new`；`rustify-dom` 的依赖可从 registry 解算 | `inspect` 当前报 `private workspace package permits publishing: rustify-colors`；`crates/rustify-dom/Cargo.toml` 依赖它 |
 | D3 | 归档复用 | `package-libraries` 不带 `--reuse`，按首发方式重建全部九个库；不运行 `plan-libraries` | D1 下所有库都会移动版本，没有可复用的归档；`plan-libraries` 必须有 `--reuse` | 上一发行目录 `~/Documents/rustify-releases/crates-io-0.2.1-20261024/release-R1` 已不存在（2026-11-10 核对）；`crates-io.yml` 本就不带 reuse |
-| D4 | Pages 候选 | 用发布后的公开说明提交 **D** 作为 `candidate_sha`，沿用现有 `docs-pages.yml` 的 Git 安装（source 分发），工作流零改动 | 线上内容与公开安装说明一致；D 中九个库目录及仓根库输入必须与 R 逐字节相同，`crates/rustify-docs-cli` 必须与 C 逐字节相同 | ADR-1 |
+| D4 | Pages 候选 | M1–M4 的候选 D3 已上线；M5–M7 用含全部展示源码的新候选 S，同一 workflow 构建文档与 Studio | 库 R/CLI C 包字节不变；来源 S、framework R 与组合 build_id 分别记录；不重新发布 0.3.0 | ADR-1、ADR-2；§5.7 |
 | D5 | 指南导航位置 | 三篇插在 `components.md` 之后、`vellum.md` 之前，顺序为 menus → panels → dom-components-migration；include、英文 Guides、中文「指南」三处一致 | 组件参考之后紧接组合指南与迁移；中文导航沿用现有英文内容回退 | `rustify-docs.toml` 现有顺序；本地 `check` 0 error（§1.1） |
-| D6 | 浏览器矩阵 | 归档 CLI 跑 docs-*、components-*、docs-theme-v2、docs-dev；源码构建跑 dom-only、dom-primitives、dom-hydrate、components-static、colors-static 与 `docs-verify --group features`；GPU 示例与 Theme Studio 只做编译和 host 回归 | 覆盖 registry 消费者实际能拿到的 CLI 与 DOM SDK 路径；GPU SDK 不发布，Theme Studio 已在 P5 验收且本期不改 | CRATES-IO-P1 §9.5 矩阵去掉 GPU 两项；P5 C-7 |
+| D6 | 验证范围 | 原发行矩阵保留；M5–M6 同批做官网场景与 Studio 子路径验收，M7 只对同候选部署完成线上读者/开发者完整任务 | 按受影响入口验，不因补展示重发包或重跑无关发行矩阵；原人工 missing 不冒充通过 | §9 V-14–V-19 |
 | D7 | 首页与公开说明的版本文案 | 仓根 README（官方站首页引言）、`site/src/pages.rs` 的中文首页段落和各指南的 0.2.1/「source-only」说法，都只在上传成功后的 D 提交中改；包内 README 和模板在 R/C 前改 | 上传前 main 不宣称尚未发生的发布；包内文案随归档冻结 | CRATES-IO-P1 §5.1 的同一做法；runbook「Public completion」 |
-| D8 | Theme Studio 导出说明 | 不改 | 「Published 0.2.1 SDK/CLI reject complete v2」在 0.3.0 发布后依然成立；Studio 不在 Pages 上；最低版本由 themes.md 和迁移指南说明（C-1） | `examples/theme-studio/src/data_tools.rs:346`；`tests/browser/theme-export-ui.spec.ts:99` |
-| D9 | Pages 回滚目标 | last-good 仍是线上现有的 C2 `88566ba1ed08223a5834f794840fff5e48f4ba8a`（CLI 0.1.32，build `f74f4a4ece90f08a`） | 回滚用同一工作流重派 C2；legacy 模式已在 run 39388531674 部署成功 | 2026-11-10 读取线上 `rustify-docs-manifest.json` |
+| D8 | 完整主题工作台 | 公开现有 Theme Studio，保留已交付功能并把其当前消费说明更新为 registry 0.3.0 / schema v2 | 不另写一个删减编辑器；已有 GPU 模式仅复用，官网组件文档仍为 DOM | ADR-2；§5.6、§6.4 |
+| D9 | 发布失败处理 | M5–M7 先本地整包验证，再授权部署；构建/上传失败保持当前 0.3.0 站点，部署后缺陷修复后重发完整候选 | 静态展示无远端用户数据写入，不新增版本恢复状态机；原 M1–M4 回滚证据保留在 M4 记录 | §8、V-18、V-19 |
 
 ### 0.3 ADR-lite
 
-#### ADR-1：Pages 用发布后的说明提交 D、以 source 分发的 Git CLI 构建
+#### ADR-1：Docs 使用候选 Git CLI，库与 CLI 的发行字节保持配对
 
-- 状态：Accepted
-- 背景与驱动：R-1 要求线上反映已发布能力，C-6 要求候选 SHA 在 origin 可检出，D7 要求公开说明在上传后才切到 0.3.0。`docs-pages.yml` 会检出候选并执行 `mbx install --git … --rev <候选>`；`docs-pages-prepare.py::prepare` 要求 CLI 的 `--build-info source` 等于候选；`docs-pages-verify.py::check_identity` 要求候选中 `framework-release.json` 的 `library_rev` 等于 prepare 记录的 R。
-- 备选：
-  1. 用冻结的 CLI 提交 C 部署：C 中的公开说明仍是上传前的「0.2.1 / 源码可用」措辞，线上会说新 API 未发布，违背 R-1。淘汰。
-  2. 改工作流为 `cargo install rustify-docs-cli --version 0.3.0`，以 registry 模式投影成 crates.io 依赖：线上产物与 registry 三包完全一致，但要改工作流和预检规则，且站点仍从候选检出读取 docs 内容，候选问题仍存在。改动面更大，收益只是把「源码 = 归档」由差异检查改成 registry 解算。淘汰。
-  3. **选择**：上传成功后提交 D（只改公开说明、CHANGELOG、`site/src/pages.rs`），推送后以 D 派发。Git 安装的 CLI 报告 `source: D`、`distribution: source`，prepare 把 `site/Cargo.toml` 的三条框架依赖投影到该 checkout 的源码；D 继承 C 的 `framework-release.json`，`library_rev = R`。
-- 决策：备选 3；另加一道门：`git diff --quiet R D -- <九个库目录> Cargo.toml mise.toml release/crates-io.toml` 与 `git diff --quiet C D -- crates/rustify-docs-cli` 必须都成立（C 在 R 之后改了 CLI 资产，CLI 目录只能对 C 比较），证明线上站编译的库与 CLI 源码就是已发布的源码。
-- 正面后果：工作流和脚本零改动；线上内容与公开说明是同一次提交。
-- 负面/中性后果：线上站点的 CLI 身份是 source 分发的 0.3.0，不是 registry 归档本身；0.2.x 之后 source 模式还没有在 CI 中部署过（A-2）。
-- 重新评估触发：V-12 在 prepare 阶段因找不到 checkout 失败，按 §8 改走备选 2。
+- 状态：Accepted。
+- 驱动：R-2、C-2、C-6。线上文档源码可以继续变化，已经公开的 0.3.0 包不能改字节。
+- 决策：沿现有 `docs-pages.yml`，安装完整候选 SHA 的 source 分发 CLI，prepare 只投影三条框架依赖与对应 lock；保留 framework R 的身份。M5–M7 只改站点/示例/组合脚本，候选 S 的库与 CLI 目录仍应分别等于 R、C。
+- 备选：改成 registry CLI 与自定义投影会改变已验证发行链路；本期无须为展示重做它。原源码配对、上传与部署证据见 M2–M4 记录。
+- 后果：候选 S、framework R、CLI 0.3.0 与组合包 build_id 分别记录；不能只看 CLI 版本推断展示源码新旧。
+- 重新评估触发：本期真实展示暴露必须修改库/CLI 的缺陷；先按 §8 明确受影响包和新版本，再修改本决策，不悄悄使用未发布接口。
+
+#### ADR-2：官网组件文档与完整 Studio 共同展示成果
+
+- 状态：Accepted（用户 2026-11-11 明确要求充分展示；具体接线为本计划技术决策）。
+- 驱动：R-1、R-4–R-6；官网不能停在发包说明与旧演示，主题创作也不能只剩截图或源码链接。
+- 备选：A＝只扩充官网组件/demo，并在其中另做完整主题编辑、Inspector、保存与导出；B＝官网组件/demo 展示可用 API，现有 Studio 原样公开并互相导流。两者均可行；A 的单页体验更统一，但会复制 Studio 的状态、持久化与导出规则，或迫使本期抽取跨 workspace 公共模块；B 增加一个静态应用入口和组合步骤，保持已有工作流与独立实例边界。
+- 决策：选 B。本站继续用 Rustify Docs；Studio 发布在 `/rustify-ui/theme-studio/`，以既有组件陈列与 Inspector 承担完整创作体验。官网自有 demo 从 Studio 中复用已验证的受控组合写法，不直接依赖 `StudioState` 或 Makepad，不抽取新 SDK 包。
+- 后果：读者可直接试用全部成果；文档和 Studio 有各自的主题/语言/本地状态，不能暗示跨应用自动同步。文档普通页面不加载 Studio wasm；进入 Studio 才加载其既有 GPU 集成。
+- 重新评估触发：已存在的静态构建不能在同一 Pages 子路径运行时，先修路径/资源接线；不得因此缩成代码展示或删掉 Studio。SDK 缺陷按 §8 的真实问题边界处理。
 
 ### 0.4 职责与事实所有权
 
 |  | crates.io / docs.rs / GitHub | 本计划 | 发布人（用户） |
 | --- | --- | --- | --- |
-| 拥有 | 包名归属、版本不可变、索引、限流、docs.rs 构建；Actions 运行器与 Pages 托管 | 冻结 R/C/D 与 receipt、逐包上传顺序与续接、公开说明、站点配置、所有验收证据 | 账号与邮箱、临时 token 的创建/范围/过期/撤销，各授权门的同意 |
-| 不拥有 | — | **不保存或打印 token；不 yank；不改 Pages 仓库设置；不发布 GPU SDK/Makepad/示例** | — |
+| 拥有 | 包名归属、版本不可变、索引、限流、docs.rs 构建；Actions 运行器与 Pages 托管 | 原发行 R/C/D 与证据；本站组件/demo、完整展示映射、Studio 公开接线、组合产物、用户主路径验收 | 账号、凭证管理、生产推送与 Pages 派发授权 |
+| 不拥有 | — | **不保存或打印 token；不 yank；不改 Pages 仓库设置；不向 registry 发布 GPU SDK/Makepad/示例** | — |
 
-一句话：本计划只把已冻结的字节交给 registry 和 Pages，凭证与授权始终在发布人手里，已上传的版本不可撤回。
+一句话：本计划负责本站与现有 Studio 的展示、组合及交付；组件契约仍由 SDK 拥有，registry 字节不可改，生产推送与派发仍由发布人授权。
 
 ### 0.5 明确不在本期
 
-- **GPU SDK `rustify-ui`、`rustify-makepad` 与示例的 registry 发布**——保持 `publish = false`，留后续发行计划。
-- **Theme Studio 的公开部署与导出文案更新**——D8；如需在 Studio 中写「需 0.3.0+」，另提需求。
-- **为新组件（Accordion、Popover、DropdownMenu、Menubar 等）新增官方站 demo 页或扩展 24 类 CATALOG**——P5 固定 24 类；这些组件通过三篇新指南和组件目录说明展示。
-- **三篇新指南与其他英文指南的中文翻译**——沿用现有英文内容回退。
-- **`.agents/skills`、`.claude/skills` 下技能参考中的 0.2.1 文字**——由技能分发管理，不在本仓发行范围。
-- **rustify-docs 生成器、`scripts/crates-io.py`、`scripts/docs-pages-*.py`、`docs-pages.yml` 的行为改动**——C-7；唯一例外是 `crates-io.yml` 与 runbook 的预取清单（§1.1 已核实缺口）。
-- **性能基线、包体积对比、Windows/完整 Linux 运行支持**——没有本期要求；平台边界照实写进公开说明。
+- **新增组件、GPU 绘制能力及 GPU SDK/Makepad 的 registry 发布**——只展示已交付能力；Studio 使用现有 GPU 可选视图，不补 DOM/GPU 对等组件。
+- **替换现有 Studio、账号/云同步/AI/社区功能**——公开现有本地主题工作流，不另建编辑器或服务。
+- **重做 Rustify Docs 生成器、搜索或通用托管系统**——复用既有 SSG、注册与搜索；Pages 组合脚本只组装已构建的本站与 Studio。
+- **重发未变化的十包、补齐 PRD 其他计划尚未实现的能力**——示例调用公开 0.3.0 能力；发现真实 SDK 缺陷按 §8 处理，不能悄悄用源码新 API 伪装为已发行。
+- **英文指南全文翻译、性能/包体积专项优化、Windows/完整 Linux 运行认证**——保持现有平台边界；新增导航、说明与操作控件有中英文，英文内容可显式回退。
+
+组件目录扩展、旧 demo 升级、Colors/Primitives 展示、公开 Studio 和线上完整任务均在本期，不能以原 24 类导航、原排除或发行已完成为由省略。
 
 ## 1. 当前事实与改动面
 
 ### 1.1 现状与缺口
 
-- **[已核实·足够]** 线上官方站：`cli_version 0.1.32`、build `f74f4a4ece90f08a`、96 个文件，来自 run 39388531674（2026-10-20），早于 DOM-COMPONENTS P1。线上内容是 C2 时的源码，完全不含 P1–P5 成果。
-- **[已核实·足够]** crates.io 上九包为 0.2.1：库 R `b32844a489943649a49d9fbe46ee837e32017885`，CLI C `8fd7fd63679196e20f8e3572e4234bb51d8faf17`，标签 `rustify-libs-v0.2.1` / `rustify-docs-cli-v0.2.1`（[CRATES-IO-P1 发行记录](CRATES-IO-P1.records/M6.md#021-补丁发布2026-10-24-1926-0800)）。R 是 HEAD 的祖先。
-- **[已核实·足够]** 自 R 以来，`crates/rustify-dom`（67 个文件）、`crates/rustify-components`（318 个）、`crates/rustify-docs`（5 个）、`crates/rustify-docs-cli`（5 个）有改动；classification-macros、style、docs-syntax、docs-macros、style-wasm 的目录没有改动；仓根 `Cargo.toml` 新增了 `crates/rustify-colors` 成员（`git diff --stat b32844a4 HEAD`）。
-- **[已核实·缺口]** `python3.12 scripts/crates-io.py inspect` 失败：`private workspace package permits publishing: rustify-colors`。`crates/rustify-colors/Cargo.toml` 没有 `publish`、`readme`、`documentation`、`rust-version`、docs.rs 元数据，也没有 `LICENSE`；其 README 第 59 行写「currently consumed from this source checkout」。→ 按 `crates/rustify-docs-syntax/Cargo.toml` 补齐元数据与 LICENSE，并进入清单（D2）→ 漏做则无法打包 `rustify-dom`。
-- **[已核实·缺口]** `tests/crates-io/test_boundaries.py:52` 断言清单恰为 9 项 → 改为 10。
-- **[已核实·缺口]** `scripts/crates-io.py::lock_inputs` 会读取 `tests/dom-only` 下的所有锁，其中包括 `tests/dom-only/public-panel-consumer/Cargo.lock`；该锁有 16 个第三方 registry 包（如 `icu_* 2.4.0`、`serde_json 1.0.154`、`uuid 1.29.0`）不在已预取的八个锁中。`stage_registry` 只读 Cargo 本地缓存，缺失时报 `missing … run mbx fetch --locked`，不会自行下载。→ 在 `.github/workflows/crates-io.yml` 的预取步骤和 runbook 第 2 步各加一行 `mbx fetch --locked --manifest-path tests/dom-only/public-panel-consumer/Cargo.toml` → 漏做则 CI 预检在 package-libraries 失败。
-- **[已核实·缺口]** 包内 README 的安装钉仍是 `=0.2.0`（dom、docs、docs-syntax、docs-macros、style、style-wasm、classification-macros 及 `crates/rustify-style/upstream/README.md`），或是 `=0.2.1`（components、CLI README、components 模板 README）→ R/C 前统一改为 0.3.0 → 漏做则 crates.io 页面给出错误的安装命令且无法改字节。
-- **[已核实·足够]** 0.2.1 的版本改动集是 `b32844a4`（32 个文件）加上 `8fd7fd63`（freeze）与 `0efbea59`（说明）。本次照它做，另需覆盖其后新增的 fixture：`tests/dom-only/primitives`、`tests/dom-only/public-panel-consumer`、`tests/theme-export/{dom,runtime}`、`tests/theme-text`、`tests/docs-ssg/fixtures/theme-v2`（`git grep -l "0\.2\.1"`）。
-- **[已核实·足够]** 三篇新指南加入配置后，`target/docs-cli/rustify-docs check`（source CLI）的结果为 80 页、0 error、40 warning；基线为 74 页、0 error、37 warning，新增的 3 条都是 `i18n-missing-page`，与其他英文指南同类。指向 `../crates/…`、`plan/…`、`validation/…` 的链接不报错。
-- **[已核实·缺口]** `tests/docs-ssg/official.spec.ts` 固定了与指南数相关的数字：`guides` 长度 12（213 行）、测试标题「exact twelve guides」（311 行）、该用例的侧栏链接数 36（315 行，12 篇指南＋24 个组件页）、中文搜索索引 37 页/35 页回退（255–256 行）、`llms.txt` 37 条（265 行），共五处。加三篇后应为 15、「fifteen」、39、40/38、40；A 落地时以 `toHaveLength\|toHaveCount` grep 复查 spec 内全部计数断言。`guides` 由 include 解析，逐篇的「English, reachable」用例（320 行）会自动覆盖新指南。
-- **[已核实·缺口]** `site/src/pages.rs::home_zh` 写着「工作区版本为 0.1.0，尚未开放包发布」，与已发布的事实不符；英文首页引言来自 README.md（`markdown_intro`），README 第 7 行仍写 0.2.1、九包 → 在 D 中更正（D7）。
-- **[已核实·足够]** Git 安装 CLI 的身份：cargo checkout（如 `~/.cargo/git/checkouts/rustify-ui-2d63cd2817e50ebf/d0d84d7`）含 `.git` 目录，`refs/heads/master` 指向该 rev；`crates/rustify-docs-cli/src/release/source.rs::identify` 因此报告 `distribution: source` 和真实 SHA。`docs-pages-prepare.py::cli_identity` 在 `CARGO_HOME/git/checkouts/*/*` 中按 `development_checkout` 指纹找回该 checkout。
-- **[已核实·足够]** `docs-pages-prepare.py::prepare_project` 在 source 模式下只投影 `site/Cargo.toml` 的三条依赖到 checkout 的 `crates/<包>`，并用 `mbx metadata --offline` 校验，不改 `site/Cargo.lock`；`read_identity` 要求 checkout 中各包版本等于 `framework-release.json`，所以 D 中三包版本须为 0.3.0（由 R/C 继承）。
-- **[已核实·足够]** `docs-pages-verify.py` 不固定文件数或指南数；`--dir` 做本地产物与图检查，`--url --run-id` 读取同一 run 的产物，并逐个读取公开文件做比对。
+- **[已核实·足够]** 十包 0.3.0 已公开，原库 R=`3f2fd1e18e48b0cf76c634512411dfb0493d35d0`、CLI C=`dde6fe85149c7f362f458a8a3139257fd0984c67`；上传、配对与平台记录见 [M2](DOM-COMPONENTS-RELEASE.records/M2.md)、[M3](DOM-COMPONENTS-RELEASE.records/M3.md)。没有必要重新发包。
+- **[已核实·足够]** 现网 manifest 为 CLI 0.3.0、build_id `3fe8d486f30d8aa5`；Menus、Panels、迁移三篇已上线。候选 D3=`596175e3550794fd83683e433702bea0534b509c`，run `42953922752`（[M4](DOM-COMPONENTS-RELEASE.records/M4.md)）。
+- **[已核实·缺口]** `site/src/lib.rs::site` 只注册 24 个 demo 和对应页面，`site/src/pages.rs::category` 依赖 SDK 旧 `CATALOG` 分类；该分类不是完整公共能力清单 → 增加本站展示目录和新组件入口，保留旧地址 → 否则 Accordion、Menubar 等只有指南代码，读者无法操作。
+- **[已核实·缺口]** `site/src/demos/basics.rs::button_demo` 仅演示 Increment/Reset/Unavailable；`feedback.rs` 沿用简单 Menu/Dialog。该目录在本期发行区间未改动 → 用当前公开 API 升级样例，覆盖适用变体/尺寸/状态 → 否则新库重建后仍像旧组件。
+- **[已核实·足够]** `examples/theme-studio/src/gallery.rs`、`gallery_catalog.rs`、`gallery_extensions.rs` 已有受控样例、部件说明和九组陈列；`tests/browser/theme-gallery.spec.ts` 已有真实操作范式。此处是复用写法与覆盖的证据，不等于官网已展示，也不以既有 49 样本数代替 §6.2 的逐项覆盖。
+- **[已核实·足够]** Studio 的 `app.js` 使用相对 `theme-studio.wasm`，`xtask/src/build.rs::build` 支持 `--base`，复制 loader、静态 message bridge、snippets、public 字体与图片；无需新服务。需在本地验证公开子路径与 meta-only CSP，不能仅由源码推断通过。
+- **[已核实·缺口]** 现有 Pages 只打包 Docs output；`scripts/docs-pages-verify.py::check_artifact` 拒绝 manifest 外文件，`verify` 要求每个 HTML 带 strict meta CSP → 新增本站专用组合步骤，将完整 Studio 与 Docs 一起进入既有 manifest/identity/打包校验 → 不能部署后手工塞一个未绑定候选的目录。
+- **[已核实·足够]** `scripts/docs-pages-prepare.py::prepare` 对候选全树保护，只投影 `site/Cargo.toml` 和 lock。新增 `site/` 源码自动进入保护，不需改 prepare 的身份协议。
+- **[已核实·足够]** `rustify_colors::ColorFamily::ALL/scale/css` 提供完整命名色阶与原始值，`crates/rustify-colors/README.md` 明确 31 色族、12 阶、浅深/透明/P3 及黑白透明；P3 是独立静态资源能力，共享主题与 GPU 仍按 sRGB 解析。
+- **[已核实·足够]** `ThemePanel`、`ThemeBoundary`、主题 codec 与 Studio 的配置/精调/导出已存在；不为展示再造主题事实源或持久化格式。Studio 继续使用其独立 `rustify-ui.theme-studio.v2` 本地 key。
+- **[已核实·缺口]** `tests/docs-ssg/official.spec.ts` 从旧 CATALOG 推导页面并假设一个 demo island；需扩展到本站展示目录与一页多个具名样例的实际公开行为，保留旧路由、语言、静态页面/按需 wasm、CSP、搜索和来源代码的保障，不能只改通过计数。
+
 
 ### 1.2 拓扑与文件清单
+
+M1–M4 已完成发行的文件与契约保留如下；续做改动见本节表后及 §5.5–§6，不重复运行发包步骤。
 
 发布顺序沿 [release/crates-io.toml](../../release/crates-io.toml)：classification-macros → style → docs-syntax → docs-macros → **colors ★** → dom → components → docs → docs-cli（docs 组），公开门通过后发 style-wasm（remaining 组）。
 
@@ -331,20 +340,55 @@ REVIEW @progress_consistency:
 | `docs/docs-ssg.md`「Official site delivery」 | 记录 D 的 run、build、last-good C2 | E |
 | `docs/plan/DOM-COMPONENTS-RELEASE.records/` ★ | 里程碑记录 | 随里程碑 |
 
-零改动面：`makepad/`、GPU SDK 与 Makepad 桥、`examples/**`（Theme Studio 见 D8）、`crates/rustify-docs*/src` 的行为、`scripts/*.py` 的逻辑、`docs-pages.yml`、`verify.yml`。依据：本期只换版本、配置与说明，不改组件或生成规则。
+续做改动（★ 为新增文件）：
+
+| 路径 | 行为与复用点 | 执行范围 |
+| --- | --- | --- |
+| `site/src/lib.rs`、`site/src/pages.rs`、`site/src/showcase.rs` ★ | 本站展示索引/分类/条目，继续注册具名 demo 与自定义静态页面；不修改 SDK 的 24 类 CATALOG | M5 |
+| `site/src/demos/{basics,choices,fields,feedback,collections}.rs`；`site/src/demos/{composition,menus,content,layout,typography,colors}.rs` ★ | 升级已有 demo，补全 §6.2 的公开能力与部件；按现有 `pub fn ...() -> impl IntoView` 注册，参考 Studio 受控样本 | M5 |
+| `site/Cargo.toml`、`site/Cargo.lock`、`rustify-docs.toml`、`site/theme.json` ★ | 仅给本站增加 `rustify-colors = { version = "=0.3.0", features = ["p3"] }` 的直接消费、导航与 schema v2 主题；样式使用现有无前缀 Tailwind utilities，由 Docs 编译；主 CLI 配对不变 | M5 |
+| `site/static/colors/` ★ | 从已发行 `crates/rustify-colors/css/` 原样复制色阶 CSS 与完整 `vendor/colors/LICENSE`（发布名 `LICENSE.txt`），供静态 CSS 下载；不从忽略的 ref 构建、不把数据转换成另一份色表 | M5 |
+| `docs/{components,themes,menus,panels,forms,quickstart,dom-components-migration}.md`、`docs/zh/quickstart.md`、`README.md` | 从说明与首页链接到真实样例、Colors 与公开 Studio；当前可用版本一致 | M5–M6 |
+| `examples/theme-studio/index.html`、`app.css`、`src/data_tools.rs` | 仅增加公开文档往返入口、更新 0.3.0 消费提示及必要的公开子路径适配；保留现有编辑、保存、导出和 GPU 功能 | M6 |
+| `scripts/docs-pages-compose.py` ★、`.github/workflows/docs-pages.yml`、`scripts/docs-pages-verify.py` | 组合两份已构建静态目录，复用既有产物身份与校验；整包部署和对照，不重构 prepare 或生成器 | M6 |
+| `tests/docs-ssg/official.spec.ts`、`tests/docs-ssg/serve.sh`、`tests/browser/theme-deployment.spec.ts`、`tests/crates-io/test_pairing.py` | 官网真实用户旅程、组合包部署、既有协议回归；不把演示覆盖降为数字断言 | M5–M7 |
+| `docs/validation/dom-components-release/showcase-coverage.md` ★、本计划 M5–M7 记录 | 实施时写真实展示落点与验收结果；不预填通过 | M5–M7 |
+
+不改 Makepad/GPU 绘制、SDK 组件 API、Docs 生成器或 registry 归档。只有真实官网使用暴露 SDK 缺陷时才按 §8 的版本边界处理，不自行扩大框架开发。
+
+## 2. 本站展示目录与页面契约
+
+`site/src/showcase.rs` 仅供本站使用，定义 `ShowcaseEntry { group, route, anchor, title, demo, public_paths, guide }` 的静态条目；字段均为静态字符串/切片，不生成运行期路由或查 registry API。`route + anchor` 是用户可分享位置，`demo` 对应 `site/src/lib.rs` 已注册函数，`public_paths` 显示实际 `rustify_components` / `rustify_dom` 公共路径。该目录服务首页、分类、样例页面三个真实调用者，不加入 SDK 或通用组件包。
+
+- 既有 24 个 `/components/<name>/` 地址保持，在其中升级真实样例；同类新部件可在其页内有独立锚点，不另造一个 Props 类型页面。
+- 新 `/components/` 是总索引；新增分类页 `/components/interaction/`、`/components/overlays/`、`/components/menus/`、`/components/navigation/`、`/components/content/`、`/components/feedback/`、`/components/layout/`、`/components/typography/`、`/components/extensions/`。每个 §6.2 项有条目锚点；旧组件条目链接回旧详情页，新家族在分类页用 `context.demo(entry.demo)` 渲染。分类内允许多个具名 island，不能用“存在一个 island”作为整页完成条件。
+- `/colors/` 为色阶实物与消费入口；`/primitives/` 给出无样式组合与 themed 对照和各家族入口；`/studio/` 为可搜索的工作台介绍页，`/theme-studio/` 是公开完整应用；Docs 内另有主题介绍链接，不能把该应用伪装成静态指南。
+- 分类页和源码在 SSG 时生成，可索引/搜索/深链；交互按现有 Docs island hydrate 接管。同一示例的状态由其 `RwSignal` 拥有，部件不持有另一份业务值；重新挂载恢复样例初态。
+- `site/src/lib.rs` 沿既有宏声明方式注册新静态页与 demo；`pages.rs` 复用 `RenderContext::demo`。源码展示继续由实际注册函数产生，不能贴一份与运行样例分叉的代码。
+- 控制台和展示区域分开；只暴露该 API 已支持的参数，不给不存在的功能增加空控件。函数复用受控示例组合，不把 Studio 应用状态搬进 docs，不为共享代码改 SDK 包。
+
+## 3. 数据与版本边界
+
+组件 demo 的数据只驻留当前 island，不写用户本地库或示例业务文件。导入使用用户主动选取的文件；演示下载使用明确命名的演示文件。Studio 沿既有本地 key、schema v2、备份和存储冲突处理；官网文档不读写 Studio key。JSON/CSS/Rust 导出沿现有 codec/data_tools，不新增交换格式。
+
+0.3.0 已发布字节不变。本站增加 Colors 的公开依赖并由锁正常解析；示例仅使用 R 中已发行能力。Studio 从相同候选 S 的现有应用代码构建，保持其 Git-only GPU 来源说明，不能写成可从 crates.io 安装 GPU SDK。
 
 ## 4. 集成与契约
 
 | 依赖/调用方 | 当前状态 | 行为级证据 | 本期处理 | 失败语义 |
 | --- | --- | --- | --- | --- |
-| crates.io registry | 已核实足够（外部） | 0.2.1 九包由本仓库账号发布；`rustify-colors` 尚不存在；新包有限流（CRATES-IO-P1 §5.4） | 只上传冻结归档；`publish` 子命令逐包 dry-run、核对 digest、查询索引后再继续 | 超时→`waiting-index` 先查状态；429→记录 `next_retry_at` 后续接；同名同版本异 checksum→停止（runbook「Upload and resume」） |
-| docs.rs | 已核实足够（外部） | 0.2.1 八库构建成功；CLI 无库 target，用 README、`--help` 和真实安装作文档门（CRATES-IO-P1 发行记录） | 上传后等待九个库（含 colors）的 0.3.0 构建 | 排队或失败记为未通过项，不宣称完成；修复需 0.3.1（§8） |
-| 发布人账号与临时 token | 未核实（外部，只阻塞 M3） | A-1 | V-8 核对名称模式覆盖十包、`publish-new` + `publish-update`、过期时间覆盖上传等待；Agent 不读取凭证文件 | 凭证缺失或过期→停在当前包，由发布人更换后用同一 receipt 续接 |
-| `crates-io.yml` 远端预检 | 已核实缺口（自有） | 预取缺 `public-panel-consumer`（§1.1） | R 中补一行；授权推送后派发 | 任一平台失败→不进 M3，按失败点修复后重冻 |
-| `docs-pages.yml` + prepare/verify 脚本 | 已核实足够；source 模式在 CI 未实跑（A-2） | §1.1 | 零改动，派发 D | build 失败→线上保持 C2；部署后核验失败→重派 C2（§8） |
+| crates.io registry | 已核实足够（已完成发行） | M3 记录十包 0.3.0 公开与 checksum 核验 | M5–M7 仅消费已发行版本，不重新上传 | 发布字节不可变；真实 SDK 缺陷依 §8 重新界定版本 |
+| docs.rs | 已核实足够（原发行） | M3 记录九库 0.3.0；CLI 为 binary-only | 官网公共 API 链接匹配 0.3.0，CLI 继续链接公开 README/help | 链接错误修本站；不能据版本号声称新展示完成 |
+| 发布人账号与临时 token | 已核实足够（原发行） | M3 上传完成；用户已决定保留 token | M5–M7 不访问该凭证、不重新上传 | 新上传不在默认执行范围 |
+| `crates-io.yml` 远端预检 | 已核实足够（原发行） | M2 记录预取修复及双平台成功 | 原源码/包字节未变则复用，不作为 M5–M7 新增上传门 | 不以原矩阵通过替代本站展示验收 |
+| `docs-pages.yml` + prepare/verify 脚本 | 已核实足够（原 Docs）；已核实缺口（组合 Studio） | §1.1、M4 | 保持 prepare 配对，按 §5.6 增加两份静态输出组合与整包校验 | 组合/校验失败则不上传、不部署，修复后安全重做 |
 | GitHub Pages 环境 `github-pages` | 已核实足够 | 线上可读，Actions 源已配置（docs-ssg.md） | 不改设置 | — |
+| 现有 Studio | 已核实足够（本地功能）；公开子路径需验 | `examples/theme-studio/app.js`、`xtask/src/build.rs`、现有 gallery/deployment 测试 | 同候选构建完整应用，公开在固定子路径；保持存储命名空间与既有 DOM/GPU 边界 | 原 startup/fatal/storage 错误如实可见，不用静态截图替代失败应用 |
+| GitHub Pages 生产派发权限 | 已有原发行授权记录，新的候选尚未派发 | M4、C-3 | M7 在本地完整可审产物通过后展示 S、组合 identity 和准确命令，再申请本次授权 | 不获授权保持 M7 未完成，不把本地通过写作上线 |
 
-## 5. 核心机制：冻结、发行与部署顺序
+## 5. 核心机制：发行配对、完整展示与整站部署
+
+§5.1–§5.4 是 M1–M4 已完成发行交付的契约；当前续做从 §5.5 开始，不重新发包或重复原矩阵。
 
 ### 5.1 R：库候选
 
@@ -389,21 +433,106 @@ python3.12 scripts/crates-io.py verify --release "$DIR"
 2. V-11 本地预演通过后，在 M4 授权门出示 D、预演结果和派发命令；获准后执行 `gh workflow run docs-pages.yml --ref main -f candidate_sha="$D"`，build 与 deploy 都成功才进入 V-12。
 3. V-12、V-13 通过后提交 E（docs-ssg.md 官方站交付节：候选 D、run ID、build_id、last-good C2），在同一授权内推送。E 不重新部署：线上站点不显示自身的部署记录，与 DOCS-SSG-P4-gaps 的 `c6d49c97` 做法相同。
 
-## 8. 失败模式、发布与回滚
+### 5.5 官网 demo 与完整展示映射
+
+1. 在 `site/src/showcase.rs` 登记 §6.2 的每个已交付家族、旧详情页/新分类页锚点、具名 demo 和公共 API 路径；以 `docs/components.md` 的 Public source entries、PRD §2.3、Studio `gallery_catalog.rs` 三者交叉核对。数量不相等不等于缺陷：helper/Props 在所属家族说明中展示，不能凑空 demo；任何有独立可观察行为的组件不能遗漏。
+2. 首页同时给出 Components、Colors、Primitives、Theme Studio 入口；组件总索引按九组分区，列出具体名称，不让用户只能搜索一个旧分类词。分类/详情与 Guides 双向链接。
+3. 在既有 24 页原地升级 demo；新家族在分类页有独立锚点、标题、真实样本和源码。Button 至少可切换全部 `ButtonVariant::ALL`、`ButtonSize::ALL`、颜色/高对比、disabled/loading；其它控件只提供自己公开支持的维度，使用相应枚举 `ALL`，不维护另一份手写选项表。
+4. 扩展 `official.spec.ts` 的页面获取：既有 CATALOG 场景仍保护旧路由，新增来源是本站展示目录/注册页；每个具名 island 单独等待 ready，不再全页强制只有一个。操作断言检查用户状态和实际控件结果，不以 `data-variant` 等内部标记代替可见效果。
+5. 实施时填写 `docs/validation/dom-components-release/showcase-coverage.md`：`公开能力/交付来源 | 页面+锚点 | 可操作行为/视觉维度 | 示例源函数/公共路径 | 真实结果/证据`。可合并同家族部件，但每个公开能力必须有落点；未实现、只写文档、无法操作分别标缺口，不标完成。
+6. 本站使用 `site/theme.json` 的 schema v2 标准主题（依据 `ThemeDocument::standard` 的完整两模式数据），在 `rustify-docs.toml` 用 `theme.document` 声明，不以旧 legacy 默认色板代表新主题系统。页面主题切换与 SSR 初始外观一致；不为了本站展示修改 Docs 的 CSS 编译器。
+
+### 5.6 现有 Studio 的公开接线与静态产物组合
+
+- 应用入口固定为 `/rustify-ui/theme-studio/`；根路径验收时为 `/theme-studio/`。从首页、主题指南和组件页可到达，Studio 提供返回官网的普通链接。`index.html` 使用 `href="../"` 的普通返回链接，随根/子路径自然回到官网；不把 docs 组件嵌入 Studio、不跨实例共享内存。
+- 从同一候选 S 的未投影 checkout 执行 `mbx xtask build-web --example theme-studio --release --base /rustify-ui/theme-studio/`，使用 `xtask` 返回的产物目录，复制到仓外稳定目录后才接后续检查；根路径产物另用 `--base /theme-studio/`。不猜 `@...` 目录名。保持 `app.js`、loader/bridge、snippets、CSS、字体、图片与 WASM 完整配套。
+- 新增 `scripts/docs-pages-compose.py`，接口固定为 `--docs-dir <已构建Docs> --studio-dir <完整Studio> --out <不存在或空的仓外目录> --base /rustify-ui/`。用 Python 3.12 标准库；输入分别读既有 Docs manifest 和 Studio build-manifest，要求 base 为 `<base>` 与 `<base>theme-studio/`，不在组合阶段编译应用。
+- 组合器先验证输入路径/清单/字节，再复制 Docs 全部文件到 out、Studio 完整文件到 `out/theme-studio/`；输出不得覆盖任一输入，路径冲突/缺资源/错误 base 直接报错。失败的临时 out 可删除后重试，不写事务日志或恢复状态机。
+- Studio HTML 在构建产物中加入与 `scripts/docs-pages-verify.py::META_CSP` 相同的 meta CSP；保留模块脚本和外置资源，不加入 unsafe-inline/eval。组合不改候选源码或输入产物；Docs HTML 除下面明确的 Studio 链接本地化外字节不变。
+- 按 `crates/rustify-docs/src/publish.rs::Manifest::of` 的**既有**算法对最终文件集重算 `files` 和 `build_id`（排除根 manifest 自身），保留 schema/base/cli_version/locale_not_found/page_policies。只使用既有 sha256 和 build_id，不增加第二套指纹或协议。Studio HTML 在已有返回链接之外加入 CSP 后，按 `xtask/src/build.rs::finish` 的既有文件清单结构更新 Studio build-manifest 的 `files: BTreeMap<String,u64>` 与相应 `size_report` 大小信息，WASM build_id/schema_hash/base 保持实际构建值；再纳入根 manifest。不能让根 manifest 正确却保留一份与 HTML 不符的嵌套清单。
+- Docs 构建期还没有 Studio 文件，`crates/rustify-docs/src/generation.rs` 的最终链接检查会拒绝尚未发布的内部 `/theme-studio/`。因此站点源码/导航/指南先以绝对官网 URL `https://rockie.github.io/rustify-ui/theme-studio/` 链接完整应用，另注册可搜索的 `/studio/` 静态介绍页；不伪造应用页面或放空 iframe。组合器只把这个明确 URL 在生成 HTML 的 href 中本地化为 `<base>theme-studio/`，使 root/subpath/meta 与线上均访问同包应用；不得泛化重写其它外链。组件/指南的索引搜索仍由 Docs 生成，Studio 的动态 UI 不冒充静态搜索内容。
+- workflow 仍保留 Docs 的 `build.json`，同时把组合 manifest 写入原 evidence 工件；`identity.json` 的 build_id 指向最终组合包，原 candidate/framework/projection 字段不变。必须在生成 identity、verify、archive **之前**完成组合；最终 tar 从组合 out 打包，不能继续打包原 Docs 目录。把 workflow 的 docs-site 固定路径改为该明确输出，不更改 GitHub Pages 环境设置。
+- `docs-pages-verify.py` 保持完整文件集合、资源字节、地址、MIME、meta CSP 与语言/搜索/AI 检查；增加 Studio 必需入口及其 build-manifest base/依赖完整性核对，不把 Studio 当 Docs 内容页要求侧栏/搜索。`prepare.py` 继续保护全部候选源码，不需新增投影。
+- `tests/docs-ssg/serve.sh` 的 official 分支复用组合器。通过 `RUSTIFY_STUDIO_DIR` 指向按相同 base 已构建的 Studio，由调用方预构建，缺失直接失败；依现有 root/subpath/meta 三种宿主服务同一个组合包。`official.spec.ts` 中覆盖公开 Studio 的场景通过同一配置运行，不在验收时偷换成本地独立端口。
+
+### 5.7 新候选 S 的部署顺序
+
+1. M5–M6 同批实现并完成 V-14–V-17；本批 site、Studio 接线与组合脚本可分别提交，但共用文件由一人集成。提交后冻结完整 S，回写 M5/M6 记录，不能继续使用 D3 的源码身份代表新展示。
+2. 检查 S 的九库及根库输入仍等于 R，CLI 包仍等于 C；本站新增依赖不改变 registry 发行。按现有 Git CLI 安装与 prepare 命令做完整候选预演，再从 S 未投影源码构建 Studio、组合/verify。由于 prepare 会投影 site manifest，不能从投影目录启动根 xtask 构建 Studio。
+3. V-18 的本地候选门通过后，出示 S、最终 build_id、主要可操作入口与生产命令；获本次推送/派发授权后推送并执行 `gh workflow run docs-pages.yml --ref main -f candidate_sha="$S"`，再 `gh run watch`。没有授权不派发，但其它已授权本地工作照常完成。
+4. 用同 run 工件与线上 HTTP 核对完整组合包，再在真实官网执行 V-19。任何缺失演示、不可用状态、资源错误或导出消费失败均是未完成；修复后只重验失败任务与波及项，并发布新 S。
+5. V-19 全部通过后，M7 才能记完成、整期进度才可成为 7/7；记录实际 S/run/build_id、展示覆盖和已确认的限制。只有新版文档上线、Studio 启动成功或截图好看都不够。
+
+## 6. 前端与展示验收契约
+
+### 6.1 信息架构与页面行为
+
+首页首屏清楚呈现三层能力（Colors / Primitives / Themes）与“浏览组件 / 打开 Theme Studio”主入口，辅以真实组件构成的短预览；不把原 Git/GPU 定位或发行说明堆成唯一主体。组件总索引按 §2 九组列出完整集合，当前分类/面包屑与页面标题一致；移动端导航可用。旧 24 页可直接访问且已有链接不失效。
+
+详情结构统一为：组件用途与使用条件 → 可操作样例和适用参数 → 关键状态/组合 → 实际源码 → 公共路径/部件结构/相关指南 → Studio 对应场景入口。部件与类型辅助说明跟随所属家族，不用导出符号总数冒充用户可操作组件数。没有业务行为的布局/排版以真实语义、响应式和视觉变化证明，不能放假操作按钮。
+
+### 6.2 必须完整展示的能力矩阵
+
+下面是交付集合，不是抽样清单；来源为 PRD §2.3、当前公共组件清单与已有 Studio 样本。每行都要在覆盖记录中有页面/锚点和实际结果，逐个家族核对；相同根部件与便捷组件可组合展示，不能删除。
+
+| 组/展示落点 | 已交付能力 | 读者必须能实际看到或完成的事 |
+| --- | --- | --- |
+| Colors `/colors/` | 全部 `ColorFamily::ALL` 的 12 阶、浅深、实色/透明、黑白透明；sRGB 与 P3 数据/静态 CSS | 选择色族/模式，看到色块、阶号和真实颜色字符串，复制值/下载匹配 CSS；P3 标明浏览器/显示器条件与 sRGB 回退，不暗示 GPU P3 |
+| Primitives `/primitives/` 及各家族条目 | 当前公开 raw 部件与 themed 对应；typed native decorators、Direction、Portal、AccessibleIcon、VisuallyHidden | 同类 raw/themed 受控样例都可操作，看到结构、状态及公共路径；示范 RTL、原生按钮/链接语义与组合，不把 Props/helper 单独凑 demo |
+| 操作与图标：旧 Button/Link/Icon + Interaction | Button、IconButton、Link、Icon/Glyph | 全部声明的变体/尺寸，颜色、高对比、disabled/loading；点击有结果，禁用/加载不触发，链接保留原生打开方式 |
+| 基础选择：旧 Checkbox/Radio/Switch/ToggleGroup + Interaction | Checkbox、CheckboxGroup、Radio、RadioGroup、Switch、Toggle、ToggleGroup、SegmentedControl | 三态、单选/多选、受控回写、方向与禁用；SegmentedControl 不伪装成 Tabs |
+| 卡片选择 Interaction | CheckboxCards、RadioCards 及对应 Root/Item/Control/Indicator/Text | 整卡交互、选中/禁用、键盘和表单值；可以对比尺寸/变体 |
+| 范围输入：旧 Slider + Interaction | Slider、RangeSlider、公开 slider Root/Track/Range/Thumb | 多滑块、垂直/反向、值/提交、键盘、最小间距及应用拒绝请求时显示值保持 |
+| 字段与表单：旧字段页 + Interaction | TextField、TextArea、NumberField、ColorField、Label、Field、FormRoot、SubmitButton、FormStatus 及字段部件 | 前后插槽、只读/禁用/invalid、数字/颜色草稿，真实提交/错误恢复/reset，展示应用最后接受值与原生表单结果 |
+| 选择器：旧 Select | Select 的便捷/部件 API、分组、长列表、空值 | 打开/选择/清空、滚动与键盘、disabled 项不可选，正确焦点返回 |
+| 模态/浮层：旧 Dialog/Tooltip + Overlays | Dialog、AlertDialog、Popover、HoverCard、Tooltip 的公开部件 | 确认/取消有不同结果，Escape/外点/嵌套与焦点，Popover 内实际操作；Tooltip 用可聚焦原生目标 |
+| 菜单：旧 Menu + Menus | Menu、DropdownMenu、ContextMenu、Menubar | 点/右键/键盘入口、复选/单选/子菜单/禁用、菜单间移动、执行命令和焦点返回；沿用指南真实组合 |
+| 导航/切换：旧 Tabs + Navigation | NavigationMenu、Toolbar、Tabs/TabPanel、TabNav、Accordion、Collapsible | 网站链接与应用命令区分，工具栏 roving focus，Tabs/展开受控结果、单项/多项选择及键盘操作 |
+| 反馈：旧 Progress/Loading/Toast + Feedback | Progress、Spinner、Skeleton、Toast/Toaster | 确定/不确定进度、真实等待/空/完成反馈，Toast 更新/关闭；不只放永远转动的装饰 |
+| 内容 Content | Avatar/Image/Fallback、Badge、Callout/Icon/Text、Card、DataList 部件、Table 全部表格部件 | 图片失败回退、可见状态/变体、真实文本和数据；普通 Table 与 DataTable 分清用途 |
+| 尺寸内容 Content + 旧 ScrollArea | AspectRatio、Separator、ScrollArea 的 Viewport/Scrollbar/Thumb/Corner | 比例随容器变化、分隔方向、横纵滚动与长内容，不用静态外框代替行为 |
+| 布局 Layout | Box、Flex、Grid、Container、Section、Inset、Reset | 响应式间距/对齐/列数/容器尺寸，Inset 与最近容器关系，Reset 作用域不影响页面其它内容 |
+| 排版 Typography | Text、Heading、Blockquote、Code、Kbd、Em、Quote、Strong | 原生语义、字级/字重/对齐/裁切/换行等实际支持字段；同一文本随参数变化可见，不以 class 文本代替视觉 |
+| Rustify 扩展：旧 DataTable/Tree/字段等 + Extensions | DataTable、Tree、FilePicker、DropZone、Splitter、PanelTabs、CommandPalette；保留 NumberField/ColorField/Icon 对应页面 | 排序/筛选/选择，树展开与键盘，用户主动文件选择/拖放，拖动/键盘调分隔、切换面板、搜索执行命令；演示数据和操作结果可见 |
+| 主题与公开 Studio | Theme/ThemeScope、ThemeBoundary、ThemePanel、主题配置、codec 与来源 API | 官网从公开入口编辑主题；比较根/局部/浮层继承，变体与尺寸受主题驱动；完整工作流见 §6.4 |
+
+Colors 色块可用 SVG `rect` 的颜色属性在 SSG 中展示真实 sRGB 值，保留可读数值，不加内联 style 或运行时拼 CSS；P3 数据读 `ColorFamily::css/scale` 的公开 p3 feature，下载链接指向 `site/static/colors/` 中原样打包的 CSS（包括相对导入的 sRGB 文件）与许可证，不使用示意字符串。可交互选择的状态随用户操作更新，内容页不为色块而强制加载 Studio。复制/下载沿浏览器原生能力，失败必须对用户可见且仍能选中原始文本。
+
+### 6.3 状态、主题与可访问性
+
+复用 PRODUCT.md / DESIGN.md 的中性文档壳和作用域主题；预览承载新组件外观。实施前按仓库要求使用 impeccable 做页面设计；当前技能目录未发现该技能，实施者须明确提示安装并如实记录，不能声称已经使用。设计需覆盖视觉层级、信息架构、间距、颜色、动效、可访问性和 loading/empty/error；缺技能不授权改技术栈或缩减展示范围。
+
+每个可操作示例有明确结果和复位；禁用/只读/加载/错误只用于对应语义，不能用它们掩盖未实现交互。页面和 Studio 均测试浅深、中文导航/英文回退、窄屏及放大、键盘焦点。错误资源、CSP/pageerror、空示例与永远 loading 都是失败；保留实际截图与操作结果。文档壳与某个局部主题互不污染，浮层继承创建样例的有效主题。
+
+### 6.4 公开 Studio 的完整使用路径
+
+从官网点击 Studio → 选现有预设 → 修改品牌/中性色族、面板、圆角和缩放 → Colors/Typography/Other 精调 → Components 场景检查对应组件的变体/状态/部件 → Inspector 选真实组件及浮层，看到有效值和根/局部/继承来源 → 撤销/重做 → 保存并刷新恢复 → 导出 JSON/CSS/Rust → 按公开说明在独立 registry 0.3.0 DOM 应用消费。
+
+现有导入、导出、本地库、草稿、错误恢复与独立 scope 对比全部保留；不可替换成一个删减面板。默认读者主路径选 DOM；GPU/对比仍是原有可选模式，显示真实支持与错误，不为“完整展示”增加 GPU 组件。中文入口与语言控件沿现有应用，文档与 Studio 不承诺自动同步编辑状态。
+
+## 7. 质量边界
+
+沿用现有 strict CSP、静态托管、资源外置、无脚本可读与按需 island。官网普通文档不依赖 Makepad；Studio 可选独立应用保留已存在的 Makepad 集成。新增组合 sha256/build_id 只延续现有 manifest 合同。无本期新增性能数值或真人样本指标，不以性能专项替代功能交付；已有人工/平台 missing 继续如实列出，不推导可访问性认证。
+
+## 8. 失败模式、发布与恢复
+
+M1–M4 已完成的上传/冻结/派发故障及处置保存在原 M2–M4 记录，不作为 M5–M7 重新发行的触发。续做只处理当前真实入口的失败：
 
 | 失败/触发 | 爆炸半径 | 数据后果 | 用户表现/降级 | 检测 | 恢复/补偿 | 验证 |
 | --- | --- | --- | --- | --- | --- | --- |
-| docs 组部分上传后中断（网络、429、凭证过期） | 已上传的低层包公开，上层包缺失 | 无损；版本不可变 | 新版本暂时无法安装 CLI 或上层包 | `publish` 的 receipt 状态与退出码 75 | 同一 receipt 续接，不重打包、不换版本（runbook） | V-9 |
-| 公开门（`verify --public-docs`/`--public`）或 docs.rs 在上传后失败 | 0.3.0 已公开但有缺陷 | 无法撤回字节 | 作者按说明安装失败或文档缺失 | V-9、V-10 | 不推送 D、不部署 Pages；在 R′ 修复并发布 0.3.1 重走 M2–M3；yank 须发布人另行明确授权（runbook） | 重跑 V-4–V-10 |
-| Pages build 在 prepare 阶段找不到 source checkout（A-2） | 本次部署 | 无 | 线上保持 C2 | run 日志 | 改走 ADR-1 备选 2：另开计划修订工作流，不在本计划内临时改动 | V-12 |
-| Pages 部署后核验失败（文件、身份、浏览器） | 官方站 | 无 | 读者看到异常内容 | V-12、V-13 | `gh workflow run docs-pages.yml --ref main -f candidate_sha=88566ba1ed08223a5834f794840fff5e48f4ba8a` 回滚到 C2，并对该 run 跑 V-12 的 `--url` 核验；回滚派发沿用 M4 已取得的派发授权，执行后回写 M4 记录 | V-12 |
+| 官网仍遗漏已交付家族、样例不能操作、显示旧视觉 | 对应读者任务 | 无 | 看不到或无法评估研发成果 | §6.2 逐项映射与实际操作 | 在 M5/M6 修复，记录缺口；不能按“指南已写”记完成 | V-14、V-15、V-19 |
+| Studio 公开子路径资源/CSP 失败，或组合漏打包 | Studio/本次部署 | 不写已有用户数据 | 白屏、启动失败或字体/菜单/下载不工作 | 组合 CLI、既有 verify、同包真实浏览器与失败请求 | 不上传失败组合包；修正接线后重建，失败临时 out 可安全清理重做 | V-16、V-17、V-18 |
+| 组合 build_id 或线上候选与同 run 工件不一致 | 本次展示身份 | 无 | 线上可能仍是旧成果或资源混版 | manifest/identity 与公开 HTTP 字节对照 | 保留当前完整站直到候选通过；部署后核验不通过则记 M7 未完成，修复候选重发，不手工补线上文件 | V-18 |
+| 导入/保存/导出失败 | 当前 Studio 实例 | 沿既有存储/codec 合同 | 显示真实错误，已有内存编辑与可用导出按原合同保留 | 真实主题任务，刷新/导出文件检查 | 不新增持久化/恢复状态机；按既有错误入口处理，真实产品缺陷修复后重验 | V-19 |
+| 独立 registry 示例调用不到源码中使用的接口，或 SDK 真实缺陷 | 公开教程与发行配对 | 0.3.0 字节不可变 | 读者按官网无法复现 | 公共源码示例实际构建与消费 | 先区分站点组装问题与 SDK 缺陷；前者在本计划修复，后者记录影响并按 runbook 修订明确的新版本交付范围；禁止悄悄改包或跳过任务 | V-19 |
 
-- 发布顺序：A → R → C → 推送与预检 → 上传 docs 组 → 公开门 → 上传 remaining → D → V-10 → 标签 → Pages(D) → E。
-- 回滚门：上传不可回滚；Pages 只按上表回滚到 C2；作者端回滚到 0.2.1 的方法写在 D 的 docs-ssg.md 中。
+M5/M6 实现先本地验，M7 再冻结 S、授权推送/派发、核对整包、真实线上任务、提交最终记录。生产审批、包不可变和全文件校验沿既有合同，低成本静态构建失败可重做；不新增兼容模式、自动回滚或恢复基础设施。原 last-good 身份保留供发布人查证；不得把旧站可用当新目标完成。
 
 ## 9. 验证
 
 ### 9.1 检查表
+
+V-1–V-13 为 M1–M4 已完成发行范围，证据见原记录，未受影响则复用。当前必需出口为 V-14–V-19；前者不能代替后者。
 
 共同环境：macOS，Rust 1.99.0（mise），mbx，`/opt/homebrew/bin/python3.12`；浏览器类命令前把指向 python3.12 的 `python3` 放到 PATH 最前（`PATH="/opt/homebrew/opt/python@3.12/libexec/bin:$PATH"`），Node 26，Playwright 自带 Chromium。
 
@@ -422,12 +551,21 @@ python3.12 scripts/crates-io.py verify --release "$DIR"
 | V-11 | 风险门 | R-1、A-2、C-6：Pages 工作流本地预演 | §5.4 第 1 步的差异门；`mbx install --git "file://$PWD" --rev "$D" --locked --profile docs-cli --root "$PREVIEW/cli" rustify-docs-cli`；`/opt/homebrew/bin/python3.12 scripts/docs-pages-prepare.py --candidate-sha "$D" --cli "$PREVIEW/cli/bin/rustify-docs" --out "$PREVIEW/site"`（`$PREVIEW` 在 `$TMPDIR`，位于仓库和任何 `.rustify-docs/` 之外）；在该目录跑 `check`/`build --format json`，0 error；照工作流的内联脚本写 `identity.json`，再跑 `docs-pages-verify.py --dir … --identity … --candidate-sha "$D" --report …`；确认产物包含 `menus/`、`panels/`、`dom-components-migration/` 及其 zh 回退页，manifest 的 `cli_version` 为 0.3.0 | M4 开始、派发之前 |
 | V-12 | 风险门 | R-1、R-3：线上身份与读者任务 | 派发后 `gh run watch`，build 与 deploy 都成功；`python3.12 scripts/docs-pages-verify.py --url https://rockie.github.io/rustify-ui/ --candidate-sha "$D" --run-id "$RUN"` 通过；在 `.rustify-docs/release-0.3.0/` 写临时配置：沿用 `official-meta` 项目，`baseURL` 改为线上地址，`webServer: []`；运行 `npx playwright test -c <临时配置> --project=official-meta official.spec.ts --grep "official Chinese home\|ordinary sidebar\|guide /menus/\|guide /panels/\|guide /dom-components-migration/\|CATALOG button uses\|deep not-found\|the dark first frame"`，全部通过 | M4：派发成功后 |
 | V-13 | 真实使用验收 | R-1、R-2、R-3、C-1：读者和开发者只凭线上站点完成任务 | 干净浏览器上下文 + 全新 `CARGO_HOME`/`--root`，只用线上站点与 crates.io。任务一（读者）：从首页进入 Guides → Menus，读完后到组件页操作 Data table 和 Tree demo，切换深色与中文，再用站内搜索找到 Menubar 并定位到正确段落；确认页面说明「0.3.0 可用」，没有「仅源码」或「0.2.1」误导。任务二（DOM 开发者）：按线上 quickstart 的 DOM 应用一节新建项目，依赖 registry `=0.3.0`，把 menus.md 的 Menubar 示例放进去，用 `wasm-bindgen-cli 0.2.128` 构建，在浏览器中用键盘打开菜单、切换项目。任务三（作者）：按线上 docs-ssg 安装 CLI 0.3.0，`new --template components`，导入一份 v2 主题后 build、preview。任务四（既有作者升级）：用 crates.io 0.2.1 CLI 生成 components 站点并 build 一次，只按线上迁移指南与 docs-ssg 把 CLI、manifest/lock 与 v1 主题升级到 0.3.0 和 v2，再 build、preview；同时确认 V-6 记录的仓根文档卡点已消除。亲自查看页面和产物，记录卡点；发现的问题修复后重跑受影响的部分，或列给用户确认延期 | M4 收口：V-12 通过后 |
+| V-14 | 场景 E2E | R-1、R-4：从首页按分类找到并比较全部交付家族；旧页已升级，新组件有真实入口/源码；按 §6.2 逐项记录结果 | 扩展现有 `tests/docs-ssg/official.spec.ts`：首次读者从 Components 索引进入 Button 调变体/尺寸/颜色并点击，再使用表单/卡片/Slider、浮层/菜单/导航、反馈、内容、布局、排版和扩展各组，观察用户任务结果；页面覆盖遍历核对每个声明条目和部件样本，不用仅计数断言 | M5–M6 全部展示和组合产物齐备后，与 V-15/V-17 同一轮 official-root/subpath/meta 命令执行、各项目串行 |
+| V-15 | 场景 E2E | R-5：从官网到 Colors/Primitives/完整 Studio，编辑并检查真实组件；原研发能力公开可用 | 同一 `official.spec.ts` 的连续任务：选色族并查看阶值/复制或下载；操作 raw/themed 对照与 RTL；从公开 Studio 入口选预设、改配置/模式/覆盖、进入 Components 操作新组件、Inspector 检查局部和浮层来源，撤销/重做；检查不是删减编辑器，保持原场景/本地库/导入导出入口 | 同 V-14；使用 official 服务的组合包，不能换成独立 Studio 端口 |
+| V-16 | 局部/风险门 | C-2、C-6、C-7：错误 base/缺文件/输出覆盖输入被拒绝，完整组合包与已发行框架配对 | 先写非法输入复现再做组合器；用真实 Docs 与 Studio 产物在临时目录调用组合 CLI，覆盖合法组合、缺资源、错误 base、覆盖输入三类可达错误，失败不修改输入；把检查纳入 `tests/crates-io/test_pairing.py` 既有协议测试，以 `/opt/homebrew/bin/python3.12 -m unittest discover -s tests/crates-io -p test_pairing.py` 执行。新脚本标准库、`python3.12 -m py_compile scripts/docs-pages-compose.py`；`cargo fmt --all -- --check`，本站分别 `mbx test --locked --manifest-path site/Cargo.toml --features ssr --lib` 与 `mbx clippy --locked --manifest-path site/Cargo.toml --features ssr --lib -- -D warnings` | M5–M6 同批退出；组合错误路径属于真实发布边界校验，复用实际构建结果，不造本方 HTML/SDK mock；其它包未改不跑全仓 |
+| V-17 | 阶段收口 | R-1、R-4、R-5：整站导航/搜索/源码、SSG→hydrate、CSP/资源与响应式完整；旧路由可用、纯 Docs 不加载 Makepad | 预构建匹配 base 的 Studio；每次设置 `RUSTIFY_STUDIO_DIR` 后逐条串行执行 `npx playwright test -c playwright.docs.config.ts --project=official-root`、`--project=official-subpath`、`--project=official-meta`。这同一轮包含 V-14/V-15 和原 official 回归，不再重复运行。真实浏览器核对浅深/中英、窄屏/200% 放大、键盘、无脚本可读/按需 island、源码与示例一致、console/pageerror/失败请求；Studio 的完整已有功能引用未变历史证据，新增公开接线由同包路径实验补证 | M5–M6 全批唯一完整本地收口；失败只重验失败场景与实际波及项，耗时实测记记录 |
+| V-18 | 发布风险门 | R-1、C-6：新候选、Docs/Studio 两份构建、最终组合包与线上同 run 一致 | §5.7 的 S→安装 Git CLI→prepare Docs→同 S 构建 Studio→compose→`docs-pages-verify.py --dir`；通过并获新授权后推送/dispatch/watch，再 `python3.12 scripts/docs-pages-verify.py --url https://rockie.github.io/rustify-ui/ --candidate-sha "$S" --run-id "$RUN"`。核对新组件页、Studio HTML/wasm/字体与构建身份全部在整包 manifest 内且线上字节一致，不只比 CLI 版本 | M7；本地完整候选先过门再请求生产授权，线上成功后进入 V-19 |
+| V-19 | 真实使用验收（阶段终验） | R-6：只凭线上入口连续完成评估、创作和独立消费；证明充分展示 | Agent 用干净 Chromium context 模拟首次读者和 DOM 开发者，只读官网：①首页找到 Colors/Primitives/新组件，比较 Button 与表单样式状态，键盘执行 Menubar 命令并使用 DataTable/Tree；②进入公开 Studio 选预设、精调、切换模式、检查实际部件和浮层来源，保存并刷新恢复，导出 JSON/CSS/Rust，故意导入不合法文件后可恢复；③在全新仓外 registry `=0.3.0` DOM 项目按页面源码构建一个含菜单/表单与主题边界的真实界面，消费刚导出的主题，浏览器确认主题/状态/菜单键盘结果与官网一致。逐个检查 §6.2 的覆盖记录并亲自看页面与实际导出文件，所有卡点修复或获用户明确延期；不能用截图/计数/退出码代替结果 | M7，V-18 线上身份通过后；完整源码/主题文件/必要截图/卡点记录于 M7；未通过不能记 7/7 |
 
-### 9.2 证据失效
+### 9.2 证据失效与复用
 
-- 改动落在库输入上（包目录、仓根 `Cargo.toml`、`mise.toml`、清单）→ 重新提交 R′，V-2 的相关项、V-3 库部分以及 V-4–V-7 全部失效；V-1 只有在站点内容或 CLI 行为变化时才失效。
-- 只改 CLI 包 → 重冻 C′，V-3 的 CLI 三行、V-4 的 CLI 部分、V-5、V-6、V-7 失效。
-- 上传之后，只允许 D/E 这类仓根说明改动；任何包字节变化都需要新版本（§8）。
+- M1–M4 的发行记录与 U-01/R1/R2 保持原身份和历史结论；M5–M7 新增展示范围尚未验收，不能用 R2 通过覆盖新范围。
+- 新改 site 页面、demo、主题/导航，只使对应展示、搜索/SSR/hydrate 与本期场景证据失效，合并在 M5–M6 批末 V-14–V-17 复验，不触发重发包或无关全仓矩阵。
+- Studio 公开路径、资源、启动或 CSS 改动须重建匹配 base 的完整产物并重验该应用与整包部署；源码/配置未变的历史编辑功能直接引用原证据。
+- 组合器、workflow、identity 改动使 V-16/V-18 的相应产物门失效；线上内容变化需对同候选补 V-19 的受影响任务。部署候选必须在本地门所验代码提交后冻结。
+- 任何库/CLI 包字节变化按 runbook 重新确认版本与失效范围；上传后已发布 0.3.0 不可修改。未声明的 SDK 缺陷不靠跳过样例处理。
+- 批内最小反馈：围绕当前失败使用 `official.spec.ts --grep` 对应用户任务或复用已有 Studio spec 的具体失败用例；不因一次样式微调跑三个项目或重建未变化的应用。退出门统一执行一次。
 
 ### 9.4 浏览器执行纪律
 
@@ -441,21 +579,25 @@ python3.12 scripts/crates-io.py verify --release "$DIR"
 | M2 | 上传前发行收口 | M1 的 R；预取完成 | 严格串行：detached R 上的 V-3 库部分 → package-libraries → freeze-cli → 提交 C → C 上的 V-3 CLI 三行 → package-cli → verify（V-4）→ V-5 → V-6 → 授权后 V-7。`DIR` 单人负责；不上传 | V-3–V-7；receipt 冻结且没有必需缺口；回写「实施进度」 |
 | M3 | crates.io 发布与公开说明 | M2 的 `DIR` 与 V-7；V-8 的授权与凭证 | 按 §5.3：先上传 docs 组，过公开门，再上传 remaining；提交并推送 D；V-10 通过后推送标签；撤销临时 token。凭证与生产 registry 单人负责 | V-8–V-10；十包与公开说明实际可获取；未完成不算发布成功；回写「实施进度」 |
 | M4 | Pages 部署与真实使用验收 | M3 的 D 已在公共 main，V-10 通过；M4 派发授权 | §5.4：差异门 → V-11 → 授权派发 → V-12 → V-13 → 提交并推送 E；清理 `$PREVIEW` 下的 detached worktree（`git worktree remove --force`）以及 `git worktree prune` | V-11–V-13；线上 manifest 的 `cli_version` 为 0.3.0，`build_id` 等于本次 run 的记录；回写「实施进度」 |
+| M5 | 官网完整组件、Colors 与 Primitives 展示 | M1–M4 发行成果；现有 R/C 与公开 API | 与 M6 同批；按 §2、§5.5、§6.2 改 `site` 目录/旧 demo/新增分类与 demo、导航、标准主题和公开说明；先贯通 Button 与 Menubar 的可见新能力，再完成全部矩阵。共享 `site/src/lib.rs`/导航/覆盖表单人集成，独立样例可按组分工 | 与 M6 共用 V-14–V-17，全量展示矩阵没有未处置缺口后完成；回写「实施进度」 |
+| M6 | 完整 Studio 公开入口与整站组合交付 | 现有 Studio；与 M5 稳定的导航/路由合同；不要求先等 M5 全部完成 | 与 M5 同批；按 §5.6 接线 `examples/theme-studio`、组合 CLI、workflow、verify 和官方测试服务；同候选 Docs+Studio 在真实子路径上运行，保持全部创作能力；脚本/workflow 单人负责，浏览器串行 | 与 M5 共用 V-14–V-17，整包产物、strict CSP 和真实公开入口可用，保留可审产物和覆盖记录；回写「实施进度」 |
+| M7 | 新版 Pages 上线与完整成果真实终验 | M5–M6 本地门通过；冻结 S；本次生产推送/派发授权 | 按 §5.7 完整候选预演→授权→部署→线上整包核验→角色任务与独立消费；更新展示覆盖记录、M7 实际证据和当前交付说明，不重发未改 0.3.0 | V-18、V-19 全部通过，官网逐项可发现/操作/带走成果，缺口已修复或用户逐项确认延期；完成最终提交及回填后才报 7/7；回写「实施进度」 |
 
-提交点：M1 的 A、R 各自提交；M2 中 freeze 后提交 C，阶段完成后提交记录与进度回填；M3 提交 D（只含公开说明）并推送，随后提交记录；M4 提交 E（docs-ssg 交付节）与最终进度，推送。每次推送都要在对应授权范围内；当前分支 main，不新开分支。
+提交点：M1–M4 原提交与发行记录保留。M5/M6 同批交付，可各自提交源码但批末共用门只运行一次；本地阶段收口通过后必须提交并冻结 S，再做 M7 生产门。M7 全部退出后提交公开交付记录与最终进度，按顶部协议回填 SHA 并提交回填；推送/派发只在本次授权范围执行，不新开分支。完成记录只有实际开始/完成才写对应行，不预建 M5–M7 空记录。
 
 ## 11. 风险、开放问题与就绪状态
 
 | 项目 | 影响 | 责任人/解除办法 | 最晚确认点 | 是否阻塞 |
 | --- | --- | --- | --- | --- |
-| A-1：账号、token 与 `rustify-colors` 名称 | 上传 | 发布人准备凭证；Agent 在 V-8 重查，名称被占用就停止并询问，不自行改名 | M3 上传前 | 只阻塞 M3 |
-| 推送、上传、Pages 派发三道授权 | 远端预检、发布、部署 | 每道门出示具体 SHA、包名/版本与命令后询问用户；本计划获批不等于这些动作已获授权；§8 回滚到 C2 的重派沿用 M4 派发授权 | V-7 / V-8 / M4 派发前 | 未获授权则阻塞对应门 |
-| A-3：多期未运行的浏览器项目 | M2 工期与修复量 | V-5 失败先判断是产品回归还是过期 spec；产品缺陷修在 R′（按 §9.2 重冻）；修复量明显超出版本发行时报告用户，决定继续修复还是收窄矩阵 | M2 | 否（工期未知） |
-| A-2：CI 中 source 模式 Pages | 部署 | V-11 本地预演；CI 失败按 §8 保持 C2，另起工作流修订 | M4 | 否 |
-| 上传后发现缺陷 | 0.3.0 不可修改 | 先做 V-4–V-6 再上传；之后的缺陷走 0.3.1（§8） | M3 | 否 |
+| 新候选推送与 Pages 派发授权 | 生产更新 | 实施者先交付 V-14–V-18 本地可审结果与 S/build_id，发布人按具体命令授权；原 M4 授权不默认为新候选授权 | M7 生产门前 | 仅阻塞生产动作，不阻塞 M5/M6 |
+| 展示范围再次缩成旧分类/指南 | 原目标落空 | 实施者逐项完成 §6.2 与覆盖记录，验收者从公开官网重走 V-19；不能以数量或旧评审通过关闭 | M5–M7 | 缺项直接阻塞本期完成 |
+| 公开 Studio 的子路径/CSP/资源接线 | 真实可用性 | 实施者沿既有 build-web 与 §5.6 组合合同修接线，在 meta-only 和同包官网入口验证；不能换成根路径独立 demo 自证 | M5–M6 批末 | 未通过则不进 M7 |
+| 用户主题与演示主题/本地库混淆 | 保存、导出结果 | 演示 island 不写持久化，Studio 沿独立 key 与既有 schema，不增新存储模型；真实任务检查刷新及导出消费 | V-15、V-19 | 有真实错误则阻塞相应任务 |
+| 真正 SDK 缺陷或未发行接口 | 公开消费契约 | 先排除示例组装错误；记录具体能力/影响，按 §8 修订必要版本范围，不隐藏或把它写成演示限制 | 首次具体失败后，M7 前 | 若影响必做项则阻塞终验 |
+| impeccable 技能缺失 | 实施设计工具约定 | 当前可见技能中未发现；实施前明确提示安装，依据 PRODUCT/DESIGN 完成设计并如实记录所用工具，不声称已调用缺失技能 | 页面设计开始前 | 不阻塞计划修订；是否影响实际执行按仓库规则说明 |
 
 - 最终状态：**Ready**。
-- 定级理由：版本、包集合、复用方式、Pages 候选和浏览器矩阵都有确定路线，事实已核到脚本行为；M1 可直接开工。外部凭证与三道授权是 M2 末、M3、M4 的阶段门，不影响开发。
+- 定级理由：用户已明确完整展示范围；采用现有 Docs + 完整 Studio，路由、组合边界、版本、可操作矩阵和验收已给定。本地实现没有未决产品/接口选择；生产权限在具体候选门办理。Ready 是可继续实施，当前仅完成 4/7，不能解释为整期交付通过。
 
 ## 12. 已知坑与历史教训
 

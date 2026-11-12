@@ -10,5 +10,7 @@
 | b7e2f5a8-3c41-4d6e-9a82-5f8b7c1d2e94 | implementation / M2 | [事件](b7e2f5a8-3c41-4d6e-9a82-5f8b7c1d2e94.md) |
 | c9d3b7f1-4a6e-4c8d-b5f2-8e1a7c4d9b63 | implementation / M3 | [事件](c9d3b7f1-4a6e-4c8d-b5f2-8e1a7c4d9b63.md) |
 | f2a9c5e8-3d71-4f9a-a6b4-8c5d7e2f1a09 | implementation / M4 | [事件](f2a9c5e8-3d71-4f9a-a6b4-8c5d7e2f1a09.md) |
+| 71611798-741d-484a-9b0e-cad04a9519e4 | readiness / plan | [完整展示就绪](71611798-741d-484a-9b0e-cad04a9519e4.md) |
+| 3f3301d3-4153-487e-be5a-fc25b9923752 | implementation / plan | [4/7 待续](3f3301d3-4153-487e-be5a-fc25b9923752.md) |
 
 维护约定：[目录索引维护](../../../protocol.md#目录索引维护)。

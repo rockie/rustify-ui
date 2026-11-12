@@ -22,6 +22,8 @@
 | 3bc23089-adb5-4844-b005-7144614ac86e | DOM-COMPONENTS-P4 完整计划评审事件 | [入口](3bc23089-adb5-4844-b005-7144614ac86e/index.md) |
 | 4096c476-5ee3-44a5-a195-09a5183542ca | DOM-COMPONENTS-P1 UI 验收评审 R6 事件 | [入口](4096c476-5ee3-44a5-a195-09a5183542ca/index.md) |
 | 5307296b-348d-4666-bda3-55b208901877 | DOM-COMPONENTS-P1-gaps 代码复审 R2 事件 | [入口](5307296b-348d-4666-bda3-55b208901877/index.md) |
+| 85daaefc-bdb6-4cf1-bfbc-3c56dad84836 | DOM-COMPONENTS-RELEASE 计划评审 R2 事件 | [入口](85daaefc-bdb6-4cf1-bfbc-3c56dad84836/index.md) |
+| 8ccea889-a3fa-459c-bb92-5f2f6a6f01e9 | DOM-COMPONENTS-RELEASE 代码复审 R2 事件 | [入口](8ccea889-a3fa-459c-bb92-5f2f6a6f01e9/index.md) |
 | c5423b46-21f3-4f6f-9b17-a6a6fc0e5033 | 发行工具按包修订代码评审事件 | [入口](c5423b46-21f3-4f6f-9b17-a6a6fc0e5033/index.md) |
 | d2eed6a8-ae96-481f-b597-ddd75656fe17 | DOM-COMPONENTS-P2 完整计划评审事件 | [入口](d2eed6a8-ae96-481f-b597-ddd75656fe17/index.md) |
 | de846332-6a97-449b-93b2-e2616a992403 | DOM-COMPONENTS-P2 代码初审 R1 事件 | [入口](de846332-6a97-449b-93b2-e2616a992403/index.md) |
@@ -108,5 +110,6 @@
 | 6b1d35bf-077b-440d-8d7b-bfef8fdeeff4 | DOM-COMPONENTS-P5-gaps 完整计划评审事件 | [入口](6b1d35bf-077b-440d-8d7b-bfef8fdeeff4/index.md) |
 | 4068cbe5-0c09-4ed7-9996-1336a588a187 | DOM-COMPONENTS-RELEASE 计划评审 R1 事件 | [入口](4068cbe5-0c09-4ed7-9996-1336a588a187/index.md) |
 
+| be61162b-1236-46e7-85ed-c1908a56ca6f | DOM-COMPONENTS-RELEASE 代码初审 R1 事件 | [入口](be61162b-1236-46e7-85ed-c1908a56ca6f/index.md) |
 
 维护约定：改变本层内容者同步索引；按稳定 ID/路径保留历史，无变化不重写，索引不作为事件。详见[目录索引维护](../../protocol.md#目录索引维护)。
