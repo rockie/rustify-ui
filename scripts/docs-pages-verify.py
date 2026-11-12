@@ -161,7 +161,11 @@ def check_artifact(files, identity):
         name, checksum = entry["path"], entry["sha256"]
         if PurePosixPath(name).is_absolute() or ".." in PurePosixPath(name).parts or "\\" in name:
             raise ValueError(f"unsafe manifest file: {name}")
-        if name.endswith(".md") or name.endswith("llms-full.txt"):
+        # The rule protects the docs tree: its Markdown sources and the
+        # full-text AI copy must never publish. The composed public Studio
+        # carries its own bundled application resources (for example makepad
+        # font licences), which are product files, not docs copy.
+        if (name.endswith(".md") or name.endswith("llms-full.txt")) and not name.startswith("theme-studio/"):
             raise ValueError(f"source Markdown or full-text AI copy was published: {name}")
         if len(files[name]) != entry["bytes"] or hashlib.sha256(files[name]).hexdigest() != checksum:
             raise ValueError(f"artifact bytes disagree with the manifest: {name}")
