@@ -206,13 +206,13 @@ REVIEW @progress_consistency:
 
 ### 恢复快照
 
-- 最近更新：2026-11-11 +08:00 · 官网完整成果展示待续
-- 当前进度：4/7 个里程碑完成
-- 当前状态：进行中；M1–M4 的十包 0.3.0 发行和首轮 Pages 部署已完成，完整成果展示尚未完成，M5–M7 未开始
-- 最近完成：M4 发行阶段 Pages 部署与真实使用验收；现网 build_id=`3fe8d486f30d8aa5`、run `42953922752`；原始记录及 U-01 补证见 [M4 记录](DOM-COMPONENTS-RELEASE.records/M4.md)
-- 下一步：M5–M6 同批续做；先按 §6.2 的展示矩阵升级 Button 与打通新增 Menubar 的官网真实入口，再完成全部样例、公开 Studio 及组合产物，批末运行 V-14–V-17；M7 完成线上终验后才记整期完成
+- 最近更新：2026-11-12 +08:00 · M5+M6 批门通过，候选 S 冻结
+- 当前进度：6/7 个里程碑完成
+- 当前状态：进行中；M5+M6 官网完整展示与公开 Studio 组合已完成（批门 V-14–V-17 全过）；M7 线上终验未开始
+- 最近完成：M5+M6 同批交付：官网展示矩阵（九分类页/Colors/Primitives/Studio 页，72 demo，旧 24 路由保留升级）与整站组合（compose/workflow/verify/serve.sh）；批门 V-16 全绿，V-17 三项目串行各 63/63（official-subpath 9.2m、official-meta 4.8m、official-root 4.7m，RUSTIFY_STUDIO_DIR 匹配 base）；候选 S=`45d5d514`（`45d5d514300616ea2bdfc9bd93542f2eaed05acf`）；记录见 [M5](DOM-COMPONENTS-RELEASE.records/M5.md)、[M6](DOM-COMPONENTS-RELEASE.records/M6.md)，逐项结果与偏差见 [showcase-coverage.md](../validation/dom-components-release/showcase-coverage.md)
+- 下一步：M7 按 §5.7 执行：本地整包门（S 九库/根库输入=R、CLI=C、Git CLI 预演、compose、verify --dir）→ 获用户本次授权后推送 main 并派发 docs-pages.yml（candidate_sha=S）→ V-18 线上核验与 V-19 三段真实使用验收 → 记录/快照/台账收口，全部完成后写「下一步」为代码评审
 - 当前阻塞：无开发阻塞；M7 推送/Pages 派发按既有授权门办理，不以部署授权尚未请求阻断本地实现。临时 registry token 保留沿用户 2026-11-11 决定，不需要用于 M5–M7
-- 代码基线：`921802b3c9d1022033bd500681b870a430652616`；R1/R2 仅覆盖原发行范围与 U-01，不代表新增展示范围已验收
+- 代码基线：`45d5d514300616ea2bdfc9bd93542f2eaed05acf`（候选 S，M6 提交）；R1/R2/U-01 覆盖原发行范围，M5/M6 批门证据见 [M6 记录](DOM-COMPONENTS-RELEASE.records/M6.md)
 
 ### 完成记录
 
@@ -222,6 +222,8 @@ REVIEW @progress_consistency:
 | M2 | 已完成 | 2026-11-10 | §5.2 冻结与 V-3–V-7 全过（C=`2445aea6`、CLI 候选 `dde6fe85`、runner 修复 `6993fed9`；receipt 十包 0.3.0 冻结 1817 KB；远端预检 run 42833566509 双平台成功） | [M2.md](DOM-COMPONENTS-RELEASE.records/M2.md) | C=`2445aea6`、`dde6fe85`、`6993fed9` |
 | M3 | 已完成 | 2026-11-11 | V-8–V-10 全过；十包 0.3.0 公开可取（checksum 全一致）；D=`8d3544bb` 推送公共 main；标签 rustify-libs-v0.3.0→R、rustify-docs-cli-v0.3.0→C 读回；token 撤销暂缓（用户确认） | [M3.md](DOM-COMPONENTS-RELEASE.records/M3.md) | D=`8d3544bb` |
 | M4 | 已完成 | 2026-11-11 | 差异门与 V-11 预演（D 与 D3 两轮）通过；部署 run `42953922752`（build 28m39s＋deploy 9s）；V-12 全过（线上 manifest cli_version=0.3.0、build_id `3fe8d486f30d8aa5` 与 run 一致）；V-13 四任务全过（V-6 卡点消除）；E=`458333d5`；worktree 清理 | [M4.md](DOM-COMPONENTS-RELEASE.records/M4.md) | D3=`596175e3`、E=`458333d5` |
+| M5 | 已完成 | 2026-11-12 | 展示目录/九分类页/Colors/Primitives/Studio 页、72 demo（旧 24 保留升级）、theme.json（schema v2）、静态 Colors CSS、docs/README 链接；偏差见覆盖记录（catalogue 承载总索引、Select 级联分组、ThemeBoundary 静态对照、phoenix-ui 替代） | [M5.md](DOM-COMPONENTS-RELEASE.records/M5.md) | `624ea1e3` |
+| M6 | 已完成 | 2026-11-12 | compose.py/workflow/verify.py check_studio/serve.sh RUSTIFY_STUDIO_DIR/official.spec V-14+V-15 场景/ComposeTests 13 用例/theme-studio 接线；批门 V-16 全绿、V-17 三项目各 63/63；候选 S=`45d5d514` 冻结 | [M6.md](DOM-COMPONENTS-RELEASE.records/M6.md) | `45d5d514` |
 
 ## 0. 需求、范围与决策
 
