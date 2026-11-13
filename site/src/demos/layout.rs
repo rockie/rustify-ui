@@ -23,7 +23,7 @@ pub fn layout_demo() -> impl IntoView {
     let columns = RwSignal::new(3_u8);
     view! {
         <div class="space-y-4">
-            <div class="flex flex-wrap items-center gap-3 text-sm">
+            <div class="demo-controls flex flex-wrap items-center gap-3 border-b border-border pb-4 text-sm">
                 <label class="flex items-center gap-2">"Grid columns "
                     <select class="rounded-md border border-border bg-background px-2 py-1" on:change=move |event| {
                         if let Ok(value) = event_target_value(&event).parse::<u8>() { columns.set(value); }
@@ -46,7 +46,7 @@ pub fn layout_demo() -> impl IntoView {
             <Box layout=Signal::derive(move || padded(columns.get() as i8)) class="max-w-md rounded-md border border-border">
                 <p class="rounded-md bg-muted p-2 text-sm">{move || format!("A box with theme padding step {}", columns.get())}</p>
             </Box>
-            <p class="text-sm">"Layout: "<output data-demo-state="">{move || format!("{} columns, 8 cells, 2 flex items, box padding step {}", columns.get(), columns.get())}</output></p>
+            <p data-demo-state-line="" class="text-sm">"Layout: "<output data-demo-state="">{move || format!("{} columns, 8 cells, 2 flex items, box padding step {}", columns.get(), columns.get())}</output></p>
         </div>
     }
 }
@@ -63,7 +63,7 @@ pub fn container_demo() -> impl IntoView {
             <rustify_components::layout::Section class="rounded-md border border-border p-3">
                 <p class="text-sm">"A section adds its own vertical rhythm to the flow."</p>
             </rustify_components::layout::Section>
-            <p class="text-sm">"Containers: "<output data-demo-state="">"container and section on the same page"</output></p>
+            <p data-demo-state-line="" class="text-sm">"Containers: "<output data-demo-state="">"container and section on the same page"</output></p>
         </div>
     }
 }
@@ -89,7 +89,7 @@ pub fn inset_demo() -> impl IntoView {
                 </Inset>
                 <p class="mt-3 text-sm">"The text below keeps the card's padding."</p>
             </Box>
-            <p class="text-sm">"Inset: "<output data-demo-state="">{move || format!("cancels padding step {} on top, left and right", step.get())}</output></p>
+            <p data-demo-state-line="" class="text-sm">"Inset: "<output data-demo-state="">{move || format!("cancels padding step {} on top, left and right", step.get())}</output></p>
         </div>
     }
 }
@@ -106,7 +106,7 @@ pub fn reset_demo() -> impl IntoView {
                         .child(leptos::html::p().child("This paragraph starts from the reset baseline inside its own scope."))
                 )}
             </div>
-            <p class="text-sm">"Reset: "<output data-demo-state="">"scoped; the outer paragraph is unchanged"</output></p>
+            <p data-demo-state-line="" class="text-sm">"Reset: "<output data-demo-state="">"scoped; the outer paragraph is unchanged"</output></p>
         </div>
     }
 }
@@ -143,7 +143,7 @@ pub fn primitives_demo() -> impl IntoView {
                     <p class="text-xs text-muted-foreground">"rustify_components::Checkbox"</p>
                 </div>
             </div>
-            <p class="text-sm">"Value: "
+            <p data-demo-state-line="" class="text-sm">"Value: "
                 <output data-demo-state="">{move || state.get().as_str()}</output>
             </p>
         </div>
@@ -174,7 +174,7 @@ pub fn direction_demo() -> impl IntoView {
                         min=0.0 max=100.0 step=10.0 />
                 </div>
             </DirectionProvider>
-            <p class="text-sm">"Direction: "<output data-demo-state="">{move || format!("{} · amount {}", if rtl.get() { "rtl" } else { "ltr" }, amount.get())}</output></p>
+            <p data-demo-state-line="" class="text-sm">"Direction: "<output data-demo-state="">{move || format!("{} · amount {}", if rtl.get() { "rtl" } else { "ltr" }, amount.get())}</output></p>
         </div>
     }
 }

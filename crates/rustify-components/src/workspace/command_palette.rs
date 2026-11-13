@@ -12,7 +12,7 @@ use rustify_ui::{Anchor, Layer, ViewportAlign};
 const PANEL: &str =
     "w-[32rem] max-w-full rounded-lg border border-border bg-background text-popover-foreground shadow-lg overflow-hidden";
 const SEARCH: &str = "w-full border-0 border-b border-border bg-transparent px-4 py-3 text-sm text-popover-foreground outline-none placeholder:text-muted-foreground";
-const ITEM: &str = "flex w-full items-center justify-between gap-3 px-4 py-2 text-sm text-popover-foreground cursor-pointer aria-disabled:opacity-50 aria-disabled:cursor-not-allowed";
+const ITEM: &str = "flex w-full items-center justify-between gap-3 px-4 py-2 text-sm cursor-pointer aria-disabled:opacity-50 aria-disabled:cursor-not-allowed";
 
 /// One thing the application can do.
 #[derive(Clone, Debug, PartialEq, Eq)]
@@ -250,8 +250,9 @@ pub fn CommandPalette(
                                 view! {
                                     <li
                                         id=command_id(&id)
-                                        class=ITEM
-                                        class=("bg-muted", move || current.get())
+                                        class=move || {
+                                            format!("{ITEM} {}", if current.get() { "bg-primary text-primary-foreground" } else { "text-popover-foreground" })
+                                        }
                                         data-name="Command"
                                         data-rustify-part="command-item"
                                         data-highlighted=move || current.get().then_some("")
@@ -270,7 +271,9 @@ pub fn CommandPalette(
                                         }>
                                             <span
                                                 id=reason_id.clone()
-                                                class="text-xs text-muted-foreground"
+                                                class=move || {
+                                                    format!("text-xs {}", if current.get() { "text-primary-foreground" } else { "text-muted-foreground" })
+                                                }
                                             >
                                                 {reason.clone()}
                                             </span>

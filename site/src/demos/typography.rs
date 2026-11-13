@@ -40,7 +40,7 @@ pub fn typography_demo() -> impl IntoView {
                 <t::Strong>"strong"</t::Strong>
                 " inside one sentence."
             </p>
-            <p class="text-sm">"Family: "
+            <p data-demo-state-line="" class="text-sm">"Family: "
                 <output data-demo-state="">"semantic set rendered from one function"</output>
             </p>
         </div>
@@ -104,7 +104,7 @@ pub fn text_controls_demo() -> impl IntoView {
                     {sample}
                 </t::Text>
             </div>
-            <p class="text-sm">"Current: "
+            <p data-demo-state-line="" class="text-sm">"Current: "
                 <output data-demo-state="">{move || format!("{:?} · {:?} · {:?}", size.get(), weight.get(), align.get())}</output>
             </p>
         </div>

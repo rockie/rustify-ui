@@ -18,7 +18,7 @@ pub fn progress_demo() -> impl IntoView {
                 </Button>
                 <Button variant=ButtonVariant::Outline on_click=move || progress.set(0.0)>"Reset"</Button>
             </div>
-            <p class="text-sm">"Complete: "<output data-demo-state="">{move || progress.get().to_string()}</output>"%"</p>
+            <p data-demo-state-line="" class="text-sm">"Complete: "<output data-demo-state="">{move || progress.get().to_string()}</output>"%"</p>
         </div>
     }
 }
@@ -36,7 +36,7 @@ pub fn spinner_demo() -> impl IntoView {
             <Button variant=ButtonVariant::Outline on_click=move || busy.set(!busy.get_untracked())>
                 {move || if busy.get() { "Finish loading" } else { "Load again" }}
             </Button>
-            <p class="text-sm">"Status: "<output data-demo-state="">{move || if busy.get() { "Loading accounts" } else { "Idle" }}</output></p>
+            <p data-demo-state-line="" class="text-sm">"Status: "<output data-demo-state="">{move || if busy.get() { "Loading accounts" } else { "Idle" }}</output></p>
         </div>
     }
 }
@@ -53,7 +53,7 @@ pub fn skeleton_demo() -> impl IntoView {
             <Button variant=ButtonVariant::Outline on_click=move || loaded.set(!loaded.get_untracked())>
                 {move || if loaded.get() { "Show the skeleton" } else { "Load the content" }}
             </Button>
-            <p class="text-sm">"Content: "<output data-demo-state="">{move || if loaded.get() { "Loaded" } else { "Loading" }}</output></p>
+            <p data-demo-state-line="" class="text-sm">"Content: "<output data-demo-state="">{move || if loaded.get() { "Loaded" } else { "Loading" }}</output></p>
         </div>
     }
 }
@@ -69,7 +69,7 @@ pub fn tooltip_demo() -> impl IntoView {
                     .class("inline-flex h-9 items-center rounded-md border border-border bg-background px-4 text-sm font-medium outline-none hover:bg-muted focus-visible:ring-ring/50 focus-visible:ring-[3px]")
                     .child("Hover or focus for help")
             />
-            <p class="text-sm">"Tooltip: "<output data-demo-state="">{move || if open.get() { "Open" } else { "Closed" }}</output></p>
+            <p data-demo-state-line="" class="text-sm">"Tooltip: "<output data-demo-state="">{move || if open.get() { "Open" } else { "Closed" }}</output></p>
         </div>
     }
 }
@@ -102,7 +102,7 @@ pub fn menu_demo() -> impl IntoView {
                     MenuItem::separator(),
                     MenuItem::new("delete", "Delete").disabled("Deletion is unavailable in this example."),
                 ] />
-            <p class="text-sm">"Last action: "<output data-demo-state="">{move || action.get()}</output></p>
+            <p data-demo-state-line="" class="text-sm">"Last action: "<output data-demo-state="">{move || action.get()}</output></p>
         </div>
     }
 }
@@ -125,7 +125,7 @@ pub fn dialog_demo() -> impl IntoView {
                     <Button variant=ButtonVariant::Outline on_click=move || { result.set("Dismissed".to_string()); open.set(false); }>"Dismiss"</Button>
                 </div>
             </Dialog>
-            <p class="text-sm">"Result: "<output data-demo-state="">{move || result.get()}</output></p>
+            <p data-demo-state-line="" class="text-sm">"Result: "<output data-demo-state="">{move || result.get()}</output></p>
         </div>
     }
 }
@@ -156,7 +156,7 @@ pub fn alert_dialog_demo() -> impl IntoView {
                     </alert_dialog::Content>
                 </alert_dialog::Portal>
             </alert_dialog::Root>
-            <p class="text-sm">"Outcome: "<output data-demo-state="">{move || outcome.get()}</output></p>
+            <p data-demo-state-line="" class="text-sm">"Outcome: "<output data-demo-state="">{move || outcome.get()}</output></p>
         </div>
     }
 }
@@ -178,7 +178,7 @@ pub fn popover_demo() -> impl IntoView {
                     </popover::Content>
                 </popover::Portal>
             </popover::Root>
-            <p class="text-sm">"Density: "<output data-demo-state="">{move || density.get()}</output></p>
+            <p data-demo-state-line="" class="text-sm">"Density: "<output data-demo-state="">{move || density.get()}</output></p>
         </div>
     }
 }
@@ -201,7 +201,7 @@ pub fn hover_card_demo() -> impl IntoView {
                 </rustify_components::hover_card::Portal>
             </rustify_components::hover_card::Root>
             <p id="hover-card-demo-target" tabindex="-1" class="text-sm">"The link lands on this paragraph."</p>
-            <p class="text-sm">"Hover card: "<output data-demo-state="">{move || if open.get() { "Open" } else { "Closed" }}</output></p>
+            <p data-demo-state-line="" class="text-sm">"Hover card: "<output data-demo-state="">{move || if open.get() { "Open" } else { "Closed" }}</output></p>
         </div>
     }
 }
@@ -227,7 +227,7 @@ pub fn toast_demo() -> impl IntoView {
                     });
                 }>"Show warning"</Button>
             </div>
-            <p class="text-sm">"Notification: "<output data-demo-state="">{move || {
+            <p data-demo-state-line="" class="text-sm">"Notification: "<output data-demo-state="">{move || {
                 toasts.current().map(|toast| toast.message).unwrap_or_else(|| "None".to_string())
             }}</output></p>
             <Toaster test_id="toast-demo" />

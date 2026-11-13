@@ -15,6 +15,7 @@ thread_local! {
 }
 
 struct Attachment {
+    block: HtmlElement,
     root: HtmlElement,
     metadata: IslandMetadata,
     prepared: Option<PreparedComponent>,
@@ -155,6 +156,7 @@ pub fn hydrate_site(registry: SiteRegistry) -> Result<(), SiteError> {
         };
         let environment = prepare_environment(&metadata.environment)?;
         attachments.push(Attachment {
+            block,
             root,
             metadata,
             prepared,
@@ -167,12 +169,31 @@ pub fn hydrate_site(registry: SiteRegistry) -> Result<(), SiteError> {
     let initial_syncs = Rc::new(RefCell::new(Vec::<ThemeSync>::new()));
     for attachment in attachments {
         let Attachment {
+            block,
             root,
             metadata,
             prepared,
             demo,
             environment,
         } = attachment;
+        // A sample's own state readout belongs to the external status row: the
+        // canvas keeps only the controls, and the row under it reports what
+        // they accepted. Both nodes are found here, while they still are
+        // where the server rendered them; the stylesheet shows the line once
+        // the island is ready.
+        let state_line = matches!(metadata.target, RenderTarget::Demo { .. })
+            .then(|| {
+                root.query_selector("[data-demo-state-line]")
+                    .ok()
+                    .flatten()
+                    .zip(
+                        block
+                            .query_selector("[data-rd-island-status]")
+                            .ok()
+                            .flatten(),
+                    )
+            })
+            .flatten();
         let config = rustify_ui::MountConfig {
             scope: metadata.seed.clone(),
             base: metadata.environment.base.clone(),
@@ -263,6 +284,9 @@ pub fn hydrate_site(registry: SiteRegistry) -> Result<(), SiteError> {
             })
             .map_err(|error| SiteError::new("hydrate_failed", error.to_string()))?;
             apps.push(handle);
+            if let Some((line, status)) = state_line {
+                let _ = status.append_child(&line);
+            }
         }
     }
     APPS.with_borrow_mut(|retained| retained.extend(apps));

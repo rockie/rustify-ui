@@ -98,7 +98,7 @@ pub fn button_demo() -> impl IntoView {
                     "Unavailable"
                 </Button>
             </div>
-            <p class="text-sm">"Count: "<output data-demo-state="">{move || count.get()}</output></p>
+            <p data-demo-state-line="" class="text-sm">"Count: "<output data-demo-state="">{move || count.get()}</output></p>
             <p class="demo-help text-sm text-muted-foreground">"A disabled or loading button never fires the click; loading keeps its label and size."</p>
         </div>
     }
@@ -131,7 +131,7 @@ pub fn icon_button_demo() -> impl IntoView {
                     <Icon glyph=Glyph::Close label="" />
                 </IconButton>
             </div>
-            <p class="text-sm">"Approvals: "<output data-demo-state="">{move || count.get()}</output></p>
+            <p data-demo-state-line="" class="text-sm">"Approvals: "<output data-demo-state="">{move || count.get()}</output></p>
         </div>
     }
 }
@@ -146,7 +146,7 @@ pub fn label_demo() -> impl IntoView {
                 <Label control=field_id.clone()>"Project name"</Label>
                 <TextField id=field_id value=name on_change=move |value| name.set(value) />
             </div>
-            <p class="text-sm break-words">"Current name: "<output data-demo-state="">{move || name.get()}</output></p>
+            <p data-demo-state-line="" class="text-sm break-words">"Current name: "<output data-demo-state="">{move || name.get()}</output></p>
         </div>
     }
 }
@@ -165,7 +165,7 @@ pub fn link_demo() -> impl IntoView {
                 </Button>
             </div>
             <p id=destination_id tabindex="-1">"The link points to this paragraph."</p>
-            <p class="text-sm">"Link: "<output data-demo-state="">{move || if disabled.get() { "Unavailable" } else { "Available" }}</output></p>
+            <p data-demo-state-line="" class="text-sm">"Link: "<output data-demo-state="">{move || if disabled.get() { "Unavailable" } else { "Available" }}</output></p>
         </div>
     }
 }
@@ -187,7 +187,7 @@ pub fn icon_demo() -> impl IntoView {
                     "Change icon"
                 </Button>
             </div>
-            <p class="text-sm">"Last icon: "<output data-demo-state="">{move || if checked.get() { "Check" } else { "Close" }}</output></p>
+            <p data-demo-state-line="" class="text-sm">"Last icon: "<output data-demo-state="">{move || if checked.get() { "Check" } else { "Close" }}</output></p>
         </div>
     }
 }
@@ -201,8 +201,8 @@ pub fn loading_demo() -> impl IntoView {
                 <Show when=move || loading.get() fallback=|| ()>
                     <Spinner label="Loading example" />
                 </Show>
-                <output data-demo-state="">{move || if loading.get() { "Loading" } else { "Ready" }}</output>
             </div>
+            <p data-demo-state-line="" class="text-sm">"Spinner: "<output data-demo-state="">{move || if loading.get() { "Loading" } else { "Ready" }}</output></p>
             <Button variant=ButtonVariant::Outline on_click=move || loading.set(!loading.get_untracked())>
                 "Toggle loading"
             </Button>

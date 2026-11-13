@@ -479,7 +479,7 @@ pub fn DataTable(
             >
                 <div
                     role="presentation"
-                    class=format!("relative {spacer_geometry}")
+                    class=format!("relative min-w-full {spacer_geometry}")
                 >
                     <div role="rowgroup">
                         <For each=pool key=|slot| *slot let:slot>

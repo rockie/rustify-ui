@@ -119,6 +119,11 @@ async function open(page: Page, route: string, lang = "en") {
     return response;
 }
 
+// A demo's own state readout lives in the external status row, outside the
+// canvas that holds its controls.
+const stateLine = (canvas: Locator) => canvas.locator("xpath=ancestor::*[@data-rustify-island]").locator("[data-rd-island-status] > [data-demo-state-line]");
+const demoState = (canvas: Locator) => stateLine(canvas).locator("[data-demo-state]");
+
 async function attached(page: Page, name: string, lang = "en") {
     await expect(island(page)).toHaveCount(1);
     await expect(island(page)).toHaveAttribute("data-rd-island-state", "ready");
@@ -129,6 +134,8 @@ async function attached(page: Page, name: string, lang = "en") {
     const field = island(page).locator("fieldset[data-rd-island-controls]");
     await expect(field).toHaveJSProperty("disabled", false);
     await expect(field).toHaveJSProperty("inert", false);
+    await expect(stateLine(field)).toBeVisible();
+    await expect(field.locator("[data-demo-state-line]")).toHaveCount(0);
     await expect(field.locator(":scope > [data-rustify-scope]")).toHaveAttribute("data-rustify-mounted", metadata.seed);
     await expect(field.locator("[style]:not([data-rustify-notifications])")).toHaveCount(0);
     expect(await page.evaluate(() => { const ids = [...document.querySelectorAll("[id]")].map(node => node.id); return ids.length === new Set(ids).size; })).toBe(true);
@@ -150,6 +157,8 @@ async function attachedDemo(page: Page, name: string, lang = "en") {
     expect(metadata.environment.lang).toBe(lang);
     const field = all.nth(index).locator("fieldset[data-rd-island-controls]");
     await expect(field).toHaveJSProperty("disabled", false);
+    await expect(stateLine(field)).toBeVisible();
+    await expect(field.locator("[data-demo-state-line]")).toHaveCount(0);
     return field;
 }
 
@@ -165,7 +174,7 @@ async function fits(page: Page) {
 }
 
 async function exercise(page: Page, field: Locator, name: string) {
-    const state = field.locator("[data-demo-state]");
+    const state = demoState(field);
     await expect(state).not.toBeEmpty();
     switch (name) {
         case "button":
@@ -377,7 +386,7 @@ test("without script every official demo keeps its source and native disabled in
     try {
         for (const entry of categories) {
             await open(page, entry.route); const field = island(page).locator("fieldset[data-rd-island-controls]"); await expect(field).toHaveJSProperty("disabled", true);
-            await expect(island(page).locator("noscript span")).toBeVisible(); await expect(field.locator("[data-demo-state]")).not.toBeEmpty(); await sourceText(page, entry);
+            await expect(island(page).locator("noscript span")).toBeVisible(); await expect(field.locator("[data-demo-state]")).toBeVisible(); await sourceText(page, entry);
             expect(await field.locator("input,button,textarea,select").evaluateAll(nodes => nodes.every(node => node.matches(":disabled")))).toBe(true);
             await fits(page);
         }
@@ -556,7 +565,7 @@ test("V-14 every showcase group page renders its inline entries and links the ol
         for (const entry of inline) {
             await expect(page.locator(`[data-showcase-entry="${entry.anchor}"]`)).toBeVisible();
             const field = await attachedDemo(page, entry.demo);
-            await expect(field.locator("[data-demo-state]")).not.toBeEmpty();
+            await expect(demoState(field)).not.toBeEmpty();
         }
         for (const entry of linked) await expect(page.locator("ul.rd-showcase-links").getByRole("link", { name: entry.title, exact: true })).toHaveAttribute("href", new RegExp(`#${entry.anchor}$`));
         await healthy(page, audit);
@@ -567,7 +576,7 @@ test("V-14 the upgraded button page shows the full matrix with working state tog
     await open(page, "components/button/");
     const field = await attached(page, "ButtonDemo");
     const increment = field.getByRole("button", { name: "Increment", exact: true });
-    const state = field.locator("[data-demo-state]");
+    const state = demoState(field);
     await expect(field.getByRole("button", { name: "Unavailable", exact: true })).toBeDisabled();
     await increment.focus(); await page.keyboard.press("Enter"); await expect(state).toHaveText("1");
     const solid = await increment.evaluate(node => getComputedStyle(node).backgroundColor);
@@ -586,7 +595,7 @@ test("V-14 the upgraded button page shows the full matrix with working state tog
 test("V-14 the menubar entry executes commands by keyboard", async ({ page, audit }) => {
     await open(page, "components/menus/");
     const field = await attachedDemo(page, "MenubarDemo");
-    const state = field.locator("[data-demo-state]");
+    const state = demoState(field);
     await field.getByRole("menuitem", { name: "File", exact: true }).focus();
     await page.keyboard.press("Enter");
     const menu = field.getByRole("menu", { name: "File commands", exact: true });
@@ -613,7 +622,7 @@ test("V-14 interaction samples change the controls they drive", async ({ page, a
     await button.getByLabel("Color").selectOption("crimson");
     await expect(increment).toHaveAttribute("data-color", "crimson");
     await expect.poll(() => increment.evaluate(node => getComputedStyle(node).backgroundColor)).not.toBe(accent);
-    await increment.click(); await expect(button.locator("[data-demo-state]")).toHaveText("1");
+    await increment.click(); await expect(demoState(button)).toHaveText("1");
 
     await open(page, "components/interaction/");
     const cards = await attachedDemo(page, "CheckboxCardsDemo");
@@ -623,19 +632,19 @@ test("V-14 interaction samples change the controls they drive", async ({ page, a
     await expect.poll(async () => (await box(mail)).height).toBeGreaterThan(small.height);
     await cards.getByRole("checkbox", { name: /Product news/ }).click();
     await cards.getByRole("button", { name: "Submit the form", exact: true }).click();
-    await expect(cards.getByText("Form data: channel=mail&channel=news")).toBeVisible();
+    await expect(stateLine(cards).getByText("Form data: channel=mail&channel=news")).toBeVisible();
     const radios = await attachedDemo(page, "RadioCardsDemo");
     await radios.getByRole("radio", { name: /Starter/ }).click();
     await radios.getByRole("button", { name: "Submit the form", exact: true }).click();
-    await expect(radios.getByText("Form data: plan=starter")).toBeVisible();
+    await expect(stateLine(radios).getByText("Form data: plan=starter")).toBeVisible();
 
     const range = await attachedDemo(page, "RangeSliderDemo");
-    const state = range.locator("[data-demo-state]");
+    const state = demoState(range);
     const high = range.getByRole("slider", { name: "High edge" }).first();
     await expect(state).toHaveText("20 – 60");
     await high.press("ArrowRight"); await expect(state).toHaveText("20 – 65");
     for (let press = 0; press < 3; press++) await high.press("ArrowRight");
-    await expect(state).toHaveText("20 – 80"); await expect(range.getByText("Committed: 20 – 80")).toBeVisible();
+    await expect(state).toHaveText("20 – 80"); await expect(stateLine(range).getByText("Committed: 20 – 80")).toBeVisible();
     await high.press("ArrowRight");
     await expect(range.getByText(/^Rejected 20 – 85/)).toBeVisible(); await expect(state).toHaveText("20 – 80");
     await expect(high).toHaveAttribute("aria-valuenow", "80");
@@ -656,7 +665,7 @@ test("V-14 interaction samples change the controls they drive", async ({ page, a
     await list.getByRole("option", { name: "Release 0.8.0", exact: true }).click();
     await expect(trigger).toContainText("Release 0.8.0"); await expect(trigger).toBeFocused();
     await parts.getByRole("button", { name: "Clear the release", exact: true }).click();
-    await expect(parts.locator("[data-demo-state]")).toHaveText("none"); await expect(trigger).toContainText("Choose a release");
+    await expect(demoState(parts)).toHaveText("none"); await expect(trigger).toContainText("Choose a release");
 
     const cascade = await attachedDemo(page, "SelectGroupedDemo");
     await cascade.getByRole("combobox", { name: "Region", exact: true }).click();
@@ -666,14 +675,14 @@ test("V-14 interaction samples change the controls they drive", async ({ page, a
     await city.click();
     await expect(page.getByRole("listbox").getByRole("option")).toHaveText(["Osaka", "Taipei"]);
     await page.getByRole("option", { name: "Taipei", exact: true }).click();
-    await expect(cascade.locator("[data-demo-state]")).toHaveText("apac · taipei");
+    await expect(demoState(cascade)).toHaveText("apac · taipei");
     await healthy(page, audit);
 });
 
 test("V-14 overlay samples open, close and report distinct results", async ({ page, audit }) => {
     await open(page, "components/overlays/");
     const alert = await attachedDemo(page, "AlertDialogDemo");
-    const outcome = alert.locator("[data-demo-state]");
+    const outcome = demoState(alert);
     const remove = alert.getByRole("button", { name: "Delete a workspace", exact: true });
     const dialog = page.getByRole("alertdialog", { name: "Delete this workspace?", exact: true });
     await expect(dialog).toBeHidden();
@@ -693,7 +702,7 @@ test("V-14 overlay samples open, close and report distinct results", async ({ pa
     await expect(panel).toBeHidden();
     await trigger.click(); await expect(panel).toBeVisible();
     await panel.getByRole("radio", { name: "Compact", exact: true }).check();
-    await expect(popover.locator("[data-demo-state]")).toHaveText("compact");
+    await expect(demoState(popover)).toHaveText("compact");
     await page.keyboard.press("Escape"); await expect(panel).toBeHidden(); await expect(trigger).toBeFocused();
     await trigger.click(); await panel.getByRole("button", { name: "Done", exact: true }).click(); await expect(panel).toBeHidden();
     await healthy(page, audit);
@@ -712,8 +721,8 @@ test("V-14 navigation, content, layout, typography and extension samples show th
     await page.keyboard.press("Enter");
     await expect(accordion.getByText("The panels render in static HTML")).toBeVisible();
     await expect(accordion.getByText("Every sample value stays")).toBeHidden();
-    await expect(accordion.locator("[data-demo-state]")).toHaveText("second");
-    await second.click(); await expect(accordion.locator("[data-demo-state]")).toHaveText("none");
+    await expect(demoState(accordion)).toHaveText("second");
+    await second.click(); await expect(demoState(accordion)).toHaveText("none");
 
     await open(page, "components/content/");
     const table = await attachedDemo(page, "TableDemo");
@@ -753,7 +762,7 @@ test("V-14 navigation, content, layout, typography and extension samples show th
     await grid.getByRole("button", { name: /Component/ }).click();
     await expect.poll(names).toEqual(["Text field", "Dialog", "Data table", "Button"]);
     await grid.getByRole("gridcell").filter({ hasText: /^Dialog$/ }).focus(); await page.keyboard.press("Space");
-    await expect(page.locator("[data-demo-state]")).toHaveText("Dialog");
+    await expect(page.locator("[data-rd-island-status] > [data-demo-state-line] [data-demo-state]")).toHaveText("Dialog");
     await page.keyboard.press("Enter"); await expect(page.getByText("Activated: Dialog", { exact: true })).toBeVisible();
 
     await open(page, "components/extensions/");
@@ -783,14 +792,14 @@ test("V-15 from the home preview through Colors, Primitives and into the compose
     const preview = await attachedDemo(page, "ButtonDemo");
     await attachedDemo(page, "SegmentedControlDemo");
     await preview.getByRole("button", { name: "Increment", exact: true }).click();
-    await expect(preview.locator("[data-demo-state]")).toHaveText("1");
+    await expect(demoState(preview)).toHaveText("1");
     await page.getByRole("link", { name: "Colors", exact: true }).first().click();
     await expect(page).toHaveURL(url("colors/"));
     const colorField = await attachedDemo(page, "ColorsDemo");
     await colorField.getByLabel("Family").selectOption("mint");
-    await expect(colorField.locator("[data-demo-state]")).toContainText("mint · light · solid · srgb");
+    await expect(demoState(colorField)).toContainText("mint · light · solid · srgb");
     await colorField.getByLabel("Mode").selectOption("dark");
-    await expect(colorField.locator("[data-demo-state]")).toContainText("mint · dark");
+    await expect(demoState(colorField)).toContainText("mint · dark");
     await expect(colorField.locator("svg[aria-hidden='true'] rect").first()).toHaveAttribute("fill", /^#/);
     await colorField.getByLabel("Style").selectOption("alpha");
     await colorField.getByLabel("Display P3").check();
@@ -813,15 +822,15 @@ test("V-15 from the home preview through Colors, Primitives and into the compose
     const rawBox = raw.getByRole("checkbox", { name: "Raw subscribe", exact: true });
     const themedBox = raw.getByRole("checkbox", { name: "Themed subscribe", exact: true });
     await expect(rawBox).toHaveJSProperty("tagName", "INPUT");
-    await rawBox.check(); await expect(raw.locator("[data-demo-state]")).toHaveText("checked"); await expect(themedBox).toBeChecked();
-    await themedBox.uncheck(); await expect(rawBox).not.toBeChecked(); await expect(raw.locator("[data-demo-state]")).toHaveText("unchecked");
+    await rawBox.check(); await expect(demoState(raw)).toHaveText("checked"); await expect(themedBox).toBeChecked();
+    await themedBox.uncheck(); await expect(rawBox).not.toBeChecked(); await expect(demoState(raw)).toHaveText("unchecked");
     await expect(raw.locator('[data-rustify-part="visually-hidden"]')).toHaveText(" to release notes");
     const direction = await attachedDemo(page, "DirectionDemo");
     const slider = direction.getByRole("slider", { name: "Amount", exact: true });
-    await slider.press("ArrowRight"); await expect(direction.locator("[data-demo-state]")).toHaveText("ltr · amount 40");
+    await slider.press("ArrowRight"); await expect(demoState(direction)).toHaveText("ltr · amount 40");
     await direction.getByRole("button").click();
     await expect(direction.locator('[data-rustify-part="direction-provider"]')).toHaveAttribute("dir", "rtl");
-    await slider.press("ArrowRight"); await expect(direction.locator("[data-demo-state]")).toHaveText("rtl · amount 30");
+    await slider.press("ArrowRight"); await expect(demoState(direction)).toHaveText("rtl · amount 30");
     await page.getByRole("link", { name: "Theme Studio", exact: true }).first().click();
     await expect(page.locator("h1")).toHaveText("Theme Studio");
     await page.getByRole("link", { name: "Open Theme Studio", exact: true }).click();
@@ -878,12 +887,12 @@ test("official form finishes saving and can reset and submit again", async ({ pa
     const field = await attachedDemo(page, "FormDemo");
     await field.getByLabel("Display name", { exact: true }).fill("Grace Hopper");
     await field.getByRole("button", { name: "Save contact", exact: true }).click();
-    await expect(field.locator("[data-demo-state]")).toContainText("Grace Hopper");
+    await expect(demoState(field)).toContainText("Grace Hopper");
     await expect(field.getByText("Saving…", { exact: true })).toHaveCount(0);
     await field.getByRole("button", { name: "Reset", exact: true }).click();
-    await expect(field.locator("[data-demo-state]")).toContainText("Not submitted");
+    await expect(demoState(field)).toContainText("Not submitted");
     await field.getByRole("button", { name: "Save contact", exact: true }).click();
-    await expect(field.locator("[data-demo-state]")).toContainText("Ada Lovelace");
+    await expect(demoState(field)).toContainText("Ada Lovelace");
     await expect(field.getByText("Saving…", { exact: true })).toHaveCount(0);
     await healthy(page, audit);
 });
@@ -901,7 +910,7 @@ test("official command palette is readable inside its scope and executes the sel
     await search.fill("JSON");
     await search.press("ArrowDown");
     await search.press("Enter");
-    await expect(field.locator("[data-demo-state]")).toHaveText("copy-json");
+    await expect(demoState(field)).toHaveText("copy-json");
     await expect(panel).toBeHidden();
     await expect(trigger).toBeFocused();
     await healthy(page, audit);

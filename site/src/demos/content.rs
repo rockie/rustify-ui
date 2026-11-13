@@ -12,7 +12,7 @@ pub fn avatar_demo() -> impl IntoView {
                 <Avatar src="data:image/png;base64,AAAA" alt="Unreachable portrait" fallback="RU" />
                 <Avatar src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><rect width='24' height='24' fill='%23175cd3'/></svg>" alt="Solid square" fallback="SQ" />
             </div>
-            <p class="text-sm">"Image states: "
+            <p data-demo-state-line="" class="text-sm">"Image states: "
                 <output data-demo-state="">{"Missing image shows the initials fallback; the loaded square shows the image."}</output>
             </p>
         </div>
@@ -26,7 +26,7 @@ pub fn badge_demo() -> impl IntoView {
             <p class="flex items-center gap-3">
                 "Release channel " <Badge>"stable"</Badge> " · " <Badge>"0.3.0"</Badge>
             </p>
-            <p class="text-sm">"Badges: "<output data-demo-state="">"2 rendered next to release text"</output></p>
+            <p data-demo-state-line="" class="text-sm">"Badges: "<output data-demo-state="">"2 rendered next to release text"</output></p>
         </div>
     }
 }
@@ -41,7 +41,7 @@ pub fn card_demo() -> impl IntoView {
                 <p class="text-sm">"Every card action is a real application action."</p>
                 <Button on_click=move || count.update(|count| *count += 1)>"Deploy once"</Button>
             </Card>
-            <p class="text-sm">"Deployments: "<output data-demo-state="">{move || count.get()}</output></p>
+            <p data-demo-state-line="" class="text-sm">"Deployments: "<output data-demo-state="">{move || count.get()}</output></p>
         </div>
     }
 }
@@ -54,7 +54,7 @@ pub fn callout_demo() -> impl IntoView {
                 <rustify_components::callout::Icon><Icon glyph=Glyph::Dot label="" /></rustify_components::callout::Icon>
                 <rustify_components::callout::Text>"This environment keeps drafts local; exports stay on your machine."</rustify_components::callout::Text>
             </rustify_components::callout::Root>
-            <p class="text-sm">"Callout: "<output data-demo-state="">"visible with icon and text"</output></p>
+            <p data-demo-state-line="" class="text-sm">"Callout: "<output data-demo-state="">"visible with icon and text"</output></p>
         </div>
     }
 }
@@ -77,7 +77,7 @@ pub fn data_list_demo() -> impl IntoView {
                     <rustify_components::data_list::Value>"light and dark"</rustify_components::data_list::Value>
                 </rustify_components::data_list::Item>
             </rustify_components::data_list::Root>
-            <p class="text-sm">"Rows: "<output data-demo-state="">"3"</output></p>
+            <p data-demo-state-line="" class="text-sm">"Rows: "<output data-demo-state="">"3"</output></p>
         </div>
     }
 }
@@ -113,7 +113,7 @@ pub fn table_demo() -> impl IntoView {
                     </table::Row>
                 </table::Body>
             </table::Root>
-            <p class="text-sm">"Table rows: "<output data-demo-state="">"3 rows, each named by its row header; large datasets use the Data table extension"</output></p>
+            <p data-demo-state-line="" class="text-sm">"Table rows: "<output data-demo-state="">"3 rows, each named by its row header; large datasets use the Data table extension"</output></p>
         </div>
     }
 }
@@ -135,7 +135,7 @@ pub fn scroll_area_parts_demo() -> impl IntoView {
                 <scroll_area::Scrollbar orientation=Orientation::Horizontal><scroll_area::Thumb /></scroll_area::Scrollbar>
                 <scroll_area::Corner />
             </scroll_area::Root>
-            <p class="text-sm">"Scroll area parts: "<output data-demo-state="">"Root, Viewport, both Scrollbars with Thumbs and the Corner over 24 wide rows"</output></p>
+            <p data-demo-state-line="" class="text-sm">"Scroll area parts: "<output data-demo-state="">"Root, Viewport, both Scrollbars with Thumbs and the Corner over 24 wide rows"</output></p>
         </div>
     }
 }
@@ -152,7 +152,7 @@ pub fn aspect_ratio_demo() -> impl IntoView {
                     <p class="flex h-full items-center justify-center text-sm">"4:3"</p>
                 </rustify_components::AspectRatio>
             </div>
-            <p class="text-sm">"Ratios: "<output data-demo-state="">"both panes keep their ratio as the container narrows"</output></p>
+            <p data-demo-state-line="" class="text-sm">"Ratios: "<output data-demo-state="">"both panes keep their ratio as the container narrows"</output></p>
         </div>
     }
 }
@@ -169,7 +169,7 @@ pub fn separator_demo() -> impl IntoView {
             <p class="flex items-center gap-3 text-sm">
                 "Left" <rustify_components::Separator orientation=Signal::stored(rustify_components::tabs::Orientation::Vertical.into()) class="h-4" /> "Right"
             </p>
-            <p class="text-sm">"Separators: "<output data-demo-state="">"horizontal and vertical"</output></p>
+            <p data-demo-state-line="" class="text-sm">"Separators: "<output data-demo-state="">"horizontal and vertical"</output></p>
         </div>
     }
 }

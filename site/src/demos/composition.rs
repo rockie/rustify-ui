@@ -64,7 +64,7 @@ pub fn form_demo() -> impl IntoView {
                 </div>
                 <FormStatus form=form saving="Saving…" />
             </FormRoot>
-            <p class="text-sm break-words">"Submitted: "
+            <p data-demo-state-line="" class="text-sm break-words">"Submitted: "
                 <output data-demo-state="">{move || submitted.get().map_or_else(|| "Not submitted".to_string(), |(name, email)| format!("{name} <{email}>"))}</output>
             </p>
         </div>
@@ -86,7 +86,7 @@ pub fn field_parts_demo() -> impl IntoView {
     view! {
         <div class="space-y-4">
             <f::Field form=form field="project" label="Project name" description="Two or more characters." control=control />
-            <p class="text-sm">"Accepted project: "
+            <p data-demo-state-line="" class="text-sm">"Accepted project: "
                 <output data-demo-state="">{move || project.get()}</output>
             </p>
         </div>
@@ -146,7 +146,7 @@ pub fn select_parts_demo() -> impl IntoView {
             </div>
             <Button variant=ButtonVariant::Outline disabled=Signal::derive(move || release.get().is_none())
                 on_click=move || release.set(None)>"Clear the release"</Button>
-            <p class="text-sm">"Selected: "<output data-demo-state="">{move || release.get().unwrap_or_else(|| "none".to_string())}</output>
+            <p data-demo-state-line="" class="text-sm">"Selected: "<output data-demo-state="">{move || release.get().unwrap_or_else(|| "none".to_string())}</output>
                 " · Open: "{move || if open.get() { "yes" } else { "no" }}</p>
             <p class="text-sm text-muted-foreground">"Twelve releases in two labelled groups; 0.11.0 is disabled and cannot be chosen by pointer or keyboard. Closing the list returns focus to the trigger."</p>
         </div>
@@ -201,7 +201,7 @@ pub fn select_grouped_demo() -> impl IntoView {
                         aria_label="City" options=Signal::derive(cities) />
                 </div>
             </div>
-            <p class="text-sm">"Location: "
+            <p data-demo-state-line="" class="text-sm">"Location: "
                 <output data-demo-state="">{move || format!("{} · {}", region.get(), city.get())}</output>
             </p>
         </div>

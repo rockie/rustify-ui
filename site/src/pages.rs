@@ -113,9 +113,8 @@ pub fn category(context: RenderContext) -> impl IntoView {
                     {demo}
                     <h2 id="public-api">"Public API and composition"</h2>
                     {source_note}
-                    <p>{entry.properties.note}</p>
-                    <p>"The source above shows the component and its child structure. State stays in the application; the example reports accepted values after each action."</p>
-                    <p>{guide.map(|href| view! { <a href=href>"Related components"</a> })}{" · "}<a href=PUBLIC_STUDIO_URL>"Explore the Components scene in Theme Studio"</a></p>
+                    <p class="mt-[1.125rem]">"The source above shows this component and the parts the application passes as its children. State stays in the application: the example reports the values it accepts after each action."</p>
+                    <p class="mt-[1.125rem]">{guide.map(|href| view! { <a href=href>"Related components"</a> })}{" · "}<a href=PUBLIC_STUDIO_URL>"Explore the Components scene in Theme Studio"</a></p>
                     <h2 id="capabilities">"Capabilities"</h2>
                     <div class="rd-table" role="region" aria-label="Component capabilities" tabindex="0"><table>
                         <thead><tr><th scope="col">"Capability"</th><th scope="col">"Support"</th><th scope="col">"Details"</th></tr></thead>
@@ -260,9 +259,9 @@ pub fn colors_page(context: RenderContext) -> impl IntoView {
         .collect_view();
     let alpha_downloads = ["black", "white"].into_iter().map(|name| {
         let links = [("-alpha", "sRGB"), ("-alpha-p3", "P3")].into_iter().map(|(suffix,label)| {
-            view! { <a class="whitespace-nowrap target:bg-primary target:text-primary-foreground target:outline-2 target:outline-primary target:outline-offset-2" id=format!("css-{name}{suffix}") href=format!("{}colors/{name}{suffix}.css",context.base) download="">{label}</a> }
+            view! { <td><a class="whitespace-nowrap target:bg-primary target:text-primary-foreground target:outline-2 target:outline-primary target:outline-offset-2" id=format!("css-{name}{suffix}") href=format!("{}colors/{name}{suffix}.css",context.base) download="">{label}</a></td> }
         }).collect_view();
-        view! { <li class="flex gap-4">{format!("{name} alpha: ")}{links}</li> }
+        view! { <tr><th scope="row">{format!("{name}-alpha")}</th>{links}</tr> }
     }).collect_view();
     let license = format!("{}colors/LICENSE.txt", context.base);
     view! {
@@ -272,12 +271,15 @@ pub fn colors_page(context: RenderContext) -> impl IntoView {
             <section id="colors">{context.demo("ColorsDemo")}</section>
             <h2 id="downloads">"Static CSS downloads"</h2>
             <p class="text-sm text-muted-foreground">"Each file sets twelve custom properties on an explicitly marked element and never touches root selectors. Alpha scales add the -a1 through -a12 suffix; Display P3 files use the -p3.css suffix and import their sRGB sibling. Black and white alpha scales are packaged as black-alpha and white-alpha."</p>
-            <div class="rd-table rd-color-downloads" role="region" aria-label="Color CSS downloads" tabindex="0"><table>
+            <div class="rd-table rd-color-downloads mt-[1.125rem]" role="region" aria-label="Color CSS downloads" tabindex="0"><table>
                 <thead><tr><th scope="col">"Family"</th>{SCALES.iter().map(|(_,label)| view! { <th scope="col">{*label}</th> }).collect_view()}</tr></thead>
                 <tbody>{downloads}</tbody>
             </table></div>
-            <ul class="rd-color-downloads">{alpha_downloads}</ul>
-            <p class="text-sm text-muted-foreground">"The packaged files are redistributed under their original license: "<a href=license>"colors LICENSE"</a>". P3 strings need a P3-capable browser and display; sRGB files never import P3 assets."</p>
+            <div class="rd-table rd-color-downloads mt-[1.125rem]" role="region" aria-label="Black and white alpha downloads" tabindex="0"><table>
+                <thead><tr><th scope="col">"Scale"</th><th scope="col">"Alpha"</th><th scope="col">"Alpha P3"</th></tr></thead>
+                <tbody>{alpha_downloads}</tbody>
+            </table></div>
+            <p class="mt-[1.125rem] text-sm text-muted-foreground">"The packaged files are redistributed under their original license: "<a href=license>"colors LICENSE"</a>". P3 strings need a P3-capable browser and display; sRGB files never import P3 assets."</p>
         </div>
     }
 }

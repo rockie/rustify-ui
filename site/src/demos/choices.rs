@@ -39,7 +39,7 @@ pub fn checkbox_demo() -> impl IntoView {
                     }
                 }).collect_view()}
             </div>
-            <p class="text-sm">"Packages: "
+            <p data-demo-state-line="" class="text-sm">"Packages: "
                 <output data-demo-state="">{move || {
                     let state = if all.get() { "all" } else if some.get() { "mixed" } else { "none" };
                     let names = included.with(|items| ITEMS.iter().zip(items).filter(|(_, on)| **on).map(|((key, _), _)| *key).collect::<Vec<_>>().join(", "));
@@ -62,7 +62,7 @@ pub fn checkbox_group_demo() -> impl IntoView {
                     CheckboxOption::new("announce", "Announce (unavailable)").disabled(),
                 ])
                 on_change=move |next| selected.set(next) />
-            <p class="text-sm">"Selected: "
+            <p data-demo-state-line="" class="text-sm">"Selected: "
                 <output data-demo-state="">{move || selected.with(|selected| if selected.is_empty() { "None".to_string() } else { selected.join(", ") })}</output>
             </p>
         </div>
@@ -80,7 +80,7 @@ pub fn radio_demo() -> impl IntoView {
                     RadioOption::new("compact", "Compact"),
                     RadioOption::new("custom", "Custom (unavailable)").disabled(),
                 ] />
-            <p class="text-sm">"Density: "<output data-demo-state="">{move || density.get()}</output></p>
+            <p data-demo-state-line="" class="text-sm">"Density: "<output data-demo-state="">{move || density.get()}</output></p>
         </div>
     }
 }
@@ -125,7 +125,7 @@ fn card_controls(
     variants: &'static [&'static str],
 ) -> impl IntoView {
     view! {
-        <div class="flex flex-wrap items-center gap-3 text-sm">
+        <div class="demo-controls flex flex-wrap items-center gap-3 border-b border-border pb-4 text-sm">
             <label class="flex items-center gap-2">"Size "
                 <select class="rounded-md border border-border bg-background px-2 py-1" on:change=move |event| {
                     if let Ok(index) = event_target_value(&event).parse::<usize>() { size.set(index); }
@@ -165,7 +165,7 @@ pub fn radio_cards_demo() -> impl IntoView {
             </radio_cards::Root>
             <Button r#type=rustify_components::ButtonType::Submit on_click=|| ()>"Submit the form"</Button>
             </form>
-            <p class="text-sm">"Plan: "<output data-demo-state="">{move || plan.get().unwrap_or_else(|| "None".into())}</output>
+            <p data-demo-state-line="" class="text-sm">"Plan: "<output data-demo-state="">{move || plan.get().unwrap_or_else(|| "None".into())}</output>
                 " · Form data: "<output>{move || submitted.get()}</output></p>
         </div>
     }
@@ -185,7 +185,7 @@ pub fn switch_demo() -> impl IntoView {
             <Button variant=rustify_components::ButtonVariant::Outline on_click=move || disabled.set(!disabled.get_untracked())>
                 {move || if disabled.get() { "Enable the control" } else { "Disable the control" }}
             </Button>
-            <p class="text-sm">"Notifications: "<output data-demo-state="">{move || if disabled.get() { "Control disabled" } else if enabled.get() { "Enabled" } else { "Disabled" }}</output></p>
+            <p data-demo-state-line="" class="text-sm">"Notifications: "<output data-demo-state="">{move || if disabled.get() { "Control disabled" } else if enabled.get() { "Enabled" } else { "Disabled" }}</output></p>
         </div>
     }
 }
@@ -198,7 +198,7 @@ pub fn toggle_demo() -> impl IntoView {
             <toggle::Root pressed=Signal::derive(move || pinned.get()) on_change=Callback::new(move |next| pinned.set(next)) aria_label="Pin this panel">
                 {move || if pinned.get() { "Pinned" } else { "Pin this panel" }}
             </toggle::Root>
-            <p class="text-sm">"Panel: "<output data-demo-state="">{move || if pinned.get() { "Pinned" } else { "Unpinned" }}</output></p>
+            <p data-demo-state-line="" class="text-sm">"Panel: "<output data-demo-state="">{move || if pinned.get() { "Pinned" } else { "Unpinned" }}</output></p>
         </div>
     }
 }
@@ -215,7 +215,7 @@ pub fn toggle_group_demo() -> impl IntoView {
                     ToggleItem::new("italic", "Italic"),
                     ToggleItem::new("underline", "Underline"),
                 ] />
-            <p class="text-sm">"Pressed: "<output data-demo-state="">{move || styles.with(|styles| {
+            <p data-demo-state-line="" class="text-sm">"Pressed: "<output data-demo-state="">{move || styles.with(|styles| {
                 if styles.is_empty() { "None".to_string() } else { styles.join(", ") }
             })}</output></p>
         </div>
@@ -233,7 +233,7 @@ pub fn segmented_control_demo() -> impl IntoView {
                 <segmented_control::Item value="week">"Week"</segmented_control::Item>
                 <segmented_control::Item value="month">"Month"</segmented_control::Item>
             </segmented_control::Root>
-            <p class="text-sm">"Period: "<output data-demo-state="">{move || period.get().unwrap_or_else(|| "None".into())}</output></p>
+            <p data-demo-state-line="" class="text-sm">"Period: "<output data-demo-state="">{move || period.get().unwrap_or_else(|| "None".into())}</output></p>
             <p class="demo-help text-sm text-muted-foreground">"A segmented control switches one value; panels belong to Tabs."</p>
         </div>
     }
@@ -260,7 +260,7 @@ pub fn checkbox_cards_demo() -> impl IntoView {
             </checkbox_cards::Root>
             <Button r#type=rustify_components::ButtonType::Submit on_click=|| ()>"Submit the form"</Button>
             </form>
-            <p class="text-sm">"Channels: "<output data-demo-state="">{move || channels.with(|channels| {
+            <p data-demo-state-line="" class="text-sm">"Channels: "<output data-demo-state="">{move || channels.with(|channels| {
                 if channels.is_empty() { "None".to_string() } else { channels.join(", ") }
             })}</output>" · Form data: "<output>{move || submitted.get()}</output></p>
         </div>
@@ -278,7 +278,7 @@ pub fn slider_demo() -> impl IntoView {
                 <Slider id=field_id aria_label="Value" value=amount on_change=move |value| amount.set(value)
                     min=0.0 max=100.0 step=5.0 />
             </div>
-            <p class="text-sm">"Value: "<output data-demo-state="">{move || amount.get().to_string()}</output></p>
+            <p data-demo-state-line="" class="text-sm">"Value: "<output data-demo-state="">{move || amount.get().to_string()}</output></p>
             <p class="text-sm text-muted-foreground">"Arrow keys move one step at a time; requests outside the range clamp."</p>
         </div>
     }
@@ -338,7 +338,7 @@ pub fn range_slider_demo() -> impl IntoView {
                         orientation=rustify_components::Orientation::Vertical inverted=true />
                 </div>
             </div>
-            <p class="text-sm">"Range: "
+            <p data-demo-state-line="" class="text-sm">"Range: "
                 <output data-demo-state="">{move || values.with(|values| describe(values))}</output>
                 " · Committed: "<output>{move || committed.get()}</output>
             </p>
@@ -364,7 +364,7 @@ pub fn select_demo() -> impl IntoView {
                         SelectOption::new("typescript", "TypeScript"),
                     ] />
             </div>
-            <p class="text-sm">"Selected: "<output data-demo-state="">{move || language.get()}</output></p>
+            <p data-demo-state-line="" class="text-sm">"Selected: "<output data-demo-state="">{move || language.get()}</output></p>
         </div>
     }
 }

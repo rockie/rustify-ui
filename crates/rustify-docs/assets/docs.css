@@ -523,6 +523,11 @@
     position: sticky;
     top: var(--rd-header);
     max-height: calc(100vh - var(--rd-header));
+    /* Room for a link's 3px focus ring and its 2px offset inside the
+       scrolling column; the negative inline margin keeps the text where
+       the column puts it. */
+    padding-inline: 5px;
+    margin-inline: -5px;
     padding-block: 3rem;
     overflow-y: auto;
   }
@@ -553,6 +558,8 @@
     position: sticky;
     top: var(--rd-header);
     max-height: calc(100vh - var(--rd-header));
+    padding-inline: 5px;
+    margin-inline: -5px;
     padding-block: 3rem;
     overflow-y: auto;
   }
@@ -838,6 +845,15 @@
   text-align: start;
 }
 
+/* A wide table keeps its row labels in view: the row header stays at the
+   table's leading edge over the cells that scroll under it. */
+.rd-table tbody th[scope="row"] {
+  position: sticky;
+  inset-inline-start: 0;
+  z-index: 1;
+  box-shadow: 1px 0 0 var(--secondary);
+}
+
 /* GitHub's five alerts: a tint of the alert's hue on the page, a hairline
    of it around, and its drawn icon beside the title. */
 .markdown-alert {
@@ -1121,6 +1137,26 @@
 
 .rd-demo-status [hidden] {
   display: none;
+}
+
+/* The sample's own state readout: before any script runs it stays readable in
+   the canvas; on attachment it moves to the external status row, which reports
+   what the controls accepted once the island is ready. */
+.rd-demo:not([data-rd-island-state="no-script"]) .rd-demo-canvas [data-demo-state-line] {
+  display: none;
+}
+
+.rd-demo-status > [data-demo-state-line] {
+  display: none;
+  grid-column: 1;
+  grid-row: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  font-size: 0.8125rem;
+}
+
+.rd-demo[data-rd-island-state="ready"] .rd-demo-status > [data-demo-state-line] {
+  display: block;
 }
 
 .rd-demo-status > [data-rd-island-loading],

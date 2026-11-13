@@ -1,10 +1,11 @@
 ---
 description: The pinned versions, browser matrix, deployment contract and capability limits this repository has actually verified.
 ---
-# Compatibility and capability boundaries (P1 research preview)
+# Compatibility and capability boundaries
 
-Everything below describes what this repository has actually built and
-verified. Items marked *not verified* or *unsupported* are not claims of
+This page is a P1 research preview: it records what this repository has
+actually built and verified so far, not a stability promise for later
+releases. Items marked *not verified* or *unsupported* are not claims of
 future behaviour.
 
 ## Fixed versions

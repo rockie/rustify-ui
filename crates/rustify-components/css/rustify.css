@@ -170,6 +170,9 @@
   .min-w-9 {
     min-width: calc(0.25rem * 9);
   }
+  .min-w-full {
+    min-width: 100%;
+  }
   .flex-1 {
     flex: 1;
   }

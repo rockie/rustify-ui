@@ -454,7 +454,7 @@ pub const CATALOG: [Entry; 24] = [
             gpu: Support::No,
             across_regions: Support::No,
         },
-        properties: cap(Support::Yes, "message/title/action, duration and importance; Replace with one visible item by default, or explicitly configured FIFO and visible limit"),
+        properties: cap(Support::Yes, "message/title/action, duration and importance; replace with one visible item by default, or explicitly configured FIFO and visible limit"),
         actions: cap(Support::Yes, "show/dismiss and controlled close requests; one cancellable scheduler preserves remaining reading time and does not repeatedly request refused expiry"),
         theme: cap(Support::Yes, "the popover surface, its border, and a coloured edge per tone; the tone changes how it looks and nothing else"),
         input: cap(Support::Yes, "native Action/Close, scope-local F8 entry, natural Tab exit, focused-notification Escape and cancellable directional swipe"),

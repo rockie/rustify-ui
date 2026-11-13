@@ -34,7 +34,7 @@ pub fn dropdown_menu_demo() -> impl IntoView {
                     </dropdown_menu::Content>
                 </dropdown_menu::Portal>
             </dropdown_menu::Root>
-            <p class="text-sm">"Menu state: "
+            <p data-demo-state-line="" class="text-sm">"Menu state: "
                 <output data-demo-state="">{move || format!("grid {}, action {}", if grid.get() { "on" } else { "off" }, action.get())}</output>
             </p>
         </div>
@@ -61,7 +61,7 @@ pub fn context_menu_demo() -> impl IntoView {
                     </context_menu::Content>
                 </context_menu::Portal>
             </context_menu::Root>
-            <p class="text-sm">"Last command: "<output data-demo-state="">{move || action.get()}</output></p>
+            <p data-demo-state-line="" class="text-sm">"Last command: "<output data-demo-state="">{move || action.get()}</output></p>
         </div>
     }
 }
@@ -92,7 +92,7 @@ pub fn menubar_demo() -> impl IntoView {
                     </menubar::Portal>
                 </menubar::Menu>
             </menubar::Root>
-            <p class="text-sm">"Menubar: "
+            <p data-demo-state-line="" class="text-sm">"Menubar: "
                 <output data-demo-state="">{move || format!("open {}, last {}", value.get().unwrap_or_else(|| "none".into()), command.get())}</output>
             </p>
             <p class="text-sm text-muted-foreground">"Arrow keys move between menus and their items; Escape closes and focus returns to the bar."</p>

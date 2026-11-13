@@ -34,7 +34,7 @@ pub fn text_field_demo() -> impl IntoView {
                     "Disabled"
                 </label>
             </div>
-            <p class="text-sm break-words">"Current value: "
+            <p data-demo-state-line="" class="text-sm break-words">"Current value: "
                 <output data-demo-state="">{move || text.get()}</output>
             </p>
         </div>
@@ -60,8 +60,10 @@ pub fn text_area_demo() -> impl IntoView {
                 <input type="checkbox" checked=read_only on:change=move |event| read_only.set(event_target_checked(&event)) />
                 "Read-only"
             </label>
-            <p class="text-sm">"Current text:"</p>
-            <output data-demo-state="" class="block whitespace-pre-wrap break-words text-sm">{move || text.get()}</output>
+            <div data-demo-state-line="" class="space-y-1">
+                <p>"Current text:"</p>
+                <output data-demo-state="" class="block whitespace-pre-wrap break-words">{move || text.get()}</output>
+            </div>
         </div>
     }
 }
@@ -80,7 +82,7 @@ pub fn number_field_demo() -> impl IntoView {
                     min=0.0 max=100.0 step=0.5 described_by=hint_id.clone() />
                 <p id=hint_id class="text-sm text-muted-foreground">"Use 0–100. Arrow keys step by 0.5; Escape restores the draft; typing 500 commits as 100."</p>
             </div>
-            <p class="text-sm">"Committed value: "<output data-demo-state="">{move || number.get().to_string()}</output></p>
+            <p data-demo-state-line="" class="text-sm">"Committed value: "<output data-demo-state="">{move || number.get().to_string()}</output></p>
         </div>
     }
 }
@@ -98,7 +100,7 @@ pub fn color_field_demo() -> impl IntoView {
                     alpha=true described_by=hint_id.clone() test_id="color-demo" />
                 <p id=hint_id class="text-sm text-muted-foreground">"Enter six or eight hex digits, then press Enter or leave the field."</p>
             </div>
-            <p class="text-sm">"Committed color: "<output data-demo-state="">{move || color.get()}</output></p>
+            <p data-demo-state-line="" class="text-sm">"Committed color: "<output data-demo-state="">{move || color.get()}</output></p>
         </div>
     }
 }

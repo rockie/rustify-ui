@@ -28,7 +28,7 @@ pub fn tabs_demo() -> impl IntoView {
                 <TabPanel value="overview"><p>"The first panel is visible initially."</p></TabPanel>
                 <TabPanel value="details"><p>"Each panel keeps its place and state in the document."</p></TabPanel>
             </Tabs>
-            <p class="text-sm">"Active panel: "<output data-demo-state="">{move || active.get()}</output></p>
+            <p data-demo-state-line="" class="text-sm">"Active panel: "<output data-demo-state="">{move || active.get()}</output></p>
         </div>
     }
 }
@@ -50,7 +50,7 @@ pub fn tab_nav_demo() -> impl IntoView {
                 <Button variant=ButtonVariant::Outline on_click=move || current.set("components".to_string())>"Visit components"</Button>
                 <Button variant=ButtonVariant::Outline on_click=move || current.set("themes".to_string())>"Visit themes"</Button>
             </div>
-            <p id="tab-nav-demo" class="text-sm">"Current section: "<output data-demo-state="">{move || current.get()}</output></p>
+            <p data-demo-state-line="" id="tab-nav-demo" class="text-sm">"Current section: "<output data-demo-state="">{move || current.get()}</output></p>
         </div>
     }
 }
@@ -71,7 +71,7 @@ pub fn accordion_demo() -> impl IntoView {
                     <accordion::Content>"The panels render in static HTML and hydrate on demand."</accordion::Content>
                 </accordion::Item>
             </accordion::Root>
-            <p class="text-sm">"Open panel: "<output data-demo-state="">{move || match open.get() {
+            <p data-demo-state-line="" class="text-sm">"Open panel: "<output data-demo-state="">{move || match open.get() {
                 accordion::AccordionValue::Single(Some(value)) => value,
                 _ => "none".to_string(),
             }}</output></p>
@@ -90,7 +90,7 @@ pub fn collapsible_demo() -> impl IntoView {
                     <collapsible::Content>"The static build deploys as files; no server runtime is required."</collapsible::Content>
                 </div>
             </collapsible::Root>
-            <p class="text-sm">"Notes: "<output data-demo-state="">{move || if open.get() { "Shown" } else { "Hidden" }}</output></p>
+            <p data-demo-state-line="" class="text-sm">"Notes: "<output data-demo-state="">{move || if open.get() { "Shown" } else { "Hidden" }}</output></p>
         </div>
     }
 }
@@ -123,7 +123,7 @@ pub fn navigation_menu_demo() -> impl IntoView {
                     </navigation_menu::Item>
                 </navigation_menu::List>
             </navigation_menu::Root>
-            <p id="navigation-menu-demo" class="text-sm">"Open item: "
+            <p data-demo-state-line="" id="navigation-menu-demo" class="text-sm">"Open item: "
                 <output data-demo-state="">{move || value.get().unwrap_or_else(|| "none".into())}</output>
             </p>
         </div>
@@ -146,7 +146,7 @@ pub fn toolbar_demo() -> impl IntoView {
                     <toolbar::ToggleItem class="data-[state=on]:bg-primary/15 data-[state=on]:text-foreground" value="list">"List"</toolbar::ToggleItem>
                 </toolbar::ToggleGroup>
             </toolbar::Root>
-            <p class="text-sm">"Last command: "
+            <p data-demo-state-line="" class="text-sm">"Last command: "
                 <output data-demo-state="">{move || format!("{}, layout {}", last.get(), pressed.get().join("+"))}</output>
             </p>
         </div>
@@ -168,7 +168,7 @@ pub fn scroll_area_demo() -> impl IntoView {
             <Button variant=ButtonVariant::Outline on_click=move || count.update(|count| *count += 1)>
                 "Add item"
             </Button>
-            <p class="text-sm">"Items: "<output data-demo-state="">{move || count.get()}</output></p>
+            <p data-demo-state-line="" class="text-sm">"Items: "<output data-demo-state="">{move || count.get()}</output></p>
         </div>
     }
 }
@@ -224,8 +224,8 @@ pub fn data_table_demo() -> impl IntoView {
                 on_select=move |row| { selected.update(|selected| { selected.toggle(chosen(row) as u32); }); }
                 on_activate=move |row| activated.set(Some(chosen(row)))
                 initial_viewport=(360.0, 128.0) row_height=32.0 column_width=180.0
-                aria_label="Example components" class="h-48 w-full" />
-            <p class="text-sm break-words">"Selected: "<output data-demo-state="">{move || selected.with(|selection| {
+                aria_label="Example components" class="w-full" />
+            <p data-demo-state-line="" class="text-sm break-words">"Selected: "<output data-demo-state="">{move || selected.with(|selection| {
                 if selection.is_empty() {
                     "None".to_string()
                 } else {
@@ -256,7 +256,7 @@ pub fn tree_demo() -> impl IntoView {
                         TreeNode::new("themes", "Themes"),
                     ]),
                 ] />
-            <p class="text-sm">"Selected: "<output data-demo-state="">{move || selected.get().unwrap_or_else(|| "None".to_string())}</output></p>
+            <p data-demo-state-line="" class="text-sm">"Selected: "<output data-demo-state="">{move || selected.get().unwrap_or_else(|| "None".to_string())}</output></p>
             <p class="text-sm">"Expanded: "<output>{move || expanded.with(|groups| {
                 if groups.is_empty() { "None".to_string() } else { groups.iter().cloned().collect::<Vec<_>>().join(", ") }
             })}</output></p>
@@ -277,7 +277,7 @@ pub fn file_picker_demo() -> impl IntoView {
                         names.set(Vec::new());
                     }
                 } />
-            <p class="text-sm break-words">"Chosen: "
+            <p data-demo-state-line="" class="text-sm break-words">"Chosen: "
                 <output data-demo-state="">{move || names.with(|names| if names.is_empty() { "None".to_string() } else { names.join(", ") })}</output>
             </p>
         </div>
@@ -302,7 +302,7 @@ pub fn drop_zone_demo() -> impl IntoView {
             <Button variant=ButtonVariant::Outline on_click=move || invalid.set(!invalid.get_untracked())>
                 {move || if invalid.get() { "Clear the invalid state" } else { "Mark the zone invalid" }}
             </Button>
-            <p class="text-sm break-words">"Dropped: "
+            <p data-demo-state-line="" class="text-sm break-words">"Dropped: "
                 <output data-demo-state="">{move || names.with(|names| if names.is_empty() { "None".to_string() } else { names.join(", ") })}</output>
             </p>
         </div>
@@ -328,7 +328,7 @@ pub fn splitter_demo() -> impl IntoView {
                 </Grid>
             </div>
             <Button variant=ButtonVariant::Outline on_click=move || sizes.set(INITIAL.to_vec())>"Reset columns"</Button>
-            <p class="text-sm">"Columns: "
+            <p data-demo-state-line="" class="text-sm">"Columns: "
                 <output data-demo-state="">{move || sizes.with(|sizes| sizes.iter().map(|size| format!("{size:.0}px")).collect::<Vec<_>>().join(" / "))}</output>
             </p>
         </div>
@@ -354,7 +354,7 @@ pub fn panel_tabs_demo() -> impl IntoView {
                         if let Some(first) = tabs.get_untracked().first() { active.set(first.id.clone()); }
                     }
                 } />
-            <p class="text-sm">"Open panels: "
+            <p data-demo-state-line="" class="text-sm">"Open panels: "
                 <output data-demo-state="">{move || {
                     let open: Vec<String> = tabs.get().iter().map(|tab| tab.label.clone()).collect();
                     format!("{} · active {}", open.join(", "), active.get())
@@ -380,7 +380,7 @@ pub fn command_palette_demo() -> impl IntoView {
                     Command::new("toggle-grid", "Toggle the preview grid"),
                 ])
                 on_run=move |command| { run.set(command); open.set(false); } />
-            <p class="text-sm">"Ran: "<output data-demo-state="">{move || run.get()}</output></p>
+            <p data-demo-state-line="" class="text-sm">"Ran: "<output data-demo-state="">{move || run.get()}</output></p>
         </div>
     }
 }
