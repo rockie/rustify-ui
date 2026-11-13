@@ -212,7 +212,7 @@ REVIEW @progress_consistency:
 - 最近完成：M6 UI R1 修复：33 条已修改待评审、2 条不采纳；真实浏览器补证及 V-14–V-17 门通过，见 [M6 · UI 验收修复](DOM-COMPONENTS-RELEASE.records/M6.md#ui-验收修复)
 - 下一步：用户发起 `review-ui docs/plan/DOM-COMPONENTS-RELEASE.md` 独立复审，直接复用 [M6 修复材料](DOM-COMPONENTS-RELEASE.records/M6.md#ui-验收修复)。必要 SDK/Docs 本地修复已完成，新版本发行另行处理；M7 仍需新候选与本次生产授权。
 - 当前阻塞：生产推送/派发需用户对新候选逐次授权；无本地开发阻塞。临时 registry token 保留沿用户 2026-11-11 决定，不需要用于 M5–M7
-- 代码基线：R3 修复 `c3605c2e`；上一部署候选 `cd062cad`
+- 代码基线：UI R1 修复 `a6493064`；R3 修复 `c3605c2e`；上一部署候选 `cd062cad`
 
 ### 完成记录
 
@@ -222,8 +222,8 @@ REVIEW @progress_consistency:
 | M2 | 已完成 | 2026-11-10 | §5.2 冻结与 V-3–V-7 全过（C=`2445aea6`、CLI 候选 `dde6fe85`、runner 修复 `6993fed9`；receipt 十包 0.3.0 冻结 1817 KB；远端预检 run 42833566509 双平台成功） | [M2.md](DOM-COMPONENTS-RELEASE.records/M2.md) | C=`2445aea6`、`dde6fe85`、`6993fed9` |
 | M3 | 已完成 | 2026-11-11 | V-8–V-10 全过；十包 0.3.0 公开可取（checksum 全一致）；D=`8d3544bb` 推送公共 main；标签 rustify-libs-v0.3.0→R、rustify-docs-cli-v0.3.0→C 读回；token 撤销暂缓（用户确认） | [M3.md](DOM-COMPONENTS-RELEASE.records/M3.md) | D=`8d3544bb` |
 | M4 | 已完成 | 2026-11-11 | 差异门与 V-11 预演（D 与 D3 两轮）通过；部署 run `42953922752`（build 28m39s＋deploy 9s）；V-12 全过（线上 manifest cli_version=0.3.0、build_id `3fe8d486f30d8aa5` 与 run 一致）；V-13 四任务全过（V-6 卡点消除）；E=`458333d5`；worktree 清理 | [M4.md](DOM-COMPONENTS-RELEASE.records/M4.md) | D3=`596175e3`、E=`458333d5` |
-| M5 | 已完成 | 2026-11-13 | 展示目录/九分类页/Colors/Primitives/Studio 页、72 demo（旧 24 保留升级）、theme.json（R3 修复后为 schema v2 标准 + Indigo 11 覆盖）、静态 Colors CSS、docs/README 链接；偏差见覆盖记录（catalogue 承载总索引、Select 部件分组（R3 更正）、ThemeBoundary 静态对照、phoenix-ui 替代） | [M5.md](DOM-COMPONENTS-RELEASE.records/M5.md) | `624ea1e3`；修复 `c3605c2e`；UI修复 待提交 |
-| M6 | 已完成 | 2026-11-13 | compose.py/workflow/verify.py check_studio/serve.sh RUSTIFY_STUDIO_DIR/official.spec V-14+V-15 场景/ComposeTests/theme-studio 接线；候选 S=`45d5d514` 冻结；R3 修复后批门 V-16 全过、V-17 三项目各 66/66 | [M6.md](DOM-COMPONENTS-RELEASE.records/M6.md) | `45d5d514`；修复 `c3605c2e`；UI修复 待提交 |
+| M5 | 已完成 | 2026-11-13 | 展示目录/九分类页/Colors/Primitives/Studio 页、72 demo（旧 24 保留升级）、theme.json（R3 修复后为 schema v2 标准 + Indigo 11 覆盖）、静态 Colors CSS、docs/README 链接；偏差见覆盖记录（catalogue 承载总索引、Select 部件分组（R3 更正）、ThemeBoundary 静态对照、phoenix-ui 替代） | [M5.md](DOM-COMPONENTS-RELEASE.records/M5.md) | `624ea1e3`；修复 `c3605c2e`；UI修复 `a6493064` |
+| M6 | 已完成 | 2026-11-13 | compose.py/workflow/verify.py check_studio/serve.sh RUSTIFY_STUDIO_DIR/official.spec V-14+V-15 场景/ComposeTests/theme-studio 接线；候选 S=`45d5d514` 冻结；R3 修复后批门 V-16 全过、V-17 三项目各 66/66 | [M6.md](DOM-COMPONENTS-RELEASE.records/M6.md) | `45d5d514`；修复 `c3605c2e`；UI修复 `a6493064` |
 | M7 | 进行中 | 2026-11-13 | R3 评审推翻 V-19 完整展示结论并在本地修复；`cd062cad`/run `43247264809` 的 V-18/V-19 保留为历史，待含修复的新候选经授权上线后重验 V-18、V-19 ①③ | [M7.md](DOM-COMPONENTS-RELEASE.records/M7.md) | `8de588f5`、`6b6bde91`、`cd062cad` |
 
 ## 0. 需求、范围与决策
