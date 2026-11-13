@@ -521,6 +521,34 @@ fn published_source(
 }
 
 #[test]
+fn cold_check_resolves_registered_page_anchors() {
+    let temp = project();
+    let content = temp.read("site/content/index.md");
+    temp.write(
+        "site/content/index.md",
+        &format!("{content}\n[Custom details](/docs/custom/#custom-details)\n"),
+    );
+    let output = check(&temp, &["--format", "json"]);
+    let report: Value = serde_json::from_slice(&output.stdout).unwrap();
+    assert_eq!(output.status.code(), Some(0), "{}", diagnostics(&report));
+    assert_eq!(report["success"], true);
+    temp.write(
+        "site/content/index.md",
+        &format!("{content}\n[Missing details](/docs/custom/#missing-details)\n"),
+    );
+    let invalid = check(&temp, &["--format", "json"]);
+    let report: Value = serde_json::from_slice(&invalid.stdout).unwrap();
+    assert_ne!(invalid.status.code(), Some(0));
+    assert!(report["diagnostics"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .any(
+            |diagnostic| diagnostic["severity"] == "error" && diagnostic["rule"] == "broken-anchor"
+        ));
+}
+
+#[test]
 fn real_component_builds_report_independent_errors_preserve_good_bytes_and_recover_one_generation()
 {
     let temp = project();

@@ -324,10 +324,9 @@ fn analyse(
         .iter()
         .filter(|diagnostic| diagnostic.severity == Severity::Error)
         .collect();
-    if !errors.is_empty()
-        && errors
-            .iter()
-            .all(|diagnostic| diagnostic.rule == "rust-generation-changed")
+    if errors
+        .iter()
+        .any(|diagnostic| diagnostic.rule == "rust-generation-changed")
         && std::fs::read_to_string(project.root.join(&project.config_file))
             .is_ok_and(|text| text == project.config_text)
     {
