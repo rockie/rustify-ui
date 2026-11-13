@@ -208,9 +208,9 @@ REVIEW @progress_consistency:
 
 - 最近更新：2026-11-14 +08:00 · R6 复审通过，用户已授权新候选与线上终验
 - 当前进度：6/7 个里程碑完成
-- 当前状态：进行中；R6 已关闭 F-14，旧问题保持关闭；新候选 `1e021db3` 本地 V-18 全过，Pages run `43474209494` 已派发，等待构建/部署与线上终验
+- 当前状态：进行中；R6 已关闭 F-14，旧问题保持关闭；新候选 `1e021db3` 本地 V-18 全过，Pages run `43474209494` attempt 2 已成功部署，build_id `01583fb1e2290a65`；S2 线上 V-18、受影响浏览器与 Studio 连续任务已过；独立接入发现字体许可失效链接，需含文档修复的新候选
 - 最近完成：M6 的 CommandPalette 背景/文字 token 配对修复，官网命令、公开 Studio 独立 token 与局部来源三个浏览器场景通过，见 [M6 · 代码评审 R5 修复](DOM-COMPONENTS-RELEASE.records/M6.md#代码评审-r5-修复)
-- 下一步：等待 Pages run `43474209494` 的 build/deploy；成功后完成同 run 线上 V-18 与 V-19 受影响任务，随后最终提交/回填；必要 SDK/Docs 修复的 registry 新版本发行另行处理。
+- 下一步：独立消费者 build/浏览器已过；将字体许可链接修复冻结为新候选，再完成整包预演/发布及受影响终验，随后最终提交/回填；必要 SDK/Docs 修复的 registry 新版本发行另行处理。
 - 当前阻塞：无；用户本次已授权新候选与线上终验。临时 registry token 保留沿用户 2026-11-11 决定，不需要用于 M5–M7
 - 代码基线：当前候选 `1e021db3`（含冷构建 CLI 修复）；R5 修复 `824ae589`；UI R3 修复 `af73bfcd`；上一部署候选 `cd062cad`
 
@@ -224,7 +224,7 @@ REVIEW @progress_consistency:
 | M4 | 已完成 | 2026-11-11 | 差异门与 V-11 预演（D 与 D3 两轮）通过；部署 run `42953922752`（build 28m39s＋deploy 9s）；V-12 全过（线上 manifest cli_version=0.3.0、build_id `3fe8d486f30d8aa5` 与 run 一致）；V-13 四任务全过（V-6 卡点消除）；E=`458333d5`；worktree 清理 | [M4.md](DOM-COMPONENTS-RELEASE.records/M4.md) | D3=`596175e3`、E=`458333d5` |
 | M5 | 已完成 | 2026-11-13 | 展示目录/九分类页/Colors/Primitives/Studio 页、72 demo（旧 24 保留升级）、theme.json（R3 修复后为 schema v2 标准 + Indigo 11 覆盖）、静态 Colors CSS、docs/README 链接；偏差见覆盖记录（catalogue 承载总索引、Select 部件分组（R3 更正）、ThemeBoundary 静态对照、phoenix-ui 替代） | [M5.md](DOM-COMPONENTS-RELEASE.records/M5.md) | `624ea1e3`；修复 `c3605c2e`；UI修复 `a6493064`、`042ccca5`、`af73bfcd` |
 | M6 | 已完成 | 2026-11-14 | compose.py/workflow/verify.py check_studio/serve.sh RUSTIFY_STUDIO_DIR/official.spec V-14+V-15 场景/ComposeTests/theme-studio 接线；原候选 S=`45d5d514` 冻结；R3 修复后批门 V-16 全过、V-17 三项目各 66/66；R5 F-14 修复及三个定向浏览器场景通过 | [M6.md](DOM-COMPONENTS-RELEASE.records/M6.md) | `45d5d514`；修复 `c3605c2e`；UI修复 `a6493064`、`042ccca5`、`af73bfcd`；修复 `824ae589` |
-| M7 | 进行中 | 2026-11-14 | 新候选 `1e021db3` 含全部修复及真实冷构建修复；V-18 本地整包全过（build `81d4bbc3c53649d5`）；已授权推送/派发 run `43474209494`，待构建/部署及线上 V-18/V-19 | [M7.md](DOM-COMPONENTS-RELEASE.records/M7.md) | `8de588f5`、`6b6bde91`、`cd062cad`；修复 `1e021db3` |
+| M7 | 进行中 | 2026-11-14 | 新候选 `1e021db3` 含全部修复及真实冷构建修复；V-18 本地整包全过（build `81d4bbc3c53649d5`）；已授权部署 run `43474209494` attempt 2（build `01583fb1e2290a65`），S2 线上 V-18/V-19 全过，待许可文档修复新候选 | [M7.md](DOM-COMPONENTS-RELEASE.records/M7.md) | `8de588f5`、`6b6bde91`、`cd062cad`；修复 `1e021db3` |
 
 ## 0. 需求、范围与决策
 
@@ -357,7 +357,7 @@ M1–M4 已完成发行的文件与契约保留如下；续做改动见本节表
 | `tests/docs-ssg/official.spec.ts`、`tests/docs-ssg/serve.sh`、`tests/browser/theme-deployment.spec.ts`、`tests/crates-io/test_pairing.py` | 官网真实用户旅程、组合包部署、既有协议回归；不把演示覆盖降为数字断言 | M5–M7 |
 | `docs/validation/dom-components-release/showcase-coverage.md` ★、本计划 M5–M7 记录 | 实施时写真实展示落点与验收结果；不预填通过 | M5–M7 |
 
-不改 Makepad/GPU 绘制、SDK 组件 API 或已发布 registry 归档。用户 2026-11-13 授权 UI R1 必要 SDK/Docs 本地修复：scope 内模态完整可读、默认色族标签达到 AA、源码 tabpanel 使用有效容器；不扩大为生成器重构。新版本发行另行处理，修复后的本地源码行为不代表 0.3.0 registry 归档已更新，处置及用户原话见 [M6 UI 修复](DOM-COMPONENTS-RELEASE.records/M6.md#ui-验收修复)。
+不改 Makepad/GPU 绘制、SDK 组件 API 或已发布 registry 归档。 M7 实际接入发现 `makepad/widgets/resources/FONT-LICENSES.md` 两个许可/源码下载链接失效，允许只修正为已核验的不可变公开归档并刷新同候选 Studio 资源；不改字体或绘制代码。用户 2026-11-13 授权 UI R1 必要 SDK/Docs 本地修复：scope 内模态完整可读、默认色族标签达到 AA、源码 tabpanel 使用有效容器；不扩大为生成器重构。新版本发行另行处理，修复后的本地源码行为不代表 0.3.0 registry 归档已更新，处置及用户原话见 [M6 UI 修复](DOM-COMPONENTS-RELEASE.records/M6.md#ui-验收修复)。
 
 ## 2. 本站展示目录与页面契约
 
