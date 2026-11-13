@@ -851,7 +851,7 @@
   position: sticky;
   inset-inline-start: 0;
   z-index: 1;
-  box-shadow: 1px 0 0 var(--secondary);
+  border-inline-end: 1px solid var(--border);
 }
 
 /* GitHub's five alerts: a tint of the alert's hue on the page, a hairline

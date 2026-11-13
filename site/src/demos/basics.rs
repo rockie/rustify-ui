@@ -27,7 +27,7 @@ pub fn button_demo() -> impl IntoView {
     let disabled = RwSignal::new(false);
     let loading = RwSignal::new(false);
     view! {
-        <div class="space-y-4">
+        <div class="flex flex-col gap-4">
             <div class="demo-controls border-b border-border pb-4 flex flex-wrap items-center gap-3 text-sm">
                 <label class="flex items-center gap-2">"Variant "
                     <select class="rounded-md border border-border bg-background px-2 py-1" on:change=move |event| {

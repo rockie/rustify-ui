@@ -225,15 +225,19 @@ pub fn data_table_demo() -> impl IntoView {
                 on_activate=move |row| activated.set(Some(chosen(row)))
                 initial_viewport=(360.0, 128.0) row_height=32.0 column_width=180.0
                 aria_label="Example components" class="w-full" />
-            <p data-demo-state-line="" class="text-sm break-words">"Selected: "<output data-demo-state="">{move || selected.with(|selection| {
-                if selection.is_empty() {
-                    "None".to_string()
-                } else {
-                    selection.ids().map(|row| entries[row as usize][0]).collect::<Vec<_>>().join(", ")
-                }
-            })}</output></p>
-            <p class="text-sm">"Activated: "<output>{move || activated.get().map_or("None", |row| entries[row][0])}</output></p>
-            <p class="text-sm">"Sort: "<output>{move || sorted.get().map_or("none".to_string(), |(column, ascending)| format!("column {} {}", column + 1, if ascending { "↑" } else { "↓" }))}</output></p>
+            <p data-demo-state-line="" class="text-sm break-words">
+                <span>"Selected: "<output data-demo-state="">{move || selected.with(|selection| {
+                    if selection.is_empty() {
+                        "None".to_string()
+                    } else {
+                        selection.ids().map(|row| entries[row as usize][0]).collect::<Vec<_>>().join(", ")
+                    }
+                })}</output></span>
+                " · "
+                <span>"Activated: "<output>{move || activated.get().map_or("None", |row| entries[row][0])}</output></span>
+                " · "
+                <span>"Sort: "<output>{move || sorted.get().map_or("none".to_string(), |(column, ascending)| format!("column {} {}", column + 1, if ascending { "↑" } else { "↓" }))}</output></span>
+            </p>
         </div>
     }
 }

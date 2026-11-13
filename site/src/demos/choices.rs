@@ -226,8 +226,8 @@ pub fn toggle_group_demo() -> impl IntoView {
 pub fn segmented_control_demo() -> impl IntoView {
     let period = RwSignal::new(Some("week".to_string()));
     view! {
-        <div class="space-y-4">
-            <segmented_control::Root class="[&_.rustify-segmented-input:checked+.rustify-segmented-label]:bg-primary/15 [&_.rustify-segmented-input:checked+.rustify-segmented-label]:text-foreground [&_.rustify-segmented-input:checked+.rustify-segmented-label]:ring-1 [&_.rustify-segmented-input:checked+.rustify-segmented-label]:ring-border" value=Signal::derive(move || period.get()) aria_label="Reporting period"
+        <div class="flex flex-col gap-4">
+            <segmented_control::Root class="self-start [&_.rustify-segmented-input:checked+.rustify-segmented-label]:bg-primary/15 [&_.rustify-segmented-input:checked+.rustify-segmented-label]:text-foreground [&_.rustify-segmented-input:checked+.rustify-segmented-label]:ring-1 [&_.rustify-segmented-input:checked+.rustify-segmented-label]:ring-border" value=Signal::derive(move || period.get()) aria_label="Reporting period"
                 on_change=Callback::new(move |next| period.set(next))>
                 <segmented_control::Item value="day">"Day"</segmented_control::Item>
                 <segmented_control::Item value="week">"Week"</segmented_control::Item>

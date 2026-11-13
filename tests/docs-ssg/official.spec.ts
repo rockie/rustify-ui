@@ -235,7 +235,7 @@ async function exercise(page: Page, field: Locator, name: string) {
             const area = field.getByRole("group", { name: "Example items", exact: true }); await area.focus(); await expect(area).toBeFocused(); await area.press("End"); await expect.poll(() => area.evaluate(node => node.scrollTop)).toBeGreaterThan(0); break;
         }
         case "data table": {
-            const grid = field.getByRole("grid", { name: "Example components", exact: true }); const cell = grid.getByRole("gridcell").filter({ hasText: /^Button$/ }); await cell.focus(); await page.keyboard.press("Space"); await expect(state).toHaveText("Button"); await page.keyboard.press("Enter"); await expect(field.getByText("Activated: Button", { exact: true })).toBeVisible(); break;
+            const grid = field.getByRole("grid", { name: "Example components", exact: true }); const cell = grid.getByRole("gridcell").filter({ hasText: /^Button$/ }); await cell.focus(); await page.keyboard.press("Space"); await expect(state).toHaveText("Button"); await page.keyboard.press("Enter"); await expect(stateLine(field).getByText("Activated: Button", { exact: true })).toBeVisible(); break;
         }
         case "tree": {
             const tree = field.getByRole("tree", { name: "Example documentation tree", exact: true }); const parent = tree.getByRole("treeitem").filter({ hasText: /Components$/ });
@@ -267,6 +267,17 @@ test("home has one English title, the original README introduction and two first
     await expect(page.locator(".rd-home-prose").getByRole("link", { name: "repository quick start", exact: true })).toHaveAttribute("href", repoQuickstart);
     await attachedDemo(page, "ButtonDemo");
     await attachedDemo(page, "SegmentedControlDemo");
+    const previewTrailingSpace = await page.locator(".rd-preview .rd-demo-canvas").evaluateAll(nodes => nodes.map(node => {
+        const root = node.querySelector("[data-rustify-content]")!.firstElementChild!;
+        const last = [...root.children].filter(child => getComputedStyle(child).display !== "none").at(-1)!;
+        return node.getBoundingClientRect().bottom - last.getBoundingClientRect().bottom - parseFloat(getComputedStyle(node).paddingBottom);
+    }));
+    expect(previewTrailingSpace).toEqual([0, 0]);
+    const segmentedWidth = await page.locator(".rd-preview .rd-demo-canvas").nth(1).evaluate(node => {
+        const control = node.querySelector(".rustify-segmented-control")!;
+        return { control: control.getBoundingClientRect().width, available: node.clientWidth - parseFloat(getComputedStyle(node).paddingInline) * 2 };
+    });
+    expect(segmentedWidth.control).toBeLessThan(segmentedWidth.available);
     expect(new Set(wasm(audit)).size).toBe(1); await healthy(page, audit);
     await quickstart.click(); await expect(page.locator("h1")).toHaveText(guides[0].title); expect(new Set(wasm(audit)).size).toBe(1);
 });
@@ -754,7 +765,8 @@ test("V-14 navigation, content, layout, typography and extension samples show th
     await expect.poll(() => sample.evaluate(node => { const range = document.createRange(); range.selectNodeContents(node); return range.getBoundingClientRect().x; })).toBeGreaterThan(left + 20);
 
     await open(page, "components/data-table/");
-    const grid = (await attached(page, "DataTableDemo")).getByRole("grid", { name: "Example components", exact: true });
+    const dataTable = await attached(page, "DataTableDemo");
+    const grid = dataTable.getByRole("grid", { name: "Example components", exact: true });
     const names = () => grid.getByRole("gridcell").evaluateAll(cells => cells.filter(cell => cell.getAttribute("aria-colindex") === "1" && !cell.classList.contains("hidden")).map(cell => cell.textContent));
     expect(await names()).toEqual(["Button", "Text field", "Data table", "Dialog"]);
     await grid.getByRole("button", { name: /Component/ }).click();
@@ -763,7 +775,7 @@ test("V-14 navigation, content, layout, typography and extension samples show th
     await expect.poll(names).toEqual(["Text field", "Dialog", "Data table", "Button"]);
     await grid.getByRole("gridcell").filter({ hasText: /^Dialog$/ }).focus(); await page.keyboard.press("Space");
     await expect(page.locator("[data-rd-island-status] > [data-demo-state-line] [data-demo-state]")).toHaveText("Dialog");
-    await page.keyboard.press("Enter"); await expect(page.getByText("Activated: Dialog", { exact: true })).toBeVisible();
+    await page.keyboard.press("Enter"); await expect(stateLine(dataTable).getByText("Activated: Dialog", { exact: true })).toBeVisible();
 
     await open(page, "components/extensions/");
     const splitter = await attachedDemo(page, "SplitterDemo");
@@ -807,6 +819,8 @@ test("V-15 from the home preview through Colors, Primitives and into the compose
     await expect.poll(() => new URL(page.url()).hash).toBe("#css-mint-dark-alpha-p3");
     const matching = page.locator("#css-mint-dark-alpha-p3");
     await expect(matching).toHaveAttribute("download", "");
+    const rowHeader = matching.locator("xpath=ancestor::tr[1]").getByRole("rowheader");
+    await expect(rowHeader).toHaveCSS("border-inline-end", "1px solid rgb(205, 206, 214)");
     const css = await request.get(await matching.evaluate(node => (node as HTMLAnchorElement).href));
     expect(css.status()).toBe(200);
     expect(css.headers()["content-type"]).toContain("text/css");
