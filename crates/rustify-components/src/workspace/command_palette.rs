@@ -7,10 +7,10 @@
 
 use leptos::ev::KeyboardEvent;
 use leptos::prelude::*;
-use rustify_ui::{Anchor, Layer};
+use rustify_ui::{Anchor, Layer, ViewportAlign};
 
 const PANEL: &str =
-    "w-[32rem] max-w-full rounded-lg border border-border bg-popover text-popover-foreground shadow-lg overflow-hidden";
+    "w-[32rem] max-w-full rounded-lg border border-border bg-background text-popover-foreground shadow-lg overflow-hidden";
 const SEARCH: &str = "w-full border-0 border-b border-border bg-transparent px-4 py-3 text-sm text-popover-foreground outline-none placeholder:text-muted-foreground";
 const ITEM: &str = "flex w-full items-center justify-between gap-3 px-4 py-2 text-sm text-popover-foreground cursor-pointer aria-disabled:opacity-50 aria-disabled:cursor-not-allowed";
 
@@ -178,7 +178,7 @@ pub fn CommandPalette(
         <Show when=move || open.get() fallback=|| ()>
             <Layer
                 modal=true
-                anchor=Signal::derive(|| Anchor::Centred)
+                anchor=Signal::derive(|| Anchor::Viewport { align: ViewportAlign::Center })
                 on_close=move || on_open_change.with_value(|change| change(false))
                 class="rui-command-layer"
             >

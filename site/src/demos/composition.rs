@@ -29,7 +29,9 @@ pub fn form_demo() -> impl IntoView {
     let form_for_reset = form;
     view! {
         <div class="space-y-4">
-            <FormRoot form=form rules=rules aria_label="Contact details">
+            <FormRoot form=form rules=rules aria_label="Contact details" on_asked=Callback::new(move |result| {
+                if result == rustify_ui::Submit::Save { form.submitted(Ok(())); }
+            })>
                 <f::Root form=form field="name">
                     <f::Label>"Display name"</f::Label>
                     <TextField value=name on_change=move |value| { name_for_change.set(value.clone()); form.changed("name"); } />

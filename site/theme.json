@@ -117,11 +117,13 @@
   "overrides": {
     "light": {
       "primary": "#3a5bc7",
-      "primary-foreground": "#ffffff"
+      "primary-foreground": "#ffffff",
+      "ring": "#3a5bc7"
     },
     "dark": {
       "primary": "#9eb1ff",
-      "primary-foreground": "#11131f"
+      "primary-foreground": "#11131f",
+      "ring": "#9eb1ff"
     }
   }
 }

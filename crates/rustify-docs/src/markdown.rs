@@ -1425,7 +1425,12 @@ impl<'a> Writer<'a> {
             group.labels.len() - 1
         });
         let mut html = String::with_capacity(block.text.len() * 3 + 256);
-        html.push_str("<figure class=\"rd-code\"");
+        let (container, caption) = if tab.is_some() {
+            ("div", "div")
+        } else {
+            ("figure", "figcaption")
+        };
+        html.push_str(&format!("<{container} class=\"rd-code\""));
         if !lang_attr.is_empty() {
             html.push_str(" data-lang=\"");
             escape_html_into(&mut html, &lang_attr);
@@ -1437,7 +1442,9 @@ impl<'a> Writer<'a> {
         if let Some(tab) = tab {
             html.push_str(&format!(" data-rd-tab-panel=\"{tab}\""));
         }
-        html.push_str(">\n<figcaption class=\"rd-code-bar\"><span class=\"rd-code-title\"");
+        html.push_str(&format!(
+            ">\n<{caption} class=\"rd-code-bar\"><span class=\"rd-code-title\""
+        ));
         html.push_str(&self.ui_lang(label_lang));
         html.push('>');
         escape_html_into(&mut html, &label);
@@ -1458,9 +1465,9 @@ impl<'a> Writer<'a> {
         html.push_str(&crate::icons::copy());
         html.push_str("<span class=\"rd-copy-label\">");
         escape_html_into(&mut html, &copy.text);
-        html.push_str(
-            "</span></button></figcaption>\n<pre class=\"rd-code-pre\" tabindex=\"0\"><code>",
-        );
+        html.push_str(&format!(
+            "</span></button></{caption}>\n<pre class=\"rd-code-pre\" tabindex=\"0\"><code>"
+        ));
         for (index, line) in highlighted.lines.iter().enumerate() {
             let number = index + 1;
             if block.highlight.iter().any(|range| range.contains(&number)) {
@@ -1477,7 +1484,7 @@ impl<'a> Writer<'a> {
         let mut raw = String::new();
         escape_html_into(&mut raw, &block.text);
         html.push_str(&raw.replace('\r', "&#13;"));
-        html.push_str("</template>\n</figure>\n");
+        html.push_str(&format!("</template>\n</{container}>\n"));
         self.push(&html);
         self.out.code_blocks.push(CodeBlock {
             tag: block.tag,
@@ -2267,9 +2274,9 @@ mod tests {
         let page = md(source);
         assert!(page.issues.is_empty(), "{:?}", page.issues);
         let html = &page.html;
-        assert!(html.starts_with("<div class=\"rd-code-group\" data-rd-group=\"install\">\n<div class=\"rd-code-tabs\" hidden><div class=\"rd-code-tablist\" role=\"tablist\"><button type=\"button\" role=\"tab\" aria-selected=\"true\" data-rd-tab=\"0\">Cargo</button><button type=\"button\" role=\"tab\" aria-selected=\"false\" data-rd-tab=\"1\">Manifest</button></div></div>\n<figure class=\"rd-code\" data-lang=\"sh\" data-rd-tab-panel=\"0\">"), "{html}");
+        assert!(html.starts_with("<div class=\"rd-code-group\" data-rd-group=\"install\">\n<div class=\"rd-code-tabs\" hidden><div class=\"rd-code-tablist\" role=\"tablist\"><button type=\"button\" role=\"tab\" aria-selected=\"true\" data-rd-tab=\"0\">Cargo</button><button type=\"button\" role=\"tab\" aria-selected=\"false\" data-rd-tab=\"1\">Manifest</button></div></div>\n<div class=\"rd-code\" data-lang=\"sh\" data-rd-tab-panel=\"0\">"), "{html}");
         assert!(html.contains("data-rd-tab-panel=\"1\""));
-        assert!(html.trim_end().ends_with("</figure>\n</div>"));
+        assert!(html.trim_end().ends_with("</div>\n</div>"));
         assert!(!html.contains("rustify:"));
         assert_eq!(
             page.code_groups,

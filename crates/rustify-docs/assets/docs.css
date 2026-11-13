@@ -24,8 +24,7 @@
   }
 }
 
-/* Every interactive element shows where focus is: an opaque 3px ring with
-   a 2px gap, in the ring colour, which is the brand's primary. */
+/* Reading controls use a 3px ring; demo components retain their 2px outline. */
 :where(a, button, summary, [tabindex]):focus-visible {
   outline: 3px solid var(--ring);
   outline-offset: 2px;
@@ -717,14 +716,14 @@
   margin-top: 0.75rem;
 }
 
-.rd-prose a:where(:not([data-rustify-island] *), [data-rustify-children] *, .rd-prose .rd-prose *) {
+.rd-prose a:not(.rd-action):where(:not([data-rustify-island] *), [data-rustify-children] *, .rd-prose .rd-prose *) {
   color: var(--primary);
   text-decoration: underline;
   text-decoration-thickness: 1px;
   text-underline-offset: 0.2em;
 }
 
-.rd-prose a:hover:where(:not([data-rustify-island] *), [data-rustify-children] *, .rd-prose .rd-prose *) {
+.rd-prose a:not(.rd-action):hover:where(:not([data-rustify-island] *), [data-rustify-children] *, .rd-prose .rd-prose *) {
   text-decoration-thickness: 2px;
 }
 
@@ -1079,6 +1078,24 @@
   border: 1px solid var(--secondary);
   border-radius: var(--rd-radius);
   overflow: hidden;
+}
+
+.rd-demo-canvas :is(a, button, summary, [tabindex]):focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.rd-demo-canvas .rustify-button:focus-visible {
+  outline-color: var(--ring);
+}
+
+.rd-demo-canvas [role="gridcell"]:focus-visible {
+  outline-offset: -2px;
+}
+
+.rd-demo [data-rustify-part="command-palette"] {
+  border-radius: var(--rd-radius);
+  box-shadow: none;
 }
 
 .rd-demo-canvas {

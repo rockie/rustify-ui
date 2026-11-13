@@ -1,42 +1,49 @@
 ---
-description: Source API entries, supported fields, reference coverage, limits and verification paths for Rustify components.
+description: Find Rustify components by group, try their controls and copy working Rust examples.
 ---
 # Component catalogue
 
-This reference describes the 0.3.0 release. The ten published
-Docs/DOM/style packages ship the component API and schema v2 described here.
-Configured themes, layout/typography APIs and Colors are part of the published
-packages.
-
-`crates/rustify-components/src/catalog.rs` is the fact source. Regenerate with
-`mbx xtask catalog --write docs/components.md`; add `--check` to detect drift.
-The existing `CATALOG` has 24 navigation categories for older applications.
-It is separate from the public-entry and complete stable-reference inventories.
-
-A listed component exposes its stated Rust contract. Same-name reference
-mapping does not establish the full upstream API, generic asChild/Slot,
-an `unstyled Primitives` namespace beyond the documented primitive parts, accessibility certification or DOM/GPU visual parity.
-Verification columns identify checks to rerun; dated outcomes remain in
-[component validation record](plan/DOM-COMPONENTS-P1.records/M4.md) and the development plan.
-Use the [migration guide](dom-components-migration.md) for API, theme and CSS
-changes, and the [field matrix](validation/dom-components-p1/field-matrix.md)
-for defaults and enum values.
+Find a component, try its controls, and copy the Rust example into your application.
 
 ## Browse by group
 
-The showcase groups every released family with working examples:
+### Interaction
 
-- [Interaction](/components/interaction/) — buttons, choices, ranges, fields and pickers
-- [Overlays](/components/overlays/) — dialogs, alert dialogs, popover, hover cards and tooltips
-- [Menus](/components/menus/) — dropdown, context menu and menubar
-- [Navigation](/components/navigation/) — tabs, tab nav, accordion, collapsible, navigation menu and toolbar
-- [Content](/components/content/) — avatar, badge, card, callout, data lists, tables and sizing
-- [Feedback](/components/feedback/) — progress, spinner, skeleton and toast
-- [Layout](/components/layout/) — box, flex, grid, container, section, inset and reset
-- [Typography](/components/typography/) — semantic text families
-- [Extensions](/components/extensions/) — data table, tree, files and workspace surfaces
+[Button](/components/button/#example) · [Icon button](/components/interaction/#icon-button) · [Link](/components/link/#example) · [Icon](/components/icon/#example) · [Checkbox](/components/checkbox/#example) · [Checkbox group](/components/interaction/#checkbox-group) · [Radio](/components/radio/#example) · [Radio cards](/components/interaction/#radio-cards) · [Switch](/components/switch/#example) · [Toggle](/components/interaction/#toggle) · [Toggle group](/components/toggle-group/#example) · [Segmented control](/components/interaction/#segmented-control) · [Checkbox cards](/components/interaction/#checkbox-cards) · [Slider](/components/slider/#example) · [Range slider](/components/interaction/#range-slider) · [Text field](/components/text-field/#example) · [Text area](/components/text-area/#example) · [Number field](/components/number-field/#example) · [Color field](/components/color-field/#example) · [Label](/components/label/#example) · [Form and field](/components/interaction/#form) · [Field status](/components/interaction/#field-parts) · [Select](/components/select/#example) · [Select parts and groups](/components/interaction/#select-parts) · [Dependent selects](/components/interaction/#select-grouped) · [Raw primitives](/primitives/#primitives) · [Colors](/colors/#colors)
 
-Also see [Colors](/colors/), [Primitives](/primitives/) and the public [Theme Studio](https://rockie.github.io/rustify-ui/theme-studio/).
+### Overlays
+
+[Dialog](/components/dialog/#example) · [Alert dialog](/components/overlays/#alert-dialog) · [Popover](/components/overlays/#popover) · [Hover card](/components/overlays/#hover-card) · [Tooltip](/components/tooltip/#example)
+
+### Menus
+
+[Menu](/components/menu/#example) · [Dropdown menu](/components/menus/#dropdown-menu) · [Context menu](/components/menus/#context-menu) · [Menubar](/components/menus/#menubar)
+
+### Navigation
+
+[Tabs](/components/tabs/#example) · [Tab nav](/components/navigation/#tab-nav) · [Accordion](/components/navigation/#accordion) · [Collapsible](/components/navigation/#collapsible) · [Navigation menu](/components/navigation/#navigation-menu) · [Toolbar](/components/navigation/#toolbar)
+
+### Content
+
+[Avatar](/components/content/#avatar) · [Badge](/components/content/#badge) · [Card](/components/content/#card) · [Callout](/components/content/#callout) · [Data list](/components/content/#data-list) · [Table](/components/content/#table) · [Scroll area](/components/scroll-area/#example) · [Scroll area parts](/components/content/#scroll-area-parts) · [Aspect ratio](/components/content/#aspect-ratio) · [Separator](/components/content/#separator)
+
+### Feedback
+
+[Progress](/components/progress/#example) · [Spinner](/components/loading/#example) · [Skeleton](/components/feedback/#skeleton) · [Toast](/components/toast/#example)
+
+### Layout
+
+[Box, Flex, Grid](/components/layout/#box) · [Container and Section](/components/layout/#container) · [Inset](/components/layout/#inset) · [Reset](/components/layout/#reset) · [Direction and RTL](/primitives/#direction)
+
+### Typography
+
+[Text family](/components/typography/#text) · [Text controls](/components/typography/#text-controls) · [Theme boundary](/studio/#theme-boundary)
+
+### Extensions
+
+[Data table](/components/data-table/#example) · [Tree](/components/tree/#example) · [File picker](/components/extensions/#file-picker) · [Drop zone](/components/extensions/#drop-zone) · [Splitter](/components/extensions/#splitter) · [Panel tabs](/components/extensions/#panel-tabs) · [Command palette](/components/extensions/#command-palette)
+
+Explore [Colors](/colors/), [Primitives](/primitives/) and [Theme Studio](https://rockie.github.io/rustify-ui/theme-studio/). See the [migration guide](dom-components-migration.md) when upgrading an existing application.
 
 <!-- catalogue -->
 ## Public source entries

@@ -1,6 +1,6 @@
 use leptos::prelude::*;
 use rustify_components::primitives;
-use rustify_components::{context_menu, dropdown_menu, menubar};
+use rustify_components::{context_menu, dropdown_menu, menubar, Glyph, Icon};
 
 /// A dropdown menu runs commands, keeps checkbox state and nests a submenu.
 pub fn dropdown_menu_demo() -> impl IntoView {
@@ -11,9 +11,9 @@ pub fn dropdown_menu_demo() -> impl IntoView {
     view! {
         <div class="space-y-4">
             <dropdown_menu::Root open=open on_open_change=move |next| open.set(next)>
-                <dropdown_menu::Trigger>"Document actions"</dropdown_menu::Trigger>
+                <dropdown_menu::Trigger class="rustify-dialog-button gap-2">"Document actions"<Icon glyph=Glyph::ChevronDown label="" /></dropdown_menu::Trigger>
                 <dropdown_menu::Portal>
-                    <dropdown_menu::Content aria_label="File actions">
+                    <dropdown_menu::Content class="rounded-md border border-border bg-background shadow-none" aria_label="File actions">
                         <dropdown_menu::Label>"Actions"</dropdown_menu::Label>
                         <dropdown_menu::Item on_select=move |_| action.set("Copy".to_string())>"Copy"</dropdown_menu::Item>
                         <dropdown_menu::Item on_select=move |_| action.set("Rename".to_string())>"Rename"</dropdown_menu::Item>
@@ -23,7 +23,7 @@ pub fn dropdown_menu_demo() -> impl IntoView {
                         <dropdown_menu::Sub open=sub on_open_change=move |next| sub.set(next)>
                             <dropdown_menu::SubTrigger>"Share"</dropdown_menu::SubTrigger>
                             <dropdown_menu::Portal>
-                                <dropdown_menu::SubContent>
+                                <dropdown_menu::SubContent class="rounded-md border border-border bg-background shadow-none">
                                     <dropdown_menu::Item on_select=move |_| action.set("Copy link".to_string())>"Copy link"</dropdown_menu::Item>
                                     <dropdown_menu::Item on_select=move |_| action.set("Email file".to_string())>"Email file"</dropdown_menu::Item>
                                 </dropdown_menu::SubContent>
@@ -53,7 +53,7 @@ pub fn context_menu_demo() -> impl IntoView {
                     "Right-click, long-press or Shift+F10 on this surface"
                 </context_menu::Trigger>
                 <context_menu::Portal>
-                    <context_menu::Content>
+                    <context_menu::Content class="rounded-md border border-border bg-background shadow-none">
                         <context_menu::Item on_select=move |_| action.set("Pin".to_string())>"Pin"</context_menu::Item>
                         <context_menu::Item on_select=move |_| action.set("Duplicate".to_string())>"Duplicate"</context_menu::Item>
                         <context_menu::Separator />
@@ -76,7 +76,7 @@ pub fn menubar_demo() -> impl IntoView {
                 <menubar::Menu value="file">
                     <menubar::Trigger>"File"</menubar::Trigger>
                     <menubar::Portal>
-                        <menubar::Content aria_label="File commands">
+                        <menubar::Content class="rounded-md border border-border bg-background shadow-none" aria_label="File commands">
                             <menubar::Item on_select=move |_| command.set("New project".to_string())>"New project"</menubar::Item>
                             <menubar::Item on_select=move |_| command.set("Open folder".to_string())>"Open folder"</menubar::Item>
                         </menubar::Content>
@@ -85,7 +85,7 @@ pub fn menubar_demo() -> impl IntoView {
                 <menubar::Menu value="view">
                     <menubar::Trigger>"View"</menubar::Trigger>
                     <menubar::Portal>
-                        <menubar::Content aria_label="View commands">
+                        <menubar::Content class="rounded-md border border-border bg-background shadow-none" aria_label="View commands">
                             <menubar::Item on_select=move |_| command.set("Toggle sidebar".to_string())>"Toggle sidebar"</menubar::Item>
                             <menubar::Item disabled=true on_select=move |_| ()>"Zen mode (unavailable)"</menubar::Item>
                         </menubar::Content>

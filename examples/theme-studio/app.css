@@ -225,7 +225,10 @@ button,input,textarea {font:inherit;}
 .inspector-outline[data-annotated="false"]>span {background:#475467;}
 .inspector-tokens:empty {display:none;}
 .studio-dom-pane {container-type:inline-size;}
-@container (max-width:600px) {.studio-authored-preview [data-testid="scene-cards"] {grid-template-columns:minmax(0,1fr);}}
+@container (max-width:600px) {
+ .studio-authored-preview [data-testid="scene-cards"] {grid-template-columns:minmax(0,1fr);}
+ .studio-authored-preview [data-testid="scene-cards"]>.md\:col-span-2 {grid-column:1 / -1;}
+}
 @container (max-width:36rem) {
  .studio-authored-preview {--preview-padding-x:.75rem;--preview-padding-y:.75rem;padding:.75rem;}
  .studio-authored-preview .preview-surface {padding:.75rem;}
@@ -244,6 +247,7 @@ button,input,textarea {font:inherit;}
 .studio-storage:has(.tools-state-memory) .tools-state-memory>strong {display:none;}
 @container (max-width:36rem) {
  .studio-command-bar {display:grid;grid-template-columns:minmax(0,1fr) auto;gap:.5rem 1rem;}
+ .studio-command-bar>.studio-back {grid-column:1 / -1;}
  .studio-command-actions {grid-column:1 / -1;display:flex;gap:.5rem;}
  .studio-command-actions [data-name="Button"] {padding-inline:.375rem;}
  .studio-editor-top .studio-preview-mode {flex-direction:column;align-items:flex-start;gap:.25rem;}
@@ -304,16 +308,16 @@ button,input,textarea {font:inherit;}
 .gallery-files-reason:empty { display: none; }
 .component-gallery[data-show-parts=true] [data-rustify-part]::after { content: attr(data-rustify-part); position: absolute; z-index: 2; inset-inline-start: 0; bottom: 100%; padding: 1px 3px; font: 10px/1.2 monospace; background: var(--background); color: var(--foreground); pointer-events: none; }
 
-.studio-topbar {
-  display: flex;
-  justify-content: flex-end;
-  padding: 8px 16px;
-}
 .studio-back {
   font: inherit;
+  white-space: nowrap;
   color: var(--primary, inherit);
   text-decoration: none;
 }
 .studio-back:hover {
   text-decoration: underline;
 }
+
+.studio-back:focus-visible {outline:2px solid #175cd3;outline-offset:2px;}
+[data-testid="inspector-contrast"] li {display:flex;align-items:baseline;flex-wrap:wrap;gap:.5rem;}
+[data-testid="inspector-contrast"] button {border:1px solid #d0d5dd;border-radius:.375rem;padding:.25rem .5rem;background:#fff;color:#175cd3;}

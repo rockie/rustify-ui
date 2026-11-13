@@ -90,7 +90,7 @@ impl Default for Preferences {
             locale: "en".into(),
             favorites: Vec::new(),
             scene: "Cards".into(),
-            renderer: "compare".into(),
+            renderer: "dom".into(),
             preview_width: "responsive".into(),
             mode: ThemeMode::Light,
         }

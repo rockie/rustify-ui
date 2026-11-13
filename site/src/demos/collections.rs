@@ -142,8 +142,8 @@ pub fn toolbar_demo() -> impl IntoView {
                 <toolbar::Separator />
                 <toolbar::ToggleGroup value=Signal::derive(move || pressed.get())
                     on_change=Callback::new(move |next| pressed.set(next))>
-                    <toolbar::ToggleItem value="grid">"Grid"</toolbar::ToggleItem>
-                    <toolbar::ToggleItem value="list">"List"</toolbar::ToggleItem>
+                    <toolbar::ToggleItem class="data-[state=on]:bg-primary/15 data-[state=on]:text-foreground" value="grid">"Grid"</toolbar::ToggleItem>
+                    <toolbar::ToggleItem class="data-[state=on]:bg-primary/15 data-[state=on]:text-foreground" value="list">"List"</toolbar::ToggleItem>
                 </toolbar::ToggleGroup>
             </toolbar::Root>
             <p class="text-sm">"Last command: "
@@ -215,7 +215,7 @@ pub fn data_table_demo() -> impl IntoView {
             });
         });
     view! {
-        <div class="min-w-0 space-y-4">
+        <div class="min-w-0 space-y-4 [&_[role=row][aria-selected=true]]:bg-primary/15 [&_[role=row][aria-selected=true]]:text-foreground [&_[role=row][aria-selected=true]_[role=gridcell]:focus-visible]:outline-ring">
             <DataTable rows=entries.len() columns=vec![Column::new("name", "Component"), Column::new("group", "Group")]
                 cell=Arc::new(move |row, column| entries[entry(row)][column].to_string())
                 row_id=Arc::new(move |row| entry(row) as u32) selected=selected goto=goto focus=focus
@@ -320,9 +320,9 @@ pub fn splitter_demo() -> impl IntoView {
             <div class="max-w-full overflow-x-auto rounded-md border border-border p-3">
                 <Grid columns=Signal::derive(move || Responsive::from(GridTracks::from(columns(&sizes.get()))))
                     class="relative h-24 w-fit">
-                    <div class="overflow-hidden bg-muted p-3 text-sm">"Sources"</div>
-                    <div class="overflow-hidden border-x border-border p-3 text-sm">"Preview"</div>
-                    <div class="overflow-hidden bg-muted p-3 text-sm">"Inspector"</div>
+                    <div class="truncate bg-muted p-3 text-sm">"Sources"</div>
+                    <div class="truncate border-x border-border p-3 text-sm">"Preview"</div>
+                    <div class="truncate bg-muted p-3 text-sm">"Inspector"</div>
                     <Splitter sizes=Signal::derive(move || sizes.get()) mins=vec![64.0, 64.0, 64.0]
                         divider_label="Resize panels" on_resize=move |next| sizes.set(next) />
                 </Grid>
@@ -369,7 +369,7 @@ pub fn command_palette_demo() -> impl IntoView {
     let open = RwSignal::new(false);
     let run = RwSignal::new("None".to_string());
     view! {
-        <div class="space-y-4">
+        <div class="demo-modal-workspace min-h-96 space-y-4">
             <Button on_click=move || open.set(true)>"Run a command"</Button>
             <CommandPalette open=Signal::derive(move || open.get()) aria_label="Commands"
                 placeholder="Search commands"

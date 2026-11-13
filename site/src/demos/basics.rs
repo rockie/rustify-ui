@@ -28,7 +28,7 @@ pub fn button_demo() -> impl IntoView {
     let loading = RwSignal::new(false);
     view! {
         <div class="space-y-4">
-            <div class="flex flex-wrap items-center gap-3 text-sm">
+            <div class="demo-controls border-b border-border pb-4 flex flex-wrap items-center gap-3 text-sm">
                 <label class="flex items-center gap-2">"Variant "
                     <select class="rounded-md border border-border bg-background px-2 py-1" on:change=move |event| {
                         let chosen = event_target_value(&event);
@@ -99,7 +99,7 @@ pub fn button_demo() -> impl IntoView {
                 </Button>
             </div>
             <p class="text-sm">"Count: "<output data-demo-state="">{move || count.get()}</output></p>
-            <p class="text-sm text-muted-foreground">"A disabled or loading button never fires the click; loading keeps its label and size."</p>
+            <p class="demo-help text-sm text-muted-foreground">"A disabled or loading button never fires the click; loading keeps its label and size."</p>
         </div>
     }
 }
@@ -111,7 +111,7 @@ pub fn icon_button_demo() -> impl IntoView {
     let loading = RwSignal::new(false);
     view! {
         <div class="space-y-4">
-            <div class="flex flex-wrap items-center gap-3 text-sm">
+            <div class="demo-controls border-b border-border pb-4 flex flex-wrap items-center gap-3 text-sm">
                 <label class="flex items-center gap-2">
                     <input type="checkbox" checked=disabled on:change=move |event| disabled.set(event_target_checked(&event)) />
                     "Disabled"

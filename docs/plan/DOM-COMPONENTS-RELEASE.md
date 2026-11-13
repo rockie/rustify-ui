@@ -206,11 +206,11 @@ REVIEW @progress_consistency:
 
 ### 恢复快照
 
-- 最近更新：2026-11-13 +08:00 · 代码评审 R3 修复完成，M7 重新打开
+- 最近更新：2026-11-13 +08:00 · UI R1 本地修复与自检完成，待独立复审
 - 当前进度：6/7 个里程碑完成
 - 当前状态：进行中；R3（M5–M7）的 F-01–F-13 与 G-01 已在本地修复并验证（V-14–V-17 三宿主各 66/66、V-16 全过），M7 的线上 V-18/V-19 只覆盖旧候选 `cd062cad`，需新候选上线后重验
-- 最近完成：M6 公开 Studio 与整站组合（批门在 R3 修复版本上重新全部通过）；处置与证据见 [M5 记录 · 评审修复](DOM-COMPONENTS-RELEASE.records/M5.md#评审修复)
-- 下一步：按 [M7 未完项](DOM-COMPONENTS-RELEASE.records/M7.md#未完项与继续动作) 冻结含修复的新候选 S5、做本地整包预演，向用户出示 S5 与生产命令并**取得本次推送/派发授权**后部署，再补 V-18 与 V-19 ①③（②复用）；也可先由用户以 review-code 复审本次修复
+- 最近完成：M6 UI R1 修复：33 条已修改待评审、2 条不采纳；真实浏览器补证及 V-14–V-17 门通过，见 [M6 · UI 验收修复](DOM-COMPONENTS-RELEASE.records/M6.md#ui-验收修复)
+- 下一步：用户发起 `review-ui docs/plan/DOM-COMPONENTS-RELEASE.md` 独立复审，直接复用 [M6 修复材料](DOM-COMPONENTS-RELEASE.records/M6.md#ui-验收修复)。必要 SDK/Docs 本地修复已完成，新版本发行另行处理；M7 仍需新候选与本次生产授权。
 - 当前阻塞：生产推送/派发需用户对新候选逐次授权；无本地开发阻塞。临时 registry token 保留沿用户 2026-11-11 决定，不需要用于 M5–M7
 - 代码基线：R3 修复 `c3605c2e`；上一部署候选 `cd062cad`
 
@@ -222,8 +222,8 @@ REVIEW @progress_consistency:
 | M2 | 已完成 | 2026-11-10 | §5.2 冻结与 V-3–V-7 全过（C=`2445aea6`、CLI 候选 `dde6fe85`、runner 修复 `6993fed9`；receipt 十包 0.3.0 冻结 1817 KB；远端预检 run 42833566509 双平台成功） | [M2.md](DOM-COMPONENTS-RELEASE.records/M2.md) | C=`2445aea6`、`dde6fe85`、`6993fed9` |
 | M3 | 已完成 | 2026-11-11 | V-8–V-10 全过；十包 0.3.0 公开可取（checksum 全一致）；D=`8d3544bb` 推送公共 main；标签 rustify-libs-v0.3.0→R、rustify-docs-cli-v0.3.0→C 读回；token 撤销暂缓（用户确认） | [M3.md](DOM-COMPONENTS-RELEASE.records/M3.md) | D=`8d3544bb` |
 | M4 | 已完成 | 2026-11-11 | 差异门与 V-11 预演（D 与 D3 两轮）通过；部署 run `42953922752`（build 28m39s＋deploy 9s）；V-12 全过（线上 manifest cli_version=0.3.0、build_id `3fe8d486f30d8aa5` 与 run 一致）；V-13 四任务全过（V-6 卡点消除）；E=`458333d5`；worktree 清理 | [M4.md](DOM-COMPONENTS-RELEASE.records/M4.md) | D3=`596175e3`、E=`458333d5` |
-| M5 | 已完成 | 2026-11-13 | 展示目录/九分类页/Colors/Primitives/Studio 页、72 demo（旧 24 保留升级）、theme.json（R3 修复后为 schema v2 标准 + Indigo 11 覆盖）、静态 Colors CSS、docs/README 链接；偏差见覆盖记录（catalogue 承载总索引、Select 部件分组（R3 更正）、ThemeBoundary 静态对照、phoenix-ui 替代） | [M5.md](DOM-COMPONENTS-RELEASE.records/M5.md) | `624ea1e3`；修复 `c3605c2e` |
-| M6 | 已完成 | 2026-11-13 | compose.py/workflow/verify.py check_studio/serve.sh RUSTIFY_STUDIO_DIR/official.spec V-14+V-15 场景/ComposeTests/theme-studio 接线；候选 S=`45d5d514` 冻结；R3 修复后批门 V-16 全过、V-17 三项目各 66/66 | [M6.md](DOM-COMPONENTS-RELEASE.records/M6.md) | `45d5d514`；修复 `c3605c2e` |
+| M5 | 已完成 | 2026-11-13 | 展示目录/九分类页/Colors/Primitives/Studio 页、72 demo（旧 24 保留升级）、theme.json（R3 修复后为 schema v2 标准 + Indigo 11 覆盖）、静态 Colors CSS、docs/README 链接；偏差见覆盖记录（catalogue 承载总索引、Select 部件分组（R3 更正）、ThemeBoundary 静态对照、phoenix-ui 替代） | [M5.md](DOM-COMPONENTS-RELEASE.records/M5.md) | `624ea1e3`；修复 `c3605c2e`；UI修复 待提交 |
+| M6 | 已完成 | 2026-11-13 | compose.py/workflow/verify.py check_studio/serve.sh RUSTIFY_STUDIO_DIR/official.spec V-14+V-15 场景/ComposeTests/theme-studio 接线；候选 S=`45d5d514` 冻结；R3 修复后批门 V-16 全过、V-17 三项目各 66/66 | [M6.md](DOM-COMPONENTS-RELEASE.records/M6.md) | `45d5d514`；修复 `c3605c2e`；UI修复 待提交 |
 | M7 | 进行中 | 2026-11-13 | R3 评审推翻 V-19 完整展示结论并在本地修复；`cd062cad`/run `43247264809` 的 V-18/V-19 保留为历史，待含修复的新候选经授权上线后重验 V-18、V-19 ①③ | [M7.md](DOM-COMPONENTS-RELEASE.records/M7.md) | `8de588f5`、`6b6bde91`、`cd062cad` |
 
 ## 0. 需求、范围与决策
@@ -244,7 +244,7 @@ REVIEW @progress_consistency:
 | C-4 | 约束 | AGENTS.md「浏览器测试」 | Playwright 每条命令只带一个 `--project`，串行执行，不同时运行两个 | §9.4；V-1、V-5 | 已确认 |
 | C-5 | 约束 | AGENTS.md「工具链与本地开发」 | 不新开分支、不升依赖 major；提交直接落 main | §10 提交点 | 已确认 |
 | C-6 | 约束 | `.github/workflows/docs-pages.yml` | 只部署显式给出的完整候选 SHA；候选必须在 origin 上可检出；Pages 已用 Actions 源（[docs-ssg.md 官方站交付](../docs-ssg.md#official-site-delivery)） | ADR-1；V-11、V-12 | 已确认 |
-| C-7 | 约束 | [PRD §1.3](../PRD-DOM-COMPONENTS.md#13-非目标) | 沿用 Rustify Docs 的页面/demo/SSG、搜索和现有 Pages 流水线；只增加本期展示页面与 Studio 整包组合，不改生成器通用行为 | §0.5、§1.2、§5.6；V-16–V-18 | 已确认 |
+| C-7 | 约束 | [PRD §1.3](../PRD-DOM-COMPONENTS.md#13-非目标) | 沿用 Rustify Docs 的页面/demo/SSG、搜索和现有 Pages 流水线；增加本期展示页面与 Studio 整包组合；用户 2026-11-13 允许 UI R1 必要 SDK/Docs 本地缺陷修复（见 §1.2），新版本发行另行处理 | §0.5、§1.2、§5.6；V-16–V-18 | 已确认 |
 | A-1 | 假设 | [M3 公开发行记录](DOM-COMPONENTS-RELEASE.records/M3.md) | 原上传名称与凭证前提已在十包 0.3.0 发行中核实；M5–M7 不再依赖 registry 上传凭证 | V-8、V-9 原证据复用 | 已解除 |
 | A-2 | 假设 | [M4 成功部署记录](DOM-COMPONENTS-RELEASE.records/M4.md) | source 分发 CLI 已在 run 42953922752 完成 prepare/build/deploy；新增 Studio 的组合交付另由 V-16、V-18 验证 | §5.6–§5.7；V-11、V-12 原证据 | 已解除 |
 | A-3 | 假设 | [M2 浏览器发行矩阵](DOM-COMPONENTS-RELEASE.records/M2.md) | 原 0.3.0 发行矩阵已有记录；新增页面与公开 Studio 不能沿用旧矩阵判通过 | §9.2；V-14–V-19 | 已解除（原范围） |
@@ -357,7 +357,7 @@ M1–M4 已完成发行的文件与契约保留如下；续做改动见本节表
 | `tests/docs-ssg/official.spec.ts`、`tests/docs-ssg/serve.sh`、`tests/browser/theme-deployment.spec.ts`、`tests/crates-io/test_pairing.py` | 官网真实用户旅程、组合包部署、既有协议回归；不把演示覆盖降为数字断言 | M5–M7 |
 | `docs/validation/dom-components-release/showcase-coverage.md` ★、本计划 M5–M7 记录 | 实施时写真实展示落点与验收结果；不预填通过 | M5–M7 |
 
-不改 Makepad/GPU 绘制、SDK 组件 API、Docs 生成器或 registry 归档。只有真实官网使用暴露 SDK 缺陷时才按 §8 的版本边界处理，不自行扩大框架开发。
+不改 Makepad/GPU 绘制、SDK 组件 API 或已发布 registry 归档。用户 2026-11-13 授权 UI R1 必要 SDK/Docs 本地修复：scope 内模态完整可读、默认色族标签达到 AA、源码 tabpanel 使用有效容器；不扩大为生成器重构。新版本发行另行处理，修复后的本地源码行为不代表 0.3.0 registry 归档已更新，处置及用户原话见 [M6 UI 修复](DOM-COMPONENTS-RELEASE.records/M6.md#ui-验收修复)。
 
 ## 2. 本站展示目录与页面契约
 
@@ -374,7 +374,7 @@ M1–M4 已完成发行的文件与契约保留如下；续做改动见本节表
 
 组件 demo 的数据只驻留当前 island，不写用户本地库或示例业务文件。导入使用用户主动选取的文件；演示下载使用明确命名的演示文件。Studio 沿既有本地 key、schema v2、备份和存储冲突处理；官网文档不读写 Studio key。JSON/CSS/Rust 导出沿现有 codec/data_tools，不新增交换格式。
 
-0.3.0 已发布字节不变。本站增加 Colors 的公开依赖并由锁正常解析；示例仅使用 R 中已发行能力。Studio 从相同候选 S 的现有应用代码构建，保持其 Git-only GPU 来源说明，不能写成可从 crates.io 安装 GPU SDK。
+0.3.0 已发布字节不变。本站增加 Colors 的公开依赖并由锁正常解析；示例公共 API 取自 R 中已发行能力；UI R1 的必要 SDK/Docs 本地修复按 §1.2 执行，不能将其行为等同于现有 registry 归档。Studio 从相同候选 S 的现有应用代码构建，保持其 Git-only GPU 来源说明，不能写成可从 crates.io 安装 GPU SDK。
 
 ## 4. 集成与契约
 

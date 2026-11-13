@@ -74,14 +74,14 @@ pub fn colors_demo() -> impl IntoView {
                     "Display P3"
                 </label>
             </div>
-            <ol class="flex flex-wrap gap-2">
+            <ol class="color-scale rounded-md p-4 data-[mode=light]:bg-[#f9fafb] data-[mode=light]:text-[#1d2939] data-[mode=dark]:bg-[#11131f] data-[mode=dark]:text-[#f9fafb] flex flex-wrap gap-2" data-mode=move || if dark.get() { "dark" } else { "light" }>
                 {move || steps().into_iter().enumerate().map(|(index, value)| view! {
                     <li class="w-36 space-y-1">
-                        <svg viewBox="0 0 144 36" class="h-9 w-36" aria-hidden="true">
+                        <svg viewBox="0 0 144 36" class="color-swatch rounded-md border border-current h-9 w-36" aria-hidden="true">
                             <rect x="0" y="0" width="144" height="36" rx="6" fill=value />
                         </svg>
                         <p class="text-xs">{format!("Step {}", index + 1)}</p>
-                        <code class="block break-all text-xs">{value}</code>
+                        <code class="color-value break-normal block text-xs">{value}</code>
                     </li>
                 }).collect_view()}
             </ol>
@@ -92,7 +92,7 @@ pub fn colors_demo() -> impl IntoView {
                         let gamut = if p3.get() { ColorGamut::P3 } else { ColorGamut::Srgb };
                         [(black_alpha(gamut), "black"), (white_alpha(gamut), "white")].iter().map(|(steps, name)| view! {
                             <div class="space-y-1">
-                                <svg viewBox="0 0 144 24" class="h-6 w-36" aria-hidden="true">
+                                <svg viewBox="0 0 144 24" class="alpha-swatch rounded-md border border-border data-[alpha=black]:bg-white data-[alpha=white]:bg-[#11131f] h-6 w-36" data-alpha=name.to_string() aria-hidden="true">
                                     {(0..12).map(|index| view! {
                                         <rect x=index * 12 y="0" width="12" height="24" fill=steps.step((index + 1) as u8).unwrap_or_default().to_string() />
                                     }).collect_view()}
@@ -100,7 +100,7 @@ pub fn colors_demo() -> impl IntoView {
                                 <p class="text-xs font-medium">{format!("{name}-alpha")}</p>
                                 <ol class="space-y-0.5 text-xs">
                                     {(1..=12_u8).map(|step| view! {
-                                        <li>{format!("{step}: ")}<code class="break-all">{steps.step(step).unwrap_or_default()}</code></li>
+                                        <li>{format!("{step}: ")}<code class="color-value break-normal">{steps.step(step).unwrap_or_default()}</code></li>
                                     }).collect_view()}
                                 </ol>
                             </div>

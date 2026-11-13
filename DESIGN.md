@@ -209,6 +209,9 @@ configuration. Brand families do not rename the existing semantic green
 `accent`. Explicit author overrides remain above generated configuration.
 Component-local color choices affect that component's roles and stop at its
 boundary. An omitted component color consumes the effective semantic pair.
+Generated palette labels retain the reference color when it reaches 4.5:1 on
+solid step 9; otherwise the SDK selects opaque black or white to meet AA.
+Authored semantic pairs remain under author control.
 
 The root `ThemeScope` and nested `ThemeBoundary` retain a complete two-mode
 author source. Explicit local appearance can differ from the root; owned

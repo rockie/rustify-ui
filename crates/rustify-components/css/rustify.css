@@ -332,9 +332,6 @@
   .bg-muted {
     background-color: var(--muted);
   }
-  .bg-popover {
-    background-color: var(--popover);
-  }
   .bg-primary {
     background-color: var(--primary);
   }
@@ -2151,6 +2148,26 @@
 @layer components {
   :where(.rustify-hover-card-content) {
     min-width: min(var(--rustify-popover-min-width, 0px), var(--rustify-floating-available-width, calc(100vw - 2rem)));
+  }
+}
+@layer components {
+  :where(.rui-command-layer) {
+    isolation: isolate;
+    max-width: var(--rustify-floating-available-width, calc(100vw - 2rem));
+  }
+  :where(.rui-command-layer)::before {
+    content: "";
+    position: fixed;
+    left: var(--rustify-layer-scope-x);
+    top: var(--rustify-layer-scope-y);
+    width: var(--rustify-layer-scope-width);
+    height: var(--rustify-layer-scope-height);
+    background: rgb(0 0 0 / 35%);
+    z-index: -1;
+  }
+  :where([data-rustify-part="command-palette"]) {
+    max-height: var(--rustify-floating-available-height, calc(100vh - 2rem));
+    overflow: auto;
   }
 }
 @layer components {

@@ -135,7 +135,7 @@ pub fn alert_dialog_demo() -> impl IntoView {
     let open = RwSignal::new(false);
     let outcome = RwSignal::new("Nothing deleted".to_string());
     view! {
-        <div class="space-y-4">
+        <div class="demo-modal-workspace min-h-96 space-y-4">
             <alert_dialog::Root open=Signal::derive(move || open.get()) on_open_change=Callback::new(move |next| {
                 if next { outcome.set("Waiting for a decision".to_string()); }
                 else if outcome.get_untracked() == "Waiting for a decision" { outcome.set("Kept the workspace".to_string()); }
@@ -144,7 +144,7 @@ pub fn alert_dialog_demo() -> impl IntoView {
                 <alert_dialog::Trigger>"Delete a workspace"</alert_dialog::Trigger>
                 <alert_dialog::Portal>
                     <alert_dialog::Overlay />
-                    <alert_dialog::Content>
+                    <alert_dialog::Content class="rounded-md border border-border bg-background shadow-none">
                         <alert_dialog::Title>"Delete this workspace?"</alert_dialog::Title>
                         <alert_dialog::Description>"The workspace's drafts leave with it; deleting cannot be undone."</alert_dialog::Description>
                         <div class="flex gap-3">
@@ -170,7 +170,7 @@ pub fn popover_demo() -> impl IntoView {
             <popover::Root open=Signal::derive(move || open.get()) on_open_change=Callback::new(move |next| open.set(next))>
                 <popover::Trigger>"Choose a density"</popover::Trigger>
                 <popover::Portal>
-                    <popover::Content aria_label="Density" class="w-64 space-y-3 p-3">
+                    <popover::Content aria_label="Density" class="w-64 space-y-3 rounded-md border border-border bg-background p-3 shadow-none">
                         <p class="text-sm font-medium">"Interface density"</p>
                         <RadioGroupForDensity density=density />
                         <popover::Close>"Done"</popover::Close>
@@ -193,7 +193,7 @@ pub fn hover_card_demo() -> impl IntoView {
                     "Hover for the theme guide"
                 </rustify_components::hover_card::Trigger>
                 <rustify_components::hover_card::Portal>
-                    <rustify_components::hover_card::Content class="w-64 space-y-2 p-3">
+                    <rustify_components::hover_card::Content class="w-64 space-y-2 rounded-md border border-border bg-background p-3 shadow-none">
                         <p class="text-sm font-medium">"Theme guide"</p>
                         <p class="text-sm">"Scoped themes, boundaries and the exported codec."</p>
                         <rustify_components::hover_card::Arrow />

@@ -112,7 +112,7 @@ pub fn site() -> SiteRegistry {
             Interaction { route: "/components/interaction/", title: "Interaction", description: "Buttons, choices, ranges, fields and pickers with working examples." } => crate::pages::showcase_category,
             Overlays { route: "/components/overlays/", title: "Overlays", description: "Dialogs, popovers, hover cards and tooltips with working examples." } => crate::pages::showcase_category,
             MenusCategory { route: "/components/menus/", title: "Menus", description: "Menu, dropdown, context menu and menubar with working examples." } => crate::pages::showcase_category,
-            Navigation { route: "/components/navigation/", title: "Navigation components", description: "Tabs, tab nav, accordion, collapsible, navigation menu and toolbar." } => crate::pages::showcase_category,
+            Navigation { route: "/components/navigation/", title: "Navigation", description: "Tabs, tab nav, accordion, collapsible, navigation menu and toolbar." } => crate::pages::showcase_category,
             Content { route: "/components/content/", title: "Content", description: "Avatar, badge, card, callout, lists, tables and sizing surfaces." } => crate::pages::showcase_category,
             Feedback { route: "/components/feedback/", title: "Feedback", description: "Progress, spinner, skeleton and toast surfaces." } => crate::pages::showcase_category,
             Layout { route: "/components/layout/", title: "Layout", description: "Box, flex, grid, container, section, inset and reset." } => crate::pages::showcase_category,
@@ -169,7 +169,7 @@ mod tests {
             "{html}"
         );
         assert!(html.contains("href=\"/rustify-ui/zh/quickstart/\""));
-        assert!(html.contains("href=\"/rustify-ui/zh/components/button/\""));
+        assert!(html.contains("href=\"/rustify-ui/zh/components/\""));
         assert!(!html.contains("An experimental Rust SDK"));
     }
 

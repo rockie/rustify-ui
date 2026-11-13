@@ -55,7 +55,8 @@ const llmsText = (value: string) => value.replace(/[\\[\]<>*_`]/g, "\\$&");
 const componentRoutes = config.match(/label = "Components"\s+routes = \[([\s\S]*?)\]/)?.[1];
 const guideItems = config.match(/label = "Guides"\s+items = \[([\s\S]*?)\]/)?.[1];
 if (!componentRoutes || !guideItems) throw new Error("official navigation groups are missing");
-const configuredRoutes = [...componentRoutes.matchAll(/"([^"]+)"/g)].map(match => match[1]);
+const detailRoutes = config.match(/label = "Component details"\s+routes = \[([\s\S]*?)\]/)?.[1] || "";
+const configuredRoutes = [...(componentRoutes + detailRoutes).matchAll(/"([^"]+)"/g)].map(match => match[1]);
 const configuredGuides = [...guideItems.matchAll(/"([^"]+)"/g)].map(match => `docs/${match[1]}`);
 const readme = readFileSync("README.md", "utf8");
 const introduction = readme.slice(readme.indexOf("\n", readme.indexOf("# ")) + 1, readme.indexOf("\n## Quick start")).trim();
@@ -677,6 +678,8 @@ test("V-14 overlay samples open, close and report distinct results", async ({ pa
     const dialog = page.getByRole("alertdialog", { name: "Delete this workspace?", exact: true });
     await expect(dialog).toBeHidden();
     await remove.click(); await expect(dialog).toBeVisible();
+    await expect(dialog.getByRole("heading", { name: "Delete this workspace?" })).toBeInViewport({ ratio: 1 });
+    await expect(dialog.locator(".rustify-dialog-description")).toBeInViewport({ ratio: 1 });
     await page.keyboard.press("Escape"); await expect(dialog).toBeHidden();
     await expect(outcome).toHaveText("Kept the workspace"); await expect(remove).toBeFocused();
     await remove.click(); await dialog.getByRole("button", { name: "Cancel", exact: true }).click();
@@ -800,9 +803,9 @@ test("V-15 from the home preview through Colors, Primitives and into the compose
     expect(css.headers()["content-type"]).toContain("text/css");
     expect(await css.text()).toContain("color(display-p3");
     await expect(colorField.getByText("white-alpha", { exact: true }).locator("xpath=..").locator("li")).toHaveCount(12);
-    for (const label of ["light alpha P3", "dark alpha"]) await expect(page.locator("ul.rd-color-downloads").getByRole("link", { name: label, exact: true })).toHaveCount(31);
+    for (const label of ["Light alpha P3", "Dark alpha"]) await expect(page.locator(".rd-color-downloads").getByRole("link", { name: label, exact: true })).toHaveCount(31);
     const black = page.locator("#css-black-alpha-p3");
-    await expect(black).toHaveText("alpha P3");
+    await expect(black).toHaveText("P3");
     expect((await request.get(await black.evaluate(node => (node as HTMLAnchorElement).href))).headers()["content-type"]).toContain("text/css");
     await page.getByRole("link", { name: "Primitives", exact: true }).first().click();
     await expect(page).toHaveURL(url("primitives/"));
@@ -826,13 +829,16 @@ test("V-15 from the home preview through Colors, Primitives and into the compose
     await expect(page.getByTestId("status")).toHaveAttribute("data-status", "ready", { timeout: 60_000 });
     const manifest = await (await request.get(new URL("theme-studio/build-manifest.json", url("./")).href)).json();
     expect(manifest).toMatchObject({ example: "theme-studio", profile: "release", base: `${base()}theme-studio/` });
-    await page.getByTestId("renderer-dom").click();
+    await expect(page.getByTestId("renderer-dom")).toHaveAttribute("aria-pressed", "true");
     await page.getByTestId("preview-scene").click();
     await page.getByTestId("preview-scene-list").getByRole("option", { name: "Components", exact: true }).click();
     await expect(page.getByTestId("dom-preview").getByTestId("component-gallery")).toBeVisible();
     await page.getByTestId("inspector-toggle").click();
     await expect(page.getByTestId("inspector-panel")).toBeVisible();
     await expect(page.locator("a.studio-back")).toHaveAttribute("href", "../");
+    await page.locator("a.studio-back").click();
+    await expect(page).toHaveURL(url("./"));
+    await expect(page.locator(".rd-home-title")).toHaveText("Rustify UI");
     expect(audit.requests.some(address => new URL(address).pathname.includes("theme-studio/"))).toBe(true);
     expect(audit.requests.filter(address => { const resource = new URL(address); return resource.protocol !== "data:" && resource.protocol !== "blob:" && (resource.origin !== new URL(url("./")).origin || !resource.pathname.startsWith(base())); })).toEqual([]);
     expect(audit.failures).toEqual([]); expect(audit.pageErrors).toEqual([]); expect(audit.console).toEqual([]); expect(audit.csp).toEqual([]);
@@ -861,6 +867,42 @@ for (const colorScheme of ["light", "dark"] as const) for (const width of [1280,
         }
         await attachScans(test.info(), `gaps-a11y-official-${colorScheme}-${width}.json`, scans, await buildId(page, url("./")));
         expect(serious(scans)).toEqual([]);
+        expect(scans.flatMap(scan => scan.violations.filter(violation => violation.id === "aria-allowed-role"))).toEqual([]);
         await healthy(page, audit);
     });
 }
+
+
+test("official form finishes saving and can reset and submit again", async ({ page, audit }) => {
+    await open(page, "components/interaction/");
+    const field = await attachedDemo(page, "FormDemo");
+    await field.getByLabel("Display name", { exact: true }).fill("Grace Hopper");
+    await field.getByRole("button", { name: "Save contact", exact: true }).click();
+    await expect(field.locator("[data-demo-state]")).toContainText("Grace Hopper");
+    await expect(field.getByText("Saving…", { exact: true })).toHaveCount(0);
+    await field.getByRole("button", { name: "Reset", exact: true }).click();
+    await expect(field.locator("[data-demo-state]")).toContainText("Not submitted");
+    await field.getByRole("button", { name: "Save contact", exact: true }).click();
+    await expect(field.locator("[data-demo-state]")).toContainText("Ada Lovelace");
+    await expect(field.getByText("Saving…", { exact: true })).toHaveCount(0);
+    await healthy(page, audit);
+});
+
+
+test("official command palette is readable inside its scope and executes the selected result", async ({ page, audit }) => {
+    await open(page, "components/extensions/");
+    const field = await attachedDemo(page, "CommandPaletteDemo");
+    const trigger = field.getByRole("button", { name: "Run a command", exact: true });
+    await trigger.click();
+    const panel = field.locator('[data-rustify-part="command-palette"]');
+    await expect(panel).toBeInViewport({ ratio: 1 });
+    expect(await panel.evaluate(node => getComputedStyle(node).backgroundColor)).not.toMatch(/rgba.*0\.7/);
+    const search = panel.getByRole("combobox");
+    await search.fill("JSON");
+    await search.press("ArrowDown");
+    await search.press("Enter");
+    await expect(field.locator("[data-demo-state]")).toHaveText("copy-json");
+    await expect(panel).toBeHidden();
+    await expect(trigger).toBeFocused();
+    await healthy(page, audit);
+});

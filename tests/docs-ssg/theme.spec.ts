@@ -156,12 +156,12 @@ test.describe("code", () => {
         await expect(groups).toHaveCount(2);
         const first = groups.nth(0);
         await expect(first.locator('[role="tablist"]')).toBeVisible();
-        await expect(first.locator("figure.rd-code").nth(1)).toBeHidden();
+        await expect(first.locator(".rd-code").nth(1)).toBeHidden();
         await first.getByRole("tab", { name: "Config" }).click();
         for (const group of [first, groups.nth(1)]) {
             await expect(group.getByRole("tab", { name: "Config" })).toHaveAttribute("aria-selected", "true");
-            await expect(group.locator("figure.rd-code").nth(0)).toBeHidden();
-            await expect(group.locator("figure.rd-code").nth(1)).toBeVisible();
+            await expect(group.locator(".rd-code").nth(0)).toBeHidden();
+            await expect(group.locator(".rd-code").nth(1)).toBeVisible();
         }
         // Arrow keys move between tabs.
         await first.getByRole("tab", { name: "Config" }).focus();
@@ -342,8 +342,8 @@ test.describe("without script", () => {
         await expect(page.locator("[data-rd-copy]").first()).toBeHidden();
         const group = page.locator(".rd-code-group").first();
         await expect(group.locator('[role="tablist"]')).toBeHidden();
-        await expect(group.locator("figure.rd-code")).toHaveCount(2);
-        for (const figure of await group.locator("figure.rd-code").all()) {
+        await expect(group.locator(".rd-code")).toHaveCount(2);
+        for (const figure of await group.locator(".rd-code").all()) {
             await expect(figure).toBeVisible();
         }
         await expect(page.locator(".hl-source").first()).toBeVisible();

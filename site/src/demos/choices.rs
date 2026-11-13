@@ -227,14 +227,14 @@ pub fn segmented_control_demo() -> impl IntoView {
     let period = RwSignal::new(Some("week".to_string()));
     view! {
         <div class="space-y-4">
-            <segmented_control::Root value=Signal::derive(move || period.get()) aria_label="Reporting period"
+            <segmented_control::Root class="[&_.rustify-segmented-input:checked+.rustify-segmented-label]:bg-primary/15 [&_.rustify-segmented-input:checked+.rustify-segmented-label]:text-foreground [&_.rustify-segmented-input:checked+.rustify-segmented-label]:ring-1 [&_.rustify-segmented-input:checked+.rustify-segmented-label]:ring-border" value=Signal::derive(move || period.get()) aria_label="Reporting period"
                 on_change=Callback::new(move |next| period.set(next))>
                 <segmented_control::Item value="day">"Day"</segmented_control::Item>
                 <segmented_control::Item value="week">"Week"</segmented_control::Item>
                 <segmented_control::Item value="month">"Month"</segmented_control::Item>
             </segmented_control::Root>
             <p class="text-sm">"Period: "<output data-demo-state="">{move || period.get().unwrap_or_else(|| "None".into())}</output></p>
-            <p class="text-sm text-muted-foreground">"A segmented control switches one value; panels belong to Tabs."</p>
+            <p class="demo-help text-sm text-muted-foreground">"A segmented control switches one value; panels belong to Tabs."</p>
         </div>
     }
 }

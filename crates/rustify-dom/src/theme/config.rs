@@ -538,20 +538,36 @@ fn parse_palette(family: ColorFamily, mode: ThemeMode) -> Result<ResolvedPalette
     } else {
         indicator
     };
+    let white = Rgba {
+        r: 1.,
+        g: 1.,
+        b: 1.,
+        a: 1.,
+    };
+    let reference = if roles.contrast == "white" {
+        white
+    } else {
+        parse(roles.contrast)?
+    };
+    // Reference labels are retained when readable on the solid step. A black
+    // or white label always reaches AA on an opaque sRGB background.
+    let contrast = if super::contrast_ratio(reference, solid[8], None).unwrap() >= 4.5 {
+        reference
+    } else if super::contrast_ratio(white, solid[8], None).unwrap() >= 4.5 {
+        white
+    } else {
+        Rgba {
+            r: 0.,
+            g: 0.,
+            b: 0.,
+            a: 1.,
+        }
+    };
     Ok(ResolvedPalette {
         family,
         solid,
         alpha,
-        contrast: if roles.contrast == "white" {
-            Rgba {
-                r: 1.,
-                g: 1.,
-                b: 1.,
-                a: 1.,
-            }
-        } else {
-            parse(roles.contrast)?
-        },
+        contrast,
         surface: parse(roles.surface[index])?,
         indicator,
         track,
@@ -664,6 +680,18 @@ pub(super) fn generated_values(
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn default_palette_labels_meet_aa_on_solid_surfaces() {
+        for family in ColorFamily::ALL {
+            for mode in [ThemeMode::Light, ThemeMode::Dark] {
+                let palette = ResolvedPalette::for_family(*family, mode).unwrap();
+                let ratio =
+                    super::super::contrast_ratio(palette.contrast, palette.solid[8], None).unwrap();
+                assert!(ratio >= 4.5, "{family:?} {mode:?}: {ratio}");
+            }
+        }
+    }
 
     #[test]
     fn reference_options_and_numeric_scaling_are_strict() {

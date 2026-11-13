@@ -629,7 +629,7 @@ The [M4 design synchronization record](docs/validation/docs-ssg-p2/m4/design-doc
 
 ### States
 
-- **Focus:** every `a`, `button`, `summary` and `[tabindex]` gets an opaque 3px `ring` outline at a 2px offset, inset (−3px) inside code panels and tab rows. A skip link ("Skip to content") appears at the top left on focus.
+- **Focus:** reading-shell `a`, `button`, `summary` and `[tabindex]` controls get an opaque 3px `ring` outline at a 2px offset, inset (−3px) inside code panels and tab rows. Controls inside the demo canvas use a 2px `ring` outline; the source viewer retains the reading-shell rule. A skip link ("Skip to content") appears at the top left on focus.
 - **Problems (dev only):** see "Dev problem panel".
 - **Draft (dev only):** a "Draft" label above the title, foreground 0.8125rem/500 with a 1px `warning` border. The sidebar entry carries " · Draft".
 - **No script:** every page is complete. The mode follows the system through CSS, code is readable and selectable, panels open natively, and code groups read as consecutive blocks. Script-only controls (mode switch, copy) ship `hidden`.
