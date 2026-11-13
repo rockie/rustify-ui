@@ -1,6 +1,5 @@
 use leptos::prelude::*;
 use rustify_colors::{black_alpha, white_alpha, ColorFamily, ColorGamut, ColorMode};
-use rustify_components::{Button, ButtonVariant};
 
 fn family_name(family: ColorFamily) -> String {
     format!("{family:?}").to_lowercase()
@@ -30,6 +29,17 @@ pub fn colors_demo() -> impl IntoView {
         )
     };
     let steps = move || scale().steps().to_vec();
+    // The packaged file for exactly this selection; the page's download list
+    // carries its deploy-qualified link under the same name.
+    let file = move || {
+        format!(
+            "{}-{}{}{}",
+            family_name(family.get()),
+            if dark.get() { "dark" } else { "light" },
+            if alpha.get() { "-alpha" } else { "" },
+            if p3.get() { "-p3" } else { "" },
+        )
+    };
     view! {
         <div class="space-y-4">
             <div class="flex flex-wrap items-center gap-3 text-sm">
@@ -87,12 +97,18 @@ pub fn colors_demo() -> impl IntoView {
                                         <rect x=index * 12 y="0" width="12" height="24" fill=steps.step((index + 1) as u8).unwrap_or_default().to_string() />
                                     }).collect_view()}
                                 </svg>
-                                <p class="text-xs">{*name}<code class="ml-1">{steps.step(9).unwrap_or_default()}</code></p>
+                                <p class="text-xs font-medium">{format!("{name}-alpha")}</p>
+                                <ol class="space-y-0.5 text-xs">
+                                    {(1..=12_u8).map(|step| view! {
+                                        <li>{format!("{step}: ")}<code class="break-all">{steps.step(step).unwrap_or_default()}</code></li>
+                                    }).collect_view()}
+                                </ol>
                             </div>
                         }).collect_view()
                     }}
                 </div>
             </div>
+            <p class="text-sm">"Matching CSS: "<a data-rustify-native-navigation="" href=move || format!("#css-{}", file())>{move || format!("{}.css", file())}</a></p>
             <p class="text-sm">"Selection: "
                 <output data-demo-state="">{move || format!("{} · {} · {} · {}", family_name(family.get()), if dark.get() { "dark" } else { "light" }, if alpha.get() { "alpha" } else { "solid" }, if p3.get() { "p3" } else { "srgb" })}</output>
             </p>

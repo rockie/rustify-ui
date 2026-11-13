@@ -2,8 +2,12 @@
 import hashlib
 import importlib.util
 import json
+import os
 from pathlib import Path
+import shutil
 import subprocess
+import sys
+import tempfile
 import tomllib
 import unittest
 
@@ -101,124 +105,108 @@ class PairingTests(unittest.TestCase):
             self.assertEqual(template['dependencies'][name], {'version':'=0.3.0', 'default-features':False})
 
 
-SPEC_COMPOSE = importlib.util.spec_from_file_location('docs_compose', ROOT / 'scripts/docs-pages-compose.py')
-compose = importlib.util.module_from_spec(SPEC_COMPOSE)
-SPEC_COMPOSE.loader.exec_module(compose)
+COMPOSER = ROOT / 'scripts/docs-pages-compose.py'
+REAL_DOCS = os.environ.get('RUSTIFY_COMPOSE_DOCS_DIR')
+REAL_STUDIO = os.environ.get('RUSTIFY_COMPOSE_STUDIO_DIR')
 
 
+def tree(directory):
+    return sorted((path.relative_to(directory).as_posix(), path.stat().st_size)
+                  for path in directory.rglob('*') if path.is_file())
+
+
+@unittest.skipUnless(REAL_DOCS and REAL_STUDIO,
+                     'set RUSTIFY_COMPOSE_DOCS_DIR and RUSTIFY_COMPOSE_STUDIO_DIR to a real /rustify-ui/ Docs build and its Studio build')
 class ComposeTests(unittest.TestCase):
-    """The Pages composer contract: valid composition plus the three refused
-    inputs (missing resource, wrong base, output covering an input)."""
+    """The Pages composer CLI over real Docs and Studio builds: a valid
+    composition plus the refused inputs (missing resource, wrong base, output
+    inside or over an input), none of which may change an input."""
 
-    def setUp(self):
-        import tempfile
-        self.temporary = tempfile.TemporaryDirectory()
-        self.root = Path(self.temporary.name)
-        self.docs = self.root / 'docs'
-        self.studio = self.root / 'studio'
-        self.make_inputs('/x/')
+    BASE = '/rustify-ui/'
 
-    def tearDown(self):
-        self.temporary.cleanup()
+    @classmethod
+    def setUpClass(cls):
+        cls.temporary = tempfile.TemporaryDirectory()
+        cls.root = Path(cls.temporary.name)
+        cls.docs = cls.root / 'docs'
+        cls.studio = cls.root / 'studio'
+        shutil.copytree(REAL_DOCS, cls.docs)
+        shutil.copytree(REAL_STUDIO, cls.studio)
+        cls.inputs = (tree(cls.docs), tree(cls.studio))
 
-    def make_inputs(self, base, studio_base=None, break_file=False):
-        studio_base = studio_base or f'{base}theme-studio/'
-        (self.docs / 'assets').mkdir(parents=True, exist_ok=True)
-        (self.docs / 'index.html').write_bytes(
-            b'<html><head></head><body><a href="https://rockie.github.io/rustify-ui/theme-studio/">Studio</a></body></html>'
-        )
-        (self.docs / 'assets/site.js').write_bytes(b'console.log(1)\n')
-        files = {}
-        for path in ('index.html', 'assets/site.js'):
-            data = (self.docs / path).read_bytes()
-            files[path] = {'path': path, 'sha256': hashlib.sha256(data).hexdigest(), 'bytes': len(data)}
-        manifest = {
-            'schema_version': 1, 'mode': 'production', 'base': base,
-            'cli_version': '0.3.0', 'build_id': '0' * 16,
-            'files': [files['index.html'], files['assets/site.js']],
-            'locale_not_found': {'': '404.html'}, 'page_policies': {},
-        }
-        (self.docs / 'rustify-docs-manifest.json').write_text(json.dumps(manifest, indent=2) + '\n')
-        self.studio.mkdir(parents=True, exist_ok=True)
-        (self.studio / 'index.html').write_bytes(b'<html><head>\n<title>studio</title></head><body>app</body></html>')
-        (self.studio / 'app.js').write_bytes(b'boot()\n')
-        studio_manifest = {
-            'example': 'theme-studio', 'profile': 'release', 'base': studio_base,
-            'build_id': 'a' * 16, 'schema_hash': 'b' * 16, 'toolchain': '1.99.0',
-            'files': {'index.html': (self.studio / 'index.html').stat().st_size,
-                      'app.js': (self.studio / 'app.js').stat().st_size},
-            'size_report': {'wasm': 0, 'js': 0, 'css': 0, 'fonts': 0, 'images': 0, 'data': 0, 'total': 0},
-        }
-        if break_file:
-            (self.studio / 'app.js').unlink()
-        (self.studio / 'build-manifest.json').write_text(json.dumps(studio_manifest, indent=2) + '\n')
-        return manifest
+    @classmethod
+    def tearDownClass(cls):
+        cls.temporary.cleanup()
 
-    def compose(self, out, base='/x/', docs=None, studio=None):
-        return compose.compose(docs or self.docs, studio or self.studio, out, base)
+    def compose(self, out, base=BASE, docs=None):
+        return subprocess.run(
+            [sys.executable, str(COMPOSER), '--docs-dir', str(docs or self.docs),
+             '--studio-dir', str(self.studio), '--out', str(out), '--base', base],
+            capture_output=True, text=True)
 
-    def test_missing_resource_is_refused(self):
-        (self.docs / 'assets/site.js').unlink()
-        with self.assertRaises(SystemExit):
-            self.compose(self.root / 'out')
-        self.assertFalse((self.root / 'out').exists())
-        self.assertFalse((self.root / 'out' / 'index.html').exists())
+    def assertRefused(self, run, out, reason):
+        self.assertNotEqual(run.returncode, 0, run.stdout)
+        self.assertIn(reason, run.stderr)
+        self.assertFalse(out.exists(), f'{out} was created by a refused composition')
+        self.assertEqual((tree(self.docs), tree(self.studio)), self.inputs)
 
-    def test_wrong_base_is_refused(self):
-        with self.assertRaises(SystemExit):
-            self.compose(self.root / 'out', base='/other/')
-
-    def test_wrong_base_is_refused_docs_and_studio(self):
-        self.make_inputs('/y/')
-        with self.assertRaises(SystemExit):
-            self.compose(self.root / 'out', base='/x/')
-        self.assertFalse((self.root / 'out').exists())
-
-    def test_output_covering_an_input_is_refused(self):
-        with self.assertRaises(SystemExit):
-            self.compose(self.docs)
-        nested = self.docs / 'nested'
-        with self.assertRaises(SystemExit):
-            self.compose(nested)
-        out = self.root / 'fresh'
-        out.mkdir()
-        (out / 'stale.txt').write_text('occupied')
-        with self.assertRaises(SystemExit):
-            self.compose(out)
-        self.assertTrue((self.docs / 'index.html').exists())
-
-    def test_studio_manifest_mismatch_is_refused(self):
-        self.make_inputs('/x/', studio_base='/x/other/')
-        with self.assertRaises(SystemExit):
-            self.compose(self.root / 'out')
-
-    def test_valid_compose_copies_csp_localizes_and_recomputes(self):
+    def test_valid_composition_packages_studio_with_its_policy_and_one_manifest(self):
         out = self.root / 'composed'
-        summary = self.compose(out)
-        self.assertEqual(summary['base'], '/x/')
-        docs_html = (out / 'index.html').read_text()
-        self.assertIn('href="/x/theme-studio/"', docs_html)
-        self.assertNotIn('https://rockie.github.io/rustify-ui/theme-studio/', docs_html)
+        run = self.compose(out)
+        self.assertEqual(run.returncode, 0, run.stderr)
+        self.addCleanup(shutil.rmtree, out)
+        summary = json.loads(run.stdout)
+        self.assertEqual(summary['base'], self.BASE)
         studio_html = (out / 'theme-studio/index.html').read_text()
-        self.assertIn(compose.META_CSP, studio_html)
+        self.assertIn(compose_csp(), studio_html)
+        studio_page = (out / 'studio/index.html').read_text()
+        self.assertIn('href="/rustify-ui/theme-studio/"', studio_page)
+        self.assertNotIn('https://rockie.github.io/rustify-ui/theme-studio/', studio_page)
         nested = json.loads((out / 'theme-studio/build-manifest.json').read_text())
-        self.assertEqual(nested['base'], '/x/theme-studio/')
-        self.assertEqual(nested['build_id'], 'a' * 16)
-        self.assertIn('index.html', nested['files'])
-        self.assertGreater(nested['size_report']['data'], 0)
-        self.assertEqual(nested['size_report']['js'], (out / 'theme-studio/app.js').stat().st_size)
+        original = json.loads((self.studio / 'build-manifest.json').read_text())
+        self.assertEqual((nested['base'], nested['build_id']), (original['base'], original['build_id']))
+        self.assertEqual(nested['files']['index.html'], (out / 'theme-studio/index.html').stat().st_size)
         root_manifest = json.loads((out / 'rustify-docs-manifest.json').read_text())
-        paths = sorted(entry['path'] for entry in root_manifest['files'])
-        expected = sorted(['index.html', 'assets/site.js', 'theme-studio/index.html', 'theme-studio/app.js', 'theme-studio/build-manifest.json'])
-        self.assertEqual(paths, expected)
+        listed = sorted(entry['path'] for entry in root_manifest['files'])
+        self.assertEqual(listed, sorted(path for path, _ in tree(out) if path != 'rustify-docs-manifest.json'))
         whole = hashlib.sha256()
         for entry in root_manifest['files']:
-            whole.update(entry['path'].encode())
-            whole.update(b'\0')
-            whole.update(entry['sha256'].encode())
-            whole.update(b'\n')
-        self.assertEqual(root_manifest['build_id'], whole.hexdigest()[:16])
-        self.assertEqual(root_manifest['locale_not_found'], {'': '404.html'})
+            data = (out / entry['path']).read_bytes()
+            self.assertEqual(entry['sha256'], hashlib.sha256(data).hexdigest(), entry['path'])
+            whole.update(entry['path'].encode() + b'\0' + entry['sha256'].encode() + b'\n')
+        self.assertEqual((root_manifest['build_id'], summary['build_id']), (whole.hexdigest()[:16],) * 2)
+        self.assertEqual((tree(self.docs), tree(self.studio)), self.inputs)
+
+    def test_missing_resource_is_refused(self):
+        docs = self.root / 'docs-missing'
+        shutil.copytree(self.docs, docs)
+        self.addCleanup(shutil.rmtree, docs)
+        (docs / 'colors/index.html').unlink()
+        self.assertRefused(self.compose(self.root / 'out', docs=docs), self.root / 'out', 'colors/index.html')
+
+    def test_wrong_base_is_refused(self):
+        self.assertRefused(self.compose(self.root / 'out', base='/other/'), self.root / 'out', '/other/')
+
+    def test_output_inside_or_over_an_input_is_refused(self):
+        self.assertRefused(self.compose(self.docs / 'nested'), self.docs / 'nested', 'inside an input')
+        self.assertRefused(self.compose(self.studio / 'nested'), self.studio / 'nested', 'inside an input')
+        run = self.compose(self.docs)
+        self.assertNotEqual(run.returncode, 0)
+        self.assertIn('one of the input directories', run.stderr)
+        self.assertEqual((tree(self.docs), tree(self.studio)), self.inputs)
+        occupied = self.root / 'occupied'
+        occupied.mkdir()
+        self.addCleanup(shutil.rmtree, occupied)
+        (occupied / 'stale.txt').write_text('occupied')
+        run = self.compose(occupied)
+        self.assertNotEqual(run.returncode, 0)
+        self.assertIn('not empty', run.stderr)
+        self.assertEqual(tree(occupied), [('stale.txt', 8)])
+
+
+def compose_csp():
+    text = (ROOT / 'scripts/docs-pages-verify.py').read_text()
+    return text.split('META_CSP = "', 1)[1].split('"', 1)[0]
 
 
 if __name__ == '__main__': unittest.main()

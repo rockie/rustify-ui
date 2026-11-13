@@ -206,13 +206,13 @@ REVIEW @progress_consistency:
 
 ### 恢复快照
 
-- 最近更新：2026-11-13 +08:00 · 全部 7/7 里程碑完成，交付上线
-- 当前进度：7/7 个里程碑完成
-- 当前状态：已完成；M7 上线（run `43247264809`、线上 build_id `529f5ec678ee1c77`、候选 `cd062cad`）与 V-18/V-19 全过
-- 最近完成：M7 新候选上线与真实终验：S4=`cd062cad` 部署成功（三次逐候选授权，前两次 CI 失败均已修复：build-web 双行输出捕获、YAML 块标量缩进）；线上核验（同 run 工件 509 文件一致+字节抽查）与 V-19 三段（①评估/操作+复验 ②Studio 全流程含三格式导出与非法导入恢复 ③仓外 registry =0.3.0 消费导出主题并与官网一致）全部通过；记录见 [M7](DOM-COMPONENTS-RELEASE.records/M7.md)
-- 下一步：代码评审。以本计划路径发起 review-code，对本计划 M5–M7 改动（site 展示、组合与 workflow、theme-studio 接线、verify/serve/spec 扩展）做独立评审；实施中不自行启动评审或修复评审意见
-- 当前阻塞：无开发阻塞；M7 推送/Pages 派发按既有授权门办理，不以部署授权尚未请求阻断本地实现。临时 registry token 保留沿用户 2026-11-11 决定，不需要用于 M5–M7
-- 代码基线：`45d5d514300616ea2bdfc9bd93542f2eaed05acf`（候选 S，M6 提交）；R1/R2/U-01 覆盖原发行范围，M5/M6 批门证据见 [M6 记录](DOM-COMPONENTS-RELEASE.records/M6.md)
+- 最近更新：2026-11-13 +08:00 · 代码评审 R3 修复完成，M7 重新打开
+- 当前进度：6/7 个里程碑完成
+- 当前状态：进行中；R3（M5–M7）的 F-01–F-13 与 G-01 已在本地修复并验证（V-14–V-17 三宿主各 66/66、V-16 全过），M7 的线上 V-18/V-19 只覆盖旧候选 `cd062cad`，需新候选上线后重验
+- 最近完成：M6 公开 Studio 与整站组合（批门在 R3 修复版本上重新全部通过）；处置与证据见 [M5 记录 · 评审修复](DOM-COMPONENTS-RELEASE.records/M5.md#评审修复)
+- 下一步：按 [M7 未完项](DOM-COMPONENTS-RELEASE.records/M7.md#未完项与继续动作) 冻结含修复的新候选 S5、做本地整包预演，向用户出示 S5 与生产命令并**取得本次推送/派发授权**后部署，再补 V-18 与 V-19 ①③（②复用）；也可先由用户以 review-code 复审本次修复
+- 当前阻塞：生产推送/派发需用户对新候选逐次授权；无本地开发阻塞。临时 registry token 保留沿用户 2026-11-11 决定，不需要用于 M5–M7
+- 代码基线：R3 修复提交（见完成记录 M5「修复」）；上一部署候选 `cd062cad`
 
 ### 完成记录
 
@@ -222,9 +222,9 @@ REVIEW @progress_consistency:
 | M2 | 已完成 | 2026-11-10 | §5.2 冻结与 V-3–V-7 全过（C=`2445aea6`、CLI 候选 `dde6fe85`、runner 修复 `6993fed9`；receipt 十包 0.3.0 冻结 1817 KB；远端预检 run 42833566509 双平台成功） | [M2.md](DOM-COMPONENTS-RELEASE.records/M2.md) | C=`2445aea6`、`dde6fe85`、`6993fed9` |
 | M3 | 已完成 | 2026-11-11 | V-8–V-10 全过；十包 0.3.0 公开可取（checksum 全一致）；D=`8d3544bb` 推送公共 main；标签 rustify-libs-v0.3.0→R、rustify-docs-cli-v0.3.0→C 读回；token 撤销暂缓（用户确认） | [M3.md](DOM-COMPONENTS-RELEASE.records/M3.md) | D=`8d3544bb` |
 | M4 | 已完成 | 2026-11-11 | 差异门与 V-11 预演（D 与 D3 两轮）通过；部署 run `42953922752`（build 28m39s＋deploy 9s）；V-12 全过（线上 manifest cli_version=0.3.0、build_id `3fe8d486f30d8aa5` 与 run 一致）；V-13 四任务全过（V-6 卡点消除）；E=`458333d5`；worktree 清理 | [M4.md](DOM-COMPONENTS-RELEASE.records/M4.md) | D3=`596175e3`、E=`458333d5` |
-| M5 | 已完成 | 2026-11-12 | 展示目录/九分类页/Colors/Primitives/Studio 页、72 demo（旧 24 保留升级）、theme.json（schema v2）、静态 Colors CSS、docs/README 链接；偏差见覆盖记录（catalogue 承载总索引、Select 级联分组、ThemeBoundary 静态对照、phoenix-ui 替代） | [M5.md](DOM-COMPONENTS-RELEASE.records/M5.md) | `624ea1e3` |
-| M6 | 已完成 | 2026-11-12 | compose.py/workflow/verify.py check_studio/serve.sh RUSTIFY_STUDIO_DIR/official.spec V-14+V-15 场景/ComposeTests 13 用例/theme-studio 接线；批门 V-16 全绿、V-17 三项目各 63/63；候选 S=`45d5d514` 冻结 | [M6.md](DOM-COMPONENTS-RELEASE.records/M6.md) | `45d5d514` |
-| M7 | 已完成 | 2026-11-13 | S2/S3/S4 三次逐候选授权上线（前两次 CI 失败修复：sed 双行捕获、YAML 缩进）；run `43247264809` build+deploy success，线上 build_id `529f5ec678ee1c77`；V-18 线上核验（同 run 工件 509 文件一致+11 文件字节抽查）；V-19 ①②③ 全过（Studio 三格式导出落盘、非法导入恢复、仓外 registry =0.3.0 消费与官网一致）；偏差见 M7 记录 | [M7.md](DOM-COMPONENTS-RELEASE.records/M7.md) | `8de588f5`、`6b6bde91`、`cd062cad` |
+| M5 | 已完成 | 2026-11-13 | 展示目录/九分类页/Colors/Primitives/Studio 页、72 demo（旧 24 保留升级）、theme.json（R3 修复后为 schema v2 标准 + Indigo 11 覆盖）、静态 Colors CSS、docs/README 链接；偏差见覆盖记录（catalogue 承载总索引、Select 部件分组（R3 更正）、ThemeBoundary 静态对照、phoenix-ui 替代） | [M5.md](DOM-COMPONENTS-RELEASE.records/M5.md) | `624ea1e3` |
+| M6 | 已完成 | 2026-11-13 | compose.py/workflow/verify.py check_studio/serve.sh RUSTIFY_STUDIO_DIR/official.spec V-14+V-15 场景/ComposeTests/theme-studio 接线；候选 S=`45d5d514` 冻结；R3 修复后批门 V-16 全过、V-17 三项目各 66/66 | [M6.md](DOM-COMPONENTS-RELEASE.records/M6.md) | `45d5d514` |
+| M7 | 进行中 | 2026-11-13 | R3 评审推翻 V-19 完整展示结论并在本地修复；`cd062cad`/run `43247264809` 的 V-18/V-19 保留为历史，待含修复的新候选经授权上线后重验 V-18、V-19 ①③ | [M7.md](DOM-COMPONENTS-RELEASE.records/M7.md) | `8de588f5`、`6b6bde91`、`cd062cad` |
 
 ## 0. 需求、范围与决策
 
@@ -443,7 +443,7 @@ python3.12 scripts/crates-io.py verify --release "$DIR"
 3. 在既有 24 页原地升级 demo；新家族在分类页有独立锚点、标题、真实样本和源码。Button 至少可切换全部 `ButtonVariant::ALL`、`ButtonSize::ALL`、颜色/高对比、disabled/loading；其它控件只提供自己公开支持的维度，使用相应枚举 `ALL`，不维护另一份手写选项表。
 4. 扩展 `official.spec.ts` 的页面获取：既有 CATALOG 场景仍保护旧路由，新增来源是本站展示目录/注册页；每个具名 island 单独等待 ready，不再全页强制只有一个。操作断言检查用户状态和实际控件结果，不以 `data-variant` 等内部标记代替可见效果。
 5. 实施时填写 `docs/validation/dom-components-release/showcase-coverage.md`：`公开能力/交付来源 | 页面+锚点 | 可操作行为/视觉维度 | 示例源函数/公共路径 | 真实结果/证据`。可合并同家族部件，但每个公开能力必须有落点；未实现、只写文档、无法操作分别标缺口，不标完成。
-6. 本站使用 `site/theme.json` 的 schema v2 标准主题（依据 `ThemeDocument::standard` 的完整两模式数据），在 `rustify-docs.toml` 用 `theme.document` 声明，不以旧 legacy 默认色板代表新主题系统。页面主题切换与 SSR 初始外观一致；不为了本站展示修改 Docs 的 CSS 编译器。
+6. 本站使用 `site/theme.json` 的 schema v2 标准主题（依据 `ThemeDocument::standard` 的完整两模式数据），在 `rustify-docs.toml` 用 `theme.document` 声明，不以旧 legacy 默认色板代表新主题系统。Docs 壳以 `--primary` 作链接色，标准 indigo 第 9 阶在深色背景与浅色强调底上不足 4.5:1，因此另以 v2 overrides 将两模式 `primary`/`primary-foreground` 设为 Indigo 第 11 阶（light `#3a5bc7`/`#ffffff`，dark `#9eb1ff`/`#11131f`；用户 2026-11-13 决定）。页面主题切换与 SSR 初始外观一致；不为了本站展示修改 Docs 的 CSS 编译器。
 
 ### 5.6 现有 Studio 的公开接线与静态产物组合
 

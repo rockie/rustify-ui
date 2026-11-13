@@ -1,8 +1,8 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "id": "official-site",
   "name": "Official site theme",
-  "styles": {
+  "base": {
     "light": {
       "accent": "#12b76a",
       "accent-foreground": "#0c111d",
@@ -104,6 +104,24 @@
       "spacing": "0.25rem",
       "success": "#32d583",
       "warning": "#fdb022"
+    }
+  },
+  "config": {
+    "appearance": "inherit",
+    "accent_color": "indigo",
+    "gray_color": "auto",
+    "panel_background": "translucent",
+    "radius": "medium",
+    "scaling": 100
+  },
+  "overrides": {
+    "light": {
+      "primary": "#3a5bc7",
+      "primary-foreground": "#ffffff"
+    },
+    "dark": {
+      "primary": "#9eb1ff",
+      "primary-foreground": "#11131f"
     }
   }
 }

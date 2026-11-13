@@ -6,21 +6,46 @@ use rustify_components::{
     ThumbValue, ToggleGroup, ToggleItem,
 };
 
-/// A checkbox shows and changes one application-owned boolean; groups keep the
-/// mixed-state semantics.
+/// A checkbox shows and changes one application-owned boolean. The parent
+/// shows the mixed state while only some of its items are included, and
+/// choosing it includes or excludes them all.
 pub fn checkbox_demo() -> impl IntoView {
-    let field_id = id::next("checkbox-demo-field");
-    let checked = RwSignal::new(true);
+    const ITEMS: [(&str, &str); 3] = [
+        ("docs", "Docs"),
+        ("dom", "DOM SDK"),
+        ("components", "Components"),
+    ];
+    let included = RwSignal::new(vec![true, false, true]);
+    let all = Signal::derive(move || included.with(|items| items.iter().all(|item| *item)));
+    let some =
+        Signal::derive(move || included.with(|items| items.iter().any(|item| *item)) && !all.get());
+    let parent_id = id::next("checkbox-demo-all");
     view! {
         <div class="space-y-4">
             <div class="flex items-center gap-3">
-                <Checkbox id=field_id.clone() checked=checked on_change=move |value| checked.set(value) />
-                <Label control=field_id>"Include this item"</Label>
+                <Checkbox id=parent_id.clone() checked=all indeterminate=some
+                    on_change=move |value| included.set(vec![value; ITEMS.len()]) />
+                <Label control=parent_id>"Include every package"</Label>
             </div>
-            <p class="text-sm">"Item: "
-                <output data-demo-state="">{move || if checked.get() { "Included" } else { "Excluded" }}</output>
+            <div class="ml-6 space-y-2">
+                {ITEMS.iter().enumerate().map(|(index, (key, label))| {
+                    let field_id = id::next(&format!("checkbox-demo-{key}"));
+                    view! {
+                        <div class="flex items-center gap-3">
+                            <Checkbox id=field_id.clone() checked=Signal::derive(move || included.with(|items| items[index]))
+                                on_change=move |value| included.update(|items| items[index] = value) />
+                            <Label control=field_id>{*label}</Label>
+                        </div>
+                    }
+                }).collect_view()}
+            </div>
+            <p class="text-sm">"Packages: "
+                <output data-demo-state="">{move || {
+                    let state = if all.get() { "all" } else if some.get() { "mixed" } else { "none" };
+                    let names = included.with(|items| ITEMS.iter().zip(items).filter(|(_, on)| **on).map(|((key, _), _)| *key).collect::<Vec<_>>().join(", "));
+                    format!("{state} · {}", if names.is_empty() { "none".to_string() } else { names })
+                }}</output>
             </p>
-            <p class="text-sm text-muted-foreground">"Group checkboxes carry the mixed state; see the checkbox group below."</p>
         </div>
     }
 }
@@ -60,18 +85,88 @@ pub fn radio_demo() -> impl IntoView {
     }
 }
 
-/// Card radios pick one option with the whole card as the target.
+/// What a native form submission of these controls would carry, read from the
+/// form's own controls rather than from application state.
+fn submitted_entries(event: &leptos::ev::SubmitEvent) -> String {
+    use leptos::wasm_bindgen::JsCast;
+    event.prevent_default();
+    let Some(form) = event
+        .target()
+        .and_then(|target| target.dyn_into::<leptos::web_sys::HtmlFormElement>().ok())
+    else {
+        return String::new();
+    };
+    let elements = form.elements();
+    let entries = (0..elements.length())
+        .filter_map(|index| {
+            elements
+                .item(index)?
+                .dyn_into::<leptos::web_sys::HtmlInputElement>()
+                .ok()
+        })
+        .filter(|input| {
+            !input.name().is_empty()
+                && !input.disabled()
+                && (!matches!(input.type_().as_str(), "checkbox" | "radio") || input.checked())
+        })
+        .map(|input| format!("{}={}", input.name(), input.value()))
+        .collect::<Vec<_>>();
+    if entries.is_empty() {
+        "nothing".to_string()
+    } else {
+        entries.join("&")
+    }
+}
+
+/// The card size and variant enumerations, read from the public `ALL` lists.
+fn card_controls(
+    size: RwSignal<usize>,
+    variant: RwSignal<usize>,
+    variants: &'static [&'static str],
+) -> impl IntoView {
+    view! {
+        <div class="flex flex-wrap items-center gap-3 text-sm">
+            <label class="flex items-center gap-2">"Size "
+                <select class="rounded-md border border-border bg-background px-2 py-1" on:change=move |event| {
+                    if let Ok(index) = event_target_value(&event).parse::<usize>() { size.set(index); }
+                }>
+                    {(0..3).map(|index| view! { <option value=index selected=move || size.get() == index>{format!("Size {}", index + 1)}</option> }).collect_view()}
+                </select>
+            </label>
+            <label class="flex items-center gap-2">"Variant "
+                <select class="rounded-md border border-border bg-background px-2 py-1" on:change=move |event| {
+                    if let Ok(index) = event_target_value(&event).parse::<usize>() { variant.set(index); }
+                }>
+                    {variants.iter().enumerate().map(|(index, name)| view! { <option value=index selected=move || variant.get() == index>{*name}</option> }).collect_view()}
+                </select>
+            </label>
+        </div>
+    }
+}
+
+/// Card radios pick one option with the whole card as the target; size and
+/// variant come from the public enumerations, and the form carries the value.
 pub fn radio_cards_demo() -> impl IntoView {
     let plan = RwSignal::new(Some("standard".to_string()));
+    let size = RwSignal::new(1_usize);
+    let variant = RwSignal::new(0_usize);
+    let submitted = RwSignal::new("not submitted".to_string());
     view! {
         <div class="space-y-4">
-            <radio_cards::Root value=Signal::derive(move || plan.get()) aria_label="Support plan"
+            {card_controls(size, variant, &["Surface", "Classic"])}
+            <form class="space-y-3" on:submit=move |event| submitted.set(submitted_entries(&event))>
+            <radio_cards::Root value=Signal::derive(move || plan.get()) aria_label="Support plan" name="plan"
+                size=Signal::derive(move || radio_cards::RadioCardsSize::ALL[size.get()].into())
+                variant=Signal::derive(move || radio_cards::RadioCardsVariant::ALL[variant.get()])
                 on_change=move |next| plan.set(next)>
                 <radio_cards::Item value="starter">"Starter"<span class="block text-sm text-muted-foreground">"Community support"</span></radio_cards::Item>
                 <radio_cards::Item value="standard">"Standard"<span class="block text-sm text-muted-foreground">"Business hours"</span></radio_cards::Item>
                 <radio_cards::Item value="dedicated" disabled=true>"Dedicated"<span class="block text-sm text-muted-foreground">"Currently unavailable"</span></radio_cards::Item>
             </radio_cards::Root>
-            <p class="text-sm">"Plan: "<output data-demo-state="">{move || plan.get().unwrap_or_else(|| "None".into())}</output></p>
+            <Button r#type=rustify_components::ButtonType::Submit on_click=|| ()>"Submit the form"</Button>
+            </form>
+            <p class="text-sm">"Plan: "<output data-demo-state="">{move || plan.get().unwrap_or_else(|| "None".into())}</output>
+                " · Form data: "<output>{move || submitted.get()}</output></p>
         </div>
     }
 }
@@ -144,20 +239,30 @@ pub fn segmented_control_demo() -> impl IntoView {
     }
 }
 
-/// Card checkboxes select several options with keyboard and form semantics.
+/// Card checkboxes select several options with keyboard and form semantics;
+/// size and variant come from the public enumerations.
 pub fn checkbox_cards_demo() -> impl IntoView {
     let channels = RwSignal::new(vec!["mail".to_string()]);
+    let size = RwSignal::new(1_usize);
+    let variant = RwSignal::new(0_usize);
+    let submitted = RwSignal::new("not submitted".to_string());
     view! {
         <div class="space-y-4">
-            <checkbox_cards::Root value=Signal::derive(move || channels.get()) aria_label="Update channels"
+            {card_controls(size, variant, &["Surface", "Classic"])}
+            <form class="space-y-3" on:submit=move |event| submitted.set(submitted_entries(&event))>
+            <checkbox_cards::Root value=Signal::derive(move || channels.get()) aria_label="Update channels" name="channel"
+                size=Signal::derive(move || checkbox_cards::CheckboxCardsSize::ALL[size.get()].into())
+                variant=Signal::derive(move || checkbox_cards::CheckboxCardsVariant::ALL[variant.get()])
                 on_change=Callback::new(move |next| channels.set(next))>
                 <checkbox_cards::Item value="mail">"Email updates"<span class="block text-sm text-muted-foreground">"One message per release"</span></checkbox_cards::Item>
                 <checkbox_cards::Item value="news">"Product news"<span class="block text-sm text-muted-foreground">"Monthly digest"</span></checkbox_cards::Item>
                 <checkbox_cards::Item value="alerts" disabled=true>"Security alerts"<span class="block text-sm text-muted-foreground">"Managed by policy"</span></checkbox_cards::Item>
             </checkbox_cards::Root>
+            <Button r#type=rustify_components::ButtonType::Submit on_click=|| ()>"Submit the form"</Button>
+            </form>
             <p class="text-sm">"Channels: "<output data-demo-state="">{move || channels.with(|channels| {
                 if channels.is_empty() { "None".to_string() } else { channels.join(", ") }
-            })}</output></p>
+            })}</output>" · Form data: "<output>{move || submitted.get()}</output></p>
         </div>
     }
 }
@@ -179,7 +284,10 @@ pub fn slider_demo() -> impl IntoView {
     }
 }
 
-/// A range slider keeps two thumbs with their own accessible names.
+/// A range slider keeps two thumbs with their own accessible names. The
+/// thumbs stay two steps apart, the application rejects ranges wider than 60
+/// and keeps showing the last accepted range, and a commit is reported when a
+/// drag or key press ends. The vertical, inverted slider shares the value.
 pub fn range_slider_demo() -> impl IntoView {
     let values = RwSignal::new(vec![
         ThumbValue {
@@ -188,20 +296,53 @@ pub fn range_slider_demo() -> impl IntoView {
         },
         ThumbValue {
             id: "high".to_string(),
-            value: 80.0,
+            value: 60.0,
         },
     ]);
+    let rejected = RwSignal::new(None::<String>);
+    let committed = RwSignal::new("nothing yet".to_string());
+    let describe = |values: &[ThumbValue]| format!("{} – {}", values[0].value, values[1].value);
+    let request = Callback::new(move |next: Vec<ThumbValue>| {
+        if next[1].value - next[0].value > 60.0 {
+            rejected.set(Some(describe(&next)));
+        } else {
+            rejected.set(None);
+            values.set(next);
+        }
+    });
+    let commit = Callback::new(move |_: Vec<ThumbValue>| {
+        committed.set(values.with_untracked(|values| describe(values)))
+    });
+    let thumbs = || {
+        vec![
+            ThumbLabel {
+                id: "low".to_string(),
+                label: "Low edge".to_string(),
+            },
+            ThumbLabel {
+                id: "high".to_string(),
+                label: "High edge".to_string(),
+            },
+        ]
+    };
     view! {
         <div class="space-y-4">
-            <RangeSlider values=Signal::derive(move || values.get()) aria_label="Price range"
-                thumbs=vec![
-                    ThumbLabel { id: "low".to_string(), label: "Low edge".to_string() },
-                    ThumbLabel { id: "high".to_string(), label: "High edge".to_string() },
-                ]
-                on_change=Callback::new(move |next| values.set(next)) min=0.0 max=100.0 step=5.0 />
+            <div class="flex max-w-md items-center gap-6">
+                <div class="min-w-0 flex-1">
+                    <RangeSlider values=Signal::derive(move || values.get()) aria_label="Price range" thumbs=thumbs()
+                        on_change=request on_commit=commit min=0.0 max=100.0 step=5.0 min_steps_between=2 />
+                </div>
+                <div class="h-32">
+                    <RangeSlider values=Signal::derive(move || values.get()) aria_label="Price range, vertical" thumbs=thumbs()
+                        on_change=request on_commit=commit min=0.0 max=100.0 step=5.0 min_steps_between=2
+                        orientation=rustify_components::Orientation::Vertical inverted=true />
+                </div>
+            </div>
             <p class="text-sm">"Range: "
-                <output data-demo-state="">{move || values.with(|values| format!("{} – {}", values[0].value, values[1].value))}</output>
+                <output data-demo-state="">{move || values.with(|values| describe(values))}</output>
+                " · Committed: "<output>{move || committed.get()}</output>
             </p>
+            <p class="text-sm" aria-live="polite">{move || rejected.get().map(|range| format!("Rejected {range}: the range can be at most 60 wide."))}</p>
         </div>
     }
 }

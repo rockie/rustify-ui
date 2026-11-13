@@ -100,7 +100,7 @@ pub fn text_controls_demo() -> impl IntoView {
                 </label>
             </div>
             <div class="rounded-md border border-border p-3">
-                <t::Text size=Signal::derive(move || size.get().into()) weight=Signal::derive(move || weight.get().into()) align=Signal::derive(move || align.get().into())>
+                <t::Text as_=t::TextElement::P size=Signal::derive(move || size.get().into()) weight=Signal::derive(move || weight.get().into()) align=Signal::derive(move || align.get().into())>
                     {sample}
                 </t::Text>
             </div>

@@ -29,7 +29,7 @@ jobs:
       CANDIDATE_SHA: ${{ inputs.candidate_sha }}
       RUSTIFY_DOCS_CARGO: mbx
     outputs:
-      build_id: ${{ steps.build.outputs.build_id }}
+      build_id: ${{ steps.compose.outputs.build_id }}
     steps:
       - uses: actions/checkout@v4
         with:

@@ -1,6 +1,22 @@
 use leptos::prelude::*;
-use rustify_components::layout::{Container, Flex, Grid, Inset};
-use rustify_components::{Button, Reset, TextField};
+use rustify_components::layout::{
+    Box, Container, Flex, Grid, Inset, InsetSide, Layout, Padding, Spacing,
+};
+use rustify_components::primitives::{
+    checkbox, AccessibleIcon, CheckedState, DirectionProvider, VisuallyHidden,
+};
+use rustify_components::{Button, Checkbox, Reset, Responsive, Slider};
+use rustify_ui::Direction;
+
+fn padded(step: i8) -> Layout {
+    Layout {
+        padding: Padding {
+            p: Spacing::Scale(step).into(),
+            ..Default::default()
+        },
+        ..Default::default()
+    }
+}
 
 /// Box, Flex and Grid respond to the parameters the application declares.
 pub fn layout_demo() -> impl IntoView {
@@ -27,7 +43,10 @@ pub fn layout_demo() -> impl IntoView {
                 <div class="rounded-md border border-border bg-muted p-3 text-sm">"Flex item"</div>
                 <div class="rounded-md border border-border bg-muted p-3 text-sm">"Flex item"</div>
             </Flex>
-            <p class="text-sm">"Layout: "<output data-demo-state="">{move || format!("{} columns, 8 cells, 2 flex items", columns.get())}</output></p>
+            <Box layout=Signal::derive(move || padded(columns.get() as i8)) class="max-w-md rounded-md border border-border">
+                <p class="rounded-md bg-muted p-2 text-sm">{move || format!("A box with theme padding step {}", columns.get())}</p>
+            </Box>
+            <p class="text-sm">"Layout: "<output data-demo-state="">{move || format!("{} columns, 8 cells, 2 flex items, box padding step {}", columns.get(), columns.get())}</output></p>
         </div>
     }
 }
@@ -49,17 +68,28 @@ pub fn container_demo() -> impl IntoView {
     }
 }
 
-/// Inset relates padding to the nearest container border.
+/// Inset cancels the padding of its nearest layout container on the chosen
+/// sides, whatever that padding is.
 pub fn inset_demo() -> impl IntoView {
+    let step = RwSignal::new(4_i8);
     view! {
         <div class="space-y-4">
-            <div class="max-w-md rounded-md border border-border p-4">
-                <p class="text-sm">"Card edge with its own padding."</p>
-                <Inset class="rounded-md bg-muted">
-                    <p class="text-sm">"The inset aligns this text with the card's own spacing rules."</p>
+            <label class="flex items-center gap-2 text-sm">"Container padding step "
+                <select class="rounded-md border border-border bg-background px-2 py-1" on:change=move |event| {
+                    if let Ok(value) = event_target_value(&event).parse::<i8>() { step.set(value); }
+                }>
+                    {[2_i8, 4, 6].into_iter().map(|value| view! {
+                        <option value=value selected=move || step.get() == value>{value}</option>
+                    }).collect_view()}
+                </select>
+            </label>
+            <Box layout=Signal::derive(move || padded(step.get())) class="max-w-md rounded-md border border-border">
+                <Inset side=Signal::stored(Responsive::from(InsetSide::Top)) class="bg-muted">
+                    <p class="p-3 text-sm">"This band reaches the card's top, left and right edges."</p>
                 </Inset>
-            </div>
-            <p class="text-sm">"Inset: "<output data-demo-state="">"aligned to the nearest container"</output></p>
+                <p class="mt-3 text-sm">"The text below keeps the card's padding."</p>
+            </Box>
+            <p class="text-sm">"Inset: "<output data-demo-state="">{move || format!("cancels padding step {} on top, left and right", step.get())}</output></p>
         </div>
     }
 }
@@ -81,49 +111,70 @@ pub fn reset_demo() -> impl IntoView {
     }
 }
 
-/// The same control raw and themed, both driven by the application's value.
+/// The same checkbox raw and themed, both requesting changes to one
+/// application value. The raw side decorates the page's own native input with
+/// `checkbox::control_as`; accessible icons and visually hidden text name the
+/// raw control without a theme.
 pub fn primitives_demo() -> impl IntoView {
-    let raw_name = RwSignal::new("Rustify UI".to_string());
-    let themed_name = RwSignal::new("Rustify UI".to_string());
-    let raw_count = RwSignal::new(0_u32);
-    let themed_count = RwSignal::new(0_u32);
+    let state = RwSignal::new(CheckedState::Unchecked);
+    let raw_input = leptos::html::input().attr("class", "size-4 accent-current");
     view! {
         <div class="space-y-4">
-            <div class="grid max-w-xl grid-cols-2 gap-4">
+            <div class="grid max-w-xl gap-4 sm:grid-cols-2">
                 <div class="space-y-2 rounded-md border border-border p-3">
-                    <p class="text-sm font-medium">"Raw native"</p>
-                    <input type="text" aria-label="Raw project name" class="h-9 w-full rounded-md border border-border bg-background px-3 text-sm"
-                        prop:value=move || raw_name.get() on:input=move |event| raw_name.set(event_target_value(&event)) />
-                    <button type="button" class="h-9 rounded-md border border-border px-4 text-sm" on:click=move |_| raw_count.update(|count| *count += 1)>
-                        "Raw button"
-                    </button>
+                    <p class="text-sm font-medium">"Raw primitive"</p>
+                    <checkbox::Root checked=state on_change=Callback::new(move |next| state.set(next)) aria_label="Raw subscribe">
+                        <label class="flex items-center gap-2 text-sm">
+                            {checkbox::control_as(raw_input)}
+                            <AccessibleIcon><span>"✉"</span></AccessibleIcon>
+                            "Subscribe"
+                            <VisuallyHidden>" to release notes"</VisuallyHidden>
+                        </label>
+                    </checkbox::Root>
+                    <p class="text-xs text-muted-foreground">"rustify_components::primitives::checkbox::{Root, control_as}"</p>
                 </div>
                 <div class="space-y-2 rounded-md border border-border p-3">
                     <p class="text-sm font-medium">"Themed"</p>
-                    <TextField value=themed_name on_change=move |value| themed_name.set(value) aria_label="Themed name" class="w-full" />
-                    <Button on_click=move || themed_count.update(|count| *count += 1)>"Themed button"</Button>
+                    <label class="flex items-center gap-2 text-sm">
+                        <Checkbox checked=Signal::derive(move || state.get() == CheckedState::Checked)
+                            on_change=move |next: bool| state.set(next.into()) aria_label="Themed subscribe" />
+                        "Subscribe"
+                    </label>
+                    <p class="text-xs text-muted-foreground">"rustify_components::Checkbox"</p>
                 </div>
             </div>
-            <p class="text-sm">"Values: "
-                <output data-demo-state="">{move || format!("raw {}, themed {}; clicks {} / {}", raw_name.get(), themed_name.get(), raw_count.get(), themed_count.get())}</output>
+            <p class="text-sm">"Value: "
+                <output data-demo-state="">{move || state.get().as_str()}</output>
             </p>
-            <p class="text-sm text-muted-foreground">"Typed native decorators also wrap your own elements: select::trigger_as, tab_nav::link_as and context_menu::trigger_as."</p>
         </div>
     }
 }
 
-/// Direction handling flips one layout between LTR and RTL.
+/// A direction provider flips the controls inside it: the slider fills from
+/// the right and its arrow keys follow reading order.
 pub fn direction_demo() -> impl IntoView {
     let rtl = RwSignal::new(false);
+    let amount = RwSignal::new(30.0_f64);
+    let direction = Signal::derive(move || {
+        if rtl.get() {
+            Direction::RightToLeft
+        } else {
+            Direction::LeftToRight
+        }
+    });
     view! {
         <div class="space-y-4">
             <Button variant=rustify_components::ButtonVariant::Outline on_click=move || rtl.set(!rtl.get_untracked())>
                 {move || if rtl.get() { "Switch to left-to-right" } else { "Switch to right-to-left" }}
             </Button>
-            <div class="max-w-md rounded-md border border-border p-3" dir=move || if rtl.get() { "rtl" } else { "ltr" }>
-                <p class="text-sm">{"The browser lays this line out in the direction you picked, and reading order follows it."}</p>
-            </div>
-            <p class="text-sm">"Direction: "<output data-demo-state="">{move || if rtl.get() { "rtl" } else { "ltr" }}</output></p>
+            <DirectionProvider direction=direction>
+                <div class="max-w-md space-y-3 rounded-md border border-border p-3">
+                    <p class="text-sm">"Reading order and the slider below follow the direction you picked."</p>
+                    <Slider value=amount on_change=move |value| amount.set(value) aria_label="Amount"
+                        min=0.0 max=100.0 step=10.0 />
+                </div>
+            </DirectionProvider>
+            <p class="text-sm">"Direction: "<output data-demo-state="">{move || format!("{} · amount {}", if rtl.get() { "rtl" } else { "ltr" }, amount.get())}</output></p>
         </div>
     }
 }

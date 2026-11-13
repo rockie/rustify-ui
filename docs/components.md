@@ -22,9 +22,6 @@ Use the [migration guide](dom-components-migration.md) for API, theme and CSS
 changes, and the [field matrix](validation/dom-components-p1/field-matrix.md)
 for defaults and enum values.
 
-<!-- catalogue -->
-## Public source entries
-
 ## Browse by group
 
 The showcase groups every released family with working examples:
@@ -41,6 +38,8 @@ The showcase groups every released family with working examples:
 
 Also see [Colors](/colors/), [Primitives](/primitives/) and the public [Theme Studio](https://rockie.github.io/rustify-ui/theme-studio/).
 
+<!-- catalogue -->
+## Public source entries
 
 182 entries: 67 components, 37 subcomponent, 66 helper groups and 12 data surface. These are source APIs, not a count of all exported Rust symbols. The legacy application navigation has 24 categories.
 

@@ -5,13 +5,16 @@ use leptos::prelude::*;
 use rustify_components::accordion;
 use rustify_components::collapsible;
 use rustify_components::data_table::Cell;
+use rustify_components::layout::{Grid, GridTracks};
 use rustify_components::navigation_menu;
 use rustify_components::tab_nav;
 use rustify_components::toolbar;
-use rustify_components::workspace::{Command, CommandPalette, PanelTab, PanelTabs, Splitter};
+use rustify_components::workspace::{
+    columns, Command, CommandPalette, PanelTab, PanelTabs, Splitter,
+};
 use rustify_components::{
-    Button, ButtonVariant, Column, DataTable, DropZone, FilePicker, ScrollArea, Tab, TabPanel,
-    Tabs, Tree, TreeNode,
+    Button, ButtonVariant, Column, DataTable, DropZone, FilePicker, Responsive, ScrollArea, Tab,
+    TabPanel, Tabs, Tree, TreeNode,
 };
 use rustify_ui::Selection;
 
@@ -52,11 +55,13 @@ pub fn tab_nav_demo() -> impl IntoView {
     }
 }
 
-/// An accordion opens one panel at a time with real headers and content.
+/// An accordion opens one panel at a time; the open panel belongs to the
+/// application, and arrow keys move between the headers.
 pub fn accordion_demo() -> impl IntoView {
+    let open = RwSignal::new(accordion::AccordionValue::Single(Some("first".to_string())));
     view! {
         <div class="space-y-4">
-            <div class="max-w-md space-y-2">
+            <accordion::Root value=open on_change=move |next| open.set(next) collapsible=true class="max-w-md space-y-2">
                 <accordion::Item value="first">
                     <accordion::Header><accordion::Trigger>"What stays local?"</accordion::Trigger></accordion::Header>
                     <accordion::Content>"Every sample value stays in this page's application state."</accordion::Content>
@@ -65,8 +70,11 @@ pub fn accordion_demo() -> impl IntoView {
                     <accordion::Header><accordion::Trigger>"Does it work without scripts?"</accordion::Trigger></accordion::Header>
                     <accordion::Content>"The panels render in static HTML and hydrate on demand."</accordion::Content>
                 </accordion::Item>
-            </div>
-            <p class="text-sm">"Accordion: "<output data-demo-state="">"two panels, keyboard reachable"</output></p>
+            </accordion::Root>
+            <p class="text-sm">"Open panel: "<output data-demo-state="">{move || match open.get() {
+                accordion::AccordionValue::Single(Some(value)) => value,
+                _ => "none".to_string(),
+            }}</output></p>
         </div>
     }
 }
@@ -179,6 +187,24 @@ pub fn data_table_demo() -> impl IntoView {
     let focus = RwSignal::new(Cell { row: 0, column: 0 });
     let goto = RwSignal::new(None);
     let sorted = RwSignal::new(None::<(usize, bool)>);
+    // Display position -> entry index; row identity, selection and activation
+    // follow the entry, not the position it is drawn at.
+    let order = Memo::new(move |_| {
+        let mut order: Vec<usize> = (0..entries.len()).collect();
+        if let Some((column, ascending)) = sorted.get() {
+            order.sort_by(|left, right| {
+                let ordering = entries[*left][column].cmp(entries[*right][column]);
+                if ascending {
+                    ordering
+                } else {
+                    ordering.reverse()
+                }
+            });
+        }
+        order
+    });
+    let entry = move |row: usize| order.with(|order| order[row]);
+    let chosen = move |row: usize| order.with_untracked(|order| order[row]);
     let on_sort: std::sync::Arc<dyn Fn(usize) + Send + Sync> =
         std::sync::Arc::new(move |column: usize| {
             sorted.update(|current| {
@@ -191,12 +217,12 @@ pub fn data_table_demo() -> impl IntoView {
     view! {
         <div class="min-w-0 space-y-4">
             <DataTable rows=entries.len() columns=vec![Column::new("name", "Component"), Column::new("group", "Group")]
-                cell=Arc::new(move |row, column| entries[row][column].to_string())
-                row_id=Arc::new(|row| row as u32) selected=selected goto=goto focus=focus
+                cell=Arc::new(move |row, column| entries[entry(row)][column].to_string())
+                row_id=Arc::new(move |row| entry(row) as u32) selected=selected goto=goto focus=focus
                 sorted=sorted
                 on_sort=on_sort
-                on_select=move |row| { selected.update(|selected| { selected.toggle(row as u32); }); }
-                on_activate=move |row| activated.set(Some(row))
+                on_select=move |row| { selected.update(|selected| { selected.toggle(chosen(row) as u32); }); }
+                on_activate=move |row| activated.set(Some(chosen(row)))
                 initial_viewport=(360.0, 128.0) row_height=32.0 column_width=180.0
                 aria_label="Example components" class="h-48 w-full" />
             <p class="text-sm break-words">"Selected: "<output data-demo-state="">{move || selected.with(|selection| {
@@ -284,22 +310,26 @@ pub fn drop_zone_demo() -> impl IntoView {
 }
 
 /// A splitter resizes columns by drag or keyboard, with an application reset.
+/// The application lays the row out from the same pixel sizes the dividers
+/// are placed from.
 pub fn splitter_demo() -> impl IntoView {
-    let sizes = RwSignal::new(vec![1.0, 1.0, 1.0]);
+    const INITIAL: [f64; 3] = [96.0, 96.0, 96.0];
+    let sizes = RwSignal::new(INITIAL.to_vec());
     view! {
         <div class="space-y-4">
-            <div class="max-w-md rounded-md border border-border p-3">
-                <div class="grid grid-cols-3 gap-2">
-                    <div class="rounded-md bg-muted p-3 text-sm">"Sources"</div>
-                    <div class="rounded-md bg-muted p-3 text-sm">"Preview"</div>
-                    <div class="rounded-md bg-muted p-3 text-sm">"Inspector"</div>
-                </div>
-                <Splitter sizes=Signal::derive(move || sizes.get()) mins=vec![0.25, 0.25, 0.25]
-                    divider_label="Resize panels" on_resize=move |next| sizes.set(next) />
+            <div class="max-w-full overflow-x-auto rounded-md border border-border p-3">
+                <Grid columns=Signal::derive(move || Responsive::from(GridTracks::from(columns(&sizes.get()))))
+                    class="relative h-24 w-fit">
+                    <div class="overflow-hidden bg-muted p-3 text-sm">"Sources"</div>
+                    <div class="overflow-hidden border-x border-border p-3 text-sm">"Preview"</div>
+                    <div class="overflow-hidden bg-muted p-3 text-sm">"Inspector"</div>
+                    <Splitter sizes=Signal::derive(move || sizes.get()) mins=vec![64.0, 64.0, 64.0]
+                        divider_label="Resize panels" on_resize=move |next| sizes.set(next) />
+                </Grid>
             </div>
-            <Button variant=ButtonVariant::Outline on_click=move || sizes.set(vec![1.0, 1.0, 1.0])>"Reset columns"</Button>
+            <Button variant=ButtonVariant::Outline on_click=move || sizes.set(INITIAL.to_vec())>"Reset columns"</Button>
             <p class="text-sm">"Columns: "
-                <output data-demo-state="">{move || sizes.with(|sizes| sizes.iter().map(|size| format!("{:.2}", size)).collect::<Vec<_>>().join(" / "))}</output>
+                <output data-demo-state="">{move || sizes.with(|sizes| sizes.iter().map(|size| format!("{size:.0}px")).collect::<Vec<_>>().join(" / "))}</output>
             </p>
         </div>
     }

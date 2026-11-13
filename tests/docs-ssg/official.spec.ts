@@ -185,7 +185,12 @@ async function exercise(page: Page, field: Locator, name: string) {
             await input.fill("A real edit — résumé"); await expect(state).toHaveText("A real edit — résumé"); break;
         }
         case "text area": await field.getByLabel("Notes", { exact: true }).fill("First line\nSecond line — résumé"); await expect(state).toHaveText("First line\nSecond line — résumé"); break;
-        case "checkbox": await field.getByRole("checkbox", { name: "Include this item", exact: true }).press("Space"); await expect(state).toHaveText("Excluded"); break;
+        case "checkbox": {
+            const parent = field.getByRole("checkbox", { name: "Include every package", exact: true });
+            await expect(parent).toHaveJSProperty("indeterminate", true); await expect(state).toHaveText("mixed · docs, components");
+            await parent.press("Space"); await expect(state).toHaveText("all · docs, dom, components"); await expect(field.getByRole("checkbox", { name: "DOM SDK", exact: true })).toBeChecked();
+            await field.getByRole("checkbox", { name: "Docs", exact: true }).press("Space"); await expect(parent).toHaveJSProperty("indeterminate", true); await expect(state).toHaveText("mixed · dom, components"); break;
+        }
         case "radio": await expect(field.getByRole("radio", { name: "Custom (unavailable)", exact: true })).toBeDisabled(); await field.getByRole("radio", { name: "Compact", exact: true }).press("Space"); await expect(state).toHaveText("compact"); break;
         case "switch": await field.getByRole("switch", { name: "Enable notifications", exact: true }).press("Space"); await expect(state).toHaveText("Enabled"); break;
         case "select": {
@@ -596,6 +601,178 @@ test("V-14 the menubar entry executes commands by keyboard", async ({ page, audi
     await healthy(page, audit);
 });
 
+// What a reader sees after operating a sample, not the state text alone.
+const box = async (locator: Locator) => (await locator.boundingBox())!;
+
+test("V-14 interaction samples change the controls they drive", async ({ page, audit }) => {
+    await open(page, "components/button/");
+    const button = await attached(page, "ButtonDemo");
+    const increment = button.getByRole("button", { name: "Increment", exact: true });
+    const accent = await increment.evaluate(node => getComputedStyle(node).backgroundColor);
+    await button.getByLabel("Color").selectOption("crimson");
+    await expect(increment).toHaveAttribute("data-color", "crimson");
+    await expect.poll(() => increment.evaluate(node => getComputedStyle(node).backgroundColor)).not.toBe(accent);
+    await increment.click(); await expect(button.locator("[data-demo-state]")).toHaveText("1");
+
+    await open(page, "components/interaction/");
+    const cards = await attachedDemo(page, "CheckboxCardsDemo");
+    const mail = cards.getByRole("checkbox", { name: /Email updates/ });
+    const small = await box(mail);
+    await cards.getByLabel("Size").selectOption({ index: 2 });
+    await expect.poll(async () => (await box(mail)).height).toBeGreaterThan(small.height);
+    await cards.getByRole("checkbox", { name: /Product news/ }).click();
+    await cards.getByRole("button", { name: "Submit the form", exact: true }).click();
+    await expect(cards.getByText("Form data: channel=mail&channel=news")).toBeVisible();
+    const radios = await attachedDemo(page, "RadioCardsDemo");
+    await radios.getByRole("radio", { name: /Starter/ }).click();
+    await radios.getByRole("button", { name: "Submit the form", exact: true }).click();
+    await expect(radios.getByText("Form data: plan=starter")).toBeVisible();
+
+    const range = await attachedDemo(page, "RangeSliderDemo");
+    const state = range.locator("[data-demo-state]");
+    const high = range.getByRole("slider", { name: "High edge" }).first();
+    await expect(state).toHaveText("20 – 60");
+    await high.press("ArrowRight"); await expect(state).toHaveText("20 – 65");
+    for (let press = 0; press < 3; press++) await high.press("ArrowRight");
+    await expect(state).toHaveText("20 – 80"); await expect(range.getByText("Committed: 20 – 80")).toBeVisible();
+    await high.press("ArrowRight");
+    await expect(range.getByText(/^Rejected 20 – 85/)).toBeVisible(); await expect(state).toHaveText("20 – 80");
+    await expect(high).toHaveAttribute("aria-valuenow", "80");
+    const low = range.getByRole("slider", { name: "Low edge" }).first();
+    for (let press = 0; press < 12; press++) await low.press("ArrowRight");
+    await expect(state).toHaveText("70 – 80");
+    const vertical = range.getByRole("slider", { name: "High edge" }).nth(1);
+    await expect(vertical).toHaveAttribute("aria-orientation", "vertical");
+    await expect(vertical).toHaveAttribute("aria-valuenow", "80");
+
+    const parts = await attachedDemo(page, "SelectPartsDemo");
+    const trigger = parts.getByRole("combobox", { name: "Release", exact: true });
+    await trigger.click();
+    const list = page.getByRole("listbox");
+    await expect(list.getByRole("group", { name: "Stable" })).toBeVisible();
+    await expect(list.getByRole("group", { name: "Preview" }).getByRole("option")).toHaveCount(6);
+    await expect(list.getByRole("option", { name: "Release 0.11.0", exact: true })).toHaveAttribute("aria-disabled", "true");
+    await list.getByRole("option", { name: "Release 0.8.0", exact: true }).click();
+    await expect(trigger).toContainText("Release 0.8.0"); await expect(trigger).toBeFocused();
+    await parts.getByRole("button", { name: "Clear the release", exact: true }).click();
+    await expect(parts.locator("[data-demo-state]")).toHaveText("none"); await expect(trigger).toContainText("Choose a release");
+
+    const cascade = await attachedDemo(page, "SelectGroupedDemo");
+    await cascade.getByRole("combobox", { name: "Region", exact: true }).click();
+    await page.getByRole("option", { name: "Asia-Pacific", exact: true }).click();
+    const city = cascade.getByRole("combobox", { name: "City", exact: true });
+    await expect(city).toContainText("Osaka");
+    await city.click();
+    await expect(page.getByRole("listbox").getByRole("option")).toHaveText(["Osaka", "Taipei"]);
+    await page.getByRole("option", { name: "Taipei", exact: true }).click();
+    await expect(cascade.locator("[data-demo-state]")).toHaveText("apac · taipei");
+    await healthy(page, audit);
+});
+
+test("V-14 overlay samples open, close and report distinct results", async ({ page, audit }) => {
+    await open(page, "components/overlays/");
+    const alert = await attachedDemo(page, "AlertDialogDemo");
+    const outcome = alert.locator("[data-demo-state]");
+    const remove = alert.getByRole("button", { name: "Delete a workspace", exact: true });
+    const dialog = page.getByRole("alertdialog", { name: "Delete this workspace?", exact: true });
+    await expect(dialog).toBeHidden();
+    await remove.click(); await expect(dialog).toBeVisible();
+    await page.keyboard.press("Escape"); await expect(dialog).toBeHidden();
+    await expect(outcome).toHaveText("Kept the workspace"); await expect(remove).toBeFocused();
+    await remove.click(); await dialog.getByRole("button", { name: "Cancel", exact: true }).click();
+    await expect(dialog).toBeHidden(); await expect(outcome).toHaveText("Kept the workspace");
+    await remove.click(); await dialog.getByRole("button", { name: "Delete", exact: true }).click();
+    await expect(dialog).toBeHidden(); await expect(outcome).toHaveText("Workspace deleted");
+
+    const popover = await attachedDemo(page, "PopoverDemo");
+    const trigger = popover.getByRole("button", { name: "Choose a density", exact: true });
+    const panel = page.getByRole("dialog", { name: "Density", exact: true });
+    await expect(panel).toBeHidden();
+    await trigger.click(); await expect(panel).toBeVisible();
+    await panel.getByRole("radio", { name: "Compact", exact: true }).check();
+    await expect(popover.locator("[data-demo-state]")).toHaveText("compact");
+    await page.keyboard.press("Escape"); await expect(panel).toBeHidden(); await expect(trigger).toBeFocused();
+    await trigger.click(); await panel.getByRole("button", { name: "Done", exact: true }).click(); await expect(panel).toBeHidden();
+    await healthy(page, audit);
+});
+
+test("V-14 navigation, content, layout, typography and extension samples show their effect", async ({ page, audit }) => {
+    test.setTimeout(240_000);
+    await open(page, "components/navigation/");
+    const accordion = await attachedDemo(page, "AccordionDemo");
+    const first = accordion.getByRole("button", { name: "What stays local?", exact: true });
+    const second = accordion.getByRole("button", { name: "Does it work without scripts?", exact: true });
+    await expect(first).toBeEnabled(); await expect(first).toHaveAttribute("aria-expanded", "true");
+    await expect(accordion.getByText("Every sample value stays")).toBeVisible();
+    await expect(accordion.getByText("The panels render in static HTML")).toBeHidden();
+    await first.focus(); await page.keyboard.press("ArrowDown"); await expect(second).toBeFocused();
+    await page.keyboard.press("Enter");
+    await expect(accordion.getByText("The panels render in static HTML")).toBeVisible();
+    await expect(accordion.getByText("Every sample value stays")).toBeHidden();
+    await expect(accordion.locator("[data-demo-state]")).toHaveText("second");
+    await second.click(); await expect(accordion.locator("[data-demo-state]")).toHaveText("none");
+
+    await open(page, "components/content/");
+    const table = await attachedDemo(page, "TableDemo");
+    await expect(table.getByRole("rowheader", { name: "rustify-colors", exact: true })).toBeVisible();
+    const scroll = await attachedDemo(page, "ScrollAreaPartsDemo");
+    const viewport = scroll.locator('[data-rustify-part="scroll-area-viewport"]');
+    await expect.poll(() => viewport.evaluate(node => [node.scrollWidth > node.clientWidth, node.scrollHeight > node.clientHeight])).toEqual([true, true]);
+    await expect(scroll.locator('[data-rustify-part="scroll-area-corner"]')).toBeVisible();
+
+    await open(page, "components/layout/");
+    const inset = await attachedDemo(page, "InsetDemo");
+    const card = inset.locator('[data-name="Box"]');
+    const band = inset.locator('[data-name="Inset"]');
+    for (const step of ["2", "6"]) {
+        await inset.getByLabel("Container padding step").selectOption(step);
+        await expect.poll(async () => { const [outer, inner] = [await box(card), await box(band)]; return [Math.round(inner.x - outer.x), Math.round(outer.x + outer.width - inner.x - inner.width), Math.round(inner.y - outer.y)]; }).toEqual([1, 1, 1]);
+    }
+    const layout = await attachedDemo(page, "LayoutDemo");
+    const layoutBox = layout.locator('[data-name="Box"]');
+    const padding = await layoutBox.evaluate(node => getComputedStyle(node).paddingLeft);
+    await layout.getByLabel("Grid columns").selectOption("4");
+    await expect.poll(() => layoutBox.evaluate(node => getComputedStyle(node).paddingLeft)).not.toBe(padding);
+
+    await open(page, "components/typography/");
+    const text = await attachedDemo(page, "TextControlsDemo");
+    const sample = text.getByText("The same text follows the size");
+    const left = (await sample.evaluate(node => { const range = document.createRange(); range.selectNodeContents(node); return range.getBoundingClientRect().x; }));
+    await text.getByLabel("Align").selectOption("Right");
+    await expect.poll(() => sample.evaluate(node => { const range = document.createRange(); range.selectNodeContents(node); return range.getBoundingClientRect().x; })).toBeGreaterThan(left + 20);
+
+    await open(page, "components/data-table/");
+    const grid = (await attached(page, "DataTableDemo")).getByRole("grid", { name: "Example components", exact: true });
+    const names = () => grid.getByRole("gridcell").evaluateAll(cells => cells.filter(cell => cell.getAttribute("aria-colindex") === "1" && !cell.classList.contains("hidden")).map(cell => cell.textContent));
+    expect(await names()).toEqual(["Button", "Text field", "Data table", "Dialog"]);
+    await grid.getByRole("button", { name: /Component/ }).click();
+    await expect.poll(names).toEqual(["Button", "Data table", "Dialog", "Text field"]);
+    await grid.getByRole("button", { name: /Component/ }).click();
+    await expect.poll(names).toEqual(["Text field", "Dialog", "Data table", "Button"]);
+    await grid.getByRole("gridcell").filter({ hasText: /^Dialog$/ }).focus(); await page.keyboard.press("Space");
+    await expect(page.locator("[data-demo-state]")).toHaveText("Dialog");
+    await page.keyboard.press("Enter"); await expect(page.getByText("Activated: Dialog", { exact: true })).toBeVisible();
+
+    await open(page, "components/extensions/");
+    const splitter = await attachedDemo(page, "SplitterDemo");
+    const panels = splitter.locator('[data-name="Grid"] > div:not([data-rustify-part])');
+    const widths = () => panels.evaluateAll(nodes => nodes.map(node => Math.round(node.getBoundingClientRect().width)));
+    expect(await widths()).toEqual([96, 96, 96]);
+    const divider = splitter.getByRole("separator", { name: "Resize panels 1", exact: true });
+    const [sources, divide] = [await box(panels.first()), await box(divider)];
+    expect(Math.abs(divide.x + divide.width / 2 - (sources.x + sources.width))).toBeLessThanOrEqual(2);
+    await divider.press("ArrowRight"); await expect.poll(widths).toEqual([112, 80, 96]);
+    // One pointer sequence in the page, as tests/browser/p2-workspace.spec.ts drags its dividers.
+    await divider.evaluate(node => {
+        const box = node.getBoundingClientRect(); const from = box.left + box.width / 2;
+        for (const [type, x] of [["pointerdown", from], ["pointermove", from - 32], ["pointerup", from - 32]] as const)
+            node.dispatchEvent(new PointerEvent(type, { bubbles: true, clientX: x, clientY: box.top + box.height / 2, pointerId: 1, isPrimary: true }));
+    });
+    await expect.poll(widths).toEqual([80, 112, 96]);
+    await splitter.getByRole("button", { name: "Reset columns", exact: true }).click(); await expect.poll(widths).toEqual([96, 96, 96]);
+    await healthy(page, audit);
+});
+
 test("V-15 from the home preview through Colors, Primitives and into the composed public Studio", async ({ page, audit, request }) => {
     test.setTimeout(480_000);
     await page.setViewportSize({ width: 1280, height: 900 });
@@ -612,18 +789,36 @@ test("V-15 from the home preview through Colors, Primitives and into the compose
     await colorField.getByLabel("Mode").selectOption("dark");
     await expect(colorField.locator("[data-demo-state]")).toContainText("mint · dark");
     await expect(colorField.locator("svg[aria-hidden='true'] rect").first()).toHaveAttribute("fill", /^#/);
-    const download = page.locator("ul.rd-color-downloads").getByRole("link", { name: "light", exact: true }).first();
-    const css = await request.get(await download.getAttribute("href"));
+    await colorField.getByLabel("Style").selectOption("alpha");
+    await colorField.getByLabel("Display P3").check();
+    await colorField.getByRole("link", { name: "mint-dark-alpha-p3.css", exact: true }).click();
+    await expect.poll(() => new URL(page.url()).hash).toBe("#css-mint-dark-alpha-p3");
+    const matching = page.locator("#css-mint-dark-alpha-p3");
+    await expect(matching).toHaveAttribute("download", "");
+    const css = await request.get(await matching.evaluate(node => (node as HTMLAnchorElement).href));
     expect(css.status()).toBe(200);
     expect(css.headers()["content-type"]).toContain("text/css");
+    expect(await css.text()).toContain("color(display-p3");
+    await expect(colorField.getByText("white-alpha", { exact: true }).locator("xpath=..").locator("li")).toHaveCount(12);
+    for (const label of ["light alpha P3", "dark alpha"]) await expect(page.locator("ul.rd-color-downloads").getByRole("link", { name: label, exact: true })).toHaveCount(31);
+    const black = page.locator("#css-black-alpha-p3");
+    await expect(black).toHaveText("alpha P3");
+    expect((await request.get(await black.evaluate(node => (node as HTMLAnchorElement).href))).headers()["content-type"]).toContain("text/css");
     await page.getByRole("link", { name: "Primitives", exact: true }).first().click();
     await expect(page).toHaveURL(url("primitives/"));
     const raw = await attachedDemo(page, "PrimitivesDemo");
-    await raw.getByRole("textbox").first().fill("official reader");
-    await expect(raw.locator("[data-demo-state]")).toContainText("raw official reader");
+    const rawBox = raw.getByRole("checkbox", { name: "Raw subscribe", exact: true });
+    const themedBox = raw.getByRole("checkbox", { name: "Themed subscribe", exact: true });
+    await expect(rawBox).toHaveJSProperty("tagName", "INPUT");
+    await rawBox.check(); await expect(raw.locator("[data-demo-state]")).toHaveText("checked"); await expect(themedBox).toBeChecked();
+    await themedBox.uncheck(); await expect(rawBox).not.toBeChecked(); await expect(raw.locator("[data-demo-state]")).toHaveText("unchecked");
+    await expect(raw.locator('[data-rustify-part="visually-hidden"]')).toHaveText(" to release notes");
     const direction = await attachedDemo(page, "DirectionDemo");
+    const slider = direction.getByRole("slider", { name: "Amount", exact: true });
+    await slider.press("ArrowRight"); await expect(direction.locator("[data-demo-state]")).toHaveText("ltr · amount 40");
     await direction.getByRole("button").click();
-    await expect(direction.locator("[data-demo-state]")).toHaveText("rtl");
+    await expect(direction.locator('[data-rustify-part="direction-provider"]')).toHaveAttribute("dir", "rtl");
+    await slider.press("ArrowRight"); await expect(direction.locator("[data-demo-state]")).toHaveText("rtl · amount 30");
     await page.getByRole("link", { name: "Theme Studio", exact: true }).first().click();
     await expect(page.locator("h1")).toHaveText("Theme Studio");
     await page.getByRole("link", { name: "Open Theme Studio", exact: true }).click();

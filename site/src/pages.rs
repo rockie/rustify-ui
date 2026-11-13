@@ -199,21 +199,37 @@ pub fn colors_page(context: RenderContext) -> impl IntoView {
         .iter()
         .map(|family| format!("{family:?}").to_lowercase())
         .collect::<Vec<_>>();
+    let variants = |stem: String, suffixes: &'static [(&'static str, &'static str)]| {
+        suffixes
+            .iter()
+            .map(|(suffix, label)| {
+                let href = format!("{}colors/{stem}{suffix}.css", context.base);
+                let id = format!("css-{stem}{suffix}");
+                view! { {" "}<a id=id href=href download="">{*label}</a> }
+            })
+            .collect_view()
+    };
+    const SCALES: &[(&str, &str)] = &[
+        ("-light", "light"),
+        ("-dark", "dark"),
+        ("-light-alpha", "light alpha"),
+        ("-dark-alpha", "dark alpha"),
+        ("-light-p3", "light P3"),
+        ("-dark-p3", "dark P3"),
+        ("-light-alpha-p3", "light alpha P3"),
+        ("-dark-alpha-p3", "dark alpha P3"),
+    ];
+    const ALPHA: &[(&str, &str)] = &[("-alpha", "alpha"), ("-alpha-p3", "alpha P3")];
     let downloads = families
         .iter()
         .map(|name| {
-            let light = format!("{}colors/{name}-light.css", context.base);
-            let dark = format!("{}colors/{name}-dark.css", context.base);
-            view! {
-                <li>
-                    <span>{name.clone()}</span>
-                    {" – "}
-                    <a href=light>"light"</a>
-                    {"/"}
-                    <a href=dark>"dark"</a>
-                </li>
-            }
+            view! { <li><span>{name.clone()}</span>{" –"}{variants(name.clone(), SCALES)}</li> }
+                .into_any()
         })
+        .chain(["black", "white"].into_iter().map(|name| {
+            view! { <li><span>{name}</span>{" –"}{variants(name.to_string(), ALPHA)}</li> }
+                .into_any()
+        }))
         .collect_view();
     let license = format!("{}colors/LICENSE.txt", context.base);
     view! {

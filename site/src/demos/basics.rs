@@ -2,6 +2,7 @@ use leptos::prelude::*;
 use rustify_components::{
     id, Button, ButtonSize, ButtonVariant, Glyph, Icon, IconButton, Label, Link, Spinner, TextField,
 };
+use rustify_ui::AccentColor;
 
 fn variant_label(variant: ButtonVariant) -> &'static str {
     match variant {
@@ -21,6 +22,7 @@ pub fn button_demo() -> impl IntoView {
     let count = RwSignal::new(0_u32);
     let variant = RwSignal::new(ButtonVariant::Solid);
     let size = RwSignal::new(ButtonSize::Two);
+    let color = RwSignal::new(None::<AccentColor>);
     let high_contrast = RwSignal::new(false);
     let disabled = RwSignal::new(false);
     let loading = RwSignal::new(false);
@@ -54,6 +56,17 @@ pub fn button_demo() -> impl IntoView {
                         }).collect_view()}
                     </select>
                 </label>
+                <label class="flex items-center gap-2">"Color "
+                    <select class="rounded-md border border-border bg-background px-2 py-1" on:change=move |event| {
+                        let chosen = event_target_value(&event);
+                        color.set(AccentColor::ALL.iter().copied().find(|candidate| candidate.as_str() == chosen));
+                    }>
+                        <option value="" selected=move || color.get().is_none()>"Theme accent"</option>
+                        {AccentColor::ALL.iter().map(|candidate| view! {
+                            <option value=candidate.as_str() selected=move || color.get() == Some(*candidate)>{candidate.as_str()}</option>
+                        }).collect_view()}
+                    </select>
+                </label>
                 <label class="flex items-center gap-2">
                     <input type="checkbox" checked=high_contrast on:change=move |event| high_contrast.set(event_target_checked(&event)) />
                     "High contrast"
@@ -69,12 +82,14 @@ pub fn button_demo() -> impl IntoView {
             </div>
             <div class="flex flex-wrap items-center gap-3">
                 <Button variant=Signal::derive(move || variant.get()) size=Signal::derive(move || size.get().into())
+                    color=Signal::derive(move || color.get())
                     high_contrast=Signal::derive(move || high_contrast.get()) disabled=Signal::derive(move || disabled.get())
                     loading=Signal::derive(move || loading.get())
                     on_click=move || count.update(|count| *count += 1)>
                     "Increment"
                 </Button>
                 <Button variant=Signal::derive(move || variant.get()) size=Signal::derive(move || size.get().into())
+                    color=Signal::derive(move || color.get())
                     high_contrast=Signal::derive(move || high_contrast.get()) disabled=Signal::derive(move || disabled.get())
                     on_click=move || count.set(0)>
                     "Reset"

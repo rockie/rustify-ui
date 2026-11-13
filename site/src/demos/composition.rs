@@ -1,7 +1,9 @@
 use leptos::prelude::*;
 use rustify_components::form::field as f;
 use rustify_components::form::{FieldBinding, Form, FormRoot, FormStatus, SubmitButton};
-use rustify_components::{id, Button, ButtonVariant, Label, Select, SelectOption, TextField};
+use rustify_components::{
+    id, select, Button, ButtonVariant, Label, Select, SelectOption, TextField,
+};
 
 /// A real form: application-owned values, changed-field tracking, submit rules
 /// and a reset that restores the last accepted state.
@@ -89,40 +91,67 @@ pub fn field_parts_demo() -> impl IntoView {
     }
 }
 
-/// One select's state: a long list, a disabled entry, and the open state the
-/// application controls.
+/// The select built from its public parts: grouped entries with labels, a long
+/// list, a disabled entry, an empty value with its placeholder, and a clear
+/// action. The application owns both the value and the open state.
 pub fn select_parts_demo() -> impl IntoView {
-    let field_id = id::next("select-parts-field");
-    let release = RwSignal::new("0.3.0".to_string());
+    let release = RwSignal::new(Some("0.3.0".to_string()));
     let open = RwSignal::new(false);
-    let options = (1..=12)
-        .map(|minor| {
-            let value = format!("0.{minor}.0");
-            let option = SelectOption::new(value.clone(), format!("Release {value}"));
-            if minor == 11 {
-                option.disabled()
+    let field_id = id::next("select-parts-field");
+    let stable = (1..=6)
+        .map(|minor| format!("0.{minor}.0"))
+        .collect::<Vec<_>>();
+    let preview = (7..=12)
+        .map(|minor| format!("0.{minor}.0"))
+        .collect::<Vec<_>>();
+    let entries = stable
+        .iter()
+        .chain(&preview)
+        .map(|value| {
+            let entry = select::SelectEntry::new(value.clone(), format!("Release {value}"));
+            if value == "0.11.0" {
+                entry.disabled()
             } else {
-                option
+                entry
             }
         })
         .collect::<Vec<_>>();
+    let (stable, preview) = (StoredValue::new(stable), StoredValue::new(preview));
+    let items = |values: Vec<String>| {
+        values
+            .into_iter()
+            .map(|value| view! { <select::Item value=value /> })
+            .collect_view()
+    };
     view! {
         <div class="space-y-4">
             <div class="max-w-sm space-y-2">
                 <Label control=field_id.clone()>"Release"</Label>
-                <Select id=field_id value=release on_change=move |value| release.set(value)
-                    open=open on_open_change=move |value| open.set(value) aria_label="Release"
-                    options=options />
+                <select::Root value=release on_change=move |value| release.set(value)
+                    open=open on_open_change=move |value| open.set(value)
+                    entries=entries id=field_id>
+                    <select::Trigger class="w-full"><select::Value placeholder="Choose a release" /><select::Icon /></select::Trigger>
+                    <select::Content>
+                        <select::ScrollUpButton />
+                        <select::Viewport>
+                            <select::Group><select::Label>"Stable"</select::Label>{items(stable.get_value())}</select::Group>
+                            <select::Separator />
+                            <select::Group><select::Label>"Preview"</select::Label>{items(preview.get_value())}</select::Group>
+                        </select::Viewport>
+                        <select::ScrollDownButton />
+                    </select::Content>
+                </select::Root>
             </div>
-            <p class="text-sm">"Selected: "<output data-demo-state="">{move || release.get()}</output>
-                " · List: 12 entries · Disabled: 0.11.0 · Open: "{move || if open.get() { "yes" } else { "no" }}</p>
-            <p class="text-sm text-muted-foreground">"Closing the list returns focus to the trigger; the disabled entry cannot be chosen by pointer or keyboard."</p>
+            <Button variant=ButtonVariant::Outline disabled=Signal::derive(move || release.get().is_none())
+                on_click=move || release.set(None)>"Clear the release"</Button>
+            <p class="text-sm">"Selected: "<output data-demo-state="">{move || release.get().unwrap_or_else(|| "none".to_string())}</output>
+                " · Open: "{move || if open.get() { "yes" } else { "no" }}</p>
+            <p class="text-sm text-muted-foreground">"Twelve releases in two labelled groups; 0.11.0 is disabled and cannot be chosen by pointer or keyboard. Closing the list returns focus to the trigger."</p>
         </div>
     }
 }
 
-/// Two related selects where the second follows the first: grouped choices as
-/// one coherent decision.
+/// Two related selects where the second's options follow the first.
 pub fn select_grouped_demo() -> impl IntoView {
     let region = RwSignal::new("eu".to_string());
     let city = RwSignal::new("berlin".to_string());
@@ -167,7 +196,7 @@ pub fn select_grouped_demo() -> impl IntoView {
                     <Label control="select-grouped-city">"City"</Label>
                     <Select id="select-grouped-city" value=city on_change=move |value| city.set(value)
                         open=city_open on_open_change=move |value| city_open.set(value)
-                        aria_label="City" options=cities() />
+                        aria_label="City" options=Signal::derive(cities) />
                 </div>
             </div>
             <p class="text-sm">"Location: "

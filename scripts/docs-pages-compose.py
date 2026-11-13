@@ -127,6 +127,13 @@ def load_studio_manifest(studio_dir: Path, base: str) -> dict:
 
 
 def prepare_out(out: Path, docs_dir: Path, studio_dir: Path) -> None:
+    resolved = {docs_dir.resolve(), studio_dir.resolve()}
+    probe = out.resolve()
+    if probe in resolved:
+        fail("--out must not be one of the input directories")
+    for source in resolved:
+        if source in probe.parents:
+            fail("--out must not be inside an input directory")
     if out.exists():
         if not out.is_dir():
             fail(f"--out {out} exists and is not a directory")
@@ -134,13 +141,6 @@ def prepare_out(out: Path, docs_dir: Path, studio_dir: Path) -> None:
             fail(f"--out {out} exists and is not empty")
     else:
         out.mkdir(parents=True)
-    resolved = {docs_dir.resolve(), studio_dir.resolve()}
-    probe = out.resolve()
-    if probe in resolved:
-        fail("--out must not be one of the input directories")
-    for source in resolved:
-        if probe == source or source in probe.parents:
-            fail("--out must not contain an input directory")
 
 
 def inject_meta_csp(page: Path) -> None:

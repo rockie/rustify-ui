@@ -1,4 +1,5 @@
 use leptos::prelude::*;
+use rustify_components::{alert_dialog, popover};
 use rustify_components::{
     Button, ButtonVariant, Dialog, Menu, MenuItem, Progress, Skeleton, Toaster, Tooltip,
 };
@@ -135,20 +136,26 @@ pub fn alert_dialog_demo() -> impl IntoView {
     let outcome = RwSignal::new("Nothing deleted".to_string());
     view! {
         <div class="space-y-4">
-            <Button variant=ButtonVariant::Outline on_click=move || open.set(true)>"Delete a workspace"</Button>
-            <rustify_components::alert_dialog::Root open=Signal::derive(move || open.get()) on_open_change=Callback::new(move |next| open.set(next))>
-                <rustify_components::alert_dialog::Content>
-                    <rustify_components::alert_dialog::Title>"Delete this workspace?"</rustify_components::alert_dialog::Title>
-                    <rustify_components::alert_dialog::Description>"The workspace's drafts leave with it; deleting cannot be undone."</rustify_components::alert_dialog::Description>
-                    <div class="flex gap-3">
-                        <rustify_components::alert_dialog::Cancel>"Cancel"</rustify_components::alert_dialog::Cancel>
-                        <rustify_components::alert_dialog::Action on_action=Callback::new(move |_allow: rustify_ui::Cancelable<()>| {
-                            outcome.set("Workspace deleted".to_string());
-                            open.set(false);
-                        })>"Delete"</rustify_components::alert_dialog::Action>
-                    </div>
-                </rustify_components::alert_dialog::Content>
-            </rustify_components::alert_dialog::Root>
+            <alert_dialog::Root open=Signal::derive(move || open.get()) on_open_change=Callback::new(move |next| {
+                if next { outcome.set("Waiting for a decision".to_string()); }
+                else if outcome.get_untracked() == "Waiting for a decision" { outcome.set("Kept the workspace".to_string()); }
+                open.set(next);
+            })>
+                <alert_dialog::Trigger>"Delete a workspace"</alert_dialog::Trigger>
+                <alert_dialog::Portal>
+                    <alert_dialog::Overlay />
+                    <alert_dialog::Content>
+                        <alert_dialog::Title>"Delete this workspace?"</alert_dialog::Title>
+                        <alert_dialog::Description>"The workspace's drafts leave with it; deleting cannot be undone."</alert_dialog::Description>
+                        <div class="flex gap-3">
+                            <alert_dialog::Cancel>"Cancel"</alert_dialog::Cancel>
+                            <alert_dialog::Action on_action=Callback::new(move |_allow: rustify_ui::Cancelable<()>| {
+                                outcome.set("Workspace deleted".to_string());
+                            })>"Delete"</alert_dialog::Action>
+                        </div>
+                    </alert_dialog::Content>
+                </alert_dialog::Portal>
+            </alert_dialog::Root>
             <p class="text-sm">"Outcome: "<output data-demo-state="">{move || outcome.get()}</output></p>
         </div>
     }
@@ -160,14 +167,17 @@ pub fn popover_demo() -> impl IntoView {
     let density = RwSignal::new("comfortable".to_string());
     view! {
         <div class="space-y-4">
-            <Button variant=ButtonVariant::Outline on_click=move || open.set(!open.get())>"Choose a density"</Button>
-            <rustify_components::popover::Root open=Signal::derive(move || open.get()) on_open_change=Callback::new(move |next| open.set(next))>
-                <rustify_components::popover::Content aria_label="Density" class="w-64 space-y-3 p-3">
-                    <p class="text-sm font-medium">"Interface density"</p>
-                    <RadioGroupForDensity density=density />
-                    <Button on_click=move || open.set(false)>"Done"</Button>
-                </rustify_components::popover::Content>
-            </rustify_components::popover::Root>
+            <popover::Root open=Signal::derive(move || open.get()) on_open_change=Callback::new(move |next| open.set(next))>
+                <popover::Trigger>"Choose a density"</popover::Trigger>
+                <popover::Portal>
+                    <popover::Content aria_label="Density" class="w-64 space-y-3 p-3">
+                        <p class="text-sm font-medium">"Interface density"</p>
+                        <RadioGroupForDensity density=density />
+                        <popover::Close>"Done"</popover::Close>
+                        <popover::Arrow />
+                    </popover::Content>
+                </popover::Portal>
+            </popover::Root>
             <p class="text-sm">"Density: "<output data-demo-state="">{move || density.get()}</output></p>
         </div>
     }
