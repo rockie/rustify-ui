@@ -929,3 +929,62 @@ test("official command palette is readable inside its scope and executes the sel
     await expect(trigger).toBeFocused();
     await healthy(page, audit);
 });
+
+test("official Studio command palette pairs independently authored surface tokens", async ({ page, audit }) => {
+    await open(page, "studio/");
+    await page.getByRole("link", { name: "Open Theme Studio", exact: true }).click();
+    await expect(page.getByTestId("status")).toHaveAttribute("data-status", "ready", { timeout: 60_000 });
+    const theme = JSON.parse(readFileSync("site/theme.json", "utf8"));
+    const tokens = {
+        background: "#000000", foreground: "#ffffff",
+        popover: "#ffeecc", "popover-foreground": "#004400",
+        "muted-foreground": "#cccccc", primary: "#2233aa", "primary-foreground": "#ffffee",
+    };
+    for (const mode of ["light", "dark"]) Object.assign(theme.overrides[mode], tokens);
+    await page.getByTestId("theme-import").click();
+    await page.getByTestId("import-source").fill(JSON.stringify(theme));
+    await page.getByTestId("import-review").click();
+    await page.getByTestId("import-apply").click();
+    await page.getByTestId("renderer-dom").click();
+    await page.getByTestId("preview-scene").click();
+    await page.getByTestId("preview-scene-list").getByRole("option", { name: "Components", exact: true }).click();
+    const commands = page.getByTestId("dom-preview").getByTestId("component-gallery").locator('[data-gallery-entry="CommandPalette"]');
+    const trigger = commands.getByRole("button", { name: "Open the command palette", exact: true });
+    await trigger.click();
+    const panel = page.getByTestId("gallery-command");
+    const search = panel.getByRole("combobox");
+    const save = panel.getByTestId("command-save");
+    const exported = panel.getByTestId("command-export");
+    const blocked = panel.getByTestId("command-delete");
+    const reason = blocked.locator("span").last();
+    await expect(search).toBeFocused();
+    await expect(panel).toHaveCSS("background-color", "rgb(0, 0, 0)");
+    await expect(panel).toHaveCSS("color", "rgb(255, 255, 255)");
+    await search.fill("file");
+    await expect(search).toHaveCSS("color", "rgb(255, 255, 255)");
+    await search.fill("");
+    await expect(exported).toHaveCSS("color", "rgb(255, 255, 255)");
+    await expect(reason).toHaveCSS("color", "rgb(204, 204, 204)");
+    await expect(save).toHaveCSS("background-color", "rgb(34, 51, 170)");
+    await expect(save).toHaveCSS("color", "rgb(255, 255, 238)");
+    await test.info().attach("command-palette-separated-tokens.png", { body: await panel.screenshot({ path: test.info().outputPath("command-palette-separated-tokens.png") }), contentType: "image/png" });
+    await search.press("ArrowDown");
+    await search.press("ArrowDown");
+    await expect(blocked).toHaveAttribute("aria-selected", "true");
+    await expect(blocked).toHaveAttribute("aria-disabled", "true");
+    await expect(reason).toHaveCSS("color", "rgb(255, 255, 238)");
+    await search.press("Enter");
+    await expect(panel).toBeVisible();
+    await expect(commands.locator("output")).toHaveText("no command run");
+    await search.press("ArrowUp");
+    await search.press("Enter");
+    await expect(commands.locator("output")).toHaveText("export");
+    await expect(panel).toBeHidden();
+    await expect(trigger).toBeFocused();
+    await trigger.click();
+    await search.press("Escape");
+    await expect(panel).toBeHidden();
+    await expect(trigger).toBeFocused();
+    expect(audit.requests.filter(address => { const resource = new URL(address); return resource.protocol !== "data:" && resource.protocol !== "blob:" && (resource.origin !== new URL(url("./")).origin || !resource.pathname.startsWith(base())); })).toEqual([]);
+    expect(audit.failures).toEqual([]); expect(audit.pageErrors).toEqual([]); expect(audit.console).toEqual([]); expect(audit.csp).toEqual([]);
+});

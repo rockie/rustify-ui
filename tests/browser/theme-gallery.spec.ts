@@ -624,18 +624,23 @@ test('gallery picking identifies extension parts and their local source', async 
     await expect(page.getByTestId('inspector-source')).toContainText(/Extension local theme|扩展局部主题/);
     // The palette opens with picking off (a modal layer covers the preview
     // toolbar) and, although it portals out of the boundary, it resolves the
-    // boundary's patched popover tokens.
+    // boundary's theme while its opaque surface uses background/foreground.
     await page.keyboard.press('Escape');
     await gallery.getByLabel('Low contrast', { exact: true }).first().check();
     await local.getByRole('button', { name: /Run a command/ }).click();
     const localPalette = page.getByTestId('studio-preview').getByTestId('gallery-command-local');
     await expect(localPalette).toBeVisible();
-    const paletteColors = await localPalette.evaluate(node => ({
+    const surface = await page.getByTestId('dom-preview').locator('.studio-authored-preview').evaluate(node => ({
         background: getComputedStyle(node).backgroundColor,
         color: getComputedStyle(node).color,
     }));
-    expect(paletteColors.background).toBe('rgb(243, 245, 247)');
-    expect(paletteColors.color).toBe('rgb(195, 203, 210)');
+    await expect(localPalette).toHaveCSS('background-color', surface.background);
+    await expect(localPalette).toHaveCSS('color', surface.color);
+    const paletteSource = await localPalette.evaluate(node => ({
+        popover: getComputedStyle(node).getPropertyValue('--popover').trim(),
+        popoverForeground: getComputedStyle(node).getPropertyValue('--popover-foreground').trim(),
+    }));
+    expect(paletteSource).toEqual({ popover: 'rgb(243 245 247)', popoverForeground: 'rgb(195 203 210)' });
     await page.keyboard.press('Escape');
     const icons = gallery.locator('[data-gallery-entry="Icon"]');
     await icons.evaluate(node => node.scrollIntoView({ block: 'center' }));
