@@ -1764,26 +1764,29 @@ Chinese home and quick-start pages. Other guides and component categories
 keep explicit English-content fallback inside the Chinese reading shell.
 The content allowlist excludes plans, reports and validation sources.
 
-The existing `docs-pages.yml` workflow builds a complete fixed Git candidate
-C with its paired library R. It changes only the official consumer's three
-dependency lines and generated lock, checks the remaining frozen inputs,
-then uploads and deploys the same-run artifact. Pages must already use the
-Actions source and the existing `github-pages` environment; the workflow
-does not enable Pages. This repository now has that configuration. The
-archive includes `.nojekyll`, and its actual members are checked against
-the complete manifest before upload.
+The existing `docs-pages.yml` workflow builds Docs and Theme Studio from one
+fixed Git candidate S, then composes and deploys their complete static output.
+For a source CLI, prepare points the official consumer's three framework
+dependencies at S's canonical checkout and checks the remaining frozen inputs.
+The framework R identity records the unchanged published 0.3.0 archives;
+it does not replace the source framework paths with older registry code.
+SDK and Docs fixes used by this site are Git-source fixes. Publishing newer
+registry packages is a separate release.
 
-The [public site](https://rockie.github.io/rustify-ui/) has been verified. The
-site was published from the 0.3.0 release candidate
-`596175e3550794fd83683e433702bea0534b509c` by workflow run
-[42953922752](https://github.com/rockie/rustify-ui/actions/runs/42953922752)
-(build `3fe8d486f30d8aa5`, manifest `cli_version` 0.3.0); its
-[release record](plan/DOM-COMPONENTS-RELEASE.records/M4.md) identifies the
-local preview, online checks and real-use acceptance. The previous
-deployment, C2 `88566ba1ed08223a5834f794840fff5e48f4ba8a` (0.1.32), is the
-last-good C. The [P4 gaps record](plan/DOCS-SSG-P4-gaps.records/M3.md)
-identifies that deployment's workflow runs, online checks and the rollback
-rehearsal.
+Pages must already use the Actions source and the existing `github-pages`
+environment; the workflow does not enable Pages. This repository has that
+configuration. The archive includes `.nojekyll`, and its actual members are
+checked against the complete manifest before upload.
+
+The [public site](https://rockie.github.io/rustify-ui/) was published from
+`29a69cd6fed20acb01dce0dec3ee18055c07e09a` by workflow run
+[43497922320](https://github.com/rockie/rustify-ui/actions/runs/43497922320)
+(build `e7bc8812ab87e7d9`, manifest `cli_version` 0.3.0; Studio build
+`13b5b95695372b91`). Full public HTTP verification matched all 700 files to
+the same-run artifact. Browser acceptance covered the component showcase,
+Studio creation and export, and a fresh registry 0.3.0 consumer using the
+exported theme. The [release record](plan/DOM-COMPONENTS-RELEASE.records/M7.md)
+records the checks, network transfer retries and reused unchanged evidence.
 
 After the required acceptance checks and publication authorization,
 assign `DOCS_C` the approved complete CLI commit SHA and run:
@@ -1808,9 +1811,8 @@ in a browser.
 Keep the previous successful C and its artifact/manifest. Roll back by
 dispatching the same workflow with that C, verify the restored build ID and
 complete files, then restore the approved target C after the rehearsal.
-The last-good C for this release is C1, the 0.1.31 revision in the CLI
-rollback command above. The same workflow's complete rollback and restore
-were rehearsed when C1 was published.
+The verified candidate `29a69cd6fed20acb01dce0dec3ee18055c07e09a` is the
+last-good candidate for subsequent deployments.
 
 ## The default theme
 

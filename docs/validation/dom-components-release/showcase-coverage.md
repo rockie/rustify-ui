@@ -1,7 +1,9 @@
-# M5–M6 展示覆盖记录（§6.2 能力矩阵逐项）
+# 展示覆盖与 M7 终验记录（§6.2 能力矩阵逐项）
 
-验证基线：dirty@27510b36（site/、rustify-docs.toml、scripts/、tests/docs-ssg/、tests/crates-io/、tests/browser/theme-deployment.spec.ts、examples/theme-studio/、docs/、README.md、.github/workflows/docs-pages.yml）。R3 评审修复后（见 [M5 记录 · 评审修复](../../plan/DOM-COMPONENTS-RELEASE.records/M5.md#评审修复)）受影响行按修复版本改写，新结果来自扩展后的 V-14/V-15 断言。
-批门结果：V-16 全绿（unittest 13/13、py_compile、`cargo fmt --all -- --check`、site ssr 测试 3/3、site/studio clippy `-D warnings` 0 错）；V-17 三项目串行各 63/63 通过（official-subpath 9.2m、official-meta 4.8m、official-root 4.7m，RUSTIFY_STUDIO_DIR 分别指向匹配 base 的预构建 Studio，组合包服务）。同轮覆盖 V-14（分类导航/旧页升级/新组件入口/Button 矩阵/Menubar 键盘）、V-15（Colors/Primitives/公开 Studio 连续任务）与原 official 回归（zh 回退、模式持久化、无障碍 gap 扫描 40 路由×4 变体、搜索/llms/AI 索引、CSP/请求边界）。
+当前已验收候选 S3=`29a69cd6`，线上 build `e7bc8812ab87e7d9`；当前完整结果与证据复用见文末 M7 终验。
+
+原 M5–M6 验证基线：dirty@27510b36（site/、rustify-docs.toml、scripts/、tests/docs-ssg/、tests/crates-io/、tests/browser/theme-deployment.spec.ts、examples/theme-studio/、docs/、README.md、.github/workflows/docs-pages.yml）。R3 评审修复后（见 [M5 记录 · 评审修复](../../plan/DOM-COMPONENTS-RELEASE.records/M5.md#评审修复)）受影响行按修复版本改写，新结果来自扩展后的 V-14/V-15 断言。
+原批门结果：V-16 全绿（unittest 13/13、py_compile、`cargo fmt --all -- --check`、site ssr 测试 3/3、site/studio clippy `-D warnings` 0 错）；V-17 三项目串行各 63/63 通过（official-subpath 9.2m、official-meta 4.8m、official-root 4.7m，RUSTIFY_STUDIO_DIR 分别指向匹配 base 的预构建 Studio，组合包服务）。同轮覆盖 V-14（分类导航/旧页升级/新组件入口/Button 矩阵/Menubar 键盘）、V-15（Colors/Primitives/公开 Studio 连续任务）与原 official 回归（zh 回退、模式持久化、无障碍 gap 扫描 40 路由×4 变体、搜索/llms/AI 索引、CSP/请求边界）。
 
 | 公开能力（§6.2 组） | 页面+锚点 | 可操作行为/视觉维度 | 示例源函数/公共路径 | 真实结果 |
 | --- | --- | --- | --- | --- |
@@ -31,8 +33,21 @@
 4. （R3 更正）M5 提交的 `site/theme.json` 实为 schema 1 legacy 文档；现由 `ThemeDocument::standard` + `export_json` 生成 schema v2 标准文档（indigo 强调色，两模式；按用户 2026-11-13 决定另以 Indigo 第 11 阶覆盖两模式 `primary`/`primary-foreground`，使 Docs 壳链接与浅色强调文本达到 AA），字体令牌按 CLI 模板与 theme-v2 fixture 的做法设为系统通用字族。`theme.document` 生效后，主题运行时在 `data-rustify-notifications` 宿主上经 CSSOM 注入 token 自定义属性（style 属性）；CSP 不拦截 CSSOM 注入，official.spec.ts 的 `[style]` 断言已放行该宿主（其余仍为 0）。
 5. 设计工具：用户指定以 phoenix-ui 替代 impeccable（2026-11-12）；已运行 phoenix-ui context，页面基于 PRODUCT/DESIGN 中性文档壳设计，未使用 impeccable（技能缺失如实记录）。
 
-## 上线终验（M7，2026-11-12/13）
+## 历史上线终验（M7，2026-11-12/13）
 
 > R3 评审修复改动了站点展示、主题与组合脚本，本节线上结论只对应 `cd062cad`，不再代表当前代码；需新候选部署后按 V-18/V-19 受影响任务重验（见 [M7 记录](../../plan/DOM-COMPONENTS-RELEASE.records/M7.md)）。
 
 线上 build_id `529f5ec678ee1c77`（run `43247264809`，候选 `cd062cad`）：线上 manifest 与同 run 工件 509 文件一致、11 文件字节抽查全等（含 Studio 全套与打包字体）；V-19 三段真实使用验收全部通过（①发现/比较/键盘/表格树 + 修正复验；②Studio 全流程含三格式导出落盘与非法导入恢复；③仓外 registry =0.3.0 项目消费导出主题，主色与官网一致 [23,92,211]，边界 accent 覆盖 #7c3aed）。证据：`~/Documents/rustify-releases/m5m7-evidence/`（artifact、online-verify、exports/、invalid-theme.json）与 `~/Documents/rustify-releases/m5m7-consumer/`（独立消费项目，含构建产物）。
+
+
+## 当前线上终验（2026-11-14）
+
+已验证基线 S2=`1e021db3`，run `43474209494`，线上 build `01583fb1e2290a65`。V-18 原入口完整 HTTP 核对 700 文件与同 run 工件逐字节一致，含全部 107 HTML、搜索/AI 各 2 和完整 Studio；首次网络超时后原样重试通过，没有以抽样链替代。
+
+V-19 ①：公开 official-meta 定向 14/14，通过九组与旧详情入口、Button 全维度、三态 Checkbox、DataTable 排序/选择/激活、Tree 键盘、卡片/范围/Select/表单/浮层/导航/内容/布局/排版/扩展及 Colors/Primitives 连续路径、官网与公开 Studio 的独立配色 CommandPalette。公开 Studio 根/局部/继承浮层来源另 1/1。未变的旧详情与视口/语言/模式等范围复用 [M6 批门及 UI 修复检查](../../plan/DOM-COMPONENTS-RELEASE.records/M6.md#检查与实际失败)（最终 subpath/meta 各 68/68；root 67 通过加元数据失败项修正后 1/1），其后 UI R3 定向 5/5 与 R5 主题配对场景见同记录；不以新计数代替这些用户行为。
+
+V-19 ②③：从公开首页 CTA 进入 Studio，Graphite、110%、官网实际主色 `#3a5bc7`、精调/浅深/撤销重做/保存与刷新全等/三格式真实下载/非法导入保持文档均过。下载 JSON/CSS/Rust 用于全新仓外 registry 0.3.0 DOM 应用，release 构建与真实浏览器的主题、根/局部边界、表单提交/复位/required 拒绝、菜单键盘执行及焦点返回全过。根按钮 `rgb(58,91,199)` 与官网一致，局部为 `rgb(124,58,237)`；外部字体实际加载。官网/Studio 的 console/pageerror/CSP/失败请求检查通过；消费者的 console/pageerror/失败请求/HTTP≥400 均为空，亲自查看了页面与消费者截图和实际导出。完整步骤、日志/截图/文件位置见 [M7 当前结果](../../plan/DOM-COMPONENTS-RELEASE.records/M7.md#s2-线上终验与新发现的接入卡点)。
+
+许可文档缺陷已由 S3=`29a69cd6` 修复并实际部署：run `43497922320`，线上组合 build `e7bc8812ab87e7d9`，Studio `13b5b95695372b91`。S3 线上 V-18 完整 700 文件、107 HTML、2 搜索/2 AI 与同 run 工件逐字节一致；真实网络超时/截断及每 URL 一次有界重读见 M7，未改字节/状态/地址/MIME/CSP/资源图规则，未以抽样替代。
+
+S3 定向 V-19：从最新首页进入 Studio，导入同一已保存主题并实际下载三格式；JSON/CSS 与 S2 全等，Rust 只有来源头更新为 S3，setup notes 同源；公开许可文档与原许可/源码归档可获取且原始字节相同。最新下载用于仓外 registry 消费者 release 构建（2.34s）和真实浏览器，主题/局部边界/表单正常与必填边界/键盘菜单与回焦/实际字体全过，截图已亲自查看。S2→S3 没有 UI、SDK、主题格式或字体字节变化，上述完整行为证据按计划 §9.2 保留，受影响文件和身份重新实证。完整文件、命令、失败与结果见 [M7](../../plan/DOM-COMPONENTS-RELEASE.records/M7.md#s3-最新导出与独立消费终验)。本计划覆盖矩阵无未处置必需缺口。
