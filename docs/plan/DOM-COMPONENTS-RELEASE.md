@@ -206,12 +206,12 @@ REVIEW @progress_consistency:
 
 ### 恢复快照
 
-- 最近更新：2026-11-14 00:40 +08:00 · R5 F-14 本地修复与验证完成，待独立代码复审
+- 最近更新：2026-11-14 +08:00 · R6 复审通过，用户已授权新候选与线上终验
 - 当前进度：6/7 个里程碑完成
-- 当前状态：进行中；R4 已关闭 F-01–F-13、G-01、U-01，R5 新增 F-14 已修复并验证；M7 线上 V-18/V-19 仍只覆盖旧候选 `cd062cad`，需新候选上线后重验
+- 当前状态：进行中；R6 已关闭 F-14，旧问题保持关闭；M7 正在冻结含全部本地修复的新候选并做 V-18 预演
 - 最近完成：M6 的 CommandPalette 背景/文字 token 配对修复，官网命令、公开 Studio 独立 token 与局部来源三个浏览器场景通过，见 [M6 · 代码评审 R5 修复](DOM-COMPONENTS-RELEASE.records/M6.md#代码评审-r5-修复)
-- 下一步：用户发起 `$review-code docs/plan/DOM-COMPONENTS-RELEASE.md` 独立复审。必要 SDK/Docs 本地修复的新版本发行另行处理；M7 仍需新候选与本次生产授权。
-- 当前阻塞：生产推送/派发需用户对新候选逐次授权；无本轮本地修复阻塞。临时 registry token 保留沿用户 2026-11-11 决定，不需要用于 M5–M7
+- 下一步：完成新候选的本地整包门后，按用户本次授权推送/派发，完成线上 V-18 与 V-19 受影响任务；必要 SDK/Docs 修复的 registry 新版本发行另行处理。
+- 当前阻塞：无；用户本次已授权新候选与线上终验。临时 registry token 保留沿用户 2026-11-11 决定，不需要用于 M5–M7
 - 代码基线：R5 修复 `824ae589`；UI R3 修复 `af73bfcd`；上一部署候选 `cd062cad`
 
 ### 完成记录
@@ -269,7 +269,7 @@ REVIEW @progress_consistency:
 
 - 状态：Accepted。
 - 驱动：R-2、C-2、C-6。线上文档源码可以继续变化，已经公开的 0.3.0 包不能改字节。
-- 决策：沿现有 `docs-pages.yml`，安装完整候选 SHA 的 source 分发 CLI，prepare 只投影三条框架依赖与对应 lock；保留 framework R 的身份。M5–M7 只改站点/示例/组合脚本，候选 S 的库与 CLI 目录仍应分别等于 R、C。
+- 决策：沿现有 `docs-pages.yml`，安装完整候选 SHA 的 source 分发 CLI，prepare 只投影三条框架依赖与对应 lock；保留 framework R 的身份。M5–M7 使用候选 S 的 source CLI 和同 checkout 的框架路径依赖；原发行 R/C 与 registry 0.3.0 字节保持不变。用户已授权的必要 SDK/Docs 本地修复可以进入官网 source 构建，不能宣称已在 registry 发布。
 - 备选：改成 registry CLI 与自定义投影会改变已验证发行链路；本期无须为展示重做它。原源码配对、上传与部署证据见 M2–M4 记录。
 - 后果：候选 S、framework R、CLI 0.3.0 与组合包 build_id 分别记录；不能只看 CLI 版本推断展示源码新旧。
 - 重新评估触发：本期真实展示暴露必须修改库/CLI 的缺陷；先按 §8 明确受影响包和新版本，再修改本决策，不悄悄使用未发布接口。
@@ -461,7 +461,7 @@ python3.12 scripts/crates-io.py verify --release "$DIR"
 ### 5.7 新候选 S 的部署顺序
 
 1. M5–M6 同批实现并完成 V-14–V-17；本批 site、Studio 接线与组合脚本可分别提交，但共用文件由一人集成。提交后冻结完整 S，回写 M5/M6 记录，不能继续使用 D3 的源码身份代表新展示。
-2. 检查 S 的九库及根库输入仍等于 R，CLI 包仍等于 C；本站新增依赖不改变 registry 发行。按现有 Git CLI 安装与 prepare 命令做完整候选预演，再从 S 未投影源码构建 Studio、组合/verify。由于 prepare 会投影 site manifest，不能从投影目录启动根 xtask 构建 Studio。
+2. 检查 S 相对 R 的库及根输入差异仅为已授权并经 R4–R6 验证的 SDK/Docs 修复，CLI 包仍等于 C；核对 source CLI 的候选身份及 prepare 投影的三条路径依赖都指向同一 S。原 registry 归档不变，其 framework R 身份与官网 source S 分别记录；独立 registry 消费只验 0.3.0 已有契约。按现有 Git CLI 安装与 prepare 命令做完整候选预演，再从 S 未投影源码构建 Studio、组合/verify。由于 prepare 会投影 site manifest，不能从投影目录启动根 xtask 构建 Studio。
 3. V-18 的本地候选门通过后，出示 S、最终 build_id、主要可操作入口与生产命令；获本次推送/派发授权后推送并执行 `gh workflow run docs-pages.yml --ref main -f candidate_sha="$S"`，再 `gh run watch`。没有授权不派发，但其它已授权本地工作照常完成。
 4. 用同 run 工件与线上 HTTP 核对完整组合包，再在真实官网执行 V-19。任何缺失演示、不可用状态、资源错误或导出消费失败均是未完成；修复后只重验失败任务与波及项，并发布新 S。
 5. V-19 全部通过后，M7 才能记完成、整期进度才可成为 7/7；记录实际 S/run/build_id、展示覆盖和已确认的限制。只有新版文档上线、Studio 启动成功或截图好看都不够。
