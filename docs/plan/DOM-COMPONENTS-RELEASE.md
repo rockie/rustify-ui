@@ -212,7 +212,7 @@ REVIEW @progress_consistency:
 - 最近完成：M6 的 R5 修复及原有展示范围；原 M7 的资源校验与已覆盖任务保留历史证据，未覆盖本次根滚动路径，不能继续支撑 M7 完成
 - 下一步：冻结含滚动修复的新候选，沿既有授权完成 source CLI/Docs/Studio 整包门、发布及线上受影响终验。
 - 当前阻塞：无。registry 0.3.0 归档不变，源码修复的新 registry 发行另行处理。
-- 代码基线：dirty@`eb883af5`（SDK primitives.css/rustify.css 与 theme-scroll.spec.ts）；当前公开 S3=`29a69cd6`，build `e7bc8812ab87e7d9`。
+- 代码基线：新候选 `e0ba61cd`（SDK primitives.css/rustify.css 与 theme-scroll.spec.ts）；当前公开 S3=`29a69cd6`，build `e7bc8812ab87e7d9`。
 
 ### 完成记录
 
@@ -224,7 +224,7 @@ REVIEW @progress_consistency:
 | M4 | 已完成 | 2026-11-11 | 差异门与 V-11 预演（D 与 D3 两轮）通过；部署 run `42953922752`（build 28m39s＋deploy 9s）；V-12 全过（线上 manifest cli_version=0.3.0、build_id `3fe8d486f30d8aa5` 与 run 一致）；V-13 四任务全过（V-6 卡点消除）；E=`458333d5`；worktree 清理 | [M4.md](DOM-COMPONENTS-RELEASE.records/M4.md) | D3=`596175e3`、E=`458333d5` |
 | M5 | 已完成 | 2026-11-13 | 展示目录/九分类页/Colors/Primitives/Studio 页、72 demo（旧 24 保留升级）、theme.json（R3 修复后为 schema v2 标准 + Indigo 11 覆盖）、静态 Colors CSS、docs/README 链接；偏差见覆盖记录（catalogue 承载总索引、Select 部件分组（R3 更正）、ThemeBoundary 静态对照、phoenix-ui 替代） | [M5.md](DOM-COMPONENTS-RELEASE.records/M5.md) | `624ea1e3`；修复 `c3605c2e`；UI修复 `a6493064`、`042ccca5`、`af73bfcd` |
 | M6 | 已完成 | 2026-11-14 | compose.py/workflow/verify.py check_studio/serve.sh RUSTIFY_STUDIO_DIR/official.spec V-14+V-15 场景/ComposeTests/theme-studio 接线；原候选 S=`45d5d514` 冻结；R3 修复后批门 V-16 全过、V-17 三项目各 66/66；R5 F-14 修复及三个定向浏览器场景通过 | [M6.md](DOM-COMPONENTS-RELEASE.records/M6.md) | `45d5d514`；修复 `c3605c2e`；UI修复 `a6493064`、`042ccca5`、`af73bfcd`；修复 `824ae589` |
-| M7 | 进行中 | 2026-11-14 | S3 `29a69cd6` 本地整包及 run `43497922320` 成功；线上 build `e7bc8812ab87e7d9` 全 700 文件比对通过；V-19 三段和最新导出/许可/registry 消费通过，复用与网络重读如实记录；原收口遗漏根页面滚动；用户发现空白后重新打开，修复验证与新候选上线待完成 | [M7.md](DOM-COMPONENTS-RELEASE.records/M7.md) | `8de588f5`、`6b6bde91`、`cd062cad`；修复 `1e021db3`、`29a69cd6`；最终记录 `bd06a4bd`；滚动修复待提交 |
+| M7 | 进行中 | 2026-11-14 | S3 `29a69cd6` 本地整包及 run `43497922320` 成功；线上 build `e7bc8812ab87e7d9` 全 700 文件比对通过；V-19 三段和最新导出/许可/registry 消费通过，复用与网络重读如实记录；原收口遗漏根页面滚动；用户发现空白后重新打开，修复验证与新候选上线待完成 | [M7.md](DOM-COMPONENTS-RELEASE.records/M7.md) | `8de588f5`、`6b6bde91`、`cd062cad`；修复 `1e021db3`、`29a69cd6`；最终记录 `bd06a4bd`；滚动修复 `e0ba61cd` |
 
 ## 0. 需求、范围与决策
 
