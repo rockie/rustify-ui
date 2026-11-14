@@ -813,6 +813,9 @@
   }
 }
 @layer components {
+  :where([data-rustify-part="select-root"]) {
+    position: relative;
+  }
   :where([data-rustify-part="select-content"]) {
     display: flex;
     flex-direction: column;

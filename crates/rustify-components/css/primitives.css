@@ -32,6 +32,8 @@
 }
 
 @layer components {
+  /* Keep the hidden native form control in its select's containing block. */
+  :where([data-rustify-part="select-root"]) { position: relative; }
   :where([data-rustify-part="select-content"]) { display: flex; flex-direction: column; max-height: calc(100vh - 2rem); }
   :where([data-rustify-part="select-viewport"]) { min-height: 0; overflow: auto; max-height: min(20rem, calc(100vh - 2rem)); overscroll-behavior: contain; }
   :where([data-rustify-part="select-item-indicator"][data-state="unchecked"]) { visibility: hidden; }

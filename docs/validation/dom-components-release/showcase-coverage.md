@@ -1,6 +1,6 @@
 # 展示覆盖与 M7 终验记录（§6.2 能力矩阵逐项）
 
-当前已验收候选 S3=`29a69cd6`，线上 build `e7bc8812ab87e7d9`；当前完整结果与证据复用见文末 M7 终验。
+前次验证候选 S3=`29a69cd6`，线上 build `e7bc8812ab87e7d9`；用户发现根页面滚动空白后 M7 已重新打开，原结果与新缺口见文末。
 
 原 M5–M6 验证基线：dirty@27510b36（site/、rustify-docs.toml、scripts/、tests/docs-ssg/、tests/crates-io/、tests/browser/theme-deployment.spec.ts、examples/theme-studio/、docs/、README.md、.github/workflows/docs-pages.yml）。R3 评审修复后（见 [M5 记录 · 评审修复](../../plan/DOM-COMPONENTS-RELEASE.records/M5.md#评审修复)）受影响行按修复版本改写，新结果来自扩展后的 V-14/V-15 断言。
 原批门结果：V-16 全绿（unittest 13/13、py_compile、`cargo fmt --all -- --check`、site ssr 测试 3/3、site/studio clippy `-D warnings` 0 错）；V-17 三项目串行各 63/63 通过（official-subpath 9.2m、official-meta 4.8m、official-root 4.7m，RUSTIFY_STUDIO_DIR 分别指向匹配 base 的预构建 Studio，组合包服务）。同轮覆盖 V-14（分类导航/旧页升级/新组件入口/Button 矩阵/Menubar 键盘）、V-15（Colors/Primitives/公开 Studio 连续任务）与原 official 回归（zh 回退、模式持久化、无障碍 gap 扫描 40 路由×4 变体、搜索/llms/AI 索引、CSP/请求边界）。
@@ -50,4 +50,9 @@ V-19 ②③：从公开首页 CTA 进入 Studio，Graphite、110%、官网实际
 
 许可文档缺陷已由 S3=`29a69cd6` 修复并实际部署：run `43497922320`，线上组合 build `e7bc8812ab87e7d9`，Studio `13b5b95695372b91`。S3 线上 V-18 完整 700 文件、107 HTML、2 搜索/2 AI 与同 run 工件逐字节一致；真实网络超时/截断及每 URL 一次有界重读见 M7，未改字节/状态/地址/MIME/CSP/资源图规则，未以抽样替代。
 
-S3 定向 V-19：从最新首页进入 Studio，导入同一已保存主题并实际下载三格式；JSON/CSS 与 S2 全等，Rust 只有来源头更新为 S3，setup notes 同源；公开许可文档与原许可/源码归档可获取且原始字节相同。最新下载用于仓外 registry 消费者 release 构建（2.34s）和真实浏览器，主题/局部边界/表单正常与必填边界/键盘菜单与回焦/实际字体全过，截图已亲自查看。S2→S3 没有 UI、SDK、主题格式或字体字节变化，上述完整行为证据按计划 §9.2 保留，受影响文件和身份重新实证。完整文件、命令、失败与结果见 [M7](../../plan/DOM-COMPONENTS-RELEASE.records/M7.md#s3-最新导出与独立消费终验)。本计划覆盖矩阵无未处置必需缺口。
+S3 定向 V-19：从最新首页进入 Studio，导入同一已保存主题并实际下载三格式；JSON/CSS 与 S2 全等，Rust 只有来源头更新为 S3，setup notes 同源；公开许可文档与原许可/源码归档可获取且原始字节相同。最新下载用于仓外 registry 消费者 release 构建（2.34s）和真实浏览器，主题/局部边界/表单正常与必填边界/键盘菜单与回焦/实际字体全过，截图已亲自查看。S2→S3 没有 UI、SDK、主题格式或字体字节变化，上述完整行为证据按计划 §9.2 保留，受影响文件和身份重新实证。完整文件、命令、失败与结果见 [M7](../../plan/DOM-COMPONENTS-RELEASE.records/M7.md#s3-最新导出与独立消费终验)。上述结论未覆盖根页面滚动到底；后续用户发现的必需缺口见下节。
+
+
+## 用户发现的根页面滚动缺口
+
+公开 S3 的 Studio 外层页面可滚出整片空白，1440/768/390px 新回归修前全部失败。原生 Select 表单镜像绝对定位而根无定位上下文，导致 scrollHeight 超出视口；修复 SDK Select 根结构样式并重生成 CSS。修后本地 release、8/8 浏览器与 CSS drift 检查通过，桌面/手机真实滚轮到底的根 scrollHeight 均为视口高度，末尾内容可达；新候选线上结果尚待完成，M7 保持进行中；见 [M7 用户反馈](../../plan/DOM-COMPONENTS-RELEASE.records/M7.md#用户发现滚到底出现整片空白2026-11-14)。

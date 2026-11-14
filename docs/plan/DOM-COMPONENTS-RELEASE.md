@@ -206,13 +206,13 @@ REVIEW @progress_consistency:
 
 ### 恢复快照
 
-- 最近更新：2026-11-14 +08:00 · M7 线上终验完成
-- 当前进度：7/7 个里程碑完成
-- 当前状态：已完成；S3 `29a69cd6` 经本地整包门及 Pages run `43497922320` 成功部署（build `e7bc8812ab87e7d9`），线上 V-18 全 700 文件比对与 V-19 最新导出/许可/独立消费通过；未变交互证据限定复用，网络失败与有界传输重读见 M7
-- 最近完成：M7 的新候选发布、完整线上比对与最新导出独立消费，见 [M7 终验记录](DOM-COMPONENTS-RELEASE.records/M7.md#s3-最新导出与独立消费终验)
-- 下一步：用户发起 `$review-code docs/plan/DOM-COMPONENTS-RELEASE.md`。必要 SDK/Docs 修复的 registry 新版本发行另行处理。
-- 当前阻塞：无。临时 registry token 保留沿用户 2026-11-11 决定，本次未使用。
-- 代码基线：已部署 S3 `29a69cd6`（许可文档修复），包含冷构建 CLI 修复 `1e021db3`、R5 修复 `824ae589` 与 UI R3 修复 `af73bfcd`；最终记录提交见 M7 行。
+- 最近更新：2026-11-14 +08:00 · 用户发现公开 Studio 底部空白，M7 重新打开
+- 当前进度：6/7 个里程碑完成
+- 当前状态：进行中；已在公开 S3 复现外层页面多滚出空白，新增 1440/768/390px 回归修前全部失败；根因是 Select 隐藏原生表单镜像缺少所属根的定位上下文。SDK 结构 CSS 修复及生成物已写入，本地 release、8/8 定向浏览器、CSS 漂移检查与底部实拍已过；新候选整包门及上线待完成
+- 最近完成：M6 的 R5 修复及原有展示范围；原 M7 的资源校验与已覆盖任务保留历史证据，未覆盖本次根滚动路径，不能继续支撑 M7 完成
+- 下一步：冻结含滚动修复的新候选，沿既有授权完成 source CLI/Docs/Studio 整包门、发布及线上受影响终验。
+- 当前阻塞：无。registry 0.3.0 归档不变，源码修复的新 registry 发行另行处理。
+- 代码基线：dirty@`eb883af5`（SDK primitives.css/rustify.css 与 theme-scroll.spec.ts）；当前公开 S3=`29a69cd6`，build `e7bc8812ab87e7d9`。
 
 ### 完成记录
 
@@ -224,7 +224,7 @@ REVIEW @progress_consistency:
 | M4 | 已完成 | 2026-11-11 | 差异门与 V-11 预演（D 与 D3 两轮）通过；部署 run `42953922752`（build 28m39s＋deploy 9s）；V-12 全过（线上 manifest cli_version=0.3.0、build_id `3fe8d486f30d8aa5` 与 run 一致）；V-13 四任务全过（V-6 卡点消除）；E=`458333d5`；worktree 清理 | [M4.md](DOM-COMPONENTS-RELEASE.records/M4.md) | D3=`596175e3`、E=`458333d5` |
 | M5 | 已完成 | 2026-11-13 | 展示目录/九分类页/Colors/Primitives/Studio 页、72 demo（旧 24 保留升级）、theme.json（R3 修复后为 schema v2 标准 + Indigo 11 覆盖）、静态 Colors CSS、docs/README 链接；偏差见覆盖记录（catalogue 承载总索引、Select 部件分组（R3 更正）、ThemeBoundary 静态对照、phoenix-ui 替代） | [M5.md](DOM-COMPONENTS-RELEASE.records/M5.md) | `624ea1e3`；修复 `c3605c2e`；UI修复 `a6493064`、`042ccca5`、`af73bfcd` |
 | M6 | 已完成 | 2026-11-14 | compose.py/workflow/verify.py check_studio/serve.sh RUSTIFY_STUDIO_DIR/official.spec V-14+V-15 场景/ComposeTests/theme-studio 接线；原候选 S=`45d5d514` 冻结；R3 修复后批门 V-16 全过、V-17 三项目各 66/66；R5 F-14 修复及三个定向浏览器场景通过 | [M6.md](DOM-COMPONENTS-RELEASE.records/M6.md) | `45d5d514`；修复 `c3605c2e`；UI修复 `a6493064`、`042ccca5`、`af73bfcd`；修复 `824ae589` |
-| M7 | 已完成 | 2026-11-14 | S3 `29a69cd6` 本地整包及 run `43497922320` 成功；线上 build `e7bc8812ab87e7d9` 全 700 文件比对通过；V-19 三段和最新导出/许可/registry 消费通过，复用与网络重读如实记录；交付说明/覆盖记录/临时资源收口 | [M7.md](DOM-COMPONENTS-RELEASE.records/M7.md) | `8de588f5`、`6b6bde91`、`cd062cad`；修复 `1e021db3`、`29a69cd6`；最终记录 `bd06a4bd` |
+| M7 | 进行中 | 2026-11-14 | S3 `29a69cd6` 本地整包及 run `43497922320` 成功；线上 build `e7bc8812ab87e7d9` 全 700 文件比对通过；V-19 三段和最新导出/许可/registry 消费通过，复用与网络重读如实记录；原收口遗漏根页面滚动；用户发现空白后重新打开，修复验证与新候选上线待完成 | [M7.md](DOM-COMPONENTS-RELEASE.records/M7.md) | `8de588f5`、`6b6bde91`、`cd062cad`；修复 `1e021db3`、`29a69cd6`；最终记录 `bd06a4bd`；滚动修复待提交 |
 
 ## 0. 需求、范围与决策
 
@@ -461,7 +461,7 @@ python3.12 scripts/crates-io.py verify --release "$DIR"
 ### 5.7 新候选 S 的部署顺序
 
 1. M5–M6 同批实现并完成 V-14–V-17；本批 site、Studio 接线与组合脚本可分别提交，但共用文件由一人集成。提交后冻结完整 S，回写 M5/M6 记录，不能继续使用 D3 的源码身份代表新展示。
-2. 检查 S 相对 R 的库及根输入差异仅为已授权并经 R4–R6 验证的 SDK/Docs 修复，CLI 包相对 C 仅增加本次真实冷构建失败所需的一次重新分析修复及回归测试；核对 source CLI 的候选身份及 prepare 投影的三条路径依赖都指向同一 S。原 registry 归档不变，其 framework R 身份与官网 source S 分别记录；独立 registry 消费只验 0.3.0 已有契约。按现有 Git CLI 安装与 prepare 命令做完整候选预演，再从 S 未投影源码构建 Studio、组合/verify。由于 prepare 会投影 site manifest，不能从投影目录启动根 xtask 构建 Studio。
+2. 检查 S 相对 R 的库及根输入差异仅为已授权并经 R4–R6 验证的 SDK/Docs 修复，以及用户本次反馈的 Select 镜像滚动定位修复（M7 红绿回归与定向浏览器验证），CLI 包相对 C 仅增加本次真实冷构建失败所需的一次重新分析修复及回归测试；核对 source CLI 的候选身份及 prepare 投影的三条路径依赖都指向同一 S。原 registry 归档不变，其 framework R 身份与官网 source S 分别记录；独立 registry 消费只验 0.3.0 已有契约。按现有 Git CLI 安装与 prepare 命令做完整候选预演，再从 S 未投影源码构建 Studio、组合/verify。由于 prepare 会投影 site manifest，不能从投影目录启动根 xtask 构建 Studio。
 3. V-18 的本地候选门通过后，出示 S、最终 build_id、主要可操作入口与生产命令；获本次推送/派发授权后推送并执行 `gh workflow run docs-pages.yml --ref main -f candidate_sha="$S"`，再 `gh run watch`。没有授权不派发，但其它已授权本地工作照常完成。
 4. 用同 run 工件与线上 HTTP 核对完整组合包，再在真实官网执行 V-19。任何缺失演示、不可用状态、资源错误或导出消费失败均是未完成；修复后只重验失败任务与波及项，并发布新 S。
 5. V-19 全部通过后，M7 才能记完成、整期进度才可成为 7/7；记录实际 S/run/build_id、展示覆盖和已确认的限制。只有新版文档上线、Studio 启动成功或截图好看都不够。
